@@ -81,6 +81,18 @@ describe('PerfCategoryRenderer', () => {
     assert.equal(timelineElements.length + nontimelineElements.length, metricAudits.length);
   });
 
+  it('renders the metrics variance disclaimer as markdown', () => {
+    const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
+    const disclaimerEl =
+        categoryDOM.querySelector('.lh-audit-group--metrics > .lh-metrics__disclaimer');
+
+    assert.ok(disclaimerEl.textContent.includes('Values are estimated'));
+    const disclamerLink = disclaimerEl.querySelector('a');
+    assert.ok(disclamerLink, 'disclaimer contains coverted markdown link');
+    const disclamerUrl = new URL(disclamerLink.href);
+    assert.strictEqual(disclamerUrl.hostname, 'github.com');
+  });
+
   it('renders the failing performance opportunities', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
 
@@ -138,7 +150,7 @@ describe('PerfCategoryRenderer', () => {
 
   it('renders the failing diagnostics', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
-    const diagnosticSection = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group')[2];
+    const diagnosticSection = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group')[3];
 
     const diagnosticAudits = category.auditRefs.filter(audit => audit.group === 'diagnostics' &&
         !Util.showAsPassed(audit.result));

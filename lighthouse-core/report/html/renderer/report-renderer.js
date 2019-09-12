@@ -77,6 +77,7 @@ class ReportRenderer {
     const el = this._dom.cloneTemplate('#tmpl-lh-topbar', this._templateContext);
     const metadataUrl = /** @type {HTMLAnchorElement} */ (this._dom.find('.lh-topbar__url', el));
     metadataUrl.href = metadataUrl.textContent = report.finalUrl;
+    metadataUrl.title = report.finalUrl;
     return el;
   }
 
@@ -90,17 +91,6 @@ class ReportRenderer {
     /** @type {HTMLDivElement} */ (placeholder.parentNode).replaceChild(domFragment, placeholder);
     return el;
   }
-
-  /**
-   * @return {Element}
-   */
-  _renderReportShortHeader() {
-    const shortHeaderContainer = this._dom.createElement('div', 'lh-header-container');
-    const wrapper = this._dom.cloneTemplate('#tmpl-lh-scores-wrapper', this._templateContext);
-    shortHeaderContainer.appendChild(wrapper);
-    return shortHeaderContainer;
-  }
-
 
   /**
    * @param {LH.ReportResult} report
@@ -195,30 +185,6 @@ class ReportRenderer {
    * @return {DocumentFragment}
    */
   _renderReport(report) {
-    let header;
-    const headerContainer = this._dom.createElement('div');
-    if (this._dom.isDevTools()) {
-      headerContainer.classList.add('lh-header-plain');
-      header = this._renderReportShortHeader();
-    } else {
-      headerContainer.classList.add('lh-header-sticky');
-      header = this._renderReportHeader();
-    }
-    headerContainer.appendChild(header);
-
-    const container = this._dom.createElement('div', 'lh-container');
-    const reportSection = container.appendChild(this._dom.createElement('div', 'lh-report'));
-
-    reportSection.appendChild(this._renderReportWarnings(report));
-
-    let scoreHeader;
-    const isSoloCategory = Object.keys(report.categories).length === 1;
-    if (!isSoloCategory) {
-      scoreHeader = this._dom.createElement('div', 'lh-scores-header');
-    } else {
-      headerContainer.classList.add('lh-header--solo-category');
-    }
-
     const detailsRenderer = new DetailsRenderer(this._dom);
     const categoryRenderer = new CategoryRenderer(this._dom, detailsRenderer);
     categoryRenderer.setTemplateContext(this._templateContext);
@@ -232,8 +198,36 @@ class ReportRenderer {
       renderer.setTemplateContext(this._templateContext);
     });
 
-    const categories = reportSection.appendChild(this._dom.createElement('div', 'lh-categories'));
+    const headerContainer = this._dom.createElement('div');
+    headerContainer.appendChild(this._renderReportHeader());
 
+    const reportContainer = this._dom.createElement('div', 'lh-container');
+    const reportSection = this._dom.createElement('div', 'lh-report');
+    reportSection.appendChild(this._renderReportWarnings(report));
+
+    let scoreHeader;
+    const isSoloCategory = Object.keys(report.categories).length === 1;
+    if (!isSoloCategory) {
+      scoreHeader = this._dom.createElement('div', 'lh-scores-header');
+    } else {
+      headerContainer.classList.add('lh-header--solo-category');
+    }
+
+    if (scoreHeader) {
+      const scoreScale = this._dom.cloneTemplate('#tmpl-lh-scorescale', this._templateContext);
+      const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
+      scoreHeader.append(
+        ...this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers));
+      scoresContainer.appendChild(scoreHeader);
+      scoresContainer.appendChild(scoreScale);
+
+      const stickyHeader = this._dom.createElement('div', 'lh-sticky-header');
+      stickyHeader.append(
+        ...this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers));
+      reportContainer.appendChild(stickyHeader);
+    }
+
+    const categories = reportSection.appendChild(this._dom.createElement('div', 'lh-categories'));
     for (const category of Object.values(report.categories)) {
       const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
       // .lh-category-wrapper is full-width and provides horizontal rules between categories.
@@ -242,38 +236,14 @@ class ReportRenderer {
       wrapper.appendChild(renderer.render(category, report.categoryGroups));
     }
 
-    if (scoreHeader) {
-      const scoreGauges =
-        this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers);
-      scoreHeader.append(...scoreGauges);
-      const scoreScale = this._dom.cloneTemplate('#tmpl-lh-scorescale', this._templateContext);
-      const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
-      scoresContainer.appendChild(scoreHeader);
-      scoresContainer.appendChild(scoreScale);
-    }
-
-    reportSection.appendChild(this._renderReportFooter(report));
-
     const reportFragment = this._dom.createFragment();
+    const topbarDocumentFragment = this._renderReportTopbar(report);
 
-    if (!this._dom.isDevTools()) {
-      const topbarDocumentFragment = this._renderReportTopbar(report);
-      reportFragment.appendChild(topbarDocumentFragment);
-    }
-
-    if (scoreHeader && !this._dom.isDevTools()) {
-      const stickyHeader = this._dom.createElement('div', 'lh-sticky-header');
-      this._dom.createChildOf(stickyHeader, 'div', 'lh-highlighter');
-
-      const scoreGauges =
-        this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers);
-      stickyHeader.append(...scoreGauges);
-
-      reportFragment.appendChild(stickyHeader);
-    }
-
-    reportFragment.appendChild(headerContainer);
-    reportFragment.appendChild(container);
+    reportFragment.appendChild(topbarDocumentFragment);
+    reportFragment.appendChild(reportContainer);
+    reportContainer.appendChild(headerContainer);
+    reportContainer.appendChild(reportSection);
+    reportSection.appendChild(this._renderReportFooter(report));
 
     return reportFragment;
   }

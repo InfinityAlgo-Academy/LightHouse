@@ -58,7 +58,7 @@ Note that some flag functionality is only available to the CLI. The set of share
 | `chromeFlags` | Ignored, Chrome is not launched for you. |
 | `outputPath` | Ignored, output is returned as string in `.report` property. |
 | `saveAssets` | Ignored, artifacts are returned in `.artifacts` property. |
-| `view` | Ignored, use the `opn` npm module if you want this functionality. |
+| `view` | Ignored, use the `open` npm module if you want this functionality. |
 | `enableErrorReporting` | Ignored, error reporting is always disabled for node. |
 | `listAllAudits` | Ignored, not relevant in programmatic use. |
 | `listTraceCategories` | Ignored, not relevant in programmatic use. |
@@ -114,6 +114,14 @@ instance with an open debugging port.
 1. Run `chrome-debug`. This will log the debugging port of your Chrome instance
 1. Navigate to your site and log in.
 1. In a separate terminal tab, run `lighthouse http://mysite.com --port port-number` using the port number from chrome-debug.
+
+## Testing on a site with an untrusted certificate
+
+When testing a site with an untrusted certificate, Chrome will be unable to load the page and so the Lighthouse report will mostly contain errors.
+
+If this certificate **is one you control** and is necessary for development (for instance, `localhost` with a self-signed certificate for local HTTP/2 testing), we recommend you _add the certificate to your locally-trusted certificate store_. In Chrome, see `Settings` > `Privacy and Security` > `Manage certificates` or consult instructions for adding to the certificate store in your operating system.
+
+Alternatively, you can instruct Chrome to ignore the invalid certificate by adding the Lighthouse CLI flag `--chrome-flags="--ignore-certificate-errors"`. However, you must be as careful with this flag as it's equivalent to browsing the web with TLS disabled. Any content loaded by the test page (e.g. third-party scripts or iframed ads) will *also* not be subject to certificate checks, [opening up avenues for MitM attacks](https://www.chromium.org/Home/chromium-security/education/tls#TOC-What-security-properties-does-TLS-give-me-). For these reasons, we recommend the earlier solution of adding the certificate to your local cert store.
 
 ## Testing on a mobile device
 

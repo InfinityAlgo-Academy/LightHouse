@@ -10,78 +10,13 @@ const Connection = require('../../gather/connections/connection.js');
 const Element = require('../../lib/element.js');
 const EventEmitter = require('events').EventEmitter;
 const {protocolGetVersionResponse} = require('./fake-driver.js');
+const {createMockSendCommandFn, createMockOnceFn} = require('./mock-commands.js');
 
 const redirectDevtoolsLog = require('../fixtures/wikipedia-redirect.devtoolslog.json');
 
 /* eslint-env jest */
 
 jest.useFakeTimers();
-
-/**
- * Creates a jest mock function whose implementation consumes mocked protocol responses matching the
- * requested command in the order they were mocked.
- *
- * It is decorated with two methods:
- *    - `mockResponse` which pushes protocol message responses for consumption
- *    - `findInvocation` which asserts that `sendCommand` was invoked with the given command and
- *      returns the protocol message argument.
- */
-function createMockSendCommandFn() {
-  const mockResponses = [];
-  const mockFn = jest.fn().mockImplementation(command => {
-    const indexOfResponse = mockResponses.findIndex(entry => entry.command === command);
-    if (indexOfResponse === -1) throw new Error(`${command} unimplemented`);
-    const {response, delay} = mockResponses[indexOfResponse];
-    mockResponses.splice(indexOfResponse, 1);
-    if (delay) return new Promise(resolve => setTimeout(() => resolve(response), delay));
-    return Promise.resolve(response);
-  });
-
-  mockFn.mockResponse = (command, response, delay) => {
-    mockResponses.push({command, response, delay});
-    return mockFn;
-  };
-
-  mockFn.findInvocation = command => {
-    expect(mockFn).toHaveBeenCalledWith(command, expect.anything());
-    return mockFn.mock.calls.find(call => call[0] === command)[1];
-  };
-
-  return mockFn;
-}
-
-/**
- * Creates a jest mock function whose implementation invokes `.on`/`.once` listeners after a setTimeout tick.
- * Closely mirrors `createMockSendCommandFn`.
- *
- * It is decorated with two methods:
- *    - `mockEvent` which pushes protocol event payload for consumption
- *    - `findListener` which asserts that `on` was invoked with the given event name and
- *      returns the listener .
- */
-function createMockOnceFn() {
-  const mockEvents = [];
-  const mockFn = jest.fn().mockImplementation((eventName, listener) => {
-    const indexOfResponse = mockEvents.findIndex(entry => entry.event === eventName);
-    if (indexOfResponse === -1) return;
-    const {response} = mockEvents[indexOfResponse];
-    mockEvents.splice(indexOfResponse, 1);
-    // Wait a tick because real events never fire immediately
-    setTimeout(() => listener(response), 0);
-  });
-
-  mockFn.mockEvent = (event, response) => {
-    mockEvents.push({event, response});
-    return mockFn;
-  };
-
-  mockFn.findListener = event => {
-    expect(mockFn).toHaveBeenCalledWith(event, expect.anything());
-    return mockFn.mock.calls.find(call => call[0] === event)[1];
-  };
-
-  return mockFn;
-}
 
 /**
  * Transparently augments the promise with inspectable functions to query its state.
@@ -316,6 +251,19 @@ describe('.evaluateAsync', () => {
       'Page.createIsolatedWorld',
       expect.anything()
     );
+  });
+
+  it('recovers from isolation failures', async () => {
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: 1337}}})
+      .mockResponse('Page.createIsolatedWorld', {executionContextId: 9001})
+      .mockResponse('Runtime.evaluate', Promise.reject(new Error('Cannot find context')))
+      .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: 1337}}})
+      .mockResponse('Page.createIsolatedWorld', {executionContextId: 9002})
+      .mockResponse('Runtime.evaluate', {result: {value: 'mocked value'}});
+
+    const value = await driver.evaluateAsync('"magic"', {useIsolation: true});
+    expect(value).toEqual('mocked value');
   });
 });
 
@@ -674,108 +622,6 @@ describe('.gotoURL', () => {
       await expect(loadPromise).rejects.toBeTruthy();
       // Make sure we still cleaned up our listeners
       expect(driver._waitForLoadEvent.getMockCancelFn()).toHaveBeenCalled();
-    });
-
-    it('does not reject when page is secure', async () => {
-      const secureSecurityState = {
-        explanations: [],
-        securityState: 'secure',
-      };
-
-      driver.on = driver.once = createMockOnceFn()
-        .mockEvent('Security.securityStateChanged', secureSecurityState);
-
-      const startUrl = 'https://www.example.com';
-      const loadOptions = {
-        waitForLoad: true,
-        passContext: {
-          settings: {
-            maxWaitForLoad: 1,
-          },
-        },
-      };
-
-      const loadPromise = driver.gotoURL(startUrl, loadOptions);
-      await flushAllTimersAndMicrotasks();
-      await loadPromise;
-    });
-
-    it('does not reject when page is insecure but http', async () => {
-      const secureSecurityState = {
-        explanations: [],
-        securityState: 'insecure',
-        schemeIsCryptographic: false,
-      };
-
-      driver.on = driver.once = createMockOnceFn()
-        .mockEvent('Security.securityStateChanged', secureSecurityState);
-
-      const startUrl = 'https://www.example.com';
-      const loadOptions = {
-        waitForLoad: true,
-        passContext: {
-          settings: {
-            maxWaitForLoad: 1,
-          },
-        },
-      };
-
-      const loadPromise = driver.gotoURL(startUrl, loadOptions);
-      await flushAllTimersAndMicrotasks();
-      await loadPromise;
-    });
-
-    it('rejects when page is insecure', async () => {
-      const insecureSecurityState = {
-        explanations: [
-          {
-            description: 'reason 1.',
-            securityState: 'insecure',
-          },
-          {
-            description: 'blah.',
-            securityState: 'info',
-          },
-          {
-            description: 'reason 2.',
-            securityState: 'insecure',
-          },
-        ],
-        securityState: 'insecure',
-        schemeIsCryptographic: true,
-      };
-
-      driver.on = driver.once = createMockOnceFn();
-
-      const startUrl = 'https://www.example.com';
-      const loadOptions = {
-        waitForLoad: true,
-        passContext: {
-          passConfig: {
-            networkQuietThresholdMs: 1,
-          },
-        },
-      };
-
-      // 2 assertions in the catch block and the 1 implicit in `findListener`
-      expect.assertions(3);
-
-      try {
-        const loadPromise = driver.gotoURL(startUrl, loadOptions);
-        await flushAllTimersAndMicrotasks();
-
-        // Use `findListener` instead of `mockEvent` so we can control exactly when the promise resolves
-        const listener = driver.on.findListener('Security.securityStateChanged');
-        listener(insecureSecurityState);
-        await flushAllTimersAndMicrotasks();
-        await loadPromise;
-      } catch (err) {
-        expect(err).toHaveProperty('code', 'INSECURE_DOCUMENT_REQUEST');
-        expect(err.friendlyMessage).toBeDisplayString(
-          'The URL you have provided does not have a valid security certificate. ' +
-          'reason 1. reason 2.'
-        );
-      }
     });
   });
 });

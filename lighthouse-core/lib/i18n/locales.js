@@ -10,15 +10,18 @@
  *
  * Google locale inheritance rules: https://goto.google.com/ccssm
  * CLDR language aliases: https://www.unicode.org/cldr/charts/latest/supplemental/aliases.html
+ * CLDR locale inheritance: https://github.com/unicode-cldr/cldr-core/blob/master/supplemental/parentLocales.json
  */
 
-/** @typedef {Record<string, {message: string}>} LocaleMessages */
+// TODO(paulirish): Centralize locale inheritance (combining this & i18n.lookupLocale()), adopt cldr parentLocale rules.
+
+/** @typedef {Record<string, {message: string}>} LhlMessages */
 
 // The keys within this const must exactly match the LH.Locale type in externs.d.ts
-/** @type {Record<LH.Locale, LocaleMessages>} */
+/** @type {Record<LH.Locale, LhlMessages>} */
 const locales = {
-  'en-US': require('./en-US.json'), // The 'source' strings, with descriptions
-  'en': require('./en-US.json'), // According to CLDR/ICU, 'en' == 'en-US' dates/numbers (Why?!)
+  'en-US': require('./locales/en-US.json'), // The 'source' strings, with descriptions
+  'en': require('./locales/en-US.json'), // According to CLDR/ICU, 'en' == 'en-US' dates/numbers (Why?!)
 
   // TODO: en-GB has just ~10 messages that are different from en-US. We should only ship those.
   'en-AU': require('./locales/en-GB.json'), // Alias of 'en-GB'
@@ -39,7 +42,33 @@ const locales = {
   'de': require('./locales/de.json'), // de-AT, de-CH identical, so they fall back into de
   'el': require('./locales/el.json'),
   'en-XA': require('./locales/en-XA.json'), // psuedolocalization
+  'en-XL': require('./locales/en-XL.json'), // local psuedolocalization
   'es': require('./locales/es.json'),
+  'es-419': require('./locales/es-419.json'),
+  // Aliases of es-419: https://raw.githubusercontent.com/unicode-cldr/cldr-core/master/supplemental/parentLocales.json
+  'es-AR': require('./locales/es-419.json'),
+  'es-BO': require('./locales/es-419.json'),
+  'es-BR': require('./locales/es-419.json'),
+  'es-BZ': require('./locales/es-419.json'),
+  'es-CL': require('./locales/es-419.json'),
+  'es-CO': require('./locales/es-419.json'),
+  'es-CR': require('./locales/es-419.json'),
+  'es-CU': require('./locales/es-419.json'),
+  'es-DO': require('./locales/es-419.json'),
+  'es-EC': require('./locales/es-419.json'),
+  'es-GT': require('./locales/es-419.json'),
+  'es-HN': require('./locales/es-419.json'),
+  'es-MX': require('./locales/es-419.json'),
+  'es-NI': require('./locales/es-419.json'),
+  'es-PA': require('./locales/es-419.json'),
+  'es-PE': require('./locales/es-419.json'),
+  'es-PR': require('./locales/es-419.json'),
+  'es-PY': require('./locales/es-419.json'),
+  'es-SV': require('./locales/es-419.json'),
+  'es-US': require('./locales/es-419.json'),
+  'es-UY': require('./locales/es-419.json'),
+  'es-VE': require('./locales/es-419.json'),
+
   'fi': require('./locales/fi.json'),
   'fil': require('./locales/fil.json'),
   'fr': require('./locales/fr.json'), // fr-CH identical, so it falls back into fr

@@ -293,6 +293,24 @@ describe('Runner', () => {
       });
     });
 
+    it('outputs an error audit result when devtoolsLog required but not provided', async () => {
+      const config = new Config({
+        settings: {
+          auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
+        },
+        audits: [
+          // requires devtoolsLogs[Audit.DEFAULT_PASS]
+          'is-on-https',
+        ],
+      });
+
+      const results = await Runner.run({}, {config});
+      const auditResult = results.lhr.audits['is-on-https'];
+      assert.strictEqual(auditResult.score, null);
+      assert.strictEqual(auditResult.scoreDisplayMode, 'error');
+      assert.strictEqual(auditResult.errorMessage, 'Required devtoolsLogs gatherer did not run.');
+    });
+
     it('outputs an error audit result when missing a required artifact', () => {
       const config = new Config({
         settings: {
@@ -312,32 +330,40 @@ describe('Runner', () => {
       });
     });
 
-    // TODO: need to support save/load of artifact errors.
-    // See https://github.com/GoogleChrome/lighthouse/issues/4984
-    it.skip('outputs an error audit result when required artifact was an Error', () => {
-      const errorMessage = 'blurst of times';
-      const artifactError = new Error(errorMessage);
+    it('outputs an error audit result when required artifact was an Error', async () => {
+      // Start with empty-artifacts.
+      const baseArtifacts = assetSaver.loadArtifacts(__dirname +
+          '/fixtures/artifacts/empty-artifacts/');
 
-      const url = 'https://example.com';
+      // Add error and save artifacts using assetSaver to serialize Error object.
+      const errorMessage = 'blurst of times';
+      const artifacts = {
+        ...baseArtifacts,
+        ViewportDimensions: new Error(errorMessage),
+        TestedAsMobileDevice: true,
+      };
+      const artifactsPath = '.tmp/test_artifacts';
+      const resolvedPath = path.resolve(process.cwd(), artifactsPath);
+      await assetSaver.saveArtifacts(artifacts, resolvedPath);
+
+      // Load artifacts via auditMode.
       const config = new Config({
+        settings: {
+          auditMode: resolvedPath,
+        },
         audits: [
+          // requires ViewportDimensions and TestedAsMobileDevice artifacts
           'content-width',
         ],
-
-        artifacts: {
-          // Error objects don't make it through the Config constructor due to
-          // JSON.stringify/parse step, so populate with test error below.
-          ViewportDimensions: null,
-        },
       });
-      config.artifacts.ViewportDimensions = artifactError;
 
-      return Runner.run({}, {url, config}).then(results => {
-        const auditResult = results.lhr.audits['content-width'];
-        assert.strictEqual(auditResult.score, null);
-        assert.strictEqual(auditResult.scoreDisplayMode, 'error');
-        assert.ok(auditResult.errorMessage.includes(errorMessage));
-      });
+      const results = await Runner.run({}, {config});
+      const auditResult = results.lhr.audits['content-width'];
+      assert.strictEqual(auditResult.score, null);
+      assert.strictEqual(auditResult.scoreDisplayMode, 'error');
+      assert.ok(auditResult.errorMessage.includes(errorMessage));
+
+      rimraf.sync(resolvedPath);
     });
 
     it('only passes the required artifacts to the audit', async () => {
@@ -496,20 +522,24 @@ describe('Runner', () => {
   });
 
 
-  it('rejects when not given a URL', () => {
-    return Runner.run({}, {}).then(_ => assert.ok(false), _ => assert.ok(true));
+  it('rejects when not given a URL', async () => {
+    const config = new Config({});
+    await expect(Runner.run({}, {config})).rejects.toThrow('INVALID_URL');
   });
 
-  it('rejects when given a URL of zero length', () => {
-    return Runner.run({}, {url: ''}).then(_ => assert.ok(false), _ => assert.ok(true));
+  it('rejects when given a URL of zero length', async () => {
+    const config = new Config({});
+    await expect(Runner.run({}, {url: '', config})).rejects.toThrow('INVALID_URL');
   });
 
-  it('rejects when given a URL without protocol', () => {
-    return Runner.run({}, {url: 'localhost'}).then(_ => assert.ok(false), _ => assert.ok(true));
+  it('rejects when given a URL without protocol', async () => {
+    const config = new Config({});
+    await expect(Runner.run({}, {url: 'localhost', config})).rejects.toThrow('INVALID_URL');
   });
 
-  it('rejects when given a URL without hostname', () => {
-    return Runner.run({}, {url: 'https://'}).then(_ => assert.ok(false), _ => assert.ok(true));
+  it('rejects when given a URL without hostname', async () => {
+    const config = new Config({});
+    await expect(Runner.run({}, {url: 'https://', config})).rejects.toThrow('INVALID_URL');
   });
 
   it('only supports core audits with names matching their filename', () => {
@@ -631,11 +661,16 @@ describe('Runner', () => {
     });
   });
 
-  it('includes a top-level runtimeError when a gatherer throws one', async () => {
+  describe('lhr.runtimeError', () => {
     const NO_FCP = LHError.errors.NO_FCP;
     class RuntimeErrorGatherer extends Gatherer {
       afterPass() {
         throw new LHError(NO_FCP);
+      }
+    }
+    class RuntimeError2Gatherer extends Gatherer {
+      afterPass() {
+        throw new LHError(LHError.errors.NO_SCREENSHOTS);
       }
     }
     class WarningAudit extends Audit {
@@ -652,19 +687,55 @@ describe('Runner', () => {
       }
     }
 
-    const config = new Config({
-      passes: [{gatherers: [RuntimeErrorGatherer]}],
+    const configJson = {
+      passes: [
+        {gatherers: [RuntimeErrorGatherer]},
+        {gatherers: [RuntimeError2Gatherer], passName: 'second'},
+      ],
       audits: [WarningAudit],
-    });
-    const {lhr} = await Runner.run(null, {url: 'https://example.com/', config, driverMock});
+    };
 
-    // Audit error included the runtimeError
-    assert.strictEqual(lhr.audits['test-audit'].scoreDisplayMode, 'error');
-    assert.ok(lhr.audits['test-audit'].errorMessage.includes(NO_FCP.code));
-    // And it bubbled up to the runtimeError.
-    assert.strictEqual(lhr.runtimeError.code, NO_FCP.code);
-    expect(lhr.runtimeError.message)
-      .toBeDisplayString(/Something .*\(NO_FCP\)/);
+    it('includes a top-level runtimeError when a gatherer throws one', async () => {
+      const config = new Config(configJson);
+      const {lhr} = await Runner.run(null, {url: 'https://example.com/', config, driverMock});
+
+      // Audit error included the runtimeError
+      expect(lhr.audits['test-audit'].scoreDisplayMode).toEqual('error');
+      expect(lhr.audits['test-audit'].errorMessage).toEqual(expect.stringContaining(NO_FCP.code));
+
+      // And it bubbled up to the runtimeError.
+      expect(lhr.runtimeError.code).toEqual(NO_FCP.code);
+      expect(lhr.runtimeError.message).toBeDisplayString(/Something .*\(NO_FCP\)/);
+    });
+
+    it('includes a pageLoadError runtimeError over any gatherer runtimeErrors', async () => {
+      const url = 'https://www.reddit.com/r/nba';
+      let firstLoad = true;
+      const errorDriverMock = Object.assign({}, driverMock, {
+        online: true,
+        // Loads the page successfully in the first pass, fails with PAGE_HUNG in the second.
+        async gotoURL(url) {
+          if (url.includes('blank')) return null;
+          if (firstLoad) {
+            firstLoad = false;
+            return url;
+          } else {
+            throw new LHError(LHError.errors.PAGE_HUNG);
+          }
+        },
+      });
+
+      const config = new Config(configJson);
+      const {lhr} = await Runner.run(null, {url, config, driverMock: errorDriverMock});
+
+      // Audit error still includes the gatherer runtimeError.
+      expect(lhr.audits['test-audit'].scoreDisplayMode).toEqual('error');
+      expect(lhr.audits['test-audit'].errorMessage).toEqual(expect.stringContaining(NO_FCP.code));
+
+      // But top-level runtimeError is the pageLoadError.
+      expect(lhr.runtimeError.code).toEqual(LHError.errors.PAGE_HUNG.code);
+      expect(lhr.runtimeError.message).toBeDisplayString(/because the page stopped responding/);
+    });
   });
 
   it('localized errors thrown from driver', async () => {

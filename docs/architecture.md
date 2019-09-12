@@ -16,7 +16,7 @@ _Some incomplete notes_
 ### Audit/Report terminology
 * **Category** - Roll-up collection of audits and audit groups into a user-facing section of the report (eg. `Best Practices`). Applies weighting and overall scoring to the section. Examples: PWA, Accessibility, Best Practices.
 * **Audit title** - Short user-visible title for the successful audit. eg. “All image elements have `[alt]` attributes.”
-* **Audit failureTitle** - Short user-visible title for a failing  audit. eg. “Some image elements do not have `[alt]` attributes.”
+* **Audit failureTitle** - Short user-visible title for a failing audit. eg. “Some image elements do not have `[alt]` attributes.”
 * **Audit description** - Explanation of why the user should care about the audit. Not necessarily how to fix it, unless there is no external link that explains it. ([See description guidelines](CONTRIBUTING.md#description-guidelines)). eg. “Informative elements should aim for short, descriptive alternate text. Decorative elements can be ignored with an empty alt attribute. [Learn more].”
 
 ## Protocol
@@ -39,7 +39,7 @@ driver.sendCommand('Security.enable');
 
 ## Understanding a Trace
 
-`lighthouse-core/computed/trace-of-tab.js` and `lighthouse-core/lib/traces/tracing-processor.js` provide the core transformation of a trace into more meaningful objects. Each raw trace event has a monotonically increasing timestamp in microseconds, a thread ID, a process ID, a duration in microseconds (potentially), and other applicable metadata properties such as the event type, the task name, the frame, etc. [Learn more about trace events](https://docs.google.com/document/d/1CvAClvFfyA5R-PhYUmn5OOQtYMH4h6I0nSsKchNAySU/preview).
+`lighthouse-core/lib/tracehouse/trace-processor.js` provides the core transformation of a trace into more meaningful objects. Each raw trace event has a monotonically increasing timestamp in microseconds, a thread ID, a process ID, a duration in microseconds (potentially), and other applicable metadata properties such as the event type, the task name, the frame, etc. [Learn more about trace events](https://docs.google.com/document/d/1CvAClvFfyA5R-PhYUmn5OOQtYMH4h6I0nSsKchNAySU/preview).
 
 ### Example Trace Event
 ```js

@@ -60,7 +60,17 @@ function getFlags(manualArgv) {
           'Path to JSON file of HTTP Header key/value pairs to send in requests')
       .example(
           'lighthouse <url> --only-categories=performance,pwa',
-          'Only run specific categories.')
+          'Only run the specified categories. Available categories: accessibility, best-practices, performance, pwa, seo')
+      /**
+       * Also accept a file for all of these flags. Yargs will merge in and override the file-based
+       * flags with the command-line flags.
+       *
+       * i.e. when command-line `--throttling-method=provided` and file `throttlingMethod: "devtools"`,
+       * throttlingMethod will be `provided`.
+       *
+       * @see https://github.com/yargs/yargs/blob/a6e67f15a61558d0ba28bfe53385332f0ce5d431/docs/api.md#config
+       */
+      .config('cli-flags-path')
 
       // List of options
       .group(['verbose', 'quiet'], 'Logging:')
@@ -78,6 +88,7 @@ function getFlags(manualArgv) {
         ],
         'Configuration:')
       .describe({
+        'cli-flags-path': 'The path to a JSON file that contains the desired CLI flags to apply. Flags specified at the command line will still override the file-based ones.',
         // We don't allowlist specific locales. Why? So we can support the user who requests 'es-MX' (unsupported) and we'll fall back to 'es' (supported)
         'locale': 'The locale/language the report should be formatted in',
         'enable-error-reporting':
@@ -117,7 +128,7 @@ function getFlags(manualArgv) {
         'precomputed-lantern-data-path': 'Path to the file where lantern simulation data should be read from, overwriting the lantern observed estimates for RTT and server latency.',
         'lantern-data-output-path': 'Path to the file where lantern simulation data should be written to, can be used in a future run with the `precomputed-lantern-data-path` flag.',
         'only-audits': 'Only run the specified audits',
-        'only-categories': 'Only run the specified categories',
+        'only-categories': 'Only run the specified categories. Available categories: accessibility, best-practices, performance, pwa, seo',
         'skip-audits': 'Run everything except these audits',
         'plugins': 'Run the specified plugins',
         'print-config': 'Print the normalized config for the given config and options, then exit.',

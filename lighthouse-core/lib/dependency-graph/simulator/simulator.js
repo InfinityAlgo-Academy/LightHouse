@@ -9,7 +9,7 @@ const BaseNode = require('../base-node.js');
 const TcpConnection = require('./tcp-connection.js');
 const ConnectionPool = require('./connection-pool.js');
 const DNSCache = require('./dns-cache.js');
-const mobileSlow4G = require('../../../config/constants').throttling.mobileSlow4G;
+const mobileSlow4G = require('../../../config/constants.js').throttling.mobileSlow4G;
 
 /** @typedef {BaseNode.Node} Node */
 /** @typedef {import('../network-node')} NetworkNode */

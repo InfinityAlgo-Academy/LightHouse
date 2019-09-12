@@ -31,7 +31,7 @@ class ViewerUIFeatures extends ReportUIFeatures {
 
     // Disable option to save as gist if no callback for saving.
     if (!this._saveGistCallback) {
-      const saveGistItem = this._dom.find('.lh-export--gist', this._document);
+      const saveGistItem = this._dom.find('.lh-tools--gist', this._document);
       saveGistItem.setAttribute('disabled', 'true');
     }
   }
@@ -57,7 +57,7 @@ class ViewerUIFeatures extends ReportUIFeatures {
     }
 
     // Disable save-as-gist option after saving.
-    const saveGistItem = this._dom.find('.lh-export--gist', this._document);
+    const saveGistItem = this._dom.find('.lh-tools--gist', this._document);
     saveGistItem.setAttribute('disabled', 'true');
   }
 }

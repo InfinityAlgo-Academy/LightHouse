@@ -121,7 +121,7 @@ describe('Best Practices: unused css rules audit', () => {
     const networkRecords = [
       {
         url: 'file://a.css',
-        transferSize: 10 * 1024,
+        transferSize: 100 * 1024,
         resourceType: 'Stylesheet',
       },
     ];
@@ -184,7 +184,7 @@ describe('Best Practices: unused css rules audit', () => {
         ]},
       }), networkRecords).then(result => {
         assert.equal(result.items.length, 2);
-        assert.equal(result.items[0].totalBytes, 10 * 1024);
+        assert.equal(result.items[0].totalBytes, 100 * 1024);
         assert.equal(result.items[1].totalBytes, 40000 * 3 * 0.2);
         assert.equal(result.items[0].wastedPercent, 75);
         assert.equal(result.items[1].wastedPercent, 50);

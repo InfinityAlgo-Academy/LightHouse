@@ -14,7 +14,7 @@ const log = require('lighthouse-logger');
 
 /** @param {string} str */
 const purpleify = str => `${log.purple}${str}${log.reset}`;
-const SMOKETESTS = require('./smoke-test-dfns').SMOKE_TEST_DFNS;
+const SMOKETESTS = require('./smoke-test-dfns.js').SMOKE_TEST_DFNS;
 
 /**
  * Display smokehouse output from child process

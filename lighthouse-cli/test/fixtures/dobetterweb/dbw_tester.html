@@ -44,6 +44,9 @@
 <!-- PASS: async stylesheet -->
 <link rel="stylesheet" href="./dbw_tester.css?delay=3000&async=true" disabled onload="this.disabled = false">
 
+<!-- Alternate stylesheets should not show in TagsBlockingFirstPaint artifact -->
+<link rel="alternate stylesheet" href="./empty.css">
+
 <!-- FAIL: block rendering -->
 <script src="./dbw_tester.js"></script>
 
@@ -116,6 +119,18 @@
 <!-- EmbeddedContent will process these elements -->
 <object id="5934a"></object>
 <object id="5934b"></object>
+
+<div id="shadow-root-container"></div>
+<script>
+  // DOM Size has had trouble with very specific shadow root traversal issues.
+  // Make sure it can handle reporting of the widest element being a shadow root.
+  const shadowRootContainer = document.getElementById('shadow-root-container');
+  const shadowRoot = shadowRootContainer.attachShadow({mode: 'open'});
+  for (let i = 0; i < 100; i++) {
+    const span = document.createElement('span');
+    shadowRoot.appendChild(span);
+  }
+</script>
 
 <script>
   // Ensure gatherers still work when individual elements override '.matches'
@@ -198,8 +213,8 @@
   https://github.com/GoogleChrome/lighthouse/issues/1194 -->
 <script>window.Error = function(error) { this.stack = 'stacktrace'; };</script>
 
-<!--The javascriptDialogOpening test is disabled as we hit a platform bug frequently on travis-->
-<!--<script>window.confirm('Is DBW Mega Tester the best site?')</script>-->
+<!-- Does the automatic dialog suppression `driver.dismissJavaScriptDialogs()` work? -->
+<script>window.confirm('Is DBW Mega Tester the best site?')</script>
 
 <script>
 function stampTemplate(id, location) {

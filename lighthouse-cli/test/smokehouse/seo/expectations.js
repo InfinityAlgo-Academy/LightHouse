@@ -16,6 +16,67 @@ function headersParam(headers) {
   return new URLSearchParams([['extra_header', headerString]]).toString();
 }
 
+const expectedGatheredTapTargets = [
+  {
+    snippet: /large-link-at-bottom-of-page/,
+  },
+  {
+    snippet: /visible-target/,
+  },
+  {
+    snippet: /target-with-client-rect-outside-scroll-container/,
+  },
+  {
+    snippet: /link-containing-large-inline-block-element/,
+  },
+  {
+    snippet: /link-next-to-link-containing-large-inline-block-element/,
+  },
+  {
+    snippet: /tap-target-containing-other-tap-targets/,
+  },
+  {
+    snippet: /child-client-rect-hidden-by-overflow-hidden/,
+  },
+  {
+    snippet: /tap-target-next-to-child-client-rect-hidden-by-overflow-hidden/,
+  },
+  {
+    snippet: /child-client-rect-overlapping-other-target/,
+    shouldFail: true,
+  },
+  {
+    snippet: /tap-target-overlapped-by-other-targets-position-absolute-child-rect/,
+    shouldFail: true,
+  },
+  {
+    snippet: /position-absolute-tap-target-fully-contained-in-other-target/,
+  },
+  {
+    snippet: /tap-target-fully-containing-position-absolute-target/,
+  },
+  {
+    snippet: /too-small-failing-tap-target/,
+    shouldFail: true,
+  },
+  {
+    snippet: /large-enough-tap-target-next-to-too-small-tap-target/,
+  },
+  {
+    snippet: /zero-width-tap-target-with-overflowing-child-content/,
+    shouldFail: true,
+  },
+  {
+    snippet: /passing-tap-target-next-to-zero-width-target/,
+  },
+  {
+    snippet: /links-with-same-link-target-1/,
+  },
+  {
+    snippet: /links-with-same-link-target-2/,
+  },
+];
+
 const failureHeaders = headersParam([[
   'x-robots-tag',
   'none',
@@ -56,9 +117,65 @@ module.exports = [
         'font-size': {
           score: 1,
           details: {
-            items: {
-              length: 6,
-            },
+            items: [
+              {
+                source: /seo-tester\.html.+:24:12$/,
+                selector: '.small',
+                fontSize: '11px',
+              },
+              {
+                source: /seo-tester\.html.+:28:55$/,
+                selector: '.small-2',
+                fontSize: '11px',
+              },
+              {
+                source: /seo-tester-inline-magic\.css:3:14$/,
+                selector: '.small-3',
+                fontSize: '6px',
+              },
+              {
+                source: /seo-tester-styles-magic\.css:3:10$/,
+                selector: '.small-4',
+                fontSize: '6px',
+              },
+              {
+                source: 'User Agent Stylesheet',
+                selector: 'h6',
+                fontSize: '10px',
+              },
+              {
+                source: /seo-tester\.html.+$/,
+                selector: {
+                  type: 'node',
+                  selector: 'body',
+                  snippet: '<font size="1">',
+                },
+                fontSize: '10px',
+              },
+              {
+                source: /seo-tester\.html.+$/,
+                selector: {
+                  type: 'node',
+                  selector: 'font',
+                  snippet: '<b>',
+                },
+                fontSize: '10px',
+              },
+              {
+                source: /seo-tester\.html.+$/,
+                selector: {
+                  type: 'node',
+                  selector: 'body',
+                  snippet: '<p style="font-size:10px">',
+                },
+                fontSize: '10px',
+              },
+              {
+                source: 'Legible text',
+                selector: '',
+                fontSize: '≥ 12px',
+              },
+            ],
           },
         },
         'link-text': {
@@ -149,10 +266,13 @@ module.exports = [
       // Note: most scores are null (audit error) because the page 403ed.
       requestedUrl: BASE_URL + 'seo-failure-cases.html?status_code=403',
       finalUrl: BASE_URL + 'seo-failure-cases.html?status_code=403',
+      runtimeError: {
+        code: 'ERRORED_DOCUMENT_REQUEST',
+        message: /Status code: 403/,
+      },
       audits: {
         'http-status-code': {
-          score: 0,
-          displayValue: '403',
+          score: null,
         },
         'viewport': {
           score: null,
@@ -190,38 +310,76 @@ module.exports = [
       audits: {
         'tap-targets': {
           score: (() => {
-            const PASSING_TAP_TARGETS = 11;
-            const TOTAL_TAP_TARGETS = 12;
+            const totalTapTargets = expectedGatheredTapTargets.length;
+            const passingTapTargets = expectedGatheredTapTargets.filter(t => !t.shouldFail).length;
             const SCORE_FACTOR = 0.89;
-            return Math.floor(PASSING_TAP_TARGETS / TOTAL_TAP_TARGETS * SCORE_FACTOR * 100) / 100;
+            return Math.round(passingTapTargets / totalTapTargets * SCORE_FACTOR * 100) / 100;
           })(),
           details: {
             items: [
               {
                 'tapTarget': {
                   'type': 'node',
-                  'snippet': '<a ' +
-                 'style="display: block; width: 100px; height: 30px;background: #ddd;">' +
-                 '\n        too small target\n      </a>',
-                  'path': '2,HTML,1,BODY,3,DIV,21,DIV,0,A',
+                  /* eslint-disable max-len */
+                  'snippet': '<a data-gathered-target="zero-width-tap-target-with-overflowing-child-content" style="display: block; width: 0; white-space: nowrap">\n        <!-- TODO: having the span should not be necessary to cause a failure here, but\n             right now we don\'t try to get the client rects of children that …',
+                  'path': '2,HTML,1,BODY,14,DIV,0,A',
+                  'selector': 'body > div > a',
+                  'nodeLabel': 'zero width target',
+                },
+                'overlappingTarget': {
+                  'type': 'node',
+                  /* eslint-disable max-len */
+                  'snippet': '<a data-gathered-target="passing-tap-target-next-to-zero-width-target" style="display: block; width: 110px; height: 100px;background: #aaa;">\n        passing target\n      </a>',
+                  'path': '2,HTML,1,BODY,14,DIV,1,A',
+                  'selector': 'body > div > a',
+                  'nodeLabel': 'passing target',
+                },
+                'tapTargetScore': 864,
+                'overlappingTargetScore': 720,
+                'overlapScoreRatio': 0.8333333333333334,
+                'size': '110x18',
+                'width': 110,
+                'height': 18,
+              },
+              {
+                'tapTarget': {
+                  'type': 'node',
+                  'path': '2,HTML,1,BODY,10,DIV,0,DIV,1,A',
                   'selector': 'body > div > div > a',
                   'nodeLabel': 'too small target',
                 },
                 'overlappingTarget': {
                   'type': 'node',
-                  'snippet': '<a ' +
-                  'style="display: block; width: 100px; height: 100px;background: #aaa;">' +
-                  '\n        big enough target\n      </a>',
-                  'path': '2,HTML,1,BODY,3,DIV,21,DIV,1,A',
+                  'path': '2,HTML,1,BODY,10,DIV,0,DIV,2,A',
                   'selector': 'body > div > div > a',
                   'nodeLabel': 'big enough target',
                 },
-                'size': '100x30',
-                'width': 100,
-                'height': 30,
                 'tapTargetScore': 1440,
                 'overlappingTargetScore': 432,
                 'overlapScoreRatio': 0.3,
+                'size': '100x30',
+                'width': 100,
+                'height': 30,
+              },
+              {
+                'tapTarget': {
+                  'type': 'node',
+                  'path': '2,HTML,1,BODY,3,DIV,24,A',
+                  'selector': 'body > div > a',
+                  'nodeLabel': 'left',
+                },
+                'overlappingTarget': {
+                  'type': 'node',
+                  'path': '2,HTML,1,BODY,3,DIV,25,A',
+                  'selector': 'body > div > a',
+                  'nodeLabel': 'right',
+                },
+                'tapTargetScore': 1920,
+                'overlappingTargetScore': 560,
+                'overlapScoreRatio': 0.2916666666666667,
+                'size': '40x40',
+                'width': 40,
+                'height': 40,
               },
             ],
           },
@@ -229,9 +387,7 @@ module.exports = [
       },
     },
     artifacts: {
-      TapTargets: {
-        length: 11,
-      },
+      TapTargets: expectedGatheredTapTargets.map(({snippet}) => ({snippet})),
     },
   },
 ];

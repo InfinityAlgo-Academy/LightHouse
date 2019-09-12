@@ -121,7 +121,7 @@ module.exports = [
                   'type': 'node',
                   'selector': '#button-name',
                   'snippet': '<button id="button-name"></button>',
-                  'explanation': 'Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element has a value attribute and the value attribute is empty\n  Element has no value attribute or the value attribute is empty\n  Element does not have inner text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element\'s default semantics were not overridden with role="presentation"\n  Element\'s default semantics were not overridden with role="none"\n  Element has no title attribute or the title attribute is empty',
+                  'explanation': 'Fix any of the following:\n  Element does not have inner text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element\'s default semantics were not overridden with role="presentation"\n  Element\'s default semantics were not overridden with role="none"\n  Element has no title attribute or the title attribute is empty',
                   'nodeLabel': 'button',
                 },
               },
@@ -153,7 +153,8 @@ module.exports = [
                   'type': 'node',
                   'selector': '#color-contrast',
                   'snippet': '<div id="color-contrast" style="background-color: red; color: pink;">\n          Hello\n      </div>',
-                  'explanation': 'Fix any of the following:\n  Element has insufficient color contrast of 2.59 (foreground color: #ffc0cb, background color: #ff0000, font size: 28.5pt, font weight: normal). Expected contrast ratio of 3:1',
+                  // Default font size is different depending on the platform (e.g. 28.5 on travis, 30.0 on Mac), so use \d\d\.\d.
+                  'explanation': /^Fix any of the following:\n {2}Element has insufficient color contrast of 2\.59 \(foreground color: #ffc0cb, background color: #ff0000, font size: \d\d\.\dpt, font weight: normal\). Expected contrast ratio of 3:1$/,
                   'nodeLabel': 'Hello',
                 },
               },

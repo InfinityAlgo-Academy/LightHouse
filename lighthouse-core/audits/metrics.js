@@ -15,6 +15,7 @@ const Interactive = require('../computed/metrics/interactive.js');
 const SpeedIndex = require('../computed/metrics/speed-index.js');
 const EstimatedInputLatency = require('../computed/metrics/estimated-input-latency.js');
 const LayoutStability = require('../computed/metrics/layout-stability.js');
+const TotalBlockingTime = require('../computed/metrics/total-blocking-time.js');
 
 class Metrics extends Audit {
   /**
@@ -61,6 +62,7 @@ class Metrics extends Audit {
     const speedIndex = await requestOrUndefined(SpeedIndex, metricComputationData);
     const estimatedInputLatency = await EstimatedInputLatency.request(metricComputationData, context); // eslint-disable-line max-len
     const layoutStability = await LayoutStability.request(metricComputationData, context); // eslint-disable-line max-len
+    const totalBlockingTime = await TotalBlockingTime.request(metricComputationData, context); // eslint-disable-line max-len
 
     /** @type {UberMetricsItem} */
     const metrics = {
@@ -77,6 +79,7 @@ class Metrics extends Audit {
       speedIndexTs: speedIndex && speedIndex.timestamp,
       estimatedInputLatency: estimatedInputLatency.timing,
       estimatedInputLatencyTs: estimatedInputLatency.timestamp,
+      totalBlockingTime: totalBlockingTime.timing,
 
       // Include all timestamps of interest from trace of tab
       observedNavigationStart: traceOfTab.timings.navigationStart,
@@ -141,6 +144,7 @@ class Metrics extends Audit {
  * @property {number=} speedIndexTs
  * @property {number} estimatedInputLatency
  * @property {number=} estimatedInputLatencyTs
+ * @property {number} totalBlockingTime
  * @property {number} observedNavigationStart
  * @property {number} observedNavigationStartTs
  * @property {number=} observedFirstPaint

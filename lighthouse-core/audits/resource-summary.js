@@ -16,8 +16,9 @@ const UIStrings = {
   description: 'To set budgets for the quantity and size of page resources,' +
     ' add a budget.json file. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).',
   /** [ICU Syntax] Label for an audit identifying the number of requests and kilobytes used to load the page. */
-  displayValue: `{requestCount, plural, =1 {1 request} other {# requests}}` +
-    ` • { byteCount, number, bytes } KB`,
+  displayValue: `{requestCount, plural, ` +
+    `=1 {1 request • {byteCount, number, bytes} KB} ` +
+    `other {# requests • {byteCount, number, bytes} KB}}`,
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -48,9 +49,9 @@ class ResourceSummary extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'label', itemType: 'text', text: 'Resource Type'},
-      {key: 'requestCount', itemType: 'numeric', text: 'Requests'},
-      {key: 'size', itemType: 'bytes', text: 'Transfer Size'},
+      {key: 'label', itemType: 'text', text: str_(i18n.UIStrings.columnResourceType)},
+      {key: 'requestCount', itemType: 'numeric', text: str_(i18n.UIStrings.columnRequests)},
+      {key: 'size', itemType: 'bytes', text: str_(i18n.UIStrings.columnTransferSize)},
     ];
 
 

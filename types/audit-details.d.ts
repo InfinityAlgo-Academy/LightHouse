@@ -145,6 +145,7 @@ declare global {
       /**
        * A value used within a details object, intended to be displayed as a
        * link with text, regardless of the controlling heading's valueType.
+       * If URL is the empty string, fallsback to a basic `TextValue`.
        */
       export interface LinkValue {
         type: 'link',

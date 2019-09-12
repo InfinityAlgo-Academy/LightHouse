@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 const assert = require('assert');
-const getFlags = require('../../cli-flags').getFlags;
+const getFlags = require('../../cli-flags.js').getFlags;
 
 describe('CLI bin', function() {
   it('all options should have descriptions', () => {
@@ -26,6 +26,25 @@ describe('CLI bin', function() {
 
     allOptions.forEach(opt => {
       assert.ok(optionsWithDescriptions.includes(opt), `cli option '${opt}' has no description`);
+    });
+  });
+
+  it('settings are accepted from a file path', () => {
+    const flags = getFlags([
+      'http://www.example.com',
+      `--cli-flags-path="${__dirname}/../fixtures/cli-flags-path.json"`,
+      '--budgets-path=path/to/my/budget-from-command-line.json', // this should override the config value
+    ].join(' '));
+
+    expect(flags).toMatchObject({
+      budgetsPath: 'path/to/my/budget-from-command-line.json',
+      onlyCategories: ['performance', 'seo'],
+      chromeFlags: '--window-size 800,600',
+      throttlingMethod: 'devtools',
+      throttling: {
+        requestLatencyMs: 700,
+        cpuSlowdownMultiplier: 6,
+      },
     });
   });
 

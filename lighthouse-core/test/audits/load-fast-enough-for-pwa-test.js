@@ -6,7 +6,7 @@
 'use strict';
 
 const FastPWAAudit = require('../../audits/load-fast-enough-for-pwa.js');
-const mobileSlow4GThrottling = require('../../config/constants').throttling.mobileSlow4G;
+const mobileSlow4GThrottling = require('../../config/constants.js').throttling.mobileSlow4G;
 const assert = require('assert');
 const createTestTrace = require('../create-test-trace.js');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');

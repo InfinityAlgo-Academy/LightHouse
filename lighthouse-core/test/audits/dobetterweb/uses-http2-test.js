@@ -29,15 +29,15 @@ describe('Resources are fetched over http/2', () => {
     return UsesHTTP2Audit.audit(getArtifacts(networkRecords, URL), {computedCache: new Map()}).then(
       auditResult => {
         assert.equal(auditResult.score, 0);
-        assert.ok(auditResult.displayValue.match('3 requests not'));
+        expect(auditResult.displayValue).toBeDisplayString('3 requests not served via HTTP/2');
         assert.equal(auditResult.details.items.length, 3);
         assert.equal(
           auditResult.details.items[0].url,
           'https://webtide.com/wp-content/plugins/wp-pagenavi/pagenavi-css.css?ver=2.70'
         );
         const headers = auditResult.details.headings;
-        assert.equal(headers[0].text, 'URL', 'table headings are correct and in order');
-        assert.equal(headers[1].text, 'Protocol', 'table headings are correct and in order');
+        expect(headers[0].text).toBeDisplayString('URL');
+        expect(headers[1].text).toBeDisplayString('Protocol');
       }
     );
   });
@@ -46,7 +46,7 @@ describe('Resources are fetched over http/2', () => {
     const entryWithHTTP1 = networkRecords.slice(1, 2);
     return UsesHTTP2Audit.audit(getArtifacts(entryWithHTTP1, URL), {computedCache: new Map()}).then(
       auditResult => {
-        assert.ok(auditResult.displayValue.match('1 request not'));
+        expect(auditResult.displayValue).toBeDisplayString('1 request not served via HTTP/2');
       }
     );
   });
@@ -78,7 +78,7 @@ describe('Resources are fetched over http/2', () => {
       computedCache: new Map(),
     }).then(auditResult => {
       assert.equal(auditResult.score, 0);
-      assert.ok(auditResult.displayValue.match('1 request not'));
+      expect(auditResult.displayValue).toBeDisplayString('1 request not served via HTTP/2');
       // Protocol is http/1.0 which we don't mark as fetched fetchedViaServiceWorker on line 73.
       assert.equal(
         auditResult.details.items[0].url,
