@@ -6,25 +6,37 @@ const https = require('https');
 const {execFileSync} = require('child_process');
 
 const LH_ROOT = path.join(__dirname, '..', '..', '..');
-const NUM_SAMPLES = 1;
+const SAMPLES = 2;
 const URLS = [
   'https://www.example.com',
+  'https://www.paulirish.com',
 ];
 
 if (!process.env.WPT_KEY) throw new Error('missing WPT_KEY');
 const WPT_KEY = process.env.WPT_KEY;
+const DEBUG = process.env.DEBUG;
 
 const outputFolder = path.join(__dirname, '..', '..', '..', 'dist', 'lantern-traces');
 const summaryPath = path.join(outputFolder, 'summary.json');
 
 /** @typedef {{trace: string}} Result */
-/** @typedef {{mobile: Result[], desktop: Result[]}} UrlResults */
+/** @typedef {{url: string, mobile: Result[], desktop: Result[]}} UrlResults */
 
-/** @type {Record<string, UrlResults>} */
-let summary = {};
+/** @type {UrlResults[]} */
+let summary = loadSummary();
 
 function loadSummary() {
-  summary = JSON.parse(fs.readFileSync(summaryPath, 'utf-8'));
+  if (fs.existsSync(summaryPath)) {
+    return JSON.parse(fs.readFileSync(summaryPath, 'utf-8'));
+  } else {
+    return URLS.map((url) => {
+      return {
+        url,
+        mobile: [],
+        desktop: [],
+      };
+    });
+  }
 }
 
 function saveSummary() {
@@ -78,7 +90,7 @@ async function runForDesktop(url) {
     path.join(LH_ROOT, 'lighthouse-cli'),
     url,
     `-G=${artifactsFolder}`,
-  ]);
+  ] );
   const trace = fs.readFileSync(`${artifactsFolder}/defaultPass.trace.json`, 'utf-8');
   return {
     trace,
@@ -90,8 +102,10 @@ async function runForDesktop(url) {
  * @return {Promise<Result>}
  */
 async function runForMobile(url) {
+  return {trace:''};
+
   const {testId, jsonUrl} = await startWptTest(url);
-  console.log({testId, jsonUrl});
+  if (DEBUG) console.log({testId, jsonUrl});
 
   // Give the test at least 30 seconds before we start polling.
   await new Promise((resolve) => setTimeout(resolve, 30 * 1000));
@@ -101,7 +115,7 @@ async function runForMobile(url) {
     const pollingInterval = 5 * 1000;
 
     async function poll() {
-      console.log('poll ...');
+      if (DEBUG) console.log('poll ...');
       const responseJson = await fetch(jsonUrl);
       const response = JSON.parse(responseJson);
       if (response.statusCode === 200) return resolve(response);
@@ -117,13 +131,26 @@ async function runForMobile(url) {
   traceUrl.searchParams.set('test', testId);
   traceUrl.searchParams.set('file', 'lighthouse_trace.json');
   // TODO this isn't working ...
-  console.log(traceUrl.href);
+  if (DEBUG) console.log(traceUrl.href);
   // const traceJson = await fetch(traceUrl.href);
   const traceJson = '';
 
   return {
     trace: traceJson,
   };
+}
+
+/**
+ * @param {() => Promise<Result>} asyncFn
+ */
+async function repeatUntilPass(asyncFn) {
+  while (true) {
+    try {
+      return await asyncFn();
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }
 
 async function main() {
@@ -135,47 +162,41 @@ async function main() {
     loadSummary();
   }
 
-  const tasks = [];
-  for (const url of URLS) {
-    if (!summary[url]) summary[url] = {mobile: [], desktop: []};
+  for (const urlResultSet of summary) {
+    if (urlResultSet.mobile.length === SAMPLES && urlResultSet.desktop.length === SAMPLES) {
+      continue;
+    }
 
+    const url = urlResultSet.url;
     const sanitizedUrl = url.replace(/[^a-z0-9]/gi, '-');
-    for (let i = summary[url].mobile.length; i < NUM_SAMPLES; i++) {
-      tasks.push({
-        url,
-        mobile: true,
-        traceFilename: `${sanitizedUrl}-mobile-${i + 1}-trace.json`,
-      });
-    }
-    for (let i = summary[url].desktop.length; i < NUM_SAMPLES; i++) {
-      tasks.push({
-        url,
-        mobile: false,
-        traceFilename: `${sanitizedUrl}-desktop-${i + 1}-trace.json`,
-      });
-    }
-  }
+    console.log('collecting traces for', url);
 
-  console.log(`tasks: ${tasks.length}`);
-  for (let i = 0; i < tasks.length; i++) {
-    const task = tasks[i];
-    console.log(task);
-    const result = await (task.mobile ? runForMobile(task.url) : runForDesktop(task.url));
-    const tracePath = path.join(outputFolder, task.traceFilename);
-    fs.writeFileSync(tracePath, result.trace);
-    if (task.mobile) {
-      summary[task.url].mobile.push({trace: task.traceFilename});
-    } else {
-      summary[task.url].desktop.push({trace: task.traceFilename});
+    const mobileResultPromises = [];
+    for (let i = 0; i < SAMPLES; i++) {
+      // Can run in parallel.
+      mobileResultPromises.push(repeatUntilPass(() => runForMobile(url)));
     }
 
-    // Only commit changes if all tasks for a URL are done.
-    // This ensures that all samples for a URL are collected at
-    // the same time (in the same invocation of this script).
-    if (i === tasks.length - 1 || task.url !== tasks[i + 1].url) {
-      console.log(`tasks done: ${i + 1} / ${tasks.length}`);
-      saveSummary();
+    const desktopResults= [];
+    for (let i = 0; i < SAMPLES; i++) {
+      // Must run in series.
+      desktopResults.push(await repeatUntilPass(() => runForDesktop(url)));
     }
+
+    const mobileTraces = await Promise.all(mobileResultPromises);
+    urlResultSet.mobile = mobileTraces.map((result, i) => {
+      const traceFilename = `${sanitizedUrl}-mobile-${i + 1}-trace.json`;
+      fs.writeFileSync(path.join(outputFolder, traceFilename), result.trace);
+      return {trace: traceFilename}
+    });
+
+    urlResultSet.desktop = desktopResults.map((result, i) => {
+      const traceFilename = `${sanitizedUrl}-desktop-${i + 1}-trace.json`;
+      fs.writeFileSync(path.join(outputFolder, traceFilename), result.trace);
+      return {trace: traceFilename}
+    });
+
+    saveSummary();
   }
 }
 
