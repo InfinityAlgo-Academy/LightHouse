@@ -211,19 +211,13 @@ async function main() {
     loadSummary();
   }
 
+  // Traces are collected for one URL at a time, in series, so traces are collected for
+  // mobile / desktop during a small time frame, reducing the chance of a site change affecting
+  // results.
   let urlIndex = 0;
   for (const url of URLS) {
-    let urlResultSet = summary.find((urlResultSet) => urlResultSet.url === url);
-
     // This URL has been done already.
-    if (urlResultSet) continue;
-
-    urlResultSet = {
-      url,
-      mobile: [],
-      desktop: [],
-    };
-    summary.push(urlResultSet);
+    if (summary.find((urlResultSet) => urlResultSet.url === url)) continue;
 
     const sanitizedUrl = url.replace(/[^a-z0-9]/gi, '-');
     log.log(`collecting traces for ${url}`);
@@ -247,35 +241,40 @@ async function main() {
 
     updateProgress();
 
+    // Can run in parallel.
     const mobileResultsPromises = [];
     for (let i = 0; i < SAMPLES; i++) {
-      // Can run in parallel.
       const resultPromise = repeatUntilPass(() => runForMobile(url));
+      // Push to results array as they finish, so the progress indicator can track progress.
       resultPromise.then((result) => mobileResults.push(result)).finally(updateProgress);
       mobileResultsPromises.push(resultPromise);
     }
 
+    // Must run in series.
     for (let i = 0; i < SAMPLES; i++) {
-      // Must run in series.
       const resultPromise = repeatUntilPass(() => runForDesktop(url));
       desktopResults.push(await resultPromise);
       updateProgress();
     }
 
     await Promise.all(mobileResultsPromises);
-    urlResultSet.mobile = mobileResults.map((result, i) => {
-      const traceFilename = `${sanitizedUrl}-mobile-${i + 1}-trace.json`;
-      fs.writeFileSync(path.join(outputFolder, traceFilename), result.trace);
-      return {trace: traceFilename};
-    });
 
-    urlResultSet.desktop = desktopResults.map((result, i) => {
-      const traceFilename = `${sanitizedUrl}-desktop-${i + 1}-trace.json`;
-      fs.writeFileSync(path.join(outputFolder, traceFilename), result.trace);
-      return {trace: traceFilename};
-    });
+    const urlResultSet = {
+      url,
+      mobile: mobileResults.map((result, i) => {
+        const traceFilename = `${sanitizedUrl}-mobile-${i + 1}-trace.json`;
+        fs.writeFileSync(path.join(outputFolder, traceFilename), result.trace);
+        return {trace: traceFilename};
+      }),
+      desktop: desktopResults.map((result, i) => {
+        const traceFilename = `${sanitizedUrl}-desktop-${i + 1}-trace.json`;
+        fs.writeFileSync(path.join(outputFolder, traceFilename), result.trace);
+        return {trace: traceFilename};
+      }),
+    };
 
     // We just collected NUM_SAMPLES * 2 traces, so let's save our progress.
+    summary.push(urlResultSet);
     saveSummary();
     urlIndex++;
   }
