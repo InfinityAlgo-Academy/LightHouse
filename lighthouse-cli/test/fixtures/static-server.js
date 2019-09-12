@@ -64,7 +64,7 @@ function requestHandler(request, response) {
 
   function fsExistsCallback(fileExists) {
     if (!fileExists) {
-      return sendResponse(404, `404 - File not found. ${absoluteFilePath}`);
+      return sendResponse(404, `404 - File not found. ${filePath}`);
     }
     fs.readFile(absoluteFilePath, 'binary', readFileCallback);
   }
