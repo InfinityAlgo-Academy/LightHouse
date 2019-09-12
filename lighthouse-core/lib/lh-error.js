@@ -360,6 +360,7 @@ const ERRORS = {
   NO_LAYOUT_JANK: {
     code: 'NO_LAYOUT_JANK',
     message: UIStrings.badTraceRecording,
+  },
 
   /**
    * Error internal to Runner used when an artifact required for an audit is missing.

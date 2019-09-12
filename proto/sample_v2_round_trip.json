@@ -1185,6 +1185,14 @@
             "scoreDisplayMode": "binary",
             "title": "Form elements do not have associated labels"
         },
+        "layout-stability": {
+            "description": "The more the page's layout changes during its load, the higher the instability. Perfectly solid == 0%. Unpleasant experience >= 50%",
+            "errorMessage": "Something went wrong with recording the trace over your page load. Please run Lighthouse again. (NO_LAYOUT_JANK)",
+            "id": "layout-stability",
+            "score": null,
+            "scoreDisplayMode": "error",
+            "title": "Layout Instability"
+        },
         "layout-table": {
             "description": "A table being used for layout purposes should not include data elements, such as the th or caption elements or the summary attribute, because this can create a confusing experience for screen reader users. [Learn more](https://web.dev/layout-table/).",
             "id": "layout-table",
@@ -1482,49 +1490,10 @@
         },
         "metrics": {
             "description": "Collects all available metrics.",
-            "details": {
-                "items": [
-                    {
-                        "estimatedInputLatency": 16.0,
-                        "firstCPUIdle": 4927.0,
-                        "firstCPUIdleTs": 185608247190.0,
-                        "firstContentfulPaint": 3969.0,
-                        "firstContentfulPaintTs": 185607289047.0,
-                        "firstMeaningfulPaint": 3969.0,
-                        "firstMeaningfulPaintTs": 185607289048.0,
-                        "interactive": 4927.0,
-                        "interactiveTs": 185608247190.0,
-                        "observedDomContentLoaded": 4901.0,
-                        "observedDomContentLoadedTs": 185608220734.0,
-                        "observedFirstContentfulPaint": 3969.0,
-                        "observedFirstContentfulPaintTs": 185607289047.0,
-                        "observedFirstMeaningfulPaint": 3969.0,
-                        "observedFirstMeaningfulPaintTs": 185607289048.0,
-                        "observedFirstPaint": 3969.0,
-                        "observedFirstPaintTs": 185607289043.0,
-                        "observedFirstVisualChange": 3969.0,
-                        "observedFirstVisualChangeTs": 185607288912.0,
-                        "observedLastVisualChange": 4791.0,
-                        "observedLastVisualChangeTs": 185608110912.0,
-                        "observedLoad": 4924.0,
-                        "observedLoadTs": 185608244374.0,
-                        "observedNavigationStart": 0.0,
-                        "observedNavigationStartTs": 185603319912.0,
-                        "observedSpeedIndex": 4417.0,
-                        "observedSpeedIndexTs": 185607736763.0,
-                        "observedTraceEnd": 10281.0,
-                        "observedTraceEndTs": 185613601189.0,
-                        "speedIndex": 4417.0,
-                        "speedIndexTs": 185607736912.0,
-                        "totalBlockingTime": 117.0
-                    }
-                ],
-                "type": "debugdata"
-            },
+            "errorMessage": "Something went wrong with recording the trace over your page load. Please run Lighthouse again. (NO_LAYOUT_JANK)",
             "id": "metrics",
-            "numericValue": 4927.278,
             "score": null,
-            "scoreDisplayMode": "informative",
+            "scoreDisplayMode": "error",
             "title": "Metrics"
         },
         "network-requests": {
@@ -3543,6 +3512,10 @@
                     "weight": 0.0
                 },
                 {
+                    "id": "layout-stability",
+                    "weight": 0.0
+                },
+                {
                     "id": "estimated-input-latency",
                     "weight": 0.0
                 },
@@ -4207,6 +4180,18 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:computed:MaxPotentialFID",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:audit:layout-stability",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:computed:LayoutStability",
                 "startTime": 0.0
             },
             {

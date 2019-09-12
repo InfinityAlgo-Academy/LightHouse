@@ -209,6 +209,14 @@
       "numericValue": 122.537,
       "displayValue": "120 ms"
     },
+    "layout-stability": {
+      "id": "layout-stability",
+      "title": "Layout Instability",
+      "description": "The more the page's layout changes during its load, the higher the instability. Perfectly solid == 0%. Unpleasant experience >= 50%",
+      "score": null,
+      "scoreDisplayMode": "error",
+      "errorMessage": "Something went wrong with recording the trace over your page load. Please run Lighthouse again. (NO_LAYOUT_JANK)"
+    },
     "errors-in-console": {
       "id": "errors-in-console",
       "title": "Browser errors were logged to the console",
@@ -1241,47 +1249,8 @@
       "title": "Metrics",
       "description": "Collects all available metrics.",
       "score": null,
-      "scoreDisplayMode": "informative",
-      "numericValue": 4927.278,
-      "details": {
-        "type": "debugdata",
-        "items": [
-          {
-            "firstContentfulPaint": 3969,
-            "firstContentfulPaintTs": 185607289047,
-            "firstMeaningfulPaint": 3969,
-            "firstMeaningfulPaintTs": 185607289048,
-            "firstCPUIdle": 4927,
-            "firstCPUIdleTs": 185608247190,
-            "interactive": 4927,
-            "interactiveTs": 185608247190,
-            "speedIndex": 4417,
-            "speedIndexTs": 185607736912,
-            "estimatedInputLatency": 16,
-            "totalBlockingTime": 117,
-            "observedNavigationStart": 0,
-            "observedNavigationStartTs": 185603319912,
-            "observedFirstPaint": 3969,
-            "observedFirstPaintTs": 185607289043,
-            "observedFirstContentfulPaint": 3969,
-            "observedFirstContentfulPaintTs": 185607289047,
-            "observedFirstMeaningfulPaint": 3969,
-            "observedFirstMeaningfulPaintTs": 185607289048,
-            "observedTraceEnd": 10281,
-            "observedTraceEndTs": 185613601189,
-            "observedLoad": 4924,
-            "observedLoadTs": 185608244374,
-            "observedDomContentLoaded": 4901,
-            "observedDomContentLoadedTs": 185608220734,
-            "observedFirstVisualChange": 3969,
-            "observedFirstVisualChangeTs": 185607288912,
-            "observedLastVisualChange": 4791,
-            "observedLastVisualChangeTs": 185608110912,
-            "observedSpeedIndex": 4417,
-            "observedSpeedIndexTs": 185607736763
-          }
-        ]
-      }
+      "scoreDisplayMode": "error",
+      "errorMessage": "Something went wrong with recording the trace over your page load. Please run Lighthouse again. (NO_LAYOUT_JANK)"
     },
     "offline-start-url": {
       "id": "offline-start-url",
@@ -3415,6 +3384,10 @@
           "group": "metrics"
         },
         {
+          "id": "layout-stability",
+          "weight": 0
+        },
+        {
           "id": "estimated-input-latency",
           "weight": 0
         },
@@ -4310,6 +4283,18 @@
       {
         "startTime": 0,
         "name": "lh:computed:MaxPotentialFID",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:layout-stability",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:LayoutStability",
         "duration": 100,
         "entryType": "measure"
       },
@@ -5283,6 +5268,26 @@
       ],
       "lighthouse-core/audits/metrics/max-potential-fid.js | description": [
         "audits[max-potential-fid].description"
+      ],
+      "lighthouse-core/audits/metrics/layout-stability.js | title": [
+        "audits[layout-stability].title"
+      ],
+      "lighthouse-core/audits/metrics/layout-stability.js | description": [
+        "audits[layout-stability].description"
+      ],
+      "lighthouse-core/lib/lh-error.js | badTraceRecording": [
+        {
+          "values": {
+            "errorCode": "NO_LAYOUT_JANK"
+          },
+          "path": "audits[layout-stability].errorMessage"
+        },
+        {
+          "values": {
+            "errorCode": "NO_LAYOUT_JANK"
+          },
+          "path": "audits.metrics.errorMessage"
+        }
       ],
       "lighthouse-core/audits/errors-in-console.js | failureTitle": [
         "audits[errors-in-console].title"

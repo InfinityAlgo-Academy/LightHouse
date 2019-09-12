@@ -806,6 +806,12 @@
   "lighthouse-core/audits/metrics/interactive.js | title": {
     "message": "Time to Interactive"
   },
+  "lighthouse-core/audits/metrics/layout-stability.js | description": {
+    "message": "The more the page's layout changes during its load, the higher the instability. Perfectly solid == 0%. Unpleasant experience >= 50%"
+  },
+  "lighthouse-core/audits/metrics/layout-stability.js | title": {
+    "message": "Layout Instability"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "The maximum potential First Input Delay that your users could experience is the duration, in milliseconds, of the longest task. [Learn more](https://developers.google.com/web/updates/2018/05/first-input-delay)."
   },
