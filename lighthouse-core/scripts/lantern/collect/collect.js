@@ -132,11 +132,15 @@ async function startWptTest(url) {
   const apiUrl = new URL('https://www.webpagetest.org/runtest.php');
   apiUrl.searchParams.set('k', WPT_KEY);
   apiUrl.searchParams.set('f', 'json');
+  // Keep the location constant. Use Chrome and 3G network conditions.
   apiUrl.searchParams.set('location', 'Dulles:Chrome.3G');
   apiUrl.searchParams.set('lighthouse', '1');
+  // Makes the trace file available over /getgzip.php.
   apiUrl.searchParams.set('lighthouseTrace', '1');
+  // Disables some things that WPT does, such as a "repeat view" analysis.
   apiUrl.searchParams.set('type', 'lighthouse');
   apiUrl.searchParams.set('mobile', '1');
+  // apiUrl.searchParams.set('mobileDevice', '1');
   apiUrl.searchParams.set('url', url);
   const wptResponseJson = await fetch(apiUrl.href);
   const wptResponse = JSON.parse(wptResponseJson);
