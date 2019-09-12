@@ -39,6 +39,7 @@ class ProgressLogger {
   log(...args) {
     readline.clearLine(process.stdout, 0);
     readline.cursorTo(process.stdout, 0);
+    // eslint-disable-next-line no-console
     console.log(...args);
     this.progress(this._currentProgressMessage);
   }
@@ -193,6 +194,7 @@ async function runForMobile(url) {
  * @param {() => Promise<Result>} asyncFn
  */
 async function repeatUntilPass(asyncFn) {
+  // eslint-disable-next-line no-constant-condition
   while (true) {
     try {
       return await asyncFn();
@@ -227,6 +229,8 @@ async function main() {
     /** @type {Result[]} */
     const desktopResults = [];
 
+    // The closure this makes is too convenient to decompose.
+    // eslint-disable-next-line no-inner-declarations
     function updateProgress() {
       const mobileDone = mobileResults.length === SAMPLES;
       const desktopDone = desktopResults.length === SAMPLES;
