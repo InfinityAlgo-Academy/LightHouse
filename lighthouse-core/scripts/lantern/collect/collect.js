@@ -14,109 +14,9 @@ const readline = require('readline');
 const https = require('https');
 const {execFile} = require('child_process');
 
-const LH_ROOT = path.join(__dirname, '..', '..', '..');
-const SAMPLES = 9;
-const URLS = [
-  'http://www.4399.com/',
-  'http://www.4shared.com/',
-  'http://www.56.com/',
-  'http://www.58.com/',
-  'http://www.7k7k.com/',
-  'http://www.addthis.com/',
-  'http://www.alexa.com/',
-  'http://www.amazon.co.jp/',
-  'http://www.att.com/',
-  'http://www.bing.com/',
-  'http://www.blogspot.com/',
-  'http://www.brothersoft.com/',
-  'http://www.china.com.cn/',
-  'http://www.cnet.com/',
-  'http://www.cntv.cn/',
-  'http://www.conduit.com/',
-  'http://www.craigslist.org/',
-  'http://www.dawn.com/',
-  'http://www.depositfiles.com/',
-  'http://www.deviantart.com/',
-  'http://www.dion.ne.jp/',
-  'http://www.domaintools.com/',
-  'http://www.douban.com/',
-  'http://www.ebay.com/',
-  'http://www.espn.com/',
-  'http://www.facebook.com/',
-  'http://www.fc2.com/',
-  'http://www.filestube.com/',
-  'http://www.foxnews.com/',
-  'http://www.getpersonas.com/',
-  'http://www.globo.com/',
-  'http://www.gmx.net/',
-  'http://www.hatena.ne.jp/',
-  'http://www.hexun.com/',
-  'http://www.hotfile.com/',
-  'http://www.hp.com/',
-  'http://www.huffingtonpost.com/',
-  'http://www.hulu.com/',
-  'http://www.iciba.com/',
-  'http://www.ifeng.com/',
-  'http://www.imageshack.us/',
-  'http://www.irs.gov/',
-  'http://www.java.com/',
-  'http://www.linkedin.com/',
-  'http://www.livedoor.jp/',
-  'http://www.liveperson.net/',
-  'http://www.mail.ru/',
-  'http://www.maktoob.com/',
-  'http://www.marketgid.com/',
-  'http://www.metacafe.com/',
-  'http://www.metrolyrics.com/',
-  'http://www.mlb.com/',
-  'http://www.mop.com/',
-  'http://www.mozilla.org/',
-  'http://www.msn.com/',
-  'http://www.netflix.com/',
-  'http://www.nih.gov/',
-  'http://www.ning.com/',
-  'http://www.nokia.com/',
-  'http://www.ocn.ne.jp/',
-  'http://www.onet.pl/',
-  'http://www.optmd.com/',
-  'http://www.orange.fr/',
-  'http://www.orkut.com/',
-  'http://www.partypoker.com/',
-  'http://www.pcpop.com/',
-  'http://www.pdfqueen.com/',
-  'http://www.pptv.com/',
-  'http://www.rakuten.co.jp/',
-  'http://www.rakuten.ne.jp/',
-  'http://www.scribd.com/',
-  'http://www.shopping.com/',
-  'http://www.skype.com/',
-  'http://www.so-net.ne.jp/',
-  'http://www.softonic.com/',
-  'http://www.sogou.com/',
-  'http://www.soso.com/',
-  'http://www.symantec.com/',
-  'http://www.t-online.de/',
-  'http://www.tabelog.com/',
-  'http://www.thefreedictionary.com/',
-  'http://www.thepiratebay.org/',
-  'http://www.thestar.com.my',
-  'http://www.tianya.cn/',
-  'http://www.torrentz.com/',
-  'http://www.tumblr.com/',
-  'http://www.twitpic.com/',
-  'http://www.typepad.com/',
-  'http://www.verizonwireless.com/',
-  'http://www.vevo.com/',
-  'http://www.weather.com/',
-  'http://www.wikipedia.org/',
-  'http://www.ynet.com/',
-  'http://www.youdao.com/',
-  'http://www.zol.com.cn/',
-  'https://flipkart.com',
-  'https://vine.co/',
-  'https://weather.com/',
-  'https://www.ebs.in/IPS/',
-];
+const LH_ROOT = path.join(__dirname, '..', '..', '..', '..');
+const SAMPLES = 1;
+const URLS = require('./urls.json');
 
 if (!process.env.WPT_KEY) throw new Error('missing WPT_KEY');
 const WPT_KEY = process.env.WPT_KEY;
@@ -174,15 +74,12 @@ const summary = loadSummary();
 
 function loadSummary() {
   if (fs.existsSync(summaryPath)) {
-    return JSON.parse(fs.readFileSync(summaryPath, 'utf-8'));
+    /** @type {UrlResults[]} */
+    const summary = JSON.parse(fs.readFileSync(summaryPath, 'utf-8'));
+    // Remove data if no longer in URLS.
+    return summary.filter(urlSet => URLS.includes(urlSet.url));
   } else {
-    return URLS.map((url) => {
-      return {
-        url,
-        mobile: [],
-        desktop: [],
-      };
-    });
+    return [];
   }
 }
 
@@ -315,14 +212,26 @@ async function main() {
   }
 
   let urlIndex = 0;
-  for (const urlResultSet of summary) {
-    if (urlResultSet.mobile.length === SAMPLES && urlResultSet.desktop.length === SAMPLES) {
-      continue;
-    }
+  for (const url of URLS) {
+    let urlResultSet = summary.find((urlResultSet) => urlResultSet.url === url);
 
-    const url = urlResultSet.url;
+    // This URL has been done already.
+    if (urlResultSet) continue;
+
+    urlResultSet = {
+      url,
+      mobile: [],
+      desktop: [],
+    };
+    summary.push(urlResultSet);
+
     const sanitizedUrl = url.replace(/[^a-z0-9]/gi, '-');
     log.log(`collecting traces for ${url}`);
+
+    /** @type {Result[]} */
+    const mobileResults = [];
+    /** @type {Result[]} */
+    const desktopResults = [];
 
     function updateProgress() {
       const mobileDone = mobileResults.length === SAMPLES;
@@ -335,11 +244,6 @@ async function main() {
         '(' + (desktopDone ? 'DONE' : `${desktopResults.length + 1} / ${SAMPLES}`) + ')',
       ].join(' '));
     }
-
-    /** @type {Result[]} */
-    const mobileResults = [];
-    /** @type {Result[]} */
-    const desktopResults = [];
 
     updateProgress();
 
