@@ -8,6 +8,7 @@
 /** @typedef {{trace: string}} Result */
 /** @typedef {{url: string, mobile: Result[], desktop: Result[]}} UrlResults */
 
+const archiver = require('archiver');
 const path = require('path');
 const fs = require('fs');
 const readline = require('readline');
@@ -15,7 +16,7 @@ const https = require('https');
 const {execFile} = require('child_process');
 
 const LH_ROOT = path.join(__dirname, '..', '..', '..', '..');
-const SAMPLES = 1;
+const SAMPLES = 9;
 const URLS = require('./urls.json');
 
 if (!process.env.WPT_KEY) throw new Error('missing WPT_KEY');
@@ -66,6 +67,27 @@ class ProgressLogger {
     }
     return char;
   }
+}
+
+/**
+ *
+ * @param {string} archiveDir
+ * @param {string} outputPath
+ */
+function archive(archiveDir, outputPath) {
+  return new Promise((resolve, reject) => {
+    const archive = archiver('zip', {
+      zlib: {level: 9},
+    });
+
+    const writeStream = fs.createWriteStream(outputPath);
+    writeStream.on('finish', resolve);
+    writeStream.on('error', reject);
+
+    archive.pipe(writeStream);
+    archive.directory(archiveDir, false);
+    archive.finalize();
+  });
 }
 
 const log = new ProgressLogger();
@@ -283,7 +305,8 @@ async function main() {
     urlIndex++;
   }
 
-  log.log('done!');
+  log.log('done! archiving ...');
+  await archive(outputFolder, path.join(LH_ROOT, 'dist', 'lantern-traces.zip'));
   log.close();
 }
 
