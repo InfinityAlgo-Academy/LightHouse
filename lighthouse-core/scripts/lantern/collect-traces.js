@@ -5,6 +5,9 @@
  */
 'use strict';
 
+/** @typedef {{trace: string}} Result */
+/** @typedef {{url: string, mobile: Result[], desktop: Result[]}} UrlResults */
+
 const path = require('path');
 const fs = require('fs');
 const readline = require('readline');
@@ -22,11 +25,52 @@ if (!process.env.WPT_KEY) throw new Error('missing WPT_KEY');
 const WPT_KEY = process.env.WPT_KEY;
 const DEBUG = process.env.DEBUG;
 
-const outputFolder = path.join(__dirname, '..', '..', '..', 'dist', 'lantern-traces');
+const outputFolder = path.join(LH_ROOT, 'dist', 'lantern-traces');
 const summaryPath = path.join(outputFolder, 'summary.json');
 
-/** @typedef {{trace: string}} Result */
-/** @typedef {{url: string, mobile: Result[], desktop: Result[]}} UrlResults */
+class ProgressLogger {
+  constructor() {
+    this._currentProgressMessage = '';
+    this._loadingChars = '⣾⣽⣻⢿⡿⣟⣯⣷ ⠁⠂⠄⡀⢀⠠⠐⠈';
+    this._nextLoadingIndex = 0;
+    this._progressBarHandle = setInterval(() => this.progress(this._currentProgressMessage), 100);
+  }
+
+  /**
+   * @param  {...any} args
+   */
+  log(...args) {
+    readline.clearLine(process.stdout, 0);
+    readline.cursorTo(process.stdout, 0);
+    console.log(...args);
+    this.progress(this._currentProgressMessage);
+  }
+
+  /**
+   * @param {string} message
+   */
+  progress(message) {
+    this._currentProgressMessage = message;
+    readline.clearLine(process.stdout, 0);
+    readline.cursorTo(process.stdout, 0);
+    if (message) process.stdout.write(`${this._nextLoadingChar()} ${message}`);
+  }
+
+  close() {
+    clearInterval(this._progressBarHandle);
+    this.progress('');
+  }
+
+  _nextLoadingChar() {
+    const char = this._loadingChars[this._nextLoadingIndex++];
+    if (this._nextLoadingIndex >= this._loadingChars.length) {
+      this._nextLoadingIndex = 0;
+    }
+    return char;
+  }
+}
+
+const log = new ProgressLogger();
 
 /** @type {UrlResults[]} */
 const summary = loadSummary();
@@ -117,7 +161,7 @@ async function runForDesktop(url) {
  */
 async function runForMobile(url) {
   const {testId, jsonUrl} = await startWptTest(url);
-  if (DEBUG) log({testId, jsonUrl});
+  if (DEBUG) log.log({testId, jsonUrl});
 
   // Poll for the results every x seconds, where x = position in queue.
   // This returns a response of {data: {lighthouse: {...}}}, but we don't
@@ -131,7 +175,7 @@ async function runForMobile(url) {
       } else if (response.statusCode >= 100 && response.statusCode < 200) {
         // If behindCount doesn't exist, the test is currently running.
         const secondsToWait = response.data.behindCount || 5;
-        if (DEBUG) log('poll wpt in', secondsToWait);
+        if (DEBUG) log.log('poll wpt in', secondsToWait);
         setTimeout(poll, secondsToWait * 1000);
       } else {
         reject(new Error(`unexpected response: ${response.statusCode} ${response.statusText}`));
@@ -159,57 +203,12 @@ async function repeatUntilPass(asyncFn) {
     try {
       return await asyncFn();
     } catch (err) {
-      log(err);
+      log.log(err);
     }
   }
 }
 
-let currentProgressMessage = '';
-
-/**
- * @param  {...any} args
- */
-function log(...args) {
-  readline.clearLine(process.stdout, 0);
-  readline.cursorTo(process.stdout, 0);
-  console.log(...args);
-  progress(currentProgressMessage);
-}
-
-/**
- * @param {string} message
- */
-function progress(message) {
-  currentProgressMessage = message;
-  readline.clearLine(process.stdout, 0);
-  readline.cursorTo(process.stdout, 0);
-  if (message) process.stdout.write(`${getNextLoadingChar()} ${message}`);
-}
-
-const loadingChars = '⣾⣽⣻⢿⡿⣟⣯⣷ ⠁⠂⠄⡀⢀⠠⠐⠈';
-let nextLoadingIndex = 0;
-function getNextLoadingChar() {
-  const char = loadingChars[nextLoadingIndex++];
-  if (nextLoadingIndex >= loadingChars.length) {
-    nextLoadingIndex = 0;
-  }
-  return char;
-}
-
-/** @type {NodeJS.Timer} */
-let progressBarHandle;
-function startProgressBar() {
-  progressBarHandle = setInterval(() => progress(currentProgressMessage), 100);
-}
-
-function stopProgressBar() {
-  if (progressBarHandle) clearInterval(progressBarHandle);
-  progress('');
-}
-
 async function main() {
-  startProgressBar();
-
   if (!fs.existsSync(outputFolder)) {
     fs.mkdirSync(outputFolder);
   }
@@ -226,12 +225,12 @@ async function main() {
 
     const url = urlResultSet.url;
     const sanitizedUrl = url.replace(/[^a-z0-9]/gi, '-');
-    log(`collecting traces for ${url}`);
+    log.log(`collecting traces for ${url}`);
 
     function updateProgress() {
       const mobileDone = mobileResults.length === SAMPLES;
       const desktopDone = desktopResults.length === SAMPLES;
-      progress([
+      log.progress([
         `${url} (${urlIndex + 1} / ${URLS.length})`,
         'mobile',
         '(' + (mobileDone ? 'DONE' : `${mobileResults.length + 1} / ${SAMPLES}`) + ')',
@@ -277,12 +276,11 @@ async function main() {
 
     // We just collected NUM_SAMPLES * 2 traces, so let's save our progress.
     saveSummary();
-    progress('');
     urlIndex++;
   }
 
-  log('done!');
-  stopProgressBar();
+  log.log('done!');
+  log.close();
 }
 
 main();
