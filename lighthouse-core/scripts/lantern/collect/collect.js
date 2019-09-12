@@ -240,11 +240,13 @@ async function main() {
   // results.
   for (const url of URLS) {
     // This URL has been done already.
-    if (summary.find((urlResultSet) => urlResultSet.url === url)) continue;
-
-    const sanitizedUrl = url.replace(/[^a-z0-9]/gi, '-');
+    if (summary.find((urlResultSet) => urlResultSet.url === url)) {
+      log.log(`already collected traces for ${url}`);
+      continue;
+    }
     log.log(`collecting traces for ${url}`);
 
+    const sanitizedUrl = url.replace(/[^a-z0-9]/gi, '-');
     /** @type {Result[]} */
     const mobileResults = [];
     /** @type {Result[]} */
