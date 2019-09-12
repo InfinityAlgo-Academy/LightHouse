@@ -144,14 +144,14 @@ async function main() {
       tasks.push({
         url,
         mobile: true,
-        pathPrefix: `${sanitizedUrl}-mobile-${i + 1}`,
+        traceFilename: `${sanitizedUrl}-mobile-${i + 1}-trace.json`,
       });
     }
     for (let i = summary[url].desktop.length; i < NUM_SAMPLES; i++) {
       tasks.push({
         url,
         mobile: false,
-        pathPrefix: `${sanitizedUrl}-desktop-${i + 1}`,
+        traceFilename: `${sanitizedUrl}-desktop-${i + 1}-trace.json`,
       });
     }
   }
@@ -161,12 +161,12 @@ async function main() {
     const task = tasks[i];
     console.log(task);
     const result = await (task.mobile ? runForMobile(task.url) : runForDesktop(task.url));
-    const tracePath = `${task.pathPrefix}-trace.json`;
-    fs.writeFileSync(path.join(outputFolder, tracePath), result.trace);
+    const tracePath = path.join(outputFolder, task.traceFilename);
+    fs.writeFileSync(tracePath, result.trace);
     if (task.mobile) {
-      summary[task.url].mobile.push({trace: tracePath});
+      summary[task.url].mobile.push({trace: task.traceFilename});
     } else {
-      summary[task.url].desktop.push({trace: tracePath});
+      summary[task.url].desktop.push({trace: task.traceFilename});
     }
 
     // Only commit changes if all tasks for a URL are done.
