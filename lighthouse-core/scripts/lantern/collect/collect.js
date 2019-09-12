@@ -235,14 +235,9 @@ async function main() {
     fs.mkdirSync(outputFolder);
   }
 
-  if (fs.existsSync(summaryPath)) {
-    loadSummary();
-  }
-
   // Traces are collected for one URL at a time, in series, so traces are collected for
   // mobile / desktop during a small time frame, reducing the chance of a site change affecting
   // results.
-  let urlIndex = 0;
   for (const url of URLS) {
     // This URL has been done already.
     if (summary.find((urlResultSet) => urlResultSet.url === url)) continue;
@@ -258,10 +253,11 @@ async function main() {
     // The closure this makes is too convenient to decompose.
     // eslint-disable-next-line no-inner-declarations
     function updateProgress() {
+      const index = URLS.indexOf(url);
       const mobileDone = mobileResults.length === SAMPLES;
       const desktopDone = desktopResults.length === SAMPLES;
       log.progress([
-        `${url} (${urlIndex + 1} / ${URLS.length})`,
+        `${url} (${index + 1} / ${URLS.length})`,
         'mobile',
         '(' + (mobileDone ? 'DONE' : `${mobileResults.length + 1} / ${SAMPLES}`) + ')',
         'desktop',
@@ -306,7 +302,6 @@ async function main() {
     // We just collected NUM_SAMPLES * 2 traces, so let's save our progress.
     summary.push(urlResultSet);
     saveSummary();
-    urlIndex++;
   }
 
   log.log('done! archiving ...');
