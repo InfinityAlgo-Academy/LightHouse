@@ -804,8 +804,8 @@
 
 .lh-filmstrip__thumbnail {
   border: 1px solid var(--report-border-color-secondary);
-  max-height: 100px;
-  max-width: 60px;
+  /* max-height: 100px; */
+  /* max-width: 60px; */
 }
 
 @media screen and (max-width: 750px) {

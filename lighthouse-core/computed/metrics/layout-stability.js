@@ -26,12 +26,17 @@ class LayoutStability extends MetricArtifact {
    */
   static computeObservedMetric(data) {
     const layoutJankEvts = data.traceOfTab.mainThreadEvents
-      .filter(evt => evt.name === 'FrameLayoutJank')
+      .filter(evt => evt.name === 'LayoutShift')
       .filter(e => e.args && e.args.data && e.args.data.is_main_frame);
 
     if (layoutJankEvts.length === 0) throw new LHError(LHError.errors.NO_LAYOUT_JANK);
 
+    // console.log({layoutJankEvts});
+    // console.log(layoutJankEvts.map(e => e.args.data));
+
     const finalLayoutJank = layoutJankEvts.slice(-1)[0];
+    console.log(finalLayoutJank.args.data)
+
     const layoutStabilityScore =
       finalLayoutJank.args &&
       finalLayoutJank.args.data &&
