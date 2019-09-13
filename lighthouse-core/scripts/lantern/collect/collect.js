@@ -95,6 +95,10 @@ const log = new ProgressLogger();
 /** @type {UrlResults[]} */
 const summary = loadSummary();
 
+/**
+ * Resume state from previous invocation of script.
+ * @return {UrlResults[]}
+ */
 function loadSummary() {
   if (fs.existsSync(summaryPath)) {
     /** @type {UrlResults[]} */
