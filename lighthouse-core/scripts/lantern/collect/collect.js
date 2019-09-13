@@ -237,7 +237,7 @@ async function main() {
   // mobile / desktop during a small time frame, reducing the chance of a site change affecting
   // results.
   for (const url of URLS) {
-    // This URL has been done already.
+    // This URL has been done on a previous script invocation. Skip it.
     if (summary.find((urlResultSet) => urlResultSet.url === url)) {
       log.log(`already collected traces for ${url}`);
       continue;
