@@ -6,7 +6,7 @@
 'use strict';
 
 /** @typedef {{trace: string}} Result */
-/** @typedef {{url: string, mobile: Result[], desktop: Result[]}} UrlResults */
+/** @typedef {{url: string, wpt: Result[], unthrottled: Result[]}} UrlResults */
 
 const archiver = require('archiver');
 const path = require('path');
@@ -158,7 +158,7 @@ async function startWptTest(url) {
  * @param {string} url
  * @return {Promise<Result>}
  */
-async function runForDesktop(url) {
+async function runForUnthrottled(url) {
   const artifactsFolder = `${LH_ROOT}/.tmp/collect-traces-artifacts`;
   await new Promise((resolve, reject) => {
     execFile('node', [
@@ -248,22 +248,22 @@ async function main() {
 
     const sanitizedUrl = url.replace(/[^a-z0-9]/gi, '-');
     /** @type {Result[]} */
-    const mobileResults = [];
+    const wptResults = [];
     /** @type {Result[]} */
-    const desktopResults = [];
+    const unthrottledResults = [];
 
     // The closure this makes is too convenient to decompose.
     // eslint-disable-next-line no-inner-declarations
     function updateProgress() {
       const index = URLS.indexOf(url);
-      const mobileDone = mobileResults.length === SAMPLES;
-      const desktopDone = desktopResults.length === SAMPLES;
+      const mobileDone = wptResults.length === SAMPLES;
+      const desktopDone = unthrottledResults.length === SAMPLES;
       log.progress([
         `${url} (${index + 1} / ${URLS.length})`,
         'mobile',
-        '(' + (mobileDone ? 'DONE' : `${mobileResults.length + 1} / ${SAMPLES}`) + ')',
+        '(' + (mobileDone ? 'DONE' : `${wptResults.length + 1} / ${SAMPLES}`) + ')',
         'desktop',
-        '(' + (desktopDone ? 'DONE' : `${desktopResults.length + 1} / ${SAMPLES}`) + ')',
+        '(' + (desktopDone ? 'DONE' : `${unthrottledResults.length + 1} / ${SAMPLES}`) + ')',
       ].join(' '));
     }
 
@@ -274,14 +274,14 @@ async function main() {
     for (let i = 0; i < SAMPLES; i++) {
       const resultPromise = repeatUntilPass(() => runForMobile(url));
       // Push to results array as they finish, so the progress indicator can track progress.
-      resultPromise.then((result) => mobileResults.push(result)).finally(updateProgress);
+      resultPromise.then((result) => wptResults.push(result)).finally(updateProgress);
       mobileResultsPromises.push(resultPromise);
     }
 
     // Must run in series.
     for (let i = 0; i < SAMPLES; i++) {
-      const resultPromise = repeatUntilPass(() => runForDesktop(url));
-      desktopResults.push(await resultPromise);
+      const resultPromise = repeatUntilPass(() => runForUnthrottled(url));
+      unthrottledResults.push(await resultPromise);
       updateProgress();
     }
 
@@ -289,13 +289,13 @@ async function main() {
 
     const urlResultSet = {
       url,
-      mobile: mobileResults.map((result, i) => {
-        const traceFilename = `${sanitizedUrl}-mobile-${i + 1}-trace.json`;
+      wpt: wptResults.map((result, i) => {
+        const traceFilename = `${sanitizedUrl}-mobile-wpt-${i + 1}-trace.json`;
         fs.writeFileSync(path.join(outputFolder, traceFilename), result.trace);
         return {trace: traceFilename};
       }),
-      desktop: desktopResults.map((result, i) => {
-        const traceFilename = `${sanitizedUrl}-desktop-${i + 1}-trace.json`;
+      unthrottled: unthrottledResults.map((result, i) => {
+        const traceFilename = `${sanitizedUrl}-mobile-unthrottled-${i + 1}-trace.json`;
         fs.writeFileSync(path.join(outputFolder, traceFilename), result.trace);
         return {trace: traceFilename};
       }),
