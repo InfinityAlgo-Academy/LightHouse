@@ -9,13 +9,12 @@
 /** @typedef {{url: string, wpt: Result[], unthrottled: Result[]}} UrlResults */
 
 const archiver = require('archiver');
-const path = require('path');
 const fs = require('fs');
 const readline = require('readline');
 const https = require('https');
 const {execFile} = require('child_process');
 
-const LH_ROOT = path.join(__dirname, '..', '..', '..', '..');
+const LH_ROOT = `${__dirname}/../../../..`;
 const SAMPLES = 9;
 const URLS = require('./urls.json');
 
@@ -23,8 +22,8 @@ if (!process.env.WPT_KEY) throw new Error('missing WPT_KEY');
 const WPT_KEY = process.env.WPT_KEY;
 const DEBUG = process.env.DEBUG;
 
-const outputFolder = path.join(LH_ROOT, 'dist', 'lantern-traces');
-const summaryPath = path.join(outputFolder, 'summary.json');
+const outputFolder = `${LH_ROOT}/dist/lantern-traces`;
+const summaryPath = `${outputFolder}/summary.json`;
 
 class ProgressLogger {
   constructor() {
@@ -166,7 +165,7 @@ async function runForUnthrottled(url) {
   const artifactsFolder = `${LH_ROOT}/.tmp/collect-traces-artifacts`;
   await new Promise((resolve, reject) => {
     execFile('node', [
-      path.join(LH_ROOT, 'lighthouse-cli'),
+      `${LH_ROOT}/lighthouse-cli`,
       url,
       `-G=${artifactsFolder}`,
     ], (_, stderr) => {
@@ -293,12 +292,12 @@ async function main() {
       url,
       wpt: wptResults.map((result, i) => {
         const traceFilename = `${sanitizedUrl}-mobile-wpt-${i + 1}-trace.json`;
-        fs.writeFileSync(path.join(outputFolder, traceFilename), result.trace);
+        fs.writeFileSync(`${outputFolder}/${traceFilename}`, result.trace);
         return {trace: traceFilename};
       }),
       unthrottled: unthrottledResults.map((result, i) => {
         const traceFilename = `${sanitizedUrl}-mobile-unthrottled-${i + 1}-trace.json`;
-        fs.writeFileSync(path.join(outputFolder, traceFilename), result.trace);
+        fs.writeFileSync(`${outputFolder}/${traceFilename}`, result.trace);
         return {trace: traceFilename};
       }),
     };
@@ -309,7 +308,7 @@ async function main() {
   }
 
   log.log('done! archiving ...');
-  await archive(outputFolder, path.join(LH_ROOT, 'dist', 'lantern-traces.zip'));
+  await archive(outputFolder, `${LH_ROOT}/dist/lantern-traces.zip`);
   log.close();
 }
 
