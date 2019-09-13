@@ -187,24 +187,22 @@ async function runForMobile(url) {
   // Poll for the results every x seconds, where x = position in queue.
   // This returns a response of {data: {lighthouse: {...}}}, but we don't
   // care about the LHR so we ignore the response.
-  await new Promise((resolve, reject) => {
-    async function poll() {
-      const responseJson = await fetch(jsonUrl);
-      const response = JSON.parse(responseJson);
-      if (response.statusCode === 200) {
-        resolve(response);
-      } else if (response.statusCode >= 100 && response.statusCode < 200) {
-        // If behindCount doesn't exist, the test is currently running.
-        const secondsToWait = response.data.behindCount || 5;
-        if (DEBUG) log.log('poll wpt in', secondsToWait);
-        setTimeout(poll, secondsToWait * 1000);
-      } else {
-        reject(new Error(`unexpected response: ${response.statusCode} ${response.statusText}`));
-      }
-    }
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const responseJson = await fetch(jsonUrl);
+    const response = JSON.parse(responseJson);
 
-    poll();
-  });
+    if (response.statusCode === 200) break;
+
+    if (response.statusCode >= 100 && response.statusCode < 200) {
+      // If behindCount doesn't exist, the test is currently running.
+      const secondsToWait = response.data.behindCount || 5;
+      if (DEBUG) log.log('poll wpt in', secondsToWait);
+      await new Promise((resolve) => setTimeout(resolve, secondsToWait * 1000));
+    } else {
+      throw new Error(`unexpected response: ${response.statusCode} ${response.statusText}`);
+    }
+  }
 
   const traceUrl = new URL('https://www.webpagetest.org/getgzip.php');
   traceUrl.searchParams.set('test', testId);
