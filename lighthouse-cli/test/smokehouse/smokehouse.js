@@ -131,8 +131,12 @@ const cli = yargs
   .describe({
     'config-path': 'The path to the config JSON file',
     'expectations-path': 'The path to the expected audit results file',
+    'only-audits': 'Filter for audit expectations to run',
+    'only-urls': 'Filter for urls to run',
     'debug': 'Save the artifacts along with the output',
   })
+  .array('only-audits')
+  .array('only-urls')
   .require('config-path', true)
   .require('expectations-path', true)
   .argv;
@@ -140,20 +144,47 @@ const cli = yargs
 const configPath = resolveLocalOrCwd(cli['config-path']);
 /** @type {Smokehouse.ExpectedRunnerResult[]} */
 const expectations = require(resolveLocalOrCwd(cli['expectations-path']));
+/** @type {string[]} */
+const onlyAudits = cli['only-audits'];
+/** @type {string[]} */
+const onlyUrls = cli['only-urls'];
 
 // Loop sequentially over expectations, comparing against Lighthouse run, and
 // reporting result.
 let passingCount = 0;
 let failingCount = 0;
+/** @type {string[]} */
+const failingUrls = [];
 expectations.forEach(expected => {
-  console.log(`Doing a run of '${expected.lhr.requestedUrl}'...`);
-  const results = runLighthouse(expected.lhr.requestedUrl, configPath, cli.debug);
+  const url = expected.lhr.requestedUrl;
 
-  console.log(`Asserting expected results match those found. (${expected.lhr.requestedUrl})`);
+  if (onlyUrls && !onlyUrls.some((pattern) => new RegExp(pattern).test(url))) {
+    console.log(`skipping url: ${url}`);
+    return;
+  }
+
+  if (onlyAudits) {
+    if (!onlyAudits.some((audit) => expected.lhr.audits[audit])) {
+      console.log(`skipping url: ${url}`);
+      return;
+    }
+
+    for (const key in expected.lhr.audits) {
+      if (onlyAudits.includes(key)) continue;
+      console.log(`skipping audit: ${key}`);
+      delete expected.lhr.audits[key];
+    }
+  }
+
+  console.log(`Doing a run of '${url}'...`);
+  const results = runLighthouse(url, configPath, cli.debug);
+
+  console.log(`Asserting expected results match those found. (${url})`);
   const collated = collateResults(results, expected);
   const counts = report(collated);
   passingCount += counts.passed;
   failingCount += counts.failed;
+  if (counts.failed) failingUrls.push(url);
 });
 
 if (passingCount) {
@@ -161,5 +192,19 @@ if (passingCount) {
 }
 if (failingCount) {
   console.log(log.redify(`${failingCount} failing`));
+
+  const rerunCommand = [
+    'node',
+    path.relative(process.cwd(), __filename),
+    `--config-path=${cli['config-path']}`,
+    `--expectations-path=${cli['expectations-path']}`,
+    // Use the same audit filters.
+    onlyAudits ? `--only-audits ${onlyAudits.join(' ')}` : '',
+    // This is the good bit.
+    `--only-urls ${failingUrls.join(' ')}`,
+  ].filter(Boolean).join(' ');
+  console.error(`To run just these failing smoke tests:\n   ${rerunCommand}`);
+  console.log('Note: you must also be running `yarn static-server`');
+
   process.exit(1);
 }

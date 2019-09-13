@@ -5,9 +5,12 @@
  */
 'use strict';
 
+/** @typedef {{onlyAudits: string[], onlyBatches: string[], onlyUrls: string[]}} CliArgs */
+
 /* eslint-disable no-console */
 const {promisify} = require('util');
 const execAsync = promisify(require('child_process').exec);
+const yargs = require('yargs');
 
 const {server, serverForOffline} = require('../fixtures/static-server.js');
 const log = require('lighthouse-logger');
@@ -36,18 +39,23 @@ function displaySmokehouseOutput(result) {
  * Run smokehouse in child processes for selected smoketests
  * Display output from each as soon as they finish, but resolve function when ALL are complete
  * @param {Array<Smokehouse.TestDfn>} smokes
+ * @param {CliArgs} argv
  * @return {Promise<Array<{id: string, error?: Error}>>}
  */
-async function runSmokehouse(smokes) {
+async function runSmokehouse(smokes, argv) {
   const cmdPromises = [];
   for (const {id, expectations, config} of smokes) {
     console.log(`${purpleify(id)} smoketest starting…`);
     console.time(`smoketest-${id}`);
-    const cmd = [
+    const commandParts = [
       'node lighthouse-cli/test/smokehouse/smokehouse.js',
       `--config-path=${config}`,
       `--expectations-path=${expectations}`,
-    ].join(' ');
+    ];
+    if (argv.onlyAudits) commandParts.push(`--only-audits ${argv.onlyAudits.join(' ')}`);
+    if (argv.onlyUrls) commandParts.push(`--only-audits ${argv.onlyUrls.join(' ')}`);
+    const cmd = commandParts.join(' ');
+    console.log(cmd);
 
     // The promise ensures we output immediately, even if the process errors
     const p = execAsync(cmd, {timeout: 6 * 60 * 1000, encoding: 'utf8'})
@@ -101,13 +109,13 @@ function getSmoketestBatches(argv) {
 
 /**
  * Main function. Run webservers, smokehouse, then report on failures
+ * @param {CliArgs} argv
  */
-async function cli() {
+async function cli(argv) {
   server.listen(10200, 'localhost');
   serverForOffline.listen(10503, 'localhost');
 
-  const argv = process.argv.slice(2);
-  const batches = getSmoketestBatches(argv);
+  const batches = getSmoketestBatches(argv.onlyBatches);
 
   const smokeDefns = new Map();
   const smokeResults = [];
@@ -117,7 +125,7 @@ async function cli() {
       smokeDefns.set(defn.id, defn);
     }
 
-    const results = await runSmokehouse(batch);
+    const results = await runSmokehouse(batch, argv);
     smokeResults.push(...results);
   }
 
@@ -130,7 +138,7 @@ async function cli() {
       /** @type {number} */
       const resultIndex = smokeResults.indexOf(failedResult);
       const smokeDefn = smokeDefns.get(failedResult.id);
-      smokeResults[resultIndex] = (await runSmokehouse([smokeDefn]))[0];
+      smokeResults[resultIndex] = (await runSmokehouse([smokeDefn], argv))[0];
     }
   }
 
@@ -148,7 +156,21 @@ async function cli() {
   process.exit(0);
 }
 
-cli().catch(e => {
+const argv = yargs
+  .help('help')
+  .describe({
+    'only-audits': 'Filter for audit expectations to run',
+    'only-urls': 'Filter for urls to run',
+  })
+  .array('only-audits')
+  .array('only-urls')
+  .argv;
+
+cli({
+  onlyAudits: argv['only-audits'],
+  onlyBatches: argv['_'], // Positional args.
+  onlyUrls: argv['only-urls'],
+}).catch(e => {
   console.error(e);
   process.exit(1);
 });
