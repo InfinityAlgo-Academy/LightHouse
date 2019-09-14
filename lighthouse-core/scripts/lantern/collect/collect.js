@@ -13,6 +13,8 @@ const fs = require('fs');
 const readline = require('readline');
 const fetch = require('isomorphic-fetch');
 const {execFile} = require('child_process');
+const {promisify} = require('util');
+const execFileAsync = promisify(execFile);
 
 const LH_ROOT = `${__dirname}/../../../..`;
 const SAMPLES = 9;
@@ -160,16 +162,11 @@ async function startWptTest(url) {
  */
 async function runForUnthrottled(url) {
   const artifactsFolder = `${LH_ROOT}/.tmp/collect-traces-artifacts`;
-  await new Promise((resolve, reject) => {
-    execFile('node', [
-      `${LH_ROOT}/lighthouse-cli`,
-      url,
-      `-G=${artifactsFolder}`,
-    ], (_, stderr) => {
-      if (stderr) reject(stderr);
-      else resolve();
-    });
-  });
+  await execFileAsync('node', [
+    `${LH_ROOT}/lighthouse-cli`,
+    url,
+    `-G=${artifactsFolder}`,
+  ]);
   const trace = fs.readFileSync(`${artifactsFolder}/defaultPass.trace.json`, 'utf-8');
   return {
     trace,
