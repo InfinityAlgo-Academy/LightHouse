@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/** @typedef {{trace: string}} Result */
+/** @typedef {{lhr: string, trace: string}} Result */
 /** @typedef {{url: string, wpt: Result[], unthrottled: Result[]}} Summary */
 
 const archiver = require('archiver');
@@ -18,8 +18,8 @@ const execFileAsync = promisify(execFile);
 const streamFinished = promisify(require('stream').finished);
 
 const LH_ROOT = `${__dirname}/../../../..`;
-const SAMPLES = 9;
-const TEST_URLS = require('./urls.js');
+const SAMPLES = process.env.SAMPLES ? Number(process.env.SAMPLES) : 9;
+const TEST_URLS = process.env.TEST_URLS ? process.env.TEST_URLS.split(' ') : require('./urls.js');
 
 if (!process.env.WPT_KEY) throw new Error('missing WPT_KEY');
 const WPT_KEY = process.env.WPT_KEY;
@@ -57,7 +57,7 @@ class ProgressLogger {
     if (message) process.stdout.write(`${this._nextLoadingChar()} ${message}`);
   }
 
-  close() {
+  closeProgress() {
     clearInterval(this._progressBarHandle);
     this.progress('');
   }
@@ -114,6 +114,15 @@ function saveSummary() {
 }
 
 /**
+ * @param {string} filename
+ * @param {string} data
+ */
+function saveData(filename, data) {
+  fs.writeFileSync(`${outputFolder}/${filename}`, data);
+  return filename;
+}
+
+/**
  * @param {string} url
  * @return {Promise<string>}
  */
@@ -160,13 +169,17 @@ async function startWptTest(url) {
  */
 async function runUnthrottledLocally(url) {
   const artifactsFolder = `${LH_ROOT}/.tmp/collect-traces-artifacts`;
-  await execFileAsync('node', [
+  const {stdout} = await execFileAsync('node', [
     `${LH_ROOT}/lighthouse-cli`,
     url,
-    `-G=${artifactsFolder}`,
+    '--output=json',
+    `-AG=${artifactsFolder}`,
   ]);
+  // Make the JSON small.
+  const lhr = JSON.stringify(JSON.parse(stdout));
   const trace = fs.readFileSync(`${artifactsFolder}/defaultPass.trace.json`, 'utf-8');
   return {
+    lhr,
     trace,
   };
 }
@@ -182,12 +195,16 @@ async function runForWpt(url) {
   // Poll for the results every x seconds, where x = position in queue.
   // This returns a response of {data: {lighthouse: {...}}}, but we don't
   // care about the LHR so we ignore the response.
+  let lhr = '';
   // eslint-disable-next-line no-constant-condition
   while (true) {
     const responseJson = await fetchString(jsonUrl);
     const response = JSON.parse(responseJson);
 
-    if (response.statusCode === 200) break;
+    if (response.statusCode === 200) {
+      lhr = JSON.stringify(response.data.lighthouse);
+      break;
+    }
 
     if (response.statusCode >= 100 && response.statusCode < 200) {
       // If behindCount doesn't exist, the test is currently running.
@@ -205,6 +222,7 @@ async function runForWpt(url) {
   const traceJson = await fetchString(traceUrl.href);
 
   return {
+    lhr,
     trace: traceJson,
   };
 }
@@ -284,14 +302,18 @@ async function main() {
     const urlResultSet = {
       url,
       wpt: wptResults.map((result, i) => {
-        const traceFilename = `${sanitizedUrl}-mobile-wpt-${i + 1}-trace.json`;
-        fs.writeFileSync(`${outputFolder}/${traceFilename}`, result.trace);
-        return {trace: traceFilename};
+        const prefix = `${sanitizedUrl}-mobile-wpt-${i + 1}`;
+        return {
+          lhr: saveData(`${prefix}-lhr.json`, result.lhr),
+          trace: saveData(`${prefix}-trace.json`, result.trace),
+        };
       }),
       unthrottled: unthrottledResults.map((result, i) => {
-        const traceFilename = `${sanitizedUrl}-mobile-unthrottled-${i + 1}-trace.json`;
-        fs.writeFileSync(`${outputFolder}/${traceFilename}`, result.trace);
-        return {trace: traceFilename};
+        const prefix = `${sanitizedUrl}-mobile-unthrottled-${i + 1}`;
+        return {
+          lhr: saveData(`${prefix}-lhr.json`, result.lhr),
+          trace: saveData(`${prefix}-trace.json`, result.trace),
+        };
       }),
     };
 
@@ -300,9 +322,9 @@ async function main() {
     saveSummary();
   }
 
+  log.closeProgress();
   log.log('done! archiving ...');
   await archive(outputFolder, `${LH_ROOT}/dist/lantern-traces.zip`);
-  log.close();
 }
 
 main();
