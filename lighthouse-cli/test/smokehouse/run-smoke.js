@@ -160,7 +160,7 @@ const argv = yargs
   .help('help')
   .describe({
     'only-audits': 'Filter for audit expectations to run',
-    'only-urls': 'Filter for urls to run',
+    'only-urls': 'Filter for urls to run. Patterns accepted',
   })
   .array('only-audits')
   .array('only-urls')

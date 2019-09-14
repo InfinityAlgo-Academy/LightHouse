@@ -132,7 +132,7 @@ const cli = yargs
     'config-path': 'The path to the config JSON file',
     'expectations-path': 'The path to the expected audit results file',
     'only-audits': 'Filter for audit expectations to run',
-    'only-urls': 'Filter for urls to run',
+    'only-urls': 'Filter for urls to run. Patterns accepted',
     'debug': 'Save the artifacts along with the output',
   })
   .array('only-audits')
