@@ -91,7 +91,8 @@ function archive(archiveDir, outputPath) {
   });
 }
 
-const log = new ProgressLogger();
+/** @type {ProgressLogger} */
+let log;
 
 /** @type {UrlResults[]} */
 const summary = loadSummary();
@@ -160,7 +161,7 @@ async function startWptTest(url) {
  * @param {string} url
  * @return {Promise<Result>}
  */
-async function runForUnthrottled(url) {
+async function runUnthrottledLocally(url) {
   const artifactsFolder = `${LH_ROOT}/.tmp/collect-traces-artifacts`;
   await execFileAsync('node', [
     `${LH_ROOT}/lighthouse-cli`,
@@ -177,7 +178,7 @@ async function runForUnthrottled(url) {
  * @param {string} url
  * @return {Promise<Result>}
  */
-async function runForMobile(url) {
+async function runForWpt(url) {
   const {testId, jsonUrl} = await startWptTest(url);
   if (DEBUG) log.log({testId, jsonUrl});
 
@@ -195,7 +196,7 @@ async function runForMobile(url) {
       // If behindCount doesn't exist, the test is currently running.
       const secondsToWait = response.data.behindCount || 5;
       if (DEBUG) log.log('poll wpt in', secondsToWait);
-      await new Promise((resolve) => setTimeout(resolve, secondsToWait * 1000));
+      await new Promise((resolve) => setTimeout(resolve, secondsToWait * 1500));
     } else {
       throw new Error(`unexpected response: ${response.statusCode} ${response.statusText}`);
     }
@@ -226,6 +227,8 @@ async function repeatUntilPass(asyncFn) {
 }
 
 async function main() {
+  log = new ProgressLogger();
+
   if (!fs.existsSync(outputFolder)) {
     fs.mkdirSync(outputFolder);
   }
@@ -267,7 +270,7 @@ async function main() {
     // Can run in parallel.
     const mobileResultsPromises = [];
     for (let i = 0; i < SAMPLES; i++) {
-      const resultPromise = repeatUntilPass(() => runForMobile(url));
+      const resultPromise = repeatUntilPass(() => runForWpt(url));
       // Push to results array as they finish, so the progress indicator can track progress.
       resultPromise.then((result) => wptResults.push(result)).finally(updateProgress);
       mobileResultsPromises.push(resultPromise);
@@ -275,7 +278,7 @@ async function main() {
 
     // Must run in series.
     for (let i = 0; i < SAMPLES; i++) {
-      const resultPromise = repeatUntilPass(() => runForUnthrottled(url));
+      const resultPromise = repeatUntilPass(() => runUnthrottledLocally(url));
       unthrottledResults.push(await resultPromise);
       updateProgress();
     }
