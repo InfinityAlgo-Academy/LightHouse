@@ -11,12 +11,12 @@
 const archiver = require('archiver');
 const fs = require('fs');
 const readline = require('readline');
-const https = require('https');
+const fetch = require('isomorphic-fetch');
 const {execFile} = require('child_process');
 
 const LH_ROOT = `${__dirname}/../../../..`;
 const SAMPLES = 9;
-const URLS = require('./urls.json');
+const TEST_URLS = require('./urls.json');
 
 if (!process.env.WPT_KEY) throw new Error('missing WPT_KEY');
 const WPT_KEY = process.env.WPT_KEY;
@@ -103,7 +103,7 @@ function loadSummary() {
     /** @type {UrlResults[]} */
     const summary = JSON.parse(fs.readFileSync(summaryPath, 'utf-8'));
     // Remove data if no longer in URLS.
-    return summary.filter(urlSet => URLS.includes(urlSet.url));
+    return summary.filter(urlSet => TEST_URLS.includes(urlSet.url));
   } else {
     return [];
   }
@@ -117,15 +117,10 @@ function saveSummary() {
  * @param {string} url
  * @return {Promise<string>}
  */
-function fetch(url) {
-  return new Promise((resolve, reject) => {
-    https.get(url, (res) => {
-      let data = '';
-      res.on('data', (chunk) => data += chunk);
-      res.on('end', () => resolve(data));
-      res.on('error', (err) => reject(err));
-    });
-  });
+async function fetchString(url) {
+  const response = await fetch(url);
+  if (response.ok) return response.text();
+  throw new Error(`error fetching ${url}: ${response.status} ${response.statusText}`);
 }
 
 /**
@@ -133,19 +128,21 @@ function fetch(url) {
  */
 async function startWptTest(url) {
   const apiUrl = new URL('https://www.webpagetest.org/runtest.php');
-  apiUrl.searchParams.set('k', WPT_KEY);
-  apiUrl.searchParams.set('f', 'json');
-  // Keep the location constant. Use Chrome and 3G network conditions.
-  apiUrl.searchParams.set('location', 'Dulles:Chrome.3G');
-  apiUrl.searchParams.set('lighthouse', '1');
-  // Makes the trace file available over /getgzip.php.
-  apiUrl.searchParams.set('lighthouseTrace', '1');
-  // Disables some things that WPT does, such as a "repeat view" analysis.
-  apiUrl.searchParams.set('type', 'lighthouse');
-  apiUrl.searchParams.set('mobile', '1');
-  // apiUrl.searchParams.set('mobileDevice', '1');
-  apiUrl.searchParams.set('url', url);
-  const wptResponseJson = await fetch(apiUrl.href);
+  apiUrl.search = new URLSearchParams({
+    k: WPT_KEY,
+    f: 'json',
+    url,
+    // Keep the location constant. Use Chrome and 3G network conditions.
+    location: 'Dulles:Chrome.3G',
+    lighthouse: '1',
+    // Make the trace file available over /getgzip.php.
+    lighthouseTrace: '1',
+    // Disable some things that WPT does, such as a "repeat view" analysis.
+    type: 'lighthouse',
+    mobile: '1',
+    // mobileDevice: '1',
+  }).toString();
+  const wptResponseJson = await fetchString(apiUrl.href);
   const wptResponse = JSON.parse(wptResponseJson);
   if (wptResponse.statusCode !== 200) {
     throw new Error(`unexpected status code ${wptResponse.statusCode} ${wptResponse.statusText}`);
@@ -192,7 +189,7 @@ async function runForMobile(url) {
   // care about the LHR so we ignore the response.
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const responseJson = await fetch(jsonUrl);
+    const responseJson = await fetchString(jsonUrl);
     const response = JSON.parse(responseJson);
 
     if (response.statusCode === 200) break;
@@ -210,7 +207,7 @@ async function runForMobile(url) {
   const traceUrl = new URL('https://www.webpagetest.org/getgzip.php');
   traceUrl.searchParams.set('test', testId);
   traceUrl.searchParams.set('file', 'lighthouse_trace.json');
-  const traceJson = await fetch(traceUrl.href);
+  const traceJson = await fetchString(traceUrl.href);
 
   return {
     trace: traceJson,
@@ -239,7 +236,7 @@ async function main() {
   // Traces are collected for one URL at a time, in series, so traces are collected for
   // mobile / desktop during a small time frame, reducing the chance of a site change affecting
   // results.
-  for (const url of URLS) {
+  for (const url of TEST_URLS) {
     // This URL has been done on a previous script invocation. Skip it.
     if (summary.find((urlResultSet) => urlResultSet.url === url)) {
       log.log(`already collected traces for ${url}`);
@@ -256,11 +253,11 @@ async function main() {
     // The closure this makes is too convenient to decompose.
     // eslint-disable-next-line no-inner-declarations
     function updateProgress() {
-      const index = URLS.indexOf(url);
+      const index = TEST_URLS.indexOf(url);
       const mobileDone = wptResults.length === SAMPLES;
       const desktopDone = unthrottledResults.length === SAMPLES;
       log.progress([
-        `${url} (${index + 1} / ${URLS.length})`,
+        `${url} (${index + 1} / ${TEST_URLS.length})`,
         'mobile',
         '(' + (mobileDone ? 'DONE' : `${wptResults.length + 1} / ${SAMPLES}`) + ')',
         'desktop',
