@@ -205,7 +205,7 @@ if (failingCount) {
     `--only-urls ${failingUrls.join(' ')}`,
   ].filter(Boolean).join(' ');
   console.error(`To run just these failing smoke tests:\n   ${rerunCommand}`);
-  console.log('Note: you must also be running `yarn static-server`');
+  console.error('Note: you must also be running `yarn static-server`');
 
   process.exit(1);
 }
