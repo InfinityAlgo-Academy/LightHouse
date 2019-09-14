@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/** @typedef {{lhr: string, trace: string}} Result */
+/** @typedef {{devtoolsLog?: string, lhr: string, trace: string}} Result */
 /** @typedef {{url: string, wpt: Result[], unthrottled: Result[]}} Summary */
 
 const archiver = require('archiver');
@@ -177,8 +177,10 @@ async function runUnthrottledLocally(url) {
   ]);
   // Make the JSON small.
   const lhr = JSON.stringify(JSON.parse(stdout));
+  const devtoolsLog = fs.readFileSync(`${artifactsFolder}/defaultPass.devtoolslog.json`, 'utf-8');
   const trace = fs.readFileSync(`${artifactsFolder}/defaultPass.trace.json`, 'utf-8');
   return {
+    devtoolsLog,
     lhr,
     trace,
   };
@@ -309,8 +311,11 @@ async function main() {
         };
       }),
       unthrottled: unthrottledResults.map((result, i) => {
+        if (!result.devtoolsLog) throw new Error('expected devtools log');
+
         const prefix = `${sanitizedUrl}-mobile-unthrottled-${i + 1}`;
         return {
+          devtoolsLog: saveData(`${prefix}-devtoolsLog.json`, result.devtoolsLog),
           lhr: saveData(`${prefix}-lhr.json`, result.lhr),
           trace: saveData(`${prefix}-trace.json`, result.trace),
         };
