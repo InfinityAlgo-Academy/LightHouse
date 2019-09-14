@@ -15,6 +15,7 @@ const fetch = require('isomorphic-fetch');
 const {execFile} = require('child_process');
 const {promisify} = require('util');
 const execFileAsync = promisify(execFile);
+const streamFinished = promisify(require('stream').finished);
 
 const LH_ROOT = `${__dirname}/../../../..`;
 const SAMPLES = 9;
@@ -76,19 +77,15 @@ class ProgressLogger {
  * @param {string} outputPath
  */
 function archive(archiveDir, outputPath) {
-  return new Promise((resolve, reject) => {
-    const archive = archiver('zip', {
-      zlib: {level: 9},
-    });
-
-    const writeStream = fs.createWriteStream(outputPath);
-    writeStream.on('finish', resolve);
-    writeStream.on('error', reject);
-
-    archive.pipe(writeStream);
-    archive.directory(archiveDir, false);
-    archive.finalize();
+  const archive = archiver('zip', {
+    zlib: {level: 9},
   });
+
+  const writeStream = fs.createWriteStream(outputPath);
+  archive.pipe(writeStream);
+  archive.directory(archiveDir, false);
+  archive.finalize();
+  return streamFinished(archive);
 }
 
 /** @type {ProgressLogger} */
