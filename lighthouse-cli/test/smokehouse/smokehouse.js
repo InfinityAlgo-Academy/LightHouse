@@ -139,6 +139,7 @@ const cli = yargs
   .array('only-urls')
   .require('config-path', true)
   .require('expectations-path', true)
+  .wrap(yargs.terminalWidth())
   .argv;
 
 const configPath = resolveLocalOrCwd(cli['config-path']);

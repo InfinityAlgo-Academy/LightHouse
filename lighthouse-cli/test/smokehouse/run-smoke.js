@@ -164,6 +164,11 @@ const argv = yargs
   })
   .array('only-audits')
   .array('only-urls')
+  .example('yarn smoke --only-audits network-requests',
+    'Only run tests for the network-request audit')
+  .example('yarn smoke --only-urls http://localhost:10200/preload.html',
+    'Only run tests for http://localhost:10200/preload.html')
+  .wrap(yargs.terminalWidth())
   .argv;
 
 cli({
