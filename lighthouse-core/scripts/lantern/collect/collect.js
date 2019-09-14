@@ -6,7 +6,7 @@
 'use strict';
 
 /** @typedef {{trace: string}} Result */
-/** @typedef {{url: string, wpt: Result[], unthrottled: Result[]}} UrlResults */
+/** @typedef {{url: string, wpt: Result[], unthrottled: Result[]}} Summary */
 
 const archiver = require('archiver');
 const fs = require('fs');
@@ -18,7 +18,7 @@ const execFileAsync = promisify(execFile);
 
 const LH_ROOT = `${__dirname}/../../../..`;
 const SAMPLES = 9;
-const TEST_URLS = require('./urls.json');
+const TEST_URLS = require('./urls.js');
 
 if (!process.env.WPT_KEY) throw new Error('missing WPT_KEY');
 const WPT_KEY = process.env.WPT_KEY;
@@ -94,16 +94,16 @@ function archive(archiveDir, outputPath) {
 /** @type {ProgressLogger} */
 let log;
 
-/** @type {UrlResults[]} */
+/** @type {Summary[]} */
 const summary = loadSummary();
 
 /**
  * Resume state from previous invocation of script.
- * @return {UrlResults[]}
+ * @return {Summary[]}
  */
 function loadSummary() {
   if (fs.existsSync(summaryPath)) {
-    /** @type {UrlResults[]} */
+    /** @type {Summary[]} */
     const summary = JSON.parse(fs.readFileSync(summaryPath, 'utf-8'));
     // Remove data if no longer in URLS.
     return summary.filter(urlSet => TEST_URLS.includes(urlSet.url));
@@ -233,9 +233,8 @@ async function main() {
     fs.mkdirSync(outputFolder);
   }
 
-  // Traces are collected for one URL at a time, in series, so traces are collected for
-  // mobile / desktop during a small time frame, reducing the chance of a site change affecting
-  // results.
+  // Traces are collected for one URL at a time, in series, so all traces are from a small time
+  // frame, reducing the chance of a site change affecting results.
   for (const url of TEST_URLS) {
     // This URL has been done on a previous script invocation. Skip it.
     if (summary.find((urlResultSet) => urlResultSet.url === url)) {
@@ -254,26 +253,26 @@ async function main() {
     // eslint-disable-next-line no-inner-declarations
     function updateProgress() {
       const index = TEST_URLS.indexOf(url);
-      const mobileDone = wptResults.length === SAMPLES;
-      const desktopDone = unthrottledResults.length === SAMPLES;
+      const wptDone = wptResults.length === SAMPLES;
+      const unthrottledDone = unthrottledResults.length === SAMPLES;
       log.progress([
         `${url} (${index + 1} / ${TEST_URLS.length})`,
-        'mobile',
-        '(' + (mobileDone ? 'DONE' : `${wptResults.length + 1} / ${SAMPLES}`) + ')',
-        'desktop',
-        '(' + (desktopDone ? 'DONE' : `${unthrottledResults.length + 1} / ${SAMPLES}`) + ')',
+        'wpt',
+        '(' + (wptDone ? 'DONE' : `${wptResults.length + 1} / ${SAMPLES}`) + ')',
+        'unthrottledResults',
+        '(' + (unthrottledDone ? 'DONE' : `${unthrottledResults.length + 1} / ${SAMPLES}`) + ')',
       ].join(' '));
     }
 
     updateProgress();
 
     // Can run in parallel.
-    const mobileResultsPromises = [];
+    const wptResultsPromises = [];
     for (let i = 0; i < SAMPLES; i++) {
       const resultPromise = repeatUntilPass(() => runForWpt(url));
       // Push to results array as they finish, so the progress indicator can track progress.
       resultPromise.then((result) => wptResults.push(result)).finally(updateProgress);
-      mobileResultsPromises.push(resultPromise);
+      wptResultsPromises.push(resultPromise);
     }
 
     // Must run in series.
@@ -283,7 +282,7 @@ async function main() {
       updateProgress();
     }
 
-    await Promise.all(mobileResultsPromises);
+    await Promise.all(wptResultsPromises);
 
     const urlResultSet = {
       url,
