@@ -53,7 +53,7 @@ async function runSmokehouse(smokes, argv) {
       `--expectations-path=${expectations}`,
     ];
     if (argv.onlyAudits) commandParts.push(`--only-audits ${argv.onlyAudits.join(' ')}`);
-    if (argv.onlyUrls) commandParts.push(`--only-audits ${argv.onlyUrls.join(' ')}`);
+    if (argv.onlyUrls) commandParts.push(`--only-urls ${argv.onlyUrls.join(' ')}`);
     const cmd = commandParts.join(' ');
     console.log(cmd);
 
