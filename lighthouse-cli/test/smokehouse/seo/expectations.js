@@ -119,12 +119,12 @@ module.exports = [
           details: {
             items: [
               {
-                source: /seo-tester\.html.+:24:12$/,
+                source: /seo-tester\.html.+:32:12$/,
                 selector: '.small',
                 fontSize: '11px',
               },
               {
-                source: /seo-tester\.html.+:28:55$/,
+                source: /seo-tester\.html.+:36:55$/,
                 selector: '.small-2',
                 fontSize: '11px',
               },
