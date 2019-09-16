@@ -17,6 +17,7 @@ const rimraf = require('rimraf');
 
 const {collateResults, report} = require('./smokehouse-report.js');
 const assetSaver = require('../../../lighthouse-core/lib/asset-saver.js');
+const Config = require('../../../lighthouse-core/config/config.js');
 
 const PROTOCOL_TIMEOUT_EXIT_CODE = 67;
 const RETRIES = 3;
@@ -150,6 +151,13 @@ const onlyAudits = cli['only-audits'];
 /** @type {string[]} */
 const onlyUrls = cli['only-urls'];
 
+/** @type {string[]} */
+let requiredGatherers = [];
+if (onlyAudits) {
+  const config = new Config(require(configPath), {onlyAudits});
+  requiredGatherers = [...Config.getGatherersNeededByAudits(config.audits)];
+}
+
 // Loop sequentially over expectations, comparing against Lighthouse run, and
 // reporting result.
 let passingCount = 0;
@@ -174,6 +182,13 @@ expectations.forEach(expected => {
       if (onlyAudits.includes(key)) continue;
       console.log(`skipping audit: ${key}`);
       delete expected.lhr.audits[key];
+    }
+
+    for (const key in expected.artifacts) {
+      if (requiredGatherers.includes(key)) continue;
+      console.log(`skipping artifact: ${key}`);
+      // @ts-ignore: key exists
+      delete expected.artifacts[key];
     }
   }
 
