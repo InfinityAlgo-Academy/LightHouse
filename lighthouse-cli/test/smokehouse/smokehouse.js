@@ -159,7 +159,7 @@ const failingUrls = [];
 expectations.forEach(expected => {
   const url = expected.lhr.requestedUrl;
 
-  if (onlyUrls && !onlyUrls.some((pattern) => new RegExp(pattern).test(url))) {
+  if (onlyUrls && !onlyUrls.some(pattern => new RegExp(pattern).test(url))) {
     console.log(`skipping url: ${url}`);
     return;
   }
