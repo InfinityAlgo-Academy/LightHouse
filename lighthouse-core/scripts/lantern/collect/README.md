@@ -12,9 +12,11 @@ Check what version of Lighthouse WPT is using. You should use the same version o
 
 ```sh
 node -e "console.log(require('./urls.js').join('\n'))" |\
-  xargs -I{} curl -o /dev/null -Is --write-out '%{http_code} {} (if redirect: %{redirect_url})\n' {} |\
+  xargs -I{} curl -o /dev/null -s --write-out '%{http_code} {} (if redirect: %{redirect_url})\n' {} |\
   sort
 ```
+
+Note: some good URLs will 4xx b/c the site blocks such usages of `curl`.
 
 ## Run
 
