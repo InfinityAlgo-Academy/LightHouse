@@ -36,6 +36,9 @@ bash ./lighthouse-core/scripts/release/test.sh
 # Prepare the commit, replace x.x.x with the desired version
 bash ./lighthouse-core/scripts/release/prepare-commit.sh x.x.x
 
+# Test on latest build of Chrome
+# See "Manually Testing Chrome" section
+
 # Open the PR and await merge...
 echo "It's been merged! 🎉"
 
@@ -67,3 +70,14 @@ echo "Upload the package zip to CWS dev dashboard..."
 # * Tell the world!!! *
 echo "Complete the _Release publicity_ tasks documented above"
 ```
+
+## Manually Testing Chrome
+
+1. Build Chrome (not Chromium) on your local machine.
+2. Build the devtools client `yarn build-devtools`
+3. Roll devtools client to Chrome `yarn devtools`. Note: this will output a command at the end for testing, copy this.
+4. Test the new roll
+    1. Make sure version is x.x.x
+    2. Make sure there are no glaring problems with UI/auditing
+    3. Give all major features a once over manual test.
+5. Run the testing command from the `yarn devtools` step.
