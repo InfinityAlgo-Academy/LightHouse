@@ -894,7 +894,7 @@
     "message": "Page isn’t blocked from indexing"
   },
   "lighthouse-core/audits/seo/json-ld.js | description": {
-    "message": "Structured data contains rich metadata about a web page. The data is used in search results and social sharing. Invalid metadata will affect how the page appears in these contexts. This audit currently validates a subset of JSON-LD rules. See also the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) to validate other types of structured data."
+    "message": "This audit currently validates a subset of JSON-LD rules used in search engines. See also the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) to validate other types of structured data."
   },
   "lighthouse-core/audits/seo/json-ld.js | displayValue": {
     "message": "{invalidSnippetCount, plural,\n    =1 {# invalid snippet}\n    other {# invalid snippets}\n    }"
