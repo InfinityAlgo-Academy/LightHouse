@@ -33,7 +33,7 @@ module.exports = [
   'http://www.espn.com/',
   'http://www.facebook.com/',
   'http://www.fc2.com/',
-  // 'http://www.filestube.com/',
+  'http://www.filestube.com/',
   'http://www.foxnews.com/',
   'http://www.getpersonas.com/',
   'http://www.globo.com/',

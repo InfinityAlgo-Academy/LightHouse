@@ -8,6 +8,14 @@ http://www.webpagetest.org/getkey.php -> "Login with Google" -> fill form. Key w
 
 Check what version of Lighthouse WPT is using. You should use the same version of lighthouse for the desktop collection.
 
+## Verify URLs
+
+```sh
+node -e "console.log(require('./urls.js').join('\n'))" |\
+  xargs -I{} curl -o /dev/null -Is --write-out '%{http_code} {} (if redirect: %{redirect_url})\n' {} |\
+  sort
+```
+
 ## Run
 
 ```sh
