@@ -6,6 +6,18 @@
 'use strict';
 
 module.exports = [
+  // Flagship sites.
+  'https://flipkart.com',
+  'http://www.espn.com/',
+
+  // TTI tester sites.
+  'http://www.vevo.com/',
+  'https://weather.com/',
+  'http://www.thestar.com.my',
+  'http://www.dawn.com/',
+  'https://www.ebs.in/IPS/',
+
+  // Buncha popular sites.
   'http://www.4399.com/',
   'http://www.4shared.com/',
   'http://www.56.com/',
@@ -23,14 +35,12 @@ module.exports = [
   'http://www.cntv.cn/',
   'http://www.conduit.com/',
   'http://www.craigslist.org/',
-  'http://www.dawn.com/',
   'http://www.depositfiles.com/',
   'http://www.deviantart.com/',
   'http://www.dion.ne.jp/',
   'http://www.domaintools.com/',
   'http://www.douban.com/',
   'http://www.ebay.com/',
-  'http://www.espn.com/',
   'http://www.facebook.com/',
   'http://www.fc2.com/',
   'http://www.filestube.com/',
@@ -88,21 +98,15 @@ module.exports = [
   'http://www.tabelog.com/',
   'http://www.thefreedictionary.com/',
   'http://www.thepiratebay.org/',
-  'http://www.thestar.com.my',
   'http://www.tianya.cn/',
   'http://www.torrentz.com/',
   'http://www.tumblr.com/',
   'http://www.twitpic.com/',
   'http://www.typepad.com/',
   'http://www.verizonwireless.com/',
-  'http://www.vevo.com/',
-  'http://www.weather.com/',
   'http://www.wikipedia.org/',
   'http://www.ynet.com/',
   'http://www.youdao.com/',
   'http://www.zol.com.cn/',
-  'https://flipkart.com',
-  'https://vine.co/',
-  'https://weather.com/',
-  'https://www.ebs.in/IPS/',
-];
+  // 'https://vine.co/',
+].sort();
