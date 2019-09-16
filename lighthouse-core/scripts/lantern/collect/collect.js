@@ -174,7 +174,10 @@ async function runUnthrottledLocally(url) {
     url,
     '--output=json',
     `-AG=${artifactsFolder}`,
-  ]);
+  ], {
+    // Default (1024 * 1024) is too small.
+    maxBuffer: 10 * 1024 * 1024,
+  });
   // Make the JSON small.
   const lhr = JSON.stringify(JSON.parse(stdout));
   const devtoolsLog = fs.readFileSync(`${artifactsFolder}/defaultPass.devtoolslog.json`, 'utf-8');
@@ -238,7 +241,7 @@ async function repeatUntilPass(asyncFn) {
     try {
       return await asyncFn();
     } catch (err) {
-      log.log(err);
+      log.log(err, 'error....');
     }
   }
 }
