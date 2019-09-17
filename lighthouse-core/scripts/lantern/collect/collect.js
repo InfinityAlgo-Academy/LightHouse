@@ -213,7 +213,7 @@ async function runForWpt(url) {
 
     if (response.statusCode >= 100 && response.statusCode < 200) {
       // If behindCount doesn't exist, the test is currently running.
-      const secondsToWait = response.data.behindCount || 5;
+      const secondsToWait = response.data.behindCount || 10;
       if (DEBUG) log.log('poll wpt in', secondsToWait);
       await new Promise((resolve) => setTimeout(resolve, secondsToWait * 1500));
     } else {
