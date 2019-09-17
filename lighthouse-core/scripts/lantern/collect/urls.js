@@ -42,7 +42,7 @@ module.exports = [
   'https://www.douban.com/',
   'https://www.ebay.com/',
   'https://www.facebook.com/',
-  'https://www.fc2.com/',
+  // 'https://www.fc2.com/',
   // 'https://www.filestube.com/',
   'https://www.foxnews.com/',
   // 'https://www.getpersonas.com/',
