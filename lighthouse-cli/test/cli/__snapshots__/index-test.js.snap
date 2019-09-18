@@ -1145,6 +1145,9 @@ Object {
           "path": "script-elements",
         },
         Object {
+          "path": "iframe-elements",
+        },
+        Object {
           "path": "dobetterweb/appcache",
         },
         Object {
