@@ -1116,7 +1116,7 @@
                         "name": "WordPress"
                     }
                 ],
-                "summary": {},
+                "summary": null,
                 "type": "table"
             },
             "id": "js-libraries",
@@ -1248,7 +1248,7 @@
             "details": {
                 "headings": [],
                 "items": [],
-                "summary": {},
+                "summary": null,
                 "type": "table"
             },
             "id": "link-text",
@@ -1905,7 +1905,7 @@
                         "vulnCount": 2.0
                     }
                 ],
-                "summary": {},
+                "summary": null,
                 "type": "table"
             },
             "displayValue": "2 vulnerabilities detected",
@@ -3983,7 +3983,7 @@
             "warningHeader": "Warnings: "
         }
     },
-    "lighthouseVersion": "5.3.0",
+    "lighthouseVersion": "5.3.1",
     "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
     "runWarnings": [],
     "stackPacks": [

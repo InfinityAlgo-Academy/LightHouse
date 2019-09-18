@@ -1,3 +1,23 @@
+ <a name="5.3.1"></a>
+# 5.3.1 (2019-09-18)
+[Full Changelog](https://github.com/googlechrome/lighthouse/compare/v5.3.0...v5.3.1)
+
+## Core
+
+* iframe-elements: Include new IFrameElements gatherer ([#8979](https://github.com/googlechrome/lighthouse/pull/8979))
+
+## Docs
+
+* plugins: update recipe's lighthouse peerDependency version ([#9653](https://github.com/googlechrome/lighthouse/pull/9653))
+
+## I18n
+
+* treat Infinity and NaN as numeric values ([#9687](https://github.com/googlechrome/lighthouse/pull/9687))
+
+## Tests
+
+* smokehouse: fix unintentional 404, relax max-len ([#9665](https://github.com/googlechrome/lighthouse/pull/9665))
+
 <a name="5.3.0"></a>
 # 5.3.0 (2019-09-13)
 
