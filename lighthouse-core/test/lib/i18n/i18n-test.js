@@ -81,7 +81,6 @@ describe('i18n', () => {
       expect(formattedStr).toEqual('happy test');
     });
 
-
     it('returns the formatted string with replacements', () => {
       const UIStrings = {testMessage: 'replacement test ({errorCode})'};
       const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -96,6 +95,25 @@ describe('i18n', () => {
 
       expect(_ => i18n.getFormatted(str_(UIStrings.testMessage), 'still-not-a-locale'))
         .toThrow(`Unsupported locale 'still-not-a-locale'`);
+    });
+
+    it('does not alter the passed-in replacement values object', () => {
+      const UIStrings = {
+        testMessage: 'needs {count, number, bytes}KB test {str} in {timeInMs, number, seconds}s',
+      };
+      const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+
+      const replacements = {
+        count: 2555,
+        str: '*units*',
+        timeInMs: 314159265,
+      };
+      const replacementsClone = JSON.parse(JSON.stringify(replacements));
+
+      const formattedStr = i18n.getFormatted(str_(UIStrings.testMessage, replacements), 'en');
+      expect(formattedStr).toEqual('needs 2KB test *units* in 314,159.3s');
+
+      expect(replacements).toEqual(replacementsClone);
     });
   });
 
@@ -264,6 +282,14 @@ describe('i18n', () => {
       expect(_ => i18n.getFormatted(helloStr, 'en-US'))
         // eslint-disable-next-line max-len
         .toThrow(`Provided value "sirNotAppearingInThisString" does not match any placeholder in ICU message "Hello {timeInMs, number, seconds} World"`);
+    });
+
+    it('formats correctly with NaN and Infinity numeric values', () => {
+      const helloInfinityStr = str_(UIStrings.helloBytesWorld, {in: Infinity});
+      expect(helloInfinityStr).toBeDisplayString('Hello ∞ World');
+
+      const helloNaNStr = str_(UIStrings.helloBytesWorld, {in: NaN});
+      expect(helloNaNStr).toBeDisplayString('Hello NaN World');
     });
   });
 });
