@@ -522,7 +522,7 @@
     "message": "V̂ál̂úê"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "B̂ŕôẃŝér̂ én̂ǵîńêér̂ś r̂éĉóm̂ḿêńd̂ ṕâǵêś ĉón̂t́âín̂ f́êẃêŕ t̂h́âń ~1,500 D̂ÓM̂ él̂ém̂én̂t́ŝ. T́ĥé ŝẃêét̂ śp̂ót̂ íŝ á t̂ŕêé d̂ép̂t́ĥ < 32 él̂ém̂én̂t́ŝ án̂d́ f̂éŵér̂ t́ĥán̂ 60 ćĥíl̂d́r̂én̂/ṕâŕêńt̂ él̂ém̂én̂t́. Â ĺâŕĝé D̂ÓM̂ ćâń îńĉŕêáŝé m̂ém̂ór̂ý ûśâǵê, ćâúŝé l̂ón̂ǵêŕ [ŝt́ŷĺê ćâĺĉúl̂át̂íôńŝ](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), án̂d́ p̂ŕôd́ûćê ćôśt̂ĺŷ [ĺâýôút̂ ŕêf́l̂óŵś](https://developers.google.com/speed/articles/reflow). [L̂éâŕn̂ ḿôŕê](https://web.dev/dom-size)."
+    "message": "B̂ŕôẃŝér̂ én̂ǵîńêér̂ś r̂éĉóm̂ḿêńd̂ ṕâǵêś ĉón̂t́âín̂ f́êẃêŕ t̂h́âń ~1,500 D̂ÓM̂ él̂ém̂én̂t́ŝ. Á m̂ór̂é îd́êál̂ ĺâýôút̂ íŝ á t̂ŕêé d̂ép̂t́ĥ ĺêśŝ t́ĥán̂ 32 él̂ém̂én̂t́ŝ án̂d́ f̂éŵér̂ t́ĥán̂ 60 ćĥíl̂d́r̂én̂/ṕâŕêńt̂ él̂ém̂én̂t́. Â ĺâŕĝé D̂ÓM̂ ćâń îńĉŕêáŝé m̂ém̂ór̂ý ûśâǵê, ćâúŝé l̂ón̂ǵêŕ [ŝt́ŷĺê ćâĺĉúl̂át̂íôńŝ](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), án̂d́ p̂ŕôd́ûćê ćôśt̂ĺŷ [ĺâýôút̂ ŕêf́l̂óŵś](https://developers.google.com/speed/articles/reflow). [L̂éâŕn̂ ḿôŕê](https://web.dev/dom-size)."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount, plural,\n    =1 {1 êĺêḿêńt̂}\n    other {# él̂ém̂én̂t́ŝ}\n    }"

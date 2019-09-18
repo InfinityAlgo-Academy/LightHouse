@@ -27,8 +27,8 @@ const UIStrings = {
   failureTitle: 'Avoid an excessive DOM size',
   /** Description of a Lighthouse audit that tells the user *why* they should reduce the size of the web page's DOM. The size of a DOM is characterized by the total number of DOM elements and greatest DOM depth. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Browser engineers recommend pages contain fewer than ' +
-    `~${MAX_DOM_ELEMENTS.toLocaleString()} DOM elements. The sweet spot is a tree ` +
-    `depth < ${MAX_DOM_TREE_DEPTH} elements and fewer than ${MAX_DOM_TREE_WIDTH} ` +
+    `~${MAX_DOM_ELEMENTS.toLocaleString()} DOM elements. A more ideal layout is a tree ` +
+    `depth less than ${MAX_DOM_TREE_DEPTH} elements and fewer than ${MAX_DOM_TREE_WIDTH} ` +
     'children/parent element. A large DOM can increase memory usage, cause longer ' +
     '[style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), ' +
     'and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://web.dev/dom-size).',
