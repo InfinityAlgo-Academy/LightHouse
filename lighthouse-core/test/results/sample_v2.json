@@ -1242,7 +1242,7 @@
       "description": "Collects all available metrics.",
       "score": null,
       "scoreDisplayMode": "error",
-      "errorMessage": "Something went wrong with recording the trace over your page load. Please run Lighthouse again. (NO_FMP)"
+      "errorMessage": "Something went wrong with recording the trace over your page load. Please run Lighthouse again. (NO_LCP)"
     },
     "offline-start-url": {
       "id": "offline-start-url",
@@ -5456,7 +5456,7 @@
       "lighthouse-core/lib/lh-error.js | badTraceRecording": [
         {
           "values": {
-            "errorCode": "NO_FMP"
+            "errorCode": "NO_LCP"
           },
           "path": "audits.metrics.errorMessage"
         }

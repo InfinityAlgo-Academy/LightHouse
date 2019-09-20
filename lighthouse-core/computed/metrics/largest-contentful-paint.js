@@ -27,11 +27,11 @@ class LargestContentfulPaint extends ComputedMetric {
   static async computeObservedMetric(data) {
     const {traceOfTab} = data;
     if (!traceOfTab.timestamps.largestContentfulPaint) {
-      throw new LHError(LHError.errors.NO_FMP);
+      throw new LHError(LHError.errors.NO_LCP);
     }
 
     return {
-      // FMP established as existing, so cast
+      // LCP established as existing, so cast
       timing: /** @type {number} */ (traceOfTab.timings.largestContentfulPaint),
       timestamp: traceOfTab.timestamps.largestContentfulPaint,
     };
