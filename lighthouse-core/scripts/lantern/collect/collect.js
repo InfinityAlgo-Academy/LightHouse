@@ -142,7 +142,8 @@ async function startWptTest(url) {
     f: 'json',
     url,
     // Keep the location constant. Use Chrome and 3G network conditions.
-    location: 'Dulles:Chrome.3G',
+    // Using Beta because we need 78+ traces for LCP.
+    location: 'Dulles:Chrome Beta.3G',
     lighthouse: '1',
     // Make the trace file available over /getgzip.php.
     lighthouseTrace: '1',
