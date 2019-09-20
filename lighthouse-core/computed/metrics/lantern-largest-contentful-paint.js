@@ -25,6 +25,7 @@ class LanternLargestContentfulPaint extends LanternMetric {
   }
 
   /**
+   * TODO: Validate.
    * @param {Node} dependencyGraph
    * @param {LH.Artifacts.TraceOfTab} traceOfTab
    * @return {Node}
@@ -45,6 +46,7 @@ class LanternLargestContentfulPaint extends LanternMetric {
   }
 
   /**
+   * TODO: Validate.
    * @param {Node} dependencyGraph
    * @param {LH.Artifacts.TraceOfTab} traceOfTab
    * @return {Node}
