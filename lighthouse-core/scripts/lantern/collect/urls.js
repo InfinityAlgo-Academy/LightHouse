@@ -20,7 +20,6 @@ module.exports = [
   // Buncha popular sites.
   'http://www.hatena.ne.jp/',
   'http://www.zol.com.cn/',
-  'https://birdsarentreal.com',
   'https://depositfiles.com/',
   'https://en-maktoob.yahoo.com/?p=xa',
   'https://gm.58.com/glsanfrancisco-sl/',
@@ -86,4 +85,7 @@ module.exports = [
   'https://www.wikipedia.org/',
   'https://www.youdao.com/',
   'https://www8.hp.com/us/en/home.html',
+
+  // Cool sites.
+  'https://birdsarentreal.com',
 ].sort();
