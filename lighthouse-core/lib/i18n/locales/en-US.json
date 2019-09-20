@@ -30,10 +30,10 @@
     "message": "Some ARIA parent roles must contain specific child roles to perform their intended accessibility functions. [Learn more](https://web.dev/aria-required-children/)."
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | failureTitle": {
-    "message": "Elements with `[role]` that require specific children `[role]`s, are missing."
+    "message": "Elements with an ARIA `[role]` that require children to contain a specific `[role]` are missing some or all of those required children."
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | title": {
-    "message": "Elements with `[role]` that require specific children `[role]`s, are present"
+    "message": "Elements with an ARIA `[role]` that require children to contain a specific `[role]` have all required children."
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | description": {
     "message": "Some ARIA child roles must be contained by specific parent roles to properly perform their intended accessibility functions. [Learn more](https://web.dev/aria-required-parent/)."
@@ -276,10 +276,10 @@
     "message": "Screen readers have features to make navigating tables easier. Ensuring `<td>` cells using the `[headers]` attribute only refer to other cells in the same table may improve the experience for screen reader users. [Learn more](https://web.dev/td-headers-attr/)."
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | failureTitle": {
-    "message": "Cells in a `<table>` element that use the `[headers]` attribute refers to other cells of that same table."
+    "message": "Cells in a `<table>` element that use the `[headers]` attribute refer to an element `id` not found within the same table."
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | title": {
-    "message": "Cells in a `<table>` element that use the `[headers]` attribute only refer to other cells of that same table."
+    "message": "Cells in a `<table>` element that use the `[headers]` attribute refer to table cells within the same table."
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | description": {
     "message": "Screen readers have features to make navigating tables easier. Ensuring table headers always refer to some set of cells may improve the experience for screen reader users. [Learn more](https://web.dev/th-has-data-cells/)."
@@ -441,7 +441,7 @@
     "message": "Serve images in next-gen formats"
   },
   "lighthouse-core/audits/content-width.js | description": {
-    "message": "If the width of your app's content doesn't match the width of the viewport, your app might not be optimized for mobile screens. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/content-sized-correctly-for-viewport)."
+    "message": "If the width of your app's content doesn't match the width of the viewport, your app might not be optimized for mobile screens. [Learn more](https://web.dev/content-width)."
   },
   "lighthouse-core/audits/content-width.js | explanation": {
     "message": "The viewport size of {innerWidth}px does not match the window size of {outerWidth}px."
@@ -705,7 +705,7 @@
     "message": "Invalid image sizing information {url}"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
-    "message": "Browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/install-prompt)."
+    "message": "Browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://web.dev/installable-manifest)."
   },
   "lighthouse-core/audits/installable-manifest.js | failureTitle": {
     "message": "Web app manifest does not meet the installability requirements"
@@ -735,7 +735,7 @@
     "message": "Legacy JavaScript"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "A fast page load over a cellular network ensures a good mobile user experience. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/fast-3g)."
+    "message": "A fast page load over a cellular network ensures a good mobile user experience. [Learn more](https://web.dev/load-fast-enough-for-pwa)."
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
     "message": "Interactive at {timeInMs, number, seconds} s"
@@ -765,19 +765,19 @@
     "message": "Minimizes main-thread work"
   },
   "lighthouse-core/audits/manual/pwa-cross-browser.js | description": {
-    "message": "To reach the most number of users, sites should work across every major browser. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist#site-works-cross-browser)."
+    "message": "To reach the most number of users, sites should work across every major browser. [Learn more](https://web.dev/pwa-cross-browser)."
   },
   "lighthouse-core/audits/manual/pwa-cross-browser.js | title": {
     "message": "Site works cross-browser"
   },
   "lighthouse-core/audits/manual/pwa-each-page-has-url.js | description": {
-    "message": "Ensure individual pages are deep linkable via URL and that URLs are unique for the purpose of shareability on social media. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist#each-page-has-a-url)."
+    "message": "Ensure individual pages are deep linkable via URL and that URLs are unique for the purpose of shareability on social media. [Learn more](https://web.dev/pwa-each-page-has-url)."
   },
   "lighthouse-core/audits/manual/pwa-each-page-has-url.js | title": {
     "message": "Each page has a URL"
   },
   "lighthouse-core/audits/manual/pwa-page-transitions.js | description": {
-    "message": "Transitions should feel snappy as you tap around, even on a slow network, a key to perceived performance. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist#page-transitions-dont-feel-like-they-block-on-the-network)."
+    "message": "Transitions should feel snappy as you tap around, even on a slow network. This experience is key to a user's perception of performance. [Learn more](https://web.dev/pwa-page-transitions)."
   },
   "lighthouse-core/audits/manual/pwa-page-transitions.js | title": {
     "message": "Page transitions don't feel like they block on the network"
@@ -843,7 +843,7 @@
     "message": "Server Backend Latencies"
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "A service worker enables your web app to be reliable in unpredictable network conditions. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline)."
+    "message": "A service worker enables your web app to be reliable in unpredictable network conditions. [Learn more](https://web.dev/offline-start-url)."
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` does not respond with a 200 when offline"
@@ -867,7 +867,7 @@
     "message": "Performance budget"
   },
   "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "If you've already set up HTTPS, make sure that you redirect all HTTP traffic to HTTPS in order to enable secure web features for all your users. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/http-redirects-to-https)."
+    "message": "If you've already set up HTTPS, make sure that you redirect all HTTP traffic to HTTPS in order to enable secure web features for all your users. [Learn more](https://web.dev/redirects-http)."
   },
   "lighthouse-core/audits/redirects-http.js | failureTitle": {
     "message": "Does not redirect HTTP traffic to HTTPS"
@@ -885,7 +885,7 @@
     "message": "To set budgets for the quantity and size of page resources, add a budget.json file. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
   "lighthouse-core/audits/resource-summary.js | displayValue": {
-    "message": "{requestCount, plural, =1 {1 request} other {# requests}} • {byteCount, number, bytes} KB"
+    "message": "{requestCount, plural, =1 {1 request • {byteCount, number, bytes} KB} other {# requests • {byteCount, number, bytes} KB}}"
   },
   "lighthouse-core/audits/resource-summary.js | title": {
     "message": "Keep request counts low and transfer sizes small"
@@ -1005,7 +1005,7 @@
     "message": "If your robots.txt file is malformed, crawlers may not be able to understand how you want your website to be crawled or indexed. [Learn more](https://web.dev/robots-txt)."
   },
   "lighthouse-core/audits/seo/robots-txt.js | displayValueHttpBadCode": {
-    "message": "request for robots.txt returned HTTP status: {statusCode}"
+    "message": "Request for robots.txt returned HTTP status: {statusCode}"
   },
   "lighthouse-core/audits/seo/robots-txt.js | displayValueValidationError": {
     "message": "{itemCount, plural,\n    =1 {1 error found}\n    other {# errors found}\n    }"
@@ -1041,7 +1041,7 @@
     "message": "Tap targets are sized appropriately"
   },
   "lighthouse-core/audits/service-worker.js | description": {
-    "message": "The service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/registered-service-worker)."
+    "message": "The service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. [Learn more](https://web.dev/service-worker)."
   },
   "lighthouse-core/audits/service-worker.js | explanationBadManifest": {
     "message": "This page is controlled by a service worker, however no `start_url` was found because manifest failed to parse as valid JSON"
@@ -1062,7 +1062,7 @@
     "message": "Registers a service worker that controls page and `start_url`"
   },
   "lighthouse-core/audits/splash-screen.js | description": {
-    "message": "A themed splash screen ensures a high-quality experience when users launch your app from their homescreens. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/custom-splash-screen)."
+    "message": "A themed splash screen ensures a high-quality experience when users launch your app from their homescreens. [Learn more](https://web.dev/splash-screen)."
   },
   "lighthouse-core/audits/splash-screen.js | failureTitle": {
     "message": "Is not configured for a custom splash screen"
@@ -1071,7 +1071,7 @@
     "message": "Configured for a custom splash screen"
   },
   "lighthouse-core/audits/themed-omnibox.js | description": {
-    "message": "The browser address bar can be themed to match your site. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/address-bar)."
+    "message": "The browser address bar can be themed to match your site. [Learn more](https://web.dev/themed-omnibox)."
   },
   "lighthouse-core/audits/themed-omnibox.js | failureTitle": {
     "message": "Does not set a theme color for the address bar."
@@ -1079,8 +1079,8 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Sets a theme color for the address bar."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Main Thread Time"
+  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
+    "message": "Main-Thread Blocking Time"
   },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Third-Party"
@@ -1089,10 +1089,13 @@
     "message": "Third-party code can significantly impact load performance. Limit the number of redundant third-party providers and try to load third-party code after your page has primarily finished loading. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
   },
   "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount, plural,\n    =1 {1 Third-Party Found}\n    other {# Third-Parties Found}\n  }"
+    "message": "Third-party code blocked the main thread for {timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/audits/third-party-summary.js | failureTitle": {
+    "message": "Reduce the impact of third-party code"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "Third-Party Usage"
+    "message": "Third-Party usage"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Time To First Byte identifies the time at which your server sends a response. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/ttfb)."
@@ -1128,7 +1131,7 @@
     "message": "A preconnect <link> was found for \"{securityOrigin}\" but was not used by the browser. Check that you are using the `crossorigin` attribute properly."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | description": {
-    "message": "Consider adding preconnect or dns-prefetch resource hints to establish early connections to important third-party origins. [Learn more](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect)."
+    "message": "Consider adding `preconnect` or `dns-prefetch` resource hints to establish early connections to important third-party origins. [Learn more](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect)."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | title": {
     "message": "Preconnect to required origins"
@@ -1143,7 +1146,7 @@
     "message": "Preload key requests"
   },
   "lighthouse-core/audits/viewport.js | description": {
-    "message": "Add a `<meta name=\"viewport\">` tag to optimize your app for mobile screens. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/has-viewport-meta-tag)."
+    "message": "Add a `<meta name=\"viewport\">` tag to optimize your app for mobile screens. [Learn more](https://web.dev/viewport)."
   },
   "lighthouse-core/audits/viewport.js | explanationNoTag": {
     "message": "No `<meta name=\"viewport\">` tag found"
@@ -1155,7 +1158,7 @@
     "message": "Has a `<meta name=\"viewport\">` tag with `width` or `initial-scale`"
   },
   "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Your app should display some content when JavaScript is disabled, even if it's just a warning to the user that JavaScript is required to use the app. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/no-js)."
+    "message": "Your app should display some content when JavaScript is disabled, even if it's just a warning to the user that JavaScript is required to use the app. [Learn more](https://web.dev/without-javascript)."
   },
   "lighthouse-core/audits/without-javascript.js | explanation": {
     "message": "The page body should render some content if its scripts are not available."
@@ -1167,7 +1170,7 @@
     "message": "Contains some content when JavaScript is not available"
   },
   "lighthouse-core/audits/works-offline.js | description": {
-    "message": "If you're building a Progressive Web App, consider using a service worker so that your app can work offline. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline)."
+    "message": "If you're building a Progressive Web App, consider using a service worker so that your app can work offline. [Learn more](https://web.dev/works-offline)."
   },
   "lighthouse-core/audits/works-offline.js | failureTitle": {
     "message": "Current page does not respond with a 200 when offline"

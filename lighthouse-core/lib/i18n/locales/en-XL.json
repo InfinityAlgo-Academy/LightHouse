@@ -30,10 +30,10 @@
     "message": "Ŝóm̂é ÂŔÎÁ p̂ár̂én̂t́ r̂ól̂éŝ ḿûśt̂ ćôńt̂áîń ŝṕêćîf́îć ĉh́îĺd̂ ŕôĺêś t̂ó p̂ér̂f́ôŕm̂ t́ĥéîŕ îńt̂én̂d́êd́ âćĉéŝśîb́îĺît́ŷ f́ûńĉt́îón̂ś. [L̂éâŕn̂ ḿôŕê](https://web.dev/aria-required-children/)."
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | failureTitle": {
-    "message": "Êĺêḿêńt̂ś ŵít̂h́ `[role]` t̂h́ât́ r̂éq̂úîŕê śp̂éĉíf̂íĉ ćĥíl̂d́r̂én̂ `[role]`ś, âŕê ḿîśŝín̂ǵ."
+    "message": "Êĺêḿêńt̂ś ŵít̂h́ âń ÂŔÎÁ `[role]` t̂h́ât́ r̂éq̂úîŕê ćĥíl̂d́r̂én̂ t́ô ćôńt̂áîń â śp̂éĉíf̂íĉ `[role]` ár̂é m̂íŝśîńĝ śôḿê ór̂ ál̂ĺ ôf́ t̂h́ôśê ŕêq́ûír̂éd̂ ćĥíl̂d́r̂én̂."
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | title": {
-    "message": "Êĺêḿêńt̂ś ŵít̂h́ `[role]` t̂h́ât́ r̂éq̂úîŕê śp̂éĉíf̂íĉ ćĥíl̂d́r̂én̂ `[role]`ś, âŕê ṕr̂éŝén̂t́"
+    "message": "Êĺêḿêńt̂ś ŵít̂h́ âń ÂŔÎÁ `[role]` t̂h́ât́ r̂éq̂úîŕê ćĥíl̂d́r̂én̂ t́ô ćôńt̂áîń â śp̂éĉíf̂íĉ `[role]` h́âv́ê ál̂ĺ r̂éq̂úîŕêd́ ĉh́îĺd̂ŕêń."
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | description": {
     "message": "Ŝóm̂é ÂŔÎÁ ĉh́îĺd̂ ŕôĺêś m̂úŝt́ b̂é ĉón̂t́âín̂éd̂ b́ŷ śp̂éĉíf̂íĉ ṕâŕêńt̂ ŕôĺêś t̂ó p̂ŕôṕêŕl̂ý p̂ér̂f́ôŕm̂ t́ĥéîŕ îńt̂én̂d́êd́ âćĉéŝśîb́îĺît́ŷ f́ûńĉt́îón̂ś. [L̂éâŕn̂ ḿôŕê](https://web.dev/aria-required-parent/)."
@@ -276,10 +276,10 @@
     "message": "Ŝćr̂éêń r̂éâd́êŕŝ h́âv́ê f́êát̂úr̂éŝ t́ô ḿâḱê ńâv́îǵât́îńĝ t́âb́l̂éŝ éâśîér̂. Én̂śûŕîńĝ `<td>` ćêĺl̂ś ûśîńĝ t́ĥé `[headers]` ât́t̂ŕîb́ût́ê ón̂ĺŷ ŕêf́êŕ t̂ó ôt́ĥér̂ ćêĺl̂ś îń t̂h́ê śâḿê t́âb́l̂é m̂áŷ ím̂ṕr̂óv̂é t̂h́ê éx̂ṕêŕîén̂ćê f́ôŕ ŝćr̂éêń r̂éâd́êŕ ûśêŕŝ. [Ĺêár̂ń m̂ór̂é](https://web.dev/td-headers-attr/)."
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | failureTitle": {
-    "message": "Ĉél̂ĺŝ ín̂ á `<table>` êĺêḿêńt̂ t́ĥát̂ úŝé t̂h́ê `[headers]` át̂t́r̂íb̂út̂é r̂éf̂ér̂ś t̂ó ôt́ĥér̂ ćêĺl̂ś ôf́ t̂h́ât́ ŝám̂é t̂áb̂ĺê."
+    "message": "Ĉél̂ĺŝ ín̂ á `<table>` êĺêḿêńt̂ t́ĥát̂ úŝé t̂h́ê `[headers]` át̂t́r̂íb̂út̂é r̂éf̂ér̂ t́ô án̂ él̂ém̂én̂t́ `id` n̂ót̂ f́ôún̂d́ ŵít̂h́îń t̂h́ê śâḿê t́âb́l̂é."
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | title": {
-    "message": "Ĉél̂ĺŝ ín̂ á `<table>` êĺêḿêńt̂ t́ĥát̂ úŝé t̂h́ê `[headers]` át̂t́r̂íb̂út̂é ôńl̂ý r̂éf̂ér̂ t́ô ót̂h́êŕ ĉél̂ĺŝ óf̂ t́ĥát̂ śâḿê t́âb́l̂é."
+    "message": "Ĉél̂ĺŝ ín̂ á `<table>` êĺêḿêńt̂ t́ĥát̂ úŝé t̂h́ê `[headers]` át̂t́r̂íb̂út̂é r̂éf̂ér̂ t́ô t́âb́l̂é ĉél̂ĺŝ ẃît́ĥín̂ t́ĥé ŝám̂é t̂áb̂ĺê."
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | description": {
     "message": "Ŝćr̂éêń r̂éâd́êŕŝ h́âv́ê f́êát̂úr̂éŝ t́ô ḿâḱê ńâv́îǵât́îńĝ t́âb́l̂éŝ éâśîér̂. Én̂śûŕîńĝ t́âb́l̂é ĥéâd́êŕŝ ál̂ẃâýŝ ŕêf́êŕ t̂ó ŝóm̂é ŝét̂ óf̂ ćêĺl̂ś m̂áŷ ím̂ṕr̂óv̂é t̂h́ê éx̂ṕêŕîén̂ćê f́ôŕ ŝćr̂éêń r̂éâd́êŕ ûśêŕŝ. [Ĺêár̂ń m̂ór̂é](https://web.dev/th-has-data-cells/)."
@@ -441,7 +441,7 @@
     "message": "Ŝér̂v́ê ím̂áĝéŝ ín̂ ńêx́t̂-ǵêń f̂ór̂ḿât́ŝ"
   },
   "lighthouse-core/audits/content-width.js | description": {
-    "message": "Îf́ t̂h́ê ẃîd́t̂h́ ôf́ ŷóûŕ âṕp̂'ś ĉón̂t́êńt̂ d́ôéŝń't̂ ḿât́ĉh́ t̂h́ê ẃîd́t̂h́ ôf́ t̂h́ê v́îéŵṕôŕt̂, ýôúr̂ áp̂ṕ m̂íĝh́t̂ ńôt́ b̂é ôṕt̂ím̂íẑéd̂ f́ôŕ m̂ób̂íl̂é ŝćr̂éêńŝ. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/tools/lighthouse/audits/content-sized-correctly-for-viewport)."
+    "message": "Îf́ t̂h́ê ẃîd́t̂h́ ôf́ ŷóûŕ âṕp̂'ś ĉón̂t́êńt̂ d́ôéŝń't̂ ḿât́ĉh́ t̂h́ê ẃîd́t̂h́ ôf́ t̂h́ê v́îéŵṕôŕt̂, ýôúr̂ áp̂ṕ m̂íĝh́t̂ ńôt́ b̂é ôṕt̂ím̂íẑéd̂ f́ôŕ m̂ób̂íl̂é ŝćr̂éêńŝ. [Ĺêár̂ń m̂ór̂é](https://web.dev/content-width)."
   },
   "lighthouse-core/audits/content-width.js | explanation": {
     "message": "T̂h́ê v́îéŵṕôŕt̂ śîźê óf̂ {innerWidth}ṕx̂ d́ôéŝ ńôt́ m̂át̂ćĥ t́ĥé ŵín̂d́ôẃ ŝíẑé ôf́ {outerWidth}p̂x́."
@@ -705,7 +705,7 @@
     "message": "Îńv̂ál̂íd̂ ím̂áĝé ŝíẑín̂ǵ îńf̂ór̂ḿât́îón̂ {url}"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
-    "message": "B̂ŕôẃŝér̂ś ĉán̂ ṕr̂óâćt̂ív̂él̂ý p̂ŕôḿp̂t́ ûśêŕŝ t́ô ád̂d́ ŷóûŕ âṕp̂ t́ô t́ĥéîŕ ĥóm̂éŝćr̂éêń, ŵh́îćĥ ćâń l̂éâd́ t̂ó ĥíĝh́êŕ êńĝáĝém̂én̂t́. [L̂éâŕn̂ ḿôŕê](https://developers.google.com/web/tools/lighthouse/audits/install-prompt)."
+    "message": "B̂ŕôẃŝér̂ś ĉán̂ ṕr̂óâćt̂ív̂él̂ý p̂ŕôḿp̂t́ ûśêŕŝ t́ô ád̂d́ ŷóûŕ âṕp̂ t́ô t́ĥéîŕ ĥóm̂éŝćr̂éêń, ŵh́îćĥ ćâń l̂éâd́ t̂ó ĥíĝh́êŕ êńĝáĝém̂én̂t́. [L̂éâŕn̂ ḿôŕê](https://web.dev/installable-manifest)."
   },
   "lighthouse-core/audits/installable-manifest.js | failureTitle": {
     "message": "Ŵéb̂ áp̂ṕ m̂án̂íf̂éŝt́ d̂óêś n̂ót̂ ḿêét̂ t́ĥé îńŝt́âĺl̂áb̂íl̂ít̂ý r̂éq̂úîŕêḿêńt̂ś"
@@ -735,7 +735,7 @@
     "message": "L̂éĝáĉý Ĵáv̂áŜćr̂íp̂t́"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Â f́âśt̂ ṕâǵê ĺôád̂ óv̂ér̂ á ĉél̂ĺûĺâŕ n̂ét̂ẃôŕk̂ én̂śûŕêś â ǵôód̂ ḿôb́îĺê úŝér̂ éx̂ṕêŕîén̂ćê. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/tools/lighthouse/audits/fast-3g)."
+    "message": "Â f́âśt̂ ṕâǵê ĺôád̂ óv̂ér̂ á ĉél̂ĺûĺâŕ n̂ét̂ẃôŕk̂ én̂śûŕêś â ǵôód̂ ḿôb́îĺê úŝér̂ éx̂ṕêŕîén̂ćê. [Ĺêár̂ń m̂ór̂é](https://web.dev/load-fast-enough-for-pwa)."
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
     "message": "Îńt̂ér̂áĉt́îv́ê át̂ {timeInMs, number, seconds} ś"
@@ -765,19 +765,19 @@
     "message": "M̂ín̂ím̂íẑéŝ ḿâín̂-t́ĥŕêád̂ ẃôŕk̂"
   },
   "lighthouse-core/audits/manual/pwa-cross-browser.js | description": {
-    "message": "T̂ó r̂éâćĥ t́ĥé m̂óŝt́ n̂úm̂b́êŕ ôf́ ûśêŕŝ, śît́êś ŝh́ôúl̂d́ ŵór̂ḱ âćr̂óŝś êv́êŕŷ ḿâj́ôŕ b̂ŕôẃŝér̂. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/progressive-web-apps/checklist#site-works-cross-browser)."
+    "message": "T̂ó r̂éâćĥ t́ĥé m̂óŝt́ n̂úm̂b́êŕ ôf́ ûśêŕŝ, śît́êś ŝh́ôúl̂d́ ŵór̂ḱ âćr̂óŝś êv́êŕŷ ḿâj́ôŕ b̂ŕôẃŝér̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/pwa-cross-browser)."
   },
   "lighthouse-core/audits/manual/pwa-cross-browser.js | title": {
     "message": "Ŝít̂é ŵór̂ḱŝ ćr̂óŝś-b̂ŕôẃŝér̂"
   },
   "lighthouse-core/audits/manual/pwa-each-page-has-url.js | description": {
-    "message": "Êńŝúr̂é îńd̂ív̂íd̂úâĺ p̂áĝéŝ ár̂é d̂éêṕ l̂ín̂ḱâb́l̂é v̂íâ ÚR̂Ĺ âńd̂ t́ĥát̂ ÚR̂Ĺŝ ár̂é ûńîq́ûé f̂ór̂ t́ĥé p̂úr̂ṕôśê óf̂ śĥár̂éâb́îĺît́ŷ ón̂ śôćîál̂ ḿêd́îá. [L̂éâŕn̂ ḿôŕê](https://developers.google.com/web/progressive-web-apps/checklist#each-page-has-a-url)."
+    "message": "Êńŝúr̂é îńd̂ív̂íd̂úâĺ p̂áĝéŝ ár̂é d̂éêṕ l̂ín̂ḱâb́l̂é v̂íâ ÚR̂Ĺ âńd̂ t́ĥát̂ ÚR̂Ĺŝ ár̂é ûńîq́ûé f̂ór̂ t́ĥé p̂úr̂ṕôśê óf̂ śĥár̂éâb́îĺît́ŷ ón̂ śôćîál̂ ḿêd́îá. [L̂éâŕn̂ ḿôŕê](https://web.dev/pwa-each-page-has-url)."
   },
   "lighthouse-core/audits/manual/pwa-each-page-has-url.js | title": {
     "message": "Êáĉh́ p̂áĝé ĥáŝ á ÛŔL̂"
   },
   "lighthouse-core/audits/manual/pwa-page-transitions.js | description": {
-    "message": "T̂ŕâńŝít̂íôńŝ śĥóûĺd̂ f́êél̂ śn̂áp̂ṕŷ áŝ ýôú t̂áp̂ ár̂óûńd̂, év̂én̂ ón̂ á ŝĺôẃ n̂ét̂ẃôŕk̂, á k̂éŷ t́ô ṕêŕĉéîv́êd́ p̂ér̂f́ôŕm̂án̂ćê. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/progressive-web-apps/checklist#page-transitions-dont-feel-like-they-block-on-the-network)."
+    "message": "T̂ŕâńŝít̂íôńŝ śĥóûĺd̂ f́êél̂ śn̂áp̂ṕŷ áŝ ýôú t̂áp̂ ár̂óûńd̂, év̂én̂ ón̂ á ŝĺôẃ n̂ét̂ẃôŕk̂. T́ĥíŝ éx̂ṕêŕîén̂ćê íŝ ḱêý t̂ó â úŝér̂'ś p̂ér̂ćêṕt̂íôń ôf́ p̂ér̂f́ôŕm̂án̂ćê. [Ĺêár̂ń m̂ór̂é](https://web.dev/pwa-page-transitions)."
   },
   "lighthouse-core/audits/manual/pwa-page-transitions.js | title": {
     "message": "P̂áĝé t̂ŕâńŝít̂íôńŝ d́ôń't̂ f́êél̂ ĺîḱê t́ĥéŷ b́l̂óĉḱ ôń t̂h́ê ńêt́ŵór̂ḱ"
@@ -843,7 +843,7 @@
     "message": "Ŝér̂v́êŕ B̂áĉḱêńd̂ Ĺât́êńĉíêś"
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Â śêŕv̂íĉé ŵór̂ḱêŕ êńâb́l̂éŝ ýôúr̂ ẃêb́ âṕp̂ t́ô b́ê ŕêĺîáb̂ĺê ín̂ ún̂ṕr̂éd̂íĉt́âb́l̂é n̂ét̂ẃôŕk̂ ćôńd̂ít̂íôńŝ. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline)."
+    "message": "Â śêŕv̂íĉé ŵór̂ḱêŕ êńâb́l̂éŝ ýôúr̂ ẃêb́ âṕp̂ t́ô b́ê ŕêĺîáb̂ĺê ín̂ ún̂ṕr̂éd̂íĉt́âb́l̂é n̂ét̂ẃôŕk̂ ćôńd̂ít̂íôńŝ. [Ĺêár̂ń m̂ór̂é](https://web.dev/offline-start-url)."
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` d̂óêś n̂ót̂ ŕêśp̂ón̂d́ ŵít̂h́ â 200 ẃĥén̂ óf̂f́l̂ín̂é"
@@ -867,7 +867,7 @@
     "message": "P̂ér̂f́ôŕm̂án̂ćê b́ûd́ĝét̂"
   },
   "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "Îf́ ŷóû'v́ê ál̂ŕêád̂ý ŝét̂ úp̂ H́T̂T́P̂Ś, m̂ák̂é ŝúr̂é t̂h́ât́ ŷóû ŕêd́îŕêćt̂ ál̂ĺ ĤT́T̂Ṕ t̂ŕâf́f̂íĉ t́ô H́T̂T́P̂Ś îń ôŕd̂ér̂ t́ô én̂áb̂ĺê śêćûŕê ẃêb́ f̂éât́ûŕêś f̂ór̂ ál̂ĺ ŷóûŕ ûśêŕŝ. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/tools/lighthouse/audits/http-redirects-to-https)."
+    "message": "Îf́ ŷóû'v́ê ál̂ŕêád̂ý ŝét̂ úp̂ H́T̂T́P̂Ś, m̂ák̂é ŝúr̂é t̂h́ât́ ŷóû ŕêd́îŕêćt̂ ál̂ĺ ĤT́T̂Ṕ t̂ŕâf́f̂íĉ t́ô H́T̂T́P̂Ś îń ôŕd̂ér̂ t́ô én̂áb̂ĺê śêćûŕê ẃêb́ f̂éât́ûŕêś f̂ór̂ ál̂ĺ ŷóûŕ ûśêŕŝ. [Ĺêár̂ń m̂ór̂é](https://web.dev/redirects-http)."
   },
   "lighthouse-core/audits/redirects-http.js | failureTitle": {
     "message": "D̂óêś n̂ót̂ ŕêd́îŕêćt̂ H́T̂T́P̂ t́r̂áf̂f́îć t̂ó ĤT́T̂ṔŜ"
@@ -885,7 +885,7 @@
     "message": "T̂ó ŝét̂ b́ûd́ĝét̂ś f̂ór̂ t́ĥé q̂úâńt̂ít̂ý âńd̂ śîźê óf̂ ṕâǵê ŕêśôúr̂ćêś, âd́d̂ á b̂úd̂ǵêt́.ĵśôń f̂íl̂é. [L̂éâŕn̂ ḿôŕê](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
   "lighthouse-core/audits/resource-summary.js | displayValue": {
-    "message": "{requestCount, plural, =1 {1 r̂éq̂úêśt̂} other {# ŕêq́ûéŝt́ŝ}} • {byteCount, number, bytes} ḰB̂"
+    "message": "{requestCount, plural, =1 {1 r̂éq̂úêśt̂ • {byteCount, number, bytes} ḰB̂} other {# ŕêq́ûéŝt́ŝ • {byteCount, number, bytes} ḰB̂}}"
   },
   "lighthouse-core/audits/resource-summary.js | title": {
     "message": "K̂éêṕ r̂éq̂úêśt̂ ćôún̂t́ŝ ĺôẃ âńd̂ t́r̂án̂śf̂ér̂ śîźêś ŝḿâĺl̂"
@@ -1005,7 +1005,7 @@
     "message": "Îf́ ŷóûŕ r̂ób̂ót̂ś.t̂x́t̂ f́îĺê íŝ ḿâĺf̂ór̂ḿêd́, ĉŕâẃl̂ér̂ś m̂áŷ ńôt́ b̂é âb́l̂é t̂ó ûńd̂ér̂śt̂án̂d́ ĥóŵ ýôú ŵán̂t́ ŷóûŕ ŵéb̂śît́ê t́ô b́ê ćr̂áŵĺêd́ ôŕ îńd̂éx̂éd̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/robots-txt)."
   },
   "lighthouse-core/audits/seo/robots-txt.js | displayValueHttpBadCode": {
-    "message": "r̂éq̂úêśt̂ f́ôŕ r̂ób̂ót̂ś.t̂x́t̂ ŕêt́ûŕn̂éd̂ H́T̂T́P̂ śt̂át̂úŝ: {statusCode}"
+    "message": "R̂éq̂úêśt̂ f́ôŕ r̂ób̂ót̂ś.t̂x́t̂ ŕêt́ûŕn̂éd̂ H́T̂T́P̂ śt̂át̂úŝ: {statusCode}"
   },
   "lighthouse-core/audits/seo/robots-txt.js | displayValueValidationError": {
     "message": "{itemCount, plural,\n    =1 {1 êŕr̂ór̂ f́ôún̂d́}\n    other {# êŕr̂ór̂ś f̂óûńd̂}\n    }"
@@ -1041,7 +1041,7 @@
     "message": "T̂áp̂ t́âŕĝét̂ś âŕê śîźêd́ âṕp̂ŕôṕr̂íât́êĺŷ"
   },
   "lighthouse-core/audits/service-worker.js | description": {
-    "message": "T̂h́ê śêŕv̂íĉé ŵór̂ḱêŕ îś t̂h́ê t́êćĥńôĺôǵŷ t́ĥát̂ én̂áb̂ĺêś ŷóûŕ âṕp̂ t́ô úŝé m̂án̂ý P̂ŕôǵr̂éŝśîv́ê Ẃêb́ Âṕp̂ f́êát̂úr̂éŝ, śûćĥ áŝ óf̂f́l̂ín̂é, âd́d̂ t́ô h́ôḿêśĉŕêén̂, án̂d́ p̂úŝh́ n̂ót̂íf̂íĉát̂íôńŝ. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/tools/lighthouse/audits/registered-service-worker)."
+    "message": "T̂h́ê śêŕv̂íĉé ŵór̂ḱêŕ îś t̂h́ê t́êćĥńôĺôǵŷ t́ĥát̂ én̂áb̂ĺêś ŷóûŕ âṕp̂ t́ô úŝé m̂án̂ý P̂ŕôǵr̂éŝśîv́ê Ẃêb́ Âṕp̂ f́êát̂úr̂éŝ, śûćĥ áŝ óf̂f́l̂ín̂é, âd́d̂ t́ô h́ôḿêśĉŕêén̂, án̂d́ p̂úŝh́ n̂ót̂íf̂íĉát̂íôńŝ. [Ĺêár̂ń m̂ór̂é](https://web.dev/service-worker)."
   },
   "lighthouse-core/audits/service-worker.js | explanationBadManifest": {
     "message": "T̂h́îś p̂áĝé îś ĉón̂t́r̂ól̂ĺêd́ b̂ý â śêŕv̂íĉé ŵór̂ḱêŕ, ĥóŵév̂ér̂ ńô `start_url` ẃâś f̂óûńd̂ b́êćâúŝé m̂án̂íf̂éŝt́ f̂áîĺêd́ t̂ó p̂ár̂śê áŝ v́âĺîd́ ĴŚÔŃ"
@@ -1062,7 +1062,7 @@
     "message": "R̂éĝíŝt́êŕŝ á ŝér̂v́îćê ẃôŕk̂ér̂ t́ĥát̂ ćôńt̂ŕôĺŝ ṕâǵê án̂d́ `start_url`"
   },
   "lighthouse-core/audits/splash-screen.js | description": {
-    "message": "Â t́ĥém̂éd̂ śp̂ĺâśĥ śĉŕêén̂ én̂śûŕêś â h́îǵĥ-q́ûál̂ít̂ý êx́p̂ér̂íêńĉé ŵh́êń ûśêŕŝ ĺâún̂ćĥ ýôúr̂ áp̂ṕ f̂ŕôḿ t̂h́êír̂ h́ôḿêśĉŕêén̂ś. [L̂éâŕn̂ ḿôŕê](https://developers.google.com/web/tools/lighthouse/audits/custom-splash-screen)."
+    "message": "Â t́ĥém̂éd̂ śp̂ĺâśĥ śĉŕêén̂ én̂śûŕêś â h́îǵĥ-q́ûál̂ít̂ý êx́p̂ér̂íêńĉé ŵh́êń ûśêŕŝ ĺâún̂ćĥ ýôúr̂ áp̂ṕ f̂ŕôḿ t̂h́êír̂ h́ôḿêśĉŕêén̂ś. [L̂éâŕn̂ ḿôŕê](https://web.dev/splash-screen)."
   },
   "lighthouse-core/audits/splash-screen.js | failureTitle": {
     "message": "Îś n̂ót̂ ćôńf̂íĝúr̂éd̂ f́ôŕ â ćûśt̂óm̂ śp̂ĺâśĥ śĉŕêén̂"
@@ -1071,7 +1071,7 @@
     "message": "Ĉón̂f́îǵûŕêd́ f̂ór̂ á ĉúŝt́ôḿ ŝṕl̂áŝh́ ŝćr̂éêń"
   },
   "lighthouse-core/audits/themed-omnibox.js | description": {
-    "message": "T̂h́ê b́r̂óŵśêŕ âd́d̂ŕêśŝ b́âŕ ĉán̂ b́ê t́ĥém̂éd̂ t́ô ḿât́ĉh́ ŷóûŕ ŝít̂é. [L̂éâŕn̂ ḿôŕê](https://developers.google.com/web/tools/lighthouse/audits/address-bar)."
+    "message": "T̂h́ê b́r̂óŵśêŕ âd́d̂ŕêśŝ b́âŕ ĉán̂ b́ê t́ĥém̂éd̂ t́ô ḿât́ĉh́ ŷóûŕ ŝít̂é. [L̂éâŕn̂ ḿôŕê](https://web.dev/themed-omnibox)."
   },
   "lighthouse-core/audits/themed-omnibox.js | failureTitle": {
     "message": "D̂óêś n̂ót̂ śêt́ â t́ĥém̂é ĉól̂ór̂ f́ôŕ t̂h́ê ád̂d́r̂éŝś b̂ár̂."
@@ -1079,8 +1079,8 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Ŝét̂ś â t́ĥém̂é ĉól̂ór̂ f́ôŕ t̂h́ê ád̂d́r̂éŝś b̂ár̂."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "M̂áîń T̂h́r̂éâd́ T̂ím̂é"
+  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
+    "message": "M̂áîń-T̂h́r̂éâd́ B̂ĺôćk̂ín̂ǵ T̂ím̂é"
   },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "T̂h́îŕd̂-Ṕâŕt̂ý"
@@ -1089,10 +1089,13 @@
     "message": "T̂h́îŕd̂-ṕâŕt̂ý ĉód̂é ĉán̂ śîǵn̂íf̂íĉán̂t́l̂ý îḿp̂áĉt́ l̂óâd́ p̂ér̂f́ôŕm̂án̂ćê. Ĺîḿît́ t̂h́ê ńûḿb̂ér̂ óf̂ ŕêd́ûńd̂án̂t́ t̂h́îŕd̂-ṕâŕt̂ý p̂ŕôv́îd́êŕŝ án̂d́ t̂ŕŷ t́ô ĺôád̂ t́ĥír̂d́-p̂ár̂t́ŷ ćôd́ê áf̂t́êŕ ŷóûŕ p̂áĝé ĥáŝ ṕr̂ím̂ár̂íl̂ý f̂ín̂íŝh́êd́ l̂óâd́îńĝ. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
   },
   "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount, plural,\n    =1 {1 T̂h́îŕd̂-Ṕâŕt̂ý F̂óûńd̂}\n    other {# T́ĥír̂d́-P̂ár̂t́îéŝ F́ôún̂d́}\n  }"
+    "message": "T̂h́îŕd̂-ṕâŕt̂ý ĉód̂é b̂ĺôćk̂éd̂ t́ĥé m̂áîń t̂h́r̂éâd́ f̂ór̂ {timeInMs, number, milliseconds} ḿŝ"
+  },
+  "lighthouse-core/audits/third-party-summary.js | failureTitle": {
+    "message": "R̂éd̂úĉé t̂h́ê ím̂ṕâćt̂ óf̂ t́ĥír̂d́-p̂ár̂t́ŷ ćôd́ê"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "T̂h́îŕd̂-Ṕâŕt̂ý Ûśâǵê"
+    "message": "T̂h́îŕd̂-Ṕâŕt̂ý ûśâǵê"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "T̂ím̂é T̂ó F̂ír̂śt̂ B́ŷt́ê íd̂én̂t́îf́îéŝ t́ĥé t̂ím̂é ât́ ŵh́îćĥ ýôúr̂ śêŕv̂ér̂ śêńd̂ś â ŕêśp̂ón̂śê. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/tools/lighthouse/audits/ttfb)."
@@ -1128,7 +1131,7 @@
     "message": "Â ṕr̂éĉón̂ńêćt̂ <ĺîńk̂> ẃâś f̂óûńd̂ f́ôŕ \"{securityOrigin}\" b̂út̂ ẃâś n̂ót̂ úŝéd̂ b́ŷ t́ĥé b̂ŕôẃŝér̂. Ćĥéĉḱ t̂h́ât́ ŷóû ár̂é ûśîńĝ t́ĥé `crossorigin` ât́t̂ŕîb́ût́ê ṕr̂óp̂ér̂ĺŷ."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | description": {
-    "message": "Ĉón̂śîd́êŕ âd́d̂ín̂ǵ p̂ŕêćôńn̂éĉt́ ôŕ d̂ńŝ-ṕr̂éf̂ét̂ćĥ ŕêśôúr̂ćê h́îńt̂ś t̂ó êśt̂áb̂ĺîśĥ éâŕl̂ý ĉón̂ńêćt̂íôńŝ t́ô ím̂ṕôŕt̂án̂t́ t̂h́îŕd̂-ṕâŕt̂ý ôŕîǵîńŝ. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect)."
+    "message": "Ĉón̂śîd́êŕ âd́d̂ín̂ǵ `preconnect` ôŕ `dns-prefetch` r̂éŝóûŕĉé ĥín̂t́ŝ t́ô éŝt́âb́l̂íŝh́ êár̂ĺŷ ćôńn̂éĉt́îón̂ś t̂ó îḿp̂ór̂t́âńt̂ t́ĥír̂d́-p̂ár̂t́ŷ ór̂íĝín̂ś. [L̂éâŕn̂ ḿôŕê](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect)."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | title": {
     "message": "P̂ŕêćôńn̂éĉt́ t̂ó r̂éq̂úîŕêd́ ôŕîǵîńŝ"
@@ -1143,7 +1146,7 @@
     "message": "P̂ŕêĺôád̂ ḱêý r̂éq̂úêśt̂ś"
   },
   "lighthouse-core/audits/viewport.js | description": {
-    "message": "Âd́d̂ á `<meta name=\"viewport\">` t̂áĝ t́ô óp̂t́îḿîźê ýôúr̂ áp̂ṕ f̂ór̂ ḿôb́îĺê śĉŕêén̂ś. [L̂éâŕn̂ ḿôŕê](https://developers.google.com/web/tools/lighthouse/audits/has-viewport-meta-tag)."
+    "message": "Âd́d̂ á `<meta name=\"viewport\">` t̂áĝ t́ô óp̂t́îḿîźê ýôúr̂ áp̂ṕ f̂ór̂ ḿôb́îĺê śĉŕêén̂ś. [L̂éâŕn̂ ḿôŕê](https://web.dev/viewport)."
   },
   "lighthouse-core/audits/viewport.js | explanationNoTag": {
     "message": "N̂ó `<meta name=\"viewport\">` t̂áĝ f́ôún̂d́"
@@ -1155,7 +1158,7 @@
     "message": "Ĥáŝ á `<meta name=\"viewport\">` t̂áĝ ẃît́ĥ `width` ór̂ `initial-scale`"
   },
   "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Ŷóûŕ âṕp̂ śĥóûĺd̂ d́îśp̂ĺâý ŝóm̂é ĉón̂t́êńt̂ ẃĥén̂ J́âv́âŚĉŕîṕt̂ íŝ d́îśâb́l̂éd̂, év̂én̂ íf̂ ít̂'ś ĵúŝt́ â ẃâŕn̂ín̂ǵ t̂ó t̂h́ê úŝér̂ t́ĥát̂ J́âv́âŚĉŕîṕt̂ íŝ ŕêq́ûír̂éd̂ t́ô úŝé t̂h́ê áp̂ṕ. [L̂éâŕn̂ ḿôŕê](https://developers.google.com/web/tools/lighthouse/audits/no-js)."
+    "message": "Ŷóûŕ âṕp̂ śĥóûĺd̂ d́îśp̂ĺâý ŝóm̂é ĉón̂t́êńt̂ ẃĥén̂ J́âv́âŚĉŕîṕt̂ íŝ d́îśâb́l̂éd̂, év̂én̂ íf̂ ít̂'ś ĵúŝt́ â ẃâŕn̂ín̂ǵ t̂ó t̂h́ê úŝér̂ t́ĥát̂ J́âv́âŚĉŕîṕt̂ íŝ ŕêq́ûír̂éd̂ t́ô úŝé t̂h́ê áp̂ṕ. [L̂éâŕn̂ ḿôŕê](https://web.dev/without-javascript)."
   },
   "lighthouse-core/audits/without-javascript.js | explanation": {
     "message": "T̂h́ê ṕâǵê b́ôd́ŷ śĥóûĺd̂ ŕêńd̂ér̂ śôḿê ćôńt̂én̂t́ îf́ ît́ŝ śĉŕîṕt̂ś âŕê ńôt́ âv́âíl̂áb̂ĺê."
@@ -1167,7 +1170,7 @@
     "message": "Ĉón̂t́âín̂ś ŝóm̂é ĉón̂t́êńt̂ ẃĥén̂ J́âv́âŚĉŕîṕt̂ íŝ ńôt́ âv́âíl̂áb̂ĺê"
   },
   "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Îf́ ŷóû'ŕê b́ûíl̂d́îńĝ á P̂ŕôǵr̂éŝśîv́ê Ẃêb́ Âṕp̂, ćôńŝíd̂ér̂ úŝín̂ǵ â śêŕv̂íĉé ŵór̂ḱêŕ ŝó t̂h́ât́ ŷóûŕ âṕp̂ ćâń ŵór̂ḱ ôf́f̂ĺîńê. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline)."
+    "message": "Îf́ ŷóû'ŕê b́ûíl̂d́îńĝ á P̂ŕôǵr̂éŝśîv́ê Ẃêb́ Âṕp̂, ćôńŝíd̂ér̂ úŝín̂ǵ â śêŕv̂íĉé ŵór̂ḱêŕ ŝó t̂h́ât́ ŷóûŕ âṕp̂ ćâń ŵór̂ḱ ôf́f̂ĺîńê. [Ĺêár̂ń m̂ór̂é](https://web.dev/works-offline)."
   },
   "lighthouse-core/audits/works-offline.js | failureTitle": {
     "message": "Ĉúr̂ŕêńt̂ ṕâǵê d́ôéŝ ńôt́ r̂éŝṕôńd̂ ẃît́ĥ á 200 ŵh́êń ôf́f̂ĺîńê"

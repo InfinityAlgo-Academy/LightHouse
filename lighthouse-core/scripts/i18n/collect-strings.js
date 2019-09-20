@@ -13,8 +13,9 @@ const glob = require('glob');
 const path = require('path');
 const assert = require('assert');
 const tsc = require('typescript');
-const collectAndBakeCtcStrings = require('./bake-ctc-to-lhl.js');
 const Util = require('../../report/html/renderer/util.js');
+const {collectAndBakeCtcStrings} = require('./bake-ctc-to-lhl.js');
+const {pruneObsoleteLhlMessages} = require('./prune-obsolete-lhl-messages.js');
 
 const LH_ROOT = path.join(__dirname, '../../../');
 const UISTRINGS_REGEX = /UIStrings = .*?\};\n/s;
@@ -576,11 +577,15 @@ if (require.main === module) {
   console.log('Written to disk!', 'en-XL.ctc.json');
 
   // Bake the ctc en-US and en-XL files into en-US and en-XL LHL format
-  const lhl = collectAndBakeCtcStrings.collectAndBakeCtcStrings(path.join(LH_ROOT, 'lighthouse-core/lib/i18n/locales/'),
-  path.join(LH_ROOT, 'lighthouse-core/lib/i18n/locales/'));
+  const lhl = collectAndBakeCtcStrings(path.join(LH_ROOT, 'lighthouse-core/lib/i18n/locales/'),
+      path.join(LH_ROOT, 'lighthouse-core/lib/i18n/locales/'));
   lhl.forEach(function(locale) {
     console.log(`Baked ${locale} into LHL format.`);
   });
+
+  // Remove any obsolete strings in existing LHL files.
+  console.log('Checking for out-of-date LHL messages...');
+  pruneObsoleteLhlMessages();
 }
 
 module.exports = {
