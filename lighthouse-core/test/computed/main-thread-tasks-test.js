@@ -8,7 +8,7 @@
 /* eslint-env jest */
 
 const MainThreadTasks = require('../../computed/main-thread-tasks.js');
-const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
+const pwaTrace = require('../fixtures/traces/progressive-app-m79.json');
 
 describe('MainThreadTasksComputed', () => {
   it('computes the artifact', async () => {

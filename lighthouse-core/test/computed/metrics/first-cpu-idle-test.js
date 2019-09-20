@@ -9,8 +9,8 @@ const FirstCPUIdle = require('../../../computed/metrics/first-cpu-idle.js');
 const TracingProcessor = require('../../../lib/tracehouse/trace-processor.js');
 
 const tooShortTrace = require('../../fixtures/traces/progressive-app.json');
-const acceptableTrace = require('../../fixtures/traces/progressive-app-m60.json');
-const acceptableDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json'); // eslint-disable-line max-len
+const acceptableTrace = require('../../fixtures/traces/progressive-app-m79.json');
+const acceptableDevtoolsLog = require('../../fixtures/traces/progressive-app-m79.devtools.log.json'); // eslint-disable-line max-len
 const redirectTrace = require('../../fixtures/traces/site-with-redirect.json');
 
 const assert = require('assert');

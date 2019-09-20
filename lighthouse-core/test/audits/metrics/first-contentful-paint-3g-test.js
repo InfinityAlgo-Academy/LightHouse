@@ -8,8 +8,8 @@
 const FCP3G = require('../../../audits/metrics/first-contentful-paint-3g.js');
 const options = FCP3G.defaultOptions;
 
-const pwaTrace = require('../../fixtures/traces/progressive-app-m60.json');
-const pwaDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+const pwaTrace = require('../../fixtures/traces/progressive-app-m79.json');
+const pwaDevtoolsLog = require('../../fixtures/traces/progressive-app-m79.devtools.log.json');
 
 /* eslint-env jest */
 

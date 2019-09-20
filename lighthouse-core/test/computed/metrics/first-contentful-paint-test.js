@@ -8,8 +8,8 @@
 const assert = require('assert');
 
 const FirstContentfulPaint = require('../../../computed/metrics/first-contentful-paint.js'); // eslint-disable-line max-len
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+const trace = require('../../fixtures/traces/progressive-app-m79.json');
+const devtoolsLog = require('../../fixtures/traces/progressive-app-m79.devtools.log.json');
 
 /* eslint-env jest */
 

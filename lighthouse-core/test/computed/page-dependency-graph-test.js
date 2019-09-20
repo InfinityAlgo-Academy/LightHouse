@@ -9,8 +9,8 @@ const PageDependencyGraph = require('../../computed/page-dependency-graph.js');
 const BaseNode = require('../../lib/dependency-graph/base-node.js');
 const NetworkRequest = require('../../lib/network-request.js');
 
-const sampleTrace = require('../fixtures/traces/progressive-app-m60.json');
-const sampleDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
+const sampleTrace = require('../fixtures/traces/progressive-app-m79.json');
+const sampleDevtoolsLog = require('../fixtures/traces/progressive-app-m79.devtools.log.json');
 
 const assert = require('assert');
 

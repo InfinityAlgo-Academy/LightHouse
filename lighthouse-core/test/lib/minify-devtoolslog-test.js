@@ -6,8 +6,8 @@
 'use strict';
 
 const {minifyDevtoolsLog} = require('../../lib/minify-devtoolslog.js');
-const trace = require('../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
+const trace = require('../fixtures/traces/progressive-app-m79.json');
+const devtoolsLog = require('../fixtures/traces/progressive-app-m79.devtools.log.json');
 const MetricsAudit = require('../../audits/metrics.js');
 
 /* eslint-env jest */

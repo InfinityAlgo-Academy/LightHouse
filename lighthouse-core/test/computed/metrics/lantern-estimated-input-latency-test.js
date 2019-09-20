@@ -6,8 +6,8 @@
 'use strict';
 
 const LanternEstimatedInputLatency = require('../../../computed/metrics/lantern-estimated-input-latency.js'); // eslint-disable-line max-len
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+const trace = require('../../fixtures/traces/progressive-app-m79.json');
+const devtoolsLog = require('../../fixtures/traces/progressive-app-m79.devtools.log.json');
 
 /* eslint-env jest */
 

@@ -258,8 +258,8 @@ describe('DependencyGraph/Simulator', () => {
     });
 
     describe('on a real trace', () => {
-      const trace = require('../../../fixtures/traces/progressive-app-m60.json');
-      const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtools.log.json');
+      const trace = require('../../../fixtures/traces/progressive-app-m79.json');
+      const devtoolsLog = require('../../../fixtures/traces/progressive-app-m79.devtools.log.json');
       let result;
 
       beforeAll(async () => {

@@ -8,8 +8,8 @@
 const LanternFirstContentfulPaint = require('../../../computed/metrics/lantern-first-contentful-paint.js'); // eslint-disable-line max-len
 const assert = require('assert');
 
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+const trace = require('../../fixtures/traces/progressive-app-m79.json');
+const devtoolsLog = require('../../fixtures/traces/progressive-app-m79.devtools.log.json');
 
 /* eslint-env jest */
 describe('Metrics: Lantern FCP', () => {

@@ -8,8 +8,8 @@
 const ThirdPartySummary = require('../../audits/third-party-summary.js');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
-const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
-const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
+const pwaTrace = require('../fixtures/traces/progressive-app-m79.json');
+const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m79.devtools.log.json');
 const noThirdPartyTrace = require('../fixtures/traces/no-tracingstarted-m74.json');
 
 /* eslint-env jest */

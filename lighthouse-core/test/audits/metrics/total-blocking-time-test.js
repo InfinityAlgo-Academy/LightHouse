@@ -8,7 +8,7 @@
 const TBTAudit = require('../../../audits/metrics/total-blocking-time.js');
 const options = TBTAudit.defaultOptions;
 
-const pwaTrace = require('../../fixtures/traces/progressive-app-m60.json');
+const pwaTrace = require('../../fixtures/traces/progressive-app-m79.json');
 
 function generateArtifactsWithTrace(trace) {
   return {

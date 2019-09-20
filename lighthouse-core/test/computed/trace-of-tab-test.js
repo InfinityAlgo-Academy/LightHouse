@@ -8,7 +8,7 @@
 /* eslint-env jest */
 
 const TraceOfTab = require('../../computed/trace-of-tab.js');
-const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
+const pwaTrace = require('../fixtures/traces/progressive-app-m79.json');
 const noFCPtrace = require('../fixtures/traces/airhorner_no_fcp.json');
 const noNavStartTrace = require('../fixtures/traces/no_navstart_event.json');
 

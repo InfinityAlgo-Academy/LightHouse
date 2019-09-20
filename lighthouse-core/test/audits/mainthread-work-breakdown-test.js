@@ -10,7 +10,7 @@ const PageExecutionTimings = require('../../audits/mainthread-work-breakdown.js'
 const assert = require('assert');
 const options = PageExecutionTimings.defaultOptions;
 
-const acceptableTrace = require('../fixtures/traces/progressive-app-m60.json');
+const acceptableTrace = require('../fixtures/traces/progressive-app-m79.json');
 const siteWithRedirectTrace = require('../fixtures/traces/site-with-redirect.json');
 const loadTrace = require('../fixtures/traces/load.json');
 const errorTrace = require('../fixtures/traces/no_fmp_event.json');

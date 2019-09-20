@@ -9,7 +9,7 @@
 
 const assert = require('assert');
 const ArbitraryEqualityMap = require('../../lib/arbitrary-equality-map.js');
-const trace = require('../fixtures/traces/progressive-app-m60.json');
+const trace = require('../fixtures/traces/progressive-app-m79.json');
 
 describe('ArbitraryEqualityMap', () => {
   it('creates a map', () => {

@@ -9,8 +9,8 @@
 const BootupTime = require('../../audits/bootup-time.js');
 const assert = require('assert');
 
-const acceptableTrace = require('../fixtures/traces/progressive-app-m60.json');
-const acceptableDevtoolsLogs = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
+const acceptableTrace = require('../fixtures/traces/progressive-app-m79.json');
+const acceptableDevtoolsLogs = require('../fixtures/traces/progressive-app-m79.devtools.log.json');
 const errorTrace = require('../fixtures/traces/no_fmp_event.json');
 
 describe('Performance: bootup-time audit', () => {

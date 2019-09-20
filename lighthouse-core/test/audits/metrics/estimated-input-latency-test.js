@@ -9,7 +9,7 @@ const Audit = require('../../../audits/metrics/estimated-input-latency.js');
 const assert = require('assert');
 const options = Audit.defaultOptions;
 
-const pwaTrace = require('../../fixtures/traces/progressive-app-m60.json');
+const pwaTrace = require('../../fixtures/traces/progressive-app-m79.json');
 
 function generateArtifactsWithTrace(trace) {
   return {

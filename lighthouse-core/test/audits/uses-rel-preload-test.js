@@ -11,8 +11,8 @@
 const UsesRelPreload = require('../../audits/uses-rel-preload.js');
 const assert = require('assert');
 
-const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
-const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
+const pwaTrace = require('../fixtures/traces/progressive-app-m79.json');
+const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m79.devtools.log.json');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 const createTestTrace = require('../create-test-trace.js');
 

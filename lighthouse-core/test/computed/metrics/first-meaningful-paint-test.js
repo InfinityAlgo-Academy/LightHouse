@@ -9,8 +9,8 @@ const FirstMeaningfulPaint = require('../../../computed/metrics/first-meaningful
 const assert = require('assert');
 
 const TRACE_FIXTURES = '../../fixtures/traces';
-const pwaTrace = require(`${TRACE_FIXTURES}/progressive-app-m60.json`);
-const pwaDevtoolsLog = require(`${TRACE_FIXTURES}/progressive-app-m60.devtools.log.json`);
+const pwaTrace = require(`${TRACE_FIXTURES}/progressive-app-m79.json`);
+const pwaDevtoolsLog = require(`${TRACE_FIXTURES}/progressive-app-m79.devtools.log.json`);
 
 const badNavStartTrace = require(`${TRACE_FIXTURES}/bad-nav-start-ts.json`);
 const lateTracingStartedTrace = require(`${TRACE_FIXTURES}/tracingstarted-after-navstart.json`);
