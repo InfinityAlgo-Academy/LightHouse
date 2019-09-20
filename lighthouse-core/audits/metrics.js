@@ -92,6 +92,8 @@ class Metrics extends Audit {
       observedFirstContentfulPaintTs: traceOfTab.timestamps.firstContentfulPaint,
       observedFirstMeaningfulPaint: traceOfTab.timings.firstMeaningfulPaint,
       observedFirstMeaningfulPaintTs: traceOfTab.timestamps.firstMeaningfulPaint,
+      observedLargestMeaningfulPaint: traceOfTab.timings.largestMeaningfulPaint,
+      observedLargestMeaningfulPaintTs: traceOfTab.timestamps.largestMeaningfulPaint,
       observedTraceEnd: traceOfTab.timings.traceEnd,
       observedTraceEndTs: traceOfTab.timestamps.traceEnd,
       observedLoad: traceOfTab.timings.load,
@@ -155,6 +157,8 @@ class Metrics extends Audit {
  * @property {number} observedFirstContentfulPaintTs
  * @property {number=} observedFirstMeaningfulPaint
  * @property {number=} observedFirstMeaningfulPaintTs
+ * @property {number=} observedLargestMeaningfulPaint
+ * @property {number=} observedLargestMeaningfulPaintTs
  * @property {number=} observedTraceEnd
  * @property {number=} observedTraceEndTs
  * @property {number=} observedLoad
