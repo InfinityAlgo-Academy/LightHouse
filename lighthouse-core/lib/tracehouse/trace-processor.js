@@ -528,18 +528,13 @@ class TraceProcessor {
     // by a `largestContentfulPaint::Invalidate` trace. In the case that the last candidate is
     // invalidated, the value will be null.
     let largestContentfulPaint;
-    const largestContentfulPaintIndex = frameEvents.findIndex(
-      e => e.name === 'largestContentfulPaint::Candidate' && e.ts > navigationStart.ts
-    );
-    if (largestContentfulPaintIndex !== -1) {
-      largestContentfulPaint = frameEvents[largestContentfulPaintIndex];
-      for (let i = largestContentfulPaintIndex + 1; i < frameEvents.length; i++) {
-        const e = frameEvents[i];
-        if (e.name !== 'largestContentfulPaint::Invalidate') continue;
-
-        largestContentfulPaint = undefined;
-        break;
-      }
+    for (let i = frameEvents.length - 1; i >= 0; i--) {
+      const e = frameEvents[i];
+      if (e.ts <= navigationStart.ts) break;
+      if (e.name === 'largestContentfulPaint::Invalidate') break;
+      if (e.name !== 'largestContentfulPaint::Candidate') continue;
+      largestContentfulPaint = e;
+      break;
     }
     console.log('connor =============================== ', largestContentfulPaint);
 
