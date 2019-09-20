@@ -41,7 +41,6 @@ class Metrics extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const metricComputationData = {trace, devtoolsLog, settings: context.settings};
 
-
     /**
      * @template TArtifacts
      * @template TReturn
@@ -64,6 +63,7 @@ class Metrics extends Audit {
     const estimatedInputLatency = await EstimatedInputLatency.request(metricComputationData, context); // eslint-disable-line max-len
     const totalBlockingTime = await TotalBlockingTime.request(metricComputationData, context); // eslint-disable-line max-len
 
+    console.log(largestContentfulPaint);
     /** @type {UberMetricsItem} */
     const metrics = {
       // Include the simulated/observed performance metrics
@@ -92,8 +92,8 @@ class Metrics extends Audit {
       observedFirstContentfulPaintTs: traceOfTab.timestamps.firstContentfulPaint,
       observedFirstMeaningfulPaint: traceOfTab.timings.firstMeaningfulPaint,
       observedFirstMeaningfulPaintTs: traceOfTab.timestamps.firstMeaningfulPaint,
-      observedLargestMeaningfulPaint: traceOfTab.timings.largestMeaningfulPaint,
-      observedLargestMeaningfulPaintTs: traceOfTab.timestamps.largestMeaningfulPaint,
+      observedLargestContentfulPaint: traceOfTab.timings.largestContentfulPaint,
+      observedLargestContentfulPaintTs: traceOfTab.timestamps.largestContentfulPaint,
       observedTraceEnd: traceOfTab.timings.traceEnd,
       observedTraceEndTs: traceOfTab.timestamps.traceEnd,
       observedLoad: traceOfTab.timings.load,
@@ -157,8 +157,8 @@ class Metrics extends Audit {
  * @property {number} observedFirstContentfulPaintTs
  * @property {number=} observedFirstMeaningfulPaint
  * @property {number=} observedFirstMeaningfulPaintTs
- * @property {number=} observedLargestMeaningfulPaint
- * @property {number=} observedLargestMeaningfulPaintTs
+ * @property {number=} observedLargestContentfulPaint
+ * @property {number=} observedLargestContentfulPaintTs
  * @property {number=} observedTraceEnd
  * @property {number=} observedTraceEndTs
  * @property {number=} observedLoad

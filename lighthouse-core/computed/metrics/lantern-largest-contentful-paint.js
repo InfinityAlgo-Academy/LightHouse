@@ -72,9 +72,9 @@ class LanternLargestContentfulPaint extends LanternMetric {
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static async compute_(data, context) {
-    const lcpResult = await LanternFirstContentfulPaint.request(data, context);
+    const fcpResult = await LanternFirstContentfulPaint.request(data, context);
     const metricResult = await this.computeMetricWithGraphs(data, context);
-    metricResult.timing = Math.max(metricResult.timing, lcpResult.timing);
+    metricResult.timing = Math.max(metricResult.timing, fcpResult.timing);
     return metricResult;
   }
 }

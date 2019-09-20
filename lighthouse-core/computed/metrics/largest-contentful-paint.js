@@ -8,7 +8,7 @@
 const makeComputedArtifact = require('../computed-artifact.js');
 const ComputedMetric = require('./metric.js');
 const LHError = require('../../lib/lh-error.js');
-const LanternLargestContentfulPain = require('./lantern-largest-contentful-paint.js');
+const LanternLargestContentfulPaint = require('./lantern-largest-contentful-paint.js');
 
 class LargestContentfulPaint extends ComputedMetric {
   /**
@@ -17,7 +17,7 @@ class LargestContentfulPaint extends ComputedMetric {
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static computeSimulatedMetric(data, context) {
-    return LanternLargestContentfulPain.request(data, context);
+    return LanternLargestContentfulPaint.request(data, context);
   }
 
   /**
