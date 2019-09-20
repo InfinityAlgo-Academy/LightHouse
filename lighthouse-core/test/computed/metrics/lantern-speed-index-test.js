@@ -24,9 +24,9 @@ describe('Metrics: Lantern Speed Index', () => {
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
     }).toMatchInlineSnapshot(`
 Object {
-  "optimistic": 605,
-  "pessimistic": 1631,
-  "timing": 1657,
+  "optimistic": 539,
+  "pessimistic": 1034,
+  "timing": 1177,
 }
 `);
   });
@@ -42,9 +42,9 @@ Object {
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
     }).toMatchInlineSnapshot(`
 Object {
-  "optimistic": 605,
-  "pessimistic": 2381,
-  "timing": 2958,
+  "optimistic": 539,
+  "pessimistic": 1784,
+  "timing": 2293,
 }
 `);
   });

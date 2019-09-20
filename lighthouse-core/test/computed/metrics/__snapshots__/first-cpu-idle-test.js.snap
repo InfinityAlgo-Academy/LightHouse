@@ -2,8 +2,8 @@
 
 exports[`FirstInteractive computed artifact: should simulate when settings specify 1`] = `
 Object {
-  "optimistic": 3351,
-  "pessimistic": 3502,
-  "timing": 3351,
+  "optimistic": 1072,
+  "pessimistic": 1072,
+  "timing": 1211,
 }
 `;
