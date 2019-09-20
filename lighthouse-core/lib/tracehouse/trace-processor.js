@@ -525,7 +525,7 @@ class TraceProcessor {
     }
 
     // LCP comes from the latest `largestContentfulPaint::Candidate`, but it can be invalidated
-    // by a `largestContentfulPaint::Invalidate` trace. In the case that the last candidate is
+    // by a `largestContentfulPaint::Invalidate` event. In the case that the last candidate is
     // invalidated, the value will be null.
     let largestContentfulPaint;
     for (let i = frameEvents.length - 1; i >= 0; i--) {
