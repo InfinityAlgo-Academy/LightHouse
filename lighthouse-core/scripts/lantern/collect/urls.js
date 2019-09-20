@@ -20,6 +20,7 @@ module.exports = [
   // Buncha popular sites.
   'https://www.4shared.com/',
   'https://www.56.com/',
+  'https://birdsarentreal.com',
   'https://gm.58.com/glsanfrancisco-sl/',
   'https://www.addthis.com/',
   'https://www.alexa.com/',
