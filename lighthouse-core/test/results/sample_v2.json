@@ -89,14 +89,6 @@
       "numericValue": 3969.136,
       "displayValue": "4.0 s"
     },
-    "largest-contentful-paint": {
-      "id": "largest-contentful-paint",
-      "title": "Largest Contentful Paint",
-      "description": "Largest Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/largest-contentful-paint).",
-      "score": null,
-      "scoreDisplayMode": "error",
-      "errorMessage": "Something went wrong with recording the trace over your page load. Please run Lighthouse again. (NO_FMP)"
-    },
     "load-fast-enough-for-pwa": {
       "id": "load-fast-enough-for-pwa",
       "title": "Page load is fast enough on mobile networks",
@@ -3364,11 +3356,6 @@
           "group": "metrics"
         },
         {
-          "id": "largest-contentful-paint",
-          "weight": 0,
-          "group": "metrics"
-        },
-        {
           "id": "speed-index",
           "weight": 4,
           "group": "metrics"
@@ -4199,18 +4186,6 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:largest-contentful-paint",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:LargestContentfulPaint",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:audit:load-fast-enough-for-pwa",
         "duration": 100,
         "entryType": "measure"
@@ -4524,6 +4499,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:metrics",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:LargestContentfulPaint",
         "duration": 100,
         "entryType": "measure"
       },
@@ -5208,26 +5189,6 @@
       "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": [
         "audits[first-meaningful-paint].description"
       ],
-      "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": [
-        "audits[largest-contentful-paint].title"
-      ],
-      "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": [
-        "audits[largest-contentful-paint].description"
-      ],
-      "lighthouse-core/lib/lh-error.js | badTraceRecording": [
-        {
-          "values": {
-            "errorCode": "NO_FMP"
-          },
-          "path": "audits[largest-contentful-paint].errorMessage"
-        },
-        {
-          "values": {
-            "errorCode": "NO_FMP"
-          },
-          "path": "audits.metrics.errorMessage"
-        }
-      ],
       "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": [
         "audits[load-fast-enough-for-pwa].title"
       ],
@@ -5491,6 +5452,14 @@
       ],
       "lighthouse-core/audits/network-server-latency.js | description": [
         "audits[network-server-latency].description"
+      ],
+      "lighthouse-core/lib/lh-error.js | badTraceRecording": [
+        {
+          "values": {
+            "errorCode": "NO_FMP"
+          },
+          "path": "audits.metrics.errorMessage"
+        }
       ],
       "lighthouse-core/audits/offline-start-url.js | failureTitle": [
         "audits[offline-start-url].title"

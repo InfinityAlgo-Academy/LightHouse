@@ -536,7 +536,6 @@ class TraceProcessor {
       largestContentfulPaint = e;
       break;
     }
-    console.log('connor =============================== ', largestContentfulPaint);
 
     const load = frameEvents.find(e => e.name === 'loadEventEnd' && e.ts > navigationStart.ts);
     const domContentLoaded = frameEvents.find(
