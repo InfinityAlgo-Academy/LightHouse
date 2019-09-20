@@ -176,6 +176,7 @@ const defaultConfig = {
     'without-javascript',
     'metrics/first-contentful-paint',
     'metrics/first-meaningful-paint',
+    'metrics/largest-contentful-paint',
     'load-fast-enough-for-pwa',
     'metrics/speed-index',
     'screenshot-thumbnails',
@@ -374,6 +375,7 @@ const defaultConfig = {
       auditRefs: [
         {id: 'first-contentful-paint', weight: 3, group: 'metrics'},
         {id: 'first-meaningful-paint', weight: 1, group: 'metrics'},
+        {id: 'largest-contentful-paint', weight: 0, group: 'metrics'},
         {id: 'speed-index', weight: 4, group: 'metrics'},
         {id: 'interactive', weight: 5, group: 'metrics'},
         {id: 'first-cpu-idle', weight: 2, group: 'metrics'},

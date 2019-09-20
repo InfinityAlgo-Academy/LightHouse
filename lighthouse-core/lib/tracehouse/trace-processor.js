@@ -524,6 +524,25 @@ class TraceProcessor {
       firstMeaningfulPaint = lastCandidate;
     }
 
+    // LCP comes from the latest `largestContentfulPaint::Candidate`, but it can be invalidated
+    // by a `largestContentfulPaint::Invalidate` trace. In the case that the last candidate is
+    // invalidated, the value will be null.
+    let largestContentfulPaint;
+    const largestContentfulPaintIndex = frameEvents.findIndex(
+      e => e.name === 'largestContentfulPaint::Candidate' && e.ts > navigationStart.ts
+    );
+    if (largestContentfulPaintIndex !== -1) {
+      largestContentfulPaint = frameEvents[largestContentfulPaintIndex];
+      for (let i = largestContentfulPaintIndex + 1; i < frameEvents.length; i++) {
+        const e = frameEvents[i];
+        if (e.name !== 'largestContentfulPaint::Invalidate') continue;
+
+        largestContentfulPaint = undefined;
+        break;
+      }
+    }
+    console.log('connor =============================== ', largestContentfulPaint);
+
     const load = frameEvents.find(e => e.name === 'loadEventEnd' && e.ts > navigationStart.ts);
     const domContentLoaded = frameEvents.find(
       e => e.name === 'domContentLoadedEventEnd' && e.ts > navigationStart.ts
@@ -551,6 +570,7 @@ class TraceProcessor {
       firstPaint: getTimestamp(firstPaint),
       firstContentfulPaint: getTimestamp(firstContentfulPaint),
       firstMeaningfulPaint: getTimestamp(firstMeaningfulPaint),
+      largestContentfulPaint: getTimestamp(largestContentfulPaint),
       traceEnd: fakeEndOfTraceEvt.ts,
       load: getTimestamp(load),
       domContentLoaded: getTimestamp(domContentLoaded),
@@ -566,6 +586,7 @@ class TraceProcessor {
       firstPaint: maybeGetTiming(timestamps.firstPaint),
       firstContentfulPaint: maybeGetTiming(timestamps.firstContentfulPaint),
       firstMeaningfulPaint: maybeGetTiming(timestamps.firstMeaningfulPaint),
+      largestContentfulPaint: maybeGetTiming(timestamps.largestContentfulPaint),
       traceEnd: getTiming(timestamps.traceEnd),
       load: maybeGetTiming(timestamps.load),
       domContentLoaded: maybeGetTiming(timestamps.domContentLoaded),

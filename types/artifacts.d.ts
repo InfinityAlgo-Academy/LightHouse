@@ -496,6 +496,7 @@ declare global {
         firstPaint?: number;
         firstContentfulPaint: number;
         firstMeaningfulPaint?: number;
+        largestContentfulPaint?: number;
         traceEnd: number;
         load?: number;
         domContentLoaded?: number;
