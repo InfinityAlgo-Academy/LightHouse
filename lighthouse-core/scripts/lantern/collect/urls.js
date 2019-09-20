@@ -62,6 +62,7 @@ module.exports = [
   'https://www.ning.com/',
   'https://www.nokia.com/',
   'https://www.ocn.ne.jp/',
+  'https://www.marketwatch.com/',
   'https://www.onet.pl/',
   'https://www.orange.fr/portail',
   'https://www.partypoker.com/',
@@ -88,4 +89,7 @@ module.exports = [
 
   // Cool sites.
   'https://birdsarentreal.com',
+  'https://noclip.website/',
+  'https://stripe.com/docs',
+  'https://www.codewars.com',
 ].sort();
