@@ -63,7 +63,6 @@ class Metrics extends Audit {
     const estimatedInputLatency = await EstimatedInputLatency.request(metricComputationData, context); // eslint-disable-line max-len
     const totalBlockingTime = await TotalBlockingTime.request(metricComputationData, context); // eslint-disable-line max-len
 
-    console.log(largestContentfulPaint);
     /** @type {UberMetricsItem} */
     const metrics = {
       // Include the simulated/observed performance metrics
