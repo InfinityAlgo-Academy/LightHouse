@@ -90,6 +90,8 @@ module.exports = [
   // Cool sites.
   'https://birdsarentreal.com',
   'https://noclip.website/',
+  // Banjo :)
+  'https://noclip.website/#bk/01;ZNCA8Ac%7d%7b15_%28S%7bMfXPk;;zm%28[o$K3YC;u%5e~P3%7duru4~L~W9l%7d&a79MC%7d=m$v*_8!_6DhC=',
   'https://stripe.com/docs',
   'https://www.codewars.com',
 ].sort();
