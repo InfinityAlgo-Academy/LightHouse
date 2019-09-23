@@ -199,8 +199,6 @@ async function runForWpt(url) {
   if (DEBUG) log.log({testId, jsonUrl});
 
   // Poll for the results every x seconds, where x = position in queue.
-  // This returns a response of {data: {lighthouse: {...}}}, but we don't
-  // care about the LHR so we ignore the response.
   let lhr = '';
   // eslint-disable-next-line no-constant-condition
   while (true) {
