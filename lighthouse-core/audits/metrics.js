@@ -56,7 +56,7 @@ class Metrics extends Audit {
     const speedline = await Speedline.request(trace, context);
     const firstContentfulPaint = await FirstContentfulPaint.request(metricComputationData, context);
     const firstMeaningfulPaint = await FirstMeaningfulPaint.request(metricComputationData, context);
-    const largestContentfulPaint = await LargestContentfulPaint.request(metricComputationData, context); // eslint-disable-line max-len
+    const largestContentfulPaint = await requestOrUndefined(LargestContentfulPaint, metricComputationData); // eslint-disable-line max-len
     const firstCPUIdle = await requestOrUndefined(FirstCPUIdle, metricComputationData);
     const interactive = await requestOrUndefined(Interactive, metricComputationData);
     const speedIndex = await requestOrUndefined(SpeedIndex, metricComputationData);
@@ -70,8 +70,8 @@ class Metrics extends Audit {
       firstContentfulPaintTs: firstContentfulPaint.timestamp,
       firstMeaningfulPaint: firstMeaningfulPaint.timing,
       firstMeaningfulPaintTs: firstMeaningfulPaint.timestamp,
-      largestContentfulPaint: largestContentfulPaint.timing,
-      largestContentfulPaintTs: largestContentfulPaint.timestamp,
+      largestContentfulPaint: largestContentfulPaint && largestContentfulPaint.timing,
+      largestContentfulPaintTs: largestContentfulPaint && largestContentfulPaint.timestamp,
       firstCPUIdle: firstCPUIdle && firstCPUIdle.timing,
       firstCPUIdleTs: firstCPUIdle && firstCPUIdle.timestamp,
       interactive: interactive && interactive.timing,
@@ -137,7 +137,7 @@ class Metrics extends Audit {
  * @property {number=} firstContentfulPaintTs
  * @property {number} firstMeaningfulPaint
  * @property {number=} firstMeaningfulPaintTs
- * @property {number} largestContentfulPaint
+ * @property {number=} largestContentfulPaint
  * @property {number=} largestContentfulPaintTs
  * @property {number=} firstCPUIdle
  * @property {number=} firstCPUIdleTs
