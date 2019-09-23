@@ -52,9 +52,10 @@ async function runSmokehouse(smokes, argv) {
       `--config-path=${config}`,
       `--expectations-path=${expectations}`,
     ];
-    if (argv.onlyAudits) commandParts.push(`--only-audits ${argv.onlyAudits.join(' ')}`);
-    if (argv.onlyUrls) commandParts.push(`--only-urls ${argv.onlyUrls.join(' ')}`);
+    if (argv.onlyAudits) commandParts.push('--only-audits', ...argv.onlyAudits);
+    if (argv.onlyUrls) commandParts.push('--only-urls', ...argv.onlyUrls);
     const cmd = commandParts.join(' ');
+    // Print command to run just the failing cases.
     console.log(cmd);
 
     // The promise ensures we output immediately, even if the process errors
