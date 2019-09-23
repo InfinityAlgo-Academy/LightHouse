@@ -13,8 +13,8 @@ const PageDependencyGraph = require('../../../computed/page-dependency-graph.js'
 const LoadSimulator = require('../../../computed/load-simulator.js');
 
 
-const trace = require('../../fixtures/traces/progressive-app-m79.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m79.devtools.log.json');
+const trace = require('../../fixtures/traces/progressive-app-m60.json');
+const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
 const assert = require('assert');
 
 /* eslint-env jest */

@@ -7,8 +7,8 @@
 
 const PredictivePerf = require('../../audits/predictive-perf.js');
 
-const acceptableTrace = require('../fixtures/traces/progressive-app-m79.json');
-const acceptableDevToolsLog = require('../fixtures/traces/progressive-app-m79.devtools.log.json');
+const acceptableTrace = require('../fixtures/traces/progressive-app-m60.json');
+const acceptableDevToolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
 
 /* eslint-env jest */
 describe('Performance: predictive performance audit', () => {

@@ -9,7 +9,7 @@ const NetworkRequests = require('../../audits/network-requests.js');
 const assert = require('assert');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
-const acceptableDevToolsLog = require('../fixtures/traces/progressive-app-m79.devtools.log.json');
+const acceptableDevToolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
 
 /* eslint-env jest */
 describe('Network requests audit', () => {

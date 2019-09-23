@@ -8,7 +8,7 @@
 const assert = require('assert');
 
 const FinalScreenshotAudit = require('../../audits/final-screenshot.js');
-const pwaTrace = require('../fixtures/traces/progressive-app-m79.json');
+const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
 
 /* eslint-env jest */
 

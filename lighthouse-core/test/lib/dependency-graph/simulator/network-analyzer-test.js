@@ -9,7 +9,7 @@ const assert = require('assert');
 
 const NetworkAnalyzer = require('../../../../lib/dependency-graph/simulator/network-analyzer.js');
 const NetworkRecords = require('../../../../computed/network-records.js');
-const devtoolsLog = require('../../../fixtures/traces/progressive-app-m79.devtools.log.json');
+const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtools.log.json');
 
 /* eslint-env jest */
 describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {

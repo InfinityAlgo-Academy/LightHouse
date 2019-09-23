@@ -7,7 +7,7 @@
 
 const NetworkAnalysis = require('../../computed/network-analysis.js');
 
-const acceptableDevToolsLog = require('../fixtures/traces/progressive-app-m79.devtools.log.json');
+const acceptableDevToolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
 
 /* eslint-env jest */
 

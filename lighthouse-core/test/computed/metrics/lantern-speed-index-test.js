@@ -8,8 +8,8 @@
 const defaultThrottling = require('../../../config/constants.js').throttling.mobileSlow4G;
 const LanternSpeedIndex = require('../../../computed/metrics/lantern-speed-index.js');
 
-const trace = require('../../fixtures/traces/progressive-app-m79.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m79.devtools.log.json');
+const trace = require('../../fixtures/traces/progressive-app-m60.json');
+const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
 
 /* eslint-env jest */
 describe('Metrics: Lantern Speed Index', () => {
@@ -24,9 +24,9 @@ describe('Metrics: Lantern Speed Index', () => {
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
     }).toMatchInlineSnapshot(`
 Object {
-  "optimistic": 539,
-  "pessimistic": 1034,
-  "timing": 1177,
+  "optimistic": 605,
+  "pessimistic": 1631,
+  "timing": 1657,
 }
 `);
   });
@@ -42,9 +42,9 @@ Object {
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
     }).toMatchInlineSnapshot(`
 Object {
-  "optimistic": 539,
-  "pessimistic": 1784,
-  "timing": 2293,
+  "optimistic": 605,
+  "pessimistic": 2381,
+  "timing": 2958,
 }
 `);
   });

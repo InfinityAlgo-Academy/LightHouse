@@ -9,9 +9,9 @@ const Interactive = require('../../../audits/metrics/interactive.js');
 const assert = require('assert');
 const options = Interactive.defaultOptions;
 
-const acceptableTrace = require('../../fixtures/traces/progressive-app-m79.json');
+const acceptableTrace = require('../../fixtures/traces/progressive-app-m60.json');
 const acceptableDevToolsLog =
-    require('../../fixtures/traces/progressive-app-m79.devtools.log.json');
+    require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
 
 const redirectTrace = require('../../fixtures/traces/site-with-redirect.json');
 const redirectDevToolsLog = require('../../fixtures/traces/site-with-redirect.devtools.log.json');

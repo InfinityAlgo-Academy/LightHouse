@@ -11,8 +11,8 @@ const assert = require('assert');
 const createTestTrace = require('../create-test-trace.js');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
-const trace = require('../fixtures/traces/progressive-app-m79.json');
-const devtoolsLog = require('../fixtures/traces/progressive-app-m79.devtools.log.json');
+const trace = require('../fixtures/traces/progressive-app-m60.json');
+const devtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
 
 
 /* eslint-env jest */

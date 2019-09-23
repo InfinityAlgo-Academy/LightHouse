@@ -7,7 +7,7 @@
 
 const MainThreadTasks = require('../../audits/main-thread-tasks.js');
 
-const acceptableTrace = require('../fixtures/traces/progressive-app-m79.json');
+const acceptableTrace = require('../fixtures/traces/progressive-app-m60.json');
 
 /* eslint-env jest */
 

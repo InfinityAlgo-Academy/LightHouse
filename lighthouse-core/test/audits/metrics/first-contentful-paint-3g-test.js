@@ -8,8 +8,8 @@
 const FCP3G = require('../../../audits/metrics/first-contentful-paint-3g.js');
 const options = FCP3G.defaultOptions;
 
-const pwaTrace = require('../../fixtures/traces/progressive-app-m79.json');
-const pwaDevtoolsLog = require('../../fixtures/traces/progressive-app-m79.devtools.log.json');
+const pwaTrace = require('../../fixtures/traces/progressive-app-m60.json');
+const pwaDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
 
 /* eslint-env jest */
 
@@ -28,8 +28,8 @@ describe('Performance: first-contentful-paint-3g audit', () => {
     // Use InlineSnapshot here so changes to Lantern coefficients can be easily updated en masse
     expect({score: result.score, value: Math.round(result.numericValue)}).toMatchInlineSnapshot(`
 Object {
-  "score": 1,
-  "value": 1755,
+  "score": 0.99,
+  "value": 2057,
 }
 `);
   });

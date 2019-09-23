@@ -11,8 +11,8 @@ const Audit = require('../../../audits/metrics/speed-index.js');
 const assert = require('assert');
 const options = Audit.defaultOptions;
 
-const pwaTrace = require('../../fixtures/traces/progressive-app-m79.json');
-const pwaDevtoolsLog = require('../../fixtures/traces/progressive-app-m79.devtools.log.json');
+const pwaTrace = require('../../fixtures/traces/progressive-app-m60.json');
+const pwaDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
 
 describe('Performance: speed-index audit', () => {
   it('works on a real trace', () => {

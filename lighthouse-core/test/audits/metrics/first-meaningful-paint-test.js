@@ -9,8 +9,8 @@ const FMPAudit = require('../../../audits/metrics/first-meaningful-paint.js');
 const Audit = require('../../../audits/audit.js');
 const assert = require('assert');
 const options = FMPAudit.defaultOptions;
-const trace = require('../../fixtures/traces/progressive-app-m79.json');
-const devtoolsLogs = require('../../fixtures/traces/progressive-app-m79.devtools.log.json');
+const trace = require('../../fixtures/traces/progressive-app-m60.json');
+const devtoolsLogs = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
 
 /* eslint-env jest */
 describe('Performance: first-meaningful-paint audit', () => {
