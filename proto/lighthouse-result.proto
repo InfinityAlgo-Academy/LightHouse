@@ -147,6 +147,21 @@ message LighthouseResult {
     // How Lighthouse was run, e.g. from the Chrome extension or from the npm
     // module
     string channel = 4;
+
+    // The possible form factors an audit can be run in
+    enum DeviceScreenEmulationMethod {
+      // Unknown screen emulation method. This should not be used.
+      UNKNOWN_SCREEN_EMULATION_METHOD = 0;
+
+      // DevTools mobile/desktop viewport emulation should be applied.
+      devtools = 1;
+
+      // Mobile viewport emulation was already applied outside of Lighthouse
+      provided = 2;
+    }
+
+    // The form factor used in the audit
+    DeviceScreenEmulationMethod device_screen_emulation_method = 5;
   }
 
   // The settings that were used to run this audit
