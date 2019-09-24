@@ -11,6 +11,9 @@ const TTIComputed = require('../../computed/metrics/interactive.js');
 const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
 const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
 
+const lcpTrace = require('../fixtures/traces/lcp-m79.json');
+const lcpDevtoolsLog = require('../fixtures/traces/lcp-m79.devtools.log.json');
+
 /* eslint-env jest */
 
 describe('Performance: metrics', () => {
@@ -44,5 +47,20 @@ describe('Performance: metrics', () => {
     const context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
     const result = await MetricsAudit.audit(artifacts, context);
     expect(result.details.items[0].interactive).toEqual(undefined);
+  });
+
+  it('evaluates valid input (with lcp) correctly', async () => {
+    const artifacts = {
+      traces: {
+        [MetricsAudit.DEFAULT_PASS]: lcpTrace,
+      },
+      devtoolsLogs: {
+        [MetricsAudit.DEFAULT_PASS]: lcpDevtoolsLog,
+      },
+    };
+
+    const context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
+    const result = await MetricsAudit.audit(artifacts, context);
+    expect(result.details.items[0]).toMatchSnapshot();
   });
 });
