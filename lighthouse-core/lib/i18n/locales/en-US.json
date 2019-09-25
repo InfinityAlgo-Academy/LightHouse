@@ -318,7 +318,7 @@
     "message": "`<video>` elements contain a `<track>` element with `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "For ideal appearance on iOS when users add a progressive web app to the home screen, define an `apple-touch-icon`. It must point to a non-transparent 192px (or 180px) square PNG. [Learn More](https://developers.google.com/web/fundamentals/design-and-ux/browser-customization/)."
+    "message": "For ideal appearance on iOS when users add a progressive web app to the home screen, define an `apple-touch-icon`. It must point to a non-transparent 192px (or 180px) square PNG. [Learn More](https://web.dev/apple-touch-icon/)."
   },
   "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
     "message": "Does not provide a valid `apple-touch-icon`"

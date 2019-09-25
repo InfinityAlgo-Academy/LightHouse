@@ -318,7 +318,7 @@
     "message": "`<video>` êĺêḿêńt̂ś ĉón̂t́âín̂ á `<track>` êĺêḿêńt̂ ẃît́ĥ `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "F̂ór̂ íd̂éâĺ âṕp̂éâŕâńĉé ôń îÓŜ ẃĥén̂ úŝér̂ś âd́d̂ á p̂ŕôǵr̂éŝśîv́ê ẃêb́ âṕp̂ t́ô t́ĥé ĥóm̂é ŝćr̂éêń, d̂éf̂ín̂é âń `apple-touch-icon`. Ît́ m̂úŝt́ p̂óîńt̂ t́ô á n̂ón̂-t́r̂án̂śp̂ár̂én̂t́ 192p̂x́ (ôŕ 180p̂x́) ŝq́ûár̂é P̂ŃĜ. [Ĺêár̂ń M̂ór̂é](https://developers.google.com/web/fundamentals/design-and-ux/browser-customization/)."
+    "message": "F̂ór̂ íd̂éâĺ âṕp̂éâŕâńĉé ôń îÓŜ ẃĥén̂ úŝér̂ś âd́d̂ á p̂ŕôǵr̂éŝśîv́ê ẃêb́ âṕp̂ t́ô t́ĥé ĥóm̂é ŝćr̂éêń, d̂éf̂ín̂é âń `apple-touch-icon`. Ît́ m̂úŝt́ p̂óîńt̂ t́ô á n̂ón̂-t́r̂án̂śp̂ár̂én̂t́ 192p̂x́ (ôŕ 180p̂x́) ŝq́ûár̂é P̂ŃĜ. [Ĺêár̂ń M̂ór̂é](https://web.dev/apple-touch-icon/)."
   },
   "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
     "message": "D̂óêś n̂ót̂ ṕr̂óv̂íd̂é â v́âĺîd́ `apple-touch-icon`"

@@ -488,7 +488,7 @@
     "apple-touch-icon": {
       "id": "apple-touch-icon",
       "title": "Does not provide a valid `apple-touch-icon`",
-      "description": "For ideal appearance on iOS when users add a progressive web app to the home screen, define an `apple-touch-icon`. It must point to a non-transparent 192px (or 180px) square PNG. [Learn More](https://developers.google.com/web/fundamentals/design-and-ux/browser-customization/).",
+      "description": "For ideal appearance on iOS when users add a progressive web app to the home screen, define an `apple-touch-icon`. It must point to a non-transparent 192px (or 180px) square PNG. [Learn More](https://web.dev/apple-touch-icon/).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "warnings": []
