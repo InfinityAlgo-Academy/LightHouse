@@ -65,6 +65,9 @@
     "static-server": "node lighthouse-cli/test/fixtures/static-server.js"
   },
   "devDependencies": {
+    "@bazel/bazel": "latest",
+    "@bazel/buildifier": "latest",
+    "@bazel/ibazel": "latest",
     "@firebase/app-types": "0.3.1",
     "@firebase/auth-types": "0.3.2",
     "@firebase/util": "0.2.1",

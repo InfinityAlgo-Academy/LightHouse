@@ -1,0 +1,57 @@
+load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
+
+# Use self managed node_modules, becuase listing out each dependency needed is a chore.
+# Note, this makes RCE slower.
+# see https://github.com/bazelbuild/rules_nodejs/blob/7e3e6be38e1cf3c6c99d8dc8829377a2beacbb53/docs/install.md#dependencies
+filegroup(
+  name = "node_modules",
+  srcs = glob(
+    include = ["node_modules/**/*"],
+    exclude = [
+      # Files under test & docs may contain file names that
+      # are not legal Bazel labels (e.g.,
+      # node_modules/ecstatic/test/public/中文/檔案.html)
+      "node_modules/test/**",
+      "node_modules/docs/**",
+      # Files with spaces are not allowed in Bazel runfiles
+      # See https://github.com/bazelbuild/bazel/issues/4327
+      "node_modules/**/* */**",
+      "node_modules/**/* *",
+    ],
+  ),
+)
+
+filegroup(
+  name = "cli",
+  srcs = [
+    "//:lighthouse-cli",
+    "//:lighthouse-core",
+  ]
+)
+
+nodejs_binary(
+  name = "lighthouse",
+  entry_point = "//:lighthouse-cli",
+  data = [
+    ":cli",
+    # "@npm//yargs",
+    # "@npm//lighthouse-logger",
+    # "@npm//rimraf",
+    # "@npm//mkdirp",
+    # "@npm//lodash.isequal",
+    # "@npm//intl-messageformat",
+    # ... gonna be a lot ... see comment above node_modules filegroup
+  ],
+  node_modules = ":node_modules"
+)
+
+nodejs_binary(
+  name = "smoke",
+  entry_point = "//:lighthouse-cli/test/smokehouse/run-smoke.js",
+  data = [
+    ":cli",
+    "//:lighthouse-cli/test/fixtures",
+    "//:lighthouse-cli/test/smokehouse",
+  ],
+  node_modules = ":node_modules"
+)
