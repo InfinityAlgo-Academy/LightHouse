@@ -20,6 +20,7 @@ module.exports = [
       requestedUrl: 'http://localhost:10200/infinite-loop.html',
       finalUrl: 'http://localhost:10200/infinite-loop.html',
       runtimeError: {code: 'PAGE_HUNG'},
+      runWarnings: ['Lighthouse was unable to reliably load the URL you requested because the page stopped responding.'],
       audits: {
         'first-contentful-paint': {
           scoreDisplayMode: 'error',
@@ -42,6 +43,7 @@ module.exports = [
       requestedUrl: 'https://expired.badssl.com',
       finalUrl: 'https://expired.badssl.com/',
       runtimeError: {code: 'INSECURE_DOCUMENT_REQUEST'},
+      runWarnings: ['The URL you have provided does not have a valid security certificate. net::ERR_CERT_DATE_INVALID'],
       audits: {
         'first-contentful-paint': {
           scoreDisplayMode: 'error',
