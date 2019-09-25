@@ -1,3 +1,10 @@
+# TODO: https://g3doc.corp.google.com/devtools/blaze/bazel/g3doc/bazel-rbe.md?cl=head
+# https://cloud.google.com/remote-build-execution/docs/quickstart
+# google.com:lighthouse-bazel
+
+# bazel run --config=remote --remote_instance_name=projects/google.com:lighthouse-bazel/instances/default_instance :lighthouse -- --help
+# hit a snag: https://github.com/bazelbuild/rules_nodejs/issues/1190
+
 load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
 
 # Use self managed node_modules, becuase listing out each dependency needed is a chore.
