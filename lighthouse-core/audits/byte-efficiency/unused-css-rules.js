@@ -47,6 +47,10 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
    */
   static indexStylesheetsById(styles, networkRecords) {
     const indexedNetworkRecords = networkRecords
+        // Some phantom network records appear with a 0 resourceSize that aren't real.
+        // A network record that has no size data is just as good as no network record at all for our
+        // purposes, so we'll just filter them out. https://github.com/GoogleChrome/lighthouse/issues/9684#issuecomment-532381611
+        .filter(record => record.resourceSize > 0)
         .reduce((indexed, record) => {
           indexed[record.url] = record;
           return indexed;
