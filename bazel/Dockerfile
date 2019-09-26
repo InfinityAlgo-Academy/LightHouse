@@ -6,3 +6,6 @@ FROM gcr.io/cloud-marketplace/google/rbe-ubuntu16-04@sha256:4bfd33aa9ce73e287183
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 RUN dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy install
 ENV CHROME_PATH=/usr/bin/google-chrome
+
+# Verbose output for smoke tests.
+ENV DEBUG=1
