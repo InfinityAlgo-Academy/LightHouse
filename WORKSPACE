@@ -88,5 +88,5 @@ rbe_autoconfig(
     digest = "sha256:4bfd33aa9ce73e28718385b8c01608a79bc6546906f01cf9329311cace1766a1",
     env = clang_env(),
     registry = "gcr.io",
-    repository = "gcr.io/google.com/lighthouse-bazel/rbe-lighthouse",
+    repository = "google.com/lighthouse-bazel/rbe-lighthouse",
 )
