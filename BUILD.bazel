@@ -34,6 +34,8 @@ filegroup(
     "//:lighthouse-cli",
     "//:lighthouse-core",
     "//:stack-packs",
+    # cli-flags.js reads this.
+    "//:package.json"
   ],
   # testonly = True,
   data = [
