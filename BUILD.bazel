@@ -34,17 +34,17 @@ filegroup(
     "//:lighthouse-cli",
     "//:lighthouse-core",
   ],
-  testonly = True,
+  # testonly = True,
   data = [
-    '@org_chromium_chromium//file',
-    '@io_bazel_rules_webtesting//browsers:chromium-local',
+    # '@org_chromium_chromium//file',
+    # '@io_bazel_rules_webtesting//browsers:chromium-local',
   ]
 )
 
 nodejs_test(
   name = "lighthouse",
   entry_point = "//:lighthouse-cli",
-  testonly = True,
+  # testonly = True,
   data = [
     ":cli",
     # "@npm//yargs",

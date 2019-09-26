@@ -83,7 +83,12 @@ try-import %workspace%/.bazelrc.user
 
 test:debug --test_arg=--node_options=--inspect-brk --test_output=streamed --test_strategy=exclusive --test_timeout=9999 --nocache_test_results
 
-### RBE - https://github.com/bazelbuild/bazel-toolchains/blob/master/bazelrc/bazel-0.29.0.bazelrc
+### RBE
+# https://github.com/bazelbuild/bazel-toolchains/blob/master/bazelrc/bazel-0.29.0.bazelrc
+# https://cloud.google.com/remote-build-execution/docs/create-custom-toolchain
+
+# Build remote by default.
+build --config=remote --remote_instance_name=projects/google.com:lighthouse-bazel/instances/default_instance
 
 # Copyright 2016 The Bazel Authors. All rights reserved.
 #

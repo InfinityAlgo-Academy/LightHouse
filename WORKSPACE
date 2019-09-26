@@ -13,6 +13,7 @@ workspace(
 # Install the nodejs "bootstrap" package
 # This provides the basic tools for running and packaging nodejs programs in Bazel
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
 http_archive(
     name = "build_bazel_rules_nodejs",
     sha256 = "da217044d24abd16667324626a33581f3eaccabf80985b2688d6a08ed2f864be",
@@ -21,6 +22,7 @@ http_archive(
 
 # Install Node.
 load("@build_bazel_rules_nodejs//:defs.bzl", "node_repositories")
+
 node_repositories(
     node_version = "10.16.0",
     node_repositories = {
@@ -34,6 +36,7 @@ node_repositories(
 # The yarn_install rule runs yarn anytime the package.json or yarn.lock file changes.
 # It also extracts and installs any Bazel rules distributed in an npm package.
 load("@build_bazel_rules_nodejs//:defs.bzl", "yarn_install")
+
 yarn_install(
     # Name this npm so that Bazel Label references look like @npm//package
     name = "npm",
@@ -46,20 +49,20 @@ load("@npm//:install_bazel_dependencies.bzl", "install_bazel_dependencies")
 install_bazel_dependencies()
 
 # Install Chrome - https://github.com/bazelbuild/rules_webtesting
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-http_archive(
-    name = "io_bazel_rules_webtesting",
-    sha256 = "9bb461d5ef08e850025480bab185fd269242d4e533bca75bfb748001ceb343c3",
-    urls = [
-        "https://github.com/bazelbuild/rules_webtesting/releases/download/0.3.3/rules_webtesting.tar.gz",
-    ],
-)
-load("@io_bazel_rules_webtesting//web:repositories.bzl", "web_test_repositories")
+# load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+# http_archive(
+#     name = "io_bazel_rules_webtesting",
+#     sha256 = "9bb461d5ef08e850025480bab185fd269242d4e533bca75bfb748001ceb343c3",
+#     urls = [
+#         "https://github.com/bazelbuild/rules_webtesting/releases/download/0.3.3/rules_webtesting.tar.gz",
+#     ],
+# )
+# load("@io_bazel_rules_webtesting//web:repositories.bzl", "web_test_repositories")
 
-web_test_repositories()
-load("@io_bazel_rules_webtesting//web/versioned:browsers-0.3.1.bzl", "org_chromium_chromium", "org_chromium_chromedriver")
-org_chromium_chromium()
-org_chromium_chromedriver()
+# web_test_repositories()
+# load("@io_bazel_rules_webtesting//web/versioned:browsers-0.3.1.bzl", "org_chromium_chromium", "org_chromium_chromedriver")
+# org_chromium_chromium()
+# org_chromium_chromedriver()
 
 # RBE - https://releases.bazel.build/bazel-toolchains.html
 http_archive(
@@ -76,4 +79,14 @@ http_archive(
 # Use this as is if you are using the rbe_ubuntu16_04 container,
 # otherwise refer to RBE docs.
 load("@bazel_toolchains//rules:rbe_repo.bzl", "rbe_autoconfig")
-rbe_autoconfig(name = "rbe_default")
+load("@bazel_toolchains//rules:environments.bzl", "clang_env")
+
+rbe_autoconfig(
+    name = "rbe_default",
+    # These SHAs match the image used in the Dockerfile.
+    base_container_digest = "sha256:4bfd33aa9ce73e28718385b8c01608a79bc6546906f01cf9329311cace1766a1",
+    digest = "sha256:4bfd33aa9ce73e28718385b8c01608a79bc6546906f01cf9329311cace1766a1",
+    env = clang_env(),
+    registry = "gcr.io",
+    repository = "gcr.io/google.com/lighthouse-bazel/rbe-lighthouse",
+)
