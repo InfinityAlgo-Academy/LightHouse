@@ -1,5 +1,7 @@
 # Lantern Collect Traces
 
+[Download](https://drive.google.com/file/d/112lP_j6kSZghUWANbX9JHHf99oA-D65K/view?usp=sharing) traces (note: 3.5GB zipped, 20GB unzipped).
+
 ## Get a WPT key
 
 http://www.webpagetest.org/getkey.php -> "Login with Google" -> fill form. Key will be emailed to you.

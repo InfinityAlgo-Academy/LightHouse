@@ -17,6 +17,11 @@ module.exports = [
   'https://www.thestar.com.my/',
   'https://www.vevo.com/',
 
+  // High LCP / FCP ratio.
+  'https://mobile.twitter.com/',
+  'https://www.instagram.com/',
+  'https://www.reddit.com/',
+
   // Buncha popular sites.
   'http://www.hatena.ne.jp/',
   'http://www.zol.com.cn/',
