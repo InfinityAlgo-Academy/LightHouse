@@ -83,9 +83,10 @@ load("@bazel_toolchains//rules:environments.bzl", "clang_env")
 
 rbe_autoconfig(
     name = "rbe_default",
-    # These SHAs match the image used in the Dockerfile.
+    # Matches the base image used in the Dockerfile.
     base_container_digest = "sha256:4bfd33aa9ce73e28718385b8c01608a79bc6546906f01cf9329311cace1766a1",
-    digest = "sha256:4bfd33aa9ce73e28718385b8c01608a79bc6546906f01cf9329311cace1766a1",
+    # Matches the google.com/lighthouse-bazel/rbe-lighthouse image.
+    digest = "sha256:484f4d1c0e16001b32f9a1e03732f5fd391273f1d7fee9092a26016bcad9deb5",
     env = clang_env(),
     registry = "gcr.io",
     repository = "google.com/lighthouse-bazel/rbe-lighthouse",
