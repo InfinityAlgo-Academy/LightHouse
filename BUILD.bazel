@@ -33,6 +33,7 @@ filegroup(
   srcs = [
     "//:lighthouse-cli",
     "//:lighthouse-core",
+    "//:stack-packs",
   ],
   # testonly = True,
   data = [
