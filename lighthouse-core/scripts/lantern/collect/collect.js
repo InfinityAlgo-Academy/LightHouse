@@ -91,9 +91,6 @@ function archive(archiveDir, outputPath) {
 /** @type {ProgressLogger} */
 let log;
 
-/** @type {Summary[]} */
-const summary = loadSummary();
-
 /**
  * Resume state from previous invocation of script.
  * @return {Summary[]}
@@ -109,7 +106,10 @@ function loadSummary() {
   }
 }
 
-function saveSummary() {
+/**
+ * @param {Summary[]} summary
+ */
+function saveSummary(summary) {
   fs.writeFileSync(summaryPath, JSON.stringify(summary, null, 2));
 }
 
@@ -246,6 +246,9 @@ async function repeatUntilPass(asyncFn) {
 }
 
 async function main() {
+  /** @type {Summary[]} */
+  const summary = loadSummary();
+
   log = new ProgressLogger();
 
   if (!fs.existsSync(outputFolder)) {
@@ -326,7 +329,7 @@ async function main() {
 
     // We just collected NUM_SAMPLES * 2 traces, so let's save our progress.
     summary.push(urlResultSet);
-    saveSummary();
+    saveSummary(summary);
   }
 
   log.closeProgress();
