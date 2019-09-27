@@ -30,7 +30,7 @@ class NetworkRecorder extends EventEmitter {
    * @return {Array<LH.Artifacts.NetworkRequest>}
    */
   getInflightRecords() {
-    return this._records.filter(record => !NetworkRecorder.isNetworkRecordFinished(record));
+    return this._records.filter(record => !record.finished);
   }
 
   getRecords() {
@@ -72,7 +72,7 @@ class NetworkRecorder extends EventEmitter {
 
     for (let i = 0; i < this._records.length; i++) {
       const record = this._records[i];
-      if (NetworkRecorder.isNetworkRecordFinished(record)) continue;
+      if (record.finished) continue;
       if (IGNORED_NETWORK_SCHEMES.includes(record.parsedURL.scheme)) continue;
       inflightRequests++;
     }
@@ -100,28 +100,6 @@ class NetworkRecorder extends EventEmitter {
   }
 
   /**
-   * QUIC network requests don't always "finish" even when they're done loading data, use recievedHeaders
-   * @see https://github.com/GoogleChrome/lighthouse/issues/5254
-   * @param {LH.Artifacts.NetworkRequest} record
-   * @return {boolean}
-   */
-  static _isQUICAndFinished(record) {
-    const isQUIC = record.responseHeaders && record.responseHeaders
-        .some(header => header.name.toLowerCase() === 'alt-svc' && /quic/.test(header.value));
-    const receivedHeaders = record.timing && record.timing.receiveHeadersEnd > 0;
-    return !!(isQUIC && receivedHeaders && record.endTime);
-  }
-
-  /**
-   * @param {LH.Artifacts.NetworkRequest} record
-   * @return {boolean}
-   */
-  static isNetworkRecordFinished(record) {
-    return record.finished ||
-      NetworkRecorder._isQUICAndFinished(record);
-  }
-
-  /**
    * Finds all time periods where the number of inflight requests is less than or equal to the
    * number of allowed concurrent requests.
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
@@ -141,7 +119,7 @@ class NetworkRecorder extends EventEmitter {
 
       // convert the network record timestamp to ms
       timeBoundaries.push({time: record.startTime * 1000, isStart: true});
-      if (NetworkRecorder.isNetworkRecordFinished(record)) {
+      if (record.finished) {
         timeBoundaries.push({time: record.endTime * 1000, isStart: false});
       }
     });
