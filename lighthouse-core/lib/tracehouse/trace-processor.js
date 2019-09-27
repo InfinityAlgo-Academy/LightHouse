@@ -173,6 +173,7 @@ class TraceProcessor {
     // create an array of the indices that we want to keep
     const indices = [];
     for (let srcIndex = 0; srcIndex < traceEvents.length; srcIndex++) {
+      // console.log(srcIndex, traceEvents[srcIndex]);
       if (filter(traceEvents[srcIndex])) {
         indices.push(srcIndex);
       }

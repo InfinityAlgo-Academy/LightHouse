@@ -1,7 +1,7 @@
 # Lantern Collect Traces
 
-[Download all](https://drive.google.com/file/d/1OJz1y5sBZQpRWLiCLbyourDTjuq9bOW3/view?usp=sharing) traces (3.5GB zipped, 20GB unzipped).
-[Download golden](https://drive.google.com/file/d/1wj6mik7AIiOG30Fwd3zpWwl6i9f7Zr2B/view?usp=sharing) traces (362MB zipped, 2.1GB unzipped).
+[Download all](https://drive.google.com/file/d/1vowczOByYoLFPcCON1wOUMVyD6IX_K0P/view?usp=sharing) traces (3.2GB zipped, 19GB unzipped).
+[Download golden](https://drive.google.com/file/d/1vbxROqtYTPHRdNvSiOGmJvA1DGdJd3o0/view?usp=sharing) traces (362MB zipped, 2.1GB unzipped).
 
 ## Get a WPT key
 
