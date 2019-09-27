@@ -9,6 +9,7 @@
 /** @typedef {{url: string, wpt: Result[], unthrottled: Result[]}} Summary */
 
 const fs = require('fs');
+const readline = require('readline');
 const {promisify} = require('util');
 const archiver = require('archiver');
 const streamFinished = promisify(require('stream').finished);
@@ -17,6 +18,49 @@ const LH_ROOT = `${__dirname}/../../../..`;
 const collectFolder = `${LH_ROOT}/dist/collect-lantern-traces`;
 const summaryPath = `${collectFolder}/summary.json`;
 const goldenFolder = `${LH_ROOT}/dist/golden-lantern-traces`;
+
+class ProgressLogger {
+  constructor() {
+    this._currentProgressMessage = '';
+    this._loadingChars = '⣾⣽⣻⢿⡿⣟⣯⣷ ⠁⠂⠄⡀⢀⠠⠐⠈';
+    this._nextLoadingIndex = 0;
+    this._progressBarHandle = setInterval(() => this.progress(this._currentProgressMessage), 100);
+  }
+
+  /**
+   * @param  {...any} args
+   */
+  log(...args) {
+    readline.clearLine(process.stdout, 0);
+    readline.cursorTo(process.stdout, 0);
+    // eslint-disable-next-line no-console
+    console.log(...args);
+    this.progress(this._currentProgressMessage);
+  }
+
+  /**
+   * @param {string} message
+   */
+  progress(message) {
+    this._currentProgressMessage = message;
+    readline.clearLine(process.stdout, 0);
+    readline.cursorTo(process.stdout, 0);
+    if (message) process.stdout.write(`${this._nextLoadingChar()} ${message}`);
+  }
+
+  closeProgress() {
+    clearInterval(this._progressBarHandle);
+    this.progress('');
+  }
+
+  _nextLoadingChar() {
+    const char = this._loadingChars[this._nextLoadingIndex++];
+    if (this._nextLoadingIndex >= this._loadingChars.length) {
+      this._nextLoadingIndex = 0;
+    }
+    return char;
+  }
+}
 
 /**
  * @param {string} archiveDir
@@ -52,6 +96,7 @@ function saveSummary(summary) {
 }
 
 module.exports = {
+  ProgressLogger,
   collectFolder,
   goldenFolder,
   archive,

@@ -9,7 +9,6 @@
 /** @typedef {import('./common.js').Summary} Summary */
 
 const fs = require('fs');
-const readline = require('readline');
 const fetch = require('isomorphic-fetch');
 const {execFile} = require('child_process');
 const {promisify} = require('util');
@@ -23,52 +22,6 @@ const TEST_URLS = process.env.TEST_URLS ? process.env.TEST_URLS.split(' ') : req
 if (!process.env.WPT_KEY) throw new Error('missing WPT_KEY');
 const WPT_KEY = process.env.WPT_KEY;
 const DEBUG = process.env.DEBUG;
-
-class ProgressLogger {
-  constructor() {
-    this._currentProgressMessage = '';
-    this._loadingChars = '⣾⣽⣻⢿⡿⣟⣯⣷ ⠁⠂⠄⡀⢀⠠⠐⠈';
-    this._nextLoadingIndex = 0;
-    this._progressBarHandle = setInterval(() => this.progress(this._currentProgressMessage), 100);
-  }
-
-  /**
-   * @param  {...any} args
-   */
-  log(...args) {
-    readline.clearLine(process.stdout, 0);
-    readline.cursorTo(process.stdout, 0);
-    // eslint-disable-next-line no-console
-    console.log(...args);
-    this.progress(this._currentProgressMessage);
-  }
-
-  /**
-   * @param {string} message
-   */
-  progress(message) {
-    this._currentProgressMessage = message;
-    readline.clearLine(process.stdout, 0);
-    readline.cursorTo(process.stdout, 0);
-    if (message) process.stdout.write(`${this._nextLoadingChar()} ${message}`);
-  }
-
-  closeProgress() {
-    clearInterval(this._progressBarHandle);
-    this.progress('');
-  }
-
-  _nextLoadingChar() {
-    const char = this._loadingChars[this._nextLoadingIndex++];
-    if (this._nextLoadingIndex >= this._loadingChars.length) {
-      this._nextLoadingIndex = 0;
-    }
-    return char;
-  }
-}
-
-/** @type {ProgressLogger} */
-let log;
 
 /**
  * @param {string} filename
@@ -202,13 +155,16 @@ async function repeatUntilPass(asyncFn) {
   }
 }
 
+/** @type {typeof common.ProgressLogger['prototype']} */
+let log;
+
 async function main() {
+  log = new common.ProgressLogger();
+
   // Resume state from previous invocation of script.
   const summary = common.loadSummary()
     // Remove data if no longer in URLS.
     .filter(urlSet => TEST_URLS.includes(urlSet.url));
-
-  log = new ProgressLogger();
 
   if (!fs.existsSync(common.collectFolder)) {
     fs.mkdirSync(common.collectFolder);
@@ -291,9 +247,9 @@ async function main() {
     common.saveSummary(summary);
   }
 
-  log.closeProgress();
-  log.log('done! archiving ...');
+  log.progress('archiving ...');
   await common.archive(common.collectFolder);
+  log.closeProgress();
 }
 
 main();

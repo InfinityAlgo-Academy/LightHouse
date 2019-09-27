@@ -25,8 +25,7 @@ function getMedianResult(results) {
     /** @type {import('../../../audits/metrics.js').UberMetricsItem} */
     const metrics = metricsDetails && metricsDetails.items && metricsDetails.items[0];
     if (!metrics || !metrics.interactive) {
-      // eslint-disable-next-line no-console
-      console.warn(`missing metrics: ${result.lhr}`);
+      log.log(`missing metrics: ${result.lhr}`);
       continue;
     }
     resultsWithValue.push({value: metrics.interactive, result});
@@ -38,7 +37,8 @@ function getMedianResult(results) {
   }
 
   // Select the value that is closest to the average.
-  const average = resultsWithValue.reduce((acc, cur) => acc + cur.value, 0) / resultsWithValue.length;
+  const sum = resultsWithValue.reduce((acc, cur) => acc + cur.value, 0);
+  const average = sum / resultsWithValue.length;
   const a = resultsWithValue[Math.floor(resultsWithValue.length / 2)];
   const b = resultsWithValue[Math.floor(resultsWithValue.length / 2) + 1];
   return Math.abs(a.value - average) < Math.abs(b.value - average) ? a.result : b.result;
@@ -67,11 +67,17 @@ function saveGoldenData(filename, data) {
   fs.writeFileSync(`${common.goldenFolder}/${filename}`, data);
 }
 
+/** @type {typeof common.ProgressLogger['prototype']} */
+let log;
+
 async function main() {
+  log = new common.ProgressLogger();
+
   /** @type {Summary[]} */
   const summary = common.loadSummary();
 
-  const golden = summary.map(({url, wpt, unthrottled}) => {
+  const golden = summary.map(({url, wpt, unthrottled}, index) => {
+    log.progress(`finding median ${index + 1} / ${summary.length}`);
     return {
       url,
       wpt: getMedianResult(wpt),
@@ -83,13 +89,16 @@ async function main() {
   fs.mkdirSync(common.goldenFolder);
   saveGoldenData('golden.json', JSON.stringify(golden, null, 2));
   for (const result of golden) {
+    log.progress('making golden.json');
     const filenames = [...Object.values(result.wpt), ...Object.values(result.unthrottled)];
     for (const filename of filenames) {
       if (filename) copyToGolden(filename);
     }
   }
 
+  log.progress('archiving ...');
   await common.archive(common.goldenFolder);
+  log.closeProgress();
 }
 
 main();
