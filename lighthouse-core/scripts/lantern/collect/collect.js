@@ -135,9 +135,13 @@ async function runForWpt(url) {
   traceUrl.searchParams.set('file', 'lighthouse_trace.json');
   const traceJson = await fetchString(traceUrl.href);
 
+  const trace = JSON.parse(traceJson);
+  // For some reason, the first trace event is an empty object.
+  trace.traceEvents = trace.traceEvents.filter(e => Object.keys(e).length > 0);
+
   return {
     lhr,
-    trace: traceJson,
+    trace: JSON.stringify(trace),
   };
 }
 
