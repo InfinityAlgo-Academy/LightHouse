@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -euox pipefail
+set -eox pipefail
 
 # This script requires LHCI_CANARY_SERVER_URL and LHCI_CANARY_SERVER_TOKEN variables to be set.
 
