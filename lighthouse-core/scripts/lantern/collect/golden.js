@@ -5,42 +5,12 @@
  */
 'use strict';
 
-/** @typedef {{devtoolsLog?: string, lhr: string, trace: string}} Result */
-/** @typedef {{url: string, wpt: Result[], unthrottled: Result[]}} Summary */
+/** @typedef {import('./common.js').Result} Result */
+/** @typedef {import('./common.js').Summary} Summary */
 
 const fs = require('fs');
 const rimraf = require('rimraf');
-
-const LH_ROOT = `${__dirname}/../../../..`;
-
-const inputFolder = `${LH_ROOT}/dist/lantern-traces`;
-const summaryPath = `${inputFolder}/summary.json`;
-
-const outputFolder = `${LH_ROOT}/dist/golden-lantern-traces`;
-
-/**
- * @return {Summary[]}
- */
-function loadSummary() {
-  return JSON.parse(fs.readFileSync(summaryPath, 'utf-8'));
-}
-
-/**
- * @param {string} filename
- * @param {string} data
- */
-function saveData(filename, data) {
-  fs.writeFileSync(`${outputFolder}/${filename}`, data);
-  return filename;
-}
-
-/**
- * @param {string} filename
- * @return {LH.Result}
- */
-function loadLhr(filename) {
-  return JSON.parse(fs.readFileSync(`${inputFolder}/${filename}`, 'utf-8'));
-}
+const common = require('./common.js');
 
 /**
  * Returns run w/ the median TTI.
@@ -50,26 +20,53 @@ function getMedianResult(results) {
   const resultsWithValue = [];
   for (const result of results) {
     const lhr = loadLhr(result.lhr);
-    const metricsDetails = /** @type {LH.Audit.Details.DebugData=} */ (lhr.audits['metrics'].details);
+    const metricsDetails = /** @type {LH.Audit.Details.DebugData=} */ (
+      lhr.audits['metrics'].details);
     /** @type {import('../../../audits/metrics.js').UberMetricsItem} */
     const metrics = metricsDetails && metricsDetails.items && metricsDetails.items[0];
     if (!metrics || !metrics.interactive) {
+      // eslint-disable-next-line no-console
       console.warn(`missing metrics: ${result.lhr}`);
       continue;
     }
     resultsWithValue.push({value: metrics.interactive, result});
-  }  
+  }
   resultsWithValue.sort((a, b) => b.value - a.value);
 
-  if (resultsWithValue.length % 2 === 1) return resultsWithValue[Math.floor(resultsWithValue.length / 2)].result;
+  if (resultsWithValue.length % 2 === 1) {
+    return resultsWithValue[Math.floor(resultsWithValue.length / 2)].result;
+  }
 
   // TODO
   return resultsWithValue[Math.floor(resultsWithValue.length / 2)].result;
 }
 
+/**
+ * @param {string} filename
+ * @return {LH.Result}
+ */
+function loadLhr(filename) {
+  return JSON.parse(fs.readFileSync(`${common.collectFolder}/${filename}`, 'utf-8'));
+}
+
+/**
+ * @param {string} filename
+ */
+function copyToGolden(filename) {
+  fs.copyFileSync(`${common.collectFolder}/${filename}`, `${common.goldenFolder}/${filename}`);
+}
+
+/**
+ * @param {string} filename
+ * @param {string} data
+ */
+function saveGoldenData(filename, data) {
+  fs.writeFileSync(`${common.goldenFolder}/${filename}`, data);
+}
+
 async function main() {
   /** @type {Summary[]} */
-  const summary = loadSummary();
+  const summary = common.loadSummary();
 
   const golden = summary.map(({url, wpt, unthrottled}) => {
     return {
@@ -79,13 +76,13 @@ async function main() {
     };
   });
 
-  rimraf.sync(outputFolder);
-  fs.mkdirSync(outputFolder);
-  saveData('golden.json', JSON.stringify(golden, null, 2));
+  rimraf.sync(common.goldenFolder);
+  fs.mkdirSync(common.goldenFolder);
+  saveGoldenData('golden.json', JSON.stringify(golden, null, 2));
   for (const result of golden) {
-    const filenames = [...Object.values(result.wpt), ...Object.values(result.unthrottled)].filter(Boolean);
+    const filenames = [...Object.values(result.wpt), ...Object.values(result.unthrottled)];
     for (const filename of filenames) {
-      fs.copyFileSync(`${inputFolder}/${filename}`, `${outputFolder}/${filename}`);
+      if (filename) copyToGolden(filename);
     }
   }
 }

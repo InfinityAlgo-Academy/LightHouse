@@ -5,17 +5,16 @@
  */
 'use strict';
 
-/** @typedef {{devtoolsLog?: string, lhr: string, trace: string}} Result */
-/** @typedef {{url: string, wpt: Result[], unthrottled: Result[]}} Summary */
+/** @typedef {import('./common.js').Result} Result */
+/** @typedef {import('./common.js').Summary} Summary */
 
-const archiver = require('archiver');
 const fs = require('fs');
 const readline = require('readline');
 const fetch = require('isomorphic-fetch');
 const {execFile} = require('child_process');
 const {promisify} = require('util');
 const execFileAsync = promisify(execFile);
-const streamFinished = promisify(require('stream').finished);
+const common = require('./common.js');
 
 const LH_ROOT = `${__dirname}/../../../..`;
 const SAMPLES = process.env.SAMPLES ? Number(process.env.SAMPLES) : 9;
@@ -24,9 +23,6 @@ const TEST_URLS = process.env.TEST_URLS ? process.env.TEST_URLS.split(' ') : req
 if (!process.env.WPT_KEY) throw new Error('missing WPT_KEY');
 const WPT_KEY = process.env.WPT_KEY;
 const DEBUG = process.env.DEBUG;
-
-const outputFolder = `${LH_ROOT}/dist/lantern-traces`;
-const summaryPath = `${outputFolder}/summary.json`;
 
 class ProgressLogger {
   constructor() {
@@ -71,54 +67,15 @@ class ProgressLogger {
   }
 }
 
-/**
- *
- * @param {string} archiveDir
- * @param {string} outputPath
- */
-function archive(archiveDir, outputPath) {
-  const archive = archiver('zip', {
-    zlib: {level: 9},
-  });
-
-  const writeStream = fs.createWriteStream(outputPath);
-  archive.pipe(writeStream);
-  archive.directory(archiveDir, false);
-  archive.finalize();
-  return streamFinished(archive);
-}
-
 /** @type {ProgressLogger} */
 let log;
-
-/**
- * Resume state from previous invocation of script.
- * @return {Summary[]}
- */
-function loadSummary() {
-  if (fs.existsSync(summaryPath)) {
-    /** @type {Summary[]} */
-    const summary = JSON.parse(fs.readFileSync(summaryPath, 'utf-8'));
-    // Remove data if no longer in URLS.
-    return summary.filter(urlSet => TEST_URLS.includes(urlSet.url));
-  } else {
-    return [];
-  }
-}
-
-/**
- * @param {Summary[]} summary
- */
-function saveSummary(summary) {
-  fs.writeFileSync(summaryPath, JSON.stringify(summary, null, 2));
-}
 
 /**
  * @param {string} filename
  * @param {string} data
  */
 function saveData(filename, data) {
-  fs.writeFileSync(`${outputFolder}/${filename}`, data);
+  fs.writeFileSync(`${common.collectFolder}/${filename}`, data);
   return filename;
 }
 
@@ -246,13 +203,15 @@ async function repeatUntilPass(asyncFn) {
 }
 
 async function main() {
-  /** @type {Summary[]} */
-  const summary = loadSummary();
+  // Resume state from previous invocation of script.
+  const summary = common.loadSummary()
+    // Remove data if no longer in URLS.
+    .filter(urlSet => TEST_URLS.includes(urlSet.url));
 
   log = new ProgressLogger();
 
-  if (!fs.existsSync(outputFolder)) {
-    fs.mkdirSync(outputFolder);
+  if (!fs.existsSync(common.collectFolder)) {
+    fs.mkdirSync(common.collectFolder);
   }
 
   // Traces are collected for one URL at a time, in series, so all traces are from a small time
@@ -329,12 +288,12 @@ async function main() {
 
     // We just collected NUM_SAMPLES * 2 traces, so let's save our progress.
     summary.push(urlResultSet);
-    saveSummary(summary);
+    common.saveSummary(summary);
   }
 
   log.closeProgress();
   log.log('done! archiving ...');
-  await archive(outputFolder, `${LH_ROOT}/dist/lantern-traces.zip`);
+  await common.archive(common.collectFolder, `${LH_ROOT}/dist/lantern-traces.zip`);
 }
 
 main();
