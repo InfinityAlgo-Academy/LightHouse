@@ -20,14 +20,13 @@ const goldenFolder = `${LH_ROOT}/dist/golden-lantern-traces`;
 
 /**
  * @param {string} archiveDir
- * @param {string} outputPath
  */
-function archive(archiveDir, outputPath) {
+function archive(archiveDir) {
   const archive = archiver('zip', {
     zlib: {level: 9},
   });
 
-  const writeStream = fs.createWriteStream(outputPath);
+  const writeStream = fs.createWriteStream(`${archiveDir}.zip`);
   archive.pipe(writeStream);
   archive.directory(archiveDir, false);
   archive.finalize();

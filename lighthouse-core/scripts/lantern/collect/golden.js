@@ -31,14 +31,17 @@ function getMedianResult(results) {
     }
     resultsWithValue.push({value: metrics.interactive, result});
   }
-  resultsWithValue.sort((a, b) => b.value - a.value);
+  resultsWithValue.sort((a, b) => a.value - b.value);
 
   if (resultsWithValue.length % 2 === 1) {
     return resultsWithValue[Math.floor(resultsWithValue.length / 2)].result;
   }
 
-  // TODO
-  return resultsWithValue[Math.floor(resultsWithValue.length / 2)].result;
+  // Select the value that is closest to the average.
+  const average = resultsWithValue.reduce((acc, cur) => acc + cur.value, 0) / resultsWithValue.length;
+  const a = resultsWithValue[Math.floor(resultsWithValue.length / 2)];
+  const b = resultsWithValue[Math.floor(resultsWithValue.length / 2) + 1];
+  return Math.abs(a.value - average) < Math.abs(b.value - average) ? a.result : b.result;
 }
 
 /**
@@ -85,6 +88,8 @@ async function main() {
       if (filename) copyToGolden(filename);
     }
   }
+
+  await common.archive(common.goldenFolder);
 }
 
 main();

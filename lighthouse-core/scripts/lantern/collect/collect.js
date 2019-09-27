@@ -293,7 +293,7 @@ async function main() {
 
   log.closeProgress();
   log.log('done! archiving ...');
-  await common.archive(common.collectFolder, `${LH_ROOT}/dist/lantern-traces.zip`);
+  await common.archive(common.collectFolder);
 }
 
 main();
