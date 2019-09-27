@@ -225,6 +225,8 @@ declare global {
       export interface ScriptElement {
         type: string | null
         src: string | null
+        /** The `id` property of the script element; null if it had no `id` or if `source` is 'network'. */
+        id: string | null
         async: boolean
         defer: boolean
         /** Path that uniquely identifies the node in the DOM */

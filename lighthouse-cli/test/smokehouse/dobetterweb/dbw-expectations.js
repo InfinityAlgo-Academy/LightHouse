@@ -109,7 +109,7 @@ module.exports = [
               },
               {
                 source: 'Runtime.exception',
-                description: 'Error: An error\n    at http://localhost:10200/dobetterweb/dbw_tester.html:57:38',
+                description: /^Error: A distinctive error\s+at http:\/\/localhost:10200\/dobetterweb\/dbw_tester.html:\d+:\d+$/,
                 url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
               },
             ],
