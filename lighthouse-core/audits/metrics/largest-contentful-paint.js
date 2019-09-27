@@ -12,9 +12,10 @@ const ComputedLcp = require('../../computed/metrics/largest-contentful-paint.js'
 const UIStrings = {
   /** The name of the metric that marks the time at which the largest text or image is painted by the browser. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
   title: 'Largest Contentful Paint',
+  // TODO: link to docs.
   /** Description of the Largest Contentful Paint (LCP) metric, which marks the time at which the largest text or image is painted by the browser. This is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Largest Contentful Paint marks the time at which the first text or image is ' +
-      `painted. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/largest-contentful-paint).`,
+      `painted.`,
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -38,9 +39,7 @@ class LargestContentfulPaint extends Audit {
    */
   static get defaultOptions() {
     return {
-      // 75th and 95th percentiles HTTPArchive -> median and PODR
-      // https://bigquery.cloud.google.com/table/httparchive:lighthouse.2018_04_01_mobile?pli=1
-      // see https://www.desmos.com/calculator/2t1ugwykrl
+      // TODO: set these numbers correctly. stolen from FCP.
       scorePODR: 2000,
       scoreMedian: 4000,
     };
