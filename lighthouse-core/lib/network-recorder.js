@@ -54,24 +54,35 @@ class NetworkRecorder extends EventEmitter {
   }
 
   isIdle() {
-    return !!this._getActiveIdlePeriod(0);
+    return this._isActiveIdlePeriod(0);
   }
 
   is2Idle() {
-    return !!this._getActiveIdlePeriod(2);
+    return this._isActiveIdlePeriod(2);
   }
 
   /**
+   * Returns whether the number of currently inflight requests is less than or
+   * equal to the number of allowed concurrent requests.
    * @param {number} allowedRequests
+   * @return {boolean}
    */
-  _getActiveIdlePeriod(allowedRequests) {
-    const quietPeriods = NetworkRecorder.findNetworkQuietPeriods(this._records, allowedRequests);
-    return quietPeriods.find(period => !Number.isFinite(period.end));
+  _isActiveIdlePeriod(allowedRequests) {
+    let inflightRequests = 0;
+
+    for (let i = 0; i < this._records.length; i++) {
+      const record = this._records[i];
+      if (NetworkRecorder.isNetworkRecordFinished(record)) continue;
+      if (IGNORED_NETWORK_SCHEMES.includes(record.parsedURL.scheme)) continue;
+      inflightRequests++;
+    }
+
+    return inflightRequests <= allowedRequests;
   }
 
   _emitNetworkStatus() {
-    const zeroQuiet = this._getActiveIdlePeriod(0);
-    const twoQuiet = this._getActiveIdlePeriod(2);
+    const zeroQuiet = this.isIdle();
+    const twoQuiet = this.is2Idle();
 
     if (twoQuiet && zeroQuiet) {
       log.verbose('NetworkRecorder', 'network fully-quiet');

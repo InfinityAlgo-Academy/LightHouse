@@ -49,7 +49,7 @@ Once we finish computing the percentile equivalent of your raw performance score
 - Green (good): 90-100
 
 ### What can developers do to improve their performance score?
-*Note: we've built [a little calculator](https://docs.google.com/spreadsheets/d/1Cxzhy5ecqJCucdf1M0iOzM8mIxNc7mmx107o5nj38Eo/edit#gid=283330180) that can help you understand what thresholds you should be aiming for achieving a certain Lighthouse performance score. *
+*Note: we've built [a little calculator](https://docs.google.com/spreadsheets/d/1up5rxd4EMCoMaxH8cppcK1x76n6HLx0e7jxb0e0FXvc/edit#gid=0) that can help you understand what thresholds you should be aiming for achieving a certain Lighthouse performance score. *
 
 Lighthouse has a whole section in the report on improving your performance score under the “Opportunities” section. There are detailed suggestions and documentation that explains the different suggestions and how to implement them. Additionally, the diagnostics section lists additional guidance that developers can explore to further experiment and tweak with their performance.
 

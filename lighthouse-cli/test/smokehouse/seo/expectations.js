@@ -270,6 +270,7 @@ module.exports = [
         code: 'ERRORED_DOCUMENT_REQUEST',
         message: /Status code: 403/,
       },
+      runWarnings: ['Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests. (Status code: 403)'],
       audits: {
         'http-status-code': {
           score: null,
