@@ -38,10 +38,6 @@ filegroup(
     # cli-flags.js reads this.
     "//:package.json"
   ],
-  templated_args = [
-    "--chrome-flags='--headless --no-sandbox'",
-    "--GA=$TEST_UNDECLARED_OUTPUTS_DIR",
-  ],
   # testonly = True,
   data = [
     # '@org_chromium_chromium//file',
@@ -52,6 +48,10 @@ filegroup(
 nodejs_test(
   name = "lighthouse",
   entry_point = "//:lighthouse-cli",
+  templated_args = [
+    "--chrome-flags='--headless --no-sandbox'",
+    "--GA=$TEST_UNDECLARED_OUTPUTS_DIR",
+  ],
   # testonly = True,
   data = [
     ":cli",
