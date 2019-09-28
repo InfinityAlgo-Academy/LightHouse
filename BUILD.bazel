@@ -34,6 +34,7 @@ filegroup(
     "//:lighthouse-cli",
     "//:lighthouse-core",
     "//:stack-packs",
+    "//:third-party",
     # cli-flags.js reads this.
     "//:package.json"
   ],
@@ -70,6 +71,43 @@ nodejs_test(
     "//:lighthouse-cli/test/smokehouse",
   ],
   node_modules = ":node_modules"
+)
+
+nodejs_test(
+  name = "smoke1",
+  entry_point = "//:lighthouse-cli/test/smokehouse/run-smoke.js",
+  templated_args = ["seo"],
+  data = [
+    ":cli",
+    "//:lighthouse-cli/test/fixtures",
+    "//:lighthouse-cli/test/smokehouse",
+  ],
+  node_modules = ":node_modules"
+)
+nodejs_test(
+  name = "smoke2",
+  entry_point = "//:lighthouse-cli/test/smokehouse/run-smoke.js",
+  templated_args = ["byte"],
+  data = [
+    ":cli",
+    "//:lighthouse-cli/test/fixtures",
+    "//:lighthouse-cli/test/smokehouse",
+  ],
+  node_modules = ":node_modules"
+)
+
+nodejs_test(
+  name = "smoke3",
+  entry_point = "//:bazel/runner.js",
+  testonly = 1,
+  data = [
+    ":cli",
+    "//:bazel/runner.js",
+    "//:lighthouse-cli/test/fixtures",
+    "//:lighthouse-cli/test/smokehouse",
+  ],
+  node_modules = ":node_modules",
+  shard_count = 14
 )
 
 # sh_test(

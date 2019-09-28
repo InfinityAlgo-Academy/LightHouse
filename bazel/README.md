@@ -8,7 +8,7 @@
 1. auth with gcp: `gcloud auth application-default login --no-launch-browser`
 1. `gcloud config set project google.com:lighthouse-bazel`
 1. `gcloud auth configure-docker`
-1. `sudo bazel test :smoke --test_arg=--help`. note: for some reason, `bazel test` can't use docker if not run w/ sudo. so must login with sudo. this should be looked into ...
+1. `sudo bazel run :smoke -- seo`. note: for some reason, `bazel test` can't use docker if not run w/ sudo. so must login with sudo. this should be looked into ...
 
 ## Update Toolchain
 
