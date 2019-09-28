@@ -83,6 +83,12 @@ try-import %workspace%/.bazelrc.user
 
 test:debug --test_arg=--node_options=--inspect-brk --test_output=streamed --test_strategy=exclusive --test_timeout=9999 --nocache_test_results
 
+### Environment variables
+
+run:remote --action_env=RBE=1
+# Verbose output for smoke tests.
+run --action_env=LH_SMOKE_VERBOSE=1
+
 ### RBE
 # https://github.com/bazelbuild/bazel-toolchains/blob/master/bazelrc/bazel-0.29.0.bazelrc
 # https://cloud.google.com/remote-build-execution/docs/create-custom-toolchain

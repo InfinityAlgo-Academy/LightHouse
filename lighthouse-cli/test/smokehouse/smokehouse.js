@@ -71,6 +71,11 @@ function runLighthouse(url, configPath, isDebug) {
     args.push('--throttling.cpuSlowdownMultiplier=1');
   }
 
+  if (process.env.RBE) {
+    // This is for remote build execution on GCP.
+    args.push('--chrome-flags=--headless --no-sandbox');
+  }
+
   // Lighthouse sometimes times out waiting to for a connection to Chrome in CI.
   // Watch for this error and retry relaunching Chrome and running Lighthouse up
   // to RETRIES times. See https://github.com/GoogleChrome/lighthouse/issues/833

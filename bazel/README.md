@@ -15,5 +15,11 @@
 ```sh
 docker build . -t gcr.io/google.com/lighthouse-bazel/rbe-lighthouse
 docker push gcr.io/google.com/lighthouse-bazel/rbe-lighthouse
-# Update the digest hash in WORKSPACE.
+# Update the digest hash in WORKSPACE. Hash:
+docker inspect --format='{{index .RepoDigests 0}}' gcr.io/google.com/lighthouse-bazel/rbe-lighthouse
+```
+
+See Chrome version:
+```sh
+docker run gcr.io/google.com/lighthouse-bazel/rbe-lighthouse /usr/bin/google-chrome --version
 ```
