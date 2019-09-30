@@ -5,6 +5,7 @@
  */
 'use strict';
 
+/** @typedef {import('./common.js').Golden} Golden */
 /** @typedef {import('./common.js').Result} Result */
 /** @typedef {import('./common.js').Summary} Summary */
 
@@ -13,8 +14,8 @@ const rimraf = require('rimraf');
 const common = require('./common.js');
 
 /**
- * @param {LH.Result} lhr 
- * @return {import('../../../audits/metrics.js').UberMetricsItem} 
+ * @param {LH.Result} lhr
+ * @return {import('../../../audits/metrics.js').UberMetricsItem}
  */
 function getMetrics(lhr) {
   const metricsDetails = /** @type {LH.Audit.Details.DebugData=} */ (
@@ -84,6 +85,7 @@ async function main() {
   /** @type {Summary[]} */
   const summary = common.loadSummary();
 
+  /** @type {Golden[]} */
   const golden = summary.map(({url, wpt, unthrottled}, index) => {
     log.progress(`finding median ${index + 1} / ${summary.length}`);
     const medianWpt = getMedianResult(wpt);

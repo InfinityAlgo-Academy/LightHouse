@@ -1,5 +1,9 @@
 # Lantern Collect Traces
 
+Collects many traces using a local machine and mobile devices via WPT.
+
+There are 9 runs for each URL in the big zip. The golden zip contains just the median runs (by performance score), along with a dump of the `metrics` collected by Lighthouse.
+
 [Download all](https://drive.google.com/file/d/1vowczOByYoLFPcCON1wOUMVyD6IX_K0P/view?usp=sharing) traces (3.2GB zipped, 19GB unzipped).
 [Download golden](https://drive.google.com/file/d/1WZ0hxoMfpKNQ6zwDLiirBspWwHlSHLNv/view?usp=sharing) traces (363MB zipped, 2.1GB unzipped).
 
@@ -34,3 +38,5 @@ node golden.js
 ```
 
 Output will be in `dist/golden-lantern-traces`, and zipped at `dist/golden-lantern-traces.zip`.
+
+Update the zips on Google Drive and `download-traces.sh`.
