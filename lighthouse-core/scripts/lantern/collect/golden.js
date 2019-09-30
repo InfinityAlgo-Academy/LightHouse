@@ -13,6 +13,17 @@ const rimraf = require('rimraf');
 const common = require('./common.js');
 
 /**
+ * @param {LH.Result} lhr 
+ * @return {import('../../../audits/metrics.js').UberMetricsItem} 
+ */
+function getMetrics(lhr) {
+  const metricsDetails = /** @type {LH.Audit.Details.DebugData=} */ (
+    lhr.audits['metrics'].details);
+  /** @type {import('../../../audits/metrics.js').UberMetricsItem} */
+  return metricsDetails && metricsDetails.items && metricsDetails.items[0];
+}
+
+/**
  * Returns run w/ the median TTI.
  * @param {Result[]} results
  */
@@ -20,10 +31,7 @@ function getMedianResult(results) {
   const resultsWithValue = [];
   for (const result of results) {
     const lhr = loadLhr(result.lhr);
-    const metricsDetails = /** @type {LH.Audit.Details.DebugData=} */ (
-      lhr.audits['metrics'].details);
-    /** @type {import('../../../audits/metrics.js').UberMetricsItem} */
-    const metrics = metricsDetails && metricsDetails.items && metricsDetails.items[0];
+    const metrics = getMetrics(lhr);
     if (!metrics || !metrics.interactive) {
       log.log(`missing metrics: ${result.lhr}`);
       continue;
@@ -78,10 +86,20 @@ async function main() {
 
   const golden = summary.map(({url, wpt, unthrottled}, index) => {
     log.progress(`finding median ${index + 1} / ${summary.length}`);
+    const medianWpt = getMedianResult(wpt);
+    const medianUnthrottled = getMedianResult(unthrottled);
     return {
       url,
-      wpt: getMedianResult(wpt),
-      unthrottled: getMedianResult(unthrottled),
+      // Cache the metrics in the golden.json, so the trace files don't
+      // need to be processed during test-lantern.sh
+      wpt: {
+        ...medianWpt,
+        metrics: getMetrics(loadLhr(medianWpt.lhr)),
+      },
+      unthrottled: {
+        ...medianUnthrottled,
+        metrics: getMetrics(loadLhr(medianUnthrottled.lhr)),
+      },
     };
   });
 
@@ -90,7 +108,9 @@ async function main() {
   saveGoldenData('golden.json', JSON.stringify(golden, null, 2));
   for (const result of golden) {
     log.progress('making golden.json');
-    const filenames = [...Object.values(result.wpt), ...Object.values(result.unthrottled)];
+    // All the string values are paths to files that we want to copy.
+    const filenames = [...Object.values(result.wpt), ...Object.values(result.unthrottled)]
+      .filter(/** @param {*} val @return {val is string} */ val => typeof val === 'string');
     for (const filename of filenames) {
       if (filename) copyToGolden(filename);
     }
