@@ -8,8 +8,9 @@
 
 /* eslint-disable no-console */
 
-/** @typedef {import('./constants.js').LanternSiteDefinition} LanternSiteDefinition */
 /** @typedef {import('./constants.js').LanternMetrics} LanternMetrics */
+/** @typedef {import('./constants.js').LanternSiteDefinition} LanternSiteDefinition */
+/** @typedef {import('./constants.js').MasterLanternValues} MasterLanternValues */
 
 /**
  * @typedef LanternEvaluation
@@ -55,9 +56,10 @@ if (!fs.existsSync(COMPUTATIONS_PATH)) throw new Error('Usage $0 <computed summa
 
 /** @type {LanternSiteDefinition[]} */
 const siteIndexWithComputed = require(COMPUTATIONS_PATH);
+/** @type {MasterLanternValues[]} */
 const baselineLanternData = require(BASELINE_PATH);
 
-for (const site of baselineLanternData.sites) {
+for (const site of baselineLanternData) {
   const computedSite = siteIndexWithComputed.find(entry => entry.url === site.url);
   if (!computedSite) continue;
   computedSite.baseline = site;
