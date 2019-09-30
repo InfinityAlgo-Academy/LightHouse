@@ -8,6 +8,8 @@
 
 /* eslint-disable no-console */
 
+/** @typedef {import('./constants.js').Golden} Golden */
+
 const fs = require('fs');
 const path = require('path');
 const execFileSync = require('child_process').execFileSync;
@@ -20,21 +22,23 @@ const RUN_ONCE_PATH = path.join(__dirname, 'run-once.js');
 
 if (!fs.existsSync(SITE_INDEX_PATH)) throw new Error('Usage $0 <expectations file>');
 
-const expectations = require(SITE_INDEX_PATH);
+/** @type {Golden[]} */
+const golden = require(SITE_INDEX_PATH);
 
-for (const site of expectations.sites) {
-  const trace = path.join(SITE_INDEX_DIR, site.unthrottled.tracePath);
-  const log = path.join(SITE_INDEX_DIR, site.unthrottled.devtoolsLogPath);
+for (const result of golden) {
+  const trace = path.join(SITE_INDEX_DIR, result.unthrottled.trace);
+  if (!result.unthrottled.devtoolsLog) throw new Error('missing devtools log'); // This won't happen.
+  const log = path.join(SITE_INDEX_DIR, result.unthrottled.devtoolsLog);
 
-  console.log('Running', site.url, '...');
+  console.log('Running', result.url, '...');
   const rawOutput = execFileSync(RUN_ONCE_PATH, [trace, log])
     .toString()
     .trim();
   if (!rawOutput) console.log('ERROR EMPTY OUTPUT!');
   const lantern = JSON.parse(rawOutput);
 
-  Object.assign(site, {lantern});
+  Object.assign(result, {lantern});
 }
 
 // eslint-disable-next-line max-len
-fs.writeFileSync(constants.SITE_INDEX_WITH_GOLDEN_WITH_COMPUTED_PATH, JSON.stringify(expectations, null, 2));
+fs.writeFileSync(constants.SITE_INDEX_WITH_GOLDEN_WITH_COMPUTED_PATH, JSON.stringify(golden, null, 2));

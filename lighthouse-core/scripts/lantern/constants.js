@@ -5,12 +5,37 @@
  */
 'use strict';
 
+/** @typedef {import('./collect/common.js').Golden} Golden */
+
+/** @typedef {Golden & {baseline: LanternMetrics, lantern: LanternMetrics}} LanternSiteDefinition */
+
+/** @typedef {{url: string} & LanternMetrics} MasterLanternValues */
+
+/**
+ * @typedef LanternMetrics
+ * @property {number} optimisticFCP
+ * @property {number} optimisticFMP
+ * @property {number} optimisticSI
+ * @property {number} optimisticTTFCPUI
+ * @property {number} optimisticTTI
+ * @property {number} pessimisticFCP
+ * @property {number} pessimisticFMP
+ * @property {number} pessimisticSI
+ * @property {number} pessimisticTTFCPUI
+ * @property {number} pessimisticTTI
+ * @property {number} roughEstimateOfFCP
+ * @property {number} roughEstimateOfFMP
+ * @property {number} roughEstimateOfSI
+ * @property {number} roughEstimateOfTTFCPUI
+ * @property {number} roughEstimateOfTTI
+ */
+
 const path = require('path');
 
 /* eslint-disable max-len */
 
 module.exports = {
-  SITE_INDEX_WITH_GOLDEN_PATH: './lantern-data/site-index-plus-golden-expectations.json',
-  SITE_INDEX_WITH_GOLDEN_WITH_COMPUTED_PATH: path.join(__dirname, '../../../.tmp/site-index-plus-golden-expectations-plus-computed.json'),
+  SITE_INDEX_WITH_GOLDEN_PATH: './lantern-data/golden.json',
+  SITE_INDEX_WITH_GOLDEN_WITH_COMPUTED_PATH: path.join(__dirname, '../../../.tmp/golden-plus-computed.json'),
   MASTER_COMPUTED_PATH: path.join(__dirname, '../../test/fixtures/lantern-master-computed-values.json'),
 };

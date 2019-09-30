@@ -8,6 +8,9 @@
 
 /* eslint-disable no-console */
 
+/** @typedef {import('./constants.js').LanternSiteDefinition} LanternSiteDefinition */
+/** @typedef {import('./constants.js').MasterLanternValues} MasterLanternValues */
+
 const fs = require('fs');
 const path = require('path');
 const execFileSync = require('child_process').execFileSync;
@@ -25,20 +28,21 @@ if (!fs.existsSync(HEAD_COMPUTED_PATH) || process.env.FORCE) {
   execFileSync(RUN_ALL_SCRIPT_PATH, [SITE_INDEX_PATH]);
 }
 
+/** @type {LanternSiteDefinition[]} */
 const computedResults = require(HEAD_COMPUTED_PATH);
 
-const sites = [];
-for (const entry of computedResults.sites) {
+/** @type {MasterLanternValues[]} */
+const masterLanternValues = [];
+for (const entry of computedResults) {
   const lanternValues = entry.lantern;
+  // @ts-ignore - ignore missing index signature.
   Object.keys(lanternValues).forEach(key => lanternValues[key] = Math.round(lanternValues[key]));
-  sites.push({url: entry.url, ...lanternValues});
+  masterLanternValues.push({url: entry.url, ...lanternValues});
 }
 
-fs.writeFileSync(OUTPUT_PATH, prettyJSONStringify({sites}, {
+fs.writeFileSync(OUTPUT_PATH, prettyJSONStringify(masterLanternValues, {
   tab: '  ',
   spaceBeforeColon: '',
   spaceInsideObject: '',
-  shouldExpand: (_, level) => level < 2,
+  shouldExpand: (_, level) => level < 1,
 }));
-
-

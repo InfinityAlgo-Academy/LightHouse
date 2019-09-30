@@ -8,13 +8,8 @@
 
 /* eslint-disable no-console */
 
-/**
- * @typedef LanternSiteDefinition
- * @property {string} url
- * @property {TargetMetrics} wpt3g
- * @property {LanternMetrics} lantern
- * @property {LanternMetrics} baseline
- */
+/** @typedef {import('./constants.js').LanternSiteDefinition} LanternSiteDefinition */
+/** @typedef {import('./constants.js').LanternMetrics} LanternMetrics */
 
 /**
  * @typedef LanternEvaluation
@@ -37,30 +32,11 @@
 
 /**
  * @typedef TargetMetrics
- * @property {number} [firstContentfulPaint]
- * @property {number} [firstMeaningfulPaint]
- * @property {number} [timeToFirstInteractive]
- * @property {number} [timeToConsistentlyInteractive]
- * @property {number} [speedIndex]
- */
-
-/**
- * @typedef LanternMetrics
- * @property {number} optimisticFCP
- * @property {number} optimisticFMP
- * @property {number} optimisticSI
- * @property {number} optimisticTTFCPUI
- * @property {number} optimisticTTI
- * @property {number} pessimisticFCP
- * @property {number} pessimisticFMP
- * @property {number} pessimisticSI
- * @property {number} pessimisticTTFCPUI
- * @property {number} pessimisticTTI
- * @property {number} roughEstimateOfFCP
- * @property {number} roughEstimateOfFMP
- * @property {number} roughEstimateOfSI
- * @property {number} roughEstimateOfTTFCPUI
- * @property {number} roughEstimateOfTTI
+ * @property {number=} firstContentfulPaint
+ * @property {number=} firstCPUIdle
+ * @property {number=} firstMeaningfulPaint
+ * @property {number=} interactive
+ * @property {number=} speedIndex
  */
 
 const fs = require('fs');
@@ -77,17 +53,17 @@ const BASELINE_PATH = constants.MASTER_COMPUTED_PATH;
 
 if (!fs.existsSync(COMPUTATIONS_PATH)) throw new Error('Usage $0 <computed summary file>');
 
-/** @type {{sites: LanternSiteDefinition[]}} */
+/** @type {LanternSiteDefinition[]} */
 const siteIndexWithComputed = require(COMPUTATIONS_PATH);
 const baselineLanternData = require(BASELINE_PATH);
 
 for (const site of baselineLanternData.sites) {
-  const computedSite = siteIndexWithComputed.sites.find(entry => entry.url === site.url);
+  const computedSite = siteIndexWithComputed.find(entry => entry.url === site.url);
   if (!computedSite) continue;
   computedSite.baseline = site;
 }
 
-const entries = siteIndexWithComputed.sites.filter(site => site.lantern && site.baseline);
+const entries = siteIndexWithComputed.filter(site => site.lantern && site.baseline);
 
 if (!entries.length) {
   throw new Error('No lantern metrics available, did you run run-on-all-assets.js?');
@@ -102,7 +78,9 @@ if (!entries.length) {
  * @return {(LanternEvaluation & LanternSiteDefinition)|null}
  */
 function evaluateSite(site, expectedMetrics, actualMetrics, metric, lanternMetric) {
-  const expected = Math.round(expectedMetrics[metric]);
+  const expectedMetric = expectedMetrics[metric];
+  if (typeof expectedMetric === 'undefined') throw new Error('metric not found');
+  const expected = Math.round(expectedMetric);
   if (expected === 0) return null;
 
   const actual = Math.round(actualMetrics[lanternMetric]);
@@ -142,7 +120,7 @@ function evaluateAccuracy(entries, metric, lanternMetric, lanternOrBaseline = 'l
   for (const entry of entries) {
     const evaluation = evaluateSite(
       entry,
-      entry.wpt3g,
+      entry.wpt.metrics,
       entry[lanternOrBaseline],
       metric,
       lanternMetric
@@ -339,13 +317,13 @@ evaluateAndPrintAccuracy('firstMeaningfulPaint', 'optimisticFMP');
 evaluateAndPrintAccuracy('firstMeaningfulPaint', 'pessimisticFMP');
 evaluateAndPrintAccuracy('firstMeaningfulPaint', 'roughEstimateOfFMP');
 
-evaluateAndPrintAccuracy('timeToFirstInteractive', 'optimisticTTFCPUI');
-evaluateAndPrintAccuracy('timeToFirstInteractive', 'pessimisticTTFCPUI');
-evaluateAndPrintAccuracy('timeToFirstInteractive', 'roughEstimateOfTTFCPUI');
+evaluateAndPrintAccuracy('interactive', 'optimisticTTFCPUI');
+evaluateAndPrintAccuracy('interactive', 'pessimisticTTFCPUI');
+evaluateAndPrintAccuracy('interactive', 'roughEstimateOfTTFCPUI');
 
-evaluateAndPrintAccuracy('timeToConsistentlyInteractive', 'optimisticTTI');
-evaluateAndPrintAccuracy('timeToConsistentlyInteractive', 'pessimisticTTI');
-evaluateAndPrintAccuracy('timeToConsistentlyInteractive', 'roughEstimateOfTTI');
+evaluateAndPrintAccuracy('firstCPUIdle', 'optimisticTTI');
+evaluateAndPrintAccuracy('firstCPUIdle', 'pessimisticTTI');
+evaluateAndPrintAccuracy('firstCPUIdle', 'roughEstimateOfTTI');
 
 evaluateAndPrintAccuracy('speedIndex', 'optimisticSI');
 evaluateAndPrintAccuracy('speedIndex', 'pessimisticSI');
@@ -366,12 +344,12 @@ findAndPrintWorst10Sites('firstMeaningfulPaint', [
   'pessimisticFMP',
   'roughEstimateOfFMP',
 ]);
-findAndPrintWorst10Sites('timeToFirstInteractive', [
+findAndPrintWorst10Sites('interactive', [
   'optimisticTTFCPUI',
   'pessimisticTTFCPUI',
   'roughEstimateOfTTFCPUI',
 ]);
-findAndPrintWorst10Sites('timeToConsistentlyInteractive', [
+findAndPrintWorst10Sites('firstCPUIdle', [
   'optimisticTTI',
   'pessimisticTTI',
   'roughEstimateOfTTI',

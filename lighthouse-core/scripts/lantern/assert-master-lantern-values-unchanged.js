@@ -8,6 +8,9 @@
 
 /* eslint-disable no-console */
 
+/** @typedef {import('./constants.js').LanternSiteDefinition} LanternSiteDefinition */
+/** @typedef {import('./constants.js').LanternSiteDefinition} MasterLanternValues */
+
 const fs = require('fs');
 const path = require('path');
 const constants = require('./constants.js');
@@ -21,21 +24,24 @@ if (!fs.existsSync(HEAD_PATH) || !fs.existsSync(MASTER_PATH)) {
   throw new Error('Usage $0 <computed file>');
 }
 
+/** @type {LanternSiteDefinition[]} */
 const computedResults = require(HEAD_PATH);
+/** @type {MasterLanternValues[]} */
 const expectedResults = require(MASTER_PATH);
 
 /** @type {Array<{url: string, maxDiff: number, diffsForSite: Array<DiffForSite>}>} */
 const diffs = [];
-for (const entry of computedResults.sites) {
-  // @ts-ignore - over-aggressive implicit any on candidate
-  const expectedLantern = expectedResults.sites.find(candidate => entry.url === candidate.url);
+for (const entry of computedResults) {
+  const expectedLantern = expectedResults.find(candidate => entry.url === candidate.url);
   const actualLantern = entry.lantern;
 
   let maxDiff = 0;
   /** @type {DiffForSite[]} */
   const diffsForSite = [];
   Object.keys(actualLantern).forEach(metricName => {
+    // @ts-ignore - ignore missing index signature.
     const actual = Math.round(actualLantern[metricName]);
+    // @ts-ignore - ignore missing index signature.
     const expected = Math.round(expectedLantern[metricName]);
     const diff = actual - expected;
     if (Math.abs(diff) > 0) {
