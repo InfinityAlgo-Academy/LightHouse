@@ -39,7 +39,7 @@ class LargestContentfulPaint extends Audit {
    */
   static get defaultOptions() {
     return {
-      // TODO: set these numbers correctly. stolen from FCP.
+      // TODO: Reusing FCP's scoring curve. Set correctly once distribution of results is available.
       scorePODR: 2000,
       scoreMedian: 4000,
     };
