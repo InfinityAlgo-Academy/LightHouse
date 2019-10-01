@@ -59,7 +59,7 @@ describe('Performance: metrics', () => {
       },
     };
 
-    const context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
+    const context = {settings: {throttlingMethod: 'devtools'}, computedCache: new Map()};
     const result = await MetricsAudit.audit(artifacts, context);
     expect(result.details.items[0]).toMatchSnapshot();
   });
