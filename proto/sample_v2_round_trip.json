@@ -1517,6 +1517,9 @@
                         "speedIndex": 4417.0,
                         "speedIndexTs": 185607736912.0,
                         "totalBlockingTime": 117.0
+                    },
+                    {
+                        "lcpInvalidated": false
                     }
                 ],
                 "type": "debugdata"
@@ -4435,6 +4438,12 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:audit:metrics",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:computed:LargestContentfulPaint",
                 "startTime": 0.0
             },
             {

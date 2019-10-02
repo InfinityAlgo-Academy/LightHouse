@@ -9,6 +9,7 @@ const TraceProcessor = require('../../../lib/tracehouse/trace-processor.js');
 
 const assert = require('assert');
 const fs = require('fs');
+const createTestTrace = require('../../create-test-trace.js');
 const pwaTrace = require('../../fixtures/traces/progressive-app.json');
 const badNavStartTrace = require('../../fixtures/traces/bad-nav-start-ts.json');
 const lateTracingStartedTrace = require('../../fixtures/traces/tracingstarted-after-navstart.json');
@@ -18,6 +19,7 @@ const noFMPtrace = require('../../fixtures/traces/no_fmp_event.json');
 const noFCPtrace = require('../../fixtures/traces/airhorner_no_fcp.json');
 const noNavStartTrace = require('../../fixtures/traces/no_navstart_event.json');
 const backgroundTabTrace = require('../../fixtures/traces/backgrounded-tab-missing-paints.json');
+const lcpTrace = require('../../fixtures/traces/lcp-m79.json');
 
 /* eslint-env jest */
 
@@ -319,6 +321,70 @@ describe('TraceProcessor', () => {
         assert.equal(trace.firstContentfulPaintEvt.ts, 2146737302468);
         assert.equal(trace.firstMeaningfulPaintEvt.ts, 2146740268666);
         assert.ok(trace.fmpFellBack);
+      });
+    });
+
+    describe('finds correct LCP', () => {
+      it('in a trace', () => {
+        const trace = TraceProcessor.computeTraceOfTab(lcpTrace);
+        assert.equal(trace.mainFrameIds.frameId, '906A10385298DD996B521026AF4DA204');
+        assert.equal(trace.navigationStartEvt.ts, 1671221915754);
+        assert.equal(trace.firstContentfulPaintEvt.ts, 1671226617803);
+        assert.equal(trace.largestContentfulPaintEvt.ts, 1671236939268);
+        assert.equal(trace.timings.firstContentfulPaint, 4702.049);
+        assert.equal(trace.timings.largestContentfulPaint, 15023.514);
+        assert.equal(trace.timestamps.firstContentfulPaint, 1671226617803);
+        assert.equal(trace.timestamps.largestContentfulPaint, 1671236939268);
+        assert.ok(!trace.lcpInvalidated);
+      });
+
+      it('uses latest candidate', () => {
+        const testTrace = createTestTrace({navigationStart: 0, traceEnd: 2000});
+        const frame = testTrace.traceEvents[0].args.frame;
+        const args = {frame};
+        const cat = 'loading,rail,devtools.timeline';
+        testTrace.traceEvents.push(
+          {name: 'largestContentfulPaint::Candidate', cat, args, ts: 1000, duration: 10},
+          {name: 'largestContentfulPaint::Invalidate', cat, args, ts: 1100, duration: 10},
+          {name: 'largestContentfulPaint::Candidate', cat, args, ts: 1200, duration: 10}
+        );
+        const trace = TraceProcessor.computeTraceOfTab(testTrace);
+        assert.equal(trace.timestamps.largestContentfulPaint, 1200);
+        assert.ok(!trace.lcpInvalidated);
+      });
+
+      it('undefined if no candidates', () => {
+        const testTrace = createTestTrace({navigationStart: 0, traceEnd: 2000});
+        const trace = TraceProcessor.computeTraceOfTab(testTrace);
+        assert.equal(trace.timestamps.largestContentfulPaint, undefined);
+        assert.ok(!trace.lcpInvalidated);
+      });
+
+      it('invalidates if last event is ::Invalidate', () => {
+        const testTrace = createTestTrace({navigationStart: 0, traceEnd: 2000});
+        const frame = testTrace.traceEvents[0].args.frame;
+        const args = {frame};
+        const cat = 'loading,rail,devtools.timeline';
+        testTrace.traceEvents.push(
+          {name: 'largestContentfulPaint::Candidate', cat, args, ts: 1000, duration: 10},
+          {name: 'largestContentfulPaint::Invalidate', cat, args, ts: 1100, duration: 10}
+        );
+        const trace = TraceProcessor.computeTraceOfTab(testTrace);
+        assert.equal(trace.largestContentfulPaintEvt, undefined);
+        assert.ok(trace.lcpInvalidated);
+      });
+
+      it('ignores candidates before navstart', () => {
+        const testTrace = createTestTrace({navigationStart: 1100, traceEnd: 2000});
+        const frame = testTrace.traceEvents[0].args.frame;
+        const args = {frame};
+        const cat = 'loading,rail,devtools.timeline';
+        testTrace.traceEvents.push(
+          {name: 'largestContentfulPaint::Candidate', cat, args, ts: 1000, duration: 10}
+        );
+        const trace = TraceProcessor.computeTraceOfTab(testTrace);
+        assert.equal(trace.largestContentfulPaintEvt, undefined);
+        assert.ok(!trace.lcpInvalidated);
       });
     });
 

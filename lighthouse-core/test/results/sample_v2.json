@@ -1279,6 +1279,9 @@
             "observedLastVisualChangeTs": 185608110912,
             "observedSpeedIndex": 4417,
             "observedSpeedIndexTs": 185607736763
+          },
+          {
+            "lcpInvalidated": false
           }
         ]
       }
@@ -4538,6 +4541,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:metrics",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:LargestContentfulPaint",
         "duration": 100,
         "entryType": "measure"
       },
