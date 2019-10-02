@@ -1,3 +1,49 @@
+<a name="5.5.0"></a>
+# 5.5.0 (2019-10-02)
+
+## Notable changes
+* Preliminary implementation of the [Largest Contentful Paint](https://web.dev/largest-contentful-paint) metric has landed (`devtools` and `provided` throttling only) and can be found in the hidden `metrics` audit in the raw LHR JSON ([#9706](https://github.com/googlechrome/lighthouse/pull/9706))
+* The creation of main-thread tasks from a trace is now more robust. This should significantly reduce the occurrence of Issue [#7764](https://github.com/GoogleChrome/lighthouse/issues/7764), `"Fatal trace logic error - expected start event, got X"` ([#9491](https://github.com/googlechrome/lighthouse/pull/9491))
+* `<script>` element `id` has been added to the `ScriptElements` artifact ([#9718](https://github.com/googlechrome/lighthouse/pull/9718))
+
+## New contributors!
+Thanks to @LarsKumbier, @TimvdLippe, and @uchoudh for their first contributions!
+
+## Core
+
+* network-recorder: remove quic-request-finished workaround ([#9744](https://github.com/googlechrome/lighthouse/pull/9744))
+* network-recorder: optimize network idle detection ([#9712](https://github.com/googlechrome/lighthouse/pull/9712))
+* unused-css-rules: no more infinity savings ([#9731](https://github.com/googlechrome/lighthouse/pull/9731))
+
+## Clients
+
+* devtools: expose `registerLocaleData` to worker ([#9645](https://github.com/googlechrome/lighthouse/pull/9645))
+* devtools: update references to `Runtime.cachedResources` ([#9758](https://github.com/googlechrome/lighthouse/pull/9758))
+
+## Docs
+
+* new documentation for running Lighthouse on [authenticated pages](https://github.com/GoogleChrome/lighthouse/blob/a7e823ebf017224a3528a5a337e3b79c2983fee5/docs/authenticated-pages.md) ([#9628](https://github.com/googlechrome/lighthouse/pull/9628), [#9705](https://github.com/googlechrome/lighthouse/pull/9705))
+* point more docs links to web.dev ([#9540](https://github.com/googlechrome/lighthouse/pull/9540), [#9711](https://github.com/googlechrome/lighthouse/pull/9711), [#9761](https://github.com/googlechrome/lighthouse/pull/9761))
+* readme: add more related projects ([#9716](https://github.com/googlechrome/lighthouse/pull/9716), [#9743](https://github.com/googlechrome/lighthouse/pull/9743))
+* releasing: add schedule, more integration testing ([#9695](https://github.com/googlechrome/lighthouse/pull/9695))
+* add links to more info about throttling and variability ([#9734](https://github.com/googlechrome/lighthouse/pull/9734))
+* update scoring calculator link to v5 ([#9729](https://github.com/googlechrome/lighthouse/pull/9729))
+
+## Tests
+
+* add Lighthouse CI dogfood script to travis ([#9677](https://github.com/googlechrome/lighthouse/pull/9677), [#9745](https://github.com/googlechrome/lighthouse/pull/9745))
+* report: update `utm_medium` check for web.dev links ([#9737](https://github.com/googlechrome/lighthouse/pull/9737))
+* smokehouse: add check for any `runWarnings` ([#9732](https://github.com/googlechrome/lighthouse/pull/9732))
+* attempt to download lantern test trace set a few times ([#9766](https://github.com/googlechrome/lighthouse/pull/9766))
+
+## Misc
+
+* devtools: remove version replacement for expectations ([#9702](https://github.com/googlechrome/lighthouse/pull/9702))
+* remove unnecessary return in Promise ([#9703](https://github.com/googlechrome/lighthouse/pull/9703))
+* assets: update logo ([#9694](https://github.com/googlechrome/lighthouse/pull/9694))
+
+[Full Changelog](https://github.com/googlechrome/lighthouse/compare/v5.4.0...v5.5.0)
+
  <a name="5.4.0"></a>
 # 5.4.0 (2019-09-18)
 
