@@ -6,9 +6,10 @@
 'use strict';
 
 /**
+ * @type {Array<Smokehouse.ExpectedRunnerResult>}
  * Expected Lighthouse audit values for Do Better Web tests.
  */
-module.exports = [
+const expectations = [
   {
     artifacts: {
       Stacks: [{
@@ -278,3 +279,5 @@ module.exports = [
     },
   },
 ];
+
+module.exports = expectations;
