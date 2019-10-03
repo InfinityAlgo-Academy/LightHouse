@@ -217,7 +217,7 @@ declare global {
         /** The `as` attribute of the link */
         as: string
         /** The `crossOrigin` attribute of the link */
-        crossOrigin: 'anonymous'|'use-credentials'|null
+        crossOrigin: string | null
         /** Where the link was found, either in the DOM or in the headers of the main document */
         source: 'head'|'body'|'headers'
       }
