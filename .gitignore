@@ -14,7 +14,6 @@ lcov.info
 lighthouse-cli/results
 results.html
 last-run-results.html
-smoke-test-dfns-compiled.js
 
 *.trace.json
 *.devtoolslog.json

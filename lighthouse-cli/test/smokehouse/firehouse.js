@@ -15,7 +15,7 @@
 const log = require('lighthouse-logger');
 const {collateResults, report} = require('./smokehouse-report.js');
 
-/** @type {Smokehouse.Test[]} */
+/** @type {Smokehouse.TestDfn[]} */
 // @ts-ignore
 const smokeTests = require('./smoke-test-dfns.js').getSmokeTests();
 
