@@ -13,11 +13,8 @@
 /* eslint-disable no-console */
 
 const log = require('lighthouse-logger');
+const smokeTests = require('./smoke-test-dfns.js');
 const {collateResults, report} = require('./smokehouse-report.js');
-
-/** @type {Smokehouse.TestDfn[]} */
-// @ts-ignore
-const smokeTests = require('./smoke-test-dfns.js').getSmokeTests();
 
 /**
  * @param {Smokehouse.RunnerOptions} options
