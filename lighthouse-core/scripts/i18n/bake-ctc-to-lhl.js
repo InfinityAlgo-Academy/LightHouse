@@ -35,7 +35,7 @@ const LH_ROOT = path.join(__dirname, '../../../');
 /**
  * Take a series of CTC format ICU messages and converts them to LHL format by
  * replacing $placeholders$ with their {ICU} values. Functional opposite of
- * `convertMessageToPlaceholders`. This is commonly called as the last step in
+ * `convertMessageToCtc`. This is commonly called as the last step in
  * translation.
  *
  * Converts this:
@@ -75,11 +75,13 @@ function bakePlaceholders(messages) {
 
     if (placeholders) {
       for (const [placeholder, {content}] of Object.entries(placeholders)) {
-        const escapedPlaceholder = '$' + placeholder + '$';
-        if (!message.includes(escapedPlaceholder)) {
+        if (!message.includes('$' + placeholder + '$')) {
           throw Error(`Provided placeholder "${placeholder}" not found in message "${message}".`);
         }
-        message = message.replace(escapedPlaceholder, content);
+        // Need a global replace due to plural ICU copying placeholders
+        // (and therefore ICU vars) multiple times.
+        const regex = new RegExp('\\$' + placeholder + '\\$', 'g');
+        message = message.replace(regex, content);
       }
     }
 

@@ -13,7 +13,7 @@
 /* eslint-disable no-console */
 
 const log = require('lighthouse-logger');
-const { collateResults, report } = require('./smokehouse-report.js');
+const {collateResults, report} = require('./smokehouse-report.js');
 
 /** @type {Smokehouse.Test[]} */
 // @ts-ignore

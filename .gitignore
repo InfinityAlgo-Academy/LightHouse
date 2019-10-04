@@ -33,6 +33,7 @@ smoke-test-dfns-compiled.js
 
 latest-run
 lantern-data
+timings-data
 
 closure-error.log
 yarn-error.log
@@ -46,3 +47,6 @@ yarn-error.log
 proto/scripts/*_pb2.*
 proto/scripts/*_pb.*
 proto/scripts/*_processed.json
+
+# require any lock file to be checked in explicitly
+yarn.lock

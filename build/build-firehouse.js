@@ -12,32 +12,8 @@ const path = require('path');
 const distDir = path.join(__dirname, '..', 'dist');
 const bundleOutFile = `${distDir}/firehouse-bundle.js`;
 const firehouseFilename = './lighthouse-cli/test/smokehouse/firehouse.js';
-const Smokes = require('../lighthouse-cli/test/smokehouse/smoke-test-dfns.js');
 
-let bundle = browserify(firehouseFilename, {standalone: 'Lighthouse.Firehouse'});
-
-/**
- * @param {string} absPath
- */
-function relativeToProjectRoot(absPath) {
-  return './' + path.relative(path.dirname(__dirname), absPath);
-}
-
-/**
- * @param {string} smokeResourcePath
- */
-function stubSmokeResource(smokeResourcePath) {
-  const modulePath = relativeToProjectRoot(Smokes.resolveLocalOrProjectRoot(smokeResourcePath));
-  bundle = bundle.require(modulePath, {expose: './smokehouse/' + smokeResourcePath});
-}
-
-for (const smokeTestDfn of Smokes.SMOKE_TEST_DFNS) {
-  Smokes.resolveLocalOrProjectRoot(smokeTestDfn.config);
-  stubSmokeResource(smokeTestDfn.config);
-  stubSmokeResource(smokeTestDfn.expectations);
-}
-
-bundle
+browserify(firehouseFilename, {standalone: 'Lighthouse.Firehouse'})
   .bundle((err, src) => {
     if (err) throw err;
     fs.writeFileSync(bundleOutFile, src.toString());

@@ -12,14 +12,17 @@ const fs = require('fs');
 const glob = require('glob');
 const path = require('path');
 const assert = require('assert');
-const esprima = require('esprima');
-const collectAndBakeCtcStrings = require('./bake-ctc-to-lhl.js');
+const tsc = require('typescript');
+const Util = require('../../report/html/renderer/util.js');
+const {collectAndBakeCtcStrings} = require('./bake-ctc-to-lhl.js');
+const {pruneObsoleteLhlMessages} = require('./prune-obsolete-lhl-messages.js');
 
 const LH_ROOT = path.join(__dirname, '../../../');
-const UISTRINGS_REGEX = /UIStrings = (.|\s)*?\};\n/im;
+const UISTRINGS_REGEX = /UIStrings = .*?\};\n/s;
 
 /** @typedef {import('./bake-ctc-to-lhl.js').CtcMessage} CtcMessage */
 /** @typedef {Required<Pick<CtcMessage, 'message'|'placeholders'>>} IncrementalCtc */
+/** @typedef {{message: string, description: string, examples: Record<string, string>}} ParsedUIString */
 
 const ignoredPathComponents = [
   '**/.git/**',
@@ -30,48 +33,70 @@ const ignoredPathComponents = [
   '**/*-renderer.js',
 ];
 
-// @ts-ignore - @types/esprima lacks all of these
-function computeDescription(ast, property, value, startRange) {
-  const endRange = property.range[0];
+/**
+ * Extract the description and examples (if any) from a jsDoc annotation.
+ * @param {import('typescript').JSDoc|undefined} ast
+ * @param {string} message
+ * @return {{description: string, examples: Record<string, string>}}
+ */
+function computeDescription(ast, message) {
+  if (!ast) {
+    throw Error(`Missing description comment for message "${message}"`);
+  }
 
-  for (const comment of ast.comments || []) {
-    if (comment.range[0] < startRange) continue;
-    if (comment.range[0] > endRange) continue;
-    if (comment.value.includes('@')) {
-      // This is a complex description with description and examples.
-      let description = '';
-      /** @type {Record<string, string>} */
-      const examples = {};
+  if (ast.tags) {
+    // This is a complex description with description and examples.
+    let description = '';
+    /** @type {Record<string, string>} */
+    const examples = {};
 
-      const r = /@(\w+) ({.+})?(.*)(\n|$)/g;
-      let matches;
-      while ((matches = r.exec(comment.value)) !== null) {
-        const tagName = matches[1];
-        const example = matches[2];
-        const messageOrPlaceholder = matches[3].trim();
+    for (const tag of ast.tags) {
+      const comment = coerceToSingleLineAndTrim(tag.comment);
 
-        if (tagName === 'description') {
-          description = messageOrPlaceholder;
-        } else if (tagName === 'example') {
-          examples[messageOrPlaceholder] = example.substring(1, example.length - 1);
-        }
+      if (tag.tagName.text === 'description') {
+        description = comment;
+      } else if (tag.tagName.text === 'example') {
+        const {placeholderName, exampleValue} = parseExampleJsDoc(comment);
+        examples[placeholderName] = exampleValue;
+      } else {
+        // Until a compelling use case for supporting more @tags, throw to catch typos, etc.
+        throw new Error(`Unexpected tagName "@${tag.tagName.text}"`);
       }
-
-      // Make sure description is not empty
-      if (description.length === 0) throw Error(`Empty @description for message "${value}"`);
-      return {description, examples};
     }
 
-    /** @type {string} */
-    const description = comment.value.replace('*', '').trim();
-
-    // Make sure description is not empty
-    if (description.length === 0) throw Error(`Empty description for message "${value}"`);
-
-    // The entire comment is the description, so return everything.
-    return {description};
+    if (description.length === 0) throw Error(`Empty @description for message "${message}"`);
+    return {description, examples};
   }
-  throw Error(`No Description for message "${value}"`);
+
+  if (ast.comment) {
+    // The entire comment is the description, so return everything.
+    return {description: coerceToSingleLineAndTrim(ast.comment), examples: {}};
+  }
+
+  throw Error(`Missing description comment for message "${message}"`);
+}
+
+/**
+ * Collapses a jsdoc comment into a single line and trims whitespace.
+ * @param {string=} comment
+ * @return {string}
+ */
+function coerceToSingleLineAndTrim(comment = '') {
+  // Line breaks within a jsdoc comment should always be replaceable with a space.
+  return comment.replace(/\n+/g, ' ').trim();
+}
+
+/**
+ * Parses a string of the form `{exampleValue} placeholderName`, parsed by tsc
+ * as the content of an `@example` tag.
+ * @param {string} rawExample
+ * @return {{placeholderName: string, exampleValue: string}}
+ */
+function parseExampleJsDoc(rawExample) {
+  const match = rawExample.match(/^{(?<exampleValue>[^}]+)} (?<placeholderName>.+)$/);
+  if (!match || !match.groups) throw new Error(`Incorrectly formatted @example: "${rawExample}"`);
+  const {placeholderName, exampleValue} = match.groups;
+  return {placeholderName, exampleValue};
 }
 
 /**
@@ -134,28 +159,27 @@ function convertMessageToCtc(message, examples = {}) {
  * @param {IncrementalCtc} icu
  */
 function _processPlaceholderMarkdownCode(icu) {
+  const message = icu.message;
+
   // Check that number of backticks is even.
-  const match = icu.message.match(/`/g);
+  const match = message.match(/`/g);
   if (match && match.length % 2 !== 0) {
-    throw Error(`Open backtick in message "${icu.message}"`);
+    throw Error(`Open backtick in message "${message}"`);
   }
 
-  // Split on backticked code spans
-  const parts = icu.message.split(/`(.*?)`/g);
   icu.message = '';
   let idx = 0;
-  while (parts.length) {
-    // Pop off the same number of elements as there are capture groups.
-    const [preambleText, codeText] = parts.splice(0, 2);
-    icu.message += preambleText;
-    if (codeText) {
+  for (const segment of Util.splitMarkdownCodeSpans(message)) {
+    if (segment.isCode) {
       const placeholderName = `MARKDOWN_SNIPPET_${idx++}`;
       // Backtick replacement looks unreadable here, so .join() instead.
       icu.message += '$' + placeholderName + '$';
       icu.placeholders[placeholderName] = {
-        content: '`' + codeText + '`',
-        example: codeText,
+        content: '`' + segment.text + '`',
+        example: segment.text,
       };
+    } else {
+      icu.message += segment.text;
     }
   }
 }
@@ -166,35 +190,39 @@ function _processPlaceholderMarkdownCode(icu) {
  * @param {IncrementalCtc} icu
  */
 function _processPlaceholderMarkdownLink(icu) {
+  const message = icu.message;
+
   // Check for markdown link common errors, ex:
   // * [extra] (space between brackets and parens)
-  if (icu.message.match(/\[.*\] \(.*\)/)) {
-    throw Error(`Bad Link syntax in message "${icu.message}"`);
+  if (message.match(/\[.*\] \(.*\)/)) {
+    throw Error(`Bad Link spacing in message "${message}"`);
+  }
+  // * [](empty link text)
+  if (message.match(/\[\]\(.*\)/)) {
+    throw Error(`markdown link text missing in message "${message}"`);
   }
 
-  // Split on markdown links (e.g. [some link](https://...)).
-  const parts = icu.message.split(/\[([^\]]*?)\]\((https?:\/\/.*?)\)/g);
   icu.message = '';
   let idx = 0;
 
-  while (parts.length) {
-    // Pop off the same number of elements as there are capture groups.
-    const [preambleText, linkText, linkHref] = parts.splice(0, 3);
-    icu.message += preambleText;
-
-    // Append link if there are any.
-    if (linkText && linkHref) {
-      const startPlaceholder = `LINK_START_${idx}`;
-      const endPlaceholder = `LINK_END_${idx}`;
-      icu.message += '$' + startPlaceholder + '$' + linkText + '$' + endPlaceholder + '$';
-      idx++;
-      icu.placeholders[startPlaceholder] = {
-        content: '[',
-      };
-      icu.placeholders[endPlaceholder] = {
-        content: `](${linkHref})`,
-      };
+  for (const segment of Util.splitMarkdownLink(message)) {
+    if (!segment.isLink) {
+      // Plain text segment.
+      icu.message += segment.text;
+      continue;
     }
+
+    // Otherwise, append any links found.
+    const startPlaceholder = `LINK_START_${idx}`;
+    const endPlaceholder = `LINK_END_${idx}`;
+    icu.message += '$' + startPlaceholder + '$' + segment.text + '$' + endPlaceholder + '$';
+    idx++;
+    icu.placeholders[startPlaceholder] = {
+      content: '[',
+    };
+    icu.placeholders[endPlaceholder] = {
+      content: `](${segment.linkHref})`,
+    };
   }
 }
 
@@ -286,7 +314,7 @@ function _processPlaceholderDirectIcu(icu, examples) {
   while ((matches = findIcu.exec(tempMessage)) !== null) {
     const varName = matches[1];
     if (!examples[varName]) {
-      throw Error(`Variable '${varName}' is missing example comment in message "${tempMessage}"`);
+      throw Error(`Variable '${varName}' is missing @example comment in message "${tempMessage}"`);
     }
   }
 
@@ -375,6 +403,60 @@ function createPsuedoLocaleStrings(messages) {
   return psuedoLocalizedStrings;
 }
 
+/**
+ * Helper function that retrieves the text identifier of a named node in the tsc AST.
+ * @param {import('typescript').NamedDeclaration} node
+ * @return {string}
+ */
+function getIdentifier(node) {
+  if (!node.name || !tsc.isIdentifier(node.name)) throw new Error('no Identifier found');
+
+  return node.name.text;
+}
+
+/**
+ * @param {string} sourceStr String of the form 'const UIStrings = {...}'.
+ * @param {Record<string, string>} liveUIStrings The actual imported UIStrings object.
+ * @return {Record<string, ParsedUIString>}
+ */
+function parseUIStrings(sourceStr, liveUIStrings) {
+  const tsAst = tsc.createSourceFile('uistrings', sourceStr, tsc.ScriptTarget.ES2019, true, tsc.ScriptKind.JS);
+
+  const extractionError = new Error('UIStrings declaration was not extracted correctly by the collect-strings regex.');
+  const uiStringsStatement = tsAst.statements[0];
+  if (tsAst.statements.length !== 1) throw extractionError;
+  if (!tsc.isVariableStatement(uiStringsStatement)) throw extractionError;
+
+  const uiStringsDeclaration = uiStringsStatement.declarationList.declarations[0];
+  if (!tsc.isVariableDeclaration(uiStringsDeclaration)) throw extractionError;
+  if (getIdentifier(uiStringsDeclaration) !== 'UIStrings') throw extractionError;
+
+  const uiStringsObject = uiStringsDeclaration.initializer;
+  if (!uiStringsObject || !tsc.isObjectLiteralExpression(uiStringsObject)) throw extractionError;
+
+  /** @type {Record<string, ParsedUIString>} */
+  const parsedMessages = {};
+
+  for (const property of uiStringsObject.properties) {
+    const key = getIdentifier(property);
+
+    // Use live message to avoid having to e.g. concat strings broken into parts.
+    const message = liveUIStrings[key];
+
+    // @ts-ignore - Not part of the public tsc interface yet.
+    const jsDocComments = tsc.getJSDocCommentsAndTags(property);
+    const {description, examples} = computeDescription(jsDocComments[0], message);
+
+    parsedMessages[key] = {
+      message,
+      description,
+      examples,
+    };
+  }
+
+  return parsedMessages;
+}
+
 /** @type {Map<string, string>} */
 const seenStrings = new Map();
 
@@ -402,66 +484,56 @@ function collectAllStringsInDir(dir) {
 
     const content = fs.readFileSync(absolutePath, 'utf8');
     const exportVars = require(absolutePath);
-    const regexMatches = UISTRINGS_REGEX.test(content);
-    const exportsUIStrings = !!exportVars.UIStrings;
-    if (!regexMatches && !exportsUIStrings) continue;
+    const regexMatch = content.match(UISTRINGS_REGEX);
+    const exportedUIStrings = exportVars.UIStrings;
 
-    if (regexMatches && !exportsUIStrings) {
-      throw new Error('UIStrings defined but not exported');
-    }
+    if (!regexMatch) {
+      // No UIStrings found in the file text or exports, so move to the next.
+      if (!exportedUIStrings) continue;
 
-    if (exportsUIStrings && !regexMatches) {
       throw new Error('UIStrings exported but no definition found');
     }
 
-    // @ts-ignore regex just matched
-    const justUIStrings = 'const ' + content.match(UISTRINGS_REGEX)[0];
+    if (!exportedUIStrings) {
+      throw new Error('UIStrings defined in file but not exported');
+    }
+
     // just parse the UIStrings substring to avoid ES version issues, save time, etc
-    // @ts-ignore - esprima's type definition is supremely lacking
-    const ast = esprima.parse(justUIStrings, {comment: true, range: true});
+    const justUIStrings = 'const ' + regexMatch[0];
+    const parsedMessages = parseUIStrings(justUIStrings, exportedUIStrings);
 
-    for (const stmt of ast.body) {
-      if (stmt.type !== 'VariableDeclaration') continue;
-      if (stmt.declarations[0].id.name !== 'UIStrings') continue;
+    for (const [key, parsed] of Object.entries(parsedMessages)) {
+      const {message, description, examples} = parsed;
+      const converted = convertMessageToCtc(message, examples);
 
-      let lastPropertyEndIndex = 0;
-      for (const property of stmt.declarations[0].init.properties) {
-        const key = property.key.name;
-        const val = exportVars.UIStrings[key];
-        const {description, examples} = computeDescription(ast, property, val, lastPropertyEndIndex);
-        const converted = convertMessageToCtc(val, examples);
+      // Don't include placeholders if there are none.
+      const placeholders = Object.keys(converted.placeholders).length === 0 ?
+          undefined :
+          converted.placeholders;
 
-        // Don't include placeholders if there are none.
-        const placeholders = Object.keys(converted.placeholders).length === 0 ?
-            undefined :
-            converted.placeholders;
+      /** @type {CtcMessage} */
+      const ctc = {
+        message: converted.message,
+        description,
+        placeholders,
+      };
 
-        /** @type {CtcMessage} */
-        const ctc = {
-          message: converted.message,
-          description,
-          placeholders,
-        };
+      const messageKey = `${relativeToRootPath} | ${key}`;
+      strings[messageKey] = ctc;
 
-        const messageKey = `${relativeToRootPath} | ${key}`;
-        strings[messageKey] = ctc;
-
-        // check for duplicates, if duplicate, add @description as @meaning to both
-        if (seenStrings.has(ctc.message)) {
-          ctc.meaning = ctc.description;
-          const seenId = seenStrings.get(ctc.message);
-          if (seenId) {
-            if (!strings[seenId].meaning) {
-              strings[seenId].meaning = strings[seenId].description;
-              collisions++;
-            }
+      // check for duplicates, if duplicate, add @description as @meaning to both
+      if (seenStrings.has(ctc.message)) {
+        ctc.meaning = ctc.description;
+        const seenId = seenStrings.get(ctc.message);
+        if (seenId) {
+          if (!strings[seenId].meaning) {
+            strings[seenId].meaning = strings[seenId].description;
             collisions++;
           }
+          collisions++;
         }
-        seenStrings.set(ctc.message, messageKey);
-
-        lastPropertyEndIndex = property.range[1];
       }
+      seenStrings.set(ctc.message, messageKey);
     }
   }
 
@@ -505,15 +577,19 @@ if (require.main === module) {
   console.log('Written to disk!', 'en-XL.ctc.json');
 
   // Bake the ctc en-US and en-XL files into en-US and en-XL LHL format
-  const lhl = collectAndBakeCtcStrings.collectAndBakeCtcStrings(path.join(LH_ROOT, 'lighthouse-core/lib/i18n/locales/'),
-  path.join(LH_ROOT, 'lighthouse-core/lib/i18n/locales/'));
+  const lhl = collectAndBakeCtcStrings(path.join(LH_ROOT, 'lighthouse-core/lib/i18n/locales/'),
+      path.join(LH_ROOT, 'lighthouse-core/lib/i18n/locales/'));
   lhl.forEach(function(locale) {
     console.log(`Baked ${locale} into LHL format.`);
   });
+
+  // Remove any obsolete strings in existing LHL files.
+  console.log('Checking for out-of-date LHL messages...');
+  pruneObsoleteLhlMessages();
 }
 
 module.exports = {
-  computeDescription,
+  parseUIStrings,
   createPsuedoLocaleStrings,
-  convertMessageToPlaceholders: convertMessageToCtc,
+  convertMessageToCtc,
 };
