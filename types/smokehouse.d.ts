@@ -44,7 +44,7 @@
 
   export interface RunnerOptions {
     runLighthouse: (url: string, config: LH.Config.Json) => Promise<Omit<LH.RunnerResult, 'report'>>;
-    filter?: RegExp; 
+    filter?: RegExp;
     skip?: (test: TestDfn, expectation: ExpectedRunnerResult) => string | false;
     modify?: (test: TestDfn, expectation: ExpectedRunnerResult) => void;
   }
