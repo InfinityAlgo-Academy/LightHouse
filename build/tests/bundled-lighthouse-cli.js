@@ -68,9 +68,7 @@ const lighthouse = (function getLighthouseCoreBundled() {
 // @ts-ignore
 lighthouse.__PATCHED__ = true;
 require.cache[corePath] = {
-  id: corePath,
   exports: lighthouse,
-  loaded: true,
 };
 
 // @ts-ignore
