@@ -20,8 +20,8 @@ const lighthouse = (function getLighthouseCoreBundled() {
   // This `let` protects the global reference to the native require.
   // Doesn't need to have any value, but for good measure define a function that explicitly forbids
   // its own usage.
-  /* eslint-disable-next-line no-unused-vars */
-  const require = () => {
+  /* eslint-disable-next-line */
+  let require = () => {
     throw new Error('illegal require');
   };
 
