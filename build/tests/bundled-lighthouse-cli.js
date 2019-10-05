@@ -30,6 +30,8 @@ const lighthouse = (function getLighthouseCoreBundled() {
 
   const lighthouseBundledCode = fs.readFileSync('dist/test-bundle.js', 'utf-8')
     // Some modules are impossible to bundle. So we cheat by leaning on globalThis.
+    // cri.js will be able to use native require. It's a minor defect - it means that some usages
+    // of lh-error.js will not come from the bundled code.
     .replace('new ChromeProtocol', 'new globalThis.ChromeProtocol')
     // Needed for asset-saver.js.
     .replace(/mkdirp\./g, 'globalThis.mkdirp.')
