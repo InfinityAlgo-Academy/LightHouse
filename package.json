@@ -12,8 +12,8 @@
   },
   "scripts": {
     "build-all": "npm-run-posix-or-windows build-all:task",
-    "build-all:task": "yarn build-extension & yarn build-devtools & yarn build-lr & yarn build-viewer & wait",
-    "build-all:task:windows": "yarn build-extension && yarn build-devtools && yarn build-lr && yarn build-viewer",
+    "build-all:task": "yarn build-extension & yarn build-devtools & yarn build-lr & yarn build-viewer & yarn build-firehouse & wait",
+    "build-all:task:windows": "yarn build-extension && yarn build-devtools && yarn build-lr && yarn build-viewer && yarn build-firehouse",
     "build-extension": "node ./build/build-extension.js",
     "build-devtools": "node ./build/build-bundle.js clients/devtools-entry.js dist/lighthouse-dt-bundle.js && node ./build/build-dt-report-resources.js",
     "build-firehouse": "node ./build/build-firehouse.js",
