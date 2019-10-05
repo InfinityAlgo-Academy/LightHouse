@@ -43,8 +43,8 @@
   }
 
   export interface RunnerOptions {
-    runLighthouse: (url: string, config: LH.Config.Json) => Promise<LH.RunnerResult>;
-    filter?: RegExp;
+    runLighthouse: (url: string, config: LH.Config.Json) => Promise<Omit<LH.RunnerResult, 'report'>>;
+    filter?: RegExp; 
     skip?: (test: TestDfn, expectation: ExpectedRunnerResult) => string | false;
     modify?: (test: TestDfn, expectation: ExpectedRunnerResult) => void;
   }
