@@ -22,7 +22,7 @@ const lighthouse = (function getLighthouseCoreBundled() {
   // its own usage.
   // To be further convinced that this works (that the un-bundled files are not being loaded),
   // add some console.log's somewhere like `driver.js`, and
-  // run `node build/tests/bundled-lighthouse-cli.js https://www.example.com`.
+  // run `node build/tests/bundled-lighthouse-cli.js https://www.example.com`. You won't see them.
   /* eslint-disable-next-line */
   let require = () => {
     throw new Error('illegal require');
