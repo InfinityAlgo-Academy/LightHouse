@@ -20,6 +20,9 @@ const lighthouse = (function getLighthouseCoreBundled() {
   // This `let` protects the global reference to the native require.
   // Doesn't need to have any value, but for good measure define a function that explicitly forbids
   // its own usage.
+  // To be further convinced that this works (that the un-bundled files are not being loaded),
+  // add some console.log's somewhere like `driver.js`, and
+  // run `node build/tests/bundled-lighthouse-cli.js https://www.example.com`.
   /* eslint-disable-next-line */
   let require = () => {
     throw new Error('illegal require');
