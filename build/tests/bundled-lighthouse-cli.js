@@ -25,7 +25,7 @@ const lighthouse = (function getLighthouseCoreBundled() {
     throw new Error('illegal require');
   };
 
-  const LighthouseBundledCode = fs.readFileSync('dist/test-bundle.js', 'utf-8')
+  const lighthouseBundledCode = fs.readFileSync('dist/test-bundle.js', 'utf-8')
     // Some modules are impossible to bundle. So we cheat by leaning on globalThis.
     .replace('new ChromeProtocol', 'new globalThis.ChromeProtocol')
     // Needed for asset-saver.js.
@@ -44,7 +44,7 @@ const lighthouse = (function getLighthouseCoreBundled() {
   globalThis.fs = fs;
   /*  eslint-enable no-undef */
 
-  const bundledLighthouseRequire = eval(LighthouseBundledCode);
+  const bundledLighthouseRequire = eval(lighthouseBundledCode);
 
   // Find the lighthouse module.
   /** @type {import('../../lighthouse-core/index.js')} */
