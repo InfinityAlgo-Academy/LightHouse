@@ -31,6 +31,7 @@ const {taskGroups, taskNameToGroup} = require('./task-groups.js');
  * @prop {LH.TraceEvent} event
  * @prop {TaskNode[]} children
  * @prop {TaskNode|undefined} parent
+ * @prop {boolean} unbounded Indicates that the task had an endTime that was inferred rather than specified in the trace. i.e. in the source trace this task was unbounded.
  * @prop {number} startTime
  * @prop {number} endTime
  * @prop {number} duration
@@ -64,6 +65,7 @@ class MainThreadTasks {
       duration: endTime - startTime,
 
       // These properties will be filled in later
+      unbounded: false,
       parent: undefined,
       children: [],
       attributableURLs: [],
@@ -181,10 +183,12 @@ class MainThreadTasks {
 
       /** @type {Pick<LH.TraceEvent, 'ph'|'ts'>} */
       let taskEndEvent;
+      let unbounded = false;
       if (matchedEventIndex === -1) {
         // If we couldn't find an end event, we'll assume it's the end of the trace.
         // If this creates invalid parent/child relationships it will be caught in the next step.
         taskEndEvent = {ph: 'E', ts: traceEndTs};
+        unbounded = true;
       } else if (matchedEventIndex === taskEndEventsReverseQueue.length - 1) {
         // Use .pop() in the common case where the immediately next event is needed.
         // It's ~25x faster, https://jsperf.com/pop-vs-splice.
@@ -193,7 +197,9 @@ class MainThreadTasks {
         taskEndEvent = taskEndEventsReverseQueue.splice(matchedEventIndex, 1)[0];
       }
 
-      tasks.push(MainThreadTasks._createNewTaskNode(taskStartEvent, taskEndEvent));
+      const task = MainThreadTasks._createNewTaskNode(taskStartEvent, taskEndEvent);
+      task.unbounded = unbounded;
+      tasks.push(task);
     }
 
     if (taskEndEventsReverseQueue.length) {
@@ -247,18 +253,29 @@ class MainThreadTasks {
         if (nextTask.endTime > currentTask.endTime) {
           const timeDelta = nextTask.endTime - currentTask.endTime;
           // The child task is taking longer than the parent task, which should be impossible.
-          //    If it's less than 1ms, we'll let it slide by increasing the duration of the parent.
-          //    If it's more, throw an error.
+          // In reality these situations happen, so we allow for some flexibility in trace event times.
           if (timeDelta < 1000) {
+            // It's less than 1ms, we'll let it slide by increasing the duration of the parent.
             currentTask.endTime = nextTask.endTime;
             currentTask.duration += timeDelta;
+          } else if (nextTask.unbounded) {
+            // It's ending at traceEndTs, it means we were missing the end event. We'll truncate it to the parent.
+            nextTask.endTime = currentTask.endTime;
+            nextTask.duration = nextTask.endTime - nextTask.startTime;
           } else {
-            // If we fell into this error, it's usually because of one of three reasons.
-            //    - We were missing an E event for a child task and we assumed the child ended at the end of the trace.
+            // None of our workarounds matched. It's time to throw an error.
+            // When we fall into this error, it's usually because of one of two reasons.
             //    - There was slop in the opposite direction (child started 1ms before parent) and the child was assumed to be parent instead.
             //    - The child timestamp ended more than 1ms after tha parent.
             // These have more complicated fixes, so handling separately https://github.com/GoogleChrome/lighthouse/pull/9491#discussion_r327331204.
-            throw new Error('Fatal trace logic error - child cannot end after parent');
+            /** @type {any} */
+            const error = new Error('Fatal trace logic error - child cannot end after parent');
+            error.timeDelta = timeDelta;
+            error.nextTaskEvent = nextTask.event;
+            error.nextTaskEndTime = nextTask.endTime;
+            error.currentTaskEvent = currentTask.event;
+            error.currentTaskEndTime = currentTask.endTime;
+            throw error;
           }
         }
 

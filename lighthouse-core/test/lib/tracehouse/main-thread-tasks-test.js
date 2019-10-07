@@ -99,6 +99,7 @@ describe('Main Thread Tasks', () => {
       duration: 100,
       selfTime: 50,
       group: taskGroups.other,
+      unbounded: false,
     });
 
     expect(taskB).toEqual({
@@ -112,6 +113,7 @@ describe('Main Thread Tasks', () => {
       duration: 50,
       selfTime: 20,
       group: taskGroups.other,
+      unbounded: false,
     });
   });
 
@@ -232,6 +234,7 @@ describe('Main Thread Tasks', () => {
       duration: 110,
       selfTime: 5,
       group: taskGroups.other,
+      unbounded: true,
     });
 
     expect(taskB).toEqual({
@@ -245,6 +248,7 @@ describe('Main Thread Tasks', () => {
       duration: 105,
       selfTime: 95,
       group: taskGroups.other,
+      unbounded: true,
     });
   });
 
@@ -362,6 +366,7 @@ describe('Main Thread Tasks', () => {
         duration: 100,
         selfTime: 50,
         group: taskGroups.other,
+        unbounded: false,
       },
       {
         parent: taskA,
@@ -374,6 +379,7 @@ describe('Main Thread Tasks', () => {
         duration: 50,
         selfTime: 50,
         group: taskGroups.other,
+        unbounded: false,
       },
     ]);
   });
@@ -406,6 +412,7 @@ describe('Main Thread Tasks', () => {
         duration: 100,
         selfTime: 100,
         group: taskGroups.other,
+        unbounded: false,
       },
       {
         parent: undefined,
@@ -418,6 +425,7 @@ describe('Main Thread Tasks', () => {
         duration: 0,
         selfTime: 0,
         group: taskGroups.other,
+        unbounded: false,
       },
     ]);
   });
@@ -452,6 +460,7 @@ describe('Main Thread Tasks', () => {
         duration: 100,
         selfTime: 25,
         group: taskGroups.other,
+        unbounded: false,
       },
       {
         parent: taskA,
@@ -464,10 +473,61 @@ describe('Main Thread Tasks', () => {
         duration: 75,
         selfTime: 75,
         group: taskGroups.other,
+        unbounded: false,
       },
     ]);
   });
 
+  it('should handle child events that extend >1ms beyond parent event because missing E', () => {
+    /*
+    An artistic rendering of the below trace:
+    ████████████████TaskA██████████████████
+            █████████TaskB██████████████████
+    */
+    const traceEvents = [
+      ...boilerplateTrace,
+      {ph: 'B', name: 'TaskA', pid, tid, ts: baseTs, args},
+      {ph: 'B', name: 'TaskB', pid, tid, ts: baseTs + 25e3, args},
+      {ph: 'E', name: 'TaskA', pid, tid, ts: baseTs + 100e3, args},
+      {ph: 'I', name: 'MarkerToPushOutTraceEnd', pid, tid, ts: baseTs + 110e3, args},
+    ];
+
+    traceEvents.forEach(evt => Object.assign(evt, {cat: 'devtools.timeline'}));
+
+    const tasks = run({traceEvents});
+    const [taskA, taskB] = tasks;
+    expect(tasks).toEqual([
+      {
+        parent: undefined,
+        attributableURLs: [],
+
+        children: [taskB],
+        event: traceEvents.find(event => event.name === 'TaskA'),
+        startTime: 0,
+        endTime: 100,
+        duration: 100,
+        selfTime: 25,
+        group: taskGroups.other,
+        unbounded: false,
+      },
+      {
+        parent: taskA,
+        attributableURLs: [],
+
+        children: [],
+        event: traceEvents.find(event => event.name === 'TaskB' && event.ph === 'B'),
+        startTime: 25,
+        endTime: 100,
+        duration: 75,
+        selfTime: 75,
+        group: taskGroups.other,
+        unbounded: true,
+      },
+    ]);
+  });
+
+  // Invalid sets of events.
+  // All of these should have `traceEnd` pushed out to avoid falling into one of our mitigation scenarios.
   const invalidEventSets = [
     [
       // TaskA overlaps with TaskB, X first
@@ -498,12 +558,6 @@ describe('Main Thread Tasks', () => {
       // TaskB is missing a B event after an X
       {ph: 'X', name: 'TaskA', pid, tid, ts: baseTs, dur: 100e3, args},
       {ph: 'E', name: 'TaskB', pid, tid, ts: baseTs + 10e3, args},
-    ],
-    [
-      {ph: 'I', name: 'MarkerToPushOutTraceEnd', pid, tid, ts: baseTs + 110e3, args},
-      // TaskB is missing an E event within an X
-      {ph: 'X', name: 'TaskA', pid, tid, ts: baseTs, dur: 100e3, args},
-      {ph: 'B', name: 'TaskB', pid, tid, ts: baseTs + 10e3, args},
     ],
   ];
 
