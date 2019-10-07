@@ -8,6 +8,7 @@
 // Example:
 //     node lighthouse-core/scripts/compare-timings.js --name my-collection --collect -n 3 --lh-flags='--only-audits=unminified-javascript' --urls https://www.example.com https://www.nyt.com
 //     node lighthouse-core/scripts/compare-timings.js --name my-collection --summarize --measure-filter 'loadPage|connect'
+//     node lighthouse-core/scripts/compare-timings.js --name base --name pr --compare
 
 const fs = require('fs');
 const {execSync} = require('child_process');
@@ -19,7 +20,9 @@ const ROOT_OUTPUT_DIR = `${LH_ROOT}/timings-data`;
 const argv = yargs
   .help('help')
   .describe({
+    // common flags
     'name': 'Unique identifier, makes the folder for storing LHRs. Not a path',
+    'report-exclude': 'Regex of properties to exclude. Set to "none" to disable default',
     // --collect
     'collect': 'Saves LHRs to disk',
     'lh-flags': 'Lighthouse flags',
@@ -27,18 +30,33 @@ const argv = yargs
     'n': 'Number of times to run',
     // --summarize
     'summarize': 'Prints statistics report',
-    'measure-filter': 'Regex filter of measures to report. Optional',
+    'measure-filter': 'Regex of measures to include. Optional',
     'output': 'table, json',
+    // --compare
+    'compare': 'Compare two sets of LHRs',
+    'delta-property-sort': 'Property to sort by its delta',
+    'desc': 'Set to override default ascending sort',
   })
   .string('measure-filter')
+  .default('report-exclude', 'min|max|stdev|^n$')
+  .default('delta-property-sort', 'mean')
   .default('output', 'table')
   .array('urls')
   .string('lh-flags')
+  .default('desc', false)
   .default('lh-flags', '')
   .wrap(yargs.terminalWidth())
 .argv;
 
-const outputDir = `${ROOT_OUTPUT_DIR}/${argv.name}`;
+const reportExcludeRegex =
+  argv.reportExclude !== 'none' ? new RegExp(argv.reportExclude, 'i') : null;
+
+/**
+ * @param {string} name
+ */
+function dir(name) {
+  return `${ROOT_OUTPUT_DIR}/${name}`;
+}
 
 /**
  * @param {number[]} values
@@ -72,6 +90,7 @@ function round(value) {
 }
 
 function collect() {
+  const outputDir = dir(argv.name);
   if (!fs.existsSync(ROOT_OUTPUT_DIR)) fs.mkdirSync(ROOT_OUTPUT_DIR);
   if (fs.existsSync(outputDir)) throw new Error(`folder already exists: ${outputDir}`);
   fs.mkdirSync(outputDir);
@@ -91,11 +110,15 @@ function collect() {
   }
 }
 
-function summarize() {
+/**
+ * @param {string} name
+ */
+function aggregateResults(name) {
+  const outputDir = dir(name);
+
   // `${url}@@@${entry.name}` -> duration
   /** @type {Map<string, number[]>} */
   const durationsMap = new Map();
-  /** @type {RegExp|null} */
   const measureFilter = argv.measureFilter ? new RegExp(argv.measureFilter, 'i') : null;
 
   for (const lhrPath of fs.readdirSync(outputDir)) {
@@ -127,13 +150,14 @@ function summarize() {
     }
   }
 
-  const results = [...durationsMap].map(([key, durations]) => {
+  return [...durationsMap].map(([key, durations]) => {
     const [url, entryName] = key.split('@@@');
     const mean = average(durations);
     const min = Math.min(...durations);
     const max = Math.max(...durations);
     const stdev = sampleStdev(durations);
     return {
+      key,
       measure: entryName,
       url,
       n: durations.length,
@@ -148,7 +172,104 @@ function summarize() {
     if (measureComp !== 0) return measureComp;
     return a.url.localeCompare(b.url);
   });
+}
 
+/**
+ * @param {*[]} results
+ */
+function filter(results) {
+  if (!reportExcludeRegex) return;
+
+  for (const result of results) {
+    for (const key in result) {
+      if (reportExcludeRegex.test(key)) delete result[key];
+    }
+  }
+}
+
+/**
+ * @param {number=} value
+ * @return {value is number}
+ */
+function exists(value) {
+  return typeof value !== 'undefined';
+}
+
+function summarize() {
+  const results = aggregateResults(argv.name);
+  filter(results);
+  print(results);
+}
+
+/**
+ * @param {number=} base
+ * @param {number=} other
+ */
+function compareValues(base, other) {
+  const basePart = exists(base) ? base : 'N/A';
+  const otherPart = exists(other) ? other : 'N/A';
+  return {
+    description: `${basePart} -> ${otherPart}`,
+    delta: exists(base) && exists(other) ? (other - base) : undefined,
+  };
+}
+
+function compare() {
+  if (!Array.isArray(argv.name) || argv.name.length !== 2) {
+    throw new Error('expected two entries for name option');
+  }
+
+  const baseResults = aggregateResults(argv.name[0]);
+  const otherResults = aggregateResults(argv.name[1]);
+
+  const keys = [...new Set([...baseResults.map(r => r.key), ...otherResults.map(r => r.key)])];
+  const results = keys.map(key => {
+    const baseResult = baseResults.find(result => result.key === key);
+    const otherResult = otherResults.find(result => result.key === key);
+
+    const someResult = baseResult || otherResult;
+    if (!someResult) throw new Error('impossible');
+
+    const mean = compareValues(baseResult && baseResult.mean, otherResult && otherResult.mean);
+    const stdev = compareValues(baseResult && baseResult.stdev, otherResult && otherResult.stdev);
+    const min = compareValues(baseResult && baseResult.min, otherResult && otherResult.min);
+    const max = compareValues(baseResult && baseResult.max, otherResult && otherResult.max);
+
+    return {
+      'measure': someResult.measure,
+      'url': someResult.url,
+      'mean': mean.description,
+      'mean Δ': exists(mean.delta) ? round(mean.delta) : undefined,
+      'stdev': stdev.description,
+      'stdev Δ': exists(stdev.delta) ? round(stdev.delta) : undefined,
+      'min': min.description,
+      'min Δ': exists(min.delta) ? round(min.delta) : undefined,
+      'max': max.description,
+      'max Δ': exists(max.delta) ? round(max.delta) : undefined,
+    };
+  });
+
+  const sortByKey = `${argv.deltaPropertySort} Δ`;
+  results.sort((a, b) => {
+    // @ts-ignore - shhh tsc.
+    const aValue = a[sortByKey];
+    // @ts-ignore - shhh tsc.
+    const bValue = b[sortByKey];
+
+    // Always put the keys missing a result at the bottom of the table.
+    if (!exists(aValue)) return 1;
+    else if (!exists(bValue)) return -1;
+
+    return (argv.desc ? 1 : -1) * (Math.abs(aValue) - Math.abs(bValue));
+  });
+  filter(results);
+  print(results);
+}
+
+/**
+ * @param {*[]} results
+ */
+function print(results) {
   if (argv.output === 'table') {
     // eslint-disable-next-line no-console
     console.table(results);
@@ -161,6 +282,7 @@ function summarize() {
 function main() {
   if (argv.collect) collect();
   if (argv.summarize) summarize();
+  if (argv.compare) compare();
 }
 
 main();
