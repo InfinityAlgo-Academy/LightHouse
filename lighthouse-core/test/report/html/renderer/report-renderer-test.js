@@ -220,15 +220,16 @@ describe('ReportRenderer', () => {
     const container = renderer._dom._document.body;
     const output = renderer.renderReport(sampleResults, container);
 
+    const DOCS_ORIGINS = ['https://developers.google.com', 'https://web.dev'];
     const utmChannels = [...output.querySelectorAll('a[href*="utm_source=lighthouse"')]
       .map(a => new URL(a.href))
-      .filter(url => url.origin === 'https://developers.google.com')
+      .filter(url => DOCS_ORIGINS.includes(url.origin))
       .map(url => url.searchParams.get('utm_medium'));
 
-    assert.ok(utmChannels.length > 20);
-    utmChannels.forEach(anchorChannel => {
-      assert.strictEqual(anchorChannel, lhrChannel);
-    });
+    assert.ok(utmChannels.length > 100);
+    for (const utmChannel of utmChannels) {
+      assert.strictEqual(utmChannel, lhrChannel);
+    }
   });
 
   it('renders `not_applicable` audits as `notApplicable`', () => {

@@ -39,6 +39,7 @@ script:
   - yarn test-viewer
   - yarn test-lantern
   - yarn i18n:checks
+  - yarn dogfood-lhci
 before_cache:
   # nyc, jest and other projects store files in here. They mess up the travis build cache.
   - rm -rf ./node_modules/.cache/

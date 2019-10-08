@@ -16,7 +16,7 @@
             "title": "Uses Application Cache"
         },
         "apple-touch-icon": {
-            "description": "For ideal appearance on iOS when users add a progressive web app to the home screen, define an `apple-touch-icon`. It must point to a non-transparent 192px (or 180px) square PNG. [Learn More](https://developers.google.com/web/fundamentals/design-and-ux/browser-customization/).",
+            "description": "For ideal appearance on iOS when users add a progressive web app to the home screen, define an `apple-touch-icon`. It must point to a non-transparent 192px (or 180px) square PNG. [Learn More](https://web.dev/apple-touch-icon/).",
             "id": "apple-touch-icon",
             "score": 0.0,
             "scoreDisplayMode": "binary",
@@ -80,7 +80,7 @@
             "title": "`<audio>` elements contain a `<track>` element with `[kind=\"captions\"]`"
         },
         "bootup-time": {
-            "description": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/bootup).",
+            "description": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn more](https://web.dev/bootup-time).",
             "details": {
                 "headings": [
                     {
@@ -232,7 +232,7 @@
             "title": "Content is sized correctly for the viewport"
         },
         "critical-request-chains": {
-            "description": "The Critical Request Chains below show you what resources are loaded with a high priority. Consider reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains).",
+            "description": "The Critical Request Chains below show you what resources are loaded with a high priority. Consider reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load. [Learn more](https://web.dev/critical-request-chains).",
             "details": {
                 "chains": {
                     "75994.33": {
@@ -565,7 +565,7 @@
             "title": "`[id]` attributes on the page are unique"
         },
         "efficient-animated-content": {
-            "description": "Large GIFs are inefficient for delivering animated content. Consider using MPEG4/WebM videos for animations and PNG/WebP for static images instead of GIF to save network bytes. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/replace-animated-gifs-with-video/)",
+            "description": "Large GIFs are inefficient for delivering animated content. Consider using MPEG4/WebM videos for animations and PNG/WebP for static images instead of GIF to save network bytes. [Learn more](https://web.dev/efficient-animated-content)",
             "details": {
                 "headings": [],
                 "items": [],
@@ -630,7 +630,7 @@
             "title": "Browser errors were logged to the console"
         },
         "estimated-input-latency": {
-            "description": "Estimated Input Latency is an estimate of how long your app takes to respond to user input, in milliseconds, during the busiest 5s window of page load. If your latency is higher than 50 ms, users may perceive your app as laggy. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency).",
+            "description": "Estimated Input Latency is an estimate of how long your app takes to respond to user input, in milliseconds, during the busiest 5s window of page load. If your latency is higher than 50 ms, users may perceive your app as laggy. [Learn more](https://web.dev/estimated-input-latency).",
             "displayValue": "20\u00a0ms",
             "id": "estimated-input-latency",
             "numericValue": 16.0,
@@ -700,7 +700,7 @@
             "title": "Final Screenshot"
         },
         "first-contentful-paint": {
-            "description": "First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint).",
+            "description": "First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://web.dev/first-contentful-paint).",
             "displayValue": "4.0\u00a0s",
             "id": "first-contentful-paint",
             "numericValue": 3969.135,
@@ -709,7 +709,7 @@
             "title": "First Contentful Paint"
         },
         "first-cpu-idle": {
-            "description": "First CPU Idle marks the first time at which the page's main thread is quiet enough to handle input. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-interactive).",
+            "description": "First CPU Idle marks the first time at which the page's main thread is quiet enough to handle input.  [Learn more](https://web.dev/first-cpu-idle).",
             "displayValue": "4.9\u00a0s",
             "id": "first-cpu-idle",
             "numericValue": 4927.278,
@@ -718,7 +718,7 @@
             "title": "First CPU Idle"
         },
         "first-meaningful-paint": {
-            "description": "First Meaningful Paint measures when the primary content of a page is visible. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint).",
+            "description": "First Meaningful Paint measures when the primary content of a page is visible. [Learn more](https://web.dev/first-meaningful-paint).",
             "displayValue": "4.0\u00a0s",
             "id": "first-meaningful-paint",
             "numericValue": 3969.136,
@@ -741,7 +741,7 @@
             "title": "Interactive controls are keyboard focusable"
         },
         "font-display": {
-            "description": "Leverage the font-display CSS feature to ensure text is user-visible while webfonts are loading. [Learn more](https://developers.google.com/web/updates/2016/02/font-display).",
+            "description": "Leverage the font-display CSS feature to ensure text is user-visible while webfonts are loading. [Learn more](https://web.dev/font-display).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -1041,7 +1041,7 @@
             "title": "Web app manifest does not meet the installability requirements"
         },
         "interactive": {
-            "description": "Time to interactive is the amount of time it takes for the page to become fully interactive. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive).",
+            "description": "Time to interactive is the amount of time it takes for the page to become fully interactive. [Learn more](https://web.dev/interactive).",
             "displayValue": "4.9\u00a0s",
             "id": "interactive",
             "numericValue": 4927.278,
@@ -1377,7 +1377,7 @@
             "title": "Tasks"
         },
         "mainthread-work-breakdown": {
-            "description": "Consider reducing the time spent parsing, compiling and executing JS. You may find delivering smaller JS payloads helps with this.",
+            "description": "Consider reducing the time spent parsing, compiling and executing JS. You may find delivering smaller JS payloads helps with this. [Learn more](https://web.dev/mainthread-work-breakdown)",
             "details": {
                 "headings": [
                     {
@@ -1517,6 +1517,9 @@
                         "speedIndex": 4417.0,
                         "speedIndexTs": 185607736912.0,
                         "totalBlockingTime": 117.0
+                    },
+                    {
+                        "lcpInvalidated": false
                     }
                 ],
                 "type": "debugdata"
@@ -2009,7 +2012,7 @@
             "title": "Offscreen content is hidden from assistive technology"
         },
         "offscreen-images": {
-            "description": "Consider lazy-loading offscreen and hidden images after all critical resources have finished loading to lower time to interactive. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images).",
+            "description": "Consider lazy-loading offscreen and hidden images after all critical resources have finished loading to lower time to interactive. [Learn more](https://web.dev/offscreen-images).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -2191,7 +2194,7 @@
             "title": "Page transitions don't feel like they block on the network"
         },
         "redirects": {
-            "description": "Redirects introduce additional delays before the page can be loaded. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/redirects).",
+            "description": "Redirects introduce additional delays before the page can be loaded. [Learn more](https://web.dev/redirects).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -2212,7 +2215,7 @@
             "title": "Does not redirect HTTP traffic to HTTPS"
         },
         "render-blocking-resources": {
-            "description": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources).",
+            "description": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. [Learn more](https://web.dev/render-blocking-resources).",
             "details": {
                 "headings": [
                     {
@@ -2430,7 +2433,7 @@
             "title": "Does not register a service worker that controls page and `start_url`"
         },
         "speed-index": {
-            "description": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/speed-index).",
+            "description": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more](https://web.dev/speed-index).",
             "displayValue": "4.4\u00a0s",
             "id": "speed-index",
             "numericValue": 4417.0,
@@ -2607,7 +2610,7 @@
             "title": "Third-Party usage"
         },
         "time-to-first-byte": {
-            "description": "Time To First Byte identifies the time at which your server sends a response. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/ttfb).",
+            "description": "Time To First Byte identifies the time at which your server sends a response. [Learn more](https://web.dev/time-to-first-byte).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -2631,7 +2634,7 @@
             "title": "Total Blocking Time"
         },
         "total-byte-weight": {
-            "description": "Large network payloads cost users real money and are highly correlated with long load times. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/network-payloads).",
+            "description": "Large network payloads cost users real money and are highly correlated with long load times. [Learn more](https://web.dev/total-byte-weight).",
             "details": {
                 "headings": [
                     {
@@ -2697,7 +2700,7 @@
             "title": "Avoids enormous network payloads"
         },
         "unminified-css": {
-            "description": "Minifying CSS files can reduce network payload sizes. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/minify-css).",
+            "description": "Minifying CSS files can reduce network payload sizes. [Learn more](https://web.dev/unminified-css).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -2712,7 +2715,7 @@
             "title": "Minify CSS"
         },
         "unminified-javascript": {
-            "description": "Minifying JavaScript files can reduce payload sizes and script parse time. [Learn more](https://developers.google.com/speed/docs/insights/MinifyResources).",
+            "description": "Minifying JavaScript files can reduce payload sizes and script parse time. [Learn more](https://web.dev/unminified-javascript).",
             "details": {
                 "headings": [
                     {
@@ -2752,7 +2755,7 @@
             "warnings": []
         },
         "unused-css-rules": {
-            "description": "Remove dead rules from stylesheets and defer the loading of CSS not used for above-the-fold content to reduce unnecessary bytes consumed by network activity. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/unused-css).",
+            "description": "Remove dead rules from stylesheets and defer the loading of CSS not used for above-the-fold content to reduce unnecessary bytes consumed by network activity. [Learn more](https://web.dev/unused-css-rules).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -2774,7 +2777,7 @@
             "title": "HTML5 landmark elements are used to improve navigation"
         },
         "user-timings": {
-            "description": "Consider instrumenting your app with the User Timing API to measure your app's real-world performance during key user experiences. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/user-timing).",
+            "description": "Consider instrumenting your app with the User Timing API to measure your app's real-world performance during key user experiences. [Learn more](https://web.dev/user-timings).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -2871,7 +2874,7 @@
             "title": "Does not use HTTP/2 for all of its resources"
         },
         "uses-long-cache-ttl": {
-            "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/cache-policy).",
+            "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more](https://web.dev/uses-long-cache-ttl).",
             "details": {
                 "headings": [
                     {
@@ -2978,7 +2981,7 @@
             "title": "Serve static assets with an efficient cache policy"
         },
         "uses-optimized-images": {
-            "description": "Optimized images load faster and consume less cellular data. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/optimize-images).",
+            "description": "Optimized images load faster and consume less cellular data. [Learn more](https://web.dev/uses-optimized-images).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -3030,7 +3033,7 @@
             "title": "Does not use passive listeners to improve scrolling performance"
         },
         "uses-rel-preconnect": {
-            "description": "Consider adding `preconnect` or `dns-prefetch` resource hints to establish early connections to important third-party origins. [Learn more](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect).",
+            "description": "Consider adding `preconnect` or `dns-prefetch` resource hints to establish early connections to important third-party origins. [Learn more](https://web.dev/uses-rel-preconnect).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -3045,7 +3048,7 @@
             "warnings": []
         },
         "uses-rel-preload": {
-            "description": "Consider using `<link rel=preload>` to prioritize fetching resources that are currently requested later in page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/preload).",
+            "description": "Consider using `<link rel=preload>` to prioritize fetching resources that are currently requested later in page load. [Learn more](https://web.dev/uses-rel-preload).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -3059,7 +3062,7 @@
             "title": "Preload key requests"
         },
         "uses-responsive-images": {
-            "description": "Serve images that are appropriately-sized to save cellular data and improve load time. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/oversized-images).",
+            "description": "Serve images that are appropriately-sized to save cellular data and improve load time. [Learn more](https://web.dev/uses-responsive-images).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -3075,7 +3078,7 @@
             "warnings": []
         },
         "uses-text-compression": {
-            "description": "Text-based resources should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/text-compression).",
+            "description": "Text-based resources should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more](https://web.dev/uses-text-compression).",
             "details": {
                 "headings": [
                     {
@@ -3118,7 +3121,7 @@
             "title": "Enable text compression"
         },
         "uses-webp-images": {
-            "description": "Image formats like JPEG 2000, JPEG XR, and WebP often provide better compression than PNG or JPEG, which means faster downloads and less data consumption. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/webp).",
+            "description": "Image formats like JPEG 2000, JPEG XR, and WebP often provide better compression than PNG or JPEG, which means faster downloads and less data consumption. [Learn more](https://web.dev/uses-webp-images).",
             "details": {
                 "headings": [
                     {
@@ -3983,7 +3986,7 @@
             "warningHeader": "Warnings: "
         }
     },
-    "lighthouseVersion": "5.2.0",
+    "lighthouseVersion": "5.5.0",
     "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
     "runWarnings": [],
     "stackPacks": [
@@ -4435,6 +4438,12 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:audit:metrics",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:computed:LargestContentfulPaint",
                 "startTime": 0.0
             },
             {

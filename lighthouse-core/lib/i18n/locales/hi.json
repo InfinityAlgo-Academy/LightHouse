@@ -318,7 +318,7 @@
     "message": "`<video>` एलिमेंट में `[kind=\"description\"]` वाला एक `<track>` एलिमेंट है"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "उपयोगकर्ता जब होम स्क्रीन पर प्रगतिशील वेब ऐप जोड़ें, तो iOS पर वह अच्छे से नज़र आए, इसके लिए `apple-touch-icon` तय करें. यह ज़रूरी है कि यह आइकॉन किसी ऐसे 192px (या 180px) के चौकोर PNG की तरफ़ इशारा करे जिसके आर-पार न देखा जा सके. [ज़्यादा जानें](https://developers.google.com/web/fundamentals/design-and-ux/browser-customization/)."
+    "message": "उपयोगकर्ता जब होम स्क्रीन पर प्रगतिशील वेब ऐप्लिकेशन जोड़ें, तो iOS पर वह अच्छे से नज़र आए, इसके लिए `apple-touch-icon` तय करें. यह ज़रूरी है कि यह आइकॉन किसी ऐसे 192px (या 180px) के वर्गाकार PNG की तरफ़ इशारा करे जिसके आर-पार न देखा जा सके. [ज़्यादा जानें](https://developers.google.com/web/fundamentals/design-and-ux/browser-customization/)."
   },
   "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
     "message": "एक सही `apple-touch-icon` नहीं उपलब्ध कराता"
@@ -441,7 +441,7 @@
     "message": "इमेज अगली जेनरेशन के फ़ॉर्मेट में ऑफ़र करें"
   },
   "lighthouse-core/audits/content-width.js | description": {
-    "message": "आपके ऐप्लिकेशन की सामग्री की चौड़ाई व्यूपोर्ट की चौड़ाई से मेल नहीं खाती है, तो आपका ऐप्लिकेशन मोबाइल स्क्रीन पर ऑप्टिमाइज़ नहीं किया जा सकेगा. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/content-sized-correctly-for-viewport)."
+    "message": "अगर आपके ऐप्लिकेशन की सामग्री की चौड़ाई व्यूपोर्ट की चौड़ाई से मेल नहीं खाती है, तो आपका ऐप्लिकेशन मोबाइल स्क्रीन पर ऑप्टिमाइज़ नहीं किया जा सकेगा. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/content-sized-correctly-for-viewport)."
   },
   "lighthouse-core/audits/content-width.js | explanation": {
     "message": "{innerWidth}px के व्यूपोर्ट का आकार {outerWidth}px की विंडो के आकार से मेल नहीं खाता है."
@@ -705,7 +705,7 @@
     "message": "इमेज के आकार की जानकारी गलत है {url}"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
-    "message": "ब्राउज़र अपनी ओर से, उपयोगकर्ताओं को आपके ऐप्लिकेशन को उनकी होमस्क्रीन पर जोड़ने के लिए कह सकते हैं. इससे उपयोगकर्ताओं के साथ बेहतरी से जुड़ने में मदद मिलती है. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/install-prompt)."
+    "message": "ब्राउज़र अपनी ओर से उपयोगकर्ताओं को आपके ऐप्लिकेशन को उनकी होमस्क्रीन पर जोड़ने का सुझाव दे सकते हैं. इससे उपयोगकर्ताओं के साथ बेहतर तरीके से जुड़ने में मदद मिलती है. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/install-prompt)."
   },
   "lighthouse-core/audits/installable-manifest.js | failureTitle": {
     "message": "वेब ऐप्लिकेशन का मेनिफ़ेस्ट, इंस्टॉल करने की ज़रूरतों को पूरा नहीं करता है"
@@ -738,7 +738,7 @@
     "message": "{timeInMs, number, seconds} से. में सिम्युलेट किए गए मोबाइल नेटवर्क पर इंटरैक्शन शुरू हुआ"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "आपका पेज बहुत धीरे लोड होता है और 10 सेकंड में इंटरैक्टिव (पेज लोड होने के दौरान उपयोगकर्ता के इनपुट जैसे कि क्लिक, टैप, और बटन दबाने का जवाब देने में लगने वाला समय) नहीं होता है. सुधार करने के तरीके जानने के लिए \"प्रदर्शन\" सेक्शन में अवसरों पर नज़र डालें और गड़बड़ी की जानकारी लें."
+    "message": "आपका पेज बहुत धीरे लोड होता है और 10 सेकंड में इंटरैक्टिव नहीं होता है. सुधार करने के तरीके जानने के लिए \"परफ़ॉर्मेंस\" सेक्शन में अवसरों पर नज़र डालें और गड़बड़ी की जानकारी लें."
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
     "message": "मोबाइल नेटवर्क पर पेज लोड होने की गति ज़रूरत के मुताबिक तेज़ नहीं है"
@@ -762,19 +762,19 @@
     "message": "ज़्यादा से ज़्यादा उपयोगकर्ताओं तक पहुंचने के लिए, साइटों का सभी प्रमुख ब्राउज़र पर काम करना ज़रूरी है. [ज़्यादा जानें](https://developers.google.com/web/progressive-web-apps/checklist#site-works-cross-browser)."
   },
   "lighthouse-core/audits/manual/pwa-cross-browser.js | title": {
-    "message": "यह क्रॉस-ब्राउज़र वेबसाइट है जो अलग-अलग ब्राउज़र पर काम करती है"
+    "message": "यह वेबसाइट अलग-अलग ब्राउज़र पर काम करती है"
   },
   "lighthouse-core/audits/manual/pwa-each-page-has-url.js | description": {
-    "message": "पक्का करें कि अलग-अलग पेज, यूआरएल के ज़रिए डीप लिंक के लायक हैं. साथ ही, वे ऐसे खास यूआरएल हैं जो सोशल मीडिया पर शेयर करने के मकसद को पूरा करते हैं. [ज़्यादा जानें](https://developers.google.com/web/progressive-web-apps/checklist#each-page-has-a-url)."
+    "message": "पक्का करें कि हर पेज को यूआरएल के ज़रिए डीप लिंक किया जा सकता हो. साथ ही, वे ऐसे खास यूआरएल हों जिन्हें सोशल मीडिया पर शेयर किया जा सकता है. [ज़्यादा जानें](https://developers.google.com/web/progressive-web-apps/checklist#each-page-has-a-url)."
   },
   "lighthouse-core/audits/manual/pwa-each-page-has-url.js | title": {
     "message": "हर पेज का एक यूआरएल होता है"
   },
   "lighthouse-core/audits/manual/pwa-page-transitions.js | description": {
-    "message": "नेटवर्क धीमा होने के बाद भी वेब ऐप्लिकेशन पर टैप करने पर ट्रांज़िशन की रफ़्तार तेज़ महसूस होनी चाहिए. यह आपके पेज की अच्छी परफ़ॉर्मेंस के लिए अहम है. [ज़्यादा जानें](https://developers.google.com/web/progressive-web-apps/checklist#page-transitions-dont-feel-like-they-block-on-the-network)."
+    "message": "नेटवर्क धीमा होने पर भी वेब ऐप्लिकेशन में टैप करने पर ट्रांज़िशन की रफ़्तार तेज़ महसूस होनी चाहिए. यह आपके पेज की अच्छी परफ़ॉर्मेंस के लिए अहम है. [ज़्यादा जानें](https://developers.google.com/web/progressive-web-apps/checklist#page-transitions-dont-feel-like-they-block-on-the-network)."
   },
   "lighthouse-core/audits/manual/pwa-page-transitions.js | title": {
-    "message": "पेज ट्रांज़िशन को देखकर ऐसा नहीं लगना चाहिए जैसे वे नेटवर्क लोड होने का इंतज़ार कर रहे हैं"
+    "message": "पेज ट्रांज़िशन को देखकर ऐसा नहीं लगना चाहिए जैसे कि वे नेटवर्क लोड होने का इंतज़ार कर रहे हैं"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "इनपुट के इंतज़ार के समय का अंदाज़ा, इस बात से लगाया जाता है कि पेज लोड होने की सबसे व्यस्त पांच सेकंड की विंडो के दौरान आपके ऐप्लिकेशन को इस्तेमाल करने वाले के इनपुट का जवाब देने में कितना समय लगेगा. इस समय का हिसाब मिलीसेकंड में लगाया जाता है. अगर इंतज़ार का समय 50 मिलीसेकंड से ज़्यादा हो, तो इस्तेमाल करने वाले आपके ऐप्लिकेशन को धीमा मान सकते हैं. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
@@ -837,7 +837,7 @@
     "message": "सर्वर बैकएंड के इंतज़ार का समय"
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "सर्विस वर्कर की वजह से आपका वेब ऐप्लिकेशन ऑनलाइन, ऑफ़लाइन, और रुक-रुककर चलने वाले नेटवर्क कनेक्शन जैसी स्थितियों में भी अच्छे ढंग से काम करता है. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline)."
+    "message": "सर्विस वर्कर की वजह से आपका वेब ऐप्लिकेशन ऑनलाइन, ऑफ़लाइन, और रुक-रुककर चलने वाले नेटवर्क जैसी स्थितियों में भी अच्छे ढंग से काम करता है. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline)."
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` ऑफ़लाइन होने पर, \"200\" कोड का जवाब नहीं देता है"
@@ -1035,7 +1035,7 @@
     "message": "टैप की जाने वाली जगहें सही आकार में हैं"
   },
   "lighthouse-core/audits/service-worker.js | description": {
-    "message": "सर्विस वर्कर एक ऐसी तकनीक है जो आपके ऐप्लिकेशन के लिए कई प्रगतिशील वेब ऐप फ़ीचर जैसे कि ऑफ़लाइन, होमस्क्रीन पर जोड़ें, और पुश नोटिफ़िकेशन को चालू करती है. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/registered-service-worker)."
+    "message": "सर्विस वर्कर एक ऐसी तकनीक है जो आपके ऐप्लिकेशन के लिए कई प्रगतिशील वेब ऐप्लिकेशन फ़ीचर जैसे कि ऑफ़लाइन, होमस्क्रीन पर जोड़ें, और पुश नोटिफ़िकेशन को चालू करती है. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/registered-service-worker)."
   },
   "lighthouse-core/audits/service-worker.js | explanationBadManifest": {
     "message": "इस पेज का नियंत्रण सर्विस वर्कर के पास है. हालांकि, कोई `start_url` नहीं मिला, क्योंकि मेनिफ़ेस्ट को मान्य JSON के रूप में पार्स नहीं किया जा सका"
@@ -1044,10 +1044,10 @@
     "message": "इस पेज का नियंत्रण सर्विस वर्कर के पास है. हालांकि, `start_url` ({startUrl}) सर्विस वर्कर के दायरे में नहीं है ({scopeUrl})"
   },
   "lighthouse-core/audits/service-worker.js | explanationNoManifest": {
-    "message": "इस पेज का नियंत्रण सर्विस वर्कर के पास है. हालांकि, कोई `start_url` नहीं मिला, क्योंकि कोई पेज पर कोई मेनिफ़ेस्ट ही नहीं था."
+    "message": "इस पेज का नियंत्रण सर्विस वर्कर के पास है. हालांकि, कोई `start_url` नहीं मिला, क्योंकि किसी पेज पर कोई मेनिफ़ेस्ट ही नहीं था."
   },
   "lighthouse-core/audits/service-worker.js | explanationOutOfScope": {
-    "message": "इस मूल में एक या ज़्यादा सर्विस वर्कर हैं. हालांकि, पेज ({pageUrl}) दायरे में नहीं है."
+    "message": "यहां पर एक या ज़्यादा सर्विस वर्कर हैं. हालांकि, पेज ({pageUrl}) दायरे में नहीं है."
   },
   "lighthouse-core/audits/service-worker.js | failureTitle": {
     "message": "किसी ऐसे सर्विस वर्कर को रजिस्टर नहीं करता जो पेज और `start_url` को नियंत्रित करता है"
@@ -1056,7 +1056,7 @@
     "message": "किसी ऐसे सर्विस वर्कर को रजिस्टर करता है जो पेज और `start_url` को नियंत्रित करता है"
   },
   "lighthouse-core/audits/splash-screen.js | description": {
-    "message": "उपयोगकर्ता जब अपनी होमस्क्रीन से आपका ऐप्लिकेशन लॉन्च करते हैं, तो थीम वाली स्प्लैश स्क्रीन की वजह से इसका इस्तेमाल करने वालों को अच्छा अनुभव मिलता है. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/custom-splash-screen)."
+    "message": "उपयोगकर्ता जब अपनी होमस्क्रीन से आपका ऐप्लिकेशन लॉन्च करते हैं, तो थीम वाली स्प्लैश स्क्रीन की वजह से इस्तेमाल करने वालों को अच्छा अनुभव मिलता है. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/custom-splash-screen)."
   },
   "lighthouse-core/audits/splash-screen.js | failureTitle": {
     "message": "पसंद के मुताबिक स्प्लैश स्क्रीन के लिए कॉन्फ़िगर नहीं किया गया"
@@ -1065,13 +1065,13 @@
     "message": "पसंद के मुताबिक स्प्लैश स्क्रीन के लिए कॉन्फ़िगर किया गया"
   },
   "lighthouse-core/audits/themed-omnibox.js | description": {
-    "message": "ब्राउज़र का पता बार आपकी वेबसाइट से मेल खाए, इसके लिए थीम इस्तेमाल कर सकते हैं. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/address-bar)."
+    "message": "ब्राउज़र के 'पता बार' की थीम ऐसी हो सकती है जो आपकी वेबसाइट से मेल खाए. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/address-bar)."
   },
   "lighthouse-core/audits/themed-omnibox.js | failureTitle": {
-    "message": "पता बार के लिए थीम का रंग सेट नहीं करता है."
+    "message": "'पता बार' के लिए थीम का रंग सेट नहीं करता है."
   },
   "lighthouse-core/audits/themed-omnibox.js | title": {
-    "message": "पता बार के लिए थीम का रंग सेट करता है."
+    "message": "'पता बार' के लिए थीम का रंग सेट करता है."
   },
   "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
     "message": "मुख्य थ्रेड ब्लॉक होने का समय"
@@ -1125,7 +1125,7 @@
     "message": "\"{securityOrigin}\" के लिए पहले से कनेक्ट किया गया <link> मिला, लेकिन ब्राउज़र ने इसका इस्तेमाल नहीं किया था. यह पक्का कर लें कि आप `crossorigin` विशेषता का इस्तेमाल ठीक से कर रहे हैं."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | description": {
-    "message": "तीसरे पक्ष के मूल से जल्दी कनेक्शन बनाने के लिए `preconnect` या `dns-prefetch` संसाधन संकेत जोड़ें. [ज़्यादा जानें](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect)."
+    "message": "तीसरे पक्ष से जल्दी कनेक्शन बनाने के लिए `preconnect` या `dns-prefetch` संसाधन संकेत जोड़ें. [ज़्यादा जानें](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect)."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | title": {
     "message": "ज़रूरी मूल से प्री-कनेक्ट करें"
@@ -1158,7 +1158,7 @@
     "message": "अगर इसकी स्क्रिप्ट उपलब्ध नहीं हैं, तो पेज के मुख्य हिस्से को कुछ सामग्री रेंडर करनी चाहिए या उसकी इमेज बनानी चाहिए."
   },
   "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "यह वेब पेज, JavaScript उपलब्ध न होने पर फ़ॉलबैक सामग्री मुहैया नहीं करवाता है"
+    "message": "यह वेब पेज, JavaScript उपलब्ध न होने पर फ़ॉलबैक सामग्री मुहैया नहीं कराता है"
   },
   "lighthouse-core/audits/without-javascript.js | title": {
     "message": "यह वेब पेज, JavaScript उपलब्ध नहीं होने पर कुछ सामग्री दिखाता है"
@@ -1167,13 +1167,13 @@
     "message": "अगर आप एक प्रगतिशील वेब ऐप्लिकेशन बना रहे हैं, तो सर्विस वर्कर का इस्तेमाल करें, ताकि आपका ऐप्लिकेशन ऑफ़लाइन भी काम कर सके. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline)."
   },
   "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "ऑफ़लाइन होने पर, मौजूदा पेज \"200\" कोड (एचटीटीपी स्टेटस कोड जिसका मतलब है कि एचटीटीपी स्तर पर ट्रांसमिशन ठीक है) का जवाब नहीं देता है"
+    "message": "ऑफ़लाइन होने पर, मौजूदा पेज \"200\" कोड का जवाब नहीं देता है"
   },
   "lighthouse-core/audits/works-offline.js | title": {
     "message": "ऑफ़लाइन होने पर, मौजूदा पेज \"200\" कोड का जवाब देता है"
   },
   "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "ऐसा हो सकता है कि ऑफ़लाइन होने पर पेज इसलिए लोड नहीं हो रहा है, क्योंकि आपका टेस्ट यूआरएल ({requested}) को \"{final}\" की ओर रीडायरेक्ट किया गया था. टेस्टिंग के लिए सीधे दूसरी यूआरएल आज़माएं."
+    "message": "ऐसा हो सकता है कि ऑफ़लाइन होने पर पेज इसलिए लोड नहीं हो रहा है, क्योंकि आपका टेस्ट यूआरएल ({requested}) को \"{final}\" की ओर रीडायरेक्ट किया गया था. टेस्टिंग के लिए सीधे दूसरा यूआरएल आज़माएं."
   },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "ये आपके ऐप्लिकेशन में ARIA के इस्तेमाल को बेहतर बनाने के अवसर हैं, जिससे उपयोगकर्ताओं का स्क्रीन रीडर जैसी सहायक तकनीक का अनुभव बेहतर हो सकता है."

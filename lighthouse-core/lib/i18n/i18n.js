@@ -136,21 +136,6 @@ function lookupLocale(locale) {
 }
 
 /**
- * Preformat values for the message based on how they're used, like KB or milliseconds.
- * @param {string} icuMessage
- * @param {MessageFormat} messageFormatter
- * @param {Record<string, string | number>} [values]
- * @return {Record<string, string | number>}
- */
-function _preformatValues(icuMessage, messageFormatter, values = {}) {
-  const clonedValues = JSON.parse(JSON.stringify(values));
-
-  const elements = collectAllCustomElementsFromICU(messageFormatter.getAst().elements);
-
-  return _processParsedElements(icuMessage, Array.from(elements.values()), clonedValues);
-}
-
-/**
  * Function to retrieve all 'argumentElement's from an ICU message. An argumentElement
  * is an ICU element with an argument in it, like '{varName}' or '{varName, number, bytes}'. This
  * differs from 'messageElement's which are just arbitrary text in a message.
@@ -188,16 +173,21 @@ function collectAllCustomElementsFromICU(icuElements, seenElementsById = new Map
 }
 
 /**
- * This function takes a list of ICU argumentElements and a map of values and
- * will apply Lighthouse custom formatting to the values based on the argumentElement
- * format style.
- *
+ * Returns a copy of the `values` object, with the values formatted based on how
+ * they will be used in the `icuMessage`, e.g. KB or milliseconds. The original
+ * object is unchanged.
  * @param {string} icuMessage
- * @param {Array<ArgumentElement>} argumentElements
- * @param {Record<string, string | number>} [values]
+ * @param {MessageFormat} messageFormatter
+ * @param {Readonly<Record<string, string | number>>} values
  * @return {Record<string, string | number>}
  */
-function _processParsedElements(icuMessage, argumentElements, values = {}) {
+function _preformatValues(icuMessage, messageFormatter, values) {
+  const elementMap = collectAllCustomElementsFromICU(messageFormatter.getAst().elements);
+  const argumentElements = [...elementMap.values()];
+
+  /** @type {Record<string, string | number>} */
+  const formattedValues = {};
+
   for (const {id, format} of argumentElements) {
     // Throw an error if a message's value isn't provided
     if (id && (id in values) === false) {
@@ -205,10 +195,14 @@ function _processParsedElements(icuMessage, argumentElements, values = {}) {
         `that wasn't provided`);
     }
 
-    // Direct `{id}` replacement and non-numeric values need no formatting.
-    if (!format || format.type !== 'numberFormat') continue;
-
     const value = values[id];
+
+    // Direct `{id}` replacement and non-numeric values need no formatting.
+    if (!format || format.type !== 'numberFormat') {
+      formattedValues[id] = value;
+      continue;
+    }
+
     if (typeof value !== 'number') {
       throw new Error(`ICU Message "${icuMessage}" contains a numeric reference ("${id}") ` +
         'but provided value was not a number');
@@ -217,28 +211,34 @@ function _processParsedElements(icuMessage, argumentElements, values = {}) {
     // Format values for known styles.
     if (format.style === 'milliseconds') {
       // Round all milliseconds to the nearest 10.
-      values[id] = Math.round(value / 10) * 10;
+      formattedValues[id] = Math.round(value / 10) * 10;
     } else if (format.style === 'seconds' && id === 'timeInMs') {
       // Convert all seconds to the correct unit (currently only for `timeInMs`).
-      values[id] = Math.round(value / 100) / 10;
+      formattedValues[id] = Math.round(value / 100) / 10;
     } else if (format.style === 'bytes') {
       // Replace all the bytes with KB.
-      values[id] = value / 1024;
+      formattedValues[id] = value / 1024;
+    } else {
+      // For all other number styles, the value isn't changed.
+      formattedValues[id] = value;
     }
   }
 
   // Throw an error if a value is provided but has no placeholder in the message.
   for (const valueId of Object.keys(values)) {
-    // errorCode is a special case always allowed to help ease of LHError use.
-    if (valueId === 'errorCode') continue;
+    if (valueId in formattedValues) continue;
 
-    if (!argumentElements.find(el => el.id === valueId)) {
-      throw new Error(`Provided value "${valueId}" does not match any placeholder in ` +
-        `ICU message "${icuMessage}"`);
+    // errorCode is a special case always allowed to help LHError ease-of-use.
+    if (valueId === 'errorCode') {
+      formattedValues.errorCode = values.errorCode;
+      continue;
     }
+
+    throw new Error(`Provided value "${valueId}" does not match any placeholder in ` +
+      `ICU message "${icuMessage}"`);
   }
 
-  return values;
+  return formattedValues;
 }
 
 /**
@@ -260,7 +260,7 @@ const _ICUMsgNotFoundMsg = 'ICU message not found in destination locale';
  * @param {Record<string, string | number>} [values]
  * @return {{formattedString: string, icuMessage: string}}
  */
-function _formatIcuMessage(locale, icuMessageId, uiStringMessage, values) {
+function _formatIcuMessage(locale, icuMessageId, uiStringMessage, values = {}) {
   const localeMessages = LOCALES[locale];
   if (!localeMessages) throw new Error(`Unsupported locale '${locale}'`);
   let localeMessage = localeMessages[icuMessageId] && localeMessages[icuMessageId].message;

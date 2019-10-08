@@ -23,24 +23,6 @@ const PROTOCOL_TIMEOUT_EXIT_CODE = 67;
 const RETRIES = 3;
 
 /**
- * Attempt to resolve a path locally. If this fails, attempts to locate the path
- * relative to the current working directory.
- * @param {string} payloadPath
- * @return {string}
- */
-function resolveLocalOrCwd(payloadPath) {
-  let resolved;
-  try {
-    resolved = require.resolve('./' + payloadPath);
-  } catch (e) {
-    const cwdPath = path.resolve(process.cwd(), payloadPath);
-    resolved = require.resolve(cwdPath);
-  }
-
-  return resolved;
-}
-
-/**
  * Launch Chrome and do a full Lighthouse run.
  * @param {string} url
  * @param {string} configPath
@@ -130,26 +112,32 @@ function runLighthouse(url, configPath, isDebug) {
 const cli = yargs
   .help('help')
   .describe({
-    'config-path': 'The path to the config JSON file',
-    'expectations-path': 'The path to the expected audit results file',
+    'smoke-id': 'The id of the smoke test to run',
     'only-audits': 'Filter for audit expectations to run',
     'only-urls': 'Filter for urls to run. Patterns accepted',
     'debug': 'Save the artifacts along with the output',
   })
   .array('only-audits')
   .array('only-urls')
-  .require('config-path', true)
-  .require('expectations-path', true)
+  .require('smoke-id', true)
   .wrap(yargs.terminalWidth())
   .argv;
 
-const configPath = resolveLocalOrCwd(cli['config-path']);
-/** @type {Smokehouse.ExpectedRunnerResult[]} */
-const expectations = require(resolveLocalOrCwd(cli['expectations-path']));
 /** @type {string[]} */
 const onlyAudits = cli['only-audits'];
 /** @type {string[]} */
 const onlyUrls = cli['only-urls'];
+
+const smokeId = cli['smoke-id'];
+const smokeTest = require('./smoke-test-dfns.js').find(smoke => smoke.id === smokeId);
+
+if (!smokeTest) {
+  process.exit(1);
+  throw new Error(`could not find smoke ${smokeId}`);
+}
+
+const configPath = `./.tmp/smoke-config-${smokeTest.id}.json`;
+fs.writeFileSync(configPath, JSON.stringify(smokeTest.config));
 
 /** @type {string[]} */
 let requiredGatherers = [];
@@ -164,7 +152,7 @@ let passingCount = 0;
 let failingCount = 0;
 /** @type {string[]} */
 const failingUrls = [];
-expectations.forEach(expected => {
+smokeTest.expectations.forEach(expected => {
   const url = expected.lhr.requestedUrl;
 
   if (onlyUrls && !onlyUrls.some(pattern => new RegExp(pattern).test(url))) {
@@ -212,15 +200,15 @@ if (failingCount) {
   const rerunCommand = [
     'node',
     path.relative(process.cwd(), __filename),
-    `--config-path=${cli['config-path']}`,
-    `--expectations-path=${cli['expectations-path']}`,
+    `--smoke-id=${cli.smokeId}`,
     // Use the same audit filters.
     onlyAudits ? `--only-audits ${onlyAudits.join(' ')}` : '',
     // This is the good bit.
     `--only-urls ${failingUrls.join(' ')}`,
   ].filter(Boolean).join(' ');
-  console.error(`To run just these failing smoke tests:\n   ${rerunCommand}`);
-  console.error('Note: you must also be running `yarn static-server`');
+  const commandWithStaticServer =
+    `npx concurrently --kill-others 'yarn static-server' '${rerunCommand}'`;
+  console.error(`To run just these failing smoke tests:\n   ${commandWithStaticServer}`);
 
   process.exit(1);
 }

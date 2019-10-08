@@ -702,10 +702,10 @@
     "message": "Zeigt Bilder mit einem korrekten Seitenverhältnis an"
   },
   "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
-    "message": "Ungültige Informationen zur Bildgröße {url}"
+    "message": "Ungültige Informationen zur Bildgröße: {url}"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
-    "message": "Browser können Nutzer direkt dazu auffordern, Ihre Web-App zum Startbildschirm hinzuzufügen. Das kann zu mehr Interaktionen führen. [Weitere Informationen.](https://developers.google.com/web/tools/lighthouse/audits/install-prompt)"
+    "message": "Browser können Nutzer direkt dazu auffordern, Ihre Web-App zum Startbildschirm hinzuzufügen. Das kann zu mehr Engagement führen. [Weitere Informationen.](https://developers.google.com/web/tools/lighthouse/audits/install-prompt)"
   },
   "lighthouse-core/audits/installable-manifest.js | failureTitle": {
     "message": "Das Manifest der Web-App erfüllt die Anforderungen an die Installierbarkeit nicht"
@@ -1071,7 +1071,7 @@
     "message": "Legt keine Designfarbe für die Adressleiste fest."
   },
   "lighthouse-core/audits/themed-omnibox.js | title": {
-    "message": "Legt die Designfarbe der Adressleiste fest."
+    "message": "Legt eine Designfarbe für die Adressleiste fest."
   },
   "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
     "message": "Dauer der Blockierung des Hauptthreads"

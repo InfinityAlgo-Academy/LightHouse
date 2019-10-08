@@ -19,6 +19,7 @@ module.exports = {
       'render-blocking-resources',
       'errors-in-console',
       'efficient-animated-content',
+      'apple-touch-icon', // pull in apple touch icon to test `LinkElements`
     ],
   },
 };

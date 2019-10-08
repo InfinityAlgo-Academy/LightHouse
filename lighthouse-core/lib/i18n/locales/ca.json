@@ -918,7 +918,7 @@
     "message": "El {decimalProportion, number, extendedPercent} del text és llegible"
   },
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
-    "message": "El text és il·legible perquè no hi ha cap metaetiqueta de finestra gràfica optimitzada per a pantalles de mòbil."
+    "message": "El text és il·legible perquè no hi ha cap metaetiqueta de finestra gràfica optimitzada per a pantalles de dispositius mòbils."
   },
   "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
     "message": "El {decimalProportion, number, extendedPercent} del text és massa petit (d'acord amb una mostra del {decimalProportionVisited, number, extendedPercent})."
@@ -999,7 +999,7 @@
     "message": "Si el format del fitxer robots.txt no és correcte, és possible que els rastrejadors no puguin entendre com vols que rastregin o indexin el lloc web. [Obtén més informació](https://web.dev/robots-txt)."
   },
   "lighthouse-core/audits/seo/robots-txt.js | displayValueHttpBadCode": {
-    "message": "La sol·licitud del fitxer robots.txt ha tornat l'estat HTTP: {statusCode}"
+    "message": "La sol·licitud del fitxer robots.txt ha tornat l'estat HTTP següent: {statusCode}"
   },
   "lighthouse-core/audits/seo/robots-txt.js | displayValueValidationError": {
     "message": "{itemCount,plural, =1{S'ha trobat 1 error}other{S'han trobat # errors}}"

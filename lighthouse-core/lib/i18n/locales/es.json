@@ -861,7 +861,7 @@
     "message": "Límites de rendimiento"
   },
   "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "Si ya has configurado HTTPS, asegúrate de redireccionar todo el tráfico HTTP a HTTPS para habilitar funciones de seguridad web para todos los usuarios. [Más información](https://developers.google.com/web/tools/lighthouse/audits/http-redirects-to-https)"
+    "message": "Si ya has configurado HTTPS, asegúrate de redirigir todo el tráfico HTTP a HTTPS para habilitar funciones de seguridad web para todos los usuarios. [Más información](https://developers.google.com/web/tools/lighthouse/audits/http-redirects-to-https)"
   },
   "lighthouse-core/audits/redirects-http.js | failureTitle": {
     "message": "No redirige el tráfico HTTP a HTTPS"
