@@ -318,7 +318,7 @@
     "message": "Naglalaman ng element na `<track>` na may `[kind=\"description\"]` ang mga element na `<video>`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "Para sa magandang hitsura sa iOS kapag nagdagdag ang mga user ng progressive web app sa home screen, tumukoy ng isang `apple-touch-icon`. Dapat itong nakadirekta sa isang hindi transparent na kuwadradong 192px (o 180px) PNG. [Matuto Pa](https://developers.google.com/web/fundamentals/design-and-ux/browser-customization/)."
+    "message": "Para sa magandang hitsura sa iOS kapag nagdagdag ang mga user ng progressive web app sa home screen, tumukoy ng `apple-touch-icon`. Dapat itong nakadirekta sa isang hindi transparent na kuwadradong 192px (o 180px) PNG. [Matuto Pa](https://developers.google.com/web/fundamentals/design-and-ux/browser-customization/)."
   },
   "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
     "message": "Hindi nagbibigay ng valid na `apple-touch-icon`"
@@ -705,7 +705,7 @@
     "message": "Invalid ang laki ng larawan ng impormasyon {url}"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
-    "message": "Puwedeng proactive na i-prompt ng mga browser ang mga user para idagdag ang iyong app sa kanilang homescreen, na maaaring magresulta sa mas mataas na pakikipag-ugnayan. [Matuto pa](https://developers.google.com/web/tools/lighthouse/audits/install-prompt)."
+    "message": "Puwedeng proactive na i-prompt ng mga browser ang mga user na idagdag ang iyong app sa kanilang homescreen, na puwedeng magresulta sa mas maraming pakikipag-ugnayan. [Matuto pa](https://developers.google.com/web/tools/lighthouse/audits/install-prompt)."
   },
   "lighthouse-core/audits/installable-manifest.js | failureTitle": {
     "message": "Hindi natutugunan ng manifest ng web app ang mga kinakailangan sa pag-install"
@@ -738,7 +738,7 @@
     "message": "Interactive sa naka-simulate na mobile network sa loob ng {timeInMs, number, seconds} s"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Masyadong mabagal mag-load ang iyong page at hindi interactive sa loob ng 10 segundo. Tingnan ang mga pagkakataon at diagnostic sa seksyong \"Performance\" para matutunan kung paano magpahusay."
+    "message": "Masyadong mabagal mag-load ang iyong page at hindi ito interactive sa loob ng 10 segundo. Tingnan ang mga pagkakataon at diagnostic sa seksyong \"Performance\" para malaman kung paano magpahusay."
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
     "message": "Hindi sapat ang bilis ng pag-load ng page sa mga mobile network"
@@ -759,19 +759,19 @@
     "message": "Binabawasan ang gawain sa pangunahing thread"
   },
   "lighthouse-core/audits/manual/pwa-cross-browser.js | description": {
-    "message": "Para maabot ang pinakamaraming bilang nguser, dapat gumana ang mga site sa bawat pangunahing browser. [Matuto pa](https://developers.google.com/web/progressive-web-apps/checklist#site-works-cross-browser)."
+    "message": "Para maabot ang pinakamaraming user, dapat gumana ang mga site sa bawat pangunahing browser. [Matuto pa](https://developers.google.com/web/progressive-web-apps/checklist#site-works-cross-browser)."
   },
   "lighthouse-core/audits/manual/pwa-cross-browser.js | title": {
-    "message": "Gumagana ang site sa cross-browser"
+    "message": "Gumagana ang site sa iba't ibang browser"
   },
   "lighthouse-core/audits/manual/pwa-each-page-has-url.js | description": {
-    "message": "Tiyaking nali-link nang malalim ang mga indibidwal na page sa pamamagitan ng URL at natatangi ang mga URL para sa pagbabahagi sa social media. [Matuto pa](https://developers.google.com/web/progressive-web-apps/checklist#each-page-has-a-url)."
+    "message": "Tiyaking puwedeng i-deep link ang mga indibidwal na page sa pamamagitan ng URL at natatangi ang mga URL para sa pagbabahagi sa social media. [Matuto pa](https://developers.google.com/web/progressive-web-apps/checklist#each-page-has-a-url)."
   },
   "lighthouse-core/audits/manual/pwa-each-page-has-url.js | title": {
     "message": "May URL ang bawat page"
   },
   "lighthouse-core/audits/manual/pwa-page-transitions.js | description": {
-    "message": "Mabilis dapat ang dating ng mga transition habang nagta-tap ka sa paligid, kahit nasa mabagal na network, isang susi sa kapansin-pansing performance. [Matuto pa](https://developers.google.com/web/progressive-web-apps/checklist#page-transitions-dont-feel-like-they-block-on-the-network)."
+    "message": "Mabilis dapat ang mga transition habang nagta-tap ka, kahit sa mabagal na network, na isang susi sa nakikitang performance. [Matuto pa](https://developers.google.com/web/progressive-web-apps/checklist#page-transitions-dont-feel-like-they-block-on-the-network)."
   },
   "lighthouse-core/audits/manual/pwa-page-transitions.js | title": {
     "message": "Mukhang hindi nagba-block sa network ang mga transition ng page"
@@ -846,7 +846,7 @@
     "message": "Tumutugon ang `start_url` gamit ang 200 kapag offline"
   },
   "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Hindi mabasa ng Lighthouse ang `start_url` na galing sa manifest. Dahil dito, ipinagpapalagay ang `start_url` bilang URL ng dokumento. Mensahe ng error: '{manifestWarning}'."
+    "message": "Hindi mabasa ng Lighthouse ang `start_url` na galing sa manifest. Dahil dito, ipinagpapalagay na `start_url` ang URL ng dokumento. Mensahe ng error: '{manifestWarning}.'"
   },
   "lighthouse-core/audits/performance-budget.js | columnOverBudget": {
     "message": "Lampas sa Badyet"
@@ -861,7 +861,7 @@
     "message": "Badyet sa performance"
   },
   "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "Kung na-set up mo na ang HTTPS, tiyaking iyong na-redirect sa HTTPS ang lahat ng trapiko sa HTTP para ma-enable ang mga ligtas na feature sa web para sa lahat ng user mo. [Matuto pa](https://developers.google.com/web/tools/lighthouse/audits/http-redirects-to-https)."
+    "message": "Kung na-set up mo na ang HTTPS, tiyaking ire-redirect mo sa HTTPS ang lahat ng trapiko sa HTTP para ma-enable ang mga ligtas na feature sa web para sa lahat ng iyong user. [Matuto pa](https://developers.google.com/web/tools/lighthouse/audits/http-redirects-to-https)."
   },
   "lighthouse-core/audits/redirects-http.js | failureTitle": {
     "message": "Hindi nire-redirect sa HTTPS ang trapiko sa HTTP"
@@ -1035,19 +1035,19 @@
     "message": "Angkop ang laki ng mga target ng pag-tap"
   },
   "lighthouse-core/audits/service-worker.js | description": {
-    "message": "Ang service worker ay ang teknolohiyang nag-e-enable sa iyong app na gumamit ng maraming feature ng Progressive Web App, gaya ng offline, pagdaragdag sa homescreen, at mga push notification. [Matuto pa](https://developers.google.com/web/tools/lighthouse/audits/registered-service-worker)."
+    "message": "Ang service worker ay ang teknolohiyang nagbibigay-daan sa iyong app na gumamit ng maraming feature ng Progressive Web App, gaya ng offline, pagdaragdag sa homescreen, at mga push notification. [Matuto pa](https://developers.google.com/web/tools/lighthouse/audits/registered-service-worker)."
   },
   "lighthouse-core/audits/service-worker.js | explanationBadManifest": {
-    "message": "Kinokontrol ng isang service worker ang page na ito, gayunpaman, walang nakitang `start_url` dahil hindi na-parse ang manifest bilang valid na JSON"
+    "message": "Kinokontrol ng service worker ang page na ito, gayunpaman, walang nakitang `start_url` dahil hindi na-parse ang manifest bilang valid na JSON"
   },
   "lighthouse-core/audits/service-worker.js | explanationBadStartUrl": {
-    "message": "Kinokontrol ng isang service worker ang page na ito, gayunpaman, wala ang `start_url` ({startUrl}) sa saklaw ng service worker ({scopeUrl})"
+    "message": "Kinokontrol ng service worker ang page na ito, gayunpaman, wala ang `start_url` ({startUrl}) sa saklaw ng service worker ({scopeUrl})"
   },
   "lighthouse-core/audits/service-worker.js | explanationNoManifest": {
-    "message": "Kinokontrol ng isang service worker ang page na ito, gayunpaman, walang nakitang `start_url` dahil walang nakuhang manifest."
+    "message": "Kinokontrol ng service worker ang page na ito, gayunpaman, walang nakitang `start_url` dahil walang nakuhang manifest."
   },
   "lighthouse-core/audits/service-worker.js | explanationOutOfScope": {
-    "message": "May isa o higit pang service worker ang origin na ito, gayunpaman, wala sa saklaw ang page ({pageUrl})."
+    "message": "May isa o higit pang service worker ang pinagmulang ito, gayunpaman, wala sa saklaw ang page ({pageUrl})."
   },
   "lighthouse-core/audits/service-worker.js | failureTitle": {
     "message": "Hindi nagrerehistro ng service worker na kumokontrol sa page at `start_url`"
@@ -1056,7 +1056,7 @@
     "message": "Nagrerehistro ng service worker na kumokontrol sa page at `start_url`"
   },
   "lighthouse-core/audits/splash-screen.js | description": {
-    "message": "Tinititiyak ng isang splash screen na may tema ang mataas na kalidad na karanasan kapag inilunsad ng mga user ang iyong app sa kanilang mga homescreen. [Matuto pa](https://developers.google.com/web/tools/lighthouse/audits/custom-splash-screen)."
+    "message": "Tinitiyak ng splash screen na may tema na magkakaroon ng karanasang may mataas na kalidad kapag inilunsad ng mga user ang iyong app sa kanilang mga homescreen. [Matuto pa](https://developers.google.com/web/tools/lighthouse/audits/custom-splash-screen)."
   },
   "lighthouse-core/audits/splash-screen.js | failureTitle": {
     "message": "Hindi naka-configure para sa custom na splash screen"
@@ -1083,10 +1083,10 @@
     "message": "Puwedeng lubos na makaapekto ang code ng third party sa performance ng pag-load. Limitahan ang bilang ng paulit-ulit na mga third-party na provider at subukang i-load ang code ng third party pagkatapos ng pangunahing pag-load ng iyong page. [Matuto pa](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
   },
   "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "Na-block ng third-party na code ang pangunahing thread sa loob ng {timeInMs, number, milliseconds} ms"
+    "message": "Na-block ng code ng third party ang pangunahing thread sa loob ng {timeInMs, number, milliseconds} ms"
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
-    "message": "Bawasan ang epekto ng third-party na code"
+    "message": "Bawasan ang epekto ng code ng third party"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Paggamit ng Third Party"
@@ -1152,7 +1152,7 @@
     "message": "May tag na `<meta name=\"viewport\">` na may `width` o `initial-scale`"
   },
   "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Dapat magpakita ng ilang content ang iyong app kapag naka-disable ang JavaScript, kahit isang babala lang ito sa user na kinakailangan ang Javascript para magamit ang app. [Matuto pa](https://developers.google.com/web/tools/lighthouse/audits/no-js)."
+    "message": "Dapat magpakita ng ilang content ang iyong app kapag naka-disable ang JavaScript, kahit isang babala lang sa user na kinakailangan ang Javascript para magamit ang app. [Matuto pa](https://developers.google.com/web/tools/lighthouse/audits/no-js)."
   },
   "lighthouse-core/audits/without-javascript.js | explanation": {
     "message": "Dapat mag-render ng ilang content ang nilalaman ng page kung hindi available ang mga script nito."
@@ -1164,7 +1164,7 @@
     "message": "Naglalaman ng ilang content kapag hindi available ang JavaScript"
   },
   "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Kung bumubuo ka ng Progressive Web App, pag-isipang gumamit ng isang service worker para puwedeng gumana ang iyong app offline. [Matuto pa](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline)."
+    "message": "Kung bumubuo ka ng Progressive Web App, pag-isipang gumamit ng service worker para gumana ang iyong app offline. [Matuto pa](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline)."
   },
   "lighthouse-core/audits/works-offline.js | failureTitle": {
     "message": "Hindi tumutugon ang kasalukuyang page gamit ang 200 kapag offline"
@@ -1275,7 +1275,7 @@
     "message": "Vina-validate ng mga pagsusuring ito ang mga aspeto ng isang Progressive Web App. [Matuto pa](https://developers.google.com/web/progressive-web-apps/checklist)."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryManualDescription": {
-    "message": "Kinakailangan ang mga pagsusuring ito ng baseline na [Checklist ng PWA ](https://developers.google.com/web/progressive-web-apps/checklist) pero hindi awtomatikong sinusuri ng Lighthouse. Hindi nakakaapekto ang mga ito sa iyong score pero mahalagang ma-verify mo ang mga ito nang manual."
+    "message": "Kinakailangan ang mga pagsusuring ito ng baseline na [Checklist ng PWA ](https://developers.google.com/web/progressive-web-apps/checklist) pero hindi ito awtomatikong sinusuri ng Lighthouse. Hindi nakakaapekto ang mga ito sa iyong score pero mahalagang ma-verify mo ang mga ito nang manual."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Progressive Web App"

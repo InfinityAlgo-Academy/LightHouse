@@ -363,7 +363,7 @@
     "message": "オフスクリーン画像の遅延読み込み"
   },
   "lighthouse-core/audits/byte-efficiency/render-blocking-resources.js | description": {
-    "message": "ページの初回ペイントをリソースがブロックしています。重要な JavaScript や CSS はインラインで配信し、それ以外の JavaScript やスタイルはすべて遅らせることをご検討ください。[詳細](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources)"
+    "message": "ページの First Paint をリソースがブロックしています。重要な JavaScript や CSS はインラインで配信し、それ以外の JavaScript やスタイルはすべて遅らせることをご検討ください。[詳細](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources)"
   },
   "lighthouse-core/audits/byte-efficiency/render-blocking-resources.js | title": {
     "message": "レンダリングを妨げるリソースの除外"
@@ -783,10 +783,10 @@
     "message": "入力の推定待ち時間"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "コンテンツの初回ペイントは、テキストまたは画像が初めてペイントされるまでにかかった時間です。[詳細](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)"
+    "message": "First Contentful Paint は、テキストまたは画像が初めてペイントされるまでにかかった時間です。[詳細](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
-    "message": "コンテンツの初回ペイント"
+    "message": "First Contentful Paint"
   },
   "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
     "message": "CPU の初回アイドルは、ページのメインスレッド処理が静止し、初めて入力の処理が可能になるまでにかかった時間です。[詳細](https://developers.google.com/web/tools/lighthouse/audits/first-interactive)"
@@ -795,10 +795,10 @@
     "message": "CPU の初回アイドル"
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
-    "message": "意味のあるコンテンツの初回ペイントは、ページの主要なコンテンツが可視化されるまでにかかった時間です。[詳細](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint)"
+    "message": "First Meaningful Paint は、ページの主要なコンテンツが可視化されるまでにかかった時間です。[詳細](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint)"
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | title": {
-    "message": "意味のあるコンテンツの初回ペイント"
+    "message": "First Meaningful Paint"
   },
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "操作可能になるまでの時間とは、ページが完全に操作可能になるのに要する時間です。[詳細](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive)"
@@ -1248,10 +1248,10 @@
     "message": "診断"
   },
   "lighthouse-core/config/default-config.js | firstPaintImprovementsGroupDescription": {
-    "message": "パフォーマンスの最も重要な点は、ピクセルをどのくらい速く画面にレンダリングできるかです。主要な指標: コンテンツの初回ペイント、意味のあるコンテンツの初回ペイント"
+    "message": "パフォーマンスの最も重要な点は、ピクセルをどのくらい速く画面にレンダリングできるかです。主要な指標: First Contentful Paint、First Meaningful Paint"
   },
   "lighthouse-core/config/default-config.js | firstPaintImprovementsGroupTitle": {
-    "message": "初回ペイントの改善点"
+    "message": "First Paint の改善点"
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupDescription": {
     "message": "これらの提案を実施すると、ページの読み込み時間を短縮できる可能性があります。なお、パフォーマンス スコアには[直接影響](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted)しません。"

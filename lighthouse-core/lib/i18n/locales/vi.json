@@ -318,7 +318,7 @@
     "message": "Các phần tử `<video>` chứa phần tử `<track>` có `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "Hãy xác định `apple-touch-icon` để hiển thị đúng cách trên iOS khi người dùng thêm một ứng dụng web tiến bộ vào màn hình chính. Thuộc tính này phải trỏ đến ảnh PNG vuông có kích thước 192px (hoặc 180px) ở dạng không trong suốt. [Tìm hiểu thêm](https://developers.google.com/web/fundamentals/design-and-ux/browser-customization/)"
+    "message": "Hãy xác định `apple-touch-icon` để khi người dùng thêm một ứng dụng web tiến bộ vào màn hình chính trên iOS, biểu tượng ứng dụng sẽ hiển thị chính xác. Thuộc tính này phải trỏ đến ảnh PNG vuông có kích thước 192px (hoặc 180px) ở dạng không trong suốt. [Tìm hiểu thêm](https://developers.google.com/web/fundamentals/design-and-ux/browser-customization/)"
   },
   "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
     "message": "Chưa cung cấp `apple-touch-icon` hợp lệ"
@@ -573,7 +573,7 @@
     "message": "Phiên bản"
   },
   "lighthouse-core/audits/dobetterweb/js-libraries.js | description": {
-    "message": "Phát hiện tất cả thư viện giao diện người dùng JavaScript trên trang này. [Tìm hiểu thêm](https://web.dev/js-libraries)"
+    "message": "Phát hiện tất cả thư viện JavaScript ở phía giao diện người dùng trên trang này. [Tìm hiểu thêm](https://web.dev/js-libraries)"
   },
   "lighthouse-core/audits/dobetterweb/js-libraries.js | title": {
     "message": "Thư viện JavaScript phát hiện được"
@@ -738,7 +738,7 @@
     "message": "Tương tác trên mạng di động mô phỏng ở giây thứ {timeInMs, number, seconds}"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Trang của bạn tải quá chậm và không tương tác trong vòng 10 giây. Hãy xem các cơ hội và thông tin chẩn đoán trong phần \"Hiệu suất\" để tìm hiểu cách cải thiện."
+    "message": "Trang của bạn tải quá chậm và không tương tác trong vòng 10 giây. Hãy xem các lựa chọn tối ưu hóa và thông tin chẩn đoán trong phần \"Hiệu suất\" để tìm hiểu cách cải thiện."
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
     "message": "Tốc độ tải trang không đủ nhanh trên mạng di động"
@@ -765,16 +765,16 @@
     "message": "Trang web hoạt động trên nhiều trình duyệt"
   },
   "lighthouse-core/audits/manual/pwa-each-page-has-url.js | description": {
-    "message": "Đảm bảo từng trang có thể liên kết sâu qua URL và URL là duy nhất, có như vậy thì mới chia sẻ được trên mạng xã hội. [Tìm hiểu thêm](https://developers.google.com/web/progressive-web-apps/checklist#each-page-has-a-url)"
+    "message": "Đảm bảo từng trang có thể liên kết sâu qua URL và URL là duy nhất để có thể chia sẻ trên mạng xã hội. [Tìm hiểu thêm](https://developers.google.com/web/progressive-web-apps/checklist#each-page-has-a-url)"
   },
   "lighthouse-core/audits/manual/pwa-each-page-has-url.js | title": {
     "message": "Mỗi trang có một URL"
   },
   "lighthouse-core/audits/manual/pwa-page-transitions.js | description": {
-    "message": "Quá trình chuyển tiếp phải diễn ra ngay khi bạn nhấn vào, kể cả khi mạng chậm, một yếu tố then chốt để tăng hiệu suất cảm nhận. [Tìm hiểu thêm](https://developers.google.com/web/progressive-web-apps/checklist#page-transitions-dont-feel-like-they-block-on-the-network)"
+    "message": "Quá trình chuyển tiếp phải diễn ra ngay khi bạn nhấn vào, kể cả khi mạng chậm. Đây là một yếu tố quan trọng trong cảm nhận về hiệu suất. [Tìm hiểu thêm](https://developers.google.com/web/progressive-web-apps/checklist#page-transitions-dont-feel-like-they-block-on-the-network)"
   },
   "lighthouse-core/audits/manual/pwa-page-transitions.js | title": {
-    "message": "Quá trình chuyển tiếp trang không bị chậm trễ do mạng"
+    "message": "Người dùng không cảm thấy mạng chậm khi chuyển trang"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Thời gian chờ nhập thông tin theo ước tính là thời gian ước tính mà ứng dụng cần để phản hồi thông tin do người dùng nhập (tính bằng mili giây) trong khoảng thời gian 5 giây tải nhiều trang nhất. Nếu người dùng phải chờ quá 50 mili giây, thì ứng dụng của bạn bị coi là chạy chậm. [Tìm hiểu thêm](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
@@ -840,10 +840,10 @@
     "message": "Trình chạy dịch vụ giúp ứng dụng web của bạn hoạt động ổn định trong điều kiện mạng chập chờn. [Tìm hiểu thêm](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline)"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "`start_url` không phản hồi kèm mã trạng thái 200 khi không có mạng"
+    "message": "`start_url` không trả về mã trạng thái 200 khi không có mạng"
   },
   "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "`start_url` phản hồi kèm mã trạng thái 200 khi không có mạng"
+    "message": "`start_url` trả về mã trạng thái 200 khi không có mạng"
   },
   "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
     "message": "Lighthouse không đọc được `start_url` trong tệp kê khai. Do đó, `start_url` được giả định là URL của tài liệu. Thông báo lỗi: '{manifestWarning}'."
@@ -996,7 +996,7 @@
     "message": "Tài liệu tránh sử dụng plugin"
   },
   "lighthouse-core/audits/seo/robots-txt.js | description": {
-    "message": "Nếu định dạng của tệp robots.txt không đúng, thì trình thu thập thông tin có thể không hiểu được cách bạn muốn thu thập thông tin hoặc lập chỉ mục trang web. [Tìm hiểu thêm](https://web.dev/robots-txt)"
+    "message": "Nếu định dạng của tệp robots.txt không đúng, thì trình thu thập thông tin có thể không hiểu được cách bạn muốn thu thập thông tin hoặc lập chỉ mục trang web của mình. [Tìm hiểu thêm](https://web.dev/robots-txt)"
   },
   "lighthouse-core/audits/seo/robots-txt.js | displayValueHttpBadCode": {
     "message": "Yêu cầu robots.txt trả về trạng thái HTTP: {statusCode}"
@@ -1035,19 +1035,19 @@
     "message": "Mục tiêu nhấn có kích thước phù hợp"
   },
   "lighthouse-core/audits/service-worker.js | description": {
-    "message": "Trình chạy dịch vụ là công nghệ cho phép ứng dụng của bạn dùng nhiều tính năng của Ứng dụng web tiến bộ, chẳng hạn như thêm vào màn hình chính khi không có mạng và thông báo đẩy. [Tìm hiểu thêm](https://developers.google.com/web/tools/lighthouse/audits/registered-service-worker)"
+    "message": "Trình chạy dịch vụ là công nghệ cho phép ứng dụng của bạn dùng nhiều tính năng của Ứng dụng web tiến bộ, chẳng hạn như hoạt động khi không có mạng, thêm vào màn hình chính, và thông báo đẩy. [Tìm hiểu thêm](https://developers.google.com/web/tools/lighthouse/audits/registered-service-worker)"
   },
   "lighthouse-core/audits/service-worker.js | explanationBadManifest": {
     "message": "Trang này do một trình chạy dịch vụ kiểm soát. Tuy nhiên, không tìm thấy `start_url` vì tệp kê khai không thể phân tích cú pháp thành tệp JSON hợp lệ"
   },
   "lighthouse-core/audits/service-worker.js | explanationBadStartUrl": {
-    "message": "Trang này do một trình chạy dịch vụ kiểm soát. Tuy nhiên, `start_url` ({startUrl}) không thuộc phạm vi kiểm soát của trình chạy này ({scopeUrl})"
+    "message": "Trang này do một trình chạy dịch vụ kiểm soát. Tuy nhiên, `start_url` ({startUrl}) không thuộc phạm vi của trình chạy dịch vụ này ({scopeUrl})"
   },
   "lighthouse-core/audits/service-worker.js | explanationNoManifest": {
     "message": "Trang này do một trình chạy dịch vụ kiểm soát. Tuy nhiên, không tìm thấy `start_url` vì không tìm nạp được tệp kê khai."
   },
   "lighthouse-core/audits/service-worker.js | explanationOutOfScope": {
-    "message": "Nguồn gốc này có tối thiểu một trình chạy dịch vụ. Tuy nhiên, trang ({pageUrl}) không thuộc phạm vi kiểm soát của các trình chạy này."
+    "message": "Nguồn gốc này có một hoặc nhiều trình chạy dịch vụ. Tuy nhiên, trang ({pageUrl}) không thuộc phạm vi của các trình chạy dịch vụ này."
   },
   "lighthouse-core/audits/service-worker.js | failureTitle": {
     "message": "Không đăng ký một trình chạy dịch vụ kiểm soát trang và `start_url`"
@@ -1056,7 +1056,7 @@
     "message": "Đăng ký một trình chạy dịch vụ kiểm soát trang và `start_url`"
   },
   "lighthouse-core/audits/splash-screen.js | description": {
-    "message": "Màn hình chờ theo chủ đề giúp đảm bảo người dùng có trải nghiệm chất lượng cao khi chạy ứng dụng từ màn hình chính. [Tìm hiểu thêm](https://developers.google.com/web/tools/lighthouse/audits/custom-splash-screen)"
+    "message": "Màn hình chờ có giao diện giúp đảm bảo người dùng có trải nghiệm chất lượng cao khi chạy ứng dụng từ màn hình chính. [Tìm hiểu thêm](https://developers.google.com/web/tools/lighthouse/audits/custom-splash-screen)"
   },
   "lighthouse-core/audits/splash-screen.js | failureTitle": {
     "message": "Chưa được định cấu hình cho màn hình chờ tùy chỉnh"
@@ -1065,13 +1065,13 @@
     "message": "Đã định cấu hình cho màn hình chờ tùy chỉnh"
   },
   "lighthouse-core/audits/themed-omnibox.js | description": {
-    "message": "Bạn có thể đặt màu chủ đề cho thanh địa chỉ trên trình duyệt để phù hợp với trang web của mình. [Tìm hiểu thêm](https://developers.google.com/web/tools/lighthouse/audits/address-bar)"
+    "message": "Bạn có thể đặt giao diện cho thanh địa chỉ trên trình duyệt để phù hợp với trang web của mình. [Tìm hiểu thêm](https://developers.google.com/web/tools/lighthouse/audits/address-bar)"
   },
   "lighthouse-core/audits/themed-omnibox.js | failureTitle": {
-    "message": "Không đặt màu chủ đề cho thanh địa chỉ."
+    "message": "Không đặt màu giao diện cho thanh địa chỉ."
   },
   "lighthouse-core/audits/themed-omnibox.js | title": {
-    "message": "Đặt màu chủ đề cho thanh địa chỉ."
+    "message": "Đặt màu giao diện cho thanh địa chỉ."
   },
   "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
     "message": "Thời gian chặn chuỗi chính"
@@ -1152,25 +1152,25 @@
     "message": "Có thẻ `<meta name=\"viewport\">` có `width` hoặc `initial-scale`"
   },
   "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Ứng dụng của bạn phải hiển thị nội dung nào đó khi JavaScript bị tắt, ngay cả khi đó chỉ là cảnh báo cho người dùng biết phải có JavaScript mới dùng được ứng dụng. [Tìm hiểu thêm](https://developers.google.com/web/tools/lighthouse/audits/no-js)."
+    "message": "Ứng dụng của bạn phải hiển thị một số nội dung khi JavaScript bị tắt, ngay cả khi đó chỉ là một cảnh báo cho người dùng biết phải có JavaScript mới dùng được ứng dụng. [Tìm hiểu thêm](https://developers.google.com/web/tools/lighthouse/audits/no-js)."
   },
   "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "Phần nội dung trang phải hiển thị nội dung nào đó ngay cả khi không tải được tập lệnh"
+    "message": "Phần nội dung trang phải hiển thị một số nội dung nếu không có sẵn tập lệnh."
   },
   "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "Không cung cấp nội dung dự phòng khi JavaScript không hoạt động"
+    "message": "Không cung cấp nội dung dự phòng khi JavaScript không có sẵn"
   },
   "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Chứa nội dung nào đó khi JavaScript không hoạt động"
+    "message": "Chứa một số nội dung khi JavaScript không có sẵn"
   },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "Nếu bạn đang tạo một Ứng dụng web tiến bộ, hãy cân nhắc dùng trình chạy dịch vụ để ứng dụng có thể hoạt động khi không có mạng. [Tìm hiểu thêm](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline)"
   },
   "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "Trang hiện tại không phản hồi kèm mã trạng thái 200 khi không có mạng"
+    "message": "Trang hiện tại không trả về mã trạng thái 200 khi không có mạng"
   },
   "lighthouse-core/audits/works-offline.js | title": {
-    "message": "Trang hiện tại phản hồi kèm mã trạng thái 200 khi không có mạng"
+    "message": "Trang hiện tại trả về mã trạng thái 200 khi không có mạng"
   },
   "lighthouse-core/audits/works-offline.js | warningNoLoad": {
     "message": "Trang này có thể không tải được khi không có mạng vì URL kiểm tra ({requested}) đã được chuyển hướng tới \"{final}\". Hãy thử kiểm tra trực tiếp URL thứ hai."
@@ -1275,7 +1275,7 @@
     "message": "Những hoạt động kiểm tra này sẽ xác thực các khía cạnh của một Ứng dụng web tiến bộ. [Tìm hiểu thêm](https://developers.google.com/web/progressive-web-apps/checklist)."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryManualDescription": {
-    "message": "Bạn phải tiến hành những hoạt động kiểm tra mà Lighthouse không tự động thực hiện trong [Danh sách kiểm tra ứng dụng web tiến bộ (PWA)](https://developers.google.com/web/progressive-web-apps/checklist). Các hoạt động kiểm tra này không ảnh hưởng đến điểm số của bạn, nhưng bạn phải xác minh theo cách thủ công."
+    "message": "Đây là những hoạt động kiểm tra được chỉ định trong [Danh sách kiểm tra ứng dụng web tiến bộ (PWA)](https://developers.google.com/web/progressive-web-apps/checklist) cơ bản, nhưng Lighthouse không tự động kiểm tra các mục này. Các hoạt động kiểm tra này không ảnh hưởng đến điểm số của bạn, nhưng bạn nên xác minh theo cách thủ công."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Ứng dụng web tiến bộ"

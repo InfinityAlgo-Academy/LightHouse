@@ -738,7 +738,7 @@
     "message": "시뮬레이션된 모바일 네트워크에서 페이지와 상호작용할 수 있게 될 때까지 걸린 시간: {timeInMs, number, seconds}초"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "페이지가 너무 느리게 로드되므로 10초 이내에 사용할 수 없습니다. '성능' 섹션에서 추천 내용과 진단을 확인하고 개선 방안을 알아보세요."
+    "message": "페이지가 너무 느리게 로드되므로 10초 이내에 사용할 수 없습니다. '성능' 섹션에서 추천 내용과 진단을 확인해 개선 방안을 알아보세요."
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
     "message": "모바일 네트워크에서 페이지 로딩이 충분히 빠르지 않음"
@@ -1053,7 +1053,7 @@
     "message": "페이지와 `start_url`을(를) 제어하는 서비스 워커를 등록하지 않음"
   },
   "lighthouse-core/audits/service-worker.js | title": {
-    "message": "페이지와`start_url`을(를) 제어하는 서비스 워커를 등록함"
+    "message": "페이지와 `start_url`을(를) 제어하는 서비스 워커를 등록함"
   },
   "lighthouse-core/audits/splash-screen.js | description": {
     "message": "테마 스플래시 화면을 사용하면 사용자가 홈 화면에서 앱을 실행했을 때 고품질의 환경을 경험할 수 있습니다. [자세히 알아보기](https://developers.google.com/web/tools/lighthouse/audits/custom-splash-screen)"
@@ -1155,7 +1155,7 @@
     "message": "JavaScript가 사용 중지되었더라도 사용자에게 앱을 사용하려면 JavaScript가 필요하다는 경고 등의 일부 콘텐츠는 앱에 표시되어야 합니다. [자세히 알아보기](https://developers.google.com/web/tools/lighthouse/audits/no-js)"
   },
   "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "스크립트를 사용할 수 없는 경우 페이지 본문에서 일부 콘텐츠를 렌더링해야 합니다."
+    "message": "페이지 본문에서 스크립트를 사용할 수 없는 경우 본문에서 콘텐츠를 일부 렌더링해야 합니다."
   },
   "lighthouse-core/audits/without-javascript.js | failureTitle": {
     "message": "JavaScript를 사용할 수 없는 경우 대체 콘텐츠를 제공하지 않음"

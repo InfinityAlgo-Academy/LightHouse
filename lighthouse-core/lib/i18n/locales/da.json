@@ -759,7 +759,7 @@
     "message": "Formindsker primært trådarbejde"
   },
   "lighthouse-core/audits/manual/pwa-cross-browser.js | description": {
-    "message": "Websites bør fungere på alle de mest populære browsere, så de når ud til flest mulige brugere. [Få flere oplysninger](https://developers.google.com/web/progressive-web-apps/checklist#site-works-cross-browser)."
+    "message": "Websites bør fungere på alle populære browsere, så de når ud til flest mulige brugere. [Få flere oplysninger](https://developers.google.com/web/progressive-web-apps/checklist#site-works-cross-browser)."
   },
   "lighthouse-core/audits/manual/pwa-cross-browser.js | title": {
     "message": "Websitet fungerer i forskellige browsere"

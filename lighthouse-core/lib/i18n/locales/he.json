@@ -879,7 +879,7 @@
     "message": "כדי להגדיר תקציבים עבור הכמות והגודל של משאבי הדף, יש להוסיף קובץ budget.json. [מידע נוסף](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
   "lighthouse-core/audits/resource-summary.js | displayValue": {
-    "message": "{requestCount,plural, =1{בקשה אחת •KB‎‎ {byteCount, number, bytes}‏}two{# בקשות • KB {byteCount, number, bytes}}many{# בקשות • KB {byteCount, number, bytes}}other{# בקשות • KB {byteCount, number, bytes}}}"
+    "message": "{requestCount,plural, =1{בקשה אחת • ‎{byteCount, number, bytes} KB‏}two{# בקשות • ‎KB {byteCount, number, bytes}}many{# בקשות • ‎KB {byteCount, number, bytes}}other{# בקשות • ‎KB {byteCount, number, bytes}}}"
   },
   "lighthouse-core/audits/resource-summary.js | title": {
     "message": "יש לצמצם ככל האפשר את מספר הבקשות ואת גודל ההעברות"
