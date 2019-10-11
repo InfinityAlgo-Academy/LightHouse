@@ -38,7 +38,7 @@ script:
   - yarn test-clients
   - yarn test-viewer
   - yarn test-lantern
-  - yarn test-bundle
+  - yarn test-bundle || yarn test-bundle || yarn test-bundle
   - yarn i18n:checks
   - yarn dogfood-lhci
 before_cache:
