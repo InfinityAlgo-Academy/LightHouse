@@ -727,7 +727,7 @@
   resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-8.0.2.tgz#0f9c7b236e2d78cd8f4b6502de15d0728aa29385"
   integrity sha512-Upj9YsBZRgjEVPvsaeGru48d2JiyzBNZkmkebHyoaQ+UM9wqj/rp5mkilRjSq/Ga45yfd/zwrNuML9f2gGfVpw==
 
-"@wardpeet/brfs@^2.1.0-0":
+"@wardpeet/brfs@2.1.0-0":
   version "2.1.0-0"
   resolved "https://registry.yarnpkg.com/@wardpeet/brfs/-/brfs-2.1.0-0.tgz#04e77dc088ca5bbc5b07051860faa45569e799f3"
   integrity sha512-ra9bDHPwsI+HBKQJk9CLMYaFDHLA7QGEH0teWlIcZ6/CHtFvjRb2YjwLBXc8jgtw+3LvCEuqme/BQaDfo74fUA==

@@ -93,7 +93,7 @@
     "@types/update-notifier": "^1.0.2",
     "@types/ws": "^4.0.1",
     "@types/yargs": "^8.0.2",
-    "@wardpeet/brfs": "^2.1.0-0",
+    "@wardpeet/brfs": "2.1.0-0",
     "angular": "^1.7.4",
     "archiver": "^3.0.0",
     "babel-core": "^6.26.0",
