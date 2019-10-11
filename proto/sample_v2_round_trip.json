@@ -601,6 +601,11 @@
                         "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
                     },
                     {
+                        "description": "Error: An error\n    at http://localhost:10200/dobetterweb/dbw_tester.html:42:38",
+                        "source": "Runtime.exception",
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
+                    },
+                    {
                         "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
                         "source": "network",
                         "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200"
@@ -614,11 +619,6 @@
                         "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
                         "source": "network",
                         "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200"
-                    },
-                    {
-                        "description": "Error: An error\n    at http://localhost:10200/dobetterweb/dbw_tester.html:42:38",
-                        "source": "Runtime.exception",
-                        "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
                     }
                 ],
                 "type": "table"

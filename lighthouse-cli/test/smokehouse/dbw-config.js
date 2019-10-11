@@ -22,4 +22,8 @@ module.exports = {
       'apple-touch-icon', // pull in apple touch icon to test `LinkElements`
     ],
   },
+  audits: [
+    // Test the `ignoredPatterns` audit option.
+    {path: 'errors-in-console', options: {ignoredPatterns: ['An ignored error']}},
+  ],
 };
