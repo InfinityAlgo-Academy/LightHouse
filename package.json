@@ -24,6 +24,7 @@
     "debug": "node --inspect-brk ./lighthouse-cli/index.js",
     "start": "node ./lighthouse-cli/index.js",
     "test": "yarn diff:sample-json && yarn lint --quiet && yarn unit && yarn type-check",
+    "test-bundle": "node build/tests/bundle-smoke-test.js",
     "test-clients": "jest \"clients/\"",
     "test-viewer": "yarn unit-viewer && jest lighthouse-viewer/test/viewer-test-pptr.js",
     "test-lantern": "bash lighthouse-core/scripts/test-lantern.sh",
