@@ -37,7 +37,7 @@ function buildEntryPoint() {
 function buildReportGenerator() {
   browserify(generatorFilename, {standalone: 'ReportGenerator'})
     // Transform the fs.readFile etc into inline strings.
-    .transform('brfs', {global: true, parserOpts: {ecmaVersion: 10}})
+    .transform('@wardpeet/brfs', {global: true, parserOpts: {ecmaVersion: 10}})
     .bundle((err, src) => {
       if (err) throw err;
       fs.writeFileSync(bundleOutFile, src.toString());

@@ -10,6 +10,7 @@ const path = require('path');
 const {promisify} = require('util');
 const readFileAsync = promisify(fs.readFile);
 const writeFileAsync = promisify(fs.writeFile);
+const stream = require('stream');
 
 const browserify = require('browserify');
 const cpy = require('cpy');
@@ -99,6 +100,30 @@ async function html() {
 }
 
 /**
+ * Minifies file which are read by fs.readFileSync (brfs)
+ *
+ * @param {string} file
+ */
+function minifyReadFileContent(file) {
+  return new stream.Transform({
+    transform(chunk, enc, next) {
+      if (file.endsWith('.js')) {
+        const result = terser.minify(chunk.toString());
+        if (result.error) {
+          throw result.error;
+        }
+
+        this.push(result.code);
+      } else {
+        this.push(chunk);
+      }
+
+      next();
+    },
+  });
+}
+
+/**
  * Combine multiple JS files into single viewer.js file.
  * @return {Promise<void>}
  */
@@ -106,7 +131,9 @@ async function compileJs() {
   // JS bundle from browserified ReportGenerator.
   const generatorFilename = `${sourceDir}/../lighthouse-core/report/report-generator.js`;
   const generatorBrowserify = browserify(generatorFilename, {standalone: 'ReportGenerator'})
-    .transform('brfs');
+    .transform('@wardpeet/brfs', {
+      readFileSyncTransform: minifyReadFileContent,
+    });
 
   /** @type {Promise<string>} */
   const generatorJsPromise = new Promise((resolve, reject) => {

@@ -727,6 +727,16 @@
   resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-8.0.2.tgz#0f9c7b236e2d78cd8f4b6502de15d0728aa29385"
   integrity sha512-Upj9YsBZRgjEVPvsaeGru48d2JiyzBNZkmkebHyoaQ+UM9wqj/rp5mkilRjSq/Ga45yfd/zwrNuML9f2gGfVpw==
 
+"@wardpeet/brfs@2.1.0-0":
+  version "2.1.0-0"
+  resolved "https://registry.yarnpkg.com/@wardpeet/brfs/-/brfs-2.1.0-0.tgz#04e77dc088ca5bbc5b07051860faa45569e799f3"
+  integrity sha512-ra9bDHPwsI+HBKQJk9CLMYaFDHLA7QGEH0teWlIcZ6/CHtFvjRb2YjwLBXc8jgtw+3LvCEuqme/BQaDfo74fUA==
+  dependencies:
+    quote-stream "^1.0.1"
+    resolve "^1.1.5"
+    static-module "^3.0.2"
+    through2 "^2.0.0"
+
 JSONStream@^1.0.3, JSONStream@^1.0.4:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/JSONStream/-/JSONStream-1.3.5.tgz#3208c1f08d3a4d99261ab64f92302bc15e111ca0"
@@ -1371,16 +1381,6 @@ braces@^2.3.1:
     snapdragon-node "^2.0.1"
     split-string "^3.0.2"
     to-regex "^3.0.1"
-
-brfs@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/brfs/-/brfs-2.0.2.tgz#44237878fa82aa479ce4f5fe2c1796ec69f07845"
-  integrity sha512-IrFjVtwu4eTJZyu8w/V2gxU7iLTtcHih67sgEdzrhjLBMHp2uYefUBfdM4k2UvcuWMgV7PQDZHSLeNWnLFKWVQ==
-  dependencies:
-    quote-stream "^1.0.1"
-    resolve "^1.1.5"
-    static-module "^3.0.2"
-    through2 "^2.0.0"
 
 brorand@^1.0.1:
   version "1.1.0"
