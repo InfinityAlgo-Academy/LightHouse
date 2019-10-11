@@ -306,7 +306,7 @@
     },
     "critical-request-chains": {
       "id": "critical-request-chains",
-      "title": "Minimize Critical Requests Depth",
+      "title": "Avoid chaining critical requests",
       "description": "The Critical Request Chains below show you what resources are loaded with a high priority. Consider reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load. [Learn more](https://web.dev/critical-request-chains).",
       "score": null,
       "scoreDisplayMode": "informative",
@@ -1484,7 +1484,7 @@
     },
     "third-party-summary": {
       "id": "third-party-summary",
-      "title": "Third-Party usage",
+      "title": "Minimize third-party usage",
       "description": "Third-party code can significantly impact load performance. Limit the number of redundant third-party providers and try to load third-party code after your page has primarily finished loading. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/).",
       "score": 1,
       "scoreDisplayMode": "binary",

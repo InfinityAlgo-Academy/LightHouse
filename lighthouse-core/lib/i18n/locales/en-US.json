@@ -459,7 +459,7 @@
     "message": "{itemCount, plural,\n    =1 {1 chain found}\n    other {# chains found}\n    }"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "Minimize Critical Requests Depth"
+    "message": "Avoid chaining critical requests"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "Deprecation / Warning"
@@ -1089,7 +1089,7 @@
     "message": "Reduce the impact of third-party code"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "Third-Party usage"
+    "message": "Minimize third-party usage"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Time To First Byte identifies the time at which your server sends a response. [Learn more](https://web.dev/time-to-first-byte)."

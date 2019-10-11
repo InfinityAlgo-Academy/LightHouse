@@ -459,7 +459,7 @@
     "message": "{itemCount, plural,\n    =1 {1 ĉh́âín̂ f́ôún̂d́}\n    other {# ĉh́âín̂ś f̂óûńd̂}\n    }"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "M̂ín̂ím̂íẑé Ĉŕît́îćâĺ R̂éq̂úêśt̂ś D̂ép̂t́ĥ"
+    "message": "Âv́ôíd̂ ćĥáîńîńĝ ćr̂ít̂íĉál̂ ŕêq́ûéŝt́ŝ"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "D̂ép̂ŕêćât́îón̂ / Ẃâŕn̂ín̂ǵ"
@@ -1089,7 +1089,7 @@
     "message": "R̂éd̂úĉé t̂h́ê ím̂ṕâćt̂ óf̂ t́ĥír̂d́-p̂ár̂t́ŷ ćôd́ê"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "T̂h́îŕd̂-Ṕâŕt̂ý ûśâǵê"
+    "message": "M̂ín̂ím̂íẑé t̂h́îŕd̂-ṕâŕt̂ý ûśâǵê"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "T̂ím̂é T̂ó F̂ír̂śt̂ B́ŷt́ê íd̂én̂t́îf́îéŝ t́ĥé t̂ím̂é ât́ ŵh́îćĥ ýôúr̂ śêŕv̂ér̂ śêńd̂ś â ŕêśp̂ón̂śê. [Ĺêár̂ń m̂ór̂é](https://web.dev/time-to-first-byte)."

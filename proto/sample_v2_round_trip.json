@@ -375,7 +375,7 @@
             "id": "critical-request-chains",
             "score": null,
             "scoreDisplayMode": "informative",
-            "title": "Minimize Critical Requests Depth"
+            "title": "Avoid chaining critical requests"
         },
         "custom-controls-labels": {
             "description": "Custom interactive controls have associated labels, provided by aria-label or aria-labelledby. [Learn more](https://web.dev/custom-controls-labels/).",
@@ -2607,7 +2607,7 @@
             "id": "third-party-summary",
             "score": 1.0,
             "scoreDisplayMode": "binary",
-            "title": "Third-Party usage"
+            "title": "Minimize third-party usage"
         },
         "time-to-first-byte": {
             "description": "Time To First Byte identifies the time at which your server sends a response. [Learn more](https://web.dev/time-to-first-byte).",
