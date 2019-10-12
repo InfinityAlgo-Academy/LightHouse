@@ -49,10 +49,15 @@ module.exports = class ConnectionPool {
     const serverResponseTimeByOrigin = this._options.serverResponseTimeByOrigin;
 
     const recordsByOrigin = NetworkAnalyzer.groupByOrigin(this._records);
+    global.loggedit = global.loggedit || {};
     for (const [origin, records] of recordsByOrigin.entries()) {
       const connections = [];
       const additionalRtt = additionalRttByOrigin.get(origin) || 0;
       const responseTime = serverResponseTimeByOrigin.get(origin) || DEFAULT_SERVER_RESPONSE_TIME;
+      if (!global.loggedit[origin]) {
+        console.log('rtt & server response', {origin, additionalRtt, responseTime});
+        global.loggedit[origin] = true;
+      }
 
       for (const record of records) {
         if (connectionReused.get(record.requestId)) continue;

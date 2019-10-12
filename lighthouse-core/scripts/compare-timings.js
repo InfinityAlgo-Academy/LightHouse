@@ -129,13 +129,13 @@ function aggregateResults(name) {
     // Group the durations of each entry of the same name.
     /** @type {Record<string, number[]>} */
     const durationsByName = {};
-    for (const entry of lhr.timing.entries) {
-      if (measureFilter && !measureFilter.test(entry.name)) {
+    for (const [name, timimg] of Object.entries(lhr.audits.metrics.details.items[0])) {
+      if (measureFilter && !measureFilter.test(name)) {
         continue;
       }
 
-      const durations = durationsByName[entry.name] = durationsByName[entry.name] || [];
-      durations.push(entry.duration);
+      const durations = durationsByName[name] = durationsByName[name] || [];
+      durations.push(timimg);
     }
 
     // Push the aggregate time of each unique (by name) entry.
@@ -158,17 +158,18 @@ function aggregateResults(name) {
     const stdev = sampleStdev(durations);
     return {
       key,
-      measure: entryName,
+      metric: entryName,
       url,
       n: durations.length,
       mean: round(mean),
       stdev: round(stdev),
+      cv: (stdev / mean).toFixed(3),
       min: round(min),
       max: round(max),
     };
   }).sort((a, b) => {
     // sort by {measure, url}
-    const measureComp = a.measure.localeCompare(b.measure);
+    const measureComp = a.metric.localeCompare(b.metric);
     if (measureComp !== 0) return measureComp;
     return a.url.localeCompare(b.url);
   });
@@ -182,7 +183,7 @@ function filter(results) {
 
   for (const result of results) {
     for (const key in result) {
-      if (reportExcludeRegex.test(key)) delete result[key];
+      // if (reportExcludeRegex.test(key)) delete result[key];
     }
   }
 }
@@ -236,7 +237,7 @@ function compare() {
     const max = compareValues(baseResult && baseResult.max, otherResult && otherResult.max);
 
     return {
-      'measure': someResult.measure,
+      'measure': someResult.metric,
       'url': someResult.url,
       'mean': mean.description,
       'mean Δ': exists(mean.delta) ? round(mean.delta) : undefined,
