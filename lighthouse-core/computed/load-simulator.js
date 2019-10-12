@@ -32,16 +32,22 @@ class LoadSimulator {
       const additionalRttTimes = Object.entries(precomputedLanternData.additionalRttByOrigin);
       const serverResponseTimes = Object.entries(precomputedLanternData.serverResponseTimeByOrigin);
 
-      options.additionalRttByOrigin
-       = new Map(additionalRttTimes);
+      options.additionalRttByOrigin = new Map(additionalRttTimes);
       options.serverResponseTimeByOrigin = new Map(serverResponseTimes);
 
       // apply wildcard entry to all origins
-      const wildcardRtt = additionalRttTimes.find(([origin, rtt]) => origin === '*');
-      const wildcardServerResponse = serverResponseTimes.find(([origin, rtt]) => origin === '*');
+      if ('*' in precomputedLanternData.additionalRttByOrigin) {
+        const globalRtt = precomputedLanternData.additionalRttByOrigin['*'];
+        for (const key of networkAnalysis.additionalRttByOrigin.keys()) {
+          networkAnalysis.additionalRttByOrigin.set(key, globalRtt);
+        }
+      }
 
-      if (wildcardRtt) {
-
+      if ('*' in precomputedLanternData.serverResponseTimeByOrigin) {
+        const globalServerResponse = precomputedLanternData.serverResponseTimeByOrigin['*'];
+        for (const key of networkAnalysis.serverResponseTimeByOrigin.keys()) {
+          networkAnalysis.serverResponseTimeByOrigin.set(key, globalServerResponse);
+        }
       }
     }
 
