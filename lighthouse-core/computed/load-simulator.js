@@ -29,10 +29,20 @@ class LoadSimulator {
     // If we have precomputed lantern data, overwrite our observed estimates and use precomputed instead
     // for increased stability.
     if (precomputedLanternData) {
-      options.additionalRttByOrigin = new Map(Object.entries(
-        precomputedLanternData.additionalRttByOrigin));
-      options.serverResponseTimeByOrigin = new Map(Object.entries(
-        precomputedLanternData.serverResponseTimeByOrigin));
+      const additionalRttTimes = Object.entries(precomputedLanternData.additionalRttByOrigin);
+      const serverResponseTimes = Object.entries(precomputedLanternData.serverResponseTimeByOrigin);
+
+      options.additionalRttByOrigin
+       = new Map(additionalRttTimes);
+      options.serverResponseTimeByOrigin = new Map(serverResponseTimes);
+
+      // apply wildcard entry to all origins
+      const wildcardRtt = additionalRttTimes.find(([origin, rtt]) => origin === '*');
+      const wildcardServerResponse = serverResponseTimes.find(([origin, rtt]) => origin === '*');
+
+      if (wildcardRtt) {
+
+      }
     }
 
     switch (throttlingMethod) {

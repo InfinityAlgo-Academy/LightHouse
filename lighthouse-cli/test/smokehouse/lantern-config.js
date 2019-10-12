@@ -14,10 +14,10 @@ module.exports = {
     onlyCategories: ['performance'],
     precomputedLanternData: {
       additionalRttByOrigin: {
-        'http://localhost:10200': 500,
+        '*': 500,
       },
       serverResponseTimeByOrigin: {
-        'http://localhost:10200': 1000,
+        '*': 1000,
       },
     },
   },
