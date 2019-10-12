@@ -233,6 +233,7 @@ function compare() {
 
     const mean = compareValues(baseResult && baseResult.mean, otherResult && otherResult.mean);
     const stdev = compareValues(baseResult && baseResult.stdev, otherResult && otherResult.stdev);
+    const cv = compareValues(baseResult && baseResult.cv, otherResult && otherResult.cv);
     const min = compareValues(baseResult && baseResult.min, otherResult && otherResult.min);
     const max = compareValues(baseResult && baseResult.max, otherResult && otherResult.max);
 
@@ -243,6 +244,8 @@ function compare() {
       'mean Δ': exists(mean.delta) ? round(mean.delta) : undefined,
       'stdev': stdev.description,
       'stdev Δ': exists(stdev.delta) ? round(stdev.delta) : undefined,
+      'cv': cv.description,
+      'cv Δ': exists(cv.delta) ? round(cv.delta) : undefined,
       'min': min.description,
       'min Δ': exists(min.delta) ? round(min.delta) : undefined,
       'max': max.description,
