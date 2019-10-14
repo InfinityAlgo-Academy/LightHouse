@@ -11,6 +11,8 @@
 //     node lighthouse-core/scripts/compare-timings.js --name base --name pr --compare
 
 const fs = require('fs');
+const mkdirp = require('mkdirp');
+const glob = require('glob');
 const {execSync} = require('child_process');
 const yargs = require('yargs');
 
@@ -23,8 +25,10 @@ const argv = yargs
     // common flags
     'name': 'Unique identifier, makes the folder for storing LHRs. Not a path',
     'report-exclude': 'Regex of properties to exclude. Set to "none" to disable default',
-    // --collect
-    'collect': 'Saves LHRs to disk',
+    // collection
+    'gather': 'Just gathers',
+    'audit': 'Audits from the artifacts on disk',
+    'collect': 'Gathers, audits and saves LHRs to disk',
     'lh-flags': 'Lighthouse flags',
     'urls': 'Urls to run',
     'n': 'Number of times to run',
@@ -45,6 +49,7 @@ const argv = yargs
   .string('lh-flags')
   .default('desc', false)
   .default('lh-flags', '')
+  .strict() // fail on unknown commands
   .wrap(yargs.terminalWidth())
 .argv;
 
@@ -82,6 +87,14 @@ function sampleStdev(values) {
 }
 
 /**
+ * @param {string} url
+ * @return string
+ */
+function urlToFolder(url) {
+  return url.replace(/[^a-zA-Z0-9]/g, '_');
+}
+
+/**
  * Round to the tenth.
  * @param {number} value
  */
@@ -89,19 +102,42 @@ function round(value) {
   return Math.round(value * 10) / 10;
 }
 
-function collect() {
+function gather() {
   const outputDir = dir(argv.name);
-  if (!fs.existsSync(ROOT_OUTPUT_DIR)) fs.mkdirSync(ROOT_OUTPUT_DIR);
+  mkdirp.sync(ROOT_OUTPUT_DIR);
+  // Don't overwrite a previous collection
   if (fs.existsSync(outputDir)) throw new Error(`folder already exists: ${outputDir}`);
   fs.mkdirSync(outputDir);
 
   for (const url of argv.urls) {
     for (let i = 0; i < argv.n; i++) {
+      const gatherDir = `${outputDir}/${urlToFolder(url)}/${i}/`;
+      mkdirp.sync(gatherDir);
+
       const cmd = [
         'node',
         `${LH_ROOT}/lighthouse-cli`,
         url,
-        `--output-path=${outputDir}/lhr-${url.replace(/[^a-zA-Z0-9]/g, '_')}-${i}.json`,
+        `--gather-mode=${gatherDir}`,
+        argv.lhFlags,
+      ].join(' ');
+      execSync(cmd, {stdio: 'ignore'});
+    }
+  }
+}
+
+function audit() {
+  const outputDir = dir(argv.name);
+  for (const url of argv.urls) {
+    for (let i = 0; i < argv.n; i++) {
+      const gatherDir = `${outputDir}/${urlToFolder(url)}/${i}/`;
+
+      const cmd = [
+        'node',
+        `${LH_ROOT}/lighthouse-cli`,
+        url,
+        `--audit-mode=${gatherDir}`,
+        `--output-path=${outputDir}/lhr-${urlToFolder(url)}-${i}.json`,
         '--output=json',
         argv.lhFlags,
       ].join(' ');
@@ -121,8 +157,8 @@ function aggregateResults(name) {
   const durationsMap = new Map();
   const measureFilter = argv.measureFilter ? new RegExp(argv.measureFilter, 'i') : null;
 
-  for (const lhrPath of fs.readdirSync(outputDir)) {
-    const lhrJson = fs.readFileSync(`${outputDir}/${lhrPath}`, 'utf-8');
+  for (const lhrPath of glob.sync(`${outputDir}/*.json`)) {
+    const lhrJson = fs.readFileSync(lhrPath, 'utf-8');
     /** @type {LH.Result} */
     const lhr = JSON.parse(lhrJson);
 
@@ -284,7 +320,12 @@ function print(results) {
 }
 
 function main() {
-  if (argv.collect) collect();
+  if (argv.gather) gather();
+  if (argv.audit) audit();
+  if (argv.collect) {
+    gather();
+    audit();
+  }
   if (argv.summarize) summarize();
   if (argv.compare) compare();
 }
