@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const Element = require('../../lib/element.js');
+const LHElement = require('../../lib/lh-element.js');
 const assert = require('assert');
 
 class DriverStub {
@@ -28,7 +28,7 @@ class DriverStub {
 }
 
 /* global describe, it, beforeEach */
-describe('Element', () => {
+describe('LHElement', () => {
   let stubbedDriver;
   let stubbedElement;
 
@@ -39,38 +39,38 @@ describe('Element', () => {
 
   it('throws when no driver or element is passed', () => {
     assert.throws(() => {
-      const _ = new Element();
+      const _ = new LHElement();
     });
   });
 
   it('throws when no driver is passed', () => {
     assert.throws(() => {
-      const _ = new Element(stubbedElement, undefined);
+      const _ = new LHElement(stubbedElement, undefined);
     });
   });
 
   it('throws when no element is passed', () => {
     assert.throws(() => {
-      const _ = new Element(undefined, stubbedDriver);
+      const _ = new LHElement(undefined, stubbedDriver);
     });
   });
 
   it('returns null from getAttribute when no attribute found', () => {
-    const element = new Element(stubbedElement, stubbedDriver);
+    const element = new LHElement(stubbedElement, stubbedDriver);
     return element.getAttribute('notanattribute').then(value => {
       assert.equal(value, null);
     });
   });
 
   it('returns attribute value from getAttribute', () => {
-    const element = new Element(stubbedElement, stubbedDriver);
+    const element = new LHElement(stubbedElement, stubbedDriver);
     return element.getAttribute('rel').then(value => {
       assert.equal(value, 'manifest');
     });
   });
 
   it('returns property value from getProperty', () => {
-    const element = new Element(stubbedElement, stubbedDriver);
+    const element = new LHElement(stubbedElement, stubbedDriver);
     return element.getProperty('test').then(value => {
       assert.equal(value, '123');
     });

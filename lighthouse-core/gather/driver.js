@@ -7,7 +7,7 @@
 
 const NetworkRecorder = require('../lib/network-recorder.js');
 const emulation = require('../lib/emulation.js');
-const Element = require('../lib/element.js');
+const LHElement = require('../lib/lh-element.js');
 const LHError = require('../lib/lh-error.js');
 const NetworkRequest = require('../lib/network-request.js');
 const EventEmitter = require('events').EventEmitter;
@@ -1228,7 +1228,7 @@ class Driver {
 
   /**
    * @param {string} selector Selector to find in the DOM
-   * @return {Promise<Element|null>} The found element, or null, resolved in a promise
+   * @return {Promise<LHElement|null>} The found element, or null, resolved in a promise
    */
   async querySelector(selector) {
     const documentResponse = await this.sendCommand('DOM.getDocument');
@@ -1242,12 +1242,12 @@ class Driver {
     if (targetNode.nodeId === 0) {
       return null;
     }
-    return new Element(targetNode, this);
+    return new LHElement(targetNode, this);
   }
 
   /**
    * @param {string} selector Selector to find in the DOM
-   * @return {Promise<Array<Element>>} The found elements, or [], resolved in a promise
+   * @return {Promise<Array<LHElement>>} The found elements, or [], resolved in a promise
    */
   async querySelectorAll(selector) {
     const documentResponse = await this.sendCommand('DOM.getDocument');
@@ -1258,11 +1258,11 @@ class Driver {
       selector,
     });
 
-    /** @type {Array<Element>} */
+    /** @type {Array<LHElement>} */
     const elementList = [];
     targetNodeList.nodeIds.forEach(nodeId => {
       if (nodeId !== 0) {
-        elementList.push(new Element({nodeId}, this));
+        elementList.push(new LHElement({nodeId}, this));
       }
     });
     return elementList;
@@ -1272,13 +1272,13 @@ class Driver {
    * Returns the flattened list of all DOM elements within the document.
    * @param {boolean=} pierce Whether to pierce through shadow trees and iframes.
    *     True by default.
-   * @return {Promise<Array<Element>>} The found elements, or [], resolved in a promise
+   * @return {Promise<Array<LHElement>>} The found elements, or [], resolved in a promise
    */
   getElementsInDocument(pierce = true) {
     return this.getNodesInDocument(pierce)
       .then(nodes => nodes
         .filter(node => node.nodeType === 1)
-        .map(node => new Element({nodeId: node.nodeId}, this))
+        .map(node => new LHElement({nodeId: node.nodeId}, this))
       );
   }
 
