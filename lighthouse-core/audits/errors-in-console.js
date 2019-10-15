@@ -10,6 +10,7 @@
  * This is done by collecting Chrome console log messages and filtering out the non-error ones.
  */
 
+const log = require('lighthouse-logger');
 const Audit = require('./audit.js');
 const i18n = require('../lib/i18n/i18n.js');
 
@@ -57,7 +58,9 @@ class ErrorLogs extends Audit {
    * @return {Array<T>}
    */
   static filterAccordingToOptions(items, options) {
-    const {ignoredPatterns} = options;
+    const {ignoredPatterns, ...restOfOptions} = options;
+    const otherOptionKeys = Object.keys(restOfOptions);
+    if (otherOptionKeys.length) log.warn(this.meta.id, 'Unrecognized options', otherOptionKeys);
     if (!ignoredPatterns) return items;
 
     return items.filter(({description}) => {
