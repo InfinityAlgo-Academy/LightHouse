@@ -227,7 +227,7 @@ class MainThreadTasks {
     const timerInstallEventsReverseQueue = timerInstallEvents.slice().reverse();
 
     for (let i = 0; i < sortedTasks.length; i++) {
-      const nextTask = sortedTasks[i];
+      let nextTask = sortedTasks[i];
 
       // This inner loop updates what our `currentTask` is at `nextTask.startTime - ε`.
       // While `nextTask` starts after our `currentTask`, close out the task, popup to the parent, and repeat.
@@ -262,10 +262,46 @@ class MainThreadTasks {
             // It's ending at traceEndTs, it means we were missing the end event. We'll truncate it to the parent.
             nextTask.endTime = currentTask.endTime;
             nextTask.duration = nextTask.endTime - nextTask.startTime;
+          } else if (
+            nextTask.startTime - currentTask.startTime < 1000 &&
+            !currentTask.children.length
+          ) {
+            // The true parent started less than 1ms before the true child, so we're looking at the relationship backwards.
+            // We'll let it slide and fix the situation by swapping the two tasks into their correct positions
+            // and increasing the duration of the parent.
+
+            // Below is an artistic rendition of the heirarchy we are trying to create.
+            //   ████████████currentTask.parent██████████████████
+            //       █████████nextTask██████████████
+            //      ███████currentTask███████
+            const actualParentTask = nextTask;
+            const actualChildTask = currentTask;
+
+            // We'll grab the grandparent task to see if we need to fix it.
+            // We'll reassign it to be the parent of `actualParentTask` in a bit.
+            const grandparentTask = currentTask.parent;
+            if (grandparentTask) {
+              const lastGrandparentChildIndex = grandparentTask.children.length - 1;
+              if (grandparentTask.children[lastGrandparentChildIndex] !== actualChildTask) {
+                // The child we need to swap should always be the most recently added child.
+                // But if not then there's a serious bug in this code, so double-check.
+                throw new Error('Fatal trace logic error - impossible children');
+              }
+
+              grandparentTask.children.pop();
+              grandparentTask.children.push(actualParentTask);
+            }
+
+            actualParentTask.parent = grandparentTask;
+            actualParentTask.startTime = actualChildTask.startTime;
+            actualParentTask.duration = actualParentTask.endTime - actualParentTask.startTime;
+            currentTask = actualParentTask;
+            nextTask = actualChildTask;
           } else {
             // None of our workarounds matched. It's time to throw an error.
             // When we fall into this error, it's usually because of one of two reasons.
-            //    - There was slop in the opposite direction (child started 1ms before parent) and the child was assumed to be parent instead.
+            //    - There was slop in the opposite direction (child started 1ms before parent),
+            //      the child was assumed to be parent instead, and another task already started.
             //    - The child timestamp ended more than 1ms after tha parent.
             // These have more complicated fixes, so handling separately https://github.com/GoogleChrome/lighthouse/pull/9491#discussion_r327331204.
             /** @type {any} */
@@ -310,6 +346,7 @@ class MainThreadTasks {
    *    2. Create tasks for each X/B event, throwing if a matching E event cannot be found for a given B.
    *    3. Sort the tasks by ↑ startTime, ↓ duration.
    *    4. Match each task to its parent, throwing if there is any invalid overlap between tasks.
+   *    5. Sort the tasks once more by ↑ startTime, ↓ duration in case they changed during relationship creation.
    *
    * @param {LH.TraceEvent[]} mainThreadEvents
    * @param {PriorTaskData} priorTaskData
@@ -346,7 +383,10 @@ class MainThreadTasks {
     // Phase 4 - Match each task to its parent.
     MainThreadTasks._createTaskRelationships(sortedTasks, timerInstallEvents, priorTaskData);
 
-    return sortedTasks;
+    // Phase 5 - Sort once more in case the order changed after wiring up relationships.
+    return sortedTasks.sort(
+      (taskA, taskB) => taskA.startTime - taskB.startTime || taskB.duration - taskA.duration
+    );
   }
 
   /**
