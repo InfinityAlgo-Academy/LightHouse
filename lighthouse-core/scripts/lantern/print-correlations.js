@@ -42,6 +42,7 @@
  * @property {number} [timeToFirstInteractive]
  * @property {number} [timeToConsistentlyInteractive]
  * @property {number} [speedIndex]
+ * @property {number} [largestContentfulPaint]
  */
 
 /**
@@ -111,6 +112,8 @@ function evaluateSite(site, expectedMetrics, actualMetrics, metric, lanternMetri
   const actual = Math.round(actualMetrics[lanternMetric]);
   const diff = Math.abs(actual - expected);
   const diffAsPercent = diff / expected;
+
+  // if (metric === 'largestContentfulPaint') console.log(actualMetrics, {...site, expected, actual, diff, diffAsPercent, metric, lanternMetric});
 
   return {...site, expected, actual, diff, diffAsPercent, metric, lanternMetric};
 }
@@ -435,3 +438,5 @@ console.log(chalk.bold('\n ------- % Error Summary -------'));
 printPercentile(50);
 printPercentile(90);
 printPercentile(95);
+
+console.log(allEvaluations.length)
