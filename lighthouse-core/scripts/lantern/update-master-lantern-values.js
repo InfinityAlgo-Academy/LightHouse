@@ -30,6 +30,7 @@ const computedResults = require(HEAD_COMPUTED_PATH);
 const sites = [];
 for (const entry of computedResults.sites) {
   const lanternValues = entry.lantern;
+  if (!lanternValues) continue;
   Object.keys(lanternValues).forEach(key => lanternValues[key] = Math.round(lanternValues[key]));
   sites.push({url: entry.url, ...lanternValues});
 }

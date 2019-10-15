@@ -85,8 +85,10 @@ if (!fs.existsSync(COMPUTATIONS_PATH)) throw new Error('Usage $0 <computed summa
 const siteIndexWithComputed = require(COMPUTATIONS_PATH);
 const baselineLanternData = require(BASELINE_PATH);
 
+const fixUrl = url => url.replace(/https?/, 'http').replace(/www\./, '')
+
 for (const site of baselineLanternData.sites) {
-  const computedSite = siteIndexWithComputed.sites.find(entry => entry.url === site.url);
+  const computedSite = siteIndexWithComputed.sites.find(entry => fixUrl(entry.url) === fixUrl(site.url));
   if (!computedSite) continue;
   computedSite.baseline = site;
 }
