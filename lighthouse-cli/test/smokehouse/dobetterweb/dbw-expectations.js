@@ -15,6 +15,9 @@ const expectations = [
       Stacks: [{
         id: 'jquery',
       }, {
+        id: 'jquery',
+        name: 'jQuery (Fast path)',
+      }, {
         id: 'wordpress',
       }],
       LinkElements: [
@@ -355,6 +358,9 @@ const expectations = [
           details: {
             items: [{
               name: 'jQuery',
+            },
+            {
+              name: 'jQuery (Fast path)',
             },
             {
               name: 'WordPress',

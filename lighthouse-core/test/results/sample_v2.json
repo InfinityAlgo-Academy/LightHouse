@@ -2882,6 +2882,10 @@
             "npm": "jquery"
           },
           {
+            "name": "jQuery (Fast path)",
+            "npm": "jquery"
+          },
+          {
             "name": "WordPress"
           }
         ],

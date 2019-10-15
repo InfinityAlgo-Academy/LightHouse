@@ -1837,6 +1837,12 @@
     },
     {
       "detector": "js",
+      "id": "jquery",
+      "name": "jQuery (Fast path)",
+      "npm": "jquery"
+    },
+    {
+      "detector": "js",
       "id": "wordpress",
       "name": "WordPress"
     }
