@@ -120,7 +120,9 @@ class ReportRenderer {
       env.appendChild(item);
     });
 
-    this._dom.find('.lh-footer__version', footer).textContent = report.lighthouseVersion;
+    this._dom.find('.lh-footer__version', footer).textContent = report.configSettings.channel ?
+      `${report.lighthouseVersion}-${report.configSettings.channel}` :
+      report.lighthouseVersion;
     return footer;
   }
 
