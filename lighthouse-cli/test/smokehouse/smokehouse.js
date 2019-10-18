@@ -9,7 +9,6 @@
 /* eslint-disable no-console */
 
 const fs = require('fs');
-const mkdirp = require('mkdirp');
 const spawnSync = require('child_process').spawnSync;
 const yargs = require('yargs');
 const log = require('lighthouse-logger');
@@ -127,7 +126,7 @@ if (!smokeTest) {
 
 const lhRootDir = `${__dirname}/../../..`;
 const tmpDir = `${lhRootDir}/.tmp`;
-mkdirp.sync(tmpDir);
+fs.mkdirSync(tmpDir, {recursive: true});
 const configPath = `${tmpDir}/smoke-config-${smokeTest.id}.json`;
 fs.writeFileSync(configPath, JSON.stringify(smokeTest.config));
 
