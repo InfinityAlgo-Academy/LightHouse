@@ -5,7 +5,7 @@
     "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3358.0 Safari/537.36",
     "benchmarkIndex": 1000
   },
-  "lighthouseVersion": "5.5.0",
+  "lighthouseVersion": "5.6.0",
   "fetchTime": "2018-03-13T00:55:45.840Z",
   "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "finalUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
@@ -237,6 +237,11 @@
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           },
           {
+            "source": "Runtime.exception",
+            "description": "Error: An error\n    at http://localhost:10200/dobetterweb/dbw_tester.html:42:38",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
+          },
+          {
             "source": "network",
             "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
             "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200"
@@ -250,11 +255,6 @@
             "source": "network",
             "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
             "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200"
-          },
-          {
-            "source": "Runtime.exception",
-            "description": "Error: An error\n    at http://localhost:10200/dobetterweb/dbw_tester.html:42:38",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           }
         ]
       }
@@ -306,7 +306,7 @@
     },
     "critical-request-chains": {
       "id": "critical-request-chains",
-      "title": "Minimize Critical Requests Depth",
+      "title": "Avoid chaining critical requests",
       "description": "The Critical Request Chains below show you what resources are loaded with a high priority. Consider reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load. [Learn more](https://web.dev/critical-request-chains).",
       "score": null,
       "scoreDisplayMode": "informative",
@@ -1484,7 +1484,7 @@
     },
     "third-party-summary": {
       "id": "third-party-summary",
-      "title": "Third-Party usage",
+      "title": "Minimize third-party usage",
       "description": "Third-party code can significantly impact load performance. Limit the number of redundant third-party providers and try to load third-party code after your page has primarily finished loading. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/).",
       "score": 1,
       "scoreDisplayMode": "binary",
@@ -2648,7 +2648,7 @@
     "dom-size": {
       "id": "dom-size",
       "title": "Avoids an excessive DOM size",
-      "description": "Browser engineers recommend pages contain fewer than ~1,500 DOM elements. The sweet spot is a tree depth < 32 elements and fewer than 60 children/parent element. A large DOM can increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://web.dev/dom-size).",
+      "description": "A large DOM will increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://web.dev/dom-size).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 31,
@@ -2879,6 +2879,10 @@
           {
             "name": "jQuery",
             "version": "2.1.1",
+            "npm": "jquery"
+          },
+          {
+            "name": "jQuery (Fast path)",
             "npm": "jquery"
           },
           {

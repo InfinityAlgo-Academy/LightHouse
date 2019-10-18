@@ -375,7 +375,7 @@
             "id": "critical-request-chains",
             "score": null,
             "scoreDisplayMode": "informative",
-            "title": "Minimize Critical Requests Depth"
+            "title": "Avoid chaining critical requests"
         },
         "custom-controls-labels": {
             "description": "Custom interactive controls have associated labels, provided by aria-label or aria-labelledby. [Learn more](https://web.dev/custom-controls-labels/).",
@@ -502,7 +502,7 @@
             "title": "Document has a `<title>` element"
         },
         "dom-size": {
-            "description": "Browser engineers recommend pages contain fewer than ~1,500 DOM elements. The sweet spot is a tree depth < 32 elements and fewer than 60 children/parent element. A large DOM can increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://web.dev/dom-size).",
+            "description": "A large DOM will increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://web.dev/dom-size).",
             "details": {
                 "headings": [
                     {
@@ -601,6 +601,11 @@
                         "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
                     },
                     {
+                        "description": "Error: An error\n    at http://localhost:10200/dobetterweb/dbw_tester.html:42:38",
+                        "source": "Runtime.exception",
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
+                    },
+                    {
                         "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
                         "source": "network",
                         "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200"
@@ -614,11 +619,6 @@
                         "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
                         "source": "network",
                         "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200"
-                    },
-                    {
-                        "description": "Error: An error\n    at http://localhost:10200/dobetterweb/dbw_tester.html:42:38",
-                        "source": "Runtime.exception",
-                        "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
                     }
                 ],
                 "type": "table"
@@ -1111,6 +1111,10 @@
                         "name": "jQuery",
                         "npm": "jquery",
                         "version": "2.1.1"
+                    },
+                    {
+                        "name": "jQuery (Fast path)",
+                        "npm": "jquery"
                     },
                     {
                         "name": "WordPress"
@@ -2607,7 +2611,7 @@
             "id": "third-party-summary",
             "score": 1.0,
             "scoreDisplayMode": "binary",
-            "title": "Third-Party usage"
+            "title": "Minimize third-party usage"
         },
         "time-to-first-byte": {
             "description": "Time To First Byte identifies the time at which your server sends a response. [Learn more](https://web.dev/time-to-first-byte).",
@@ -3986,7 +3990,7 @@
             "warningHeader": "Warnings: "
         }
     },
-    "lighthouseVersion": "5.5.0",
+    "lighthouseVersion": "5.6.0",
     "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
     "runWarnings": [],
     "stackPacks": [

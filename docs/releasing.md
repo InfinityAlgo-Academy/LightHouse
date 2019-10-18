@@ -60,7 +60,7 @@ and that no new PRs should be merged until you are done.
 ```sh
 # Run the tests.
 bash ./lighthouse-core/scripts/release/test.sh
-# Change into the pristine folder.
+# Change into the newly-created pristine folder.
 cd ../lighthouse-pristine
 ```
 
@@ -85,7 +85,7 @@ yarn --cwd ~/chromium/src/third_party/blink/renderer/devtools test 'http/tests/d
 git diff
 
 # Verify that the Audits panel still works. Consider the new features that have been added.
-# If anything is wrong, stop releasing, investigate, and prioritize landing the PR.
+# If anything is wrong, stop releasing, investigate, land a fix and start over.
 
 # For bonus points, add some tests covering new features. Either a new test, or an extra
 # assertion in an existing test.
@@ -105,7 +105,7 @@ Confirm Lightrider integration will work:
 
 # Verify that Lightrider works properly, and is generating reports fully. Consider the new features that have been added.
 # Note: if the changes include proto changes make sure that the API has those new fields.
-# If anything is wrong, stop releasing, investigate, and prioritize landing the PR.
+# If anything is wrong, stop releasing, investigate, land a fix and start over.
 
 # For bonus points, add some tests covering new features. Either a new test, or an extra
 # assertion in an existing test.
@@ -114,10 +114,6 @@ Confirm Lightrider integration will work:
 Now that the integrations are confirmed to work, go back to `lighthouse` folder.
 
 ```sh
-# Run the tests again.
-# Note: you can skip this if you didn't need to land any changes.
-bash ./lighthouse-core/scripts/release/test.sh
-
 # Prepare the commit, replace x.x.x with the desired version
 bash ./lighthouse-core/scripts/release/prepare-commit.sh x.x.x
 

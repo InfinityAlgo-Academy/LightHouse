@@ -37,6 +37,8 @@ const locales = fs.readdirSync(__dirname + '/../lighthouse-core/lib/i18n/locales
 const isDevtools = file => path.basename(file).includes('devtools');
 /** @param {string} file */
 const isExtension = file => path.basename(file).includes('extension');
+/** @param {string} file */
+const isLightrider = file => path.basename(file).includes('lightrider');
 
 const BANNER = `// lighthouse, browserified. ${VERSION} (${COMMIT_HASH})\n`;
 const DEBUG = false; // true for sourcemaps
@@ -54,7 +56,7 @@ async function browserifyFile(entryPath, distPath) {
 
   bundle
     // Transform the fs.readFile etc into inline strings.
-    .transform('brfs', {global: true, parserOpts: {ecmaVersion: 10}})
+    .transform('@wardpeet/brfs', {global: true, parserOpts: {ecmaVersion: 10}})
     // Strip everything out of package.json includes except for the version.
     .transform('package-json-versionify');
 
@@ -71,8 +73,9 @@ async function browserifyFile(entryPath, distPath) {
   // Don't include the desktop protocol connection.
   bundle.ignore(require.resolve('../lighthouse-core/gather/connections/cri.js'));
 
-  // Dont include the stringified report in DevTools.
-  if (isDevtools(entryPath)) {
+  // Don't include the stringified report in DevTools - see devtools-report-assets.js
+  // Don't include in Lightrider - HTML generation isn't supported, so report assets aren't needed.
+  if (isDevtools(entryPath) || isLightrider(entryPath)) {
     bundle.ignore(require.resolve('../lighthouse-core/report/html/html-report-assets.js'));
   }
 

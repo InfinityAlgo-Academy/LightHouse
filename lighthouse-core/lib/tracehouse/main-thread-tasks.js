@@ -31,6 +31,7 @@ const {taskGroups, taskNameToGroup} = require('./task-groups.js');
  * @prop {LH.TraceEvent} event
  * @prop {TaskNode[]} children
  * @prop {TaskNode|undefined} parent
+ * @prop {boolean} unbounded Indicates that the task had an endTime that was inferred rather than specified in the trace. i.e. in the source trace this task was unbounded.
  * @prop {number} startTime
  * @prop {number} endTime
  * @prop {number} duration
@@ -64,6 +65,7 @@ class MainThreadTasks {
       duration: endTime - startTime,
 
       // These properties will be filled in later
+      unbounded: false,
       parent: undefined,
       children: [],
       attributableURLs: [],
@@ -181,10 +183,12 @@ class MainThreadTasks {
 
       /** @type {Pick<LH.TraceEvent, 'ph'|'ts'>} */
       let taskEndEvent;
+      let unbounded = false;
       if (matchedEventIndex === -1) {
         // If we couldn't find an end event, we'll assume it's the end of the trace.
         // If this creates invalid parent/child relationships it will be caught in the next step.
         taskEndEvent = {ph: 'E', ts: traceEndTs};
+        unbounded = true;
       } else if (matchedEventIndex === taskEndEventsReverseQueue.length - 1) {
         // Use .pop() in the common case where the immediately next event is needed.
         // It's ~25x faster, https://jsperf.com/pop-vs-splice.
@@ -193,7 +197,9 @@ class MainThreadTasks {
         taskEndEvent = taskEndEventsReverseQueue.splice(matchedEventIndex, 1)[0];
       }
 
-      tasks.push(MainThreadTasks._createNewTaskNode(taskStartEvent, taskEndEvent));
+      const task = MainThreadTasks._createNewTaskNode(taskStartEvent, taskEndEvent);
+      task.unbounded = unbounded;
+      tasks.push(task);
     }
 
     if (taskEndEventsReverseQueue.length) {
@@ -221,7 +227,7 @@ class MainThreadTasks {
     const timerInstallEventsReverseQueue = timerInstallEvents.slice().reverse();
 
     for (let i = 0; i < sortedTasks.length; i++) {
-      const nextTask = sortedTasks[i];
+      let nextTask = sortedTasks[i];
 
       // This inner loop updates what our `currentTask` is at `nextTask.startTime - ε`.
       // While `nextTask` starts after our `currentTask`, close out the task, popup to the parent, and repeat.
@@ -247,18 +253,65 @@ class MainThreadTasks {
         if (nextTask.endTime > currentTask.endTime) {
           const timeDelta = nextTask.endTime - currentTask.endTime;
           // The child task is taking longer than the parent task, which should be impossible.
-          //    If it's less than 1ms, we'll let it slide by increasing the duration of the parent.
-          //    If it's more, throw an error.
+          // In reality these situations happen, so we allow for some flexibility in trace event times.
           if (timeDelta < 1000) {
+            // It's less than 1ms, we'll let it slide by increasing the duration of the parent.
             currentTask.endTime = nextTask.endTime;
             currentTask.duration += timeDelta;
+          } else if (nextTask.unbounded) {
+            // It's ending at traceEndTs, it means we were missing the end event. We'll truncate it to the parent.
+            nextTask.endTime = currentTask.endTime;
+            nextTask.duration = nextTask.endTime - nextTask.startTime;
+          } else if (
+            nextTask.startTime - currentTask.startTime < 1000 &&
+            !currentTask.children.length
+          ) {
+            // The true parent started less than 1ms before the true child, so we're looking at the relationship backwards.
+            // We'll let it slide and fix the situation by swapping the two tasks into their correct positions
+            // and increasing the duration of the parent.
+
+            // Below is an artistic rendition of the heirarchy we are trying to create.
+            //   ████████████currentTask.parent██████████████████
+            //       █████████nextTask██████████████
+            //      ███████currentTask███████
+            const actualParentTask = nextTask;
+            const actualChildTask = currentTask;
+
+            // We'll grab the grandparent task to see if we need to fix it.
+            // We'll reassign it to be the parent of `actualParentTask` in a bit.
+            const grandparentTask = currentTask.parent;
+            if (grandparentTask) {
+              const lastGrandparentChildIndex = grandparentTask.children.length - 1;
+              if (grandparentTask.children[lastGrandparentChildIndex] !== actualChildTask) {
+                // The child we need to swap should always be the most recently added child.
+                // But if not then there's a serious bug in this code, so double-check.
+                throw new Error('Fatal trace logic error - impossible children');
+              }
+
+              grandparentTask.children.pop();
+              grandparentTask.children.push(actualParentTask);
+            }
+
+            actualParentTask.parent = grandparentTask;
+            actualParentTask.startTime = actualChildTask.startTime;
+            actualParentTask.duration = actualParentTask.endTime - actualParentTask.startTime;
+            currentTask = actualParentTask;
+            nextTask = actualChildTask;
           } else {
-            // If we fell into this error, it's usually because of one of three reasons.
-            //    - We were missing an E event for a child task and we assumed the child ended at the end of the trace.
-            //    - There was slop in the opposite direction (child started 1ms before parent) and the child was assumed to be parent instead.
+            // None of our workarounds matched. It's time to throw an error.
+            // When we fall into this error, it's usually because of one of two reasons.
+            //    - There was slop in the opposite direction (child started 1ms before parent),
+            //      the child was assumed to be parent instead, and another task already started.
             //    - The child timestamp ended more than 1ms after tha parent.
             // These have more complicated fixes, so handling separately https://github.com/GoogleChrome/lighthouse/pull/9491#discussion_r327331204.
-            throw new Error('Fatal trace logic error - child cannot end after parent');
+            /** @type {any} */
+            const error = new Error('Fatal trace logic error - child cannot end after parent');
+            error.timeDelta = timeDelta;
+            error.nextTaskEvent = nextTask.event;
+            error.nextTaskEndTime = nextTask.endTime;
+            error.currentTaskEvent = currentTask.event;
+            error.currentTaskEndTime = currentTask.endTime;
+            throw error;
           }
         }
 
@@ -293,6 +346,7 @@ class MainThreadTasks {
    *    2. Create tasks for each X/B event, throwing if a matching E event cannot be found for a given B.
    *    3. Sort the tasks by ↑ startTime, ↓ duration.
    *    4. Match each task to its parent, throwing if there is any invalid overlap between tasks.
+   *    5. Sort the tasks once more by ↑ startTime, ↓ duration in case they changed during relationship creation.
    *
    * @param {LH.TraceEvent[]} mainThreadEvents
    * @param {PriorTaskData} priorTaskData
@@ -329,7 +383,10 @@ class MainThreadTasks {
     // Phase 4 - Match each task to its parent.
     MainThreadTasks._createTaskRelationships(sortedTasks, timerInstallEvents, priorTaskData);
 
-    return sortedTasks;
+    // Phase 5 - Sort once more in case the order changed after wiring up relationships.
+    return sortedTasks.sort(
+      (taskA, taskB) => taskA.startTime - taskB.startTime || taskB.duration - taskA.duration
+    );
   }
 
   /**

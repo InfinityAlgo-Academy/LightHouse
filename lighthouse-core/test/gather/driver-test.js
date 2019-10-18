@@ -7,7 +7,7 @@
 
 const Driver = require('../../gather/driver.js');
 const Connection = require('../../gather/connections/connection.js');
-const Element = require('../../lib/element.js');
+const LHElement = require('../../lib/lh-element.js');
 const EventEmitter = require('events').EventEmitter;
 const {protocolGetVersionResponse} = require('./fake-driver.js');
 const {createMockSendCommandFn, createMockOnceFn} = require('./mock-commands.js');
@@ -108,7 +108,7 @@ describe('.querySelector(All)', () => {
       .mockResponse('DOM.querySelector', {nodeId: 231});
 
     const result = await driver.querySelector('meta head');
-    expect(result).toBeInstanceOf(Element);
+    expect(result).toBeInstanceOf(LHElement);
   });
 
   it('returns [] when DOM.querySelectorAll finds no node', async () => {
@@ -127,7 +127,7 @@ describe('.querySelector(All)', () => {
 
     const result = await driver.querySelectorAll('#no.matches');
     expect(result).toHaveLength(1);
-    expect(result[0]).toBeInstanceOf(Element);
+    expect(result[0]).toBeInstanceOf(LHElement);
   });
 });
 

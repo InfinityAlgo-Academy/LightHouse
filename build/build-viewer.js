@@ -19,6 +19,7 @@ const lighthousePackage = require('../package.json');
 const makeDir = require('make-dir');
 const rimraf = require('rimraf');
 const terser = require('terser');
+const {minifyFileTransform} = require('./build-utils.js');
 
 const htmlReportAssets = require('../lighthouse-core/report/html/html-report-assets.js');
 const sourceDir = `${__dirname}/../lighthouse-viewer`;
@@ -106,7 +107,9 @@ async function compileJs() {
   // JS bundle from browserified ReportGenerator.
   const generatorFilename = `${sourceDir}/../lighthouse-core/report/report-generator.js`;
   const generatorBrowserify = browserify(generatorFilename, {standalone: 'ReportGenerator'})
-    .transform('brfs');
+    .transform('@wardpeet/brfs', {
+      readFileSyncTransform: minifyFileTransform,
+    });
 
   /** @type {Promise<string>} */
   const generatorJsPromise = new Promise((resolve, reject) => {

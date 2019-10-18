@@ -99,6 +99,7 @@ describe('Main Thread Tasks', () => {
       duration: 100,
       selfTime: 50,
       group: taskGroups.other,
+      unbounded: false,
     });
 
     expect(taskB).toEqual({
@@ -112,6 +113,7 @@ describe('Main Thread Tasks', () => {
       duration: 50,
       selfTime: 20,
       group: taskGroups.other,
+      unbounded: false,
     });
   });
 
@@ -232,6 +234,7 @@ describe('Main Thread Tasks', () => {
       duration: 110,
       selfTime: 5,
       group: taskGroups.other,
+      unbounded: true,
     });
 
     expect(taskB).toEqual({
@@ -245,6 +248,7 @@ describe('Main Thread Tasks', () => {
       duration: 105,
       selfTime: 95,
       group: taskGroups.other,
+      unbounded: true,
     });
   });
 
@@ -362,6 +366,7 @@ describe('Main Thread Tasks', () => {
         duration: 100,
         selfTime: 50,
         group: taskGroups.other,
+        unbounded: false,
       },
       {
         parent: taskA,
@@ -374,6 +379,7 @@ describe('Main Thread Tasks', () => {
         duration: 50,
         selfTime: 50,
         group: taskGroups.other,
+        unbounded: false,
       },
     ]);
   });
@@ -406,6 +412,7 @@ describe('Main Thread Tasks', () => {
         duration: 100,
         selfTime: 100,
         group: taskGroups.other,
+        unbounded: false,
       },
       {
         parent: undefined,
@@ -418,6 +425,54 @@ describe('Main Thread Tasks', () => {
         duration: 0,
         selfTime: 0,
         group: taskGroups.other,
+        unbounded: false,
+      },
+    ]);
+  });
+
+  it('should handle nested tasks of the same name', () => {
+    /*
+    An artistic rendering of the below trace:
+      ████████████████SameName██████████████████
+          ███████████SameName████████████
+    */
+    const traceEvents = [
+      ...boilerplateTrace,
+      {ph: 'B', name: 'SameName', pid, tid, ts: baseTs, args},
+      {ph: 'B', name: 'SameName', pid, tid, ts: baseTs + 25e3, args},
+      {ph: 'E', name: 'SameName', pid, tid, ts: baseTs + 75e3, args},
+      {ph: 'E', name: 'SameName', pid, tid, ts: baseTs + 100e3, args},
+    ];
+
+    traceEvents.forEach(evt => Object.assign(evt, {cat: 'devtools.timeline'}));
+
+    const tasks = run({traceEvents});
+    expect(tasks).toEqual([
+      {
+        parent: undefined,
+        attributableURLs: [],
+
+        children: [tasks[1]],
+        event: traceEvents.find(event => event.name === 'SameName' && event.ts === baseTs),
+        startTime: 0,
+        endTime: 100,
+        duration: 100,
+        selfTime: 50,
+        group: taskGroups.other,
+        unbounded: false,
+      },
+      {
+        parent: tasks[0],
+        attributableURLs: [],
+
+        children: [],
+        event: traceEvents.find(event => event.ts === baseTs + 25e3),
+        startTime: 25,
+        endTime: 75,
+        duration: 50,
+        selfTime: 50,
+        group: taskGroups.other,
+        unbounded: false,
       },
     ]);
   });
@@ -452,6 +507,7 @@ describe('Main Thread Tasks', () => {
         duration: 100,
         selfTime: 25,
         group: taskGroups.other,
+        unbounded: false,
       },
       {
         parent: taskA,
@@ -464,10 +520,125 @@ describe('Main Thread Tasks', () => {
         duration: 75,
         selfTime: 75,
         group: taskGroups.other,
+        unbounded: false,
       },
     ]);
   });
 
+  it('should handle child events that extend >1ms beyond parent event because missing E', () => {
+    /*
+    An artistic rendering of the below trace:
+    ████████████████TaskA██████████████████
+            █████████TaskB██████████████████
+    */
+    const traceEvents = [
+      ...boilerplateTrace,
+      {ph: 'B', name: 'TaskA', pid, tid, ts: baseTs, args},
+      {ph: 'B', name: 'TaskB', pid, tid, ts: baseTs + 25e3, args},
+      {ph: 'E', name: 'TaskA', pid, tid, ts: baseTs + 100e3, args},
+      {ph: 'I', name: 'MarkerToPushOutTraceEnd', pid, tid, ts: baseTs + 110e3, args},
+    ];
+
+    traceEvents.forEach(evt => Object.assign(evt, {cat: 'devtools.timeline'}));
+
+    const tasks = run({traceEvents});
+    const [taskA, taskB] = tasks;
+    expect(tasks).toEqual([
+      {
+        parent: undefined,
+        attributableURLs: [],
+
+        children: [taskB],
+        event: traceEvents.find(event => event.name === 'TaskA'),
+        startTime: 0,
+        endTime: 100,
+        duration: 100,
+        selfTime: 25,
+        group: taskGroups.other,
+        unbounded: false,
+      },
+      {
+        parent: taskA,
+        attributableURLs: [],
+
+        children: [],
+        event: traceEvents.find(event => event.name === 'TaskB' && event.ph === 'B'),
+        startTime: 25,
+        endTime: 100,
+        duration: 75,
+        selfTime: 75,
+        group: taskGroups.other,
+        unbounded: true,
+      },
+    ]);
+  });
+
+  it('should handle child events that start <1ms before parent event', () => {
+    /*
+    An artistic rendering of the below trace:
+    ████████████████TaskA██████████████████
+            █████████TaskB██████████████
+           ████████TaskC█████████
+    */
+    const traceEvents = [
+      ...boilerplateTrace,
+      {ph: 'B', name: 'TaskA', pid, tid, ts: baseTs, args},
+      {ph: 'B', name: 'TaskB', pid, tid, ts: baseTs + 25e3 + 50, args}, // this is invalid, but happens in practice
+      {ph: 'B', name: 'TaskC', pid, tid, ts: baseTs + 25e3, args},
+      {ph: 'E', name: 'TaskC', pid, tid, ts: baseTs + 60e3, args},
+      {ph: 'E', name: 'TaskB', pid, tid, ts: baseTs + 90e3, args},
+      {ph: 'E', name: 'TaskA', pid, tid, ts: baseTs + 100e3, args},
+    ];
+
+    traceEvents.forEach(evt => Object.assign(evt, {cat: 'devtools.timeline'}));
+
+    const tasks = run({traceEvents});
+    const [taskA, taskB, taskC] = tasks;
+    expect(tasks).toEqual([
+      {
+        parent: undefined,
+        attributableURLs: [],
+
+        children: [taskB],
+        event: traceEvents.find(event => event.name === 'TaskA'),
+        startTime: 0,
+        endTime: 100,
+        duration: 100,
+        selfTime: 35,
+        group: taskGroups.other,
+        unbounded: false,
+      },
+      {
+        parent: taskA,
+        attributableURLs: [],
+
+        children: [taskC],
+        event: traceEvents.find(event => event.name === 'TaskB' && event.ph === 'B'),
+        startTime: 25,
+        endTime: 90,
+        duration: 65,
+        selfTime: 30,
+        group: taskGroups.other,
+        unbounded: false,
+      },
+      {
+        parent: taskB,
+        attributableURLs: [],
+
+        children: [],
+        event: traceEvents.find(event => event.name === 'TaskC' && event.ph === 'B'),
+        startTime: 25,
+        endTime: 60,
+        duration: 35,
+        selfTime: 35,
+        group: taskGroups.other,
+        unbounded: false,
+      },
+    ]);
+  });
+
+  // Invalid sets of events.
+  // All of these should have `traceEnd` pushed out to avoid falling into one of our mitigation scenarios.
   const invalidEventSets = [
     [
       // TaskA overlaps with TaskB, X first
@@ -500,10 +671,13 @@ describe('Main Thread Tasks', () => {
       {ph: 'E', name: 'TaskB', pid, tid, ts: baseTs + 10e3, args},
     ],
     [
-      {ph: 'I', name: 'MarkerToPushOutTraceEnd', pid, tid, ts: baseTs + 110e3, args},
-      // TaskB is missing an E event within an X
-      {ph: 'X', name: 'TaskA', pid, tid, ts: baseTs, dur: 100e3, args},
-      {ph: 'B', name: 'TaskB', pid, tid, ts: baseTs + 10e3, args},
+      // TaskA is starting .5ms too late, but TaskB already has a child
+      {ph: 'B', name: 'TaskA', pid, tid, ts: baseTs + 500, args},
+      {ph: 'B', name: 'TaskB', pid, tid, ts: baseTs, args},
+      {ph: 'X', name: 'TaskC', pid, tid, ts: baseTs + 50, dur: 100, args},
+      {ph: 'E', name: 'TaskB', pid, tid, ts: baseTs + 100e3, args},
+      {ph: 'E', name: 'TaskA', pid, tid, ts: baseTs + 115e3, args},
+      {ph: 'I', name: 'MarkerToPushOutTraceEnd', pid, tid, ts: baseTs + 200e3, args},
     ],
   ];
 

@@ -42,9 +42,9 @@
     batch: string;
   }
 
-  export interface RunnerOptions {
+  export interface FirehouseOptions {
     runLighthouse: (url: string, config: LH.Config.Json) => Promise<Omit<LH.RunnerResult, 'report'>>;
-    filter?: RegExp;
+    urlFilterRegex?: RegExp;
     skip?: (test: TestDfn, expectation: ExpectedRunnerResult) => string | false;
     modify?: (test: TestDfn, expectation: ExpectedRunnerResult) => void;
   }

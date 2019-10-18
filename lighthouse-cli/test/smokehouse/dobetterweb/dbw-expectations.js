@@ -15,8 +15,12 @@ const expectations = [
       Stacks: [{
         id: 'jquery',
       }, {
+        id: 'jquery',
+        name: 'jQuery (Fast path)',
+      }, {
         id: 'wordpress',
       }],
+      MainDocumentContent: /^<!doctype html>.*DoBetterWeb Mega Tester.*aggressive-promise-polyfill.*<\/html>\n$/s,
       LinkElements: [
         {
           rel: 'stylesheet',
@@ -185,14 +189,19 @@ const expectations = [
           details: {
             items: [
               {
-                source: 'network',
-                description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
-                url: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200',
-              },
-              {
                 source: 'other',
                 description: 'Application Cache Error event: Manifest fetch failed (404) http://localhost:10200/dobetterweb/clock.appcache',
                 url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+              },
+              {
+                source: 'Runtime.exception',
+                description: /^Error: A distinctive error\s+at http:\/\/localhost:10200\/dobetterweb\/dbw_tester.html:\d+:\d+$/,
+                url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+              },
+              {
+                source: 'network',
+                description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
+                url: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200',
               },
               {
                 source: 'network',
@@ -208,11 +217,6 @@ const expectations = [
                 source: 'network',
                 description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
                 url: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200',
-              },
-              {
-                source: 'Runtime.exception',
-                description: /^Error: A distinctive error\s+at http:\/\/localhost:10200\/dobetterweb\/dbw_tester.html:\d+:\d+$/,
-                url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
               },
             ],
           },
@@ -355,6 +359,9 @@ const expectations = [
           details: {
             items: [{
               name: 'jQuery',
+            },
+            {
+              name: 'jQuery (Fast path)',
             },
             {
               name: 'WordPress',

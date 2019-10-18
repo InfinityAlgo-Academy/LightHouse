@@ -10,6 +10,7 @@ const fs = require('fs');
 const path = require('path');
 const makeDir = require('make-dir');
 const bundleBuilder = require('./build-bundle.js');
+const {minifyFileTransform} = require('./build-utils.js');
 
 const distDir = path.join(__dirname, '..', 'dist', 'lightrider');
 const sourceDir = __dirname + '/../clients/lightrider';
@@ -37,7 +38,11 @@ function buildEntryPoint() {
 function buildReportGenerator() {
   browserify(generatorFilename, {standalone: 'ReportGenerator'})
     // Transform the fs.readFile etc into inline strings.
-    .transform('brfs', {global: true, parserOpts: {ecmaVersion: 10}})
+    .transform('@wardpeet/brfs', {
+      readFileSyncTransform: minifyFileTransform,
+      global: true,
+      parserOpts: {ecmaVersion: 10},
+    })
     .bundle((err, src) => {
       if (err) throw err;
       fs.writeFileSync(bundleOutFile, src.toString());

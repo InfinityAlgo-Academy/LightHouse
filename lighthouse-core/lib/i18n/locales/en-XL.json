@@ -459,7 +459,7 @@
     "message": "{itemCount, plural,\n    =1 {1 ĉh́âín̂ f́ôún̂d́}\n    other {# ĉh́âín̂ś f̂óûńd̂}\n    }"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "M̂ín̂ím̂íẑé Ĉŕît́îćâĺ R̂éq̂úêśt̂ś D̂ép̂t́ĥ"
+    "message": "Âv́ôíd̂ ćĥáîńîńĝ ćr̂ít̂íĉál̂ ŕêq́ûéŝt́ŝ"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "D̂ép̂ŕêćât́îón̂ / Ẃâŕn̂ín̂ǵ"
@@ -522,7 +522,7 @@
     "message": "V̂ál̂úê"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "B̂ŕôẃŝér̂ én̂ǵîńêér̂ś r̂éĉóm̂ḿêńd̂ ṕâǵêś ĉón̂t́âín̂ f́êẃêŕ t̂h́âń ~1,500 D̂ÓM̂ él̂ém̂én̂t́ŝ. T́ĥé ŝẃêét̂ śp̂ót̂ íŝ á t̂ŕêé d̂ép̂t́ĥ < 32 él̂ém̂én̂t́ŝ án̂d́ f̂éŵér̂ t́ĥán̂ 60 ćĥíl̂d́r̂én̂/ṕâŕêńt̂ él̂ém̂én̂t́. Â ĺâŕĝé D̂ÓM̂ ćâń îńĉŕêáŝé m̂ém̂ór̂ý ûśâǵê, ćâúŝé l̂ón̂ǵêŕ [ŝt́ŷĺê ćâĺĉúl̂át̂íôńŝ](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), án̂d́ p̂ŕôd́ûćê ćôśt̂ĺŷ [ĺâýôút̂ ŕêf́l̂óŵś](https://developers.google.com/speed/articles/reflow). [L̂éâŕn̂ ḿôŕê](https://web.dev/dom-size)."
+    "message": "Â ĺâŕĝé D̂ÓM̂ ẃîĺl̂ ín̂ćr̂éâśê ḿêḿôŕŷ úŝáĝé, ĉáûśê ĺôńĝér̂ [śt̂ýl̂é ĉál̂ćûĺât́îón̂ś](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), âńd̂ ṕr̂ód̂úĉé ĉóŝt́l̂ý [l̂áŷóût́ r̂éf̂ĺôẃŝ](https://developers.google.com/speed/articles/reflow). [Ĺêár̂ń m̂ór̂é](https://web.dev/dom-size)."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount, plural,\n    =1 {1 êĺêḿêńt̂}\n    other {# él̂ém̂én̂t́ŝ}\n    }"
@@ -1089,7 +1089,7 @@
     "message": "R̂éd̂úĉé t̂h́ê ím̂ṕâćt̂ óf̂ t́ĥír̂d́-p̂ár̂t́ŷ ćôd́ê"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "T̂h́îŕd̂-Ṕâŕt̂ý ûśâǵê"
+    "message": "M̂ín̂ím̂íẑé t̂h́îŕd̂-ṕâŕt̂ý ûśâǵê"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "T̂ím̂é T̂ó F̂ír̂śt̂ B́ŷt́ê íd̂én̂t́îf́îéŝ t́ĥé t̂ím̂é ât́ ŵh́îćĥ ýôúr̂ śêŕv̂ér̂ śêńd̂ś â ŕêśp̂ón̂śê. [Ĺêár̂ń m̂ór̂é](https://web.dev/time-to-first-byte)."
@@ -1495,6 +1495,99 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Ŵár̂ńîńĝś: "
+  },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "F̂ór̂ án̂ím̂át̂éd̂ ćôńt̂én̂t́, ûśê [ám̂ṕ-âńîḿ](https://amp.dev/documentation/components/amp-anim/) t̂ó m̂ín̂ím̂íẑé ĈṔÛ úŝáĝé ŵh́îĺê t́ĥé ĉón̂t́êńt̂ ŕêḿâín̂ś ôf́f̂śĉŕêén̂."
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "Êńŝúr̂é t̂h́ât́ ŷóû ár̂é ŷóû úŝín̂ǵ v̂ál̂íd̂ `amp-img` t́âǵŝ f́ôŕ ŷóûŕ îḿâǵêś ŵh́îćĥ áût́ôḿât́îćâĺl̂ý l̂áẑý-l̂óâd́ ôút̂śîd́ê t́ĥé f̂ír̂śt̂ v́îéŵṕôŕt̂. [Ĺêár̂ń m̂ór̂é](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "Ûśê t́ôól̂ś ŝúĉh́ âś [ÂḾP̂ Óp̂t́îḿîźêŕ](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) t̂ó [ŝér̂v́êŕ-ŝíd̂é r̂én̂d́êŕ ÂḾP̂ ĺâýôút̂ś](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "R̂éf̂ér̂ t́ô t́ĥé [ÂḾP̂ d́ôćûḿêńt̂át̂íôń](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) t̂ó êńŝúr̂é âĺl̂ ýôúr̂ śt̂ýl̂éŝ ár̂é ŝúp̂ṕôŕt̂éd̂."
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "T̂h́ê `amp-img` él̂ém̂én̂t́ ŝúp̂ṕôŕt̂ś t̂h́ê `srcset` át̂t́r̂íb̂út̂é t̂ó ŝṕêćîf́ŷ ẃĥíĉh́ îḿâǵê áŝśêt́ŝ t́ô úŝé b̂áŝéd̂ ón̂ t́ĥé ŝćr̂éêń ŝíẑé.  [L̂éâŕn̂ ḿôŕê](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "Ĉón̂śîd́êŕ d̂íŝṕl̂áŷín̂ǵ âĺl̂ ýôúr̂ `amp-img` ćôḿp̂ón̂én̂t́ŝ ín̂ Ẃêb́P̂ f́ôŕm̂át̂ś ŵh́îĺê śp̂éĉíf̂ýîńĝ án̂ áp̂ṕr̂óp̂ŕîát̂é f̂ál̂ĺb̂áĉḱ f̂ór̂ ót̂h́êŕ b̂ŕôẃŝér̂ś. [L̂éâŕn̂ ḿôŕê](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "Ĉón̂śîd́êŕ v̂ír̂t́ûál̂ śĉŕôĺl̂ín̂ǵ ŵít̂h́ t̂h́ê Ćôḿp̂ón̂én̂t́ D̂év̂ Ḱît́ (ĈD́K̂) íf̂ v́êŕŷ ĺâŕĝé l̂íŝt́ŝ ár̂é b̂éîńĝ ŕêńd̂ér̂éd̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/virtualize-lists-with-angular-cdk/)."
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "Âṕp̂ĺŷ [ŕôút̂é-l̂év̂él̂ ćôd́ê-śp̂ĺît́t̂ín̂ǵ](https://web.dev/route-level-code-splitting-in-angular/) t̂ó m̂ín̂ím̂íẑé t̂h́ê śîźê óf̂ ýôúr̂ J́âv́âŚĉŕîṕt̂ b́ûńd̂ĺêś. Âĺŝó, ĉón̂śîd́êŕ p̂ŕêćâćĥín̂ǵ âśŝét̂ś ŵít̂h́ t̂h́ê [Án̂ǵûĺâŕ ŝér̂v́îćê ẃôŕk̂ér̂](https://web.dev/precaching-with-the-angular-service-worker/)."
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "Îf́ ŷóû ár̂é ûśîńĝ Án̂ǵûĺâŕ ĈĹÎ, én̂śûŕê t́ĥát̂ b́ûíl̂d́ŝ ár̂é ĝén̂ér̂át̂éd̂ ín̂ ṕr̂ód̂úĉt́îón̂ ḿôd́ê. [Ĺêár̂ń m̂ór̂é](https://angular.io/guide/deployment#enable-runtime-production-mode)."
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "Îf́ ŷóû ár̂é ûśîńĝ Án̂ǵûĺâŕ ĈĹÎ, ín̂ćl̂úd̂é ŝóûŕĉé m̂áp̂ś îńt̂ó ŷóûŕ p̂ŕôd́ûćt̂íôń b̂úîĺd̂ t́ô ín̂śp̂éĉt́ ŷóûŕ b̂ún̂d́l̂éŝ. [Ĺêár̂ń m̂ór̂é](https://angular.io/guide/deployment#inspect-the-bundles)."
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "P̂ŕêĺôád̂ ŕôút̂éŝ áĥéâd́ ôf́ t̂ím̂é t̂ó ŝṕêéd̂ úp̂ ńâv́îǵât́îón̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/route-preloading-in-angular/)."
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "Ĉón̂śîd́êŕ ûśîńĝ t́ĥé `BreakpointObserver` ût́îĺît́ŷ ín̂ t́ĥé Ĉóm̂ṕôńêńt̂ D́êv́ K̂ít̂ (ĆD̂Ḱ) t̂ó m̂án̂áĝé îḿâǵê b́r̂éâḱp̂óîńt̂ś. [L̂éâŕn̂ ḿôŕê](https://material.angular.io/cdk/layout/overview)."
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "Îf́ ŷóû ár̂é n̂ót̂ b́ûńd̂ĺîńĝ ýôúr̂ J́âv́âŚĉŕîṕt̂ áŝśêt́ŝ, ćôńŝíd̂ér̂ úŝín̂ǵ [b̂ál̂ér̂](https://github.com/magento/baler)."
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "D̂íŝáb̂ĺê Ḿâǵêńt̂ó'ŝ b́ûíl̂t́-îń [Ĵáv̂áŜćr̂íp̂t́ b̂ún̂d́l̂ín̂ǵ âńd̂ ḿîńîf́îćât́îón̂](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html), án̂d́ ĉón̂śîd́êŕ ûśîńĝ [b́âĺêŕ](https://github.com/magento/baler/) îńŝt́êád̂."
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "Ŝṕêćîf́ŷ `@font-display` ẃĥén̂ [d́êf́îńîńĝ ćûśt̂óm̂ f́ôńt̂ś](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)."
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "Ĉón̂śîd́êŕ m̂ód̂íf̂ýîńĝ ýôúr̂ ṕr̂ód̂úĉt́ âńd̂ ćât́âĺôǵ t̂ém̂ṕl̂át̂éŝ t́ô ḿâḱê úŝé ôf́ t̂h́ê ẃêb́ p̂ĺât́f̂ór̂ḿ'ŝ [ĺâźŷ ĺôád̂ín̂ǵ](https://web.dev/native-lazy-loading) f̂éât́ûŕê."
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "Ûśê Ḿâǵêńt̂ó'ŝ [V́âŕn̂íŝh́ îńt̂éĝŕât́îón̂](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "Êńâb́l̂é t̂h́ê \"Ḿîńîf́ŷ ĆŜŚ F̂íl̂éŝ\" óp̂t́îón̂ ín̂ ýôúr̂ śt̂ór̂é'ŝ D́êv́êĺôṕêŕ ŝét̂t́îńĝś. [L̂éâŕn̂ ḿôŕê](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "Ûśê [T́êŕŝér̂](https://www.npmjs.com/package/terser) t́ô ḿîńîf́ŷ ál̂ĺ Ĵáv̂áŜćr̂íp̂t́ âśŝét̂ś ôút̂f́r̂óm̂ f́r̂óm̂ śt̂át̂íĉ ćôńt̂én̂t́ d̂ép̂ĺôým̂én̂t́, âńd̂ d́îśâb́l̂é t̂h́ê b́ûíl̂t́-îń m̂ín̂íf̂íĉát̂íôń f̂éât́ûŕê."
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "D̂íŝáb̂ĺê Ḿâǵêńt̂ó'ŝ b́ûíl̂t́-îń [Ĵáv̂áŜćr̂íp̂t́ b̂ún̂d́l̂ín̂ǵ](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)."
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "Ĉón̂śîd́êŕ ŝéâŕĉh́îńĝ t́ĥé [M̂áĝén̂t́ô Ḿâŕk̂ét̂ṕl̂áĉé](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) f̂ór̂ á v̂ár̂íêt́ŷ óf̂ t́ĥír̂d́ p̂ár̂t́ŷ éx̂t́êńŝíôńŝ t́ô óp̂t́îḿîźê ím̂áĝéŝ."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "P̂ŕêćôńn̂éĉt́ ôŕ d̂ńŝ-ṕr̂éf̂ét̂ćĥ ŕêśôúr̂ćê h́îńt̂ś ĉán̂ b́ê ád̂d́êd́ b̂ý [m̂ód̂íf̂ýîńĝ á t̂h́êḿêś'ŝ ĺâýôút̂](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "`<link rel=preload>` t̂áĝś ĉán̂ b́ê ád̂d́êd́ b̂ý [m̂ód̂íf̂ýîńĝ á t̂h́êḿêś'ŝ ĺâýôút̂](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "Ĉón̂śîd́êŕ ŝéâŕĉh́îńĝ t́ĥé [M̂áĝén̂t́ô Ḿâŕk̂ét̂ṕl̂áĉé](https://marketplace.magento.com/catalogsearch/result/?q=webp) f̂ór̂ á v̂ár̂íêt́ŷ óf̂ t́ĥír̂d́-p̂ár̂t́ŷ éx̂t́êńŝíôńŝ t́ô ĺêv́êŕâǵê ńêẃêŕ îḿâǵê f́ôŕm̂át̂ś."
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "Ĉón̂śîd́êŕ ûśîńĝ á “ŵín̂d́ôẃîńĝ” ĺîb́r̂ár̂ý l̂ík̂é `react-window` t̂ó m̂ín̂ím̂íẑé t̂h́ê ńûḿb̂ér̂ óf̂ D́ÔḾ n̂ód̂éŝ ćr̂éât́êd́ îf́ ŷóû ár̂é r̂én̂d́êŕîńĝ ḿâńŷ ŕêṕêát̂éd̂ él̂ém̂én̂t́ŝ ón̂ t́ĥé p̂áĝé. [L̂éâŕn̂ ḿôŕê](https://web.dev/virtualize-long-lists-react-window/). Ál̂śô, ḿîńîḿîźê ún̂éĉéŝśâŕŷ ŕê-ŕêńd̂ér̂ś ûśîńĝ [śĥóûĺd̂Ćôḿp̂ón̂én̂t́Ûṕd̂át̂é](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [P̂úr̂éĈóm̂ṕôńêńt̂](https://reactjs.org/docs/react-api.html#reactpurecomponent), ór̂ [Ŕêáĉt́.m̂ém̂ó](https://reactjs.org/docs/react-api.html#reactmemo) âńd̂ [śk̂íp̂ éf̂f́êćt̂ś](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) ôńl̂ý ûńt̂íl̂ ćêŕt̂áîń d̂ép̂én̂d́êńĉíêś ĥáv̂é ĉh́âńĝéd̂ íf̂ ýôú âŕê úŝín̂ǵ t̂h́ê Éf̂f́êćt̂ h́ôók̂ t́ô ím̂ṕr̂óv̂é r̂ún̂t́îḿê ṕêŕf̂ór̂ḿâńĉé."
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "Îf́ ŷóû ár̂é ûśîńĝ Ŕêáĉt́ R̂óût́êŕ, m̂ín̂ím̂íẑé ûśâǵê óf̂ t́ĥé `<Redirect>` ĉóm̂ṕôńêńt̂ f́ôŕ [r̂óût́ê ńâv́îǵât́îón̂ś](https://reacttraining.com/react-router/web/api/Redirect)."
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "Îf́ ŷóû ár̂é ŝér̂v́êŕ-ŝíd̂é r̂én̂d́êŕîńĝ án̂ý R̂éâćt̂ ćôḿp̂ón̂én̂t́ŝ, ćôńŝíd̂ér̂ úŝín̂ǵ `renderToNodeStream()` ôŕ `renderToStaticNodeStream()` t̂ó âĺl̂óŵ t́ĥé ĉĺîén̂t́ t̂ó r̂éĉéîv́ê án̂d́ ĥýd̂ŕât́ê d́îf́f̂ér̂én̂t́ p̂ár̂t́ŝ óf̂ t́ĥé m̂ár̂ḱûṕ îńŝt́êád̂ óf̂ ál̂ĺ ât́ ôńĉé. [L̂éâŕn̂ ḿôŕê](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "Îf́ ŷóûŕ b̂úîĺd̂ śŷśt̂ém̂ ḿîńîf́îéŝ ýôúr̂ ĆŜŚ f̂íl̂éŝ áût́ôḿât́îćâĺl̂ý, êńŝúr̂é t̂h́ât́ ŷóû ár̂é d̂ép̂ĺôýîńĝ t́ĥé p̂ŕôd́ûćt̂íôń b̂úîĺd̂ óf̂ ýôúr̂ áp̂ṕl̂íĉát̂íôń. Ŷóû ćâń ĉh́êćk̂ t́ĥíŝ ẃît́ĥ t́ĥé R̂éâćt̂ D́êv́êĺôṕêŕ T̂óôĺŝ éx̂t́êńŝíôń. [L̂éâŕn̂ ḿôŕê](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "Îf́ ŷóûŕ b̂úîĺd̂ śŷśt̂ém̂ ḿîńîf́îéŝ ýôúr̂ J́Ŝ f́îĺêś âút̂óm̂át̂íĉál̂ĺŷ, én̂śûŕê t́ĥát̂ ýôú âŕê d́êṕl̂óŷín̂ǵ t̂h́ê ṕr̂ód̂úĉt́îón̂ b́ûíl̂d́ ôf́ ŷóûŕ âṕp̂ĺîćât́îón̂. Ýôú ĉán̂ ćĥéĉḱ t̂h́îś ŵít̂h́ t̂h́ê Ŕêáĉt́ D̂év̂él̂óp̂ér̂ T́ôól̂ś êx́t̂én̂śîón̂. [Ĺêár̂ń m̂ór̂é](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "Îf́ ŷóû ár̂é n̂ót̂ śêŕv̂ér̂-śîd́ê ŕêńd̂ér̂ín̂ǵ, [ŝṕl̂ít̂ ýôúr̂ J́âv́âŚĉŕîṕt̂ b́ûńd̂ĺêś](https://web.dev/code-splitting-suspense/) ŵít̂h́ `React.lazy()`. Ôt́ĥér̂ẃîśê, ćôd́ê-śp̂ĺît́ ûśîńĝ á t̂h́îŕd̂-ṕâŕt̂ý l̂íb̂ŕâŕŷ śûćĥ áŝ [ĺôád̂áb̂ĺê-ćôḿp̂ón̂én̂t́ŝ](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "Ûśê t́ĥé R̂éâćt̂ D́êv́T̂óôĺŝ Ṕr̂óf̂íl̂ér̂, ẃĥíĉh́ m̂ák̂éŝ úŝé ôf́ t̂h́ê Ṕr̂óf̂íl̂ér̂ ÁP̂Í, t̂ó m̂éâśûŕê t́ĥé r̂én̂d́êŕîńĝ ṕêŕf̂ór̂ḿâńĉé ôf́ ŷóûŕ ĉóm̂ṕôńêńt̂ś. [L̂éâŕn̂ ḿôŕê.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "Ĉón̂śîd́êŕ ûṕl̂óâd́îńĝ ýôúr̂ ǴÎF́ t̂ó â śêŕv̂íĉé ŵh́îćĥ ẃîĺl̂ ḿâḱê ít̂ áv̂áîĺâb́l̂é t̂ó êḿb̂éd̂ áŝ án̂ H́T̂ḾL̂5 v́îd́êó."

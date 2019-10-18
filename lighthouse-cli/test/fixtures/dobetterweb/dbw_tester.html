@@ -56,6 +56,9 @@
 <!-- FAIL(errors-in-console): exception thrown -->
 <script type="text/javascript" id="error-time">throw new Error('A distinctive error');</script>
 
+<!-- PASS(errors-in-console): exception thrown but ignoredPatterns removes it -->
+<script type="text/javascript">throw new Error('An ignored error');</script>
+
 <!-- Add non-functional script to appear to be a Wordpress page for Stack Packs. -->
 <script type="example" src="fake-script-wp-includes"></script>
 

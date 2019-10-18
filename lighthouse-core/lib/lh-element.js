@@ -7,7 +7,7 @@
 
 const Driver = require('../gather/driver.js'); // eslint-disable-line no-unused-vars
 
-class Element {
+class LHElement {
   /**
    * @param {{nodeId: number}} element
    * @param {Driver} driver
@@ -68,4 +68,4 @@ class Element {
   }
 }
 
-module.exports = Element;
+module.exports = LHElement;

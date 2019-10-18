@@ -53,10 +53,8 @@ async function main() {
   serverForOffline.listen(10503, 'localhost');
 
   const results = await firehouse.runSmokes({
-    async runLighthouse(url, config) {
-      return runLighthouseFromMinifiedBundle(url, config);
-    },
-    filter: /byte|dbw/,
+    runLighthouse: runLighthouseFromMinifiedBundle,
+    urlFilterRegex: /byte|dbw/,
   });
 
   await new Promise(resolve => server.close(resolve));

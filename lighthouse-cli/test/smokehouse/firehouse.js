@@ -6,8 +6,9 @@
 'use strict';
 
 /**
- * @fileoverview Smoke test runner for non-Node environments. Supports skipping and modifiying
- * expectations to match the environment.
+ * @fileoverview Smoke test runner.
+ * Used to test channels other than npm (`run-smoke.js` handles that).
+ * Supports skipping and modifiying expectations to match the environment.
  */
 
 /* eslint-disable no-console */
@@ -17,17 +18,17 @@ const smokeTests = require('./smoke-test-dfns.js');
 const {collateResults, report} = require('./smokehouse-report.js');
 
 /**
- * @param {Smokehouse.RunnerOptions} options
+ * @param {Smokehouse.FirehouseOptions} options
  */
 async function runSmokes(options) {
-  const {runLighthouse, filter, skip, modify} = options;
+  const {runLighthouse, urlFilterRegex, skip, modify} = options;
 
   let passingCount = 0;
   let failingCount = 0;
 
   for (const test of smokeTests) {
     for (const expected of test.expectations) {
-      if (filter && !expected.lhr.requestedUrl.match(filter)) {
+      if (urlFilterRegex && !expected.lhr.requestedUrl.match(urlFilterRegex)) {
         continue;
       }
 

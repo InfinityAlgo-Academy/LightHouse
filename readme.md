@@ -301,6 +301,8 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[Web Page Test](https://www.webpagetest.org)** — An [open source](https://github.com/WPO-Foundation/webpagetest) tool for measuring and analyzing the performance of web pages on real devices. Users can choose to produce a Lighthouse report alongside the analysis of WebPageTest results.
 
+* **[is-website-vulnerable](https://github.com/lirantal/is-website-vulnerable)** - An open source Node.js CLI tool that finds publicly known security vulnerabilities in a website's frontend JavaScript libraries.
+
 ## Plugins
 
 * **[lighthouse-plugin-field-performance](https://github.com/treosh/lighthouse-plugin-field-performance)** - a plugin that adds real-user performance metrics for the URL using the data from [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/).
@@ -309,11 +311,14 @@ This section details services that have integrated Lighthouse data. If you're wo
 Other awesome open source projects that use Lighthouse.
 
 * **[Exthouse](https://github.com/treosh/exthouse)** - Analyze the impact of a browser extension on web performance.
-* **[Garie](https://github.com/boyney123/garie)** — An open source tool for monitoring performance using Lighthouse,  PageSpeed Insights, [Prometheus](https://prometheus.io/), [Grafana](https://grafana.com/) and [Docker](https://www.docker.com/).
+* **[Garie](https://github.com/boyney123/garie)** - An open source tool for monitoring performance using Lighthouse,  PageSpeed Insights, [Prometheus](https://prometheus.io/), [Grafana](https://grafana.com/) and [Docker](https://www.docker.com/).
 * **[Gimbal](https://labs.moduscreate.com/gimbal-web-performance-audit-budgeting)** - An [open source (MIT licensed)](https://github.com/ModusCreateOrg/gimbal) tool used to measure, analyze, and budget aspects of a web application. Gimbal also integrates reports with GitHub pull requests.
+* **[Gradle Lighthouse Plugin](https://github.com/Cognifide/gradle-lighthouse-plugin)** - An open source Gradle plugin that runs Lighthouse tests on multiple URLs and asserts category score thresholds (useful in continuous integration).
 * **[lightcrawler](https://github.com/github/lightcrawler)** - Crawl a website and run each page found through Lighthouse.
 * **[lighthouse-badges](https://github.com/emazzotta/lighthouse-badges)** - Generate gh-badges (shields.io) based on Lighthouse performance.
 * **[lighthouse-batch](https://www.npmjs.com/package/lighthouse-batch)** - Run Lighthouse over a number of sites and generate a summary of their metrics/scores.
+* **[lighthouse-check-action](https://github.com/foo-software/lighthouse-check-action)** - A Github Action to run Lighthouse in a workflow, featuring Slack notifications and report upload to S3.
+* **[lighthouse-check-orb](https://circleci.com/orbs/registry/orb/foo-software/lighthouse-check)** - A CircleCI Orb to run Lighthouse in a workflow, featuring Slack notifications and report upload to S3.
 * **[lighthouse-ci](https://github.com/andreasonny83/lighthouse-ci)** - Run Lighthouse and assert scores satisfy your custom thresholds.
 * **[lighthouse-ci-action](https://github.com/treosh/lighthouse-ci-action)** - A Github Action that makes it easy to run Lighthouse in CI and keep your pages small using performance budgets.
 * **[lighthouse-cron](https://github.com/thearegee/lighthouse-cron)** - Cron multiple batch Lighthouse audits and emit results for sending to remote server.

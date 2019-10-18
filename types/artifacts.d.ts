@@ -63,6 +63,8 @@ declare global {
       ConsoleMessages: Crdp.Log.EntryAddedEvent[];
       /** All the iframe elements in the page.*/
       IFrameElements: Artifacts.IFrameElement[];
+      /** The contents of the main HTML document network resource. */
+      MainDocumentContent: string;
       /** Information on size and loading for all the images in the page. Natural size information for `picture` and CSS images is only available if the image was one of the largest 50 images. */
       ImageElements: Artifacts.ImageElement[];
       /** All the link elements on the page or equivalently declared in `Link` headers. @see https://html.spec.whatwg.org/multipage/links.html */
