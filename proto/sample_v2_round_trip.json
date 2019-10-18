@@ -2629,7 +2629,7 @@
             "title": "Server response times are low (TTFB)"
         },
         "total-blocking-time": {
-            "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds.",
+            "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more](https://web.dev/lighthouse-total-blocking-time).",
             "displayValue": "120\u00a0ms",
             "id": "total-blocking-time",
             "numericValue": 116.79800000000023,
