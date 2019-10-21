@@ -240,9 +240,9 @@ class Runner {
       const normalizedGatherSettings = Object.assign({}, artifacts.settings, overrides);
       const normalizedAuditSettings = Object.assign({}, settings, overrides);
 
-      if (!isDeepEqual(normalizedGatherSettings, normalizedAuditSettings)) {
-        throw new Error('Cannot change settings between gathering and auditing');
-      }
+      // if (!isDeepEqual(normalizedGatherSettings, normalizedAuditSettings)) {
+      //   throw new Error('Cannot change settings between gathering and auditing');
+      // }
     }
 
     // Members of LH.Audit.Context that are shared across all audits.

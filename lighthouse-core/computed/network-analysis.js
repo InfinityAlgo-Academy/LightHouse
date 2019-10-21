@@ -29,6 +29,7 @@ class NetworkAnalysis {
     const responseTimeSummaries = NetworkAnalyzer.estimateServerResponseTimeByOrigin(records, {
       rttByOrigin,
     });
+    console.log({responseTimeSummaries});
 
     /** @type {Map<string, number>} */
     const additionalRttByOrigin = new Map();
@@ -57,6 +58,7 @@ class NetworkAnalysis {
     const records = await NetworkRecords.request(devtoolsLog, context);
     const throughput = NetworkAnalyzer.estimateThroughput(records);
     const rttAndServerResponseTime = NetworkAnalysis.computeRTTAndServerResponseTime(records);
+    console.log({rttAndServerResponseTime});
     return {throughput, ...rttAndServerResponseTime};
   }
 }

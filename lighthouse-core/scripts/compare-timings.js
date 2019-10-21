@@ -113,7 +113,9 @@ function gather() {
     for (let i = 0; i < argv.n; i++) {
       const gatherDir = `${outputDir}/${urlToFolder(url)}/${i}/`;
       mkdirp.sync(gatherDir);
-
+      // TODO include multiple urls too.
+      const progressBar = new Array(Math.round(i * 40/ argv.n)).fill('▄').join('').padEnd(40);
+      console.log(`Gathering:   `, '|', progressBar, '|')
       const cmd = [
         'node',
         `${LH_ROOT}/lighthouse-cli`,
@@ -131,6 +133,8 @@ function audit() {
   for (const url of argv.urls) {
     for (let i = 0; i < argv.n; i++) {
       const gatherDir = `${outputDir}/${urlToFolder(url)}/${i}/`;
+      const progressBar = new Array(Math.round(i * 40/ argv.n)).fill('▄').join('').padEnd(40);
+      console.log(`Auditing:   `, '|', progressBar, '|')
 
       const cmd = [
         'node',

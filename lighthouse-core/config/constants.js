@@ -60,14 +60,15 @@ const defaultSettings = {
   blockedUrlPatterns: null,
   additionalTraceCategories: null,
   extraHeaders: null,
-  precomputedLanternData: {
-    additionalRttByOrigin: {
-      '*': 500,
-    },
-    serverResponseTimeByOrigin: {
-      '*': 1000,
-    },
-  },
+  precomputedLanternData: null,
+  // precomputedLanternData: {
+  //   additionalRttByOrigin: {
+  //     '*': 500,
+  //   },
+  //   serverResponseTimeByOrigin: {
+  //     '*': 1000,
+  //   },
+  // },
   onlyAudits: null,
   onlyCategories: null,
   skipAudits: null,

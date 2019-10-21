@@ -371,6 +371,7 @@ class NetworkAnalyzer {
     }
 
     const estimatesByOrigin = NetworkAnalyzer._estimateResponseTimeByOrigin(records, rttByOrigin);
+    console.log({estimatesByOrigin})
     return NetworkAnalyzer.summarize(estimatesByOrigin);
   }
 
