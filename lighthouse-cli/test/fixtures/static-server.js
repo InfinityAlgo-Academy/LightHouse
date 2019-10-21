@@ -92,6 +92,10 @@ class Server {
       if (useGzip) {
         data = zlib.gzipSync(data);
         headers['Content-Encoding'] = 'gzip';
+        // Set special header for Lightrider, needed for Smokerider.
+        // This is meant to be the byte size of the entire
+        // response (encoded content, headers, chunk overhead, etc.). Rough estimate is OK.
+        headers['X-TotalFetchedSize'] = Buffer.byteLength(data) + JSON.stringify(headers).length;
       }
 
       response.writeHead(statusCode, headers);
