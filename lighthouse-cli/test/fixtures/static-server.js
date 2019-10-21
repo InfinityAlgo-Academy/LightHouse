@@ -41,50 +41,6 @@ class Server {
     const queryString = requestUrl.search && parseQueryString(requestUrl.search.slice(1));
     let absoluteFilePath = path.join(__dirname, filePath);
 
-    // Create an index page that lists the available test pages.
-    if (filePath === '/') {
-      const fixturePaths = glob.sync('**/*.html', {cwd: __dirname});
-      const html = `
-        <html>
-        <h1>Smoke test fixtures</h1>
-        ${fixturePaths.map(p => `<a href=${encodeURI(p)}>${escape(p)}</a>`).join('<br>')}
-      `;
-      response.writeHead(200, {
-        'Content-Security-Policy': `default-src 'none';`,
-      });
-      sendResponse(200, html);
-      return;
-    }
-
-    if (filePath.startsWith('/dist/viewer')) {
-      // Rewrite lighthouse-viewer paths to point to that location.
-      absoluteFilePath = path.join(__dirname, '/../../../', filePath);
-    }
-
-    // Disallow file requests outside of LH folder
-    const filePathDir = path.parse(absoluteFilePath).dir;
-    if (!filePathDir.startsWith(lhRootDirPath)) {
-      return readFileCallback(new Error('Disallowed path'));
-    }
-
-    // Check if the file exists, then read it and serve it.
-    fs.exists(absoluteFilePath, fsExistsCallback);
-
-    function fsExistsCallback(fileExists) {
-      if (!fileExists) {
-        return sendResponse(404, `404 - File not found. ${filePath}`);
-      }
-      fs.readFile(absoluteFilePath, 'binary', readFileCallback);
-    }
-
-    function readFileCallback(err, file) {
-      if (err) {
-        console.error(`Unable to read local file ${absoluteFilePath}:`, err);
-        return sendResponse(500, '500 - Internal Server Error');
-      }
-      sendResponse(200, file);
-    }
-
     const sendResponse = (statusCode, data) => {
       // Used by Smokerider.
       if (this._dataTransformer) data = this._dataTransformer(data);
@@ -136,8 +92,6 @@ class Server {
       if (useGzip) {
         data = zlib.gzipSync(data);
         headers['Content-Encoding'] = 'gzip';
-        // Set special header for Lightrider, needed for Smokerider.
-        headers['X-TotalFetchedSize'] = data.length;
       }
 
       response.writeHead(statusCode, headers);
@@ -150,6 +104,50 @@ class Server {
       const encoding = charset === 'UTF-8' ? 'utf-8' : 'binary';
       finishResponse(data, encoding);
     };
+
+    // Create an index page that lists the available test pages.
+    if (filePath === '/') {
+      const fixturePaths = glob.sync('**/*.html', {cwd: __dirname});
+      const html = `
+        <html>
+        <h1>Smoke test fixtures</h1>
+        ${fixturePaths.map(p => `<a href=${encodeURI(p)}>${escape(p)}</a>`).join('<br>')}
+      `;
+      response.writeHead(200, {
+        'Content-Security-Policy': `default-src 'none';`,
+      });
+      sendResponse(200, html);
+      return;
+    }
+
+    if (filePath.startsWith('/dist/viewer')) {
+      // Rewrite lighthouse-viewer paths to point to that location.
+      absoluteFilePath = path.join(__dirname, '/../../../', filePath);
+    }
+
+    // Disallow file requests outside of LH folder
+    const filePathDir = path.parse(absoluteFilePath).dir;
+    if (!filePathDir.startsWith(lhRootDirPath)) {
+      return readFileCallback(new Error('Disallowed path'));
+    }
+
+    // Check if the file exists, then read it and serve it.
+    fs.exists(absoluteFilePath, fsExistsCallback);
+
+    function fsExistsCallback(fileExists) {
+      if (!fileExists) {
+        return sendResponse(404, `404 - File not found. ${filePath}`);
+      }
+      fs.readFile(absoluteFilePath, 'binary', readFileCallback);
+    }
+
+    function readFileCallback(err, file) {
+      if (err) {
+        console.error(`Unable to read local file ${absoluteFilePath}:`, err);
+        return sendResponse(500, '500 - Internal Server Error');
+      }
+      sendResponse(200, file);
+    }
 
     function sendRedirect(url) {
       const headers = {
