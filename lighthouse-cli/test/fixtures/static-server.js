@@ -136,6 +136,8 @@ class Server {
       if (useGzip) {
         data = zlib.gzipSync(data);
         headers['Content-Encoding'] = 'gzip';
+        // Set special header for Lightrider, needed for Smokerider.
+        headers['X-TotalFetchedSize'] = data.length;
       }
 
       response.writeHead(statusCode, headers);
