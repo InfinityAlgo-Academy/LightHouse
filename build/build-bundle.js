@@ -12,11 +12,11 @@
 
 const fs = require('fs');
 const path = require('path');
+const mkdir = fs.promises.mkdir;
 
 const LighthouseRunner = require('../lighthouse-core/runner.js');
 const babel = require('babel-core');
 const browserify = require('browserify');
-const makeDir = require('make-dir');
 const pkg = require('../package.json');
 
 const VERSION = pkg.version;
@@ -66,7 +66,6 @@ async function browserifyFile(entryPath, distPath) {
     .ignore('intl')
     .ignore('intl-pluralrules')
     .ignore('raven')
-    .ignore('mkdirp')
     .ignore('rimraf')
     .ignore('pako/lib/zlib/inflate.js');
 
@@ -104,7 +103,7 @@ async function browserifyFile(entryPath, distPath) {
   const bundleStream = bundle.bundle();
 
   // Make sure path exists.
-  await makeDir(path.dirname(distPath));
+  await mkdir(path.dirname(distPath), {recursive: true});
   return new Promise((resolve, reject) => {
     const writeStream = fs.createWriteStream(distPath);
     writeStream.on('finish', resolve);

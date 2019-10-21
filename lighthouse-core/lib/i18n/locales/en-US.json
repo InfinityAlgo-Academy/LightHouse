@@ -819,7 +819,7 @@
     "message": "Speed Index"
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds."
+    "message": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more](https://web.dev/lighthouse-total-blocking-time)."
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | title": {
     "message": "Total Blocking Time"

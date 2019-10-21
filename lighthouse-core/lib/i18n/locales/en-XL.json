@@ -819,7 +819,7 @@
     "message": "Ŝṕêéd̂ Ín̂d́êx́"
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "Ŝúm̂ óf̂ ál̂ĺ t̂ím̂é p̂ér̂íôd́ŝ b́êt́ŵéêń F̂ĆP̂ án̂d́ T̂ím̂é t̂ó Îńt̂ér̂áĉt́îv́ê, ẃĥén̂ t́âśk̂ ĺêńĝt́ĥ éx̂ćêéd̂éd̂ 50ḿŝ, éx̂ṕr̂éŝśêd́ îń m̂íl̂ĺîśêćôńd̂ś."
+    "message": "Ŝúm̂ óf̂ ál̂ĺ t̂ím̂é p̂ér̂íôd́ŝ b́êt́ŵéêń F̂ĆP̂ án̂d́ T̂ím̂é t̂ó Îńt̂ér̂áĉt́îv́ê, ẃĥén̂ t́âśk̂ ĺêńĝt́ĥ éx̂ćêéd̂éd̂ 50ḿŝ, éx̂ṕr̂éŝśêd́ îń m̂íl̂ĺîśêćôńd̂ś. [L̂éâŕn̂ ḿôŕê](https://web.dev/lighthouse-total-blocking-time)."
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | title": {
     "message": "T̂ót̂ál̂ B́l̂óĉḱîńĝ T́îḿê"
