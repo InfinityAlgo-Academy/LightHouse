@@ -1242,7 +1242,7 @@
       "description": "Collects all available metrics.",
       "score": null,
       "scoreDisplayMode": "informative",
-      "numericValue": 4927.278,
+      "numericValue": 4927,
       "details": {
         "type": "debugdata",
         "items": [
@@ -4545,6 +4545,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:metrics",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TimingSummary",
         "duration": 100,
         "entryType": "measure"
       },

@@ -1529,7 +1529,7 @@
                 "type": "debugdata"
             },
             "id": "metrics",
-            "numericValue": 4927.278,
+            "numericValue": 4927.0,
             "score": null,
             "scoreDisplayMode": "informative",
             "title": "Metrics"
@@ -4442,6 +4442,12 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:audit:metrics",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:computed:TimingSummary",
                 "startTime": 0.0
             },
             {
