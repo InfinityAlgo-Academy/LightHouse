@@ -38,12 +38,10 @@ describe('Budget', () => {
           {
             metric: 'interactive',
             budget: 2000,
-            tolerance: 1000,
           },
           {
             metric: 'first-contentful-paint',
             budget: 1000,
-            // tolerance is optional, so not defined here.
           },
         ],
       },
@@ -83,12 +81,10 @@ describe('Budget', () => {
     assert.deepStrictEqual(result[0].timings[0], {
       metric: 'interactive',
       budget: 2000,
-      tolerance: 1000,
     });
     assert.deepStrictEqual(result[0].timings[1], {
       metric: 'first-contentful-paint',
       budget: 1000,
-      tolerance: undefined,
     });
 
     // Does not set unsupplied result
@@ -182,9 +178,9 @@ describe('Budget', () => {
       assert.throws(_ => Budget.initializeBudget(budgets), /Invalid budget: 100KB/);
     });
 
-    it('throws when an invalid tolerance is supplied', () => {
+    it('throws when a tolerance is supplied', () => {
       budgets[0].timings[0].tolerance = '100ms';
-      assert.throws(_ => Budget.initializeBudget(budgets), /Invalid tolerance: 100ms/);
+      assert.throws(_ => Budget.initializeBudget(budgets), /unrecognized properties/);
     });
 
     it('throws when an invalid property is supplied', () => {

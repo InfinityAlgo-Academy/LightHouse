@@ -193,7 +193,7 @@ class Budget {
    * @return {LH.Budget.TimingBudget}
    */
   static validateTimingBudget(timingBudget) {
-    const {metric, budget, tolerance, ...invalidRest} = timingBudget;
+    const {metric, budget, ...invalidRest} = timingBudget;
     Budget.assertNoExcessProperties(invalidRest, 'Timing Budget');
 
     /** @type {Array<LH.Budget.TimingMetric>} */
@@ -203,6 +203,8 @@ class Budget {
       'interactive',
       'first-meaningful-paint',
       'max-potential-fid',
+      'estimated-input-latency',
+      'total-blocking-time',
     ];
     // Assume metric is an allowed string, throw if not.
     if (!validTimingMetrics.includes(/** @type {LH.Budget.TimingMetric} */ (metric))) {
@@ -212,13 +214,9 @@ class Budget {
     if (!isNumber(budget)) {
       throw new Error(`Invalid budget: ${budget}`);
     }
-    if (typeof tolerance !== 'undefined' && !isNumber(tolerance)) {
-      throw new Error(`Invalid tolerance: ${tolerance}`);
-    }
     return {
       metric: /** @type {LH.Budget.TimingMetric} */ (metric),
       budget,
-      tolerance,
     };
   }
 
