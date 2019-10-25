@@ -842,50 +842,26 @@
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Êśt̂ím̂át̂éd̂ Ín̂ṕût́ L̂át̂én̂ćŷ íŝ án̂ éŝt́îḿât́ê óf̂ h́ôẃ l̂ón̂ǵ ŷóûŕ âṕp̂ t́âḱêś t̂ó r̂éŝṕôńd̂ t́ô úŝér̂ ín̂ṕût́, îń m̂íl̂ĺîśêćôńd̂ś, d̂úr̂ín̂ǵ t̂h́ê b́ûśîéŝt́ 5ŝ ẃîńd̂óŵ óf̂ ṕâǵê ĺôád̂. Íf̂ ýôúr̂ ĺât́êńĉý îś ĥíĝh́êŕ t̂h́âń 50 m̂ś, ûśêŕŝ ḿâý p̂ér̂ćêív̂é ŷóûŕ âṕp̂ áŝ ĺâǵĝý. [L̂éâŕn̂ ḿôŕê](https://web.dev/estimated-input-latency)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | title": {
-    "message": "Êśt̂ím̂át̂éd̂ Ín̂ṕût́ L̂át̂én̂ćŷ"
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "F̂ír̂śt̂ Ćôńt̂én̂t́f̂úl̂ Ṕâín̂t́ m̂ár̂ḱŝ t́ĥé t̂ím̂é ât́ ŵh́îćĥ t́ĥé f̂ír̂śt̂ t́êx́t̂ ór̂ ím̂áĝé îś p̂áîńt̂éd̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/first-contentful-paint)."
-  },
-  "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
-    "message": "F̂ír̂śt̂ Ćôńt̂én̂t́f̂úl̂ Ṕâín̂t́"
   },
   "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
     "message": "F̂ír̂śt̂ ĆP̂Ú Îd́l̂é m̂ár̂ḱŝ t́ĥé f̂ír̂śt̂ t́îḿê át̂ ẃĥíĉh́ t̂h́ê ṕâǵê'ś m̂áîń t̂h́r̂éâd́ îś q̂úîét̂ én̂óûǵĥ t́ô h́âńd̂ĺê ín̂ṕût́.  [L̂éâŕn̂ ḿôŕê](https://web.dev/first-cpu-idle)."
   },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | title": {
-    "message": "F̂ír̂śt̂ ĆP̂Ú Îd́l̂é"
-  },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "F̂ír̂śt̂ Ḿêán̂ín̂ǵf̂úl̂ Ṕâín̂t́ m̂éâśûŕêś ŵh́êń t̂h́ê ṕr̂ím̂ár̂ý ĉón̂t́êńt̂ óf̂ á p̂áĝé îś v̂íŝíb̂ĺê. [Ĺêár̂ń m̂ór̂é](https://web.dev/first-meaningful-paint)."
-  },
-  "lighthouse-core/audits/metrics/first-meaningful-paint.js | title": {
-    "message": "F̂ír̂śt̂ Ḿêán̂ín̂ǵf̂úl̂ Ṕâín̂t́"
   },
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "T̂ím̂é t̂ó îńt̂ér̂áĉt́îv́ê íŝ t́ĥé âḿôún̂t́ ôf́ t̂ím̂é ît́ t̂ák̂éŝ f́ôŕ t̂h́ê ṕâǵê t́ô b́êćôḿê f́ûĺl̂ý îńt̂ér̂áĉt́îv́ê. [Ĺêár̂ń m̂ór̂é](https://web.dev/interactive)."
   },
-  "lighthouse-core/audits/metrics/interactive.js | title": {
-    "message": "T̂ím̂é t̂ó Îńt̂ér̂áĉt́îv́ê"
-  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "T̂h́ê ḿâx́îḿûḿ p̂ót̂én̂t́îál̂ F́îŕŝt́ Îńp̂út̂ D́êĺâý t̂h́ât́ ŷóûŕ ûśêŕŝ ćôúl̂d́ êx́p̂ér̂íêńĉé îś t̂h́ê d́ûŕât́îón̂, ín̂ ḿîĺl̂íŝéĉón̂d́ŝ, óf̂ t́ĥé l̂ón̂ǵêśt̂ t́âśk̂. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/updates/2018/05/first-input-delay)."
-  },
-  "lighthouse-core/audits/metrics/max-potential-fid.js | title": {
-    "message": "M̂áx̂ Ṕôt́êńt̂íâĺ F̂ír̂śt̂ Ín̂ṕût́ D̂él̂áŷ"
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Ŝṕêéd̂ Ín̂d́êx́ ŝh́ôẃŝ h́ôẃ q̂úîćk̂ĺŷ t́ĥé ĉón̂t́êńt̂ś ôf́ â ṕâǵê ár̂é v̂íŝíb̂ĺŷ ṕôṕûĺât́êd́. [L̂éâŕn̂ ḿôŕê](https://web.dev/speed-index)."
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "Ŝṕêéd̂ Ín̂d́êx́"
-  },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
     "message": "Ŝúm̂ óf̂ ál̂ĺ t̂ím̂é p̂ér̂íôd́ŝ b́êt́ŵéêń F̂ĆP̂ án̂d́ T̂ím̂é t̂ó Îńt̂ér̂áĉt́îv́ê, ẃĥén̂ t́âśk̂ ĺêńĝt́ĥ éx̂ćêéd̂éd̂ 50ḿŝ, éx̂ṕr̂éŝśêd́ îń m̂íl̂ĺîśêćôńd̂ś. [L̂éâŕn̂ ḿôŕê](https://web.dev/lighthouse-total-blocking-time)."
-  },
-  "lighthouse-core/audits/metrics/total-blocking-time.js | title": {
-    "message": "T̂ót̂ál̂ B́l̂óĉḱîńĝ T́îḿê"
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "N̂ét̂ẃôŕk̂ ŕôún̂d́ t̂ŕîṕ t̂ím̂éŝ (ŔT̂T́) ĥáv̂é â ĺâŕĝé îḿp̂áĉt́ ôń p̂ér̂f́ôŕm̂án̂ćê. Íf̂ t́ĥé R̂T́T̂ t́ô án̂ ór̂íĝín̂ íŝ h́îǵĥ, ít̂'ś âń îńd̂íĉát̂íôń t̂h́ât́ ŝér̂v́êŕŝ ćl̂óŝér̂ t́ô t́ĥé ûśêŕ ĉóûĺd̂ ím̂ṕr̂óv̂é p̂ér̂f́ôŕm̂án̂ćê. [Ĺêár̂ń m̂ór̂é](https://hpbn.co/primer-on-latency-and-bandwidth/)."
@@ -1421,11 +1397,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "D̂óĉúm̂én̂t́"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "Êśt̂ím̂át̂éd̂ Ín̂ṕût́ L̂át̂én̂ćŷ"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "F̂ír̂śt̂ Ćôńt̂én̂t́f̂úl̂ Ṕâín̂t́"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "F̂ír̂śt̂ ĆP̂Ú Îd́l̂é"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "F̂ír̂śt̂ Ḿêán̂ín̂ǵf̂úl̂ Ṕâín̂t́"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "F̂ón̂t́"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Îḿâǵê"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "T̂ím̂é t̂ó Îńt̂ér̂áĉt́îv́ê"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "M̂áx̂ Ṕôt́êńt̂íâĺ F̂ír̂śt̂ Ín̂ṕût́ D̂él̂áŷ"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "M̂éd̂íâ"
@@ -1442,11 +1436,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} ŝ"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Ŝṕêéd̂ Ín̂d́êx́"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Ŝt́ŷĺêśĥéêt́"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "T̂h́îŕd̂-ṕâŕt̂ý"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "T̂ót̂ál̂ B́l̂óĉḱîńĝ T́îḿê"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "T̂ót̂ál̂"
