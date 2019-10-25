@@ -855,7 +855,7 @@
     "message": "Time to interactive is the amount of time it takes for the page to become fully interactive. [Learn more](https://web.dev/interactive)."
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "The maximum potential First Input Delay that your users could experience is the duration, in milliseconds, of the longest task. [Learn more](https://developers.google.com/web/updates/2018/05/first-input-delay)."
+    "message": "The maximum potential First Input Delay that your users could experience is the duration, in milliseconds, of the longest task. [Learn more](https://web.dev/lighthouse-max-potential-fid)."
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more](https://web.dev/speed-index)."

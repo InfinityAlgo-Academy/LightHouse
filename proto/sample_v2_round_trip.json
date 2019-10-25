@@ -1527,7 +1527,7 @@
             "title": "The user's focus is directed to new content added to the page"
         },
         "max-potential-fid": {
-            "description": "The maximum potential First Input Delay that your users could experience is the duration, in milliseconds, of the longest task. [Learn more](https://developers.google.com/web/updates/2018/05/first-input-delay).",
+            "description": "The maximum potential First Input Delay that your users could experience is the duration, in milliseconds, of the longest task. [Learn more](https://web.dev/lighthouse-max-potential-fid).",
             "displayValue": "120\u00a0ms",
             "id": "max-potential-fid",
             "numericValue": 122.537,
