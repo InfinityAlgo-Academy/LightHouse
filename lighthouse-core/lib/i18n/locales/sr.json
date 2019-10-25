@@ -137,15 +137,6 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Документ има елемент `<title>`"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "Вредност атрибута ИД мора да буде јединствена да би се спречило да технологије за помоћ особама са инвалидитетом пропусте друге инстанце. [Сазнајте више](https://web.dev/duplicate-id/)."
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "Атрибути `[id]` на страници нису јединствени"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "Атрибути `[id]` на страници су јединствени"
-  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Корисници читача екрана очекују од наслова оквира да им опишу садржај оквира. [Сазнајте више](https://web.dev/frame-title/)."
   },

@@ -137,15 +137,6 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Документът има елемент `<title>`"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "Стойността на всеки атрибут id трябва да е уникална, за да се предотврати пропускането на други екземпляри от страна на помощните технологии. [Научете повече](https://web.dev/duplicate-id/)."
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "Някои атрибути `[id]` на страницата не са уникални"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "Атрибутите `[id]` на страницата са уникални"
-  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Потребителите на екранни четци очакват заглавието на рамката да описва съдържанието й. [Научете повече](https://web.dev/frame-title/)."
   },

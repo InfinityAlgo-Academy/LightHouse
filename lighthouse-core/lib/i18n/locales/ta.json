@@ -137,15 +137,6 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "ஆவணத்தில் `<title>` உறுப்பு உள்ளது"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "உதவிகரமான தொழில்நுட்பங்களால் நேர்வுகள் புறக்கணிக்கப்படுவதைத் தடுக்க, ஐடி பண்புக்கூறின் மதிப்பு பிரத்தியேகமானவையாக இருக்க வேண்டும். [மேலும் அறிக](https://web.dev/duplicate-id/)."
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "பக்கத்திலுள்ள `[id]` பண்புக்கூறுகள் பிரத்தியேகமானவையாக இல்லை"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "பக்கத்தில் உள்ள `[id]` பண்புக்கூறுகள் பிரத்தியேகமானவை"
-  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "ஃபிரேம்களில் உள்ளவற்றை விவரிக்க அவற்றின் தலைப்பை ஸ்க்ரீன் ரீடர் பயனர்கள் சார்ந்துள்ளனர். [மேலும் அறிக](https://web.dev/frame-title/)."
   },

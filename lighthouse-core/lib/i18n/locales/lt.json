@@ -137,15 +137,6 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Dokumente yra elementas „`<title>`“"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "Atributo „id“ vertė turi būti unikali, kad pagalbinės technologijos nepraleistų kitų objektų. [Sužinokite daugiau](https://web.dev/duplicate-id/)."
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "Puslapio atributai „`[id]`“ nėra unikalūs"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "Puslapio atributai „`[id]`“ yra unikalūs"
-  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Pagal rėmelių pavadinimus ekrano skaitytuvų naudotojai sužino, koks yra rėmelių turinys. [Sužinokite daugiau](https://web.dev/frame-title/)."
   },

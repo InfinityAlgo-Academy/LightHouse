@@ -137,15 +137,6 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "పత్రంలో '`<title>`' మూలకం ఉంది"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "సహాయకర సాంకేతిక పరిజ్ఞానాల ద్వారా ఇతర సందర్భాలు విస్మరించబడకుండా నిరోధించడానికి id లక్షణం విలువ ప్రత్యేకంగా ఉండాలి. [మరింత తెలుసుకోండి](https://web.dev/duplicate-id/)."
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "పేజీలోని ``[id]`` లక్షణాలు విశిష్ఠమైనవి కావు"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "పేజీలోని ``[id]`` లక్షణాలు విశిష్ఠంగా ఉన్నాయి"
-  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "స్క్రీన్ రీడర్ వినియోగదారులు ఫ్రేమ్‌ల కంటెంట్‌లను వివరించడానికి ఫ్రేమ్ శీర్షికలపై ఆధారపడతారు. [మరింత తెలుసుకోండి](https://web.dev/frame-title/)."
   },

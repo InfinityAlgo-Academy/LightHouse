@@ -137,15 +137,6 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Document bevat een `<title>`-element"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "De waarde van een id-kenmerk moet uniek zijn om te voorkomen dat andere instanties over het hoofd worden gezien door hulptechnologieën. [Meer informatie](https://web.dev/duplicate-id/)"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "De `[id]`-kenmerken op de pagina zijn niet uniek"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "De `[id]`-kenmerken op de pagina zijn uniek"
-  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Gebruikers van een schermlezer zijn afhankelijk van frametitels die de content van de frames beschrijven. [Meer informatie](https://web.dev/frame-title/)"
   },

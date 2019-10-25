@@ -137,15 +137,6 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "ドキュメントに `<title>` 要素が指定されています"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "他のインスタンスが支援技術によって見落とされることのないように、id 属性の値は一意にする必要があります。[詳細](https://web.dev/duplicate-id/)"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "ページの `[id]` 属性が一意ではありません"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "ページの `[id]` 属性は一意です"
-  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "スクリーン リーダーでは、フレームのコンテンツを説明するためにフレームのタイトルが使用されます。[詳細](https://web.dev/frame-title/)"
   },

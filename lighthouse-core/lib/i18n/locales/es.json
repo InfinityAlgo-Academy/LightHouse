@@ -137,15 +137,6 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "El documento tiene un elemento `<title>`"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "El valor de los atributos id debe ser único para evitar que las tecnologías de asistencia omitan otras instancias. [Más información](https://web.dev/duplicate-id/)"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "Los atributos `[id]` de la página no son únicos"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "Los atributos `[id]` de la página son únicos"
-  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Los usuarios de lectores de pantalla confían en que los títulos describan el contenido de los marcos. [Más información](https://web.dev/frame-title/)"
   },

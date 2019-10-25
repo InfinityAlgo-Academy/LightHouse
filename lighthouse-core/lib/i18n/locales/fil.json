@@ -137,15 +137,6 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "May `<title>` na element ang dokumento"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "Natatangi dapat ang value ng id attribute para hindi makaligtaan ng mga nakakatulong na teknolohiya ang iba pang instance. [Matuto pa](https://web.dev/duplicate-id/)."
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "Hindi natatangi ang mga attribute na `[id]`"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "Natatangi ang mga attribute na `[id]` sa page"
-  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Umaasa ang mga user ng screen reader sa mga pamagat ng frame para ilarawan ang mga content ng mga frame. [Matuto pa](https://web.dev/frame-title/)."
   },

@@ -137,15 +137,6 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "दस्तावेज़ में `<title>` एलिमेंट है"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "सहायक तकनीकों को दूसरे इंस्टेंस अनदेखा करने से रोकने के लिए, आईडी विशेषता का मान सबसे अलग होना चाहिए. [ज़्यादा जानें](https://web.dev/duplicate-id/)."
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "पेज पर `[id]` विशेषताएं सबसे अलग नहीं हैं"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "पेज पर `[id]` विशेषताएं सबसे अलग हैं"
-  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "स्क्रीन रीडर उपयोगकर्ता, फ़्रेम की सामग्री के बारे में जानने के लिए फ़्रेम के शीर्षकों का इस्तेमाल करते हैं. [ज़्यादा जानें](https://web.dev/frame-title/)."
   },

@@ -137,15 +137,6 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Dokument zawiera element `<title>`"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "Wartość atrybutu id musi być unikalna, by inne wystąpienia nie zostały pominięte przez technologie wspomagające. [Więcej informacji](https://web.dev/duplicate-id/)"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "Atrybuty `[id]` na stronie nie są unikalne"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "Atrybuty `[id]` na stronie są unikalne"
-  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Tytuły ramek służą użytkownikom czytników ekranu jako opisy zawartości ramek. [Więcej informacji](https://web.dev/frame-title/)"
   },

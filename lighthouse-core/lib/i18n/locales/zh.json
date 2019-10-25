@@ -137,15 +137,6 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "文档包含 `<title>` 元素"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "id 属性的值必须独一无二，以防其他实例被辅助技术忽略。[了解详情](https://web.dev/duplicate-id/)。"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "页面上的 `[id]` 属性不是独一无二的"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "页面上的 `[id]` 属性是独一无二的"
-  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "屏幕阅读器用户依靠框架标题来描述框架的内容。[了解详情](https://web.dev/frame-title/)。"
   },

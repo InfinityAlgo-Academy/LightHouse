@@ -137,15 +137,6 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "المستند يحتوي على عنصر `<title>`"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "يجب أن تكون قيمة سمة رقم التعريف فريدة لكي لا تتغاضى تقنيات المساعدة عن الأمثلة الأخرى. [مزيد من المعلومات](https://web.dev/duplicate-id/)"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "سمات `[id]` في الصفحة هي غير فريدة"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "سمات `[id]` في الصفحة هي فريدة"
-  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "يعتمد مستخدمو برامج قراءة الشاشة على عناوين الإطارات لوصف محتوى الإطارات. [مزيد من المعلومات](https://web.dev/frame-title/)"
   },

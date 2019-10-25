@@ -137,15 +137,6 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Dokumentā ir ietverts elements `<title>`"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "ID atribūta vērtībai ir jābūt unikālai, lai palīgtehnoloģijas neizlaistu citas instances. [Uzziniet vairāk](https://web.dev/duplicate-id/)."
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "Atribūti `[id]` lapā nav unikāli"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "Atribūti `[id]` lapā ir unikāli"
-  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Ekrāna lasītāji izmanto ietvaru nosaukumus, lai raksturotu ietvaru saturu. [Uzziniet vairāk](https://web.dev/frame-title/)."
   },

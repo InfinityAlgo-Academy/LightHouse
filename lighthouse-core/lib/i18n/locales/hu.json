@@ -137,15 +137,6 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "A dokumentum tartalmaz `<title>` elemet"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "Az „id” attribútum értékének egyedinek kell lennie, hogy a kisegítő technológiák ne hagyják figyelmen kívül a többi előfordulást. [További információ](https://web.dev/duplicate-id/)."
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "Az oldal `[id]` attribútumai nem egyediek"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "Az oldalon található `[id]` attribútumok egyediek"
-  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "A képernyőolvasók a keretcímek alapján írják le a keretek tartalmát. [További információ](https://web.dev/frame-title/)."
   },

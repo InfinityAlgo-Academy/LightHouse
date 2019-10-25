@@ -137,15 +137,6 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "เอกสารมีองค์ประกอบ `<title>`"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "ค่าของแอตทริบิวต์รหัสต้องไม่ซ้ำกันเพื่อป้องกันไม่ให้เทคโนโลยีอำนวยความสะดวกมองข้ามอินสแตนซ์อื่นๆ [ดูข้อมูลเพิ่มเติม](https://web.dev/duplicate-id/)"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "แอตทริบิวต์ `[id]` ในหน้าเว็บซ้ำกัน"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "แอตทริบิวต์ `[id]` ในหน้าเว็บไม่ซ้ำกัน"
-  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "ผู้ใช้โปรแกรมอ่านหน้าจอต้องใช้ชื่อเฟรมเพื่ออธิบายเนื้อหาของเฟรม [ดูข้อมูลเพิ่มเติม](https://web.dev/frame-title/)"
   },

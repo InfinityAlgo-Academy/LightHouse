@@ -137,15 +137,6 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Il documento ha un elemento `<title>`"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "Il valore di un attributo id deve essere univoco per evitare che altre istanze vengano ignorate dalle tecnologie di ausilio per la disabilità. [Ulteriori informazioni](https://web.dev/duplicate-id/)."
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "Gli attributi `[id]` nella pagina non sono univoci"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "Gli attributi `[id]` nella pagina sono univoci"
-  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Gli screen reader si affidano ai titoli dei frame per descrivere i contenuti dei frame agli utenti. [Ulteriori informazioni](https://web.dev/frame-title/)."
   },

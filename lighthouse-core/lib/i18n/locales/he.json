@@ -137,15 +137,6 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "המסמך מכיל רכיב `<title>`"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "הערך של מאפיין id חייב להיות ייחודי כדי למנוע מטכנולוגיות לנגישות להתעלם ממופעים אחרים. [מידע נוסף](https://web.dev/duplicate-id/)."
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "יש בדף מאפייני `[id]` שאינם ייחודיים"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "מאפייני ה-`[id]` בדף הם ייחודיים"
-  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "משתמשים הנעזרים בקוראי מסך מסתמכים על כותרות של מסגרות כדי להבין מה תוכן המסגרות. [מידע נוסף](https://web.dev/frame-title/)."
   },

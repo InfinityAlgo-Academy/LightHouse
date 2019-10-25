@@ -137,15 +137,6 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Dokument obsahuje prvek `<title>`"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "Aby asistenční technologie nepřehlédly další výskyty, hodnota atributu id musí být jedinečná. [Další informace](https://web.dev/duplicate-id/)"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "Atributy `[id]` na stránce nejsou jedinečné"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "Atributy `[id]` na stránce jsou jedinečné"
-  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Čtečky obrazovek obvykle k popisu obsahu rámců používají jejich atributy title. [Další informace](https://web.dev/frame-title/)"
   },

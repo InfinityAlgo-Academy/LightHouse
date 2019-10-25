@@ -137,15 +137,6 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "[Ðöçûméñţ ĥåš å ᐅ`<title>`ᐊ éļéméñţ one two three four five six]"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "[Ţĥé våļûé öƒ åñ îð åţţŕîбûţé mûšţ бé ûñîqûé ţö þŕévéñţ öţĥéŕ îñšţåñçéš ƒŕöm бéîñĝ övéŕļööķéð бý åššîšţîvé ţéçĥñöļöĝîéš. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/duplicate-id/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone]"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "[ᐅ`[id]`ᐊ åţţŕîбûţéš öñ ţĥé þåĝé åŕé ñöţ ûñîqûé one two three four five six seven eight nine]"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "[ᐅ`[id]`ᐊ åţţŕîбûţéš öñ ţĥé þåĝé åŕé ûñîqûé one two three four five six seven eight]"
-  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "[Šçŕééñ ŕéåðéŕ ûšéŕš ŕéļý öñ ƒŕåmé ţîţļéš ţö ðéšçŕîбé ţĥé çöñţéñţš öƒ ƒŕåméš. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/frame-title/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen]"
   },

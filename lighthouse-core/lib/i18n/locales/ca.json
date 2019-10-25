@@ -137,15 +137,6 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "El document té un element `<title>`"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "El valor d'un atribut d'identificador ha de ser únic per impedir que les tecnologies d'assistència no passin per alt altres instàncies. [Obtén més informació](https://web.dev/duplicate-id/)."
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "Els atributs `[id]` de la pàgina no són únics"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "Els atributs `[id]` de la pàgina són únics"
-  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Els usuaris de lectors de pantalla depenen dels títols dels marcs perquè en descriguin el contingut. [Obtén més informació](https://web.dev/frame-title/)."
   },

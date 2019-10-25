@@ -137,15 +137,6 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Dokumentissa on `<title>`-elementti"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "Tunnusmääritteen arvon on oltava yksilöllinen, jotta avustustekniikat eivät jätä muita esiintymiä huomioimatta. [Lue lisää](https://web.dev/duplicate-id/)."
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "Sivulla olevat `[id]`-määritteet eivät ole yksilöllisiä"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "Sivulla olevat `[id]`-määritteet ovat yksilöllisiä"
-  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Näytönlukuohjelman käyttäjät saavat tietää kehysten sisällöt vain kehysten nimien avulla. [Lue lisää](https://web.dev/frame-title/)."
   },

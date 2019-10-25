@@ -137,15 +137,6 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "文件具備 `<title>` 元素"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "ID 屬性的值不可重複，以免輔助技術忽略其他例項。[瞭解詳情](https://web.dev/duplicate-id/)。"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "網頁中的 `[id]` 屬性重複"
-  },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "網頁中的 `[id]` 屬性沒有重複"
-  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "螢幕閱讀器使用者依賴頁框標題來瞭解頁框內容。[瞭解詳情](https://web.dev/frame-title/)。"
   },
