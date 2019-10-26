@@ -197,8 +197,8 @@ class GatherRunner {
    * main document request failure, a security issue, etc.
    * @param {LH.Gatherer.PassContext} passContext
    * @param {LH.Gatherer.LoadData} loadData
-   * @param {LighthouseError|undefined} navigationError
-   * @return {LighthouseError|undefined}
+   * @param {LH.LighthouseError|undefined} navigationError
+   * @return {LH.LighthouseError|undefined}
    */
   static getPageLoadError(passContext, loadData, navigationError) {
     const {networkRecords} = loadData;

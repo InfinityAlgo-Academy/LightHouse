@@ -5,24 +5,17 @@
   "manifest_version": 2,
   "description": "__MSG_appDescription__",
   "icons": {
-    "16": "images/lh_logo_bg.png",
-    "128": "images/lh_logo_bg.png"
+    "16": "images/lh_favicon_16x16.png",
+    "128": "images/lh_logo_128x128.png"
   },
   "default_locale": "en",
-  "background": {
-    "scripts": [
-      "scripts/lighthouse-ext-bundle.js"
-    ],
-    "persistent": false
-  },
   "permissions": [
     "activeTab",
-    "debugger",
     "storage"
   ],
   "browser_action": {
     "default_icon": {
-      "38": "images/lh_logo_icon.png"
+      "32": "images/lh_favicon_32x32.png"
     },
     "default_title": "Lighthouse",
     "default_popup": "popup.html"
