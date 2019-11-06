@@ -570,6 +570,7 @@ declare global {
         estimatedInputLatency: number;
         estimatedInputLatencyTs: number | undefined;
         maxPotentialFID: number | undefined;
+        layoutStability: number | undefined;
         totalBlockingTime: number;
         observedNavigationStart: number;
         observedNavigationStartTs: number;
