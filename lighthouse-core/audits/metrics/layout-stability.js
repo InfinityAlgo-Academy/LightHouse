@@ -6,13 +6,13 @@
 'use strict';
 
 const Audit = require('../audit');
-const ComputedLS = require('../../computed/metrics/layout-stability.js');
+const ComputedLS = require('../../computed/metrics/cumulative-layout-shift.js');
 const i18n = require('../../lib/i18n/i18n');
 
 const UIStrings = {
-  /** The name of the metric "Layout Stability" that indicates how much the page changes its layout while it loads. If big segments of the page shift their location during load, the layout instability will be higher. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
-  title: 'Layout Instability',
-  /** Description of the Layout Stability metric that indicates how much the page changes its layout while it loads. If big segments of the page shift their location during load, the layout instability will be higher. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** The name of the metric "Layout Stability" that indicates how much the page changes its layout while it loads. If big segments of the page shift their location during load, the Cumulative Layout Shift will be higher. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
+  title: 'Cumulative Layout Shift',
+  /** Description of the Layout Stability metric that indicates how much the page changes its layout while it loads. If big segments of the page shift their location during load, the Cumulative Layout Shift will be higher. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'The more the page\'s layout changes during its load, the higher the instability. ' +
       'Perfectly solid == 0%. Unpleasant experience >= 50%',
 };
@@ -30,7 +30,7 @@ class LayoutStability extends Audit {
    */
   static get meta() {
     return {
-      id: 'layout-stability',
+      id: 'cumulative-layout-shift',
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,

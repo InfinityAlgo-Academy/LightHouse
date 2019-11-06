@@ -209,9 +209,9 @@
       "numericValue": 122.537,
       "displayValue": "120 ms"
     },
-    "layout-stability": {
-      "id": "layout-stability",
-      "title": "Layout Instability",
+    "cumulative-layout-shift": {
+      "id": "cumulative-layout-shift",
+      "title": "Cumulative Layout Shift",
       "description": "The more the page's layout changes during its load, the higher the instability. Perfectly solid == 0%. Unpleasant experience >= 50%",
       "score": null,
       "scoreDisplayMode": "error",
@@ -3476,7 +3476,7 @@
           "group": "metrics"
         },
         {
-          "id": "layout-stability",
+          "id": "cumulative-layout-shift",
           "weight": 0,
           "group": "metrics"
         },
@@ -4418,7 +4418,7 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:layout-stability",
+        "name": "lh:audit:cumulative-layout-shift",
         "duration": 100,
         "entryType": "measure"
       },
@@ -5453,18 +5453,18 @@
       "lighthouse-core/audits/metrics/max-potential-fid.js | description": [
         "audits[max-potential-fid].description"
       ],
-      "lighthouse-core/audits/metrics/layout-stability.js | title": [
-        "audits[layout-stability].title"
+      "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": [
+        "audits[cumulative-layout-shift].title"
       ],
-      "lighthouse-core/audits/metrics/layout-stability.js | description": [
-        "audits[layout-stability].description"
+      "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": [
+        "audits[cumulative-layout-shift].description"
       ],
       "lighthouse-core/lib/lh-error.js | badTraceRecording": [
         {
           "values": {
             "errorCode": "NO_LAYOUT_JANK"
           },
-          "path": "audits[layout-stability].errorMessage"
+          "path": "audits[cumulative-layout-shift].errorMessage"
         },
         {
           "values": {

@@ -854,10 +854,10 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "T̂ím̂é t̂ó îńt̂ér̂áĉt́îv́ê íŝ t́ĥé âḿôún̂t́ ôf́ t̂ím̂é ît́ t̂ák̂éŝ f́ôŕ t̂h́ê ṕâǵê t́ô b́êćôḿê f́ûĺl̂ý îńt̂ér̂áĉt́îv́ê. [Ĺêár̂ń m̂ór̂é](https://web.dev/interactive)."
   },
-  "lighthouse-core/audits/metrics/layout-stability.js | description": {
+  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "T̂h́ê ḿôŕê t́ĥé p̂áĝé'ŝ ĺâýôút̂ ćĥán̂ǵêś d̂úr̂ín̂ǵ ît́ŝ ĺôád̂, t́ĥé ĥíĝh́êŕ t̂h́ê ín̂śt̂áb̂íl̂ít̂ý. P̂ér̂f́êćt̂ĺŷ śôĺîd́ == 0%. Ûńp̂ĺêáŝán̂t́ êx́p̂ér̂íêńĉé >= 50%"
   },
-  "lighthouse-core/audits/metrics/layout-stability.js | title": {
+  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
     "message": "L̂áŷóût́ Îńŝt́âb́îĺît́ŷ"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {

@@ -1266,13 +1266,13 @@
             "scoreDisplayMode": "binary",
             "title": "Form elements do not have associated labels"
         },
-        "layout-stability": {
+        "cumulative-layout-shift": {
             "description": "The more the page's layout changes during its load, the higher the instability. Perfectly solid == 0%. Unpleasant experience >= 50%",
             "errorMessage": "Something went wrong with recording the trace over your page load. Please run Lighthouse again. (NO_LAYOUT_JANK)",
-            "id": "layout-stability",
+            "id": "cumulative-layout-shift",
             "score": null,
             "scoreDisplayMode": "error",
-            "title": "Layout Instability"
+            "title": "Cumulative Layout Shift"
         },
         "layout-table": {
             "description": "A table being used for layout purposes should not include data elements, such as the th or caption elements or the summary attribute, because this can create a confusing experience for screen reader users. [Learn more](https://web.dev/layout-table/).",
@@ -3640,7 +3640,7 @@
                 },
                 {
                     "group": "metrics",
-                    "id": "layout-stability",
+                    "id": "cumulative-layout-shift",
                     "weight": 0.0
                 },
                 {
@@ -4319,7 +4319,7 @@
             {
                 "duration": 100.0,
                 "entryType": "measure",
-                "name": "lh:audit:layout-stability",
+                "name": "lh:audit:cumulative-layout-shift",
                 "startTime": 0.0
             },
             {
