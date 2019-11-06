@@ -76,6 +76,8 @@ const UIStrings = {
   columnTransferSize: 'Transfer Size',
   /** Label for a column in a data table; entries will be the names of arbitrary objects, e.g. the name of a Javascript library, or the name of a user defined timing event. */
   columnName: 'Name',
+  /** Label for a column in a data table; entries will be how much a predetermined budget has been exeeded by. Depending on the context, this number could represent an excess in quantity or size of network requests, or, an excess in the duration of time that it takes for the page to load.*/
+  columnOverBudget: 'Over Budget',
   /** Label for a row in a data table; entries will be the total number and byte size of all resources loaded by a web page. */
   totalResourceType: 'Total',
   /** Label for a row in a data table; entries will be the total number and byte size of all 'Document' resources loaded by a web page. */
@@ -94,6 +96,22 @@ const UIStrings = {
   otherResourceType: 'Other',
   /** Label for a row in a data table; entries will be the total number and byte size of all third-party resources loaded by a web page. 'Third-party resources are items loaded from URLs that aren't controlled by the owner of the web page. */
   thirdPartyResourceType: 'Third-party',
+  /** The name of the metric that marks the time at which the first text or image is painted by the browser. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
+  firstContentfulPaintMetric: 'First Contentful Paint',
+  /** The name of the metric that marks when the page has displayed content and the CPU is not busy executing the page's scripts. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
+  firstCPUIdleMetric: 'First CPU Idle',
+  /** The name of the metric that marks the time at which the page is fully loaded and is able to quickly respond to user input (clicks, taps, and keypresses feel responsive). Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
+  interactiveMetric: 'Time to Interactive',
+  /** The name of the metric that marks the time at which a majority of the content has been painted by the browser. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
+  firstMeaningfulPaintMetric: 'First Meaningful Paint',
+  /** The name of the metric that marks the estimated time between the page receiving input (a user clicking, tapping, or typing) and the page responding. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
+  estimatedInputLatencyMetric: 'Estimated Input Latency',
+  /** The name of a metric that calculates the total duration of blocking time for a web page. Blocking times are time periods when the page would be blocked (prevented) from responding to user input (clicks, taps, and keypresses will feel slow to respond). Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
+  totalBlockingTimeMetric: 'Total Blocking Time',
+  /** The name of the metric "Maximum Potential First Input Delay" that marks the maximum estimated time between the page receiving input (a user clicking, tapping, or typing) and the page responding. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
+  maxPotentialFIDMetric: 'Max Potential First Input Delay',
+  /** The name of the metric that summarizes how quickly the page looked visually complete. The name of this metric is largely abstract and can be loosely translated. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
+  speedIndexMetric: 'Speed Index',
 };
 
 const formats = {
@@ -136,21 +154,6 @@ function lookupLocale(locale) {
 }
 
 /**
- * Preformat values for the message based on how they're used, like KB or milliseconds.
- * @param {string} icuMessage
- * @param {MessageFormat} messageFormatter
- * @param {Record<string, string | number>} [values]
- * @return {Record<string, string | number>}
- */
-function _preformatValues(icuMessage, messageFormatter, values = {}) {
-  const clonedValues = JSON.parse(JSON.stringify(values));
-
-  const elements = collectAllCustomElementsFromICU(messageFormatter.getAst().elements);
-
-  return _processParsedElements(icuMessage, Array.from(elements.values()), clonedValues);
-}
-
-/**
  * Function to retrieve all 'argumentElement's from an ICU message. An argumentElement
  * is an ICU element with an argument in it, like '{varName}' or '{varName, number, bytes}'. This
  * differs from 'messageElement's which are just arbitrary text in a message.
@@ -188,16 +191,21 @@ function collectAllCustomElementsFromICU(icuElements, seenElementsById = new Map
 }
 
 /**
- * This function takes a list of ICU argumentElements and a map of values and
- * will apply Lighthouse custom formatting to the values based on the argumentElement
- * format style.
- *
+ * Returns a copy of the `values` object, with the values formatted based on how
+ * they will be used in the `icuMessage`, e.g. KB or milliseconds. The original
+ * object is unchanged.
  * @param {string} icuMessage
- * @param {Array<ArgumentElement>} argumentElements
- * @param {Record<string, string | number>} [values]
+ * @param {MessageFormat} messageFormatter
+ * @param {Readonly<Record<string, string | number>>} values
  * @return {Record<string, string | number>}
  */
-function _processParsedElements(icuMessage, argumentElements, values = {}) {
+function _preformatValues(icuMessage, messageFormatter, values) {
+  const elementMap = collectAllCustomElementsFromICU(messageFormatter.getAst().elements);
+  const argumentElements = [...elementMap.values()];
+
+  /** @type {Record<string, string | number>} */
+  const formattedValues = {};
+
   for (const {id, format} of argumentElements) {
     // Throw an error if a message's value isn't provided
     if (id && (id in values) === false) {
@@ -205,10 +213,14 @@ function _processParsedElements(icuMessage, argumentElements, values = {}) {
         `that wasn't provided`);
     }
 
-    // Direct `{id}` replacement and non-numeric values need no formatting.
-    if (!format || format.type !== 'numberFormat') continue;
-
     const value = values[id];
+
+    // Direct `{id}` replacement and non-numeric values need no formatting.
+    if (!format || format.type !== 'numberFormat') {
+      formattedValues[id] = value;
+      continue;
+    }
+
     if (typeof value !== 'number') {
       throw new Error(`ICU Message "${icuMessage}" contains a numeric reference ("${id}") ` +
         'but provided value was not a number');
@@ -217,28 +229,34 @@ function _processParsedElements(icuMessage, argumentElements, values = {}) {
     // Format values for known styles.
     if (format.style === 'milliseconds') {
       // Round all milliseconds to the nearest 10.
-      values[id] = Math.round(value / 10) * 10;
+      formattedValues[id] = Math.round(value / 10) * 10;
     } else if (format.style === 'seconds' && id === 'timeInMs') {
       // Convert all seconds to the correct unit (currently only for `timeInMs`).
-      values[id] = Math.round(value / 100) / 10;
+      formattedValues[id] = Math.round(value / 100) / 10;
     } else if (format.style === 'bytes') {
       // Replace all the bytes with KB.
-      values[id] = value / 1024;
+      formattedValues[id] = value / 1024;
+    } else {
+      // For all other number styles, the value isn't changed.
+      formattedValues[id] = value;
     }
   }
 
   // Throw an error if a value is provided but has no placeholder in the message.
   for (const valueId of Object.keys(values)) {
-    // errorCode is a special case always allowed to help ease of LHError use.
-    if (valueId === 'errorCode') continue;
+    if (valueId in formattedValues) continue;
 
-    if (!argumentElements.find(el => el.id === valueId)) {
-      throw new Error(`Provided value "${valueId}" does not match any placeholder in ` +
-        `ICU message "${icuMessage}"`);
+    // errorCode is a special case always allowed to help LHError ease-of-use.
+    if (valueId === 'errorCode') {
+      formattedValues.errorCode = values.errorCode;
+      continue;
     }
+
+    throw new Error(`Provided value "${valueId}" does not match any placeholder in ` +
+      `ICU message "${icuMessage}"`);
   }
 
-  return values;
+  return formattedValues;
 }
 
 /**
@@ -260,7 +278,7 @@ const _ICUMsgNotFoundMsg = 'ICU message not found in destination locale';
  * @param {Record<string, string | number>} [values]
  * @return {{formattedString: string, icuMessage: string}}
  */
-function _formatIcuMessage(locale, icuMessageId, uiStringMessage, values) {
+function _formatIcuMessage(locale, icuMessageId, uiStringMessage, values = {}) {
   const localeMessages = LOCALES[locale];
   if (!localeMessages) throw new Error(`Unsupported locale '${locale}'`);
   let localeMessage = localeMessages[icuMessageId] && localeMessages[icuMessageId].message;
@@ -273,7 +291,7 @@ function _formatIcuMessage(locale, icuMessageId, uiStringMessage, values) {
 
     // Warn the user that the UIString message != the `en` message ∴ they should update the strings
     if (!LOCALES.en[icuMessageId] || localeMessage !== LOCALES.en[icuMessageId].message) {
-      log.warn('i18n', `Message "${icuMessageId}" does not match its 'en' counterpart. ` +
+      log.verbose('i18n', `Message "${icuMessageId}" does not match its 'en' counterpart. ` +
         `Run 'i18n' to update.`);
     }
   }

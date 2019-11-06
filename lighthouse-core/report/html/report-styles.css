@@ -1390,6 +1390,11 @@
   display: block;
 }
 
+.lh-unknown pre {
+  overflow: scroll;
+  border: solid 1px var(--color-gray-200);
+}
+
 .lh-text__url > a {
   color: inherit;
   text-decoration: none;

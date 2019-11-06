@@ -61,6 +61,10 @@ declare global {
     export interface PublicGathererArtifacts {
       /** Console deprecation and intervention warnings logged by Chrome during page load. */
       ConsoleMessages: Crdp.Log.EntryAddedEvent[];
+      /** All the iframe elements in the page.*/
+      IFrameElements: Artifacts.IFrameElement[];
+      /** The contents of the main HTML document network resource. */
+      MainDocumentContent: string;
       /** Information on size and loading for all the images in the page. Natural size information for `picture` and CSS images is only available if the image was one of the largest 50 images. */
       ImageElements: Artifacts.ImageElement[];
       /** All the link elements on the page or equivalently declared in `Link` headers. @see https://html.spec.whatwg.org/multipage/links.html */
@@ -184,6 +188,24 @@ declare global {
         params: {name: string; value: string}[];
       }
 
+      export interface IFrameElement {
+        /** The `id` attribute of the iframe. */
+        id: string,
+        /** The `src` attribute of the iframe. */
+        src: string,
+        /** The iframe's ClientRect. @see https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect */
+        clientRect: {
+          top: number;
+          bottom: number;
+          left: number;
+          right: number;
+          width: number;
+          height: number;
+        },
+        /** If the iframe or an ancestor of the iframe is fixed in position. */
+        isPositionFixed: boolean,
+      }
+
       /** @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#Attributes */
       export interface LinkElement {
         /** The `rel` attribute of the link, normalized to lower case. @see https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types */
@@ -197,7 +219,7 @@ declare global {
         /** The `as` attribute of the link */
         as: string
         /** The `crossOrigin` attribute of the link */
-        crossOrigin: 'anonymous'|'use-credentials'|null
+        crossOrigin: string | null
         /** Where the link was found, either in the DOM or in the headers of the main document */
         source: 'head'|'body'|'headers'
       }
@@ -205,6 +227,8 @@ declare global {
       export interface ScriptElement {
         type: string | null
         src: string | null
+        /** The `id` property of the script element; null if it had no `id` or if `source` is 'network'. */
+        id: string | null
         async: boolean
         defer: boolean
         /** Path that uniquely identifies the node in the DOM */
@@ -476,6 +500,7 @@ declare global {
         firstPaint?: number;
         firstContentfulPaint: number;
         firstMeaningfulPaint?: number;
+        largestContentfulPaint?: number;
         traceEnd: number;
         load?: number;
         domContentLoaded?: number;
@@ -500,6 +525,8 @@ declare global {
         firstContentfulPaintEvt: TraceEvent;
         /** The trace event marking firstMeaningfulPaint, if it was found. */
         firstMeaningfulPaintEvt?: TraceEvent;
+        /** The trace event marking largestContentfulPaint, if it was found. */
+        largestContentfulPaintEvt?: TraceEvent;
         /** The trace event marking loadEventEnd, if it was found. */
         loadEvt?: TraceEvent;
         /** The trace event marking domContentLoadedEventEnd, if it was found. */
@@ -509,6 +536,8 @@ declare global {
          * firstMeaningfulPaintCandidate events had to be attempted.
          */
         fmpFellBack: boolean;
+        /** Whether LCP was invalidated without a new candidate. */
+        lcpInvalidated: boolean;
       }
 
       /** Information on a tech stack (e.g. a JS library) used by the page. */
@@ -523,6 +552,47 @@ declare global {
         version?: string;
         /** The package name on NPM, if it exists. */
         npm?: string;
+      }
+
+      export interface TimingSummary {
+        firstContentfulPaint: number;
+        firstContentfulPaintTs: number | undefined;
+        firstMeaningfulPaint: number;
+        firstMeaningfulPaintTs: number | undefined;
+        largestContentfulPaint: number | undefined;
+        largestContentfulPaintTs: number | undefined;
+        firstCPUIdle: number | undefined;
+        firstCPUIdleTs: number | undefined;
+        interactive: number | undefined;
+        interactiveTs: number | undefined;
+        speedIndex: number | undefined;
+        speedIndexTs: number | undefined;
+        estimatedInputLatency: number;
+        estimatedInputLatencyTs: number | undefined;
+        maxPotentialFID: number | undefined;
+        totalBlockingTime: number;
+        observedNavigationStart: number;
+        observedNavigationStartTs: number;
+        observedFirstPaint: number | undefined;
+        observedFirstPaintTs: number | undefined;
+        observedFirstContentfulPaint: number;
+        observedFirstContentfulPaintTs: number;
+        observedFirstMeaningfulPaint: number | undefined;
+        observedFirstMeaningfulPaintTs: number | undefined;
+        observedLargestContentfulPaint: number | undefined;
+        observedLargestContentfulPaintTs: number | undefined;
+        observedTraceEnd: number | undefined;
+        observedTraceEndTs: number | undefined;
+        observedLoad: number | undefined;
+        observedLoadTs: number | undefined;
+        observedDomContentLoaded: number | undefined;
+        observedDomContentLoadedTs: number | undefined;
+        observedFirstVisualChange: number;
+        observedFirstVisualChangeTs: number;
+        observedLastVisualChange: number;
+        observedLastVisualChangeTs: number;
+        observedSpeedIndex: number;
+        observedSpeedIndexTs: number;
       }
     }
   }

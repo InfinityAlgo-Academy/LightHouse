@@ -47,24 +47,18 @@ function requestHandler(request, response) {
     absoluteFilePath = path.join(__dirname, '/../../../', filePath);
   }
 
-  if (filePath === '/zone.js') {
-    // evaluateAsync previously had a bug that LH would fail if a page polyfilled Promise.
-    // We bring in an aggressive Promise polyfill (zone) to ensure we don't still fail.
-    const zonePath = '../../../node_modules/zone.js';
-    absoluteFilePath = path.join(__dirname, `${zonePath}/dist/zone.js`);
-  } else {
-    // Otherwise, disallow file requests outside of LH folder
-    const filePathDir = path.parse(absoluteFilePath).dir;
-    if (!filePathDir.startsWith(lhRootDirPath)) {
-      return readFileCallback(new Error('Disallowed path'));
-    }
+  // Disallow file requests outside of LH folder
+  const filePathDir = path.parse(absoluteFilePath).dir;
+  if (!filePathDir.startsWith(lhRootDirPath)) {
+    return readFileCallback(new Error('Disallowed path'));
   }
 
+  // Check if the file exists, then read it and serve it.
   fs.exists(absoluteFilePath, fsExistsCallback);
 
   function fsExistsCallback(fileExists) {
     if (!fileExists) {
-      return sendResponse(404, `404 - File not found. ${absoluteFilePath}`);
+      return sendResponse(404, `404 - File not found. ${filePath}`);
     }
     fs.readFile(absoluteFilePath, 'binary', readFileCallback);
   }

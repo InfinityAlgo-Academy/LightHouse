@@ -122,6 +122,7 @@ describe('Best Practices: unused css rules audit', () => {
       {
         url: 'file://a.css',
         transferSize: 100 * 1024,
+        resourceSize: 100 * 1024,
         resourceType: 'Stylesheet',
       },
     ];
@@ -189,6 +190,36 @@ describe('Best Practices: unused css rules audit', () => {
         assert.equal(result.items[0].wastedPercent, 75);
         assert.equal(result.items[1].wastedPercent, 50);
       });
+    });
+
+    it('handles phantom network records without size data', async () => {
+      const result = await UnusedCSSAudit.audit_(getArtifacts({
+        CSSUsage: {rules: [
+          {styleSheetId: 'a', used: true, startOffset: 0, endOffset: 60000}, // 40000 * 3 * 50% = 60000
+        ], stylesheets: [
+          {
+            header: {styleSheetId: 'a', sourceURL: 'file://a.html'},
+            content: `${generate('123', 40000)}`, // stylesheet size of 40000 * 3 uncompressed bytes
+          },
+        ]},
+      }), [
+        {
+          url: 'file://a.html',
+          transferSize: 100 * 1024 * 0.5, // compression ratio of 0.5
+          resourceSize: 100 * 1024,
+          resourceType: 'Document', // this is a document so it'll use the compressionRatio but not the raw size
+        },
+        {
+          url: 'file://a.html',
+          transferSize: 0,
+          resourceSize: 0,
+          resourceType: 'Document',
+        },
+      ]);
+
+      expect(result.items).toMatchObject([
+        {totalBytes: 40000 * 3 * 0.5, wastedPercent: 50},
+      ]);
     });
 
     it('does not include empty or small sheets', () => {
