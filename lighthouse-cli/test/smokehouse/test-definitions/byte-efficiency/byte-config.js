@@ -10,7 +10,7 @@
  * Config file for running byte efficiency smokehouse audits.
  */
 const config = {
-  extends: 'lighthouse:full',
+  extends: 'lighthouse:default',
   settings: {
     onlyAudits: [
       'accesskeys', // run axe on the page since we've had problems with interactions
