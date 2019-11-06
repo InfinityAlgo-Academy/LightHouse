@@ -425,6 +425,14 @@
             "scoreDisplayMode": "informative",
             "title": "Avoid chaining critical requests"
         },
+        "cumulative-layout-shift": {
+            "description": "The more the page's layout changes during its load, the higher the instability. Perfectly solid == 0%. Unpleasant experience >= 50%",
+            "errorMessage": "Something went wrong with recording the trace over your page load. Please run Lighthouse again. (NO_LAYOUT_JANK)",
+            "id": "cumulative-layout-shift",
+            "score": null,
+            "scoreDisplayMode": "error",
+            "title": "Cumulative Layout Shift"
+        },
         "custom-controls-labels": {
             "description": "Custom interactive controls have associated labels, provided by aria-label or aria-labelledby. [Learn more](https://web.dev/custom-controls-labels/).",
             "id": "custom-controls-labels",
@@ -1265,14 +1273,6 @@
             "score": 0.0,
             "scoreDisplayMode": "binary",
             "title": "Form elements do not have associated labels"
-        },
-        "cumulative-layout-shift": {
-            "description": "The more the page's layout changes during its load, the higher the instability. Perfectly solid == 0%. Unpleasant experience >= 50%",
-            "errorMessage": "Something went wrong with recording the trace over your page load. Please run Lighthouse again. (NO_LAYOUT_JANK)",
-            "id": "cumulative-layout-shift",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "title": "Cumulative Layout Shift"
         },
         "layout-table": {
             "description": "A table being used for layout purposes should not include data elements, such as the th or caption elements or the summary attribute, because this can create a confusing experience for screen reader users. [Learn more](https://web.dev/layout-table/).",
@@ -3639,7 +3639,6 @@
                     "weight": 0.0
                 },
                 {
-                    "group": "metrics",
                     "id": "cumulative-layout-shift",
                     "weight": 0.0
                 },
@@ -3648,7 +3647,6 @@
                     "weight": 0.0
                 },
                 {
-                    "group": "metrics",
                     "id": "total-blocking-time",
                     "weight": 0.0
                 },

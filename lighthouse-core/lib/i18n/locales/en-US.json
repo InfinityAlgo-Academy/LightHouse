@@ -839,6 +839,12 @@
   "lighthouse-core/audits/manual/pwa-page-transitions.js | title": {
     "message": "Page transitions don't feel like they block on the network"
   },
+  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
+    "message": "The more the page's layout changes during its load, the higher the instability. Perfectly solid == 0%. Unpleasant experience >= 50%"
+  },
+  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
+    "message": "Cumulative Layout Shift"
+  },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Estimated Input Latency is an estimate of how long your app takes to respond to user input, in milliseconds, during the busiest 5s window of page load. If your latency is higher than 50 ms, users may perceive your app as laggy. [Learn more](https://web.dev/estimated-input-latency)."
   },
@@ -853,12 +859,6 @@
   },
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "Time to interactive is the amount of time it takes for the page to become fully interactive. [Learn more](https://web.dev/interactive)."
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "The more the page's layout changes during its load, the higher the instability. Perfectly solid == 0%. Unpleasant experience >= 50%"
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "Cumulative Layout Shift"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "The maximum potential First Input Delay that your users could experience is the duration, in milliseconds, of the longest task. [Learn more](https://web.dev/lighthouse-max-potential-fid)."

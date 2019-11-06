@@ -839,6 +839,12 @@
   "lighthouse-core/audits/manual/pwa-page-transitions.js | title": {
     "message": "P̂áĝé t̂ŕâńŝít̂íôńŝ d́ôń't̂ f́êél̂ ĺîḱê t́ĥéŷ b́l̂óĉḱ ôń t̂h́ê ńêt́ŵór̂ḱ"
   },
+  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
+    "message": "T̂h́ê ḿôŕê t́ĥé p̂áĝé'ŝ ĺâýôút̂ ćĥán̂ǵêś d̂úr̂ín̂ǵ ît́ŝ ĺôád̂, t́ĥé ĥíĝh́êŕ t̂h́ê ín̂śt̂áb̂íl̂ít̂ý. P̂ér̂f́êćt̂ĺŷ śôĺîd́ == 0%. Ûńp̂ĺêáŝán̂t́ êx́p̂ér̂íêńĉé >= 50%"
+  },
+  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
+    "message": "Ĉúm̂úl̂át̂ív̂é L̂áŷóût́ Ŝh́îf́t̂"
+  },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Êśt̂ím̂át̂éd̂ Ín̂ṕût́ L̂át̂én̂ćŷ íŝ án̂ éŝt́îḿât́ê óf̂ h́ôẃ l̂ón̂ǵ ŷóûŕ âṕp̂ t́âḱêś t̂ó r̂éŝṕôńd̂ t́ô úŝér̂ ín̂ṕût́, îń m̂íl̂ĺîśêćôńd̂ś, d̂úr̂ín̂ǵ t̂h́ê b́ûśîéŝt́ 5ŝ ẃîńd̂óŵ óf̂ ṕâǵê ĺôád̂. Íf̂ ýôúr̂ ĺât́êńĉý îś ĥíĝh́êŕ t̂h́âń 50 m̂ś, ûśêŕŝ ḿâý p̂ér̂ćêív̂é ŷóûŕ âṕp̂ áŝ ĺâǵĝý. [L̂éâŕn̂ ḿôŕê](https://web.dev/estimated-input-latency)."
   },
@@ -853,12 +859,6 @@
   },
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "T̂ím̂é t̂ó îńt̂ér̂áĉt́îv́ê íŝ t́ĥé âḿôún̂t́ ôf́ t̂ím̂é ît́ t̂ák̂éŝ f́ôŕ t̂h́ê ṕâǵê t́ô b́êćôḿê f́ûĺl̂ý îńt̂ér̂áĉt́îv́ê. [Ĺêár̂ń m̂ór̂é](https://web.dev/interactive)."
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "T̂h́ê ḿôŕê t́ĥé p̂áĝé'ŝ ĺâýôút̂ ćĥán̂ǵêś d̂úr̂ín̂ǵ ît́ŝ ĺôád̂, t́ĥé ĥíĝh́êŕ t̂h́ê ín̂śt̂áb̂íl̂ít̂ý. P̂ér̂f́êćt̂ĺŷ śôĺîd́ == 0%. Ûńp̂ĺêáŝán̂t́ êx́p̂ér̂íêńĉé >= 50%"
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "L̂áŷóût́ Îńŝt́âb́îĺît́ŷ"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "T̂h́ê ḿâx́îḿûḿ p̂ót̂én̂t́îál̂ F́îŕŝt́ Îńp̂út̂ D́êĺâý t̂h́ât́ ŷóûŕ ûśêŕŝ ćôúl̂d́ êx́p̂ér̂íêńĉé îś t̂h́ê d́ûŕât́îón̂, ín̂ ḿîĺl̂íŝéĉón̂d́ŝ, óf̂ t́ĥé l̂ón̂ǵêśt̂ t́âśk̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/lighthouse-max-potential-fid)."

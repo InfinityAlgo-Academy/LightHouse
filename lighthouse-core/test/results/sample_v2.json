@@ -3477,8 +3477,7 @@
         },
         {
           "id": "cumulative-layout-shift",
-          "weight": 0,
-          "group": "metrics"
+          "weight": 0
         },
         {
           "id": "estimated-input-latency",
@@ -3486,8 +3485,7 @@
         },
         {
           "id": "total-blocking-time",
-          "weight": 0,
-          "group": "metrics"
+          "weight": 0
         },
         {
           "id": "render-blocking-resources",
