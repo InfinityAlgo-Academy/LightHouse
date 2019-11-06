@@ -6,8 +6,8 @@
 'use strict';
 
 const makeComputedArtifact = require('../computed-artifact.js');
-const MetricArtifact = require('./metric');
-const LHError = require('../../lib/lh-error');
+const MetricArtifact = require('./metric.js');
+const LHError = require('../../lib/lh-error.js');
 
 class LayoutStability extends MetricArtifact {
   /**
@@ -33,7 +33,7 @@ class LayoutStability extends MetricArtifact {
     // TODO: Validate that. http://crbug.com/1003459
     if (layoutShiftEvts.length === 0) {
       return Promise.resolve({
-        timing: 0
+        timing: 0,
       });
     }
 

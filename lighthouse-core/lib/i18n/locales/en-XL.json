@@ -840,7 +840,7 @@
     "message": "P̂áĝé t̂ŕâńŝít̂íôńŝ d́ôń't̂ f́êél̂ ĺîḱê t́ĥéŷ b́l̂óĉḱ ôń t̂h́ê ńêt́ŵór̂ḱ"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "T̂h́ê ḿôŕê t́ĥé p̂áĝé'ŝ ĺâýôút̂ ćĥán̂ǵêś d̂úr̂ín̂ǵ ît́ŝ ĺôád̂, t́ĥé ĥíĝh́êŕ t̂h́ê ín̂śt̂áb̂íl̂ít̂ý. P̂ér̂f́êćt̂ĺŷ śôĺîd́ == 0%. Ûńp̂ĺêáŝán̂t́ êx́p̂ér̂íêńĉé >= 50%"
+    "message": "T̂h́ê ḿôŕê t́ĥé p̂áĝé'ŝ ĺâýôút̂ ćĥán̂ǵêś d̂úr̂ín̂ǵ ît́ŝ ĺôád̂, t́ĥé ĥíĝh́êŕ t̂h́ê ín̂śt̂áb̂íl̂ít̂ý. P̂ér̂f́êćt̂ĺŷ śôĺîd́ == 0. Ûńp̂ĺêáŝán̂t́ êx́p̂ér̂íêńĉé >= 0.50."
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
     "message": "Ĉúm̂úl̂át̂ív̂é L̂áŷóût́ Ŝh́îf́t̂"

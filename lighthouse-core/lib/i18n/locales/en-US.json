@@ -840,7 +840,7 @@
     "message": "Page transitions don't feel like they block on the network"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "The more the page's layout changes during its load, the higher the instability. Perfectly solid == 0%. Unpleasant experience >= 50%"
+    "message": "The more the page's layout changes during its load, the higher the instability. Perfectly solid == 0. Unpleasant experience >= 0.50."
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
     "message": "Cumulative Layout Shift"
