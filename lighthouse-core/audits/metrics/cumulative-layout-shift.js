@@ -6,15 +6,15 @@
 'use strict';
 
 const Audit = require('../audit');
-const ComputedLS = require('../../computed/metrics/cumulative-layout-shift.js');
+const ComputedCLS = require('../../computed/metrics/cumulative-layout-shift.js');
 const i18n = require('../../lib/i18n/i18n');
 
 const UIStrings = {
-  /** The name of the metric "Layout Stability" that indicates how much the page changes its layout while it loads. If big segments of the page shift their location during load, the Cumulative Layout Shift will be higher. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
+  /** The name of the metric "Cumulative Layout Shift" that indicates how much the page changes its layout while it loads. If big segments of the page shift their location during load, the Cumulative Layout Shift will be higher. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
   title: 'Cumulative Layout Shift',
-  /** Description of the Layout Stability metric that indicates how much the page changes its layout while it loads. If big segments of the page shift their location during load, the Cumulative Layout Shift will be higher. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of the Cumulative Layout Shift metric that indicates how much the page changes its layout while it loads. If big segments of the page shift their location during load, the Cumulative Layout Shift will be higher. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'The more the page\'s layout changes during its load, the higher the instability. ' +
-      'Perfectly solid == 0%. Unpleasant experience >= 50%',
+      'Perfectly solid == 0. Unpleasant experience >= 0.50.',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -43,7 +43,7 @@ class LayoutStability extends Audit {
    */
   static get defaultOptions() {
     return {
-      // TODO: calibrate these
+      // TODO(paulirish): Calibrate these
       scorePODR: 0.1,
       scoreMedian: 0.5,
     };
@@ -58,7 +58,7 @@ class LayoutStability extends Audit {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const metricComputationData = {trace, devtoolsLog, settings: context.settings};
-    const metricResult = await ComputedLS.request(metricComputationData, context);
+    const metricResult = await ComputedCLS.request(metricComputationData, context);
 
     return {
       score: Audit.computeLogNormalScore(
@@ -67,7 +67,8 @@ class LayoutStability extends Audit {
         context.options.scoreMedian
       ),
       numericValue: metricResult.timing,
-      displayValue: `${(metricResult.timing * 10).toLocaleString()} %`, // TODO: i18n and figure out how this number should be shown
+      // TODO: i18n and figure out how this number should be shown
+      displayValue: metricResult.timing.toLocaleString(),
     };
   }
 }

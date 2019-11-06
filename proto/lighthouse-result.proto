@@ -56,7 +56,7 @@ enum LighthouseError {
   // A timeout in the initial connection to the debugger protocol.
   CRI_TIMEOUT = 20;
   // No Layout Stability trace events
-  NO_LAYOUT_JANK = 21;
+  NO_LAYOUT_SHIFT = 21;
 }
 
 // The overarching Lighthouse Response object (LHR)

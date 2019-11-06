@@ -360,9 +360,9 @@ const ERRORS = {
     lhrRuntimeError: true,
   },
 
-  // No Layout Stability trace events
-  NO_LAYOUT_JANK: {
-    code: 'NO_LAYOUT_JANK',
+  // Layout Shift trace events are found but without data
+  NO_LAYOUT_SHIFT: {
+    code: 'NO_LAYOUT_SHIFT',
     message: UIStrings.badTraceRecording,
   },
 

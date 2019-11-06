@@ -100,7 +100,7 @@ class Driver {
       // Used instead of 'toplevel' in Chrome 71+
       'disabled-by-default-lighthouse',
 
-      // Used for Layout Stability metric
+      // Used for Cumulative Layout Shift metric
       'loading',
 
       // All compile/execute events are captured by parent events in devtools.timeline..

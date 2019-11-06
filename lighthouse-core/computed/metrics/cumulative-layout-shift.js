@@ -16,7 +16,7 @@ class LayoutStability extends MetricArtifact {
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static computeSimulatedMetric(data, _) {
-    // @ts-ignore There's no difference between Simulated and Observed for LS
+    // @ts-ignore There's no difference between Simulated and Observed for CLS
     return LayoutStability.computeObservedMetric(data);
   }
 
@@ -25,24 +25,25 @@ class LayoutStability extends MetricArtifact {
    * @return {Promise<LH.Artifacts.Metric>}
    */
   static computeObservedMetric(data) {
-    const layoutJankEvts = data.traceOfTab.mainThreadEvents
+    const layoutShiftEvts = data.traceOfTab.mainThreadEvents
       .filter(evt => evt.name === 'LayoutShift')
       .filter(e => e.args && e.args.data && e.args.data.is_main_frame);
 
-    if (layoutJankEvts.length === 0) throw new LHError(LHError.errors.NO_LAYOUT_JANK);
+    // tdresser sez: In about 10% of cases, layout instability is 0, and there will be no trace events.
+    // TODO: Validate that. http://crbug.com/1003459
+    if (layoutShiftEvts.length === 0) {
+      return Promise.resolve({
+        timing: 0
+      });
+    }
 
-    // console.log({layoutJankEvts});
-    // console.log(layoutJankEvts.map(e => e.args.data));
-
-    const finalLayoutJank = layoutJankEvts.slice(-1)[0];
-    console.log(finalLayoutJank.args.data)
-
+    const finalLayoutShift = layoutShiftEvts.slice(-1)[0];
     const layoutStabilityScore =
-      finalLayoutJank.args &&
-      finalLayoutJank.args.data &&
-      finalLayoutJank.args.data.cumulative_score;
+      finalLayoutShift.args &&
+      finalLayoutShift.args.data &&
+      finalLayoutShift.args.data.cumulative_score;
 
-    if (layoutStabilityScore === undefined) throw new LHError(LHError.errors.NO_LAYOUT_JANK);
+    if (layoutStabilityScore === undefined) throw new LHError(LHError.errors.NO_LAYOUT_SHIFT);
 
     return Promise.resolve({
       timing: layoutStabilityScore,

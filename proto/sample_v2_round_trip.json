@@ -427,7 +427,7 @@
         },
         "cumulative-layout-shift": {
             "description": "The more the page's layout changes during its load, the higher the instability. Perfectly solid == 0%. Unpleasant experience >= 50%",
-            "errorMessage": "Something went wrong with recording the trace over your page load. Please run Lighthouse again. (NO_LAYOUT_JANK)",
+            "errorMessage": "Something went wrong with recording the trace over your page load. Please run Lighthouse again. (NO_LAYOUT_SHIFT)",
             "id": "cumulative-layout-shift",
             "score": null,
             "scoreDisplayMode": "error",
@@ -1571,7 +1571,7 @@
         },
         "metrics": {
             "description": "Collects all available metrics.",
-            "errorMessage": "Something went wrong with recording the trace over your page load. Please run Lighthouse again. (NO_LAYOUT_JANK)",
+            "errorMessage": "Something went wrong with recording the trace over your page load. Please run Lighthouse again. (NO_LAYOUT_SHIFT)",
             "id": "metrics",
             "score": null,
             "scoreDisplayMode": "error",
