@@ -30,6 +30,7 @@ Object {
   "interactiveTs": undefined,
   "largestContentfulPaint": undefined,
   "largestContentfulPaintTs": undefined,
+  "layoutStability": 0,
   "maxPotentialFID": 396.0000000000001,
   "observedDomContentLoaded": 560.294,
   "observedDomContentLoadedTs": 225414732309,
