@@ -1352,12 +1352,7 @@ class Driver {
    * @return {Promise<void>}
    */
   async beginEmulation(settings) {
-    if (settings.emulatedFormFactor === 'mobile') {
-      await emulation.enableNexus5X(this);
-    } else if (settings.emulatedFormFactor === 'desktop') {
-      await emulation.enableDesktop(this);
-    }
-
+    await emulation.emulate(this, settings);
     await this.setThrottling(settings, {useThrottling: true});
   }
 
