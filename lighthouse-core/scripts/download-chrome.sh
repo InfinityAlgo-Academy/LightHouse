@@ -1,4 +1,4 @@
-#!/usr/bin/env bash -x
+#!/usr/bin/env bash
 
 ##
 # @license Copyright 2017 Google Inc. All Rights Reserved.
@@ -7,6 +7,8 @@
 ##
 
 # Download chrome inside of our CI env.
+
+set -x
 
 if [ "$APPVEYOR" == "True" ]; then
   url="https://download-chromium.appspot.com/dl/Win?type=snapshots"
@@ -27,4 +29,7 @@ fi
 
 ls "$CHROME_PATH"
 ls chrome-win
+chrome-win/chrome.exe --version
 "$CHROME_PATH" --version
+
+exit 1
