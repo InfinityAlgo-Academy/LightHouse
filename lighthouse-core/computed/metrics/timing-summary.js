@@ -71,7 +71,7 @@ class TimingSummary {
       estimatedInputLatencyTs: estimatedInputLatency.timestamp,
       totalBlockingTime: totalBlockingTime.timing,
       maxPotentialFID: maxPotentialFID && maxPotentialFID.timing,
-      layoutStability: layoutStability && layoutStability.timing,
+      layoutStability: layoutStability && layoutStability.value,
 
       // Include all timestamps of interest from trace of tab
       observedNavigationStart: traceOfTab.timings.navigationStart,

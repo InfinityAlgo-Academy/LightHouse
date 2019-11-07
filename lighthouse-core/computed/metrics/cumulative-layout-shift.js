@@ -6,26 +6,23 @@
 'use strict';
 
 const makeComputedArtifact = require('../computed-artifact.js');
-const MetricArtifact = require('./metric.js');
+const TraceOfTab = require('../trace-of-tab.js');
 const LHError = require('../../lib/lh-error.js');
 
-class LayoutStability extends MetricArtifact {
+class LayoutStability {
   /**
-   * @param {LH.Artifacts.MetricComputationData} data
-   * @param {LH.Audit.Context} _
-   * @return {Promise<LH.Artifacts.LanternMetric>}
+   * @param {LH.Artifacts.MetricComputationDataInput} data
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Artifacts.MetricValue>}
    */
-  static computeSimulatedMetric(data, _) {
-    // @ts-ignore There's no difference between Simulated and Observed for CLS
-    return LayoutStability.computeObservedMetric(data);
-  }
+  static async compute_(data, context) {
+    const {trace} = data;
+    if (!trace) {
+      throw new Error('Did not provide neccessary data for CLS computation');
+    }
+    const traceOfTab = await TraceOfTab.request(trace, context);
 
-  /**
-   * @param {LH.Artifacts.MetricComputationData} data
-   * @return {Promise<LH.Artifacts.Metric>}
-   */
-  static computeObservedMetric(data) {
-    const layoutShiftEvts = data.traceOfTab.mainThreadEvents
+    const layoutShiftEvts = traceOfTab.mainThreadEvents
       .filter(evt => evt.name === 'LayoutShift')
       .filter(e => e.args && e.args.data && e.args.data.is_main_frame);
 
@@ -33,7 +30,8 @@ class LayoutStability extends MetricArtifact {
     // TODO: Validate that. http://crbug.com/1003459
     if (layoutShiftEvts.length === 0) {
       return Promise.resolve({
-        timing: 0,
+        value: 0,
+        explanation: 'No LayoutShift trace events found'
       });
     }
 
@@ -46,7 +44,7 @@ class LayoutStability extends MetricArtifact {
     if (layoutStabilityScore === undefined) throw new LHError(LHError.errors.NO_LAYOUT_SHIFT);
 
     return Promise.resolve({
-      timing: layoutStabilityScore,
+      value: layoutStabilityScore,
     });
   }
 }

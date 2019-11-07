@@ -62,13 +62,14 @@ class LayoutStability extends Audit {
 
     return {
       score: Audit.computeLogNormalScore(
-        metricResult.timing,
+        metricResult.value,
         context.options.scorePODR,
         context.options.scoreMedian
       ),
-      numericValue: metricResult.timing,
+      explanation: metricResult.explanation,
+      numericValue: metricResult.value,
       // TODO: i18n and figure out how this number should be shown
-      displayValue: metricResult.timing.toLocaleString(),
+      displayValue: metricResult.value.toLocaleString(),
     };
   }
 }

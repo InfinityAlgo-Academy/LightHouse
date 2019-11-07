@@ -477,6 +477,12 @@ declare global {
         timestamp?: number;
       }
 
+      /* Used in cases where a metric may not be exposing a timing per-say, but still a numeric value */
+      export interface MetricValue {
+        value: number;
+        explanation?: string;
+      }
+
       export interface NetworkAnalysis {
         rtt: number;
         additionalRttByOrigin: Map<string, number>;
