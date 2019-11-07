@@ -84,8 +84,8 @@ describe('CLI bin', function() {
     });
 
     it('should load the config from the preset', async () => {
-      cliFlags = {...cliFlags, preset: 'full'};
-      const actualConfig = require('../../../lighthouse-core/config/full-config.js');
+      cliFlags = {...cliFlags, preset: 'mixed-content'};
+      const actualConfig = require('../../../lighthouse-core/config/mixed-content-config.js');
       await bin.begin();
 
       expect(getRunLighthouseArgs()[2]).toEqual(actualConfig);

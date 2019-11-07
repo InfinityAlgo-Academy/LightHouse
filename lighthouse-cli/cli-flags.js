@@ -155,7 +155,7 @@ function getFlags(manualArgv) {
       .choices('output', printer.getValidOutputOptions())
       .choices('emulated-form-factor', ['mobile', 'desktop', 'none'])
       .choices('throttling-method', ['devtools', 'provided', 'simulate'])
-      .choices('preset', ['full', 'perf', 'mixed-content'])
+      .choices('preset', ['perf', 'mixed-content'])
       // force as an array
       // note MUST use camelcase versions or only the kebab-case version will be forced
       .array('blockedUrlPatterns')

@@ -14,13 +14,15 @@ const {registerLocaleData, lookupLocale} = require('../lighthouse-core/lib/i18n/
 
 /**
  * Return a version of the default config, filtered to only run the specified
- * categories.
+ * categories. If `lighthouse-plugin-publisher-ads` is in the list of
+ * `categoryIDs` the plugin will also be run.
  * @param {Array<string>} categoryIDs
  * @return {LH.Config.Json}
  */
 function getDefaultConfigForCategories(categoryIDs) {
   return {
     extends: 'lighthouse:default',
+    plugins: ['lighthouse-plugin-publisher-ads'],
     settings: {
       onlyCategories: categoryIDs,
     },
@@ -38,6 +40,7 @@ function runLighthouseInWorker(port, url, flags, categoryIDs) {
   // Default to 'info' logging level.
   flags.logLevel = flags.logLevel || 'info';
   flags.channel = 'devtools';
+  global.devtools = true;
   const config = getDefaultConfigForCategories(categoryIDs);
   const connection = new RawProtocol(port);
 

@@ -9,7 +9,7 @@
  * Config file for running byte efficiency smokehouse audits.
  */
 module.exports = {
-  extends: 'lighthouse:full',
+  extends: 'lighthouse:default',
   settings: {
     onlyCategories: ['performance'],
     precomputedLanternData: {
