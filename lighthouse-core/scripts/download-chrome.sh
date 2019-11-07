@@ -24,3 +24,5 @@ if [ -e "$CHROME_PATH" ]; then
 else
   wget "$url" --no-check-certificate -q -O chrome.zip && unzip -q chrome.zip
 fi
+
+"$CHROME_PATH" --version
