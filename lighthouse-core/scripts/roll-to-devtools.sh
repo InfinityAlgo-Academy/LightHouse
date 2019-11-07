@@ -19,7 +19,7 @@ check="\033[96m ✓\033[39m"
 if [[ -n "$1" ]]; then
   frontend_dir="$1"
 else
-  frontend_dir="$chromium_dir/third_party/blink/renderer/devtools/front_end"
+  frontend_dir="$chromium_dir/third_party/devtools-frontend/src/front_end"
 fi
 
 tests_dir="$frontend_dir/../../../web_tests/http/tests/devtools/audits"
