@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -x
 
 ##
 # @license Copyright 2017 Google Inc. All Rights Reserved.
@@ -25,4 +25,6 @@ else
   wget "$url" --no-check-certificate -q -O chrome.zip && unzip -q chrome.zip
 fi
 
+ls "$CHROME_PATH"
+ls chrome-win
 "$CHROME_PATH" --version
