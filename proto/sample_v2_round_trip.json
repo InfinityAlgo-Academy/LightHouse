@@ -426,8 +426,9 @@
             "title": "Avoid chaining critical requests"
         },
         "cumulative-layout-shift": {
-            "description": "The more the page's layout changes during its load, the higher the instability. Perfectly solid == 0. Unpleasant experience >= 0.50.",
+            "description": "The more the page's layout changes during its load, the higher the Cumulative Layout Shift. Perfectly solid == 0. Unpleasant experience >= 0.50.",
             "displayValue": "0",
+            "explanation": "No LayoutShift trace events found",
             "id": "cumulative-layout-shift",
             "numericValue": 0.0,
             "score": 1.0,
@@ -1575,6 +1576,7 @@
             "details": {
                 "items": [
                     {
+                        "cumulativeLayoutShift": 0.0,
                         "estimatedInputLatency": 16.0,
                         "firstCPUIdle": 4927.0,
                         "firstCPUIdleTs": 185608247190.0,
@@ -1584,7 +1586,6 @@
                         "firstMeaningfulPaintTs": 185607289048.0,
                         "interactive": 4927.0,
                         "interactiveTs": 185608247190.0,
-                        "layoutStability": 0.0,
                         "maxPotentialFID": 123.0,
                         "observedDomContentLoaded": 4901.0,
                         "observedDomContentLoadedTs": 185608220734.0,
@@ -4368,7 +4369,7 @@
             {
                 "duration": 100.0,
                 "entryType": "measure",
-                "name": "lh:computed:LayoutStability",
+                "name": "lh:computed:CumulativeLayoutShift",
                 "startTime": 0.0
             },
             {

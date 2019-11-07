@@ -12,7 +12,7 @@ const FirstMeaningfulPaint = require('./first-meaningful-paint.js');
 const LargestContentfulPaint = require('./largest-contentful-paint.js');
 const FirstCPUIdle = require('./first-cpu-idle.js');
 const Interactive = require('./interactive.js');
-const LayoutStability = require('./cumulative-layout-shift.js');
+const CumulativeLayoutShift = require('./cumulative-layout-shift.js');
 const SpeedIndex = require('./speed-index.js');
 const EstimatedInputLatency = require('./estimated-input-latency.js');
 const MaxPotentialFID = require('./max-potential-fid.js');
@@ -46,7 +46,7 @@ class TimingSummary {
     const largestContentfulPaint = await requestOrUndefined(LargestContentfulPaint, metricComputationData); // eslint-disable-line max-len
     const firstCPUIdle = await requestOrUndefined(FirstCPUIdle, metricComputationData);
     const interactive = await requestOrUndefined(Interactive, metricComputationData);
-    const layoutStability = await LayoutStability.request(metricComputationData, context); // eslint-disable-line max-len
+    const cumulativeLayoutShift = await CumulativeLayoutShift.request(trace, context); // eslint-disable-line max-len
     const maxPotentialFID = await requestOrUndefined(MaxPotentialFID, metricComputationData);
     const speedIndex = await requestOrUndefined(SpeedIndex, metricComputationData);
     const estimatedInputLatency = await EstimatedInputLatency.request(metricComputationData, context); // eslint-disable-line max-len
@@ -71,7 +71,7 @@ class TimingSummary {
       estimatedInputLatencyTs: estimatedInputLatency.timestamp,
       totalBlockingTime: totalBlockingTime.timing,
       maxPotentialFID: maxPotentialFID && maxPotentialFID.timing,
-      layoutStability: layoutStability && layoutStability.value,
+      cumulativeLayoutShift: cumulativeLayoutShift && cumulativeLayoutShift.value,
 
       // Include all timestamps of interest from trace of tab
       observedNavigationStart: traceOfTab.timings.navigationStart,

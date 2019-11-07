@@ -212,11 +212,12 @@
     "cumulative-layout-shift": {
       "id": "cumulative-layout-shift",
       "title": "Cumulative Layout Shift",
-      "description": "The more the page's layout changes during its load, the higher the instability. Perfectly solid == 0. Unpleasant experience >= 0.50.",
+      "description": "The more the page's layout changes during its load, the higher the Cumulative Layout Shift. Perfectly solid == 0. Unpleasant experience >= 0.50.",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
-      "displayValue": "0"
+      "displayValue": "0",
+      "explanation": "No LayoutShift trace events found"
     },
     "errors-in-console": {
       "id": "errors-in-console",
@@ -1269,7 +1270,7 @@
             "estimatedInputLatency": 16,
             "totalBlockingTime": 117,
             "maxPotentialFID": 123,
-            "layoutStability": 0,
+            "cumulativeLayoutShift": 0,
             "observedNavigationStart": 0,
             "observedNavigationStartTs": 185603319912,
             "observedFirstPaint": 3969,
@@ -4467,7 +4468,7 @@
       },
       {
         "startTime": 0,
-        "name": "lh:computed:LayoutStability",
+        "name": "lh:computed:CumulativeLayoutShift",
         "duration": 100,
         "entryType": "measure"
       },
