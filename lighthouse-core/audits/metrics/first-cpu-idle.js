@@ -19,6 +19,7 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 const requiredArtifacts = declareRequiredArtifacts('traces', 'devtoolsLogs');
 
+// This would actually be on Audit.
 /**
  * @template T
  * @param {...keyof T} artifactKeys
