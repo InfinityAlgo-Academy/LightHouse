@@ -28,6 +28,9 @@ Object {
       "path": "metrics/first-meaningful-paint",
     },
     Object {
+      "path": "metrics/largest-contentful-paint",
+    },
+    Object {
       "path": "load-fast-enough-for-pwa",
     },
     Object {
@@ -743,6 +746,11 @@ Object {
           "group": "metrics",
           "id": "first-meaningful-paint",
           "weight": 1,
+        },
+        Object {
+          "group": "metrics",
+          "id": "largest-contentful-paint",
+          "weight": 0,
         },
         Object {
           "group": "metrics",

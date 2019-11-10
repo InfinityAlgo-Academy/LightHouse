@@ -30,10 +30,10 @@
     "message": "目的のユーザー補助機能を実行するには、一部の ARIA 親役割に特定の子役割を含める必要があります。[詳細](https://web.dev/aria-required-children/)"
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | failureTitle": {
-    "message": "Elements with an ARIA `[role]` that require children to contain a specific `[role]` are missing some or all of those required children."
+    "message": "ARIA `[role]` が指定されている要素には、特定の `[role]` を含む子を指定する必要がありますが、その一部またはすべてが指定されていません。"
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | title": {
-    "message": "Elements with an ARIA `[role]` that require children to contain a specific `[role]` have all required children."
+    "message": "ARIA `[role]` が指定されている要素に、特定の `[role]` を含む必要な子がすべて指定されています。"
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | description": {
     "message": "目的のユーザー補助機能を正しく実行するには、一部の ARIA 子役割を特定の親役割に含める必要があります。[詳細](https://web.dev/aria-required-parent/)"
@@ -267,10 +267,10 @@
     "message": "スクリーン リーダーには、表内の移動を補助する機能があります。`[headers]` 属性を使用している `<td>` セルが同じ表の他のセルのみを参照するように設定すると、スクリーン リーダーの利便性が向上する可能性があります。[詳細](https://web.dev/td-headers-attr/)"
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | failureTitle": {
-    "message": "Cells in a `<table>` element that use the `[headers]` attribute refer to an element `id` not found within the same table."
+    "message": "`<table>` 要素で `[headers]` 属性を使用しているセルが、同じ表内にない要素 `id` を参照しています。"
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | title": {
-    "message": "Cells in a `<table>` element that use the `[headers]` attribute refer to table cells within the same table."
+    "message": "`<table>` 要素で `[headers]` 属性を使用しているセルは、同じ表内の表セルを参照しています。"
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | description": {
     "message": "スクリーン リーダーには、表内の移動を補助する機能があります。表のヘッダーが常に一部のセルを参照するように設定すると、スクリーン リーダーの利便性が向上する可能性があります。[詳細](https://web.dev/th-has-data-cells/)"
@@ -450,7 +450,7 @@
     "message": "{itemCount,plural, =1{1 件のチェーンが見つかりました}other{# 件のチェーンが見つかりました}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "クリティカルなリクエストの深さの最小化"
+    "message": "クリティカル リクエスト チェーンを回避してください"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "非推奨 / 警告"
@@ -513,7 +513,7 @@
     "message": "値"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "ブラウザ エンジニアは、ページに含まれる DOM の要素数が 1,500 個を超えないようにすることを推奨しています。ツリーの深さは 32 要素まで、子や親の要素数は 60 個までにするのが最適です。DOM サイズが大きいと、メモリの使用量が増え、[スタイルの計算](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)に時間がかかり、[レイアウトのリフロー](https://developers.google.com/speed/articles/reflow)というコストが発生する可能性があります。[詳細](https://web.dev/dom-size)"
+    "message": "DOM サイズが大きいと、メモリの使用量が増え、[スタイルの計算](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)に時間がかかり、[レイアウトのリフロー](https://developers.google.com/speed/articles/reflow)というコストが発生します。[詳細](https://web.dev/dom-size)"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 件の要素}other{# 件の要素}}"
@@ -741,7 +741,7 @@
     "message": "カテゴリ"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | description": {
-    "message": "Consider reducing the time spent parsing, compiling and executing JS. You may find delivering smaller JS payloads helps with this. [Learn more](https://web.dev/mainthread-work-breakdown)"
+    "message": "JavaScript の解析、コンパイル、実行にかかる時間を短縮することをご検討ください。JavaScript ペイロードのサイズを抑えるなどの方法があります。[詳細](https://web.dev/mainthread-work-breakdown)"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
     "message": "メインスレッド処理の最小化"
@@ -762,7 +762,7 @@
     "message": "ページごとに 1 つの URL を使用している"
   },
   "lighthouse-core/audits/manual/pwa-page-transitions.js | description": {
-    "message": "Transitions should feel snappy as you tap around, even on a slow network. This experience is key to a user's perception of performance. [Learn more](https://web.dev/pwa-page-transitions)."
+    "message": "遅いネットワークであってもタップしたときに画面がすばやく切り替われば、ユーザーはパフォーマンスの遅さを感じにくくなります。[詳細](https://web.dev/pwa-page-transitions)"
   },
   "lighthouse-core/audits/manual/pwa-page-transitions.js | title": {
     "message": "ページの切り替え時、ネットワークが遅いという印象を与えない"
@@ -774,7 +774,7 @@
     "message": "First Contentful Paint は、テキストまたは画像が初めてペイントされるまでにかかった時間です。[詳細](https://web.dev/first-contentful-paint)"
   },
   "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "First CPU Idle marks the first time at which the page's main thread is quiet enough to handle input.  [Learn more](https://web.dev/first-cpu-idle)."
+    "message": "CPU の初回アイドルは、ページのメインスレッド処理が静止し、初めて入力の処理が可能になるまでにかかった時間です。[詳細](https://web.dev/first-cpu-idle)"
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "First Meaningful Paint は、ページの主要なコンテンツが可視化されるまでにかかった時間です。[詳細](https://web.dev/first-meaningful-paint)"
@@ -1053,7 +1053,7 @@
     "message": "第三者コードの影響を抑えてください"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "第三者コードの利用"
+    "message": "第三者の使用の最小化"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "最初の 1 バイトまでの時間は、サーバーが応答を返すまでにかかった時間を表しています。[詳細](https://web.dev/time-to-first-byte)"
@@ -1066,6 +1066,9 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "サーバーの応答時間が遅い（TTFB）"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "継続時間"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "開始時間"
@@ -1456,6 +1459,99 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "警告: "
+  },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "アニメーション コンテンツの場合は、[amp-anim](https://amp.dev/documentation/components/amp-anim/) を使用して、コンテンツをオフスクリーンにしたまま CPU 使用量を最小限に抑えることができます。"
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "最初のビューポートの外側で自動的に遅延読み込みされる画像に対し、有効な `amp-img` タグを使用していることを確認します。[詳細](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)"
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "[AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) などのツールを使用して、[AMP レイアウトをサーバーサイドでレンダリング](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)します。"
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "[AMP のドキュメント](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/)で、使用しているスタイルがすべてサポートされているか確認します。"
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "`amp-img` 要素では `srcset` 属性を使用して、画面サイズに応じてどの画像アセットを使用するかを指定できます。[詳細](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)"
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "すべての `amp-img` コンポーネントを WebP 形式で表示し、他のブラウザには適切な代替画像を表示することを検討してください。[詳細](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)"
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "大きなリストをレンダリングする場合は、Component Dev Kit（CDK）で仮想スクロールを行うことを検討してください。[詳細](https://web.dev/virtualize-lists-with-angular-cdk/)"
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "JavaScript バンドルのサイズを最小限に抑えるには、[ルートレベルのコード分割](https://web.dev/route-level-code-splitting-in-angular/)を適用します。また、[Angular Service Worker](https://web.dev/precaching-with-the-angular-service-worker/) でアセットを事前キャッシュすることも検討してください。"
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "Angular CLI を使用している場合は、本番環境モードでビルドを生成していることを確認します。[詳細](https://angular.io/guide/deployment#enable-runtime-production-mode)"
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "Angular CLI を使用している場合は、ソースマップを本番環境用ビルドに含め、バンドルを調べられるようにします。[詳細](https://angular.io/guide/deployment#inspect-the-bundles)"
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "ナビゲーションの速度を向上するにはルートをプリロードします。[詳細](https://web.dev/route-preloading-in-angular/)"
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "画像のブレークポイントを管理するには、Component Dev Kit（CDK）の `BreakpointObserver` ユーティリティを使用することを検討してください。[詳細](https://material.angular.io/cdk/layout/overview)"
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "JavaScript アセットをバンドルしていない場合は、[baler](https://github.com/magento/baler) の使用を検討してください。"
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "Magento の組み込みの [JavaScript バンドルと圧縮](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)を無効にします。代わりに [baler](https://github.com/magento/baler/) の使用を検討してください。"
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "[カスタム フォントを定義](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)する際に `@font-display` を指定します。"
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "ウェブ プラットフォームの[遅延読み込み](https://web.dev/native-lazy-loading)機能を活用できるように、ご使用のサービスとカタログのテンプレートを編集することを検討してください。"
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "Magento の [Varnish 統合](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)を使用します。"
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "ストアのデベロッパー設定で [CSS ファイルを圧縮] オプションを有効にします。[詳細](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "[Terser](https://www.npmjs.com/package/terser) を使用して静的なコンテンツ実装からの JavaScript アセットをすべて圧縮するとともに、組み込みの圧縮機能を無効にします。"
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "Magento の組み込みの [JavaScript バンドル](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)を無効にします。"
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "画像を最適化するには、[Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) にさまざまな第三者の拡張機能がありますので、検索してみてください。"
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "[テーマのレイアウトを編集](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)して、事前接続または DNS プリフェッチのリソースヒントを追加できます。"
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "[テーマのレイアウトを編集](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)して、`<link rel=preload>` タグを追加できます。"
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "より新しい画像形式を活用するには、[Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) にさまざまな第三者の拡張機能がありますので、検索してみてください。"
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "ページに多くの繰り返し要素をレンダリングする場合は、作成される DOM ノードの数が最小限で済むように、`react-window` などの「ウィンドウ設定」用のライブラリを使用することを検討してください。[詳細](https://web.dev/virtualize-long-lists-react-window/)また、ランタイム パフォーマンスの向上に Effect フックを使用している場合は、[shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action)、[PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent)、[React.memo](https://reactjs.org/docs/react-api.html#reactmemo) を使用した不要な再レンダリングを抑えるとともに、特定の依存関係が変化するところまでのみ[効果をスキップ](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects)します。"
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "React Router を使用している場合、`<Redirect>` コンポーネントを使った[ナビゲーションのルーティング](https://reacttraining.com/react-router/web/api/Redirect)は最小限にします。"
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "React コンポーネントをサーバーサイドでレンダリングする場合は、クライアントでマークアップの全体を一度に受信するのではなく一部ずつ受信してデータを挿入できるように、`renderToNodeStream()` または `renderToStaticNodeStream()` を使用することを検討してください。[詳細](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "ご使用のビルドシステムで CSS ファイルが自動的に圧縮される場合は、アプリケーションの本番環境用ビルドをデプロイしていることを確認します。確認には React Developer Tools 拡張機能を使用できます。[詳細](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "ご使用のビルドシステムで JS ファイルが自動的に圧縮される場合は、アプリケーションの本番環境用ビルドをデプロイしていることを確認します。確認には React Developer Tools 拡張機能を使用できます。[詳細](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "サーバーサイドのレンダリングを行わない場合は、`React.lazy()` で [JavaScript バンドルを分割](https://web.dev/code-splitting-suspense/)します。それ以外は、[loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/) などの第三者ライブラリを使用してコードを分割します。"
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "Profiler API を採用している React DevTools Profiler を使用して、コンポーネントのレンダリング性能を測定します。[詳細](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "GIF を HTML5 動画として埋め込み可能なサービスにアップロードすることをご検討ください。"

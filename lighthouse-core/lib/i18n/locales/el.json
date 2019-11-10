@@ -450,7 +450,7 @@
     "message": "{itemCount,plural, =1{Βρέθηκε 1 αλυσίδα}other{Βρέθηκαν # αλυσίδες}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "Ελαχιστοποίηση βάθους κρίσιμων αιτημάτων"
+    "message": "Αποφύγετε τη συσσώρευση σημαντικών αιτημάτων"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "Κατάργηση / Προειδοποίηση"
@@ -513,7 +513,7 @@
     "message": "Τιμή"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "Οι μηχανικοί προγραμμάτων περιήγησης συνιστούν οι σελίδες να περιέχουν λιγότερα από 1.500 στοιχεία DOM. Το ιδανικό είναι μια δενδρική δομή με βάθος έως 32 στοιχεία και λιγότερα από 60 θυγατρικά/γονικά στοιχεία. Ένα μεγάλο DOM μπορεί να αυξήσει τη χρήση της μνήμης, να προκαλέσει [υπολογισμούς στιλ](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) μεγαλύτερης διάρκειας και να δημιουργήσει [ανανεώσεις ροών διάταξης](https://developers.google.com/speed/articles/reflow) υψηλού κόστους. [Μάθετε περισσότερα](https://web.dev/dom-size)."
+    "message": "Ένα μεγάλο DOM μπορεί να αυξήσει τη χρήση της μνήμης, να προκαλέσει [υπολογισμούς στιλ](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) μεγαλύτερης διάρκειας και να δημιουργήσει [ανανεώσεις ροών διάταξης](https://developers.google.com/speed/articles/reflow) υψηλού κόστους. [Μάθετε περισσότερα](https://web.dev/dom-size)."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 στοιχείο}other{# στοιχεία}}"
@@ -1053,7 +1053,7 @@
     "message": "Μείωση αντίκτυπου του κώδικα τρίτου μέρους"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "Χρήση κώδικα τρίτου μέρους"
+    "message": "Ελαχιστοποίηση χρήσης τρίτων μερών"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Ο χρόνος μέχρι το πρώτο byte προσδιορίζει τον χρόνο που χρειάζεται για την αποστολή μιας απόκρισης από τον διακομιστή σας. [Μάθετε περισσότερα](https://web.dev/time-to-first-byte)."
@@ -1066,6 +1066,9 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Οι χρόνοι απόκρισης διακομιστή είναι χαμηλοί (TTFB)"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Διάρκεια"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "Ώρα έναρξης"
@@ -1456,6 +1459,99 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Προειδοποιήσεις: "
+  },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "Για περιεχόμενο κινούμενης εικόνας, χρησιμοποιήστε το [amp-anim](https://amp.dev/documentation/components/amp-anim/) για να ελαχιστοποιήσετε τη χρήση CPU ενώ το περιεχόμενο παραμένει εκτός οθόνης."
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "Βεβαιωθείτε ότι χρησιμοποιείτε έγκυρες ετικέτες `amp-img` για τις εικόνες σας, για τις οποίες πραγματοποιείται αργή φόρτωση εκτός της πρώτης θύρας προβολής. [Μάθετε περισσότερα](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "Χρησιμοποιήστε εργαλεία όπως το [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) για να [αποδώσετε διατάξεις AMP στον διακομιστή](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "Ανατρέξτε στην [τεκμηρίωση AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) για να βεβαιωθείτε ότι υποστηρίζονται όλα τα στιλ σας."
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "Το στοιχείο `amp-img` υποστηρίζει το χαρακτηριστικό `srcset`, ορίζοντας ποια στοιχεία εικόνας θα χρησιμοποιούνται, βάσει μεγέθους οθόνης.  [Μάθετε περισσότερα](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "Μπορείτε να εμφανίσετε όλα τα στοιχεία `amp-img` σε μορφές WebP, ορίζοντας μια κατάλληλη εναλλακτική για άλλα προγράμματα περιήγησης. [Μάθετε περισσότερα](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "Μπορείτε να χρησιμοποιήσετε εικονική κύλιση με το Component Dev Kit (CDK), όταν αποδίδονται πολύ μεγάλες λίστες. [Μάθετε περισσότερα](https://web.dev/virtualize-lists-with-angular-cdk/)."
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "Εφαρμόστε [διαχωρισμό κώδικα σε επίπεδο διαδρομής](https://web.dev/route-level-code-splitting-in-angular/) για να ελαχιστοποιήσετε το μέγεθος των πακέτων JavaScript. Μπορείτε επίσης να πραγματοποιήσετε πρόωρη προσωρινή αποθήκευση στοιχείων με το[Angular service worker](https://web.dev/precaching-with-the-angular-service-worker/)."
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "Εάν χρησιμοποιείτε το Angular CLI, βεβαιωθείτε ότι οι εκδόσεις δημιουργούνται σε λειτουργία παραγωγής. [Μάθετε περισσότερα](https://angular.io/guide/deployment#enable-runtime-production-mode)."
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "Εάν χρησιμοποιείτε το Angular CLI, συμπεριλάβετε χάρτες πηγής στην έκδοση παραγωγής σας, για να ελέγξετε τα πακέτα σας. [Μάθετε περισσότερα](https://angular.io/guide/deployment#inspect-the-bundles)."
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "Προφορτώστε τις διαδρομές εκ των προτέρων, για να επιταχύνετε την πλοήγηση. [Μάθετε περισσότερα](https://web.dev/route-preloading-in-angular/)."
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "Μπορείτε να χρησιμοποιήσετε το βοηθητικό πρόγραμμα `BreakpointObserver` στο Component Dev Kit (CDK) για να διαχειρίζεστε τα σημεία διακοπής εικόνας. [Μάθετε περισσότερα](https://material.angular.io/cdk/layout/overview)."
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "Εάν δεν δημιουργείτε δικά σας στοιχεία JavaScript, σκεφτείτε να χρησιμοποιήσετε [δεματοποιητή](https://github.com/magento/baler)."
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "Απενεργοποιήστε την ενσωματωμένη [πακετοποίηση και ελαχιστοποίηση JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html), και δοκιμάστε να χρησιμοποιήσετε αντ' αυτού τον [δεματοποιητή](https://github.com/magento/baler/)."
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "Καθορίστε το `@font-display` όταν [ορίζετε προσαρμοσμένες γραμματοσειρές](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)."
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "Μπορείτε να τροποποιήσετε το προϊόν σας και τα πρότυπα καταλόγου για να αξιοποιήσετε τη λειτουργία [αργής φόρτωσης](https://web.dev/native-lazy-loading) της πλατφόρμας ιστού."
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "Χρησιμοποιήστε την[ενσωμάτωση Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) του Magento."
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "Ενεργοποιήστε την επιλογή Ελαχιστοποίηση αρχείων CSS στις ρυθμίσεις Προγραμματιστή του καταστήματός σας. [Μάθετε περισσότερα](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "Χρησιμοποιήστε το [Terser](https://www.npmjs.com/package/terser) για να ελαχιστοποιήσετε όλα τα στοιχεία JavaScript από ανάπτυξη στατικού περιεχομένου και να απενεργοποιήσετε την ενσωματωμένη λειτουργία ελαχιστοποίησης."
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "Απενεργοποιήστε την ενσωματωμένη [πακετοποίηση JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) του Magento."
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "Μπορείτε να πραγματοποιήσετε αναζήτηση στο [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) για διάφορες επεκτάσεις τρίτου μέρους, για να βελτιστοποιήσετε τις εικόνες."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "Υποδείξεις πόρων πρόωρης σύνδεσης ή πρόωρης λήψης dns μπορούν να προστεθούν [τροποποιώντας τη διάταξη ενός θέματος](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "Οι ετικέτες `<link rel=preload>` μπορούν να προστεθούν [τροποποιώντας τη διάταξη ενός θέματος](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "Μπορείτε να πραγματοποιήσετε αναζήτηση στο [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) για διάφορες επεκτάσεις τρίτων μερών, ώστε να αξιοποιήσετε νεότερες μορφές εικόνας."
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "Μπορείτε να χρησιμοποιήσετε μια βιβλιοθήκη \"παραθύρων\", όπως η `react-window` για να ελαχιστοποιήσετε τον αριθμό κόμβων DOM που δημιουργήθηκαν, εάν αποδίδετε πολλά επαναλαμβανόμενα στοιχεία στη σελίδα. [Μάθετε περισσότερα](https://web.dev/virtualize-long-lists-react-window/). Επίσης, ελαχιστοποιήστε τις περιττές επαναλαμβανόμενες αποδόσεις, χρησιμοποιώντας το [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), το [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) ή το[React.memo](https://reactjs.org/docs/react-api.html#reactmemo) και [παραβλέψτε τα εφέ](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) μόνο μέχρι να αλλάξουν συγκεκριμένες εξαρτήσεις, εάν χρησιμοποιείτε το σημείο ενδιαφέροντος Εφέ για να βελτιώσετε την απόδοση χρόνου εκτέλεσης (runtime)."
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "Εάν χρησιμοποιείτε το React Router, ελαχιστοποιήστε τη χρήση του στοιχείου `<Redirect>` για [πλοηγήσεις διαδρομής](https://reacttraining.com/react-router/web/api/Redirect)."
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "Εάν πραγματοποιείτε απόδοση στοιχείων React στον διακομιστή, μπορείτε να χρησιμοποιήσετε το `renderToNodeStream()` ή το `renderToStaticNodeStream()` για να επιτρέψετε στον υπολογιστή-πελάτη να λαμβάνει και να ενισχύει διαφορετικά μέρη της σήμανσης, αντί για όλα μαζί. [Μάθετε περισσότερα](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "Εάν το σύστημα έκδοσής σας ελαχιστοποιεί τα αρχεία CSS σας αυτόματα, βεβαιωθείτε ότι αναπτύσσετε την έκδοση παραγωγής της εφαρμογής σας. Μπορείτε να το ελέγξετε αυτό από την επέκταση React Developer Tools. [Μάθετε περισσότερα](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "Εάν το σύστημα έκδοσής σας ελαχιστοποιεί τα αρχεία JS αυτόματα, βεβαιωθείτε ότι αναπτύσσετε την έκδοση παραγωγής της εφαρμογής σας. Μπορείτε να το ελέγξετε αυτό από την επέκταση React Developer Tools. [Μάθετε περισσότερα](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "Εάν δεν πραγματοποιείτε απόδοση στον διακομιστή, [χωρίστε τα πακέτα JavaScript](https://web.dev/code-splitting-suspense/) με το `React.lazy()`. Διαφορετικά, χωρίστε με χρήση κώδικα, χρησιμοποιώντας μια βιβλιοθήκη τρίτου μέρους, όπως τα [στοιχεία με δυνατότητα φόρτωσης](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "Χρησιμοποιήστε το React DevTools Profiler, το οποίο χρησιμοποιεί το API του Profiler, για να μετρήσετε τις επιδόσεις απόδοσης των στοιχείων σας. [Μάθετε περισσότερα.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "Εξετάστε το ενδεχόμενο μεταφόρτωσης του GIF σε μια υπηρεσία η οποία θα το διαθέσει για ενσωμάτωση ως βίντεο HTML5."

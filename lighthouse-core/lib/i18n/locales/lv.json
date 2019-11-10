@@ -450,7 +450,7 @@
     "message": "{itemCount,plural, =1{Atrasta 1 ķēde}zero{Atrastas # ķēdes}one{Atrasta # ķēde}other{Atrastas # ķēdes}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "Kritisko pieprasījumu dziļuma samazināšana"
+    "message": "Novērsiet kritisko pieprasījumu ķēdes"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "Pārtraukšana/brīdinājums"
@@ -513,7 +513,7 @@
     "message": "Vērtība"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "Pārlūkprogrammas inženieri iesaka, lai lapā nebūtu vairāk par 1500 DOM elementiem. Ieteicams, lai koka dziļums nepārsniegtu 32 elementus un 60 bērnelementus/vecākelementus. Liels DOM elements var palielināt atmiņas lietojumu, radīt ilgākus [stila aprēķinus](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) un izraisīt [izkārtojuma plūduma sakārtošanu](https://developers.google.com/speed/articles/reflow). [Uzziniet vairāk](https://web.dev/dom-size)."
+    "message": "Liels DOM koks palielina atmiņas lietojumu, paildzina [stila aprēķinus](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) un izraisa dārgu [izkārtojuma plūduma sakārtošanu](https://developers.google.com/speed/articles/reflow). [Uzziniet vairāk](https://web.dev/dom-size)."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 elements}zero{# elementu}one{# elements}other{# elementi}}"
@@ -1053,7 +1053,7 @@
     "message": "Samaziniet trešo pušu koda ietekmi"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "Trešo pušu lietojums"
+    "message": "Samaziniet trešās puses koda lietojumu"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Metrika “Laiks līdz pirmajam baitam” norāda laiku, kad jūsu serveris nosūta atbildi. [Uzziniet vairāk](https://web.dev/time-to-first-byte)."
@@ -1066,6 +1066,9 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Servera atbildes laiks ir mazs (TTFB)"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Ilgums"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "Sākuma laiks"
@@ -1456,6 +1459,99 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Brīdinājumi: "
+  },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "Animētam saturam izmantojiet komponentu [amp-anim](https://amp.dev/documentation/components/amp-anim/), lai samazinātu centrālā procesora lietojumu, kamēr saturs nav redzams ekrānā."
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "Pārbaudiet, vai tiek izmantoti derīgi `amp-img` tagi attēliem, kuriem tiek automātiski veikta lēna ielāde ārpus pirmās skatvietas. [Uzziniet vairāk](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "Izmantojiet tādus rīkus kā [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer), lai [servera pusē renderētu AMP izkārtojumus](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "Skatiet [AMP dokumentāciju](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/), lai pārliecinātos, vai visi jūsu stili tiek atbalstīti."
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "Elements `amp-img` atbalsta atribūtu `srcset`, lai varētu norādīt, kurus attēlu līdzekļus izmantot atkarībā no attēla izmēra.  [Uzziniet vairāk](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "Apsveriet iespēju attēlot visus `amp-img` komponentus WebP formātos un norādīt piemērotu atkāpšanās formātu citām pārlūkprogrammām. [Uzziniet vairāk](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "Ja tiek renderēti ļoti lieli saraksti, apsveriet iespēju izmantot virtuālo ritināšanu ar komponentu izstrādes komplektu (Component Dev Kit — CDK). [Uzziniet vairāk](https://web.dev/virtualize-lists-with-angular-cdk/)."
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "Lietojiet [koda dalīšanu maršruta līmenī](https://web.dev/route-level-code-splitting-in-angular/), lai samazinātu JavaScript paku lielumu. Apsveriet arī iespēju iepriekš saglabāt līdzekļus kešatmiņā, izmantojot [Angular pakalpojumu skriptu](https://web.dev/precaching-with-the-angular-service-worker/)."
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "Ja izmantojat Angular CLI, būvējumi jāģenerē produkcijas režīmā. [Uzziniet vairāk](https://angular.io/guide/deployment#enable-runtime-production-mode)."
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "Ja izmantojat Angular CLI, iekļaujiet produkcijas būvējumā avota kartes, lai pārbaudītu pakas. [Uzziniet vairāk](https://angular.io/guide/deployment#inspect-the-bundles)."
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "Iepriekš ielādējiet maršrutus, lai paātrinātu navigāciju. [Uzziniet vairāk](https://web.dev/route-preloading-in-angular/)."
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "Lai pārvaldītu attēlu robežvērtības, varat izmantot utilītprogrammu `BreakpointObserver`, kas ir pieejama komponentu izstrādes komplektā (Component Dev Kit — CDK). [Uzziniet vairāk](https://material.angular.io/cdk/layout/overview)."
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "Ja negrupējat JavaScript līdzekļus, apsveriet iespēju izmantot programmu [baler](https://github.com/magento/baler)."
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "Atspējojiet Magento iebūvēto [JavaScript grupēšanu un samazināšanu](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) un apsveriet iespēju izmantot programmu [baler](https://github.com/magento/baler/)."
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "[Definējot pielāgotus fontus](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html), norādiet mainīgo `@font-display`."
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "Apsveriet iespēju modificēt produktu un katalogu veidnes, lai izmantotu tīmekļa platformas [lēnas ielādes](https://web.dev/native-lazy-loading) funkciju."
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "Izmantojiet platformas Magento [Varnish integrāciju](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "Veikala izstrādātāja iestatījumos iespējojiet opciju Minify CSS Files (Samazināt CSS failus). [Uzziniet vairāk](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "Varat izmantot rīkkopu [Terser](https://www.npmjs.com/package/terser), lai samazinātu visus JavaScript līdzekļus no statiskas satura izvietošanas un atspējotu iebūvēto samazināšanas funkciju."
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "Atspējojiet Magento iebūvēto [JavaScript grupēšanu](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)."
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "Veikalā [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) varat atrast dažādus trešo pušu paplašinājumus attēlu optimizācijai."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "Varat pievienot norādes par iepriekšēju pieslēgšanu vai DNS sākotnējo datu iegūšanas resursu, [modificējot motīva izkārtojumu](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "Varat pievienot `<link rel=preload>` tagus, [modificējot motīva izkārtojumu](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "Veikalā [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) varat atrast dažādus trešo pušu paplašinājumus jaunāku attēlu formātu izmantošanai."
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "Ja lapā renderējat daudzus atkārtotus elementus, apsveriet iespēju izmantot logošanas bibliotēku, piemēram, `react-window`, lai samazinātu izveidoto DOM mezglu skaitu. [Uzziniet vairāk](https://web.dev/virtualize-long-lists-react-window/). Ja izmantojat Effect aizķeri izpildlaika veiktspējas uzlabošanai, samaziniet lieku atkārtotu renderēšanu, izmantojot [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) vai [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) un [izlaišanas efektus](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) tikai līdz noteiktu atkarību maiņas brīdim."
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "Ja izmantojat bibliotēku React Router, samaziniet komponenta `<Redirect>` lietojumu [maršrutu navigācijai](https://reacttraining.com/react-router/web/api/Redirect)."
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "Ja renderējat React komponentus servera pusē, apsveriet iespēju izmantot metodi `renderToNodeStream()` vai `renderToStaticNodeStream()`, lai klients varētu saņemt un aizpildīt dažādas marķējuma daļas, nevis visu marķējumu reizē. [Uzziniet vairāk](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "Ja būvējuma sistēmā CSS faili tiek automātiski samazināti, pārbaudiet, vai ir izvietots jūsu lietojumprogrammas produkcijas būvējums. To var pārbaudīt, izmantojot paplašinājumu React Developer Tools. [Uzziniet vairāk](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "Ja būvējuma sistēmā JavaScript faili tiek automātiski samazināti, pārbaudiet, vai ir izvietots jūsu lietojumprogrammas produkcijas būvējums. To var pārbaudīt, izmantojot paplašinājumu React Developer Tools. [Uzziniet vairāk](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "Ja neveicat renderēšanu servera pusē, [sadaliet JavaScript pakas](https://web.dev/code-splitting-suspense/), izmantojot `React.lazy()`. Pretējā gadījumā sadaliet kodu, izmantojot trešās puses bibliotēku, piemēram, [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "Varat mērīt komponentu renderēšanas veiktspēju ar spraudni React DevTools Profiler, kurā tiek izmantots Profiler API. [Uzziniet vairāk.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "Apsveriet iespēju augšupielādēt GIF attēlu pakalpojumā, kuru varēs izmantot, lai iegultu GIF attēlu kā HTML5 videoklipu."

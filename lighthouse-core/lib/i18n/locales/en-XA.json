@@ -450,7 +450,7 @@
     "message": "{itemCount,plural, =1{[1 çĥåîñ ƒöûñð one two]}other{[# çĥåîñš ƒöûñð one two]}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "[Mîñîmîžé Çŕîţîçåļ Ŕéqûéšţš Ðéþţĥ one two three four five six seven]"
+    "message": "[Åvöîð çĥåîñîñĝ çŕîţîçåļ ŕéqûéšţš one two three four five six seven]"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "[Ðéþŕéçåţîöñ / Ŵåŕñîñĝ one two three]"
@@ -513,7 +513,7 @@
     "message": "[Våļûé one]"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "[Бŕöŵšéŕ éñĝîñééŕš ŕéçömméñð þåĝéš çöñţåîñ ƒéŵéŕ ţĥåñ ~1,500 ÐÖM éļéméñţš. Ţĥé šŵééţ šþöţ îš å ţŕéé ðéþţĥ < 32 éļéméñţš åñð ƒéŵéŕ ţĥåñ 60 çĥîļðŕéñ/þåŕéñţ éļéméñţ. Å ļåŕĝé ÐÖM çåñ îñçŕéåšé mémöŕý ûšåĝé, çåûšé ļöñĝéŕ ᐅ[ᐊšţýļé çåļçûļåţîöñšᐅ](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)ᐊ, åñð þŕöðûçé çöšţļý ᐅ[ᐊļåýöûţ ŕéƒļöŵšᐅ](https://developers.google.com/speed/articles/reflow)ᐊ. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/dom-size)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven twentyeight twentynine thirty thirtyone thirtytwo thirtythree thirtyfour thirtyfive thirtysix]"
+    "message": "[Å ļåŕĝé ÐÖM ŵîļļ îñçŕéåšé mémöŕý ûšåĝé, çåûšé ļöñĝéŕ ᐅ[ᐊšţýļé çåļçûļåţîöñšᐅ](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)ᐊ, åñð þŕöðûçé çöšţļý ᐅ[ᐊļåýöûţ ŕéƒļöŵšᐅ](https://developers.google.com/speed/articles/reflow)ᐊ. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/dom-size)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone]"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{[1 éļéméñţ one two]}other{[# éļéméñţš one two]}}"
@@ -1053,7 +1053,7 @@
     "message": "[Ŕéðûçé ţĥé îmþåçţ öƒ ţĥîŕð-þåŕţý çöðé one two three four five six seven eight]"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "[Ţĥîŕð-Þåŕţý ûšåĝé one two three]"
+    "message": "[Mîñîmîžé ţĥîŕð-þåŕţý ûšåĝé one two three]"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "[Ţîmé Ţö Fîŕšţ Бýţé îðéñţîƒîéš ţĥé ţîmé åţ ŵĥîçĥ ýöûŕ šéŕvéŕ šéñðš å ŕéšþöñšé. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/time-to-first-byte)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen]"
@@ -1066,6 +1066,9 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "[Šéŕvéŕ ŕéšþöñšé ţîméš åŕé ļöŵ (ŢŢFБ) one two three four five six seven eight]"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "[Ðûŕåţîöñ one]"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "[Šţåŕţ Ţîmé one two]"
@@ -1456,6 +1459,99 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "[Ŵåŕñîñĝš:  one two]"
+  },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "[Föŕ åñîmåţéð çöñţéñţ, ûšé ᐅ[ᐊåmþ-åñîmᐅ](https://amp.dev/documentation/components/amp-anim/)ᐊ ţö mîñîmîžé ÇÞÛ ûšåĝé ŵĥîļé ţĥé çöñţéñţ ŕémåîñš öƒƒšçŕééñ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen]"
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "[Éñšûŕé ţĥåţ ýöû åŕé ýöû ûšîñĝ våļîð ᐅ`amp-img`ᐊ ţåĝš ƒöŕ ýöûŕ îmåĝéš ŵĥîçĥ åûţömåţîçåļļý ļåžý-ļöåð öûţšîðé ţĥé ƒîŕšţ vîéŵþöŕţ. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone]"
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "[Ûšé ţööļš šûçĥ åš ᐅ[ᐊÅMÞ Öþţîmîžéŕᐅ](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer)ᐊ ţö ᐅ[ᐊšéŕvéŕ-šîðé ŕéñðéŕ ÅMÞ ļåýöûţšᐅ](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen]"
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "[Ŕéƒéŕ ţö ţĥé ᐅ[ᐊÅMÞ ðöçûméñţåţîöñᐅ](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/)ᐊ ţö éñšûŕé åļļ ýöûŕ šţýļéš åŕé šûþþöŕţéð. one two three four five six seven eight nine ten eleven twelve thirteen fourteen]"
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "[Ţĥé ᐅ`amp-img`ᐊ éļéméñţ šûþþöŕţš ţĥé ᐅ`srcset`ᐊ åţţŕîбûţé ţö šþéçîƒý ŵĥîçĥ îmåĝé åššéţš ţö ûšé бåšéð öñ ţĥé šçŕééñ šîžé.  ᐅ[ᐊĻéåŕñ möŕéᐅ](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen]"
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "[Çöñšîðéŕ ðîšþļåýîñĝ åļļ ýöûŕ ᐅ`amp-img`ᐊ çömþöñéñţš îñ ŴéбÞ ƒöŕmåţš ŵĥîļé šþéçîƒýîñĝ åñ åþþŕöþŕîåţé ƒåļļбåçķ ƒöŕ öţĥéŕ бŕöŵšéŕš. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone]"
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "[Çöñšîðéŕ vîŕţûåļ šçŕöļļîñĝ ŵîţĥ ţĥé Çömþöñéñţ Ðév Ķîţ (ÇÐĶ) îƒ véŕý ļåŕĝé ļîšţš åŕé бéîñĝ ŕéñðéŕéð. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/virtualize-lists-with-angular-cdk/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen]"
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "[Åþþļý ᐅ[ᐊŕöûţé-ļévéļ çöðé-šþļîţţîñĝᐅ](https://web.dev/route-level-code-splitting-in-angular/)ᐊ ţö mîñîmîžé ţĥé šîžé öƒ ýöûŕ ĴåvåŠçŕîþţ бûñðļéš. Åļšö, çöñšîðéŕ þŕéçåçĥîñĝ åššéţš ŵîţĥ ţĥé ᐅ[ᐊÅñĝûļåŕ šéŕvîçé ŵöŕķéŕᐅ](https://web.dev/precaching-with-the-angular-service-worker/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree]"
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "[Îƒ ýöû åŕé ûšîñĝ Åñĝûļåŕ ÇĻÎ, éñšûŕé ţĥåţ бûîļðš åŕé ĝéñéŕåţéð îñ þŕöðûçţîöñ möðé. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://angular.io/guide/deployment#enable-runtime-production-mode)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen]"
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "[Îƒ ýöû åŕé ûšîñĝ Åñĝûļåŕ ÇĻÎ, îñçļûðé šöûŕçé måþš îñţö ýöûŕ þŕöðûçţîöñ бûîļð ţö îñšþéçţ ýöûŕ бûñðļéš. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://angular.io/guide/deployment#inspect-the-bundles)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen]"
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "[Þŕéļöåð ŕöûţéš åĥéåð öƒ ţîmé ţö šþééð ûþ ñåvîĝåţîöñ. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/route-preloading-in-angular/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen]"
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "[Çöñšîðéŕ ûšîñĝ ţĥé ᐅ`BreakpointObserver`ᐊ ûţîļîţý îñ ţĥé Çömþöñéñţ Ðév Ķîţ (ÇÐĶ) ţö måñåĝé îmåĝé бŕéåķþöîñţš. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://material.angular.io/cdk/layout/overview)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen]"
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "[Îƒ ýöû åŕé ñöţ бûñðļîñĝ ýöûŕ ĴåvåŠçŕîþţ åššéţš, çöñšîðéŕ ûšîñĝ ᐅ[ᐊбåļéŕᐅ](https://github.com/magento/baler)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen]"
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "[Ðîšåбļé Måĝéñţö'š бûîļţ-îñ ᐅ[ᐊĴåvåŠçŕîþţ бûñðļîñĝ åñð mîñîƒîçåţîöñᐅ](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)ᐊ, åñð çöñšîðéŕ ûšîñĝ ᐅ[ᐊбåļéŕᐅ](https://github.com/magento/baler/)ᐊ îñšţéåð. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen]"
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "[Šþéçîƒý ᐅ`@font-display`ᐊ ŵĥéñ ᐅ[ᐊðéƒîñîñĝ çûšţöm ƒöñţšᐅ](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)ᐊ. one two three four five six seven eight nine]"
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "[Çöñšîðéŕ möðîƒýîñĝ ýöûŕ þŕöðûçţ åñð çåţåļöĝ ţémþļåţéš ţö måķé ûšé öƒ ţĥé ŵéб þļåţƒöŕm'š ᐅ[ᐊļåžý ļöåðîñĝᐅ](https://web.dev/native-lazy-loading)ᐊ ƒéåţûŕé. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen]"
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "[Ûšé Måĝéñţö'š ᐅ[ᐊVåŕñîšĥ îñţéĝŕåţîöñᐅ](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)ᐊ. one two three four five six seven eight]"
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "[Éñåбļé ţĥé \"Mîñîƒý ÇŠŠ Fîļéš\" öþţîöñ îñ ýöûŕ šţöŕé'š Ðévéļöþéŕ šéţţîñĝš. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen]"
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "[Ûšé ᐅ[ᐊŢéŕšéŕᐅ](https://www.npmjs.com/package/terser)ᐊ ţö mîñîƒý åļļ ĴåvåŠçŕîþţ åššéţš öûţƒŕöm ƒŕöm šţåţîç çöñţéñţ ðéþļöýméñţ, åñð ðîšåбļé ţĥé бûîļţ-îñ mîñîƒîçåţîöñ ƒéåţûŕé. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone]"
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "[Ðîšåбļé Måĝéñţö'š бûîļţ-îñ ᐅ[ᐊĴåvåŠçŕîþţ бûñðļîñĝᐅ](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)ᐊ. one two three four five six seven eight nine ten eleven]"
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "[Çöñšîðéŕ šéåŕçĥîñĝ ţĥé ᐅ[ᐊMåĝéñţö Måŕķéţþļåçéᐅ](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image)ᐊ ƒöŕ å våŕîéţý öƒ ţĥîŕð þåŕţý éxţéñšîöñš ţö öþţîmîžé îmåĝéš. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen]"
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "[Þŕéçöññéçţ öŕ ðñš-þŕéƒéţçĥ ŕéšöûŕçé ĥîñţš çåñ бé åððéð бý ᐅ[ᐊmöðîƒýîñĝ å ţĥéméš'š ļåýöûţᐅ](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen]"
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "[ᐅ`<link rel=preload>`ᐊ ţåĝš çåñ бé åððéð бý ᐅ[ᐊmöðîƒýîñĝ å ţĥéméš'š ļåýöûţᐅ](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)ᐊ. one two three four five six seven eight nine ten eleven twelve]"
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "[Çöñšîðéŕ šéåŕçĥîñĝ ţĥé ᐅ[ᐊMåĝéñţö Måŕķéţþļåçéᐅ](https://marketplace.magento.com/catalogsearch/result/?q=webp)ᐊ ƒöŕ å våŕîéţý öƒ ţĥîŕð-þåŕţý éxţéñšîöñš ţö ļévéŕåĝé ñéŵéŕ îmåĝé ƒöŕmåţš. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen]"
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "[Çöñšîðéŕ ûšîñĝ å “ŵîñðöŵîñĝ” ļîбŕåŕý ļîķé ᐅ`react-window`ᐊ ţö mîñîmîžé ţĥé ñûmбéŕ öƒ ÐÖM ñöðéš çŕéåţéð îƒ ýöû åŕé ŕéñðéŕîñĝ måñý ŕéþéåţéð éļéméñţš öñ ţĥé þåĝé. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/virtualize-long-lists-react-window/)ᐊ. Åļšö, mîñîmîžé ûñéçéššåŕý ŕé-ŕéñðéŕš ûšîñĝ ᐅ[ᐊšĥöûļðÇömþöñéñţÛþðåţéᐅ](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action)ᐊ, ᐅ[ᐊÞûŕéÇömþöñéñţᐅ](https://reactjs.org/docs/react-api.html#reactpurecomponent)ᐊ, öŕ ᐅ[ᐊŔéåçţ.mémöᐅ](https://reactjs.org/docs/react-api.html#reactmemo)ᐊ åñð ᐅ[ᐊšķîþ éƒƒéçţšᐅ](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects)ᐊ öñļý ûñţîļ çéŕţåîñ ðéþéñðéñçîéš ĥåvé çĥåñĝéð îƒ ýöû åŕé ûšîñĝ ţĥé Éƒƒéçţ ĥööķ ţö îmþŕövé ŕûñţîmé þéŕƒöŕmåñçé. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven twentyeight twentynine thirty thirtyone thirtytwo thirtythree thirtyfour thirtyfive thirtysix thirtyseven thirtyeight thirtynine forty one two three four five six seven eight nine ten eleven twelve thirteen]"
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "[Îƒ ýöû åŕé ûšîñĝ Ŕéåçţ Ŕöûţéŕ, mîñîmîžé ûšåĝé öƒ ţĥé ᐅ`<Redirect>`ᐊ çömþöñéñţ ƒöŕ ᐅ[ᐊŕöûţé ñåvîĝåţîöñšᐅ](https://reacttraining.com/react-router/web/api/Redirect)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen]"
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "[Îƒ ýöû åŕé šéŕvéŕ-šîðé ŕéñðéŕîñĝ åñý Ŕéåçţ çömþöñéñţš, çöñšîðéŕ ûšîñĝ ᐅ`renderToNodeStream()`ᐊ öŕ ᐅ`renderToStaticNodeStream()`ᐊ ţö åļļöŵ ţĥé çļîéñţ ţö ŕéçéîvé åñð ĥýðŕåţé ðîƒƒéŕéñţ þåŕţš öƒ ţĥé måŕķûþ îñšţéåð öƒ åļļ åţ öñçé. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix]"
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "[Îƒ ýöûŕ бûîļð šýšţém mîñîƒîéš ýöûŕ ÇŠŠ ƒîļéš åûţömåţîçåļļý, éñšûŕé ţĥåţ ýöû åŕé ðéþļöýîñĝ ţĥé þŕöðûçţîöñ бûîļð öƒ ýöûŕ åþþļîçåţîöñ. Ýöû çåñ çĥéçķ ţĥîš ŵîţĥ ţĥé Ŕéåçţ Ðévéļöþéŕ Ţööļš éxţéñšîöñ. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven twentyeight]"
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "[Îƒ ýöûŕ бûîļð šýšţém mîñîƒîéš ýöûŕ ĴŠ ƒîļéš åûţömåţîçåļļý, éñšûŕé ţĥåţ ýöû åŕé ðéþļöýîñĝ ţĥé þŕöðûçţîöñ бûîļð öƒ ýöûŕ åþþļîçåţîöñ. Ýöû çåñ çĥéçķ ţĥîš ŵîţĥ ţĥé Ŕéåçţ Ðévéļöþéŕ Ţööļš éxţéñšîöñ. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven twentyeight]"
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "[Îƒ ýöû åŕé ñöţ šéŕvéŕ-šîðé ŕéñðéŕîñĝ, ᐅ[ᐊšþļîţ ýöûŕ ĴåvåŠçŕîþţ бûñðļéšᐅ](https://web.dev/code-splitting-suspense/)ᐊ ŵîţĥ ᐅ`React.lazy()`ᐊ. Öţĥéŕŵîšé, çöðé-šþļîţ ûšîñĝ å ţĥîŕð-þåŕţý ļîбŕåŕý šûçĥ åš ᐅ[ᐊļöåðåбļé-çömþöñéñţšᐅ](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour]"
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "[Ûšé ţĥé Ŕéåçţ ÐévŢööļš Þŕöƒîļéŕ, ŵĥîçĥ måķéš ûšé öƒ ţĥé Þŕöƒîļéŕ ÅÞÎ, ţö méåšûŕé ţĥé ŕéñðéŕîñĝ þéŕƒöŕmåñçé öƒ ýöûŕ çömþöñéñţš. ᐅ[ᐊĻéåŕñ möŕé.ᐅ](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)ᐊ one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo]"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "[Çöñšîðéŕ ûþļöåðîñĝ ýöûŕ ĜÎF ţö å šéŕvîçé ŵĥîçĥ ŵîļļ måķé îţ åvåîļåбļé ţö émбéð åš åñ ĤŢMĻ5 vîðéö. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen]"

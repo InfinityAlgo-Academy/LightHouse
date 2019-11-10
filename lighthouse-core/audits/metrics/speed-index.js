@@ -27,20 +27,27 @@ class SpeedIndex extends Audit {
       title: str_(i18n.UIStrings.speedIndexMetric),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['traces', 'devtoolsLogs'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'TestedAsMobileDevice'],
     };
   }
 
   /**
-   * @return {LH.Audit.ScoreOptions}
+   * @return {{mobile: LH.Audit.ScoreOptions, desktop: LH.Audit.ScoreOptions}}
    */
   static get defaultOptions() {
     return {
-      // 75th and 95th percentiles HTTPArchive -> median and PODR
-      // https://bigquery.cloud.google.com/table/httparchive:lighthouse.2018_04_01_mobile?pli=1
-      // see https://www.desmos.com/calculator/orvoyu9ygq
-      scorePODR: 2900,
-      scoreMedian: 5800,
+      mobile: {
+        // 75th and 95th percentiles HTTPArchive -> median and PODR
+        // https://bigquery.cloud.google.com/table/httparchive:lighthouse.2018_04_01_mobile?pli=1
+        // see https://www.desmos.com/calculator/orvoyu9ygq
+        scorePODR: 2900,
+        scoreMedian: 5800,
+      },
+      desktop: {
+        // SELECT QUANTILES(SpeedIndex, 21) FROM [httparchive:summary_pages.2018_12_15_desktop] LIMIT 1000
+        scorePODR: 1100,
+        scoreMedian: 2300,
+      },
     };
   }
 
@@ -56,12 +63,14 @@ class SpeedIndex extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const metricComputationData = {trace, devtoolsLog, settings: context.settings};
     const metricResult = await ComputedSi.request(metricComputationData, context);
+    const scoreOptions =
+      context.options[artifacts.TestedAsMobileDevice === false ? 'desktop' : 'mobile'];
 
     return {
       score: Audit.computeLogNormalScore(
         metricResult.timing,
-        context.options.scorePODR,
-        context.options.scoreMedian
+        scoreOptions.scorePODR,
+        scoreOptions.scoreMedian
       ),
       numericValue: metricResult.timing,
       displayValue: str_(i18n.UIStrings.seconds, {timeInMs: metricResult.timing}),
