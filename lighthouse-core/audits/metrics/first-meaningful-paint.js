@@ -27,20 +27,27 @@ class FirstMeaningfulPaint extends Audit {
       title: str_(i18n.UIStrings.firstMeaningfulPaintMetric),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['traces', 'devtoolsLogs'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'TestedAsMobileDevice'],
     };
   }
 
   /**
-   * @return {LH.Audit.ScoreOptions}
+   * @return {{mobile: LH.Audit.ScoreOptions, desktop: LH.Audit.ScoreOptions}}
    */
   static get defaultOptions() {
     return {
-      // 75th and 95th percentiles HTTPArchive -> median and PODR
-      // https://bigquery.cloud.google.com/table/httparchive:lighthouse.2018_04_01_mobile?pli=1
-      // see https://www.desmos.com/calculator/2t1ugwykrl
-      scorePODR: 2000,
-      scoreMedian: 4000,
+      mobile: {
+        // 75th and 95th percentiles HTTPArchive -> median and PODR
+        // https://bigquery.cloud.google.com/table/httparchive:lighthouse.2018_04_01_mobile?pli=1
+        // see https://www.desmos.com/calculator/2t1ugwykrl
+        scorePODR: 2000,
+        scoreMedian: 4000,
+      },
+      desktop: {
+        // SELECT QUANTILES(renderStart, 21) FROM [httparchive:summary_pages.2018_12_15_desktop] LIMIT 1000
+        scorePODR: 800,
+        scoreMedian: 1600,
+      },
     };
   }
 
@@ -57,12 +64,14 @@ class FirstMeaningfulPaint extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const metricComputationData = {trace, devtoolsLog, settings: context.settings};
     const metricResult = await ComputedFmp.request(metricComputationData, context);
+    const scoreOptions =
+      context.options[artifacts.TestedAsMobileDevice === false ? 'desktop' : 'mobile'];
 
     return {
       score: Audit.computeLogNormalScore(
         metricResult.timing,
-        context.options.scorePODR,
-        context.options.scoreMedian
+        scoreOptions.scorePODR,
+        scoreOptions.scoreMedian
       ),
       numericValue: metricResult.timing,
       displayValue: str_(i18n.UIStrings.seconds, {timeInMs: metricResult.timing}),
