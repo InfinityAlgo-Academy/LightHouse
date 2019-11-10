@@ -225,8 +225,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
-      "displayValue": "0",
-      "explanation": "No LayoutShift trace events found"
+      "displayValue": "0"
     },
     "errors-in-console": {
       "id": "errors-in-console",

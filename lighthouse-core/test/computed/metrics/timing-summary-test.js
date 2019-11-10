@@ -18,7 +18,7 @@ describe('Timing summary', () => {
 
     expect(result.metrics).toMatchInlineSnapshot(`
 Object {
-  "cumulativeLayoutShift": undefined,
+  "cumulativeLayoutShift": 0,
   "estimatedInputLatency": 77.79999999999995,
   "estimatedInputLatencyTs": undefined,
   "firstCPUIdle": 3351.3320000492968,

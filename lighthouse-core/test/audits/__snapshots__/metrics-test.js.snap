@@ -2,7 +2,7 @@
 
 exports[`Performance: metrics evaluates valid input (with lcp) correctly 1`] = `
 Object {
-  "cumulativeLayoutShift": undefined,
+  "cumulativeLayoutShift": 0,
   "estimatedInputLatency": 543,
   "estimatedInputLatencyTs": undefined,
   "firstCPUIdle": 3677,
@@ -46,7 +46,7 @@ Object {
 
 exports[`Performance: metrics evaluates valid input correctly 1`] = `
 Object {
-  "cumulativeLayoutShift": undefined,
+  "cumulativeLayoutShift": 0,
   "estimatedInputLatency": 78,
   "estimatedInputLatencyTs": undefined,
   "firstCPUIdle": 3351,

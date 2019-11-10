@@ -20,7 +20,7 @@ class CumulativeLayoutShift {
 
     // Find the last LayoutShift event, if any.
     let finalLayoutShift;
-    for (let i = traceOfTab.mainThreadEvents.length; i >= 0; i--) {
+    for (let i = traceOfTab.mainThreadEvents.length - 1; i >= 0; i--) {
       const evt = traceOfTab.mainThreadEvents[i];
       if (evt.name === 'LayoutShift' && evt.args && evt.args.data && evt.args.data.is_main_frame) {
         finalLayoutShift = evt;
