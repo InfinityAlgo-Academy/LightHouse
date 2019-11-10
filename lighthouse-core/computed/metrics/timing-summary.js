@@ -71,7 +71,8 @@ class TimingSummary {
       estimatedInputLatencyTs: estimatedInputLatency.timestamp,
       totalBlockingTime: totalBlockingTime.timing,
       maxPotentialFID: maxPotentialFID && maxPotentialFID.timing,
-      cumulativeLayoutShift: cumulativeLayoutShift && cumulativeLayoutShift.value,
+      cumulativeLayoutShift: cumulativeLayoutShift && cumulativeLayoutShift.value !== null ?
+        cumulativeLayoutShift.value : undefined,
 
       // Include all timestamps of interest from trace of tab
       observedNavigationStart: traceOfTab.timings.navigationStart,
@@ -90,6 +91,8 @@ class TimingSummary {
       observedLoadTs: traceOfTab.timestamps.load,
       observedDomContentLoaded: traceOfTab.timings.domContentLoaded,
       observedDomContentLoadedTs: traceOfTab.timestamps.domContentLoaded,
+      observedCumulativeLayoutShift: traceOfTab.timings.cumulativeLayoutShift,
+      observedCumulativeLayoutShiftTs: traceOfTab.timestamps.cumulativeLayoutShift,
 
       // Include some visual metrics from speedline
       observedFirstVisualChange: speedline.first,
