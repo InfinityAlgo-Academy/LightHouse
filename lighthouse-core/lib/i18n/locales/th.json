@@ -450,7 +450,7 @@
     "message": "{itemCount,plural, =1{พบห่วงโซ่ 1 รายการ}other{พบห่วงโซ่ # รายการ}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "ลดความลึกของคำขอที่สำคัญ"
+    "message": "หลีกเลี่ยงคำขอสำคัญแบบลูกโซ่"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "การเลิกใช้งาน / คำเตือน"
@@ -513,7 +513,7 @@
     "message": "ค่า"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "วิศวกรเบราว์เซอร์แนะนำให้ใช้หน้าเว็บที่มีองค์ประกอบ DOM น้อยกว่า 1,500 รายการโดยประมาณ ความลึกที่เหมาะที่สุดคือแบบต้นไม้ซึ่งมีองค์ประกอบน้อยกว่า 32 รายการและมีองค์ประกอบย่อย/หลักน้อยกว่า 60 รายการ รายการ DOM ขนาดใหญ่อาจใช้หน่วยความจำเพิ่มขึ้น ทำให้[การคำนวณสไตล์](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)ยาวนานขึ้น และสร้าง[การจัดเรียงการออกแบบใหม่](https://developers.google.com/speed/articles/reflow)ซึ่งมีค่าใช้จ่ายสูง [ดูข้อมูลเพิ่มเติม](https://web.dev/dom-size)"
+    "message": "รายการ DOM ขนาดใหญ่จะใช้หน่วยความจำเพิ่มขึ้น ทำให้[การคำนวณสไตล์](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)ยาวนานขึ้น และสร้าง[การจัดเรียงการออกแบบใหม่](https://developers.google.com/speed/articles/reflow)ซึ่งมีค่าใช้จ่ายสูง [ดูข้อมูลเพิ่มเติม](https://web.dev/dom-size)"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 องค์ประกอบ}other{# องค์ประกอบ}}"
@@ -1053,7 +1053,7 @@
     "message": "ลดผลกระทบจากโค้ดของบุคคลที่สาม"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "การใช้บุคคลที่สาม"
+    "message": "ลดการใช้ของบุคคลที่สาม"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Time To First Byte ระบุเวลาที่เซิร์ฟเวอร์ส่งการตอบกลับ [ดูข้อมูลเพิ่มเติม](https://web.dev/time-to-first-byte)"
@@ -1066,6 +1066,9 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "เวลาตอบสนองของเซิร์ฟเวอร์ต่ำ (TTFB)"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "ระยะเวลา"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "เวลาเริ่มต้น"
@@ -1456,6 +1459,99 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "คำเตือน "
+  },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "สำหรับเนื้อหาที่เป็นภาพเคลื่อนไหว ให้ใช้ [AMP-anim](https://amp.dev/documentation/components/amp-anim/) เพื่อลดการใช้ CPU ขณะที่เนื้อหายังคงอยู่นอกจอ"
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "ตรวจสอบให้แน่ใจว่าคุณกำลังใช้แท็ก `amp-img` ที่ถูกต้องสำหรับรูปภาพที่มีการโหลดแบบ Lazy Loading โดยอัตโนมัตินอกวิวพอร์ตแรก [ดูข้อมูลเพิ่มเติม](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)"
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "ใช้เครื่องมือ เช่น [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) เพื่อ[แสดงเลย์เอาต์ AMP ฝั่งเซิร์ฟเวอร์](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)"
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "ดู[เอกสาร AMP ](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/)เพื่อให้แน่ใจว่าระบบรองรับรูปแบบทั้งหมด"
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "`amp-img` องค์ประกอบรองรับ`srcset`แอตทริบิวต์เพื่อกำหนดว่าจะใช้เนื้อหาภาพใดตามขนาดของหน้าจอ  [ดูข้อมูลเพิ่มเติม](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)"
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "ลองแสดงคอมโพเนนต์ `amp-img` ทั้งหมดในรูปแบบ WebP โดยกำหนดการสำรองที่เหมาะสมให้กับเบราว์เซอร์อื่นด้วย [ดูข้อมูลเพิ่มเติม](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)"
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "ลองใช้การเลื่อนเสมือนจริงด้วยComponent Dev Kit (CDK) หากกำลังแสดงรายการที่ใหญ่มาก [ดูข้อมูลเพิ่มเติม](https://web.dev/virtualize-lists-with-angular-cdk/)"
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "ใช้[การแยกโค้กระดับเส้นทาง](https://web.dev/route-level-code-splitting-in-angular/)เพื่อลดขนาดกลุ่ม JavaScript และลองแคชเนื้อหาล่วงหน้าด้วย [Angular Service Worker](https://web.dev/precaching-with-the-angular-service-worker/)"
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "หากคุณกำลังใช้ Angular CLI โปรดตรวจสอบให้แน่ใจว่ารุ่นดังกล่าวสร้างขึ้นในโหมดที่ใช้งานจริง [ดูข้อมูลเพิ่มเติม](https://angular.io/guide/deployment#enable-runtime-production-mode)"
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "หากคุณกำลังใช้ Angular CLI ให้รวมแมปที่มาลงในรุ่นที่ใช้งานจริงเพื่อตรวจสอบกลุ่ม [ดูข้อมูลเพิ่มเติม](https://angular.io/guide/deployment#inspect-the-bundles)"
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "โหลดเส้นทางล่วงหน้าก่อนเวลาเพื่อเร่งความเร็วในการไปยังส่วนต่างๆ [ดูข้อมูลเพิ่มเติม](https://web.dev/route-preloading-in-angular/)"
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "ลองใช้ยูทิลิตี `BreakpointObserver` ใน Component Dev Kit (CDK) เพื่อจัดการเบรกพอยท์ของภาพ [ดูข้อมูลเพิ่มเติม](https://material.angular.io/cdk/layout/overview)"
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "หากไม่ได้รวมกลุ่มเนื้อหา JavaScript ให้ลองใช้ [Baler](https://github.com/magento/baler)"
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "ปิดใช้ [การรวมกลุ่มและการลดขนาดของ JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) ในตัวของ Magento และลองใช้ [Baler](https://github.com/magento/baler/) แทน"
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "ระบุ `@font-display` เมื่อ [ กำหนดฟอนต์ที่กำหนดเอง ](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)"
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "ลองแก้ไขเทมเพลตผลิตภัณฑ์และแคตตาล็อกเพื่อใช้ประโยชน์จากฟีเจอร์[การโหลดแบบ Lazy Loading](https://web.dev/native-lazy-loading)ของแพลตฟอร์มเว็บ"
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "ใช้[การผสานรวม Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) ของ Magento"
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "เปิดใช้ตัวเลือก \"Minify CSS Files\" ในการตั้งค่านักพัฒนาซอฟต์แวร์ของร้านค้า [ดูข้อมูลเพิ่มเติม](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "ใช้ [Terser](https://www.npmjs.com/package/terser) เพื่อลด Outfrom เนื้อหาของ JavaScript จากการใช้งานเนื้อหาและปิดใช้ฟีเจอร์การลดขนาดในตัว"
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "ปิดใช้[การรวมกลุ่ม JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) ในตัวของ Magento"
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "ลองค้นหาใน[ตลาดกลางของ Magento](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) เพื่อหาส่วนขยายต่างๆ ของบุคคลที่สามเพื่อเพิ่มประสิทธิภาพให้รูปภาพ"
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "เพิ่มการเชื่อมต่อล่วงหน้าหรือคำแนะนำด้านทรัพยากรที่ DNS ดึงมาล่วงหน้าได้โดย[แก้ไขเลย์เอาต์ของธีม](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)"
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "เพิ่มแท็ก `<link rel=preload>` ได้โดย[แก้ไขเลย์เอาต์ของธีม](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)"
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "ลองค้นหาใน[ตลาดกลางของ Magento](https://marketplace.magento.com/catalogsearch/result/?q=webp) เพื่อหาส่วนขยายต่างๆ ของบุคคลที่สามเพื่อใช้ประโยชน์จากรูปแบบรูปภาพที่ใหม่กว่า"
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "ลองใช้ไลบรารี \"การสร้างกรอบเวลา\" เช่น `react-window` เพื่อลดจำนวนโหนดของ DOM ที่สร้างขึ้น หากกำลังแสดงองค์ประกอบซ้ำบนหน้านั้น [ดูข้อมูลเพิ่มเติม](https://web.dev/virtualize-long-lists-react-window/) และลดการแสดงซ้ำที่ไม่จำเป็นโดยใช้ [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) หรือ [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) และ[ข้ามเอฟเฟกต์](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects)เฉพาะเมื่อการพึ่งพาบางประการเปลี่ยนแปลงไปหากคุณกำลังใช้ฮุก Effect เพื่อปรับปรุงประสิทธิภาพของรันไทม์"
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "หากคุณกำลังใช้ React Router ให้ลดการใช้ของคอมโพเนนต์ `<Redirect>` ในการ[ไปยังเส้นทางต่างๆ](https://reacttraining.com/react-router/web/api/Redirect)"
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "หากคุณกำลังแสดงคอมโพเนนต์ของ React ใดๆ บนฝั่งเซิร์ฟเวอร์ ให้ลองใช้ `renderToNodeStream()` หรือ `renderToStaticNodeStream()` เพื่อให้ลูกค้าได้รับและรวมส่วนต่างๆ ของมาร์กอัปแทนที่จะรวมทั้งหมดในคราวเดียว [ดูข้อมูลเพิ่มเติม](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "หากระบบในรุ่นของคุณลดขนาดไฟล์ CSS โดยอัตโนมัติ โปรดตรวจสอบให้แน่ใจว่าคุณทำให้รุ่นที่ใช้งานจริงของแอปพลิเคชันใช้งานได้ ตรวจสอบเรื่องนี้ได้ด้วยส่วนขยายของ React Developer Tools [ดูข้อมูลเพิ่มเติม](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "หากระบบในรุ่นของคุณลดขนาดไฟล์ JS โดยอัตโนมัติ โปรดตรวจสอบให้แน่ใจว่าคุณทำให้รุ่นที่ใช้งานจริงของแอปพลิเคชันใช้งานได้ ตรวจสอบเรื่องนี้ได้ด้วยส่วนขยายของ React Developer Tools [ดูข้อมูลเพิ่มเติม](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "หากคุณไม่ได้กำลังแสดงผลฝั่งเซิร์ฟเวอร์ [แยกกลุ่ม JavaScript](https://web.dev/code-splitting-suspense/) ด้วย `React.lazy()` หรือแยกโค้ดโดยใช้ไลบรารีของบุคคลที่สาม เช่น [คอมโพเนนต์ที่โหลดได้](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)"
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "ใช้ React DevTools Profiler ซึ่งใช้ประโยชน์จาก Profiler API ในการวัดประสิทธิภาพในการแสดงผลของคอมโพเนนต์ [ดูข้อมูลเพิ่มเติม](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "ลองอัปโหลด GIF ไปยังบริการซึ่งจะทำให้ใช้ GIF เพื่อฝังเป็นวิดีโอ HTML5 ได้"

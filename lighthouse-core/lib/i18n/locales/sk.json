@@ -450,7 +450,7 @@
     "message": "{itemCount,plural, =1{Našiel sa 1 reťazec}few{Našli sa # reťazce}many{# chains found}other{Našlo sa # reťazcov}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "Minimalizujte hĺbku podstatných žiadostí"
+    "message": "Vyhýbajte sa reťazeniu podstatných žiadostí"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "Ukončenie podpory / upozornenie"
@@ -513,7 +513,7 @@
     "message": "Hodnota"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "Programátori prehliadača odporúčajú, aby stránky obsahovali menej ako ~1 500 prvkov DOM. Optimálna hodnota je hĺbka stromovej štruktúry menšia ako 32 prvkov a menej ako 60 podradených či nadradených prvkov. Veľký prvok DOM môže zvýšiť spotrebu pamäte, predĺžiť [výpočty štýlov](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) a spôsobiť nákladné [preformátovania rozložení](https://developers.google.com/speed/articles/reflow). [Ďalšie informácie](https://web.dev/dom-size)"
+    "message": "Rozsiahly model DOM zvýši spotrebu pamäte, predĺži [výpočty štýlov](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) a spôsobí nákladné [preformátovania rozloženia](https://developers.google.com/speed/articles/reflow). [Ďalšie informácie](https://web.dev/dom-size)"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 prvok}few{# prvky}many{# elements}other{# prvkov}}"
@@ -1053,7 +1053,7 @@
     "message": "Zníženie vplyvu kódu tretích strán"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "Používanie tretími stranami"
+    "message": "Minimalizujte použitie riešení tretích strán"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Čas do prvého bajtu určuje čas, za ktorý váš server odošle odpoveď. [Ďalšie informácie](https://web.dev/time-to-first-byte)"
@@ -1066,6 +1066,9 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Časy odozvy servera sú krátke (TTFB)"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Trvanie"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "Čas začatia"
@@ -1456,6 +1459,99 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Upozornenia: "
+  },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "V prípade animovaného obsahu minimalizujete využitie procesora pomocou komponenta [amp-anim](https://amp.dev/documentation/components/amp-anim/), keď je tento obsah mimo obrazovky."
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "Zaistite používanie platných značiek `amp-img` pre obrázky, ktoré automaticky oneskorene načítavajú mimo prvej oblasti zobrazenia. [Ďalšie informácie](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)"
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "Na [serverové vykresľovanie rozložení AMP](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/) používajte nástroje, ako je [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer)."
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "Ak chcete zaistiť, aby všetky použité štýly boli podporované, prečítajte si [dokumentáciu pre stránky AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/)."
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "Prvok `amp-img` podporuje atribút `srcset` na určenie toho, ktoré obrázky použiť na základe veľkosti obrazovky.  [Ďalšie informácie](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)"
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "Skúste zobraziť všetky komponenty `amp-img` vo formátoch WebP a zároveň nastaviť vhodné záložné riešenie pre ďalšie prehliadače. [Ďalšie informácie](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)"
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "Ak vykresľujete veľmi dlhé zoznamy, môžete použiť virtuálne posúvanie pomocou súpravy Component Dev Kit (CDK). [Ďalšie informácie](https://web.dev/virtualize-lists-with-angular-cdk/)"
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "Veľkosť balíkov súborov JavaScript minimalizujte [rozdelením kódu na úrovni smerovania](https://web.dev/route-level-code-splitting-in-angular/). Môžete tiež predbežne načítať prvky do vyrovnávacej pamäte pomocou [obsluhy Angular](https://web.dev/precaching-with-the-angular-service-worker/)."
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "Ak používate príkazový riadok Angular, zostavy by ste mali generovať v produkčnom režime. [Ďalšie informácie](https://angular.io/guide/deployment#enable-runtime-production-mode)"
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "Ak používate príkazový riadok Angular, zahrňte zdrojové mapy do produkčnej zostavy na účely kontroly balíkov. [Ďalšie informácie](https://angular.io/guide/deployment#inspect-the-bundles)"
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "Prednačítajte smerovanie vopred, aby ste urýchlili navigáciu. [Ďalšie informácie](https://web.dev/route-preloading-in-angular/)"
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "Na správu zlomových bodov obrázkov môžete použiť nástroj `BreakpointObserver` zo súpravy Component Dev Kit (CDK). [Ďalšie informácie](https://material.angular.io/cdk/layout/overview)"
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "Ak prvky JavaScriptu nezoskupujete, zvážte použitie [funkcie baler](https://github.com/magento/baler)."
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "Vypnite v platforme Magento vstavané funkcie [zoskupovania a minifikácie súborov JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) a zvážte namiesto toho použitie funkcie [baler](https://github.com/magento/baler/)."
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "Pri [definovaní vlastných písmen](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html) nastavte parameter `@font-display`."
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "Ak chcete využiť funkciu [oneskoreného načítania](https://web.dev/native-lazy-loading) danej webovej platformy, upravte šablóny svojho produktu a katalógu."
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "Použite [integráciu Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) platformy Magento."
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "Povoľte možnosť Minifikovať súbory CSS v nastaveniach vášho obchodu pre vývojárov. [Ďalšie informácie](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "Použite nástroj [Terser](https://www.npmjs.com/package/terser) na minifikáciu všetkých prvkov JavaScriptu zo statického obsahu a vypnite vstavanú funkciu minifikácie."
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "Vypnite vstavané [zoskupovanie súborov JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) v platforme Magento."
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "Na trhovisku [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) nájdete veľké množstvo rozšírení tretích strán určených na optimalizáciu obrázkov."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "Indikátory zdrojov predbežného pripojenia alebo predbežného načítania DNS môžete pridať [úpravou rozloženia motívu](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "Značky `<link rel=preload>` je možné pridať [úpravou rozloženia motívu](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "Na trhovisku [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) nájdete veľké množstvo rozšírení tretích strán, ktoré podporujú nové formáty obrázkov."
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "Ak na stránke opakovane vykresľujete určité prvky, zvážte použitie „okennej“ knižnice, ako je `react-window`, ktorá vám pomôže minimalizovať počet vytvorených uzlov DOM. [Ďalšie informácie](https://web.dev/virtualize-long-lists-react-window/) Minimalizujte aj zbytočné opakované vykresľovanie. Môžete na to použiť funkciu [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) alebo [React.memo](https://reactjs.org/docs/react-api.html#reactmemo). [Efekty preskakujte](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) iba v prípade, ak sa zmenili určité závislosti a zlepšujete výkonnosť počas spustenia pomocou nástroja Effect Hook."
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "Ak používate React Router, minimalizujte používanie komponentu `<Redirect>` na [určenie smerovania](https://reacttraining.com/react-router/web/api/Redirect)."
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "Ak na strane servera vykresľujete komponenty knižnice React, zvážte použitie funkcie `renderToNodeStream()` alebo `renderToStaticNodeStream()`, aby ste klientovi umožnili prijať a spracovať rôzne časti značiek namiesto všetkých naraz. [Ďalšie informácie](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "Ak vaša zostava automaticky minifikuje súbory CSS, mali by ste nasádzať produkčnú zostavu aplikácie. Môžete to skontrolovať pomocou rozšírenia React Developer Tools. [Ďalšie informácie](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "Ak váš systém zostavy automaticky minifikuje súbory JS, mali by ste nasadzovať produkčnú zostavu aplikácie. Môžete to skontrolovať pomocou rozšírenia React Developer Tools. [Ďalšie informácie](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "Ak nevykresľujete na strane servera, [rozdeľte balíky súborov JavaScript](https://web.dev/code-splitting-suspense/) pomocou funkcie `React.lazy()`. V opačnom prípade rozdeľte kód pomocou knižnice tretej strany, napríklad [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "Na meranie výkonnosti vykresľovania svojich komponentov použite profilovač React DevTools Profiler, ktorý využíva rozhranie Profiler API. [Ďalšie informácie](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "Zvážte nahranie gifu do služby, ktorá umožní jeho vloženie v podobe videa HTML5."

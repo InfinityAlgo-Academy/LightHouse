@@ -450,7 +450,7 @@
     "message": "{itemCount,plural, =1{Znaleziono 1 łańcuch}few{Znaleziono # łańcuchy}many{Znaleziono # łańcuchów}other{Znaleziono # łańcucha}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "Zminimalizuj głębię żądań krytycznych"
+    "message": "Unikaj tworzenia łańcuchów żądań krytycznych"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "Wycofanie/ostrzeżenie"
@@ -513,7 +513,7 @@
     "message": "Wartość"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "Twórcy przeglądarek zalecają, by strony zawierały mniej niż około 1500 elementów DOM. Optymalne jest drzewo o głębokości mniejszej niż 32 elementy i zawierające mniej niż 60 elementów podrzędnych/nadrzędnych. Duży DOM może zwiększyć wykorzystanie pamięci, wydłużyć [obliczanie stylów](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) i powodować kosztowne [przeformatowania układu](https://developers.google.com/speed/articles/reflow). [Więcej informacji](https://web.dev/dom-size)"
+    "message": "Duży DOM zwiększy wykorzystanie pamięci, wydłuży [obliczanie stylów](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) i spowoduje kosztowne [przeformatowania układu](https://developers.google.com/speed/articles/reflow). [Więcej informacji](https://web.dev/dom-size)"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 element}few{# elementy}many{# elementów}other{# elementu}}"
@@ -1053,7 +1053,7 @@
     "message": "Ogranicz wpływ kodu spoza witryny"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "Używanie kodu spoza witryny"
+    "message": "Minimalizacja wykorzystania kodu zewnętrznego"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Czas do pierwszego bajta oznacza czas wysłania odpowiedzi przez serwer. [Więcej informacji](https://web.dev/time-to-first-byte)"
@@ -1066,6 +1066,9 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Czasy odpowiedzi serwera są krótkie (TTFB)"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Czas trwania"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "Czas rozpoczęcia"
@@ -1456,6 +1459,99 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Ostrzeżenia "
+  },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "W przypadku treści animowanych stosuj atrybut [amp-anim](https://amp.dev/documentation/components/amp-anim/), aby zminimalizować wykorzystanie procesora, gdy te treści znajdują się poza ekranem."
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "Upewnij się, że używasz prawidłowych tagów `amp-img` dla obrazów, które są automatycznie leniwie ładowane poza pierwszym widocznym obszarem. [Więcej informacji](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)"
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "Korzystaj z narzędzi takich jak [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer), aby [renderować układy AMP po stronie serwera](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "Sprawdź w [dokumentacji AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/), czy wszystkie Twoje style są obsługiwane."
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "Element `amp-img` ma atrybut `srcset` wskazujący, których zasobów graficznych użyć w zależności od rozmiaru ekranu.  [Więcej informacji](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)"
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "Sugerujemy wyświetlanie wszystkich komponentów `amp-img` w formatach WebP i podanie odpowiednich zasobów zastępczych dla innych przeglądarek. [Więcej informacji](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)"
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "Jeśli renderowane są bardzo duże listy, proponujemy zastosowanie przewijania wirtualnego z pakietu CDK (Component Dev Kit). [Więcej informacji](https://web.dev/virtualize-lists-with-angular-cdk/)"
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "Zastosuj [dzielenie kodu na poziomie przekierowań](https://web.dev/route-level-code-splitting-in-angular/), by zminimalizować wielkość pakietów JavaScript. Pomyśl też o wstępnym zapisywaniu zasobów w pamięci podręcznej za pomocą [skryptu service worker Angular](https://web.dev/precaching-with-the-angular-service-worker/)."
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "Jeśli używasz interfejsu wiersza poleceń Angular, upewnij się, że kompilacje są generowane w trybie produkcyjnym. [Więcej informacji](https://angular.io/guide/deployment#enable-runtime-production-mode)"
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "Jeśli używasz interfejsu wiersza poleceń Angular, dołącz do kompilacji produkcyjnej mapy źródeł w celu inspekcji pakietów. [Więcej informacji](https://angular.io/guide/deployment#inspect-the-bundles)"
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "Aby przyspieszyć nawigację, załaduj wcześniej przekierowania. [Więcej informacji](https://web.dev/route-preloading-in-angular/)"
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "Do zarządzania punktami przerwania obrazów proponujemy używać narzędzia `BreakpointObserver` z pakietu CDK (Component Dev Kit). [Więcej informacji](https://material.angular.io/cdk/layout/overview)"
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "Jeśli nie łączysz zasobów JavaScript w pakiet, proponujemy użycie metody [baler](https://github.com/magento/baler)."
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "Proponujemy wyłączenie wbudowanych w Magento funkcji [tworzenia pakietów i minifikacji JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html), a użycie zamiast nich metody [baler](https://github.com/magento/baler/)."
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "[Definiując niestandardowe czcionki](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html), ustaw `@font-display`."
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "Sugerujemy zmodyfikowanie szablonów produktu i katalogu w celu wykorzystania funkcji platformy internetowej [leniwego ładowania](https://web.dev/native-lazy-loading)."
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "Skorzystaj z [integracji Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) z Magento."
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "Włącz opcję „Minify CSS Files” (Minifikuj pliki CSS) w ustawieniach dewelopera swojego sklepu. [Więcej informacji](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "Do minifikacji wszystkich zasobów JavaScript poza wdrożeniem treści statycznych używaj biblioteki [Terser](https://www.npmjs.com/package/terser) i wyłącz wbudowaną funkcję minifikacji."
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "Wyłącz wbudowaną w Magento funkcję [tworzenia pakietów JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)."
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "Proponujemy poszukać w [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) rozszerzeń innych firm umożliwiających optymalizację obrazów."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "Wskazówki „preconnect” lub „dns-prefetch” można dodać, [modyfikując układ motywu](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "Tagi `<link rel=preload>` można dodać, [modyfikując układ motywu](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "Proponujemy poszukać w [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) rozszerzeń innych firm umożliwiających wykorzystanie nowych formatów obrazów."
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "Jeśli renderujesz na stronie wiele powtarzających się elementów, proponujemy wykorzystanie biblioteki „okienkowej”, takiej jak `react-window`, by zminimalizować liczbę tworzonych węzłów DOM. [Więcej informacji](https://web.dev/virtualize-long-lists-react-window/) Oprócz tego aby przyspieszyć działanie, zredukuj liczbę ponownych renderowań za pomocą metod [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) lub [React.memo](https://reactjs.org/docs/react-api.html#reactmemo). Jeśli używasz hooka Effect, [pomijaj efekty](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) tylko do momentu zmiany określonych zależności."
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "Jeśli używasz komponentów React Router, zminimalizuj wykorzystanie komponentu `<Redirect>` do [przekierowania nawigacji](https://reacttraining.com/react-router/web/api/Redirect)."
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "Jeśli renderujesz komponenty React po stronie serwera, proponujemy używanie metod `renderToNodeStream()` lub `renderToStaticNodeStream()`, by umożliwić klientowi odbieranie i rozwijanie poszczególnych części kodu zamiast całego naraz. [Więcej informacji](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "Jeśli Twój system kompilacji automatycznie minifikuje pliki CSS, upewnij się, że wdrażasz kompilację produkcyjną aplikacji. Możesz to sprawdzić za pomocą rozszerzenia Narzędzia dla programistów React. [Więcej informacji](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "Jeśli Twój system kompilacji automatycznie minifikuje pliki JS, upewnij się, że wdrażasz kompilację produkcyjną aplikacji. Możesz to sprawdzić za pomocą rozszerzenia Narzędzia dla programistów React. [Więcej informacji](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "Jeśli nie renderujesz po stronie serwera, [podziel pakiety JavaScript](https://web.dev/code-splitting-suspense/), używając funkcji `React.lazy()`. W przeciwnym razie podziel kod za pomocą biblioteki innej firmy, takiej jak [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "Do pomiaru wydajności renderowania komponentów używaj programu profilującego z narzędzi dla programistów React, który wykorzystuje interfejs Profiler API. [Więcej informacji](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "Możesz przesłać plik GIF do usługi, która umożliwi umieszczanie go jako pliku wideo HTML5."

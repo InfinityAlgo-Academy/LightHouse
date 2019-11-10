@@ -30,10 +30,10 @@
     "message": "కొన్ని ARIA మూలాధార పాత్రలు తప్పనిసరిగా నిర్దిష్ట ఉపాంశ పాత్రల కలయికతో వాటి ఉద్దేశిత యాక్సెసిబిలిటీ ఫంక్షన్‌లు సరిగ్గా అమలయ్యే విధంగా ఉండాలి. [మరింత తెలుసుకోండి](https://web.dev/aria-required-children/)."
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | failureTitle": {
-    "message": "ఉప మూలకాలు నిర్దిష్టమైన '`[role]`'ను కలిగి ఉండాల్సిన ARIA '`[role]`' మూలకాలలో కొన్నింటిని లేదా వేటినీ ఉప మూలకాలు కలిగి ఉండకపోవడంతో సమస్య ఏర్పడింది."
+    "message": "నిర్దిష్టమైన '`[role]`'ను కలిగి ఉండాల్సిన, ఉప మూలకాలు అవసరమైన ARIA '`[role]`' మూలకాలలో అటువంటి ఉప మూలకాలన్నీ లేదా వాటిలో కొన్ని లేకపోవడంతో ఈ సమస్య ఏర్పడింది."
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | title": {
-    "message": "ఉప మూలకాలు నిర్దిష్టమైన '`[role]`'ను కలిగి ఉండటం అవసరమైన ARIA `[role]` గల మూలకాలు అవసరమైన అన్ని ఉప మూలకాలను కలిగి ఉన్నాయి."
+    "message": "నిర్దిష్టమైన '`[role]`'ను కలిగి ఉండాల్సిన, ఉప మూలకాలు అవసరమైన ARIA `[role]` గల మూలకాలు అవసరమైన అన్ని ఉప మూలకాలను కలిగి ఉన్నాయి."
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | description": {
     "message": "కొన్ని ARIA ఉపాంశ పాత్రలు తప్పనిసరిగా నిర్దిష్ట మూలధార పాత్రల కలయికతో వాటి ఉద్దేశిత యాక్సెసిబిలిటీ ఫంక్షన్‌లు సరిగ్గా అమలయ్యే విధంగా ఉండాలి. [మరింత తెలుసుకోండి](https://web.dev/aria-required-parent/)."
@@ -450,7 +450,7 @@
     "message": "{itemCount,plural, =1{1 గొలుసు కనుగొనబడింది}other{# గొలుసులు కనుగొనబడ్డాయి}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "క్లిష్టమైన అభ్యర్ధనల గాఢత్వమును తగ్గించండి"
+    "message": "అత్యంత ముఖ్యమైన అభ్యర్థనలను గొలుసు క్రమంలో అందించడం నివారించండి"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "విస్మరణ / హెచ్చరిక"
@@ -513,7 +513,7 @@
     "message": "విలువ"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "బ్రౌజర్ ఇంజినీర్‌లు ~1,500 కంటే తక్కువ DOM మూలకాలను కలిగి ఉండే పేజీలను సిఫార్సు చేస్తారు. అత్యుత్తమ ప్రమాణంలో ట్రీ డెప్త్ < 32 మూలకాలు, 60 కంటే తక్కువ ఉపాంశ/మూలాధార మూలకాలు ఉండాలి. పెద్ద DOM వలన మెమరీ వినియోగం పెరగవచ్చు. దీర్ఘమైన [స్టైల్ గణనలు](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) జరగవచ్చు, ఖరీదైన [లేఅవుట్ రీఫ్లోలు](https://developers.google.com/speed/articles/reflow) అందించవచ్చు. [మరింత తెలుసుకోండి](https://web.dev/dom-size)."
+    "message": "పెద్ద DOM వలన మెమరీ వినియోగం పెరుగుతుంది. దీర్ఘమైన [శైలి గణనలు](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) జరుగుతాయి, ఖరీదైన [లేఅవుట్ రీఫ్లోలు](https://developers.google.com/speed/articles/reflow) అందించబడతాయి. [మరింత తెలుసుకోండి](https://web.dev/dom-size)."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 మూలకం}other{# మూలకాలు}}"
@@ -1053,7 +1053,7 @@
     "message": "మూడవ పక్షం కోడ్ ప్రభావాన్ని తగ్గించండి"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "మూడవ పక్షం వినియోగం"
+    "message": "మూడవ పక్ష వినియోగాన్ని కనీస స్థాయికి తగ్గించండి"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "మొదటి బైట్ సమయం మీ సర్వర్ ప్రతిస్పందనను పంపించిన సమయాన్ని గుర్తిస్తుంది. [మరింత తెలుసుకోండి](https://web.dev/time-to-first-byte)."
@@ -1066,6 +1066,9 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "సర్వర్ ప్రతిస్పందన సమయాలు తక్కువగా ఉన్నాయి (TTFB)"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "వ్యవధి"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "ప్రారంభ సమయం"
@@ -1456,6 +1459,99 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "హెచ్చరికలు: "
+  },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "యానిమేట్ చేసిన కంటెంట్ కోసం, '[amp-anim](https://amp.dev/documentation/components/amp-anim/)'ను ఉపయోగించడం ద్వారా కంటెంట్‌ను ఆఫ్‌స్క్రీన్‌లో ఉంచుతూ CPU వినియోగాన్ని కనీస స్థాయికి తగ్గించుకోండి."
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "మీ చిత్రాల కోసం మొదటి వీక్షణ పోర్ట్ వెలుపల ఆటోమేటిక్‌గా లేజీ లోడ్ కాబడే చెల్లుబాటయ్యే `amp-img` ట్యాగ్‌లను మీరు ఉపయోగిస్తున్నట్లు నిర్ధారించుకోండి. [మరింత తెలుసుకోండి](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "[సర్వర్ వైపు అమలు చేసే AMP లేఅవుట్‌ల](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/) కోసం [AMP ఆప్టిమైజర్](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) లాంటి సాధనాలను ఉపయోగించండి."
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "మీ అన్ని శైలులకు మద్దతు ఉందో లేదో నిర్ధారించుకోవడానికి [AMP పత్రాలు](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) చూడండి."
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "స్క్రీన్ సైజ్ ఆధారంగా ఏయే చిత్రం అస్సెట్‌లను ఉపయోగించాలో పేర్కొనడానికి `srcset` లక్షణానికి `amp-img` ఎలిమెంట్ మద్దతు అందిస్తుంది.  [మరింత తెలుసుకోండి](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "ఇతర బ్రౌజర్‌ల కోసం సముచితంగా ఉండే మునుపటి వాటిని పేర్కొంటున్నప్పుడు, మీ అన్ని `amp-img` కాంపొనెంట్‌లను WebP ఫార్మాట్‌లలో ప్రదర్శించడానికి ప్రయత్నించండి. [మరింత తెలుసుకోండి](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "చాలా ఎక్కువ జాబితాలను అమలు చేస్తున్నట్లయితే, కాంపొనెంట్ డెవలపర్ కిట్ (CDK)తో వర్చువల్ స్క్రోలింగ్ చేయడానికి ప్రయత్నించండి. [మరింత తెలుసుకోండి](https://web.dev/virtualize-lists-with-angular-cdk/)."
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "మీ JavaScript బండిల్‌ల సైజ్‌ను కనీస స్థాయికి తగ్గించడానికి [మూల స్థాయిలో కోడ్ విభజన](https://web.dev/route-level-code-splitting-in-angular/)ను వర్తింపజేయండి. అలాగే, [Angular సర్వీస్ వర్కర్](https://web.dev/precaching-with-the-angular-service-worker/) సహాయంతో, అస్సెట్‌లను ముందుగానే కాష్ చేయడానికి ప్రయత్నించండి."
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "మీరు Angular CLIని ఉపయోగిస్తున్నట్లయితే, బిల్డ్‌లను ఉత్పాదన మోడ్‌లో రూపొందించినట్లు నిర్ధారించుకోండి. [మరింత తెలుసుకోండి](https://angular.io/guide/deployment#enable-runtime-production-mode)."
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "మీరు Angular CLIని ఉపయోగిస్తున్నట్లయితే, మీ బండిల్‌లను పర్యవేక్షించడానికి మీ ఉత్పాదన బిల్డ్‌లో సోర్స్ మ్యాప్‌లను చేర్చండి. [మరింత తెలుసుకోండి](https://angular.io/guide/deployment#inspect-the-bundles)."
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "నావిగేషన్ వేగంగా అందించడానికి తగిన సమయం కంటే ముందుగానే మార్గాలను లోడ్ చేస్తుంది. [మరింత తెలుసుకోండి](https://web.dev/route-preloading-in-angular/)."
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "చిత్రం బ్రేక్ పాయింట్‌లను నిర్వహించడానికి, కాంపొనెంట్ డెవలపర్ కిట్ (CDK)లోని `BreakpointObserver` యుటిలిటీని ఉపయోగించడానికి ప్రయత్నించండి. [మరింత తెలుసుకోండి](https://material.angular.io/cdk/layout/overview)."
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "మీ JavaScript అస్సెట్‌లను మీరు బండిల్ చేయనట్లయితే, [బేలర్‌](https://github.com/magento/baler)ను ఉపయోగించడానికి ప్రయత్నించండి."
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "Magento అంతర్నిర్మిత [JavaScript బండ్లింగ్, కనిష్ఠీకరణ](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)ను నిలిపివేసి, దానికి బదులుగా [బేలర్‌](https://github.com/magento/baler/)ను ఉపయోగించడానికి ప్రయత్నించండి."
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "[అనుకూల ఫాంట్‌లను నిర్వచిస్తున్నప్పుడు](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html), `@font-display`ను పేర్కొనండి."
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "వెబ్ ప్లాట్‌ఫామ్‌లోని [లేజీ లోడింగ్](https://web.dev/native-lazy-loading) ఫీచర్‌ను వినియోగించడం కోసం మీ ఉత్పత్తి, కేటలాగ్ టెంప్లేట్‌లను సవరించడానికి ప్రయత్నించండి."
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "Magento సంబంధిత [వార్నిష్ ఇంటిగ్రేషన్‌](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)ను ఉపయోగించండి."
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "మీ స్టోర్ డెవలపర్ సెట్టింగ్‌లలో \"CSS ఫైల్‌లను చిన్నవిగా చేయి\" ఎంపికను ప్రారంభించండి. [మరింత తెలుసుకోండి](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "స్టాటిక్ కంటెంట్ అమలు చేయడం నుండి ఉత్పన్నమయ్యే అన్ని JavaScript అస్సెట్‌లను కనిష్ఠ స్థాయికి తగ్గించడానికి [టెర్సర్‌](https://www.npmjs.com/package/terser)ను ఉపయోగించండి, అలాగే అంతర్నిర్మిత కనిష్ఠీకరణ ఫీచర్‌ను నిలిపివేయండి."
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "Magento అంతర్నిర్మిత [JavaScript బండ్లింగ్‌](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)ను నిలిపివేయండి."
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "చిత్రాలను ఆప్టిమైజ్ చేయగలిగే వివిధ రకాల మూడవ పక్ష ఎక్స్‌టెన్షన్‌ల కోసం [Magento మార్కెట్‌ప్లేస్‌](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image)లో వెతకడానికి ప్రయత్నించండి."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "[థీమ్ లేఅవుట్‌ను సవరించడం](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html) ద్వారా ప్రీకనెక్ట్ లేదా dns ప్రీఫెట్చ్ వనరు సూచనలను జోడించవచ్చు."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "[థీమ్ లేఅవుట్‌ను సవరించడం](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html) ద్వారా `<link rel=preload>` ట్యాగ్‌లను జోడించవచ్చు."
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "సరికొత్త చిత్ర ఫార్మాట్‌లను అందించే వివిధ రకాల మూడవ పక్ష ఎక్స్‌టెన్షన్‌ల కోసం [Magento మార్కెట్‌ప్లేస్](https://marketplace.magento.com/catalogsearch/result/?q=webp)‌లో వెతకడానికి ప్రయత్నించండి."
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "మీరు పేజీలోని అనేక పునరావృత ఎలిమెంట్‌లను అమలు చేస్తున్నట్లయితే, DOM నోడ్‌లు సృష్టించబడే సంఖ్యను కనీస స్థాయికి తగ్గించడానికి, `react-window` లాంటి “విండో తరహా” లైబ్రరీని ఉపయోగించేందుకు ప్రయత్నించండి. [మరింత తెలుసుకోండి](https://web.dev/virtualize-long-lists-react-window/). అలాగే, మీరు అమలు సమయం పనితీరును మెరుగుపరచడానికి ఎఫెక్ట్ హుక్‌ను ఉపయోగిస్తున్నట్లయితే, నిర్దిష్ట ఆధారిత అంశాలను మార్చబడే వరకు మాత్రమే [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) లేదా [React.memo](https://reactjs.org/docs/react-api.html#reactmemo), [దాటివేత ప్రభావాలు](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) ఉపయోగించి అనవసరమైన పునరావృత అమలు చర్యలను కనిష్ఠ స్థాయికి తగ్గించండి."
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "మీరు 'రియాక్ట్ రూటర్'ను ఉపయోగిస్తున్నట్లయితే, [మార్గం నావిగేషన్‌ల](https://reacttraining.com/react-router/web/api/Redirect) కోసం `<Redirect>` కాంపొనెంట్ వినియోగాన్ని కనీస స్థాయికి తగ్గించండి."
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "మీరు సర్వర్ వైపు నుండి ఏవైనా 'రియాక్ట్' కాంపొనెంట్‌లను అమలు చేస్తున్నట్లయితే, `renderToNodeStream()` లేదా `renderToStaticNodeStream()`ను వినియోగించడానికి ప్రయత్నించడం ద్వారా మార్క్అప్‌లో ఉండే విభాగాలన్నీ ఒకేసారి కాకుండా, వివిధ భాగాలుగా అందుకోవడానికి, హైడ్రేట్ చేయడానికి క్లయింట్‌ను అనుమతించండి. [మరింత తెలుసుకోండి](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "మీ CSS ఫైల్‌లను మీ బిల్డ్ సిస్టమ్ ఆటోమేటిక్‌గా కనిష్ఠ స్థాయికి తగ్గిస్తున్నట్లయితే, మీ అప్లికేషన్ యొక్క ఉత్పాదన బిల్డ్‌ను మీరు అమలు చేస్తున్నట్లు నిర్ధారించుకోండి. 'రియాక్ట్ డెవలపర్ సాధనాలు' ఎక్స్‌టెన్షన్‌తో మీరు దీనిని తనిఖీ చేయవచ్చు. [మరింత తెలుసుకోండి](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "మీ JS ఫైల్‌లను మీ బిల్డ్ సిస్టమ్ ఆటోమేటిక్‌గా చిన్నదిగా చేస్తున్నట్లయితే, మీ అప్లికేషన్ యొక్క ఉత్పాదన బిల్డ్‌ను మీరు అమలు చేస్తున్నట్లు నిర్ధారించుకోండి. 'రియాక్ట్ డెవలపర్ సాధనాలు' ఎక్స్‌టెన్షన్‌తో మీరు దీనిని తనిఖీ చేయవచ్చు. [మరింత తెలుసుకోండి](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "మీరు సర్వర్ వైపు అమలు చేయనట్లయితే, `React.lazy()` ద్వారా [మీ JavaScript బండిల్‌లను విభజించండి](https://web.dev/code-splitting-suspense/). లేదంటే, '[లోడ్ చేయదగిన కాంపొనెంట్‌లు](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)' లాంటి మూడవ పక్షం లైబ్రరీని ఉపయోగించడం ద్వారా కోడ్‌ను విభజించండి."
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "మీ కాంపొనెంట్‌ల అమలు పనితీరును అంచనా వేయడానికి, ప్రొఫైలర్ API వినియోగించబడే రియాక్ట్ DevTools ప్రొఫైలర్‌ను ఉపయోగించండి. [మరింత తెలుసుకోండి.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "మీ GIFను HTML5 వీడియోగా పొందుపరచగల సౌలభ్యం అందించే సేవకు అప్‌లోడ్ చేయడానికి ప్రయత్నించండి."

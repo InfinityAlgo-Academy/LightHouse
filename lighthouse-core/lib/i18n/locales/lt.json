@@ -450,7 +450,7 @@
     "message": "{itemCount,plural, =1{Rasta 1 grandinė}one{Rasta # grandinė}few{Rastos # grandinės}many{Rasta # grandinės}other{Rasta # grandinių}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "Sumažinkite svarbiausių užklausų gylį"
+    "message": "Nekurkite svarbių užklausų grandinių"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "Naudojimo nutraukimas / įspėjimas"
@@ -513,7 +513,7 @@
     "message": "Vertė"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "Naršyklių inžinieriai rekomenduoja puslapiuose naudoti ne daugiau kaip apytiksliai 1,5 tūkst. DOM elementų. Optimaliausias medžio gylis – mažiau nei 32 elementai ir mažiau nei 60 antrinių bei pirminių elementų. Dėl didelio DOM elementų skaičiaus gali būti sunaudojama daugiau atminties, ilgiau [skaičiuojami stiliai](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) ir gali reikėti brangių [išdėstymo perskaičiavimų](https://developers.google.com/speed/articles/reflow). [Sužinokite daugiau](https://web.dev/dom-size)."
+    "message": "Dėl didelio DOM elementų skaičiaus bus sunaudojama daugiau atminties, ilgiau [skaičiuojami stiliai](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) ir gali reikėti brangių [išdėstymo perskaičiavimų](https://developers.google.com/speed/articles/reflow). [Sužinokite daugiau](https://web.dev/dom-size)."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 elementas}one{# elementas}few{# elementai}many{# elemento}other{# elementų}}"
@@ -1053,7 +1053,7 @@
     "message": "Sumažina trečiosios šalies kodo poveikį"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "Trečiosios šalies naudojimas"
+    "message": "Trečiųjų šalių kodo naudojimo sumažinimas"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Laikas iki pirmojo baito nurodo laiką, per kurį serveris atsako. [Sužinokite daugiau](https://web.dev/time-to-first-byte)."
@@ -1066,6 +1066,9 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Serverio atsako laikas yra trumpas (TTFB)"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Trukmė"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "Pradžios laikas"
@@ -1456,6 +1459,99 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Įspėjimai: "
+  },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "Jei teikiate animuotą turinį, naudokite [„amp-anim“](https://amp.dev/documentation/components/amp-anim/), kad sumažintumėte centrinio procesoriaus naudojimą, kol turinys nerodomas ekrane."
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "Įsitikinkite, kad naudojate tinkamas vaizdų žymas „`amp-img`“, kurios, naudojant atidėtąjį įkėlimą, automatiškai įkeliamos už peržiūros srities. [Sužinokite daugiau](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)"
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "[Serveryje pateikdami AMP išdėstymus](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/) naudokite tokius įrankius kaip [AMP optimizavimo priemonė](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer)."
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "Peržiūrėkite [AMP dokumentus](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) ir isitikinkite, kad visi jūsų naudojami stiliai yra palaikomi."
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "Elementas „`amp-img`“ palaiko atributą „`srcset`“, kad būtų galima nurodyti, kuriuos vaizdo išteklius naudoti pagal ekrano dydį.  [Sužinokite daugiau](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)"
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "Apsvarstykite galimybę pateikti visus „`amp-img`“ komponentus „WebP“ formatais ir nurodyti atitinkamus kitų naršyklių atsarginius elementus. [Sužinokite daugiau](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)"
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "Jei pateikiami labai dideli sąrašai, apsvarstykite galimybę naudoti virtualų slinkimą naudojant komponentų kūrimo rinkinį (CDK). [Sužinokite daugiau](https://web.dev/virtualize-lists-with-angular-cdk/)"
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "Jei norite sumažinti „JavaScript“ grupių dydį, taikykite [maršruto lygio kodo skaidymą](https://web.dev/route-level-code-splitting-in-angular/). Taip pat apsvarstykite galimybę išteklius iš anksto įdėti į talpyklą naudojant [pagalbinį „JavaScript“ failą „Angular“](https://web.dev/precaching-with-the-angular-service-worker/)."
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "Jei naudojate „Angular CLI“, įsitikinkite, kad versijos generuojamos gamybos režimu. [Sužinokite daugiau](https://angular.io/guide/deployment#enable-runtime-production-mode)"
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "Jei naudojate „Angular CLI“, į gamybinę versiją įtraukite šaltinio žemėlapių, kad būtų tikrinamos jūsų grupės. [Sužinokite daugiau](https://angular.io/guide/deployment#inspect-the-bundles)"
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "Iš anksto įkelkite maršrutus, kad būtų galima greičiau naršyti. [Sužinokite daugiau](https://web.dev/route-preloading-in-angular/)"
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "Apsvarstykite galimybę naudoti komponentų kūrimo rinkinyje (CDK) esančią paslaugų priemonę „`BreakpointObserver`“ vaizdų atskaitos taškams tvarkyti. [Sužinokite daugiau](https://material.angular.io/cdk/layout/overview)"
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "Jei negrupuojate „JavaScript“ išteklių, apsvarstykite galimybę naudoti [presavimo įrankį](https://github.com/magento/baler)."
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "Išjunkite platformos „Magento“ įtaisytą [„JavaScript“ grupavimą ir nereikalingų duomenų pašalinimą](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) ir apsvarstykite galimybę vietoje jų naudoti [presavimo įrankį](https://github.com/magento/baler/)."
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "[Apibrėždami tinkintus šriftus](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html) nurodykite „`@font-display`“."
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "Apsvarstykite galimybę keisti produkto ir katalogo šablonus, kad galėtumėte išnaudoti žiniatinklio platformos [atidėtojo įkėlimo](https://web.dev/native-lazy-loading) funkciją."
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "Naudokite platformos „Magento“ [„Varnish“ integravimą](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "Parduotuvės skiltyje „Kūrėjų nustatymai“ įgalinkite parinktį „Pašalinti nereikalingus CSS failų duomenis“. [Sužinokite daugiau](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "Naudodami [„Terser“](https://www.npmjs.com/package/terser) pašalinkite visų „JavaScript“ išteklių nereikalingus duomenis iš statinio turinio diegimo ir išjunkite įtaisytą nereikalingų duomenų pašalinimo funkciją."
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "Išjunkite platformos „Magento“ įtaisytą [„JavaScript“ grupavimą](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)."
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "Apsvarstykite galimybę [„Magento Marketplace“](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) ieškoti įvairių trečiųjų šalių plėtinių, kad galėtumėte optimizuoti vaizdus."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "[Keičiant temos išdėstymą](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html) galima pridėti išankstinio prijungimo arba DNS išankstinės iškvietos ištekliaus nurodymų."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "Žymas „`<link rel=preload>`“ galima pridėti [keičiant temos išdėstymą](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "Apsvarstykite galimybę [„Magento Marketplace“](https://marketplace.magento.com/catalogsearch/result/?q=webp) ieškoti įvairių trečiųjų šalių plėtinių, kad galėtumėte pasinaudoti naujesniais vaizdo formatais."
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "Jei puslapyje pateikiate daug pasikartojančių elementų, apsvarstykite galimybę naudoti langų pateikimo biblioteką, pvz., „`react-window`“, kad sumažintumėte sukurtų DOM mazgų skaičių. [Sužinokite daugiau](https://web.dev/virtualize-long-lists-react-window/) Be to, sumažinkite nebūtinus pakartotinius pateikimus naudodami elementą [„shouldComponentUpdate“](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [„PureComponent“](https://reactjs.org/docs/react-api.html#reactpurecomponent) arba [„React.memo“](https://reactjs.org/docs/react-api.html#reactmemo) ir [praleiskite efektus](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) tik iki to laiko, kai bus pakeistos tam tikros priklausomybės, jei naudojate „Effect Hook“, siekdami pagerinti vykdymo laiko našumą."
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "Jei naudojate „React“ maršruto parinktuvą, sumažinkite komponento „`<Redirect>`“ naudojimą [parenkant maršrutą](https://reacttraining.com/react-router/web/api/Redirect)."
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "Jei serveryje pateikiate „React“ komponentų, apsvarstykite galimybę naudoti „`renderToNodeStream()`“ arba „`renderToStaticNodeStream()`“, kad klientas galėtų gauti ir užpildyti skirtingas žymėjimo dalis, o ne viską iš karto. [Sužinokite daugiau](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "Jei versijų sistemoje iš CSS failų nereikalingi duomenys pašalinami automatiškai, įsitikinkite, kad pritaikote gamybinę programos versiją. Galite tai patikrinti naudodami „React“ kūrėjo įrankių plėtinį. [Sužinokite daugiau](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "Jei versijų sistemoje iš JS failų nereikalingi duomenys pašalinami automatiškai, įsitikinkite, kad pritaikote gamybinę programos versiją. Galite tai patikrinti naudodami „React“ kūrėjo įrankių plėtinį. [Sužinokite daugiau](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "Jei nepateikiate serveryje, [išskaidykite „JavaScript“ grupes](https://web.dev/code-splitting-suspense/) naudodami „`React.lazy()`“. Kitu atveju išskaidykite kodą naudodami trečiosios šalies biblioteką, pvz., [„loadable-components“](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "Naudokite „React“ kūrimo įrankių analizės įrankį (kurį naudojant pasitelkiama analizės įrankio API) komponentų pateikimo našumui įvertinti. [Sužinokite daugiau.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "Apsvarstykite galimybę įkelti savo GIF į paslaugą, kuri leis jį įterpti kaip HTML5 vaizdo įrašą."

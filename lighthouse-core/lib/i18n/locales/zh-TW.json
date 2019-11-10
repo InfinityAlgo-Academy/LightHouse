@@ -450,7 +450,7 @@
     "message": "{itemCount,plural, =1{找到 1 個鏈結}other{找到 # 個鏈結}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "將關鍵要求層級降至最低"
+    "message": "避免鏈結關鍵要求"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "淘汰/警告"
@@ -513,7 +513,7 @@
     "message": "值"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "瀏覽器工程師建議網頁包含的 DOM 元素數量應少於 1,500 個左右。最理想的情況是樹狀結構深度包含的元素少於 32 個，且子項/父項元素少於 60 個。大型 DOM 會增加記憶體用量、延長[樣式運算](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)的時間，並產生費工的[版面配置重排](https://developers.google.com/speed/articles/reflow)。[瞭解詳情](https://web.dev/dom-size)。"
+    "message": "大型 DOM 會增加記憶體用量、延長[樣式運算](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)的時間，並產生費工的[版面配置重排](https://developers.google.com/speed/articles/reflow)。[瞭解詳情](https://web.dev/dom-size)。"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 個元素}other{# 個元素}}"
@@ -1053,7 +1053,7 @@
     "message": "降低第三方程式碼的影響"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "第三方程式碼使用情形"
+    "message": "盡量減少第三方程式碼的使用量"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "第一個位元組時間會指出你的伺服器傳送回應的時間。[瞭解詳情](https://web.dev/time-to-first-byte)。"
@@ -1066,6 +1066,9 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "伺服器回應時間低 (TTFB)"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "時間長度"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "開始時間"
@@ -1456,6 +1459,99 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "警告： "
+  },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "你可以對動畫內容使用 [amp-anim](https://amp.dev/documentation/components/amp-anim/) 標記，這樣一來，畫面外的內容即會盡量節省 CPU 用量。"
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "請確認你的圖片具備有效的 `amp-img` 標記，可以讓圖片在首要可視區域外自動延遲載入。[瞭解詳情](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)。"
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "使用 [AMP 最佳化工具](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer)或類似工具，在[伺服器端轉譯 AMP 版面配置](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)。"
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "請參閱 [AMP 說明文件](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/)，確保你的所有樣式都受到支援。"
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "`amp-img` 元素支援 `srcset` 屬性，可根據螢幕大小指定要使用的圖片素材資源。[瞭解詳情](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)。"
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "建議你以 WebP 格式顯示所有 `amp-img` 元件，同時為其他瀏覽器指定適當的備用格式。[瞭解詳情](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)。"
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "如果要轉譯超大型清單，建議使用元件開發套件 (CDK) 進行虛擬捲動。[瞭解詳情](https://web.dev/virtualize-lists-with-angular-cdk/)。"
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "套用[路徑層級的程式碼分割](https://web.dev/route-level-code-splitting-in-angular/)，盡可能減少你的 JavaScript 套件大小。此外，建議你使用 [Angular Service Worker](https://web.dev/precaching-with-the-angular-service-worker/) 來預先快取素材資源。"
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "如果你使用 Angular CLI，請確認你是在正式版模式中產生版本。[瞭解詳情](https://angular.io/guide/deployment#enable-runtime-production-mode)。"
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "如果你使用 Angular CLI，請在正式版本中包含來源對應功能，以檢查你的套件。[瞭解詳情](https://angular.io/guide/deployment#inspect-the-bundles)。"
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "在瀏覽前預先載入路徑以加快瀏覽速度。[瞭解詳情](https://web.dev/route-preloading-in-angular/)。"
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "建議你使用元件開發套件 (CDK) 中的 `BreakpointObserver` 公用程式來管理圖片中斷點。[瞭解詳情](https://material.angular.io/cdk/layout/overview)。"
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "如果你不是在統合 JavaScript 素材資源，建議你使用 [baler](https://github.com/magento/baler)。"
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "停用 Magento 內建的 [JavaScript 統合及壓縮功能](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)，考慮改用 [baler](https://github.com/magento/baler/)。"
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "在[定義自訂字型](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)時指定 `@font-display`。"
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "建議你修改產品和目錄範本，以使用網路平台的[延遲載入](https://web.dev/native-lazy-loading)功能。"
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "使用 Magento 的 [Varnish 整合功能](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)。"
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "在商店的開發人員設定中啟用 [Minify CSS Files] 選項。[瞭解詳情](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)。"
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "如果 JavaScript 素材資源是來自靜態內容部署作業，建議你使用 [Terser](https://www.npmjs.com/package/terser) 來進行壓縮，並停用內建的壓縮功能。"
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "停用 Magento 的內建 [JavaScript 統合功能](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)。"
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "建議你在 [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) 搜尋多種的第三方擴充功能，以進行圖片最佳化。"
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "你可以透過[修改主題的版面配置](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)，新增 preconnect 或 dns-prefetch 資源提示。"
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "你可以透過[修改主題版面配置](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)來新增 `<link rel=preload>` 標記。"
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "建議你在 [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) 搜尋多種第三方擴充功能，以運用較新的圖片格式。"
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "如果你要在網頁上轉譯許多重複的元素，建議你使用「視窗化」程式庫 (例如 `react-window`)，盡可能減少系統建立的 DOM 節點數量。[瞭解詳情](https://web.dev/virtualize-long-lists-react-window/)。此外，如果你使用 Effect Hook 來改善執行階段的效能，請使用 [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action)、[PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) 或 [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) 以及[略過效果](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects)，盡量減少不必要的重新轉譯，但某些相依性已變更時除外。"
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "如果使用 React Router，請盡量避免在[路徑導航](https://reacttraining.com/react-router/web/api/Redirect)中使用 `<Redirect>` 元件。"
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "如果你在伺服器端轉譯任何 React 元件，建議你使用 `renderToNodeStream()` 或 `renderToStaticNodeStream()`，以允許用戶端接收並填入標記的不同部分，而非一次接收整個標記。[瞭解詳情](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)。"
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "如果你的版本系統會自動壓縮 CSS 檔案，請確定你部署的應用程式為正式版本。你可以使用 React Developer Tools 擴充功能進行檢查。[瞭解詳情](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)。"
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "如果你的版本系統會自動壓縮 JavaScript 檔案，請確定你部署的應用程式為正式版本。你可以使用 React Developer Tools 擴充功能進行檢查。[瞭解詳情](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)。"
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "如果你不是在伺服器端進行轉譯，請以 `React.lazy()` [分割你的 JavaScript 套件](https://web.dev/code-splitting-suspense/)。否則請使用 [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/) 等第三方程式庫來分割程式碼。"
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "使用 React DevTools Profiler，這項工具會採用 Profiler API 來測量你的元件轉譯效能。[瞭解詳情](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)。"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "建議你將 GIF 上傳到可將 GIF 做為 HTML5 影片嵌入的服務。"

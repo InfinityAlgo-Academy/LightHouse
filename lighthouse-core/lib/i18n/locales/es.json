@@ -267,10 +267,10 @@
     "message": "Los lectores de pantalla incluyen funciones para facilitar la navegación por las tablas. Asegurarse de que las celdas `<td>` que usan el atributo `[headers]` solo hacen referencia a otras celdas de la misma tabla mejora la experiencia de los usuarios de lectores de pantalla. [Más información](https://web.dev/td-headers-attr/)"
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | failureTitle": {
-    "message": "Las celdas de los elementos `<table>` que usen el atributo `[headers]` hacen referencia a un elemento `id` que no se ha encontrado en la misma tabla."
+    "message": "Las celdas de un elemento `<table>` que usan el atributo `[headers]` hacen referencia a un elemento `id` que no se encuentra en la misma tabla."
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | title": {
-    "message": "Las celdas de un elemento `<table>` que use el atributo `[headers]` hacen referencia a otras celdas de la misma tabla."
+    "message": "Las celdas de un elemento `<table>` que usan el atributo `[headers]` hacen referencia a otras celdas de la misma tabla."
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | description": {
     "message": "Los lectores de pantalla incluyen funciones para facilitar la navegación por las tablas. Si te aseguras de que los encabezados de las tablas siempre hagan referencia a un conjunto de celdas, puedes mejorar la experiencia de los usuarios de lectores de pantalla. [Más información](https://web.dev/th-has-data-cells/)"
@@ -432,7 +432,7 @@
     "message": "Publica imágenes con formatos de próxima generación"
   },
   "lighthouse-core/audits/content-width.js | description": {
-    "message": "Si el ancho del contenido de tu aplicación no coincide con el ancho del viewport, es posible que tu aplicación no esté optimizada para pantallas de dispositivos móviles. [Más información](https://web.dev/content-width)"
+    "message": "Si el ancho del contenido de tu aplicación no coincide con el ancho del viewport, es posible que no esté optimizada para pantallas de dispositivos móviles. [Más información](https://web.dev/content-width)"
   },
   "lighthouse-core/audits/content-width.js | explanation": {
     "message": "El tamaño del viewport es de {innerWidth} px y no coincide con el de la ventana, que es de {outerWidth} px."
@@ -450,7 +450,7 @@
     "message": "{itemCount,plural, =1{Se ha encontrado 1 cadena}other{Se han encontrado # cadenas}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "Minimiza la profundidad de las solicitudes críticas"
+    "message": "Evita encadenar solicitudes críticas"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "Desactivación/Advertencia"
@@ -513,7 +513,7 @@
     "message": "Valor"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "Los desarrolladores de navegadores recomiendan que las páginas contengan menos de 1500 elementos DOM. Lo ideal es conseguir una profundidad de árbol inferior a 32 elementos y a 60 elementos secundarios por cada elemento principal. Los DOM de gran tamaño aumentan el uso de memoria, hacen que los [cálculos de estilo](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) duren más y generan costosos [reinicios del flujo del diseño](https://developers.google.com/speed/articles/reflow). [Más información](https://web.dev/dom-size)"
+    "message": "Los DOM de gran tamaño aumentan el uso de memoria, hacen que los [cálculos de estilo](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) duren más y generan costosos [reinicios del flujo del diseño](https://developers.google.com/speed/articles/reflow). [Más información](https://web.dev/dom-size)"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 elemento}other{# elementos}}"
@@ -657,7 +657,7 @@
     "message": "Descripción"
   },
   "lighthouse-core/audits/errors-in-console.js | description": {
-    "message": "Los errores registrados en la consola indican problemas sin resolver. Pueden proceder de solicitudes fallidas de la red y otros errores del navegador. [Más información](https://web.dev/errors-in-console)"
+    "message": "Los errores registrados en la consola indican que hay problemas sin resolver. Pueden proceder de solicitudes fallidas de la red y otros errores del navegador. [Más información](https://web.dev/errors-in-console)"
   },
   "lighthouse-core/audits/errors-in-console.js | failureTitle": {
     "message": "Se han registrado errores del navegador en la consola"
@@ -696,7 +696,7 @@
     "message": "La información del tamaño de la imagen no es válida ({url})"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
-    "message": "Los navegadores pueden preguntar a los usuarios si quieren añadir tu aplicación a la pantalla de inicio, lo que genera más interacción. [Más información](https://web.dev/installable-manifest)"
+    "message": "Los navegadores pueden preguntar a los usuarios si quieren añadir tu aplicación a la pantalla de inicio, con lo que se generan más interacciones. [Más información](https://web.dev/installable-manifest)"
   },
   "lighthouse-core/audits/installable-manifest.js | failureTitle": {
     "message": "El archivo de manifiesto de la aplicación web no cumple los requisitos de instalación"
@@ -729,7 +729,7 @@
     "message": "Página interactiva en una red móvil simulada en {timeInMs, number, seconds} s"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Tu página tarda mucho en cargar y hay que esperar 10 segundos hasta que se puede interactuar con ella. Para mejorarla, consulta las oportunidades y los diagnósticos en la sección \"Rendimiento\"."
+    "message": "Tu página tarda mucho en cargar y hay que esperar 10 segundos hasta que se puede interactuar con ella. Consulta los diagnósticos y las oportunidades de mejora en la sección \"Rendimiento\"."
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
     "message": "La página no se carga suficientemente rápido en las redes móviles"
@@ -750,13 +750,13 @@
     "message": "Minimiza el trabajo del hilo principal"
   },
   "lighthouse-core/audits/manual/pwa-cross-browser.js | description": {
-    "message": "Para llegar al mayor número de usuarios, los sitios web deben funcionar en los navegadores principales. [Más información](https://web.dev/pwa-cross-browser)"
+    "message": "Para llegar al mayor número de usuarios, los sitios web deben funcionar en los navegadores más habituales. [Más información](https://web.dev/pwa-cross-browser)"
   },
   "lighthouse-core/audits/manual/pwa-cross-browser.js | title": {
     "message": "El sitio web funciona en diferentes navegadores"
   },
   "lighthouse-core/audits/manual/pwa-each-page-has-url.js | description": {
-    "message": "Asegúrate de que la URL de cada página sea un enlace profundo y único para poder compartir las páginas fácilmente en las redes sociales. [Más información](https://web.dev/pwa-each-page-has-url)"
+    "message": "Asegúrate de que cada página permita generar un enlace profundo en forma de URL, y de que dichas URL se utilicen solo para compartir las páginas fácilmente en las redes sociales. [Más información](https://web.dev/pwa-each-page-has-url)"
   },
   "lighthouse-core/audits/manual/pwa-each-page-has-url.js | title": {
     "message": "Cada página tiene una URL"
@@ -825,7 +825,7 @@
     "message": "Límites de rendimiento"
   },
   "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "Si ya has configurado HTTPS, asegúrate de redirigir todo el tráfico HTTP a HTTPS para habilitar funciones de seguridad web para todos los usuarios. [Más información](https://web.dev/redirects-http)"
+    "message": "Si ya has configurado HTTPS, asegúrate de redireccionar todo el tráfico HTTP a HTTPS a fin de habilitar funciones web seguras para todos los usuarios. [Más información](https://web.dev/redirects-http)"
   },
   "lighthouse-core/audits/redirects-http.js | failureTitle": {
     "message": "No redirige el tráfico HTTP a HTTPS"
@@ -1014,13 +1014,13 @@
     "message": "Este origen tiene al menos un service worker, pero la página ({pageUrl}) no está dentro del rango."
   },
   "lighthouse-core/audits/service-worker.js | failureTitle": {
-    "message": "No tiene un service worker que controle la página y la propiedad`start_url`"
+    "message": "No registra un service worker que controle la página y la propiedad `start_url`"
   },
   "lighthouse-core/audits/service-worker.js | title": {
     "message": "Hay un service worker que controla la página y la propiedad `start_url`"
   },
   "lighthouse-core/audits/splash-screen.js | description": {
-    "message": "Una pantalla de inicio personalizada asegura que la experiencia de los usuarios sea de calidad cuando ejecuten tu aplicación desde sus pantallas de inicio. [Más información](https://web.dev/splash-screen)"
+    "message": "Una pantalla de inicio personalizada asegura una experiencia de calidad cuando los usuarios ejecuten tu aplicación desde sus pantallas de inicio. [Más información](https://web.dev/splash-screen)"
   },
   "lighthouse-core/audits/splash-screen.js | failureTitle": {
     "message": "No se ha configurado para una pantalla de inicio personalizada"
@@ -1032,7 +1032,7 @@
     "message": "El color de la barra de direcciones del navegador puede adaptarse a tu sitio web. [Más información](https://web.dev/themed-omnibox)"
   },
   "lighthouse-core/audits/themed-omnibox.js | failureTitle": {
-    "message": "No establece un color de tema personalizado en la barra de direcciones."
+    "message": "No establece un color personalizado en la barra de direcciones."
   },
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Establece un color personalizado en la barra de direcciones."
@@ -1053,7 +1053,7 @@
     "message": "Reduce el impacto del código de terceros"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "Uso de código de terceros"
+    "message": "Reducir el uso de código de terceros"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "El tiempo hasta el primer byte indica el momento en el que el servidor envía una respuesta. [Más información](https://web.dev/time-to-first-byte)"
@@ -1066,6 +1066,9 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Los tiempos de respuesta del servidor son rápidos (TTFB)"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Duración"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "Hora de inicio"
@@ -1116,22 +1119,22 @@
     "message": "Tu aplicación debería mostrar algún contenido cuando JavaScript esté inhabilitado, aunque solo sea un aviso para informar al usuario de que es necesario activar JavaScript para usar la aplicación. [Más información](https://web.dev/without-javascript)"
   },
   "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "El cuerpo de la página debería renderizar algo de contenido aunque sus secuencias de comandos no estén disponibles."
+    "message": "El cuerpo de la página debería renderizar parte del contenido aunque sus secuencias de comandos no estén disponibles."
   },
   "lighthouse-core/audits/without-javascript.js | failureTitle": {
     "message": "No ofrece contenido de reserva cuando JavaScript está inhabilitado"
   },
   "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Muestra algo de contenido cuando JavaScript está inhabilitado"
+    "message": "Muestra parte del contenido cuando JavaScript está inhabilitado"
   },
   "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Si estás creando una aplicación web progresiva, puedes usar un service worker para que tu aplicación funcione sin conexión. [Más información](https://web.dev/works-offline)"
+    "message": "Si estás creando una aplicación web progresiva, puedes usar un service worker para que funcione sin conexión. [Más información](https://web.dev/works-offline)"
   },
   "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "La página web no responde con un código de estado HTTP 200 cuando no hay conexión"
+    "message": "La página web actual no responde con un código de estado HTTP 200 cuando no hay conexión"
   },
   "lighthouse-core/audits/works-offline.js | title": {
-    "message": "La página web responde con un código de estado HTTP 200 cuando no hay conexión"
+    "message": "La página web actual responde con un código de estado HTTP 200 cuando no hay conexión"
   },
   "lighthouse-core/audits/works-offline.js | warningNoLoad": {
     "message": "Es posible que la página no se esté cargando sin conexión porque la URL de prueba ({requested}) se haya redirigido a \"{final}\". Prueba directamente la segunda URL."
@@ -1236,7 +1239,7 @@
     "message": "Estas comprobaciones se centran en diferentes aspectos de las aplicaciones web progresivas. [Más información](https://developers.google.com/web/progressive-web-apps/checklist)"
   },
   "lighthouse-core/config/default-config.js | pwaCategoryManualDescription": {
-    "message": "Estas comprobaciones son necesarias según el documento de referencia [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) (lista de comprobación para aplicaciones web progresivas), pero Lighthouse no las verifica automáticamente. Es importante que las verifiques a mano (aunque no afectan a la puntuación)."
+    "message": "Estas comprobaciones son necesarias según el documento de referencia [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) (lista de comprobación para aplicaciones web progresivas), pero Lighthouse no las verifica automáticamente. Es importante que las verifiques manualmente (aunque no afectan a la puntuación)."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Aplicación web progresiva"
@@ -1456,6 +1459,99 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Advertencias: "
+  },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "En el caso del contenido animado, usa [amp-anim](https://amp.dev/documentation/components/amp-anim/) para reducir el uso de la CPU mientras el contenido no aparece en la pantalla."
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "Asegúrate de que estés usando etiquetas `amp-img` válidas con tus imágenes, que se cargan automáticamente en diferido fuera de la primera ventana gráfica. [Más información](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)"
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "Utiliza herramientas como [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) para [renderizar diseños AMP en el servidor](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "Consulta la [documentación de AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) para asegurarte de que todos tus estilos sean compatibles."
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "El elemento `amp-img` admite el atributo `srcset` para especificar las imágenes que se deben usar según el tamaño de la pantalla.  [Más información](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)"
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "Puedes mostrar todos tus componentes `amp-img` en formatos WebP y, a la vez, especificar una alternativa adecuada para otros navegadores. [Más información](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)"
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "Si se están renderizando listas muy largas, puedes usar el desplazamiento virtual con el Component Dev Kit (CDK). [Más información](https://web.dev/virtualize-lists-with-angular-cdk/)"
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "Permite [dividir código de ruta](https://web.dev/route-level-code-splitting-in-angular/) para reducir el tamaño de los paquetes de JavaScript. También puedes almacenar elementos en caché por adelantado con el [service worker de Angular](https://web.dev/precaching-with-the-angular-service-worker/)."
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "Si utilizas Angular CLI, asegúrate de que las compilaciones se generen en el modo de producción. [Más información](https://angular.io/guide/deployment#enable-runtime-production-mode)"
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "Si utilizas Angular CLI, incluye mapas de origen en tu compilación de producción para inspeccionar tus paquetes. [Más información](https://angular.io/guide/deployment#inspect-the-bundles)"
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "Precarga rutas para acelerar la navegación. [Más información](https://web.dev/route-preloading-in-angular/)"
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "Puedes usar la utilidad `BreakpointObserver` del Component Dev Kit (CDK) para gestionar los puntos de interrupción de imágenes. [Más información](https://material.angular.io/cdk/layout/overview)"
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "Si no vas a agrupar los elementos de JavaScript, puedes usar [baler](https://github.com/magento/baler)."
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "Inhabilita los [paquetes de JavaScript y la minificación](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) integrados de Magento y, en su lugar, utiliza [baler](https://github.com/magento/baler/)."
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "Especifica `@font-display` al [definir fuentes personalizadas](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)."
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "Puedes cambiar tus plantillas de producto y de catálogo para usar la función [carga en diferido](https://web.dev/native-lazy-loading) de la plataforma web."
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "Usa la [integración Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) de Magento."
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "Habilita la opción Minificar archivos CSS en los ajustes para desarrolladores de tu tienda. [Más información](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "Usa [Terser](https://www.npmjs.com/package/terser) para minificar todos los elementos de JavaScript procedentes de implementaciones de contenido estático e inhabilitar la función de minificación integrada."
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "Permite inhabilitar los [paquetes de JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) integrados de Magento."
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "En [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image), puedes encontrar diferentes extensiones de terceros para mejorar imágenes."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "Puedes añadir sugerencias de recursos Preconnect o dns-prefetch [modificando el diseño de un tema](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "Es posible añadir etiquetas `<link rel=preload>` [cambiando el diseño de un tema](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "En [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp), puedes buscar extensiones de terceros para utilizar formatos de imagen más recientes."
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "Si vas a renderizar muchos elementos repetidos en una página, puedes usar una biblioteca de \"ventanas\", como `react-window`, para reducir el número de nodos DOM que se crean. [Más información](https://web.dev/virtualize-long-lists-react-window/) También puedes reducir las renderizaciones repetidas e innecesarias usando [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) o [React.memo](https://reactjs.org/docs/react-api.html#reactmemo), y [evitar los efectos](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) solo hasta que ciertas dependencias hayan cambiado (si estás usando el Effect Hook para mejorar el rendimiento del entorno de ejecución)."
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "Si usas React Router, minimiza el uso del componente `<Redirect>` en el caso de las [navegaciones de ruta](https://reacttraining.com/react-router/web/api/Redirect)."
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "Si estás renderizando componentes React en el servidor, puedes usar `renderToNodeStream()` o `renderToStaticNodeStream()` para permitir al cliente recibir e hidratar distintas partes de las etiquetas en vez de todas a la vez. [Más información](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "Si tu sistema de compilación minifica los archivos CSS automáticamente, comprueba que estés implementado la compilación de producción de tu aplicación. Puedes comprobarlo con la extensión de las herramientas de desarrollo de React. [Más información](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "Si tu sistema de compilación minifica los archivos JS automáticamente, comprueba que estés implementado la compilación de producción de tu aplicación. Puedes comprobarlo con la extensión de las herramientas de desarrollo de React. [Más información](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "Si no vas a renderizar en el servidor, [divide tus paquetes de JavaScript](https://web.dev/code-splitting-suspense/) con `React.lazy()`. También puedes dividir el código con una biblioteca de terceros, como [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "Usa DevTools Profiler de React, que utiliza la API del profiler, para medir el rendimiento de tus componentes al renderizar. [Más información](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "Puedes subir tu GIF a un servicio que permita insertarlo como un vídeo HTML5."

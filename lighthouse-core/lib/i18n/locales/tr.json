@@ -450,7 +450,7 @@
     "message": "{itemCount,plural, =1{1 zincir bulundu}other{# zincir bulundu}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "Kritik İsteklerin Derinliğini En Aza İndirin"
+    "message": "Kritik istek zinciri oluşturmaktan kaçın"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "Kullanımdan Kaldırma / Uyarı"
@@ -513,7 +513,7 @@
     "message": "Değer"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "Tarayıcı mühendisleri, sayfaların yaklaşık olarak 1.500'den az DOM öğesi içermesini önerir. En iyisi, 32 öğeden ve 60 alt/üst öğeden az olan bir ağaç derinliğidir. Büyük bir DOM, bellek kullanımını artırarak daha uzun [stil hesaplamalarına](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), yol açabilir ve yüksek maliyetli [düzen yeniden düzenlemeleri](https://developers.google.com/speed/articles/reflow). [Daha fazla bilgi](https://web.dev/dom-size)."
+    "message": "Büyük bir DOM, bellek kullanımını artırarak daha uzun [stil hesaplamalarına](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), neden olabilir ve yüksek maliyetli [düzen yeniden düzenlemeleri](https://developers.google.com/speed/articles/reflow) üretebilir. [Daha fazla bilgi](https://web.dev/dom-size)."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 öğe}other{# öğe}}"
@@ -741,7 +741,7 @@
     "message": "Kategori"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | description": {
-    "message": "JS'yi ayrıştırma, derleme ve yürütme için harcanan zamanı kısaltmayı düşünün. Daha küçük JS yüklerinin sağlanması bu konuda yardımcı olabilir. [Daha fazla bilgi](https://web.dev/mainthread-work-breakdown)"
+    "message": "JS'yi ayrıştırma, derleme ve yürütme için harcanan zamanı kısaltabilirsiniz. Daha küçük JS yüklerinin sağlanması bu konuda yardımcı olabilir. [Daha fazla bilgi](https://web.dev/mainthread-work-breakdown)"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
     "message": "Ana iş parçacığı çalışmasını en aza indir"
@@ -1053,7 +1053,7 @@
     "message": "Üçüncü taraf kodun etkisini azaltın"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "Üçüncü Taraf Kullanımı"
+    "message": "Üçüncü taraf kullanımını en aza indirme"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "İlk Bayt Zamanı, sunucunuzun yanıt gönderme zamanını tanımlar. [Daha fazla bilgi](https://web.dev/time-to-first-byte)."
@@ -1066,6 +1066,9 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Sunucu yanıt süreleri düşük (TTFB)"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Süre"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "Başlangıç Zamanı"
@@ -1456,6 +1459,99 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Uyarılar: "
+  },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "Animasyonlu içerik için içerik ekran dışında kalırken CPU kullanımını en aza indirmek amacıyla [amp-anim](https://amp.dev/documentation/components/amp-anim/) kullanın."
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "İlk görüntü alanının dışında otomatik olarak geç yüklenen görüntüleriniz için geçerli `amp-img` etiketleri kullandığınızdan emin olun. [Daha fazla bilgi](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "[Sunucu tarafı oluşturucu AMP düzenleri](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/) için [AMP Optimize Edici](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) gibi araçları kullanın."
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "Tüm stillerinizin desteklendiğinden emin olmak için [AMP belgelerine](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) bakın."
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "`amp-img` öğesi, ekran boyutuna göre kullanılacak görüntü öğelerini belirtmek için `srcset` özelliğini destekler.  [Daha fazla bilgi](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "Diğer tarayıcılar için uygun bir yedek belirtirken tüm `amp-img` bileşenlerinizin WebP biçimlerinde görüntülenmesi seçeneğini değerlendirin. [Daha fazla bilgi](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "Çok büyük listeler oluşturuluyorsa Bileşen Geliştirme Kiti (CDK) ile sanal kaydırma seçeneğini düşünün. [Daha fazla bilgi](https://web.dev/virtualize-lists-with-angular-cdk/)."
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "JavaScript paketlerinizin boyutunu en aza indirmek için [rota düzeyinde kod bölmeyi](https://web.dev/route-level-code-splitting-in-angular/) uygulayın. Ayrıca, [Angular hizmet çalışanı](https://web.dev/precaching-with-the-angular-service-worker/) ile öğeleri önbelleğe alma seçeneğini değerlendirin."
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "Angular KSA kullanıyorsanız derlemelerin üretim modunda oluşturulduğundan emin olun. [Daha fazla bilgi](https://angular.io/guide/deployment#enable-runtime-production-mode)."
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "Angular KSA kullanıyorsanız paketlerinizi incelemek için üretim derlemenize kaynak eşlemelerini ekleyin. [Daha fazla bilgi](https://angular.io/guide/deployment#inspect-the-bundles)."
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "Gezinmeyi hızlandırmak için rotaları önceden yükleyin. [Daha fazla bilgi](https://web.dev/route-preloading-in-angular/)."
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "Görüntü ayrılma noktalarını yönetmek için Bileşen Geliştirme Kiti'nde (CDK) `BreakpointObserver` yardımcı programını kullanmayı düşünün. [Daha fazla bilgi](https://material.angular.io/cdk/layout/overview)."
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "JavaScript öğelerinizi grupluyorsanız [gruplayıcı](https://github.com/magento/baler) kullanmayı düşünün."
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "Magento'nun yerleşik [JavaScript gruplama ve küçültme](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) özelliğini devre dışı bırakın ve bunun yerine [gruplayıcı](https://github.com/magento/baler/) kullanmayı düşünün."
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "[Özel yazı tipleri tanımlarken](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html) `@font-display` öğesini belirtin."
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "Ürün ve katalog şablonlarınızı, web platformunun [geç yükleme](https://web.dev/native-lazy-loading) özelliğinden yararlanacak şekilde değiştirme seçeneğini değerlendirin."
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "Magento'nun [Cila entegrasyonunu](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) kullanın."
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "Mağazanızın Geliştirici ayarlarında \"CSS Dosyalarını Küçült\" seçeneğini etkinleştirin. [Daha fazla bilgi](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "Statik içerik dağıtımından oluşturulan tüm JavaScript öğelerini küçültmek ve yerleşik küçültme özelliğini devre dışı bırakmak için [Terser](https://www.npmjs.com/package/terser)'ı kullanın."
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "Magento'nun yerleşik [JavaScript gruplama](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) özelliğini devre dışı bırakın."
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "Görüntüleri optimize etmek için [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image)'te çeşitli üçüncü taraf uzantılarını arama seçeneğini değerlendirin."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "Önceden bağlanma veya DNS önceden getirme kaynak ipuçları, [bir temanın düzeni değiştirilerek](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html) eklenebilir."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "`<link rel=preload>` etiketleri, [bir temanın düzeni değiştirilerek](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html) eklenebilir."
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "Daha yeni görüntü biçimlerinden yararlanmak için [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp)'te çeşitli üçüncü taraf uzantılarını arama seçeneğini değerlendirin."
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "Sayfada çok sayıda yinelenen öğe oluşturuyorsanız, oluşturulan DOM düğümlerinin sayısını en aza indirmek için `react-window` gibi bir \"pencereleme\" kitaplığı ı düşünün. [Daha fazla bilgi](https://web.dev/virtualize-long-lists-react-window/). Ayrıca, çalışma zamanı performansını iyileştirmek için Efekt kancası kullanıyorsanız bazı bağımlılıklar değişinceye kadar [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) veya [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) ve [atlama efektleri](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) kullanarak gereksiz yeniden oluşturma sayısını en aza indirin."
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "React Router kullanıyorsanız [rota gezinmeleri](https://reacttraining.com/react-router/web/api/Redirect) için `<Redirect>` bileşeninin kullanımını en aza indirin."
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "Sunucu tarafında React bileşenleri oluşturuyorsanız istemcinin tüm işaretleme parçalarını bir defada alması yerine farklı parçaları alıp birleştirmesine izin vermek için `renderToNodeStream()` veya `renderToStaticNodeStream()` kullanmayı düşünün. [Daha fazla bilgi](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "Derleme sisteminiz CSS dosyalarını otomatik olarak küçültüyorsa uygulamanızın üretim derlemesini dağıttığınızdan emin olun. Bunu React Geliştirici Araçları uzantısıyla kontrol edebilirsiniz. [Daha fazla bilgi](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "Derleme sisteminiz JS dosyalarını otomatik olarak küçültüyorsa uygulamanızın üretim derlemesini dağıttığınızdan emin olun. Bunu React Geliştirici Araçları uzantısıyla kontrol edebilirsiniz. [Daha fazla bilgi](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "Sunucu tarafında oluşturmuyorsanız `React.lazy()` ile [JavaScript paketlerinizi bölün](https://web.dev/code-splitting-suspense/). Aksi halde, [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/) gibi bir üçüncü taraf kitaplığı kullanarak kodu bölün."
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "Bileşenlerinizin oluşturma performansını ölçmek için Profil Oluşturucu API'sinden yararlanan React Geliştirme Araçları Profil Oluşturucu'yu kullanın. [Daha fazla bilgi](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "GIF dosyanızı, HTML5 videosu olarak katıştırmak için kullanılabilmesini sağlayacak bir hizmete yüklemeyi düşünün."

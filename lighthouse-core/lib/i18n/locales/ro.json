@@ -450,7 +450,7 @@
     "message": "{itemCount,plural, =1{un lanț găsit}few{# lanțuri găsite}other{# de lanțuri găsite}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "Redu profunzimea solicitărilor esențiale"
+    "message": "Evită legarea solicitărilor critice"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "Renunțare la dezvoltare/Avertisment"
@@ -513,7 +513,7 @@
     "message": "Valoare"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "Specialiștii în browsere recomandă ca paginile să conțină mai puțin de ~1.500 de elemente DOM. Ideal este ca arborele să aibă o profunzime mai mică de 32 de elemente și mai puțin de 60 de elemente principale/subordonate. Un DOM mare poate crește folosirea memoriei, poate produce [calcule de stil](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) mai lungi și [rearanjări ale aspectului](https://developers.google.com/speed/articles/reflow) costisitoare. [Află mai multe](https://web.dev/dom-size)."
+    "message": "Un DOM mare va crește folosirea memoriei și va produce [calcule de stil](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) mai lungi și [rearanjări ale aspectului](https://developers.google.com/speed/articles/reflow) costisitoare. [Află mai multe](https://web.dev/dom-size)."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 element}few{# elemente}other{# de elemente}}"
@@ -1053,7 +1053,7 @@
     "message": "Redu impactul codului de la terți"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "Utilizarea terță parte"
+    "message": "Minimalizează folosirea terțelor părți"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Timpul până la primul byte identifică timpul în care serverul trimite un răspuns. [Află mai multe](https://web.dev/time-to-first-byte)."
@@ -1066,6 +1066,9 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Serverul răspunde repede (TTFB)"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Durată"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "Ora de începere"
@@ -1456,6 +1459,99 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Avertismente: "
+  },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "Pentru conținut animat, folosește [amp-anim](https://amp.dev/documentation/components/amp-anim/) pentru a minimiza utilizarea CPU în timp ce conținutul rămâne în afara ecranului."
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "Verifică dacă folosești etichete `amp-img` valide pentru imaginile tale, care se încarcă lent automat în afara primei arii vizibile. [Află mai multe](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "Folosește instrumente precum [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) pentru a [reda aspectele AMP pe server](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "Consultă [documentația AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) ca să te asiguri că se acceptă toate stilurile."
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "Elementul `amp-img` acceptă ca atributul `srcset` să specifice elementele de imagine care se vor folosi în funcție de dimensiunea ecranului.  [Află mai multe](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "Afișează toate componentele `amp-img` în formate WebP și specifică o alternativă adecvată pentru alte browsere. [Află mai multe](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "Poți derula virtual cu Kitul pentru dezvoltatori de componente (CDK) dacă se redau liste foarte mari. [Află mai multe](https://web.dev/virtualize-lists-with-angular-cdk/)."
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "Aplică [scindarea prin cod la nivel de traseu](https://web.dev/route-level-code-splitting-in-angular/) ca să minimizezi dimensiunea grupurilor JavaScript. În plus, poți memora în avans în cache elementele cu [service workerul Angular](https://web.dev/precaching-with-the-angular-service-worker/)."
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "Dacă folosești CLI Angular, verifică dacă versiunile sunt generate în modul de producție. [Află mai multe](https://angular.io/guide/deployment#enable-runtime-production-mode)."
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "Dacă folosești CLI Angular, include hărțile sursă în versiunea de producție ca să-ți inspectezi grupurile. [Află mai multe](https://angular.io/guide/deployment#inspect-the-bundles)."
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "Preîncarcă traseele din timp, ca să accelerezi navigarea. [Află mai multe](https://web.dev/route-preloading-in-angular/)."
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "Poți folosi utilitarul `BreakpointObserver` din Kitul pentru dezvoltatori de componente (CDK) pentru a gestiona punctele de întrerupere ale imaginilor. [Află mai multe](https://material.angular.io/cdk/layout/overview)."
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "Dacă nu grupezi elementele JavaScript, poți folosi [baler](https://github.com/magento/baler)."
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "Dezactivează [gruparea și minimalizarea JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) încorporate din Magento și folosește [baler](https://github.com/magento/baler/) în loc."
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "Specifică `@font-display` atunci când [definești fonturile personalizate](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)."
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "Modifică șabloanele de produse și de cataloage ca să folosești funcția de [încărcare lentă](https://web.dev/native-lazy-loading) a platformei web."
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "Folosește [integrarea Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) din Magento."
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "Activează opțiunea „Minimalizează fișierele CSS” din setările pentru dezvoltatori ale magazinului. [Află mai multe](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "Folosește [Terser](https://www.npmjs.com/package/terser) ca să minimalizezi toate elementele JavaScript din implementările de conținut static și să dezactivezi funcția de minimalizate încorporată."
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "Dezactivează [gruparea JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) încorporată în Magento."
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "Caută în [Piața Magento](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) o varietate de extensii terță parte pentru a optimiza imaginile."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "Indiciile de resurse preconectare sau dns-prefetch pot fi adăugate prin [modificarea aspectului unei teme](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "Etichetele `<link rel=preload>` se pot adăuga prin [modificarea aspectului unei teme](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "Caută în [Piața Magento](https://marketplace.magento.com/catalogsearch/result/?q=webp) o varietate de extensii terță parte pentru a obține formate de imagine mai noi."
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "Folosește o bibliotecă „windowing”, ca `react-window`, pentru a minimaliza numărul de noduri DOM create dacă redai multe elemente repetate pe pagină. [Află mai multe](https://web.dev/virtualize-long-lists-react-window/). În plus, minimalizează redările suplimentare inutile folosind [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) sau [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) și [omite efectele](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) doar până când anumite dependențe s-au schimbat dacă folosești conținutul de captare a atenției Efect ca să îmbunătățești performanța la redare."
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "Dacă folosești React Router, minimalizează folosirea componentei `<Redirect>` pentru [navigările pe traseu](https://reacttraining.com/react-router/web/api/Redirect)."
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "Dacă redai componente React pe server, poți folosi `renderToNodeStream()` sau `renderToStaticNodeStream()` ca să-i permiți clientului să primească și să completeze diferite părți ale codului de markup, nu pe tot deodată. [Află mai multe](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "Dacă sistemul de versiuni minimalizează automat fișierele CSS, verifică dacă implementezi versiunea de producție a aplicației. Poți face verificarea cu extensia React Developer Tools. [Află mai multe](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "Dacă sistemul de versiuni minimalizează automat fișierele JS, verifică dacă implementezi versiunea de producție a aplicației. Poți face verificarea cu extensia React Developer Tools. [Află mai multe](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "Dacă nu redai pe server, [împarte grupurile JavaScript](https://web.dev/code-splitting-suspense/) cu `React.lazy()`. Altfel, scindează prin cod folosind o bibliotecă terță parte, precum [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "Folosește React DevTools Profiler, care beneficiază de API-ul Profiler pentru a măsura performanța de redare a componentelor. [Află mai multe.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "Îți recomandăm să încarci GIF-ul într-un serviciu care îl va pune dispoziție pentru încorporare ca videoclip HTML5."

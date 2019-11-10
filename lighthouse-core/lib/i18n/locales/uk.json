@@ -450,7 +450,7 @@
     "message": "{itemCount,plural, =1{Знайдено 1 ланцюжок}one{Знайдено # ланцюжок}few{Знайдено # ланцюжки}many{Знайдено # ланцюжків}other{Знайдено # ланцюжка}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "Мінімізуйте глибину важливих запитів"
+    "message": "Намагайтеся не створювати ланцюжки критичних запитів"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "Припинення підтримки/застереження"
@@ -513,7 +513,7 @@
     "message": "Значення"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "Розробники веб-переглядачів радять розміщувати на сторінці до ~1500 елементів DOM. Зона найкращого сприйняття – глибина дерева, що має менше 32 елементів і менше ніж 60 дочірніх чи батьківських елементів. Через великий файл DOM використовується більше пам'яті, [стилі обчислюються](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) довше, а [перекомпонування макетів](https://developers.google.com/speed/articles/reflow) коштує дорого. [Докладніше](https://web.dev/dom-size)."
+    "message": "Через великий файл DOM використовується більше пам'яті, [стилі обчислюються](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) довше, а [перекомпонування макетів](https://developers.google.com/speed/articles/reflow) коштує дорого. [Докладніше](https://web.dev/dom-size)."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 елемент}one{# елемент}few{# елементи}many{# елементів}other{# елемента}}"
@@ -1053,7 +1053,7 @@
     "message": "Зменште вплив стороннього коду"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "Використання стороннього коду"
+    "message": "Зменште використання стороннього коду"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Час до першого байта визначає швидкість реакції сервера. [Докладніше](https://web.dev/time-to-first-byte)."
@@ -1066,6 +1066,9 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Сервер довго відповідає (TTFB)"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Тривалість"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "Час початку"
@@ -1456,6 +1459,99 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Застереження. "
+  },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "Для анімованого контенту застосовуйте [amp-anim](https://amp.dev/documentation/components/amp-anim/), щоб зменшити використання ЦП, доки контент поза межами екрана."
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "Переконайтеся, що ви використовуєте дійсні теги `amp-img` для зображень, які автоматично відкладено завантажуються поза межами першої області перегляду. [Докладніше](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "Використовуйте інструменти, наприклад [Оптимізатор сторінок AMP](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer), щоб [обробляти макети AMP на сервері](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "Перегляньте [документацію AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/), щоб переконатися, що всі стилі підтримуються."
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "Елемент `amp-img` підтримує атрибут `srcset`, щоб на основі розміру екрана указувати, які зображення використовувати.  [Докладніше](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "Можете показувати всі свої компоненти `amp-img` у форматах WebP, указуючи відповідні резервні варіанти для інших веб-переглядачів. [Докладніше](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "Якщо обробляються дуже великі списки, скористайтеся віртуальним прокручуванням за допомогою Component Dev Kit (CDK). [Докладніше](https://web.dev/virtualize-lists-with-angular-cdk/)."
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "[Розділіть код на рівні маршруту](https://web.dev/route-level-code-splitting-in-angular/), щоб зменшити розмір пакетів JavaScript. Також можете попередньо кешувати об'єкти за допомогою [синтаксису Service Worker для Angular](https://web.dev/precaching-with-the-angular-service-worker/)."
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "Якщо ви користуєтесь інтерфейсом командного рядка Angular, переконайтеся, що складання генеруються в режимі робочої версії. [Докладніше](https://angular.io/guide/deployment#enable-runtime-production-mode)."
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "Якщо ви користуєтесь інтерфейсом командного рядка Angular, додайте карти джерел у робочу версію складання, щоб перевірити пакети. [Докладніше](https://angular.io/guide/deployment#inspect-the-bundles)."
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "Попередньо завантажуйте маршрути, щоб прискорити навігацію. [Докладніше](https://web.dev/route-preloading-in-angular/)."
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "Можете скористатись інструментом `BreakpointObserver` у Component Dev Kit (CDK), щоб керувати точками переходу зображень. [Докладніше](https://material.angular.io/cdk/layout/overview)."
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "Якщо ви не створюєте пакет об'єктів JavaScript, можете скористатись [інструментом пакування](https://github.com/magento/baler)."
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "Вимкніть вбудовану функцію [створення пакетів JavaScript і мініфікації](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) в Magento й натомість скористайтесь [інструментом пакування](https://github.com/magento/baler/)."
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "Укажіть `@font-display` під час [визначення власних шрифтів](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)."
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "Можете змінити шаблони свого продукту й каталогу, щоб скористатися функцією веб-платформи для [відкладеного завантаження](https://web.dev/native-lazy-loading)."
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "Скористайтесь [інтеграцією Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) від Magento."
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "Увімкніть опцію \"Зменшувати файли CSS\" у налаштуваннях розробника в магазині. [Докладніше](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "Скористайтеся плагіном [Terser](https://www.npmjs.com/package/terser), щоб зменшити всі об'єкти JavaScript у розгортанні статичного контенту й вимкнути вбудовану функцію мініфікації."
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "Вимкніть вбудовану функцію [створення пакетів JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) у Magento."
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "Можете пошукати на [торговельному майданчику Magento](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) різні сторонні розширення для оптимізації зображень."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "Попередньо підключені або завантажені через dns корективи ресурсів можна додати, лише [змінивши макет теми](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "Теги `<link rel=preload>` можна додати, лише [змінивши макет теми](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "На [торговельному майданчику Magento](https://marketplace.magento.com/catalogsearch/result/?q=webp) можна знайти різні сторонні розширення, щоб використовувати новіші формати зображень."
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "Можете скористатися бібліотекою з \"вікнами\", як-от `react-window`, щоб зменшити кількість створених вузлів DOM, якщо на сторінці обробляється багато повторюваних елементів. [Докладніше](https://web.dev/virtualize-long-lists-react-window/). Крім того, для зменшення кількості повторних обробок скористайтеся [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) або [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) і [пропустіть ефекти](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects), доки не зміняться певні залежності, якщо ви користуєтеся хуком Effect, щоб покращити ефективність часу виконання."
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "Якщо ви користуєтеся React Router, зменште використання компонента `<Redirect>` для [навігації за маршрутом](https://reacttraining.com/react-router/web/api/Redirect)."
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "Якщо ви обробляєте компоненти React на сервері, можете застосувати `renderToNodeStream()` або `renderToStaticNodeStream()`, щоб дозволити клієнту отримувати та вмикати не всю розмітку відразу, а її різні частини. [Докладніше](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "Якщо ваша система складання автоматично зменшує файли CSS, переконайтеся, що ви вводите в дію робочу версію додатка. Це можна перевірити за допомогою розширення Інструменти розробника React. [Докладніше](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "Якщо ваша система збирання автоматично зменшує файли JS, переконайтеся, що ви вводите в дію робочу версію додатка. Це можна перевірити за допомогою розширення Інструменти розробника React. [Докладніше](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "Якщо у вас не відбувається обробка на сервері, [розділіть пакети JavaScript](https://web.dev/code-splitting-suspense/) за допомогою `React.lazy()`. Або розділіть код за допомогою сторонньої бібліотеки, як-от [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "Скористайтеся профілювальником React DevTools, який застосовує Profiler API, щоб визначити ефективність обробки ваших компонентів. [Докладніше.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "Спробуйте завантажити файл GIF у сервіс, де його можна вставити як відео HTML5."

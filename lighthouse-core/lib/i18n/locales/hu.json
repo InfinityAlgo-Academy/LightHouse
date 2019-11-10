@@ -450,7 +450,7 @@
     "message": "{itemCount,plural, =1{1 lánc található}other{# lánc található}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "Minimalizálja a kritikus lekérdezések mélységét"
+    "message": "Kerülje el a kritikus kérések láncba fűzését"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "Elavulás / Figyelmeztetés"
@@ -513,7 +513,7 @@
     "message": "Érték"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "A böngészők fejlesztői azt javasolják, hogy az oldalak legfeljebb kb. 1500 DOM-elemet tartalmazzanak. Ideális esetben 32-nél kisebb mélységű fa és 60-nál kevesebb gyermek/szülő elem van. A nagy méretű DOM megnöveli a memóriahasználatot, hosszabb ideig tartó [stílusszámítást](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) igényel, valamint költséges [elrendezés-áttördeléssel](https://developers.google.com/speed/articles/reflow) jár. [További információ](https://web.dev/dom-size)."
+    "message": "A nagy méretű DOM megnöveli a memóriahasználatot, hosszabb ideig tartó [stílusszámítást](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) igényel, valamint költséges [elrendezés-áttördeléssel](https://developers.google.com/speed/articles/reflow) jár. [További információ](https://web.dev/dom-size)."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 elem}other{# elem}}"
@@ -741,7 +741,7 @@
     "message": "Kategória"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | description": {
-    "message": "Érdemes csökkenteni a JavaScript értelmezésére, összeállítására és végrehajtására fordított időt. Ebben segíthet, ha kisebb méretű JavaScript-forrásokat továbbít. [További információ](https://web.dev/mainthread-work-breakdown)."
+    "message": "Érdemes csökkenteni a JavaScript elemzésére, kompilálására és végrehajtására fordított időt. Ebben segíthet, ha kisebb méretű JavaScript-forrásokat továbbít. [További információ](https://web.dev/mainthread-work-breakdown)."
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
     "message": "Minimalizálja a fő szál terhelését"
@@ -1053,7 +1053,7 @@
     "message": "Csökkentse a harmadik felek kódjai által kiváltott hatást"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "Harmadik féltől származó kód használata"
+    "message": "Minimalizálja a harmadik felektől származó kódok használatát"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Az első bájtig eltelt idő azt mutatja, hogy a szerver mikor küldött választ. [További információ](https://web.dev/time-to-first-byte)."
@@ -1066,6 +1066,9 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Alacsony a szerver válaszideje (TTFB)"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Időtartam"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "Kezdés ideje"
@@ -1456,6 +1459,99 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Figyelmeztetések: "
+  },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "Animált tartalmak esetében csökkentse minimálisra a processzorhasználatot az [amp-anim](https://amp.dev/documentation/components/amp-anim/) összetevővel, amíg a tartalom nem látható a képernyőn."
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "Ügyeljen arra, hogy érvényes `amp-img` címkéket használjon azoknál a képeknél, amelyek betöltése automatikusan késleltetve történik meg az első megjelenítési területen kívül. [További információ](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "Ha [szerveroldalon jeleníti meg az AMP-elrendezéseket](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/), használhat olyan eszközöket, mint az [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer)."
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "Nézzen utána az [AMP dokumentációjában](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) annak, hogy az Ön által használt összes stílus támogatott-e."
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "Az `amp-img` elem támogatja az `srcset` attribútumot annak megadásához, hogy mely képtartalmat használja a képernyő mérete alapján.  [További információ](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "Vegye fontolóra az összes `amp-img` komponens WebP formátumban való megjelenítését és megfelelő tartalékképek megadását más böngészők számára. [További információ](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "Ha nagy listák megjelenítésére készül, fontolja meg a Component Dev Kit (CDK) és a virtuális görgetés használatát. [További információ](https://web.dev/virtualize-lists-with-angular-cdk/)."
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "A JavaScript-csomagok méretének minimálisra csökkentése érdekében alkalmazzon [útvonalszintű kódfelbontást](https://web.dev/route-level-code-splitting-in-angular/). Ezenkívül vegye fontolóra a tartalmak előzetes gyorsítótárba helyezését az [Angular szolgáltató munkatárs](https://web.dev/precaching-with-the-angular-service-worker/) használatával."
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "Az Angular CLI használata esetén gondoskodjon arról, hogy a buildek létrehozása éles módban történjen. [További információ](https://angular.io/guide/deployment#enable-runtime-production-mode)."
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "Az Angular CLI használata esetén vegye fel a forrás-hozzárendeléseket az éles buildbe, hogy meg tudja vizsgálni a csomagjait. [További információ](https://angular.io/guide/deployment#inspect-the-bundles)."
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "A navigáció gyorsítása érdekében töltse be előre az útvonalakat. [További információ](https://web.dev/route-preloading-in-angular/)."
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "Fontolja meg a Component Dev Kit (CDK) `BreakpointObserver` segédprogramjának használatát a képek töréspontjainak kezeléséhez. [További információ](https://material.angular.io/cdk/layout/overview)."
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "Ha a JavaScript-tartalmakat nem teszi csomagba, fontolja meg a [baler](https://github.com/magento/baler) metódus használatát."
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "Tiltsa le a Magento beépített [JavaScript-csomagolási és -kicsinyítési](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) funkcióját, és fontolja meg helyettük a [baler](https://github.com/magento/baler/)metódus használatát."
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "Adja meg a `@font-display` elemet, ha [egyedi betűtípusokat határoz meg](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)."
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "A webes platformok [késleltetett betöltés](https://web.dev/native-lazy-loading) funkciójának használata érdekében vegye fontolóra a termék- és katalógussablonok módosítását."
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "Használja a Magento [Varnish-integrációját](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "Engedélyezze a „Minify CSS Files” (CSS-fájlok kicsinyítése) beállítást az üzlet fejlesztői beállításaiban. [További információ](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "Használja a [Tersert](https://www.npmjs.com/package/terser) a statikus tartalomtelepítés összes JavaScript-tartalmának kicsinyítéséhez, és tiltsa le a beépített kicsinyítési funkciót."
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "Tiltsa le a Magento beépített [JavaScript-csomagolási funkcióját](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)."
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "Ha optimalizálni szeretné a képeket, keressen harmadik felektől származó bővítményeket a [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) webhelyén."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "Úgy adhat hozzá előcsatlakozási vagy a DNS előzetes lehívására vonatkozó tippeket, hogy [módosítja valamelyik téma elrendezését](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "`<link rel=preload>` címkéket [valamelyik téma elrendezésének módosításával](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html) adhat hozzá."
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "Ha ki szeretné használni az újabb képformátumok előnyeit, keressen harmadik felektől származó bővítményeket a [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) webhelyén."
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "Ha sok ismétlődő elemet jelenít meg az oldalon, fontolja meg „windowing” könyvtár (pl. `react-window`) használatát annak érdekében, hogy csökkentse a létrehozott DOM-csomópontok számát. [További információ](https://web.dev/virtualize-long-lists-react-window/). Ezenkívül csökkentse a szükségtelen újrarenderelések számát a [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), a [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) vagy a [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) használatával, valamint [hagyja ki az effektusokat](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects), amíg bizonyos függőségek nem módosulnak, amennyiben az Effect horog használatával javítja a futásidejű teljesítményt."
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "Ha a React Routert használja, csökkentse minimálisra a `<Redirect>` komponens használatát az [útválasztási navigációban](https://reacttraining.com/react-router/web/api/Redirect)."
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "Ha szerveroldali renderelést alkalmaz bármilyen React-összetevőnél, fontolja meg a következők valamelyikének használatát: `renderToNodeStream()` vagy `renderToStaticNodeStream()`. Ezekkel engedélyezheti az ügyfél számára, hogy a markupot ne egyben, hanem részletekben kapja meg és hidratálja. [További információ](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "Ha a fejlesztéshez használt rendszere automatikusan kicsinyíti a CSS-fájlokat, akkor ügyeljen arra, hogy az alkalmazás éles buildjét telepítse. Ezt a React Developer Tools bővítménnyel ellenőrizheti. [További információ](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "Ha a fejlesztéshez használt rendszere automatikusan kicsinyíti a JS-fájlokat, akkor ügyeljen arra, hogy az alkalmazás éles buildjét telepítse. Ezt a React Developer Tools bővítménnyel ellenőrizheti. [További információ](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "Ha nem szerveroldali renderelést alkalmaz, [ossza fel a JavaScript-csomagokat](https://web.dev/code-splitting-suspense/) a `React.lazy()` függvény használatával. Máskülönben harmadik fél könyvtárának (pl. [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)) használatával bontsa fel a kódot."
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "Használja a React DevTools Profilert, amely a Profiler API segítségével méri az összetevők megjelenítési teljesítményét. [További információ](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)."
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "Fontolja meg a GIF-fájlok olyan szolgáltatóhoz való feltöltését, amely lehetővé teszi a fájlok HTML5-videóként történő beágyazását."
