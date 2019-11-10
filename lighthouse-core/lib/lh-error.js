@@ -254,6 +254,11 @@ const ERRORS = {
     code: 'NO_LCP',
     message: UIStrings.badTraceRecording,
   },
+  /** Layout Shift trace events are found but without data */
+  NO_LAYOUT_SHIFT: {
+    code: 'NO_LAYOUT_SHIFT',
+    message: UIStrings.badTraceRecording,
+  },
 
   // TTI calculation failures
   FMP_TOO_LATE_FOR_FCPUI: {code: 'FMP_TOO_LATE_FOR_FCPUI', message: UIStrings.pageLoadTookTooLong},
@@ -355,12 +360,6 @@ const ERRORS = {
     code: 'CRI_TIMEOUT',
     message: UIStrings.criTimeout,
     lhrRuntimeError: true,
-  },
-
-  /** Layout Shift trace events are found but without data */
-  NO_LAYOUT_SHIFT: {
-    code: 'NO_LAYOUT_SHIFT',
-    message: UIStrings.badTraceRecording,
   },
 
   /**

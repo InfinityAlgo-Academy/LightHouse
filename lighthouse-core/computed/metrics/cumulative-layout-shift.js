@@ -13,28 +13,30 @@ class CumulativeLayoutShift {
   /**
    * @param {LH.Trace} trace
    * @param {LH.Audit.Context} context
-   * @return {Promise<LH.Artifacts.MetricValue>}
+   * @return {Promise<{value: number, explanation?: string}>}
    */
   static async compute_(trace, context) {
-    if (!trace) {
-      throw new Error('Did not provide neccessary data for CLS computation');
-    }
     const traceOfTab = await TraceOfTab.request(trace, context);
 
-    const layoutShiftEvts = traceOfTab.mainThreadEvents
-      .filter(evt => evt.name === 'LayoutShift')
-      .filter(e => e.args && e.args.data && e.args.data.is_main_frame);
+    // Find the last LayoutShift event, if any.
+    let finalLayoutShift;
+    for (let i = traceOfTab.mainThreadEvents.length; i >= 0; i--) {
+      const evt = traceOfTab.mainThreadEvents[i];
+      if (evt.name === 'LayoutShift' && evt.args && evt.args.data && evt.args.data.is_main_frame) {
+        finalLayoutShift = evt;
+        break;
+      }
+    }
 
     // tdresser sez: In about 10% of cases, layout instability is 0, and there will be no trace events.
     // TODO: Validate that. http://crbug.com/1003459
-    if (layoutShiftEvts.length === 0) {
-      return Promise.resolve({
+    if (!finalLayoutShift) {
+      return {
         value: 0,
-        explanation: 'No LayoutShift trace events found'
-      });
+        explanation: 'No LayoutShift trace events found',
+      };
     }
 
-    const finalLayoutShift = layoutShiftEvts.slice(-1)[0];
     const cumulativeLayoutShift =
       finalLayoutShift.args &&
       finalLayoutShift.args.data &&
@@ -44,9 +46,9 @@ class CumulativeLayoutShift {
       throw new LHError(LHError.errors.NO_LAYOUT_SHIFT);
     }
 
-    return Promise.resolve({
+    return {
       value: cumulativeLayoutShift,
-    });
+    };
   }
 }
 
