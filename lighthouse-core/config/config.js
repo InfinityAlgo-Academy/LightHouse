@@ -7,7 +7,6 @@
 
 const defaultConfigPath = './default-config.js';
 const defaultConfig = require('./default-config.js');
-const fullConfig = require('./full-config.js');
 const constants = require('./constants.js');
 const i18n = require('./../lib/i18n/i18n.js');
 
@@ -30,6 +29,7 @@ const BASE_ARTIFACT_BLANKS = {
   fetchTime: '',
   LighthouseRunWarnings: '',
   TestedAsMobileDevice: '',
+  HostFormFactor: '',
   HostUserAgent: '',
   NetworkUserAgent: '',
   BenchmarkIndex: '',
@@ -314,12 +314,8 @@ class Config {
     // We don't want to mutate the original config object
     configJSON = deepCloneConfigJson(configJSON);
 
-    // Extend the default or full config if specified
-    if (configJSON.extends === 'lighthouse:full') {
-      const explodedFullConfig = Config.extendConfigJSON(deepCloneConfigJson(defaultConfig),
-          deepCloneConfigJson(fullConfig));
-      configJSON = Config.extendConfigJSON(explodedFullConfig, configJSON);
-    } else if (configJSON.extends) {
+    // Extend the default config if specified
+    if (configJSON.extends) {
       configJSON = Config.extendConfigJSON(deepCloneConfigJson(defaultConfig), configJSON);
     }
 

@@ -556,7 +556,13 @@ describe('Config', () => {
     assert.deepStrictEqual(config.settings.output, ['html']);
   });
 
-  it('extends the full config', () => {
+  it('does not throw on "lighthouse:full"', () => {
+    const config = new Config({extends: 'lighthouse:full'}, {output: ['html', 'json']});
+    assert.deepStrictEqual(config.settings.throttlingMethod, 'simulate');
+    assert.deepStrictEqual(config.settings.output, ['html', 'json']);
+  });
+
+  it('extends the config', () => {
     class CustomAudit extends Audit {
       static get meta() {
         return {
@@ -574,7 +580,7 @@ describe('Config', () => {
     }
 
     const config = new Config({
-      extends: 'lighthouse:full',
+      extends: 'lighthouse:default',
       audits: [
         CustomAudit,
       ],
@@ -628,7 +634,7 @@ describe('Config', () => {
   it('merges settings with correct priority', () => {
     const config = new Config(
       {
-        extends: 'lighthouse:full',
+        extends: 'lighthouse:default',
         settings: {
           disableStorageReset: true,
           emulatedFormFactor: 'mobile',

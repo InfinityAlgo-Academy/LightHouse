@@ -294,7 +294,14 @@ class FontSize extends Gatherer {
       .sort((a, b) => b.textLength - a.textLength)
       .slice(0, MAX_NODES_SOURCE_RULE_FETCHED)
       .map(async failingNode => {
-        failingNode.cssRule = await fetchSourceRule(driver, failingNode.node);
+        try {
+          const cssRule = await fetchSourceRule(driver, failingNode.node);
+          failingNode.cssRule = cssRule;
+        } catch (err) {
+          // The node was deleted. We don't need to distinguish between lack-of-rule
+          // due to a deleted node vs due to failed attribution, so just set to undefined.
+          failingNode.cssRule = undefined;
+        }
         return failingNode;
       });
 
@@ -338,6 +345,8 @@ class FontSize extends Gatherer {
 
     passContext.driver.off('CSS.styleSheetAdded', onStylesheetAdd);
 
+    // For the nodes whose computed style we could attribute to a stylesheet, assign
+    // the stylsheet to the data.
     analyzedFailingNodesData
       .filter(data => data.cssRule && data.cssRule.styleSheetId)
       // @ts-ignore - guaranteed to exist from the filter immediately above
