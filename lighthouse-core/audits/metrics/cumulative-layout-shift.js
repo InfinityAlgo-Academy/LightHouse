@@ -21,7 +21,7 @@ const UIStrings = {
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 /**
- * @fileoverview This metric represents the amount of visual shifting around that DOM elements do during page load.
+ * @fileoverview This metric represents the amount of visual shifting of DOM elements during page load.
  */
 class CumulativeLayoutShift extends Audit {
   /**

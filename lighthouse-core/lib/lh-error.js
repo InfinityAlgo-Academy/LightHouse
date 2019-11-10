@@ -357,7 +357,7 @@ const ERRORS = {
     lhrRuntimeError: true,
   },
 
-  // Layout Shift trace events are found but without data
+  /** Layout Shift trace events are found but without data */
   NO_LAYOUT_SHIFT: {
     code: 'NO_LAYOUT_SHIFT',
     message: UIStrings.badTraceRecording,
