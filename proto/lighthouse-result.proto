@@ -55,8 +55,6 @@ enum LighthouseError {
   DNS_FAILURE = 19;
   // A timeout in the initial connection to the debugger protocol.
   CRI_TIMEOUT = 20;
-  // Layout Shift trace events are found but without data
-  NO_LAYOUT_SHIFT = 21;
 }
 
 // The overarching Lighthouse Response object (LHR)

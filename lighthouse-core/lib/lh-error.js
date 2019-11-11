@@ -255,8 +255,8 @@ const ERRORS = {
     message: UIStrings.badTraceRecording,
   },
   /** Layout Shift trace events are found but without data */
-  NO_LAYOUT_SHIFT: {
-    code: 'NO_LAYOUT_SHIFT',
+  LAYOUT_SHIFT_MISSING_DATA: {
+    code: 'LAYOUT_SHIFT_MISSING_DATA',
     message: UIStrings.badTraceRecording,
   },
 
@@ -381,6 +381,7 @@ const ERRORS = {
   },
 
   // Hey! When adding a new error type, update lighthouse-result.proto too.
+  // Only necessary for runtime errors, which come from artifacts or pageLoadErrors.
 };
 
 /** @type {Record<keyof typeof ERRORS, LighthouseErrorDefinition>} */

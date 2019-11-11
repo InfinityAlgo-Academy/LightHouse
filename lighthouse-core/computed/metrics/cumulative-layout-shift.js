@@ -40,7 +40,7 @@ class CumulativeLayoutShift {
       finalLayoutShift.args.data.cumulative_score;
 
     if (cumulativeLayoutShift === undefined) {
-      throw new LHError(LHError.errors.NO_LAYOUT_SHIFT);
+      throw new LHError(LHError.errors.LAYOUT_SHIFT_MISSING_DATA);
     }
 
     return {value: cumulativeLayoutShift};
