@@ -12,6 +12,7 @@ const i18n = require('../../lib/i18n/i18n.js');
 const UIStrings = {
   /** The name of the metric "Cumulative Layout Shift" that indicates how much the page changes its layout while it loads. If big segments of the page shift their location during load, the Cumulative Layout Shift will be higher. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
   title: 'Cumulative Layout Shift',
+  // TODO(paulirish): improve this description.
   /** Description of the Cumulative Layout Shift metric that indicates how much the page changes its layout while it loads. If big segments of the page shift their location during load, the Cumulative Layout Shift will be higher. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'The more the page\'s layout changes during its load, the higher the ' +
       'Cumulative Layout Shift. ' +
