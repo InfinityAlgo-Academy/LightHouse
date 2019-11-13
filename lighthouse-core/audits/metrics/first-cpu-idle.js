@@ -16,18 +16,7 @@ const UIStrings = {
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
-
-const requiredArtifacts = declareRequiredArtifacts('traces', 'devtoolsLogs');
-
-// This would actually be on Audit.
-/**
- * @template T
- * @param {...keyof T} artifactKeys
- * @return {Array<keyof T>}
- */
-function declareRequiredArtifacts(...artifactKeys) {
-  return artifactKeys;
-}
+const requiredArtifacts = Audit.artifacts('traces', 'devtoolsLogs');
 
 class FirstCPUIdle extends Audit {
   /**

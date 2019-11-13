@@ -204,7 +204,7 @@ class Audit {
    */
   static _normalizeAuditScore(score, scoreDisplayMode, auditId) {
     if (scoreDisplayMode !== Audit.SCORING_MODES.BINARY &&
-        scoreDisplayMode !== Audit.SCORING_MODES.NUMERIC) {
+      scoreDisplayMode !== Audit.SCORING_MODES.NUMERIC) {
       return null;
     }
 
@@ -279,6 +279,15 @@ class Audit {
 
       details: product.details,
     };
+  }
+
+  /**
+   * @template T
+   * @param {...keyof T} artifactKeys
+   * @return {Array<keyof T>}
+  */
+  static artifacts(...artifactKeys) {
+    return artifactKeys;
   }
 }
 
