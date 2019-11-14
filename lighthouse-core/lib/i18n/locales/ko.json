@@ -450,7 +450,7 @@
     "message": "{itemCount,plural, =1{1개 체인 발견됨}other{#개 체인 발견됨}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "중요 요청 깊이 최소화하기"
+    "message": "중요 요청 체이닝 차단"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "지원 중단/경고"
@@ -513,7 +513,7 @@
     "message": "값"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "브라우저 엔지니어들은 페이지에 1,500개 미만의 DOM 요소를 포함하는 것을 권장합니다. 최적값은 트리 깊이가 요소 32개 미만이고 하위/상위 요소 60개 미만일 때입니다. DOM이 크면 메모리 사용량이 늘어나고 [스타일 계산](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) 시간이 길어질 수 있으며 큰 비용이 드는 [레이아웃 리플로우](https://developers.google.com/speed/articles/reflow)가 발생할 수 있습니다. [자세히 알아보기](https://web.dev/dom-size)"
+    "message": "DOM이 크면 메모리 사용량이 늘어나고 [스타일 계산](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) 시간이 길어질 수 있으며 큰 비용이 드는 [레이아웃 리플로우](https://developers.google.com/speed/articles/reflow)가 발생할 수 있습니다. [자세히 알아보기](https://web.dev/dom-size)"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{요소 1개}other{요소 #개}}"
@@ -1053,7 +1053,7 @@
     "message": "타사 코드의 영향을 줄임"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "타사 사용"
+    "message": "타사 사용량 최소화"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Time To First Byte는 서버가 응답을 보내는 시간을 식별합니다. [자세히 알아보기](https://web.dev/time-to-first-byte)"
@@ -1066,6 +1066,9 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "서버 응답 시간 낮음(TTFB)"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "시간"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "시작 시간"
@@ -1456,6 +1459,99 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "경고: "
+  },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "애니메이션 콘텐츠의 경우 [amp-anim](https://amp.dev/documentation/components/amp-anim/)을 사용하여 콘텐츠가 화면에 표시되지 않을 때 CPU 사용량을 최소화하세요."
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "첫 표시 영역의 외부에서 자동으로 지연 로드하는 이미지에 유효한 `amp-img` 태그를 사용하는지 확인하세요. [자세히 알아보기](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)"
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "[AMP 최적화 도구](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer)와 같은 도구를 사용하여 [서버 측에서 AMP 레이아웃을 렌더링](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)합니다."
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "[AMP 도움말](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/)을 참조하여 모든 스타일이 지원되는지 확인하세요."
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "`amp-img` 구성요소는 `srcset` 속성을 지원하여 화면 크기를 바탕으로 어떤 이미지 애셋을 사용할지 지정합니다.  [자세히 알아보기](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)"
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "WebP 형식의 모든 `amp-img` 구성요소를 표시하면서 다른 브라우저의 적절한 대체 텍스트를 지정해 보세요. [자세히 알아보기](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)"
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "너무 큰 목록을 렌더링하는 경우 구성요소 개발자 키트(CDK)로 가상 스크롤을 고려해 보세요. [자세히 알아보기](https://web.dev/virtualize-lists-with-angular-cdk/)"
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "[경로 수준 코드 분할](https://web.dev/route-level-code-splitting-in-angular/)을 적용하여 자바스크립트 번들의 크기를 최소화합니다. 또한 [Angular 서비스 워커](https://web.dev/precaching-with-the-angular-service-worker/)로 애셋을 미리 캐시해 보세요."
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "Angular CLI를 사용하는 경우 빌드가 프로덕션 모드에서 생성되었는지 확인하세요. [자세히 알아보기](https://angular.io/guide/deployment#enable-runtime-production-mode)"
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "Angular CLI를 사용하는 경우 소스 맵을 프로덕션 빌드에 포함하여 번들을 검사하세요. [자세히 알아보기](https://angular.io/guide/deployment#inspect-the-bundles)"
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "미리 경로를 로드하여 탐색 속도를 높입니다. [자세히 알아보기](https://web.dev/route-preloading-in-angular/)"
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "구성요소 개발자 키트(CDK)에서 `BreakpointObserver` 유틸리티를 사용하여 이미지 중단점을 관리해 보세요. [자세히 알아보기](https://material.angular.io/cdk/layout/overview)"
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "자바스크립트 애셋을 번들로 구성하지 않는 경우 [baler](https://github.com/magento/baler)를 사용해 보세요."
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "Magento의 내장 [자바스크립트 번들 구성 및 축소](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)를 사용 중지하고 대신 [baler](https://github.com/magento/baler/)를 사용하세요."
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "[맞춤 글꼴을 정의](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)할 때 `@font-display`을(를) 지정합니다."
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "제품과 카탈로그 템플릿을 수정하여 웹 플랫폼의 [지연 로드](https://web.dev/native-lazy-loading) 기능을 활용해 보세요."
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "Magento의 [Varnish 통합](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)을 사용합니다."
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "스토어의 개발자 설정에서 'CSS 파일 축소' 옵션을 사용 설정하세요. [자세히 알아보기](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "[Terser](https://www.npmjs.com/package/terser)를 사용하여 정적 콘텐츠 배포에서 모든 자바스크립트 애셋을 축소하고 내장 축소 기능을 사용 중지합니다."
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "Magento의 내장 [자바스크립트 번들 구성](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)을 사용 중지합니다."
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "[Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image)에서 이미지를 최적화하는 다양한 타사 확장 프로그램을 검색해 보세요."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "[테마의 레이아웃을 수정](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)하여 사전 연결 또는 DNS 프리페치 리소스 힌트를 추가할 수 있습니다."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "[테마의 레이아웃을 수정](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)하여 `<link rel=preload>` 태그를 추가할 수 있습니다."
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "[Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp)에서 새 이미지 형식을 활용하는 다양한 타사 확장 프로그램을 검색해 보세요."
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "페이지에서 많은 반복 구성요소를 렌더링하는 경우 `react-window`과(와) 같은 '창' 라이브러리를 사용하여 생성된 DOM 노드의 수를 최소화해 보세요. [자세히 알아보기](https://web.dev/virtualize-long-lists-react-window/) 또한 런타임 성능을 개선하기 위해 Effect 후크를 사용하는 경우 [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent), [React.memo](https://reactjs.org/docs/react-api.html#reactmemo)를 사용하여 불필요한 재렌더링을 최소화하고 특정 종속성이 변경될 때까지만 [효과를 건너뛰어](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) 보세요."
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "React Router를 사용하는 경우 [경로 탐색](https://reacttraining.com/react-router/web/api/Redirect)의 `<Redirect>` 구성요소 사용량을 축소합니다."
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "서버 측에서 React 구성요소를 렌더링하는 경우 `renderToNodeStream()` 또는 `renderToStaticNodeStream()`을(를) 사용하여 클라이언트가 모든 마크업이 아닌 마크업의 서로 다른 부분을 받아서 하이드레이션할 수 있도록 허용해 보세요. [자세히 알아보기](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "빌드가 CSS 파일을 자동으로 축소하는 경우 애플리케이션의 프로덕션 빌드를 배포하고 있는지 확인하세요. 이는 React 개발자 도구 확장 프로그램으로 확인할 수 있습니다. [자세히 알아보기](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "빌드가 JS 파일을 자동으로 축소하는 경우 애플리케이션의 프로덕션 빌드를 배포하고 있는지 확인하세요. 이는 React 개발자 도구 확장 프로그램으로 확인할 수 있습니다. [자세히 알아보기](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "서버 측에서 렌더링하지 않는 경우 `React.lazy()`(으)로 [자바스크립트 번들을 분할](https://web.dev/code-splitting-suspense/)해 보세요. 또는 [로드 가능한 구성요소](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)와 같은 타사 라이브러리를 사용하여 코드를 분할하세요."
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "Profiler API를 활용하는 React 개발자 도구 프로파일러를 사용하여 구성요소의 렌더링 성능을 측정합니다. [자세히 알아보기](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "GIF를 HTML5 동영상으로 삽입할 수 있게 해주는 서비스에 GIF를 업로드하는 것이 좋습니다."

@@ -450,7 +450,7 @@
     "message": "{itemCount,plural, =1{Nakakita ng 1 chain}one{Nakakita ng # chain}other{Nakakita ng # na chain}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "I-minimize ang Lalim ng Mahahalagang Kahilingan"
+    "message": "Iwasan ang pagsusunod-sunod ng mga kritikal na kahilingan"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "Paghinto sa Paggamit / Babala"
@@ -513,7 +513,7 @@
     "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "Inirerekomenda ng mga engineer ng browser ang mga page na naglalaman ng mas kaunti sa ~1,500 element ng DOM. Ang pinakamainam ay isang lalim ng tree na < 32 element at mas kaunti sa 60 child/parent na element. Kapag malaki ang DOM, puwedeng tumaas ang paggamit ng memory, magdulot ng mas mahahabang [pagkalkula ng istilo](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), at makagawa ng mamahaling [mga reflow ng layout](https://developers.google.com/speed/articles/reflow). [Matuto pa](https://web.dev/dom-size)."
+    "message": "Kapag malaki ang DOM, madaragdagan ang paggamit ng memory, magkakaroon ng mas mahahabang [pagkalkula ng istilo](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), at lilikha ito ng mga magastos na [reflow ng layout](https://developers.google.com/speed/articles/reflow). [Matuto pa](https://web.dev/dom-size)."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 element}one{# element}other{# na element}}"
@@ -1053,7 +1053,7 @@
     "message": "Bawasan ang epekto ng code ng third party"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "Paggamit ng Third Party"
+    "message": "Bawasan ang paggamit ng third-party"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Tinutukoy ng Time To First Byte ang tagal bago makapagpadala ng tugon ang iyong server. [Matuto pa](https://web.dev/time-to-first-byte)."
@@ -1066,6 +1066,9 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Masyadong matagal ang pagtugon ng server (TTFB)"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Tagal"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "Oras ng Pagsisimula"
@@ -1456,6 +1459,99 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Mga Babala: "
+  },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "Para sa animated na content, gamitin ang [amp-anim](https://amp.dev/documentation/components/amp-anim/) para mabawasan ang paggamit ng CPU habang nananatiling offscreen ang content."
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "Tiyaking mga valid na tag ng `amp-img` ang ginagamit mo para sa iyong mga imaheng awtomatikong nagle-lazy load sa labas ng unang viewport. [Matuto pa](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "Gumamit ng mga tool na gaya ng [Optimizer ng AMP](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) para [ma-render sa server-side ang mga layout ng AMP](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "Sumangguni sa [dokumentasyon ng AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) para matiyak na sinusuportahan ang lahat ng iyong istilo."
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "Sinusuportahan ng element na `amp-img` ang attribute na `srcset` para tukuyin kung aling mga asset ng imahe ang gagamitin batay sa laki ng screen.  [Matuto pa](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "Pag-isipang ipakita ang lahat ng bahagi ng iyong `amp-img` sa mga WebP na format habang tumutukoy ng naaangkop na fallback para sa iba pang browser. [Matuto pa](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "Pag-isipan ang virtual na pag-scroll sa Component Dev Kit (CDK) kung napakalaki ng mga listahang nire-render. [Matuto pa](https://web.dev/virtualize-lists-with-angular-cdk/)."
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "Ilapat ang [paghati ng code sa antas ng ruta](https://web.dev/route-level-code-splitting-in-angular/) para mabawasan ang laki ng iyong mga bundle ng JavaScript. Gayundin, pag-isipang i-precache ang mga asset sa pamamagitan ng [service worker sa Angular](https://web.dev/precaching-with-the-angular-service-worker/)."
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "Kung gumagamit ka ng Angular CLI, tiyaking binubuo ang mga build sa production mode. [Matuto pa](https://angular.io/guide/deployment#enable-runtime-production-mode)."
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "Kung gumagamit ka ng Angular CLI, magsama ng mga mapa ng source sa build ng iyong produksyon para masuri ang mga bundle mo. [Matuto pa](https://angular.io/guide/deployment#inspect-the-bundles)."
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "I-preload ang mga ruta nang maaga para mapabilis ang pag-navigate. [Matuto pa](https://web.dev/route-preloading-in-angular/)."
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "Pag-isipang gamitin ang utility na `BreakpointObserver` sa Component Dev Kit (CDK) para pamahalaan ang mga breakpoint ng imahe. [Matuto pa](https://material.angular.io/cdk/layout/overview)."
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "Kung hindi mo iba-bundle ang iyong mga asset ng JavaScript, pag-isipang gamitin ang [baler](https://github.com/magento/baler)."
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "I-disable ang built-in na [pag-bundle at pagpapaliit ng JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) ng Magento, at pag-isipang gamitin na lang ang [baler](https://github.com/magento/baler/)."
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "Tukuyin ang `@font-display` kapag [tumutukoy ng mga custom na font](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)."
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "Pag-isipang baguhin ang iyong mga template ng produkto at catalog para magamit ang feature na [pag-lazy load](https://web.dev/native-lazy-loading) ng web platform."
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "Gamitin ang [pagsasama ng Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) ng Magento."
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "I-enable ang opsyong \"Paliitin ang Mga CSS File\" sa mga setting ng Developer ng iyong store. [Matuto pa](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "Gamitin ang [Terser](https://www.npmjs.com/package/terser) para mapaliit ang lahat ng asset ng JavaScript mula sa deployment ng static na content, at i-disable ang built-in na feature ng pagpapaliit."
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "I-disable ang built-in na [pag-bundle ng JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) ng Magento."
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "Pag-isipang maghanap sa [Marketplace ng Magento](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) para sa iba't ibang third party na extension para ma-optimize ang mga imahe."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "Maidaragdag ang mga hint sa resource na preconnect o dns-prefetch sa pamamagitan ng [pagbabago ng layout ng tema](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "Maidaragdag ang mga tag ng `<link rel=preload>` sa pamamagitan ng [pagbabago ng layout ng tema](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "Pag-isipang maghanap sa [Marketplace ng Magento](https://marketplace.magento.com/catalogsearch/result/?q=webp) para sa iba't ibang third-party na extension para magamit ang mga mas bagong format ng imahe."
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "Pag-isipang gumamit ng “windowing” library na tulad ng `react-window` para mabawasan ang bilang ng mga node ng DOM na nagagawa kung nagre-render ka ng maraming umuulit na element sa page. [Matuto pa](https://web.dev/virtualize-long-lists-react-window/). Gayundin, bawasan ang mga hindi kinakailangang pag-render ulit gamit ang [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent), o [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) at [laktawan lang ang mga effect](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) hanggang sa may ilang partikular na dependency na magbago kung ginagamit mo ang hook na Effect para mapahusay ang performance ng runtime."
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "Kung gumagamit ka ng Router ng React, bawasan ang paggamit ng bahaging `<Redirect>` para sa [mga pag-navigate sa ruta](https://reacttraining.com/react-router/web/api/Redirect)."
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "Kung may nire-render ka sa server-side na anumang bahagi ng React, pag-isipang gamitin ang `renderToNodeStream()` o `renderToStaticNodeStream()` para payagan ang client na makatanggap at mag-hydrate ng iba't ibang bahagi ng markup sa halip na sabay-sabay. [Matuto pa](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "Kung awtomatikong pinapaliit ng system ng build ang iyong mga CSS file, tiyaking ide-deploy mo ang build ng produksyon ng iyong application. Puwede mo itong suriin sa pamamagitan ng extension na Mga Tool ng Developer ng React. [Matuto pa](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "Kung awtomatikong pinapaliit ng system ng build ang iyong mga JS file, tiyaking ide-deploy mo ang build ng produksyon ng iyong application. Puwede mo itong suriin sa pamamagitan ng extension na Mga Tool ng Developer ng React. [Matuto pa](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "Kung hindi ka nagre-render sa server-side, [hatiin ang iyong mga bundle ng JavaScript](https://web.dev/code-splitting-suspense/) gamit ang `React.lazy()`. Kung hindi naman, hatiin ang code gamit ang isang third-party na library na gaya ng [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "Gamitin ang React DevTools Profiler, na gumagamit ng Profiler API para sukatin ang performance sa pag-render ng iyong mga bahagi. [Matuto pa.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "Pag-isipang i-upload ang iyong GIF sa isang serbisyo kung saan gagawin itong available para i-embed bilang HTML5 video."

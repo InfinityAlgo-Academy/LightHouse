@@ -89,6 +89,15 @@
       "numericValue": 3969.136,
       "displayValue": "4.0 s"
     },
+    "largest-contentful-paint": {
+      "id": "largest-contentful-paint",
+      "title": "Largest Contentful Paint",
+      "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn More](https://web.dev/largest-contentful-paint)",
+      "score": 0.31,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 4927.278,
+      "displayValue": "4.9 s"
+    },
     "load-fast-enough-for-pwa": {
       "id": "load-fast-enough-for-pwa",
       "title": "Page load is fast enough on mobile networks",
@@ -1251,6 +1260,8 @@
             "firstContentfulPaintTs": 185607289047,
             "firstMeaningfulPaint": 3969,
             "firstMeaningfulPaintTs": 185607289048,
+            "largestContentfulPaint": 4927,
+            "largestContentfulPaintTs": 185608247190,
             "firstCPUIdle": 4927,
             "firstCPUIdleTs": 185608247190,
             "interactive": 4927,
@@ -1268,6 +1279,8 @@
             "observedFirstContentfulPaintTs": 185607289047,
             "observedFirstMeaningfulPaint": 3969,
             "observedFirstMeaningfulPaintTs": 185607289048,
+            "observedLargestContentfulPaint": 4927,
+            "observedLargestContentfulPaintTs": 185608247190,
             "observedTraceEnd": 10281,
             "observedTraceEndTs": 185613601189,
             "observedLoad": 4924,
@@ -3491,6 +3504,11 @@
           "group": "metrics"
         },
         {
+          "id": "largest-contentful-paint",
+          "weight": 0,
+          "group": "metrics"
+        },
+        {
           "id": "speed-index",
           "weight": 4,
           "group": "metrics"
@@ -4357,6 +4375,18 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:largest-contentful-paint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:LargestContentfulPaint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:load-fast-enough-for-pwa",
         "duration": 100,
         "entryType": "measure"
@@ -4676,12 +4706,6 @@
       {
         "startTime": 0,
         "name": "lh:computed:TimingSummary",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:LargestContentfulPaint",
         "duration": 100,
         "entryType": "measure"
       },
@@ -5373,6 +5397,12 @@
         },
         {
           "values": {
+            "timeInMs": 4927.278
+          },
+          "path": "audits[largest-contentful-paint].displayValue"
+        },
+        {
+          "values": {
             "timeInMs": 4417
           },
           "path": "audits[speed-index].displayValue"
@@ -5407,6 +5437,12 @@
       ],
       "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": [
         "audits[first-meaningful-paint].description"
+      ],
+      "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": [
+        "audits[largest-contentful-paint].title"
+      ],
+      "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": [
+        "audits[largest-contentful-paint].description"
       ],
       "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": [
         "audits[load-fast-enough-for-pwa].title"

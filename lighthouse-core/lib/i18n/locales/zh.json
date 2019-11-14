@@ -450,7 +450,7 @@
     "message": "{itemCount,plural, =1{找到了 1 条请求链}other{找到了 # 条请求链}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "最大限度地缩短关键请求深度"
+    "message": "避免链接关键请求"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "弃用/警告"
@@ -513,7 +513,7 @@
     "message": "值"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "浏览器工程师建议，页面包含的 DOM 元素最好少于 1,500 个左右。理想状况是，树深度少于 32 个元素，且少于 60 个子/父元素。大型 DOM 可能会增加内存使用量、导致[样式计算](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)用时延长，并产生高昂的[布局重排](https://developers.google.com/speed/articles/reflow)费用。[了解详情](https://web.dev/dom-size)。"
+    "message": "大型 DOM 会增加内存使用量、导致[样式计算](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)用时延长，并产生高昂的[布局重排](https://developers.google.com/speed/articles/reflow)费用。[了解详情](https://web.dev/dom-size)。"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 个元素}other{# 个元素}}"
@@ -1053,7 +1053,7 @@
     "message": "降低第三方代码的影响"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "第三方使用"
+    "message": "尽量减少第三方使用"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "首字节显示前的耗时表明了服务器发出响应的时间。[了解详情](https://web.dev/time-to-first-byte)。"
@@ -1066,6 +1066,9 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "服务器响应用时较短 (TTFB)"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "时长"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "开始时间"
@@ -1456,6 +1459,99 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "警告： "
+  },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "对于动画内容，请使用 [amp-anim](https://amp.dev/documentation/components/amp-anim/) 以尽量降低内容在屏幕外时的 CPU 使用量。"
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "确保您对图片使用了有效的 `amp-img` 标记，以便在第一个视口外自动延迟加载。[了解详情](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)。"
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "使用 [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) 之类的工具[在服务器端呈现 AMP 布局](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)。"
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "请参阅 [AMP 文档](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/)以确保所有样式均受支持。"
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "`amp-img` 元素支持 `srcset` 属性，以便系统根据屏幕尺寸指定要使用的图片资源。[了解详情](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)。"
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "您不妨既以 WebP 格式显示所有 `amp-img` 组件，也为其他浏览器指定适当的后备图片。[了解详情](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)。"
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "如果要呈现的列表非常大，您不妨使用 Component Dev Kit (CDK) 进行虚拟滚动。[了解详情](https://web.dev/virtualize-lists-with-angular-cdk/)。"
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "应用[路径级代码拆分](https://web.dev/route-level-code-splitting-in-angular/)，以尽量压缩 JavaScript 软件包的大小。您也可考虑使用 [Angular Service Worker](https://web.dev/precaching-with-the-angular-service-worker/) 预缓存资源。"
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "如果您使用的是 Angular CLI，请确保在正式版模式下生成版本。[了解详情](https://angular.io/guide/deployment#enable-runtime-production-mode)。"
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "如果您使用的是 Angular CLI，请在正式版中添加源代码映射以检查您的软件包。[了解详情](https://angular.io/guide/deployment#inspect-the-bundles)。"
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "提前预加载路径以加快导航速度。[了解详情](https://web.dev/route-preloading-in-angular/)。"
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "您不妨使用 Component Dev Kit (CDK) 中的 `BreakpointObserver` 实用程序管理映像断点。[了解详情](https://material.angular.io/cdk/layout/overview)。"
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "如果您没有捆绑 JavaScript 资源，不妨使用 [baler](https://github.com/magento/baler)。"
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "停用 Magento 内置的 [JavaScript 捆绑和缩减](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)功能，并考虑改用 [baler](https://github.com/magento/baler/)。"
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "在[定义自定义字体](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)时指定 `@font-display`。"
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "您不妨修改产品和目录模板，以利用这一网络平台的[延迟加载](https://web.dev/native-lazy-loading)功能。"
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "使用 Magento 的 [Varnish 集成](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)。"
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "在您商店的开发者设置中启用“Minify CSS Files”选项。[了解详情](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)。"
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "使用 [Terser](https://www.npmjs.com/package/terser) 缩减静态内容部署中的所有 JavaScript 资源，并停用内置的缩减功能。"
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "停用 Magento 内置的 [JavaScript 捆绑](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)功能。"
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "您不妨在 [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) 中搜索各种第三方扩展程序，以便优化图片。"
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "您可以通过[修改主题背景的布局](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)来添加 preconnect 或 dns-prefetch 资源提示。"
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "您可以通过[修改主题背景的布局](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)来添加 `<link rel=preload>` 标记。"
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "您不妨在 [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) 中搜索各种第三方扩展程序，以利用更新的图片格式。"
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "如果您要在页面上呈现很多重复元素，不妨使用“windowing”库（如 `react-window`）以尽量减少所创建的 DOM 节点数。[了解详情](https://web.dev/virtualize-long-lists-react-window/)。此外，如果您使用 Effect 钩子提高运行时性能，则还要使用 [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action)、[PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) 或 [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) 及[跳过效果](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects)以尽量减少不必要的重复呈现，直到某些依赖项发生更改为止。"
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "如果您使用的是 React Router，请尽量避免使用 `<Redirect>` 组件进行[路径导航](https://reacttraining.com/react-router/web/api/Redirect)。"
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "如果您在服务器端呈现任何 React 组件，不妨使用 `renderToNodeStream()` 或 `renderToStaticNodeStream()` 来允许客户端接收并合成标记的各个不同部分，而不是一次性接收整个标记。[了解详情](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)。"
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "如果您的编译系统可自动压缩 CSS 文件大小，请确保您部署的是正式版应用。您可以通过 React Developer Tools 扩展程序执行此项检查。[了解详情](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)。"
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "如果您的编译系统可自动压缩 JS 文件大小，请确保您部署的是正式版应用。您可以通过 React Developer Tools 扩展程序执行此项检查。[了解详情](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)。"
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "如果您不使用服务器端呈现，请使用 `React.lazy()` [拆分 JavaScript 软件包](https://web.dev/code-splitting-suspense/)。否则，请使用第三方库（如 [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)）拆分代码。"
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "使用 React DevTools Profiler，从而利用 Profiler API 来衡量组件的呈现效果。[了解详情](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)。"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "建议您将 GIF 上传到可让其作为 HTML5 视频嵌入的服务。"

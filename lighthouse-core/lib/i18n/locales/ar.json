@@ -30,10 +30,10 @@
     "message": "يجب أن تحتوي بعض أدوار ARIA الرئيسية على أدوار ثانوية محدّدة لأداء وظائف إمكانية الوصول المقصودة. [مزيد من المعلومات](https://web.dev/aria-required-children/)"
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | failureTitle": {
-    "message": "العناصر التي تتضمن ARIA `[role]` والتي تتطلب عناصر ثانوية للاحتواء على `[role]` محدد تفقد بعض هذه العناصر الثانوية المطلوبة أو جميعها."
+    "message": "إنّ العناصر التي تتضمّن ARIA `[role]` والتي تتطلب عناصر ثانوية للاحتواء على عنصر `[role]` محدّد لا تتضمّن بعض هذه العناصر الثانوية المطلوبة أو جميعها."
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | title": {
-    "message": "العناصر التي تتضمن ARIA `[role]` والتي تتطلب عناصر ثانوية للاحتواء على `[role]` محدد تشتمل على جميع العناصر الثانوية المطلوبة."
+    "message": "إنّ العناصر التي تتضمن ARIA `[role]` والتي تتطلب عناصر ثانوية للاحتواء على عنصر `[role]` محدّد تشتمل على جميع العناصر الثانوية المطلوبة."
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | description": {
     "message": "يجب أن يتم تضمين بعض أدوار ثانوية ARIA ضمن أدوار رئيسية محدّدة لتنفيذ وظائف إمكانية الوصول المقصودة بشكل صحيح. [مزيد من المعلومات](https://web.dev/aria-required-parent/)"
@@ -267,10 +267,10 @@
     "message": "تحتوي برامج قراءة الشاشة على ميزات لتسهيل التنقل بين الجداول. يمكن تحسين تجربة استخدام برامج قراءة الشاشة من خلال ضمان إشارة الخلايا `<td>` التي تستخدم السمة `[headers]` إلى خلايا أخرى في الجدول نفسه فقط. [مزيد من المعلومات](https://web.dev/td-headers-attr/)"
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | failureTitle": {
-    "message": "الخلايا الواردة في عنصر `<table>` التي تستخدم السمة `[headers]` تشير إلى عنصر `id` لم يتم العثور عليه في الجدول نفسه."
+    "message": "إنّ الخلايا الواردة في `<table>` والتي تستخدم السمة `[headers]` تشير إلى عنصر `id` غير موجود في الجدول نفسه."
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | title": {
-    "message": "الخلايا الواردة في عنصر `<table>` التي تستخدم السمة `[headers]` تشير إلى خلايا الجدول في الجدول نفسه."
+    "message": "إنّ الخلايا الواردة في `<table>` والتي تستخدم السمة `[headers]` تشير إلى الخلايا في الجدول نفسه."
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | description": {
     "message": "تحتوي برامج قراءة الشاشة على ميزات لتسهيل التنقل بين الجداول. قد يؤدي ضمان أن عناوين الجداول تشير دائمًا إلى بعض مجموعات الخلايا إلى تحسين تجربة مستخدمي برامج قراءة الشاشة. [مزيد من المعلومات](https://web.dev/th-has-data-cells/)"
@@ -450,7 +450,7 @@
     "message": "{itemCount,plural, =1{تم العثور على سلسلة واحدة}zero{تم العثور على # سلسلة}two{تم العثور على سلسلتيْنِ (#)}few{تم العثور على # سلاسل}many{تم العثور على # سلسلةً}other{تم العثور على # سلسلة}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "تقليل عمق الطلبات المهمة"
+    "message": "تجنَّب سلاسل الطلبات المهمة"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "إيقاف / تحذير"
@@ -513,7 +513,7 @@
     "message": "القيمة"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "ينصح مهندسو المتصفّح بأن تحتوي الصفحات على أقل من 1500 عنصر DOM تقريبًا. من المفضّل أن يقلّ عمق الشجرة عن 32 عنصرًا وألّا يزيد عن 60 عنصرًا فرعيًا/رئيسيًا. يمكن أن يزيد حجم DOM الكبير من استخدام الذاكرة، ويتسبب في إجراء [حسابات نمطية](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) أطول، وينتج عنه [عمليات مُكلفة لإعادة عرض التنسيق](https://developers.google.com/speed/articles/reflow). [مزيد من المعلومات](https://web.dev/dom-size)"
+    "message": "سيزيد حجم DOM الكبير من استخدام الذاكرة، ويتسبب في إجراء [حسابات نمطية](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) أطول، وينتج عنه [عمليات مُكلفة لإعادة عرض التنسيق](https://developers.google.com/speed/articles/reflow). [مزيد من المعلومات](https://web.dev/dom-size)"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{عنصر واحد}zero{# عنصر}two{عنصرين (#)}few{# عناصر}many{# عنصرًا}other{# عنصر}}"
@@ -741,7 +741,7 @@
     "message": "الفئة"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | description": {
-    "message": "يمكنك تقليل الوقت المستغرق في تحليل جافا سكريبت وإنشائه وتنفيذه. قد يتبين لك أن تسليم أحمال جافا سكريبت بحجم أصغر يساعد على ذلك. [مزيد من المعلومات](https://web.dev/mainthread-work-breakdown)"
+    "message": "ننصحك بتقليل الوقت المستغرق في تحليل \"جافا سكريبت\" وإنشائه وتنفيذه. قد يتبيّن لك أن تقديم بيانات \"جافا سكريبت\" بحجم أصغر يساعد على ذلك. [مزيد من المعلومات](https://web.dev/mainthread-work-breakdown)"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
     "message": "تقليل سلسلة العمل الرئيسية"
@@ -762,7 +762,7 @@
     "message": "كل صفحة تحتوي على عنوان URL"
   },
   "lighthouse-core/audits/manual/pwa-page-transitions.js | description": {
-    "message": "من المفترض إجراء عمليات النقل بسرعة عند النقر حولها، حتى على شبكة بطيئة. هذه التجربة هي عنصر أساسي لإدراك مستخدم لمستوى الأداء. [مزيد من المعلومات](https://web.dev/pwa-page-transitions)"
+    "message": "يجب أن تكون عملية الانتقال بين الصفحات سريعة، حتى عند استخدام شبكة بطيئة. وذلك لأنّ سرعة استجابة التطبيق تُعدّ من العناصر الأساسية التي يستند إليها المستخدم في تقييم أداء التطبيق. [مزيد من المعلومات](https://web.dev/pwa-page-transitions)"
   },
   "lighthouse-core/audits/manual/pwa-page-transitions.js | title": {
     "message": "عمليات نقل الصفحة لا تبدو أنها محظورة على الشبكة"
@@ -1053,7 +1053,7 @@
     "message": "تقليل تأثير رمز الجهة الخارجية"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "استخدام جهة خارجية"
+    "message": "تقليل استخدام الرموز التابعة لجهات خارجية"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "يحدّد \"وقت وصول أول بايت\" الوقت الذي يُرسل فيه الخادم استجابة. [مزيد من المعلومات](https://web.dev/time-to-first-byte)"
@@ -1066,6 +1066,9 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "أوقات استجابة الخادم منخفضة (TTFB)"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "المدة"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "وقت البدء"
@@ -1456,6 +1459,99 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "التحذيرات: "
+  },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "بالنسبة إلى المحتوى المتضمن صورًا متحركة، استخدِم [amp-anim](https://amp.dev/documentation/components/amp-anim/) لتقليل استخدام وحدة المعالجة المركزية (CPU) مع إبقاء المحتوى خارج الشاشة."
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "تأكّد من استخدامك لعلامات `amp-img` الصالحة لصورك التي يتم تحميلها في وضع خامل تلقائيًا خارج إطار العرض الأول. [مزيد من المعلومات](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)"
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "استخدِم الأدوات، مثل [مُحسِّن AMP](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) في [تنسيقات AMP للعرض من جانب الخادم](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "يُرجى الرجوع إلى [مستندات AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) للتأكد من توفُّر جميع الأنماط."
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "يوفّر العنصر `amp-img` السمة `srcset` لتحديد مواد عرض الصور المطلوب استخدامها استنادًا إلى حجم الشاشة.  [مزيد من المعلومات](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)"
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "عليك عرض جميع مكوّنات `amp-img` بتنسيق WebP مع تحديد عنصر احتياطي مناسب للمتصفحات الأخرى. [مزيد من المعلومات](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)"
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "عليك استخدام التمرير الافتراضي مع مجموعة تطوير المكوّنات (CDK) في حال عرض قوائم كبيرة جدًا. [مزيد من المعلومات](https://web.dev/virtualize-lists-with-angular-cdk/)"
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "طبِّق [تقسيم الرموز على مستوى المسار](https://web.dev/route-level-code-splitting-in-angular/) لتقليل حجم حِزم \"جافا سكريبت\". عليك أيضًا دفع تكاليف مواد العرض نقدًا ومسبقًا من خلال [مشغّل خدمات Angular](https://web.dev/precaching-with-the-angular-service-worker/)."
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "في حال استخدام Angular CLI، يُرجى التأكد من أنه يتم إنشاء الإصدارات في وضع الإنتاج. [مزيد من المعلومات](https://angular.io/guide/deployment#enable-runtime-production-mode)"
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "في حال استخدام Angular CLI، يُرجى تضمين خرائط المصدر في إصدار الإنتاج لفحص الحِزم. [مزيد من المعلومات](https://angular.io/guide/deployment#inspect-the-bundles)"
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "عليك التحميل المسبق للمسارات لتسريع عملية التنقل. [مزيد من المعلومات](https://web.dev/route-preloading-in-angular/)"
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "عليك استخدام الأداة `BreakpointObserver` في مجموعة تطوير المكوّنات (CDK) لإدارة النقاط الفاصلة للصور. [مزيد من المعلومات](https://material.angular.io/cdk/layout/overview)"
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "في حال عدم إنشاء حزمة لمواد عرض \"جافا سكريبت\"، عليك استخدام [baler](https://github.com/magento/baler)."
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "أوقِف [التصغير وحزمة \"جافا سكريبت\"](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) المدمجة للنظام الأساسي Magento واستخدِم [baler](https://github.com/magento/baler/) بدلاً من ذلك."
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "حدِّد `@font-display` عند [وضع خطوط مخصصة](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)."
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "عليك تعديل نماذج الكتالوج والمنتج للاستفادة من ميزة [التحميل الخامل](https://web.dev/native-lazy-loading) للنظام الأساسي للويب."
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "استخدِم [دمج Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) للنظام الأساسي Magento."
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "فعِّل الخيار \"تصغير ملفات CSS\" في إعدادات مطوّر البرامج في المتجر. [مزيد من المعلومات](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "استخدِم [Terser](https://www.npmjs.com/package/terser) لتصغير جميع مواد عرض \"جافا سكريبت\" التي تنتج عن نشر المحتوى الثابت، وأوقِف ميزة التصغير المُدمجة."
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "أوقِف [حزمة \"جافا سكريبت\"](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) المدمجة للنظام الأساسي Magento."
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "عليك البحث عن [سوق Magento](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) للحصول على مجموعة متنوعة من إضافات الجهات الخارجية لتحسين الصور."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "يمكن إضافة تعديلات الموارد preconnect أو dns-prefetch من خلال [تعديل تنسيق التصميمات](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "يمكن إضافة علامات `<link rel=preload>` عن طريق [تعديل تنسيق التصميمات](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "عليك البحث عن [سوق Magento](https://marketplace.magento.com/catalogsearch/result/?q=webp) للحصول على مجموعة متنوعة من إضافات الجهات الخارجية للاستفادة من تنسيقات الصور الأحدث."
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "عليك استخدام مكتبة \"النوافذ\" `react-window` لتقليل عدد عُقَد DOM التي تم إنشاؤها في حال عرض العديد من العناصر المتكررة في الصفحة. [مزيد من المعلومات](https://web.dev/virtualize-long-lists-react-window/) عليك أيضًا تقليل عمليات إعادة العرض غير الضرورية باستخدام [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action) أو [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) أو [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) و[تخطي التأثيرات](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) فقط حتى يتم تغيير تبعيات معيّنة في حال استخدام عنصر جذب \"التأثير\" لتحسين مستوى أداء وقت التشغيل."
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "في حال استخدام React Router، عليك تقليل استخدام المكوّن `<Redirect>` في [عمليات تنقل المسار](https://reacttraining.com/react-router/web/api/Redirect)."
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "في حال كنت تعرض من جانب الخادم أي مكوّنات React، عليك استخدام `renderToNodeStream()` أو `renderToStaticNodeStream()` للسماح للعميل بتلقي أجزاء مختلفة من الترميز ودمجها بدلاً من جميع الأجزاء دفعة واحدة. [مزيد من المعلومات](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "في حال تصغير نظام الإصدار لملفات CSS تلقائيًا، يُرجى التأكد من أنك تنشر إصدار الإنتاج لتطبيقك. يمكنك التحقّق من ذلك باستخدام إضافة React Developer Tools. [مزيد من المعلومات](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "في حال تصغير نظام الإصدار لملفات \"جافا سكريبت\" تلقائيًا، يُرجى التأكد من أنك تنشر إصدار الإنتاج لتطبيقك. يمكنك التحقّق من ذلك باستخدام إضافة React Developer Tools. [مزيد من المعلومات](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "في حال عدم العرض من جانب الخادم، عليك [تقسيم حِزم \"جافا سكريبت\"](https://web.dev/code-splitting-suspense/) من خلال `React.lazy()`. بخلاف ذلك، يمكن تقسيم الرمز باستخدام مكتبة تابعة لجهات خارجية، مثل [المكوّنات القابلة للتحميل](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "استخدِم محلِّل React DevTools الذي يتيح الاستفادة من واجهة برمجة تطبيقات المحلّل لقياس مستوى أداء العرض للمكوّنات. [مزيد من المعلومات](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "يمكنك تحميل ملف GIF إلى خدمة ستتيح تضمينه باعتباره فيديو HTML5."

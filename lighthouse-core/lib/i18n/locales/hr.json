@@ -450,7 +450,7 @@
     "message": "{itemCount,plural, =1{Pronađen je jedan lanac}one{Pronađen je # lanac}few{Pronađena su # lanca}other{Pronađeno je # lanaca}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "Minimizirajte dubinu kritičnih zahtjeva"
+    "message": "Izbjegavajte ulančavanje kritičnih zahtjeva"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "Ukidanje / upozorenje"
@@ -513,7 +513,7 @@
     "message": "Vrijednost"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "Inženjeri za preglednike preporučuju da stranice sadrže manje od ~1500 DOM elemenata. Pravo mjesto jest drvo dubine < 32 elemenata te koje ima manje od 60 podređenih/nadređenih elemenata. Veliki DOM može povećati upotrebu memorije, uzrokovati duže [izračune stila](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) te dovesti do skupih [preoblikovanja izgleda](https://developers.google.com/speed/articles/reflow). [Saznajte više](https://web.dev/dom-size)."
+    "message": "Veliki DOM zahtijeva više memorije, produljuje [izračune stila](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) te dovodi do skupih [preoblikovanja izgleda](https://developers.google.com/speed/articles/reflow). [Saznajte više](https://web.dev/dom-size)."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{Jedan element}one{# element}few{# elementa}other{# elemenata}}"
@@ -1053,7 +1053,7 @@
     "message": "Smanjite utjecaj koda trećih strana"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "Upotreba treće strane"
+    "message": "Smanjenje upotrebe koda trećih strana"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Vrijeme do prvog bajta navodi vrijeme u koje poslužitelj šalje odgovor. [Saznajte više](https://web.dev/time-to-first-byte)."
@@ -1066,6 +1066,9 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Poslužitelj odgovara sporo (TTFB)"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Trajanje"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "Vrijeme početka"
@@ -1456,6 +1459,99 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Upozorenja: "
+  },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "Za animirani sadržaj upotrijebite [amp-anim](https://amp.dev/documentation/components/amp-anim/) da biste smanjili upotrebu procesora dok sadržaj nije na zaslonu."
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "Pobrinite se da upotrebljavate valjane `amp-img` oznake za slike koje se automatski odgođeno učitavaju izvan prvog vidljivog dijela. [Saznajte više](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "Upotrebljavajte alate kao što je [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) za [generiranje AMP izgleda na poslužitelju](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "U [AMP dokumentaciji](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) provjerite jesu li svi vaši stilovi podržani."
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "Element `amp-img` podržava atribut `srcset` za određivanje elemenata slike koji će se upotrebljavati ovisno o veličini zaslona.  [Saznajte više](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "Razmislite o prikazivanju svih `amp-img` komponenti u WebP formatima uz određivanje odgovarajuće zamjene za druge preglednike. [Saznajte više](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "U slučaju generiranja vrlo velikih popisa savjetujemo vam virtualno pomicanje pomoću paketa Component Dev Kit (CDK). [Saznajte više](https://web.dev/virtualize-lists-with-angular-cdk/)."
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "Primijenite [razdvajanje koda na razini rute](https://web.dev/route-level-code-splitting-in-angular/) da biste smanjili veličinu JavaScript paketa. Također razmislite o predmemoriranju elemenata pomoću [uslužnog alata Angular](https://web.dev/precaching-with-the-angular-service-worker/)."
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "Ako upotrebljavate Angular CLI, međuverzije se trebaju generirati u produkcijskom načinu rada. [Saznajte više](https://angular.io/guide/deployment#enable-runtime-production-mode)."
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "Ako upotrebljavate Angular CLI, uključite karte izvora u produkcijsku međuverziju kako biste provjerili pakete. [Saznajte više](https://angular.io/guide/deployment#inspect-the-bundles)."
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "Unaprijed predučitajte rute da biste ubrzali navigaciju. [Saznajte više](https://web.dev/route-preloading-in-angular/)."
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "Za upravljanje prijelomnim točkama slike savjetujemo vam upotrebu uslužnog programa `BreakpointObserver` u paketu Component Dev Kit (CDK). [Saznajte više](https://material.angular.io/cdk/layout/overview)."
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "Ako ne grupirate JavaScript elemente, savjetujemo vam upotrebu [balera](https://github.com/magento/baler)."
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "Onemogućite ugrađeno [JavaScript grupiranje i umanjivanje](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) na platformi Magento i umjesto toga razmotrite upotrebu [balera](https://github.com/magento/baler/)."
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "Navedite `@font-display` kada [definirate prilagođene fontove](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)."
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "Savjetujemo vam da izmijenite predloške proizvoda i kataloga da biste iskoristili značajku [odgođenog učitavanja](https://web.dev/native-lazy-loading) web-platforme."
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "Upotrijebite [integraciju Varnisha](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) na platformi Magento."
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "Omogućite opciju \"Umanji CSS datoteke\" u postavkama razvojnog programera svoje trgovine. [Saznajte više](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "Upotrijebite [Terser](https://www.npmjs.com/package/terser) da biste umanjili sve JavaScript elemente iz implementacije statičkog sadržaja i onemogućite ugrađenu značajku umanjivanja."
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "Onemogućite ugrađeno [JavaScript grupiranje](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) na platformi Magento."
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "Savjetujemo vam da pretražite [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) kako biste pronašli razna proširenja trećih strana za optimizaciju slika."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "Nagovještaji resursa za rano povezivanje ili prethodno dohvaćanje DNS-a mogu se dodati [promjenom izgleda tema](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "`<link rel=preload>` oznake mogu se dodati [promjenom izgleda tema](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "Savjetujemo vam da pretražite [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) kako biste pronašli razna proširenja trećih strana za korištenje novijih formata slike."
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "Ako na stranici generirate mnogo elemenata koji se ponavljaju, savjetujemo vam upotrebu zbirke \"u prozorima\" kao što je `react-window` radi smanjivanja broja izrađenih čvorova DOM-a. [Saznajte više](https://web.dev/virtualize-long-lists-react-window/). Ako za poboljšanje vremena izvođenja upotrebljavate udicu Efekt, smanjite broj nepotrebnih ponovnih generiranja tako da upotrijebite [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) ili [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) i [preskočite efekte](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) samo dok se određene ovisnosti ne promijene."
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "Ako upotrebljavate React Router, smanjite upotrebu komponente `<Redirect>` za [kretanja rutom](https://reacttraining.com/react-router/web/api/Redirect)."
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "Ako generirate komponente React na poslužitelju, savjetujemo vam upotrebu `renderToNodeStream()` ili `renderToStaticNodeStream()` da biste klijentu omogućili primanje različitih dijelova označavanja i njihovo popunjavanje podacima umjesto da se to učini odjednom. [Saznajte više](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "Ako vaš sustav međuverzije automatski umanjuje CSS datoteke, trebate implementirati produkcijsku međuverziju aplikacije. To možete provjeriti pomoću proširenja React Developer Tools. [Saznajte više](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "Ako vaš sustav međuverzije automatski umanjuje JS datoteke, trebate implementirati produkcijsku međuverziju aplikacije. To možete provjeriti pomoću proširenja React Developer Tools. [Saznajte više](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "Ako ne generirate na poslužitelju, [podijelite svoje JavaScript pakete](https://web.dev/code-splitting-suspense/) pomoću `React.lazy()`. U suprotnom razdvojite kôd pomoću zbirke treće strane, primjerice [komponenti koje se mogu učitati](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "Upotrebljavajte React DevTools Profiler, koji se koristi Profiler API-jem, za mjerenje uspješnosti generiranja komponenti. [Saznajte više.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "Savjetujemo vam da prenesete GIF na uslugu na kojoj će se kodirati za ugrađivanje kao HTML5 videozapis."

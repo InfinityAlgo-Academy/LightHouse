@@ -450,7 +450,7 @@
     "message": "{itemCount,plural, =1{1 kjede funnet}other{# kjeder funnet}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "Minimer dybden på kritiske forespørsler"
+    "message": "Unngå kjeding av kritiske forespørsler"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "Avvikling/varsel"
@@ -513,7 +513,7 @@
     "message": "Verdi"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "Nettleseringeniører anbefaler å ha mindre enn 1500 DOM-elementer på nettsider. Ideelt bør treet være mindre enn 32 elementer dypt, og det bør være færre enn 60 underordnede/overordnede elementer. Store DOM-er kan øke minnebruken, forårsake lengre [stilberegninger](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) og utløse kostbare [dynamiske tilpasninger av layouten](https://developers.google.com/speed/articles/reflow). [Finn ut mer](https://web.dev/dom-size)."
+    "message": "Store DOM-er øker minnebruken, forårsaker lengre [stilberegninger](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) og utløser kostbare [dynamiske tilpasninger av layouten](https://developers.google.com/speed/articles/reflow). [Finn ut mer](https://web.dev/dom-size)."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 element}other{# elementer}}"
@@ -1053,7 +1053,7 @@
     "message": "Reduser innvirkningen av tredjepartskode"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "Tredjepartsbruk"
+    "message": "Minimer bruken av tredjepartskode"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Tid til første byte identifiserer tidspunktet da tjeneren sendte et svar. [Finn ut mer](https://web.dev/time-to-first-byte)."
@@ -1066,6 +1066,9 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Svartiden til tjeneren er lav (TTFB)"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Varighet"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "Starttid"
@@ -1456,6 +1459,99 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Advarsler: "
+  },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "For animert innhold, bruk [amp-anim](https://amp.dev/documentation/components/amp-anim/) for å minimere prosessorbruken mens innholdet er utenfor skjermen."
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "Pass på å bruke gyldige `amp-img`-tagger for bilder som automatisk lastes inn med utsettelse utenfor det første synlige området. [Finn ut mer](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "Bruk verktøy som [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) for å [gjengi AMP-layouter på tjenersiden](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "Se [AMP-dokumentasjonen](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) for å forsikre deg om at alle stilene støttes."
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "`amp-img`-elementet støtter `srcset`-attributtet, som gjør det mulig å spesifisere hvilke bilderessurser som skal brukes, basert på skjermstørrelsen.  [Finn ut mer](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "Vurder å vise alle `amp-img`-komponentene i WebP-formater og spesifisere passende reservealternativer for andre nettlesere. [Finn ut mer](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "Vurder å bruke virtuell rulling med Component Dev Kit (CDK) hvis du skal gjengi svært store lister. [Finn ut mer](https://web.dev/virtualize-lists-with-angular-cdk/)."
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "Bruk [kodeoppdeling på rutenivå](https://web.dev/route-level-code-splitting-in-angular/) for å minimere størrelsen på JavaScript-pakkene. Vurder også å forhåndsbufre ressurser med [Angular service worker](https://web.dev/precaching-with-the-angular-service-worker/)."
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "Hvis du bruker Angular CLI, må du passe på at delversjonene genereres i produksjonsmodus. [Finn ut mer](https://angular.io/guide/deployment#enable-runtime-production-mode)."
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "Hvis du bruker Angular CLI, kan du inkludere kildekodekart i produksjonsdelversjonen for å inspisere pakkene dine. [Finn ut mer](https://angular.io/guide/deployment#inspect-the-bundles)."
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "Last inn ruter på forhånd for å gjøre navigasjonen raskere. [Finn ut mer](https://web.dev/route-preloading-in-angular/)."
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "Vurder å bruke `BreakpointObserver`-verktøyet i Component Dev Kit (CDK) for å administrere stoppunkter for bilder. [Finn ut mer](https://material.angular.io/cdk/layout/overview)."
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "Hvis du ikke pakker JavaScript-ressursene dine, bør du vurdere å bruke [baler](https://github.com/magento/baler)."
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "Slå av Magentos innebygde [JavaScript-pakking og -forminskning](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html), og vurder å bruke [baler](https://github.com/magento/baler/) i stedet."
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "Spesifiser `@font-display` når du [definerer tilpassede skrifttyper](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)."
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "Vurder å endre produkt- og katalogmalene for å nyttiggjøre deg av funksjonaliteten for [utsatt innlasting](https://web.dev/native-lazy-loading) på nettplattformen."
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "Bruk Magentos [Varnish-integrasjon](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "Slå på alternativet «Forminsk CSS-filer» i Utvikler-innstillingene for butikken. [Finn ut mer](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "Bruk [Terser](https://www.npmjs.com/package/terser) til å forminske alle JavaScript-ressurser ut ifra implementering av statisk innhold, og slå av den innebygde forminskningsfunksjonen."
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "Slå av Magentos innebygde [JavaScript-pakking](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)."
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "Vurder å søke på [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) etter diverse tredjepartsutvidelser for å optimalisere bilder."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "Ressurshintene preconnect og dns-prefetch kan legges til ved å [endre temalayouten](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "`<link rel=preload>`-tagger kan legges til ved å [endre temalayouten](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "Vurder å søke på [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) etter diverse tredjepartsutvidelser som gjør det mulig å bruke nyere bildeformater."
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "Vurder å bruke et bibliotek for «vinduer», som `react-window`, for å minimere antallet DOM-noder som opprettes hvis du gjengir mange gjentatte elementer på siden. [Finn ut mer](https://web.dev/virtualize-long-lists-react-window/). Du kan også minimere antallet gjengivelser som gjentas unødvendig, ved å bruke [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) eller [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) og [hoppe over effekter](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) kun frem til visse avhengigheter har endret seg, hvis du bruker Effect-festepunktet for å øke kjøretidsytelsen."
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "Hvis du bruker React Router, kan du minimere bruken av `<Redirect>`-komponenten for [rutenavigasjoner](https://reacttraining.com/react-router/web/api/Redirect)."
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "Hvis du gjengir React-komponenter på tjenersiden, bør du vurdere å bruke `renderToNodeStream()` eller `renderToStaticNodeStream()` for å gi klienten mulighet til å motta og hydrere ulike deler av oppmerkingen i stedet for å gjøre alt på en gang. [Finn ut mer](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "Hvis delversjonsystemet forminsker CSS-filer automatisk, må du passe på at du implementerer produksjonsdelversjonen av appen. Dette kan du sjekke med React Developer Tools-utvidelsen. [Finn ut mer](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "Hvis delversjonssystemet forminsker JS-filene automatisk, må du passe på at du implementerer produksjonsdelversjonen av appen. Dette kan du sjekke med React Developer Tools-utvidelsen. [Finn ut mer](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "Hvis du ikke gjengir på tjenersiden, kan du [dele opp JavaScript-pakkene](https://web.dev/code-splitting-suspense/) med `React.lazy()`. Ellers kan du dele opp koden med et tredjepartsbibliotek som [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "Bruk React DevTools Profiler, som benytter Profiler-API-et, til å måle gjengivelsesytelsen for komponentene. [Finn ut mer.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "Vurder å laste opp GIF-filen til en tjeneste som gjør det mulig å bygge den inn som en HTML5-video."

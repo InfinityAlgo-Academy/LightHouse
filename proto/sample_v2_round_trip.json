@@ -1266,6 +1266,15 @@
             "scoreDisplayMode": "binary",
             "title": "Form elements do not have associated labels"
         },
+        "largest-contentful-paint": {
+            "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn More](https://web.dev/largest-contentful-paint)",
+            "displayValue": "4.9\u00a0s",
+            "id": "largest-contentful-paint",
+            "numericValue": 4927.278,
+            "score": 0.31,
+            "scoreDisplayMode": "numeric",
+            "title": "Largest Contentful Paint"
+        },
         "layout-table": {
             "description": "A table being used for layout purposes should not include data elements, such as the th or caption elements or the summary attribute, because this can create a confusing experience for screen reader users. [Learn more](https://web.dev/layout-table/).",
             "id": "layout-table",
@@ -1575,6 +1584,8 @@
                         "firstMeaningfulPaintTs": 185607289048.0,
                         "interactive": 4927.0,
                         "interactiveTs": 185608247190.0,
+                        "largestContentfulPaint": 4927.0,
+                        "largestContentfulPaintTs": 185608247190.0,
                         "maxPotentialFID": 123.0,
                         "observedDomContentLoaded": 4901.0,
                         "observedDomContentLoadedTs": 185608220734.0,
@@ -1586,6 +1597,8 @@
                         "observedFirstPaintTs": 185607289043.0,
                         "observedFirstVisualChange": 3969.0,
                         "observedFirstVisualChangeTs": 185607288912.0,
+                        "observedLargestContentfulPaint": 4927.0,
+                        "observedLargestContentfulPaintTs": 185608247190.0,
                         "observedLastVisualChange": 4791.0,
                         "observedLastVisualChangeTs": 185608110912.0,
                         "observedLoad": 4924.0,
@@ -3655,6 +3668,11 @@
                 },
                 {
                     "group": "metrics",
+                    "id": "largest-contentful-paint",
+                    "weight": 0.0
+                },
+                {
+                    "group": "metrics",
                     "id": "speed-index",
                     "weight": 4.0
                 },
@@ -4258,6 +4276,18 @@
             {
                 "duration": 100.0,
                 "entryType": "measure",
+                "name": "lh:audit:largest-contentful-paint",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:computed:LargestContentfulPaint",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
                 "name": "lh:audit:load-fast-enough-for-pwa",
                 "startTime": 0.0
             },
@@ -4577,12 +4607,6 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:computed:TimingSummary",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:computed:LargestContentfulPaint",
                 "startTime": 0.0
             },
             {

@@ -30,7 +30,7 @@
     "message": "Beberapa peran induk ARIA harus memuat peran turunan tertentu agar dapat menjalankan fungsi aksesibilitas yang diinginkan. [Pelajari lebih lanjut](https://web.dev/aria-required-children/)."
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | failureTitle": {
-    "message": "Elemen dengan`[role]` ARIA yang mewajibkan turunannya berisi `[role]` tertentu kehilangan beberapa atau semua turunan yang diperlukan."
+    "message": "Elemen dengan `[role]` ARIA yang mewajibkan turunannya berisi `[role]` tertentu tidak memiliki beberapa atau semua turunan yang diperlukan."
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | title": {
     "message": "Elemen dengan `[role]` ARIA yang mewajibkan turunannya berisi `[role]` tertentu memiliki semua turunan yang diperlukan."
@@ -270,7 +270,7 @@
     "message": "Sel di elemen `<table>` yang menggunakan atribut `[headers]` yang merujuk pada elemen `id` tidak ditemukan dalam tabel yang sama."
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | title": {
-    "message": "Sel dalam elemen `<table>` yang menggunakan atribut `[headers]` yang merujuk pada sel tabel dalam tabel yang sama."
+    "message": "Sel dalam elemen `<table>` yang menggunakan atribut `[headers]` merujuk pada sel tabel dalam tabel yang sama."
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | description": {
     "message": "Pembaca layar memiliki fitur yang memudahkan navigasi tabel. Memastikan header tabel selalu merujuk ke sekumpulan sel dapat menyempurnakan pengalaman bagi pengguna pembaca layar. [Pelajari lebih lanjut](https://web.dev/th-has-data-cells/)."
@@ -450,7 +450,7 @@
     "message": "{itemCount,plural, =1{1 rantai ditemukan}other{# rantai ditemukan}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "Minimalkan Kedalaman Permintaan Penting"
+    "message": "Hindari perantaian permintaan penting"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "Penghentian/Peringatan"
@@ -513,7 +513,7 @@
     "message": "Nilai"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "Engineer browser merekomendasikan halaman yang berisi kurang dari ~ 1.500 elemen DOM. Ukuran yang pas adalah suatu kedalaman hierarki yang terdiri dari <32 elemen dan kurang dari 60 elemen turunan/induk. DOM yang besar dapat meningkatkan penggunaan memori, menyebabkan [penghitungan gaya](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) yang lebih lama, dan menghasilkan [penyesuaian tata letak](https://developers.google.com/speed/articles/reflow) yang mahal. [Pelajari lebih lanjut](https://web.dev/dom-size)."
+    "message": "DOM yang berukuran besar akan meningkatkan penggunaan memori, menyebabkan [penghitungan gaya](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) yang lebih lama, dan menghasilkan [penyesuaian tata letak](https://developers.google.com/speed/articles/reflow) yang mahal. [Pelajari lebih lanjut](https://web.dev/dom-size)."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 elemen}other{# elemen}}"
@@ -762,7 +762,7 @@
     "message": "Setiap halaman memiliki URL"
   },
   "lighthouse-core/audits/manual/pwa-page-transitions.js | description": {
-    "message": "Transisi harus terasa cepat ketika Anda mengetuk-ngetuk, bahkan saat jaringan lambat. Pengalaman ini merupakan kunci persepsi pengguna terhadap performa. [Pelajari lebih lanjut](https://web.dev/pwa-page-transitions)."
+    "message": "Transisi harus terasa cepat ketika Anda mengetuk-ngetuk, bahkan saat jaringan lambat. Pengalaman ini berperan penting pada persepsi pengguna terhadap performa. [Pelajari lebih lanjut](https://web.dev/pwa-page-transitions)."
   },
   "lighthouse-core/audits/manual/pwa-page-transitions.js | title": {
     "message": "Transisi halaman sepertinya tidak diblokir di jaringan"
@@ -774,7 +774,7 @@
     "message": "First Contentful Paint menandai waktu saat teks atau gambar pertama di-paint. [Pelajari lebih lanjut](https://web.dev/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "CPU Pertama Tidak Ada Aktivitas menandai waktu pertama kalinya thread utama halaman menjadi agak tenang untuk menangani masukan.  [Pelajari lebih lanjut](https://web.dev/first-cpu-idle)."
+    "message": "CPU Pertama Tanpa Aktivitas menandai saat pertama kalinya thread utama halaman menjadi cukup tenang untuk menangani masukan.  [Pelajari lebih lanjut](https://web.dev/first-cpu-idle)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "First Meaningful Paint mengukur waktu saat konten utama halaman terlihat. [Pelajari lebih lanjut](https://web.dev/first-meaningful-paint)."
@@ -1053,7 +1053,7 @@
     "message": "Kurangi dampak kode pihak ketiga"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "Penggunaan oleh Pihak Ketiga"
+    "message": "Meminimalkan penggunaan pihak ketiga"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Time To First Byte mengidentifikasi waktu saat server mengirim respons. [Pelajari lebih lanjut](https://web.dev/time-to-first-byte)."
@@ -1066,6 +1066,9 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Waktu respons server sedikit (TTFB)"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Durasi"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "Waktu Mulai"
@@ -1456,6 +1459,99 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Peringatan: "
+  },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "Untuk konten animasi, gunakan [amp-anim](https://amp.dev/documentation/components/amp-anim/) untuk meminimalkan penggunaan CPU saat konten tetap berjalan di balik layar."
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "Pastikan Anda menggunakan tag `amp-img` yang valid untuk gambar yang secara otomatis dimuat dengan lambat di luar area pandang pertama. [Pelajari lebih lanjut](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "Gunakan alat semacam [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) untuk [merender sistem server tata letak AMP](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "Pelajari [dokumentasi AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) untuk memastikan semua gaya Anda didukung."
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "Elemen `amp-img` mendukung atribut `srcset` untuk menentukan aset image yang akan digunakan berdasarkan ukuran layar.  [Pelajari lebih lanjut](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "Pertimbangkan untuk menampilkan semua komponen `amp-img` Anda dalam format WebP saat menentukan fallback yang tepat untuk browser lain. [Pelajari lebih lanjut](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "Pertimbangkan untuk menggunakan scroll virtual dengan Component Dev Kit (CDK) jika daftar yang sangat besar sedang dirender. [Pelajari lebih lanjut](https://web.dev/virtualize-lists-with-angular-cdk/)."
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "Terapkan [pemisahan kode tingkat rute](https://web.dev/route-level-code-splitting-in-angular/) untuk mengecilkan ukuran paket JavaScript Anda. Selain itu, pertimbangkan untuk menyimpan aset ke cache terlebih dahulu menggunakan [pekerja layanan Angular](https://web.dev/precaching-with-the-angular-service-worker/)."
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "Jika Anda menggunakan Angular CLI, pastikan bahwa build dibuat dalam mode produksi. [Pelajari lebih lanjut](https://angular.io/guide/deployment#enable-runtime-production-mode)."
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "Jika Anda menggunakan Angular CLI, sertakan peta sumber dalam build produksi untuk memeriksa paket Anda. [Pelajari lebih lanjut](https://angular.io/guide/deployment#inspect-the-bundles)."
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "Pramuat rute terlebih dahulu untuk mempercepat navigasi. [Pelajari lebih lanjut](https://web.dev/route-preloading-in-angular/)."
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "Pertimbangkan untuk menggunakan utilitas `BreakpointObserver` dalam Component Dev Kit (CDK) guna mengelola titik henti image sementara. [Pelajari lebih lanjut](https://material.angular.io/cdk/layout/overview)."
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "Jika Anda tidak memaketkan aset JavaScript, pertimbangkan untuk menggunakan [baler](https://github.com/magento/baler)."
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "Nonaktifkan [paket dan minifikasi JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) bawaan Magento, dan pertimbangkan untuk menggunakan [baler](https://github.com/magento/baler/) saja."
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "Tetapkan `@font-display` saat [menentukan font kustom](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)."
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "Pertimbangkan untuk mengubah template produk dan katalog Anda untuk memanfaatkan fitur [pemuatan lambat](https://web.dev/native-lazy-loading) platform web."
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "Gunakan [Varnish integration](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) dari Magento."
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "Aktifkan opsi \"Minifikasi File CSS\" di setelan Developer toko Anda. [Pelajari lebih lanjut](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "Gunakan [Terser](https://www.npmjs.com/package/terser) untuk meminifikasi semua aset JavaScript dari penerapan konten statis, dan menonaktifkan fitur minifikasi bawaan."
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "Nonaktifkan [paket JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) bawaan Magento."
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "Pertimbangkan untuk menelusuri [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) guna menemukan berbagai ekstensi pihak ketiga untuk mengoptimalkan gambar."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "Petunjuk resource preconnect atau dns-prefetch dapat ditambahkan dengan [mengubah tata letak tema](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "Tag `<link rel=preload>` dapat ditambahkan dengan [mengubah tata letak tema](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "Pertimbangkan untuk menelusuri [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) guna menemukan berbagai ekstensi pihak ketiga untuk memanfaatkan format gambar terbaru."
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "Pertimbangkan untuk menggunakan library “windowing” seperti `react-window` untuk meminimalkan jumlah node DOM yang dibuat jika Anda merender banyak elemen berulang pada halaman. [Pelajari lebih lanjut](https://web.dev/virtualize-long-lists-react-window/). Selain itu, minimalkan render ulang yang tidak perlu menggunakan [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent), atau [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) dan [lewati efek](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) hanya sampai dependensi tertentu berubah jika Anda menggunakan hook Effect untuk menyempurnakan performa waktu proses."
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "Jika Anda menggunakan React Router, minimalkan penggunaan komponen `<Redirect>` untuk [navigasi rute](https://reacttraining.com/react-router/web/api/Redirect)."
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "Jika Anda merender komponen React pada sistem server, pertimbangkan untuk menggunakan `renderToNodeStream()` atau `renderToStaticNodeStream()` agar klien dapat menerima dan mengisi beberapa bagian markup yang berbeda, bukan sekaligus. [Pelajari lebih lanjut](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "Jika sistem build meminifikasi file CSS secara otomatis, pastikan bahwa Anda menerapkan build produksi aplikasi Anda. Anda dapat memeriksanya dengan ekstensi React Developer Tools. [Pelajari lebih lanjut](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "Jika sistem build meminifikasi file JS secara otomatis, pastikan bahwa Anda menerapkan build produksi aplikasi Anda. Anda dapat memeriksanya dengan ekstensi React Developer Tools. [Pelajari lebih lanjut](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "Jika Anda tidak melakukan rendering sistem server, [pisahkan paket JavaScript Anda](https://web.dev/code-splitting-suspense/) dengan `React.lazy()`. Atau, pisahkan kode menggunakan library pihak ketiga seperti [komponen yang dapat dimuat](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "Gunakan React DevTools Profiler, yang memanfaatkan Profiler API untuk mengukur performa rendering komponen Anda. [Pelajari lebih lanjut.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "Sebaiknya upload GIF ke server yang akan menyediakannya untuk disematkan sebagai video HTML5."

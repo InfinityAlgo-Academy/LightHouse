@@ -57,10 +57,20 @@ describe('Metrics: FMP', () => {
     assert.ok(result.pessimisticGraph, 'should have created pessimistic graph');
   });
 
-  it('should compute an observed value', async () => {
+  it('should compute an observed value (desktop)', async () => {
     settings = {throttlingMethod: 'provided'};
     const context = {computedCache: new Map()};
     const result = await FirstMeaningfulPaint.request({trace, devtoolsLog, settings}, context);
+
+    assert.equal(Math.round(result.timing), 783);
+    assert.equal(result.timestamp, 225414955343);
+  });
+
+  it('should compute an observed value (mobile)', async () => {
+    settings = {throttlingMethod: 'provided'};
+    const context = {computedCache: new Map()};
+    const result = await FirstMeaningfulPaint.request(
+      {trace, devtoolsLog, settings, TestedAsMobileDevice: true}, context);
 
     assert.equal(Math.round(result.timing), 783);
     assert.equal(result.timestamp, 225414955343);

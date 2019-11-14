@@ -5,10 +5,6 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('../computed-artifact.js');
-const ComputedMetric = require('./metric.js');
-const LHError = require('../../lib/lh-error.js');
-
 /**
  * @fileoverview Computed Largest Contentful Paint (LCP), the paint time of the largest in-viewport contentful element
  * COMPAT: LCP's trace event was first introduced in m78. We can't surface an LCP for older Chrome versions
@@ -16,15 +12,20 @@ const LHError = require('../../lib/lh-error.js');
  * @see https://wicg.github.io/largest-contentful-paint/
  * @see https://web.dev/largest-contentful-paint
  */
+
+const makeComputedArtifact = require('../computed-artifact.js');
+const ComputedMetric = require('./metric.js');
+const LHError = require('../../lib/lh-error.js');
+const LanternLargestContentfulPaint = require('./lantern-largest-contentful-paint.js');
+
 class LargestContentfulPaint extends ComputedMetric {
   /**
    * @param {LH.Artifacts.MetricComputationData} data
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
-  // eslint-disable-next-line no-unused-vars
   static computeSimulatedMetric(data, context) {
-    throw new Error('Unimplemented');
+    return LanternLargestContentfulPaint.request(data, context);
   }
 
   /**

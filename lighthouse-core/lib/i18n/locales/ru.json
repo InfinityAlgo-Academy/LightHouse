@@ -450,7 +450,7 @@
     "message": "{itemCount,plural, =1{Найдена 1 цепочка}one{Найдена # цепочка}few{Найдено # цепочки}many{Найдено # цепочек}other{Найдено # цепочки}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "Сократите глубину вложенности критических запросов"
+    "message": "Старайтесь не допускать создания цепочек критических запросов"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "Прекращение поддержки / предупреждение"
@@ -513,7 +513,7 @@
     "message": "Значение"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "Разработчики браузеров рекомендуют размещать на странице не более 1500 элементов DOM. Оптимальные показатели: глубина дерева – менее 32 элементов, количество дочерних и родительских элементов – менее 60. Сложная структура DOM может привести к использованию большего объема памяти, замедлить [вычисление стилей](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) и увеличить затраты на [компоновку шаблонов](https://developers.google.com/speed/articles/reflow). [Подробнее…](https://web.dev/dom-size)"
+    "message": "Сложная структура DOM усилит использование памяти, замедлит [вычисление стилей](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) и увеличит затраты на [компоновку шаблонов](https://developers.google.com/speed/articles/reflow). [Подробнее…](https://web.dev/dom-size)"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 элемент}one{# элемент}few{# элемента}many{# элементов}other{# элемента}}"
@@ -1053,7 +1053,7 @@
     "message": "Уменьшите влияние стороннего кода"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "Сторонний код"
+    "message": "Уменьшение использования стороннего кода"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Время до первого байта – показатель, который определяет интервал времени между отправкой запроса и ответом вашего сервера. [Подробнее…](https://web.dev/time-to-first-byte)"
@@ -1066,6 +1066,9 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Короткое время ответа сервера (время до получения первого байта)"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Длительность"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "Время начала"
@@ -1456,6 +1459,99 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Предупреждения: "
+  },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "Если на странице есть анимированный контент, используйте [amp-anim](https://amp.dev/documentation/components/amp-anim/), чтобы уменьшить нагрузку на процессор, когда контент не отображается на экране."
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "Убедитесь, что вы используете правильные теги `amp-img` для изображений, которые автоматически загружаются не сразу, если находятся за пределами первой области просмотра. [Подробнее…](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)"
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "Используйте инструменты, например [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer), для [серверного рендеринга страниц AMP](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "Проверьте в [документации по AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/), все ли ваши стили поддерживаются."
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "Атрибут `srcset` элемента `amp-img` определяет, какие изображения использовать исходя из размера экрана.  [Подробнее…](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)"
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "Рекомендуем отображать все компоненты `amp-img` в форматах WebP и указывать соответствующий резервный атрибут для других браузеров. [Подробнее…](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)"
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "Для рендеринга очень длинных списков рекомендуем использовать виртуальную прокрутку с помощью набора инструментов Component Dev Kit (CDK). [Подробнее…](https://web.dev/virtualize-lists-with-angular-cdk/)"
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "Примените [разделение кода на уровне маршрута](https://web.dev/route-level-code-splitting-in-angular/), чтобы уменьшить размер пакетов JavaScript. Рекомендуем также выполнять предварительное кеширование файлов с помощью скрипта [Angular service worker](https://web.dev/precaching-with-the-angular-service-worker/)."
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "Если вы используете Angular CLI, создавайте сборки в рабочем режиме. [Подробнее…](https://angular.io/guide/deployment#enable-runtime-production-mode)"
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "Если вы используете Angular CLI, включите в рабочую версию сборки карты исходного кода для проверки создаваемых пакетов. [Подробнее…](https://angular.io/guide/deployment#inspect-the-bundles)"
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "Чтобы ускорить переход, выполняйте предзагрузку маршрутов. [Подробнее…](https://web.dev/route-preloading-in-angular/)"
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "Для управления контрольными точками изображений мы также рекомендуем использовать утилиту `BreakpointObserver` из набора инструментов Component Dev Kit (CDK). [Подробнее…](https://material.angular.io/cdk/layout/overview)"
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "Если вы не группируете файлы JavaScript, рекомендуем использовать [модуль пакетирования и предварительной загрузки](https://github.com/magento/baler)."
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "Отключите встроенную функцию [группировки и минификации файлов JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) в Magento и используйте вместо нее [модуль пакетирования и предварительной загрузки](https://github.com/magento/baler/)."
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "Укажите свойство `@font-display` при [выборе специальных шрифтов](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)."
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "Рекомендуем изменить шаблоны продукции и каталогов для использования функции [отложенной загрузки](https://web.dev/native-lazy-loading) на веб-платформе."
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "Используйте [модуль интеграции с Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) в Magento."
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "В настройках для разработчиков своего магазина включите параметр Minify CSS Files (Уменьшать размер файлов CSS). [Подробнее…](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "Используйте [Terser](https://www.npmjs.com/package/terser), чтобы уменьшить размер всех файлов JavaScript, созданных при развертывании статического контента, и отключите встроенную функцию минификации."
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "Отключите встроенную функцию [группировки файлов JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) в Magento."
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "В [магазине Magento](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) можно найти множество сторонних расширений для оптимизации изображений."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "Ресурсные подсказки preconnect или dns-prefetch можно добавить, [изменив разметку темы](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "Чтобы добавить теги `<link rel=preload>`, [измените разметку темы](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "В [магазине Magento](https://marketplace.magento.com/catalogsearch/result/?q=webp) можно найти множество сторонних расширений для использования новых графических форматов."
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "Рекомендуем использовать библиотеку для организации многоэкранного интерфейса, например `react-window`, чтобы уменьшить количество создаваемых узлов DOM, если на одной странице выполняется отрисовка множества повторяющихся элементов. [Подробнее…](https://web.dev/virtualize-long-lists-react-window/) Кроме того, исключайте ненужные повторные отрисовки с помощью [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) или [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) и [пропускайте эффекты](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) только до того, как будут изменены определенные зависимости, если для повышения скорости отрисовки используется хук-функция Effect."
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "Если вы используете React Router, максимально ограничьте применение компонента `<Redirect>` для [перехода по маршрутам](https://reacttraining.com/react-router/web/api/Redirect)."
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "Если вы применяете серверный рендеринг компонентов React, мы рекомендуем использовать методы `renderToNodeStream()` или `renderToStaticNodeStream()`. Это позволит отправлять разметку частями, а не целиком и воссоздавать ее на устройстве клиента. [Подробнее…](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "Если ваша система сборки автоматически уменьшает размер файлов CSS, перед развертыванием приложения убедитесь, что вы используете рабочую версию сборки. Для этого установите расширение \"Инструменты разработчика React\". [Подробнее…](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "Если ваша система сборки автоматически уменьшает размер файлов JS, перед развертыванием приложения убедитесь, что вы используете рабочую версию сборки. Для этого установите расширение \"Инструменты разработчика React\". [Подробнее…](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "Если вы не применяете серверный рендеринг, используйте метод `React.lazy()` для [разделения пакетов JavaScript](https://web.dev/code-splitting-suspense/). Разделить код можно также с помощью сторонней библиотеки, например [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "Используйте подключаемый модуль React DevTools, который с помощью API профилировщика может оценить скорость визуализации ваших компонентов. [Подробнее…](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "Используйте сервисы, которые позволяют встраивать GIF-файлы на страницы сайта в формате видео HTML5."

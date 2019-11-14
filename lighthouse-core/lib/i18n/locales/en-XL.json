@@ -854,6 +854,12 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "T̂ím̂é t̂ó îńt̂ér̂áĉt́îv́ê íŝ t́ĥé âḿôún̂t́ ôf́ t̂ím̂é ît́ t̂ák̂éŝ f́ôŕ t̂h́ê ṕâǵê t́ô b́êćôḿê f́ûĺl̂ý îńt̂ér̂áĉt́îv́ê. [Ĺêár̂ń m̂ór̂é](https://web.dev/interactive)."
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "L̂ár̂ǵêśt̂ Ćôńt̂én̂t́f̂úl̂ Ṕâín̂t́ m̂ár̂ḱŝ t́ĥé t̂ím̂é ât́ ŵh́îćĥ t́ĥé l̂ár̂ǵêśt̂ t́êx́t̂ ór̂ ím̂áĝé îś p̂áîńt̂éd̂. [Ĺêár̂ń M̂ór̂é](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "L̂ár̂ǵêśt̂ Ćôńt̂én̂t́f̂úl̂ Ṕâín̂t́"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "T̂h́ê ḿâx́îḿûḿ p̂ót̂én̂t́îál̂ F́îŕŝt́ Îńp̂út̂ D́êĺâý t̂h́ât́ ŷóûŕ ûśêŕŝ ćôúl̂d́ êx́p̂ér̂íêńĉé îś t̂h́ê d́ûŕât́îón̂, ín̂ ḿîĺl̂íŝéĉón̂d́ŝ, óf̂ t́ĥé l̂ón̂ǵêśt̂ t́âśk̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/lighthouse-max-potential-fid)."
   },

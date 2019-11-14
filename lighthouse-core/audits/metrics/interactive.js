@@ -37,19 +37,26 @@ class InteractiveMetric extends Audit {
   }
 
   static get requiredArtifacts() {
-    return this.artifacts('traces', 'devtoolsLogs');
+    return this.artifacts('traces', 'devtoolsLogs', 'TestedAsMobileDevice');
   }
 
   /**
-   * @return {LH.Audit.ScoreOptions}
+   * @return {{mobile: LH.Audit.ScoreOptions, desktop: LH.Audit.ScoreOptions}}
    */
   static get defaultOptions() {
     return {
-      // 75th and 95th percentiles HTTPArchive -> median and PODR
-      // https://bigquery.cloud.google.com/table/httparchive:lighthouse.2018_04_01_mobile?pli=1
-      // see https://www.desmos.com/calculator/5xgy0pyrbp
-      scorePODR: 2900,
-      scoreMedian: 7300,
+      mobile: {
+        // 75th and 95th percentiles HTTPArchive -> median and PODR
+        // https://bigquery.cloud.google.com/table/httparchive:lighthouse.2018_04_01_mobile?pli=1
+        // see https://www.desmos.com/calculator/5xgy0pyrbp
+        scorePODR: 2900,
+        scoreMedian: 7300,
+      },
+      desktop: {
+        // SELECT QUANTILES(fullyLoaded, 21) FROM [httparchive:summary_pages.2018_12_15_desktop] LIMIT 1000
+        scorePODR: 2000,
+        scoreMedian: 4500,
+      },
     };
   }
 
@@ -64,6 +71,8 @@ class InteractiveMetric extends Audit {
     const metricComputationData = {trace, devtoolsLog, settings: context.settings};
     const metricResult = await Interactive.request(metricComputationData, context);
     const timeInMs = metricResult.timing;
+    const scoreOptions =
+      context.options[artifacts.TestedAsMobileDevice === false ? 'desktop' : 'mobile'];
     const extendedInfo = {
       timeInMs,
       timestamp: metricResult.timestamp,
@@ -76,8 +85,8 @@ class InteractiveMetric extends Audit {
     return {
       score: Audit.computeLogNormalScore(
         timeInMs,
-        context.options.scorePODR,
-        context.options.scoreMedian
+        scoreOptions.scorePODR,
+        scoreOptions.scoreMedian
       ),
       numericValue: timeInMs,
       displayValue: str_(i18n.UIStrings.seconds, {timeInMs}),
