@@ -22,7 +22,7 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 class AxeAudit extends Audit {
   /**
-   * @param {LH.Artifacts} artifacts Accessibility gatherer artifacts. Note that AxeAudit
+   * @param {LH.Artifacts.Select<typeof module.exports>} artifacts Accessibility gatherer artifacts. Note that AxeAudit
    * expects the meta name for the class to match the rule id from aXe.
    * @return {LH.Audit.Product}
    */

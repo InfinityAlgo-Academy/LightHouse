@@ -80,7 +80,7 @@ class RenderBlockingResources extends Audit {
   }
 
   /**
-   * @param {LH.Artifacts} artifacts
+   * @param {LH.Artifacts.Select<typeof module.exports>} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<{wastedMs: number, results: Array<{url: string, totalBytes: number, wastedMs: number}>}>}
    */
@@ -183,7 +183,7 @@ class RenderBlockingResources extends Audit {
   }
 
   /**
-   * @param {LH.Artifacts} artifacts
+   * @param {LH.Artifacts.Select<typeof module.exports>} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<Map<string, number>>}
    */
@@ -202,7 +202,7 @@ class RenderBlockingResources extends Audit {
   }
 
   /**
-   * @param {LH.Artifacts} artifacts
+   * @param {LH.Artifacts.Select<typeof module.exports>} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */

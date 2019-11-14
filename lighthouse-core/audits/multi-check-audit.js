@@ -13,7 +13,7 @@ const Audit = require('./audit.js');
 
 class MultiCheckAudit extends Audit {
   /**
-   * @param {LH.Artifacts} artifacts
+   * @param {LH.Artifacts.Select<typeof module.exports>} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
@@ -69,7 +69,7 @@ class MultiCheckAudit extends Audit {
   /* eslint-disable no-unused-vars */
 
   /**
-   * @param {LH.Artifacts} artifacts
+   * @param {LH.Artifacts.Select<typeof module.exports>} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<{failures: Array<string>, manifestValues?: LH.Artifacts.ManifestValues}>}
    */

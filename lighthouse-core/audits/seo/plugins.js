@@ -98,7 +98,7 @@ class Plugins extends Audit {
   }
 
   /**
-   * @param {LH.Artifacts} artifacts
+   * @param {LH.Artifacts.Select<typeof module.exports>} artifacts
    * @return {LH.Audit.Product}
    */
   static audit(artifacts) {

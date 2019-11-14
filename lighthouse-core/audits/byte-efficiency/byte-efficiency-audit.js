@@ -102,7 +102,7 @@ class UnusedBytes extends Audit {
   }
 
   /**
-   * @param {LH.Artifacts} artifacts
+   * @param {Pick<LH.Artifacts, 'devtoolsLogs'|'traces'>} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
@@ -226,7 +226,7 @@ class UnusedBytes extends Audit {
   /* eslint-disable no-unused-vars */
 
   /**
-   * @param {LH.Artifacts} artifacts
+   * @param {Partial<LH.Artifacts>} artifacts
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @param {LH.Audit.Context} context
    * @return {ByteEfficiencyProduct|Promise<ByteEfficiencyProduct>}

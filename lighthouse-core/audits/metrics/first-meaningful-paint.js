@@ -51,7 +51,7 @@ class FirstMeaningfulPaint extends Audit {
    * Audits the page to give a score for First Meaningful Paint.
    * @see https://github.com/GoogleChrome/lighthouse/issues/26
    * @see https://docs.google.com/document/d/1BR94tJdZLsin5poeet0XoTW60M0SjvOJQttKT-JK8HI/view
-   * @param {LH.Artifacts} artifacts The artifacts from the gather phase.
+   * @param {LH.Artifacts.Select<typeof module.exports>} artifacts The artifacts from the gather phase.
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */

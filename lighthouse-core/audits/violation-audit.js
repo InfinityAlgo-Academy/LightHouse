@@ -9,7 +9,7 @@ const Audit = require('./audit.js');
 
 class ViolationAudit extends Audit {
   /**
-   * @param {LH.Artifacts} artifacts
+   * @param {Pick<LH.Artifacts, 'ConsoleMessages'>} artifacts
    * @param {RegExp} pattern
    * @return {Array<{label: string, url?: string}>}
    */

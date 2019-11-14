@@ -51,7 +51,7 @@ class EstimatedInputLatency extends Audit {
    * Audits the page to estimate input latency.
    * @see https://github.com/GoogleChrome/lighthouse/issues/28
    *
-   * @param {LH.Artifacts} artifacts
+   * @param {LH.Artifacts.Select<typeof module.exports>} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */

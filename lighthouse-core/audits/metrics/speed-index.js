@@ -50,7 +50,7 @@ class SpeedIndex extends Audit {
   /**
    * Audits the page to give a score for the Speed Index.
    * @see https://github.com/GoogleChrome/lighthouse/issues/197
-   * @param {LH.Artifacts} artifacts The artifacts from the gather phase.
+   * @param {LH.Artifacts.Select<typeof module.exports>} artifacts The artifacts from the gather phase.
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */

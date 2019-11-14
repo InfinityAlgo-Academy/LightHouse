@@ -165,7 +165,7 @@ class CriticalRequestChains extends Audit {
 
   /**
    * Audits the page to give a score for First Meaningful Paint.
-   * @param {LH.Artifacts} artifacts The artifacts from the gather phase.
+   * @param {LH.Artifacts.Select<typeof module.exports>} artifacts The artifacts from the gather phase.
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */

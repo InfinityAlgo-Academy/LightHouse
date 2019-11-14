@@ -58,7 +58,7 @@ class TotalBlockingTime extends Audit {
    * Total Blocking Time is the sum of all Blocking Time between First Contentful Paint and
    * Interactive Time (TTI).
    *
-   * @param {LH.Artifacts} artifacts
+   * @param {LH.Artifacts.Select<typeof module.exports>} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */

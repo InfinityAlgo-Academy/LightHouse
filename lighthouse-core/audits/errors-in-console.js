@@ -78,7 +78,7 @@ class ErrorLogs extends Audit {
   }
 
   /**
-   * @param {LH.Artifacts} artifacts
+   * @param {LH.Artifacts.Select<typeof module.exports>} artifacts
    * @param {LH.Audit.Context} context
    * @return {LH.Audit.Product}
    */
