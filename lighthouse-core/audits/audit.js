@@ -47,13 +47,18 @@ class Audit {
   }
 
   /**
+   * Returns an array of artifact keys, which is used to pass only those artifacts
+   * to the `.audit` function.
+   *
+   * For strict type checking, do not specify a return type in the JSDoc of this method in an
+   * extended class.
    * @return {Array<keyof LH.Artifacts>}
    */
   static get requiredArtifacts() {
     // `.meta.requiredArtifacts` is used as a backup to maintain plugin support.
     // @ts-ignore: `.meta.requiredArtifacts` can be undefined, but if so then this method
     // will be overridden with a value.
-    return this.meta.requiredArtifacts;
+    return this.meta.requiredArtifacts; // replace this with `Audit.artifacts(...)`.
   }
 
   /**
