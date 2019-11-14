@@ -16,7 +16,6 @@ const UIStrings = {
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
-const requiredArtifacts = Audit.artifacts('traces', 'devtoolsLogs');
 
 class FirstCPUIdle extends Audit {
   /**
@@ -28,8 +27,11 @@ class FirstCPUIdle extends Audit {
       title: str_(i18n.UIStrings.firstCPUIdleMetric),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts,
     };
+  }
+
+  static get requiredArtifacts() {
+    return Audit.artifacts('traces', 'devtoolsLogs');
   }
 
   /**
@@ -49,7 +51,7 @@ class FirstCPUIdle extends Audit {
    * Identify the time the page is "first interactive"
    * @see https://docs.google.com/document/d/1GGiI9-7KeY3TPqS3YT271upUVimo-XiL5mwWorDUD4c/edit#
    *
-   * @param {Pick<LH.Artifacts, typeof requiredArtifacts[number]>} artifacts
+   * @param {LH.Artifacts.Select<typeof FirstCPUIdle>} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */

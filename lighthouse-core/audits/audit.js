@@ -47,6 +47,22 @@ class Audit {
   }
 
   /**
+   * @return {Array<keyof LH.Artifacts>}
+   */
+  static get requiredArtifacts() {
+    throw new Error('Audit meta information must be overridden.');
+  }
+
+  /**
+   * @template T
+   * @param {...keyof T} artifactKeys
+   * @return {Array<keyof T>}
+  */
+  static artifacts(...artifactKeys) {
+    return artifactKeys;
+  }
+
+  /**
    * @return {Object}
    */
   static get defaultOptions() {
@@ -279,15 +295,6 @@ class Audit {
 
       details: product.details,
     };
-  }
-
-  /**
-   * @template T
-   * @param {...keyof T} artifactKeys
-   * @return {Array<keyof T>}
-  */
-  static artifacts(...artifactKeys) {
-    return artifactKeys;
   }
 }
 

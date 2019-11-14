@@ -54,7 +54,7 @@ declare global {
       /** A more detailed description that describes why the audit is important and links to Lighthouse documentation on the audit; markdown links supported. */
       description: string;
       /** A list of the members of LH.Artifacts that must be present for the audit to execute. */
-      requiredArtifacts: Array<keyof Artifacts>;
+      requiredArtifacts?: Array<keyof Artifacts>;
       /** A string identifying how the score should be interpreted for display. */
       scoreDisplayMode?: Audit.ScoreDisplayMode;
     }

@@ -7,6 +7,7 @@
 import parseManifest = require('../lighthouse-core/lib/manifest-parser.js');
 import _LanternSimulator = require('../lighthouse-core/lib/dependency-graph/simulator/simulator.js');
 import _NetworkRequest = require('../lighthouse-core/lib/network-request.js');
+import _Audit = require('../lighthouse-core/audits/audit.js');
 import speedline = require('speedline-core');
 
 type _TaskNode = import('../lighthouse-core/lib/tracehouse/main-thread-tasks.js').TaskNode;
@@ -141,6 +142,7 @@ declare global {
       export type NetworkRequest = _NetworkRequest;
       export type TaskNode = _TaskNode;
       export type MetaElement = LH.Artifacts['MetaElements'][0];
+      export type Select<T extends typeof _Audit> = Pick<LH.Artifacts, T['requiredArtifacts'][number]>;
 
       export interface Accessibility {
         violations: {
