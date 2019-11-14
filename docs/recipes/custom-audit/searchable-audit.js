@@ -22,12 +22,11 @@ class LoadAudit extends Audit {
       failureTitle: 'Search box slow to initialize',
       description: 'Used to measure time from navigationStart to when the search' +
           ' box is initialized and ready to search.',
-
-      // The name of the custom gatherer class that provides input to this audit.
     };
   }
 
   static get requiredArtifacts() {
+    // The name of the custom gatherer class that provides input to this audit.
     return this.artifacts('TimeToSearchable');
   }
 

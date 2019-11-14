@@ -22,12 +22,11 @@ class PreloadAsAudit extends Audit {
       failureTitle: 'Some preloaded requests do not have proper `as` attributes',
       description: '`<link rel=preload>` tags need an `as` attribute to specify the type of ' +
           'content being loaded.',
-
-      // The name of the artifact provides input to this audit.
     };
   }
 
   static get requiredArtifacts() {
+    // The name of the artifact provides input to this audit.
     return this.artifacts('LinkElements');
   }
 
