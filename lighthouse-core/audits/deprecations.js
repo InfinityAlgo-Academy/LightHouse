@@ -45,8 +45,11 @@ class Deprecations extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['ConsoleMessages'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('ConsoleMessages');
   }
 
   /**

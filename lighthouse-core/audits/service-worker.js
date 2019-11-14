@@ -51,8 +51,11 @@ class ServiceWorker extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['URL', 'ServiceWorker', 'WebAppManifest'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('URL', 'ServiceWorker', 'WebAppManifest');
   }
 
   /**

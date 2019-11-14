@@ -38,8 +38,11 @@ class ContentWidth extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['ViewportDimensions', 'TestedAsMobileDevice'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('ViewportDimensions', 'TestedAsMobileDevice');
   }
 
   /**

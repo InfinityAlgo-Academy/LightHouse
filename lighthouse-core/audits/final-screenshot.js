@@ -20,8 +20,11 @@ class FinalScreenshot extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: 'Final Screenshot',
       description: 'The last screenshot captured of the pageload.',
-      requiredArtifacts: ['traces'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('traces');
   }
 
   /**

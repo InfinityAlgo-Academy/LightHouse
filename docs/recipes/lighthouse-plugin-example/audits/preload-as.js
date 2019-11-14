@@ -24,8 +24,11 @@ class PreloadAsAudit extends Audit {
           'content being loaded.',
 
       // The name of the artifact provides input to this audit.
-      requiredArtifacts: ['LinkElements'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('LinkElements');
   }
 
   static audit(artifacts) {

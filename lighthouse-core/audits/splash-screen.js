@@ -45,8 +45,11 @@ class SplashScreen extends MultiCheckAudit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['WebAppManifest'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('WebAppManifest');
   }
 
   /**

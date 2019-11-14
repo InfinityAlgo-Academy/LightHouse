@@ -40,8 +40,11 @@ class WorksOffline extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['Offline', 'URL'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('Offline', 'URL');
   }
 
   /**

@@ -225,7 +225,7 @@ class FontSize extends Audit {
   }
 
   static get requiredArtifacts() {
-    return Audit.artifacts('FontSize', 'URL', 'MetaElements', 'TestedAsMobileDevice');
+    return this.artifacts('FontSize', 'URL', 'MetaElements', 'TestedAsMobileDevice');
   }
 
   /**

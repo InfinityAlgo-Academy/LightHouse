@@ -28,8 +28,11 @@ class MixedContent extends Audit {
       description: `Mixed content warnings can prevent you from upgrading to HTTPS.
       This audit shows which insecure resources this page uses that can be
       upgraded to HTTPS. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/mixed-content)`,
-      requiredArtifacts: ['devtoolsLogs', 'MixedContent'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('devtoolsLogs', 'MixedContent');
   }
 
   /**

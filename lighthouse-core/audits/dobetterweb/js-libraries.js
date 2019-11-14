@@ -33,8 +33,11 @@ class JsLibrariesAudit extends Audit {
       id: 'js-libraries',
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['Stacks'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('Stacks');
   }
 
   /**

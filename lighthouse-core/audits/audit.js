@@ -58,7 +58,7 @@ class Audit {
     // `.meta.requiredArtifacts` is used as a backup to maintain plugin support.
     // @ts-ignore: `.meta.requiredArtifacts` can be undefined, but if so then this method
     // will be overridden with a value.
-    return this.meta.requiredArtifacts; // replace this with `Audit.artifacts(...)`.
+    return this.meta.requiredArtifacts; // replace this with `this.artifacts(...)`.
   }
 
   /**

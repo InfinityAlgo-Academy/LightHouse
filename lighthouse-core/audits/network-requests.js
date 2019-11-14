@@ -19,8 +19,11 @@ class NetworkRequests extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: 'Network Requests',
       description: 'Lists the network requests that were made during page load.',
-      requiredArtifacts: ['devtoolsLogs'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('devtoolsLogs');
   }
 
   /**

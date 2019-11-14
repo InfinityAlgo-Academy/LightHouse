@@ -19,8 +19,11 @@ class ManualAudit extends Audit {
   static get partialMeta() {
     return {
       scoreDisplayMode: Audit.SCORING_MODES.MANUAL,
-      requiredArtifacts: [],
     };
+  }
+
+  static get requiredArtifacts() {
+    return [];
   }
 
   /**

@@ -21,8 +21,11 @@ class Diagnostics extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: 'Diagnostics',
       description: 'Collection of useful page vitals.',
-      requiredArtifacts: ['traces', 'devtoolsLogs'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('traces', 'devtoolsLogs');
   }
 
   /**

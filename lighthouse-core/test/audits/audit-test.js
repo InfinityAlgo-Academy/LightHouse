@@ -27,8 +27,11 @@ class PassOrFailAudit extends Audit {
       title: 'Passing',
       failureTitle: 'Failing',
       description: 'A pass or fail audit',
-      requiredArtifacts: [],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts();
   }
 }
 

@@ -68,8 +68,11 @@ class Canonical extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['LinkElements', 'URL', 'devtoolsLogs'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('LinkElements', 'URL', 'devtoolsLogs');
   }
 
   /**

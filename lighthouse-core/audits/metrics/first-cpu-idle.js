@@ -31,7 +31,7 @@ class FirstCPUIdle extends Audit {
   }
 
   static get requiredArtifacts() {
-    return Audit.artifacts('traces', 'devtoolsLogs');
+    return this.artifacts('traces', 'devtoolsLogs');
   }
 
   /**

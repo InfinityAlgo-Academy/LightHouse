@@ -18,8 +18,11 @@ class MainThreadTasks extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: 'Tasks',
       description: 'Lists the toplevel main thread tasks that executed during page load.',
-      requiredArtifacts: ['traces'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('traces');
   }
 
   /**

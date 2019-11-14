@@ -72,8 +72,11 @@ class RenderBlockingResources extends Audit {
       description: str_(UIStrings.description),
       // TODO: look into adding an `optionalArtifacts` property that captures the non-required nature
       // of CSSUsage
-      requiredArtifacts: ['URL', 'TagsBlockingFirstPaint', 'traces', 'devtoolsLogs', 'CSSUsage'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('URL', 'TagsBlockingFirstPaint', 'traces', 'devtoolsLogs', 'CSSUsage');
   }
 
   /**

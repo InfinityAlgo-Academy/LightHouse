@@ -29,8 +29,11 @@ class EstimatedInputLatency extends Audit {
       title: str_(i18n.UIStrings.estimatedInputLatencyMetric),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['traces', 'devtoolsLogs'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('traces', 'devtoolsLogs');
   }
 
   /**

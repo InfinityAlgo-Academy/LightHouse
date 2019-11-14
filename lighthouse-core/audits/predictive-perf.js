@@ -32,8 +32,11 @@ class PredictivePerf extends Audit {
         'Predicted performance evaluates how your site will perform under ' +
         'a cellular connection on a mobile device.',
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['traces', 'devtoolsLogs'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('traces', 'devtoolsLogs');
   }
 
   /**

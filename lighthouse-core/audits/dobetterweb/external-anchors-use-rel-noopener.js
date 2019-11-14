@@ -42,8 +42,11 @@ class ExternalAnchorsUseRelNoopenerAudit extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['URL', 'AnchorElements'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('URL', 'AnchorElements');
   }
 
   /**

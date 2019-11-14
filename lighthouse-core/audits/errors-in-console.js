@@ -41,8 +41,11 @@ class ErrorLogs extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['ConsoleMessages', 'RuntimeExceptions'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('ConsoleMessages', 'RuntimeExceptions');
   }
 
   /** @return {AuditOptions} */

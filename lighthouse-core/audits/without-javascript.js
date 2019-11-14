@@ -33,8 +33,11 @@ class WithoutJavaScript extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['HTMLWithoutJavaScript'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('HTMLWithoutJavaScript');
   }
 
   /**

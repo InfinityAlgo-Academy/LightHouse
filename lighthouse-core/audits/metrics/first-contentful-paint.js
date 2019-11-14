@@ -27,8 +27,11 @@ class FirstContentfulPaint extends Audit {
       title: str_(i18n.UIStrings.firstContentfulPaintMetric),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['traces', 'devtoolsLogs'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('traces', 'devtoolsLogs');
   }
 
   /**

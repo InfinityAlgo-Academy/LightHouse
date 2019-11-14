@@ -33,8 +33,11 @@ class ResourceSummary extends Audit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
-      requiredArtifacts: ['devtoolsLogs', 'URL'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('devtoolsLogs', 'URL');
   }
 
   /**

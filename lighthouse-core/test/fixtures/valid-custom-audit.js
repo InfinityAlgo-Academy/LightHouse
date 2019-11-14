@@ -15,8 +15,11 @@ class ValidCustomAudit extends LighthouseAudit {
       title: 'Valid Audit',
       failureTitle: 'Valid failing Audit',
       description: 'Valid-sounding description',
-      requiredArtifacts: ['HTML'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('HTML');
   }
 
   static audit() {}

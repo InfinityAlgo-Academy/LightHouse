@@ -44,8 +44,11 @@ class FontDisplay extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['devtoolsLogs', 'CSSUsage', 'URL'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('devtoolsLogs', 'CSSUsage', 'URL');
   }
 
   /**

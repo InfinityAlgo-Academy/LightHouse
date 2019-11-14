@@ -36,8 +36,11 @@ class ImageAlt extends AxeAudit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['Accessibility'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('Accessibility');
   }
 }
 

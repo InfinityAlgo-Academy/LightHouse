@@ -37,8 +37,11 @@ class CriticalRequestChains extends Audit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
-      requiredArtifacts: ['devtoolsLogs', 'URL'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('devtoolsLogs', 'URL');
   }
 
   /** @typedef {{depth: number, id: string, chainDuration: number, chainTransferSize: number, node: LH.Audit.SimpleCriticalRequestNode[string]}} CrcNodeInfo */

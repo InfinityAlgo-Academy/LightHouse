@@ -18,8 +18,11 @@ class Metrics extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: 'Metrics',
       description: 'Collects all available metrics.',
-      requiredArtifacts: ['traces', 'devtoolsLogs'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('traces', 'devtoolsLogs');
   }
 
   /**

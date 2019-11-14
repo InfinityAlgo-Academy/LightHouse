@@ -36,8 +36,11 @@ class OfflineStartUrl extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['WebAppManifest', 'StartUrl'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('WebAppManifest', 'StartUrl');
   }
 
   /**

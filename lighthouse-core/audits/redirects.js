@@ -32,8 +32,11 @@ class Redirects extends Audit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['URL', 'devtoolsLogs', 'traces'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('URL', 'devtoolsLogs', 'traces');
   }
 
   /**

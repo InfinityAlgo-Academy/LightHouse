@@ -24,8 +24,11 @@ class LoadAudit extends Audit {
           ' box is initialized and ready to search.',
 
       // The name of the custom gatherer class that provides input to this audit.
-      requiredArtifacts: ['TimeToSearchable'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('TimeToSearchable');
   }
 
   static audit(artifacts) {

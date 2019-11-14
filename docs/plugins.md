@@ -107,8 +107,11 @@ class CatAudit extends Audit {
       description:
         'Pages should have lots of cat images to keep users happy. ' +
         'Consider adding a picture of a cat to your page improve engagement.',
-      requiredArtifacts: ['ImageElements'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('ImageElements');
   }
 
   static audit(artifacts) {
@@ -227,15 +230,18 @@ See below for an example of an audit that processes network requests.
 ```js
 const {Audit, NetworkRecords} = require('lighthouse');
 
-class HeaderPoliceAudit {
+class HeaderPoliceAudit extends Audit {
   static get meta() {
     return {
       id: 'header-police-audit-id',
       title: 'All headers stripped of debug data',
       failureTitle: 'Headers contained debug data',
       description: 'Pages should mask debug data in production.',
-      requiredArtifacts: ['devtoolsLogs'],
     };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('devtoolsLogs');
   }
 
   static async audit(artifacts, context) {
