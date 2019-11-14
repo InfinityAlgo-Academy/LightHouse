@@ -72,7 +72,7 @@ function assertValidPasses(passes, audits) {
   // All required gatherers must be found in the config. Throw otherwise.
   for (const auditDefn of audits || []) {
     const auditMeta = auditDefn.implementation.meta;
-    for (const requiredArtifact of auditMeta.requiredArtifacts) {
+    for (const requiredArtifact of auditDefn.implementation.requiredArtifacts) {
       if (!foundGatherers.has(requiredArtifact)) {
         throw new Error(`${requiredArtifact} gatherer, required by audit ${auditMeta.id}, ` +
             'was not found in config.');
@@ -680,7 +680,7 @@ class Config {
     }
 
     return audits.reduce((list, auditDefn) => {
-      auditDefn.implementation.meta.requiredArtifacts.forEach(artifact => list.add(artifact));
+      auditDefn.implementation.requiredArtifacts.forEach(artifact => list.add(artifact));
       return list;
     }, new Set());
   }

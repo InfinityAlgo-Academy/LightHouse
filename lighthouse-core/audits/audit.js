@@ -50,7 +50,10 @@ class Audit {
    * @return {Array<keyof LH.Artifacts>}
    */
   static get requiredArtifacts() {
-    throw new Error('Audit meta information must be overridden.');
+    // `.meta.requiredArtifacts` is used as a backup to maintain plugin support.
+    // @ts-ignore: `.meta.requiredArtifacts` can be undefined, but if so then this method
+    // will be overridden with a value.
+    return this.meta.requiredArtifacts;
   }
 
   /**
@@ -73,7 +76,7 @@ class Audit {
 
   /**
    *
-   * @param {LH.Artifacts} artifacts
+   * @param {LH.Artifacts.Select<typeof module.exports>} artifacts
    * @param {LH.Audit.Context} context
    * @return {LH.Audit.Product|Promise<LH.Audit.Product>}
    */

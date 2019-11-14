@@ -51,7 +51,7 @@ class FirstCPUIdle extends Audit {
    * Identify the time the page is "first interactive"
    * @see https://docs.google.com/document/d/1GGiI9-7KeY3TPqS3YT271upUVimo-XiL5mwWorDUD4c/edit#
    *
-   * @param {LH.Artifacts.Select<typeof FirstCPUIdle>} artifacts
+   * @param {LH.Artifacts.Select<typeof module.exports>} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */

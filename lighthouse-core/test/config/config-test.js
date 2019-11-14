@@ -324,7 +324,7 @@ describe('Config', () => {
 
     assert.throws(_ => new Config({
       audits: [basePath + '/missing-required-artifacts'],
-    }), /meta.requiredArtifacts property/);
+    }), /requiredArtifacts property/);
   });
 
   it('throws when a category references a non-existent audit', () => {

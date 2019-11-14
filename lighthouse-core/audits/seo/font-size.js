@@ -31,8 +31,6 @@ const UIStrings = {
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
-/** @type {['FontSize', 'URL', 'MetaElements', 'TestedAsMobileDevice']} */
-const requiredArtifacts = ['FontSize', 'URL', 'MetaElements', 'TestedAsMobileDevice'];
 
 /**
  * @param {Array<FailingNodeData>} fontSizeArtifact
@@ -223,12 +221,15 @@ class FontSize extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts,
     };
   }
 
+  static get requiredArtifacts() {
+    return Audit.artifacts('FontSize', 'URL', 'MetaElements', 'TestedAsMobileDevice');
+  }
+
   /**
-   * @param {Pick<LH.Artifacts, typeof requiredArtifacts[number]>} artifacts
+   * @param {LH.Artifacts.Select<typeof module.exports>} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */

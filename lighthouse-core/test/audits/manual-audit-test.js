@@ -24,6 +24,7 @@ describe('ManualAudit', () => {
   it('sets defaults', () => {
     assert.equal(TestAudit.meta.id, 'manual-audit');
     assert.equal(TestAudit.meta.requiredArtifacts.length, 0);
+    assert.equal(TestAudit.requiredArtifacts.length, 0);
     assert.equal(TestAudit.meta.scoreDisplayMode, 'manual');
   });
 });

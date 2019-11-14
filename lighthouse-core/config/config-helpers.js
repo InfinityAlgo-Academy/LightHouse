@@ -75,9 +75,9 @@ function assertValidAudit(auditDefinition) {
     );
   }
 
-  if (!Array.isArray(implementation.meta.requiredArtifacts)) {
+  if (!Array.isArray(implementation.requiredArtifacts)) {
     throw new Error(
-      `${auditName} has no meta.requiredArtifacts property, or the property is not an array.`
+      `${auditName} has no requiredArtifacts property, or the property is not an array.`
     );
   }
 }

@@ -283,7 +283,7 @@ class Runner {
     let auditResult;
     try {
       // Return an early error if an artifact required for the audit is missing or an error.
-      for (const artifactName of audit.meta.requiredArtifacts) {
+      for (const artifactName of audit.requiredArtifacts) {
         const noArtifact = artifacts[artifactName] === undefined;
 
         // If trace/devtoolsLog required, check that DEFAULT_PASS trace/devtoolsLog exists.
@@ -331,7 +331,7 @@ class Runner {
       // Only pass the declared `requiredArtifacts` to the audit
       // The type is masquerading as `LH.Artifacts` but will only contain a subset of the keys
       // to prevent consumers from unnecessary type assertions.
-      const requiredArtifacts = audit.meta.requiredArtifacts
+      const requiredArtifacts = audit.requiredArtifacts
         .reduce((requiredArtifacts, artifactName) => {
           const requiredArtifact = artifacts[artifactName];
           // @ts-ignore tsc can't yet express that artifactName is only a single type in each iteration, not a union of types.
