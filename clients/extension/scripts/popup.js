@@ -88,7 +88,11 @@ function fillDevToolsShortcut() {
   el.textContent = isMac ? '⌘⌥I (Cmd+Opt+I)' : 'F12';
 }
 
-function persistSettings() {
+/**
+ * Create the settings from the state of the options form, save in storage, and return it.
+ * @returns {SettingsController.Settings}
+ */
+function readSettingsFromDomAndPersist() {
   const optionsEl = find('.section--options');
   // Save settings when options page is closed.
   const checkboxes = /** @type {NodeListOf<HTMLInputElement>} */
@@ -96,10 +100,12 @@ function persistSettings() {
   const selectedCategories = Array.from(checkboxes).map(input => input.value);
   const device = /** @type {HTMLInputElement} */ (find('input[name="device"]:checked')).value;
 
-  SettingsController.saveSettings({
+  const settings = {
     selectedCategories,
     device,
-  });
+  };
+  SettingsController.saveSettings(settings);
+  return settings;
 }
 
 /**
@@ -171,7 +177,7 @@ async function initPopup() {
   });
 
   optionsFormEl.addEventListener('change', () => {
-    persistSettings();
+    settings = readSettingsFromDomAndPersist();
   });
 }
 
