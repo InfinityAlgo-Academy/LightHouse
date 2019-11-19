@@ -40,11 +40,11 @@ git checkout -b "$BRANCH_NAME"
 # Install the dependencies.
 yarn install
 
-# Bump the version in package.json and clients/extension/manifest.json
+# Bump the version in package.json
 NEEDLE="^  \"version\": \"$SEMVER_PATTERN\""
 REPLACEMENT="  \"version\": \"$NEW_VERSION\""
 
-sed -i '' "s/$NEEDLE/$REPLACEMENT/g" package.json clients/extension/manifest.json
+sed -i '' "s/$NEEDLE/$REPLACEMENT/g" package.json
 
 # Update the fixtures with the new version
 yarn update:sample-json

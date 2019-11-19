@@ -137,7 +137,7 @@ npm publish
 # Publish viewer.
 yarn deploy-viewer
 
-# Publish the extension.
+# Publish the extension (if it changed).
 open https://chrome.google.com/webstore/developer/edit/blipmdconlkpinefehnmjammfjpmpbjk
 cd dist/extension-package/
 echo "Upload the package zip to CWS dev dashboard..."
@@ -145,7 +145,7 @@ echo "Upload the package zip to CWS dev dashboard..."
 # Open <https://chrome.google.com/webstore/developer/dashboard>
 # Click _Edit_ on lighthouse
 # _Upload Updated Package_
-# Select `lighthouse-X.X.X.zip`
+# Select `lighthouse-X.X.X.X.zip`
 # _Publish_ at the bottom
 
 # * Tell the world!!! *
