@@ -1335,6 +1335,7 @@
 
 /* Looks unnecessary, but mostly for keeping the <th>s left-aligned */
 .lh-table-column--text,
+.lh-table-column--source-location,
 .lh-table-column--url,
 /* .lh-table-column--thumbnail, */
 /* .lh-table-column--empty,*/

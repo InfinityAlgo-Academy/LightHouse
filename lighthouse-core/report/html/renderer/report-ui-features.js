@@ -213,7 +213,8 @@ class ReportUIFeatures {
     /** @type {Array<HTMLTableElement>} */
     const tables = Array.from(this._document.querySelectorAll('.lh-table'));
     const tablesWithUrls = tables
-      .filter(el => el.querySelector('td.lh-table-column--url'))
+      .filter(el =>
+        el.querySelector('td.lh-table-column--url, td.lh-table-column--source-location'))
       .filter(el => {
         const containingAudit = el.closest('.lh-audit');
         if (!containingAudit) throw new Error('.lh-table not within audit');

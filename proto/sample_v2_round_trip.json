@@ -456,31 +456,33 @@
                         "text": "Deprecation / Warning"
                     },
                     {
-                        "itemType": "url",
-                        "key": "url",
+                        "itemType": "source-location",
+                        "key": "source",
                         "text": "URL"
-                    },
-                    {
-                        "itemType": "text",
-                        "key": "lineNumber",
-                        "text": "Line"
                     }
                 ],
                 "items": [
                     {
-                        "lineNumber": 322.0,
-                        "source": "deprecation",
-                        "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+                        "source": {
+                            "column": 6.0,
+                            "line": 322.0,
+                            "type": "source-location",
+                            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+                            "urlProvider": "network"
+                        },
                         "value": "Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/."
                     },
                     {
-                        "lineNumber": 325.0,
-                        "source": "deprecation",
-                        "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+                        "source": {
+                            "column": 9.0,
+                            "line": 325.0,
+                            "type": "source-location",
+                            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+                            "urlProvider": "network"
+                        },
                         "value": "'window.webkitStorageInfo' is deprecated. Please use 'navigator.webkitTemporaryStorage' or 'navigator.webkitPersistentStorage' instead."
                     },
                     {
-                        "source": "deprecation",
                         "value": "/deep/ combinator is no longer supported in CSS dynamic profile.It is now effectively no-op, acting as if it were a descendant combinator. /deep/ combinator will be removed, and will be invalid at M65. You should remove it. See https://www.chromestatus.com/features/4964279606312960 for more details."
                     }
                 ],
@@ -818,7 +820,7 @@
             "details": {
                 "headings": [
                     {
-                        "itemType": "url",
+                        "itemType": "source-location",
                         "key": "source",
                         "text": "Source"
                     },
@@ -842,7 +844,10 @@
                     {
                         "coverage": "100.00%",
                         "fontSize": "\u2265 12px",
-                        "source": "Legible text"
+                        "source": {
+                            "type": "code",
+                            "value": "Legible text"
+                        }
                     }
                 ],
                 "type": "table"

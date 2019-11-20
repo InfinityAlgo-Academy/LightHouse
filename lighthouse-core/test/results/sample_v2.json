@@ -609,33 +609,34 @@
             "text": "Deprecation / Warning"
           },
           {
-            "key": "url",
-            "itemType": "url",
+            "key": "source",
+            "itemType": "source-location",
             "text": "URL"
-          },
-          {
-            "key": "lineNumber",
-            "itemType": "text",
-            "text": "Line"
           }
         ],
         "items": [
           {
             "value": "Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/.",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "source": "deprecation",
-            "lineNumber": 322
+            "source": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 322,
+              "column": 6
+            }
           },
           {
             "value": "'window.webkitStorageInfo' is deprecated. Please use 'navigator.webkitTemporaryStorage' or 'navigator.webkitPersistentStorage' instead.",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "source": "deprecation",
-            "lineNumber": 325
+            "source": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 325,
+              "column": 9
+            }
           },
           {
-            "value": "/deep/ combinator is no longer supported in CSS dynamic profile.It is now effectively no-op, acting as if it were a descendant combinator. /deep/ combinator will be removed, and will be invalid at M65. You should remove it. See https://www.chromestatus.com/features/4964279606312960 for more details.",
-            "url": "",
-            "source": "deprecation"
+            "value": "/deep/ combinator is no longer supported in CSS dynamic profile.It is now effectively no-op, acting as if it were a descendant combinator. /deep/ combinator will be removed, and will be invalid at M65. You should remove it. See https://www.chromestatus.com/features/4964279606312960 for more details."
           }
         ]
       }
@@ -3205,7 +3206,7 @@
         "headings": [
           {
             "key": "source",
-            "itemType": "url",
+            "itemType": "source-location",
             "text": "Source"
           },
           {
@@ -3226,7 +3227,10 @@
         ],
         "items": [
           {
-            "source": "Legible text",
+            "source": {
+              "type": "code",
+              "value": "Legible text"
+            },
             "selector": "",
             "coverage": "100.00%",
             "fontSize": "≥ 12px"
@@ -5646,9 +5650,6 @@
       ],
       "lighthouse-core/audits/deprecations.js | columnDeprecate": [
         "audits.deprecations.details.headings[0].text"
-      ],
-      "lighthouse-core/audits/deprecations.js | columnLine": [
-        "audits.deprecations.details.headings[2].text"
       ],
       "lighthouse-core/audits/mainthread-work-breakdown.js | title": [
         "audits[mainthread-work-breakdown].title"

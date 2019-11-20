@@ -120,32 +120,52 @@ const expectations = [
           details: {
             items: [
               {
-                source: /seo-tester\.html.+:24:12$/,
+                source: {
+                  url: /seo-tester\.html.+$/,
+                  urlProvider: 'network',
+                  line: 23,
+                  column: 12,
+                },
                 selector: '.small',
                 fontSize: '11px',
               },
               {
-                source: /seo-tester\.html.+:28:55$/,
+                source: {
+                  url: /seo-tester\.html.+$/,
+                  urlProvider: 'network',
+                  line: 27,
+                  column: 55,
+                },
                 selector: '.small-2',
                 fontSize: '11px',
               },
               {
-                source: /seo-tester-inline-magic\.css:3:14$/,
+                source: {
+                  url: /seo-tester-inline-magic\.css$/,
+                  urlProvider: 'comment',
+                  line: 2,
+                  column: 14,
+                },
                 selector: '.small-3',
                 fontSize: '6px',
               },
               {
-                source: /seo-tester-styles-magic\.css:3:10$/,
+                source: {
+                  url: /seo-tester-styles-magic\.css$/,
+                  urlProvider: 'comment',
+                  line: 2,
+                  column: 10,
+                },
                 selector: '.small-4',
                 fontSize: '6px',
               },
               {
-                source: 'User Agent Stylesheet',
+                source: {type: 'code', value: 'User Agent Stylesheet'},
                 selector: 'h6',
                 fontSize: '10px',
               },
               {
-                source: /seo-tester\.html.+$/,
+                source: {type: 'url', value: /seo-tester\.html.+$/},
                 selector: {
                   type: 'node',
                   selector: 'body',
@@ -154,7 +174,7 @@ const expectations = [
                 fontSize: '10px',
               },
               {
-                source: /seo-tester\.html.+$/,
+                source: {type: 'url', value: /seo-tester\.html.+$/},
                 selector: {
                   type: 'node',
                   selector: 'font',
@@ -163,7 +183,7 @@ const expectations = [
                 fontSize: '10px',
               },
               {
-                source: /seo-tester\.html.+$/,
+                source: {type: 'url', value: /seo-tester\.html.+$/},
                 selector: {
                   type: 'node',
                   selector: 'body',
@@ -172,7 +192,7 @@ const expectations = [
                 fontSize: '10px',
               },
               {
-                source: 'Legible text',
+                source: {type: 'code', value: 'Legible text'},
                 selector: '',
                 fontSize: '≥ 12px',
               },
