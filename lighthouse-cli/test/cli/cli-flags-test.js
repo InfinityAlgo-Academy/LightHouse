@@ -40,6 +40,7 @@ describe('CLI bin', function() {
       budgetsPath: 'path/to/my/budget-from-command-line.json',
       onlyCategories: ['performance', 'seo'],
       chromeFlags: '--window-size 800,600',
+      extraHeaders: {'X-Men': 'wolverine'},
       throttlingMethod: 'devtools',
       throttling: {
         requestLatencyMs: 700,
