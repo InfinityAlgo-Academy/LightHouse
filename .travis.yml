@@ -41,6 +41,7 @@ script:
   - yarn test-bundle || yarn test-bundle || yarn test-bundle
   - yarn i18n:checks
   - yarn dogfood-lhci
+  - yarn test-docs
 before_cache:
   # nyc, jest and other projects store files in here. They mess up the travis build cache.
   - rm -rf ./node_modules/.cache/
