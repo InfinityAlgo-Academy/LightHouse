@@ -170,7 +170,7 @@ limitations under the License.
       --plugin-icon-size: 75%;
       --gauge-wrapper-width: 60px;
       --gauge-percentage-font-size: 13px;
-      position: sticky;
+      position: fixed;
       left: 0;
       right: 0;
       top: var(--topbar-height);
@@ -183,6 +183,11 @@ limitations under the License.
       padding-bottom: 4px;
       z-index: 1;
       pointer-events: none;
+    }
+
+    .lh-devtools .lh-sticky-header {
+      /* The report within DevTools is placed in a container with overflow, which changes the placement of this header unless we change `position` to `sticky.` */
+      position: sticky;
     }
 
     .lh-sticky-header--visible {
