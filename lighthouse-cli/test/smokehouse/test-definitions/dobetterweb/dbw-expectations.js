@@ -124,6 +124,21 @@ const expectations = [
           source: 'head',
         },
       ],
+      MetaElements: [
+        {
+          name: '',
+          content: '',
+        },
+        {
+          name: 'viewport',
+          content: 'width=device-width, initial-scale=1, minimum-scale=1',
+        },
+        {
+          name: '',
+          content: 'Open Graph smoke test description',
+          property: 'og:description',
+        },
+      ],
       TagsBlockingFirstPaint: [
         {
           tag: {
