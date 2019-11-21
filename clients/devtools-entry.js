@@ -35,21 +35,6 @@ function setUpWorkerConnection(port) {
   return new RawProtocol(port);
 }
 
-/**
- * @param {string} url
- * @param {LH.Flags} flags Lighthouse flags.
- * @param {Array<string>} categoryIDs Name values of categories to include.
- * @param {RawProtocol} connection
- * @return {Promise<LH.RunnerResult|void>}
- */
-function runLighthouse(url, flags, categoryIDs, connection) {
-  // Default to 'info' logging level.
-  flags.logLevel = flags.logLevel || 'info';
-  flags.channel = 'devtools';
-  const config = getDefaultConfigForCategories(categoryIDs);
-  return lighthouse(url, flags, config, connection);
-}
-
 /** @param {(status: [string, string, string]) => void} listenCallback */
 function listenForStatus(listenCallback) {
   log.events.addListener('status', listenCallback);
@@ -59,7 +44,8 @@ if (typeof module !== 'undefined' && module.exports) {
   // export for require()ing (via browserify).
   module.exports = {
     setUpWorkerConnection,
-    runLighthouse,
+    lighthouse,
+    getDefaultConfigForCategories,
     listenForStatus,
     registerLocaleData,
     lookupLocale,
@@ -72,7 +58,9 @@ if (typeof self !== 'undefined') {
   // @ts-ignore
   self.setUpWorkerConnection = setUpWorkerConnection;
   // @ts-ignore
-  self.runLighthouse = runLighthouse;
+  self.runLighthouse = lighthouse;
+  // @ts-ignore
+  self.getDefaultConfigForCategories = getDefaultConfigForCategories;
   // @ts-ignore
   self.listenForStatus = listenForStatus;
   // @ts-ignore
