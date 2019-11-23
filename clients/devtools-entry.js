@@ -29,19 +29,10 @@ function getDefaultConfigForCategories(categoryIDs) {
 
 /**
  * @param {RawProtocol.Port} port
- * @param {string} url
- * @param {LH.Flags} flags Lighthouse flags.
- * @param {Array<string>} categoryIDs Name values of categories to include.
- * @return {Promise<LH.RunnerResult|void>}
+ * @returns {RawProtocol}
  */
-function runLighthouseInWorker(port, url, flags, categoryIDs) {
-  // Default to 'info' logging level.
-  flags.logLevel = flags.logLevel || 'info';
-  flags.channel = 'devtools';
-  const config = getDefaultConfigForCategories(categoryIDs);
-  const connection = new RawProtocol(port);
-
-  return lighthouse(url, flags, config, connection);
+function setUpWorkerConnection(port) {
+  return new RawProtocol(port);
 }
 
 /** @param {(status: [string, string, string]) => void} listenCallback */
@@ -52,7 +43,9 @@ function listenForStatus(listenCallback) {
 if (typeof module !== 'undefined' && module.exports) {
   // export for require()ing (via browserify).
   module.exports = {
-    runLighthouseInWorker,
+    setUpWorkerConnection,
+    lighthouse,
+    getDefaultConfigForCategories,
     listenForStatus,
     registerLocaleData,
     lookupLocale,
@@ -63,7 +56,11 @@ if (typeof module !== 'undefined' && module.exports) {
 // @ts-ignore
 if (typeof self !== 'undefined') {
   // @ts-ignore
-  self.runLighthouseInWorker = runLighthouseInWorker;
+  self.setUpWorkerConnection = setUpWorkerConnection;
+  // @ts-ignore
+  self.runLighthouse = lighthouse;
+  // @ts-ignore
+  self.getDefaultConfigForCategories = getDefaultConfigForCategories;
   // @ts-ignore
   self.listenForStatus = listenForStatus;
   // @ts-ignore
