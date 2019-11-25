@@ -16,8 +16,9 @@ const NetworkRecords = require('./network-records.js');
 
 /** @typedef {import('../lib/dependency-graph/base-node.js').Node} Node */
 
-// Tasks smaller than 10 ms have minimal impact on simulation
-const MINIMUM_TASK_DURATION_OF_INTEREST = 10;
+// Shorter tasks have negligible impact on simulation results.
+const SIGNIFICANT_DUR_THRESHOLD_MS = 10;
+
 // TODO: video files tend to be enormous and throw off all graph traversals, move this ignore
 //    into estimation logic when we use the dependency graph for other purposes.
 const IGNORED_MIME_TYPES_REGEX = /^video/;
@@ -111,24 +112,18 @@ class PageDependencyGraph {
 
     TracingProcessor.assertHasToplevelEvents(traceOfTab.mainThreadEvents);
 
-    const minimumEvtDur = MINIMUM_TASK_DURATION_OF_INTEREST * 1000;
     while (i < traceOfTab.mainThreadEvents.length) {
       const evt = traceOfTab.mainThreadEvents[i];
+      i++;
 
       // Skip all trace events that aren't schedulable tasks with sizable duration
-      if (
-        !TracingProcessor.isScheduleableTask(evt) ||
-        !evt.dur ||
-        evt.dur < minimumEvtDur
-      ) {
-        i++;
+      if (!TracingProcessor.isScheduleableTask(evt) || !evt.dur) {
         continue;
       }
 
       // Capture all events that occurred within the task
       /** @type {Array<LH.TraceEvent>} */
       const children = [];
-      i++; // Start examining events after this one
       for (
         const endTime = evt.ts + evt.dur;
         i < traceOfTab.mainThreadEvents.length && traceOfTab.mainThreadEvents[i].ts < endTime;
@@ -307,6 +302,39 @@ class PageDependencyGraph {
       if (node.getNumberOfDependencies() === 0) {
         node.addDependency(rootNode);
       }
+    }
+
+    // Second pass to prune the graph of short tasks.
+    for (const node of cpuNodes) {
+      if (node.event.dur >= SIGNIFICANT_DUR_THRESHOLD_MS * 1000) {
+        // Don't prune this node. The task is long so it will impact simulation.
+        continue;
+      }
+      // Prune the node if it isn't highly connected to minimize graph size. Rewiring the graph
+      // here replaces O(M + N) edges with (M * N) edges, which is fine if either  M or N is at
+      // most 1.
+      if (node.getNumberOfDependencies() === 1 || node.getNumberOfDependents() <= 1) {
+        PageDependencyGraph._pruneNode(node);
+      }
+    }
+  }
+
+  /**
+   * Removes the given node from the graph, but retains all paths between its dependencies and
+   * dependents.
+   * @param {Node} node
+   */
+  static _pruneNode(node) {
+    const dependencies = node.getDependencies();
+    const dependents = node.getDependents();
+    for (const dependency of dependencies) {
+      node.removeDependency(dependency);
+      for (const dependent of dependents) {
+        dependency.addDependent(dependent);
+      }
+    }
+    for (const dependent of dependents) {
+      node.removeDependent(dependent);
     }
   }
 

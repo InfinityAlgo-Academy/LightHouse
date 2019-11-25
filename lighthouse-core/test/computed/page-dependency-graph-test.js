@@ -272,6 +272,7 @@ describe('PageDependencyGraph computed artifact:', () => {
 
       const getDependencyIds = node => node.getDependencies().map(node => node.id);
 
+      assert.equal(nodes.length, 7);
       assert.deepEqual(getDependencyIds(nodes[0]), []);
       assert.deepEqual(getDependencyIds(nodes[1]), [1, '1.200000']);
       assert.deepEqual(getDependencyIds(nodes[2]), [1]);
@@ -279,6 +280,91 @@ describe('PageDependencyGraph computed artifact:', () => {
       assert.deepEqual(getDependencyIds(nodes[4]), [1]);
       assert.deepEqual(getDependencyIds(nodes[5]), [1]);
       assert.deepEqual(getDependencyIds(nodes[6]), [4]);
+    });
+
+    it('should prune short tasks', () => {
+      const request0 = createRequest(0, '0', 0);
+      const request1 = createRequest(1, '1', 100, null, NetworkRequest.TYPES.Script);
+      const request2 = createRequest(2, '2', 200, null, NetworkRequest.TYPES.XHR);
+      const request3 = createRequest(3, '3', 300, null, NetworkRequest.TYPES.Script);
+      const request4 = createRequest(4, '4', 400, null, NetworkRequest.TYPES.XHR);
+      const networkRecords = [request0, request1, request2, request3, request4];
+
+      // Long task, should be kept in the output.
+      addTaskEvents(120, 50, [
+        {name: 'EvaluateScript', data: {url: '1'}},
+        {name: 'ResourceSendRequest', data: {requestId: 2}},
+        {name: 'XHRReadyStateChange', data: {readyState: 4, url: '2'}},
+      ]);
+
+      // Short task, should be pruned, but the 3->4 relationship should be retained
+      addTaskEvents(350, 5, [
+        {name: 'EvaluateScript', data: {url: '3'}},
+        {name: 'ResourceSendRequest', data: {requestId: 4}},
+        {name: 'XHRReadyStateChange', data: {readyState: 4, url: '4'}},
+      ]);
+
+      const graph = PageDependencyGraph.createGraph(traceOfTab, networkRecords);
+      const nodes = [];
+      graph.traverse(node => nodes.push(node));
+
+      const getDependencyIds = node => node.getDependencies().map(node => node.id);
+
+      assert.equal(nodes.length, 6);
+
+      assert.deepEqual(getDependencyIds(nodes[0]), []);
+      assert.deepEqual(getDependencyIds(nodes[1]), [0]);
+      assert.deepEqual(getDependencyIds(nodes[2]), [0, '1.120000']);
+      assert.deepEqual(getDependencyIds(nodes[3]), [0]);
+      assert.deepEqual(getDependencyIds(nodes[4]), [0, 3]);
+
+      assert.equal('1.120000', nodes[5].id);
+      assert.deepEqual(getDependencyIds(nodes[5]), [1]);
+    });
+
+    it('should not prune highly-connected short tasks', () => {
+      const request0 = createRequest(0, '0', 0);
+      const request1 = {
+        ...createRequest(1, '1', 100, null, NetworkRequest.TYPES.Document),
+        documentURL: '1',
+        frameId: 'frame1',
+      };
+      const request2 = {
+        ...createRequest(2, '2', 200, null, NetworkRequest.TYPES.Script),
+        documentURL: '1',
+        frameId: 'frame1',
+      };
+      const request3 = createRequest(3, '3', 300, null, NetworkRequest.TYPES.XHR);
+      const request4 = createRequest(4, '4', 400, null, NetworkRequest.TYPES.XHR);
+      const networkRecords = [request0, request1, request2, request3, request4];
+
+      // Short task, evaluates script (2) and sends two XHRs.
+      addTaskEvents(220, 5, [
+        {name: 'EvaluateScript', data: {url: '2', frame: 'frame1'}},
+
+        {name: 'ResourceSendRequest', data: {requestId: 3}},
+        {name: 'XHRReadyStateChange', data: {readyState: 4, url: '3'}},
+
+        {name: 'ResourceSendRequest', data: {requestId: 4}},
+        {name: 'XHRReadyStateChange', data: {readyState: 4, url: '4'}},
+      ]);
+
+      const graph = PageDependencyGraph.createGraph(traceOfTab, networkRecords);
+      const nodes = [];
+      graph.traverse(node => nodes.push(node));
+
+      const getDependencyIds = node => node.getDependencies().map(node => node.id);
+
+      assert.equal(nodes.length, 6);
+
+      assert.deepEqual(getDependencyIds(nodes[0]), []);
+      assert.deepEqual(getDependencyIds(nodes[1]), [0]);
+      assert.deepEqual(getDependencyIds(nodes[2]), [0]);
+      assert.deepEqual(getDependencyIds(nodes[3]), [0, '1.220000']);
+      assert.deepEqual(getDependencyIds(nodes[4]), [0, '1.220000']);
+
+      assert.equal('1.220000', nodes[5].id);
+      assert.deepEqual(getDependencyIds(nodes[5]), [1, 2]);
     });
 
     it('should set isMainDocument on first document request', () => {
