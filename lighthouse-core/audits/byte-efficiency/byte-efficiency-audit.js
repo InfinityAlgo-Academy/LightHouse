@@ -144,24 +144,25 @@ class UnusedBytes extends Audit {
     const afterLabel = `${options.label}-after`;
 
     const simulationBeforeChanges = simulator.simulate(graph, {label: beforeLabel});
-    /** @type {Map<string, LH.Audit.ByteEfficiencyItem>} */
-    const resultsByUrl = new Map();
-    for (const result of results) {
-      resultsByUrl.set(result.url, result);
+    /** @type {Map<string, number>} */
+    const wastedBytesByUrl = new Map();
+    for (const {url, wastedBytes} of results) {
+      wastedBytesByUrl.set(url, (wastedBytesByUrl.get(url) || 0) + wastedBytes);
     }
+
+    console.dir(wastedBytesByUrl);
 
     // Update all the transfer sizes to reflect implementing our recommendations
     /** @type {Map<string, number>} */
     const originalTransferSizes = new Map();
     graph.traverse(node => {
       if (node.type !== 'network') return;
-      const result = resultsByUrl.get(node.record.url);
-      if (!result) return;
+      const wastedBytes = wastedBytesByUrl.get(node.record.url);
+      if (!wastedBytes) return;
 
       const original = node.record.transferSize;
       originalTransferSizes.set(node.record.requestId, original);
 
-      const wastedBytes = result.wastedBytes;
       node.record.transferSize = Math.max(original - wastedBytes, 0);
     });
 
@@ -183,6 +184,7 @@ class UnusedBytes extends Audit {
     if (options.includeLoad) savings = Math.max(savings, savingsOnOverallLoad);
 
     // Round waste to nearest 10ms
+    console.log(savings);
     return Math.round(Math.max(savings, 0) / 10) * 10;
   }
 
@@ -205,6 +207,22 @@ class UnusedBytes extends Audit {
     }
 
     const details = Audit.makeOpportunityDetails(result.headings, results, wastedMs, wastedBytes);
+
+    console.dir({
+      explanation: result.explanation,
+      warnings: result.warnings,
+      displayValue,
+      numericValue: wastedMs,
+      score: UnusedBytes.scoreForWastedMs(wastedMs),
+      extendedInfo: {
+        value: {
+          wastedMs,
+          wastedKb,
+          results,
+        },
+      },
+      details,
+    });
 
     return {
       explanation: result.explanation,
