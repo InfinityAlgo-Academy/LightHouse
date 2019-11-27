@@ -64,6 +64,7 @@ declare global {
       wastedBytes: number;
       totalBytes: number;
       wastedPercent?: number;
+      multi?: Audit.Details.OpportunityItemMulti;
     }
 
     /** Type returned by Audit.audit(). Only score is required.  */

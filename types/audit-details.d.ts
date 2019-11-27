@@ -82,7 +82,7 @@ declare global {
       }
 
       /** Possible types of values found within table items. */
-      type ItemValueTypes = 'bytes' | 'code' | 'link' | 'ms' | 'node' | 'source-location' | 'numeric' | 'text' | 'thumbnail' | 'timespanMs' | 'url';
+      type ItemValueTypes = 'bytes' | 'code' | 'link' | 'ms' | 'multi' | 'node' | 'source-location' | 'numeric' | 'text' | 'thumbnail' | 'timespanMs' | 'url';
 
       // TODO(bckenny): unify Table/Opportunity headings and items on next breaking change.
 
@@ -118,6 +118,8 @@ declare global {
          * could also be objects with their own type to override this field.
          */
         valueType: ItemValueTypes;
+        /** ... */
+        multi?: boolean;
 
         // NOTE: not used by opportunity details, but used in the renderer until table/opportunity unification.
         displayUnit?: string;
@@ -130,7 +132,15 @@ declare global {
         totalBytes?: number;
         wastedMs?: number;
         debugData?: DebugData;
-        [p: string]: number | boolean | string | undefined | DebugData;
+        [p: string]: number | boolean | string | undefined | DebugData | OpportunityItemMulti;
+        multi?: OpportunityItemMulti;
+      }
+
+      export interface OpportunityItemMulti {
+        type: 'multi',
+        url: string[];
+        wastedBytes: number[];
+        [p: string]: number[] | boolean[] | string | string[] | undefined | DebugData[];
       }
 
       /**
@@ -183,7 +193,7 @@ declare global {
 
       /**
        * A value used within a details object, intended to be displayed as a
-       * linkified URL, regardless of the controlling heading's valueType.
+       * linkified URL, regardless of the controlling heading's valueTypeMultiValue | .
        */
       export interface UrlValue {
         type: 'url';
