@@ -60,7 +60,7 @@ class BundleDuplication extends ByteEfficiencyAudit {
         let source = map.sources[sourceIndex];
         // Trim trailing question mark - b/c webpack.
         source = source.replace(/\?$/, '');
-        // Normalize nested node_modules.
+        // Normalize paths for dependencies by keeping everything after the last `node_modules`.
         const lastNodeModulesIndex = source.lastIndexOf('node_modules');
         if (lastNodeModulesIndex !== -1) {
           source = source.substring(lastNodeModulesIndex);
@@ -90,6 +90,8 @@ class BundleDuplication extends ByteEfficiencyAudit {
       if (stats.length === 1) continue;
       // Give bundle bootstraps a pass.
       if (key.includes('webpack/bootstrap') || key.includes('(webpack)/buildin')) continue;
+      // Ignore shims.
+      if (key.includes('external ')) continue;
 
       // One copy of this module is considered to be the canonical version - the rest will have
       // non-zero `wastedBytes`. In the case of all copies being the same version. all sizes are
@@ -121,6 +123,8 @@ class BundleDuplication extends ByteEfficiencyAudit {
 
     // TODO: explore a cutoff.
     if (process.env.DEBUG) {
+      console.log(statsBySourceFile.keys());
+
       const all = sum(items);
       function sum(arr) {
         return arr.reduce((acc, cur) => acc + cur.wastedBytes, 0);
@@ -173,6 +177,8 @@ class BundleDuplication extends ByteEfficiencyAudit {
       */
     }
 
+    // TODO: how to have multi-value rows?
+
     /** @type {LH.Audit.Details.Opportunity['headings']} */
     const headings = [
       {key: 'module', valueType: 'code', label: str_(i18n.UIStrings.columnName)}, // TODO: or 'Module'?
@@ -181,7 +187,7 @@ class BundleDuplication extends ByteEfficiencyAudit {
       {key: 'wastedBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnWastedBytes)},
     ];
 
-    // TODO: show warning if no source maps.
+    // TODO: show warning somewhere if no source maps.
 
     return {
       items,
