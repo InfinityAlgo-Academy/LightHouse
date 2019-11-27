@@ -5,6 +5,8 @@
  */
 'use strict';
 
+/* global document */
+
 class Fetcher {
   /**
    * @param {import('./driver.js')} driver
@@ -153,7 +155,9 @@ class Fetcher {
       document.body.appendChild(iframe);
     }
 
-    await this.driver.evaluateAsync(`${injectIframe}(${JSON.stringify(url)})`, {useIsolation: true});
+    await this.driver.evaluateAsync(`${injectIframe}(${JSON.stringify(url)})`, {
+      useIsolation: true,
+    });
 
     /** @type {NodeJS.Timeout} */
     let timeoutHandle;
