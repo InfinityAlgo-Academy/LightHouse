@@ -66,6 +66,10 @@ const smokeTests = [{
   id: 'metrics',
   expectations: require('./tricky-metrics/expectations.js'),
   config: require('../../../../lighthouse-core/config/perf-config.js'),
+}, {
+  id: 'source-maps',
+  expectations: require('./source-maps/expectations.js'),
+  config: require('./source-maps/source-maps-config.js'),
 }];
 
 module.exports = smokeTests;
