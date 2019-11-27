@@ -217,6 +217,11 @@ class DetailsRenderer {
       return null;
     }
 
+    if (typeof value === 'object' && value.type === 'multi') {
+      console.warn('Invalid multi value given to _renderTableValue');
+      return null;
+    }
+
     // First deal with the possible object forms of value.
     if (typeof value === 'object') {
       // The value's type overrides the heading's for this column.
@@ -246,7 +251,7 @@ class DetailsRenderer {
     switch (heading.valueType) {
       case 'bytes': {
         const numValue = Number(value);
-        return this._renderBytes({value: numValue, granularity: 1});
+        return this._renderBytes({value: numValue, granularity: heading.granularity});
       }
       case 'code': {
         const strValue = String(value);
@@ -315,6 +320,22 @@ class DetailsRenderer {
   }
 
   /**
+   * @param {LH.Audit.Details.OpportunityItemMulti} multi
+   * @param {LH.Audit.Details.OpportunityColumnHeading} heading
+   * @return {DocumentFragment?}
+   */
+  _renderMultiValue(multi, heading) {
+    const values = multi[heading.key];
+    if (!Array.isArray(values)) return null;
+    const valueElement = this._dom.createFragment();
+    for (const childValue of values) {
+      const childValueElement = this._renderTableValue(childValue, heading);
+      if (childValueElement) valueElement.appendChild(childValueElement);
+    }
+    return valueElement;
+  }
+
+  /**
    * @param {LH.Audit.Details.Table|LH.Audit.Details.Opportunity} details
    * @return {Element}
    */
@@ -340,7 +361,15 @@ class DetailsRenderer {
       const rowElem = this._dom.createChildOf(tbodyElem, 'tr');
       for (const heading of headings) {
         const value = row[heading.key];
-        const valueElement = this._renderTableValue(value, heading);
+
+        let valueElement;
+        if (heading.multi
+          // Make typescript happy.
+          && typeof row.multi === 'object' && row.multi.type === 'multi') {
+          valueElement = this._renderMultiValue(row.multi, heading);
+        } else {
+          valueElement = this._renderTableValue(value, heading);
+        }
 
         if (valueElement) {
           const classes = `lh-table-column--${heading.valueType}`;

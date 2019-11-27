@@ -20,7 +20,7 @@ const UIStrings = {
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
-// const IGNORE_THRESHOLD_IN_BYTES = 1 * 1024;
+const IGNORE_THRESHOLD_IN_BYTES = 100;
 
 /** @typedef {LH.Artifacts.CSSStyleSheetInfo & {networkRecord: LH.Artifacts.NetworkRequest, usedRules: Array<LH.Crdp.CSS.RuleUsage>}} StyleSheetInfo */
 
@@ -84,7 +84,7 @@ class BundleDuplication extends ByteEfficiencyAudit {
       }
     }
 
-    /** @type {Array<{module: string, url: string, totalBytes: number, wastedBytes: number}>} */
+    /** @type {LH.Audit.ByteEfficiencyItem[]} */
     const items = [];
     for (const [key, stats] of statsBySourceFile.entries()) {
       if (stats.length === 1) continue;
@@ -99,26 +99,48 @@ class BundleDuplication extends ByteEfficiencyAudit {
       // matter. Ideally the newest version would be the canonical copy, but version information
       // is not present. Instead, size is used as a heuristic for latest version. This makes the
       // audit conserative in its estimation.
+      // TODO: instead, choose the "first" script in the DOM as the canonical?
+
       stats.sort((a, b) => b.size - a.size);
-      for (let i = 1; i < stats.length; i++) {
+      const urls = [];
+      const wastedBytesValues = [];
+      for (let i = 0; i < stats.length; i++) {
         const stat = stats[i];
         const map = SourceMaps[stat.mapIndex];
+        urls.push(map.scriptUrl);
 
-        // The length of the actual, possibly minified/transpiled module cannot be easily determined.
-        // Instead, an heuristic is used. The ratio of this wasted module / the total sourcesContent
-        // lengths is a decent estimator.
-        const sourcesContentsLength = lengthOfSourceContents.get(map.scriptUrl);
-        const networkRecord = networkRecords.find(r => r.url === map.scriptUrl);
-        if (!sourcesContentsLength || !networkRecord) continue; // Shouldn't happen.
-        const wastedBytes = (stat.size / sourcesContentsLength) * networkRecord.resourceSize;
-
-        items.push({
-          module: key,
-          url: map.scriptUrl,
-          totalBytes: wastedBytes, // Not needed, but keeps typescript happy.
-          wastedBytes,
-        });
+        if (i === 0) {
+          wastedBytesValues.push(0);
+        } else {
+          // The length of the actual, possibly minified/transpiled module cannot be easily determined.
+          // Instead, an heuristic is used. The ratio of this wasted module / the total sourcesContent
+          // lengths is a decent estimator.
+          const sourcesContentsLength = lengthOfSourceContents.get(map.scriptUrl);
+          const networkRecord = networkRecords.find(r => r.url === map.scriptUrl);
+          if (!sourcesContentsLength || !networkRecord) continue; // Shouldn't happen.
+          const wastedBytes = (stat.size / sourcesContentsLength) * networkRecord.resourceSize;
+          // TODO: this heuristic is really bad. ~2x the real size. should see how long it takes
+          // to do what source-map-explorer does.
+          wastedBytesValues.push(wastedBytes * 0.5);
+        }
       }
+
+      const wastedBytesTotal = wastedBytesValues.reduce((acc, cur) => acc + cur, 0);
+      if (wastedBytesTotal <= IGNORE_THRESHOLD_IN_BYTES) continue;
+      items.push({
+        module: key,
+        // Only used for sorting.
+        wastedBytes: wastedBytesTotal,
+        // Not needed, but keeps typescript happy.
+        url: '',
+        // Not needed, but keeps typescript happy.
+        totalBytes: 0,
+        multi: {
+          type: 'multi',
+          url: urls,
+          wastedBytes: wastedBytesValues,
+        },
+      });
     }
 
     // TODO: explore a cutoff.
@@ -126,7 +148,9 @@ class BundleDuplication extends ByteEfficiencyAudit {
       console.log(statsBySourceFile.keys());
 
       const all = sum(items);
+      // @ts-ignore
       function sum(arr) {
+        // @ts-ignore
         return arr.reduce((acc, cur) => acc + cur.wastedBytes, 0);
       }
       function print(x) {
@@ -146,6 +170,8 @@ class BundleDuplication extends ByteEfficiencyAudit {
 
       Just ignoring all the items is not a good idea b/c the sum of all the small items
       can be meaningful - <500 bytes is ~5.5%. Is that too much to ignore?
+
+      EDIT: oh, granularity is a thing. let's set that to 0.05 and make 100 bytes the threshold.
 
       https://www.coursehero.com/
 
@@ -177,14 +203,12 @@ class BundleDuplication extends ByteEfficiencyAudit {
       */
     }
 
-    // TODO: how to have multi-value rows?
-
     /** @type {LH.Audit.Details.Opportunity['headings']} */
     const headings = [
       {key: 'module', valueType: 'code', label: str_(i18n.UIStrings.columnName)}, // TODO: or 'Module'?
-      {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+      {key: 'url', valueType: 'url', multi: true, label: str_(i18n.UIStrings.columnURL)},
       // {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnSize)},
-      {key: 'wastedBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnWastedBytes)},
+      {key: 'wastedBytes', valueType: 'bytes', multi: true, granularity: 0.05, label: str_(i18n.UIStrings.columnWastedBytes)},
     ];
 
     // TODO: show warning somewhere if no source maps.
