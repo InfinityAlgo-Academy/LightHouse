@@ -43,32 +43,27 @@ class ValidSourceMaps extends Audit {
     const {SourceMaps} = artifacts;
 
     const results = [];
-
-    // Partition.
-    const mapsWithoutLoadErrors = [];
-    const mapsWithLoadErrors = [];
     for (const sourceMapOrError of SourceMaps) {
-      if (sourceMapOrError.map) mapsWithoutLoadErrors.push(sourceMapOrError);
-      else mapsWithLoadErrors.push(sourceMapOrError);
-    }
+      const {scriptUrl, sourceMapUrl} = sourceMapOrError;
 
-    // Load errors.
-    for (const sourceMap of mapsWithLoadErrors) {
-      const error = sourceMap.errorMessage;
-      results.push({
-        scriptUrl: sourceMap.scriptUrl,
-        sourceMapUrl: sourceMap.sourceMapUrl,
-        error,
-      });
-    }
+      // Load errors.
+      if (!sourceMapOrError.map) {
+        const error = sourceMapOrError.errorMessage;
+        results.push({
+          scriptUrl,
+          sourceMapUrl,
+          error,
+        });
+        continue;
+      }
 
-    // TODO find any script urls that look like bundled code but don't have
-    // a source map.
+      const map = sourceMapOrError.map;
 
-    // Sources content errors.
-    for (const {scriptUrl, sourceMapUrl, map} of mapsWithoutLoadErrors) {
+      // TODO also, validate (source-map-validator) the map. can punt this until maps
+      // are used to actually do some mapping for the report.
+
+      // Sources content errors.
       const sourcesContent = map.sourcesContent || [];
-
       let missingSourcesContentCount = 0;
       for (let i = 0; i < map.sources.length; i++) {
         if (sourcesContent.length < i || !sourcesContent[i]) missingSourcesContentCount += 1;
@@ -77,14 +72,26 @@ class ValidSourceMaps extends Audit {
         results.push({
           scriptUrl: scriptUrl,
           sourceMapUrl: sourceMapUrl,
-          error: `missing ${missingSourcesContentCount} items in .sourcesContent`,
+          error: `missing ${missingSourcesContentCount} items in \`.sourcesContent\``,
         });
         continue;
       }
+
+      results.push({
+        scriptUrl: scriptUrl,
+        sourceMapUrl: sourceMapUrl,
+      });
     }
 
-    // TODO also, validate (source-map-validator) the map. can punt this until maps
-    // are used to actually do some mapping for the report.
+    // TODO find any script urls that look like bundled code but don't have
+    // a source map.
+
+    if (SourceMaps.length === 0) {
+      return {
+        score: 1,
+        notApplicable: true,
+      };
+    }
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
@@ -93,17 +100,14 @@ class ValidSourceMaps extends Audit {
       {key: 'error', itemType: 'code', text: 'Error'}, // TODO uistring
     ];
 
-    // TODO: should we mark as n/a if no map errors and no bundle-like scripts?
-    if (results.length === 0) {
-      return {
-        score: 1,
-        notApplicable: true,
-      };
-    }
-
-    results.sort((a, b) => b.scriptUrl.localeCompare(a.scriptUrl));
+    results.sort((a, b) => {
+      if (a.error && !b.error) return -1;
+      if (!a.error && b.error) return 1;
+      return b.scriptUrl.localeCompare(a.scriptUrl);
+    });
+    const passed = !results.find(result => result.error);
     return {
-      score: Number(results.length === 0),
+      score: Number(passed),
       details: Audit.makeTableDetails(headings, results),
     };
   }
