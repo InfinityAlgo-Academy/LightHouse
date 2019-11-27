@@ -48,6 +48,8 @@ class BundleDuplication extends ByteEfficiencyAudit {
 
     /** @type {Map<string, Array<{mapIndex: number, sourceIndex: number, size: number}>>} */
     const statsBySourceFile = new Map();
+    /** @type {Map<string, number>} */
+    const lengthOfSourceContents = new Map();
 
     for (let mapIndex = 0; mapIndex < SourceMaps.length; mapIndex++) {
       const {scriptUrl, map} = SourceMaps[mapIndex];
@@ -68,6 +70,11 @@ class BundleDuplication extends ByteEfficiencyAudit {
         const size = content !== undefined ? content.length : -1;
         result.sourceSizes.push(size);
 
+        if (size !== -1) {
+          lengthOfSourceContents.set(scriptUrl,
+            (lengthOfSourceContents.get(scriptUrl) || 0) + size);
+        }
+
         let stats = statsBySourceFile.get(source);
         if (!stats) {
           stats = [];
@@ -77,6 +84,7 @@ class BundleDuplication extends ByteEfficiencyAudit {
       }
     }
 
+    /** @type {Array<{module: string, url: string, totalBytes: number, wastedBytes: number}>} */
     const items = [];
     for (const [key, stats] of statsBySourceFile.entries()) {
       if (stats.length === 1) continue;
@@ -92,66 +100,78 @@ class BundleDuplication extends ByteEfficiencyAudit {
       stats.sort((a, b) => b.size - a.size);
       for (let i = 1; i < stats.length; i++) {
         const stat = stats[i];
+        const map = SourceMaps[stat.mapIndex];
+
+        // The length of the actual, possibly minified/transpiled module cannot be easily determined.
+        // Instead, an heuristic is used. The ratio of this wasted module / the total sourcesContent
+        // lengths is a decent estimator.
+        const sourcesContentsLength = lengthOfSourceContents.get(map.scriptUrl);
+        const networkRecord = networkRecords.find(r => r.url === map.scriptUrl);
+        if (!sourcesContentsLength || !networkRecord) continue; // Shouldn't happen.
+        const wastedBytes = (stat.size / sourcesContentsLength) * networkRecord.resourceSize;
+
         items.push({
           module: key,
-          url: SourceMaps[stat.mapIndex].scriptUrl,
-          totalBytes: stat.size, // Not needed, but keeps typescript happy.
-          wastedBytes: stat.size,
+          url: map.scriptUrl,
+          totalBytes: wastedBytes, // Not needed, but keeps typescript happy.
+          wastedBytes,
         });
       }
     }
 
     // TODO: explore a cutoff.
-    const all = sum(items);
-    function sum(arr) {
-      return arr.reduce((acc, cur) => acc + cur.wastedBytes, 0);
+    if (process.env.DEBUG) {
+      const all = sum(items);
+      function sum(arr) {
+        return arr.reduce((acc, cur) => acc + cur.wastedBytes, 0);
+      }
+      function print(x) {
+        const sum_ = sum(items.filter(item => item.wastedBytes >= x));
+        console.log(x, sum_, (all - sum_) / all * 100);
+      }
+      for (let i = 0; i < 100; i += 10) {
+        print(i);
+      }
+      for (let i = 100; i < 1500; i += 100) {
+        print(i);
+      }
+      /*
+      initial thoughts: "0KB" is noisy in the report
+
+      Could make an Other entry, but then that is unactionable.
+
+      Just ignoring all the items is not a good idea b/c the sum of all the small items
+      can be meaningful - <500 bytes is ~5.5%. Is that too much to ignore?
+
+      https://www.coursehero.com/
+
+      0 176188.36490136734 0
+      10 176188.36490136734 0
+      20 176188.36490136734 0
+      30 176141.61108744194 0.026536266428022284
+      40 176141.61108744194 0.026536266428022284
+      50 176141.61108744194 0.026536266428022284
+      60 176141.61108744194 0.026536266428022284
+      70 176141.61108744194 0.026536266428022284
+      80 176062.75412877792 0.07129345496778063
+      90 175975.1834931716 0.12099630319805638
+      100 175975.1834931716 0.12099630319805638
+      200 174014.05824632183 1.2340807273299335
+      300 172646.30987490347 2.010379645924272
+      400 169433.15980658625 3.834081267831022
+      500 166372.66452209078 5.5711399471647995
+      600 162028.34675652898 8.036863360849814
+      700 159503.6408045566 9.469821747963366
+      800 157215.92153878932 10.768272566238442
+      900 153868.20003692358 12.668353484600928
+      1000 153868.20003692358 12.668353484600928
+      1100 153868.20003692358 12.668353484600928
+      1200 152701.58106087992 13.330496513566967
+      1300 152701.58106087992 13.330496513566967
+      1400 151370.21055005147 14.086148290898443
+
+      */
     }
-    function print(x) {
-      const sum_ = sum(items.filter(item => item.wastedBytes >= x));
-      console.log(x, sum_, (all - sum_) / all * 100);
-    }
-    for (let i = 0; i < 100; i += 10) {
-      print(i);
-    }
-    for (let i = 100; i < 1500; i += 100) {
-      print(i);
-    }
-    /*
-    initial thoughts: "0KB" is noisy in the report
-
-    Could make an Other entry, but then that is unactionable.
-
-    Just ignoring all the items is not a good idea b/c the sum of all the small items
-    can be meaningful - <500 bytes is ~3%. Is that too much to ignore?
-
-    https://www.coursehero.com/
-
-    0 238785 0
-    10 238785 0
-    20 238785 0
-    30 238785 0
-    40 238722 0.02638356680696024
-    50 238722 0.02638356680696024
-    60 238722 0.02638356680696024
-    70 238722 0.02638356680696024
-    80 238722 0.02638356680696024
-    90 238722 0.02638356680696024
-    100 238722 0.02638356680696024
-    200 237441 0.5628494252151517
-    300 235417 1.4104738572355886
-    400 233799 2.088070858722282
-    500 231426 3.081851875117784
-    600 226958 4.9529911845383925
-    700 224352 6.044349519442176
-    800 219800 7.950666917938731
-    900 215581 9.71752832045564
-    1000 214586 10.134221161295725
-    1100 213524 10.578972716041628
-    1200 207874 12.945117993173774
-    1300 207874 12.945117993173774
-    1400 207874 12.945117993173774
-
-    */
 
     /** @type {LH.Audit.Details.Opportunity['headings']} */
     const headings = [

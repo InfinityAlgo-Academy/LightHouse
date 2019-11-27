@@ -13,7 +13,7 @@ const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on HTTP to HTTPS redirects. This descriptive title is shown to users when HTTP traffic is redirected to HTTPS. */
   title: 'Page has valid source maps',
   /** Title of a Lighthouse audit that provides detail on HTTP to HTTPS redirects. This descriptive title is shown to users when HTTP traffic is not redirected to HTTPS. */
-  failureTitle: 'Does not have valid source maps',
+  failureTitle: 'Has invalid source maps',
   /** Description of a Lighthouse audit that tells the user why they should direct HTTP traffic to HTTPS. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'If you\'ve already set up HTTPS, make sure that you redirect all HTTP ' +
     'traffic to HTTPS in order to enable secure web features for all your users. [Learn more](https://web.dev/redirects-http).',
@@ -44,11 +44,20 @@ class ValidSourceMaps extends Audit {
 
     const results = [];
 
+    // Partition.
+    const mapsWithoutLoadErrors = [];
+    const mapsWithLoadErrors = [];
     for (const sourceMapOrError of SourceMaps) {
-      if (sourceMapOrError.map) continue;
-      const error = sourceMapOrError.errorMessage;
+      if (sourceMapOrError.map) mapsWithoutLoadErrors.push(sourceMapOrError);
+      else mapsWithLoadErrors.push(sourceMapOrError);
+    }
+
+    // Load errors.
+    for (const sourceMap of mapsWithLoadErrors) {
+      const error = sourceMap.errorMessage;
       results.push({
-        url: sourceMapOrError.scriptUrl,
+        scriptUrl: sourceMap.scriptUrl,
+        sourceMapUrl: sourceMap.sourceMapUrl,
         error,
       });
     }
@@ -56,13 +65,32 @@ class ValidSourceMaps extends Audit {
     // TODO find any script urls that look like bundled code but don't have
     // a source map.
 
+    // Sources content errors.
+    for (const {scriptUrl, sourceMapUrl, map} of mapsWithoutLoadErrors) {
+      const sourcesContent = map.sourcesContent || [];
+
+      let missingSourcesContentCount = 0;
+      for (let i = 0; i < map.sources.length; i++) {
+        if (sourcesContent.length < i || !sourcesContent[i]) missingSourcesContentCount += 1;
+      }
+      if (missingSourcesContentCount > 0) {
+        results.push({
+          scriptUrl: scriptUrl,
+          sourceMapUrl: sourceMapUrl,
+          error: `missing ${missingSourcesContentCount} items in .sourcesContent`,
+        });
+        continue;
+      }
+    }
+
     // TODO also, validate (source-map-validator) the map. can punt this until maps
     // are used to actually do some mapping for the report.
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
-      {key: 'error', itemType: 'code', text: str_(i18n.UIStrings.columnName)}, // TODO uistring
+      {key: 'scriptUrl', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
+      {key: 'sourceMapUrl', itemType: 'url', text: 'Map URL'}, // TODO uistring
+      {key: 'error', itemType: 'code', text: 'Error'}, // TODO uistring
     ];
 
     // TODO: should we mark as n/a if no map errors and no bundle-like scripts?
@@ -73,6 +101,7 @@ class ValidSourceMaps extends Audit {
       };
     }
 
+    results.sort((a, b) => b.scriptUrl.localeCompare(a.scriptUrl));
     return {
       score: Number(results.length === 0),
       details: Audit.makeTableDetails(headings, results),
