@@ -10,12 +10,15 @@
  *
  * Google locale inheritance rules: https://goto.google.com/ccssm
  * CLDR language aliases: https://www.unicode.org/cldr/charts/latest/supplemental/aliases.html
+ * CLDR locale inheritance: https://github.com/unicode-cldr/cldr-core/blob/master/supplemental/parentLocales.json
  */
 
-/** @typedef {Record<string, {message: string}>} LocaleMessages */
+// TODO(paulirish): Centralize locale inheritance (combining this & i18n.lookupLocale()), adopt cldr parentLocale rules.
+
+/** @typedef {Record<string, {message: string}>} LhlMessages */
 
 // The keys within this const must exactly match the LH.Locale type in externs.d.ts
-/** @type {Record<LH.Locale, LocaleMessages>} */
+/** @type {Record<LH.Locale, LhlMessages>} */
 const locales = {
   'en-US': require('./locales/en-US.json'), // The 'source' strings, with descriptions
   'en': require('./locales/en-US.json'), // According to CLDR/ICU, 'en' == 'en-US' dates/numbers (Why?!)
@@ -104,9 +107,9 @@ const locales = {
   'tr': require('./locales/tr.json'),
   'uk': require('./locales/uk.json'),
   'vi': require('./locales/vi.json'),
-  'zh': require('./locales/zh.json'), // zh-CN identical, so it falls back into zh
-  'zh-HK': require('./locales/zh-HK.json'),
-  'zh-TW': require('./locales/zh-TW.json'),
+  'zh': require('./locales/zh.json'), // aka ZH-Hans, sometimes seen as zh-CN, zh-Hans-CN, Simplified Chinese
+  'zh-HK': require('./locales/zh-HK.json'), // aka zh-Hant-HK. Note: yue-Hant-HK is not supported.
+  'zh-TW': require('./locales/zh-TW.json'), // aka zh-Hant, zh-Hant-TW, Traditional Chinese
 };
 
 module.exports = locales;

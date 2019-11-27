@@ -14,6 +14,8 @@ const LanternInteractive = require('../computed/metrics/lantern-interactive.js')
 const LanternFirstCPUIdle = require('../computed/metrics/lantern-first-cpu-idle.js');
 const LanternSpeedIndex = require('../computed/metrics/lantern-speed-index.js');
 const LanternEil = require('../computed/metrics/lantern-estimated-input-latency.js');
+// TODO: we don't have LCP in the lantern test yet. https://github.com/GoogleChrome/lighthouse/issues/9953
+// const LanternLcp = require('../computed/metrics/lantern-largest-contentful-paint.js');
 
 // Parameters (in ms) for log-normal CDF scoring. To see the curve:
 //   https://www.desmos.com/calculator/rjp0lbit8y
@@ -53,6 +55,7 @@ class PredictivePerf extends Audit {
     const ttfcpui = await LanternFirstCPUIdle.request({trace, devtoolsLog, settings}, context);
     const si = await LanternSpeedIndex.request({trace, devtoolsLog, settings}, context);
     const eil = await LanternEil.request({trace, devtoolsLog, settings}, context);
+    // const lcp = await LanternLcp.request({trace, devtoolsLog, settings}, context);
 
     const values = {
       roughEstimateOfFCP: fcp.timing,
@@ -78,6 +81,10 @@ class PredictivePerf extends Audit {
       roughEstimateOfEIL: eil.timing,
       optimisticEIL: eil.optimisticEstimate.timeInMs,
       pessimisticEIL: eil.pessimisticEstimate.timeInMs,
+
+      // roughEstimateOfLCP: lcp.timing,
+      // optimisticLCP: lcp.optimisticEstimate.timeInMs,
+      // pessimisticLCP: lcp.pessimisticEstimate.timeInMs,
     };
 
     const score = Audit.computeLogNormalScore(

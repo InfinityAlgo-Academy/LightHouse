@@ -63,9 +63,9 @@ class DetailsRenderer {
         return null;
 
       default: {
-        // @ts-ignore tsc thinks this unreachable, but ts-ignore for error message just in case.
-        const detailsType = details.type;
-        throw new Error(`Unknown type: ${detailsType}`);
+        // @ts-ignore tsc thinks this is unreachable, but be forward compatible
+        // with new unexpected detail types.
+        return this._renderUnknown(details.type, details);
       }
     }
   }
@@ -189,6 +189,22 @@ class DetailsRenderer {
   }
 
   /**
+   * @param {string} type
+   * @param {*} value
+   */
+  _renderUnknown(type, value) {
+    // eslint-disable-next-line no-console
+    console.error(`Unknown details type: ${type}`, value);
+    const element = this._dom.createElement('details', 'lh-unknown');
+    this._dom.createChildOf(element, 'summary').textContent =
+      `We don't know how to render audit details of type \`${type}\`. ` +
+      'The Lighthouse version that collected this data is likely newer than the Lighthouse ' +
+      'version of the report renderer. Expand for the raw JSON.';
+    this._dom.createChildOf(element, 'pre').textContent = JSON.stringify(value, null, 2);
+    return element;
+  }
+
+  /**
    * Render a details item value for embedding in a table. Renders the value
    * based on the heading's valueType, unless the value itself has a `type`
    * property to override it.
@@ -214,11 +230,14 @@ class DetailsRenderer {
         case 'node': {
           return this.renderNode(value);
         }
+        case 'source-location': {
+          return this.renderSourceLocation(value);
+        }
         case 'url': {
           return this.renderTextURL(value.value);
         }
         default: {
-          throw new Error(`Unknown valueType: ${value.type}`);
+          return this._renderUnknown(value.type, value);
         }
       }
     }
@@ -267,7 +286,7 @@ class DetailsRenderer {
         }
       }
       default: {
-        throw new Error(`Unknown valueType: ${heading.valueType}`);
+        return this._renderUnknown(heading.valueType, value);
       }
     }
   }
@@ -374,6 +393,36 @@ class DetailsRenderer {
     if (item.selector) element.setAttribute('data-selector', item.selector);
     if (item.snippet) element.setAttribute('data-snippet', item.snippet);
 
+    return element;
+  }
+
+  /**
+   * @param {LH.Audit.Details.SourceLocationValue} item
+   * @return {Element|null}
+   * @protected
+   */
+  renderSourceLocation(item) {
+    if (!item.url) {
+      return null;
+    }
+
+    // Lines are shown as one-indexed.
+    const line = item.line + 1;
+    const column = item.column;
+
+    let element;
+    if (item.urlProvider === 'network') {
+      element = this.renderTextURL(item.url);
+      this._dom.find('a', element).textContent += `:${line}:${column}`;
+    } else {
+      element = this._renderText(`${item.url}:${line}:${column} (from sourceURL)`);
+    }
+
+    element.classList.add('lh-source-location');
+    element.setAttribute('data-source-url', item.url);
+    // DevTools expects zero-indexed lines.
+    element.setAttribute('data-source-line', String(item.line));
+    element.setAttribute('data-source-column', String(item.column));
     return element;
   }
 

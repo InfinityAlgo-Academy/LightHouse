@@ -7,7 +7,6 @@
 
 /** @typedef {LH.Artifacts.FontSize['analyzedFailingNodesData'][0]} FailingNodeData */
 
-const URL = require('../../lib/url-shim.js');
 const i18n = require('../../lib/i18n/i18n.js');
 const Audit = require('../audit.js');
 const ComputedViewportMeta = require('../../computed/viewport-meta.js');
@@ -19,7 +18,7 @@ const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the font sizes used on the page. This descriptive title is shown to users when there is a font that may be too small to be read by users. */
   failureTitle: 'Document doesn\'t use legible font sizes',
   /** Description of a Lighthouse audit that tells the user *why* they need to use a larger font size. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  description: 'Font sizes less than 12px are too small to be legible and require mobile visitors to “pinch to zoom” in order to read. Strive to have >60% of page text ≥12px. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/font-sizes).',
+  description: 'Font sizes less than 12px are too small to be legible and require mobile visitors to “pinch to zoom” in order to read. Strive to have >60% of page text ≥12px. [Learn more](https://web.dev/font-size).',
   /** Label for the audit identifying font sizes that are too small. */
   displayValue: '{decimalProportion, number, extendedPercent} legible text',
   /** Explanatory message stating that there was a failure in an audit caused by a missing page viewport meta tag configuration. "viewport" and "meta" are HTML terms and should not be translated. */
@@ -119,80 +118,84 @@ function nodeToTableNode(node) {
  * @param {string} baseURL
  * @param {FailingNodeData['cssRule']} styleDeclaration
  * @param {FailingNodeData['node']} node
- * @returns {{source: string, selector: string | {type: 'node', selector: string, snippet: string}}}
+ * @returns {{source: LH.Audit.Details.UrlValue | LH.Audit.Details.SourceLocationValue | LH.Audit.Details.CodeValue, selector: string | LH.Audit.Details.NodeValue}}
  */
 function findStyleRuleSource(baseURL, styleDeclaration, node) {
-  if (
-    !styleDeclaration ||
+  if (!styleDeclaration ||
     styleDeclaration.type === 'Attributes' ||
     styleDeclaration.type === 'Inline'
   ) {
     return {
+      source: {type: 'url', value: baseURL},
       selector: nodeToTableNode(node),
-      source: baseURL,
     };
   }
 
   if (styleDeclaration.parentRule &&
     styleDeclaration.parentRule.origin === 'user-agent') {
     return {
+      source: {type: 'code', value: 'User Agent Stylesheet'},
       selector: styleDeclaration.parentRule.selectors.map(item => item.text).join(', '),
-      source: 'User Agent Stylesheet',
     };
   }
 
-  if (styleDeclaration.type === 'Regular' && styleDeclaration.parentRule) {
+  // Combine all the selectors for the associated style rule
+  // example: .some-selector, .other-selector {...} => `.some-selector, .other-selector`
+  let selector = '';
+  if (styleDeclaration.parentRule) {
     const rule = styleDeclaration.parentRule;
-    const stylesheet = styleDeclaration.stylesheet;
+    selector = rule.selectors.map(item => item.text).join(', ');
+  }
 
-    if (stylesheet) {
-      let source;
-      const selector = rule.selectors.map(item => item.text).join(', ');
+  if (styleDeclaration.stylesheet && !styleDeclaration.stylesheet.sourceURL) {
+    // Dynamically injected into page.
+    return {
+      source: {type: 'code', value: 'dynamic'},
+      selector,
+    };
+  }
 
-      if (stylesheet.sourceURL) {
-        const url = new URL(stylesheet.sourceURL, baseURL);
-        const range = styleDeclaration.range;
-        source = `${url.href}`;
+  // !!range == has defined location in a source file (.css or .html)
+  // sourceURL == stylesheet URL || raw value of magic `sourceURL` comment
+  // hasSourceURL == flag that signals sourceURL is the raw value of a magic `sourceURL` comment, *not* a real resource
+  if (styleDeclaration.stylesheet && styleDeclaration.range) {
+    const {range, stylesheet} = styleDeclaration;
 
-        // !!range == has defined location in a source file (.css or .html)
-        if (range) {
-          let line = range.startLine + 1;
-          let column = range.startColumn;
+    // DevTools protocol does not provide the resource URL if there is a magic `sourceURL` comment.
+    // `sourceURL` will be the raw value of the magic `sourceURL` comment, which likely refers to
+    // a file at build time, not one that is served over the network that we could link to.
+    const urlProvider = stylesheet.hasSourceURL ? 'comment' : 'network';
 
-          // Add the startLine/startColumn of the <style> element to the range, if stylesheet
-          // is inline.
-          // Always use the rule's location if a sourceURL magic comment is
-          // present (`hasSourceURL` is true) - this makes the line/col relative to the start
-          // of the style tag, which makes them relevant when the "file" is open in DevTool's
-          // Sources panel.
-          const addHtmlLocationOffset = stylesheet.isInline && !stylesheet.hasSourceURL;
-          if (addHtmlLocationOffset) {
-            line += stylesheet.startLine;
-            // The column the stylesheet begins on is only relevant if the rule is declared on the same line.
-            if (range.startLine === 0) {
-              column += stylesheet.startColumn;
-            }
-          }
+    let line = range.startLine;
+    let column = range.startColumn;
 
-          source += `:${line}:${column}`;
-        }
-      } else {
-        // dynamically injected to page
-        source = 'dynamic';
+    // Add the startLine/startColumn of the <style> element to the range, if stylesheet
+    // is inline.
+    // Always use the rule's location if a sourceURL magic comment is
+    // present (`hasSourceURL` is true) - this makes the line/col relative to the start
+    // of the style tag, which makes them relevant when the "file" is open in DevTool's
+    // Sources panel.
+    const addHtmlLocationOffset = stylesheet.isInline && urlProvider !== 'comment';
+    if (addHtmlLocationOffset) {
+      line += stylesheet.startLine;
+      // The column the stylesheet begins on is only relevant if the rule is declared on the same line.
+      if (range.startLine === 0) {
+        column += stylesheet.startColumn;
       }
-
-      return {
-        selector,
-        source,
-      };
     }
+
+    const url = stylesheet.sourceURL;
+    return {
+      source: {type: 'source-location', url, urlProvider, line, column},
+      selector,
+    };
   }
 
   // The responsible style declaration was not captured in the font-size gatherer due to
   // the rate limiting we do in `fetchFailingNodeSourceRules`.
   return {
-    selector: '',
-    source: 'Unknown',
+    selector,
+    source: {type: 'code', value: 'Unknown'},
   };
 }
 
@@ -268,7 +271,7 @@ class FontSize extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'source', itemType: 'url', text: 'Source'},
+      {key: 'source', itemType: 'source-location', text: 'Source'},
       {key: 'selector', itemType: 'code', text: 'Selector'},
       {key: 'coverage', itemType: 'text', text: '% of Page Text'},
       {key: 'fontSize', itemType: 'text', text: 'Font Size'},
@@ -293,7 +296,8 @@ class FontSize extends Audit {
         (failingTextLength - analyzedFailingTextLength) / visitedTextLength * 100;
 
       tableData.push({
-        source: 'Add\'l illegible text',
+        // Overrides default `source-location`
+        source: {type: 'code', value: 'Add\'l illegible text'},
         selector: '',
         coverage: `${percentageOfUnanalyzedFailingText.toFixed(2)}%`,
         fontSize: '< 12px',
@@ -302,7 +306,8 @@ class FontSize extends Audit {
 
     if (percentageOfPassingText > 0) {
       tableData.push({
-        source: 'Legible text',
+        // Overrides default `source-location`
+        source: {type: 'code', value: 'Legible text'},
         selector: '',
         coverage: `${percentageOfPassingText.toFixed(2)}%`,
         fontSize: '≥ 12px',

@@ -9,67 +9,94 @@
 /* eslint-disable no-console, max-len */
 
 const fs = require('fs');
+const glob = require('glob');
 const path = require('path');
 const assert = require('assert');
-const esprima = require('esprima');
-const collectAndBakeCtcStrings = require('./bake-ctc-to-lhl.js');
+const tsc = require('typescript');
+const Util = require('../../report/html/renderer/util.js');
+const {collectAndBakeCtcStrings} = require('./bake-ctc-to-lhl.js');
+const {pruneObsoleteLhlMessages} = require('./prune-obsolete-lhl-messages.js');
 
 const LH_ROOT = path.join(__dirname, '../../../');
-const UISTRINGS_REGEX = /UIStrings = (.|\s)*?\};\n/im;
+const UISTRINGS_REGEX = /UIStrings = .*?\};\n/s;
 
-/** @typedef {import('./bake-ctc-to-lhl.js').ICUMessageDefn} ICUMessageDefn */
+/** @typedef {import('./bake-ctc-to-lhl.js').CtcMessage} CtcMessage */
+/** @typedef {Required<Pick<CtcMessage, 'message'|'placeholders'>>} IncrementalCtc */
+/** @typedef {{message: string, description: string, examples: Record<string, string>}} ParsedUIString */
 
 const ignoredPathComponents = [
-  '/.git',
-  '/scripts',
-  '/node_modules',
-  '/test/',
-  '-test.js',
-  '-renderer.js',
+  '**/.git/**',
+  '**/scripts/**',
+  '**/node_modules/**',
+  '**/test/**',
+  '**/*-test.js',
+  '**/*-renderer.js',
 ];
 
+/**
+ * Extract the description and examples (if any) from a jsDoc annotation.
+ * @param {import('typescript').JSDoc|undefined} ast
+ * @param {string} message
+ * @return {{description: string, examples: Record<string, string>}}
+ */
+function computeDescription(ast, message) {
+  if (!ast) {
+    throw Error(`Missing description comment for message "${message}"`);
+  }
 
-// @ts-ignore - @types/esprima lacks all of these
-function computeDescription(ast, property, value, startRange) {
-  const endRange = property.range[0];
+  if (ast.tags) {
+    // This is a complex description with description and examples.
+    let description = '';
+    /** @type {Record<string, string>} */
+    const examples = {};
 
-  for (const comment of ast.comments || []) {
-    if (comment.range[0] < startRange) continue;
-    if (comment.range[0] > endRange) continue;
-    if (comment.value.includes('@')) {
-      // This is a complex description with description and examples.
-      let description = '';
-      /** @type {Record<string, string>} */
-      const examples = {};
+    for (const tag of ast.tags) {
+      const comment = coerceToSingleLineAndTrim(tag.comment);
 
-      const r = /@(\w+) ({.+})?(.*)(\n|$)/g;
-      let matches;
-      while ((matches = r.exec(comment.value)) !== null) {
-        const tagName = matches[1];
-        const example = matches[2];
-        const messageOrPlaceholder = matches[3].trim();
-
-        if (tagName === 'description') {
-          description = messageOrPlaceholder;
-        } else if (tagName === 'example') {
-          examples[messageOrPlaceholder] = example.substring(1, example.length - 1);
-        }
+      if (tag.tagName.text === 'description') {
+        description = comment;
+      } else if (tag.tagName.text === 'example') {
+        const {placeholderName, exampleValue} = parseExampleJsDoc(comment);
+        examples[placeholderName] = exampleValue;
+      } else {
+        // Until a compelling use case for supporting more @tags, throw to catch typos, etc.
+        throw new Error(`Unexpected tagName "@${tag.tagName.text}"`);
       }
-
-      // Make sure description is not empty
-      if (description.length === 0) throw Error(`Empty @description for message "${value}"`);
-      return {description, examples};
     }
 
-    const description = comment.value.replace('*', '').trim();
-
-    // Make sure description is not empty
-    if (description.length === 0) throw Error(`Empty description for message "${value}"`);
-
-    // The entire comment is the description, so return everything.
-    return {description};
+    if (description.length === 0) throw Error(`Empty @description for message "${message}"`);
+    return {description, examples};
   }
-  throw Error(`No Description for message "${value}"`);
+
+  if (ast.comment) {
+    // The entire comment is the description, so return everything.
+    return {description: coerceToSingleLineAndTrim(ast.comment), examples: {}};
+  }
+
+  throw Error(`Missing description comment for message "${message}"`);
+}
+
+/**
+ * Collapses a jsdoc comment into a single line and trims whitespace.
+ * @param {string=} comment
+ * @return {string}
+ */
+function coerceToSingleLineAndTrim(comment = '') {
+  // Line breaks within a jsdoc comment should always be replaceable with a space.
+  return comment.replace(/\n+/g, ' ').trim();
+}
+
+/**
+ * Parses a string of the form `{exampleValue} placeholderName`, parsed by tsc
+ * as the content of an `@example` tag.
+ * @param {string} rawExample
+ * @return {{placeholderName: string, exampleValue: string}}
+ */
+function parseExampleJsDoc(rawExample) {
+  const match = rawExample.match(/^{(?<exampleValue>[^}]+)} (?<placeholderName>.+)$/);
+  if (!match || !match.groups) throw new Error(`Incorrectly formatted @example: "${rawExample}"`);
+  const {placeholderName, exampleValue} = match.groups;
+  return {placeholderName, exampleValue};
 }
 
 /**
@@ -103,61 +130,56 @@ function computeDescription(ast, property, value, startRange) {
  *
  * @param {string} message
  * @param {Record<string, string>} examples
- * @return {ICUMessageDefn}
+ * @return {IncrementalCtc}
  */
 function convertMessageToCtc(message, examples = {}) {
-  const icuDefn = {
+  /** @type {IncrementalCtc} */
+  const ctc = {
     message,
     placeholders: {},
   };
 
   // Process each placeholder type
-  _processPlaceholderMarkdownCode(icuDefn);
+  _processPlaceholderMarkdownCode(ctc);
 
-  _processPlaceholderMarkdownLink(icuDefn);
+  _processPlaceholderMarkdownLink(ctc);
 
-  _processPlaceholderCustomFormattedIcu(icuDefn);
+  _processPlaceholderCustomFormattedIcu(ctc);
 
-  _processPlaceholderDirectIcu(icuDefn, examples);
+  _processPlaceholderDirectIcu(ctc, examples);
 
-  _ctcSanityChecks(icuDefn);
+  _ctcSanityChecks(ctc);
 
-  if (Object.entries(icuDefn.placeholders).length === 0) {
-    // @ts-ignore - if this is empty then force undefined so that it does not appear in the JSON
-    icuDefn.placeholders = undefined;
-  }
-
-  return icuDefn;
+  return ctc;
 }
 
 /**
  * Convert code spans into placeholders with examples.
  *
- * @param {ICUMessageDefn} icu
+ * @param {IncrementalCtc} icu
  */
 function _processPlaceholderMarkdownCode(icu) {
+  const message = icu.message;
+
   // Check that number of backticks is even.
-  const match = icu.message.match(/`/g);
+  const match = message.match(/`/g);
   if (match && match.length % 2 !== 0) {
-    throw Error(`Open backtick in message "${icu.message}"`);
+    throw Error(`Open backtick in message "${message}"`);
   }
 
-  // Split on backticked code spans
-  const parts = icu.message.split(/`(.*?)`/g);
   icu.message = '';
   let idx = 0;
-  while (parts.length) {
-    // Pop off the same number of elements as there are capture groups.
-    const [preambleText, codeText] = parts.splice(0, 2);
-    icu.message += preambleText;
-    if (codeText) {
+  for (const segment of Util.splitMarkdownCodeSpans(message)) {
+    if (segment.isCode) {
       const placeholderName = `MARKDOWN_SNIPPET_${idx++}`;
       // Backtick replacement looks unreadable here, so .join() instead.
       icu.message += '$' + placeholderName + '$';
       icu.placeholders[placeholderName] = {
-        content: '`' + codeText + '`',
-        example: codeText,
+        content: '`' + segment.text + '`',
+        example: segment.text,
       };
+    } else {
+      icu.message += segment.text;
     }
   }
 }
@@ -165,38 +187,42 @@ function _processPlaceholderMarkdownCode(icu) {
 /**
  * Convert markdown html links into placeholders.
  *
- * @param {ICUMessageDefn} icu
+ * @param {IncrementalCtc} icu
  */
 function _processPlaceholderMarkdownLink(icu) {
+  const message = icu.message;
+
   // Check for markdown link common errors, ex:
   // * [extra] (space between brackets and parens)
-  if (icu.message.match(/\[.*\] \(.*\)/)) {
-    throw Error(`Bad Link syntax in message "${icu.message}"`);
+  if (message.match(/\[.*\] \(.*\)/)) {
+    throw Error(`Bad Link spacing in message "${message}"`);
+  }
+  // * [](empty link text)
+  if (message.match(/\[\]\(.*\)/)) {
+    throw Error(`markdown link text missing in message "${message}"`);
   }
 
-  // Split on markdown links (e.g. [some link](https://...)).
-  const parts = icu.message.split(/\[([^\]]*?)\]\((https?:\/\/.*?)\)/g);
   icu.message = '';
   let idx = 0;
 
-  while (parts.length) {
-    // Pop off the same number of elements as there are capture groups.
-    const [preambleText, linkText, linkHref] = parts.splice(0, 3);
-    icu.message += preambleText;
-
-    // Append link if there are any.
-    if (linkText && linkHref) {
-      const startPlaceholder = `LINK_START_${idx}`;
-      const endPlaceholder = `LINK_END_${idx}`;
-      icu.message += '$' + startPlaceholder + '$' + linkText + '$' + endPlaceholder + '$';
-      idx++;
-      icu.placeholders[startPlaceholder] = {
-        content: '[',
-      };
-      icu.placeholders[endPlaceholder] = {
-        content: `](${linkHref})`,
-      };
+  for (const segment of Util.splitMarkdownLink(message)) {
+    if (!segment.isLink) {
+      // Plain text segment.
+      icu.message += segment.text;
+      continue;
     }
+
+    // Otherwise, append any links found.
+    const startPlaceholder = `LINK_START_${idx}`;
+    const endPlaceholder = `LINK_END_${idx}`;
+    icu.message += '$' + startPlaceholder + '$' + segment.text + '$' + endPlaceholder + '$';
+    idx++;
+    icu.placeholders[startPlaceholder] = {
+      content: '[',
+    };
+    icu.placeholders[endPlaceholder] = {
+      content: `](${segment.linkHref})`,
+    };
   }
 }
 
@@ -215,7 +241,7 @@ function _processPlaceholderMarkdownLink(icu) {
  *    }
  *  }
  *
- * @param {ICUMessageDefn} icu
+ * @param {IncrementalCtc} icu
  */
 function _processPlaceholderCustomFormattedIcu(icu) {
   // Split on custom-formatted ICU: {var, number, type}
@@ -275,7 +301,7 @@ function _processPlaceholderCustomFormattedIcu(icu) {
 /**
  * Add examples for direct ICU replacement.
  *
- * @param {ICUMessageDefn} icu
+ * @param {IncrementalCtc} icu
  * @param {Record<string, string>} examples
  */
 function _processPlaceholderDirectIcu(icu, examples) {
@@ -288,7 +314,7 @@ function _processPlaceholderDirectIcu(icu, examples) {
   while ((matches = findIcu.exec(tempMessage)) !== null) {
     const varName = matches[1];
     if (!examples[varName]) {
-      throw Error(`Variable '${varName}' is missing example comment in message "${tempMessage}"`);
+      throw Error(`Variable '${varName}' is missing @example comment in message "${tempMessage}"`);
     }
   }
 
@@ -312,7 +338,7 @@ function _processPlaceholderDirectIcu(icu, examples) {
  * Do some basic sanity checks to a ctc object to confirm that it is valid. Future
  * ctc regression catching should go here.
  *
- * @param {ICUMessageDefn} icu the ctc output message to verify
+ * @param {IncrementalCtc} icu the ctc output message to verify
  */
 function _ctcSanityChecks(icu) {
   // '$$' i.e. "Double Dollar" is always invalid in ctc.
@@ -327,13 +353,14 @@ function _ctcSanityChecks(icu) {
  * done while messages are in `ctc` format, and therefore modifies only the
  * messages themselves while leaving placeholders untouched.
  *
- * @param {Record<string, ICUMessageDefn>} messages
+ * @param {Record<string, CtcMessage>} messages
+ * @return {Record<string, CtcMessage>}
  */
 function createPsuedoLocaleStrings(messages) {
-  /** @type {Record<string, ICUMessageDefn>} */
+  /** @type {Record<string, CtcMessage>} */
   const psuedoLocalizedStrings = {};
-  for (const [key, defn] of Object.entries(messages)) {
-    const message = defn.message;
+  for (const [key, ctc] of Object.entries(messages)) {
+    const message = ctc.message;
     const psuedoLocalizedString = [];
     let braceCount = 0;
     let inPlaceholder = false;
@@ -369,10 +396,65 @@ function createPsuedoLocaleStrings(messages) {
     }
     psuedoLocalizedStrings[key] = {
       message: psuedoLocalizedString.join(''),
-      placeholders: defn.placeholders,
+      description: ctc.description,
+      placeholders: ctc.placeholders,
     };
   }
   return psuedoLocalizedStrings;
+}
+
+/**
+ * Helper function that retrieves the text identifier of a named node in the tsc AST.
+ * @param {import('typescript').NamedDeclaration} node
+ * @return {string}
+ */
+function getIdentifier(node) {
+  if (!node.name || !tsc.isIdentifier(node.name)) throw new Error('no Identifier found');
+
+  return node.name.text;
+}
+
+/**
+ * @param {string} sourceStr String of the form 'const UIStrings = {...}'.
+ * @param {Record<string, string>} liveUIStrings The actual imported UIStrings object.
+ * @return {Record<string, ParsedUIString>}
+ */
+function parseUIStrings(sourceStr, liveUIStrings) {
+  const tsAst = tsc.createSourceFile('uistrings', sourceStr, tsc.ScriptTarget.ES2019, true, tsc.ScriptKind.JS);
+
+  const extractionError = new Error('UIStrings declaration was not extracted correctly by the collect-strings regex.');
+  const uiStringsStatement = tsAst.statements[0];
+  if (tsAst.statements.length !== 1) throw extractionError;
+  if (!tsc.isVariableStatement(uiStringsStatement)) throw extractionError;
+
+  const uiStringsDeclaration = uiStringsStatement.declarationList.declarations[0];
+  if (!tsc.isVariableDeclaration(uiStringsDeclaration)) throw extractionError;
+  if (getIdentifier(uiStringsDeclaration) !== 'UIStrings') throw extractionError;
+
+  const uiStringsObject = uiStringsDeclaration.initializer;
+  if (!uiStringsObject || !tsc.isObjectLiteralExpression(uiStringsObject)) throw extractionError;
+
+  /** @type {Record<string, ParsedUIString>} */
+  const parsedMessages = {};
+
+  for (const property of uiStringsObject.properties) {
+    const key = getIdentifier(property);
+
+    // Use live message to avoid having to e.g. concat strings broken into parts.
+    const message = liveUIStrings[key];
+
+    // @ts-ignore - Not part of the public tsc interface yet.
+    const jsDocComments = tsc.getJSDocCommentsAndTags(property);
+    const {description, examples} = computeDescription(jsDocComments[0], message);
+
+    parsedMessages[key] = {
+      message,
+      description,
+      examples,
+    };
+  }
+
+  return parsedMessages;
 }
 
 /** @type {Map<string, string>} */
@@ -382,83 +464,76 @@ const seenStrings = new Map();
 let collisions = 0;
 
 /**
- * @param {string} dir
- * @param {Record<string, ICUMessageDefn>} strings
+ * Collects all LHL messsages defined in UIString from Javascript files in dir,
+ * and converts them into CTC.
+ * @param {string} dir absolute path
+ * @return {Record<string, CtcMessage>}
  */
-function collectAllStringsInDir(dir, strings = {}) {
-  for (const name of fs.readdirSync(dir)) {
-    const fullPath = path.join(dir, name);
-    const relativePath = path.relative(LH_ROOT, fullPath);
-    if (ignoredPathComponents.some(p => fullPath.includes(p))) continue;
+function collectAllStringsInDir(dir) {
+  /** @type {Record<string, CtcMessage>} */
+  const strings = {};
 
-    if (fs.statSync(fullPath).isDirectory()) {
-      collectAllStringsInDir(fullPath, strings);
-    } else {
-      if (name.endsWith('.js')) {
-        if (!process.env.CI) console.log('Collecting from', relativePath);
-        const content = fs.readFileSync(fullPath, 'utf8');
-        const exportVars = require(fullPath);
-        const regexMatches = !!UISTRINGS_REGEX.test(content);
-        const exportsUIStrings = !!exportVars.UIStrings;
-        if (!regexMatches && !exportsUIStrings) continue;
+  const globPattern = path.join(path.relative(LH_ROOT, dir), '/**/*.js');
+  const files = glob.sync(globPattern, {
+    cwd: LH_ROOT,
+    ignore: ignoredPathComponents,
+  });
+  for (const relativeToRootPath of files) {
+    const absolutePath = path.join(LH_ROOT, relativeToRootPath);
+    if (!process.env.CI) console.log('Collecting from', relativeToRootPath);
 
-        if (regexMatches && !exportsUIStrings) {
-          throw new Error('UIStrings defined but not exported');
-        }
+    const content = fs.readFileSync(absolutePath, 'utf8');
+    const exportVars = require(absolutePath);
+    const regexMatch = content.match(UISTRINGS_REGEX);
+    const exportedUIStrings = exportVars.UIStrings;
 
-        if (exportsUIStrings && !regexMatches) {
-          throw new Error('UIStrings exported but no definition found');
-        }
+    if (!regexMatch) {
+      // No UIStrings found in the file text or exports, so move to the next.
+      if (!exportedUIStrings) continue;
 
-        // @ts-ignore regex just matched
-        const justUIStrings = 'const ' + content.match(UISTRINGS_REGEX)[0];
-        // just parse the UIStrings substring to avoid ES version issues, save time, etc
-        // @ts-ignore - esprima's type definition is supremely lacking
-        const ast = esprima.parse(justUIStrings, {comment: true, range: true});
+      throw new Error('UIStrings exported but no definition found');
+    }
 
-        for (const stmt of ast.body) {
-          if (stmt.type !== 'VariableDeclaration') continue;
-          if (stmt.declarations[0].id.name !== 'UIStrings') continue;
+    if (!exportedUIStrings) {
+      throw new Error('UIStrings defined in file but not exported');
+    }
 
-          let lastPropertyEndIndex = 0;
-          for (const property of stmt.declarations[0].init.properties) {
-            const key = property.key.name;
-            const val = exportVars.UIStrings[key];
-            const {description, examples} = computeDescription(ast, property, val, lastPropertyEndIndex);
+    // just parse the UIStrings substring to avoid ES version issues, save time, etc
+    const justUIStrings = 'const ' + regexMatch[0];
+    const parsedMessages = parseUIStrings(justUIStrings, exportedUIStrings);
 
-            const converted = convertMessageToCtc(val, examples);
+    for (const [key, parsed] of Object.entries(parsedMessages)) {
+      const {message, description, examples} = parsed;
+      const converted = convertMessageToCtc(message, examples);
 
-            const messageKey = `${relativePath} | ${key}`;
+      // Don't include placeholders if there are none.
+      const placeholders = Object.keys(converted.placeholders).length === 0 ?
+          undefined :
+          converted.placeholders;
 
-            /** @type {ICUMessageDefn} */
-            const icuDefn = {
-              message: converted.message,
-              description,
-              placeholders: converted.placeholders,
-            };
+      /** @type {CtcMessage} */
+      const ctc = {
+        message: converted.message,
+        description,
+        placeholders,
+      };
 
-            // check for duplicates, if duplicate, add @description as @meaning to both
-            if (seenStrings.has(icuDefn.message)) {
-              icuDefn.meaning = icuDefn.description;
-              const seenId = seenStrings.get(icuDefn.message);
-              if (seenId) {
-                if (!strings[seenId].meaning) {
-                  strings[seenId].meaning = strings[seenId].description;
-                  collisions++;
-                }
-                collisions++;
-              }
-            }
+      const messageKey = `${relativeToRootPath} | ${key}`;
+      strings[messageKey] = ctc;
 
-            seenStrings.set(icuDefn.message, messageKey);
-
-
-            strings[messageKey] = icuDefn;
-
-            lastPropertyEndIndex = property.range[1];
+      // check for duplicates, if duplicate, add @description as @meaning to both
+      if (seenStrings.has(ctc.message)) {
+        ctc.meaning = ctc.description;
+        const seenId = seenStrings.get(ctc.message);
+        if (seenId) {
+          if (!strings[seenId].meaning) {
+            strings[seenId].meaning = strings[seenId].description;
+            collisions++;
           }
+          collisions++;
         }
       }
+      seenStrings.set(ctc.message, messageKey);
     }
   }
 
@@ -467,11 +542,11 @@ function collectAllStringsInDir(dir, strings = {}) {
 
 /**
  * @param {string} locale
- * @param {Record<string, ICUMessageDefn>} strings
+ * @param {Record<string, CtcMessage>} strings
  */
 function writeStringsToCtcFiles(locale, strings) {
   const fullPath = path.join(LH_ROOT, `lighthouse-core/lib/i18n/locales/${locale}.ctc.json`);
-  /** @type {Record<string, ICUMessageDefn>} */
+  /** @type {Record<string, CtcMessage>} */
   const output = {};
   const sortedEntries = Object.entries(strings).sort(([keyA], [keyB]) => keyA.localeCompare(keyB));
   for (const [key, defn] of sortedEntries) {
@@ -483,10 +558,10 @@ function writeStringsToCtcFiles(locale, strings) {
 
 // @ts-ignore Test if called from the CLI or as a module.
 if (require.main === module) {
-  const strings = collectAllStringsInDir(path.join(LH_ROOT, 'lighthouse-core'));
+  const coreStrings = collectAllStringsInDir(path.join(LH_ROOT, 'lighthouse-core'));
   console.log('Collected from LH core!');
 
-  collectAllStringsInDir(path.join(LH_ROOT, 'stack-packs/packs'), strings);
+  const stackPackStrings = collectAllStringsInDir(path.join(LH_ROOT, 'stack-packs/packs'));
   console.log('Collected from Stack Packs!');
 
   if ((collisions) > 0) {
@@ -494,6 +569,7 @@ if (require.main === module) {
     console.log(`MEANING COLLISION: ${collisions} string(s) have the same content.`);
   }
 
+  const strings = {...coreStrings, ...stackPackStrings};
   writeStringsToCtcFiles('en-US', strings);
   console.log('Written to disk!', 'en-US.ctc.json');
   // Generate local pseudolocalized files for debugging while translating
@@ -501,15 +577,19 @@ if (require.main === module) {
   console.log('Written to disk!', 'en-XL.ctc.json');
 
   // Bake the ctc en-US and en-XL files into en-US and en-XL LHL format
-  const lhl = collectAndBakeCtcStrings.collectAndBakeCtcStrings(path.join(LH_ROOT, 'lighthouse-core/lib/i18n/locales/'),
-  path.join(LH_ROOT, 'lighthouse-core/lib/i18n/locales/'));
+  const lhl = collectAndBakeCtcStrings(path.join(LH_ROOT, 'lighthouse-core/lib/i18n/locales/'),
+      path.join(LH_ROOT, 'lighthouse-core/lib/i18n/locales/'));
   lhl.forEach(function(locale) {
     console.log(`Baked ${locale} into LHL format.`);
   });
+
+  // Remove any obsolete strings in existing LHL files.
+  console.log('Checking for out-of-date LHL messages...');
+  pruneObsoleteLhlMessages();
 }
 
 module.exports = {
-  computeDescription,
+  parseUIStrings,
   createPsuedoLocaleStrings,
-  convertMessageToPlaceholders: convertMessageToCtc,
+  convertMessageToCtc,
 };

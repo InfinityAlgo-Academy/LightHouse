@@ -27,13 +27,16 @@ for (const site of expectations.sites) {
   const log = path.join(SITE_INDEX_DIR, site.unthrottled.devtoolsLogPath);
 
   console.log('Running', site.url, '...');
-  const rawOutput = execFileSync(RUN_ONCE_PATH, [trace, log])
-    .toString()
-    .trim();
-  if (!rawOutput) console.log('ERROR EMPTY OUTPUT!');
-  const lantern = JSON.parse(rawOutput);
-
-  Object.assign(site, {lantern});
+  try {
+    const rawOutput = execFileSync(RUN_ONCE_PATH, [trace, log])
+      .toString()
+      .trim();
+    if (!rawOutput) console.log('ERROR EMPTY OUTPUT!');
+    const lantern = JSON.parse(rawOutput);
+    Object.assign(site, {lantern});
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 // eslint-disable-next-line max-len

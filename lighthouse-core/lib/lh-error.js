@@ -100,7 +100,8 @@ class LighthouseError extends Error {
     super(errorDefinition.code);
     this.name = 'LHError';
     this.code = errorDefinition.code;
-    // Insert the i18n reference with errorCode and all additional ICU replacement properties.
+    // Add additional properties to be ICU replacements in the error string.
+    // `code` is always added as `errorCode` so callers don't need to specify the code multiple times.
     this.friendlyMessage = str_(errorDefinition.message, {errorCode: this.code, ...properties});
     this.lhrRuntimeError = !!errorDefinition.lhrRuntimeError;
     if (properties) Object.assign(this, properties);
@@ -119,10 +120,7 @@ class LighthouseError extends Error {
     // if we find one, use the friendly LighthouseError definition
     const matchedErrorDefinition = protocolErrors.find(e => e.pattern.test(protocolError.message));
     if (matchedErrorDefinition) {
-      return new LighthouseError(matchedErrorDefinition, {
-        protocolMethod: method,
-        protocolError: protocolError.message,
-      });
+      return new LighthouseError(matchedErrorDefinition);
     }
 
     // otherwise fallback to building a generic Error
@@ -250,6 +248,10 @@ const ERRORS = {
   },
   NO_FMP: {
     code: 'NO_FMP',
+    message: UIStrings.badTraceRecording,
+  },
+  NO_LCP: {
+    code: 'NO_LCP',
     message: UIStrings.badTraceRecording,
   },
 

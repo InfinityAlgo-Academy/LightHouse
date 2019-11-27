@@ -92,16 +92,15 @@ In order to extend the Lighthouse configuration programmatically, you need to pa
   settings: {
     onlyAudits: [
       'first-meaningful-paint',
-      'speed-index-metric',
-      'estimated-input-latency',
-      'first-interactive',
-      'consistently-interactive',
+      'speed-index',
+      'first-cpu-idle',
+      'interactive',
     ],
   },
 }
 ```
 
-You can extend base configuration from either [lighthouse:default](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/default-config.js) or [lighthouse:full](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/full-config.js). Alternatively, you can build up your own configuration from scratch to have complete control.
+You can extend base configuration from [lighthouse:default](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/default-config.js), or you can build up your own configuration from scratch to have complete control.
 
 For more information on the types of config you can provide, see [Lighthouse Configuration](https://github.com/GoogleChrome/lighthouse/blob/master/docs/configuration.md).
 

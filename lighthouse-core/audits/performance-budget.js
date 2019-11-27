@@ -7,6 +7,8 @@
 
 const Audit = require('./audit.js');
 const ResourceSummary = require('../computed/resource-summary.js');
+const MainResource = require('../computed/main-resource.js');
+const Budget = require('../config/budget.js');
 const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -20,8 +22,6 @@ const UIStrings = {
     =1 {1 request}
     other {# requests}
    }`,
-  /** Label for a column in a data table; entries will be how much the quantity or size of network requests exceeded a predetermined budget.*/
-  columnOverBudget: 'Over Budget',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -121,7 +121,8 @@ class ResourceBudget extends Audit {
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const summary = await ResourceSummary.request({devtoolsLog, URL: artifacts.URL}, context);
-    const budget = context.settings.budgets ? context.settings.budgets[0] : undefined;
+    const mainResource = await MainResource.request({URL: artifacts.URL, devtoolsLog}, context);
+    const budget = Budget.getMatchingBudget(context.settings.budgets, mainResource.url);
 
     if (!budget) {
       return {
@@ -130,13 +131,13 @@ class ResourceBudget extends Audit {
       };
     }
 
-    /** @type { LH.Audit.Details.Table['headings'] } */
+    /** @type {LH.Audit.Details.Table['headings']} */
     const headers = [
       {key: 'label', itemType: 'text', text: str_(i18n.UIStrings.columnResourceType)},
       {key: 'requestCount', itemType: 'numeric', text: str_(i18n.UIStrings.columnRequests)},
       {key: 'size', itemType: 'bytes', text: str_(i18n.UIStrings.columnTransferSize)},
       {key: 'countOverBudget', itemType: 'text', text: ''},
-      {key: 'sizeOverBudget', itemType: 'bytes', text: str_(UIStrings.columnOverBudget)},
+      {key: 'sizeOverBudget', itemType: 'bytes', text: str_(i18n.UIStrings.columnOverBudget)},
     ];
 
     return {

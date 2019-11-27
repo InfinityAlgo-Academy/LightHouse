@@ -9,7 +9,7 @@ const log = require('lighthouse-logger');
 const manifestParser = require('../lib/manifest-parser.js');
 const stacksGatherer = require('../lib/stack-collector.js');
 const LHError = require('../lib/lh-error.js');
-const URL = require('../lib/url-shim.js');
+const NetworkAnalyzer = require('../lib/dependency-graph/simulator/network-analyzer.js');
 const NetworkRecorder = require('../lib/network-recorder.js');
 const constants = require('../config/constants.js');
 const i18n = require('../lib/i18n/i18n.js');
@@ -132,16 +132,10 @@ class GatherRunner {
 
   /**
    * Returns an error if the original network request failed or wasn't found.
-   * @param {string} url The URL of the original requested page.
-   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
+   * @param {LH.Artifacts.NetworkRequest|undefined} mainRecord
    * @return {LH.LighthouseError|undefined}
    */
-  static getNetworkError(url, networkRecords) {
-    const mainRecord = networkRecords.find(record => {
-      // record.url is actual request url, so needs to be compared without any URL fragment.
-      return URL.equalWithExcludedFragments(record.url, url);
-    });
-
+  static getNetworkError(mainRecord) {
     if (!mainRecord) {
       return new LHError(LHError.errors.NO_DOCUMENT_REQUEST);
     } else if (mainRecord.failed) {
@@ -170,32 +164,31 @@ class GatherRunner {
 
   /**
    * Returns an error if we ended up on the `chrome-error` page and all other requests failed.
+   * @param {LH.Artifacts.NetworkRequest|undefined} mainRecord
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @return {LH.LighthouseError|undefined}
    */
-  static getInterstitialError(networkRecords) {
+  static getInterstitialError(mainRecord, networkRecords) {
+    // If we never requested a document, there's no interstitial error, let other cases handle it.
+    if (!mainRecord) return undefined;
+
     const interstitialRequest = networkRecords
       .find(record => record.documentURL.startsWith('chrome-error://'));
     // If the page didn't end up on a chrome interstitial, there's no error here.
     if (!interstitialRequest) return undefined;
 
-    const pageNetworkRecords = networkRecords
-      .filter(record => !URL.NON_NETWORK_PROTOCOLS.includes(record.protocol) &&
-        !record.documentURL.startsWith('chrome-error://'));
-    // If none of the requests failed, there's no error here.
-    // We don't expect that this case could ever occur, but better safe than sorry.
-    // Note also that in cases of redirects, the initial requests could succeed and we still end up
-    // on the error interstitial page.
-    if (!pageNetworkRecords.some(record => record.failed)) return undefined;
+    // If the main document didn't fail, we didn't end up on an interstitial.
+    // FIXME: This doesn't handle client-side redirects.
+    // None of our error-handling deals with this case either because passContext.url doesn't handle non-network redirects.
+    if (!mainRecord.failed) return undefined;
 
     // If a request failed with the `net::ERR_CERT_*` collection of errors, then it's a security issue.
-    const insecureRequest = pageNetworkRecords.find(record =>
-      record.failed && record.localizedFailDescription.startsWith('net::ERR_CERT'));
-    if (insecureRequest) {
+    if (mainRecord.localizedFailDescription.startsWith('net::ERR_CERT')) {
       return new LHError(LHError.errors.INSECURE_DOCUMENT_REQUEST, {securityMessages:
-        insecureRequest.localizedFailDescription});
+        mainRecord.localizedFailDescription});
     }
 
+    // If we made it this far, it's a generic Chrome interstitial error.
     return new LHError(LHError.errors.CHROME_INTERSTITIAL_ERROR);
   }
 
@@ -204,12 +197,19 @@ class GatherRunner {
    * main document request failure, a security issue, etc.
    * @param {LH.Gatherer.PassContext} passContext
    * @param {LH.Gatherer.LoadData} loadData
-   * @param {LighthouseError|undefined} navigationError
-   * @return {LighthouseError|undefined}
+   * @param {LH.LighthouseError|undefined} navigationError
+   * @return {LH.LighthouseError|undefined}
    */
   static getPageLoadError(passContext, loadData, navigationError) {
-    const networkError = GatherRunner.getNetworkError(passContext.url, loadData.networkRecords);
-    const interstitialError = GatherRunner.getInterstitialError(loadData.networkRecords);
+    const {networkRecords} = loadData;
+    /** @type {LH.Artifacts.NetworkRequest|undefined} */
+    let mainRecord;
+    try {
+      mainRecord = NetworkAnalyzer.findMainDocument(networkRecords, passContext.url);
+    } catch (_) {}
+
+    const networkError = GatherRunner.getNetworkError(mainRecord);
+    const interstitialError = GatherRunner.getInterstitialError(mainRecord, networkRecords);
 
     // If the driver was offline, the load will fail without offline support. Ignore this case.
     if (!passContext.driver.online) return;
@@ -456,14 +456,16 @@ class GatherRunner {
 
     const {emulatedFormFactor} = options.settings;
     // Whether Lighthouse was run on a mobile device (i.e. not on a desktop machine).
-    const IsMobileHost = hostUserAgent.includes('Android') || hostUserAgent.includes('Mobile');
+    const HostFormFactor = hostUserAgent.includes('Android') || hostUserAgent.includes('Mobile') ?
+      'mobile' : 'desktop';
     const TestedAsMobileDevice = emulatedFormFactor === 'mobile' ||
-      (emulatedFormFactor !== 'desktop' && IsMobileHost);
+      (emulatedFormFactor !== 'desktop' && HostFormFactor === 'mobile');
 
     return {
       fetchTime: (new Date()).toJSON(),
       LighthouseRunWarnings: [],
       TestedAsMobileDevice,
+      HostFormFactor,
       HostUserAgent: hostUserAgent,
       NetworkUserAgent: '', // updated later
       BenchmarkIndex: 0, // updated later
@@ -597,11 +599,12 @@ class GatherRunner {
   }
 
   /**
-   * Returns whether this pass should be considered to be measuring performance.
+   * Returns whether this pass should clear the caches.
+   * Only if it is a performance run and the settings don't disable it.
    * @param {LH.Gatherer.PassContext} passContext
    * @return {boolean}
    */
-  static isPerfPass(passContext) {
+  static shouldClearCaches(passContext) {
     const {settings, passConfig} = passContext;
     return !settings.disableStorageReset && passConfig.recordTrace && passConfig.useThrottling;
   }
@@ -631,8 +634,9 @@ class GatherRunner {
     // Go to about:blank, set up, and run `beforePass()` on gatherers.
     await GatherRunner.loadBlank(driver, passConfig.blankPage);
     await GatherRunner.setupPassNetwork(passContext);
-    const isPerfPass = GatherRunner.isPerfPass(passContext);
-    if (isPerfPass) await driver.cleanBrowserCaches(); // Clear disk & memory cache if it's a perf run
+    if (GatherRunner.shouldClearCaches(passContext)) {
+      await driver.cleanBrowserCaches(); // Clear disk & memory cache if it's a perf run
+    }
     await GatherRunner.beforePass(passContext, gathererResults);
 
     // Navigate, start recording, and run `pass()` on gatherers.

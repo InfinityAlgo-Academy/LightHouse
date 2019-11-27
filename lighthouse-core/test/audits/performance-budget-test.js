@@ -23,7 +23,7 @@ describe('Performance: Resource budgets audit', () => {
           {url: 'http://third-party.com/file.jpg', resourceType: 'Image', transferSize: 70},
         ]),
       },
-      URL: {requestedURL: 'http://example.com', finalURL: 'http://example.com'},
+      URL: {requestedUrl: 'http://example.com', finalUrl: 'http://example.com'},
     };
     context = {computedCache: new Map(), settings: {}};
   });
@@ -31,6 +31,7 @@ describe('Performance: Resource budgets audit', () => {
   describe('with a budget.json', () => {
     beforeEach(() => {
       context.settings.budgets = [{
+        path: '/',
         resourceSizes: [
           {
             resourceType: 'script',
@@ -86,6 +87,7 @@ describe('Performance: Resource budgets audit', () => {
 
       it('convert budgets from kilobytes to bytes during calculations', async () => {
         context.settings.budgets = [{
+          path: '/',
           resourceSizes: [
             {
               resourceType: 'document',
@@ -105,6 +107,7 @@ describe('Performance: Resource budgets audit', () => {
 
     it('sorts rows by descending file size overage', async () => {
       context.settings.budgets = [{
+        path: '/',
         resourceSizes: [
           {
             resourceType: 'document',
@@ -126,39 +129,72 @@ describe('Performance: Resource budgets audit', () => {
         expect(item.size).toBeGreaterThanOrEqual(items[index + 1].size);
       });
     });
-
-    it('uses the first budget in budgets', async () => {
-      context.settings.budgets = [{
-        resourceSizes: [
-          {
-            resourceType: 'image',
-            budget: 0,
-          },
-        ],
-      },
-      {
-        resourceSizes: [
-          {
-            resourceType: 'script',
-            budget: 0,
-          },
-        ],
-      },
-      ];
-      const result = await ResourceBudgetAudit.audit(artifacts, context);
-      expect(result.details.items[0].resourceType).toBe('image');
-    });
   });
 
-  describe('without a budget.json', () => {
-    beforeEach(() => {
-      context.settings.budgets = null;
+  describe('budget selection', () => {
+    describe('with a matching budget', () => {
+      it('applies the correct budget', async () => {
+        context.settings.budgets = [{
+          path: '/',
+          resourceSizes: [
+            {
+              resourceType: 'script',
+              budget: 0,
+            },
+          ],
+        },
+        {
+          path: '/file.html',
+          resourceSizes: [
+            {
+              resourceType: 'image',
+              budget: 0,
+            },
+          ],
+        },
+        {
+          path: '/not-a-match',
+          resourceSizes: [
+            {
+              resourceType: 'document',
+              budget: 0,
+            },
+          ],
+        },
+        ];
+        const result = await ResourceBudgetAudit.audit(artifacts, context);
+        expect(result.details.items[0].resourceType).toBe('image');
+      });
     });
 
-    it('audit does not apply', async () => {
-      const result = await ResourceBudgetAudit.audit(artifacts, context);
-      expect(result.details).toBeUndefined();
-      expect(result.notApplicable).toBe(true);
+    describe('without a matching budget', () => {
+      it('returns "audit does not apply"', async () => {
+        context.settings.budgets = [{
+          path: '/not-a-match',
+          resourceSizes: [
+            {
+              resourceType: 'script',
+              budget: 0,
+            },
+          ],
+        },
+        ];
+        const result = await ResourceBudgetAudit.audit(artifacts, context);
+        expect(result.details).toBeUndefined();
+        expect(result.notApplicable).toBe(true);
+      });
+    });
+
+    describe('without a budget.json', () => {
+      beforeEach(() => {
+        context.settings.budgets = null;
+      });
+
+      it('returns "audit does not apply"', async () => {
+        const result = await ResourceBudgetAudit.audit(artifacts, context);
+        expect(result.details).toBeUndefined();
+        expect(result.notApplicable).toBe(true);
+      });
     });
   });
 });

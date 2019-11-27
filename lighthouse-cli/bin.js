@@ -107,8 +107,8 @@ async function begin() {
         ' Please use "--emulated-form-factor=none" instead.');
   }
 
-  if (cliFlags.extraHeaders) {
-    // TODO: LH.Flags.extraHeaders is actually a string at this point, but needs to be
+  if (typeof cliFlags.extraHeaders === 'string') {
+    // TODO: LH.Flags.extraHeaders is sometimes actually a string at this point, but needs to be
     // copied over to LH.Settings.extraHeaders, which is LH.Crdp.Network.Headers. Force
     // the conversion here, but long term either the CLI flag or the setting should have
     // a different name.

@@ -10,7 +10,6 @@
 /* eslint-disable no-console */
 const fs = require('fs');
 const path = require('path');
-const mkdirp = require('mkdirp').sync;
 const rimraf = require('rimraf').sync;
 const swapLocale = require('../lib/i18n/swap-locale.js');
 
@@ -45,7 +44,7 @@ const DIST = path.join(__dirname, `../../dist/now`);
         html = html.replace(`"lh-root lh-vars"`, `"lh-root lh-vars lh-devtools"`);
       }
       const filepath = `${DIST}/${variant}${filename}/index.html`;
-      mkdirp(path.dirname(filepath));
+      fs.mkdirSync(path.dirname(filepath), {recursive: true});
       fs.writeFileSync(filepath, html, {encoding: 'utf-8'});
       console.log('✅', filepath, 'written.');
     }
@@ -78,6 +77,7 @@ async function generateErrorLHR() {
       `Something went wrong with recording the trace over your page load. Please run Lighthouse again. (NO_FCP)`, // eslint-disable-line max-len
     ],
     TestedAsMobileDevice: true,
+    HostFormFactor: 'desktop',
     HostUserAgent: 'Mozilla/5.0 ErrorUserAgent Chrome/66',
     NetworkUserAgent: 'Mozilla/5.0 ErrorUserAgent Chrome/66',
     BenchmarkIndex: 1000,
@@ -96,7 +96,7 @@ async function generateErrorLHR() {
 
   // Save artifacts to disk then run `lighthouse -G` with them.
   const TMP = `${DIST}/.tmp/`;
-  mkdirp(TMP);
+  fs.mkdirSync(TMP, {recursive: true});
   fs.writeFileSync(`${TMP}/artifacts.json`, JSON.stringify(artifacts), 'utf-8');
   const errorRunnerResult = await lighthouse(artifacts.URL.requestedUrl, {auditMode: TMP});
 

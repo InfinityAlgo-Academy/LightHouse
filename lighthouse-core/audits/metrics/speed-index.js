@@ -10,11 +10,9 @@ const i18n = require('../../lib/i18n/i18n.js');
 const ComputedSi = require('../../computed/metrics/speed-index.js');
 
 const UIStrings = {
-  /** The name of the metric that summarizes how quickly the page looked visually complete. The name of this metric is largely abstract and can be loosely translated. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
-  title: 'Speed Index',
   /** Description of the Speed Index metric, which summarizes how quickly the page looked visually complete. This is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Speed Index shows how quickly the contents of a page are visibly populated. ' +
-      '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/speed-index).',
+      '[Learn more](https://web.dev/speed-index).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -26,23 +24,30 @@ class SpeedIndex extends Audit {
   static get meta() {
     return {
       id: 'speed-index',
-      title: str_(UIStrings.title),
+      title: str_(i18n.UIStrings.speedIndexMetric),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['traces', 'devtoolsLogs'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'TestedAsMobileDevice'],
     };
   }
 
   /**
-   * @return {LH.Audit.ScoreOptions}
+   * @return {{mobile: LH.Audit.ScoreOptions, desktop: LH.Audit.ScoreOptions}}
    */
   static get defaultOptions() {
     return {
-      // 75th and 95th percentiles HTTPArchive -> median and PODR
-      // https://bigquery.cloud.google.com/table/httparchive:lighthouse.2018_04_01_mobile?pli=1
-      // see https://www.desmos.com/calculator/orvoyu9ygq
-      scorePODR: 2900,
-      scoreMedian: 5800,
+      mobile: {
+        // 75th and 95th percentiles HTTPArchive -> median and PODR
+        // https://bigquery.cloud.google.com/table/httparchive:lighthouse.2018_04_01_mobile?pli=1
+        // see https://www.desmos.com/calculator/orvoyu9ygq
+        scorePODR: 2900,
+        scoreMedian: 5800,
+      },
+      desktop: {
+        // SELECT QUANTILES(SpeedIndex, 21) FROM [httparchive:summary_pages.2018_12_15_desktop] LIMIT 1000
+        scorePODR: 1100,
+        scoreMedian: 2300,
+      },
     };
   }
 
@@ -58,12 +63,14 @@ class SpeedIndex extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const metricComputationData = {trace, devtoolsLog, settings: context.settings};
     const metricResult = await ComputedSi.request(metricComputationData, context);
+    const scoreOptions =
+      context.options[artifacts.TestedAsMobileDevice === false ? 'desktop' : 'mobile'];
 
     return {
       score: Audit.computeLogNormalScore(
         metricResult.timing,
-        context.options.scorePODR,
-        context.options.scoreMedian
+        scoreOptions.scorePODR,
+        scoreOptions.scoreMedian
       ),
       numericValue: metricResult.timing,
       displayValue: str_(i18n.UIStrings.seconds, {timeInMs: metricResult.timing}),

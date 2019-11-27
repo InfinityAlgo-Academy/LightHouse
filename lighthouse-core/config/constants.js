@@ -43,7 +43,7 @@ const throttling = {
 /** @type {LH.Config.Settings} */
 const defaultSettings = {
   output: 'json',
-  maxWaitForFcp: 15 * 1000,
+  maxWaitForFcp: 30 * 1000,
   maxWaitForLoad: 45 * 1000,
   throttlingMethod: 'simulate',
   throttling: throttling.mobileSlow4G,
@@ -51,6 +51,7 @@ const defaultSettings = {
   gatherMode: false,
   disableStorageReset: false,
   emulatedFormFactor: 'mobile',
+  internalDisableDeviceScreenEmulation: false,
   channel: 'node',
 
   // the following settings have no defaults but we still want ensure that `key in settings`

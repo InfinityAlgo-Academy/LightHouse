@@ -5,31 +5,34 @@
  */
 
  declare module Smokehouse {
-  export interface Difference {
-    path: string;
-    actual: any;
-    expected: any;
+  interface ExpectedLHR {
+    audits: Record<string, any>;
+    requestedUrl: string;
+    finalUrl: string;
+    runWarnings?: Array<string>;
+    runtimeError?: {
+      code?: any;
+      message?: any;
+    };
   }
-
-  export interface Comparison {
-    name: string;
-    actual: any;
-    expected: any;
-    equal: boolean;
-    diff?: Difference | null;
-  }
-
-  export type ExpectedLHR = Pick<LH.Result, 'audits' | 'finalUrl' | 'requestedUrl' | 'runtimeError'>
 
   export type ExpectedRunnerResult = {
     lhr: ExpectedLHR,
-    artifacts?: Partial<LH.Artifacts>
+    artifacts?: Partial<Record<keyof LH.Artifacts, any>>
   }
 
   export interface TestDfn {
     id: string;
-    expectations: string;
-    config: string;
-    batch: string;
+    expectations: ExpectedRunnerResult[];
+    config?: LH.Config.Json;
+    /** If test is performance sensitive, set to true so that it won't be run parallel to other tests. */
+    runSerially?: boolean;
+  }
+
+  export interface FirehouseOptions {
+    runLighthouse: (url: string, config?: LH.Config.Json) => Promise<Omit<LH.RunnerResult, 'report'>>;
+    urlFilterRegex?: RegExp;
+    skip?: (test: TestDfn, expectation: ExpectedRunnerResult) => string | false;
+    modify?: (test: TestDfn, expectation: ExpectedRunnerResult) => void;
   }
 }

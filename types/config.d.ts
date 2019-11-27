@@ -14,7 +14,7 @@ declare global {
        * The pre-normalization Lighthouse Config format.
        */
       export interface Json {
-        extends?: 'lighthouse:default' | 'lighthouse:full' | string | boolean;
+        extends?: 'lighthouse:default' | string | boolean;
         settings?: SharedFlagsSettings;
         passes?: PassJson[] | null;
         audits?: Config.AuditJson[] | null;
