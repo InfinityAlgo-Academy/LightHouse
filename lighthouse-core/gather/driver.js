@@ -5,6 +5,7 @@
  */
 'use strict';
 
+const Fetcher = require('./fetcher.js');
 const NetworkRecorder = require('../lib/network-recorder.js');
 const emulation = require('../lib/emulation.js');
 const LHElement = require('../lib/lh-element.js');
@@ -90,6 +91,8 @@ class Driver {
      * @private
      */
     this._nextProtocolTimeout = DEFAULT_PROTOCOL_TIMEOUT;
+
+    this.fetcher = new Fetcher(this);
   }
 
   static get traceCategories() {
