@@ -34,7 +34,7 @@ class BundleDuplication extends ByteEfficiencyAudit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['devtoolsLogs', 'traces', 'SourceMaps'],
+      requiredArtifacts: ['devtoolsLogs', 'traces', 'SourceMaps', 'ScriptElements'],
     };
   }
 
@@ -46,48 +46,98 @@ class BundleDuplication extends ByteEfficiencyAudit {
   static async audit_(artifacts, networkRecords) {
     const {SourceMaps} = artifacts;
 
-    /** @type {Map<string, Array<{mapIndex: number, sourceIndex: number, size: number}>>} */
-    const statsBySourceFile = new Map();
-    /** @type {Map<string, number>} */
-    const lengthOfSourceContents = new Map();
+    /** @type {Array<{map: LH.Artifacts.RawSourceMap, script: LH.Artifacts.ScriptElement, networkRecord?: LH.Artifacts.NetworkRequest, sourceDatas: Array<{normalizedSource: string, size: number}>}>} */
+    const sourceMapDatas = [];
 
+    // Collate map, script elemtns
     for (let mapIndex = 0; mapIndex < SourceMaps.length; mapIndex++) {
       const {scriptUrl, map} = SourceMaps[mapIndex];
       if (!map) continue;
 
-      const result = {scriptUrl, sourceSizes: [0]};
-      for (let sourceIndex = 0; sourceIndex < map.sources.length; sourceIndex++) {
-        let source = map.sources[sourceIndex];
+      const scriptElement = artifacts.ScriptElements.find(s => s.src === scriptUrl);
+      const networkRecord = networkRecords.find(r => r.url === scriptUrl);
+      if (!scriptElement) continue;
+      const sourceMapData = {
+        map,
+        script: scriptElement,
+        networkRecord,
+        sourceDatas: [],
+      };
+      sourceMapDatas.push(sourceMapData);
+    }
+
+    // Determine size of each `sources` entry.
+    for (const {map, script, networkRecord, sourceDatas} of sourceMapDatas) {
+      const totalSourcesContentLength = map.sourcesContent && map.sourcesContent.reduce((acc, cur) => acc + cur.length, 0);
+      for (let i = 0; i < map.sources.length; i++) {
+        const source = map.sources[i];
         // Trim trailing question mark - b/c webpack.
-        source = source.replace(/\?$/, '');
+        let normalizedSource = source.replace(/\?$/, '');
         // Normalize paths for dependencies by keeping everything after the last `node_modules`.
-        const lastNodeModulesIndex = source.lastIndexOf('node_modules');
+        const lastNodeModulesIndex = normalizedSource.lastIndexOf('node_modules');
         if (lastNodeModulesIndex !== -1) {
-          source = source.substring(lastNodeModulesIndex);
+          normalizedSource = source.substring(lastNodeModulesIndex);
         }
 
-        const content = map.sourcesContent && map.sourcesContent[sourceIndex];
-        const size = content !== undefined ? content.length : -1;
-        result.sourceSizes.push(size);
+        let sourceSize = 0;
+        // TODO: experimenting with determining size.
+        if (process.env.BUNDLE_MODE === '1') {
+          const sourceMap = require('source-map');
+          if (!script.content) continue;
+          const lines = script.content.split('\n');
 
-        if (size !== -1) {
-          lengthOfSourceContents.set(scriptUrl,
-            (lengthOfSourceContents.get(scriptUrl) || 0) + size);
+          // @ts-ignore - moz map types are wrong and should feel bad.
+          const mapConsumer = new sourceMap.SourceMapConsumer(map.map);
+          mapConsumer.eachMapping(({source, generatedLine, generatedColumn}) => {
+            if (generatedLine > lines.length) {
+              return; // TODO error handling.
+            }
+            const line = lines[generatedLine - 1];
+
+            if (generatedColumn >= line.length) {
+              return; // TODO error handling.
+            }
+          });
+        } else {
+          if (!map.sourcesContent) continue;
+          if (!totalSourcesContentLength) continue;
+          if (!networkRecord) continue;
+          // The length of the actual, possibly minified/transpiled module cannot be easily determined.
+          // Instead, an heuristic is used. The ratio of this wasted module / the total sourcesContent
+          // lengths is a decent estimator.
+          // TODO: this heuristic is really bad. ~2x the real size. should see how long it takes
+          // to do what source-map-explorer does.
+          const originalSourcesContentLength = map.sourcesContent[i].length;
+          sourceSize = (originalSourcesContentLength / totalSourcesContentLength) * networkRecord.resourceSize;
         }
 
-        let stats = statsBySourceFile.get(source);
-        if (!stats) {
-          stats = [];
-          statsBySourceFile.set(source, stats);
+        sourceDatas.push({
+          normalizedSource,
+          size: sourceSize,
+        });
+      }
+    }
+
+    /** @type {Map<string, Array<{scriptUrl: string, size: number}>>} */
+    const sourceDataAggregated = new Map();
+    for (const {script, sourceDatas} of sourceMapDatas) {
+      for (const sourceData of sourceDatas) {
+        let data = sourceDataAggregated.get(sourceData.normalizedSource);
+        if (!data) {
+          data = [];
+          sourceDataAggregated.set(sourceData.normalizedSource, data);
         }
-        stats.push({mapIndex, sourceIndex, size});
+        data.push({
+          scriptUrl: script.src || '',
+          size: sourceData.size,
+        });
       }
     }
 
     /** @type {LH.Audit.ByteEfficiencyItem[]} */
     const items = [];
-    for (const [key, stats] of statsBySourceFile.entries()) {
-      if (stats.length === 1) continue;
+    for (const [key, sourceDatas] of sourceDataAggregated.entries()) {
+      if (sourceDatas.length === 1) continue;
       // Give bundle bootstraps a pass.
       if (key.includes('webpack/bootstrap') || key.includes('(webpack)/buildin')) continue;
       // Ignore shims.
@@ -101,34 +151,24 @@ class BundleDuplication extends ByteEfficiencyAudit {
       // audit conserative in its estimation.
       // TODO: instead, choose the "first" script in the DOM as the canonical?
 
-      stats.sort((a, b) => b.size - a.size);
+      sourceDatas.sort((a, b) => b.size - a.size);
       const urls = [];
       const wastedBytesValues = [];
-      for (let i = 0; i < stats.length; i++) {
-        const stat = stats[i];
-        const map = SourceMaps[stat.mapIndex];
-        urls.push(map.scriptUrl);
+      for (let i = 0; i < sourceDatas.length; i++) {
+        const sourceData = sourceDatas[i];
+        urls.push(sourceData.scriptUrl);
 
         if (i === 0) {
           wastedBytesValues.push(0);
         } else {
-          // The length of the actual, possibly minified/transpiled module cannot be easily determined.
-          // Instead, an heuristic is used. The ratio of this wasted module / the total sourcesContent
-          // lengths is a decent estimator.
-          const sourcesContentsLength = lengthOfSourceContents.get(map.scriptUrl);
-          const networkRecord = networkRecords.find(r => r.url === map.scriptUrl);
-          if (!sourcesContentsLength || !networkRecord) continue; // Shouldn't happen.
-          const wastedBytes = (stat.size / sourcesContentsLength) * networkRecord.resourceSize;
-          // TODO: this heuristic is really bad. ~2x the real size. should see how long it takes
-          // to do what source-map-explorer does.
-          wastedBytesValues.push(wastedBytes * 0.5);
+          wastedBytesValues.push(sourceData.size);
         }
       }
 
       const wastedBytesTotal = wastedBytesValues.reduce((acc, cur) => acc + cur, 0);
       if (wastedBytesTotal <= IGNORE_THRESHOLD_IN_BYTES) continue;
       items.push({
-        module: key,
+        source: key,
         // Only used for sorting.
         wastedBytes: wastedBytesTotal,
         // Not needed, but keeps typescript happy.
@@ -145,7 +185,7 @@ class BundleDuplication extends ByteEfficiencyAudit {
 
     // TODO: explore a cutoff.
     if (process.env.DEBUG) {
-      console.log(statsBySourceFile.keys());
+      console.log(sourceDataAggregated.keys());
 
       const all = sum(items);
       // @ts-ignore
@@ -205,7 +245,7 @@ class BundleDuplication extends ByteEfficiencyAudit {
 
     /** @type {LH.Audit.Details.Opportunity['headings']} */
     const headings = [
-      {key: 'module', valueType: 'code', label: str_(i18n.UIStrings.columnName)}, // TODO: or 'Module'?
+      {key: 'source', valueType: 'code', label: str_(i18n.UIStrings.columnName)}, // TODO: or 'Source'?
       {key: 'url', valueType: 'url', multi: true, label: str_(i18n.UIStrings.columnURL)},
       // {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnSize)},
       {key: 'wastedBytes', valueType: 'bytes', multi: true, granularity: 0.05, label: str_(i18n.UIStrings.columnWastedBytes)},
