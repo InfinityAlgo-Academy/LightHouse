@@ -79,6 +79,12 @@ class BundleDuplication extends ByteEfficiencyAudit {
           normalizedSource = source.substring(lastNodeModulesIndex);
         }
 
+        // Ignore bundle overhead.
+        if (normalizedSource.includes('webpack/bootstrap')) continue;
+        if (normalizedSource.includes('(webpack)/buildin')) continue;
+        // Ignore shims.
+        if (normalizedSource.includes('external ')) continue;
+
         let sourceSize = 0;
         // TODO: experimenting with determining size.
         if (process.env.BUNDLE_MODE === '1') {
@@ -138,10 +144,6 @@ class BundleDuplication extends ByteEfficiencyAudit {
     const items = [];
     for (const [key, sourceDatas] of sourceDataAggregated.entries()) {
       if (sourceDatas.length === 1) continue;
-      // Give bundle bootstraps a pass.
-      if (key.includes('webpack/bootstrap') || key.includes('(webpack)/buildin')) continue;
-      // Ignore shims.
-      if (key.includes('external ')) continue;
 
       // One copy of this module is considered to be the canonical version - the rest will have
       // non-zero `wastedBytes`. In the case of all copies being the same version. all sizes are
