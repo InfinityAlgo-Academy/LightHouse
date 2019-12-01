@@ -164,6 +164,7 @@ class BundleDuplication extends ByteEfficiencyAudit {
 
         let sourceSize = 0;
         if (process.env.BUNDLE_MODE === '1') {
+          // Takes ~2x as long naive approach
           const fullSource = map.sourceRoot + source;
           sourceSize = fileSizes[fullSource];
         } else {
@@ -172,7 +173,7 @@ class BundleDuplication extends ByteEfficiencyAudit {
           if (!networkRecord) continue;
           // The length of the actual, possibly minified/transpiled module cannot be easily determined.
           // Instead, an heuristic is used. The ratio of this wasted module / the total sourcesContent
-          // lengths is a decent estimator.
+          // lengths is an estimator.
           // TODO: this heuristic is really bad. ~2x the real size. should see how long it takes
           // to do what source-map-explorer does.
           const originalSourcesContentLength = map.sourcesContent[i].length;
