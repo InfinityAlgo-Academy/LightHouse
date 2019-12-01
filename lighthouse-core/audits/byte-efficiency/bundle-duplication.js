@@ -22,6 +22,68 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 const IGNORE_THRESHOLD_IN_BYTES = 100;
 
+// Lifted from source-map-explorer.
+/** Calculate the number of bytes contributed by each source file */
+function computeFileSizeMapOptimized(sourceMapData) {
+  const {consumer, content} = sourceMapData;
+  const lines = content.split('\n');
+  /** @type {Record<string, number>} */
+  const files = {};
+  let mappedBytes = 0;
+
+  consumer.computeColumnSpans();
+
+  consumer.eachMapping(({source, generatedLine, generatedColumn, lastGeneratedColumn}) => {
+    // Lines are 1-based
+    const line = lines[generatedLine - 1];
+    if (line === null) {
+      // throw new AppError({
+      //   code: 'InvalidMappingLine',
+      //   generatedLine: generatedLine,
+      //   maxLine: lines.length,
+      // });
+    }
+
+    // Columns are 0-based
+    if (generatedColumn >= line.length) {
+      // throw new AppError({
+      //   code: 'InvalidMappingColumn',
+      //   generatedLine: generatedLine,
+      //   generatedColumn: generatedColumn,
+      //   maxColumn: line.length,
+      // });
+      return;
+    }
+
+    let mappingLength = 0;
+    if (lastGeneratedColumn !== null) {
+      if (lastGeneratedColumn >= line.length) {
+        // throw new AppError({
+        //   code: 'InvalidMappingColumn',
+        //   generatedLine: generatedLine,
+        //   generatedColumn: lastGeneratedColumn,
+        //   maxColumn: line.length,
+        // });
+        return;
+      }
+      mappingLength = lastGeneratedColumn - generatedColumn + 1;
+    } else {
+      mappingLength = line.length - generatedColumn;
+    }
+    files[source] = (files[source] || 0) + mappingLength;
+    mappedBytes += mappingLength;
+  });
+
+  // Don't count newlines as original version didn't count newlines
+  const totalBytes = content.length - lines.length + 1;
+
+  return {
+    files,
+    unmappedBytes: totalBytes - mappedBytes,
+    totalBytes,
+  };
+}
+
 /** @typedef {LH.Artifacts.CSSStyleSheetInfo & {networkRecord: LH.Artifacts.NetworkRequest, usedRules: Array<LH.Crdp.CSS.RuleUsage>}} StyleSheetInfo */
 
 class BundleDuplication extends ByteEfficiencyAudit {
@@ -49,7 +111,7 @@ class BundleDuplication extends ByteEfficiencyAudit {
     /** @type {Array<{map: LH.Artifacts.RawSourceMap, script: LH.Artifacts.ScriptElement, networkRecord?: LH.Artifacts.NetworkRequest, sourceDatas: Array<{normalizedSource: string, size: number}>}>} */
     const sourceMapDatas = [];
 
-    // Collate map, script elemtns
+    // Collate map, script, and network record.
     for (let mapIndex = 0; mapIndex < SourceMaps.length; mapIndex++) {
       const {scriptUrl, map} = SourceMaps[mapIndex];
       if (!map) continue;
@@ -68,7 +130,22 @@ class BundleDuplication extends ByteEfficiencyAudit {
 
     // Determine size of each `sources` entry.
     for (const {map, script, networkRecord, sourceDatas} of sourceMapDatas) {
-      const totalSourcesContentLength = map.sourcesContent && map.sourcesContent.reduce((acc, cur) => acc + cur.length, 0);
+      /** @type {Record<string, number>} */
+      let fileSizes = {};
+      let totalSourcesContentLength = 0;
+      // TODO: experimenting with determining size.
+      if (process.env.BUNDLE_MODE === '1') {
+        // TODO use CDT instead. Needs to support lastGeneratedColumn.
+        const sourceMap = require('source-map');
+        if (!script.content) continue;
+
+        // @ts-ignore - moz map types are wrong and should feel bad.
+        const consumer = await new sourceMap.SourceMapConsumer(map);
+        fileSizes = computeFileSizeMapOptimized({consumer, content: script.content}).files;
+      } else {
+        totalSourcesContentLength = map.sourcesContent ? map.sourcesContent.reduce((acc, cur) => acc + cur.length, 0) : 0;
+      }
+
       for (let i = 0; i < map.sources.length; i++) {
         const source = map.sources[i];
         // Trim trailing question mark - b/c webpack.
@@ -86,24 +163,9 @@ class BundleDuplication extends ByteEfficiencyAudit {
         if (normalizedSource.includes('external ')) continue;
 
         let sourceSize = 0;
-        // TODO: experimenting with determining size.
         if (process.env.BUNDLE_MODE === '1') {
-          const sourceMap = require('source-map');
-          if (!script.content) continue;
-          const lines = script.content.split('\n');
-
-          // @ts-ignore - moz map types are wrong and should feel bad.
-          const mapConsumer = new sourceMap.SourceMapConsumer(map.map);
-          mapConsumer.eachMapping(({source, generatedLine, generatedColumn}) => {
-            if (generatedLine > lines.length) {
-              return; // TODO error handling.
-            }
-            const line = lines[generatedLine - 1];
-
-            if (generatedColumn >= line.length) {
-              return; // TODO error handling.
-            }
-          });
+          const fullSource = map.sourceRoot + source;
+          sourceSize = fileSizes[fullSource];
         } else {
           if (!map.sourcesContent) continue;
           if (!totalSourcesContentLength) continue;
@@ -145,8 +207,8 @@ class BundleDuplication extends ByteEfficiencyAudit {
     for (const [key, sourceDatas] of sourceDataAggregated.entries()) {
       if (sourceDatas.length === 1) continue;
 
-      // One copy of this module is considered to be the canonical version - the rest will have
-      // non-zero `wastedBytes`. In the case of all copies being the same version. all sizes are
+      // One copy of this module is treated as the canonical version - the rest will have
+      // non-zero `wastedBytes`. In the case of all copies being the same version, all sizes are
       // equal and the selection doesn't matter. When the copies are different versions, it does
       // matter. Ideally the newest version would be the canonical copy, but version information
       // is not present. Instead, size is used as a heuristic for latest version. This makes the
