@@ -86,62 +86,72 @@ function computeFileSizeMapOptimized(sourceMapData) {
   };
 }
 
-// Slower.
 /** Calculate the number of bytes contributed by each source file */
 // @ts-ignore
-function computeGeneratedFileSizes(sourceMapData) {
-  const spans = computeSpans(sourceMapData);
+function computeGeneratedFileSizesForCDT(sourceMapData) {
+  const {map, content} = sourceMapData;
+  const lines = content.split('\n');
   /** @type {Record<string, number>} */
   const files = {};
-  let unmappedBytes = 0;
-  let totalBytes = 0;
+  let mappedBytes = 0;
 
-  for (let i = 0; i < spans.length; i++) {
-    const {numChars, source} = spans[i];
+  map.computeLastGeneratedColumns();
 
-    totalBytes += numChars;
+  // @ts-ignore
+  for (const mapping of map.mappings()) {
+    const source = mapping.sourceURL;
+    const generatedLine = mapping.lineNumber + 1;
+    const generatedColumn = mapping.columnNumber;
+    const lastGeneratedColumn = mapping.lastColumnNumber;
 
-    if (source === null || source === undefined) {
-      unmappedBytes += numChars;
-    } else {
-      files[source] = (files[source] || 0) + numChars;
+    // Lines are 1-based
+    const line = lines[generatedLine - 1];
+    if (line === null) {
+      // throw new AppError({
+      //   code: 'InvalidMappingLine',
+      //   generatedLine: generatedLine,
+      //   maxLine: lines.length,
+      // });
     }
+
+    // Columns are 0-based
+    if (generatedColumn >= line.length) {
+      // throw new AppError({
+      //   code: 'InvalidMappingColumn',
+      //   generatedLine: generatedLine,
+      //   generatedColumn: generatedColumn,
+      //   maxColumn: line.length,
+      // });
+      return;
+    }
+
+    let mappingLength = 0;
+    if (lastGeneratedColumn !== undefined) {
+      if (lastGeneratedColumn >= line.length) {
+        // throw new AppError({
+        //   code: 'InvalidMappingColumn',
+        //   generatedLine: generatedLine,
+        //   generatedColumn: lastGeneratedColumn,
+        //   maxColumn: line.length,
+        // });
+        return;
+      }
+      mappingLength = lastGeneratedColumn - generatedColumn + 0;
+    } else {
+      mappingLength = line.length - generatedColumn;
+    }
+    files[source] = (files[source] || 0) + mappingLength;
+    mappedBytes += mappingLength;
   }
+
+  // Don't count newlines as original version didn't count newlines
+  const totalBytes = content.length - lines.length + 1;
 
   return {
     files,
-    unmappedBytes,
+    unmappedBytes: totalBytes - mappedBytes,
     totalBytes,
   };
-}
-
-// @ts-ignore
-function computeSpans(sourceMapData) {
-  const {map, content} = sourceMapData;
-
-  const lines = content.split('\n');
-  const spans = [];
-  let numChars = 0;
-
-  let lastSource = undefined; // not a string, not null
-
-  for (let line = 0; line < lines.length; line++) {
-    const lineText = lines[line];
-    const numCols = lineText.length;
-
-    for (let column = 0; column < numCols; column++, numChars++) {
-      const {sourceURL} = map.findExactEntry(line, column);
-
-      if (sourceURL !== lastSource) {
-        lastSource = sourceURL;
-        spans.push({source: sourceURL, numChars: 1});
-      } else {
-        spans[spans.length - 1].numChars += 1;
-      }
-    }
-  }
-
-  return spans;
 }
 
 /** @typedef {LH.Artifacts.CSSStyleSheetInfo & {networkRecord: LH.Artifacts.NetworkRequest, usedRules: Array<LH.Crdp.CSS.RuleUsage>}} StyleSheetInfo */
@@ -202,11 +212,10 @@ class BundleDuplication extends ByteEfficiencyAudit {
         Time for entire audit based on sizing approach:
 
         SIZE_MODE === 'moz': ~300ms
-        SIZE_MODE === 'cdt': ~620ms
+        SIZE_MODE === 'cdt': ~300ms
         SIZE_MODE undefined: ~160ms (naive heurestic)
 
         moz and cdt give the same accurate size info.
-        CDT can be made much faster if `lastGeneratedColumn` support is added.
 
         Bundle size changes:
 
@@ -227,7 +236,7 @@ class BundleDuplication extends ByteEfficiencyAudit {
 
         // The optimized sizing fn used w/ mozilla source map requires `lastGeneratedColumn` in the mappings.
         // CDT doesn't have that (yet?), so we do a source byte-by-byte sizing.
-        fileSizes = computeGeneratedFileSizes({map: sdkSourceMap, content: script.content}).files;
+        fileSizes = computeGeneratedFileSizesForCDT({map: sdkSourceMap, content: script.content}).files;
       } else {
         totalSourcesContentLength = map.sourcesContent ? map.sourcesContent.reduce((acc, cur) => acc + cur.length, 0) : 0;
       }

@@ -60,3 +60,17 @@ global.cdt.SDK.TextSourceMap.prototype.findExactEntry = function(line, column) {
   }
   return entry;
 };
+
+// Add `lastColumnNumber` to mappings.
+global.cdt.SDK.TextSourceMap.prototype.computeLastGeneratedColumns = function() {
+  const mappings = this.mappings();
+  if (mappings.length && typeof mappings[0].lastColumnNumber !== 'undefined') return;
+
+  for (let i = 0; i < mappings.length - 1; i++) {
+    const mapping = mappings[i];
+    const nextMapping = mappings[i + 1];
+    if (mapping.lineNumber === nextMapping.lineNumber) {
+      mapping.lastColumnNumber = nextMapping.columnNumber;
+    }
+  }
+};
