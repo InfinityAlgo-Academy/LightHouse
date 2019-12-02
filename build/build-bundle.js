@@ -59,7 +59,7 @@ async function browserifyFile(entryPath, distPath) {
     .transform('package-json-versionify');
 
   // scripts will need some additional transforms, ignores and requires…
-  bundle.ignore('source-map')
+  bundle
     .ignore('debug/node')
     .ignore('intl')
     .ignore('intl-pluralrules')

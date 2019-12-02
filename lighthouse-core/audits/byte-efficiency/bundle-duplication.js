@@ -24,6 +24,7 @@ const IGNORE_THRESHOLD_IN_BYTES = 100;
 
 // Lifted from source-map-explorer.
 /** Calculate the number of bytes contributed by each source file */
+// @ts-ignore
 function computeFileSizeMapOptimized(sourceMapData) {
   const {consumer, content} = sourceMapData;
   const lines = content.split('\n');
@@ -33,6 +34,7 @@ function computeFileSizeMapOptimized(sourceMapData) {
 
   consumer.computeColumnSpans();
 
+  // @ts-ignore
   consumer.eachMapping(({source, generatedLine, generatedColumn, lastGeneratedColumn}) => {
     // Lines are 1-based
     const line = lines[generatedLine - 1];
@@ -84,6 +86,64 @@ function computeFileSizeMapOptimized(sourceMapData) {
   };
 }
 
+// Slower.
+/** Calculate the number of bytes contributed by each source file */
+// @ts-ignore
+function computeGeneratedFileSizes(sourceMapData) {
+  const spans = computeSpans(sourceMapData);
+  /** @type {Record<string, number>} */
+  const files = {};
+  let unmappedBytes = 0;
+  let totalBytes = 0;
+
+  for (let i = 0; i < spans.length; i++) {
+    const {numChars, source} = spans[i];
+
+    totalBytes += numChars;
+
+    if (source === null || source === undefined) {
+      unmappedBytes += numChars;
+    } else {
+      files[source] = (files[source] || 0) + numChars;
+    }
+  }
+
+  return {
+    files,
+    unmappedBytes,
+    totalBytes,
+  };
+}
+
+// @ts-ignore
+function computeSpans(sourceMapData) {
+  const {map, content} = sourceMapData;
+
+  const lines = content.split('\n');
+  const spans = [];
+  let numChars = 0;
+
+  let lastSource = undefined; // not a string, not null
+
+  for (let line = 0; line < lines.length; line++) {
+    const lineText = lines[line];
+    const numCols = lineText.length;
+
+    for (let column = 0; column < numCols; column++, numChars++) {
+      const {sourceURL} = map.findExactEntry(line, column);
+
+      if (sourceURL !== lastSource) {
+        lastSource = sourceURL;
+        spans.push({source: sourceURL, numChars: 1});
+      } else {
+        spans[spans.length - 1].numChars += 1;
+      }
+    }
+  }
+
+  return spans;
+}
+
 /** @typedef {LH.Artifacts.CSSStyleSheetInfo & {networkRecord: LH.Artifacts.NetworkRequest, usedRules: Array<LH.Crdp.CSS.RuleUsage>}} StyleSheetInfo */
 
 class BundleDuplication extends ByteEfficiencyAudit {
@@ -128,7 +188,7 @@ class BundleDuplication extends ByteEfficiencyAudit {
       sourceMapDatas.push(sourceMapData);
     }
 
-    const FAST_SIZE = process.env.FAST_SIZE === '1';
+    const SIZE_MODE = process.env.SIZE_MODE;
 
     // Determine size of each `sources` entry.
     for (const {map, script, networkRecord, sourceDatas} of sourceMapDatas) {
@@ -136,14 +196,38 @@ class BundleDuplication extends ByteEfficiencyAudit {
       let fileSizes = {};
       let totalSourcesContentLength = 0;
       // TODO: experimenting with determining size.
-      if (!FAST_SIZE) {
-        // TODO use CDT instead. Needs to support lastGeneratedColumn.
+      /**
+        Used `https://www.coursehero.com`, which has a lot of source maps.
+
+        Time for entire audit based on sizing approach:
+
+        SIZE_MODE === 'moz': ~300ms
+        SIZE_MODE === 'cdt': ~620ms
+        SIZE_MODE undefined: ~160ms (naive heurestic)
+
+        moz and cdt give the same accurate size info.
+        CDT can be made much faster if `lastGeneratedColumn` support is added.
+
+        Bundle size changes:
+
+        cdt: 7242000 +20KB
+        moz: 7221507 +48.8KB
+       */
+      if (SIZE_MODE === 'moz') {
         const sourceMap = require('source-map');
         if (!script.content) continue;
 
         // @ts-ignore - moz map types are wrong and should feel bad.
         const consumer = await new sourceMap.SourceMapConsumer(map);
         fileSizes = computeFileSizeMapOptimized({consumer, content: script.content}).files;
+      } else if (SIZE_MODE === 'cdt') {
+        const SDK = require('../../lib/cdt/SDK.js');
+        // @ts-ignore: TODO: `sections` in map
+        const sdkSourceMap = new SDK.TextSourceMap(`compiled.js`, `compiled.js.map`, map);
+
+        // The optimized sizing fn used w/ mozilla source map requires `lastGeneratedColumn` in the mappings.
+        // CDT doesn't have that (yet?), so we do a source byte-by-byte sizing.
+        fileSizes = computeGeneratedFileSizes({map: sdkSourceMap, content: script.content}).files;
       } else {
         totalSourcesContentLength = map.sourcesContent ? map.sourcesContent.reduce((acc, cur) => acc + cur.length, 0) : 0;
       }
@@ -165,8 +249,8 @@ class BundleDuplication extends ByteEfficiencyAudit {
         if (normalizedSource.includes('external ')) continue;
 
         let sourceSize = 0;
-        if (!FAST_SIZE) {
-          // Takes ~2x as long naive approach
+        if (SIZE_MODE === 'moz' || SIZE_MODE === 'cdt') {
+          // moz: Takes ~2x as long naive approach
           const fullSource = map.sourceRoot + source;
           sourceSize = fileSizes[fullSource];
         } else {
