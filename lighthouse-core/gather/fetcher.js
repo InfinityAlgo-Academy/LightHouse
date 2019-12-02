@@ -36,6 +36,7 @@ class Fetcher {
     await this.driver.sendCommand('Fetch.enable', {
       patterns: [{requestStage: 'Request'}, {requestStage: 'Response'}],
     });
+    await new Promise(resolve => setTimeout(resolve, 1000));
     await this.driver.on('Fetch.requestPaused', this._onRequestPaused);
   }
 

@@ -19,7 +19,6 @@ class BundleAnalysis {
 
     for (const {scriptUrl, map} of SourceMaps) {
       if (!map) continue;
-      console.log('========', scriptUrl);
 
       const result = {scriptUrl, sourceSizes: [0]};
       for (let i = 0; i < map.sources.length; i++) {
@@ -27,7 +26,7 @@ class BundleAnalysis {
         const size = content !== undefined ? content.length : -1;
         result.sourceSizes.push(size);
 
-        console.log(map.sources[i], size);
+        // console.log(map.sources[i], size);
       }
 
       results.push(result);

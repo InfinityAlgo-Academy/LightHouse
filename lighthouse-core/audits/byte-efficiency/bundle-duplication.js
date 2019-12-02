@@ -128,13 +128,15 @@ class BundleDuplication extends ByteEfficiencyAudit {
       sourceMapDatas.push(sourceMapData);
     }
 
+    const FAST_SIZE = process.env.FAST_SIZE === '1';
+
     // Determine size of each `sources` entry.
     for (const {map, script, networkRecord, sourceDatas} of sourceMapDatas) {
       /** @type {Record<string, number>} */
       let fileSizes = {};
       let totalSourcesContentLength = 0;
       // TODO: experimenting with determining size.
-      if (process.env.BUNDLE_MODE === '1') {
+      if (!FAST_SIZE) {
         // TODO use CDT instead. Needs to support lastGeneratedColumn.
         const sourceMap = require('source-map');
         if (!script.content) continue;
@@ -163,7 +165,7 @@ class BundleDuplication extends ByteEfficiencyAudit {
         if (normalizedSource.includes('external ')) continue;
 
         let sourceSize = 0;
-        if (process.env.BUNDLE_MODE === '1') {
+        if (!FAST_SIZE) {
           // Takes ~2x as long naive approach
           const fullSource = map.sourceRoot + source;
           sourceSize = fileSizes[fullSource];
