@@ -412,7 +412,6 @@ class BundleDuplication extends ByteEfficiencyAudit {
     ];
 
     // TODO: show warning somewhere if no source maps.
-
     return {
       items,
       headings,
