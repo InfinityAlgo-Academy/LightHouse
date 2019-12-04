@@ -259,8 +259,7 @@ class BundleDuplication extends ByteEfficiencyAudit {
 
         let sourceSize = 0;
         if (SIZE_MODE === 'moz' || SIZE_MODE === 'cdt') {
-          // moz: Takes ~2x as long naive approach
-          const fullSource = map.sourceRoot + source;
+          const fullSource = (map.sourceRoot || '') + source;
           sourceSize = fileSizes[fullSource];
         } else {
           if (!map.sourcesContent) continue;
@@ -412,7 +411,6 @@ class BundleDuplication extends ByteEfficiencyAudit {
     ];
 
     // TODO: show warning somewhere if no source maps.
-
     return {
       items,
       headings,

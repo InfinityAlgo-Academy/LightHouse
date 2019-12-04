@@ -5,6 +5,10 @@ global.cdt = {};
 
 require('./generated/common/ParsedURL.js');
 
+const SDK = {
+  ...require('./generated/sdk/SourceMap.js'),
+};
+
 Object.defineProperty(Array.prototype, 'upperBound', {
   /**
    * Return index of the leftmost element that is greater
@@ -41,10 +45,6 @@ Object.defineProperty(Array.prototype, 'upperBound', {
   },
 });
 
-module.exports = {
-  ...require('./generated/sdk/SourceMap.js'),
-};
-
 // @ts-ignore
 globalThis.cdt.SDK.TextSourceMap.prototype.findExactEntry = function(line, column) {
   // findEntry takes compiled locations and returns original locations.
@@ -77,3 +77,5 @@ globalThis.cdt.SDK.TextSourceMap.prototype.computeLastGeneratedColumns = functio
     }
   }
 };
+
+module.exports = SDK;
