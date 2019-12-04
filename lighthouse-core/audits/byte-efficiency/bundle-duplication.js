@@ -20,7 +20,7 @@ const UIStrings = {
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
-const IGNORE_THRESHOLD_IN_BYTES = 100;
+const IGNORE_THRESHOLD_IN_BYTES = 1024;
 
 // Lifted from source-map-explorer.
 /** Calculate the number of bytes contributed by each source file */
@@ -320,11 +320,13 @@ class BundleDuplication extends ByteEfficiencyAudit {
 
       sourceDatas.sort((a, b) => b.size - a.size);
       const urls = [];
+      const bytesValues = [];
       const wastedBytesValues = [];
       for (let i = 0; i < sourceDatas.length; i++) {
         const sourceData = sourceDatas[i];
         urls.push(sourceData.scriptUrl);
 
+        bytesValues.push(sourceData.size);
         if (i === 0) {
           wastedBytesValues.push(0);
         } else {
@@ -333,10 +335,8 @@ class BundleDuplication extends ByteEfficiencyAudit {
       }
 
       const wastedBytesTotal = wastedBytesValues.reduce((acc, cur) => acc + cur, 0);
-      if (wastedBytesTotal <= IGNORE_THRESHOLD_IN_BYTES) continue;
       items.push({
         source: key,
-        // Only used for sorting.
         wastedBytes: wastedBytesTotal,
         // Not needed, but keeps typescript happy.
         url: '',
@@ -346,8 +346,42 @@ class BundleDuplication extends ByteEfficiencyAudit {
           type: 'multi',
           url: urls,
           wastedBytes: wastedBytesValues,
+          bytes: bytesValues,
         },
       });
+    }
+
+    /** @type {LH.Audit.ByteEfficiencyItem} */
+    const otherItem = {
+      source: 'Other',
+      wastedBytes: 0,
+      url: '',
+      totalBytes: 0,
+      multi: {
+        type: 'multi',
+        url: [],
+        wastedBytes: [],
+      },
+    };
+    for (const item of items.filter(item => item.wastedBytes <= IGNORE_THRESHOLD_IN_BYTES)) {
+      if (!item.multi || !otherItem.multi) continue; // Make typescript happy.
+      otherItem.wastedBytes += item.wastedBytes;
+      for (let i = 0; i < item.multi.url.length; i++) {
+        const url = item.multi.url[i];
+        const wastedBytes = item.multi.wastedBytes[i];
+
+        const indexInOtherItem = otherItem.multi.url.indexOf(url);
+        if (indexInOtherItem === -1) {
+          otherItem.multi.url.push(url);
+          otherItem.multi.wastedBytes.push(wastedBytes);
+        } else {
+          otherItem.multi.wastedBytes[indexInOtherItem] += wastedBytes;
+        }
+      }
+      items.splice(items.indexOf(item), 1);
+    }
+    if (otherItem.wastedBytes) {
+      items.push(otherItem);
     }
 
     // TODO: explore a cutoff.
@@ -415,7 +449,8 @@ class BundleDuplication extends ByteEfficiencyAudit {
       {key: 'source', valueType: 'code', label: str_(i18n.UIStrings.columnName)}, // TODO: or 'Source'?
       {key: 'url', valueType: 'url', multi: true, label: str_(i18n.UIStrings.columnURL)},
       // {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnSize)},
-      {key: 'wastedBytes', valueType: 'bytes', multi: true, granularity: 0.05, label: str_(i18n.UIStrings.columnWastedBytes)},
+      {key: 'bytes', valueType: 'bytes', multi: true, granularity: 0.05, label: str_(i18n.UIStrings.columnSize)},
+      {key: 'wastedBytes', valueType: 'bytes', granularity: 0.05, label: str_(i18n.UIStrings.columnWastedBytes)},
     ];
 
     // TODO: show warning somewhere if no source maps.
