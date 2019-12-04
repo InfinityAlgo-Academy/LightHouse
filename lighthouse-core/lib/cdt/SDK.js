@@ -1,6 +1,6 @@
+// @ts-nocheck
 // TODO: How to ignore everything here in tsc?
 
-// @ts-ignore
 global.cdt = {};
 
 require('./generated/common/ParsedURL.js');
@@ -45,7 +45,6 @@ Object.defineProperty(Array.prototype, 'upperBound', {
   },
 });
 
-// @ts-ignore
 globalThis.cdt.SDK.TextSourceMap.prototype.findExactEntry = function(line, column) {
   // findEntry takes compiled locations and returns original locations.
   const entry = this.findEntry(line, column);
@@ -65,14 +64,12 @@ globalThis.cdt.SDK.TextSourceMap.prototype.findExactEntry = function(line, colum
 // Add `lastColumnNumber` to mappings.
 globalThis.cdt.SDK.TextSourceMap.prototype.computeLastGeneratedColumns = function() {
   const mappings = this.mappings();
-  // @ts-ignore
   if (mappings.length && typeof mappings[0].lastColumnNumber !== 'undefined') return;
 
   for (let i = 0; i < mappings.length - 1; i++) {
     const mapping = mappings[i];
     const nextMapping = mappings[i + 1];
     if (mapping.lineNumber === nextMapping.lineNumber) {
-      // @ts-ignore
       mapping.lastColumnNumber = nextMapping.columnNumber;
     }
   }
