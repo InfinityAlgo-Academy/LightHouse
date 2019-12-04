@@ -95,6 +95,7 @@ describe('StartUrl Gatherer', () => {
     expect(mockDriver.goOffline).toHaveBeenCalled();
     expect(mockDriver.goOnline).toHaveBeenCalled();
     expect(result).toEqual({
+      url: 'https://example.com/',
       statusCode: -1,
       explanation: 'Error while fetching start_url via service worker.',
     });
@@ -124,6 +125,7 @@ describe('StartUrl Gatherer', () => {
     expect(mockDriver.goOffline).toHaveBeenCalled();
     expect(mockDriver.goOnline).toHaveBeenCalled();
     expect(result).toEqual({
+      url: 'https://example.com/',
       statusCode: 200,
     });
   });
@@ -152,6 +154,7 @@ describe('StartUrl Gatherer', () => {
     expect(mockDriver.goOffline).toHaveBeenCalled();
     expect(mockDriver.goOnline).toHaveBeenCalled();
     expect(result).toEqual({
+      url: 'https://example.com/',
       statusCode: -1,
       explanation: 'The start_url did respond, but not via a service worker.',
     });
@@ -187,8 +190,9 @@ describe('StartUrl Gatherer', () => {
     expect(mockDriver.goOffline).toHaveBeenCalled();
     expect(mockDriver.goOnline).toHaveBeenCalled();
     expect(result).toEqual({
+      url: 'https://example.com/',
       statusCode: -1,
-      explanation: 'Timed out waiting for start_url to respond.',
+      explanation: 'Timed out waiting for start_url (https://example.com/) to respond.',
     });
   });
 
@@ -220,6 +224,7 @@ describe('StartUrl Gatherer', () => {
     const result = await gatherer.afterPass(passContext);
     expect(callsAtNavigationTime).toEqual(['offline']);
     expect(result).toEqual({
+      url: 'https://example.com/',
       statusCode: 200,
     });
   });

@@ -884,6 +884,9 @@
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Â śêŕv̂íĉé ŵór̂ḱêŕ êńâb́l̂éŝ ýôúr̂ ẃêb́ âṕp̂ t́ô b́ê ŕêĺîáb̂ĺê ín̂ ún̂ṕr̂éd̂íĉt́âb́l̂é n̂ét̂ẃôŕk̂ ćôńd̂ít̂íôńŝ. [Ĺêár̂ń m̂ór̂é](https://web.dev/offline-start-url)."
   },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Êŕr̂ór̂ ĺôád̂ín̂ǵ {url} îń Ŝér̂v́îćê Ẃôŕk̂ér̂, ǵôt́ ŝt́ât́ûś ĉód̂é {statusCode}"
+  },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` d̂óêś n̂ót̂ ŕêśp̂ón̂d́ ŵít̂h́ â 200 ẃĥén̂ óf̂f́l̂ín̂é"
   },
