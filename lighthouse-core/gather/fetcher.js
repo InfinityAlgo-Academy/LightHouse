@@ -61,8 +61,8 @@ class Fetcher {
   }
 
   async disableRequestInterception() {
-    await this.driver.sendCommand('Fetch.disable');
     await this.driver.off('Fetch.requestPaused', this._onRequestPaused);
+    await this.driver.sendCommand('Fetch.disable');
     this._onRequestPausedHandlers.clear();
   }
 
