@@ -1581,13 +1581,13 @@
     "message": "Dobrym rozwiązaniem może być ograniczenie liczby [wtyczek WordPressa](https://wordpress.org/plugins/) wczytujących na stronie nieużywany kod JavaScript albo zmiana tych wtyczek na inne. Aby zidentyfikować wtyczki, które dodają nieistotny kod JS, uruchom [zasięg kodu](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) w Chrome DevTools. Możesz zidentyfikować taki motyw/wtyczkę w adresie URL skryptu. Szukaj wtyczek, które mają na liście wiele skryptów z dużą ilością czerwonego koloru w zasięgu kodu. Wtyczka powinna umieszczać skrypt w kolejce, tylko jeśli rzeczywiście jest on używany na stronie."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Dowiedz się więcej o [pamięci podręcznej przeglądarki w WordPressie](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Dowiedz się więcej o [pamięci podręcznej przeglądarki w WordPressie](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Pomocna może być [wtyczka WordPressa do optymalizacji obrazów](https://wordpress.org/plugins/search/optimize+images/), która kompresuje obrazy, zachowując ich jakość."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Przesyłaj obrazy bezpośrednio przez [bibliotekę multimediów](https://codex.wordpress.org/Media_Library_Screen), by mieć pewność, że wymagane rozmiary obrazów są dostępne, a następnie wstawiaj je z biblioteki multimediów lub używaj widżetu obrazów, by zapewnić użycie optymalnych rozmiarów obrazów (także w dynamicznych punktach przerwania). Unikaj używania obrazów `Full Size`, chyba że wymiary są adekwatne do danego zastosowania. [Więcej informacji](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)"
+    "message": "Przesyłaj obrazy bezpośrednio przez [bibliotekę multimediów](https://wordpress.org/support/article/media-library-screen/), by mieć pewność, że wymagane rozmiary obrazów są dostępne, a następnie wstawiaj je z biblioteki multimediów lub używaj widżetu obrazów, by zapewnić użycie optymalnych rozmiarów obrazów (także w dynamicznych punktach przerwania). Unikaj używania obrazów `Full Size`, chyba że wymiary są adekwatne do danego zastosowania. [Więcej informacji](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)"
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Możesz włączyć kompresję tekstu w konfiguracji swojego serwera WWW."

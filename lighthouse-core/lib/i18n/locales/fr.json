@@ -1581,13 +1581,13 @@
     "message": "Vous pouvez envisager de réduire le nombre de [plug-ins WordPress](https://wordpress.org/plugins/) qui chargent des scripts JavaScript inutilisés dans votre page, ou désactiver certains de ces plug-ins. Pour déterminer les plug-ins qui ajoutent des scripts JavaScript superflus, exécutez une [couverture de code](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) dans Chrome DevTools. Vous pouvez identifier le thème ou le plug-in responsable à partir de l'URL du script. Recherchez les plug-ins pour lesquels un grand nombre de scripts présentent beaucoup d'éléments en rouge dans la couverture de code. Un plug-in ne doit mettre un script en file d'attente que s'il est effectivement utilisé dans la page."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "En savoir plus sur la [mise en cache dans le navigateur dans WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)"
+    "message": "En savoir plus sur la [mise en cache dans le navigateur dans WordPress](https://wordpress.org/support/article/optimization/#browser-caching)"
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Vous pouvez envisager d'utiliser un [plug-in WordPress d'optimisation d'image](https://wordpress.org/plugins/search/optimize+images/) pour compresser vos images sans dégrader leur qualité."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Importez des images directement via la [bibliothèque multimédia](https://codex.wordpress.org/Media_Library_Screen) pour vous assurer que les tailles d'images requises sont disponibles. Ensuite, insérez-les depuis la bibliothèque multimédia ou utilisez le widget d'image pour vous assurer que les tailles d'images optimales sont utilisées (y compris celles pour les points d'arrêt réactifs). Évitez d'utiliser les images `Full Size`, sauf si les dimensions sont adéquates pour l'utilisation prévue. [En savoir plus](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)"
+    "message": "Importez des images directement via la [bibliothèque multimédia](https://wordpress.org/support/article/media-library-screen/) pour vous assurer que les tailles d'images requises sont disponibles. Ensuite, insérez-les depuis la bibliothèque multimédia ou utilisez le widget d'image pour vous assurer que les tailles d'images optimales sont utilisées (y compris celles pour les points d'arrêt réactifs). Évitez d'utiliser les images `Full Size`, sauf si les dimensions sont adéquates pour l'utilisation prévue. [En savoir plus](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)"
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Vous pouvez activer la compression du texte dans la configuration de votre serveur Web."

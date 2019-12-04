@@ -1581,13 +1581,13 @@
     "message": "Reduza ou troque o número de [plug-ins do WordPress](https://wordpress.org/plugins/) que carregam JavaScript não utilizado na sua página. Para identificar plug-ins que estão adicionando JS externo, execute a [cobertura do código](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) no Chrome DevTools. Você pode identificar o tema/plug-in responsável a partir do URL do script. Procure plug-ins que tenham muitos scripts na lista, apresentando um nível alto de vermelho na cobertura do código. Um plug-in só deverá colocar um script na fila se ele for realmente usado na página."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Leia sobre o [Processo de cache do navegador no WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Leia sobre o [Processo de cache do navegador no WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Use um [plug-in do WordPress para otimização de imagens](https://wordpress.org/plugins/search/optimize+images/), que as compacta sem afetar a qualidade."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Faça upload de imagens diretamente por meio da [biblioteca de mídia](https://codex.wordpress.org/Media_Library_Screen) para garantir que os tamanhos de imagem necessários estejam disponíveis. Depois, insira-os na biblioteca de mídia ou use o widget de imagem para garantir que os tamanhos ideais sejam usados (incluindo aqueles para os pontos de interrupção responsivos). Evite usar imagens `Full Size`, a não ser que as dimensões sejam adequadas para uso. [Saiba mais](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Faça upload de imagens diretamente por meio da [biblioteca de mídia](https://wordpress.org/support/article/media-library-screen/) para garantir que os tamanhos de imagem necessários estejam disponíveis. Depois, insira-os na biblioteca de mídia ou use o widget de imagem para garantir que os tamanhos ideais sejam usados (incluindo aqueles para os pontos de interrupção responsivos). Evite usar imagens `Full Size`, a não ser que as dimensões sejam adequadas para uso. [Saiba mais](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Você pode ativar a compactação de texto na configuração do servidor da Web."

@@ -1581,13 +1581,13 @@
     "message": "Спробуйте зменшити кількість [плагінів WordPress](https://wordpress.org/plugins/), що завантажують на сторінці непотрібні фрагменти JavaScript. Щоб визначити плагіни, які додають зайвий код JavaScript, перевірте [покриття коду](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) в Chrome DevTools. Ви можете визначити тему чи плагін через URL-адресу сценарію. У покритті коду знайдіть плагіни з багатьма сценаріями за великим обсягом червоного тексту. Плагін має ставити сценарій у чергу, лише коли він дійсно використовується на сторінці."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Дізнайтеся про [кешування веб-переглядача у WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Дізнайтеся про [кешування веб-переглядача у WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Спробуйте [плагін WordPress для оптимізації зображень](https://wordpress.org/plugins/search/optimize+images/), який стискає зображення, але зберігає їх якість."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Завантажуйте зображення через [бібліотеку медіафайлів](https://codex.wordpress.org/Media_Library_Screen), щоб переконатися, що вони доступні в потрібному розмірі. Потім вставляйте їх в оптимальному розмірі з бібліотеки або через віджет для зображень (зокрема для адаптивних точок переходу). Використовуйте зображення, що мають `Full Size`, лише якщо вони повністю поміщаються. [Докладніше](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Завантажуйте зображення через [бібліотеку медіафайлів](https://wordpress.org/support/article/media-library-screen/), щоб переконатися, що вони доступні в потрібному розмірі. Потім вставляйте їх в оптимальному розмірі з бібліотеки або через віджет для зображень (зокрема для адаптивних точок переходу). Використовуйте зображення, що мають `Full Size`, лише якщо вони повністю поміщаються. [Докладніше](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Ви можете ввімкнути стиснення тексту в конфігурації веб-сервера."

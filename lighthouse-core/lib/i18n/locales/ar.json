@@ -1581,13 +1581,13 @@
     "message": "يمكنك تقليل عدد [مكونات WordPress الإضافية](https://wordpress.org/plugins/) التي تُحمِّل لغة جافا سكريبت غير المُستخدَمة في صفحتك أو تبديلها. لتحديد المكونات الإضافية التي تضيف لغة جافا سكريبت دخيلة، يمكنك محاولة تشغيل [تغطية الرمز البرمجي](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) في Chrome DevTools. يمكنك تحديد التصميم/المكون الإضافي المسؤول عن عنوان URL للنص البرمجي. يمكنك البحث عن المكونات الإضافية التي تحتوي على العديد من النصوص البرمجية في القائمة والتي تحتوي على الكثير من اللون الأحمر في تغطية الرمز البرمجي. يجب أن يدرِج المكون الإضافي نصًا برمجيًا فقط في حال تم استخدامه في الصفحة فعليًا."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "يمكنك الاطّلاع على [ذاكرة التخزين المؤقت للمتصفّح في WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "يمكنك الاطّلاع على [ذاكرة التخزين المؤقت للمتصفّح في WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "يمكنك استخدام [مكون WordPress الإضافي لتحسين الصورة](https://wordpress.org/plugins/search/optimize+images/) الذي يضغط صورك مع المحافظة على الجودة."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "يمكنك تحميل الصور مباشرةً من خلال [مكتبة الوسائط](https://codex.wordpress.org/Media_Library_Screen) للتأكّد من توفّر أحجام الصور المطلوبة، ثم إدراجها من مكتبة الوسائط أو استخدام أداة الصورة لضمان استخدام أفضل حجم للصورة (بما في ذلك تلك الخاصة بنقاط فاصلة متجاوبة). يمكنك تجنب استخدام صور `Full Size` إلا إذا كانت الأبعاد كافية لاستخدامها. [مزيد من المعلومات](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)"
+    "message": "يمكنك تحميل الصور مباشرةً من خلال [مكتبة الوسائط](https://wordpress.org/support/article/media-library-screen/) للتأكّد من توفّر أحجام الصور المطلوبة، ثم إدراجها من مكتبة الوسائط أو استخدام أداة الصورة لضمان استخدام أفضل حجم للصورة (بما في ذلك تلك الخاصة بنقاط فاصلة متجاوبة). يمكنك تجنب استخدام صور `Full Size` إلا إذا كانت الأبعاد كافية لاستخدامها. [مزيد من المعلومات](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)"
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "يمكنك تفعيل ضغط النص في إعداد خادم الويب."

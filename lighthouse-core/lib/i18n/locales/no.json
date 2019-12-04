@@ -1581,13 +1581,13 @@
     "message": "Vurder å redusere eller endre antall [WordPress-programtillegg](https://wordpress.org/plugins/) som laster inn ubrukt JavaScript på siden. For å identifisere programtillegg som legger til overflødig JavaScript, prøv å kjøre [kodedekning](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) i Chrome DevTools. Du kan finne det ansvarlige temaet eller programtillegget i nettadressen til skriptet. Se opp for programtillegg som har mange skript på listen, og som viser mye rødt i kodedekningen. Programtillegg bør bare legge skript i kø hvis de faktisk brukes på siden."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Les om [nettleserbufring i WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Les om [nettleserbufring i WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Vurder å bruke et [WordPress-programtillegg for bildeoptimalisering](https://wordpress.org/plugins/search/optimize+images/) som komprimerer bildene uten at det går ut over kvaliteten."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Last opp bilder direkte gjennom [mediebiblioteket](https://codex.wordpress.org/Media_Library_Screen) for å sikre at de nødvendige bildestørrelsene er tilgjengelige, og sett dem deretter inn fra mediebiblioteket eller bruk bildemodulen for å sikre at de optimale bildestørrelsene brukes (inkludert dem som brukes for responsive stoppunkter). Unngå å bruke `Full Size`-bilder med mindre størrelsen er tilstrekkelig for bruksområdet. [Finn ut mer](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Last opp bilder direkte gjennom [mediebiblioteket](https://wordpress.org/support/article/media-library-screen/) for å sikre at de nødvendige bildestørrelsene er tilgjengelige, og sett dem deretter inn fra mediebiblioteket eller bruk bildemodulen for å sikre at de optimale bildestørrelsene brukes (inkludert dem som brukes for responsive stoppunkter). Unngå å bruke `Full Size`-bilder med mindre størrelsen er tilstrekkelig for bruksområdet. [Finn ut mer](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Du kan slå på tekstkomprimering i oppsettet av nettjeneren."

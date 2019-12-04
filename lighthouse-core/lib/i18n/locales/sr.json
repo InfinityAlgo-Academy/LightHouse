@@ -1581,13 +1581,13 @@
     "message": "Препоручујемо да умањите или промените број [WordPress додатних компоненти](https://wordpress.org/plugins/) које на страници учитавају JavaScript који се не користи. Да бисте идентификовали додатне компоненте које додају сувишан JS, пробајте да покренете [покривеност кода](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) у алатки Chrome DevTools. Можете да идентификујете одговорну тему/додатну компоненту у URL-у скрипте. Потражите додатне компоненте које на листи имају много скрипти са доста црвенила у покривености кода. Додатна компонента треба да стави скрипту на листу само ако се стварно користи на страници."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Прочитајте више о [кеширању прегледача у WordPress-у](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Прочитајте више о [кеширању прегледача у WordPress-у](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Препоручујемо да користите [WordPress додатну компоненту за оптимизацију слика](https://wordpress.org/plugins/search/optimize+images/) која компримује слике без губитка квалитета."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Отпремајте слике директно помоћу [библиотеке медија](https://codex.wordpress.org/Media_Library_Screen) да бисте се уверили да су доступне обавезне величине слика, па их уметните у библиотеку медија или користите виџет странице да бисте се уверили да се користе оптималне величине слика (укључујући оне за преломне тачке које се одазивају). Избегавајте коришћење слика `Full Size` ако димензије нису адекватне за њихово коришћење. [Сазнајте више](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Отпремајте слике директно помоћу [библиотеке медија](https://wordpress.org/support/article/media-library-screen/) да бисте се уверили да су доступне обавезне величине слика, па их уметните у библиотеку медија или користите виџет странице да бисте се уверили да се користе оптималне величине слика (укључујући оне за преломне тачке које се одазивају). Избегавајте коришћење слика `Full Size` ако димензије нису адекватне за њихово коришћење. [Сазнајте више](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Можете да омогућите компримовање текста у конфигурацији веб-сервера."

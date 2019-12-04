@@ -1581,13 +1581,13 @@
     "message": "Du kan minska antalet [WordPress-pluginmoduler](https://wordpress.org/plugins/) som läser in JavaScript som inte används på sidan, eller byta ut dem. Testa fliken för [kodtäckning](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) i Chromes utvecklarverktyg om du vill se vilka pluginmoduler som lägger till överflödig JS. Du ser på skriptets webbadress vilket tema eller vilken plugin som koden kommer från. Titta efter pluginmoduler med många skript på listan där en stor del av stapeln är röd. En plugin ska bara ställa ett skript i kö för inläsning om det faktiskt används på sidan."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Läs mer om [cachelagring i webbläsaren och WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Läs mer om [cachelagring i webbläsaren och WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Du kan använda en [WordPress-plugin för bildoptimering](https://wordpress.org/plugins/search/optimize+images/) som komprimerar dina bilder utan att göra avkall på kvaliteten."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Säkerställ att de bildstorlekar som krävs finns tillgängliga genom att ladda upp bilderna direkt via [mediebiblioteket](https://codex.wordpress.org/Media_Library_Screen) och infoga dem sedan från mediebiblioteket eller med bildwidgeten, så att de optimala bildstorlekarna används (även för brytpunkterna för responsiv design). Undvik att använda `Full Size`-bilder såvida de inte har mått som passar där bilderna ska användas. [Läs mer](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Säkerställ att de bildstorlekar som krävs finns tillgängliga genom att ladda upp bilderna direkt via [mediebiblioteket](https://wordpress.org/support/article/media-library-screen/) och infoga dem sedan från mediebiblioteket eller med bildwidgeten, så att de optimala bildstorlekarna används (även för brytpunkterna för responsiv design). Undvik att använda `Full Size`-bilder såvida de inte har mått som passar där bilderna ska användas. [Läs mer](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Du kan aktivera textkomprimering i webbserverns konfiguration."

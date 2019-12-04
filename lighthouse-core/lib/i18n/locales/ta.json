@@ -1581,13 +1581,13 @@
     "message": "உங்கள் பக்கத்தில் [WordPress செருகுநிரல்கள்](https://wordpress.org/plugins/) ஏற்றும் பயன்படுத்தப்படாத JavaScriptகளின் எண்ணிக்கையைக் குறைக்கவும் அல்லது மாற்றிப் பார்க்கவும். Chrome DevToolsஸில் [குறியீட்டுக் கவரேஜ் ](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) என்பதை இயக்கி தேவையற்ற JSகளைச் சேர்க்கும் செருகுநிரல்களைக் கண்டறியவும். ஸ்கிரிப்ட்டின் URLலில் இதற்குக் காரணமான தீம்/செருகுநிரலைக் கண்டறியலாம். அதிகளவு சிவப்பில் உள்ள குறியீட்டுக் கவரேஜைக் கொண்ட பட்டியலில் பல ஸ்கிரிப்ட்களைக் கொண்ட செருகுநிரல்களைக் கண்டறியவும். இணையப் பக்கத்தில் பயன்படுத்தும் பட்சத்தில் ஒரு செருகுநிரல் ஒரு ஸ்கிரிப்ட்டை மட்டுமே வரிசையில் சேர்க்க வேண்டும்."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "[WordPressஸில் உலாவியின் தற்காலிக சேமிப்பு](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching) பற்றித் தெரிந்துகொள்ளவும்."
+    "message": "[WordPressஸில் உலாவியின் தற்காலிக சேமிப்பு](https://wordpress.org/support/article/optimization/#browser-caching) பற்றித் தெரிந்துகொள்ளவும்."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "[படங்களை மேம்படுத்தும் WordPress செருகுநிரலைப்](https://wordpress.org/plugins/search/optimize+images/) பயன்படுத்தி உங்கள் படங்களின் தரத்திற்குப் பாதிப்பு ஏற்படாமல் சுருக்கலாம்."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "[மீடியா லைப்ரரி](https://codex.wordpress.org/Media_Library_Screen) மூலம் படத்தை நேரடியாகப் பதிவேற்றி சரியான அளவில் கிடைக்கிறதா என்று உறுதிப்படுத்திக் கொள்ளலாம். பிறகு மேம்படுத்தப்பட்ட அளவுகளில் (சிறப்பாகப் பதிலளிக்கும் புள்ளிகளுக்கும் ஏற்ற அளவுகளில்) படங்கள் பயன்படுத்தப்படுவதை உறுதி செய்ய மீடியா லைப்ரரியிலிருந்தோ பட விட்ஜெட்டைப் பயன்படுத்தியோ படங்களைச் செருகலாம். பயன்படுத்த ஏதுவான அளவுகள் உள்ளபோது மட்டுமே `Full Size` படங்களைப் பயன்படுத்தவும். [மேலும் அறிக](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "[மீடியா லைப்ரரி](https://wordpress.org/support/article/media-library-screen/) மூலம் படத்தை நேரடியாகப் பதிவேற்றி சரியான அளவில் கிடைக்கிறதா என்று உறுதிப்படுத்திக் கொள்ளலாம். பிறகு மேம்படுத்தப்பட்ட அளவுகளில் (சிறப்பாகப் பதிலளிக்கும் புள்ளிகளுக்கும் ஏற்ற அளவுகளில்) படங்கள் பயன்படுத்தப்படுவதை உறுதி செய்ய மீடியா லைப்ரரியிலிருந்தோ பட விட்ஜெட்டைப் பயன்படுத்தியோ படங்களைச் செருகலாம். பயன்படுத்த ஏதுவான அளவுகள் உள்ளபோது மட்டுமே `Full Size` படங்களைப் பயன்படுத்தவும். [மேலும் அறிக](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "இணையச் சேவையக உள்ளமைவில் உரை சுருக்குதலை இயக்கலாம்."

@@ -1581,13 +1581,13 @@
     "message": "Îți recomandăm să reduci sau să schimbi numărul de [pluginuri WordPress](https://wordpress.org/plugins/) care încarcă JavaScript nefolosit în pagină. Ca să identifici pluginurile care adaugă conținut JS neesențial, încearcă să rulezi [acoperirea codului](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) în Chrome DevTools. Poți identifica tema/pluginul responsabil din adresa URL a scriptului. Caută pluginuri care au multe scripturi în listă cu mult roșu în bara acoperirii codului. Un plugin ar trebui să pună în coadă un script numai dacă este într-adevăr folosit în pagină."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Citește despre [stocarea în memoria cache a browserului în WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Citește despre [stocarea în memoria cache a browserului în WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Îți recomandăm să folosești un [plugin WordPress de optimizare a imaginii](https://wordpress.org/plugins/search/optimize+images/) care comprimă imaginile, păstrând calitatea."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Încarcă imaginile direct prin [biblioteca de media](https://codex.wordpress.org/Media_Library_Screen) pentru a te asigura că sunt disponibile dimensiunile de imagine necesare, apoi inserează-le din biblioteca de media sau folosește widgetul de imagine pentru a te asigura că se folosesc dimensiunile de imagine optime (inclusiv cele pentru punctele de întrerupere adaptabile). Evită să folosești imagini `Full Size`, cu excepția cazului în care dimensiunile sunt adecvate pentru utilizare. [Află mai multe](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Încarcă imaginile direct prin [biblioteca de media](https://wordpress.org/support/article/media-library-screen/) pentru a te asigura că sunt disponibile dimensiunile de imagine necesare, apoi inserează-le din biblioteca de media sau folosește widgetul de imagine pentru a te asigura că se folosesc dimensiunile de imagine optime (inclusiv cele pentru punctele de întrerupere adaptabile). Evită să folosești imagini `Full Size`, cu excepția cazului în care dimensiunile sunt adecvate pentru utilizare. [Află mai multe](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Poți activa comprimarea textului în configurarea serverului web."

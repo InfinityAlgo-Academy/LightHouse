@@ -1581,13 +1581,13 @@
     "message": "Savjetujemo vam da smanjite broj [WordPressovih dodataka](https://wordpress.org/plugins/) koji učitavaju JavaScript koji se ne koristi na vašoj stranici ili da ih isključite. Da biste pronašli dodatke koji dodaju suvišan JS, pokrenite [pokrivenost koda](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) u alatu Chrome DevTools. Odgovornu temu ili dodatak možete pronaći u URL-u skripte. Obratite pažnju na dodatke koji na popisu imaju mnogo skripti s mnogo crvenog u pokrivenosti koda. Dodatak bi trebao postaviti skriptu u red samo ako se ona doista upotrebljava na stranici."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Pročitajte više o [predmemoriranju koje preglednici obavljaju u WordPressu](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Pročitajte više o [predmemoriranju koje preglednici obavljaju u WordPressu](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Savjetujemo vam upotrebu [WordPressovog dodatka za optimizaciju slika](https://wordpress.org/plugins/search/optimize+images/) koji komprimira slike bez gubitka kvalitete."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Prenesite slike izravno pomoću  [medijske biblioteke](https://codex.wordpress.org/Media_Library_Screen) kako bi bile dostupne potrebne veličine slika, a zatim ih umetnite iz medijske biblioteke ili upotrijebite widget za slike da bi se koristile optimalne veličine slika (uključujući one za responzivne prijelomne točke). Izbjegavajte upotrebu slika `Full Size` osim ako dimenzije odgovaraju njihovoj upotrebi. [Saznajte više](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Prenesite slike izravno pomoću  [medijske biblioteke](https://wordpress.org/support/article/media-library-screen/) kako bi bile dostupne potrebne veličine slika, a zatim ih umetnite iz medijske biblioteke ili upotrijebite widget za slike da bi se koristile optimalne veličine slika (uključujući one za responzivne prijelomne točke). Izbjegavajte upotrebu slika `Full Size` osim ako dimenzije odgovaraju njihovoj upotrebi. [Saznajte više](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Možete omogućiti kompresiju teksta u konfiguraciji web-poslužitelja."
