@@ -36,6 +36,10 @@ function computeFileSizeMapOptimized(sourceMapData) {
 
   // @ts-ignore
   consumer.eachMapping(({source, generatedLine, generatedColumn, lastGeneratedColumn}) => {
+    // Webpack seems to sometimes emit null mappings.
+    // https://github.com/mozilla/source-map/pull/303
+    if (!source) return;
+
     // Lines are 1-based
     const line = lines[generatedLine - 1];
     if (line === null) {
@@ -104,6 +108,10 @@ function computeGeneratedFileSizesForCDT(sourceMapData) {
     const generatedColumn = mapping.columnNumber;
     const lastGeneratedColumn = mapping.lastColumnNumber;
 
+    // Webpack seems to sometimes emit null mappings.
+    // https://github.com/mozilla/source-map/pull/303
+    if (!source) continue;
+
     // Lines are 1-based
     const line = lines[generatedLine - 1];
     if (line === null) {
@@ -122,7 +130,7 @@ function computeGeneratedFileSizesForCDT(sourceMapData) {
       //   generatedColumn: generatedColumn,
       //   maxColumn: line.length,
       // });
-      return;
+      continue;
     }
 
     let mappingLength = 0;
@@ -134,7 +142,7 @@ function computeGeneratedFileSizesForCDT(sourceMapData) {
         //   generatedColumn: lastGeneratedColumn,
         //   maxColumn: line.length,
         // });
-        return;
+        continue;
       }
       mappingLength = lastGeneratedColumn - generatedColumn + 0;
     } else {
