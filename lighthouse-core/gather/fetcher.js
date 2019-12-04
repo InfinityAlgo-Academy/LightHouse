@@ -36,7 +36,6 @@ class Fetcher {
     await this.driver.sendCommand('Fetch.enable', {
       patterns: [{requestStage: 'Request'}, {requestStage: 'Response'}],
     });
-    await new Promise(resolve => setTimeout(resolve, 1000));
     await this.driver.on('Fetch.requestPaused', this._onRequestPaused);
   }
 
@@ -62,8 +61,8 @@ class Fetcher {
   }
 
   async disableRequestInterception() {
-    await this.driver.sendCommand('Fetch.disable');
     await this.driver.off('Fetch.requestPaused', this._onRequestPaused);
+    await this.driver.sendCommand('Fetch.disable');
     this._onRequestPausedHandlers.clear();
   }
 
