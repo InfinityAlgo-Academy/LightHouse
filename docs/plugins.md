@@ -51,7 +51,7 @@ To see a fully functioning example, see our [plugin recipe](./recipes/lighthouse
 
 #### `package.json`
 
-A Lighthouse plugin is just a node module with a name that starts with `lighthouse-plugin-`. Any dependencies you need are up to you. However, do not depend on Lighthouse directly, use [`peerDependencies`](http://npm.github.io/using-pkgs-docs/package-json/types/peerdependencies.html) to alert dependants, and `devDependencies` for your own local development:
+A Lighthouse plugin is just a node module with a name that starts with `lighthouse-plugin-`. Any dependencies you need are up to you. However, do not depend on Lighthouse directly, use [`peerDependencies`](http://npm.github.io/using-pkgs-docs/package-json/types/peerdependencies.html) to alert dependents, and `devDependencies` for your own local development:
 
 **Example `package.json`**
 
@@ -136,8 +136,8 @@ module.exports = CatAudit;
 
 ```sh
 # be in your plugin directory, and have lighthouse as a devDependency.
-NODE_ENV=.. yarn lighthouse https://example.com --plugins=lighthouse-plugin-example --only-categories=lighthouse-plugin-example --view
-# Note: we set NODE_ENV to the parent directory as a hack to allow Lighthouse to find this plugin.
+NODE_PATH=.. yarn lighthouse https://example.com --plugins=lighthouse-plugin-example --only-categories=lighthouse-plugin-example --view
+# Note: we add the parent directory to NODE_PATH as a hack to allow Lighthouse to find this plugin.
 # This is useful for local development, but is not necessary when your plugin consuming from NPM as
 # a node module.
 ```
@@ -230,6 +230,8 @@ The following artifacts are available for use in the audits of Lighthouse plugin
 - `WebAppManifest`
 
 While Lighthouse has more artifacts with information about the page than are in this list, those artifacts are considered experimental and their structure or existence could change at any time. Only use artifacts not on the list above if you are comfortable living on the bleeding edge and can tolerate unannounced breaking changes.
+
+If you're interested in other page information not mentioned here, please file an issue. We'd love to help.
 
 #### Using Network Requests
 
