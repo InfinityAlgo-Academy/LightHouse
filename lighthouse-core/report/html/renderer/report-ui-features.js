@@ -620,17 +620,17 @@ class ReportUIFeatures {
     if (!this.json.audits['bundle-visualization-data']) return;
 
     for (const urlEl of this._dom.findAll('.lh-text__url', this._document)) {
-      console.log(urlEl);
+      const href = /** @type {HTMLAnchorElement} */ (this._dom.find('a', urlEl)).href;
+      if (!this.json.audits['bundle-visualization-data']) continue;
+      if (!this.json.audits['bundle-visualization-data'].details) continue;
+      const visualizationData = /** @type {LH.Audit.Details.DebugData} */ (
+        this.json.audits['bundle-visualization-data'].details);
+      const rootNode = visualizationData.rootNodes[href];
+      if (!rootNode) continue;
+
       const externalButton = this._dom.createElement('button', 'lh-button');
       externalButton.textContent = 'Viz';
       externalButton.addEventListener('click', () => {
-        const href = /** @type {HTMLAnchorElement} */ (this._dom.find('a', urlEl)).href;
-        if (!this.json.audits['bundle-visualization-data']) return;
-        if (!this.json.audits['bundle-visualization-data'].details) return;
-
-        const visualizationData = /** @type {LH.Audit.Details.DebugData} */ (
-          this.json.audits['bundle-visualization-data'].details);
-        const rootNode = visualizationData.rootNodes[href];
         ReportUIFeatures.openTabAndSendData({rootNode, href}, `${VIEWER_ORIGIN}/treemap/`, `viz-${href}`);
       });
       urlEl.appendChild(externalButton);
