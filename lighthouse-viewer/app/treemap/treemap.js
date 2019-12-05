@@ -5,6 +5,9 @@
  */
 'use strict';
 
+// TODO
+// webtreemap should collapse series of nodes with just one child into one node.
+
 function main() {
   window.addEventListener('message', e => {
     if (e.source === self.opener && e.data.rootNode) {

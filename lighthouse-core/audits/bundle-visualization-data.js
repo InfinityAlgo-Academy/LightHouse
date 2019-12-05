@@ -59,7 +59,7 @@ function _prepareTreemapNodes(map, sourceBytes) {
   function addSizeToTitle(node, total) {
     const size = node.size;
     // node.id += ` • ${Number.bytesToString(size)} • ${Common.UIString('%.1f\xa0%%', size / total * 100)}`;
-    node.id += ` • ${Math.round(size)} • ${Math.round(size / total * 100)}`;
+    node.id += ` • ${Math.round(size)} • ${Math.round(size / total * 100)}`; // TODO
     if (node.children) {
       for (const child of node.children) {
         addSizeToTitle(child, total);
