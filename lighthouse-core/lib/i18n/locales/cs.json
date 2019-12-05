@@ -1581,13 +1581,13 @@
     "message": "Zvažte snížení počtu [pluginů služby WordPress](https://wordpress.org/plugins/), které na stránce načítají nepoužívaný kód JavaScript. Pluginy, které přidávají nadbytečný javascriptový kód, můžete vyhledat pomocí funkce [Coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) v nástrojích pro vývojáře v Chromu. Odpovědný motiv či plugin poznáte podle adresy URL skriptu. Hledejte pluginy, které v seznamu mají mnoho skriptů, u nichž je při použití funkce Coverage velké množství kódu označeno červeně. Plugin by měl skript do fronty zařadit jen v případě, že se na stránce opravdu používá."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Přečtěte si o [ukládání do mezipaměti prohlížeče ve službě WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Přečtěte si o [ukládání do mezipaměti prohlížeče ve službě WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Zvažte použití [pluginu služby WordPress na optimalizaci obrázků](https://wordpress.org/plugins/search/optimize+images/), který obrázky komprimuje, přičemž zachová jejich kvalitu."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Nahrajte obrázky přímo prostřednictvím [mediální knihovny](https://codex.wordpress.org/Media_Library_Screen), abyste zajistili dostupnost potřebných velikostí obrázků, a poté je vložte z mediální knihovny, případně použití optimálních velikostí obrázků zajistěte pomocí widgetu pro obrázky (včetně obrázků pro responzivní dělicí body). Obrázky v této velikosti: `Full Size` používejte pouze v případě, že jsou jejich rozměry adekvátní k použití. [Další informace](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)"
+    "message": "Nahrajte obrázky přímo prostřednictvím [mediální knihovny](https://wordpress.org/support/article/media-library-screen/), abyste zajistili dostupnost potřebných velikostí obrázků, a poté je vložte z mediální knihovny, případně použití optimálních velikostí obrázků zajistěte pomocí widgetu pro obrázky (včetně obrázků pro responzivní dělicí body). Obrázky v této velikosti: `Full Size` používejte pouze v případě, že jsou jejich rozměry adekvátní k použití. [Další informace](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)"
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Můžete v konfiguraci webového serveru zapnout kompresi textu."

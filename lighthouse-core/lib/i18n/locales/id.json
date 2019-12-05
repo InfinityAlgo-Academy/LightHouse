@@ -1581,13 +1581,13 @@
     "message": "Sebaiknya kurangi atau ubah jumlah [plugin WordPress](https://wordpress.org/plugins/) yang memuat JavaScript yang tidak digunakan di halaman Anda. Untuk mengidentifikasi plugin yang menambahkan JS tidak relevan, coba jalankan [cakupan kode](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) di Chrome DevTools. Anda dapat mengidentifikasi tema/plugin yang bertanggung jawab dari URL skrip. Cari plugin dengan banyak skrip dalam daftar yang memiliki banyak warna merah dalam cakupan kode. Plugin sebaiknya hanya menambahkan skrip ke dalam antrean jika memang benar digunakan di halaman."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Baca [Cache Browser di WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Baca [Cache Browser di WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Sebaiknya gunakan [plugin WordPress untuk pengoptimalan gambar](https://wordpress.org/plugins/search/optimize+images/) yang mengompresi gambar Anda dengan tetap mempertahankan kualitas."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Upload gambar langsung melalui [koleksi media](https://codex.wordpress.org/Media_Library_Screen) untuk memastikan ukuran gambar yang diperlukan tersedia, lalu masukkan koleksi media atau gunakan widget gambar untuk memastikan ukuran gambar optimal digunakan (termasuk untuk titik henti sementara responsif). Hindari menggunakan gambar `Full Size`, kecuali dimensinya memungkinkan untuk digunakan. [Pelajari Lebih Lanjut](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Upload gambar langsung melalui [koleksi media](https://wordpress.org/support/article/media-library-screen/) untuk memastikan ukuran gambar yang diperlukan tersedia, lalu masukkan koleksi media atau gunakan widget gambar untuk memastikan ukuran gambar optimal digunakan (termasuk untuk titik henti sementara responsif). Hindari menggunakan gambar `Full Size`, kecuali dimensinya memungkinkan untuk digunakan. [Pelajari Lebih Lanjut](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Anda dapat mengaktifkan kompresi teks di konfigurasi server web."

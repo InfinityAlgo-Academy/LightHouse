@@ -132,7 +132,7 @@ declare global {
       /** Source maps of scripts executed in the page. */
       SourceMaps: Array<Artifacts.SourceMap>;
       /** The status of an offline fetch of the page's start_url. -1 and a explanation if missing or there was an error. */
-      StartUrl: {statusCode: number, explanation?: string};
+      StartUrl: {url?: string, statusCode: number, explanation?: string};
       /** Information on <script> and <link> tags blocking first paint. */
       TagsBlockingFirstPaint: Artifacts.TagBlockingFirstPaint[];
       /** Information about tap targets including their position and size. */

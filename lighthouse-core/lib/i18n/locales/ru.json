@@ -1581,13 +1581,13 @@
     "message": "Рекомендуем заменить или удалить [плагины WordPress](https://wordpress.org/plugins/), которые загружают неиспользуемый код JavaScript на вашей странице. Чтобы найти такие плагины, запустите [анализ покрытия кода](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) в инструментах разработчика Chrome. Определить нужный плагин или тему можно по URL скрипта. Обращайте внимание на плагины с большим количеством скриптов, в которых при анализе покрытия кода преобладает красный цвет. Скрипт должен попадать в очередь, только если он используется на странице."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Подробнее [о кешировании в браузере на платформе WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)…"
+    "message": "Подробнее [о кешировании в браузере на платформе WordPress](https://wordpress.org/support/article/optimization/#browser-caching)…"
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Чтобы сжимать изображения без потери качества, используйте [специальный плагин WordPress](https://wordpress.org/plugins/search/optimize+images/)."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Чтобы привести размеры ваших изображений в соответствие с требованиями, загрузите их в [библиотеку файлов](https://codex.wordpress.org/Media_Library_Screen). Затем вставьте их на сайт прямо из библиотеки или используйте виджет изображений. Таким образом вы сможете обеспечить оптимальный размер изображений (в том числе для контрольных точек адаптивного дизайна). Старайтесь не использовать для изображения значение `Full Size` без особой необходимости. [Подробнее…](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)"
+    "message": "Чтобы привести размеры ваших изображений в соответствие с требованиями, загрузите их в [библиотеку файлов](https://wordpress.org/support/article/media-library-screen/). Затем вставьте их на сайт прямо из библиотеки или используйте виджет изображений. Таким образом вы сможете обеспечить оптимальный размер изображений (в том числе для контрольных точек адаптивного дизайна). Старайтесь не использовать для изображения значение `Full Size` без особой необходимости. [Подробнее…](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)"
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Включить сжатие текста можно в настройках веб-сервера."

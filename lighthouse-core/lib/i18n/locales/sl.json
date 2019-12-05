@@ -1581,13 +1581,13 @@
     "message": "Razmislite o tem, da bi zmanjšali ali spremenili število [vtičnikov za WordPress](https://wordpress.org/plugins/), ki na vaši strani nalagajo neuporabljen JavaScript. Če želite ugotoviti, kateri vtičniki dodajo zunanji JS, poskušajte z orodji Chrome DevTools izvesti [pokritost kode](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage). Ustrezen vtičnik/temo lahko ugotovite na podlagi URL-ja skripta. Bodite pozorni na vtičnike, ki imajo na seznamu mnogo skriptov, ki imajo v pokritosti kode veliko rdeče obarvanega območja. Skript naj bo v čakalni vrsti vtičnika samo, če je dejansko uporabljen na strani."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Preberite o [predpomnjenju brskalnika v WordPressu](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Preberite o [predpomnjenju brskalnika v WordPressu](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Razmislite o tem, da bi uporabili [vtičnik za optimizacijo slik za WordPress](https://wordpress.org/plugins/search/optimize+images/), ki slike stisne, a ohrani kakovost."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Slike naložite neposredno prek [predstavnostne knjižnice](https://codex.wordpress.org/Media_Library_Screen) in tako zagotovite, da so na voljo potrebne velikosti slik. Nato jih vstavite iz predstavnostne knjižnice ali uporabite slikovni pripomoček, da zagotovite uporabo optimalnih velikosti slik (vključno s tistimi za odzivne prekinitvene točke). Izogibajte se slikam `Full Size`, razen če so mere primerne za njihovo uporabo. [Več o tem](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Slike naložite neposredno prek [predstavnostne knjižnice](https://wordpress.org/support/article/media-library-screen/) in tako zagotovite, da so na voljo potrebne velikosti slik. Nato jih vstavite iz predstavnostne knjižnice ali uporabite slikovni pripomoček, da zagotovite uporabo optimalnih velikosti slik (vključno s tistimi za odzivne prekinitvene točke). Izogibajte se slikam `Full Size`, razen če so mere primerne za njihovo uporabo. [Več o tem](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Stiskanje besedila lahko omogočite v konfiguraciji spletnega strežnika."

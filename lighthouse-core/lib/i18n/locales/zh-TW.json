@@ -1581,13 +1581,13 @@
     "message": "有些 [WordPress 外掛程式](https://wordpress.org/plugins/)會在網頁中載入未使用的 JavaScript，建議你減少這類外掛程式的數量，或改用其他外掛程式。如要找出會新增多餘 JavaScript 的外掛程式，請嘗試在 Chrome DevTools 中執行[程式碼涵蓋率](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage)功能。你可以透過指令碼網址找出有問題的主題/外掛程式。請留意在清單中包含許多指令碼，且程式碼涵蓋率中有許多紅色標示的外掛程式。外掛程式只應將網頁實際使用的指令碼加入佇列。"
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "瞭解 [WordPress 的瀏覽器快取功能](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)。"
+    "message": "瞭解 [WordPress 的瀏覽器快取功能](https://wordpress.org/support/article/optimization/#browser-caching)。"
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "建議你使用壓縮圖片時不會影響到畫質的[圖片最佳化 WordPress 外掛程式](https://wordpress.org/plugins/search/optimize+images/)。"
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "你可以直接透過[媒體庫](https://codex.wordpress.org/Media_Library_Screen)上傳圖片，確保你可以使用所需的圖片大小，然後透過從媒體庫插入圖片，或使用圖片小工具來確保你使用的是最佳圖片大小 (包括回應式中斷點適用的圖片大小)。除非圖片尺寸符合使用目的，否則請避免使用`Full Size`圖片。[瞭解詳情](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)。"
+    "message": "你可以直接透過[媒體庫](https://wordpress.org/support/article/media-library-screen/)上傳圖片，確保你可以使用所需的圖片大小，然後透過從媒體庫插入圖片，或使用圖片小工具來確保你使用的是最佳圖片大小 (包括回應式中斷點適用的圖片大小)。除非圖片尺寸符合使用目的，否則請避免使用`Full Size`圖片。[瞭解詳情](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)。"
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "你可以在網路伺服器設定中啟用文字壓縮功能。"

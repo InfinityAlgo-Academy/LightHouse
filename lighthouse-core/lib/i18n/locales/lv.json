@@ -1581,13 +1581,13 @@
     "message": "Ieteicams samazināt vai mainīt tādu [WordPress spraudņu](https://wordpress.org/plugins/) skaitu, kuri ielādē nelietotu JavaScript kodu jūsu lapā. Lai identificētu spraudņus, kuri pievieno lieku JS kodu, mēģiniet izpildīt [koda pārklājumu](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage), izmantojot Chrome DevTools. Saistīto motīvu/spraudni varat identificēt skripta vietrādī URL. Meklējiet spraudņus, kuriem sarakstā ir daudz skriptu ar daudz sarkanām atzīmēm koda pārklājumā. Spraudnim ir jāievieto rindā skripts tikai tad, ja tas faktiski tiek izmantots lapā."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Uzziniet par [pārlūkprogrammas datu saglabāšanu kešatmiņā programmatūrā WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Uzziniet par [pārlūkprogrammas datu saglabāšanu kešatmiņā programmatūrā WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Ieteicams izmantot [attēlu optimizācijas WordPress spraudni](https://wordpress.org/plugins/search/optimize+images/), kas saspiež attēlus, vienlaikus saglabājot kvalitāti."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Tieši augšupielādējiet attēlus, izmantojot [multivides bibliotēku](https://codex.wordpress.org/Media_Library_Screen), lai nodrošinātu nepieciešamo attēlu lielumu pieejamību. Pēc tam ievietojiet attēlus no multivides bibliotēkas vai izmantojiet attēlu logrīku, lai tiktu izmantoti optimāli attēlu lielumi (tostarp reaģējošām robežvērtībām paredzētie). Neizmantojiet `Full Size` attēlus, ja to izmēri neatbilst to lietojumam. [Uzziniet vairāk](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Tieši augšupielādējiet attēlus, izmantojot [multivides bibliotēku](https://wordpress.org/support/article/media-library-screen/), lai nodrošinātu nepieciešamo attēlu lielumu pieejamību. Pēc tam ievietojiet attēlus no multivides bibliotēkas vai izmantojiet attēlu logrīku, lai tiktu izmantoti optimāli attēlu lielumi (tostarp reaģējošām robežvērtībām paredzētie). Neizmantojiet `Full Size` attēlus, ja to izmēri neatbilst to lietojumam. [Uzziniet vairāk](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Varat iespējot teksta saspiešanu tīmekļa servera konfigurācijā."

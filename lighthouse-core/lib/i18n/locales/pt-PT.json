@@ -1581,13 +1581,13 @@
     "message": "Considere reduzir ou mudar o número de [plug-ins do WordPress](https://wordpress.org/plugins/) que carregam JavaScript não utilizado na sua página. Para identificar plug-ins que estejam a adicionar JS não reconhecido, experimente realizar a [cobertura de código](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) nas DevTools do Chrome. Pode identificar o tema/plug-in responsável a partir do URL do script. Esteja atento a plug-ins que tenham muitos scripts na lista com muito vermelho na cobertura do código. Um plug-in só deve ter um script na lista de espera se este for realmente utilizado na página."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Leia sobre [Colocação do navegador em cache no WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Leia sobre [Colocação do navegador em cache no WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Considere utilizar um [plug-in do WordPress de otimização da imagem](https://wordpress.org/plugins/search/optimize+images/) que comprima as imagens, ao mesmo tempo que mantém a qualidade."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Carregue imagens diretamente a partir da [biblioteca de multimédia](https://codex.wordpress.org/Media_Library_Screen) para garantir que estão disponíveis os tamanhos de imagem necessários e, em seguida, introduza-as a partir da biblioteca de multimédia ou utilize o widget de imagens para garantir que são utilizados os tamanhos ideais das imagens (incluindo as referentes a breakpoints adaptáveis). Evite utilizar imagens de `Full Size`, a menos que as dimensões sejam adequadas à utilização. [Saiba mais](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Carregue imagens diretamente a partir da [biblioteca de multimédia](https://wordpress.org/support/article/media-library-screen/) para garantir que estão disponíveis os tamanhos de imagem necessários e, em seguida, introduza-as a partir da biblioteca de multimédia ou utilize o widget de imagens para garantir que são utilizados os tamanhos ideais das imagens (incluindo as referentes a breakpoints adaptáveis). Evite utilizar imagens de `Full Size`, a menos que as dimensões sejam adequadas à utilização. [Saiba mais](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Pode ativar a compressão de texto na configuração do servidor Web."

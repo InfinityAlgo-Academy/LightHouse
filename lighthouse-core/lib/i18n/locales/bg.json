@@ -1581,13 +1581,13 @@
     "message": "Добре е да намалите броя на [приставките за WordPress](https://wordpress.org/plugins/), които зареждат неизползван JavaScript код в страницата ви, или да ги замените с други. За да откриете приставките, които добавят ненужен JS код, стартирайте инструмента за [покритие на кода](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) в Chrome DevTools. Можете да намерите проблемната тема/приставка в URL адреса на скрипта. Търсете приставки с много скриптове в списъка, за които преобладава червеният цвят в диаграмата на инструмента. Даден скрипт трябва да бъде поставен в опашката на приставка само ако действително се използва в страницата."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Прочетете за [кеширането в браузъра при WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Прочетете за [кеширането в браузъра при WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Добре е да използвате [приставка за WordPress за оптимизиране на изображенията](https://wordpress.org/plugins/search/optimize+images/), която компресира графичните ви файлове, като същевременно запазва качеството им."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Качвайте изображенията директно чрез [мултимедийната библиотека](https://codex.wordpress.org/Media_Library_Screen), за да разполагате с графични файлове с необходимите размери, и след това ги вмъквайте от библиотеката или използвайте приспособлението за изображения, така че да се използват файловете с оптимални размери (включително за адаптивните гранични точки). Избягвайте използването на пълноразмерни изображения (`Full Size`), освен ако размерите са подходящи за съответното предназначение. [Научете повече](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Качвайте изображенията директно чрез [мултимедийната библиотека](https://wordpress.org/support/article/media-library-screen/), за да разполагате с графични файлове с необходимите размери, и след това ги вмъквайте от библиотеката или използвайте приспособлението за изображения, така че да се използват файловете с оптимални размери (включително за адаптивните гранични точки). Избягвайте използването на пълноразмерни изображения (`Full Size`), освен ако размерите са подходящи за съответното предназначение. [Научете повече](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Можете да активирате компресирането на текста в конфигурацията на уеб сървъра си."

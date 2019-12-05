@@ -1581,13 +1581,13 @@
     "message": "ลองลดหรือเปลี่ยนจำนวน[ปลั๊กอิน WordPress](https://wordpress.org/plugins/) ที่โหลด JavaScript ที่ไม่ได้ใช้ในหน้าเว็บของคุณ หากต้องการระบุปลั๊กอินที่เพิ่ม JS โดยไม่จำเป็น ให้ลองเรียกใช้ [การครอบคลุมโค้ด](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage)ใน DevTools ของ Chrome คุณระบุธีม/ปลั๊กอินที่รับผิดชอบได้จาก URL ของสคริปต์ หาปลั๊กอินที่มีสคริปต์จำนวนมากอยู่ในรายการซึ่งมีสีแดงอยู่จำนวนมากในการครอบคลุมโค้ด ปลั๊กอินควรเป็นเพียงตัวกำหนดลำดับของสคริปต์เท่านั้นหากใช้ปลั๊กอินในหน้าจริงๆ"
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "อ่านเกี่ยวกับ[การแคชของเบราว์เซอร์ใน WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)"
+    "message": "อ่านเกี่ยวกับ[การแคชของเบราว์เซอร์ใน WordPress](https://wordpress.org/support/article/optimization/#browser-caching)"
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "พิจารณาใช้[ปลั๊กอิน WordPress การเพิ่มประสิทธิภาพรูปภาพ](https://wordpress.org/plugins/search/optimize+images/)ที่บีบอัดรูปภาพแต่ยังคงคุณภาพไว้ได้"
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "อัปโหลดรูปภาพโดยตรงผ่าน[ไลบรารีสื่อ](https://codex.wordpress.org/Media_Library_Screen)เพื่อให้แน่ใจว่ามีขนาดรูปภาพที่จำเป็นพร้อมใช้งาน จากนั้นแทรกรูปภาพจากไลบรารีสื่อหรือใช้วิดเจ็ตรูปภาพเพื่อให้มีการใช้ขนาดรูปภาพที่มีประสิทธิภาพสูงสุด (รวมถึงขนาดสำหรับเบรกพอยท์ที่ปรับเปลี่ยนตามอุปกรณ์) หลีกเลี่ยงการใช้รูปภาพ`Full Size` นอกเสียจากว่าขนาดจะเพียงพอต่อการใช้งาน [ดูข้อมูลเพิ่มเติม](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)"
+    "message": "อัปโหลดรูปภาพโดยตรงผ่าน[ไลบรารีสื่อ](https://wordpress.org/support/article/media-library-screen/)เพื่อให้แน่ใจว่ามีขนาดรูปภาพที่จำเป็นพร้อมใช้งาน จากนั้นแทรกรูปภาพจากไลบรารีสื่อหรือใช้วิดเจ็ตรูปภาพเพื่อให้มีการใช้ขนาดรูปภาพที่มีประสิทธิภาพสูงสุด (รวมถึงขนาดสำหรับเบรกพอยท์ที่ปรับเปลี่ยนตามอุปกรณ์) หลีกเลี่ยงการใช้รูปภาพ`Full Size` นอกเสียจากว่าขนาดจะเพียงพอต่อการใช้งาน [ดูข้อมูลเพิ่มเติม](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)"
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "คุณเปิดใช้การบีบอัดข้อความในการกำหนดค่าเว็บเซิร์ฟเวอร์ได้"

@@ -1581,13 +1581,13 @@
     "message": "उन [WordPress प्लग इन](https://wordpress.org/plugins/) की संख्या कम करके या स्विच करके देखें जो आपके पेज में ऐसी JavaScript लोड कर रहे हैं जिसका कभी इस्तेमाल नहीं हुआ. Chrome DevTools में [कोड कवरेज](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) चलाकर उन प्लग इन की पहचान करें जो आपके पेज में गैर-ज़रूरी JS जोड़ रहे हैं. आप स्क्रिप्ट के यूआरएल से पहचान सकते हैं कि ऐसा किस थीम/प्लग इन ने किया. ऐसे प्लग इन खोजें जिनके पास उस सूची में कई स्क्रिप्ट हैं जिसमें कोड कवरेज में बहुत से लाल निशान हैं. प्लग इन को स्क्रिप्ट तभी क्यू में लगानी चाहिए, अगर पेज पर उसका वाकई इस्तेमाल किया गया हो."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "[WordPress में ब्राउज़र कैशिंग](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching) के बारे में पढ़ें."
+    "message": "[WordPress में ब्राउज़र कैशिंग](https://wordpress.org/support/article/optimization/#browser-caching) के बारे में पढ़ें."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "ऐसे [इमेज ऑप्टिमाइज़ेशन WordPress प्लग इन](https://wordpress.org/plugins/search/optimize+images/) का इस्तेमाल करें जो आपकी क्वालिटी बरकरार रखते हुए आपकी इमेज कंप्रेस करता है."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "[मीडिया लाइब्रेरी](https://codex.wordpress.org/Media_Library_Screen) की मदद से इमेज सीधे अपलोड करें, ताकि आप यह पक्का कर सकें कि आपके पास इमेज के वे आकार मौजूद हैं जिनकी आपको ज़रूरत पड़ेगी. इसके बाद, उन्हें डालने के लिए मीडिया लाइब्रेरी या इमेज विजेट का इस्तेमाल करें, ताकि आप यह पक्का कर सकें कि सबसे बेहतर इमेज आकारों का इस्तेमाल किया गया है (इसमें जवाब देने वाले ब्रेकपॉइंट की इमेज भी शामिल हैं). `Full Size` इमेज का इस्तेमाल तब तक न करें जब तक डाइमेंशन उनके इस्तेमाल के हिसाब से ठीक न हों. [ज़्यादा जानें](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "[मीडिया लाइब्रेरी](https://wordpress.org/support/article/media-library-screen/) की मदद से इमेज सीधे अपलोड करें, ताकि आप यह पक्का कर सकें कि आपके पास इमेज के वे आकार मौजूद हैं जिनकी आपको ज़रूरत पड़ेगी. इसके बाद, उन्हें डालने के लिए मीडिया लाइब्रेरी या इमेज विजेट का इस्तेमाल करें, ताकि आप यह पक्का कर सकें कि सबसे बेहतर इमेज आकारों का इस्तेमाल किया गया है (इसमें जवाब देने वाले ब्रेकपॉइंट की इमेज भी शामिल हैं). `Full Size` इमेज का इस्तेमाल तब तक न करें जब तक डाइमेंशन उनके इस्तेमाल के हिसाब से ठीक न हों. [ज़्यादा जानें](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "आप अपने वेब सर्वर कॉन्फ़िगरेशन में टेक्स्ट कंप्रेस करने की सुविधा चालू कर सकते हैं."

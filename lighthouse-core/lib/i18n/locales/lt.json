@@ -1581,13 +1581,13 @@
     "message": "Apsvarstykite galimybę sumažinti [„WordPress“ papildinių](https://wordpress.org/plugins/), įkeliančių nenaudojamą „JavaScript“ jūsų puslapyje, skaičių arba juos pakeisti. Kad nustatytumėte papildinius, pridedančius nesusijusios JS, pabandykite vykdyti [kodo aprėpties procesą](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) naudodami „Chrome DevTools“. Susijusią temą / papildinį galite nustatyti pagal scenarijaus URL. Ieškokite papildinių, kurių sąraše pateikta daug scenarijų, kurių kodo aprėptyje yra daug raudonos spalvos. Papildinys įtraukti scenarijų į eilę turėtų tik tokiu atveju, jei jis tikrai naudojamas puslapyje."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Skaitykite apie [naršyklės saugojimo talpykloje funkciją sistemoje „WordPress“](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Skaitykite apie [naršyklės saugojimo talpykloje funkciją sistemoje „WordPress“](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Apsvarstykite galimybę naudoti [vaizdų optimizavimo „WordPress“ papildinį](https://wordpress.org/plugins/search/optimize+images/), leidžiantį suglaudinti vaizdus išlaikant kokybę."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Įkelkite vaizdus tiesiai per [medijos biblioteką](https://codex.wordpress.org/Media_Library_Screen), kad būtų pasiekiami reikiami vaizdų dydžiai, tada įterpkite juos iš medijos bibliotekos arba naudokite vaizdų valdiklį, kad užtikrintumėte, jog naudojami optimalaus dydžio vaizdai (įskaitant tuos, kurie naudojami interaktyviems atskaitos taškams). Stenkitės nenaudoti vaizdų „`Full Size`“, nebent galima naudoti tokių matmenų vaizdus. [Sužinokite daugiau](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Įkelkite vaizdus tiesiai per [medijos biblioteką](https://wordpress.org/support/article/media-library-screen/), kad būtų pasiekiami reikiami vaizdų dydžiai, tada įterpkite juos iš medijos bibliotekos arba naudokite vaizdų valdiklį, kad užtikrintumėte, jog naudojami optimalaus dydžio vaizdai (įskaitant tuos, kurie naudojami interaktyviems atskaitos taškams). Stenkitės nenaudoti vaizdų „`Full Size`“, nebent galima naudoti tokių matmenų vaizdus. [Sužinokite daugiau](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Galite įgalinti teksto glaudinimą žiniatinklio serverio konfigūracijoje."

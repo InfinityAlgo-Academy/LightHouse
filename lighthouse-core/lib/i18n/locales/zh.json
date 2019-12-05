@@ -1581,13 +1581,13 @@
     "message": "建议您减少或改变会在您网页中加载未使用的 JavaScript 的 [WordPress 插件](https://wordpress.org/plugins/)的数量。若想找出会添加无关 JS 的插件，请尝试在 Chrome DevTools 中运行[代码覆盖率](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage)测试。您可根据脚本网址找出导致问题的主题背景/插件。请留意在列表中包含多个以大量红色显示代码覆盖率的脚本的插件。插件应只将网页中确实用到的脚本加入队列。"
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "了解 [WordPress 中的浏览器缓存](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)。"
+    "message": "了解 [WordPress 中的浏览器缓存](https://wordpress.org/support/article/optimization/#browser-caching)。"
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "建议您使用[图片优化 WordPress 插件](https://wordpress.org/plugins/search/optimize+images/)，以在不影响图片质量的前提下压缩图片大小。"
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "直接通过[媒体库](https://codex.wordpress.org/Media_Library_Screen)上传图片，以确保能够按要求的尺寸提供图片，然后从媒体库插入图片，或使用图片微件来确保采用最佳的图片尺寸（包括适用于自适应断点的尺寸）。避免使用 `Full Size` 图片，除非有足够的可用空间。[了解详情](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)。"
+    "message": "直接通过[媒体库](https://wordpress.org/support/article/media-library-screen/)上传图片，以确保能够按要求的尺寸提供图片，然后从媒体库插入图片，或使用图片微件来确保采用最佳的图片尺寸（包括适用于自适应断点的尺寸）。避免使用 `Full Size` 图片，除非有足够的可用空间。[了解详情](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)。"
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "您可以在网络服务器配置中启用文本压缩。"

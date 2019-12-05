@@ -884,6 +884,9 @@
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Â śêŕv̂íĉé ŵór̂ḱêŕ êńâb́l̂éŝ ýôúr̂ ẃêb́ âṕp̂ t́ô b́ê ŕêĺîáb̂ĺê ín̂ ún̂ṕr̂éd̂íĉt́âb́l̂é n̂ét̂ẃôŕk̂ ćôńd̂ít̂íôńŝ. [Ĺêár̂ń m̂ór̂é](https://web.dev/offline-start-url)."
   },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Êŕr̂ór̂ ĺôád̂ín̂ǵ {url} îń Ŝér̂v́îćê Ẃôŕk̂ér̂, ǵôt́ ŝt́ât́ûś ĉód̂é {statusCode}"
+  },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` d̂óêś n̂ót̂ ŕêśp̂ón̂d́ ŵít̂h́ â 200 ẃĥén̂ óf̂f́l̂ín̂é"
   },
@@ -1698,13 +1701,13 @@
     "message": "Ĉón̂śîd́êŕ r̂éd̂úĉín̂ǵ, ôŕ ŝẃît́ĉh́îńĝ, t́ĥé n̂úm̂b́êŕ ôf́ [Ŵór̂d́P̂ŕêśŝ ṕl̂úĝín̂ś](https://wordpress.org/plugins/) l̂óâd́îńĝ ún̂úŝéd̂ J́âv́âŚĉŕîṕt̂ ín̂ ýôúr̂ ṕâǵê. T́ô íd̂én̂t́îf́ŷ ṕl̂úĝín̂ś t̂h́ât́ âŕê ád̂d́îńĝ éx̂t́r̂án̂éôúŝ J́Ŝ, t́r̂ý r̂ún̂ńîńĝ [ćôd́ê ćôv́êŕâǵê](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) ín̂ Ćĥŕôḿê D́êv́T̂óôĺŝ. Ýôú ĉán̂ íd̂én̂t́îf́ŷ t́ĥé t̂h́êḿê/ṕl̂úĝín̂ ŕêśp̂ón̂śîb́l̂é f̂ŕôḿ t̂h́ê ÚR̂Ĺ ôf́ t̂h́ê śĉŕîṕt̂. Ĺôók̂ óût́ f̂ór̂ ṕl̂úĝín̂ś t̂h́ât́ ĥáv̂é m̂án̂ý ŝćr̂íp̂t́ŝ ín̂ t́ĥé l̂íŝt́ ŵh́îćĥ h́âv́ê á l̂ót̂ óf̂ ŕêd́ îń ĉód̂é ĉóv̂ér̂áĝé. Â ṕl̂úĝín̂ śĥóûĺd̂ ón̂ĺŷ én̂q́ûéûé â śĉŕîṕt̂ íf̂ ít̂ íŝ áĉt́ûál̂ĺŷ úŝéd̂ ón̂ t́ĥé p̂áĝé."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "R̂éâd́ âb́ôút̂ [B́r̂óŵśêŕ Ĉáĉh́îńĝ ín̂ Ẃôŕd̂Ṕr̂éŝś](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "R̂éâd́ âb́ôút̂ [B́r̂óŵśêŕ Ĉáĉh́îńĝ ín̂ Ẃôŕd̂Ṕr̂éŝś](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Ĉón̂śîd́êŕ ûśîńĝ án̂ [ím̂áĝé ôṕt̂ím̂íẑát̂íôń Ŵór̂d́P̂ŕêśŝ ṕl̂úĝín̂](https://wordpress.org/plugins/search/optimize+images/) t́ĥát̂ ćôḿp̂ŕêśŝéŝ ýôúr̂ ím̂áĝéŝ ẃĥíl̂é r̂ét̂áîńîńĝ q́ûál̂ít̂ý."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Ûṕl̂óâd́ îḿâǵêś d̂ír̂éĉt́l̂ý t̂h́r̂óûǵĥ t́ĥé [m̂éd̂íâ ĺîb́r̂ár̂ý](https://codex.wordpress.org/Media_Library_Screen) t̂ó êńŝúr̂é t̂h́ât́ t̂h́ê ŕêq́ûír̂éd̂ ím̂áĝé ŝíẑéŝ ár̂é âv́âíl̂áb̂ĺê, án̂d́ t̂h́êń îńŝér̂t́ t̂h́êḿ f̂ŕôḿ t̂h́ê ḿêd́îá l̂íb̂ŕâŕŷ ór̂ úŝé t̂h́ê ím̂áĝé ŵíd̂ǵêt́ t̂ó êńŝúr̂é t̂h́ê óp̂t́îḿâĺ îḿâǵê śîźêś âŕê úŝéd̂ (ín̂ćl̂úd̂ín̂ǵ t̂h́ôśê f́ôŕ t̂h́ê ŕêśp̂ón̂śîv́ê b́r̂éâḱp̂óîńt̂ś). Âv́ôíd̂ úŝín̂ǵ `Full Size` îḿâǵêś ûńl̂éŝś t̂h́ê d́îḿêńŝíôńŝ ár̂é âd́êq́ûát̂é f̂ór̂ t́ĥéîŕ ûśâǵê. [Ĺêár̂ń M̂ór̂é](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Ûṕl̂óâd́ îḿâǵêś d̂ír̂éĉt́l̂ý t̂h́r̂óûǵĥ t́ĥé [m̂éd̂íâ ĺîb́r̂ár̂ý](https://wordpress.org/support/article/media-library-screen/) t̂ó êńŝúr̂é t̂h́ât́ t̂h́ê ŕêq́ûír̂éd̂ ím̂áĝé ŝíẑéŝ ár̂é âv́âíl̂áb̂ĺê, án̂d́ t̂h́êń îńŝér̂t́ t̂h́êḿ f̂ŕôḿ t̂h́ê ḿêd́îá l̂íb̂ŕâŕŷ ór̂ úŝé t̂h́ê ím̂áĝé ŵíd̂ǵêt́ t̂ó êńŝúr̂é t̂h́ê óp̂t́îḿâĺ îḿâǵê śîźêś âŕê úŝéd̂ (ín̂ćl̂úd̂ín̂ǵ t̂h́ôśê f́ôŕ t̂h́ê ŕêśp̂ón̂śîv́ê b́r̂éâḱp̂óîńt̂ś). Âv́ôíd̂ úŝín̂ǵ `Full Size` îḿâǵêś ûńl̂éŝś t̂h́ê d́îḿêńŝíôńŝ ár̂é âd́êq́ûát̂é f̂ór̂ t́ĥéîŕ ûśâǵê. [Ĺêár̂ń M̂ór̂é](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Ŷóû ćâń êńâb́l̂é t̂éx̂t́ ĉóm̂ṕr̂éŝśîón̂ ín̂ ýôúr̂ ẃêb́ ŝér̂v́êŕ ĉón̂f́îǵûŕât́îón̂."

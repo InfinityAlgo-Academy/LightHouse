@@ -1581,13 +1581,13 @@
     "message": "Overweeg gebruik te maken van minder of andere [WordPress-plug-ins](https://wordpress.org/plugins/) die ongebruikt JavaScript laden op je pagina. Voer [codedekking](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) uit in Chrome DevTools als je plug-ins wilt identificeren die extra JS toevoegen. Via de URL van het script kun je identificeren welk thema/welke plug-in verantwoordelijk is. Ga in de lijst op zoek naar plug-ins met veel scripts en veel rood in de codedekking. Een plug-in zou een script alleen in de wachtrij moeten plaatsen als het daadwerkelijk wordt gebruikt op de pagina."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Lees meer over [browsercaching in WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Lees meer over [browsercaching in WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Overweeg een [beeldoptimalisatieplug-in voor WordPress](https://wordpress.org/plugins/search/optimize+images/) te gebruiken om je afbeeldingen te comprimeren terwijl de beeldkwaliteit behouden blijft."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Upload afbeeldingen rechtstreeks via de [mediabibliotheek](https://codex.wordpress.org/Media_Library_Screen) om er zeker van te zijn dat de vereiste afbeeldingsformaten beschikbaar zijn. Voeg de afbeeldingen vervolgens in vanuit de mediabibliotheek. Ook kun je de afbeeldingswidget gebruiken om ervoor te zorgen dat de optimale afbeeldingsformaten worden gebruikt (inclusief voor responsieve breakpoints). Vermijd `Full Size`-afbeeldingen, tenzij de afmetingen geschikt zijn voor waar ze worden geplaatst. [Meer informatie](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)"
+    "message": "Upload afbeeldingen rechtstreeks via de [mediabibliotheek](https://wordpress.org/support/article/media-library-screen/) om er zeker van te zijn dat de vereiste afbeeldingsformaten beschikbaar zijn. Voeg de afbeeldingen vervolgens in vanuit de mediabibliotheek. Ook kun je de afbeeldingswidget gebruiken om ervoor te zorgen dat de optimale afbeeldingsformaten worden gebruikt (inclusief voor responsieve breakpoints). Vermijd `Full Size`-afbeeldingen, tenzij de afmetingen geschikt zijn voor waar ze worden geplaatst. [Meer informatie](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)"
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Je kunt tekstcompressie inschakelen bij je webserverinstellingen."

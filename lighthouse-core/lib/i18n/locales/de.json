@@ -1581,13 +1581,13 @@
     "message": "Prüfen Sie, ob Sie [WordPress-Plug-ins](https://wordpress.org/plugins/), über die nicht verwendete JavaScript-Dateien auf Ihre Seite geladen werden, entfernen oder durch alternative Plug-ins ersetzen können. Wenn Sie die Plug-ins ermitteln möchten, über die irrelevante JavaScript-Dateien hinzugefügt werden, können Sie das Prüftool zur [Codeabdeckung](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in den Chrome-Entwicklertools verwenden. Das entsprechende Design/Plug-in können Sie anhand der URL des Skripts erkennen. Suchen Sie in der Liste nach Plug-ins mit vielen Skripts, bei denen im Prüftool zur Codeabdeckung viel nicht verwendeter Code (markiert in Rot) angezeigt wird. Ein Skript sollte nur dann in ein Plug-in aufgenommen werden, wenn es auch tatsächlich auf der Seite verwendet wird."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Hier erhalten Sie Informationen zum [Browser-Caching in WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Hier erhalten Sie Informationen zum [Browser-Caching in WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Sie haben die Möglichkeit, ein [WordPress-Plug-in für die Bildoptimierung](https://wordpress.org/plugins/search/optimize+images/) zu verwenden, durch das Ihre Bilder komprimiert werden, die Qualität jedoch gleich bleibt."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Sie haben die Möglichkeit, Bilder direkt über die [Medienbibliothek](https://codex.wordpress.org/Media_Library_Screen) hochzuladen, damit die erforderlichen Bildgrößen verfügbar sind. Die Bilder können Sie dann aus der Medienbibliothek einfügen oder auch das Bild-Widget nutzen, damit die optimalen Bildgrößen verwendet werden (einschließlich derjenigen für die responsiven Haltepunkte). Bilder in `Full Size` sollten nur verwendet werden, wenn die Abmessungen für die entsprechende Nutzung geeignet sind. [Weitere Informationen.](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)"
+    "message": "Sie haben die Möglichkeit, Bilder direkt über die [Medienbibliothek](https://wordpress.org/support/article/media-library-screen/) hochzuladen, damit die erforderlichen Bildgrößen verfügbar sind. Die Bilder können Sie dann aus der Medienbibliothek einfügen oder auch das Bild-Widget nutzen, damit die optimalen Bildgrößen verwendet werden (einschließlich derjenigen für die responsiven Haltepunkte). Bilder in `Full Size` sollten nur verwendet werden, wenn die Abmessungen für die entsprechende Nutzung geeignet sind. [Weitere Informationen.](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)"
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Sie können die Textkomprimierung in der Konfiguration Ihres Webservers aktivieren."

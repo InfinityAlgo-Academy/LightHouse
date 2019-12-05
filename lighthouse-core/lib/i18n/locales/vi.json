@@ -1581,13 +1581,13 @@
     "message": "Hãy cân nhắc giảm hoặc chuyển đổi số lượng [plugin của WordPress](https://wordpress.org/plugins/) tải JavaScript không dùng đến trong trang của bạn. Để xác định các plugin đang thêm JS không liên quan, hãy thử chạy [phạm vi của mã](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) trong Chrome DevTools. Bạn có thể xác định giao diện/plugin gây ra tình trạng này từ URL của tập lệnh. Hãy chú ý đến những plugin có nhiều tập lệnh trong danh sách. Những plugin này có nhiều màu đỏ trong phạm vi của mã. Một plugin chỉ nên thêm một tập lệnh vào hàng đợi nếu tập lệnh đó thực sự được dùng trên trang."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Hãy đọc về [Bộ nhớ đệm của trình duyệt trong WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Hãy đọc về [Bộ nhớ đệm của trình duyệt trong WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Hãy cân nhắc sử dụng một [plugin tối ưu hóa hình ảnh của WordPress](https://wordpress.org/plugins/search/optimize+images/) có khả năng nén hình ảnh mà vẫn đảm bảo chất lượng."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Trực tiếp tải hình ảnh lên thông qua [thư viện nội dung đa phương tiện](https://codex.wordpress.org/Media_Library_Screen) để đảm bảo có các kích thước hình ảnh theo yêu cầu, sau đó chèn hình ảnh từ thư viện nội dung đa phương tiện hoặc sử dụng tiện ích hình ảnh để đảm bảo sử dụng kích thước hình ảnh tối ưu (bao gồm cả các kích thước dành cho điểm ngắt thích ứng). Tránh sử dụng hình ảnh có `Full Size` trừ khi những hình ảnh đó có kích thước phù hợp. [Tìm hiểu thêm](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Trực tiếp tải hình ảnh lên thông qua [thư viện nội dung đa phương tiện](https://wordpress.org/support/article/media-library-screen/) để đảm bảo có các kích thước hình ảnh theo yêu cầu, sau đó chèn hình ảnh từ thư viện nội dung đa phương tiện hoặc sử dụng tiện ích hình ảnh để đảm bảo sử dụng kích thước hình ảnh tối ưu (bao gồm cả các kích thước dành cho điểm ngắt thích ứng). Tránh sử dụng hình ảnh có `Full Size` trừ khi những hình ảnh đó có kích thước phù hợp. [Tìm hiểu thêm](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Bạn có thể bật tính năng nén văn bản trong cấu hình máy chủ web."

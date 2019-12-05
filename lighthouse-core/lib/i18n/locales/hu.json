@@ -1581,13 +1581,13 @@
     "message": "Fontolja meg a nem használt JavaScriptet betöltő [WordPress-bővítmények](https://wordpress.org/plugins/) lecserélését vagy számuk csökkentését. A felesleges JavaScriptet elhelyező bővítmények azonosításában a Chrome DevTools [kódlefedettség](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) eszköze is segíthet. A felelős téma vagy bővítmény a szkript URL-je alapján azonosítható. Keressen olyan bővítményeket, amelyeknek több szkriptjében is sok piros szín szerepel a kódlefedettségi listán. Ideális esetben a bővítmények csak az oldalon ténylegesen használt szkripteket állítják sorba."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "További információ a [WordPress böngészős gyorsítótárazásáról](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "További információ a [WordPress böngészős gyorsítótárazásáról](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Fontolja meg olyan [képoptimalizáló WordPress-bővítmény](https://wordpress.org/plugins/search/optimize+images/) használatát, mellyel minőségromlás nélkül tömöríthetők a képek."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "A képeket közvetlenül a [Media Library](https://codex.wordpress.org/Media_Library_Screen) felületén töltse fel, hogy biztosan minden szükséges képméret rendelkezésre álljon, ezután pedig innen szúrja be őket, vagy használja az Image Widgetet, hogy biztosan az optimális képméreteket alkalmazza (a reszponzív töréspontok esetében is) `Full Size` képeket csak akkor használjon, ha méretük megfelel a felhasználás módjának. [További információ](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "A képeket közvetlenül a [Media Library](https://wordpress.org/support/article/media-library-screen/) felületén töltse fel, hogy biztosan minden szükséges képméret rendelkezésre álljon, ezután pedig innen szúrja be őket, vagy használja az Image Widgetet, hogy biztosan az optimális képméreteket alkalmazza (a reszponzív töréspontok esetében is) `Full Size` képeket csak akkor használjon, ha méretük megfelel a felhasználás módjának. [További információ](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "A szövegtömörítést a webszerver konfigurációjában engedélyezheti."

@@ -1581,13 +1581,13 @@
     "message": "Potresti ridurre, o cambiare, il numero di [plug-in di WordPress](https://wordpress.org/plugins/) che caricano file JavaScript inutilizzati nella tua pagina. Per individuare i plug-in che aggiungono JavaScript estraneo, prova a eseguire il [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. Puoi individuare il tema o il plug-in responsabile nell'URL dello script. Cerca i plug-in che nell'elenco hanno diversi script con molto rosso nel code coverage. Un plug-in dovrebbe aggiungere in coda uno script solo se viene effettivamente utilizzato nella pagina."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Leggi informazioni sulla [memorizzazione nella cache del browser in WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Leggi informazioni sulla [memorizzazione nella cache del browser in WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Potresti usare un [plug-in di WordPress per l'ottimizzazione delle immagini](https://wordpress.org/plugins/search/optimize+images/) in grado di comprimere le tue immagini preservandone la qualità."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Carica le immagini direttamente tramite la [libreria multimediale](https://codex.wordpress.org/Media_Library_Screen) per assicurarti che siano disponibili le dimensioni delle immagini richieste, quindi inseriscile dalla libreria multimediale o utilizza il widget per immagini per assicurarti che vengano utilizzate le dimensioni ottimali (incluse quelle per i punti di interruzione adattabili). Evita di utilizzare immagini `Full Size`, a meno che le dimensioni siano adatte all'utilizzo previsto. [Ulteriori informazioni](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Carica le immagini direttamente tramite la [libreria multimediale](https://wordpress.org/support/article/media-library-screen/) per assicurarti che siano disponibili le dimensioni delle immagini richieste, quindi inseriscile dalla libreria multimediale o utilizza il widget per immagini per assicurarti che vengano utilizzate le dimensioni ottimali (incluse quelle per i punti di interruzione adattabili). Evita di utilizzare immagini `Full Size`, a meno che le dimensioni siano adatte all'utilizzo previsto. [Ulteriori informazioni](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Puoi attivare la compressione del testo nella configurazione del server web."

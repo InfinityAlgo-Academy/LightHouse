@@ -183,13 +183,14 @@ function resolveModule(moduleIdentifier, configDir, category) {
     return require.resolve(cwdPath);
   } catch (e) {}
 
-  const errorString =
-    'Unable to locate ' +
-    (category ? `${category}: ` : '') +
-    `${moduleIdentifier} (tried to require() from '${__dirname}' and load from '${cwdPath}'`;
+  const errorString = 'Unable to locate ' + (category ? `${category}: ` : '') +
+    `\`${moduleIdentifier}\`.
+     Tried to require() from these locations:
+       ${__dirname}
+       ${cwdPath}`;
 
   if (!configDir) {
-    throw new Error(errorString + ')');
+    throw new Error(errorString);
   }
 
   // Finally, try looking up relative to the config file path. Just like the
@@ -200,7 +201,8 @@ function resolveModule(moduleIdentifier, configDir, category) {
     return require.resolve(relativePath);
   } catch (requireError) {}
 
-  throw new Error(errorString + ` and '${relativePath}')`);
+  throw new Error(errorString + `
+       ${relativePath}`);
 }
 
 module.exports = {

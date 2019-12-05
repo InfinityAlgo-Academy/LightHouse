@@ -1581,13 +1581,13 @@
     "message": "כדאי לשקול לצמצם את מספר [יישומי הפלאגין של WordPress](https://wordpress.org/plugins/) שטוענים תוכן JavaScript בלתי נחוץ בדף, או להשבית אותם. כדי לזהות יישומי פלאגין שמוסיפים תוכן JS מיותר, אפשר להפעיל [כיסוי קוד](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) ב-Chrome DevTools. לפי כתובת ה-URL של הסקריפט, ניתן לזהות את העיצוב/הפלאגין שאחראים להוספת התוכן. יישומי הפלאגין הבעייתיים הם אלה שברשימת הסקריפטים שלהם יש כמות גדולה של כיסוי קוד באדום. פלאגין צריך להכניס סקריפט לתור רק אם נעשה בו שימוש בדף."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "למידע על [שמירה במטמון הדפדפן ב-WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "למידע על [שמירה במטמון הדפדפן ב-WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "כדאי לשקול להשתמש ב[פלאגין של WordPress לאופטימיזציית תמונות](https://wordpress.org/plugins/search/optimize+images/) שדוחס את התמונות בלי לפגוע באיכות שלהן."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "העלאה של תמונות באופן ישיר דרך [ספריית המדיה](https://codex.wordpress.org/Media_Library_Screen) תאפשר לך לוודא שהתמונות זמינות במידות הדרושות. אחר כך אפשר להוסיף אותן מספריית המדיה או להשתמש בווידג'ט התמונות כדי לוודא שנעשה שימוש בתמונות במידות האופטימליות (כולל תמונות בשביל נקודות מעבר רספונסיביות). יש להימנע משימוש בתמונות ב`Full Size`, אלא אם המימדים מתאימים לשימוש שנעשה בהן. [מידע נוסף](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "העלאה של תמונות באופן ישיר דרך [ספריית המדיה](https://wordpress.org/support/article/media-library-screen/) תאפשר לך לוודא שהתמונות זמינות במידות הדרושות. אחר כך אפשר להוסיף אותן מספריית המדיה או להשתמש בווידג'ט התמונות כדי לוודא שנעשה שימוש בתמונות במידות האופטימליות (כולל תמונות בשביל נקודות מעבר רספונסיביות). יש להימנע משימוש בתמונות ב`Full Size`, אלא אם המימדים מתאימים לשימוש שנעשה בהן. [מידע נוסף](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "אפשר להפעיל דחיסת טקסט בהגדרות שרת האינטרנט."

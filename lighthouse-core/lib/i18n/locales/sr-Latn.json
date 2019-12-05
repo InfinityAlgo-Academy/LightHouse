@@ -1581,13 +1581,13 @@
     "message": "Preporučujemo da umanjite ili promenite broj [WordPress dodatnih komponenti](https://wordpress.org/plugins/) koje na stranici učitavaju JavaScript koji se ne koristi. Da biste identifikovali dodatne komponente koje dodaju suvišan JS, probajte da pokrenete [pokrivenost koda](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) u alatki Chrome DevTools. Možete da identifikujete odgovornu temu/dodatnu komponentu u URL-u skripte. Potražite dodatne komponente koje na listi imaju mnogo skripti sa dosta crvenila u pokrivenosti koda. Dodatna komponenta treba da stavi skriptu na listu samo ako se stvarno koristi na stranici."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Pročitajte više o [keširanju pregledača u WordPress-u](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Pročitajte više o [keširanju pregledača u WordPress-u](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Preporučujemo da koristite [WordPress dodatnu komponentu za optimizaciju slika](https://wordpress.org/plugins/search/optimize+images/) koja komprimuje slike bez gubitka kvaliteta."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Otpremajte slike direktno pomoću [biblioteke medija](https://codex.wordpress.org/Media_Library_Screen) da biste se uverili da su dostupne obavezne veličine slika, pa ih umetnite u biblioteku medija ili koristite vidžet stranice da biste se uverili da se koriste optimalne veličine slika (uključujući one za prelomne tačke koje se odazivaju). Izbegavajte korišćenje slika `Full Size` ako dimenzije nisu adekvatne za njihovo korišćenje. [Saznajte više](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Otpremajte slike direktno pomoću [biblioteke medija](https://wordpress.org/support/article/media-library-screen/) da biste se uverili da su dostupne obavezne veličine slika, pa ih umetnite u biblioteku medija ili koristite vidžet stranice da biste se uverili da se koriste optimalne veličine slika (uključujući one za prelomne tačke koje se odazivaju). Izbegavajte korišćenje slika `Full Size` ako dimenzije nisu adekvatne za njihovo korišćenje. [Saznajte više](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Možete da omogućite komprimovanje teksta u konfiguraciji veb-servera."

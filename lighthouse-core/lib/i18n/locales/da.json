@@ -1581,13 +1581,13 @@
     "message": "Overvej at reducere eller ændre antallet af [WordPress-plugins](https://wordpress.org/plugins/), der indlæser ubrugt JavaScript på din side. Hvis du vil identificere plugins, der tilføjer irrelevant JavaScript, kan du prøve at køre [kodedækning](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) i Chrome DevTools. Du kan identificere det problematiske tema/plugin via webadressen for scriptet. Kig efter plugins med mange scripts på listen, som indeholder meget rødt i kodedækningen. Et plugin bør kun sætte et script i kø, hvis det rent faktisk anvendes på siden."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Læs om [browserens cachelagring i WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Læs om [browserens cachelagring i WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Overvej at bruge et [WordPress-plugin til billedoptimering](https://wordpress.org/plugins/search/optimize+images/), der komprimerer dine billeder uden at gå på kompromis med kvaliteten."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Upload billeder direkte via [mediesamlingen](https://codex.wordpress.org/Media_Library_Screen) for at sikre, at de påkrævede billedstørrelser er tilgængelige, og indsæt dem derefter fra mediesamlingen, eller brug billedwidgetten til at sikre, at de optimale billedstørrelser anvendes (inklusive dem til responsive skillepunkter). Undgå at bruge billeder i `Full Size`, medmindre dimensionerne er passende til brugen. [Få flere oplysninger](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Upload billeder direkte via [mediesamlingen](https://wordpress.org/support/article/media-library-screen/) for at sikre, at de påkrævede billedstørrelser er tilgængelige, og indsæt dem derefter fra mediesamlingen, eller brug billedwidgetten til at sikre, at de optimale billedstørrelser anvendes (inklusive dem til responsive skillepunkter). Undgå at bruge billeder i `Full Size`, medmindre dimensionerne er passende til brugen. [Få flere oplysninger](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Du kan aktivere tekstkomprimering ved konfigurationen af din webserver."
