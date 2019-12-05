@@ -21,6 +21,7 @@ const statistics = require('../lib/statistics.js');
  */
 
 const GREAT_PCTL = 0.995;
+// This could be 0.05 instead to nearly HALVE the distance. Long tails, man.
 const TERRIBLE_PCTL = 0.0049;
 
 const config = new Config(defaultConfig);
@@ -30,8 +31,7 @@ const continuouslyScoredAudits = config.audits.filter(a => {
     return hasScoreConsts;
 });
 
-// kinda like rounding..
-const round = num => Number(num.toPrecision(3));
+const roundNum = num => Number(num.toPrecision(3)); // "rounding"
 
 const results = continuouslyScoredAudits.map(audit => {
     // TODO: handle desktop scoring as well..
@@ -39,11 +39,8 @@ const results = continuouslyScoredAudits.map(audit => {
     const great = statistics.VALUE_AT_QUANTILE(scoreMedian, scorePODR, GREAT_PCTL);
     const worst = statistics.VALUE_AT_QUANTILE(scoreMedian, scorePODR, TERRIBLE_PCTL);
     const auditId = audit.path.split('/').slice(-1)[0];
-    return [auditId, [round(great), round(worst)]];
+    return [auditId, [roundNum(great), roundNum(worst)]];
 });
 
 const limits = Object.fromEntries(results);
 console.log({ limits });
-
-
- 
