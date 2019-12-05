@@ -56,13 +56,13 @@ class BundleDuplication extends ByteEfficiencyAudit {
     const sourceDatasMap = new Map();
 
     // Determine size of each `sources` entry.
-    for (const {map, sizes} of bundles) {
+    for (const {rawMap, sizes} of bundles) {
       /** @type {SourceData[]} */
       const sourceDatas = [];
-      sourceDatasMap.set(map, sourceDatas);
+      sourceDatasMap.set(rawMap, sourceDatas);
 
-      for (let i = 0; i < map.sources.length; i++) {
-        const source = map.sources[i];
+      for (let i = 0; i < rawMap.sources.length; i++) {
+        const source = rawMap.sources[i];
         // Trim trailing question mark - b/c webpack.
         let normalizedSource = source.replace(/\?$/, '');
         // Normalize paths for dependencies by keeping everything after the last `node_modules`.
@@ -77,7 +77,7 @@ class BundleDuplication extends ByteEfficiencyAudit {
         // Ignore shims.
         if (normalizedSource.includes('external ')) continue;
 
-        const fullSource = (map.sourceRoot || '') + source;
+        const fullSource = (rawMap.sourceRoot || '') + source;
         const sourceSize = sizes.files[fullSource];
 
         sourceDatas.push({
@@ -89,8 +89,8 @@ class BundleDuplication extends ByteEfficiencyAudit {
 
     /** @type {Map<string, Array<{scriptUrl: string, size: number}>>} */
     const sourceDataAggregated = new Map();
-    for (const {map, script} of bundles) {
-      const sourceDatas = sourceDatasMap.get(map);
+    for (const {rawMap, script} of bundles) {
+      const sourceDatas = sourceDatasMap.get(rawMap);
       if (!sourceDatas) continue;
 
       for (const sourceData of sourceDatas) {

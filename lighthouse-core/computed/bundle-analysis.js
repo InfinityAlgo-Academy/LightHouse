@@ -9,6 +9,22 @@ const Audit = require('../audits/audit.js');
 const NetworkRecords = require('./network-records.js');
 const makeComputedArtifact = require('./computed-artifact.js');
 
+/**
+ * @typedef Sizes
+ * @property {Record<string, number>} files
+ * @property {number} unmappedBytes
+ * @property {number} totalBytes
+*/
+
+/**
+ * @typedef Bundle
+ * @property {LH.Artifacts.RawSourceMap} rawMap
+ * @property {LH.Artifacts.ScriptElement} script
+ * @property {LH.Artifacts.NetworkRequest=} networkRecord
+ * @property {typeof import('../lib/cdt/SDK.js')['TextSourceMap']} map
+ * @property {Sizes} sizes
+*/
+
 // Lifted from source-map-explorer.
 /** Calculate the number of bytes contributed by each source file */
 // @ts-ignore
@@ -97,39 +113,45 @@ class BundleAnalysis {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
 
-    /**
-     * @typedef Sizes
-     * @property {Record<string, number>} files
-     * @property {number} unmappedBytes
-     * @property {number} totalBytes
-    */
-
-    /** @type {Array<{map: LH.Artifacts.RawSourceMap, script: LH.Artifacts.ScriptElement, networkRecord?: LH.Artifacts.NetworkRequest, sizes: Sizes}>} */
-    const sourceMapDatas = [];
+    /** @type {Bundle[]} */
+    const bundles = [];
 
     // Collate map, script, and network record.
     for (let mapIndex = 0; mapIndex < SourceMaps.length; mapIndex++) {
-      const {scriptUrl, map} = SourceMaps[mapIndex];
-      if (!map) continue;
+      const {scriptUrl, map: rawMap} = SourceMaps[mapIndex];
+      if (!rawMap) continue;
 
       const scriptElement = ScriptElements.find(s => s.src === scriptUrl);
       const networkRecord = networkRecords.find(r => r.url === scriptUrl);
       if (!scriptElement) continue;
 
-      // @ts-ignore: TODO: `sections` in map
-      const sdkSourceMap = new SDK.TextSourceMap(`compiled.js`, `compiled.js.map`, map);
-      const sizes = computeGeneratedFileSizesForCDT({map: sdkSourceMap, content: scriptElement.content});
+      // Lazily generate expensive things.
+      /** @type {typeof SDK.TextSourceMap=} */
+      let map;
+      /** @type {Sizes=} */
+      let sizes;
 
-      const sourceMapData = {
-        map,
+      const bundle = {
+        rawMap,
         script: scriptElement,
         networkRecord,
-        sizes,
+        get map() {
+          if (map) return map;
+          // @ts-ignore: TODO: `sections` needs to be in rawMap types
+          return map = new SDK.TextSourceMap(`compiled.js`, `compiled.js.map`, rawMap);
+        },
+        get sizes() {
+          if (sizes) return sizes;
+          return sizes = computeGeneratedFileSizesForCDT({
+            map: bundle.map,
+            content: scriptElement && scriptElement.content,
+          });
+        },
       };
-      sourceMapDatas.push(sourceMapData);
+      bundles.push(bundle);
     }
 
-    return sourceMapDatas;
+    return bundles;
   }
 }
 

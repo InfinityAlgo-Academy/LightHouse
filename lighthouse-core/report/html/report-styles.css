@@ -312,6 +312,10 @@
   display: none !important;
 }
 
+.lh-root pre {
+  margin: 0;
+}
+
 .lh-root details > summary {
   cursor: pointer;
 }
@@ -1403,6 +1407,15 @@
 
 .lh-text__url > a:hover {
   text-decoration: underline dotted #999;
+}
+
+.lh-multi-value-entry:nth-child(2n) {
+  background: #efefef;
+}
+
+.lh-multi-value-entry:not(:first-child) {
+  margin-left: 20px;
+  opacity: 0.75;
 }
 
 /* Chevron

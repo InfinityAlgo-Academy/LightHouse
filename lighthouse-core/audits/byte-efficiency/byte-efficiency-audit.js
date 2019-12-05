@@ -147,11 +147,11 @@ class UnusedBytes extends Audit {
     /** @type {Map<string, number>} */
     const wastedBytesByUrl = new Map();
     for (const {url, wastedBytes, multi} of results) {
-      if (multi) continue; // Recorded in the next loop.
+      if (multi && multi.wastedBytes.length) continue; // Recorded in the next loop.
       wastedBytesByUrl.set(url, (wastedBytesByUrl.get(url) || 0) + wastedBytes);
     }
     for (const {multi} of results) {
-      if (!multi) continue;
+      if (!multi || !multi.wastedBytes.length) continue;
       for (let i = 0; i < multi.url.length; i++) {
         const url = multi.url[i];
         const wastedBytes = multi.wastedBytes[i];
