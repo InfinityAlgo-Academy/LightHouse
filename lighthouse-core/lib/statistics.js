@@ -28,6 +28,43 @@ function erf(x) {
   return sign * (1 - y * Math.exp(-x * x));
 }
 
+  /**
+   * Approximates the inverse error function. Based on Winitzki, "A handy
+   * approximation for the error function and its inverse"
+   * @param {number} x
+   * @return {number}
+   */
+  function internalErfInv_(x) {
+    // erfinv(-x) = -erfinv(x);
+    var sign = x < 0 ? -1 : 1;
+    var a = 0.147;
+
+    var log1x = Math.log(1 - x*x);
+    var p1 = 2 / (Math.PI * a) + log1x / 2;
+    var sqrtP1Log = Math.sqrt(p1 * p1 - (log1x / a));
+    return sign * Math.sqrt(sqrtP1Log - p1);
+  }
+
+  /**
+   * Calculates the value at the given quantile. Median, falloff, and
+   * expected value should all be in the same units (e.g. milliseconds).
+   * quantile should be within [0,1].
+   *
+   * @param {number} median
+   * @param {number} falloff
+   * @param {number} quantile
+   * @return The value at this quantile.
+   * @customfunction
+   */
+  function VALUE_AT_QUANTILE(median, falloff, quantile) {
+    var location = Math.log(median);
+    var logRatio = Math.log(falloff / median);
+    var shape = Math.sqrt(1 - 3 * logRatio - Math.sqrt((logRatio - 3) * (logRatio - 3) - 8)) / 2;
+
+    return Math.exp(location + shape * Math.SQRT2 * internalErfInv_(1 - 2 * quantile));
+  }
+
+
 /**
  * Creates a log-normal distribution à la traceviewer's statistics package.
  * Specified by providing the median value, at which the score will be 0.5,
@@ -76,4 +113,5 @@ function linearInterpolation(x0, y0, x1, y1, x) {
 module.exports = {
   linearInterpolation,
   getLogNormalDistribution,
+  VALUE_AT_QUANTILE,
 };
