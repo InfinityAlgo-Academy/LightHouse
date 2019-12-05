@@ -9,7 +9,6 @@ const Audit = require('./audit.js');
 const BundleAnalysis = require('../computed/bundle-analysis.js');
 
 /**
- * TODO: this could be pulled into webtreemap-cdt
  * @param {LH.Artifacts.RawSourceMap} map
  * @param {Record<string, number>} sourceBytes
  */
@@ -50,22 +49,6 @@ function _prepareTreemapNodes(map, sourceBytes) {
     });
   }
 
-  // DFS to generate each treemap node's text
-  /**
-   *
-   * @param {any} node
-   * @param {number} total
-   */
-  function addSizeToTitle(node, total) {
-    const size = node.size;
-    // node.id += ` • ${Number.bytesToString(size)} • ${Common.UIString('%.1f\xa0%%', size / total * 100)}`;
-    node.id += ` • ${Math.round(size)} • ${Math.round(size / total * 100)}`; // TODO
-    if (node.children) {
-      for (const child of node.children) {
-        addSizeToTitle(child, total);
-      }
-    }
-  }
 
   const rootNode = newNode('/');
 
@@ -79,7 +62,30 @@ function _prepareTreemapNodes(map, sourceBytes) {
     addNode(source, bytes, rootNode);
   }
 
-  addSizeToTitle(rootNode, rootNode.size);
+  /**
+   * Collapse nodes that have just one child + grandchild.
+   * @param {*} node
+   * @param {*} parent
+   */
+  function collapse(node, parent) {
+    if (parent && parent.children && parent.children.length === 1 && node.children && node.children.length === 1) {
+      parent.id += '/' + node.id;
+      parent.children = node.children;
+    }
+
+    if (node.children) {
+      for (const child of node.children) {
+        collapse(child, node);
+      }
+    }
+  }
+  collapse(rootNode, null);
+
+  // sizes for a 1163017 byte bundle
+  // first impl - 26779 bytes
+  // collapse - 25914 bytes
+  // defer addSizeToTitle - 20491 bytes
+  // TODO: flatten to get more savings.
 
   return rootNode;
 }

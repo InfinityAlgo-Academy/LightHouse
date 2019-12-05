@@ -5,12 +5,13 @@
  */
 'use strict';
 
-// TODO
-// webtreemap should collapse series of nodes with just one child into one node.
-
 function main() {
   window.addEventListener('message', e => {
     if (e.source === self.opener && e.data.rootNode) {
+      // For debugging.
+      window.__rootNode = e.data.rootNode;
+
+      addSizeToTitle(e.data.rootNode, e.data.rootNode.size);
       render(e.data.rootNode);
 
       if (self.opener && !self.opener.closed) {
@@ -37,7 +38,23 @@ function render(rootNode) {
   treemap.render(document.querySelector('main'));
 }
 
-window.addEventListener('resize', function() {
+/**
+ * DFS to generate each treemap node's text
+ * @param {any} node
+ * @param {number} total
+ */
+function addSizeToTitle(node, total) {
+  const size = node.size;
+  // node.id += ` • ${Number.bytesToString(size)} • ${Common.UIString('%.1f\xa0%%', size / total * 100)}`;
+  node.id += ` • ${Math.round(size)} • ${Math.round(size / total * 100)}`; // TODO
+  if (node.children) {
+    for (const child of node.children) {
+      addSizeToTitle(child, total);
+    }
+  }
+}
+
+window.addEventListener('resize', () => {
   if (treemap) treemap.render(document.querySelector('main'));
 });
 
