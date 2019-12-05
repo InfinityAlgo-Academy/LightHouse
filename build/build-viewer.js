@@ -95,8 +95,10 @@ async function css() {
 async function html() {
   let htmlSrc = await readFileAsync(`${sourceDir}/app/index.html`, {encoding: 'utf8'});
   htmlSrc = htmlSrc.replace(/%%LIGHTHOUSE_TEMPLATES%%/, htmlReportAssets.REPORT_TEMPLATES);
-
   await safeWriteFileAsync(`${distDir}/index.html`, htmlSrc);
+
+  const treemapHtmlSrc = await readFileAsync(`${sourceDir}/app/treemap/index.html`, {encoding: 'utf8'});
+  await safeWriteFileAsync(`${distDir}/treemap/index.html`, treemapHtmlSrc);
 }
 
 /**
@@ -140,6 +142,7 @@ async function compileJs() {
     idbKeyvalJs,
     versionJs,
     ...viewJsFiles,
+    fs.readFileSync(`${__dirname}/../node_modules/webtreemap-cdt/dist/webtreemap.js`, 'utf-8'),
   ];
   const options = {
     output: {preamble: license}, // Insert license at top.

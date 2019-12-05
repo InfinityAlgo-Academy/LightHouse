@@ -286,6 +286,7 @@ const defaultConfig = {
     'byte-efficiency/uses-responsive-images',
     'byte-efficiency/efficient-animated-content',
     'byte-efficiency/bundle-duplication',
+    'bundle-visualization-data',
     'dobetterweb/appcache-manifest',
     'dobetterweb/doctype',
     'dobetterweb/dom-size',

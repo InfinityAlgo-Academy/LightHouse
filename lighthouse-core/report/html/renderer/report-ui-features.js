@@ -25,6 +25,8 @@
 
 /* globals getFilenamePrefix Util */
 
+const VIEWER_ORIGIN = 'http://localhost:8000';
+
 /**
  * @param {HTMLTableElement} tableEl
  * @return {Array<HTMLTableRowElement>}
@@ -136,6 +138,8 @@ class ReportUIFeatures {
         this._dom.find('.lh-metrics-toggle__input', this._document));
       toggleInputEl.checked = true;
     }
+
+    this._renderBundleVizLinks();
   }
 
   /**
@@ -413,8 +417,7 @@ class ReportUIFeatures {
         break;
       }
       case 'open-viewer': {
-        const viewerPath = '/lighthouse/viewer/';
-        ReportUIFeatures.openTabAndSendJsonReport(this.json, viewerPath);
+        ReportUIFeatures.openTabAndSendJsonReportToViewer(this.json);
         break;
       }
       case 'save-gist': {
@@ -448,33 +451,42 @@ class ReportUIFeatures {
   /**
    * Opens a new tab to the online viewer and sends the local page's JSON results
    * to the online viewer using postMessage.
-   * @param {LH.Result} reportJson
-   * @param {string} viewerPath
+   * @param {LH.Result} json
    * @protected
    */
-  static openTabAndSendJsonReport(reportJson, viewerPath) {
-    const VIEWER_ORIGIN = 'https://googlechrome.github.io';
-    // Chrome doesn't allow us to immediately postMessage to a popup right
-    // after it's created. Normally, we could also listen for the popup window's
-    // load event, however it is cross-domain and won't fire. Instead, listen
-    // for a message from the target app saying "I'm open".
-    const json = reportJson;
-    window.addEventListener('message', function msgHandler(messageEvent) {
-      if (messageEvent.origin !== VIEWER_ORIGIN) {
-        return;
-      }
-      if (popup && messageEvent.data.opened) {
-        popup.postMessage({lhresults: json}, VIEWER_ORIGIN);
-        window.removeEventListener('message', msgHandler);
-      }
-    });
-
+  static openTabAndSendJsonReportToViewer(json) {
     // The popup's window.name is keyed by version+url+fetchTime, so we reuse/select tabs correctly
     // @ts-ignore - If this is a v2 LHR, use old `generatedTime`.
     const fallbackFetchTime = /** @type {string} */ (json.generatedTime);
     const fetchTime = json.fetchTime || fallbackFetchTime;
     const windowName = `${json.lighthouseVersion}-${json.requestedUrl}-${fetchTime}`;
-    const popup = window.open(`${VIEWER_ORIGIN}${viewerPath}`, windowName);
+    ReportUIFeatures.openTabAndSendData(json, `${VIEWER_ORIGIN}/lighthouse/viewer/`, windowName);
+  }
+
+  /**
+   * Opens a new tab to an external page and sends data using postMessage.
+   * @param {Object} data
+   * @param {string} path
+   * @param {string} windowName
+   * @protected
+   */
+  static openTabAndSendData(data, path, windowName) {
+    const origin = new URL(path).origin;
+    // Chrome doesn't allow us to immediately postMessage to a popup right
+    // after it's created. Normally, we could also listen for the popup window's
+    // load event, however it is cross-domain and won't fire. Instead, listen
+    // for a message from the target app saying "I'm open".
+    window.addEventListener('message', function msgHandler(messageEvent) {
+      if (messageEvent.origin !== origin) {
+        return;
+      }
+      if (popup && messageEvent.data.opened) {
+        popup.postMessage(data, origin);
+        window.removeEventListener('message', msgHandler);
+      }
+    });
+
+    const popup = window.open(path, windowName);
   }
 
   /**
@@ -602,6 +614,27 @@ class ReportUIFeatures {
     // Mutate at end to avoid layout thrashing.
     this.highlightEl.style.transform = `translate(${offset}px)`;
     this.stickyHeaderEl.classList.toggle('lh-sticky-header--visible', showStickyHeader);
+  }
+
+  _renderBundleVizLinks() {
+    if (!this.json.audits['bundle-visualization-data']) return;
+
+    for (const urlEl of this._dom.findAll('.lh-text__url', this._document)) {
+      console.log(urlEl);
+      const externalButton = this._dom.createElement('button', 'lh-button');
+      externalButton.textContent = 'Viz';
+      externalButton.addEventListener('click', () => {
+        const href = /** @type {HTMLAnchorElement} */ (this._dom.find('a', urlEl)).href;
+        if (!this.json.audits['bundle-visualization-data']) return;
+        if (!this.json.audits['bundle-visualization-data'].details) return;
+
+        const visualizationData = /** @type {LH.Audit.Details.DebugData} */ (
+          this.json.audits['bundle-visualization-data'].details);
+        const rootNode = visualizationData.rootNodes[href];
+        ReportUIFeatures.openTabAndSendData({rootNode, href}, `${VIEWER_ORIGIN}/treemap/`, `viz-${href}`);
+      });
+      urlEl.appendChild(externalButton);
+    }
   }
 }
 

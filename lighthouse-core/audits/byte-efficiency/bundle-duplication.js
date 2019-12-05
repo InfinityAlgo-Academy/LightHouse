@@ -6,6 +6,7 @@
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
+const BundleAnalysis = require('../../computed/bundle-analysis.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 // TODO: write these.
@@ -21,148 +22,6 @@ const UIStrings = {
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 const IGNORE_THRESHOLD_IN_BYTES = 1024;
-
-// Lifted from source-map-explorer.
-/** Calculate the number of bytes contributed by each source file */
-// @ts-ignore
-function computeFileSizeMapOptimized(sourceMapData) {
-  const {consumer, content} = sourceMapData;
-  const lines = content.split('\n');
-  /** @type {Record<string, number>} */
-  const files = {};
-  let mappedBytes = 0;
-
-  consumer.computeColumnSpans();
-
-  // @ts-ignore
-  consumer.eachMapping(({source, generatedLine, generatedColumn, lastGeneratedColumn}) => {
-    // Webpack seems to sometimes emit null mappings.
-    // https://github.com/mozilla/source-map/pull/303
-    if (!source) return;
-
-    // Lines are 1-based
-    const line = lines[generatedLine - 1];
-    if (line === null) {
-      // throw new AppError({
-      //   code: 'InvalidMappingLine',
-      //   generatedLine: generatedLine,
-      //   maxLine: lines.length,
-      // });
-    }
-
-    // Columns are 0-based
-    if (generatedColumn >= line.length) {
-      // throw new AppError({
-      //   code: 'InvalidMappingColumn',
-      //   generatedLine: generatedLine,
-      //   generatedColumn: generatedColumn,
-      //   maxColumn: line.length,
-      // });
-      return;
-    }
-
-    let mappingLength = 0;
-    if (lastGeneratedColumn !== null) {
-      if (lastGeneratedColumn >= line.length) {
-        // throw new AppError({
-        //   code: 'InvalidMappingColumn',
-        //   generatedLine: generatedLine,
-        //   generatedColumn: lastGeneratedColumn,
-        //   maxColumn: line.length,
-        // });
-        return;
-      }
-      mappingLength = lastGeneratedColumn - generatedColumn + 1;
-    } else {
-      mappingLength = line.length - generatedColumn;
-    }
-    files[source] = (files[source] || 0) + mappingLength;
-    mappedBytes += mappingLength;
-  });
-
-  // Don't count newlines as original version didn't count newlines
-  const totalBytes = content.length - lines.length + 1;
-
-  return {
-    files,
-    unmappedBytes: totalBytes - mappedBytes,
-    totalBytes,
-  };
-}
-
-/** Calculate the number of bytes contributed by each source file */
-// @ts-ignore
-function computeGeneratedFileSizesForCDT(sourceMapData) {
-  const {map, content} = sourceMapData;
-  const lines = content.split('\n');
-  /** @type {Record<string, number>} */
-  const files = {};
-  let mappedBytes = 0;
-
-  map.computeLastGeneratedColumns();
-
-  // @ts-ignore
-  for (const mapping of map.mappings()) {
-    const source = mapping.sourceURL;
-    const generatedLine = mapping.lineNumber + 1;
-    const generatedColumn = mapping.columnNumber;
-    const lastGeneratedColumn = mapping.lastColumnNumber;
-
-    // Webpack seems to sometimes emit null mappings.
-    // https://github.com/mozilla/source-map/pull/303
-    if (!source) continue;
-
-    // Lines are 1-based
-    const line = lines[generatedLine - 1];
-    if (line === null) {
-      // throw new AppError({
-      //   code: 'InvalidMappingLine',
-      //   generatedLine: generatedLine,
-      //   maxLine: lines.length,
-      // });
-    }
-
-    // Columns are 0-based
-    if (generatedColumn >= line.length) {
-      // throw new AppError({
-      //   code: 'InvalidMappingColumn',
-      //   generatedLine: generatedLine,
-      //   generatedColumn: generatedColumn,
-      //   maxColumn: line.length,
-      // });
-      continue;
-    }
-
-    let mappingLength = 0;
-    if (lastGeneratedColumn !== undefined) {
-      if (lastGeneratedColumn >= line.length) {
-        // throw new AppError({
-        //   code: 'InvalidMappingColumn',
-        //   generatedLine: generatedLine,
-        //   generatedColumn: lastGeneratedColumn,
-        //   maxColumn: line.length,
-        // });
-        continue;
-      }
-      mappingLength = lastGeneratedColumn - generatedColumn + 0;
-    } else {
-      mappingLength = line.length - generatedColumn;
-    }
-    files[source] = (files[source] || 0) + mappingLength;
-    mappedBytes += mappingLength;
-  }
-
-  // Don't count newlines as original version didn't count newlines
-  const totalBytes = content.length - lines.length + 1;
-
-  return {
-    files,
-    unmappedBytes: totalBytes - mappedBytes,
-    totalBytes,
-  };
-}
-
-/** @typedef {LH.Artifacts.CSSStyleSheetInfo & {networkRecord: LH.Artifacts.NetworkRequest, usedRules: Array<LH.Crdp.CSS.RuleUsage>}} StyleSheetInfo */
 
 class BundleDuplication extends ByteEfficiencyAudit {
   /**
@@ -181,73 +40,26 @@ class BundleDuplication extends ByteEfficiencyAudit {
   /**
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
+   * @param {LH.Audit.Context} context
    * @return {Promise<ByteEfficiencyAudit.ByteEfficiencyProduct>}
    */
-  static async audit_(artifacts, networkRecords) {
-    const {SourceMaps} = artifacts;
+  static async audit_(artifacts, networkRecords, context) {
+    const bundles = await BundleAnalysis.request(artifacts, context);
 
-    /** @type {Array<{map: LH.Artifacts.RawSourceMap, script: LH.Artifacts.ScriptElement, networkRecord?: LH.Artifacts.NetworkRequest, sourceDatas: Array<{normalizedSource: string, size: number}>}>} */
-    const sourceMapDatas = [];
+    /**
+     * @typedef SourceData
+     * @property {string} normalizedSource
+     * @property {number} size
+     */
 
-    // Collate map, script, and network record.
-    for (let mapIndex = 0; mapIndex < SourceMaps.length; mapIndex++) {
-      const {scriptUrl, map} = SourceMaps[mapIndex];
-      if (!map) continue;
-
-      const scriptElement = artifacts.ScriptElements.find(s => s.src === scriptUrl);
-      const networkRecord = networkRecords.find(r => r.url === scriptUrl);
-      if (!scriptElement) continue;
-      const sourceMapData = {
-        map,
-        script: scriptElement,
-        networkRecord,
-        sourceDatas: [],
-      };
-      sourceMapDatas.push(sourceMapData);
-    }
-
-    const SIZE_MODE = process.env.SIZE_MODE;
+    /** @type {Map<LH.Artifacts.RawSourceMap, SourceData[]>} */
+    const sourceDatasMap = new Map();
 
     // Determine size of each `sources` entry.
-    for (const {map, script, networkRecord, sourceDatas} of sourceMapDatas) {
-      /** @type {Record<string, number>} */
-      let fileSizes = {};
-      let totalSourcesContentLength = 0;
-      // TODO: experimenting with determining size.
-      /**
-        Used `https://www.coursehero.com`, which has a lot of source maps.
-
-        Time for entire audit based on sizing approach:
-
-        SIZE_MODE === 'moz': ~300ms
-        SIZE_MODE === 'cdt': ~300ms
-        SIZE_MODE undefined: ~160ms (naive heurestic)
-
-        moz and cdt give the same accurate size info.
-
-        Bundle size changes:
-
-        cdt: 7242000 +20KB
-        moz: 7221507 +48.8KB
-       */
-      if (SIZE_MODE === 'moz') {
-        const sourceMap = require('source-map');
-        if (!script.content) continue;
-
-        // @ts-ignore - moz map types are wrong and should feel bad.
-        const consumer = await new sourceMap.SourceMapConsumer(map);
-        fileSizes = computeFileSizeMapOptimized({consumer, content: script.content}).files;
-      } else if (SIZE_MODE === 'cdt') {
-        const SDK = require('../../lib/cdt/SDK.js');
-        // @ts-ignore: TODO: `sections` in map
-        const sdkSourceMap = new SDK.TextSourceMap(`compiled.js`, `compiled.js.map`, map);
-
-        // The optimized sizing fn used w/ mozilla source map requires `lastGeneratedColumn` in the mappings.
-        // CDT doesn't have that (yet?), so we do a source byte-by-byte sizing.
-        fileSizes = computeGeneratedFileSizesForCDT({map: sdkSourceMap, content: script.content}).files;
-      } else {
-        totalSourcesContentLength = map.sourcesContent ? map.sourcesContent.reduce((acc, cur) => acc + cur.length, 0) : 0;
-      }
+    for (const {map, sizes} of bundles) {
+      /** @type {SourceData[]} */
+      const sourceDatas = [];
+      sourceDatasMap.set(map, sourceDatas);
 
       for (let i = 0; i < map.sources.length; i++) {
         const source = map.sources[i];
@@ -265,22 +77,8 @@ class BundleDuplication extends ByteEfficiencyAudit {
         // Ignore shims.
         if (normalizedSource.includes('external ')) continue;
 
-        let sourceSize = 0;
-        if (SIZE_MODE === 'moz' || SIZE_MODE === 'cdt') {
-          const fullSource = (map.sourceRoot || '') + source;
-          sourceSize = fileSizes[fullSource];
-        } else {
-          if (!map.sourcesContent) continue;
-          if (!totalSourcesContentLength) continue;
-          if (!networkRecord) continue;
-          // The length of the actual, possibly minified/transpiled module cannot be easily determined.
-          // Instead, an heuristic is used. The ratio of this wasted module / the total sourcesContent
-          // lengths is an estimator.
-          // TODO: this heuristic is really bad. ~2x the real size. should see how long it takes
-          // to do what source-map-explorer does.
-          const originalSourcesContentLength = map.sourcesContent[i].length;
-          sourceSize = (originalSourcesContentLength / totalSourcesContentLength) * networkRecord.resourceSize;
-        }
+        const fullSource = (map.sourceRoot || '') + source;
+        const sourceSize = sizes.files[fullSource];
 
         sourceDatas.push({
           normalizedSource,
@@ -291,7 +89,10 @@ class BundleDuplication extends ByteEfficiencyAudit {
 
     /** @type {Map<string, Array<{scriptUrl: string, size: number}>>} */
     const sourceDataAggregated = new Map();
-    for (const {script, sourceDatas} of sourceMapDatas) {
+    for (const {map, script} of bundles) {
+      const sourceDatas = sourceDatasMap.get(map);
+      if (!sourceDatas) continue;
+
       for (const sourceData of sourceDatas) {
         let data = sourceDataAggregated.get(sourceData.normalizedSource);
         if (!data) {
