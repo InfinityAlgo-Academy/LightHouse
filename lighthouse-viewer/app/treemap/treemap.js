@@ -5,7 +5,6 @@
  */
 'use strict';
 
-// eslint-disable-next-line no-unused-vars
 function main() {
   window.addEventListener('message', e => {
     if (e.source === self.opener && e.data.rootNode) {
@@ -28,8 +27,15 @@ function main() {
   }
 }
 
+let treemap;
 function render(rootNode) {
-  console.log('got rootNode', rootNode);
+  webtreemap.sort(rootNode);
+  treemap = new webtreemap.TreeMap(rootNode, {padding: [18, 3, 3, 3]});
+  treemap.render(document.querySelector('main'));
 }
+
+window.addEventListener('resize', function() {
+  if (treemap) treemap.render(document.querySelector('main'));
+});
 
 main();

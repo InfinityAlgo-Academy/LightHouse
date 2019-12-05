@@ -11,7 +11,6 @@
 'use strict';
 
 const Audit = require('../audit.js');
-const BundleAnalysis = require('../../computed/bundle-analysis.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -44,8 +43,6 @@ class JsLibrariesAudit extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const data = await BundleAnalysis.request(artifacts, context);
-
     const libDetails = artifacts.Stacks
       .filter(stack => stack.detector === 'js')
       .map(stack => ({
