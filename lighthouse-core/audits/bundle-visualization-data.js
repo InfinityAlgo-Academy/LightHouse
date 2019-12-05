@@ -12,7 +12,7 @@ const BundleAnalysis = require('../computed/bundle-analysis.js');
  * @param {LH.Artifacts.RawSourceMap} map
  * @param {Record<string, number>} sourceBytes
  */
-function _prepareTreemapNodes(map, sourceBytes) {
+function prepareTreemapNodes(map, sourceBytes) {
   /**
    * @param {string} id
    */
@@ -30,7 +30,8 @@ function _prepareTreemapNodes(map, sourceBytes) {
    * @param {*} node
    */
   function addNode(source, size, node) {
-    const sourcePathSegments = source.replace(sharedPrefix, '').split('/');
+    // Strip off the shared root.
+    const sourcePathSegments = source.replace(map.sourceRoot || '', '').split('/');
     node.size += size;
 
     sourcePathSegments.forEach(sourcePathSegment => {
@@ -51,12 +52,6 @@ function _prepareTreemapNodes(map, sourceBytes) {
 
 
   const rootNode = newNode('/');
-
-  // Strip off any shared string prefix, eg. webpack://./webpack/node_modules
-  // const sharedPrefix = TextUtils.TextUtils.commonPrefix(sourceBytes.keysArray().filter(key => key !== null));
-  // this does most of the above:
-  const sharedPrefix = map.sourceRoot || '';
-
   for (const [sourceURL, bytes] of Object.entries(sourceBytes)) {
     const source = sourceURL === null ? `<unmapped>` : sourceURL;
     addNode(source, bytes, rootNode);
@@ -116,7 +111,7 @@ class BundleVisualizationData extends Audit {
     const rootNodes = {};
     for (const {map, script, sizes} of bundles) {
       if (!script.src) continue; // Make typescript happy.
-      rootNodes[script.src] = _prepareTreemapNodes(map, sizes.files);
+      rootNodes[script.src] = prepareTreemapNodes(map, sizes.files);
     }
 
     /** @type {LH.Audit.Details.DebugData} */
