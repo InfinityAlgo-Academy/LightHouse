@@ -1410,9 +1410,9 @@
   text-decoration: underline dotted #999;
 }
 
-.lh-multi-value-entry:nth-child(2n) {
+/* .lh-multi-value-entry:nth-child(2n) {
   background: var(--color-gray-200);
-}
+} */
 
 .lh-multi-values:not(:first-child) .lh-multi-value-entry {
   margin-left: 20px;
