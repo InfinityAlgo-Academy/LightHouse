@@ -1410,6 +1410,14 @@
   text-decoration: underline dotted #999;
 }
 
+.lh-external-viz {
+  fill: var(--color-gray-700);
+}
+.lh-external-viz:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
+
 /* .lh-multi-value-entry:nth-child(2n) {
   background: var(--color-gray-200);
 } */

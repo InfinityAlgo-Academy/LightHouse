@@ -628,12 +628,12 @@ class ReportUIFeatures {
       const rootNode = visualizationData.rootNodes[href];
       if (!rootNode) continue;
 
-      const externalButton = this._dom.createElement('button', 'lh-button');
-      externalButton.textContent = 'Viz';
+      const externalButton = this._dom.createElement('span', 'lh-external-viz');
+      externalButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 18h5v-6h-5v6zm-6 0h5V5H4v13zm12 0h5v-6h-5v6zM10 5v6h11V5H10z"/><path d="M0 0h24v24H0z" fill="none"/></svg>`
       externalButton.addEventListener('click', () => {
         ReportUIFeatures.openTabAndSendData({rootNode, href}, `${VIEWER_ORIGIN}/treemap/`, `viz-${href}`);
       });
-      urlEl.appendChild(externalButton);
+      urlEl.insertBefore(externalButton, urlEl.lastElementChild);
     }
   }
 }
