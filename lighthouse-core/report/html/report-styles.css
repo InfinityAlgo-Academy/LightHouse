@@ -167,6 +167,7 @@
     /* Pallete */
     --color-gray-200: var(--color-gray-800);
     --color-gray-400: var(--color-gray-600);
+    --color-gray-700: var(--color-gray-400);
     --color-gray-50: #757575;
     --color-gray-600: var(--color-gray-500);
     --color-green-700: var(--color-green);
@@ -1410,12 +1411,12 @@
 }
 
 .lh-multi-value-entry:nth-child(2n) {
-  background: #efefef;
+  background: var(--color-gray-200);
 }
 
 .lh-multi-values:not(:first-child) .lh-multi-value-entry {
   margin-left: 20px;
-  opacity: 0.75;
+  color: var(--color-gray-700);
 }
 
 /* Chevron
