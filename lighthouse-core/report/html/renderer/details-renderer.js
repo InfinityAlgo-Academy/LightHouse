@@ -322,12 +322,12 @@ class DetailsRenderer {
   /**
    * @param {LH.Audit.Details.OpportunityItemMulti} multi
    * @param {LH.Audit.Details.OpportunityColumnHeading} heading
-   * @return {DocumentFragment?}
+   * @return {Element?}
    */
   _renderMultiValue(multi, heading) {
     const values = multi[heading.key];
     if (!Array.isArray(values)) return null;
-    const valueElement = this._dom.createFragment();
+    const valueElement = this._dom.createElement('div', 'lh-multi-values');
     for (const childValue of values) {
       const childValueElement = this._renderTableValue(childValue, heading);
       if (!childValueElement) continue;
@@ -364,18 +364,21 @@ class DetailsRenderer {
       for (const heading of headings) {
         const value = row[heading.key];
 
-        let valueElement;
+        const valueFragment = this._dom.createFragment();
+
+        const valueElement = value !== undefined && this._renderTableValue(value, heading);
+        if (valueElement) valueFragment.appendChild(valueElement);
+
         if (heading.multi
           // Make typescript happy.
           && typeof row.multi === 'object' && row.multi.type === 'multi') {
-          valueElement = this._renderMultiValue(row.multi, heading);
-        } else {
-          valueElement = this._renderTableValue(value, heading);
+          const multiElement = this._renderMultiValue(row.multi, heading);
+          if (multiElement) valueFragment.appendChild(multiElement);
         }
 
-        if (valueElement) {
+        if (valueFragment.childElementCount) {
           const classes = `lh-table-column--${heading.valueType}`;
-          this._dom.createChildOf(rowElem, 'td', classes).appendChild(valueElement);
+          this._dom.createChildOf(rowElem, 'td', classes).appendChild(valueFragment);
         } else {
           this._dom.createChildOf(rowElem, 'td', 'lh-table-column--empty');
         }

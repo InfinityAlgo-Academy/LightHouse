@@ -1413,7 +1413,7 @@
   background: #efefef;
 }
 
-.lh-multi-value-entry:not(:first-child) {
+.lh-multi-values:not(:first-child) .lh-multi-value-entry {
   margin-left: 20px;
   opacity: 0.75;
 }

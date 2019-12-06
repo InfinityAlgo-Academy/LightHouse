@@ -27,6 +27,7 @@ const WASTED_MS_FOR_SCORE_OF_ZERO = 5000;
 /**
  * @typedef {object} ByteEfficiencyProduct
  * @property {Array<LH.Audit.ByteEfficiencyItem>} items
+ * @property {Map<string, number>=} wastedBytesByUrl
  * @property {LH.Audit.Details.Opportunity['headings']} headings
  * @property {string} [displayValue]
  * @property {string} [explanation]
@@ -135,7 +136,7 @@ class UnusedBytes extends Audit {
    * @param {Array<LH.Audit.ByteEfficiencyItem>} results The array of byte savings results per resource
    * @param {Node} graph
    * @param {Simulator} simulator
-   * @param {{includeLoad?: boolean, label?: string}=} options
+   * @param {{includeLoad?: boolean, label?: string, providedWastedBytesByUrl?: Map<string, number>}=} options
    * @return {number}
    */
   static computeWasteWithTTIGraph(results, graph, simulator, options) {
@@ -144,22 +145,14 @@ class UnusedBytes extends Audit {
     const afterLabel = `${options.label}-after`;
 
     const simulationBeforeChanges = simulator.simulate(graph, {label: beforeLabel});
-    /** @type {Map<string, number>} */
-    const wastedBytesByUrl = new Map();
-    for (const {url, wastedBytes, multi} of results) {
-      if (multi && multi.wastedBytes.length) continue; // Recorded in the next loop.
-      wastedBytesByUrl.set(url, (wastedBytesByUrl.get(url) || 0) + wastedBytes);
-    }
-    for (const {multi} of results) {
-      if (!multi || !multi.wastedBytes.length) continue;
-      for (let i = 0; i < multi.url.length; i++) {
-        const url = multi.url[i];
-        const wastedBytes = multi.wastedBytes[i];
+
+    let wastedBytesByUrl = options.providedWastedBytesByUrl || new Map();
+    if (!wastedBytesByUrl.size) {
+      wastedBytesByUrl = new Map();
+      for (const {url, wastedBytes} of results) {
         wastedBytesByUrl.set(url, (wastedBytesByUrl.get(url) || 0) + wastedBytes);
       }
     }
-
-    console.dir(wastedBytesByUrl);
 
     // Update all the transfer sizes to reflect implementing our recommendations
     /** @type {Map<string, number>} */
@@ -193,7 +186,6 @@ class UnusedBytes extends Audit {
     if (options.includeLoad) savings = Math.max(savings, savingsOnOverallLoad);
 
     // Round waste to nearest 10ms
-    console.log(savings);
     return Math.round(Math.max(savings, 0) / 10) * 10;
   }
 
@@ -208,7 +200,9 @@ class UnusedBytes extends Audit {
 
     const wastedBytes = results.reduce((sum, item) => sum + item.wastedBytes, 0);
     const wastedKb = Math.round(wastedBytes / KB_IN_BYTES);
-    const wastedMs = this.computeWasteWithTTIGraph(results, graph, simulator);
+    const wastedMs = this.computeWasteWithTTIGraph(results, graph, simulator, {
+      providedWastedBytesByUrl: result.wastedBytesByUrl,
+    });
 
     let displayValue = result.displayValue || '';
     if (typeof result.displayValue === 'undefined' && wastedBytes) {

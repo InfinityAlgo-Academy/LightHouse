@@ -106,8 +106,21 @@ class BundleDuplication extends ByteEfficiencyAudit {
       }
     }
 
-    /** @type {LH.Audit.ByteEfficiencyItem[]} */
+    /**
+     * @typedef ItemMulti
+     * @property {'multi'} type
+     * @property {string[]} source
+     * @property {number[]} totalBytes
+     */
+
+    /**
+     * @typedef {LH.Audit.ByteEfficiencyItem & {multi: ItemMulti}} Item
+     */
+
+    /** @type {Item[]} */
     const items = [];
+    /** @type {Map<string, number>} */
+    const wastedBytesByUrl = new Map();
     for (const [key, sourceDatas] of sourceDataAggregated.entries()) {
       if (sourceDatas.length === 1) continue;
 
@@ -122,20 +135,17 @@ class BundleDuplication extends ByteEfficiencyAudit {
       sourceDatas.sort((a, b) => b.size - a.size);
       const urls = [];
       const bytesValues = [];
-      const wastedBytesValues = [];
+      let wastedBytesTotal = 0;
       for (let i = 0; i < sourceDatas.length; i++) {
         const sourceData = sourceDatas[i];
-        urls.push(sourceData.scriptUrl);
-
+        const url = sourceData.scriptUrl;
+        urls.push(url);
         bytesValues.push(sourceData.size);
-        if (i === 0) {
-          wastedBytesValues.push(0);
-        } else {
-          wastedBytesValues.push(sourceData.size);
-        }
+        if (i === 0) continue;
+        wastedBytesTotal += sourceData.size;
+        wastedBytesByUrl.set(url, (wastedBytesByUrl.get(url) || 0) + sourceData.size);
       }
 
-      const wastedBytesTotal = wastedBytesValues.reduce((acc, cur) => acc + cur, 0);
       items.push({
         source: key,
         wastedBytes: wastedBytesTotal,
@@ -145,14 +155,13 @@ class BundleDuplication extends ByteEfficiencyAudit {
         totalBytes: 0,
         multi: {
           type: 'multi',
-          url: urls,
-          wastedBytes: wastedBytesValues,
-          bytes: bytesValues,
+          source: urls,
+          totalBytes: bytesValues,
         },
       });
     }
 
-    /** @type {LH.Audit.ByteEfficiencyItem} */
+    /** @type {Item} */
     const otherItem = {
       source: 'Other',
       wastedBytes: 0,
@@ -160,23 +169,16 @@ class BundleDuplication extends ByteEfficiencyAudit {
       totalBytes: 0,
       multi: {
         type: 'multi',
-        url: [],
-        wastedBytes: [],
+        source: [],
+        totalBytes: [],
       },
     };
     for (const item of items.filter(item => item.wastedBytes <= IGNORE_THRESHOLD_IN_BYTES)) {
-      if (!item.multi || !otherItem.multi) continue; // Make typescript happy.
       otherItem.wastedBytes += item.wastedBytes;
-      for (let i = 0; i < item.multi.url.length; i++) {
-        const url = item.multi.url[i];
-        const wastedBytes = item.multi.wastedBytes[i];
-
-        const indexInOtherItem = otherItem.multi.url.indexOf(url);
-        if (indexInOtherItem === -1) {
-          otherItem.multi.url.push(url);
-          otherItem.multi.wastedBytes.push(wastedBytes);
-        } else {
-          otherItem.multi.wastedBytes[indexInOtherItem] += wastedBytes;
+      for (let i = 0; i < item.multi.source.length; i++) {
+        const url = item.multi.source[i];
+        if (!otherItem.multi.source.includes(url)) {
+          otherItem.multi.source.push(url);
         }
       }
       items.splice(items.indexOf(item), 1);
@@ -247,10 +249,9 @@ class BundleDuplication extends ByteEfficiencyAudit {
 
     /** @type {LH.Audit.Details.Opportunity['headings']} */
     const headings = [
-      {key: 'source', valueType: 'code', label: str_(i18n.UIStrings.columnName)}, // TODO: or 'Source'?
-      {key: 'url', valueType: 'url', multi: true, label: str_(i18n.UIStrings.columnURL)},
+      {key: 'source', valueType: 'code', multi: true, label: str_(i18n.UIStrings.columnName)}, // TODO: or 'Source'?
       // {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnSize)},
-      {key: 'bytes', valueType: 'bytes', multi: true, granularity: 0.05, label: str_(i18n.UIStrings.columnSize)},
+      {key: 'totalBytes', valueType: 'bytes', multi: true, granularity: 0.05, label: str_(i18n.UIStrings.columnSize)},
       {key: 'wastedBytes', valueType: 'bytes', granularity: 0.05, label: str_(i18n.UIStrings.columnWastedBytes)},
     ];
 
@@ -258,6 +259,7 @@ class BundleDuplication extends ByteEfficiencyAudit {
     return {
       items,
       headings,
+      wastedBytesByUrl,
     };
   }
 }

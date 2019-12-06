@@ -138,8 +138,8 @@ declare global {
 
       export interface OpportunityItemMulti {
         type: 'multi',
-        url: string[];
-        wastedBytes: number[];
+        // url: string[];
+        // wastedBytes: number[];
         [p: string]: number[] | boolean[] | string | string[] | undefined | DebugData[];
       }
 
