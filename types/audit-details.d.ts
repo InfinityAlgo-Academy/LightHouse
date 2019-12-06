@@ -119,7 +119,7 @@ declare global {
          */
         valueType: ItemValueTypes;
         /** ... */
-        multi?: boolean;
+        multi?: Omit<Partial<OpportunityColumnHeading>, 'label'|'multi'>;
 
         // NOTE: not used by opportunity details, but used in the renderer until table/opportunity unification.
         displayUnit?: string;
@@ -138,8 +138,6 @@ declare global {
 
       export interface OpportunityItemMulti {
         type: 'multi',
-        // url: string[];
-        // wastedBytes: number[];
         [p: string]: number[] | boolean[] | string | string[] | undefined | DebugData[];
       }
 

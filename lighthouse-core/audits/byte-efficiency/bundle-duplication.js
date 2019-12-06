@@ -109,7 +109,7 @@ class BundleDuplication extends ByteEfficiencyAudit {
     /**
      * @typedef ItemMulti
      * @property {'multi'} type
-     * @property {string[]} source
+     * @property {string[]} url
      * @property {number[]} totalBytes
      */
 
@@ -155,7 +155,7 @@ class BundleDuplication extends ByteEfficiencyAudit {
         totalBytes: 0,
         multi: {
           type: 'multi',
-          source: urls,
+          url: urls,
           totalBytes: bytesValues,
         },
       });
@@ -169,16 +169,16 @@ class BundleDuplication extends ByteEfficiencyAudit {
       totalBytes: 0,
       multi: {
         type: 'multi',
-        source: [],
+        url: [],
         totalBytes: [],
       },
     };
     for (const item of items.filter(item => item.wastedBytes <= IGNORE_THRESHOLD_IN_BYTES)) {
       otherItem.wastedBytes += item.wastedBytes;
-      for (let i = 0; i < item.multi.source.length; i++) {
-        const url = item.multi.source[i];
-        if (!otherItem.multi.source.includes(url)) {
-          otherItem.multi.source.push(url);
+      for (let i = 0; i < item.multi.url.length; i++) {
+        const url = item.multi.url[i];
+        if (!otherItem.multi.url.includes(url)) {
+          otherItem.multi.url.push(url);
         }
       }
       items.splice(items.indexOf(item), 1);
@@ -249,9 +249,8 @@ class BundleDuplication extends ByteEfficiencyAudit {
 
     /** @type {LH.Audit.Details.Opportunity['headings']} */
     const headings = [
-      {key: 'source', valueType: 'code', multi: true, label: str_(i18n.UIStrings.columnName)}, // TODO: or 'Source'?
-      // {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnSize)},
-      {key: 'totalBytes', valueType: 'bytes', multi: true, granularity: 0.05, label: str_(i18n.UIStrings.columnSize)},
+      {key: 'source', valueType: 'code', multi: {key: 'url', valueType: 'url'}, label: str_(i18n.UIStrings.columnName)}, // TODO: or 'Source'?
+      {key: 'totalBytes', valueType: 'bytes', multi: {}, granularity: 0.05, label: str_(i18n.UIStrings.columnSize)},
       {key: 'wastedBytes', valueType: 'bytes', granularity: 0.05, label: str_(i18n.UIStrings.columnWastedBytes)},
     ];
 

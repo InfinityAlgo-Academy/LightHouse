@@ -117,7 +117,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
 
     item.multi = {
       type: 'multi',
-      url: unusedFilesSizesSorted.map(d => d.key),
+      source: unusedFilesSizesSorted.map(d => d.key),
       totalBytes: unusedFilesSizesSorted.map(d => d.total),
       wastedBytes: unusedFilesSizesSorted.map(d => d.unused),
     };
@@ -183,9 +183,9 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
     return {
       items,
       headings: [
-        {key: 'url', valueType: 'url', multi: true, label: str_(i18n.UIStrings.columnURL)},
-        {key: 'totalBytes', valueType: 'bytes', multi: true, label: str_(i18n.UIStrings.columnSize)},
-        {key: 'wastedBytes', valueType: 'bytes', multi: true, label: str_(i18n.UIStrings.columnWastedBytes)},
+        {key: 'url', valueType: 'url', multi: {key: 'source', valueType: 'code'}, label: str_(i18n.UIStrings.columnURL)},
+        {key: 'totalBytes', valueType: 'bytes', multi: {}, label: str_(i18n.UIStrings.columnSize)},
+        {key: 'wastedBytes', valueType: 'bytes', multi: {}, label: str_(i18n.UIStrings.columnWastedBytes)},
       ],
     };
   }

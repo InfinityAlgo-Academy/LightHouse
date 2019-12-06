@@ -369,11 +369,16 @@ class DetailsRenderer {
         const valueElement = value !== undefined && this._renderTableValue(value, heading);
         if (valueElement) valueFragment.appendChild(valueElement);
 
-        if (heading.multi
+        if (heading.multi && row.multi) {
           // Make typescript happy.
-          && typeof row.multi === 'object' && row.multi.type === 'multi') {
-          const multiElement = this._renderMultiValue(row.multi, heading);
-          if (multiElement) valueFragment.appendChild(multiElement);
+          if (typeof row.multi === 'object' && row.multi.type === 'multi') {
+            const multiHeading = {
+              ...heading,
+              ...heading.multi,
+            };
+            const multiElement = this._renderMultiValue(row.multi, multiHeading);
+            if (multiElement) valueFragment.appendChild(multiElement);
+          }
         }
 
         if (valueFragment.childElementCount) {
