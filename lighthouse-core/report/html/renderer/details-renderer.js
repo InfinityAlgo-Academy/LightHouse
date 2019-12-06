@@ -362,12 +362,18 @@ class DetailsRenderer {
     for (const row of details.items) {
       const rowElem = this._dom.createChildOf(tbodyElem, 'tr');
       for (const heading of headings) {
-        const value = row[heading.key];
-
         const valueFragment = this._dom.createFragment();
 
-        const valueElement = value !== undefined && this._renderTableValue(value, heading);
-        if (valueElement) valueFragment.appendChild(valueElement);
+        if (heading.key === '_') {
+          const emptyElement = this._dom.createElement('div');
+          emptyElement.innerHTML = '&nbsp;';
+          valueFragment.appendChild(emptyElement);
+        } else {
+          const value = row[heading.key];
+          const valueElement = value !== undefined && this._renderTableValue(value, heading);
+          if (valueElement) valueFragment.appendChild(valueElement);
+        }
+
 
         if (heading.multi && row.multi) {
           // Make typescript happy.

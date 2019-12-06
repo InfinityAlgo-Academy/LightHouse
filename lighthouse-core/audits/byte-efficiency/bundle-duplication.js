@@ -250,7 +250,7 @@ class BundleDuplication extends ByteEfficiencyAudit {
     /** @type {LH.Audit.Details.Opportunity['headings']} */
     const headings = [
       {key: 'source', valueType: 'code', multi: {key: 'url', valueType: 'url'}, label: str_(i18n.UIStrings.columnName)}, // TODO: or 'Source'?
-      {key: 'totalBytes', valueType: 'bytes', multi: {}, granularity: 0.05, label: str_(i18n.UIStrings.columnSize)},
+      {key: '_', valueType: 'bytes', multi: {key: 'totalBytes'}, granularity: 0.05, label: str_(i18n.UIStrings.columnSize)},
       {key: 'wastedBytes', valueType: 'bytes', granularity: 0.05, label: str_(i18n.UIStrings.columnWastedBytes)},
     ];
 
