@@ -5,12 +5,13 @@
  */
 'use strict';
 
+const log = require('lighthouse-logger');
 const Audit = require('../audits/audit.js');
 const NetworkRecords = require('./network-records.js');
 const makeComputedArtifact = require('./computed-artifact.js');
 
 /**
- * @typedef {typeof import('../lib/cdt/SDK.js')} SDK
+ * @typedef {typeof import('../lib/cdt/SDK.js')['TextSourceMap']} SourceMap
  */
 
 /**
@@ -25,69 +26,62 @@ const makeComputedArtifact = require('./computed-artifact.js');
  * @property {LH.Artifacts.RawSourceMap} rawMap
  * @property {LH.Artifacts.ScriptElement} script
  * @property {LH.Artifacts.NetworkRequest=} networkRecord
- * @property {SDK['TextSourceMap']} map
+ * @property {SourceMap} map
  * @property {Sizes} sizes
 */
 
-// Lifted from source-map-explorer.
-/** Calculate the number of bytes contributed by each source file */
-// @ts-ignore
-function computeGeneratedFileSizesForCDT(sourceMapData) {
-  const {map, content} = sourceMapData;
+/**
+ * Calculate the number of bytes contributed by each source file
+ * @param {SourceMap} map
+ * @param {string} content
+ */
+function computeGeneratedFileSizes(map, content) {
   const lines = content.split('\n');
   /** @type {Record<string, number>} */
   const files = {};
   let mappedBytes = 0;
 
+  // @ts-ignore: This function is added in SDK.js
   map.computeLastGeneratedColumns();
 
   // @ts-ignore
   for (const mapping of map.mappings()) {
     const source = mapping.sourceURL;
-    const generatedLine = mapping.lineNumber + 1;
-    const generatedColumn = mapping.columnNumber;
-    const lastGeneratedColumn = mapping.lastColumnNumber;
+    const lineNum = mapping.lineNumber;
+    const colNum = mapping.columnNumber;
+    const lastColNum = mapping.lastColumnNumber;
 
     // Webpack seems to sometimes emit null mappings.
     // https://github.com/mozilla/source-map/pull/303
     if (!source) continue;
 
     // Lines are 1-based
-    const line = lines[generatedLine - 1];
+    const line = lines[lineNum];
     if (line === null) {
-      // throw new AppError({
-      //   code: 'InvalidMappingLine',
-      //   generatedLine: generatedLine,
-      //   maxLine: lines.length,
-      // });
+      // @ts-ignore
+      log.error(`${map.compiledURL} mapping for line out of bounds: ${lineNum + 1}`);
+      break;
     }
 
     // Columns are 0-based
-    if (generatedColumn >= line.length) {
-      // throw new AppError({
-      //   code: 'InvalidMappingColumn',
-      //   generatedLine: generatedLine,
-      //   generatedColumn: generatedColumn,
-      //   maxColumn: line.length,
-      // });
-      continue;
+    if (colNum >= line.length) {
+      // @ts-ignore
+      log.error(`${map.compiledURL} mapping for column out of bounds: ${lineNum + 1}:${colNum}`);
+      break;
     }
 
     let mappingLength = 0;
-    if (lastGeneratedColumn !== undefined) {
-      if (lastGeneratedColumn >= line.length) {
-        // throw new AppError({
-        //   code: 'InvalidMappingColumn',
-        //   generatedLine: generatedLine,
-        //   generatedColumn: lastGeneratedColumn,
-        //   maxColumn: line.length,
-        // });
-        continue;
+    if (lastColNum !== undefined) {
+      if (lastColNum >= line.length) {
+        // @ts-ignore
+        // eslint-disable-next-line max-len
+        log.error(`${map.compiledURL} mapping for last column out of bounds: ${lineNum + 1}:${lastColNum}`);
+        break;
       }
-      mappingLength = lastGeneratedColumn - generatedColumn;
+      mappingLength = lastColNum - colNum;
     } else {
       // TODO Buffer.byteLength?
-      mappingLength = line.length - generatedColumn;
+      mappingLength = line.length - colNum;
     }
     files[source] = (files[source] || 0) + mappingLength;
     mappedBytes += mappingLength;
@@ -124,7 +118,7 @@ class BundleAnalysis {
       if (!scriptElement) continue;
 
       // Lazily generate expensive things.
-      /** @type {SDK['TextSourceMap']=} */
+      /** @type {SourceMap=} */
       let map;
       /** @type {Sizes=} */
       let sizes;
@@ -142,10 +136,9 @@ class BundleAnalysis {
         },
         get sizes() {
           if (sizes) return sizes;
-          return sizes = computeGeneratedFileSizesForCDT({
-            map: bundle.map,
-            content: scriptElement && scriptElement.content,
-          });
+          if (!bundle.map) throw new Error('invalid map');
+          const content = scriptElement && scriptElement.content ? scriptElement.content : '';
+          return sizes = computeGeneratedFileSizes(bundle.map, content);
         },
       };
       bundles.push(bundle);

@@ -26,41 +26,58 @@ describe('BundleAnalysis computed artifact', () => {
     };
     const context = {computedCache: new Map()};
     const results = await BundleAnalysis.request(artifacts, context);
-
     expect(results).toHaveLength(1);
-    expect(results[0].rawMap).toBe(artifacts.SourceMaps[0].map);
-    expect(results[0].script).toBe(artifacts.ScriptElements[0]);
-    expect(results[0].networkRecord.url).toEqual(networkRecords[0].url);
+    const result = results[0];
+    expect(result.rawMap).toBe(artifacts.SourceMaps[0].map);
+    expect(result.script).toBe(artifacts.ScriptElements[0]);
+    expect(result.networkRecord.url).toEqual(networkRecords[0].url);
   });
 
-  it('determines size of source files (simple map)', async () => {
+  it('works (simple map)', async () => {
     // This map is from source-map-explorer.
     // https://github.com/danvk/source-map-explorer/tree/4b95f6e7dfe0058d791dcec2107fee43a1ebf02e/tests
     const {map, content} = load('foo.min');
-    const networkRecords = [{url: 'https://example.com/foo.js'}];
+    const networkRecords = [{url: 'https://example.com/foo.min.js'}];
     const artifacts = {
-      SourceMaps: [{scriptUrl: 'https://example.com/foo.js', map}],
-      ScriptElements: [{src: 'https://example.com/foo.js', content}],
+      SourceMaps: [{scriptUrl: 'https://example.com/foo.min.js', map}],
+      ScriptElements: [{src: 'https://example.com/foo.min.js', content}],
       devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(networkRecords)},
     };
     const context = {computedCache: new Map()};
     const results = await BundleAnalysis.request(artifacts, context);
 
     expect(results).toHaveLength(1);
-    expect(results[0].sizes).toMatchInlineSnapshot(`
+    const result = results[0];
+
+    // Determine sizes.
+    expect(result.sizes).toMatchInlineSnapshot(`
       Object {
         "files": Object {
           "node_modules/browser-pack/_prelude.js": 480,
           "src/bar.js": 104,
           "src/foo.js": 97,
         },
-        "totalBytes": 717,
-        "unmappedBytes": 36,
+        "totalBytes": 718,
+        "unmappedBytes": 37,
+      }
+    `);
+
+    // Test the mapping.
+    const entry = result.map.findEntry(0, 644);
+    expect(entry).toMatchInlineSnapshot(`
+      SourceMapEntry {
+        "columnNumber": 644,
+        "lastColumnNumber": 648,
+        "lineNumber": 0,
+        "name": "bar",
+        "sourceColumnNumber": 15,
+        "sourceLineNumber": 3,
+        "sourceURL": "src/foo.js",
       }
     `);
   });
 
-  it('determines size of source files (complex map)', async () => {
+  it('works (complex map)', async () => {
     const {map, content} = load('squoosh');
     const networkRecords = [{url: 'https://squoosh.app/main-app.js'}];
     const artifacts = {
@@ -72,7 +89,10 @@ describe('BundleAnalysis computed artifact', () => {
     const results = await BundleAnalysis.request(artifacts, context);
 
     expect(results).toHaveLength(1);
-    expect(results[0].sizes).toMatchInlineSnapshot(`
+    const result = results[0];
+
+    // Determine sizes.
+    expect(result.sizes).toMatchInlineSnapshot(`
       Object {
         "files": Object {
           "webpack:///./node_modules/comlink/comlink.js": 4117,
@@ -149,8 +169,22 @@ describe('BundleAnalysis computed artifact', () => {
           "webpack:///./src/lib/icons.tsx": 2531,
           "webpack:///./src/lib/util.ts": 4043,
         },
-        "totalBytes": 83747,
-        "unmappedBytes": 10060,
+        "totalBytes": 83748,
+        "unmappedBytes": 10061,
+      }
+    `);
+
+    // Test the mapping.
+    const entry = result.map.findEntry(0, 80476);
+    expect(entry).toMatchInlineSnapshot(`
+      SourceMapEntry {
+        "columnNumber": 80469,
+        "lastColumnNumber": 80482,
+        "lineNumber": 0,
+        "name": "workerResize",
+        "sourceColumnNumber": 31,
+        "sourceLineNumber": 119,
+        "sourceURL": "webpack:///./src/components/compress/index.tsx",
       }
     `);
   });
