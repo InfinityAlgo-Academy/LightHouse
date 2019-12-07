@@ -4,7 +4,6 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
-// @ts-nocheck
 
 const SDK = {
   ...require('./generated/sdk/SourceMap.js'),
@@ -18,6 +17,9 @@ SDK.TextSourceMap.prototype.mappings = function() {
 };
 
 /**
+ * Copied from CDT utilities.js. This is the only method needed from
+ * that file.
+ *
  * Return index of the leftmost element that is greater
  * than the specimen object. If there's no such element (i.e. all
  * elements are smaller or equal to the specimen) returns right bound.
@@ -34,6 +36,7 @@ SDK.TextSourceMap.prototype.mappings = function() {
  * @template T,S
  */
 function upperBound(object, comparator, left, right) {
+  // @ts-ignore
   function defaultComparator(a, b) {
     return a < b ? -1 : (a > b ? 1 : 0);
   }
@@ -74,12 +77,14 @@ SDK.TextSourceMap.prototype.findExactEntry = function(line, column) {
 // Add `lastColumnNumber` to mappings.
 SDK.TextSourceMap.prototype.computeLastGeneratedColumns = function() {
   const mappings = this.mappings();
+  // @ts-ignore: `lastColumnNumber` is not on types yet.
   if (mappings.length && typeof mappings[0].lastColumnNumber !== 'undefined') return;
 
   for (let i = 0; i < mappings.length - 1; i++) {
     const mapping = mappings[i];
     const nextMapping = mappings[i + 1];
     if (mapping.lineNumber === nextMapping.lineNumber) {
+      // @ts-ignore: `lastColumnNumber` is not on types yet.
       mapping.lastColumnNumber = nextMapping.columnNumber;
     }
   }

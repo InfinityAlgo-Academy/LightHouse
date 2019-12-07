@@ -26,8 +26,7 @@ execFileSync('node_modules/.bin/tsc', [
 console.log('making modifications ...');
 
 for (const file of glob.sync(`${outDir}/**/*.js`)) {
-  const code = fs.readFileSync(file, 'utf-8')
-    .replace('exports["default"]', 'exports.default');
+  const code = fs.readFileSync(file, 'utf-8');
 
   let lines = code.match(/^.*(\r?\n|$)/mg) || [];
   const cutoffIndex = lines.findIndex(line => line.includes('Legacy exported object'));
@@ -43,6 +42,8 @@ for (const file of glob.sync(`${outDir}/**/*.js`)) {
     if (file.endsWith('ParsedURL.js')) {
       newLine = newLine.replace(/Common.ParsedURL/g, 'ParsedURL');
     }
+    newLine = newLine.replace('exports["default"]', 'exports.default');
+
     if (newLine !== line) {
       // eslint-disable-next-line no-console
       console.log(`${file}:${i}: ${line.trim()}`);
