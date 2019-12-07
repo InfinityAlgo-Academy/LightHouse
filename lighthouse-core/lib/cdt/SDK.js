@@ -6,7 +6,7 @@
 'use strict';
 
 const SDK = {
-  ...require('./generated/sdk/SourceMap.js'),
+  ...require('./generated/SourceMap.js'),
 };
 
 const originalMappings = SDK.TextSourceMap.prototype.mappings;

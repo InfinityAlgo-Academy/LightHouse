@@ -6,7 +6,6 @@
 'use strict';
 
 const Common = {
-  ParsedURL: require('./generated/common/ParsedURL.js').default,
   console,
 };
 
