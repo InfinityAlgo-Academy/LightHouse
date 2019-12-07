@@ -438,5 +438,18 @@ if (location.search === '') {
      FAIL(no-vulnerable-libraries): Loads a vulnerable JS library -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
+<!-- Filesystem URL shouldn't be flagged is-on-https. -->
+<script>
+  function onInitFs(fs) {
+    fs.root.getFile(`empty-${Math.random()}.png`, {create: true, exclusive: true}, function (fileEntry) {
+      const img = document.createElement('img');
+      img.src = fileEntry.toURL();
+      document.body.appendChild(img);
+    }, console.error);
+  }
+    
+  window.webkitRequestFileSystem(window.TEMPORARY, 1024 * 1024, onInitFs, console.error); 
+</script>
+
 </body>
 </html>
