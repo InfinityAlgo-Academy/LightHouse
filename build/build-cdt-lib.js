@@ -32,6 +32,8 @@ for (const file of glob.sync(`${outDir}/**/*.js`)) {
   const cutoffIndex = lines.findIndex(line => line.includes('Legacy exported object'));
   lines = lines.splice(0, cutoffIndex);
 
+  let deletionMode = false;
+
   const modifiedLines = lines.map((line, i) => {
     // Don't modify jsdoc comments.
     if (/^\s*[/*]/.test(line)) {
@@ -42,7 +44,15 @@ for (const file of glob.sync(`${outDir}/**/*.js`)) {
     if (file.endsWith('ParsedURL.js')) {
       newLine = newLine.replace(/Common.ParsedURL/g, 'ParsedURL');
     }
+    if (file.endsWith('SourceMap.js')) {
+      if (line.includes('TextSourceMap.load')) deletionMode = true;
+      if (line.includes('prototype.sourceContentProvider')) deletionMode = true;
+    }
     newLine = newLine.replace('exports["default"]', 'exports.default');
+    if (deletionMode) {
+      newLine = '';
+      if (line.includes('};')) deletionMode = false;
+    }
 
     if (newLine !== line) {
       // eslint-disable-next-line no-console

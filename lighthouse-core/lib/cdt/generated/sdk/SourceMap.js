@@ -58,8 +58,6 @@ var SourceMap = /** @class */ (function () {
      * @param {!Common.ResourceType} contentType
      * @return {!Common.ContentProvider}
      */
-    SourceMap.prototype.sourceContentProvider = function (sourceURL, contentType) {
-    };
     /**
      * @param {string} sourceURL
      * @return {?string}
@@ -205,35 +203,11 @@ var TextSourceMap = /** @class */ (function () {
      * @return {!Promise<?TextSourceMap>}
      * @this {TextSourceMap}
      */
-    TextSourceMap.load = function (sourceMapURL, compiledURL) {
-        var callback;
-        var promise = new Promise(function (fulfill) { return callback = fulfill; });
-        SDK.multitargetNetworkManager.loadResource(sourceMapURL, contentLoaded);
-        return promise;
         /**
          * @param {number} statusCode
          * @param {!Object.<string, string>} headers
          * @param {string} content
          */
-        function contentLoaded(statusCode, headers, content) {
-            if (!content || statusCode >= 400) {
-                callback(null);
-                return;
-            }
-            if (content.slice(0, 3) === ')]}') {
-                content = content.substring(content.indexOf('\n'));
-            }
-            try {
-                var payload = /** @type {!SourceMapV3} */ (JSON.parse(content));
-                callback(new TextSourceMap(compiledURL, sourceMapURL, payload));
-            }
-            catch (e) {
-                console.error(e);
-                Common.console.warn('DevTools failed to parse SourceMap: ' + sourceMapURL);
-                callback(null);
-            }
-        }
-    };
     /**
      * @override
      * @return {string}
@@ -261,13 +235,6 @@ var TextSourceMap = /** @class */ (function () {
      * @param {!Common.ResourceType} contentType
      * @return {!Common.ContentProvider}
      */
-    TextSourceMap.prototype.sourceContentProvider = function (sourceURL, contentType) {
-        var info = this._sourceInfos.get(sourceURL);
-        if (info.content) {
-            return Common.StaticContentProvider.fromString(sourceURL, contentType, info.content);
-        }
-        return new SDK.CompilerSourceMappingContentProvider(sourceURL, contentType);
-    };
     /**
      * @override
      * @param {string} sourceURL
