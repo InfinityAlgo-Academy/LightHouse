@@ -77,11 +77,11 @@ describe('BundleAnalysis computed artifact', () => {
     `);
   });
 
-  it('works (simple map) (null sources)', async () => {
+  it('works (simple map) (null source)', async () => {
     // This map is from source-map-explorer.
     // https://github.com/danvk/source-map-explorer/tree/4b95f6e7dfe0058d791dcec2107fee43a1ebf02e/tests
     const {map, content} = load('foo.min');
-    map.sources[3] = null;
+    map.sources[1] = null;
     const networkRecords = [{url: 'https://example.com/foo.min.js'}];
     const artifacts = {
       SourceMaps: [{scriptUrl: 'https://example.com/foo.min.js', map}],
@@ -99,7 +99,7 @@ describe('BundleAnalysis computed artifact', () => {
       Object {
         "files": Object {
           "node_modules/browser-pack/_prelude.js": 480,
-          "src/bar.js": 104,
+          "null": 104,
           "src/foo.js": 97,
         },
         "totalBytes": 718,
