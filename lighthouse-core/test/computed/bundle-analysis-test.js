@@ -77,6 +77,51 @@ describe('BundleAnalysis computed artifact', () => {
     `);
   });
 
+  it('works (simple map) (null sources)', async () => {
+    // This map is from source-map-explorer.
+    // https://github.com/danvk/source-map-explorer/tree/4b95f6e7dfe0058d791dcec2107fee43a1ebf02e/tests
+    const {map, content} = load('foo.min');
+    map.sources[3] = null;
+    const networkRecords = [{url: 'https://example.com/foo.min.js'}];
+    const artifacts = {
+      SourceMaps: [{scriptUrl: 'https://example.com/foo.min.js', map}],
+      ScriptElements: [{src: 'https://example.com/foo.min.js', content}],
+      devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(networkRecords)},
+    };
+    const context = {computedCache: new Map()};
+    const results = await BundleAnalysis.request(artifacts, context);
+
+    expect(results).toHaveLength(1);
+    const result = results[0];
+
+    // Determine sizes.
+    expect(result.sizes).toMatchInlineSnapshot(`
+      Object {
+        "files": Object {
+          "node_modules/browser-pack/_prelude.js": 480,
+          "src/bar.js": 104,
+          "src/foo.js": 97,
+        },
+        "totalBytes": 718,
+        "unmappedBytes": 37,
+      }
+    `);
+
+    // Test the mapping.
+    const entry = result.map.findEntry(0, 644);
+    expect(entry).toMatchInlineSnapshot(`
+      SourceMapEntry {
+        "columnNumber": 644,
+        "lastColumnNumber": 648,
+        "lineNumber": 0,
+        "name": "bar",
+        "sourceColumnNumber": 15,
+        "sourceLineNumber": 3,
+        "sourceURL": "src/foo.js",
+      }
+    `);
+  });
+
   it('works (complex map)', async () => {
     const {map, content} = load('squoosh');
     const networkRecords = [{url: 'https://squoosh.app/main-app.js'}];
@@ -185,6 +230,117 @@ describe('BundleAnalysis computed artifact', () => {
         "sourceColumnNumber": 31,
         "sourceLineNumber": 119,
         "sourceURL": "webpack:///./src/components/compress/index.tsx",
+      }
+    `);
+  });
+
+  it('handles faulty maps', async () => {
+    let data;
+    let map;
+    let content;
+
+    function init() {
+      data = load('foo.min');
+      map = data.map;
+      content = data.content;
+    }
+    async function test() {
+      const networkRecords = [{url: 'https://example.com/foo.min.js'}];
+      const artifacts = {
+        SourceMaps: [{scriptUrl: 'https://example.com/foo.min.js', map}],
+        ScriptElements: [{src: 'https://example.com/foo.min.js', content}],
+        devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(networkRecords)},
+      };
+      const context = {computedCache: new Map()};
+      const results = await BundleAnalysis.request(artifacts, context);
+      const result = results[0];
+      return {sizes: result.sizes, entry: result.map.findEntry(0, 644)};
+    }
+
+    init();
+    map.mappings = 'blahblah blah';
+    expect(await test()).toMatchInlineSnapshot(`
+      Object {
+        "entry": SourceMapEntry {
+          "columnNumber": -13,
+          "lineNumber": 0,
+          "name": "r",
+          "sourceColumnNumber": -418,
+          "sourceLineNumber": -432,
+          "sourceURL": undefined,
+        },
+        "sizes": Object {
+          "files": Object {},
+          "totalBytes": 718,
+          "unmappedBytes": 718,
+        },
+      }
+    `);
+
+    init();
+    content = 'blahblah blah';
+    expect(await test()).toMatchInlineSnapshot(`
+      Object {
+        "entry": SourceMapEntry {
+          "columnNumber": 644,
+          "lastColumnNumber": 648,
+          "lineNumber": 0,
+          "name": "bar",
+          "sourceColumnNumber": 15,
+          "sourceLineNumber": 3,
+          "sourceURL": "src/foo.js",
+        },
+        "sizes": Object {
+          "files": Object {},
+          "totalBytes": 13,
+          "unmappedBytes": 13,
+        },
+      }
+    `);
+
+    init();
+    content = '';
+    expect(await test()).toMatchInlineSnapshot(`
+      Object {
+        "entry": SourceMapEntry {
+          "columnNumber": 644,
+          "lastColumnNumber": 648,
+          "lineNumber": 0,
+          "name": "bar",
+          "sourceColumnNumber": 15,
+          "sourceLineNumber": 3,
+          "sourceURL": "src/foo.js",
+        },
+        "sizes": Object {
+          "files": Object {},
+          "totalBytes": 0,
+          "unmappedBytes": 0,
+        },
+      }
+    `);
+
+    init();
+    map.names = ['blah'];
+    expect(await test()).toMatchInlineSnapshot(`
+      Object {
+        "entry": SourceMapEntry {
+          "columnNumber": 644,
+          "lastColumnNumber": 648,
+          "lineNumber": 0,
+          "name": undefined,
+          "sourceColumnNumber": 15,
+          "sourceLineNumber": 3,
+          "sourceURL": "src/foo.js",
+        },
+        "sizes": Object {
+          "files": Object {
+            "node_modules/browser-pack/_prelude.js": 480,
+            "src/bar.js": 104,
+            "src/foo.js": 97,
+          },
+          "totalBytes": 718,
+          "unmappedBytes": 37,
+        },
       }
     `);
   });

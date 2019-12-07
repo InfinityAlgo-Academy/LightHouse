@@ -39,7 +39,12 @@ function computeGeneratedFileSizes(map, content) {
   const lines = content.split('\n');
   /** @type {Record<string, number>} */
   const files = {};
-  let mappedBytes = 0;
+  const totalBytes = content.length;
+  let unmappedBytes = totalBytes;
+
+  // If the map + contents don't line up, return a result that
+  // denotes nothing is mapped.
+  const failureResult = {files: {}, unmappedBytes, totalBytes};
 
   // @ts-ignore: This function is added in SDK.js
   map.computeLastGeneratedColumns();
@@ -60,14 +65,14 @@ function computeGeneratedFileSizes(map, content) {
     if (line === null) {
       // @ts-ignore
       log.error(`${map.compiledURL} mapping for line out of bounds: ${lineNum + 1}`);
-      break;
+      return failureResult;
     }
 
     // Columns are 0-based
     if (colNum >= line.length) {
       // @ts-ignore
       log.error(`${map.compiledURL} mapping for column out of bounds: ${lineNum + 1}:${colNum}`);
-      break;
+      return failureResult;
     }
 
     let mappingLength = 0;
@@ -76,7 +81,7 @@ function computeGeneratedFileSizes(map, content) {
         // @ts-ignore
         // eslint-disable-next-line max-len
         log.error(`${map.compiledURL} mapping for last column out of bounds: ${lineNum + 1}:${lastColNum}`);
-        break;
+        return failureResult;
       }
       mappingLength = lastColNum - colNum;
     } else {
@@ -84,13 +89,12 @@ function computeGeneratedFileSizes(map, content) {
       mappingLength = line.length - colNum;
     }
     files[source] = (files[source] || 0) + mappingLength;
-    mappedBytes += mappingLength;
+    unmappedBytes -= mappingLength;
   }
 
-  const totalBytes = content.length;
   return {
     files,
-    unmappedBytes: totalBytes - mappedBytes,
+    unmappedBytes,
     totalBytes,
   };
 }
