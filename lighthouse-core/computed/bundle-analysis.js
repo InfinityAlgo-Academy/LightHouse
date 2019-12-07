@@ -84,7 +84,7 @@ function computeGeneratedFileSizesForCDT(sourceMapData) {
         // });
         continue;
       }
-      mappingLength = lastGeneratedColumn - generatedColumn + 0;
+      mappingLength = lastGeneratedColumn - generatedColumn;
     } else {
       // TODO Buffer.byteLength?
       mappingLength = line.length - generatedColumn;
@@ -93,10 +93,7 @@ function computeGeneratedFileSizesForCDT(sourceMapData) {
     mappedBytes += mappingLength;
   }
 
-  // TODO: remove?
-  // Don't count newlines as original version didn't count newlines
-  const totalBytes = content.length - lines.length + 1;
-
+  const totalBytes = content.length;
   return {
     files,
     unmappedBytes: totalBytes - mappedBytes,
