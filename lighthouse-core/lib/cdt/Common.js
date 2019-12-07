@@ -7,6 +7,7 @@
 
 const Common = {
   ParsedURL: require('./generated/common/ParsedURL.js').default,
+  console,
 };
 
 module.exports = Common;
