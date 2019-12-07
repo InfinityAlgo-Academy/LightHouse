@@ -57,6 +57,8 @@ for (const file of glob.sync(`${outDir}/**/*.js`)) {
     if (file.endsWith('SourceMap.js')) {
       if (line.includes('TextSourceMap.load =')) deletionMode = true;
       if (line.includes('prototype.sourceContentProvider =')) deletionMode = true;
+      if (line.includes(`url += Common.UIString('? [sm]');`)) newLine = '';
+      // newLine = line.replace(`Common.ParsedURL.completeURL(this._baseURL, href)`, `''`);
     }
     newLine = newLine.replace('exports["default"]', 'exports.default');
     if (deletionMode) {
