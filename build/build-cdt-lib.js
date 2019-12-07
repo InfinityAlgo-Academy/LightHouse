@@ -42,16 +42,26 @@ for (const file of glob.sync(`${outDir}/**/*.js`)) {
 
     let newLine = line;
     if (file.endsWith('ParsedURL.js')) {
+      const match = line.match(/ParsedURL.(.*) =/);
+      const ignore = [
+        '_urlRegex',
+        '_urlRegexInstance',
+        'completeURL',
+      ];
+      if (match && !ignore.includes(match[1])) {
+        console.log(match[1]);
+        deletionMode = true;
+      }
       newLine = newLine.replace(/Common.ParsedURL/g, 'ParsedURL');
     }
     if (file.endsWith('SourceMap.js')) {
-      if (line.includes('TextSourceMap.load')) deletionMode = true;
-      if (line.includes('prototype.sourceContentProvider')) deletionMode = true;
+      if (line.includes('TextSourceMap.load =')) deletionMode = true;
+      if (line.includes('prototype.sourceContentProvider =')) deletionMode = true;
     }
     newLine = newLine.replace('exports["default"]', 'exports.default');
     if (deletionMode) {
       newLine = '';
-      if (line.includes('};')) deletionMode = false;
+      if (line.startsWith('    };')) deletionMode = false;
     }
 
     if (newLine !== line) {
