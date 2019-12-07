@@ -374,7 +374,6 @@ class DetailsRenderer {
           if (valueElement) valueFragment.appendChild(valueElement);
         }
 
-
         if (heading.multi && row.multi) {
           // Make typescript happy.
           if (typeof row.multi === 'object' && row.multi.type === 'multi') {
