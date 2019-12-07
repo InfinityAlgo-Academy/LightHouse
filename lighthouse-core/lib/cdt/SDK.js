@@ -6,10 +6,6 @@
 'use strict';
 // @ts-nocheck
 
-global.cdt = {};
-
-require('./generated/common/ParsedURL.js');
-
 const SDK = {
   ...require('./generated/sdk/SourceMap.js'),
 };
@@ -53,7 +49,7 @@ function upperBound(object, comparator, left, right) {
     }
   }
   return r;
-};
+}
 
 /**
  * @param {number} line
