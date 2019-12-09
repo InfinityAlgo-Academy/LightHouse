@@ -304,11 +304,21 @@ class DetailsRenderer {
     }
 
     return tableLike.headings.map(heading => {
+      let multi;
+      if (heading.multi) {
+        multi = {
+          key: heading.multi.key,
+          valueType: heading.multi.itemType,
+          displayUnit: heading.displayUnit,
+          granularity: heading.granularity,
+        };
+      }
+
       return {
         key: heading.key,
         label: heading.text,
         valueType: heading.itemType,
-        multi: heading.multi,
+        multi,
         displayUnit: heading.displayUnit,
         granularity: heading.granularity,
       };
@@ -331,18 +341,6 @@ class DetailsRenderer {
       valueElement.appendChild(childValueElement);
     }
     return valueElement;
-  }
-
-  /**
-   * @param {*} maybeMulti
-   * @return {maybeMulti is LH.Audit.Details.Value}
-   */
-  _isScalar(maybeMulti) {
-    if (typeof maybeMulti !== 'object') return true;
-    for (const value of Object.values(maybeMulti)) {
-      if (!Array.isArray(value)) return true;
-    }
-    return false;
   }
 
   /**
@@ -385,8 +383,11 @@ class DetailsRenderer {
 
         if (heading.multi) {
           const multiHeading = {
-            ...heading,
-            ...heading.multi,
+            key: heading.multi.key,
+            valueType: heading.multi.valueType || heading.valueType,
+            granularity: heading.multi.granularity || heading.granularity,
+            displayUnit: heading.multi.displayUnit || heading.displayUnit,
+            label: '',
           };
           const multiElement = this._renderMultiValue(row, multiHeading);
           if (multiElement) valueFragment.appendChild(multiElement);
