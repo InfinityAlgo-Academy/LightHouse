@@ -217,7 +217,7 @@ class DetailsRenderer {
       return null;
     }
 
-    if (typeof value === 'object' && value.type === 'multi') {
+    if (this._isMulti(value)) {
       console.warn('Invalid multi value given to _renderTableValue');
       return null;
     }
@@ -313,6 +313,7 @@ class DetailsRenderer {
         key: heading.key,
         label: heading.text,
         valueType: heading.itemType,
+        multi: heading.multi,
         displayUnit: heading.displayUnit,
         granularity: heading.granularity,
       };
@@ -320,7 +321,7 @@ class DetailsRenderer {
   }
 
   /**
-   * @param {LH.Audit.Details.OpportunityItemMulti} multi
+   * @param {LH.Audit.Details.MultiItem} multi
    * @param {LH.Audit.Details.OpportunityColumnHeading} heading
    * @return {Element?}
    */
@@ -335,6 +336,18 @@ class DetailsRenderer {
       valueElement.appendChild(childValueElement);
     }
     return valueElement;
+  }
+
+  /**
+   * @param {*} maybeMulti
+   * @return {maybeMulti is LH.Audit.Details.MultiItem}
+   */
+  _isMulti(maybeMulti) {
+    if (typeof maybeMulti !== 'object') return false;
+    for (const value of Object.values(maybeMulti)) {
+      if (!Array.isArray(value)) return false;
+    }
+    return true;
   }
 
   /**
@@ -375,8 +388,7 @@ class DetailsRenderer {
         }
 
         if (heading.multi && row.multi) {
-          // Make typescript happy.
-          if (typeof row.multi === 'object' && row.multi.type === 'multi') {
+          if (this._isMulti(row.multi)) {
             const multiHeading = {
               ...heading,
               ...heading.multi,

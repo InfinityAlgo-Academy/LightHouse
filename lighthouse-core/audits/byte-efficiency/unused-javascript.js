@@ -116,7 +116,6 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       });
 
     item.multi = {
-      type: 'multi',
       source: unusedFilesSizesSorted.map(d => d.key),
       totalBytes: unusedFilesSizesSorted.map(d => d.total),
       wastedBytes: unusedFilesSizesSorted.map(d => d.unused),

@@ -108,7 +108,6 @@ class BundleDuplication extends ByteEfficiencyAudit {
 
     /**
      * @typedef ItemMulti
-     * @property {'multi'} type
      * @property {string[]} url
      * @property {number[]} totalBytes
      */
@@ -119,6 +118,7 @@ class BundleDuplication extends ByteEfficiencyAudit {
 
     /** @type {Item[]} */
     const items = [];
+
     /** @type {Map<string, number>} */
     const wastedBytesByUrl = new Map();
     for (const [key, sourceDatas] of sourceDataAggregated.entries()) {
@@ -154,7 +154,6 @@ class BundleDuplication extends ByteEfficiencyAudit {
         // Not needed, but keeps typescript happy.
         totalBytes: 0,
         multi: {
-          type: 'multi',
           url: urls,
           totalBytes: bytesValues,
         },
@@ -168,7 +167,6 @@ class BundleDuplication extends ByteEfficiencyAudit {
       url: '',
       totalBytes: 0,
       multi: {
-        type: 'multi',
         url: [],
         totalBytes: [],
       },

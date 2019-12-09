@@ -97,6 +97,7 @@ declare global {
          * could also be objects with their own type to override this field.
          */
         itemType: ItemValueTypes;
+        multi?: MultiItem;
 
         displayUnit?: string;
         granularity?: number;
@@ -104,7 +105,11 @@ declare global {
 
       export type TableItem = {
         debugData?: DebugData;
-        [p: string]: undefined | string | number | boolean | undefined | DebugData | NodeValue | SourceLocationValue | LinkValue | UrlValue | CodeValue;
+        [p: string]: undefined | string | number | boolean | DebugData | NodeValue | SourceLocationValue | LinkValue | UrlValue | CodeValue;
+      }
+
+      export interface MultiItem {
+        [p: string]: undefined | string[] | number[] | boolean[] | DebugData[] | NodeValue[] | SourceLocationValue[] | LinkValue[] | UrlValue[] | CodeValue[];
       }
 
       export interface OpportunityColumnHeading {
@@ -132,13 +137,8 @@ declare global {
         totalBytes?: number;
         wastedMs?: number;
         debugData?: DebugData;
-        [p: string]: number | boolean | string | undefined | DebugData | OpportunityItemMulti;
-        multi?: OpportunityItemMulti;
-      }
-
-      export interface OpportunityItemMulti {
-        type: 'multi',
-        [p: string]: number[] | boolean[] | string | string[] | undefined | DebugData[];
+        [p: string]: number | boolean | string | undefined | DebugData | (MultiItem);
+        multi?: MultiItem;
       }
 
       /**
