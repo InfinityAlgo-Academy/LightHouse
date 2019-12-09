@@ -208,17 +208,12 @@ class DetailsRenderer {
    * Render a details item value for embedding in a table. Renders the value
    * based on the heading's valueType, unless the value itself has a `type`
    * property to override it.
-   * @param {LH.Audit.Details.TableItem[string] | LH.Audit.Details.OpportunityItem[string]} value
+   * @param {LH.Audit.Details.Value} value
    * @param {LH.Audit.Details.OpportunityColumnHeading} heading
    * @return {Element|null}
    */
   _renderTableValue(value, heading) {
     if (typeof value === 'undefined' || value === null) {
-      return null;
-    }
-
-    if (this._isMulti(value)) {
-      console.warn('Invalid multi value given to _renderTableValue');
       return null;
     }
 
@@ -321,12 +316,12 @@ class DetailsRenderer {
   }
 
   /**
-   * @param {LH.Audit.Details.MultiItem} multi
+   * @param {LH.Audit.Details.TableItem} row
    * @param {LH.Audit.Details.OpportunityColumnHeading} heading
    * @return {Element?}
    */
-  _renderMultiValue(multi, heading) {
-    const values = multi[heading.key];
+  _renderMultiValue(row, heading) {
+    const values = row[heading.key];
     if (!Array.isArray(values)) return null;
     const valueElement = this._dom.createElement('div', 'lh-multi-values');
     for (const childValue of values) {
@@ -340,14 +335,14 @@ class DetailsRenderer {
 
   /**
    * @param {*} maybeMulti
-   * @return {maybeMulti is LH.Audit.Details.MultiItem}
+   * @return {maybeMulti is LH.Audit.Details.Value}
    */
-  _isMulti(maybeMulti) {
-    if (typeof maybeMulti !== 'object') return false;
+  _isScalar(maybeMulti) {
+    if (typeof maybeMulti !== 'object') return true;
     for (const value of Object.values(maybeMulti)) {
-      if (!Array.isArray(value)) return false;
+      if (!Array.isArray(value)) return true;
     }
-    return true;
+    return false;
   }
 
   /**
@@ -383,19 +378,18 @@ class DetailsRenderer {
           valueFragment.appendChild(emptyElement);
         } else {
           const value = row[heading.key];
-          const valueElement = value !== undefined && this._renderTableValue(value, heading);
+          const valueElement =
+            value !== undefined && !Array.isArray(value) && this._renderTableValue(value, heading);
           if (valueElement) valueFragment.appendChild(valueElement);
         }
 
-        if (heading.multi && row.multi) {
-          if (this._isMulti(row.multi)) {
-            const multiHeading = {
-              ...heading,
-              ...heading.multi,
-            };
-            const multiElement = this._renderMultiValue(row.multi, multiHeading);
-            if (multiElement) valueFragment.appendChild(multiElement);
-          }
+        if (heading.multi) {
+          const multiHeading = {
+            ...heading,
+            ...heading.multi,
+          };
+          const multiElement = this._renderMultiValue(row, multiHeading);
+          if (multiElement) valueFragment.appendChild(multiElement);
         }
 
         if (valueFragment.childElementCount) {

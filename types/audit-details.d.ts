@@ -83,6 +83,7 @@ declare global {
 
       /** Possible types of values found within table items. */
       type ItemValueTypes = 'bytes' | 'code' | 'link' | 'ms' | 'multi' | 'node' | 'source-location' | 'numeric' | 'text' | 'thumbnail' | 'timespanMs' | 'url';
+      type Value = string | number | boolean | DebugData | NodeValue | SourceLocationValue | LinkValue | UrlValue | CodeValue;
 
       // TODO(bckenny): unify Table/Opportunity headings and items on next breaking change.
 
@@ -97,7 +98,11 @@ declare global {
          * could also be objects with their own type to override this field.
          */
         itemType: ItemValueTypes;
-        multi?: MultiItem;
+        /**
+         * Optional header defining an inner table of values that correspond to this column.
+         * Key is required - if other properties are not provided, the value for the heading is used.
+        */
+        multi?: {key: string, itemType?: ItemValueTypes, displayUnit?: string, granularity?: number};
 
         displayUnit?: string;
         granularity?: number;
@@ -105,11 +110,7 @@ declare global {
 
       export type TableItem = {
         debugData?: DebugData;
-        [p: string]: undefined | string | number | boolean | DebugData | NodeValue | SourceLocationValue | LinkValue | UrlValue | CodeValue;
-      }
-
-      export interface MultiItem {
-        [p: string]: undefined | string[] | number[] | boolean[] | DebugData[] | NodeValue[] | SourceLocationValue[] | LinkValue[] | UrlValue[] | CodeValue[];
+        [p: string]: undefined | Value | Value[];
       }
 
       export interface OpportunityColumnHeading {
@@ -123,8 +124,11 @@ declare global {
          * could also be objects with their own type to override this field.
          */
         valueType: ItemValueTypes;
-        /** ... */
-        multi?: Omit<Partial<OpportunityColumnHeading>, 'label'|'multi'>;
+        /**
+         * Optional header defining an inner table of values that correspond to this column.
+         * Key is required - if other properties are not provided, the value for the heading is used.
+        */
+        multi?: {key: string, valueType?: ItemValueTypes, displayUnit?: string, granularity?: number};
 
         // NOTE: not used by opportunity details, but used in the renderer until table/opportunity unification.
         displayUnit?: string;
@@ -137,8 +141,7 @@ declare global {
         totalBytes?: number;
         wastedMs?: number;
         debugData?: DebugData;
-        [p: string]: number | boolean | string | undefined | DebugData | (MultiItem);
-        multi?: MultiItem;
+        [p: string]: undefined | Value | Value[];
       }
 
       /**

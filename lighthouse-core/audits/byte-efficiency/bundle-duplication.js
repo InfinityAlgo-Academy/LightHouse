@@ -108,12 +108,12 @@ class BundleDuplication extends ByteEfficiencyAudit {
 
     /**
      * @typedef ItemMulti
-     * @property {string[]} url
-     * @property {number[]} totalBytes
+     * @property {string[]} urls
+     * @property {number[]} sourceBytes
      */
 
     /**
-     * @typedef {LH.Audit.ByteEfficiencyItem & {multi: ItemMulti}} Item
+     * @typedef {LH.Audit.ByteEfficiencyItem & ItemMulti} Item
      */
 
     /** @type {Item[]} */
@@ -153,10 +153,8 @@ class BundleDuplication extends ByteEfficiencyAudit {
         url: '',
         // Not needed, but keeps typescript happy.
         totalBytes: 0,
-        multi: {
-          url: urls,
-          totalBytes: bytesValues,
-        },
+        urls,
+        sourceBytes: bytesValues,
       });
     }
 
@@ -166,17 +164,15 @@ class BundleDuplication extends ByteEfficiencyAudit {
       wastedBytes: 0,
       url: '',
       totalBytes: 0,
-      multi: {
-        url: [],
-        totalBytes: [],
-      },
+      urls: [],
+      sourceBytes: [],
     };
     for (const item of items.filter(item => item.wastedBytes <= IGNORE_THRESHOLD_IN_BYTES)) {
       otherItem.wastedBytes += item.wastedBytes;
-      for (let i = 0; i < item.multi.url.length; i++) {
-        const url = item.multi.url[i];
-        if (!otherItem.multi.url.includes(url)) {
-          otherItem.multi.url.push(url);
+      for (let i = 0; i < item.urls.length; i++) {
+        const url = item.urls[i];
+        if (!otherItem.urls.includes(url)) {
+          otherItem.urls.push(url);
         }
       }
       items.splice(items.indexOf(item), 1);
@@ -245,10 +241,10 @@ class BundleDuplication extends ByteEfficiencyAudit {
       */
     }
 
-    /** @type {LH.Audit.Details.Opportunity['headings']} */
+    /** @type {LH.Audit.Details.OpportunityColumnHeading[]} */
     const headings = [
-      {key: 'source', valueType: 'code', multi: {key: 'url', valueType: 'url'}, label: str_(i18n.UIStrings.columnName)}, // TODO: or 'Source'?
-      {key: '_', valueType: 'bytes', multi: {key: 'totalBytes'}, granularity: 0.05, label: str_(i18n.UIStrings.columnSize)},
+      {key: 'source', valueType: 'code', multi: {key: 'urls', valueType: 'url'}, label: str_(i18n.UIStrings.columnName)}, // TODO: or 'Source'?
+      {key: '_', valueType: 'bytes', multi: {key: 'sourceBytes'}, granularity: 0.05, label: str_(i18n.UIStrings.columnSize)},
       {key: 'wastedBytes', valueType: 'bytes', granularity: 0.05, label: str_(i18n.UIStrings.columnWastedBytes)},
     ];
 
