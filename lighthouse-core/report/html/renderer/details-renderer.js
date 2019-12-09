@@ -208,7 +208,7 @@ class DetailsRenderer {
    * Render a details item value for embedding in a table. Renders the value
    * based on the heading's valueType, unless the value itself has a `type`
    * property to override it.
-   * @param {LH.Audit.Details.TableItem[string] | LH.Audit.Details.OpportunityItem[string]} value
+   * @param {LH.Audit.Details.Value} value
    * @param {LH.Audit.Details.OpportunityColumnHeading} heading
    * @return {Element|null}
    */
@@ -246,7 +246,7 @@ class DetailsRenderer {
     switch (heading.valueType) {
       case 'bytes': {
         const numValue = Number(value);
-        return this._renderBytes({value: numValue, granularity: 1});
+        return this._renderBytes({value: numValue, granularity: heading.granularity});
       }
       case 'code': {
         const strValue = String(value);
@@ -304,14 +304,43 @@ class DetailsRenderer {
     }
 
     return tableLike.headings.map(heading => {
+      let multi;
+      if (heading.multi) {
+        multi = {
+          key: heading.multi.key,
+          valueType: heading.multi.itemType,
+          displayUnit: heading.displayUnit,
+          granularity: heading.granularity,
+        };
+      }
+
       return {
         key: heading.key,
         label: heading.text,
         valueType: heading.itemType,
+        multi,
         displayUnit: heading.displayUnit,
         granularity: heading.granularity,
       };
     });
+  }
+
+  /**
+   * @param {LH.Audit.Details.TableItem} row
+   * @param {LH.Audit.Details.OpportunityColumnHeading} heading
+   * @return {Element?}
+   */
+  _renderMultiValue(row, heading) {
+    const values = row[heading.key];
+    if (!Array.isArray(values)) return null;
+    const valueElement = this._dom.createElement('div', 'lh-multi-values');
+    for (const childValue of values) {
+      const childValueElement = this._renderTableValue(childValue, heading);
+      if (!childValueElement) continue;
+      childValueElement.classList.add('lh-multi-value-entry');
+      valueElement.appendChild(childValueElement);
+    }
+    return valueElement;
   }
 
   /**
@@ -339,12 +368,34 @@ class DetailsRenderer {
     for (const row of details.items) {
       const rowElem = this._dom.createChildOf(tbodyElem, 'tr');
       for (const heading of headings) {
-        const value = row[heading.key];
-        const valueElement = this._renderTableValue(value, heading);
+        const valueFragment = this._dom.createFragment();
 
-        if (valueElement) {
+        if (heading.key === '_') {
+          const emptyElement = this._dom.createElement('div');
+          emptyElement.innerHTML = '&nbsp;';
+          valueFragment.appendChild(emptyElement);
+        } else {
+          const value = row[heading.key];
+          const valueElement =
+            value !== undefined && !Array.isArray(value) && this._renderTableValue(value, heading);
+          if (valueElement) valueFragment.appendChild(valueElement);
+        }
+
+        if (heading.multi) {
+          const multiHeading = {
+            key: heading.multi.key,
+            valueType: heading.multi.valueType || heading.valueType,
+            granularity: heading.multi.granularity || heading.granularity,
+            displayUnit: heading.multi.displayUnit || heading.displayUnit,
+            label: '',
+          };
+          const multiElement = this._renderMultiValue(row, multiHeading);
+          if (multiElement) valueFragment.appendChild(multiElement);
+        }
+
+        if (valueFragment.childElementCount) {
           const classes = `lh-table-column--${heading.valueType}`;
-          this._dom.createChildOf(rowElem, 'td', classes).appendChild(valueElement);
+          this._dom.createChildOf(rowElem, 'td', classes).appendChild(valueFragment);
         } else {
           this._dom.createChildOf(rowElem, 'td', 'lh-table-column--empty');
         }

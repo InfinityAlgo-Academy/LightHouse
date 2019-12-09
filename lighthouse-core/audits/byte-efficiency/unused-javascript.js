@@ -6,6 +6,7 @@
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
+const BundleAnalysis = require('../../computed/bundle-analysis.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -20,6 +21,13 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 const IGNORE_THRESHOLD_IN_BYTES = 2048;
 
+/**
+ * @typedef WasteData
+ * @property {Uint8Array} unusedByIndex
+ * @property {number} unusedLength
+ * @property {number} contentLength
+ */
+
 class UnusedJavaScript extends ByteEfficiencyAudit {
   /**
    * @return {LH.Audit.Meta}
@@ -30,26 +38,24 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['JsUsage', 'devtoolsLogs', 'traces'],
+      requiredArtifacts: ['JsUsage', 'SourceMaps', 'ScriptElements', 'devtoolsLogs', 'traces'],
     };
   }
 
   /**
-   * @param {LH.Crdp.Profiler.ScriptCoverage} script
-   * @return {{unusedLength: number, contentLength: number}}
+   * @param {LH.Crdp.Profiler.ScriptCoverage} scriptCoverage
+   * @return {WasteData}
    */
-  static computeWaste(script) {
+  static computeWaste(scriptCoverage) {
     let maximumEndOffset = 0;
-    for (const func of script.functions) {
-      for (const range of func.ranges) {
-        maximumEndOffset = Math.max(maximumEndOffset, range.endOffset);
-      }
+    for (const func of scriptCoverage.functions) {
+      maximumEndOffset = Math.max(maximumEndOffset, ...func.ranges.map(r => r.endOffset));
     }
 
     // We only care about unused ranges of the script, so we can ignore all the nesting and safely
     // assume that if a range is unexecuted, all nested ranges within it will also be unexecuted.
     const unusedByIndex = new Uint8Array(maximumEndOffset);
-    for (const func of script.functions) {
+    for (const func of scriptCoverage.functions) {
       for (const range of func.ranges) {
         if (range.count === 0) {
           for (let i = range.startOffset; i < range.endOffset; i++) {
@@ -65,13 +71,59 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
     }
 
     return {
+      unusedByIndex,
       unusedLength: unused,
       contentLength: maximumEndOffset,
     };
   }
 
   /**
-   * @param {Array<{unusedLength: number, contentLength: number}>} wasteData
+   * @param {LH.Audit.ByteEfficiencyItem} item
+   * @param {WasteData[]} wasteData
+   * @param {import('../../computed/bundle-analysis.js').Bundle} bundle
+   */
+  static createBundleMultiData(item, wasteData, bundle) {
+    if (!bundle.script.content) return;
+
+    /** @type {Record<string, number>} */
+    const files = {};
+    let line = 0;
+    let column = 0;
+    for (let i = 0; i < bundle.script.content.length; i++) {
+      column += 1;
+      // TODO..... this can't be good.
+      if (bundle.script.content[i] === '\n') {
+        line += 1;
+        column = 0;
+      }
+      if (wasteData.every(data => data.unusedByIndex[i] === 1)) continue;
+
+      // @ts-ignore: ughhhhh the tsc doesn't work for the compiled cdt lib
+      const mapping = bundle.map.findEntry(line, column);
+      files[mapping.sourceURL] = (files[mapping.sourceURL] || 0) + 1;
+    }
+
+    const unusedFilesSizesSorted = Object.entries(files)
+      .sort((a, b) => b[1] - a[1])
+      .filter(d => d[1] >= 1024)
+      .slice(0, 5)
+      .map(d => {
+        return {
+          key: d[0],
+          unused: d[1],
+          total: bundle.sizes.files[d[0]],
+        };
+      });
+
+    Object.assign(item, {
+      sources: unusedFilesSizesSorted.map(d => d.key),
+      sourceBytes: unusedFilesSizesSorted.map(d => d.total),
+      sourceWastedBytes: unusedFilesSizesSorted.map(d => d.unused),
+    });
+  }
+
+  /**
+   * @param {WasteData[]} wasteData
    * @param {LH.Artifacts.NetworkRequest} networkRecord
    * @return {LH.Audit.ByteEfficiencyItem}
    */
@@ -99,9 +151,12 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
   /**
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
-   * @return {ByteEfficiencyAudit.ByteEfficiencyProduct}
+   * @param {LH.Audit.Context} context
+   * @return {Promise<ByteEfficiencyAudit.ByteEfficiencyProduct>}
    */
-  static audit_(artifacts, networkRecords) {
+  static async audit_(artifacts, networkRecords, context) {
+    const bundles = await BundleAnalysis.request(artifacts, context);
+
     /** @type {Map<string, Array<LH.Crdp.Profiler.ScriptCoverage>>} */
     const scriptsByUrl = new Map();
     for (const script of artifacts.JsUsage) {
@@ -111,21 +166,25 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
     }
 
     const items = [];
-    for (const [url, scripts] of scriptsByUrl.entries()) {
+    for (const [url, scriptCoverage] of scriptsByUrl.entries()) {
       const networkRecord = networkRecords.find(record => record.url === url);
       if (!networkRecord) continue;
-      const wasteData = scripts.map(UnusedJavaScript.computeWaste);
+      const wasteData = scriptCoverage.map(UnusedJavaScript.computeWaste);
+      const bundle = bundles.find(b => b.networkRecord === networkRecord);
       const item = UnusedJavaScript.mergeWaste(wasteData, networkRecord);
       if (item.wastedBytes <= IGNORE_THRESHOLD_IN_BYTES) continue;
+      if (bundle) {
+        UnusedJavaScript.createBundleMultiData(item, wasteData, bundle);
+      }
       items.push(item);
     }
 
     return {
       items,
       headings: [
-        {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
-        {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnSize)},
-        {key: 'wastedBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnWastedBytes)},
+        {key: 'url', valueType: 'url', multi: {key: 'sources', valueType: 'code'}, label: str_(i18n.UIStrings.columnURL)},
+        {key: 'totalBytes', valueType: 'bytes', multi: {key: 'sourceBytes'}, label: str_(i18n.UIStrings.columnSize)},
+        {key: 'wastedBytes', valueType: 'bytes', multi: {key: 'sourceWastedBytes'}, label: str_(i18n.UIStrings.columnWastedBytes)},
       ],
     };
   }

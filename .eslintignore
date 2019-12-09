@@ -4,6 +4,8 @@
 
 **/node_modules/**
 **/third_party/**
+**/generated/**
+**/source-maps/**
 
 /dist/**
 
