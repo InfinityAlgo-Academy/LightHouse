@@ -313,10 +313,6 @@
   display: none !important;
 }
 
-.lh-root pre {
-  margin: 0;
-}
-
 .lh-root details > summary {
   cursor: pointer;
 }
@@ -1409,18 +1405,6 @@
 .lh-text__url > a:hover {
   text-decoration: underline dotted #999;
 }
-
-.lh-external-viz {
-  fill: var(--color-gray-700);
-}
-.lh-external-viz:hover {
-  cursor: pointer;
-  opacity: 0.7;
-}
-
-/* .lh-multi-value-entry:nth-child(2n) {
-  background: var(--color-gray-200);
-} */
 
 .lh-multi-values:not(:first-child) .lh-multi-value-entry {
   margin-left: 20px;
