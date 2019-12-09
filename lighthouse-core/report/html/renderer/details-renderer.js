@@ -370,16 +370,10 @@ class DetailsRenderer {
       for (const heading of headings) {
         const valueFragment = this._dom.createFragment();
 
-        if (heading.key === '_') {
-          const emptyElement = this._dom.createElement('div');
-          emptyElement.innerHTML = '&nbsp;';
-          valueFragment.appendChild(emptyElement);
-        } else {
-          const value = row[heading.key];
-          const valueElement =
-            value !== undefined && !Array.isArray(value) && this._renderTableValue(value, heading);
-          if (valueElement) valueFragment.appendChild(valueElement);
-        }
+        const value = row[heading.key];
+        const valueElement =
+          value !== undefined && !Array.isArray(value) && this._renderTableValue(value, heading);
+        if (valueElement) valueFragment.appendChild(valueElement);
 
         if (heading.multi) {
           const multiHeading = {
