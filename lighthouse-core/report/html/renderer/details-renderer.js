@@ -337,7 +337,7 @@ class DetailsRenderer {
     for (const childValue of values) {
       const childValueElement = this._renderTableValue(childValue, heading);
       if (!childValueElement) continue;
-      childValueElement.classList.add('lh-multi-value-entry'); // TODO style with borders
+      childValueElement.classList.add('lh-multi-value-entry');
       valueElement.appendChild(childValueElement);
     }
     return valueElement;
