@@ -81,8 +81,9 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
    * @param {LH.Audit.ByteEfficiencyItem} item
    * @param {WasteData[]} wasteData
    * @param {import('../../computed/bundle-analysis.js').Bundle} bundle
+   * @param {ReturnType<typeof UnusedJavaScript.determineLengths>} lengths
    */
-  static createBundleMultiData(item, wasteData, bundle) {
+  static createBundleMultiData(item, wasteData, bundle, lengths) {
     if (!bundle.script.content) return;
 
     /** @type {Record<string, number>} */
@@ -91,29 +92,51 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
     let column = 0;
     for (let i = 0; i < bundle.script.content.length; i++) {
       column += 1;
-      // TODO..... this can't be good.
       if (bundle.script.content[i] === '\n') {
         line += 1;
         column = 0;
       }
-      if (wasteData.every(data => data.unusedByIndex[i] === 1)) continue;
+      if (wasteData.some(data => data.unusedByIndex[i] === 0)) continue;
 
       // @ts-ignore: ughhhhh the tsc doesn't work for the compiled cdt lib
       const mapping = bundle.map.findEntry(line, column);
-      files[mapping.sourceURL] = (files[mapping.sourceURL] || 0) + 1;
+      // This can be null if the source map has gaps.
+      // For example, the webpack CommonsChunkPlugin emits code that is not mapped (`webpackJsonp`).
+      if (mapping) {
+        files[mapping.sourceURL] = (files[mapping.sourceURL] || 0) + 1;
+      }
     }
 
+    // let counter = 0;
+    // // @ts-ignore
+    // for (const mapping of bundle.map.mappings()) {
+    //   const source = mapping.sourceURL;
+    //   const colNum = mapping.columnNumber;
+    //   const lastColNum = mapping.lastColumnNumber;
+
+    //   for (let i = counter; i < counter + lastColNum; i++) {
+    //     if (wasteData.every(data => data.unusedByIndex[i] === 1)) {
+    //       files[source] = (files[source] || 0) + 1;
+    //     }
+    //   }
+
+    //   counter += lastColNum - colNum;
+    // }
+
+    // TODO: we should also estimate savings from JS resources re: Parse, Compile, Execution.
+    // right now, we just do network speed.
+    const transferRatio = lengths.transfer / lengths.content;
     const unusedFilesSizesSorted = Object.entries(files)
       .sort((a, b) => b[1] - a[1])
-      .filter(d => d[1] >= 1024)
-      .slice(0, 5)
       .map(d => {
         return {
           key: d[0],
-          unused: d[1],
-          total: bundle.sizes.files[d[0]],
+          unused: Math.round(d[1] * transferRatio),
+          total: Math.round(bundle.sizes.files[d[0]] * transferRatio),
         };
-      });
+      })
+      .filter(d => d.unused >= 1024)
+      .slice(0, 5);
 
     Object.assign(item, {
       sources: unusedFilesSizesSorted.map(d => d.key),
@@ -124,27 +147,50 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
 
   /**
    * @param {WasteData[]} wasteData
-   * @param {LH.Artifacts.NetworkRequest} networkRecord
+   * @param {string} url
+   * @param {ReturnType<typeof UnusedJavaScript.determineLengths>} lengths
    * @return {LH.Audit.ByteEfficiencyItem}
    */
-  static mergeWaste(wasteData, networkRecord) {
-    let unusedLength = 0;
-    let contentLength = 0;
+  static mergeWaste(wasteData, url, lengths) {
+    let unused = 0;
+    let content = 0;
+    // TODO: this is right for multiple script tags in an HTML document,
+    // but may be wrong for multiple frames using the same script resource.
     for (const usage of wasteData) {
-      unusedLength += usage.unusedLength;
-      contentLength += usage.contentLength;
+      unused += usage.unusedLength;
+      content += usage.contentLength;
     }
 
-    const totalBytes = ByteEfficiencyAudit.estimateTransferSize(networkRecord, contentLength,
-        'Script');
-    const wastedRatio = (unusedLength / contentLength) || 0;
-    const wastedBytes = Math.round(totalBytes * wastedRatio);
+    const wastedRatio = (unused / content) || 0;
+    const wastedBytes = Math.round(lengths.transfer * wastedRatio);
 
     return {
-      url: networkRecord.url,
-      totalBytes,
+      url: url,
+      totalBytes: lengths.transfer,
       wastedBytes,
       wastedPercent: 100 * wastedRatio,
+    };
+  }
+
+  /**
+   * @param {WasteData[]} wasteData
+   * @param {LH.Artifacts.NetworkRequest} networkRecord
+   */
+  static determineLengths(wasteData, networkRecord) {
+    let unused = 0;
+    let content = 0;
+    // TODO: this is right for multiple script tags in an HTML document,
+    // but may be wrong for multiple frames using the same script resource.
+    for (const usage of wasteData) {
+      unused += usage.unusedLength;
+      content += usage.contentLength;
+    }
+    const transfer = ByteEfficiencyAudit.estimateTransferSize(networkRecord, content, 'Script');
+
+    return {
+      content,
+      unused,
+      transfer,
     };
   }
 
@@ -170,11 +216,12 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       const networkRecord = networkRecords.find(record => record.url === url);
       if (!networkRecord) continue;
       const wasteData = scriptCoverage.map(UnusedJavaScript.computeWaste);
-      const bundle = bundles.find(b => b.networkRecord === networkRecord);
-      const item = UnusedJavaScript.mergeWaste(wasteData, networkRecord);
+      const lengths = UnusedJavaScript.determineLengths(wasteData, networkRecord);
+      const bundle = bundles.find(b => b.script.src === url);
+      const item = UnusedJavaScript.mergeWaste(wasteData, networkRecord.url, lengths);
       if (item.wastedBytes <= IGNORE_THRESHOLD_IN_BYTES) continue;
       if (bundle) {
-        UnusedJavaScript.createBundleMultiData(item, wasteData, bundle);
+        UnusedJavaScript.createBundleMultiData(item, wasteData, bundle, lengths);
       }
       items.push(item);
     }
