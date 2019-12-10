@@ -1418,10 +1418,6 @@
   opacity: 0.7;
 }
 
-/* .lh-multi-value-entry:nth-child(2n) {
-  background: var(--color-gray-200);
-} */
-
 .lh-multi-values:not(:first-child) .lh-multi-value-entry {
   margin-left: 20px;
   color: var(--color-gray-700);

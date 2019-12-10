@@ -296,33 +296,38 @@ class DetailsRenderer {
    * OpportunityColumnHeading type until we have all details use the same
    * heading format.
    * @param {LH.Audit.Details.Table|LH.Audit.Details.Opportunity} tableLike
-   * @return {Array<LH.Audit.Details.OpportunityColumnHeading>} header
+   * @return {Array<LH.Audit.Details.OpportunityColumnHeading>}
    */
-  _getCanonicalizedTableHeadings(tableLike) {
+  _getCanonicalizedHeadingsFromTable(tableLike) {
     if (tableLike.type === 'opportunity') {
       return tableLike.headings;
     }
 
-    return tableLike.headings.map(heading => {
-      let multi;
-      if (heading.multi) {
-        multi = {
-          key: heading.multi.key,
-          valueType: heading.multi.itemType,
-          displayUnit: heading.displayUnit,
-          granularity: heading.granularity,
-        };
-      }
+    return tableLike.headings.map(heading => this._getCanonicalizedHeading(heading));
+  }
 
-      return {
-        key: heading.key,
-        label: heading.text,
-        valueType: heading.itemType,
-        multi,
-        displayUnit: heading.displayUnit,
-        granularity: heading.granularity,
-      };
-    });
+  /**
+   * Get the headings of a table-like details object, converted into the
+   * OpportunityColumnHeading type until we have all details use the same
+   * heading format.
+   * @param {LH.Audit.Details.TableColumnHeading} heading
+   * @return {LH.Audit.Details.OpportunityColumnHeading}
+   */
+  _getCanonicalizedHeading(heading) {
+    let multi;
+    if (heading.multi) {
+      // @ts-ignore: It's ok that there is no text.
+      multi = this._getCanonicalizedHeading(heading.multi);
+    }
+
+    return {
+      key: heading.key,
+      valueType: heading.itemType,
+      multi,
+      label: heading.text,
+      displayUnit: heading.displayUnit,
+      granularity: heading.granularity,
+    };
   }
 
   /**
@@ -337,7 +342,7 @@ class DetailsRenderer {
     for (const childValue of values) {
       const childValueElement = this._renderTableValue(childValue, heading);
       if (!childValueElement) continue;
-      childValueElement.classList.add('lh-multi-value-entry'); // TODO style with borders
+      childValueElement.classList.add('lh-multi-value-entry');
       valueElement.appendChild(childValueElement);
     }
     return valueElement;
@@ -354,7 +359,7 @@ class DetailsRenderer {
     const theadElem = this._dom.createChildOf(tableElem, 'thead');
     const theadTrElem = this._dom.createChildOf(theadElem, 'tr');
 
-    const headings = this._getCanonicalizedTableHeadings(details);
+    const headings = this._getCanonicalizedHeadingsFromTable(details);
 
     for (const heading of headings) {
       const valueType = heading.valueType || 'text';
