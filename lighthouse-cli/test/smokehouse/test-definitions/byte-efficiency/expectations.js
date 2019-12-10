@@ -44,6 +44,12 @@ const expectations = [
                 wastedBytes: '6559 +/- 100',
                 wastedPercent: 100,
               },
+              {
+                url: "http://localhost:10200/byte-efficiency/bundle.js",
+                totalBytes: '13000 +/- 1000',
+                wastedBytes: '2500 +/- 100',
+                wastedPercent: '19 +/- 5',
+              },  
             ],
           },
         },
@@ -60,9 +66,38 @@ const expectations = [
           details: {
             overallSavingsBytes: '>=25000',
             overallSavingsMs: '>300',
-            items: {
-              length: 2,
-            },
+            items: [
+              {
+                url: 'http://localhost:10200/byte-efficiency/script.js',
+                totalBytes: '53000 +/- 1000',
+                wastedBytes: '22000 +/- 1000',
+              },
+              {
+                url: 'http://localhost:10200/byte-efficiency/tester.html',
+                totalBytes: '15000 +/- 1000',
+                wastedBytes: '6500 +/- 1000',
+              },
+              {
+                url: 'http://localhost:10200/byte-efficiency/bundle.js',
+                totalBytes: 13064,
+                wastedBytes: 5870,
+                sources: [
+                  'webpack:///./c.js',
+                  'webpack:///./b.js',
+                  'webpack:///webpack/bootstrap',
+                ],
+                sourceBytes: [
+                  2223,
+                  4432,
+                  2740,
+                ],
+                sourceWastedBytes: [
+                  2211,
+                  2205,
+                  1454,
+                ],
+              },
+            ],
           },
         },
         'offscreen-images': {
@@ -94,7 +129,7 @@ const expectations = [
             overallSavingsMs: '>700',
             overallSavingsBytes: '>50000',
             items: {
-              length: 2,
+              length: 3,
             },
           },
         },

@@ -56,7 +56,7 @@ function computeGeneratedFileSizes(map, content) {
     const colNum = mapping.columnNumber;
     const lastColNum = mapping.lastColumnNumber;
 
-    // Webpack seems to sometimes emit null mappings.
+    // Webpack sometimes emits null mappings.
     // https://github.com/mozilla/source-map/pull/303
     if (!source) continue;
 

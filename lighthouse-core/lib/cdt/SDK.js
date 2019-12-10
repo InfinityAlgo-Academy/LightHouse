@@ -54,6 +54,27 @@ function upperBound(object, comparator, left, right) {
   return r;
 }
 
+/**
+ * @param {number} line
+ * @param {number} column
+ */
+SDK.TextSourceMap.prototype.findExactEntry = function(line, column) {
+  // findEntry takes compiled locations and returns original locations.
+  const entry = this.findEntry(line, column);
+  // without an exact hit, we return no match
+  const hitMyBattleShip = entry && entry.lineNumber === line;
+  if (!entry || !hitMyBattleShip) {
+    return {
+      sourceColumnNumber: null,
+      sourceLineNumber: null,
+      name: null,
+      sourceURL: null,
+    };
+  }
+  return entry;
+};
+
+
 // Add `lastColumnNumber` to mappings.
 SDK.TextSourceMap.prototype.computeLastGeneratedColumns = function() {
   const mappings = this.mappings();
