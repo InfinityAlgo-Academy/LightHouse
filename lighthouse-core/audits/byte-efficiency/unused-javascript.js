@@ -100,7 +100,11 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
 
       // @ts-ignore: ughhhhh the tsc doesn't work for the compiled cdt lib
       const mapping = bundle.map.findEntry(line, column);
-      files[mapping.sourceURL] = (files[mapping.sourceURL] || 0) + 1;
+      // This can be null if the source map has gaps.
+      // For example, the webpack CommonsChunkPlugin emits code that is not mapped (`webpackJsonp`).
+      if (mapping) {
+        files[mapping.sourceURL] = (files[mapping.sourceURL] || 0) + 1;
+      }
     }
 
     // let counter = 0;
