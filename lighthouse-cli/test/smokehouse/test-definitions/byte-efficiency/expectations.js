@@ -45,11 +45,11 @@ const expectations = [
                 wastedPercent: 100,
               },
               {
-                url: "http://localhost:10200/byte-efficiency/bundle.js",
+                url: 'http://localhost:10200/byte-efficiency/bundle.js',
                 totalBytes: '13000 +/- 1000',
                 wastedBytes: '2500 +/- 100',
                 wastedPercent: '19 +/- 5',
-              },  
+              },
             ],
           },
         },
