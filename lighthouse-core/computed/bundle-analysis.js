@@ -111,8 +111,7 @@ class BundleAnalysis {
     const bundles = [];
 
     // Collate map, script, and network record.
-    for (let mapIndex = 0; mapIndex < SourceMaps.length; mapIndex++) {
-      const SourceMap = SourceMaps[mapIndex];
+    for (const SourceMap of SourceMaps) {
       if (!SourceMap.map) continue;
       const {scriptUrl, map: rawMap} = SourceMap;
 
