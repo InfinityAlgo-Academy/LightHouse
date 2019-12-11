@@ -259,6 +259,12 @@ declare global {
         mappings: string
         /** An optional name of the generated code (the bundled code that was the result of this build process) that this source map is associated with. */
         file?: string
+        /**
+         * An optional array of maps that are associated with an offset into the generated code. 
+         * `map` is optional because the spec defines that either `url` or `map` must be defined.
+         * We explicitly only support `map` here.
+        */
+        sections?: Array<{offset: {line: number, column: number}, map?: RawSourceMap}>
       }
 
       /**

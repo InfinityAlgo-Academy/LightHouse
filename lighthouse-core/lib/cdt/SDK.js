@@ -12,6 +12,7 @@ const SDK = {
 const originalMappings = SDK.TextSourceMap.prototype.mappings;
 SDK.TextSourceMap.prototype.mappings = function() {
   const mappings = originalMappings.call(this);
+  // @ts-ignore
   mappings.upperBound = upperBound.bind(mappings);
   return mappings;
 };
@@ -55,6 +56,7 @@ function upperBound(object, comparator, left, right) {
 }
 
 // Add `lastColumnNumber` to mappings.
+// @ts-ignore
 SDK.TextSourceMap.prototype.computeLastGeneratedColumns = function() {
   const mappings = this.mappings();
   // @ts-ignore: `lastColumnNumber` is not on types yet.
