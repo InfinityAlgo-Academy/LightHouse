@@ -50,13 +50,12 @@ function computeGeneratedFileSizes(map, content) {
   // @ts-ignore: This function is added in SDK.js
   map.computeLastGeneratedColumns();
 
-  // @ts-ignore
   for (const mapping of map.mappings()) {
     const source = mapping.sourceURL;
     const lineNum = mapping.lineNumber;
     const colNum = mapping.columnNumber;
-    // @ts-ignore
-    const lastColNum = mapping.lastColumnNumber;
+    // @ts-ignore: `lastColumnNumber` is not on types yet.
+    const lastColNum = /** @type {number=} */ (mapping.lastColumnNumber);
 
     // Webpack sometimes emits null mappings.
     // https://github.com/mozilla/source-map/pull/303
@@ -65,14 +64,12 @@ function computeGeneratedFileSizes(map, content) {
     // Lines are 1-based
     const line = lines[lineNum];
     if (line === null) {
-      // @ts-ignore
       log.error(`${map.compiledURL} mapping for line out of bounds: ${lineNum + 1}`);
       return failureResult;
     }
 
     // Columns are 0-based
     if (colNum >= line.length) {
-      // @ts-ignore
       log.error(`${map.compiledURL} mapping for column out of bounds: ${lineNum + 1}:${colNum}`);
       return failureResult;
     }
@@ -80,7 +77,6 @@ function computeGeneratedFileSizes(map, content) {
     let mappingLength = 0;
     if (lastColNum !== undefined) {
       if (lastColNum >= line.length) {
-        // @ts-ignore
         // eslint-disable-next-line max-len
         log.error(`${map.compiledURL} mapping for last column out of bounds: ${lineNum + 1}:${lastColNum}`);
         return failureResult;
