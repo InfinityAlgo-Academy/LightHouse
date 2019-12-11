@@ -23,7 +23,7 @@ for (const [input, output] of Object.entries(files)) {
   lines = lines.splice(0, cutoffIndex);
 
   let deletionMode = false;
-  let deletionCounter = 0;
+  let deletionBraceCount = 0;
 
   const modifiedLines = lines.map((line, i) => {
     // Don't modify jsdoc comments.
@@ -35,7 +35,7 @@ for (const [input, output] of Object.entries(files)) {
     if (input.endsWith('SourceMap.js')) {
       if (line.includes('static load(')) deletionMode = true;
       if (line.includes('sourceContentProvider(')) deletionMode = true;
-      // if (line.includes('Common.UIString')) newLine = '';
+      if (line.includes('Common.UIString')) newLine = '';
       if (line.includes('export class WasmSourceMap')) deletionMode = true;
       if (line.includes('WasmSourceMap')) newLine = '';
       if (line.includes('export class EditResult')) deletionMode = true;
@@ -43,15 +43,14 @@ for (const [input, output] of Object.entries(files)) {
     }
 
     if (deletionMode) {
-      if (line.trim().endsWith('{')) deletionCounter += 1;
-      if (line.trim().startsWith('}')) deletionCounter -= 1;
-      if (deletionCounter >= 0) {
+      if (line.trim().endsWith('{')) deletionBraceCount += 1;
+      if (line.trim().startsWith('}')) deletionBraceCount -= 1;
+      if (deletionBraceCount >= 0) {
         newLine = '';
-        // newLine = newLine.trim() + ` /* hi ${deletionCounter} */\n`;
       }
-      if (deletionCounter === 0) {
+      if (deletionBraceCount === 0) {
         deletionMode = false;
-        deletionCounter = 0;
+        deletionBraceCount = 0;
       }
     }
 

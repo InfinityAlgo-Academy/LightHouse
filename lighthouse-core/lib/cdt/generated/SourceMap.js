@@ -420,7 +420,6 @@ const TextSourceMap = module.exports.TextSourceMap = class TextSourceMap {
       let url = '' || href;
       const source = sourceMap.sourcesContent && sourceMap.sourcesContent[i];
       if (url === this._compiledURL && source) {
-        url += Common.UIString('? [sm]');
       }
       this._sourceInfos.set(url, new TextSourceMap.SourceInfo(source, null));
       sourcesList.push(url);
