@@ -10,7 +10,7 @@ const fs = require('fs');
 const outDir = `${__dirname}/../lighthouse-core/lib/cdt/generated`;
 const files = {
   'node_modules/chrome-devtools-frontend/front_end/sdk/SourceMap.js': 'SourceMap.js',
-}
+};
 
 // eslint-disable-next-line no-console
 console.log('making modifications ...');
@@ -36,13 +36,15 @@ for (const [input, output] of Object.entries(files)) {
       if (line.includes('static load(')) deletionMode = true;
       if (line.includes('sourceContentProvider(')) deletionMode = true;
       if (line.includes('Common.UIString')) newLine = '';
+      if (line.includes('export class WasmSourceMap')) deletionMode = true;
+      if (line.includes('WasmSourceMap')) newLine = '';
+      if (line.includes('export class EditResult')) deletionMode = true;
       newLine = newLine.replace(`Common.ParsedURL.completeURL(this._baseURL, href)`, `''`);
     }
 
     if (deletionMode) {
       if (line.trim().endsWith('{')) deletionCounter += 1;
       if (line.trim().startsWith('}')) deletionCounter -= 1;
-      console.log(line.trim(), deletionCounter);
       if (deletionCounter >= 0) {
         newLine = '';
         // newLine = newLine.trim() + ` /* hi ${deletionCounter} */\n`;
@@ -60,7 +62,8 @@ for (const [input, output] of Object.entries(files)) {
     }
     match = newLine.match(/export class (\w*)/);
     if (match) {
-      newLine = newLine.replace(match[0], `const ${match[1]} = module.exports.${match[1]} = class ${match[1]}`);
+      newLine = newLine
+        .replace(match[0], `const ${match[1]} = module.exports.${match[1]} = class ${match[1]}`);
     }
 
     if (newLine !== line) {

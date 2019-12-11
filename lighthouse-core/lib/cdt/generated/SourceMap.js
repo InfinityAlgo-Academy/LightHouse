@@ -73,12 +73,30 @@ const SourceMap = module.exports = class SourceMap {
    */
   findEntry(lineNumber, columnNumber) {
   }
+
+  /**
+   * @param {string} sourceURL
+   * @param {number} lineNumber
+   * @param {number} columnNumber
+   * @return {?SourceMapEntry}
+   */
+  sourceLineMapping(sourceURL, lineNumber, columnNumber) {
+  }
+
+  /**
+   * @return {!Array<!SourceMapEntry>}
+   */
+  mappings() {
+  }
+
+  dispose() {
+  }
 }
 
 /**
  * @unrestricted
  */
-const SourceMapV3 = module.exports.SourceMapV3 = class SourceMapV3 {
+class SourceMapV3 {
   constructor() {
     /** @type {number} */ this.version;
     /** @type {string|undefined} */ this.file;
@@ -147,18 +165,11 @@ const SourceMapEntry = module.exports.SourceMapEntry = class SourceMapEntry {
 /**
  * @unrestricted
  */
-const EditResult = module.exports.EditResult = class EditResult {
   /**
    * @param {!SourceMap} map
    * @param {!Array<!TextUtils.SourceEdit>} compiledEdits
    * @param {!Map<string, string>} newSources
    */
-  constructor(map, compiledEdits, newSources) {
-    this.map = map;
-    this.compiledEdits = compiledEdits;
-    this.newSources = newSources;
-  }
-}
 
 /**
  * @implements {SourceMap}
@@ -205,11 +216,25 @@ const TextSourceMap = module.exports.TextSourceMap = class TextSourceMap {
    * @return {!Promise<?TextSourceMap>}
    * @this {TextSourceMap}
    */
-    /**
-     * @param {number} statusCode
-     * @param {!Object.<string, string>} headers
-     * @param {string} content
-     */
+  static async load(sourceMapURL, compiledURL) {
+    let content = await new Promise((resolve, reject) => {
+      SDK.multitargetNetworkManager.loadResource(sourceMapURL, (statusCode, _headers, content) => {
+        if (!content || statusCode >= 400) {
+          const error = new Error(ls`Could not load content for ${sourceMapURL} : HTTP status code: ${statusCode}`);
+          reject(error);
+        } else {
+          resolve(content);
+        }
+      });
+    });
+
+    if (content.slice(0, 3) === ')]}') {
+      content = content.substring(content.indexOf('\n'));
+    }
+
+    const payload = /** @type {!SourceMapV3} */ (JSON.parse(content));
+    return new TextSourceMap(compiledURL, sourceMapURL, payload);
+  }
 
   /**
    * @override
@@ -268,6 +293,7 @@ const TextSourceMap = module.exports.TextSourceMap = class TextSourceMap {
   }
 
   /**
+   * @override
    * @param {string} sourceURL
    * @param {number} lineNumber
    * @param {number} columnNumber
@@ -318,6 +344,7 @@ const TextSourceMap = module.exports.TextSourceMap = class TextSourceMap {
   }
 
   /**
+   * @override
    * @return {!Array<!SourceMapEntry>}
    */
   mappings() {
@@ -517,6 +544,12 @@ const TextSourceMap = module.exports.TextSourceMap = class TextSourceMap {
     return new TextUtils.TextRange(
         startMapping.lineNumber, startMapping.columnNumber, endMapping.lineNumber, endMapping.columnNumber);
   }
+
+  /**
+   * @override
+   */
+  dispose() {
+  }
 }
 
 TextSourceMap._VLQ_BASE_SHIFT = 5;
@@ -572,4 +605,65 @@ TextSourceMap.SourceInfo = class {
 };
 
 TextSourceMap._sourcesListSymbol = Symbol('sourcesList');
+
+/**
+ * @implements {SDK.SourceMap}
+ * @unrestricted
+ */
+  /**
+   * Implements SourceMap interface for DWARF information in Wasm.
+   * @param {string} wasmUrl
+   * @param {*} resolver
+   */
+  /**
+   * @private
+   */
+  /**
+   * @private
+   */
+  /**
+   * @override
+   * @return {string}
+   */
+  /**
+   * @override
+   * @return {string}
+   */
+  /**
+   * @override
+   * @return {!Array.<string>}
+   */
+  /**
+   * @override
+   * @param {string} sourceURL
+   * @param {!Common.ResourceType} contentType
+   * @return {!Common.ContentProvider}
+   */
+  /**
+   * @override
+   * @param {string} sourceURL
+   * @return {?string}
+   */
+  /**
+   * @override
+   * @param {number} lineNumber in compiled resource
+   * @param {number} columnNumber in compiled resource
+   * @return {?SDK.SourceMapEntry}
+   */
+  /**
+   * @override
+   * @param {string} sourceURL
+   * @param {number} lineNumber
+   * @param {number} columnNumber
+   * @return {?SourceMapEntry}
+   */
+  /**
+   * @override
+   * @return {!Array<!SourceMapEntry>}
+   */
+  /**
+   * @override
+   */
+
+/* Special URL that should be kept in sync with one in V8 */
 
