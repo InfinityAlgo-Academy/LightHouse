@@ -9,9 +9,10 @@ const log = require('lighthouse-logger');
 const Audit = require('../audits/audit.js');
 const NetworkRecords = require('./network-records.js');
 const makeComputedArtifact = require('./computed-artifact.js');
+const SDK = require('../lib/cdt/SDK.js');
 
 /**
- * @typedef {typeof import('../lib/cdt/SDK.js')['TextSourceMap']} SourceMap
+ * @typedef {typeof SDK.TextSourceMap} SourceMap
  */
 
 /**
@@ -132,8 +133,6 @@ class BundleAnalysis {
         script: scriptElement,
         networkRecord,
         get map() {
-          // Defer global pollution.
-          const SDK = require('../lib/cdt/SDK.js');
           if (map) return map;
           // @ts-ignore: TODO: `sections` needs to be in rawMap types
           return map = new SDK.TextSourceMap(`compiled.js`, `compiled.js.map`, rawMap);
