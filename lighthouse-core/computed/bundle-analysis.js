@@ -115,8 +115,9 @@ class BundleAnalysis {
 
     // Collate map, script, and network record.
     for (let mapIndex = 0; mapIndex < SourceMaps.length; mapIndex++) {
-      const {scriptUrl, map: rawMap} = SourceMaps[mapIndex];
-      if (!rawMap) continue;
+      const SourceMap = SourceMaps[mapIndex];
+      if (!SourceMap.map) continue;
+      const {scriptUrl, map: rawMap} = SourceMap;
 
       const scriptElement = ScriptElements.find(s => s.src === scriptUrl);
       const networkRecord = networkRecords.find(r => r.url === scriptUrl);
@@ -134,12 +135,11 @@ class BundleAnalysis {
         networkRecord,
         get map() {
           if (map) return map;
-          // @ts-ignore: TODO: `sections` needs to be in rawMap types
+          // @ts-ignore: CDT has some funny ideas about what properties of a source map are required.
           return map = new SDK.TextSourceMap(`compiled.js`, `compiled.js.map`, rawMap);
         },
         get sizes() {
           if (sizes) return sizes;
-          if (!bundle.map) throw new Error('invalid map');
           const content = scriptElement && scriptElement.content ? scriptElement.content : '';
           return sizes = computeGeneratedFileSizes(bundle.map, content);
         },
