@@ -135,8 +135,6 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       }
     }
 
-    // TODO: we should also estimate savings from JS resources re: Parse, Compile, Execution.
-    // right now, we just do network speed.
     const transferRatio = lengths.transfer / lengths.content;
     const unusedFilesSizesSorted = Object.entries(files)
       .sort((a, b) => b[1] - a[1])
