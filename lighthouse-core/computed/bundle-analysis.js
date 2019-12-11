@@ -12,7 +12,7 @@ const makeComputedArtifact = require('./computed-artifact.js');
 const SDK = require('../lib/cdt/SDK.js');
 
 /**
- * @typedef {typeof SDK.TextSourceMap} SourceMap
+ * @typedef {import('../lib/cdt/generated/SourceMap.js').TextSourceMap} TextSourceMap
  */
 
 /**
@@ -27,13 +27,13 @@ const SDK = require('../lib/cdt/SDK.js');
  * @property {LH.Artifacts.RawSourceMap} rawMap
  * @property {LH.Artifacts.ScriptElement} script
  * @property {LH.Artifacts.NetworkRequest=} networkRecord
- * @property {SourceMap} map
+ * @property {TextSourceMap} map
  * @property {Sizes} sizes
 */
 
 /**
  * Calculate the number of bytes contributed by each source file
- * @param {SourceMap} map
+ * @param {TextSourceMap} map
  * @param {string} content
  */
 function computeGeneratedFileSizes(map, content) {
@@ -55,6 +55,7 @@ function computeGeneratedFileSizes(map, content) {
     const source = mapping.sourceURL;
     const lineNum = mapping.lineNumber;
     const colNum = mapping.columnNumber;
+    // @ts-ignore
     const lastColNum = mapping.lastColumnNumber;
 
     // Webpack sometimes emits null mappings.
@@ -124,7 +125,7 @@ class BundleAnalysis {
       if (!scriptElement) continue;
 
       // Lazily generate expensive things.
-      /** @type {SourceMap=} */
+      /** @type {TextSourceMap=} */
       let map;
       /** @type {Sizes=} */
       let sizes;
