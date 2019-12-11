@@ -22,27 +22,38 @@ for (const [input, output] of Object.entries(files)) {
   const cutoffIndex = lines.findIndex(line => line.includes('Legacy exported object'));
   lines = lines.splice(0, cutoffIndex);
 
-  // let deletionMode = false;
+  let deletionMode = false;
+  let deletionCounter = 0;
 
   const modifiedLines = lines.map((line, i) => {
     // Don't modify jsdoc comments.
     if (/^\s*[/*]/.test(line)) {
       return line;
     }
-
     let newLine = line;
-    if (input.endsWith('SourceMap.js')) {
-      // if (line.includes('TextSourceMap.load =')) deletionMode = true;
-    //   if (line.includes('prototype.sourceContentProvider =')) deletionMode = true;
-    //   if (line.includes(`url += Common.UIString('? [sm]');`)) newLine = '';
-      newLine = line.replace(`Common.ParsedURL.completeURL(this._baseURL, href)`, `''`);
-    }
-    // newLine = newLine.replace('exports["default"]', 'exports.default');
-    // if (deletionMode) {
-    //   newLine = '';
-    //   if (line.startsWith('    };')) deletionMode = false;
-    // }
 
+    if (input.endsWith('SourceMap.js')) {
+      if (line.includes('static load(')) deletionMode = true;
+      if (line.includes('sourceContentProvider(')) deletionMode = true;
+      if (line.includes('Common.UIString')) newLine = '';
+      newLine = newLine.replace(`Common.ParsedURL.completeURL(this._baseURL, href)`, `''`);
+    }
+
+    if (deletionMode) {
+      if (line.trim().endsWith('{')) deletionCounter += 1;
+      if (line.trim().startsWith('}')) deletionCounter -= 1;
+      console.log(line.trim(), deletionCounter);
+      if (deletionCounter >= 0) {
+        newLine = '';
+        // newLine = newLine.trim() + ` /* hi ${deletionCounter} */\n`;
+      }
+      if (deletionCounter === 0) {
+        deletionMode = false;
+        deletionCounter = 0;
+      }
+    }
+
+    // ESModules -> CommonJS.
     let match = newLine.match(/export default class (\w*)/);
     if (match) {
       newLine = newLine.replace(match[0], `const ${match[1]} = module.exports = class ${match[1]}`);

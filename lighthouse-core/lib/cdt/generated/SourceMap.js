@@ -58,8 +58,6 @@ const SourceMap = module.exports = class SourceMap {
    * @param {!Common.ResourceType} contentType
    * @return {!Common.ContentProvider}
    */
-  sourceContentProvider(sourceURL, contentType) {
-  }
 
   /**
    * @param {string} sourceURL
@@ -207,36 +205,11 @@ const TextSourceMap = module.exports.TextSourceMap = class TextSourceMap {
    * @return {!Promise<?TextSourceMap>}
    * @this {TextSourceMap}
    */
-  static load(sourceMapURL, compiledURL) {
-    let callback;
-    const promise = new Promise(fulfill => callback = fulfill);
-    SDK.multitargetNetworkManager.loadResource(sourceMapURL, contentLoaded);
-    return promise;
-
     /**
      * @param {number} statusCode
      * @param {!Object.<string, string>} headers
      * @param {string} content
      */
-    function contentLoaded(statusCode, headers, content) {
-      if (!content || statusCode >= 400) {
-        callback(null);
-        return;
-      }
-
-      if (content.slice(0, 3) === ')]}') {
-        content = content.substring(content.indexOf('\n'));
-      }
-      try {
-        const payload = /** @type {!SourceMapV3} */ (JSON.parse(content));
-        callback(new TextSourceMap(compiledURL, sourceMapURL, payload));
-      } catch (e) {
-        console.error(e);
-        Common.console.warn('DevTools failed to parse SourceMap: ' + sourceMapURL);
-        callback(null);
-      }
-    }
-  }
 
   /**
    * @override
@@ -268,13 +241,6 @@ const TextSourceMap = module.exports.TextSourceMap = class TextSourceMap {
    * @param {!Common.ResourceType} contentType
    * @return {!Common.ContentProvider}
    */
-  sourceContentProvider(sourceURL, contentType) {
-    const info = this._sourceInfos.get(sourceURL);
-    if (info.content) {
-      return Common.StaticContentProvider.fromString(sourceURL, contentType, info.content);
-    }
-    return new SDK.CompilerSourceMappingContentProvider(sourceURL, contentType);
-  }
 
   /**
    * @override
@@ -427,7 +393,6 @@ const TextSourceMap = module.exports.TextSourceMap = class TextSourceMap {
       let url = '' || href;
       const source = sourceMap.sourcesContent && sourceMap.sourcesContent[i];
       if (url === this._compiledURL && source) {
-        url += Common.UIString('? [sm]');
       }
       this._sourceInfos.set(url, new TextSourceMap.SourceInfo(source, null));
       sourcesList.push(url);
