@@ -88,40 +88,50 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
 
     /** @type {Record<string, number>} */
     const files = {};
-    let line = 0;
-    let column = 0;
-    for (let i = 0; i < bundle.script.content.length; i++) {
-      column += 1;
-      if (bundle.script.content[i] === '\n') {
-        line += 1;
-        column = 0;
-      }
-      if (wasteData.some(data => data.unusedByIndex[i] === 0)) continue;
 
-      // @ts-ignore: ughhhhh the tsc doesn't work for the compiled cdt lib
-      const mapping = bundle.map.findEntry(line, column);
-      // This can be null if the source map has gaps.
-      // For example, the webpack CommonsChunkPlugin emits code that is not mapped (`webpackJsonp`).
-      if (mapping) {
-        files[mapping.sourceURL] = (files[mapping.sourceURL] || 0) + 1;
+    // This is 10x slower (~320ms vs 46ms for a big map), but its correctness
+    // is much easier to reason about. The latter method gives the same counts,
+    // except it seems to have +1 byte for each file.
+    // for (let i = 0; i < bundle.script.content.length; i++) {
+    //   column += 1;
+    //   if (bundle.script.content[i] === '\n') {
+    //     line += 1;
+    //     column = 0;
+    //   }
+    //   if (wasteData.some(data => data.unusedByIndex[i] === 0)) continue;
+
+    //   // @ts-ignore: ughhhhh the tsc doesn't work for the compiled cdt lib
+    //   const mapping = bundle.map.findExactEntry(line, column);
+    //   // This can be null if the source map has gaps.
+    //   // For example, the webpack CommonsChunkPlugin emits code that is not mapped (`webpackJsonp`).
+    //   if (mapping) {
+    //     files[mapping.sourceURL] = (files[mapping.sourceURL] || 0) + 1;
+    //   }
+    // }
+
+    const lineLengths = bundle.script.content.split('\n').map(l => l.length);
+    let totalSoFar = 0;
+    const lineOffsets = lineLengths.map(len => {
+      const retVal = totalSoFar;
+      totalSoFar += len + 1;
+      return retVal;
+    });
+
+    // @ts-ignore
+    bundle.map.computeLastGeneratedColumns();
+    // @ts-ignore
+    for (const mapping of bundle.map.mappings()) {
+      let offset = lineOffsets[mapping.lineNumber];
+
+      offset += mapping.columnNumber;
+      const byteEnd = mapping.lastColumnNumber || lineLengths[mapping.lineNumber];
+      for (let i = mapping.columnNumber; i < byteEnd; i++) {
+        if (wasteData.every(data => data.unusedByIndex[offset] === 1)) {
+          files[mapping.sourceURL] = (files[mapping.sourceURL] || 0) + 1;
+        }
+        offset += 1;
       }
     }
-
-    // let counter = 0;
-    // // @ts-ignore
-    // for (const mapping of bundle.map.mappings()) {
-    //   const source = mapping.sourceURL;
-    //   const colNum = mapping.columnNumber;
-    //   const lastColNum = mapping.lastColumnNumber;
-
-    //   for (let i = counter; i < counter + lastColNum; i++) {
-    //     if (wasteData.every(data => data.unusedByIndex[i] === 1)) {
-    //       files[source] = (files[source] || 0) + 1;
-    //     }
-    //   }
-
-    //   counter += lastColNum - colNum;
-    // }
 
     // TODO: we should also estimate savings from JS resources re: Parse, Compile, Execution.
     // right now, we just do network speed.
