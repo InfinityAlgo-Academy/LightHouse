@@ -92,9 +92,9 @@ const expectations = [
                   2740,
                 ],
                 sourceWastedBytes: [
-                  2211,
-                  2205,
-                  1454,
+                  2204,
+                  2198,
+                  1234,
                 ],
               },
             ],
