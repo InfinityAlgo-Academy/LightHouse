@@ -92,6 +92,8 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
     // This is 10x slower (~320ms vs 46ms for a big map), but its correctness
     // is much easier to reason about. The latter method gives the same counts,
     // except it seems to have +1 byte for each file.
+    // let line = 0;
+    // let column = 0;
     // for (let i = 0; i < bundle.script.content.length; i++) {
     //   column += 1;
     //   if (bundle.script.content[i] === '\n') {
