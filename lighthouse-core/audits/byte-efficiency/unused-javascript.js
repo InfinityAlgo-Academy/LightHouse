@@ -126,7 +126,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       let offset = lineOffsets[mapping.lineNumber];
 
       offset += mapping.columnNumber;
-      const byteEnd = mapping.lastColumnNumber || lineLengths[mapping.lineNumber];
+      const byteEnd = mapping.lastColumnNumber || (lineLengths[mapping.lineNumber] - 1);
       for (let i = mapping.columnNumber; i < byteEnd; i++) {
         if (wasteData.every(data => data.unusedByIndex[offset] === 1)) {
           files[mapping.sourceURL] = (files[mapping.sourceURL] || 0) + 1;
@@ -134,6 +134,10 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
         offset += 1;
       }
     }
+
+    // TODO: get some hard numbers on what the sizes should be (via manual inspection)
+    // print exact unused byte length
+    // and print each character color coded (neat)
 
     const transferRatio = lengths.transfer / lengths.content;
     const unusedFilesSizesSorted = Object.entries(files)
