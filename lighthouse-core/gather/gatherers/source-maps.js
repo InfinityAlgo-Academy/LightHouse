@@ -125,6 +125,9 @@ class SourceMaps extends Gatherer {
       const map = isSourceMapADataUri ?
           this.parseSourceMapFromDataUrl(rawSourceMapUrl) :
           await this.fetchSourceMapInPage(driver, rawSourceMapUrl);
+      if (map.sections) {
+        map.sections = map.sections.filter(section => section.map);
+      }
       return {
         scriptUrl,
         sourceMapUrl,
