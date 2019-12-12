@@ -101,7 +101,7 @@ nodejs_test(
 )
 
 nodejs_test(
-  name = "smoke3",
+  name = "smoke_sharded",
   entry_point = "//:bazel/runner.js",
   testonly = 1,
   data = [
