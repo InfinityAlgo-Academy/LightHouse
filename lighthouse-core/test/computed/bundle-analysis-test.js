@@ -55,10 +55,10 @@ describe('BundleAnalysis computed artifact', () => {
         "files": Object {
           "node_modules/browser-pack/_prelude.js": 480,
           "src/bar.js": 104,
-          "src/foo.js": 97,
+          "src/foo.js": 98,
         },
         "totalBytes": 718,
-        "unmappedBytes": 37,
+        "unmappedBytes": 36,
       }
     `);
 
@@ -100,10 +100,10 @@ describe('BundleAnalysis computed artifact', () => {
         "files": Object {
           "node_modules/browser-pack/_prelude.js": 480,
           "null": 104,
-          "src/foo.js": 97,
+          "src/foo.js": 98,
         },
         "totalBytes": 718,
-        "unmappedBytes": 37,
+        "unmappedBytes": 36,
       }
     `);
 
@@ -336,10 +336,10 @@ describe('BundleAnalysis computed artifact', () => {
           "files": Object {
             "node_modules/browser-pack/_prelude.js": 480,
             "src/bar.js": 104,
-            "src/foo.js": 97,
+            "src/foo.js": 98,
           },
           "totalBytes": 718,
-          "unmappedBytes": 37,
+          "unmappedBytes": 36,
         },
       }
     `);
