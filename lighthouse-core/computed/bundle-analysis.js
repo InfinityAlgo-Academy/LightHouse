@@ -64,27 +64,28 @@ function computeGeneratedFileSizes(map, content) {
     // Lines are 1-based
     const line = lines[lineNum];
     if (line === null) {
-      log.error(`${map.compiledURL} mapping for line out of bounds: ${lineNum + 1}`);
+      log.error('BundleAnalysis', `${map.url()} mapping for line out of bounds: ${lineNum + 1}`);
       return failureResult;
     }
 
     // Columns are 0-based
-    if (colNum >= line.length) {
-      log.error(`${map.compiledURL} mapping for column out of bounds: ${lineNum + 1}:${colNum}`);
+    if (colNum > line.length) {
+      log.error('BundleAnalysis', `${map.url()} mapping for column out of bounds: ${lineNum + 1}:${colNum}`);
       return failureResult;
     }
 
     let mappingLength = 0;
     if (lastColNum !== undefined) {
-      if (lastColNum >= line.length) {
+      if (lastColNum > line.length) {
         // eslint-disable-next-line max-len
-        log.error(`${map.compiledURL} mapping for last column out of bounds: ${lineNum + 1}:${lastColNum}`);
+        log.error('BundleAnalysis', `${map.url()} mapping for last column out of bounds: ${lineNum + 1}:${lastColNum}`);
         return failureResult;
       }
       mappingLength = lastColNum - colNum;
     } else {
       // TODO Buffer.byteLength?
-      mappingLength = line.length - colNum;
+      // Add +1 to account for the newline.
+      mappingLength = line.length - colNum + 1;
     }
     files[source] = (files[source] || 0) + mappingLength;
     unmappedBytes -= mappingLength;
@@ -132,7 +133,7 @@ class BundleAnalysis {
         get map() {
           if (map) return map;
           // @ts-ignore: CDT has some funny ideas about what properties of a source map are required.
-          return map = new SDK.TextSourceMap(`compiled.js`, `compiled.js.map`, rawMap);
+          return map = new SDK.TextSourceMap(scriptElement.src || 'compiled.js', SourceMap.sourceMapUrl || 'compiled.js.map', rawMap);
         },
         get sizes() {
           if (sizes) return sizes;

@@ -135,6 +135,10 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       }
     }
 
+    console.log('sizes', bundle.sizes.files, {total: Object.values(bundle.sizes.files).reduce((acc, cur) => acc + cur, 0)});
+    console.log({lengths});
+    console.log('unused', files, {total: Object.values(files).reduce((acc, cur) => acc + cur, 0)});
+
     // TODO: get some hard numbers on what the sizes should be (via manual inspection)
     // print exact unused byte length
     // and print each character color coded (neat)
