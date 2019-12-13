@@ -119,6 +119,8 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       return retVal;
     });
 
+    let output = '';
+    const chalk = require('chalk');
     // @ts-ignore
     bundle.map.computeLastGeneratedColumns();
     // @ts-ignore
@@ -126,22 +128,42 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       let offset = lineOffsets[mapping.lineNumber];
 
       offset += mapping.columnNumber;
-      const byteEnd = mapping.lastColumnNumber || (lineLengths[mapping.lineNumber] - 1);
-      for (let i = mapping.columnNumber; i < byteEnd; i++) {
+      const byteEnd = (mapping.lastColumnNumber - 1) || lineLengths[mapping.lineNumber];
+      for (let i = mapping.columnNumber; i <= byteEnd; i++) {
+        // debugging.
+        if (mapping.sourceURL.includes('b.js')) {
+          const unused = wasteData.every(data => data.unusedByIndex[offset] === 1);
+          const fn = unused ? chalk.default.bgRedBright : chalk.default.bgGreen;
+          output += fn(bundle.script.content[offset]);
+          if (bundle.script.content[offset] === '\n') output += fn('\\n');
+        }
+
         if (wasteData.every(data => data.unusedByIndex[offset] === 1)) {
           files[mapping.sourceURL] = (files[mapping.sourceURL] || 0) + 1;
         }
         offset += 1;
       }
+      if (mapping.sourceURL.includes('b.js')) {
+        console.log(mapping);
+        console.log(files[mapping.sourceURL]);
+        console.log(output);
+        output = '';
+      }
     }
+    console.log(output);
 
+    // debugging.
     console.log('sizes', bundle.sizes.files, {total: Object.values(bundle.sizes.files).reduce((acc, cur) => acc + cur, 0)});
     console.log({lengths});
     console.log('unused', files, {total: Object.values(files).reduce((acc, cur) => acc + cur, 0)});
-
-    // TODO: get some hard numbers on what the sizes should be (via manual inspection)
-    // print exact unused byte length
-    // and print each character color coded (neat)
+    const outputAll = '';
+    for (let i = 0; i < bundle.script.content.length; i++) {
+      const unused = wasteData.every(data => data.unusedByIndex[i] === 1);
+      const fn = unused ? chalk.default.bgRedBright : chalk.default.bgGreen;
+      output += fn(bundle.script.content[i]);
+      if (bundle.script.content[i] === '\n') output += fn('\\n');
+    }
+    console.log(outputAll);
 
     const transferRatio = lengths.transfer / lengths.content;
     const unusedFilesSizesSorted = Object.entries(files)
