@@ -9,6 +9,9 @@ const SDK = {
   ...require('./generated/SourceMap.js'),
 };
 
+// CDT pollutes Array.prototype w/ `upperBound`. SourceMap
+// relies on this, but only for `.mappings`. To avoid global pollution,
+// we explicitly set `.mappings.upperBound`.
 const originalMappings = SDK.TextSourceMap.prototype.mappings;
 SDK.TextSourceMap.prototype.mappings = function() {
   const mappings = originalMappings.call(this);
@@ -55,7 +58,7 @@ function upperBound(object, comparator, left, right) {
   return r;
 }
 
-// Add `lastColumnNumber` to mappings.
+// Add `lastColumnNumber` to mappings. This will eventually be added to CDT.
 // @ts-ignore
 SDK.TextSourceMap.prototype.computeLastGeneratedColumns = function() {
   const mappings = this.mappings();
