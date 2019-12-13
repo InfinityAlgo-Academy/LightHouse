@@ -129,8 +129,9 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
 
       offset += mapping.columnNumber;
       // @ts-ignore
-      const byteEnd = (mapping.lastColumnNumber - 1) || lineLengths[mapping.lineNumber];
-      for (let i = mapping.columnNumber; i <= byteEnd; i++) {
+      const lastColumnOfMapping =
+        (mapping.lastColumnNumber - 1) || lineLengths[mapping.lineNumber];
+      for (let i = mapping.columnNumber; i <= lastColumnOfMapping; i++) {
         // debugging.
         // @ts-ignore
         if (mapping.sourceURL.includes('b.js')) {
@@ -161,17 +162,17 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
     console.log('sizes', bundle.sizes.files, {total: Object.values(bundle.sizes.files).reduce((acc, cur) => acc + cur, 0)});
     console.log({lengths});
     console.log('unused', files, {total: Object.values(files).reduce((acc, cur) => acc + cur, 0)});
-    const outputAll = '';
+    let outputAll = '';
     for (let i = 0; i < bundle.script.content.length; i++) {
       const unused = wasteData.every(data => data.unusedByIndex[i] === 1);
       const fn = unused ? chalk.default.bgRedBright : chalk.default.bgGreen;
-      output += fn(bundle.script.content[i]);
-      if (bundle.script.content[i] === '\n') output += fn('\\n');
+      outputAll += fn(bundle.script.content[i]);
+      if (bundle.script.content[i] === '\n') outputAll += fn('\\n');
     }
     console.log(outputAll);
 
     const transferRatio = lengths.transfer / lengths.content;
-    const unusedFilesSizesSorted = Object.entries(files)
+    const topUnusedFilesSizes = Object.entries(files)
       .filter(d => d[1] * transferRatio >= 1024)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 5)
@@ -184,9 +185,9 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       });
 
     Object.assign(item, {
-      sources: unusedFilesSizesSorted.map(d => d.key),
-      sourceBytes: unusedFilesSizesSorted.map(d => d.total),
-      sourceWastedBytes: unusedFilesSizesSorted.map(d => d.unused),
+      sources: topUnusedFilesSizes.map(d => d.key),
+      sourceBytes: topUnusedFilesSizes.map(d => d.total),
+      sourceWastedBytes: topUnusedFilesSizes.map(d => d.unused),
     });
   }
 
