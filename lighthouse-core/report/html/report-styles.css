@@ -1418,7 +1418,7 @@
   opacity: 0.7;
 }
 
-.lh-multi-values:not(:first-child) .lh-multi-value-entry {
+.lh-sub-rows:not(:first-child) .lh-sub-row {
   margin-left: 20px;
   color: var(--color-gray-700);
 }

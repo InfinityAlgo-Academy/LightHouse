@@ -229,9 +229,9 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
     return {
       items,
       headings: [
-        {key: 'url', valueType: 'url', multi: {key: 'sources', valueType: 'code'}, label: str_(i18n.UIStrings.columnURL)},
-        {key: 'totalBytes', valueType: 'bytes', multi: {key: 'sourceBytes'}, label: str_(i18n.UIStrings.columnSize)},
-        {key: 'wastedBytes', valueType: 'bytes', multi: {key: 'sourceWastedBytes'}, label: str_(i18n.UIStrings.columnWastedBytes)},
+        {key: 'url', valueType: 'url', subRows: {key: 'sources', valueType: 'code'}, label: str_(i18n.UIStrings.columnURL)},
+        {key: 'totalBytes', valueType: 'bytes', subRows: {key: 'sourceBytes'}, label: str_(i18n.UIStrings.columnSize)},
+        {key: 'wastedBytes', valueType: 'bytes', subRows: {key: 'sourceWastedBytes'}, label: str_(i18n.UIStrings.columnWastedBytes)},
       ],
     };
   }

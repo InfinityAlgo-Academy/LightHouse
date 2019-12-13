@@ -570,11 +570,11 @@ describe('DetailsRenderer', () => {
       assert.equal(urlEl.textContent, 'https://example.com');
     });
 
-    describe('multiple values', () => {
+    describe('subRows', () => {
       it('renders', () => {
         const details = {
           type: 'table',
-          headings: [{key: 'url', itemType: 'url', multi: {key: 'sources', itemType: 'code'}}],
+          headings: [{key: 'url', itemType: 'url', subRows: {key: 'sources', itemType: 'code'}}],
           items: [
             {url: 'https://www.example.com', sources: ['a', 'b', 'c']},
           ],
@@ -590,11 +590,11 @@ describe('DetailsRenderer', () => {
         assert.equal(codeEl.textContent, 'https://www.example.com');
 
         // Second element lists the multiple values.
-        const multiValuesEl = columnElement.children[1];
-        assert.equal(multiValuesEl.localName, 'div');
-        assert.ok(multiValuesEl.classList.contains('lh-multi-values'));
+        const subRowsEl = columnElement.children[1];
+        assert.equal(subRowsEl.localName, 'div');
+        assert.ok(subRowsEl.classList.contains('lh-sub-rows'));
 
-        const multiValueEls = multiValuesEl.querySelectorAll('.lh-multi-value-entry');
+        const multiValueEls = subRowsEl.querySelectorAll('.lh-sub-row');
         assert.equal(multiValueEls[0].textContent, 'a');
         assert.ok(multiValueEls[0].classList.contains('lh-code'));
         assert.equal(multiValueEls[1].textContent, 'b');
@@ -606,7 +606,7 @@ describe('DetailsRenderer', () => {
       it('renders, uses heading properties as fallback', () => {
         const details = {
           type: 'table',
-          headings: [{key: 'url', itemType: 'url', multi: {key: 'sources'}}],
+          headings: [{key: 'url', itemType: 'url', subRows: {key: 'sources'}}],
           items: [
             {
               url: 'https://www.example.com',
@@ -629,11 +629,11 @@ describe('DetailsRenderer', () => {
         assert.equal(codeEl.textContent, 'https://www.example.com');
 
         // Second element lists the multiple values.
-        const multiValuesEl = columnElement.children[1];
-        assert.equal(multiValuesEl.localName, 'div');
-        assert.ok(multiValuesEl.classList.contains('lh-multi-values'));
+        const subRowsEl = columnElement.children[1];
+        assert.equal(subRowsEl.localName, 'div');
+        assert.ok(subRowsEl.classList.contains('lh-sub-rows'));
 
-        const multiValueEls = multiValuesEl.querySelectorAll('.lh-multi-value-entry');
+        const multiValueEls = subRowsEl.querySelectorAll('.lh-sub-row');
         assert.equal(multiValueEls[0].textContent, 'https://www.a.com');
         assert.ok(multiValueEls[0].classList.contains('lh-text__url'));
         assert.equal(multiValueEls[1].textContent, 'https://www.b.com');

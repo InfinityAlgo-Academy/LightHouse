@@ -243,8 +243,8 @@ class BundleDuplication extends ByteEfficiencyAudit {
 
     /** @type {LH.Audit.Details.OpportunityColumnHeading[]} */
     const headings = [
-      {key: 'source', valueType: 'code', multi: {key: 'urls', valueType: 'url'}, label: str_(i18n.UIStrings.columnName)}, // TODO: or 'Source'?
-      {key: '_', valueType: 'bytes', multi: {key: 'sourceBytes'}, granularity: 0.05, label: str_(i18n.UIStrings.columnSize)},
+      {key: 'source', valueType: 'code', subRows: {key: 'urls', valueType: 'url'}, label: str_(i18n.UIStrings.columnName)}, // TODO: or 'Source'?
+      {key: '_', valueType: 'bytes', subRows: {key: 'sourceBytes'}, granularity: 0.05, label: str_(i18n.UIStrings.columnSize)},
       {key: 'wastedBytes', valueType: 'bytes', granularity: 0.05, label: str_(i18n.UIStrings.columnWastedBytes)},
     ];
 
