@@ -175,11 +175,11 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       .filter(d => d[1] * transferRatio >= 1024)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 5)
-      .map(d => {
+      .map(([key, unused]) => {
         return {
-          key: d[0],
-          unused: Math.round(d[1] * transferRatio),
-          total: Math.round(bundle.sizes.files[d[0]] * transferRatio),
+          key,
+          unused: Math.round(unused * transferRatio),
+          total: Math.round(bundle.sizes.files[key] * transferRatio),
         };
       });
 
