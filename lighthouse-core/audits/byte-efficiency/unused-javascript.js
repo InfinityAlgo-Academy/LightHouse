@@ -128,9 +128,11 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       let offset = lineOffsets[mapping.lineNumber];
 
       offset += mapping.columnNumber;
+      // @ts-ignore
       const byteEnd = (mapping.lastColumnNumber - 1) || lineLengths[mapping.lineNumber];
       for (let i = mapping.columnNumber; i <= byteEnd; i++) {
         // debugging.
+        // @ts-ignore
         if (mapping.sourceURL.includes('b.js')) {
           const unused = wasteData.every(data => data.unusedByIndex[offset] === 1);
           const fn = unused ? chalk.default.bgRedBright : chalk.default.bgGreen;
@@ -139,12 +141,15 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
         }
 
         if (wasteData.every(data => data.unusedByIndex[offset] === 1)) {
+          // @ts-ignore
           files[mapping.sourceURL] = (files[mapping.sourceURL] || 0) + 1;
         }
         offset += 1;
       }
+      // @ts-ignore
       if (mapping.sourceURL.includes('b.js')) {
         console.log(mapping);
+        // @ts-ignore
         console.log(files[mapping.sourceURL]);
         console.log(output);
         output = '';
