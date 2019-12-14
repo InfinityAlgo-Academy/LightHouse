@@ -19,12 +19,15 @@ const log = require('lighthouse-logger');
 const {runSmokehouse} = require('../smokehouse.js');
 const {server, serverForOffline} = require('../../fixtures/static-server.js');
 
-const cliLighthouseRunner = require('../lighthouse-runners/cli.js').runLighthouse;
-
 const coreTestDefnsPath = require.resolve('../test-definitions/core-tests.js');
 
-const runners = {
-  cli: cliLighthouseRunner,
+/**
+ * Possible Lighthouse runners. Loaded dynamically so e.g. a CLI run isn't
+ * contingent on having built all the bundles.
+ */
+const runnerPaths = {
+  cli: '../lighthouse-runners/cli.js',
+  bundle: '../lighthouse-runners/bundle.js',
 };
 
 /**
@@ -76,7 +79,7 @@ async function begin() {
     .alias({
       'jobs': 'j',
     })
-    .choices('runner', ['cli'])
+    .choices('runner', ['cli', 'bundle'])
     .default('runner', 'cli')
     .wrap(yargs.terminalWidth())
     .argv;
@@ -85,7 +88,11 @@ async function begin() {
   const jobs = argv.jobs !== undefined ? Number(argv.jobs) : undefined;
   const retries = argv.retries !== undefined ? Number(argv.retries) : undefined;
 
-  const lighthouseRunner = runners[/** @type {keyof typeof runners} */ (argv.runner)];
+  const runnerPath = runnerPaths[/** @type {keyof typeof runnerPaths} */ (argv.runner)];
+  if (argv.runner === 'bundle') {
+    console.log('\n✨ Be sure to have recently run this: yarn build-all');
+  }
+  const lighthouseRunner = require(runnerPath).runLighthouse;
 
   // Find test definition file and filter by requestedTestIds.
   let testDefnPath = argv.testsPath || coreTestDefnsPath;
