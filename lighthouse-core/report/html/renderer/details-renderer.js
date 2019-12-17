@@ -208,7 +208,7 @@ class DetailsRenderer {
    * Render a details item value for embedding in a table. Renders the value
    * based on the heading's valueType, unless the value itself has a `type`
    * property to override it.
-   * @param {LH.Audit.Details.TableItem[string] | LH.Audit.Details.OpportunityItem[string]} value
+   * @param {LH.Audit.Details.Value} value
    * @param {LH.Audit.Details.OpportunityColumnHeading} heading
    * @return {Element|null}
    */
@@ -246,7 +246,7 @@ class DetailsRenderer {
     switch (heading.valueType) {
       case 'bytes': {
         const numValue = Number(value);
-        return this._renderBytes({value: numValue, granularity: 1});
+        return this._renderBytes({value: numValue, granularity: heading.granularity});
       }
       case 'code': {
         const strValue = String(value);
@@ -296,22 +296,54 @@ class DetailsRenderer {
    * OpportunityColumnHeading type until we have all details use the same
    * heading format.
    * @param {LH.Audit.Details.Table|LH.Audit.Details.Opportunity} tableLike
-   * @return {Array<LH.Audit.Details.OpportunityColumnHeading>} header
+   * @return {Array<LH.Audit.Details.OpportunityColumnHeading>}
    */
-  _getCanonicalizedTableHeadings(tableLike) {
+  _getCanonicalizedHeadingsFromTable(tableLike) {
     if (tableLike.type === 'opportunity') {
       return tableLike.headings;
     }
 
-    return tableLike.headings.map(heading => {
-      return {
-        key: heading.key,
-        label: heading.text,
-        valueType: heading.itemType,
-        displayUnit: heading.displayUnit,
-        granularity: heading.granularity,
-      };
-    });
+    return tableLike.headings.map(heading => this._getCanonicalizedHeading(heading));
+  }
+
+  /**
+   * Get the headings of a table-like details object, converted into the
+   * OpportunityColumnHeading type until we have all details use the same
+   * heading format.
+   * @param {LH.Audit.Details.TableColumnHeading} heading
+   * @return {LH.Audit.Details.OpportunityColumnHeading}
+   */
+  _getCanonicalizedHeading(heading) {
+    let subRows;
+    if (heading.subRows) {
+      // @ts-ignore: It's ok that there is no text.
+      subRows = this._getCanonicalizedHeading(heading.subRows);
+    }
+
+    return {
+      key: heading.key,
+      valueType: heading.itemType,
+      subRows,
+      label: heading.text,
+      displayUnit: heading.displayUnit,
+      granularity: heading.granularity,
+    };
+  }
+
+  /**
+   * @param {LH.Audit.Details.Value[]} values
+   * @param {LH.Audit.Details.OpportunityColumnHeading} heading
+   * @return {Element}
+   */
+  _renderSubRows(values, heading) {
+    const subRowsElement = this._dom.createElement('div', 'lh-sub-rows');
+    for (const childValue of values) {
+      const subRowElement = this._renderTableValue(childValue, heading);
+      if (!subRowElement) continue;
+      subRowElement.classList.add('lh-sub-row');
+      subRowsElement.appendChild(subRowElement);
+    }
+    return subRowsElement;
   }
 
   /**
@@ -325,7 +357,7 @@ class DetailsRenderer {
     const theadElem = this._dom.createChildOf(tableElem, 'thead');
     const theadTrElem = this._dom.createChildOf(theadElem, 'tr');
 
-    const headings = this._getCanonicalizedTableHeadings(details);
+    const headings = this._getCanonicalizedHeadingsFromTable(details);
 
     for (const heading of headings) {
       const valueType = heading.valueType || 'text';
@@ -339,12 +371,30 @@ class DetailsRenderer {
     for (const row of details.items) {
       const rowElem = this._dom.createChildOf(tbodyElem, 'tr');
       for (const heading of headings) {
-        const value = row[heading.key];
-        const valueElement = this._renderTableValue(value, heading);
+        const valueFragment = this._dom.createFragment();
 
-        if (valueElement) {
+        const value = row[heading.key];
+        const valueElement =
+          value !== undefined && !Array.isArray(value) && this._renderTableValue(value, heading);
+        if (valueElement) valueFragment.appendChild(valueElement);
+
+        if (heading.subRows) {
+          const subRowsHeading = {
+            key: heading.subRows.key,
+            valueType: heading.subRows.valueType || heading.valueType,
+            granularity: heading.subRows.granularity || heading.granularity,
+            displayUnit: heading.subRows.displayUnit || heading.displayUnit,
+            label: '',
+          };
+          const values = row[subRowsHeading.key];
+          if (!Array.isArray(values)) continue;
+          const subRowsElement = this._renderSubRows(values, subRowsHeading);
+          valueFragment.appendChild(subRowsElement);
+        }
+
+        if (valueFragment.childElementCount) {
           const classes = `lh-table-column--${heading.valueType}`;
-          this._dom.createChildOf(rowElem, 'td', classes).appendChild(valueElement);
+          this._dom.createChildOf(rowElem, 'td', classes).appendChild(valueFragment);
         } else {
           this._dom.createChildOf(rowElem, 'td', 'lh-table-column--empty');
         }
