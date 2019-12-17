@@ -40,16 +40,14 @@ function listenForStatus(listenCallback) {
   log.events.addListener('status', listenCallback);
 }
 
+// For the bundle smoke test.
 if (typeof module !== 'undefined' && module.exports) {
-  // export for require()ing (via browserify).
-  module.exports = {
-    setUpWorkerConnection,
-    lighthouse,
-    getDefaultConfigForCategories,
-    listenForStatus,
-    registerLocaleData,
-    lookupLocale,
-  };
+  // Ideally this could be exposed via browserify's `standalone`, but it doesn't
+  // work for LH because of https://github.com/browserify/browserify/issues/968
+  // Instead, since this file is only ever run in node for testing, expose a
+  // bundle entry point as global.
+  // @ts-ignore
+  global.runBundledLighthouse = lighthouse;
 }
 
 // Expose only in DevTools' worker

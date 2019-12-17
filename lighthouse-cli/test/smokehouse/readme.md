@@ -79,20 +79,20 @@ The different frontends launch smokehouse with a set of tests to run. Smokehouse
 Smokehouse Frontends                                        Lighthouse Runners
 +------------+
 |            |
-|  bin (CLI) +----+                                           +--------------+
+|   bin.js   +----+                                           +--------------+
 |            |    |                                           |              |
-+------------+    |                                       +-->+     cli      |
++------------+    |                                       +-->+    cli.js    |
                   |                                       |   |              |
 +------------+    |            +---------------+          |   +--------------+
 |            |    | testDefns> |               |  config> |
-|   node     +---------------->+ smokehouse.js +<---------+
+|   node.js  +---------------->+ smokehouse.js +<---------+
 |            |    |            |               |   <lhr   |   +--------------+
 +------------+    |            +-------+-------+          |   |              |
-                  |                    ^                  +-->+   bundled    |
+                  |                    ^                  +-->+   bundle.js  |
 +------------+    |                    |                      |              |
 |            |    |                    |                      +--------------+
 |bundle+entry+----+                    v
-|            |                +--------+--------+
+|   (TODO)   |                +--------+--------+
 +------------+                |                 |
                               |  report/assert  |
                               |                 |
@@ -111,8 +111,8 @@ Smokehouse Frontends                                        Lighthouse Runners
 
 ### Lighthouse runners
 
-- `runners/cli.js` - the original test runner, exercising the Lighthouse CLI from command-line argument parsing to the results written to disk on completion.
-- TODO: bundle runner - a smoke test runner that operates on an already-bundled version of Lighthouse for end-to-end testing of that version.
+- `lighthouse-runners/cli.js` - the original test runner, exercising the Lighthouse CLI from command-line argument parsing to the results written to disk on completion.
+- `lighthouse-runners/bundle.js` - a smoke test runner that operates on an already-bundled version of Lighthouse for end-to-end testing of that version.
 
 ## Custom smoke tests (for plugins et al.)
 

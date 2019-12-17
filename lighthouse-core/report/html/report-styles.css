@@ -1069,13 +1069,12 @@
 .lh-gauge-base {
     opacity: 0.1;
     stroke: var(--circle-background);
-    stroke-width: var(--circle-border-width);
 }
 
 .lh-gauge-arc {
     fill: none;
     stroke: var(--circle-color);
-    stroke-width: var(--circle-border-width);
+    transform-origin: 50% 50%;
     animation: load-gauge var(--transition-length) ease forwards;
     animation-delay: 250ms;
 }
@@ -1139,7 +1138,6 @@
   text-decoration: none;
   padding: var(--score-container-padding);
 
-  --circle-border-width: 8;
   --transition-length: 1s;
 
   /* Contain the layout style paint & layers during animation*/
@@ -1410,7 +1408,7 @@
   text-decoration: underline dotted #999;
 }
 
-.lh-multi-values:not(:first-child) .lh-multi-value-entry {
+.lh-sub-rows:not(:first-child) .lh-sub-row {
   margin-left: 20px;
   color: var(--color-gray-700);
 }

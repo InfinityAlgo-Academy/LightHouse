@@ -99,10 +99,10 @@ declare global {
          */
         itemType: ItemValueTypes;
         /**
-         * Optional header defining an inner table of values that correspond to this column.
+         * Optional - defines an inner table of values that correspond to this column.
          * Key is required - if other properties are not provided, the value for the heading is used.
-        */
-        multi?: {key: string, itemType?: ItemValueTypes, displayUnit?: string, granularity?: number};
+         */
+        subRows?: {key: string, itemType?: ItemValueTypes, displayUnit?: string, granularity?: number};
 
         displayUnit?: string;
         granularity?: number;
@@ -125,10 +125,10 @@ declare global {
          */
         valueType: ItemValueTypes;
         /**
-         * Optional header defining an inner table of values that correspond to this column.
+         * Optional - defines an inner table of values that correspond to this column.
          * Key is required - if other properties are not provided, the value for the heading is used.
-        */
-        multi?: {key: string, valueType?: ItemValueTypes, displayUnit?: string, granularity?: number};
+         */
+        subRows?: {key: string, valueType?: ItemValueTypes, displayUnit?: string, granularity?: number};
 
         // NOTE: not used by opportunity details, but used in the renderer until table/opportunity unification.
         displayUnit?: string;

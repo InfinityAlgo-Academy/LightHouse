@@ -335,14 +335,10 @@ class CategoryRenderer {
     // Cast `null` to 0
     const numericScore = Number(category.score);
     const gauge = this.dom.find('.lh-gauge', tmpl);
-    // 352 is ~= 2 * Math.PI * gauge radius (56)
-    // https://codepen.io/xgad/post/svg-radial-progress-meters
-    // score of 50: `stroke-dasharray: 176 352`;
     /** @type {?SVGCircleElement} */
     const gaugeArc = gauge.querySelector('.lh-gauge-arc');
-    if (gaugeArc) {
-      gaugeArc.style.strokeDasharray = `${numericScore * 352} 352`;
-    }
+
+    if (gaugeArc) this._setGaugeArc(gaugeArc, numericScore);
 
     const scoreOutOf100 = Math.round(numericScore * 100);
     const percentageEl = this.dom.find('.lh-gauge__percentage', tmpl);
@@ -354,6 +350,29 @@ class CategoryRenderer {
 
     this.dom.find('.lh-gauge__label', tmpl).textContent = category.title;
     return tmpl;
+  }
+
+  /**
+   * Define the score arc of the gauge
+   * Credit to xgad for the original technique: https://codepen.io/xgad/post/svg-radial-progress-meters
+   * @param {SVGCircleElement} arcElem
+   * @param {number} percent
+   */
+  _setGaugeArc(arcElem, percent) {
+    const circumferencePx = 2 * Math.PI * Number(arcElem.getAttribute('r'));
+    // The rounded linecap of the stroke extends the arc past its start and end.
+    // First, we tweak the -90deg rotation to start exactly at the top of the circle.
+    const strokeWidthPx = Number(arcElem.getAttribute('stroke-width'));
+    const rotationalAdjustmentPercent = 0.25 * strokeWidthPx / circumferencePx;
+    arcElem.style.transform = `rotate(${-90 + rotationalAdjustmentPercent * 360}deg)`;
+
+    // Then, we terminate the line a little early as well.
+    let arcLengthPx = percent * circumferencePx - strokeWidthPx / 2;
+    // Special cases. No dot for 0, and full ring if 100
+    if (percent === 0) arcElem.style.opacity = '0';
+    if (percent === 1) arcLengthPx = circumferencePx;
+
+    arcElem.style.strokeDasharray = `${Math.max(arcLengthPx, 0)} ${circumferencePx}`;
   }
 
   /**
