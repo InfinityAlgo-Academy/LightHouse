@@ -861,7 +861,7 @@
     "message": "L̂ár̂ǵêśt̂ Ćôńt̂én̂t́f̂úl̂ Ṕâín̂t́"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "T̂h́ê ḿâx́îḿûḿ p̂ót̂én̂t́îál̂ F́îŕŝt́ Îńp̂út̂ D́êĺâý t̂h́ât́ ŷóûŕ ûśêŕŝ ćôúl̂d́ êx́p̂ér̂íêńĉé îś t̂h́ê d́ûŕât́îón̂, ín̂ ḿîĺl̂íŝéĉón̂d́ŝ, óf̂ t́ĥé l̂ón̂ǵêśt̂ t́âśk̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/lighthouse-max-potential-fid)."
+    "message": "T̂h́ê ḿâx́îḿûḿ p̂ót̂én̂t́îál̂ F́îŕŝt́ Îńp̂út̂ D́êĺâý t̂h́ât́ ŷóûŕ ûśêŕŝ ćôúl̂d́ êx́p̂ér̂íêńĉé îś t̂h́ê d́ûŕât́îón̂ óf̂ t́ĥé l̂ón̂ǵêśt̂ t́âśk̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/lighthouse-max-potential-fid)."
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Ŝṕêéd̂ Ín̂d́êx́ ŝh́ôẃŝ h́ôẃ q̂úîćk̂ĺŷ t́ĥé ĉón̂t́êńt̂ś ôf́ â ṕâǵê ár̂é v̂íŝíb̂ĺŷ ṕôṕûĺât́êd́. [L̂éâŕn̂ ḿôŕê](https://web.dev/speed-index)."

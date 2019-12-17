@@ -333,7 +333,7 @@ class DetailsRenderer {
   /**
    * @param {LH.Audit.Details.Value[]} values
    * @param {LH.Audit.Details.OpportunityColumnHeading} heading
-   * @return {Element?}
+   * @return {Element}
    */
   _renderSubRows(values, heading) {
     const subRowsElement = this._dom.createElement('div', 'lh-sub-rows');
@@ -395,7 +395,7 @@ class DetailsRenderer {
           const values = row[subRowsHeading.key];
           if (!Array.isArray(values)) continue;
           const subRowsElement = this._renderSubRows(values, subRowsHeading);
-          if (subRowsElement) valueFragment.appendChild(subRowsElement);
+          valueFragment.appendChild(subRowsElement);
         }
 
         if (valueFragment.childElementCount) {

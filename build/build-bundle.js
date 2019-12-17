@@ -38,7 +38,8 @@ const isDevtools = file => path.basename(file).includes('devtools');
 /** @param {string} file */
 const isLightrider = file => path.basename(file).includes('lightrider');
 
-const BANNER = `// lighthouse, browserified. ${VERSION} (${COMMIT_HASH})\n`;
+const BANNER = `// lighthouse, browserified. ${VERSION} (${COMMIT_HASH})\n` +
+  '// @ts-nocheck\n'; // To prevent tsc stepping into any required bundles.
 const DEBUG = false; // true for sourcemaps
 
 /**

@@ -212,7 +212,7 @@
     "max-potential-fid": {
       "id": "max-potential-fid",
       "title": "Max Potential First Input Delay",
-      "description": "The maximum potential First Input Delay that your users could experience is the duration, in milliseconds, of the longest task. [Learn more](https://web.dev/lighthouse-max-potential-fid).",
+      "description": "The maximum potential First Input Delay that your users could experience is the duration of the longest task. [Learn more](https://web.dev/lighthouse-max-potential-fid).",
       "score": 0.92,
       "scoreDisplayMode": "numeric",
       "numericValue": 122.537,
