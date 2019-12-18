@@ -13,7 +13,7 @@ class CumulativeLayoutShift {
   /**
    * @param {LH.Trace} trace
    * @param {LH.Audit.Context} context
-   * @return {Promise<{value: number | null}>}
+   * @return {Promise<{value: number, debugInfo: Record<string,boolean> | null}>}
    */
   static async compute_(trace, context) {
     const traceOfTab = await TraceOfTab.request(trace, context);
@@ -28,10 +28,16 @@ class CumulativeLayoutShift {
       }
     }
 
+    const finalLayoutShiftTraceEventFound = !!finalLayoutShift;
     // tdresser sez: In about 10% of cases, layout instability is 0, and there will be no trace events.
     // TODO: Validate that. http://crbug.com/1003459
     if (!finalLayoutShift) {
-      return {value: null};
+      return {
+        value: 0,
+        debugInfo: {
+          finalLayoutShiftTraceEventFound,
+        },
+      };
     }
 
     const cumulativeLayoutShift =
@@ -43,7 +49,12 @@ class CumulativeLayoutShift {
       throw new LHError(LHError.errors.LAYOUT_SHIFT_MISSING_DATA);
     }
 
-    return {value: cumulativeLayoutShift};
+    return {
+      value: cumulativeLayoutShift,
+      debugInfo: {
+        finalLayoutShiftTraceEventFound,
+      },
+    };
   }
 }
 
