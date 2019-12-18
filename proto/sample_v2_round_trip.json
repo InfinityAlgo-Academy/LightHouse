@@ -427,10 +427,18 @@
         },
         "cumulative-layout-shift": {
             "description": "The more the page's layout changes during its load, the higher the Cumulative Layout Shift. Perfectly solid == 0. Unpleasant experience >= 0.50.",
-            "displayValue": "0",
+            "details": {
+                "items": [
+                    {
+                        "finalLayoutShiftTraceEventFound": true
+                    }
+                ],
+                "type": "debugdata"
+            },
+            "displayValue": "0.42",
             "id": "cumulative-layout-shift",
-            "numericValue": 0.0,
-            "score": 1.0,
+            "numericValue": 0.42,
+            "score": 0.59,
             "scoreDisplayMode": "numeric",
             "title": "Cumulative Layout Shift"
         },
