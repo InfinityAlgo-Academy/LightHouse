@@ -51,6 +51,8 @@ function getHTMLImages(allElements) {
       naturalWidth: element.naturalWidth,
       naturalHeight: element.naturalHeight,
       isCss: false,
+      // @ts-ignore: loading attribute not yet added to HTMLImageElement definition.
+      loading: element.loading,
       resourceSize: 0, // this will get overwritten below
       isPicture: !!element.parentElement && element.parentElement.tagName === 'PICTURE',
       usesObjectFit: ['cover', 'contain', 'scale-down', 'none'].includes(
