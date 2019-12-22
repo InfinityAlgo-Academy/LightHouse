@@ -6712,46 +6712,46 @@
       "lighthouse-core/config/default-config.js | seoCrawlingGroupDescription": [
         "categoryGroups[seo-crawl].description"
       ],
-      "stack-packs/packs/wordpress.js | unused_css_rules": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | unused_css_rules": [
         "stackPacks[0].descriptions[unused-css-rules]"
       ],
-      "stack-packs/packs/wordpress.js | uses_webp_images": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses_webp_images": [
         "stackPacks[0].descriptions[uses-webp-images]"
       ],
-      "stack-packs/packs/wordpress.js | offscreen_images": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen_images": [
         "stackPacks[0].descriptions[offscreen-images]"
       ],
-      "stack-packs/packs/wordpress.js | total_byte_weight": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | total_byte_weight": [
         "stackPacks[0].descriptions[total-byte-weight]"
       ],
-      "stack-packs/packs/wordpress.js | render_blocking_resources": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | render_blocking_resources": [
         "stackPacks[0].descriptions[render-blocking-resources]"
       ],
-      "stack-packs/packs/wordpress.js | unminified_css": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | unminified_css": [
         "stackPacks[0].descriptions[unminified-css]"
       ],
-      "stack-packs/packs/wordpress.js | unminified_javascript": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | unminified_javascript": [
         "stackPacks[0].descriptions[unminified-javascript]"
       ],
-      "stack-packs/packs/wordpress.js | efficient_animated_content": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient_animated_content": [
         "stackPacks[0].descriptions[efficient-animated-content]"
       ],
-      "stack-packs/packs/wordpress.js | unused_javascript": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | unused_javascript": [
         "stackPacks[0].descriptions[unused-javascript]"
       ],
-      "stack-packs/packs/wordpress.js | uses_long_cache_ttl": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses_long_cache_ttl": [
         "stackPacks[0].descriptions[uses-long-cache-ttl]"
       ],
-      "stack-packs/packs/wordpress.js | uses_optimized_images": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses_optimized_images": [
         "stackPacks[0].descriptions[uses-optimized-images]"
       ],
-      "stack-packs/packs/wordpress.js | uses_text_compression": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses_text_compression": [
         "stackPacks[0].descriptions[uses-text-compression]"
       ],
-      "stack-packs/packs/wordpress.js | uses_responsive_images": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses_responsive_images": [
         "stackPacks[0].descriptions[uses-responsive-images]"
       ],
-      "stack-packs/packs/wordpress.js | time_to_first_byte": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | time_to_first_byte": [
         "stackPacks[0].descriptions[time-to-first-byte]"
       ]
     }

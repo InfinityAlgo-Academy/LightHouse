@@ -27,7 +27,8 @@ const UISTRINGS_REGEX = /UIStrings = .*?\};\n/s;
 const ignoredPathComponents = [
   '**/.git/**',
   '**/scripts/**',
-  '**/node_modules/**',
+  // allow lighthouse stack package npm package
+  '**/node_modules/!(lighthouse-stack-packs)/**',
   '**/test/**',
   '**/*-test.js',
   '**/*-renderer.js',
@@ -481,6 +482,7 @@ function collectAllStringsInDir(dir) {
     cwd: LH_ROOT,
     ignore: ignoredPathComponents,
   });
+
   for (const relativeToRootPath of files) {
     const absolutePath = path.join(LH_ROOT, relativeToRootPath);
     if (!process.env.CI) console.log('Collecting from', relativeToRootPath);
@@ -565,7 +567,8 @@ if (require.main === module) {
   const coreStrings = collectAllStringsInDir(path.join(LH_ROOT, 'lighthouse-core'));
   console.log('Collected from LH core!');
 
-  const stackPackStrings = collectAllStringsInDir(path.join(LH_ROOT, 'stack-packs/packs'));
+  // const stackPackStrings = collectAllStringsInDir(path.join(LH_ROOT, 'stack-packs/packs'));
+  const stackPackStrings = collectAllStringsInDir(path.join(path.dirname(require.resolve('lighthouse-stack-packs')), 'packs'));
   console.log('Collected from Stack Packs!');
 
   if ((collisions) > 0) {

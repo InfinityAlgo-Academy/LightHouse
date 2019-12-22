@@ -1577,139 +1577,139 @@
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "எச்சரிக்கைகள்: "
   },
-  "stack-packs/packs/amp.js | efficient_animated_content": {
+  "node_modules/lighthouse-stack-packs/packs/amp.js | efficient_animated_content": {
     "message": "உள்ளடக்கம் திரைக்கு வெளியே இருக்கும் போது CPU உபயோகத்தைக் குறைக்க அனிமேஷன் செய்யப்பட்ட உள்ளடக்கத்திற்கு [amp-anim](https://amp.dev/documentation/components/amp-anim/) என்பதைப் பயன்படுத்தவும்."
   },
-  "stack-packs/packs/amp.js | offscreen_images": {
+  "node_modules/lighthouse-stack-packs/packs/amp.js | offscreen_images": {
     "message": "தானாகவே முதல் காட்சிப் பகுதிக்கு வெளியே மெதுவாக ஏற்றும் வகையிலான சரியான `amp-img` குறியிடல்களைப் படங்களுக்குப் பயன்படுத்துவதை உறுதிப்படுத்திக்கொள்ளவும். [மேலும் அறிக](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
-  "stack-packs/packs/amp.js | render_blocking_resources": {
+  "node_modules/lighthouse-stack-packs/packs/amp.js | render_blocking_resources": {
     "message": "[AMP மேம்படுத்துதல் அம்சம்](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) முதல் [சேவையகத் தரப்பு ரெண்டரிங் AMP தளவமைப்புகள்](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/) போன்ற அம்சங்களைப் பயன்படுத்தவும்."
   },
-  "stack-packs/packs/amp.js | unminified_css": {
+  "node_modules/lighthouse-stack-packs/packs/amp.js | unminified_css": {
     "message": "அனைத்து ஸ்டைல்களும் ஆதரிக்கப்படுவதை உறுதிப்படுத்த [AMP ஆவணமாக்கத்தைப்](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) பார்க்கவும்."
   },
-  "stack-packs/packs/amp.js | uses_responsive_images": {
+  "node_modules/lighthouse-stack-packs/packs/amp.js | uses_responsive_images": {
     "message": "திரை அளவின் அடிப்படையில் எந்தப் பட உரிமையுடையவற்றைப் பயன்படுத்த வேண்டும் என்பதைக் குறிப்பிட `amp-img` கூறானது `srcset` பண்புக்கூறை ஆதரிக்கும்.  [மேலும் அறிக](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
   },
-  "stack-packs/packs/amp.js | uses_webp_images": {
+  "node_modules/lighthouse-stack-packs/packs/amp.js | uses_webp_images": {
     "message": "மற்ற உலாவிகளுக்குத் தகுந்த ஒரு ஃபால்பேக்கைக் குறிப்பிடும்போது உங்கள் `amp-img` கூறுகள் அனைத்தையும் WebP ஃபார்மேட்களில் காட்சிப்படுத்த பரிசீலிக்கவும். [மேலும் அறிக](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
   },
-  "stack-packs/packs/angular.js | dom_size": {
+  "node_modules/lighthouse-stack-packs/packs/angular.js | dom_size": {
     "message": "பெரிய பட்டியல்கள் ரெண்டரிங் செய்யப்பட்டால் Component Dev Kitஐ (CDK) பயன்படுத்தி விர்ச்சுவல் ஸ்கிராலிங்க் செய்வதைப் பரிசீலிக்கவும். [மேலும் அறிக](https://web.dev/virtualize-lists-with-angular-cdk/)."
   },
-  "stack-packs/packs/angular.js | total_byte_weight": {
+  "node_modules/lighthouse-stack-packs/packs/angular.js | total_byte_weight": {
     "message": "உங்கள் JavaScript தொகுப்புகளின் அளவைக் குறைப்பதற்கு [ரூட் நிலையில் குறியீட்டைப் பிரிப்பதைப்](https://web.dev/route-level-code-splitting-in-angular/) பயன்படுத்தவும். [Angular சேவை செயலாக்கியைப்](https://web.dev/precaching-with-the-angular-service-worker/) பயன்படுத்தி உரிமையுடையவற்றை தற்காலிகமாகச் சேமிப்பதையும் பரிசீலிக்கவும்."
   },
-  "stack-packs/packs/angular.js | unminified_warning": {
+  "node_modules/lighthouse-stack-packs/packs/angular.js | unminified_warning": {
     "message": "நீங்கள் Angular CLIயை பயன்படுத்தினால் பதிப்புகள் தயாரிப்பு பயன்முறையில் உருவாக்கப்படுவதை உறுதிப்படுத்திக்கொள்ளவும். [மேலும் அறிக](https://angular.io/guide/deployment#enable-runtime-production-mode)."
   },
-  "stack-packs/packs/angular.js | unused_javascript": {
+  "node_modules/lighthouse-stack-packs/packs/angular.js | unused_javascript": {
     "message": "Angular CLIயைப் பயன்படுத்தினால் உங்கள் தொகுப்புகளை ஆய்வு செய்ய தயாரிப்பு பதிப்பில் மூல வரைபடங்களைச் சேர்க்கவும். [மேலும் அறிக](https://angular.io/guide/deployment#inspect-the-bundles)."
   },
-  "stack-packs/packs/angular.js | uses_rel_preload": {
+  "node_modules/lighthouse-stack-packs/packs/angular.js | uses_rel_preload": {
     "message": "வழிசெலுத்தலை வேகப்படுத்த வழிகளை முன்கூட்டியே ஏற்றவும். [மேலும் அறிக](https://web.dev/route-preloading-in-angular/)."
   },
-  "stack-packs/packs/angular.js | uses_responsive_images": {
+  "node_modules/lighthouse-stack-packs/packs/angular.js | uses_responsive_images": {
     "message": "பட பிரேக்பாயிண்ட்டுகளை நிர்வகிக்க Component Dev Kitடில் (CDK) `BreakpointObserver` உபகரணத்தைப் பயன்படுத்துவதைப் பரிசீலிக்கவும். [மேலும் அறிக](https://material.angular.io/cdk/layout/overview)."
   },
-  "stack-packs/packs/magento.js | critical_request_chains": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | critical_request_chains": {
     "message": "JavaScript உரிமையுடையவற்றை நீங்கள் தொகுக்கப்போவதில்லை எனில் [பேலரைப்](https://github.com/magento/baler) பயன்படுத்துவதைப் பரிசீலிக்கவும்."
   },
-  "stack-packs/packs/magento.js | disable_bundling": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | disable_bundling": {
     "message": "Magentoவின் உள்ளமைக்கப்பட்ட பதிப்பான [JavaScript தொகுத்தலையும் சிறிதாக்குதலையும் முடக்கி](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) [பேலரைப்](https://github.com/magento/baler/) பயன்படுத்துவதைப் பரிசீலிக்கவும்."
   },
-  "stack-packs/packs/magento.js | font_display": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | font_display": {
     "message": "[பிரத்தியேகமான எழுத்துருவை வரையறுக்கும்போது](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html) `@font-display`ஐக் குறிப்பிடவும்."
   },
-  "stack-packs/packs/magento.js | offscreen_images": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen_images": {
     "message": "இணைய பிளாட்ஃபார்மின் [படங்களை மெதுவாக ஏற்றும்](https://web.dev/native-lazy-loading) அம்சத்தைப் பயன்படுத்த உங்கள் தயாரிப்பையும் கேட்டலாக் டெம்ப்ளேட்டுகளையும் மாற்றுவதைப் பரிசீலிக்கவும்."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | time_to_first_byte": {
     "message": "Magentoவின் [வார்னிஷ் ஒருங்கிணைப்பு](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) அம்சத்தைப் பயன்படுத்தவும்."
   },
-  "stack-packs/packs/magento.js | unminified_css": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | unminified_css": {
     "message": "\"CSS கோப்புகளைச் சிறிதாக்குதல்\" என்ற விருப்பத்தேர்வை உங்கள் ஸ்டோரின் டெவெலப்பர் அமைப்புகளில் இயக்கவும். [மேலும் அறிக](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
-  "stack-packs/packs/magento.js | unminified_javascript": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | unminified_javascript": {
     "message": "நிலையான உள்ளடக்க வழங்கலில் உள்ள JavaScript உரிமையுடையவை அனைத்தையும் சிறிதாக்குவதற்கு [டேர்சரைப்](https://www.npmjs.com/package/terser) பயன்படுத்துவதுடன் உள்ளமைக்கப்பட்ட சிறிதாக்குதல் அம்சத்தை முடக்கவும்."
   },
-  "stack-packs/packs/magento.js | unused_javascript": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | unused_javascript": {
     "message": "Magentoவின் உள்ளமைக்கப்பட்ட பதிப்பான [JavaScript தொகுத்தலை](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) முடக்கவும்."
   },
-  "stack-packs/packs/magento.js | uses_optimized_images": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | uses_optimized_images": {
     "message": "பல்வேறு மூன்றாம் தரப்பு நீட்டிப்புகள் படங்களை மேம்படுத்த [Magento சந்தையைத்](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) தேடுவதைப் பரிசீலிக்கவும்."
   },
-  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | uses_rel_preconnect": {
     "message": "[தீம்களின் தளவமைப்பை மாற்றுவதன்](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html) மூலம் முன்னிணைப்பு அல்லது dns ப்ரீஃபெட்ச் மூலக் குறிப்புகளைச் சேர்க்கலாம்."
   },
-  "stack-packs/packs/magento.js | uses_rel_preload": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | uses_rel_preload": {
     "message": "[தீம்களின் தளவமைப்பை மாற்றுவதன்](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html) மூலம் `<link rel=preload>` குறியிடல்களைச் சேர்க்க முடியும்."
   },
-  "stack-packs/packs/magento.js | uses_webp_images": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | uses_webp_images": {
     "message": "பல்வேறு மூன்றாம் தரப்பு நீட்டிப்புகள் புதிய பட ஃபார்மேட்டுகளை அளவிட [Magento சந்தையைத்](https://marketplace.magento.com/catalogsearch/result/?q=webp) தேடுவதைப் பரிசீலிக்கவும்."
   },
-  "stack-packs/packs/react.js | dom_size": {
+  "node_modules/lighthouse-stack-packs/packs/react.js | dom_size": {
     "message": "ஒரு பக்கத்தில் தொடர்ந்து நிகழ்கிற பல கூறுகளை ரெண்டரிங் செய்கிறீர்கள் என்றால் DOM கணுக்கள் உருவாக்கப்படும் எண்ணிக்கையைக் குறைக்கும் விதமாக `react-window` போன்ற “விண்டோவிங்” லைப்ரரி பயன்படுத்துவதைப் பரிசீலிக்கவும். [மேலும் அறிக](https://web.dev/virtualize-long-lists-react-window/). இயங்கும் நேர செயல்திறனை மேம்படுத்த விளைவு ஹூக்கைப் பயன்படுத்துவதால் குறிப்பிட்ட சார்புநிலைகள் மாறும் வரை மட்டும் [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent), [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) போன்றவற்றைப் பயன்படுத்தி அனாவசியமாக மறு ரெண்டரிங் செய்வதையும் [விளைவுகளைத் தவிர்ப்பதையும்](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) குறைத்துக்கொள்ள வேண்டும்."
   },
-  "stack-packs/packs/react.js | redirects": {
+  "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "நீங்கள் ரியாக்ட் ரூட்டரைப் பயன்படுத்தினால் [ரூட் வழிசெலுத்தல்களுக்கு](https://reacttraining.com/react-router/web/api/Redirect) `<Redirect>` உறுப்பைப் பயன்படுத்துவதைக் குறைத்துக்கொள்ளவும்."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
+  "node_modules/lighthouse-stack-packs/packs/react.js | time_to_first_byte": {
     "message": "நீங்கள் சேவையகம் தரப்பாக இருந்து ரியாக்ட் கூறுகளை ரெண்டரிங் செய்பவராக இருந்தால் அனைத்தையும் ஒரே நேரத்தில் அல்லாமல் மார்க் அப்பின் வெவ்வேறு பகுதிகளைப் பெறவும் ஹைட்ரேட் செய்யவும் கிளையண்ட்டை அனுமதிப்பதற்கு `renderToNodeStream()` அல்லது `renderToStaticNodeStream()`ஐப் பயன்படுத்துவதைப் பரிசீலிக்கவும். [மேலும் அறிக](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
   },
-  "stack-packs/packs/react.js | unminified_css": {
+  "node_modules/lighthouse-stack-packs/packs/react.js | unminified_css": {
     "message": "உங்கள் பதிப்பு சிஸ்டம் CSS கோப்புகளை தானாகச் சிறிதாக்கினால் உங்கள் ஆப்ஸுக்கு தயாரிப்புப் பதிப்பை பயன்படுத்துவதை உறுதிப்படுத்திக்கொள்ளவும். ரியாக்ட் டெவெலப்பர் கருவிகள் நீட்டிப்பில் இதைப் பார்க்கலாம். [மேலும் அறிக](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
-  "stack-packs/packs/react.js | unminified_javascript": {
+  "node_modules/lighthouse-stack-packs/packs/react.js | unminified_javascript": {
     "message": "உங்கள் பதிப்பு சிஸ்டம் உங்கள் JS கோப்புகளை தானாகவே சிறிதாக்கினால் உங்களுடைய ஆப்ஸின் தயாரிப்பு பதிப்பைப் பயன்படுத்துவதை உறுதிப்படுத்திக்கொள்ளவும். ரியாக்ட் டெவெலப்பர் கருவிகள் நீட்டிப்பில் இதைப் பார்க்கலாம். [மேலும் அறிக](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
-  "stack-packs/packs/react.js | unused_javascript": {
+  "node_modules/lighthouse-stack-packs/packs/react.js | unused_javascript": {
     "message": "நீங்கள் சேவையகத் தரப்பு ரெண்டரிங் செய்யவில்லை என்றால் `React.lazy()` மூலம் [JavaScript தொகுப்புகளை பிரிக்கவும்](https://web.dev/code-splitting-suspense/). இல்லையென்றால் [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/) போன்ற மூன்றாம் தரப்பு லைப்ரரி மூலம் குறியீட்டைப் பிரிக்கவும்."
   },
-  "stack-packs/packs/react.js | user_timings": {
+  "node_modules/lighthouse-stack-packs/packs/react.js | user_timings": {
     "message": "உங்கள் கூறுகளின் ரெண்டரிங் செயல்திறனை அளவிட Profiler APIயைப் பயன்படுத்தும் React DevTools Profilerரைப் பயன்படுத்தவும். [மேலும் அறிக.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
-  "stack-packs/packs/wordpress.js | efficient_animated_content": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "உங்கள் GIFஃபை HTML5 வீடியோவாக உட்பொதிந்து கிடைக்கச் செய்யும் சேவையில் பதிவேற்ற முயலுங்கள்."
   },
-  "stack-packs/packs/wordpress.js | offscreen_images": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen_images": {
     "message": "[lazy-load WordPress செருகுநிரலை](https://wordpress.org/plugins/search/lazy+load/) நிறுவி திரைக்கு வெளியிலுள்ள படங்களைத் தேவையான போது ஏற்றும் திறனைப் பெறலாம் அல்லது அந்தத் திறன் கொண்ட தீமிற்கு மாறலாம். [AMP செருகுநிரலையும்](https://wordpress.org/plugins/amp/) பயன்படுத்திப் பார்க்கவும்."
   },
-  "stack-packs/packs/wordpress.js | render_blocking_resources": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "[முக்கியமான சொத்துகளை முன்னிலைப்படுத்தவோ](https://wordpress.org/plugins/search/critical+css/) [முக்கியத்துவம் குறைவான ஆதாரங்களைத் தவிர்க்கவோ](https://wordpress.org/plugins/search/defer+css+javascript/) உங்களுக்கு உதவக்கூடிய பல WordPress செருகுநிரல்கள் உள்ளன. இந்த செருகுநிரல்கள் வழங்கும் மேம்படுத்துதல்கள் உங்கள் தீமிலோ செருகுநிரலிலோ உள்ள அம்சத்தைப் பாதிக்கலாம். அதனால் நீங்கள் குறியீட்டில் சில மாற்றங்களை செய்ய வேண்டியிருக்கும்."
   },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | time_to_first_byte": {
     "message": "தீம்கள், செருகுநிரல்கள், சேவையக விவரக்குறிப்புகள் அனைத்தும் சேவையகத்தின் வேகத்தை நிர்ணயிக்கும். மேலும் மேம்படுத்தப்பட்ட தீமைக் கண்டறிந்து, மேம்படுத்தும் செருகுநிரலைக் கவனமாகத் தேர்ந்தெடுத்து மற்றும்/அல்லது சேவையகத்தை மேம்படுத்தவும்."
   },
-  "stack-packs/packs/wordpress.js | total_byte_weight": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "இடுகைப் பட்டியல்களில் முக்கியமான பகுதியை மட்டும் காட்டலாம் (உதாரணமாக மேலும் என்ற குறிச்சொல்லுடன்), பக்கத்தில் இடுகைகளின் எண்ணிக்கையைக் குறைக்கலாம், ஒரு பெரிய இடுகையைப் பல சின்ன பக்கங்களாகப் பிரிக்கலாம் அல்லது தேவையுள்ள போது மட்டும் கருத்துகளைச் செருகுநிரல்கள் மூலம் ஏற்றலாம்."
   },
-  "stack-packs/packs/wordpress.js | unminified_css": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | unminified_css": {
     "message": "பல [WordPress செருகுநிரல்கள்](https://wordpress.org/plugins/search/minify+css/) உங்கள் இணையதளத்தில் உள்ள ஸ்டைல்களை சிறிதாக்கியும், சுருக்கியும், ஒன்றிணைத்தும் அதை வேகப்படுத்த முடியும். முடிந்தால், ஸ்கிரிப்ட்களை முன்னதாகவே சிறிதாக்க பதிப்பு முறைமையைப் பயன்படுத்திப் பார்க்கலாம்."
   },
-  "stack-packs/packs/wordpress.js | unminified_javascript": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | unminified_javascript": {
     "message": "பல [WordPress செருகுநிரல்கள்](https://wordpress.org/plugins/search/minify+javascript/) உங்கள் இணையதளத்திலுள்ள ஸ்கிரிப்ட்களை சிறிதாக்கியும், சுருக்கியும், ஒன்றிணைத்தும் அதை வேகப்படுத்த முடியும். முடிந்தால், ஸ்கிரிப்ட்களை முன்னதாகவே சிறிதாக்க பதிப்பு முறைமையைப் பயன்படுத்திப் பார்க்கலாம்."
   },
-  "stack-packs/packs/wordpress.js | unused_css_rules": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | unused_css_rules": {
     "message": "உங்கள் பக்கத்தில் [WordPress செருகுநிரல்கள்](https://wordpress.org/plugins/) ஏற்றும் பயன்படுத்தப்படாத CSSஸின் எண்ணிக்கையைக் குறைக்கவும் அல்லது மாற்றிப் பார்க்கவும். Chrome DevToolsஸில் [குறியீட்டுக் கவரேஜ் ](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) என்பதை இயக்கி தேவையற்ற CSSஸை சேர்க்கும் செருகுநிரல்களைக் கண்டறியவும். ஸ்டைல்ஷீட்டின் URLலில் இதற்குக் காரணமான தீம்/செருகுநிரலைக் கண்டறியலாம். அதிகளவு சிவப்பில் உள்ள குறியீட்டுக் கவரேஜைக் கொண்ட பட்டியலில் பல ஸ்டைல்ஷீட்களைக் கொண்ட செருகுநிரல்களைக் கண்டறியவும். இணையப் பக்கத்தில் பயன்படுத்தும் பட்சத்தில் ஒரு செருகுநிரல் ஒரு ஸ்டைல்ஷீட்டை மட்டுமே வரிசையில் சேர்க்க வேண்டும்."
   },
-  "stack-packs/packs/wordpress.js | unused_javascript": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | unused_javascript": {
     "message": "உங்கள் பக்கத்தில் [WordPress செருகுநிரல்கள்](https://wordpress.org/plugins/) ஏற்றும் பயன்படுத்தப்படாத JavaScriptகளின் எண்ணிக்கையைக் குறைக்கவும் அல்லது மாற்றிப் பார்க்கவும். Chrome DevToolsஸில் [குறியீட்டுக் கவரேஜ் ](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) என்பதை இயக்கி தேவையற்ற JSகளைச் சேர்க்கும் செருகுநிரல்களைக் கண்டறியவும். ஸ்கிரிப்ட்டின் URLலில் இதற்குக் காரணமான தீம்/செருகுநிரலைக் கண்டறியலாம். அதிகளவு சிவப்பில் உள்ள குறியீட்டுக் கவரேஜைக் கொண்ட பட்டியலில் பல ஸ்கிரிப்ட்களைக் கொண்ட செருகுநிரல்களைக் கண்டறியவும். இணையப் பக்கத்தில் பயன்படுத்தும் பட்சத்தில் ஒரு செருகுநிரல் ஒரு ஸ்கிரிப்ட்டை மட்டுமே வரிசையில் சேர்க்க வேண்டும்."
   },
-  "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
     "message": "[WordPressஸில் உலாவியின் தற்காலிக சேமிப்பு](https://wordpress.org/support/article/optimization/#browser-caching) பற்றித் தெரிந்துகொள்ளவும்."
   },
-  "stack-packs/packs/wordpress.js | uses_optimized_images": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "[படங்களை மேம்படுத்தும் WordPress செருகுநிரலைப்](https://wordpress.org/plugins/search/optimize+images/) பயன்படுத்தி உங்கள் படங்களின் தரத்திற்குப் பாதிப்பு ஏற்படாமல் சுருக்கலாம்."
   },
-  "stack-packs/packs/wordpress.js | uses_responsive_images": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses_responsive_images": {
     "message": "[மீடியா லைப்ரரி](https://wordpress.org/support/article/media-library-screen/) மூலம் படத்தை நேரடியாகப் பதிவேற்றி சரியான அளவில் கிடைக்கிறதா என்று உறுதிப்படுத்திக் கொள்ளலாம். பிறகு மேம்படுத்தப்பட்ட அளவுகளில் (சிறப்பாகப் பதிலளிக்கும் புள்ளிகளுக்கும் ஏற்ற அளவுகளில்) படங்கள் பயன்படுத்தப்படுவதை உறுதி செய்ய மீடியா லைப்ரரியிலிருந்தோ பட விட்ஜெட்டைப் பயன்படுத்தியோ படங்களைச் செருகலாம். பயன்படுத்த ஏதுவான அளவுகள் உள்ளபோது மட்டுமே `Full Size` படங்களைப் பயன்படுத்தவும். [மேலும் அறிக](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
-  "stack-packs/packs/wordpress.js | uses_text_compression": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "இணையச் சேவையக உள்ளமைவில் உரை சுருக்குதலை இயக்கலாம்."
   },
-  "stack-packs/packs/wordpress.js | uses_webp_images": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses_webp_images": {
     "message": "நீங்கள் பதிவேற்றிய படங்களை மேம்படுத்தப்பட்ட வடிவமைப்புகளுக்குத் தானாக மாற்றும் ஒரு [செருகுநிரலையோ](https://wordpress.org/plugins/search/convert+webp/) சேவையையோ பயன்படுத்தவும்."
   }
 }
