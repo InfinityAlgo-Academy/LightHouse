@@ -20,7 +20,9 @@ describe('BundleAnalysis computed artifact', () => {
   it('collates script element, network record, and source map', async () => {
     const networkRecords = [{url: 'https://www.example.com/app.js'}];
     const artifacts = {
-      SourceMaps: [{scriptUrl: 'https://www.example.com/app.js', map: {sources: ['index.js']}}],
+      SourceMaps: [{
+        scriptUrl: 'https://www.example.com/app.js', map: {sources: ['index.js'], mappings: 'AAAA'},
+      }],
       ScriptElements: [{src: 'https://www.example.com/app.js', content: ''}],
       devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(networkRecords)},
     };
@@ -75,6 +77,10 @@ describe('BundleAnalysis computed artifact', () => {
         "sourceURL": "src/foo.js",
       }
     `);
+    expect(result.map.sourceLineMapping(
+      entry.sourceURL, entry.sourceLineNumber, entry.sourceColumnNumber)).toBe(entry);
+
+    expect(result.map.sourceLineMapping('bogus', 0, 0)).toBe(null);
   });
 
   it('works (simple map) (null source)', async () => {
@@ -120,6 +126,8 @@ describe('BundleAnalysis computed artifact', () => {
         "sourceURL": "src/foo.js",
       }
     `);
+    expect(result.map.sourceLineMapping(
+      entry.sourceURL, entry.sourceLineNumber, entry.sourceColumnNumber)).toBe(entry);
   });
 
   it('works (complex map)', async () => {
@@ -232,6 +240,8 @@ describe('BundleAnalysis computed artifact', () => {
         "sourceURL": "webpack:///./src/components/compress/index.tsx",
       }
     `);
+    expect(result.map.sourceLineMapping(
+      entry.sourceURL, entry.sourceLineNumber, entry.sourceColumnNumber)).toBe(entry);
   });
 
   it('handles faulty maps', async () => {
@@ -254,7 +264,8 @@ describe('BundleAnalysis computed artifact', () => {
       const context = {computedCache: new Map()};
       const results = await BundleAnalysis.request(artifacts, context);
       const result = results[0];
-      return {sizes: result.sizes, entry: result.map.findEntry(0, 644)};
+      const entry = result.map.findEntry(0, 644);
+      return {sizes: result.sizes, entry};
     }
 
     init();

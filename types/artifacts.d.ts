@@ -289,6 +289,18 @@ declare global {
         map?: undefined;
       }
 
+      export interface Bundle {
+        rawMap: RawSourceMap;
+        script: ScriptElement;
+        networkRecord?: NetworkRequest;
+        map: import('../lighthouse-core/lib/cdt/generated/SourceMap.js').TextSourceMap;
+        sizes: {
+          files: Record<string, number>;
+          unmappedBytes: number;
+          totalBytes: number;
+        };
+      }
+
       /** @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#Attributes */
       export interface AnchorElement {
         rel: string
