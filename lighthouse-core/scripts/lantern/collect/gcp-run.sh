@@ -31,5 +31,8 @@ source /home/lighthouse/.env
 # Run the collection
 DEBUG=1 node --max-old-space-size=4096 ./lighthouse-core/scripts/lantern/collect/collect.js
 
+# Create golden
+DEBUG=1 node --max-old-space-size=4096 ./lighthouse-core/scripts/lantern/collect/golden.js
+
 # Kill xvfb
 kill $!

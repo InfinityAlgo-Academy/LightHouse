@@ -35,4 +35,5 @@ echo "  $ sudo -u lighthouse tail -f /home/lighthouse/collect.log"
 
 echo "When complete run..."
 echo "  $ gcloud --project="$CLOUDSDK_CORE_PROJECT" compute scp lantern-collect-instance:/home/lighthouse/src/lighthouse/dist/collect-lantern-traces.zip ./collect-lantern-traces.zip"
+echo "  $ gcloud --project="$CLOUDSDK_CORE_PROJECT" compute scp lantern-collect-instance:/home/lighthouse/src/lighthouse/dist/golden-lantern-traces.zip ./golden-lantern-traces.zip"
 echo "  $ gcloud --project="$CLOUDSDK_CORE_PROJECT" compute instances delete lantern-collect-instance"
