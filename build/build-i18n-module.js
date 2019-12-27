@@ -21,5 +21,9 @@ browserify(generatorFilename, {standalone: 'Lighthouse.i18n'})
   .ignore(locales)
   .bundle((err, src) => {
     if (err) throw err;
-    fs.writeFileSync(bundleOutFile, src.toString());
+    const code = [
+      src.toString(),
+      'document.dispatchEvent(new Event("lighthouseModuleLoaded-i18n"));',
+    ].join('\n');
+    fs.writeFileSync(bundleOutFile, code);
   });

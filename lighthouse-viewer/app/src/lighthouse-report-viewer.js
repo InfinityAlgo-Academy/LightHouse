@@ -191,8 +191,9 @@ class LighthouseReportViewer {
       const features = new ViewerUIFeatures(dom, saveCallback);
       features.initFeatures(json);
       features.initSwapLocale({
-        async fetchData(localModuleName) {
-          const response = await fetch(`./locales/${localModuleName}.json`);
+        i18nModuleSrc: 'src/i18n-module.js',
+        async fetchData(localeModuleName) {
+          const response = await fetch(`./locales/${localeModuleName}.json`);
           return response.json();
         },
       });

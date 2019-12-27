@@ -141,7 +141,7 @@ class ReportUIFeatures {
   }
 
   /**
-   * @param {{fetchData: (localModuleName: string) => Promise<LhlMessages|undefined>}} options
+   * @param {{i18nModuleSrc: string, fetchData: (localeModuleName: string) => Promise<LhlMessages|undefined>}} options
    */
   initSwapLocale(options) {
     this._swapLocaleOptions = options;
@@ -444,7 +444,13 @@ class ReportUIFeatures {
 
         // TODO: esmodules would be nice here...
         // @ts-ignore
-        if (!window.Lighthouse || !window.Lighthouse.i18n) await import('./i18n-module.js');
+        if (!window.Lighthouse || !window.Lighthouse.i18n) {
+          const script = this._document.createElement('script');
+          script.src = this._swapLocaleOptions.i18nModuleSrc;
+          this._document.body.appendChild(script);
+          await new Promise(r =>
+            this._document.addEventListener('lighthouseModuleLoaded-i18n', r, {once: true}));
+        }
 
         // Waiting for UI :)
         const randomLocales = ['es', 'fr', 'vi', 'en-US'];
@@ -454,8 +460,8 @@ class ReportUIFeatures {
         // TODO: locales.js maps a locale code to a locale module. Need that same mapping,
         // but for locale code to locale module _name_, so that we can fetch w/ that same
         // name here.
-        const localModuleName = locale;
-        const lhlMessages = await this._swapLocaleOptions.fetchData(localModuleName);
+        const localeModuleName = locale;
+        const lhlMessages = await this._swapLocaleOptions.fetchData(localeModuleName);
         if (!lhlMessages) throw new Error(`could not fetch data for locale: ${locale}`);
 
         window.Lighthouse.i18n.registerLocaleData(locale, lhlMessages);
