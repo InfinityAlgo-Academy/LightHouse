@@ -141,7 +141,7 @@ class ReportUIFeatures {
   }
 
   /**
-   * @param {{fetchData: (localModuleName: string) => Promise<LhlMessages|undefined>, render: (report: LH.Result) => void}} options
+   * @param {{fetchData: (localModuleName: string) => Promise<LhlMessages|undefined>}} options
    */
   initSwapLocale(options) {
     this._swapLocaleOptions = options;
@@ -460,14 +460,24 @@ class ReportUIFeatures {
 
         window.Lighthouse.i18n.registerLocaleData(locale, lhlMessages);
         const newLhr = window.Lighthouse.i18n.swapLocale(this.json, locale).lhr;
-        this._swapLocaleOptions.render(newLhr);
-        this.initFeatures(newLhr);
-        this._enableSwapLocale();
+        this._refresh(newLhr);
         break;
       }
     }
 
     this._dropDown.close();
+  }
+
+  /**
+   * @param {LH.Result=} newLhr
+   */
+  _refresh(newLhr) {
+    this._document.dispatchEvent(new CustomEvent(ReportUIFeatures.Events.refreshLighthouseReport, {
+      detail: {
+        features: this,
+        newLhr,
+      },
+    }));
   }
 
   _print() {
@@ -834,6 +844,10 @@ class DropDown {
     return /** @type {HTMLElement} */ (this._getNextSelectableNode(nodes, startEl));
   }
 }
+
+ReportUIFeatures.Events = {
+  refreshLighthouseReport: 'refreshLighthouseReport',
+};
 
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = ReportUIFeatures;

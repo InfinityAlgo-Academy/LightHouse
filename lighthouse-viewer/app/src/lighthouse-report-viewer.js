@@ -195,11 +195,11 @@ class LighthouseReportViewer {
           const response = await fetch(`./locales/${localModuleName}.json`);
           return response.json();
         },
-        render(report) {
-          container.innerHTML = '';
-          renderer.renderReport(report, container);
-        },
       });
+      document.addEventListener(ViewerUIFeatures.Events.refreshLighthouseReport, e => {
+        // @ts-ignore
+        this._replaceReportHtml(e.detail.newLhr);
+      }, {once: true});
     } catch (e) {
       logger.error(`Error rendering report: ${e.message}`);
       dom.resetTemplates(); // TODO(bckenny): hack
