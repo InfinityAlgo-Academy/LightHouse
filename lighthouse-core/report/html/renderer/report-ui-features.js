@@ -25,6 +25,8 @@
 
 /* globals getFilenamePrefix Util */
 
+/** @typedef {import('../../../lib/i18n/locales').LhlMessages} LhlMessages */
+
 /**
  * @param {HTMLTableElement} tableEl
  * @return {Array<HTMLTableRowElement>}
@@ -136,6 +138,18 @@ class ReportUIFeatures {
         this._dom.find('.lh-metrics-toggle__input', this._document));
       toggleInputEl.checked = true;
     }
+  }
+
+  /**
+   * @param {{fetchData: (localModuleName: string) => Promise<LhlMessages|undefined>, render: (report: LH.Result) => void}} options
+   */
+  initSwapLocale(options) {
+    this._swapLocaleOptions = options;
+    this._enableSwapLocale();
+  }
+
+  _enableSwapLocale() {
+    this._dom.find('a[data-action="swap-locale"]', this._document).removeAttribute('disabled');
   }
 
   /**
@@ -375,7 +389,7 @@ class ReportUIFeatures {
    * Handler for tool button.
    * @param {Event} e
    */
-  onDropDownMenuClick(e) {
+  async onDropDownMenuClick(e) {
     e.preventDefault();
 
     const el = /** @type {?Element} */ (e.target);
@@ -423,6 +437,32 @@ class ReportUIFeatures {
       }
       case 'toggle-dark': {
         this._toggleDarkTheme();
+        break;
+      }
+      case 'swap-locale': {
+        if (!this._swapLocaleOptions) throw new Error('must call .initSwapLocale first');
+
+        // TODO: esmodules would be nice here...
+        // @ts-ignore
+        if (!window.Lighthouse || !window.Lighthouse.i18n) await import('./i18n-module.js');
+
+        // Waiting for UI :)
+        const randomLocales = ['es', 'fr', 'vi', 'en-US'];
+        window.__locale_index = window.__locale_index || 0;
+        const locale = randomLocales[window.__locale_index++ % randomLocales.length];
+
+        // TODO: locales.js maps a locale code to a locale module. Need that same mapping,
+        // but for locale code to locale module _name_, so that we can fetch w/ that same
+        // name here.
+        const localModuleName = locale;
+        const lhlMessages = await this._swapLocaleOptions.fetchData(localModuleName);
+        if (!lhlMessages) throw new Error(`could not fetch data for locale: ${locale}`);
+
+        window.Lighthouse.i18n.registerLocaleData(locale, lhlMessages);
+        const newLhr = window.Lighthouse.i18n.swapLocale(this.json, locale).lhr;
+        this._swapLocaleOptions.render(newLhr);
+        this.initFeatures(newLhr);
+        this._enableSwapLocale();
         break;
       }
     }

@@ -190,6 +190,16 @@ class LighthouseReportViewer {
 
       const features = new ViewerUIFeatures(dom, saveCallback);
       features.initFeatures(json);
+      features.initSwapLocale({
+        async fetchData(localModuleName) {
+          const response = await fetch(`./locales/${localModuleName}.json`);
+          return response.json();
+        },
+        render(report) {
+          container.innerHTML = '';
+          renderer.renderReport(report, container);
+        },
+      });
     } catch (e) {
       logger.error(`Error rendering report: ${e.message}`);
       dom.resetTemplates(); // TODO(bckenny): hack
