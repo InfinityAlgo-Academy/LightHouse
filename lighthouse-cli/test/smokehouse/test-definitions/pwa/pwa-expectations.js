@@ -5,23 +5,14 @@
  */
 'use strict';
 
-const pwaDetailsExpectations = {
-  isParseFailure: false,
-  hasStartUrl: true,
-  hasIconsAtLeast192px: true,
-  hasIconsAtLeast512px: true,
-  hasPWADisplayValue: true,
-  hasBackgroundColor: true,
-  hasThemeColor: true,
-  hasShortName: true,
-  hasName: true,
-};
+const pwaDetailsExpectations = require('./pwa-expectations-details.js');
 
 /**
+ * @type {Array<Smokehouse.ExpectedRunnerResult>}
  * Expected Lighthouse audit values for various sites with stable(ish) PWA
  * results.
  */
-module.exports = [
+const expectations = [
   {
     lhr: {
       requestedUrl: 'https://airhorner.com',
@@ -153,4 +144,4 @@ module.exports = [
   },
 ];
 
-module.exports.PWA_DETAILS_EXPECTATIONS = pwaDetailsExpectations;
+module.exports = expectations;
