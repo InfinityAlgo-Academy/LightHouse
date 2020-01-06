@@ -154,6 +154,7 @@ const defaultConfig = {
   },
   {
     passName: 'offlinePass',
+    loadFailureMode: 'ignore',
     gatherers: [
       'service-worker',
       'offline',
@@ -162,6 +163,7 @@ const defaultConfig = {
   },
   {
     passName: 'redirectPass',
+    loadFailureMode: 'warn',
     // Speed up the redirect pass by blocking stylesheets, fonts, and images
     blockedUrlPatterns: ['*.css', '*.jpg', '*.jpeg', '*.png', '*.gif', '*.svg', '*.ttf', '*.woff', '*.woff2'],
     gatherers: [

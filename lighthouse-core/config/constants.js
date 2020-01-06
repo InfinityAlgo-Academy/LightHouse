@@ -70,6 +70,7 @@ const defaultSettings = {
 /** @type {LH.Config.Pass} */
 const defaultPassConfig = {
   passName: 'defaultPass',
+  loadFailureMode: 'fatal',
   recordTrace: false,
   useThrottling: false,
   pauseAfterLoadMs: 0,

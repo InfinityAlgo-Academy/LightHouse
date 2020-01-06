@@ -502,6 +502,26 @@ describe('Config', () => {
     assert.equal(config.passes[0].recordTrace, false, 'turns off tracing if not needed');
   });
 
+  it('forces the first pass to have a fatal loadFailureMode', () => {
+    const warnings = [];
+    const saveWarning = evt => warnings.push(evt);
+    log.events.addListener('warning', saveWarning);
+    const config = new Config({
+      extends: true,
+      settings: {
+        onlyCategories: ['performance', 'pwa'],
+      },
+      passes: [
+        {passName: 'defaultPass', loadFailureMode: 'warn'},
+      ],
+    });
+
+    log.events.removeListener('warning', saveWarning);
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0][0]).toMatch(/loadFailureMode.*fatal/);
+    expect(config.passes[0]).toHaveProperty('loadFailureMode', 'fatal');
+  });
+
   it('filters works with extension', () => {
     const config = new Config({
       extends: true,

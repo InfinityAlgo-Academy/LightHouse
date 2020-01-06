@@ -211,8 +211,9 @@ class GatherRunner {
     const networkError = GatherRunner.getNetworkError(mainRecord);
     const interstitialError = GatherRunner.getInterstitialError(mainRecord, networkRecords);
 
-    // If the driver was offline, the load will fail without offline support. Ignore this case.
-    if (!passContext.driver.online) return;
+    // Check to see if we need to ignore the page load failure.
+    // e.g. When the driver is offline, the load will fail without page offline support.
+    if (passContext.passConfig.loadFailureMode === 'ignore') return;
 
     // We want to special-case the interstitial beyond FAILED_DOCUMENT_REQUEST. See https://github.com/GoogleChrome/lighthouse/pull/8865#issuecomment-497507618
     if (interstitialError) return interstitialError;
@@ -576,7 +577,7 @@ class GatherRunner {
         Object.assign(artifacts, passResults.artifacts);
 
         // If we encountered a pageLoadError, don't try to keep loading the page in future passes.
-        if (passResults.pageLoadError) {
+        if (passResults.pageLoadError && passConfig.loadFailureMode === 'fatal') {
           baseArtifacts.PageLoadError = passResults.pageLoadError;
           break;
         }

@@ -447,6 +447,7 @@ describe('GatherRunner', function() {
     };
     const passConfig = {
       passName: 'default',
+      loadFailureMode: 'ignore',
       recordTrace: true,
       useThrottling: true,
       gatherers: [],
@@ -529,6 +530,44 @@ describe('GatherRunner', function() {
     expect(artifacts.PageLoadError).toBeInstanceOf(Error);
     expect(artifacts.PageLoadError.code).toEqual('NO_FCP');
     expect(artifacts.TestGatherer).toBeUndefined();
+  });
+
+  it('succeeds when there is a navigation error but loadFailureMode was warn', async () => {
+    const requestedUrl = 'https://example.com';
+    // NO_FCP should be ignored because it's a warn pass.
+    const navigationError = new LHError(LHError.errors.NO_FCP);
+
+    const gotoUrlForAboutBlank = jest.fn().mockResolvedValue(null);
+    const gotoUrlForRealUrl = jest.fn()
+      .mockResolvedValueOnce(null)
+      .mockRejectedValueOnce(navigationError);
+    const driver = Object.assign({}, fakeDriver, {
+      online: true,
+      gotoURL: url => url.includes('blank') ? gotoUrlForAboutBlank() : gotoUrlForRealUrl(),
+      endDevtoolsLog() {
+        return networkRecordsToDevtoolsLog([{url: requestedUrl}]);
+      },
+    });
+
+    const config = new Config({
+      passes: [{passName: 'defaultPass', recordTrace: true}, {
+        loadFailureMode: 'warn',
+        recordTrace: true,
+        passName: 'nextPass',
+        gatherers: [{instance: new TestGatherer()}],
+      }],
+    });
+    const options = {
+      driver,
+      requestedUrl,
+      settings: config.settings,
+    };
+
+    const artifacts = await GatherRunner.run(config.passes, options);
+    expect(artifacts.LighthouseRunWarnings).toHaveLength(1);
+    expect(artifacts.PageLoadError).toEqual(null);
+    expect(artifacts.TestGatherer).toBeUndefined();
+    expect(artifacts.devtoolsLogs).toHaveProperty('pageLoadError-nextPass');
   });
 
   it('does not clear origin storage with flag --disable-storage-reset', () => {
@@ -1069,7 +1108,7 @@ describe('GatherRunner', function() {
     });
 
     it('passes when the page is loaded', () => {
-      const passContext = {url: 'http://the-page.com', driver: {online: true}};
+      const passContext = {url: 'http://the-page.com', passConfig: {loadFailureMode: 'fatal'}};
       const mainRecord = new NetworkRequest();
       const loadData = {networkRecords: [mainRecord]};
       mainRecord.url = passContext.url;
@@ -1080,15 +1119,15 @@ describe('GatherRunner', function() {
     it('passes when the page is loaded, ignoring any fragment', () => {
       const url = 'http://example.com/#/page/list';
       const mainRecord = new NetworkRequest();
-      const passContext = {url, driver: {online: true}};
+      const passContext = {url, passConfig: {loadFailureMode: 'fatal'}};
       const loadData = {networkRecords: [mainRecord]};
       mainRecord.url = 'http://example.com';
       const error = GatherRunner.getPageLoadError(passContext, loadData, undefined);
       expect(error).toBeUndefined();
     });
 
-    it('passes when the page is offline', () => {
-      const passContext = {url: 'http://the-page.com', driver: {online: false}};
+    it('passes when the page is expected to fail', () => {
+      const passContext = {url: 'http://the-page.com', passConfig: {loadFailureMode: 'ignore'}};
       const mainRecord = new NetworkRequest();
       const loadData = {networkRecords: [mainRecord]};
       mainRecord.url = passContext.url;
@@ -1099,7 +1138,7 @@ describe('GatherRunner', function() {
     });
 
     it('fails with interstitial error first', () => {
-      const passContext = {url: 'http://the-page.com', driver: {online: true}};
+      const passContext = {url: 'http://the-page.com', passConfig: {loadFailureMode: 'fatal'}};
       const mainRecord = new NetworkRequest();
       const interstitialRecord = new NetworkRequest();
       const loadData = {networkRecords: [mainRecord, interstitialRecord]};
@@ -1114,7 +1153,7 @@ describe('GatherRunner', function() {
     });
 
     it('fails with network error next', () => {
-      const passContext = {url: 'http://the-page.com', driver: {online: true}};
+      const passContext = {url: 'http://the-page.com', passConfig: {loadFailureMode: 'fatal'}};
       const mainRecord = new NetworkRequest();
       const loadData = {networkRecords: [mainRecord]};
 
@@ -1126,7 +1165,18 @@ describe('GatherRunner', function() {
     });
 
     it('fails with nav error last', () => {
-      const passContext = {url: 'http://the-page.com', driver: {online: true}};
+      const passContext = {url: 'http://the-page.com', passConfig: {loadFailureMode: 'fatal'}};
+      const mainRecord = new NetworkRequest();
+      const loadData = {networkRecords: [mainRecord]};
+
+      mainRecord.url = passContext.url;
+
+      const error = GatherRunner.getPageLoadError(passContext, loadData, navigationError);
+      expect(error.message).toEqual('NAVIGATION_ERROR');
+    });
+
+    it('fails when loadFailureMode is warn', () => {
+      const passContext = {url: 'http://the-page.com', passConfig: {loadFailureMode: 'warn'}};
       const mainRecord = new NetworkRequest();
       const loadData = {networkRecords: [mainRecord]};
 
