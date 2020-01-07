@@ -31,7 +31,6 @@ describe('ReportRenderer', () => {
   let sampleResults;
 
   beforeAll(() => {
-    global.URL = URL;
     global.Util = Util;
     global.I18n = I18n;
     global.ReportUIFeatures = ReportUIFeatures;
@@ -64,7 +63,6 @@ describe('ReportRenderer', () => {
 
   afterAll(() => {
     global.self = undefined;
-    global.URL = undefined;
     global.Util = undefined;
     global.I18n = undefined;
     global.ReportUIFeatures = undefined;

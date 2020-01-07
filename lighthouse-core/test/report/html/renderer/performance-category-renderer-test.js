@@ -29,7 +29,6 @@ describe('PerfCategoryRenderer', () => {
   let sampleResults;
 
   beforeAll(() => {
-    global.URL = URL;
     global.Util = Util;
     global.Util.i18n = new I18n('en', {...Util.UIStrings});
     global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
@@ -49,7 +48,6 @@ describe('PerfCategoryRenderer', () => {
   });
 
   afterAll(() => {
-    global.URL = undefined;
     global.Util.i18n = undefined;
     global.Util = undefined;
     global.CriticalRequestChainRenderer = undefined;

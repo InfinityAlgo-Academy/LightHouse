@@ -10,7 +10,6 @@ const fs = require('fs');
 
 const jsdom = require('jsdom');
 
-const URL = require('../../../../lib/url-shim.js');
 const prepareLabData = require('../../../../report/html/renderer/psi.js');
 const Util = require('../../../../report/html/renderer/util.js');
 const I18n = require('../../../../report/html/renderer/i18n.js');
@@ -36,7 +35,6 @@ const TEMPLATE_FILE = fs.readFileSync(
 describe('DOM', () => {
   let document;
   beforeAll(() => {
-    global.URL = URL; // COMPAT: Needed for Node < 10
     global.Util = Util;
     global.Util.i18n = new I18n('en', {...Util.UIStrings});
 
@@ -55,7 +53,6 @@ describe('DOM', () => {
   });
 
   afterAll(() => {
-    global.URL = undefined;
     global.Util.i18n = undefined;
     global.Util = undefined;
     global.DOM = undefined;
