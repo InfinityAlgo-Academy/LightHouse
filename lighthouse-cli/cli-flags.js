@@ -151,6 +151,7 @@ function getFlags(manualArgv) {
       .boolean([
         'disable-storage-reset', 'save-assets', 'list-all-audits',
         'list-trace-categories', 'view', 'verbose', 'quiet', 'help', 'print-config',
+        'chrome-ignore-default-flags',
       ])
       .choices('output', printer.getValidOutputOptions())
       .choices('emulated-form-factor', ['mobile', 'desktop', 'none'])

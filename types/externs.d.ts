@@ -148,6 +148,7 @@ declare global {
      */
     export interface CliFlags extends Flags {
       _: string[];
+      chromeIgnoreDefaultFlags: boolean;
       chromeFlags: string;
       /** Output path for the generated results. */
       outputPath: string;
