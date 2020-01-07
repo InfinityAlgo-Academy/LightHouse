@@ -5,6 +5,7 @@
  */
 
 import LHError = require('../lighthouse-core/lib/lh-error.js');
+import Util = require('../lighthouse-core/report/html/renderer/util.js');
 
 declare global {
   module LH {
@@ -17,9 +18,7 @@ declare global {
       [icuMessageId: string]: I18NMessageEntry[];
     }
 
-    export interface I18NRendererStrings {
-      [varName: string]: string;
-    }
+    export type I18NRendererStrings = typeof Util['UIStrings'];
 
     export interface Environment {
       /** The user agent string of the version of Chrome used. */

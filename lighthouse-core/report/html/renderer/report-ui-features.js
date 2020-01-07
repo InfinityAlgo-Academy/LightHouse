@@ -252,7 +252,7 @@ class ReportUIFeatures {
       this._dom.find('.lh-3p-filter-count', filterTemplate).textContent =
           `${thirdPartyRows.size}`;
       this._dom.find('.lh-3p-ui-string', filterTemplate).textContent =
-          Util.UIStrings.thirdPartyResourcesLabel;
+          Util.i18n.strings.thirdPartyResourcesLabel;
 
       // If all or none of the rows are 3rd party, disable the checkbox.
       if (thirdPartyRows.size === urlItems.length || !thirdPartyRows.size) {

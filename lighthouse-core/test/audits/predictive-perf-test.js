@@ -21,8 +21,9 @@ describe('Performance: predictive performance audit', () => {
         [PredictivePerf.DEFAULT_PASS]: acceptableDevToolsLog,
       },
     };
+    const context = {computedCache: new Map(), settings: {locale: 'en'}};
 
-    return PredictivePerf.audit(artifacts, {computedCache: new Map()}).then(output => {
+    return PredictivePerf.audit(artifacts, context).then(output => {
       const metrics = output.details.items[0];
       for (const [key, value] of Object.entries(metrics)) {
         metrics[key] = Math.round(value);

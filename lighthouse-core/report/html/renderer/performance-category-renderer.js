@@ -73,7 +73,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     const displayEl = this.dom.find('.lh-audit__display-text', element);
     const sparklineWidthPct = `${details.overallSavingsMs / scale * 100}%`;
     this.dom.find('.lh-sparkline__bar', element).style.width = sparklineWidthPct;
-    displayEl.textContent = Util.formatSeconds(details.overallSavingsMs, 0.01);
+    displayEl.textContent = Util.i18n.formatSeconds(details.overallSavingsMs, 0.01);
 
     // Set [title] tooltips
     if (audit.result.displayValue) {
@@ -112,6 +112,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
    * @override
    */
   render(category, groups, environment) {
+    const strings = Util.i18n.strings;
     const element = this.dom.createElement('div', 'lh-category');
     if (environment === 'PSI') {
       const gaugeEl = this.dom.createElement('div', 'lh-score__gauge');
@@ -148,7 +149,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     // 'Values are estimated and may vary' is used as the category description for PSI
     if (environment !== 'PSI') {
       const estValuesEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-metrics__disclaimer');
-      const disclaimerEl = this.dom.convertMarkdownLinkSnippets(Util.UIStrings.varianceDisclaimer);
+      const disclaimerEl = this.dom.convertMarkdownLinkSnippets(strings.varianceDisclaimer);
       estValuesEl.appendChild(disclaimerEl);
     }
 
@@ -194,9 +195,9 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       const tmpl = this.dom.cloneTemplate('#tmpl-lh-opportunity-header', this.templateContext);
 
       this.dom.find('.lh-load-opportunity__col--one', tmpl).textContent =
-        Util.UIStrings.opportunityResourceColumnLabel;
+        strings.opportunityResourceColumnLabel;
       this.dom.find('.lh-load-opportunity__col--two', tmpl).textContent =
-        Util.UIStrings.opportunitySavingsColumnLabel;
+        strings.opportunitySavingsColumnLabel;
 
       const headerEl = this.dom.find('.lh-load-opportunity__header', tmpl);
       groupEl.appendChild(headerEl);
