@@ -11,6 +11,12 @@ import Driver = require('../lighthouse-core/gather/driver');
 
 declare global {
   module LH.Gatherer {
+    export interface Meta {
+      /** The string identifier of the gatherer, LooksLikeThis. */
+      id: keyof GathererArtifacts;
+      description: string;
+    }
+
     export interface PassContext {
       /** The url of the currently loaded page. If the main document redirects, this will be updated to keep track. */
       url: string;

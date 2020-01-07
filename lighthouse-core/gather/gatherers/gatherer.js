@@ -19,11 +19,29 @@
  */
 class Gatherer {
   /**
+   * @return {LH.Gatherer.Meta}
+   */
+  static get meta() {
+    // throw new Error('Gatherer meta information must be overridden.');
+    return {
+      // @ts-ignore
+      id: undefined,
+      // @ts-ignore
+      description: undefined,
+    };
+  }
+
+  /**
    * @return {keyof LH.GathererArtifacts}
    */
   get name() {
     // @ts-ignore - assume that class name has been added to LH.GathererArtifacts.
-    return this.constructor.name;
+    return this.constructor.meta.id || this.constructor.name;
+  }
+
+  get description() {
+    // @ts-ignore
+    return this.constructor.meta.description || this.name;
   }
 
   /* eslint-disable no-unused-vars */

@@ -68,6 +68,16 @@ function runA11yChecks() {
 
 class Accessibility extends Gatherer {
   /**
+   * @return {LH.Gatherer.Meta}
+   */
+  static get meta() {
+    return {
+      id: 'Accessibility',
+      description: 'Using axe to collect accessibility data',
+    };
+  }
+
+  /**
    * @param {LH.Gatherer.PassContext} passContext
    * @return {Promise<LH.Artifacts.Accessibility>}
    */
