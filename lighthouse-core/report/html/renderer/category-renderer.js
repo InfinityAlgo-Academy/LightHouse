@@ -45,10 +45,10 @@ class CategoryRenderer {
    */
   get _clumpTitles() {
     return {
-      warning: Util.UIStrings.warningAuditsGroupTitle,
-      manual: Util.UIStrings.manualAuditsGroupTitle,
-      passed: Util.UIStrings.passedAuditsGroupTitle,
-      notApplicable: Util.UIStrings.notApplicableAuditsGroupTitle,
+      warning: Util.i18n.strings.warningAuditsGroupTitle,
+      manual: Util.i18n.strings.manualAuditsGroupTitle,
+      passed: Util.i18n.strings.passedAuditsGroupTitle,
+      notApplicable: Util.i18n.strings.notApplicableAuditsGroupTitle,
     };
   }
 
@@ -68,6 +68,7 @@ class CategoryRenderer {
    * @return {Element}
    */
   populateAuditValues(audit, tmpl) {
+    const strings = Util.i18n.strings;
     const auditEl = this.dom.find('.lh-audit', tmpl);
     auditEl.id = audit.result.id;
     const scoreDisplayMode = audit.result.scoreDisplayMode;
@@ -115,10 +116,10 @@ class CategoryRenderer {
     if (audit.result.scoreDisplayMode === 'error') {
       auditEl.classList.add(`lh-audit--error`);
       const textEl = this.dom.find('.lh-audit__display-text', auditEl);
-      textEl.textContent = Util.UIStrings.errorLabel;
+      textEl.textContent = strings.errorLabel;
       textEl.classList.add('tooltip-boundary');
       const tooltip = this.dom.createChildOf(textEl, 'div', 'tooltip tooltip--error');
-      tooltip.textContent = audit.result.errorMessage || Util.UIStrings.errorMissingAuditInfo;
+      tooltip.textContent = audit.result.errorMessage || strings.errorMissingAuditInfo;
     } else if (audit.result.explanation) {
       const explEl = this.dom.createChildOf(titleEl, 'div', 'lh-audit-explanation');
       explEl.textContent = audit.result.explanation;
@@ -128,7 +129,7 @@ class CategoryRenderer {
 
     // Add list of warnings or singular warning
     const warningsEl = this.dom.createChildOf(titleEl, 'div', 'lh-warnings');
-    this.dom.createChildOf(warningsEl, 'span').textContent = Util.UIStrings.warningHeader;
+    this.dom.createChildOf(warningsEl, 'span').textContent = strings.warningHeader;
     if (warnings.length === 1) {
       warningsEl.appendChild(this.dom.document().createTextNode(warnings.join('')));
     } else {
@@ -287,7 +288,7 @@ class CategoryRenderer {
 
     const summaryInnerEl = this.dom.find('.lh-audit-group__summary', clumpElement);
     const chevronEl = summaryInnerEl.appendChild(this._createChevron());
-    chevronEl.title = Util.UIStrings.auditGroupExpandTooltip;
+    chevronEl.title = Util.i18n.strings.auditGroupExpandTooltip;
 
     const headerEl = this.dom.find('.lh-audit-group__header', clumpElement);
     const title = this._clumpTitles[clumpId];
@@ -345,7 +346,7 @@ class CategoryRenderer {
     percentageEl.textContent = scoreOutOf100.toString();
     if (category.score === null) {
       percentageEl.textContent = '?';
-      percentageEl.title = Util.UIStrings.errorLabel;
+      percentageEl.title = Util.i18n.strings.errorLabel;
     }
 
     this.dom.find('.lh-gauge__label', tmpl).textContent = category.title;

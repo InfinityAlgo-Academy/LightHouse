@@ -44,6 +44,8 @@ class JsLibrariesAudit extends Audit {
   static audit(artifacts) {
     const libDetails = artifacts.Stacks
       .filter(stack => stack.detector === 'js')
+      // Don't show the fast paths in the table.
+      .filter(stack => !stack.id.endsWith('-fast'))
       .map(stack => ({
         name: stack.name,
         version: stack.version,
@@ -57,9 +59,22 @@ class JsLibrariesAudit extends Audit {
     ];
     const details = Audit.makeTableDetails(headings, libDetails, {});
 
+    const debugData = {
+      type: /** @type {'debugdata'} */ ('debugdata'),
+      stacks: artifacts.Stacks.map(stack => {
+        return {
+          id: stack.id,
+          version: stack.version,
+        };
+      }),
+    };
+
     return {
       score: 1, // Always pass for now.
-      details,
+      details: {
+        ...details,
+        debugData,
+      },
     };
   }
 }

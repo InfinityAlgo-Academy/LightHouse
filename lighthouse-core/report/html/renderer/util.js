@@ -93,12 +93,6 @@ class Util {
       }
     }
 
-    // Set locale for number/date formatting and grab localized renderer strings from the LHR.
-    Util.setNumberDateLocale(clone.configSettings.locale);
-    if (clone.i18n && clone.i18n.rendererFormattedStrings) {
-      Util.updateAllUIStrings(clone.i18n.rendererFormattedStrings);
-    }
-
     // For convenience, smoosh all AuditResults into their auditRef (which has just weight & group)
     if (typeof clone.categories !== 'object') throw new Error('No categories provided.');
     for (const category of Object.values(clone.categories)) {
@@ -123,17 +117,6 @@ class Util {
     }
 
     return clone;
-  }
-
-
-  /**
-   * @param {LH.I18NRendererStrings} rendererFormattedStrings
-   */
-  static updateAllUIStrings(rendererFormattedStrings) {
-    // TODO(i18n): don't mutate these here but on the LHR and pass that around everywhere
-    for (const [key, value] of Object.entries(rendererFormattedStrings)) {
-      Util.UIStrings[key] = value;
-    }
   }
 
   /**
@@ -182,101 +165,6 @@ class Util {
       rating = RATINGS.AVERAGE.label;
     }
     return rating;
-  }
-
-  /**
-   * Format number.
-   * @param {number} number
-   * @param {number=} granularity Number of decimal places to include. Defaults to 0.1.
-   * @return {string}
-   */
-  static formatNumber(number, granularity = 0.1) {
-    const coarseValue = Math.round(number / granularity) * granularity;
-    return Util.numberFormatter.format(coarseValue);
-  }
-
-  /**
-   * @param {number} size
-   * @param {number=} granularity Controls how coarse the displayed value is, defaults to .01
-   * @return {string}
-   */
-  static formatBytesToKB(size, granularity = 0.1) {
-    const kbs = Util.numberFormatter.format(Math.round(size / 1024 / granularity) * granularity);
-    return `${kbs}${NBSP}KB`;
-  }
-
-  /**
-   * @param {number} ms
-   * @param {number=} granularity Controls how coarse the displayed value is, defaults to 10
-   * @return {string}
-   */
-  static formatMilliseconds(ms, granularity = 10) {
-    const coarseTime = Math.round(ms / granularity) * granularity;
-    return `${Util.numberFormatter.format(coarseTime)}${NBSP}ms`;
-  }
-
-  /**
-   * @param {number} ms
-   * @param {number=} granularity Controls how coarse the displayed value is, defaults to 0.1
-   * @return {string}
-   */
-  static formatSeconds(ms, granularity = 0.1) {
-    const coarseTime = Math.round(ms / 1000 / granularity) * granularity;
-    return `${Util.numberFormatter.format(coarseTime)}${NBSP}s`;
-  }
-
-  /**
-   * Format time.
-   * @param {string} date
-   * @return {string}
-   */
-  static formatDateTime(date) {
-    /** @type {Intl.DateTimeFormatOptions} */
-    const options = {
-      month: 'short', day: 'numeric', year: 'numeric',
-      hour: 'numeric', minute: 'numeric', timeZoneName: 'short',
-    };
-    let formatter = new Intl.DateTimeFormat(Util.numberDateLocale, options);
-
-    // Force UTC if runtime timezone could not be detected.
-    // See https://github.com/GoogleChrome/lighthouse/issues/1056
-    const tz = formatter.resolvedOptions().timeZone;
-    if (!tz || tz.toLowerCase() === 'etc/unknown') {
-      options.timeZone = 'UTC';
-      formatter = new Intl.DateTimeFormat(Util.numberDateLocale, options);
-    }
-    return formatter.format(new Date(date));
-  }
-  /**
-   * Converts a time in milliseconds into a duration string, i.e. `1d 2h 13m 52s`
-   * @param {number} timeInMilliseconds
-   * @return {string}
-   */
-  static formatDuration(timeInMilliseconds) {
-    let timeInSeconds = timeInMilliseconds / 1000;
-    if (Math.round(timeInSeconds) === 0) {
-      return 'None';
-    }
-
-    /** @type {Array<string>} */
-    const parts = [];
-    const unitLabels = /** @type {Object<string, number>} */ ({
-      d: 60 * 60 * 24,
-      h: 60 * 60,
-      m: 60,
-      s: 1,
-    });
-
-    Object.keys(unitLabels).forEach(label => {
-      const unit = unitLabels[label];
-      const numberOfUnits = Math.floor(timeInSeconds / unit);
-      if (numberOfUnits > 0) {
-        timeInSeconds -= numberOfUnits * unit;
-        parts.push(`${numberOfUnits}\xa0${label}`);
-      }
-    });
-
-    return parts.join(' ');
   }
 
   /**
@@ -517,18 +405,18 @@ class Util {
         break;
       case 'devtools': {
         const {cpuSlowdownMultiplier, requestLatencyMs} = throttling;
-        cpuThrottling = `${Util.formatNumber(cpuSlowdownMultiplier)}x slowdown (DevTools)`;
-        networkThrottling = `${Util.formatNumber(requestLatencyMs)}${NBSP}ms HTTP RTT, ` +
-          `${Util.formatNumber(throttling.downloadThroughputKbps)}${NBSP}Kbps down, ` +
-          `${Util.formatNumber(throttling.uploadThroughputKbps)}${NBSP}Kbps up (DevTools)`;
+        cpuThrottling = `${Util.i18n.formatNumber(cpuSlowdownMultiplier)}x slowdown (DevTools)`;
+        networkThrottling = `${Util.i18n.formatNumber(requestLatencyMs)}${NBSP}ms HTTP RTT, ` +
+          `${Util.i18n.formatNumber(throttling.downloadThroughputKbps)}${NBSP}Kbps down, ` +
+          `${Util.i18n.formatNumber(throttling.uploadThroughputKbps)}${NBSP}Kbps up (DevTools)`;
         summary = 'Throttled Slow 4G network';
         break;
       }
       case 'simulate': {
         const {cpuSlowdownMultiplier, rttMs, throughputKbps} = throttling;
-        cpuThrottling = `${Util.formatNumber(cpuSlowdownMultiplier)}x slowdown (Simulated)`;
-        networkThrottling = `${Util.formatNumber(rttMs)}${NBSP}ms TCP RTT, ` +
-          `${Util.formatNumber(throughputKbps)}${NBSP}Kbps throughput (Simulated)`;
+        cpuThrottling = `${Util.i18n.formatNumber(cpuSlowdownMultiplier)}x slowdown (Simulated)`;
+        networkThrottling = `${Util.i18n.formatNumber(rttMs)}${NBSP}ms TCP RTT, ` +
+          `${Util.i18n.formatNumber(throughputKbps)}${NBSP}Kbps throughput (Simulated)`;
         summary = 'Simulated Slow 4G network';
         break;
       }
@@ -548,18 +436,6 @@ class Util {
       networkThrottling,
       summary: `${deviceEmulation}, ${summary}`,
     };
-  }
-
-  /**
-   * Set the locale to be used for Util's number and date formatting functions.
-   * @param {LH.Locale} locale
-   */
-  static setNumberDateLocale(locale) {
-    // When testing, use a locale with more exciting numeric formatting
-    if (locale === 'en-XA') locale = 'de';
-
-    Util.numberDateLocale = locale;
-    Util.numberFormatter = new Intl.NumberFormat(locale);
   }
 
   /**
@@ -612,21 +488,12 @@ class Util {
   }
 }
 
-/**
- * This value is updated on each run to the locale of the report
- * @type {LH.Locale}
- */
-Util.numberDateLocale = 'en';
-
-/**
- * This value stays in sync with Util.numberDateLocale.
- * @type {Intl.NumberFormat}
- */
-Util.numberFormatter = new Intl.NumberFormat(Util.numberDateLocale);
+/** @type {I18n} */
+// @ts-ignore: Is set in report renderer.
+Util.i18n = null;
 
 /**
  * Report-renderer-specific strings.
- * @type {LH.I18NRendererStrings}
  */
 Util.UIStrings = {
   /** Disclaimer shown to users below the metric values (First Contentful Paint, Time to Interactive, etc) to warn them that the numbers they see will likely change slightly the next time they run Lighthouse. */

@@ -2990,14 +2990,25 @@
             "npm": "jquery"
           },
           {
-            "name": "jQuery (Fast path)",
-            "npm": "jquery"
-          },
-          {
             "name": "WordPress"
           }
         ],
-        "summary": {}
+        "summary": {},
+        "debugData": {
+          "type": "debugdata",
+          "stacks": [
+            {
+              "id": "jquery",
+              "version": "2.1.1"
+            },
+            {
+              "id": "jquery-fast"
+            },
+            {
+              "id": "wordpress"
+            }
+          ]
+        }
       }
     },
     "notification-on-start": {

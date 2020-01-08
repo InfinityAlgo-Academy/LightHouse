@@ -11,7 +11,7 @@ const assert = require('assert');
 const fs = require('fs');
 const jsdom = require('jsdom');
 const Util = require('../../../../report/html/renderer/util.js');
-const URL = require('../../../../lib/url-shim.js');
+const I18n = require('../../../../report/html/renderer/i18n.js');
 const DOM = require('../../../../report/html/renderer/dom.js');
 const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
 const CriticalRequestChainRenderer = require(
@@ -27,8 +27,8 @@ describe('CategoryRenderer', () => {
   let sampleResults;
 
   beforeAll(() => {
-    global.URL = URL;
     global.Util = Util;
+    global.Util.i18n = new I18n('en', {...Util.UIStrings});
     global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
 
     const {document} = new jsdom.JSDOM(TEMPLATE_FILE).window;
@@ -40,7 +40,7 @@ describe('CategoryRenderer', () => {
   });
 
   afterAll(() => {
-    global.URL = undefined;
+    global.Util.i18n = undefined;
     global.Util = undefined;
     global.CriticalRequestChainRenderer = undefined;
   });

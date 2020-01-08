@@ -6,7 +6,7 @@
 'use strict';
 
 const Audit = require('./audit.js');
-const Util = require('../report/html/renderer/util.js');
+const I18n = require('../report/html/renderer/i18n.js');
 
 const LanternFcp = require('../computed/metrics/lantern-first-contentful-paint.js');
 const LanternFmp = require('../computed/metrics/lantern-first-meaningful-paint.js');
@@ -92,10 +92,12 @@ class PredictivePerf extends Audit {
       SCORING_MEDIAN
     );
 
+    const i18n = new I18n(context.settings.locale);
+
     return {
       score,
       numericValue: values.roughEstimateOfTTI,
-      displayValue: Util.formatMilliseconds(values.roughEstimateOfTTI),
+      displayValue: i18n.formatMilliseconds(values.roughEstimateOfTTI),
       details: {
         type: 'debugdata',
         // TODO: Consider not nesting values under `items`.

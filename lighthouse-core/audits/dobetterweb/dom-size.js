@@ -13,8 +13,8 @@
 'use strict';
 
 const Audit = require('../audit.js');
-const Util = require('../../report/html/renderer/util.js');
-const i18n = require('../../lib/i18n/i18n.js');
+const I18n = require('../../report/html/renderer/i18n.js');
+const i18n_ = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides detail on the size of the web page's DOM. The size of a DOM is characterized by the total number of DOM elements and greatest DOM depth. This descriptive title is shown to users when the amount is acceptable and no user action is required. */
@@ -44,8 +44,7 @@ const UIStrings = {
   statisticDOMWidth: 'Maximum Child Elements',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
-
+const str_ = i18n_.createMessageInstanceIdFn(__filename, UIStrings);
 
 class DOMSize extends Audit {
   /**
@@ -97,12 +96,14 @@ class DOMSize extends Audit {
       {key: 'value', itemType: 'numeric', text: str_(UIStrings.columnValue)},
     ];
 
+    const i18n = new I18n(context.settings.locale);
+
     /** @type {LH.Audit.Details.Table['items']} */
     const items = [
       {
         statistic: str_(UIStrings.statisticDOMElements),
         element: '',
-        value: Util.formatNumber(stats.totalBodyElements),
+        value: i18n.formatNumber(stats.totalBodyElements),
       },
       {
         statistic: str_(UIStrings.statisticDOMDepth),
@@ -110,7 +111,7 @@ class DOMSize extends Audit {
           type: 'code',
           value: stats.depth.snippet,
         },
-        value: Util.formatNumber(stats.depth.max),
+        value: i18n.formatNumber(stats.depth.max),
       },
       {
         statistic: str_(UIStrings.statisticDOMWidth),
@@ -118,7 +119,7 @@ class DOMSize extends Audit {
           type: 'code',
           value: stats.width.snippet,
         },
-        value: Util.formatNumber(stats.width.max),
+        value: i18n.formatNumber(stats.width.max),
       },
     ];
 

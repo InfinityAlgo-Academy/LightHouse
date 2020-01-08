@@ -25,6 +25,7 @@ declare global {
 
       export interface PassJson {
         passName: string;
+        loadFailureMode?: 'fatal'|'warn'|'ignore';
         recordTrace?: boolean;
         useThrottling?: boolean;
         pauseAfterLoadMs?: number;

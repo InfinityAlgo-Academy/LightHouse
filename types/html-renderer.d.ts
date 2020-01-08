@@ -9,6 +9,7 @@ import _CriticalRequestChainRenderer = require('../lighthouse-core/report/html/r
 import _SnippetRenderer = require('../lighthouse-core/report/html/renderer/snippet-renderer.js');
 import _DetailsRenderer = require('../lighthouse-core/report/html/renderer/details-renderer.js');
 import _DOM = require('../lighthouse-core/report/html/renderer/dom.js');
+import _I18n = require('../lighthouse-core/report/html/renderer/i18n.js');
 import _PerformanceCategoryRenderer = require('../lighthouse-core/report/html/renderer/performance-category-renderer.js');
 import _PwaCategoryRenderer = require('../lighthouse-core/report/html/renderer/pwa-category-renderer.js');
 import _ReportRenderer = require('../lighthouse-core/report/html/renderer/report-renderer.js');
@@ -24,6 +25,7 @@ declare global {
   var DetailsRenderer: typeof _DetailsRenderer;
   var DOM: typeof _DOM;
   var getFilenamePrefix: typeof _FileNamer.getFilenamePrefix;
+  var I18n: typeof _I18n;
   var PerformanceCategoryRenderer: typeof _PerformanceCategoryRenderer;
   var PwaCategoryRenderer: typeof _PwaCategoryRenderer;
   var ReportRenderer: typeof _ReportRenderer;
@@ -37,6 +39,7 @@ declare global {
     SnippetRenderer: typeof _SnippetRenderer;
     DetailsRenderer: typeof _DetailsRenderer;
     DOM: typeof _DOM;
+    I18n: typeof _I18n;
     PerformanceCategoryRenderer: typeof _PerformanceCategoryRenderer;
     PwaCategoryRenderer: typeof _PwaCategoryRenderer;
     ReportRenderer: typeof _ReportRenderer;

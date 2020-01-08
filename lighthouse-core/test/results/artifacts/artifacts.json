@@ -1840,7 +1840,7 @@
     },
     {
       "detector": "js",
-      "id": "jquery",
+      "id": "jquery-fast",
       "name": "jQuery (Fast path)",
       "npm": "jquery"
     },

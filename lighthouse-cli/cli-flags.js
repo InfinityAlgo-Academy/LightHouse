@@ -138,7 +138,7 @@ function getFlags(manualArgv) {
 
       .group(['output', 'output-path', 'view'], 'Output:')
       .describe({
-        'output': `Reporter for the results, supports multiple values`,
+        'output': `Reporter for the results, supports multiple values. choices: ${printer.getValidOutputOptions().map(s => `"${s}"`).join(', ')}`,
         'output-path': `The file path to output the results. Use 'stdout' to write to stdout.
   If using JSON output, default is stdout.
   If using HTML or CSV output, default is a file in the working directory with a name based on the test URL and date.
@@ -151,8 +151,8 @@ function getFlags(manualArgv) {
       .boolean([
         'disable-storage-reset', 'save-assets', 'list-all-audits',
         'list-trace-categories', 'view', 'verbose', 'quiet', 'help', 'print-config',
+        'chrome-ignore-default-flags',
       ])
-      .choices('output', printer.getValidOutputOptions())
       .choices('emulated-form-factor', ['mobile', 'desktop', 'none'])
       .choices('throttling-method', ['devtools', 'provided', 'simulate'])
       .choices('preset', ['perf', 'mixed-content'])

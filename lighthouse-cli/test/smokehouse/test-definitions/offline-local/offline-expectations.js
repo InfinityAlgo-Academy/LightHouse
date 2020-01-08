@@ -6,6 +6,7 @@
 'use strict';
 
 /**
+ * @type {Array<Smokehouse.ExpectedRunnerResult>}
  * Expected Lighthouse results from testing the defaut audits on local test
  * pages, one of which works offline with a service worker and one of which does
  * not.

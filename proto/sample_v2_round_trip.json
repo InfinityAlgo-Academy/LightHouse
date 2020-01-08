@@ -1176,6 +1176,21 @@
         "js-libraries": {
             "description": "All front-end JavaScript libraries detected on the page. [Learn more](https://web.dev/js-libraries).",
             "details": {
+                "debugData": {
+                    "stacks": [
+                        {
+                            "id": "jquery",
+                            "version": "2.1.1"
+                        },
+                        {
+                            "id": "jquery-fast"
+                        },
+                        {
+                            "id": "wordpress"
+                        }
+                    ],
+                    "type": "debugdata"
+                },
                 "headings": [
                     {
                         "itemType": "text",
@@ -1193,10 +1208,6 @@
                         "name": "jQuery",
                         "npm": "jquery",
                         "version": "2.1.1"
-                    },
-                    {
-                        "name": "jQuery (Fast path)",
-                        "npm": "jquery"
                     },
                     {
                         "name": "WordPress"
