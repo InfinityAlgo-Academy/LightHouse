@@ -88,6 +88,7 @@ describe('ReportUIFeatures', () => {
 
     dom = new DOM(document.window.document);
     sampleResults = Util.prepareReportResult(sampleResultsOrig);
+    render(sampleResults);
   });
 
   afterAll(() => {
