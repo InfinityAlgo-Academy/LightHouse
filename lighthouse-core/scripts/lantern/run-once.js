@@ -20,7 +20,7 @@ async function run() {
   const devtoolsLogs = {defaultPass: require(path.resolve(process.cwd(), process.argv[3]))};
   const artifacts = {traces, devtoolsLogs};
 
-  const context = {computedCache: new Map()};
+  const context = {computedCache: new Map(), settings: {locale: 'en-us'}};
   // @ts-ignore - We don't need the full artifacts
   const result = await PredictivePerf.audit(artifacts, context);
   process.stdout.write(JSON.stringify(result.details.items[0], null, 2));
