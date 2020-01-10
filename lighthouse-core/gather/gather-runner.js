@@ -56,11 +56,9 @@ class GatherRunner {
    * @return {Promise<{navigationError?: LH.LighthouseError}>}
    */
   static async loadPage(driver, passContext) {
-    const gatherers = passContext.passConfig.gatherers;
     const status = {
       msg: 'Loading page & waiting for onload',
       id: `lh:gather:loadPage-${passContext.passConfig.passName}`,
-      args: [gatherers.map(g => g.instance.name).join(', ')],
     };
     log.time(status);
     try {
@@ -628,6 +626,13 @@ class GatherRunner {
    * @return {Promise<{artifacts: Partial<LH.GathererArtifacts>, pageLoadError?: LHError}>}
    */
   static async runPass(passContext) {
+    const status = {
+      msg: `Running ${passContext.passConfig.passName} pass`,
+      id: `lh:gather:runPass-${passContext.passConfig.passName}`,
+      args: [passContext.passConfig.gatherers.map(g => g.instance.name).join(', ')],
+    };
+    log.time(status);
+
     /** @type {Partial<GathererResults>} */
     const gathererResults = {};
     const {driver, passConfig} = passContext;
@@ -660,6 +665,7 @@ class GatherRunner {
       GatherRunner._addLoadDataToBaseArtifacts(passContext, loadData,
           `pageLoadError-${passConfig.passName}`);
 
+      log.timeEnd(status);
       return {artifacts: {}, pageLoadError};
     }
 
@@ -668,7 +674,10 @@ class GatherRunner {
 
     // Run `afterPass()` on gatherers and return collected artifacts.
     await GatherRunner.afterPass(passContext, loadData, gathererResults);
-    return GatherRunner.collectArtifacts(gathererResults);
+    const artifacts = GatherRunner.collectArtifacts(gathererResults);
+
+    log.timeEnd(status);
+    return artifacts;
   }
 }
 
