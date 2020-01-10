@@ -65,7 +65,7 @@ class UnusedBytes extends Audit {
    *
    * @param {LH.Artifacts.NetworkRequest=} networkRecord
    * @param {number} totalBytes Uncompressed size of the resource
-   * @param {LH.Crdp.Page.ResourceType=} resourceType
+   * @param {LH.Crdp.Network.ResourceType=} resourceType
    * @return {number}
    */
   static estimateTransferSize(networkRecord, totalBytes, resourceType) {

@@ -18,7 +18,7 @@ class ResourceSummary {
    */
   static determineResourceType(record) {
     if (!record.resourceType) return 'other';
-    /** @type {Partial<Record<LH.Crdp.Page.ResourceType, LH.Budget.ResourceType>>} */
+    /** @type {Partial<Record<LH.Crdp.Network.ResourceType, LH.Budget.ResourceType>>} */
     const requestToResourceType = {
       'Stylesheet': 'stylesheet',
       'Image': 'image',
