@@ -8,11 +8,11 @@
 const Driver = require('../../gather/driver.js');
 const Connection = require('../../gather/connections/connection.js');
 const LHElement = require('../../lib/lh-element.js');
-const EventEmitter = require('events').EventEmitter;
 const {protocolGetVersionResponse} = require('./fake-driver.js');
 const {createMockSendCommandFn, createMockOnceFn} = require('./mock-commands.js');
 
-const redirectDevtoolsLog = require('../fixtures/wikipedia-redirect.devtoolslog.json');
+const redirectDevtoolsLog = /** @type {LH.Protocol.RawEventMessage[]} */ (
+  require('../fixtures/wikipedia-redirect.devtoolslog.json'));
 
 /* eslint-env jest */
 
@@ -23,12 +23,13 @@ jest.useFakeTimers();
  *
  * @template T
  * @param {Promise<T>} promise
- * @return {Promise<T> & {isDone: () => boolean, isResolved: () => boolean, isRejected: () => boolean}}
  */
 function makePromiseInspectable(promise) {
   let isResolved = false;
   let isRejected = false;
+  /** @type {T=} */
   let resolvedValue = undefined;
+  /** @type {any=} */
   let rejectionError = undefined;
   const inspectablePromise = promise.then(value => {
     isResolved = true;
@@ -40,12 +41,51 @@ function makePromiseInspectable(promise) {
     throw err;
   });
 
-  inspectablePromise.isDone = () => isResolved || isRejected;
-  inspectablePromise.isResolved = () => isResolved;
-  inspectablePromise.isRejected = () => isRejected;
-  inspectablePromise.getDebugValues = () => ({resolvedValue, rejectionError});
+  return Object.assign(inspectablePromise, {
+    isDone() {
+      return isResolved || isRejected;
+    },
+    isResolved() {
+      return isResolved;
+    },
+    isRejected() {
+      return isRejected;
+    },
+    getDebugValues() {
+      return {resolvedValue, rejectionError};
+    },
+  });
+}
 
-  return inspectablePromise;
+function createDecomposedPromise() {
+  /** @type {Function} */
+  let resolve;
+  /** @type {Function} */
+  let reject;
+  const promise = new Promise((r1, r2) => {
+    resolve = r1;
+    reject = r2;
+  });
+  // @ts-ignore: Ignore 'unused' error.
+  return {promise, resolve, reject};
+}
+
+function createMockWaitForFn() {
+  const {promise, resolve, reject} = createDecomposedPromise();
+
+  const mockCancelFn = jest.fn();
+  const mockFn = jest.fn().mockReturnValue({promise, cancel: mockCancelFn});
+
+  return Object.assign(mockFn, {
+    mockResolve: resolve,
+    /** @param {Error=} err */
+    mockReject(err) {
+      reject(err || new Error('Rejected'));
+    },
+    getMockCancelFn() {
+      return mockCancelFn;
+    },
+  });
 }
 
 expect.extend({
@@ -53,7 +93,7 @@ expect.extend({
    * Asserts that an inspectable promise created by makePromiseInspectable is currently resolved or rejected.
    * This is useful for situations where we want to test that we are actually waiting for a particular event.
    *
-   * @param {ReturnType<makePromiseInspectable>} received
+   * @param {ReturnType<typeof makePromiseInspectable>} received
    * @param {string} failureMessage
    */
   toBeDone(received, failureMessage) {
@@ -81,14 +121,33 @@ async function flushAllTimersAndMicrotasks(ms = 1000) {
   }
 }
 
+/**
+ * @typedef DriverMockMethods
+ * @property {ReturnType<typeof createMockOnceFn>} on
+ * @property {ReturnType<typeof createMockOnceFn>} once
+ * @property {ReturnType<typeof createMockWaitForFn>} _waitForFCP
+ * @property {ReturnType<typeof createMockWaitForFn>} _waitForLoadEvent
+ * @property {ReturnType<typeof createMockWaitForFn>} _waitForNetworkIdle
+ * @property {ReturnType<typeof createMockWaitForFn>} _waitForCPUIdle
+ * @property {(...args: RecursivePartial<Parameters<Driver['gotoURL']>>) => ReturnType<Driver['gotoURL']>} gotoURL
+ * @property {(...args: RecursivePartial<Parameters<Driver['goOnline']>>) => ReturnType<Driver['goOnline']>} goOnline
+*/
+
+/** @typedef {Driver & DriverMockMethods} TestDriver */
+
+/** @type {TestDriver} */
 let driver;
+/** @type {Connection & {sendCommand: ReturnType<typeof createMockSendCommandFn>}} */
 let connectionStub;
 
 beforeEach(() => {
+  // @ts-ignore - connectionStub has a mocked version of sendCommand implemented in each test
   connectionStub = new Connection();
+  // @ts-ignore
   connectionStub.sendCommand = cmd => {
     throw new Error(`${cmd} not implemented`);
   };
+  // @ts-ignore - driver has a mocked version of on/once implemented in each test
   driver = new Driver(connectionStub);
 });
 
@@ -104,7 +163,7 @@ describe('.querySelector(All)', () => {
 
   it('returns element instance when DOM.querySelector finds a node', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
-    .mockResponse('DOM.getDocument', {root: {nodeId: 249}})
+      .mockResponse('DOM.getDocument', {root: {nodeId: 249}})
       .mockResponse('DOM.querySelector', {nodeId: 231});
 
     const result = await driver.querySelector('meta head');
@@ -113,7 +172,7 @@ describe('.querySelector(All)', () => {
 
   it('returns [] when DOM.querySelectorAll finds no node', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
-    .mockResponse('DOM.getDocument', {root: {nodeId: 249}})
+      .mockResponse('DOM.getDocument', {root: {nodeId: 249}})
       .mockResponse('DOM.querySelectorAll', {nodeIds: []});
 
     const result = await driver.querySelectorAll('#no.matches');
@@ -122,7 +181,7 @@ describe('.querySelector(All)', () => {
 
   it('returns element when DOM.querySelectorAll finds node', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
-    .mockResponse('DOM.getDocument', {root: {nodeId: 249}})
+      .mockResponse('DOM.getDocument', {root: {nodeId: 249}})
       .mockResponse('DOM.querySelectorAll', {nodeIds: [231]});
 
     const result = await driver.querySelectorAll('#no.matches');
@@ -168,6 +227,7 @@ describe('.getRequestContent', () => {
   it('throws if getRequestContent takes too long', async () => {
     const mockTimeout = 5000;
     const driverTimeout = 1000;
+    // @ts-ignore
     connectionStub.sendCommand = jest.fn()
       .mockImplementation(() => new Promise(r => setTimeout(r, mockTimeout)));
 
@@ -227,7 +287,7 @@ describe('.evaluateAsync', () => {
 
   it('evaluates an expression in isolation', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: 1337}}})
+      .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: '1337'}}})
       .mockResponse('Page.createIsolatedWorld', {executionContextId: 1})
       .mockResponse('Runtime.evaluate', {result: {value: 2}});
 
@@ -236,15 +296,14 @@ describe('.evaluateAsync', () => {
 
     // Check that we used the correct frame when creating the isolated context
     const createWorldArgs = connectionStub.sendCommand.findInvocation('Page.createIsolatedWorld');
-    expect(createWorldArgs).toMatchObject({frameId: 1337});
+    expect(createWorldArgs).toMatchObject({frameId: '1337'});
 
     // Check that we used the isolated context when evaluating
     const evaluateArgs = connectionStub.sendCommand.findInvocation('Runtime.evaluate');
     expect(evaluateArgs).toMatchObject({contextId: 1});
 
     // Make sure we cached the isolated context from last time
-    connectionStub.sendCommand = createMockSendCommandFn().mockResponse(
-      'Runtime.evaluate',
+    connectionStub.sendCommand = createMockSendCommandFn().mockResponse('Runtime.evaluate',
       {result: {value: 2}}
     );
     await driver.evaluateAsync('1 + 1', {useIsolation: true});
@@ -256,10 +315,10 @@ describe('.evaluateAsync', () => {
 
   it('recovers from isolation failures', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: 1337}}})
+      .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: '1337'}}})
       .mockResponse('Page.createIsolatedWorld', {executionContextId: 9001})
       .mockResponse('Runtime.evaluate', Promise.reject(new Error('Cannot find context')))
-      .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: 1337}}})
+      .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: '1337'}}})
       .mockResponse('Page.createIsolatedWorld', {executionContextId: 9002})
       .mockResponse('Runtime.evaluate', {result: {value: 'mocked value'}});
 
@@ -271,6 +330,7 @@ describe('.evaluateAsync', () => {
 describe('.sendCommand', () => {
   it('.sendCommand timesout when commands take too long', async () => {
     const mockTimeout = 5000;
+    // @ts-ignore
     connectionStub.sendCommand = jest.fn()
       .mockImplementation(() => new Promise(r => setTimeout(r, mockTimeout)));
 
@@ -294,8 +354,8 @@ describe('.beginTrace', () => {
   beforeEach(() => {
     connectionStub.sendCommand = createMockSendCommandFn()
       .mockResponse('Browser.getVersion', protocolGetVersionResponse)
-      .mockResponse('Page.enable', {})
-      .mockResponse('Tracing.start', {});
+      .mockResponse('Page.enable')
+      .mockResponse('Tracing.start');
   });
 
   it('will request default traceCategories', async () => {
@@ -320,8 +380,8 @@ describe('.beginTrace', () => {
   it('will adjust traceCategories based on chrome version', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
       .mockResponse('Browser.getVersion', {product: 'Chrome/70.0.3577.0'})
-      .mockResponse('Page.enable', {})
-      .mockResponse('Tracing.start', {});
+      .mockResponse('Page.enable')
+      .mockResponse('Tracing.start');
 
     await driver.beginTrace();
 
@@ -334,10 +394,8 @@ describe('.beginTrace', () => {
 
 describe('.setExtraHTTPHeaders', () => {
   it('should Network.setExtraHTTPHeaders when there are extra-headers', async () => {
-    connectionStub.sendCommand = createMockSendCommandFn().mockResponse(
-      'Network.setExtraHTTPHeaders',
-      {}
-    );
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('Network.setExtraHTTPHeaders');
 
     await driver.setExtraHTTPHeaders({
       'Cookie': 'monster',
@@ -351,10 +409,9 @@ describe('.setExtraHTTPHeaders', () => {
     );
   });
 
-  it('should Network.setExtraHTTPHeaders when there are extra-headers', async () => {
+  it('should not call Network.setExtraHTTPHeaders when there are not extra-headers', async () => {
     connectionStub.sendCommand = createMockSendCommandFn();
-    await driver.setExtraHTTPHeaders();
-
+    await driver.setExtraHTTPHeaders(null);
     expect(connectionStub.sendCommand).not.toHaveBeenCalled();
   });
 });
@@ -398,8 +455,8 @@ describe('.getAppManifest', () => {
 describe('.goOffline', () => {
   it('should send offline emulation', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Network.enable', {})
-      .mockResponse('Network.emulateNetworkConditions', {});
+      .mockResponse('Network.enable')
+      .mockResponse('Network.emulateNetworkConditions');
 
     await driver.goOffline();
     const emulateArgs = connectionStub.sendCommand
@@ -414,39 +471,21 @@ describe('.goOffline', () => {
 });
 
 describe('.gotoURL', () => {
-  function createMockWaitForFn() {
-    let resolve;
-    let reject;
-    const promise = new Promise((r1, r2) => {
-      resolve = r1;
-      reject = r2;
-    });
-
-    const mockCancelFn = jest.fn();
-    const mockFn = jest.fn().mockReturnValue({promise, cancel: mockCancelFn});
-
-    mockFn.mockResolve = () => resolve();
-    mockFn.mockReject = err => reject(err || new Error('Rejected'));
-    mockFn.getMockCancelFn = () => mockCancelFn;
-
-    return mockFn;
-  }
-
   beforeEach(() => {
     connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Network.enable', {})
-      .mockResponse('Page.enable', {})
-      .mockResponse('Page.setLifecycleEventsEnabled', {})
-      .mockResponse('Emulation.setScriptExecutionDisabled', {})
-      .mockResponse('Page.navigate', {})
-      .mockResponse('Target.setAutoAttach', {})
-      .mockResponse('Runtime.evaluate', {});
+      .mockResponse('Network.enable')
+      .mockResponse('Page.enable')
+      .mockResponse('Page.setLifecycleEventsEnabled')
+      .mockResponse('Emulation.setScriptExecutionDisabled')
+      .mockResponse('Page.navigate')
+      .mockResponse('Target.setAutoAttach')
+      .mockResponse('Runtime.evaluate');
   });
 
   it('will track redirects through gotoURL load', async () => {
-    const delay = _ => new Promise(resolve => setTimeout(resolve));
+    const delay = () => new Promise(resolve => setTimeout(resolve));
 
-    class ReplayConnection extends EventEmitter {
+    class ReplayConnection extends Connection {
       connect() {
         return Promise.resolve();
       }
@@ -454,9 +493,13 @@ describe('.gotoURL', () => {
         return Promise.resolve();
       }
       replayLog() {
-        redirectDevtoolsLog.forEach(msg => this.emit('protocolevent', msg));
+        redirectDevtoolsLog.forEach(msg => this.emitProtocolEvent(msg));
       }
-      sendCommand(method) {
+      /**
+       * @param {string} method
+       * @param {any} _
+       */
+      sendCommand(method, _) {
         const resolve = Promise.resolve();
 
         // If navigating, wait, then replay devtools log in parallel to resolve.
@@ -468,7 +511,8 @@ describe('.gotoURL', () => {
       }
     }
     const replayConnection = new ReplayConnection();
-    const driver = new Driver(replayConnection);
+
+    const driver = /** @type {TestDriver} */ (new Driver(replayConnection));
 
     // Redirect in log will go through
     const startUrl = 'http://en.wikipedia.org/';
@@ -486,7 +530,6 @@ describe('.gotoURL', () => {
         },
       },
     };
-
     const loadPromise = driver.gotoURL(startUrl, loadOptions);
 
     await flushAllTimersAndMicrotasks();
@@ -527,6 +570,7 @@ describe('.gotoURL', () => {
         driver._waitForNetworkIdle = createMockWaitForFn();
         driver._waitForCPUIdle = createMockWaitForFn();
 
+        // @ts-ignore - dynamic property access, tests will definitely fail if the property were to change
         const waitForResult = driver[`_waitFor${name}`];
         const otherWaitForResults = [
           driver._waitForFCP,
@@ -685,23 +729,34 @@ describe('._waitForFCP', () => {
 describe('.assertNoSameOriginServiceWorkerClients', () => {
   beforeEach(() => {
     connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('ServiceWorker.enable', {})
-      .mockResponse('ServiceWorker.disable', {})
-      .mockResponse('ServiceWorker.enable', {})
-      .mockResponse('ServiceWorker.disable', {});
+      .mockResponse('ServiceWorker.enable')
+      .mockResponse('ServiceWorker.disable')
+      .mockResponse('ServiceWorker.enable')
+      .mockResponse('ServiceWorker.disable');
   });
 
+  /**
+   * @param {number} id
+   * @param {string} url
+   * @param {boolean=} isDeleted
+   */
   function createSWRegistration(id, url, isDeleted) {
     return {
       isDeleted: !!isDeleted,
-      registrationId: id,
+      registrationId: String(id),
       scopeURL: url,
     };
   }
 
+  /**
+   * @param {number} id
+   * @param {string} url
+   * @param {string[]} controlledClients
+   * @param {LH.Crdp.ServiceWorker.ServiceWorkerVersionStatus=} status
+   */
   function createActiveWorker(id, url, controlledClients, status = 'activated') {
     return {
-      registrationId: id,
+      registrationId: String(id),
       scriptURL: url,
       controlledClients,
       status,
@@ -804,9 +859,9 @@ describe('.assertNoSameOriginServiceWorkerClients', () => {
 describe('.goOnline', () => {
   beforeEach(() => {
     connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Network.enable', {})
-      .mockResponse('Emulation.setCPUThrottlingRate', {})
-      .mockResponse('Network.emulateNetworkConditions', {});
+      .mockResponse('Network.enable')
+      .mockResponse('Emulation.setCPUThrottlingRate')
+      .mockResponse('Network.emulateNetworkConditions');
   });
 
   it('re-establishes previous throttling settings', async () => {
@@ -882,22 +937,22 @@ describe('Domain.enable/disable State', () => {
       .mockResponse('Fetch.enable')
       .mockResponse('Fetch.disable');
 
-    await driver.sendCommand('Network.enable', {});
-    await driver.sendCommand('Network.enable', {});
+    await driver.sendCommand('Network.enable');
+    await driver.sendCommand('Network.enable');
     expect(connectionStub.sendCommand).toHaveBeenCalledTimes(1);
 
-    await driver.sendCommand('Network.disable', {});
+    await driver.sendCommand('Network.disable');
     expect(connectionStub.sendCommand).toHaveBeenCalledTimes(1);
     // Network still has one enable.
 
-    await driver.sendCommand('Fetch.enable', {});
+    await driver.sendCommand('Fetch.enable');
     expect(connectionStub.sendCommand).toHaveBeenCalledTimes(2);
 
-    await driver.sendCommand('Network.disable', {});
+    await driver.sendCommand('Network.disable');
     expect(connectionStub.sendCommand).toHaveBeenCalledTimes(3);
     // Network is now disabled.
 
-    await driver.sendCommand('Fetch.disable', {});
+    await driver.sendCommand('Fetch.disable');
     expect(connectionStub.sendCommand).toHaveBeenCalledTimes(4);
   });
 
@@ -908,24 +963,24 @@ describe('Domain.enable/disable State', () => {
       .mockResponse('Network.disable')
       .mockResponseToSession('Network.disable', '123');
 
-    await driver.sendCommand('Network.enable', {});
-    await driver.sendCommandToSession('Network.enable', '123', {});
+    await driver.sendCommand('Network.enable');
+    await driver.sendCommandToSession('Network.enable', '123');
     expect(connectionStub.sendCommand).toHaveBeenCalledTimes(2);
 
-    await driver.sendCommand('Network.enable', {});
-    await driver.sendCommandToSession('Network.enable', '123', {});
+    await driver.sendCommand('Network.enable');
+    await driver.sendCommandToSession('Network.enable', '123');
     expect(connectionStub.sendCommand).toHaveBeenCalledTimes(2);
 
-    await driver.sendCommandToSession('Network.disable', '123', {});
+    await driver.sendCommandToSession('Network.disable', '123');
     expect(connectionStub.sendCommand).toHaveBeenCalledTimes(2);
 
-    await driver.sendCommand('Network.disable', {});
+    await driver.sendCommand('Network.disable');
     expect(connectionStub.sendCommand).toHaveBeenCalledTimes(2);
 
-    await driver.sendCommandToSession('Network.disable', '123', {});
+    await driver.sendCommandToSession('Network.disable', '123');
     expect(connectionStub.sendCommand).toHaveBeenCalledTimes(3);
 
-    await driver.sendCommand('Network.disable', {});
+    await driver.sendCommand('Network.disable');
     expect(connectionStub.sendCommand).toHaveBeenCalledTimes(4);
   });
 });
@@ -933,12 +988,13 @@ describe('Domain.enable/disable State', () => {
 describe('Multi-target management', () => {
   it('enables the Network domain for iframes', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponseToSession('Network.enable', '123', {})
-      .mockResponseToSession('Target.setAutoAttach', '123', {})
-      .mockResponseToSession('Runtime.runIfWaitingForDebugger', '123', {});
+      .mockResponseToSession('Network.enable', '123')
+      .mockResponseToSession('Target.setAutoAttach', '123')
+      .mockResponseToSession('Runtime.runIfWaitingForDebugger', '123');
 
     driver._eventEmitter.emit('Target.attachedToTarget', {
       sessionId: '123',
+      // @ts-ignore: Ignore partial targetInfo.
       targetInfo: {type: 'iframe'},
     });
     await flushAllTimersAndMicrotasks();
@@ -952,10 +1008,11 @@ describe('Multi-target management', () => {
 
   it('ignores other target types, but still resumes them', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Target.sendMessageToTarget', {});
+      .mockResponse('Target.sendMessageToTarget');
 
     driver._eventEmitter.emit('Target.attachedToTarget', {
       sessionId: 'SW1',
+      // @ts-ignore: Ignore partial targetInfo.
       targetInfo: {type: 'service_worker'},
     });
     await flushAllTimersAndMicrotasks();

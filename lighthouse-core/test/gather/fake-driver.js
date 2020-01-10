@@ -5,6 +5,9 @@
  */
 'use strict';
 
+/**
+ * @param {{protocolGetVersionResponse: LH.CrdpCommands['Browser.getVersion']['returnType']}} param0
+ */
 function makeFakeDriver({protocolGetVersionResponse}) {
   let scrollPosition = {x: 0, y: 0};
 
@@ -59,6 +62,7 @@ function makeFakeDriver({protocolGetVersionResponse}) {
     evaluateAsync() {
       return Promise.resolve({});
     },
+    /** @param {{x: number, y: number}} position */
     scrollTo(position) {
       scrollPosition = position;
       return Promise.resolve();
@@ -73,13 +77,15 @@ function makeFakeDriver({protocolGetVersionResponse}) {
       return Promise.resolve();
     },
     endTrace() {
-      return Promise.resolve(
-      require('../fixtures/traces/progressive-app.json')
-      );
+      // Minimal indirection so TypeScript doesn't crash trying to infer a type.
+      const modulePath = '../fixtures/traces/progressive-app.json';
+      return Promise.resolve(require(modulePath));
     },
     beginDevtoolsLog() {},
     endDevtoolsLog() {
-      return require('../fixtures/artifacts/perflog/defaultPass.devtoolslog.json');
+      // Minimal indirection so TypeScript doesn't crash trying to infer a type.
+      const modulePath = '../fixtures/artifacts/perflog/defaultPass.devtoolslog.json';
+      return require(modulePath);
     },
     blockUrlPatterns() {
       return Promise.resolve();
@@ -109,6 +115,8 @@ const fakeDriverUsingRealMobileDevice = makeFakeDriver({
   },
 });
 
-module.exports = fakeDriver;
-module.exports.fakeDriverUsingRealMobileDevice = fakeDriverUsingRealMobileDevice;
-module.exports.protocolGetVersionResponse = protocolGetVersionResponse;
+module.exports = {
+  ...fakeDriver,
+  fakeDriverUsingRealMobileDevice,
+  protocolGetVersionResponse,
+};

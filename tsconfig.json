@@ -24,5 +24,9 @@
     "lighthouse-core/test/**/*.js",
     "clients/test/**/*.js",
     "lighthouse-cli/test/fixtures/**/*.js",
-  ]
+  ],
+  "files": [
+    // Opt-in to typechecking for some core tests.
+    "lighthouse-core/test/gather/driver-test.js",
+  ],
 }
