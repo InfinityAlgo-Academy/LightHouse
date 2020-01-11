@@ -15,6 +15,9 @@ const unresolvedPerfLog = require('./../fixtures/unresolved-perflog.json');
 const NetworkRequest = require('../../lib/network-request.js');
 const LHError = require('../../lib/lh-error.js');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
+const Driver = require('../../gather/driver.js');
+const Connection = require('../../gather/connections/connection.js');
+const {createMockSendCommandFn} = require('./mock-commands.js');
 
 jest.mock('../../lib/stack-collector.js', () => () => Promise.resolve([]));
 
@@ -36,61 +39,54 @@ class TestGathererNoArtifact extends Gatherer {
   afterPass() {}
 }
 
+class EmulationDriver extends Driver {
+  enableRuntimeEvents() {
+    return Promise.resolve();
+  }
+  enableAsyncStacks() {
+    return Promise.resolve();
+  }
+  assertNoSameOriginServiceWorkerClients() {
+    return Promise.resolve();
+  }
+  cacheNatives() {
+    return Promise.resolve();
+  }
+  registerPerformanceObserver() {
+    return Promise.resolve();
+  }
+  cleanBrowserCaches() {}
+  clearDataForOrigin() {}
+}
+
 const fakeDriver = require('./fake-driver.js');
 const fakeDriverUsingRealMobileDevice = fakeDriver.fakeDriverUsingRealMobileDevice;
 
-// TODO: Refactor this to use gather/mock-commands.js
-function getMockedEmulationDriver(emulationFn, netThrottleFn, cpuThrottleFn,
-  blockUrlFn, extraHeadersFn) {
-  const Driver = require('../../gather/driver.js');
-  const Connection = require('../../gather/connections/connection.js');
-  const EmulationDriver = class extends Driver {
-    enableRuntimeEvents() {
-      return Promise.resolve();
-    }
-    enableAsyncStacks() {
-      return Promise.resolve();
-    }
-    assertNoSameOriginServiceWorkerClients() {
-      return Promise.resolve();
-    }
-    cacheNatives() {
-      return Promise.resolve();
-    }
-    registerPerformanceObserver() {
-      return Promise.resolve();
-    }
-    cleanBrowserCaches() {}
-    clearDataForOrigin() {}
-  };
-  const EmulationMock = class extends Connection {
-    sendCommand(command, sessionId, params) {
-      let fn = null;
-      switch (command) {
-        case 'Network.emulateNetworkConditions':
-          fn = netThrottleFn;
-          break;
-        case 'Emulation.setCPUThrottlingRate':
-          fn = cpuThrottleFn;
-          break;
-        case 'Emulation.setDeviceMetricsOverride':
-          fn = emulationFn;
-          break;
-        case 'Network.setBlockedURLs':
-          fn = blockUrlFn;
-          break;
-        case 'Network.setExtraHTTPHeaders':
-          fn = extraHeadersFn;
-          break;
-        default:
-          fn = null;
-          break;
-      }
-      return Promise.resolve(fn && fn(params));
-    }
-  };
-  return new EmulationDriver(new EmulationMock());
+let driver;
+let connectionStub;
+
+function resetDefaultMockResponses() {
+  connectionStub.sendCommand = createMockSendCommandFn()
+    .mockResponse('Emulation.setCPUThrottlingRate')
+    .mockResponse('Emulation.setDeviceMetricsOverride')
+    .mockResponse('Emulation.setTouchEmulationEnabled')
+    .mockResponse('Network.emulateNetworkConditions')
+    .mockResponse('Network.enable')
+    .mockResponse('Network.setBlockedURLs')
+    .mockResponse('Network.setExtraHTTPHeaders')
+    .mockResponse('Network.setUserAgentOverride')
+    .mockResponse('Page.enable')
+    .mockResponse('ServiceWorker.enable');
 }
+
+beforeEach(() => {
+  connectionStub = new Connection();
+  connectionStub.sendCommand = cmd => {
+    throw new Error(`${cmd} not implemented`);
+  };
+  driver = new EmulationDriver(connectionStub);
+  resetDefaultMockResponses();
+});
 
 describe('GatherRunner', function() {
   it('loads a page and updates passContext.URL on redirect', () => {
@@ -267,110 +263,46 @@ describe('GatherRunner', function() {
     test('works when running on desktop device', DESKTOP_UA, 'desktop');
   });
 
-  it('sets up the driver to begin emulation when all emulation flags are undefined', () => {
-    const tests = {
-      calledDeviceEmulation: false,
-      calledNetworkEmulation: false,
-      calledCpuEmulation: false,
-    };
-    const createEmulationCheck = variable => (arg) => {
-      tests[variable] = arg;
-
-      return true;
-    };
-    const driver = getMockedEmulationDriver(
-      createEmulationCheck('calledDeviceEmulation'),
-      createEmulationCheck('calledNetworkEmulation'),
-      createEmulationCheck('calledCpuEmulation')
-    );
-
-    return GatherRunner.setupDriver(driver, {
+  it('sets up the driver to begin emulation when all flags are undefined', async () => {
+    await GatherRunner.setupDriver(driver, {
       settings: {
         emulatedFormFactor: 'mobile',
+        throttlingMethod: 'provided',
         internalDisableDeviceScreenEmulation: false,
       },
-    }).then(_ => {
-      assert.ok(tests.calledDeviceEmulation, 'did not call device emulation');
-      assert.deepEqual(tests.calledNetworkEmulation, {
-        latency: 0, downloadThroughput: 0, uploadThroughput: 0, offline: false,
-      });
-      assert.ok(!tests.calledCpuEmulation, 'called cpu emulation');
     });
+
+    connectionStub.sendCommand.findInvocation('Emulation.setDeviceMetricsOverride');
+    expect(connectionStub.sendCommand.findInvocation('Network.emulateNetworkConditions')).toEqual({
+      latency: 0, downloadThroughput: 0, uploadThroughput: 0, offline: false,
+    });
+    expect(() =>
+      connectionStub.sendCommand.findInvocation('Emulation.setCPUThrottlingRate')).toThrow();
   });
 
   it('applies the correct emulation given a particular emulationFormFactor', async () => {
-    const emulationFn = jest.fn();
-    const driver = getMockedEmulationDriver(
-      emulationFn,
-      () => true,
-      () => true
-    );
-
     const getSettings = formFactor => ({
       emulatedFormFactor: formFactor,
       internalDisableDeviceScreenEmulation: false,
     });
 
     await GatherRunner.setupDriver(driver, {settings: getSettings('mobile')});
-    expect(emulationFn.mock.calls.slice(-1)[0][0]).toMatchObject({mobile: true});
+    expect(connectionStub.sendCommand.findInvocation('Emulation.setDeviceMetricsOverride'))
+      .toMatchObject({mobile: true});
 
+    resetDefaultMockResponses();
     await GatherRunner.setupDriver(driver, {settings: getSettings('desktop')});
-    expect(emulationFn.mock.calls.slice(-1)[0][0]).toMatchObject({mobile: false});
+    expect(connectionStub.sendCommand.findInvocation('Emulation.setDeviceMetricsOverride'))
+      .toMatchObject({mobile: false});
 
-    emulationFn.mockClear();
+    resetDefaultMockResponses();
     await GatherRunner.setupDriver(driver, {settings: getSettings('none')});
-    expect(emulationFn).not.toHaveBeenCalled();
+    expect(() =>
+      connectionStub.sendCommand.findInvocation('Emulation.setDeviceMetricsOverride')).toThrow();
   });
 
-  it('stops throttling when not devtools', () => {
-    const tests = {
-      calledDeviceEmulation: false,
-      calledNetworkEmulation: false,
-      calledCpuEmulation: false,
-    };
-    const createEmulationCheck = variable => (...args) => {
-      tests[variable] = args;
-      return true;
-    };
-    const driver = getMockedEmulationDriver(
-      createEmulationCheck('calledDeviceEmulation'),
-      createEmulationCheck('calledNetworkEmulation'),
-      createEmulationCheck('calledCpuEmulation')
-    );
-
-    return GatherRunner.setupDriver(driver, {
-      settings: {
-        emulatedFormFactor: 'mobile',
-        throttlingMethod: 'provided',
-        internalDisableDeviceScreenEmulation: false,
-      },
-    }).then(_ => {
-      assert.ok(tests.calledDeviceEmulation, 'did not call device emulation');
-      assert.deepEqual(tests.calledNetworkEmulation, [{
-        latency: 0, downloadThroughput: 0, uploadThroughput: 0, offline: false,
-      }]);
-      assert.ok(!tests.calledCpuEmulation, 'called CPU emulation');
-    });
-  });
-
-  it('sets throttling according to settings', () => {
-    const tests = {
-      calledDeviceEmulation: false,
-      calledNetworkEmulation: false,
-      calledCpuEmulation: false,
-    };
-    const createEmulationCheck = variable => (...args) => {
-      tests[variable] = args;
-
-      return true;
-    };
-    const driver = getMockedEmulationDriver(
-      createEmulationCheck('calledDeviceEmulation'),
-      createEmulationCheck('calledNetworkEmulation'),
-      createEmulationCheck('calledCpuEmulation')
-    );
-
-    return GatherRunner.setupDriver(driver, {
+  it('sets throttling according to settings', async () => {
+    await GatherRunner.setupDriver(driver, {
       settings: {
         emulatedFormFactor: 'mobile', internalDisableDeviceScreenEmulation: false,
         throttlingMethod: 'devtools',
@@ -381,12 +313,14 @@ describe('GatherRunner', function() {
           cpuSlowdownMultiplier: 1,
         },
       },
-    }).then(_ => {
-      assert.ok(tests.calledDeviceEmulation, 'did not call device emulation');
-      assert.deepEqual(tests.calledNetworkEmulation, [{
-        latency: 100, downloadThroughput: 1024, uploadThroughput: 1024, offline: false,
-      }]);
-      assert.deepEqual(tests.calledCpuEmulation, [{rate: 1}]);
+    });
+
+    connectionStub.sendCommand.findInvocation('Emulation.setDeviceMetricsOverride');
+    expect(connectionStub.sendCommand.findInvocation('Network.emulateNetworkConditions')).toEqual({
+      latency: 100, downloadThroughput: 1024, uploadThroughput: 1024, offline: false,
+    });
+    expect(connectionStub.sendCommand.findInvocation('Emulation.setCPUThrottlingRate')).toEqual({
+      rate: 1,
     });
   });
 
@@ -604,13 +538,8 @@ describe('GatherRunner', function() {
     });
   });
 
-  it('tells the driver to block given URL patterns when blockedUrlPatterns is given', () => {
-    let receivedUrlPatterns = null;
-    const driver = getMockedEmulationDriver(null, null, null, params => {
-      receivedUrlPatterns = params.urls;
-    });
-
-    return GatherRunner.setupPassNetwork({
+  it('tells the driver to block given URL patterns when blockedUrlPatterns is given', async () => {
+    await GatherRunner.setupPassNetwork({
       driver,
       settings: {
         blockedUrlPatterns: ['http://*.evil.com', '.jpg', '.woff2'],
@@ -619,46 +548,41 @@ describe('GatherRunner', function() {
         blockedUrlPatterns: ['*.jpeg'],
         gatherers: [],
       },
-    }).then(() => assert.deepStrictEqual(
-      receivedUrlPatterns.sort(),
-      ['*.jpeg', '.jpg', '.woff2', 'http://*.evil.com']
-    ));
-  });
-
-  it('does not throw when blockedUrlPatterns is not given', () => {
-    let receivedUrlPatterns = null;
-    const driver = getMockedEmulationDriver(null, null, null, params => {
-      receivedUrlPatterns = params.urls;
     });
 
-    return GatherRunner.setupPassNetwork({
+    const blockedUrlsResult = connectionStub.sendCommand.findInvocation('Network.setBlockedURLs');
+    blockedUrlsResult.urls.sort();
+    expect(blockedUrlsResult)
+      .toEqual({urls: ['*.jpeg', '.jpg', '.woff2', 'http://*.evil.com']});
+  });
+
+  it('does not throw when blockedUrlPatterns is not given', async () => {
+    await GatherRunner.setupPassNetwork({
       driver,
       settings: {},
       passConfig: {gatherers: []},
-    }).then(() => assert.deepStrictEqual(receivedUrlPatterns, []));
+    });
+
+    expect(connectionStub.sendCommand.findInvocation('Network.setBlockedURLs'))
+      .toEqual({urls: []});
   });
 
-
-  it('tells the driver to set additional http headers when extraHeaders flag is given', () => {
-    let receivedHeaders = null;
-    const driver = getMockedEmulationDriver(null, null, null, null, params => {
-      receivedHeaders = params.headers;
-    });
-    const headers = {
+  it('tells the driver to set additional http when extraHeaders flag is given', async () => {
+    const extraHeaders = {
       'Cookie': 'monster',
       'x-men': 'wolverine',
     };
 
-    return GatherRunner.setupPassNetwork({
+    await GatherRunner.setupPassNetwork({
       driver,
       settings: {
-        extraHeaders: headers,
+        extraHeaders,
       },
       passConfig: {gatherers: []},
-    }).then(() => assert.deepStrictEqual(
-        receivedHeaders,
-        headers
-      ));
+    });
+
+    expect(connectionStub.sendCommand.findInvocation('Network.setExtraHTTPHeaders'))
+      .toEqual({headers: extraHeaders});
   });
 
   it('tells the driver to begin tracing', async () => {
