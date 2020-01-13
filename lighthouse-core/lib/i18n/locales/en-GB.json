@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Text is illegible because there's no viewport meta tag optimised for mobile screens."
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} of text is too small (based on {decimalProportionVisited, number, extendedPercent} sample)."
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "Document doesn't use legible font sizes"
   },

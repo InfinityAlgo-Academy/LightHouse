@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "El text és il·legible perquè no hi ha cap metaetiqueta de finestra gràfica optimitzada per a pantalles de dispositius mòbils."
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "El {decimalProportion, number, extendedPercent} del text és massa petit (d'acord amb una mostra del {decimalProportionVisited, number, extendedPercent})."
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "El document no utilitza lletres amb mides llegibles"
   },

@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "文字難以辨識，這是因為網頁沒有針對行動裝置螢幕設定合適的可視區域中繼標記。"
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} 的文字過小 (根據 {decimalProportionVisited, number, extendedPercent} 的取樣結果)。"
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "文件使用的字型大小難以辨識"
   },

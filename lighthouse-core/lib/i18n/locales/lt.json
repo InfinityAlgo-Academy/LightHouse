@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Tekstas neįskaitomas, nes nėra mobiliųjų įrenginių ekranams optimizuotos peržiūros srities metažymos"
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} teksto yra per mažo dydžio (atsižvelgiant į pavyzdį – {decimalProportionVisited, number, extendedPercent})."
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "Dokumente naudojami neįskaitomo dydžio šriftai"
   },

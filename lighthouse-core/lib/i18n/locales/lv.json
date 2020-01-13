@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Teksts nav salasāms, jo mobilo ierīču ekrāniem nav optimizēts skatvietas metatags."
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} ir pārāk mazs teksta izmērs (pamatojoties uz {decimalProportionVisited, number, extendedPercent} paraugu)."
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "Dokumentā netiek izmantoti salasāmi fonta izmēri"
   },

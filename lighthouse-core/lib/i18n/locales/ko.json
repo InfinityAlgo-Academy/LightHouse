@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "모바일 화면에 최적화된 표시 영역 메타 태그가 없어서 텍스트를 알아볼 수 없음"
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "텍스트의 {decimalProportion, number, extendedPercent} 값이 너무 작습니다({decimalProportionVisited, number, extendedPercent} 샘플 기준)."
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "문서에서 읽기 쉬운 글꼴 크기를 사용하지 않음"
   },

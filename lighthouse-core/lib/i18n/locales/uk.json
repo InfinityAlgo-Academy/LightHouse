@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Текст нечитабельний, оскільки метатег області перегляду не оптимізовано для мобільних пристроїв."
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} тексту має замалий шрифт (на основі {decimalProportionVisited, number, extendedPercent} вибірки)."
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "У документі використано нечитабельні розміри шрифтів"
   },

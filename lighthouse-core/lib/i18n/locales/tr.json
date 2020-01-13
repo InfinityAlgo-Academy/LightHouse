@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Mobil ekranlar için optimize edilmiş görüntü alanı meta etiketi olmadığından metin okunaklı değil."
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "Metnin {decimalProportion, number, extendedPercent} kadarı çok küçük ({decimalProportionVisited, number, extendedPercent} örneği baz alınarak)."
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "Dokümanda okunabilir yazı tipi boyutları kullanılmıyor"
   },

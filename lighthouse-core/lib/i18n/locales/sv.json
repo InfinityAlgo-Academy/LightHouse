@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Text är oläslig eftersom det inte finns någon metatagg för visningsområde som är optimerad för mobila skärmar."
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} av texten är för liten (baserat på ett urval av {decimalProportionVisited, number, extendedPercent})."
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "Dokumentet har inga läsliga teckenstorlekar"
   },

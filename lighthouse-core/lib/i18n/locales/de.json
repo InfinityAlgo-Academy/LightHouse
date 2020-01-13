@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Text ist nicht lesbar, weil kein Meta-Tag für den Darstellungsbereich vorhanden ist, das für Bildschirme von Mobilgeräten optimiert ist."
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} des Texts ist zu klein (auf Grundlage einer Stichprobengröße von {decimalProportionVisited, number, extendedPercent})."
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "Dokument enthält keine gut lesbaren Schriftgrößen"
   },

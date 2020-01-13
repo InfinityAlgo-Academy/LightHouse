@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Слишком мелкий текст. Настройте область просмотра для экранов мобильных устройств с помощью метатега viewport."
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} текста набрано слишком мелким шрифтом (на основе образца размером {decimalProportionVisited, number, extendedPercent})."
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "В документе используются шрифты слишком маленького размера"
   },

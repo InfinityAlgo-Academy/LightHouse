@@ -307,7 +307,6 @@ declare global {
       export interface FontSize {
         totalTextLength: number;
         failingTextLength: number;
-        visitedTextLength: number;
         analyzedFailingTextLength: number;
         /** Elements that contain a text node that failed size criteria. */
         analyzedFailingNodesData: Array<{

@@ -24,9 +24,6 @@ const UIStrings = {
   /** Explanatory message stating that there was a failure in an audit caused by a missing page viewport meta tag configuration. "viewport" and "meta" are HTML terms and should not be translated. */
   explanationViewport: 'Text is illegible because there\'s no viewport meta tag optimized ' +
     'for mobile screens.',
-  /** Explanatory message stating that there was a failure in an audit caused by a certain percentage of the text on the page being too small, based on a sample size of text that was less than 100% of the text on the page. "decimalProportion" will be replaced by a percentage between 0 and 100%. */
-  explanationWithDisclaimer: '{decimalProportion, number, extendedPercent} of text is too ' +
-    'small (based on {decimalProportionVisited, number, extendedPercent} sample).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -254,7 +251,6 @@ class FontSize extends Audit {
       analyzedFailingNodesData,
       analyzedFailingTextLength,
       failingTextLength,
-      visitedTextLength,
       totalTextLength,
     } = artifacts.FontSize;
 
@@ -266,7 +262,7 @@ class FontSize extends Audit {
 
     const failingRules = getUniqueFailingRules(analyzedFailingNodesData);
     const percentageOfPassingText =
-      (visitedTextLength - failingTextLength) / visitedTextLength * 100;
+      (totalTextLength - failingTextLength) / totalTextLength * 100;
     const pageUrl = artifacts.URL.finalUrl;
 
     /** @type {LH.Audit.Details.Table['headings']} */
@@ -279,7 +275,7 @@ class FontSize extends Audit {
 
     const tableData = failingRules.sort((a, b) => b.textLength - a.textLength)
       .map(({cssRule, textLength, fontSize, node}) => {
-        const percentageOfAffectedText = textLength / visitedTextLength * 100;
+        const percentageOfAffectedText = textLength / totalTextLength * 100;
         const origin = findStyleRuleSource(pageUrl, cssRule, node);
 
         return {
@@ -293,7 +289,7 @@ class FontSize extends Audit {
     // all failing nodes that were not fully analyzed will be displayed in a single row
     if (analyzedFailingTextLength < failingTextLength) {
       const percentageOfUnanalyzedFailingText =
-        (failingTextLength - analyzedFailingTextLength) / visitedTextLength * 100;
+        (failingTextLength - analyzedFailingTextLength) / totalTextLength * 100;
 
       tableData.push({
         // Overrides default `source-location`
@@ -319,26 +315,10 @@ class FontSize extends Audit {
     const details = Audit.makeTableDetails(headings, tableData);
     const passed = percentageOfPassingText >= MINIMAL_PERCENTAGE_OF_LEGIBLE_TEXT;
 
-    let explanation;
-    if (!passed) {
-      const percentageOfFailingText = (100 - percentageOfPassingText) / 100;
-
-      // if we were unable to visit all text nodes we should disclose that information
-      if (visitedTextLength < totalTextLength) {
-        const percentageOfVisitedText = (visitedTextLength / totalTextLength);
-        explanation = str_(UIStrings.explanationWithDisclaimer,
-          {
-            decimalProportion: percentageOfFailingText,
-            decimalProportionVisited: percentageOfVisitedText,
-          });
-      }
-    }
-
     return {
       score: Number(passed),
       details,
       displayValue,
-      explanation,
     };
   }
 }

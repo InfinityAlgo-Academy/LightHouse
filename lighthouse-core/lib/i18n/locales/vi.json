@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Văn bản không đọc được vì không có thẻ meta viewport nào được tối ưu hóa cho màn hình thiết bị di động."
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "Văn bản có tỷ lệ {decimalProportion, number, extendedPercent} là quá nhỏ (căn cứ vào mẫu {decimalProportionVisited, number, extendedPercent})."
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "Tài liệu không sử dụng cỡ chữ dễ đọc"
   },

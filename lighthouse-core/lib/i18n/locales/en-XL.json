@@ -965,9 +965,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "T̂éx̂t́ îś îĺl̂éĝíb̂ĺê b́êćâúŝé t̂h́êŕê'ś n̂ó v̂íêẃp̂ór̂t́ m̂ét̂á t̂áĝ óp̂t́îḿîźêd́ f̂ór̂ ḿôb́îĺê śĉŕêén̂ś."
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} ôf́ t̂éx̂t́ îś t̂óô śm̂ál̂ĺ (b̂áŝéd̂ ón̂ {decimalProportionVisited, number, extendedPercent} śâḿp̂ĺê)."
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "D̂óĉúm̂én̂t́ d̂óêśn̂'t́ ûśê ĺêǵîb́l̂é f̂ón̂t́ ŝíẑéŝ"
   },

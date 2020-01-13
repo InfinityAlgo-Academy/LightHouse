@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Text není čitelný, protože není k dispozici metaznačka viewport optimalizovaná pro obrazovky mobilních zařízení."
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "Podíl příliš malého textu: {decimalProportion, number, extendedPercent} (posuzovaný vzorek: {decimalProportionVisited, number, extendedPercent})."
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "V dokumentu nejsou použity čitelné velikosti písma"
   },

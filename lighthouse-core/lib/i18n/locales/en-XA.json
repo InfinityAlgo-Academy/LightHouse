@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "[Ţéxţ îš îļļéĝîбļé бéçåûšé ţĥéŕé'š ñö vîéŵþöŕţ méţå ţåĝ öþţîmîžéð ƒöŕ möбîļé šçŕééñš. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen]"
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "[ᐅ{decimalProportion, number, extendedPercent}ᐊ öƒ ţéxţ îš ţöö šmåļļ (бåšéð öñ ᐅ{decimalProportionVisited, number, extendedPercent}ᐊ šåmþļé). one two three four five six seven eight nine ten]"
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "[Ðöçûméñţ ðöéšñ'ţ ûšé ļéĝîбļé ƒöñţ šîžéš one two three four five six seven eight]"
   },

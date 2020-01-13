@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Besedilo je neberljivo, ker ni metaoznake »viewport«, optimizirane za zaslone mobilnih naprav."
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} besedila je premajhnega (na podlagi {decimalProportionVisited, number, extendedPercent} vzorca)."
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "Dokument ne uporablja berljivih velikosti pisav"
   },

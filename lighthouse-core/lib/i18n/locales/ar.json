@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "النص غير مقروء لأنه لا تتوفّر علامة وصفية لإطار العرض محسنة لشاشات الجوّال."
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "نسبة {decimalProportion, number, extendedPercent} من النص هي صغيرة جدًا (استنادًا إلى نموذج {decimalProportionVisited, number, extendedPercent})."
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "لا يستخدم المستند أحجام الخطوط القابلة للقراءة"
   },
