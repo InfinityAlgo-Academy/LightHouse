@@ -1357,17 +1357,17 @@
           {
             "resourceType": "total",
             "label": "Total",
-            "requestCount": 18,
-            "size": 160738,
-            "countOverBudget": "8 requests",
-            "sizeOverBudget": 58338
+            "requestCount": 17,
+            "size": 160517,
+            "countOverBudget": "7 requests",
+            "sizeOverBudget": 58117
           },
           {
             "resourceType": "other",
             "label": "Other",
-            "requestCount": 2,
-            "size": 12861,
-            "sizeOverBudget": 7741
+            "requestCount": 1,
+            "size": 12640,
+            "sizeOverBudget": 7520
           },
           {
             "resourceType": "third-party",
@@ -1419,7 +1419,7 @@
       "description": "To set budgets for the quantity and size of page resources, add a budget.json file. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).",
       "score": null,
       "scoreDisplayMode": "informative",
-      "displayValue": "18 requests • 157 KB",
+      "displayValue": "17 requests • 157 KB",
       "details": {
         "type": "table",
         "headings": [
@@ -1443,8 +1443,8 @@
           {
             "resourceType": "total",
             "label": "Total",
-            "requestCount": 18,
-            "size": 160738
+            "requestCount": 17,
+            "size": 160517
           },
           {
             "resourceType": "script",
@@ -1467,8 +1467,8 @@
           {
             "resourceType": "other",
             "label": "Other",
-            "requestCount": 2,
-            "size": 12861
+            "requestCount": 1,
+            "size": 12640
           },
           {
             "resourceType": "stylesheet",
@@ -5761,7 +5761,7 @@
         },
         {
           "values": {
-            "count": 8
+            "count": 7
           },
           "path": "audits[performance-budget].details.items[1].countOverBudget"
         },
@@ -5825,8 +5825,8 @@
       "lighthouse-core/audits/resource-summary.js | displayValue": [
         {
           "values": {
-            "requestCount": 18,
-            "byteCount": 160738
+            "requestCount": 17,
+            "byteCount": 160517
           },
           "path": "audits[resource-summary].displayValue"
         }

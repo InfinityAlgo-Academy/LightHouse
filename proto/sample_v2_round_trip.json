@@ -2208,19 +2208,19 @@
                         "sizeOverBudget": 72955.0
                     },
                     {
-                        "countOverBudget": "8 requests",
+                        "countOverBudget": "7 requests",
                         "label": "Total",
-                        "requestCount": 18.0,
+                        "requestCount": 17.0,
                         "resourceType": "total",
-                        "size": 160738.0,
-                        "sizeOverBudget": 58338.0
+                        "size": 160517.0,
+                        "sizeOverBudget": 58117.0
                     },
                     {
                         "label": "Other",
-                        "requestCount": 2.0,
+                        "requestCount": 1.0,
                         "resourceType": "other",
-                        "size": 12861.0,
-                        "sizeOverBudget": 7741.0
+                        "size": 12640.0,
+                        "sizeOverBudget": 7520.0
                     },
                     {
                         "countOverBudget": "1 request",
@@ -2405,9 +2405,9 @@
                 "items": [
                     {
                         "label": "Total",
-                        "requestCount": 18.0,
+                        "requestCount": 17.0,
                         "resourceType": "total",
-                        "size": 160738.0
+                        "size": 160517.0
                     },
                     {
                         "label": "Script",
@@ -2429,9 +2429,9 @@
                     },
                     {
                         "label": "Other",
-                        "requestCount": 2.0,
+                        "requestCount": 1.0,
                         "resourceType": "other",
-                        "size": 12861.0
+                        "size": 12640.0
                     },
                     {
                         "label": "Stylesheet",
@@ -2460,7 +2460,7 @@
                 ],
                 "type": "table"
             },
-            "displayValue": "18 requests \u2022 157 KB",
+            "displayValue": "17 requests \u2022 157 KB",
             "id": "resource-summary",
             "score": null,
             "scoreDisplayMode": "informative",
