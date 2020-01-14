@@ -412,6 +412,44 @@ describe('ReportUIFeatures', () => {
         assert.strictEqual(nextNode, nodes[2]);
       });
     });
+
+    describe('onMenuFocusOut', () => {
+      beforeEach(() => {
+        dropDown._toggleEl.click();
+        assert.ok(dropDown._toggleEl.classList.contains('active'));
+      });
+
+      it('should toggle active class when focus relatedTarget is null', () => {
+        const event = new window.FocusEvent('focusout', {relatedTarget: null});
+        dropDown.onMenuFocusOut(event);
+
+        assert.ok(!dropDown._toggleEl.classList.contains('active'));
+      });
+
+      it('should toggle active class when focus relatedTarget is document.body', () => {
+        const relatedTarget = dom.document().body;
+        const event = new window.FocusEvent('focusout', {relatedTarget});
+        dropDown.onMenuFocusOut(event);
+
+        assert.ok(!dropDown._toggleEl.classList.contains('active'));
+      });
+
+      it('should toggle active class when focus relatedTarget is _toggleEl', () => {
+        const relatedTarget = dropDown._toggleEl;
+        const event = new window.FocusEvent('focusout', {relatedTarget});
+        dropDown.onMenuFocusOut(event);
+
+        assert.ok(!dropDown._toggleEl.classList.contains('active'));
+      });
+
+      it('should not toggle active class when focus relatedTarget is a menu item', () => {
+        const relatedTarget = dropDown._getNextMenuItem();
+        const event = new window.FocusEvent('focusout', {relatedTarget});
+        dropDown.onMenuFocusOut(event);
+
+        assert.ok(dropDown._toggleEl.classList.contains('active'));
+      });
+    });
   });
 
   describe('data-i18n', () => {
