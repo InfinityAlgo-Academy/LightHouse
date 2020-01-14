@@ -413,4 +413,14 @@ describe('ReportUIFeatures', () => {
       });
     });
   });
+
+  describe('data-i18n', () => {
+    it('should have only valid data-i18n values in template', () => {
+      const container = render(sampleResults);
+      for (const node of dom.findAll('[data-i18n]', container)) {
+        const val = node.getAttribute('data-i18n');
+        assert.ok(val in Util.UIStrings, `Invalid data-i18n value of: "${val}" found.`);
+      }
+    });
+  });
 });

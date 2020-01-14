@@ -287,6 +287,8 @@ describe('ReportRenderer', () => {
           // https://github.com/dequelabs/axe-core/tree/b573b1c1/doc/examples/jest_react#to-run-the-example
           'color-contrast': {enabled: false},
           'link-in-text-block': {enabled: false},
+          // Report has empty links prior to i18n-ing.
+          'link-name': {enabled: false},
         },
       };
 

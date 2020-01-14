@@ -95,15 +95,18 @@ class ReportRenderer {
 
     const env = this._dom.find('.lh-env__items', footer);
     env.id = 'runtime-settings';
+    this._dom.find('.lh-env__title', footer).textContent = Util.i18n.strings.runtimeSettingsTitle;
+
     const envValues = Util.getEnvironmentDisplayValues(report.configSettings || {});
     [
-      {name: 'URL', description: report.finalUrl},
-      {name: 'Fetch time', description: Util.i18n.formatDateTime(report.fetchTime)},
+      {name: Util.i18n.strings.runtimeSettingsUrl, description: report.finalUrl},
+      {name: Util.i18n.strings.runtimeSettingsFetchTime,
+        description: Util.i18n.formatDateTime(report.fetchTime)},
       ...envValues,
-      {name: 'User agent (host)', description: report.userAgent},
-      {name: 'User agent (network)', description: report.environment &&
+      {name: Util.i18n.strings.runtimeSettingsUA, description: report.userAgent},
+      {name: Util.i18n.strings.runtimeSettingsUANetwork, description: report.environment &&
         report.environment.networkUserAgent},
-      {name: 'CPU/Memory Power', description: report.environment &&
+      {name: Util.i18n.strings.runtimeSettingsBenchmark, description: report.environment &&
         report.environment.benchmarkIndex.toFixed(0)},
     ].forEach(runtime => {
       if (!runtime.description) return;
@@ -114,6 +117,7 @@ class ReportRenderer {
       env.appendChild(item);
     });
 
+    this._dom.find('.lh-footer__version_issue', footer).textContent = Util.i18n.strings.footerIssue;
     this._dom.find('.lh-footer__version', footer).textContent = report.lighthouseVersion;
     return footer;
   }

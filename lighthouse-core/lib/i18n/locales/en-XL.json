@@ -1529,11 +1529,38 @@
   "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
     "message": "M̂áx̂ím̂úm̂ ćr̂ít̂íĉál̂ ṕât́ĥ ĺât́êńĉý:"
   },
+  "lighthouse-core/report/html/renderer/util.js | dropdownCopyJSON": {
+    "message": "Ĉóp̂ý ĴŚÔŃ"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownDarkTheme": {
+    "message": "T̂óĝǵl̂é D̂ár̂ḱ T̂h́êḿê"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownPrintExpanded": {
+    "message": "P̂ŕîńt̂ Éx̂ṕâńd̂éd̂"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownPrintSummary": {
+    "message": "P̂ŕîńt̂ Śûḿm̂ár̂ý"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveGist": {
+    "message": "Ŝáv̂é âś Ĝíŝt́"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveHTML": {
+    "message": "Ŝáv̂é âś ĤT́M̂Ĺ"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveJSON": {
+    "message": "Ŝáv̂é âś ĴŚÔŃ"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownViewer": {
+    "message": "Ôṕêń îń V̂íêẃêŕ"
+  },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Êŕr̂ór̂!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "R̂ép̂ór̂t́ êŕr̂ór̂: ńô áûd́ît́ îńf̂ór̂ḿât́îón̂"
+  },
+  "lighthouse-core/report/html/renderer/util.js | footerIssue": {
+    "message": "F̂íl̂é âń îśŝúê"
   },
   "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
     "message": "L̂áb̂ D́ât́â"
@@ -1556,6 +1583,45 @@
   "lighthouse-core/report/html/renderer/util.js | passedAuditsGroupTitle": {
     "message": "P̂áŝśêd́ âúd̂ít̂ś"
   },
+  "lighthouse-core/report/html/renderer/util.js | runtimeDesktopEmulation": {
+    "message": "Êḿûĺât́êd́ D̂éŝḱt̂óp̂"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeMobileEmulation": {
+    "message": "Êḿûĺât́êd́ N̂éx̂úŝ 5X́"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeNoEmulation": {
+    "message": "N̂ó êḿûĺât́îón̂"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsBenchmark": {
+    "message": "ĈṔÛ/Ḿêḿôŕŷ Ṕôẃêŕ"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsCPUThrottling": {
+    "message": "ĈṔÛ t́ĥŕôt́t̂ĺîńĝ"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsDevice": {
+    "message": "D̂év̂íĉé"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsFetchTime": {
+    "message": "F̂ét̂ćĥ T́îḿê"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsNetworkThrottling": {
+    "message": "N̂ét̂ẃôŕk̂ t́ĥŕôt́t̂ĺîńĝ"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsTitle": {
+    "message": "R̂ún̂t́îḿê Śêt́t̂ín̂ǵŝ"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUA": {
+    "message": "Ûśêŕ âǵêńt̂ (h́ôśt̂)"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUANetwork": {
+    "message": "Ûśêŕ âǵêńt̂ (ńêt́ŵór̂ḱ)"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUrl": {
+    "message": "ÛŔL̂"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
+    "message": "Ûńk̂ńôẃn̂"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "Ĉól̂ĺâṕŝé ŝńîṕp̂ét̂"
   },
@@ -1564,6 +1630,9 @@
   },
   "lighthouse-core/report/html/renderer/util.js | thirdPartyResourcesLabel": {
     "message": "Ŝh́ôẃ 3r̂d́-p̂ár̂t́ŷ ŕêśôúr̂ćêś"
+  },
+  "lighthouse-core/report/html/renderer/util.js | throttlingProvided": {
+    "message": "P̂ŕôv́îd́êd́ b̂ý êńv̂ír̂ón̂ḿêńt̂"
   },
   "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
     "message": "T̂h́êŕê ẃêŕê íŝśûéŝ áf̂f́êćt̂ín̂ǵ t̂h́îś r̂ún̂ óf̂ Ĺîǵĥt́ĥóûśê:"

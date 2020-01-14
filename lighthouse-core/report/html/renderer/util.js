@@ -372,15 +372,15 @@ class Util {
 
     return [
       {
-        name: 'Device',
+        name: Util.i18n.strings.runtimeSettingsDevice,
         description: emulationDesc.deviceEmulation,
       },
       {
-        name: 'Network throttling',
+        name: Util.i18n.strings.runtimeSettingsNetworkThrottling,
         description: emulationDesc.networkThrottling,
       },
       {
-        name: 'CPU throttling',
+        name: Util.i18n.strings.runtimeSettingsCPUThrottling,
         description: emulationDesc.cpuThrottling,
       },
     ];
@@ -388,20 +388,18 @@ class Util {
 
   /**
    * @param {LH.Config.Settings} settings
-   * @return {{deviceEmulation: string, networkThrottling: string, cpuThrottling: string, summary: string}}
+   * @return {{deviceEmulation: string, networkThrottling: string, cpuThrottling: string}}
    */
   static getEmulationDescriptions(settings) {
     let cpuThrottling;
     let networkThrottling;
-    let summary;
 
     const throttling = settings.throttling;
 
     switch (settings.throttlingMethod) {
       case 'provided':
-        cpuThrottling = 'Provided by environment';
-        networkThrottling = 'Provided by environment';
-        summary = 'No throttling applied';
+        cpuThrottling = Util.i18n.strings.throttlingProvided;
+        networkThrottling = Util.i18n.strings.throttlingProvided;
         break;
       case 'devtools': {
         const {cpuSlowdownMultiplier, requestLatencyMs} = throttling;
@@ -409,7 +407,6 @@ class Util {
         networkThrottling = `${Util.i18n.formatNumber(requestLatencyMs)}${NBSP}ms HTTP RTT, ` +
           `${Util.i18n.formatNumber(throttling.downloadThroughputKbps)}${NBSP}Kbps down, ` +
           `${Util.i18n.formatNumber(throttling.uploadThroughputKbps)}${NBSP}Kbps up (DevTools)`;
-        summary = 'Throttled Slow 4G network';
         break;
       }
       case 'simulate': {
@@ -417,24 +414,24 @@ class Util {
         cpuThrottling = `${Util.i18n.formatNumber(cpuSlowdownMultiplier)}x slowdown (Simulated)`;
         networkThrottling = `${Util.i18n.formatNumber(rttMs)}${NBSP}ms TCP RTT, ` +
           `${Util.i18n.formatNumber(throughputKbps)}${NBSP}Kbps throughput (Simulated)`;
-        summary = 'Simulated Slow 4G network';
         break;
       }
       default:
-        cpuThrottling = 'Unknown';
-        networkThrottling = 'Unknown';
-        summary = 'Unknown';
+        cpuThrottling = Util.i18n.strings.runtimeUnknown;
+        networkThrottling = Util.i18n.strings.runtimeUnknown;
     }
 
-    let deviceEmulation = 'No emulation';
-    if (settings.emulatedFormFactor === 'mobile') deviceEmulation = 'Emulated Nexus 5X';
-    if (settings.emulatedFormFactor === 'desktop') deviceEmulation = 'Emulated Desktop';
+    let deviceEmulation = Util.i18n.strings.runtimeNoEmulation;
+    if (settings.emulatedFormFactor === 'mobile') {
+      deviceEmulation = Util.i18n.strings.runtimeMobileEmulation;
+    } else if (settings.emulatedFormFactor === 'desktop') {
+      deviceEmulation = Util.i18n.strings.runtimeDesktopEmulation;
+    }
 
     return {
       deviceEmulation,
       cpuThrottling,
       networkThrottling,
-      summary: `${deviceEmulation}, ${summary}`,
     };
   }
 
@@ -540,6 +537,57 @@ Util.UIStrings = {
 
   /** This label is for a checkbox above a table of items loaded by a web page. The checkbox is used to show or hide third-party (or "3rd-party") resources in the table, where "third-party resources" refers to items loaded by a web page from URLs that aren't controlled by the owner of the web page. */
   thirdPartyResourcesLabel: 'Show 3rd-party resources',
+
+  /** Option in a dropdown menu that opens a small, summary report in a print dialog.  */
+  dropdownPrintSummary: 'Print Summary',
+  /** Option in a dropdown menu that opens a full Lighthouse report in a print dialog.  */
+  dropdownPrintExpanded: 'Print Expanded',
+  /** Option in a dropdown menu that copies the Lighthouse JSON object to the system clipboard. */
+  dropdownCopyJSON: 'Copy JSON',
+  /** Option in a dropdown menu that saves the Lighthouse report HTML locally to the system as a '.html' file. */
+  dropdownSaveHTML: 'Save as HTML',
+  /** Option in a dropdown menu that saves the Lighthouse JSON object to the local system as a '.json' file. */
+  dropdownSaveJSON: 'Save as JSON',
+  /** Option in a dropdown menu that opens the current report in the Lighthouse Viewer Application. */
+  dropdownViewer: 'Open in Viewer',
+  /** Option in a dropdown menu that saves the current report as a new Github Gist. */
+  dropdownSaveGist: 'Save as Gist',
+  /** Option in a dropdown menu that toggles the themeing of the report between Light(default) and Dark themes. */
+  dropdownDarkTheme: 'Toggle Dark Theme',
+
+  /** Title of the Runtime settings table in a Lighthouse report.  Runtime settings are the environment configurations that a specific report used at auditing time. */
+  runtimeSettingsTitle: 'Runtime Settings',
+  /** Label for a row in a table that shows the URL that was audited during a Lighthouse run. */
+  runtimeSettingsUrl: 'URL',
+  /** Label for a row in a table that shows the time at which a Lighthouse run was conducted; formatted as a timestamp, e.g. Jan 1, 1970 12:00 AM UTC. */
+  runtimeSettingsFetchTime: 'Fetch Time',
+  /** Label for a row in a table that describes the kind of device that was emulated for the Lighthouse run.  Example values for row elements: 'No Emulation', 'Emulated Desktop', etc. */
+  runtimeSettingsDevice: 'Device',
+  /** Label for a row in a table that describes the network throttling conditions that were used during a Lighthouse run, if any. */
+  runtimeSettingsNetworkThrottling: 'Network throttling',
+  /** Label for a row in a table that describes the CPU throttling conditions that were used during a Lighthouse run, if any.*/
+  runtimeSettingsCPUThrottling: 'CPU throttling',
+  /** Label for a row in a table that shows the User Agent that was detected on the Host machine that ran Lighthouse. */
+  runtimeSettingsUA: 'User agent (host)',
+  /** Label for a row in a table that shows the User Agent that was used to send out all network requests during the Lighthouse run. */
+  runtimeSettingsUANetwork: 'User agent (network)',
+  /** Label for a row in a table that shows the estimated CPU power of the machine running Lighthouse. Example row values: 532, 1492, 783. */
+  runtimeSettingsBenchmark: 'CPU/Memory Power',
+
+  /** Label for button to create an issue against the Lighthouse Github project. */
+  footerIssue: 'File an issue',
+
+  /** Descriptive explanation for emulation setting when no device emulation is set. */
+  runtimeNoEmulation: 'No emulation',
+  /** Descriptive explanation for emulation setting when emulating a Nexus 5X mobile device. */
+  runtimeMobileEmulation: 'Emulated Nexus 5X',
+  /** Descriptive explanation for emulation setting when emulating a generic desktop form factor, as opposed to a mobile-device like form factor. */
+  runtimeDesktopEmulation: 'Emulated Desktop',
+  /** Descriptive explanation for a runtime setting that is set to an unknown value. */
+  runtimeUnknown: 'Unknown',
+
+  /** Descriptive explanation for environment throttling that was provided by the runtime environment instead of provided by Lighthouse throttling. */
+  throttlingProvided: 'Provided by environment',
 };
 
 if (typeof module !== 'undefined' && module.exports) {
