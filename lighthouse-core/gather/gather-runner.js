@@ -13,6 +13,20 @@ const NetworkAnalyzer = require('../lib/dependency-graph/simulator/network-analy
 const NetworkRecorder = require('../lib/network-recorder.js');
 const constants = require('../config/constants.js');
 const i18n = require('../lib/i18n/i18n.js');
+const URL = require('../lib/url-shim.js');
+
+const UIStrings = {
+  /**
+   * @description Warning that the web page redirected during testing and that may have affected the load.
+   * @example {https://example.com/requested/page} requested
+   * @example {https://example.com/final/resolved/page} final
+   */
+  warningRedirected: 'The page may not be loading as expected because your test URL ' +
+  `({requested}) was redirected to {final}. ` +
+  'Try testing the second URL directly.',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 /** @typedef {import('../gather/driver.js')} Driver */
 
@@ -490,6 +504,13 @@ class GatherRunner {
 
     // Copy redirected URL to artifact.
     baseArtifacts.URL.finalUrl = passContext.url;
+    /* eslint-disable max-len */
+    if (!URL.equalWithExcludedFragments(baseArtifacts.URL.requestedUrl, baseArtifacts.URL.finalUrl)) {
+      baseArtifacts.LighthouseRunWarnings.push(str_(UIStrings.warningRedirected, {
+        requested: baseArtifacts.URL.requestedUrl,
+        final: baseArtifacts.URL.finalUrl,
+      }));
+    }
 
     // Fetch the manifest, if it exists.
     baseArtifacts.WebAppManifest = await GatherRunner.getWebAppManifest(passContext);
@@ -682,3 +703,4 @@ class GatherRunner {
 }
 
 module.exports = GatherRunner;
+module.exports.UIStrings = UIStrings;

@@ -9,7 +9,7 @@
     audits: Record<string, any>;
     requestedUrl: string;
     finalUrl: string;
-    runWarnings?: Array<string>;
+    runWarnings?: Array<string|RegExp>;
     runtimeError?: {
       code?: any;
       message?: any;

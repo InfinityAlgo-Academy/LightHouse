@@ -1370,6 +1370,9 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "M̂ób̂íl̂é F̂ŕîén̂d́l̂ý"
   },
+  "lighthouse-core/gather/gather-runner.js | warningRedirected": {
+    "message": "T̂h́ê ṕâǵê ḿâý n̂ót̂ b́ê ĺôád̂ín̂ǵ âś êx́p̂éĉt́êd́ b̂éĉáûśê ýôúr̂ t́êśt̂ ÚR̂Ĺ ({requested}) ŵáŝ ŕêd́îŕêćt̂éd̂ t́ô {final}. T́r̂ý t̂éŝt́îńĝ t́ĥé ŝéĉón̂d́ ÛŔL̂ d́îŕêćt̂ĺŷ."
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Ĉáĉh́ê T́T̂Ĺ"
   },

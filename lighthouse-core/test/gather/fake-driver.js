@@ -27,8 +27,9 @@ function makeFakeDriver({protocolGetVersionResponse}) {
     disconnect() {
       return Promise.resolve();
     },
-    gotoURL() {
-      return Promise.resolve('https://www.reddit.com/r/nba');
+    /** @param {string} url */
+    gotoURL(url) {
+      return Promise.resolve(url);
     },
     beginEmulation() {
       return Promise.resolve();

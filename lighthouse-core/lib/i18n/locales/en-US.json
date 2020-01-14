@@ -1370,6 +1370,9 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Mobile Friendly"
   },
+  "lighthouse-core/gather/gather-runner.js | warningRedirected": {
+    "message": "The page may not be loading as expected because your test URL ({requested}) was redirected to {final}. Try testing the second URL directly."
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Cache TTL"
   },
