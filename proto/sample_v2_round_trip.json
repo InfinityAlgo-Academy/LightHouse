@@ -5035,6 +5035,12 @@
             {
                 "duration": 100.0,
                 "entryType": "measure",
+                "name": "lh:computed:UnusedCSS",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
                 "name": "lh:computed:FirstContentfulPaint",
                 "startTime": 0.0
             },
