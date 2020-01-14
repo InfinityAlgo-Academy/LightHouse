@@ -28,5 +28,6 @@
   "files": [
     // Opt-in to typechecking for some core tests.
     "lighthouse-core/test/gather/driver-test.js",
+    "lighthouse-core/test/gather/gather-runner-test.js",
   ],
 }
