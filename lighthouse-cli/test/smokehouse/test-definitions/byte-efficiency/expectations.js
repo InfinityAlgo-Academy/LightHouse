@@ -11,6 +11,68 @@
  */
 const expectations = [
   {
+    artifacts: {
+      ScriptElements: [
+        {
+          type: null,
+          src: null,
+          async: false,
+          defer: false,
+          source: 'head',
+          devtoolsNodePath: '2,HTML,0,HEAD,3,SCRIPT',
+        },
+        {
+          type: 'application/javascript',
+          src: 'http://localhost:10200/byte-efficiency/script.js',
+          async: false,
+          defer: false,
+          source: 'head',
+          devtoolsNodePath: '2,HTML,0,HEAD,5,SCRIPT',
+        },
+        {
+          type: null,
+          src: null,
+          async: false,
+          defer: false,
+          source: 'body',
+          devtoolsNodePath: '2,HTML,1,BODY,0,DIV,3,SCRIPT',
+        },
+        {
+          type: null,
+          src: null,
+          async: false,
+          defer: false,
+          source: 'body',
+          devtoolsNodePath: '2,HTML,1,BODY,3,SCRIPT',
+        },
+        {
+          type: null,
+          src: 'http://localhost:10200/byte-efficiency/delay-complete.js?delay=8000',
+          async: true,
+          defer: false,
+          source: 'body',
+          devtoolsNodePath: '2,HTML,1,BODY,1438,SCRIPT',
+        },
+        {
+          type: null,
+          src: null,
+          async: false,
+          defer: false,
+          source: 'body',
+          devtoolsNodePath: '2,HTML,1,BODY,1439,SCRIPT',
+          content: /Used block #1/,
+        },
+        {
+          type: null,
+          src: null,
+          async: false,
+          defer: false,
+          source: 'body',
+          devtoolsNodePath: '2,HTML,1,BODY,1440,SCRIPT',
+          content: /Unused block #1/,
+        },
+      ],
+    },
     lhr: {
       requestedUrl: 'http://localhost:10200/byte-efficiency/tester.html',
       finalUrl: 'http://localhost:10200/byte-efficiency/tester.html',
