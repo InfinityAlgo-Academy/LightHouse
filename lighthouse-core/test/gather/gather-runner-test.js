@@ -535,7 +535,7 @@ describe('GatherRunner', function() {
 
     const gotoUrlForAboutBlank = jest.fn().mockResolvedValue(null);
     const gotoUrlForRealUrl = jest.fn()
-      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce(requestedUrl)
       .mockRejectedValueOnce(navigationError);
     const driver = Object.assign({}, fakeDriver, {
       online: true,
