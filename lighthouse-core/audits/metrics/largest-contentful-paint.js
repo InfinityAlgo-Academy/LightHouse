@@ -62,6 +62,7 @@ class LargestContentfulPaint extends Audit {
         context.options.scoreMedian
       ),
       numericValue: metricResult.timing,
+      numericUnit: 'millisecond',
       displayValue: str_(i18n.UIStrings.seconds, {timeInMs: metricResult.timing}),
     };
   }

@@ -295,6 +295,9 @@ message AuditResult {
   // of nodes in the DOM or the timestamp of a specific load event. More
   // information can be found in the audit details, if present.
   google.protobuf.DoubleValue numeric_value = 11;
+
+  // The unit of the numeric_value field. Used to format the numeric value for display.
+  string numeric_unit = 12;
 }
 
 // Message containing the i18n data for the LHR - Version 1

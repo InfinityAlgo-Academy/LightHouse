@@ -168,6 +168,8 @@ class DetailsRenderer {
    * @return {Element}
    */
   _renderNumeric(text) {
+    // TODO: this should probably accept a number and call `formatNumber` instead of being identical
+    // to _renderText.
     const element = this._dom.createElement('div', 'lh-numeric');
     element.textContent = text;
     return element;

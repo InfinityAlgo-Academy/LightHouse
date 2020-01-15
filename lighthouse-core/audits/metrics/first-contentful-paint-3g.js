@@ -56,6 +56,7 @@ class FirstContentfulPaint3G extends Audit {
         context.options.scoreMedian
       ),
       numericValue: metricResult.timing,
+      numericUnit: 'millisecond',
       displayValue: `${metricResult.timing}\xa0ms`,
     };
   }
