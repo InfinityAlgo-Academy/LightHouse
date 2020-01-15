@@ -8,7 +8,7 @@
 module.exports = {
   isParseFailure: false,
   hasStartUrl: true,
-  hasIconsAtLeast192px: true,
+  hasIconsAtLeast144px: true,
   hasIconsAtLeast512px: true,
   hasPWADisplayValue: true,
   hasBackgroundColor: true,
