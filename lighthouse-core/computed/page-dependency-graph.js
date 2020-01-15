@@ -305,11 +305,30 @@ class PageDependencyGraph {
     }
 
     // Second pass to prune the graph of short tasks.
+    const minimumEvtDur = SIGNIFICANT_DUR_THRESHOLD_MS * 1000;
+    let foundFirstLayout = false;
+    let foundFirstPaint = false;
+    let foundFirstParse = false;
+
     for (const node of cpuNodes) {
-      if (node.event.dur >= SIGNIFICANT_DUR_THRESHOLD_MS * 1000) {
-        // Don't prune this node. The task is long so it will impact simulation.
+      // Don't prune if event is the first ParseHTML/Layout/Paint.
+      // See https://github.com/GoogleChrome/lighthouse/issues/9627#issuecomment-526699524 for more.
+      let isFirst = false;
+      if (!foundFirstLayout && node.childEvents.some(evt => evt.name === 'Layout')) {
+        isFirst = foundFirstLayout = true;
+      }
+      if (!foundFirstPaint && node.childEvents.some(evt => evt.name === 'Paint')) {
+        isFirst = foundFirstPaint = true;
+      }
+      if (!foundFirstParse && node.childEvents.some(evt => evt.name === 'ParseHTML')) {
+        isFirst = foundFirstParse = true;
+      }
+
+      if (isFirst || node.event.dur >= minimumEvtDur) {
+        // Don't prune this node. The task is long / important so it will impact simulation.
         continue;
       }
+
       // Prune the node if it isn't highly connected to minimize graph size. Rewiring the graph
       // here replaces O(M + N) edges with (M * N) edges, which is fine if either  M or N is at
       // most 1.
