@@ -855,7 +855,7 @@
     "message": "Time to interactive is the amount of time it takes for the page to become fully interactive. [Learn more](https://web.dev/interactive)."
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
-    "message": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn More](https://web.dev/largest-contentful-paint)"
+    "message": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn More](https://web.dev/lighthouse-largest-contentful-paint)"
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
     "message": "Largest Contentful Paint"

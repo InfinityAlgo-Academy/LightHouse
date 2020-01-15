@@ -1283,7 +1283,7 @@
             "title": "Form elements do not have associated labels"
         },
         "largest-contentful-paint": {
-            "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn More](https://web.dev/largest-contentful-paint)",
+            "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn More](https://web.dev/lighthouse-largest-contentful-paint)",
             "displayValue": "4.9\u00a0s",
             "id": "largest-contentful-paint",
             "numericValue": 4927.278,
