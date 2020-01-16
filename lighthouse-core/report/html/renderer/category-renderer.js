@@ -128,7 +128,8 @@ class CategoryRenderer {
     if (!warnings || warnings.length === 0) return auditEl;
 
     // Add list of warnings or singular warning
-    const warningsEl = this.dom.createChildOf(titleEl, 'div', 'lh-warnings');
+    const summaryEl = this.dom.find('summary', header);
+    const warningsEl = this.dom.createChildOf(summaryEl, 'div', 'lh-warnings');
     this.dom.createChildOf(warningsEl, 'span').textContent = strings.warningHeader;
     if (warnings.length === 1) {
       warningsEl.appendChild(this.dom.document().createTextNode(warnings.join('')));

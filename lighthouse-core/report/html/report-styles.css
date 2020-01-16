@@ -995,7 +995,7 @@
   --item-margin: calc(var(--report-line-height) / 6);
   color: var(--color-average);
   margin: var(--audit-padding-vertical) 0;
-  padding: calc(var(--audit-padding-vertical) / 2) var(--audit-padding-vertical);
+  padding: calc(var(--audit-padding-vertical) / 2) calc(var(--audit-description-padding-left));
 }
 .lh-warnings span {
   font-weight: bold;
