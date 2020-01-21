@@ -20,9 +20,10 @@ describe('DOMSize audit', () => {
       width: {max: 2, pathToElement: ['html', 'body']},
     },
   };
+  const context = {options, settings: {locale: 'en'}};
 
   it('calculates score hitting mid distribution', () => {
-    const auditResult = DOMSize.audit(artifact, {options});
+    const auditResult = DOMSize.audit(artifact, context);
     assert.equal(auditResult.score, 0.43);
     assert.equal(auditResult.numericValue, numElements);
     expect(auditResult.displayValue).toBeDisplayString('1,500 elements');
@@ -33,11 +34,11 @@ describe('DOMSize audit', () => {
 
   it('calculates score hitting top distribution', () => {
     artifact.DOMStats.totalBodyElements = 400;
-    assert.equal(DOMSize.audit(artifact, {options}).score, 1);
+    assert.equal(DOMSize.audit(artifact, context).score, 1);
   });
 
   it('calculates score hitting bottom of distribution', () => {
     artifact.DOMStats.totalBodyElements = 5970;
-    assert.equal(DOMSize.audit(artifact, {options}).score, 0);
+    assert.equal(DOMSize.audit(artifact, context).score, 0);
   });
 });

@@ -25,8 +25,8 @@ describe('Metrics: Lantern Speed Index', () => {
     }).toMatchInlineSnapshot(`
 Object {
   "optimistic": 605,
-  "pessimistic": 1631,
-  "timing": 1657,
+  "pessimistic": 1661,
+  "timing": 1676,
 }
 `);
   });
@@ -43,8 +43,8 @@ Object {
     }).toMatchInlineSnapshot(`
 Object {
   "optimistic": 605,
-  "pessimistic": 2381,
-  "timing": 2958,
+  "pessimistic": 2411,
+  "timing": 2983,
 }
 `);
   });

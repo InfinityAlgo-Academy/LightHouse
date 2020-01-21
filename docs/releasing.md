@@ -131,6 +131,9 @@ cd ../lighthouse-pristine
 git status
 git log
 
+# Publish tag.
+git push --follow-tags
+
 # Publish to npm.
 npm publish
 

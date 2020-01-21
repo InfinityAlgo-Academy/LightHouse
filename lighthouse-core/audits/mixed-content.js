@@ -7,7 +7,7 @@
 
 const Audit = require('./audit.js');
 const URL = require('../lib/url-shim.js');
-const Util = require('../report/html/renderer/util.js');
+const I18n = require('../report/html/renderer/i18n.js');
 const NetworkRecords = require('../computed/network-records.js');
 
 /**
@@ -126,7 +126,8 @@ class MixedContent extends Audit {
         upgradeableResources.push(resource);
       }
 
-      const displayValue = `${Util.formatNumber(upgradeableResources.length)}
+      const i18n = new I18n(context.settings.locale);
+      const displayValue = `${i18n.formatNumber(upgradeableResources.length)}
           ${upgradeableResources.length === 1 ? 'request' : 'requests'}`;
 
       /** @type {LH.Audit.Details.Table['headings']} */

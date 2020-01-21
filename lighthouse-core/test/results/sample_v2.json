@@ -78,6 +78,7 @@
       "score": 0.51,
       "scoreDisplayMode": "numeric",
       "numericValue": 3969.135,
+      "numericUnit": "millisecond",
       "displayValue": "4.0 s"
     },
     "first-meaningful-paint": {
@@ -87,15 +88,17 @@
       "score": 0.51,
       "scoreDisplayMode": "numeric",
       "numericValue": 3969.136,
+      "numericUnit": "millisecond",
       "displayValue": "4.0 s"
     },
     "largest-contentful-paint": {
       "id": "largest-contentful-paint",
       "title": "Largest Contentful Paint",
-      "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn More](https://web.dev/largest-contentful-paint)",
+      "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn More](https://web.dev/lighthouse-largest-contentful-paint)",
       "score": 0.31,
       "scoreDisplayMode": "numeric",
       "numericValue": 4927.278,
+      "numericUnit": "millisecond",
       "displayValue": "4.9 s"
     },
     "load-fast-enough-for-pwa": {
@@ -104,7 +107,8 @@
       "description": "A fast page load over a cellular network ensures a good mobile user experience. [Learn more](https://web.dev/load-fast-enough-for-pwa).",
       "score": 1,
       "scoreDisplayMode": "binary",
-      "numericValue": 4927.278
+      "numericValue": 4927.278,
+      "numericUnit": "millisecond"
     },
     "speed-index": {
       "id": "speed-index",
@@ -113,6 +117,7 @@
       "score": 0.74,
       "scoreDisplayMode": "numeric",
       "numericValue": 4417,
+      "numericUnit": "millisecond",
       "displayValue": "4.4 s"
     },
     "screenshot-thumbnails": {
@@ -198,6 +203,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 16,
+      "numericUnit": "millisecond",
       "displayValue": "20 ms"
     },
     "total-blocking-time": {
@@ -207,6 +213,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 116.79800000000023,
+      "numericUnit": "millisecond",
       "displayValue": "120 ms"
     },
     "max-potential-fid": {
@@ -216,6 +223,7 @@
       "score": 0.92,
       "scoreDisplayMode": "numeric",
       "numericValue": 122.537,
+      "numericUnit": "millisecond",
       "displayValue": "120 ms"
     },
     "errors-in-console": {
@@ -224,7 +232,6 @@
       "description": "Errors logged to the console indicate unresolved problems. They can come from network request failures and other browser concerns. [Learn more](https://web.dev/errors-in-console)",
       "score": 0,
       "scoreDisplayMode": "binary",
-      "numericValue": 5,
       "details": {
         "type": "table",
         "headings": [
@@ -275,6 +282,7 @@
       "score": 1,
       "scoreDisplayMode": "binary",
       "numericValue": 570.5630000000001,
+      "numericUnit": "millisecond",
       "displayValue": "Root document took 570 ms",
       "details": {
         "type": "opportunity",
@@ -290,6 +298,7 @@
       "score": 0.72,
       "scoreDisplayMode": "numeric",
       "numericValue": 4927.278,
+      "numericUnit": "millisecond",
       "displayValue": "4.9 s"
     },
     "interactive": {
@@ -299,6 +308,7 @@
       "score": 0.78,
       "scoreDisplayMode": "numeric",
       "numericValue": 4927.278,
+      "numericUnit": "millisecond",
       "displayValue": "4.9 s"
     },
     "user-timings": {
@@ -466,6 +476,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -648,6 +659,7 @@
       "score": 0.96,
       "scoreDisplayMode": "numeric",
       "numericValue": 1548.5690000000002,
+      "numericUnit": "millisecond",
       "displayValue": "1.5 s",
       "details": {
         "type": "table",
@@ -710,6 +722,7 @@
       "score": 0.92,
       "scoreDisplayMode": "numeric",
       "numericValue": 1150.573,
+      "numericUnit": "millisecond",
       "displayValue": "1.2 s",
       "details": {
         "type": "table",
@@ -776,6 +789,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -791,6 +805,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "warnings": [],
       "details": {
@@ -850,7 +865,6 @@
       "description": "Lists the network requests that were made during page load.",
       "score": null,
       "scoreDisplayMode": "informative",
-      "numericValue": 18,
       "details": {
         "type": "table",
         "headings": [
@@ -1092,6 +1106,7 @@
       "score": null,
       "scoreDisplayMode": "informative",
       "numericValue": 1.7249999999999943,
+      "numericUnit": "millisecond",
       "displayValue": "0 ms",
       "details": {
         "type": "table",
@@ -1127,6 +1142,7 @@
       "score": null,
       "scoreDisplayMode": "informative",
       "numericValue": 572.829,
+      "numericUnit": "millisecond",
       "displayValue": "570 ms",
       "details": {
         "type": "table",
@@ -1161,7 +1177,6 @@
       "description": "Lists the toplevel main thread tasks that executed during page load.",
       "score": null,
       "scoreDisplayMode": "informative",
-      "numericValue": 16,
       "details": {
         "type": "table",
         "headings": [
@@ -1253,6 +1268,7 @@
       "score": null,
       "scoreDisplayMode": "informative",
       "numericValue": 4927,
+      "numericUnit": "millisecond",
       "details": {
         "type": "debugdata",
         "items": [
@@ -1357,17 +1373,17 @@
           {
             "resourceType": "total",
             "label": "Total",
-            "requestCount": 18,
-            "size": 160738,
-            "countOverBudget": "8 requests",
-            "sizeOverBudget": 58338
+            "requestCount": 17,
+            "size": 160517,
+            "countOverBudget": "7 requests",
+            "sizeOverBudget": 58117
           },
           {
             "resourceType": "other",
             "label": "Other",
-            "requestCount": 2,
-            "size": 12861,
-            "sizeOverBudget": 7741
+            "requestCount": 1,
+            "size": 12640,
+            "sizeOverBudget": 7520
           },
           {
             "resourceType": "third-party",
@@ -1419,7 +1435,7 @@
       "description": "To set budgets for the quantity and size of page resources, add a budget.json file. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).",
       "score": null,
       "scoreDisplayMode": "informative",
-      "displayValue": "18 requests • 157 KB",
+      "displayValue": "17 requests • 157 KB",
       "details": {
         "type": "table",
         "headings": [
@@ -1443,8 +1459,8 @@
           {
             "resourceType": "total",
             "label": "Total",
-            "requestCount": 18,
-            "size": 160738
+            "requestCount": 17,
+            "size": 160517
           },
           {
             "resourceType": "script",
@@ -1467,8 +1483,8 @@
           {
             "resourceType": "other",
             "label": "Other",
-            "requestCount": 2,
-            "size": 12861
+            "requestCount": 1,
+            "size": 12640
           },
           {
             "resourceType": "stylesheet",
@@ -2271,6 +2287,7 @@
       "score": 0.58,
       "scoreDisplayMode": "numeric",
       "numericValue": 103455,
+      "numericUnit": "byte",
       "displayValue": "10 resources found",
       "details": {
         "type": "table",
@@ -2378,6 +2395,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 160738,
+      "numericUnit": "byte",
       "displayValue": "Total size was 157 KB",
       "details": {
         "type": "table",
@@ -2444,6 +2462,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "warnings": [],
       "details": {
@@ -2461,6 +2480,7 @@
       "score": 0.46,
       "scoreDisplayMode": "numeric",
       "numericValue": 1129,
+      "numericUnit": "millisecond",
       "displayValue": "Potential savings of 1,130 ms",
       "details": {
         "type": "opportunity",
@@ -2518,6 +2538,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -2534,6 +2555,7 @@
       "score": 0.88,
       "scoreDisplayMode": "numeric",
       "numericValue": 150,
+      "numericUnit": "millisecond",
       "displayValue": "Potential savings of 30 KB",
       "warnings": [],
       "details": {
@@ -2574,6 +2596,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -2590,6 +2613,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -2606,6 +2630,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "Potential savings of 9 KB",
       "warnings": [],
       "details": {
@@ -2652,6 +2677,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "warnings": [],
       "details": {
@@ -2669,6 +2695,7 @@
       "score": 0.75,
       "scoreDisplayMode": "numeric",
       "numericValue": 300,
+      "numericUnit": "millisecond",
       "displayValue": "Potential savings of 63 KB",
       "details": {
         "type": "opportunity",
@@ -2712,6 +2739,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "warnings": [],
       "details": {
@@ -2729,6 +2757,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -2760,6 +2789,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 31,
+      "numericUnit": "element",
       "displayValue": "31 elements",
       "details": {
         "type": "table",
@@ -2990,14 +3020,25 @@
             "npm": "jquery"
           },
           {
-            "name": "jQuery (Fast path)",
-            "npm": "jquery"
-          },
-          {
             "name": "WordPress"
           }
         ],
-        "summary": {}
+        "summary": {},
+        "debugData": {
+          "type": "debugdata",
+          "stacks": [
+            {
+              "id": "jquery",
+              "version": "2.1.1"
+            },
+            {
+              "id": "jquery-fast"
+            },
+            {
+              "id": "wordpress"
+            }
+          ]
+        }
       }
     },
     "notification-on-start": {
@@ -5100,6 +5141,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:UnusedCSS",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:computed:FirstContentfulPaint",
         "duration": 100,
         "entryType": "measure"
@@ -5316,8 +5363,17 @@
       "auditGroupExpandTooltip": "Show audits",
       "crcInitialNavigation": "Initial Navigation",
       "crcLongestDurationLabel": "Maximum critical path latency:",
+      "dropdownCopyJSON": "Copy JSON",
+      "dropdownDarkTheme": "Toggle Dark Theme",
+      "dropdownPrintExpanded": "Print Expanded",
+      "dropdownPrintSummary": "Print Summary",
+      "dropdownSaveGist": "Save as Gist",
+      "dropdownSaveHTML": "Save as HTML",
+      "dropdownSaveJSON": "Save as JSON",
+      "dropdownViewer": "Open in Viewer",
       "errorLabel": "Error!",
       "errorMissingAuditInfo": "Report error: no audit information",
+      "footerIssue": "File an issue",
       "labDataTitle": "Lab Data",
       "lsPerformanceCategoryDescription": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) analysis of the current page on an emulated mobile network. Values are estimated and may vary.",
       "manualAuditsGroupTitle": "Additional items to manually check",
@@ -5325,9 +5381,23 @@
       "opportunityResourceColumnLabel": "Opportunity",
       "opportunitySavingsColumnLabel": "Estimated Savings",
       "passedAuditsGroupTitle": "Passed audits",
+      "runtimeDesktopEmulation": "Emulated Desktop",
+      "runtimeMobileEmulation": "Emulated Nexus 5X",
+      "runtimeNoEmulation": "No emulation",
+      "runtimeSettingsBenchmark": "CPU/Memory Power",
+      "runtimeSettingsCPUThrottling": "CPU throttling",
+      "runtimeSettingsDevice": "Device",
+      "runtimeSettingsFetchTime": "Fetch Time",
+      "runtimeSettingsNetworkThrottling": "Network throttling",
+      "runtimeSettingsTitle": "Runtime Settings",
+      "runtimeSettingsUA": "User agent (host)",
+      "runtimeSettingsUANetwork": "User agent (network)",
+      "runtimeSettingsUrl": "URL",
+      "runtimeUnknown": "Unknown",
       "snippetCollapseButtonLabel": "Collapse snippet",
       "snippetExpandButtonLabel": "Expand snippet",
       "thirdPartyResourcesLabel": "Show 3rd-party resources",
+      "throttlingProvided": "Provided by environment",
       "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:",
       "varianceDisclaimer": "Values are estimated and may vary. The performance score is [based only on these metrics](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted).",
       "warningAuditsGroupTitle": "Passed audits but with warnings",
@@ -5750,7 +5820,7 @@
         },
         {
           "values": {
-            "count": 8
+            "count": 7
           },
           "path": "audits[performance-budget].details.items[1].countOverBudget"
         },
@@ -5814,8 +5884,8 @@
       "lighthouse-core/audits/resource-summary.js | displayValue": [
         {
           "values": {
-            "requestCount": 18,
-            "byteCount": 160738
+            "requestCount": 17,
+            "byteCount": 160517
           },
           "path": "audits[resource-summary].displayValue"
         }

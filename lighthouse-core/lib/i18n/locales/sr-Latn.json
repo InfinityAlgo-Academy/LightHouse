@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Tekst nije čitljiv jer ne postoji metaoznaka oblasti prikaza koja je optimizovana za ekrane na mobilnim uređajima."
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} teksta je premalo (na osnovu uzorka od {decimalProportionVisited, number, extendedPercent})."
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "Dokument ne koristi čitljive veličine fontova"
   },

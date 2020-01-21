@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Teksten er uleselig fordi det ikke er noen viewport-metatag som er optimalisert for mobilskjermer."
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} av teksten er for liten (basert på et utvalg på {decimalProportionVisited, number, extendedPercent} av siden)."
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "Dokumentet bruker ikke leselige skriftstørrelser"
   },

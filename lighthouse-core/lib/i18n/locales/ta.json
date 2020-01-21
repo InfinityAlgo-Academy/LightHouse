@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "மொபைல் திரைகளுக்கேற்ப காட்சிப் பகுதி மேலதிகத் தகவல் மேம்படுத்தப்படாததால் உரையைச் சரியாகப் படிக்க முடியவில்லை."
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} உரை மிகவும் சிறியது ({decimalProportionVisited, number, extendedPercent} மாதிரியின் அடிப்படையில்)."
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "ஆவணத்தில் தெளிவான எழுத்துரு அளவுகள் பயன்படுத்தப்படவில்லை"
   },

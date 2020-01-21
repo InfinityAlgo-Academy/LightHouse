@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Textul nu este lizibil deoarece nu există nicio metaetichetă viewport optimizată pentru ecranele dispozitivelor mobile."
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} din text este prea mic (pornind de la un eșantion de {decimalProportionVisited, number, extendedPercent})."
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "Documentul nu folosește dimensiuni de fonturi lizibile"
   },

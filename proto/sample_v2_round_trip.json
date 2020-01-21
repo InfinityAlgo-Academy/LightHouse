@@ -188,6 +188,7 @@
             },
             "displayValue": "1.2\u00a0s",
             "id": "bootup-time",
+            "numericUnit": "millisecond",
             "numericValue": 1150.573,
             "score": 0.92,
             "scoreDisplayMode": "numeric",
@@ -597,6 +598,7 @@
             },
             "displayValue": "31 elements",
             "id": "dom-size",
+            "numericUnit": "element",
             "numericValue": 31.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -636,6 +638,7 @@
                 "type": "opportunity"
             },
             "id": "efficient-animated-content",
+            "numericUnit": "millisecond",
             "numericValue": 0.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -686,7 +689,6 @@
                 "type": "table"
             },
             "id": "errors-in-console",
-            "numericValue": 5.0,
             "score": 0.0,
             "scoreDisplayMode": "binary",
             "title": "Browser errors were logged to the console"
@@ -695,6 +697,7 @@
             "description": "Estimated Input Latency is an estimate of how long your app takes to respond to user input, in milliseconds, during the busiest 5s window of page load. If your latency is higher than 50 ms, users may perceive your app as laggy. [Learn more](https://web.dev/estimated-input-latency).",
             "displayValue": "20\u00a0ms",
             "id": "estimated-input-latency",
+            "numericUnit": "millisecond",
             "numericValue": 16.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -765,6 +768,7 @@
             "description": "First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://web.dev/first-contentful-paint).",
             "displayValue": "4.0\u00a0s",
             "id": "first-contentful-paint",
+            "numericUnit": "millisecond",
             "numericValue": 3969.135,
             "score": 0.51,
             "scoreDisplayMode": "numeric",
@@ -774,6 +778,7 @@
             "description": "First CPU Idle marks the first time at which the page's main thread is quiet enough to handle input.  [Learn more](https://web.dev/first-cpu-idle).",
             "displayValue": "4.9\u00a0s",
             "id": "first-cpu-idle",
+            "numericUnit": "millisecond",
             "numericValue": 4927.278,
             "score": 0.72,
             "scoreDisplayMode": "numeric",
@@ -783,6 +788,7 @@
             "description": "First Meaningful Paint measures when the primary content of a page is visible. [Learn more](https://web.dev/first-meaningful-paint).",
             "displayValue": "4.0\u00a0s",
             "id": "first-meaningful-paint",
+            "numericUnit": "millisecond",
             "numericValue": 3969.136,
             "score": 0.51,
             "scoreDisplayMode": "numeric",
@@ -1126,6 +1132,7 @@
             "description": "Time to interactive is the amount of time it takes for the page to become fully interactive. [Learn more](https://web.dev/interactive).",
             "displayValue": "4.9\u00a0s",
             "id": "interactive",
+            "numericUnit": "millisecond",
             "numericValue": 4927.278,
             "score": 0.78,
             "scoreDisplayMode": "numeric",
@@ -1176,6 +1183,21 @@
         "js-libraries": {
             "description": "All front-end JavaScript libraries detected on the page. [Learn more](https://web.dev/js-libraries).",
             "details": {
+                "debugData": {
+                    "stacks": [
+                        {
+                            "id": "jquery",
+                            "version": "2.1.1"
+                        },
+                        {
+                            "id": "jquery-fast"
+                        },
+                        {
+                            "id": "wordpress"
+                        }
+                    ],
+                    "type": "debugdata"
+                },
                 "headings": [
                     {
                         "itemType": "text",
@@ -1193,10 +1215,6 @@
                         "name": "jQuery",
                         "npm": "jquery",
                         "version": "2.1.1"
-                    },
-                    {
-                        "name": "jQuery (Fast path)",
-                        "npm": "jquery"
                     },
                     {
                         "name": "WordPress"
@@ -1272,9 +1290,10 @@
             "title": "Form elements do not have associated labels"
         },
         "largest-contentful-paint": {
-            "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn More](https://web.dev/largest-contentful-paint)",
+            "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn More](https://web.dev/lighthouse-largest-contentful-paint)",
             "displayValue": "4.9\u00a0s",
             "id": "largest-contentful-paint",
+            "numericUnit": "millisecond",
             "numericValue": 4927.278,
             "score": 0.31,
             "scoreDisplayMode": "numeric",
@@ -1368,6 +1387,7 @@
         "load-fast-enough-for-pwa": {
             "description": "A fast page load over a cellular network ensures a good mobile user experience. [Learn more](https://web.dev/load-fast-enough-for-pwa).",
             "id": "load-fast-enough-for-pwa",
+            "numericUnit": "millisecond",
             "numericValue": 4927.278,
             "score": 1.0,
             "scoreDisplayMode": "binary",
@@ -1466,7 +1486,6 @@
                 "type": "table"
             },
             "id": "main-thread-tasks",
-            "numericValue": 16.0,
             "score": null,
             "scoreDisplayMode": "informative",
             "title": "Tasks"
@@ -1528,6 +1547,7 @@
             },
             "displayValue": "1.5\u00a0s",
             "id": "mainthread-work-breakdown",
+            "numericUnit": "millisecond",
             "numericValue": 1548.5690000000002,
             "score": 0.96,
             "scoreDisplayMode": "numeric",
@@ -1544,6 +1564,7 @@
             "description": "The maximum potential First Input Delay that your users could experience is the duration of the longest task. [Learn more](https://web.dev/lighthouse-max-potential-fid).",
             "displayValue": "120\u00a0ms",
             "id": "max-potential-fid",
+            "numericUnit": "millisecond",
             "numericValue": 122.537,
             "score": 0.92,
             "scoreDisplayMode": "numeric",
@@ -1625,6 +1646,7 @@
                 "type": "debugdata"
             },
             "id": "metrics",
+            "numericUnit": "millisecond",
             "numericValue": 4927.0,
             "score": null,
             "scoreDisplayMode": "informative",
@@ -1866,7 +1888,6 @@
                 "type": "table"
             },
             "id": "network-requests",
-            "numericValue": 18.0,
             "score": null,
             "scoreDisplayMode": "informative",
             "title": "Network Requests"
@@ -1901,6 +1922,7 @@
             },
             "displayValue": "0\u00a0ms",
             "id": "network-rtt",
+            "numericUnit": "millisecond",
             "numericValue": 1.7249999999999943,
             "score": null,
             "scoreDisplayMode": "informative",
@@ -1936,6 +1958,7 @@
             },
             "displayValue": "570\u00a0ms",
             "id": "network-server-latency",
+            "numericUnit": "millisecond",
             "numericValue": 572.829,
             "score": null,
             "scoreDisplayMode": "informative",
@@ -2121,6 +2144,7 @@
                 "type": "opportunity"
             },
             "id": "offscreen-images",
+            "numericUnit": "millisecond",
             "numericValue": 0.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -2197,19 +2221,19 @@
                         "sizeOverBudget": 72955.0
                     },
                     {
-                        "countOverBudget": "8 requests",
+                        "countOverBudget": "7 requests",
                         "label": "Total",
-                        "requestCount": 18.0,
+                        "requestCount": 17.0,
                         "resourceType": "total",
-                        "size": 160738.0,
-                        "sizeOverBudget": 58338.0
+                        "size": 160517.0,
+                        "sizeOverBudget": 58117.0
                     },
                     {
                         "label": "Other",
-                        "requestCount": 2.0,
+                        "requestCount": 1.0,
                         "resourceType": "other",
-                        "size": 12861.0,
-                        "sizeOverBudget": 7741.0
+                        "size": 12640.0,
+                        "sizeOverBudget": 7520.0
                     },
                     {
                         "countOverBudget": "1 request",
@@ -2302,6 +2326,7 @@
                 "type": "opportunity"
             },
             "id": "redirects",
+            "numericUnit": "millisecond",
             "numericValue": 0.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -2366,6 +2391,7 @@
             },
             "displayValue": "Potential savings of 1,130\u00a0ms",
             "id": "render-blocking-resources",
+            "numericUnit": "millisecond",
             "numericValue": 1129.0,
             "score": 0.46,
             "scoreDisplayMode": "numeric",
@@ -2394,9 +2420,9 @@
                 "items": [
                     {
                         "label": "Total",
-                        "requestCount": 18.0,
+                        "requestCount": 17.0,
                         "resourceType": "total",
-                        "size": 160738.0
+                        "size": 160517.0
                     },
                     {
                         "label": "Script",
@@ -2418,9 +2444,9 @@
                     },
                     {
                         "label": "Other",
-                        "requestCount": 2.0,
+                        "requestCount": 1.0,
                         "resourceType": "other",
-                        "size": 12861.0
+                        "size": 12640.0
                     },
                     {
                         "label": "Stylesheet",
@@ -2449,7 +2475,7 @@
                 ],
                 "type": "table"
             },
-            "displayValue": "18 requests \u2022 157 KB",
+            "displayValue": "17 requests \u2022 157 KB",
             "id": "resource-summary",
             "score": null,
             "scoreDisplayMode": "informative",
@@ -2536,6 +2562,7 @@
             "description": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more](https://web.dev/speed-index).",
             "displayValue": "4.4\u00a0s",
             "id": "speed-index",
+            "numericUnit": "millisecond",
             "numericValue": 4417.0,
             "score": 0.74,
             "scoreDisplayMode": "numeric",
@@ -2719,6 +2746,7 @@
             },
             "displayValue": "Root document took 570\u00a0ms",
             "id": "time-to-first-byte",
+            "numericUnit": "millisecond",
             "numericValue": 570.5630000000001,
             "score": 1.0,
             "scoreDisplayMode": "binary",
@@ -2728,6 +2756,7 @@
             "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more](https://web.dev/lighthouse-total-blocking-time).",
             "displayValue": "120\u00a0ms",
             "id": "total-blocking-time",
+            "numericUnit": "millisecond",
             "numericValue": 116.79800000000023,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -2794,6 +2823,7 @@
             },
             "displayValue": "Total size was 157\u00a0KB",
             "id": "total-byte-weight",
+            "numericUnit": "byte",
             "numericValue": 160738.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -2809,6 +2839,7 @@
                 "type": "opportunity"
             },
             "id": "unminified-css",
+            "numericUnit": "millisecond",
             "numericValue": 0.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -2848,6 +2879,7 @@
             },
             "displayValue": "Potential savings of 30\u00a0KB",
             "id": "unminified-javascript",
+            "numericUnit": "millisecond",
             "numericValue": 150.0,
             "score": 0.88,
             "scoreDisplayMode": "numeric",
@@ -2864,6 +2896,7 @@
                 "type": "opportunity"
             },
             "id": "unused-css-rules",
+            "numericUnit": "millisecond",
             "numericValue": 0.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -2879,6 +2912,7 @@
                 "type": "opportunity"
             },
             "id": "unused-javascript",
+            "numericUnit": "millisecond",
             "numericValue": 0.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -3090,6 +3124,7 @@
             },
             "displayValue": "10 resources found",
             "id": "uses-long-cache-ttl",
+            "numericUnit": "byte",
             "numericValue": 103455.0,
             "score": 0.58,
             "scoreDisplayMode": "numeric",
@@ -3105,6 +3140,7 @@
                 "type": "opportunity"
             },
             "id": "uses-optimized-images",
+            "numericUnit": "millisecond",
             "numericValue": 0.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -3156,6 +3192,7 @@
                 "type": "opportunity"
             },
             "id": "uses-rel-preconnect",
+            "numericUnit": "millisecond",
             "numericValue": 0.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -3171,6 +3208,7 @@
                 "type": "opportunity"
             },
             "id": "uses-rel-preload",
+            "numericUnit": "millisecond",
             "numericValue": 0.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -3186,6 +3224,7 @@
                 "type": "opportunity"
             },
             "id": "uses-responsive-images",
+            "numericUnit": "millisecond",
             "numericValue": 0.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -3230,6 +3269,7 @@
             },
             "displayValue": "Potential savings of 63\u00a0KB",
             "id": "uses-text-compression",
+            "numericUnit": "millisecond",
             "numericValue": 300.0,
             "score": 0.75,
             "scoreDisplayMode": "numeric",
@@ -3274,6 +3314,7 @@
             },
             "displayValue": "Potential savings of 9\u00a0KB",
             "id": "uses-webp-images",
+            "numericUnit": "millisecond",
             "numericValue": 0.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -4124,8 +4165,17 @@
             "auditGroupExpandTooltip": "Show audits",
             "crcInitialNavigation": "Initial Navigation",
             "crcLongestDurationLabel": "Maximum critical path latency:",
+            "dropdownCopyJSON": "Copy JSON",
+            "dropdownDarkTheme": "Toggle Dark Theme",
+            "dropdownPrintExpanded": "Print Expanded",
+            "dropdownPrintSummary": "Print Summary",
+            "dropdownSaveGist": "Save as Gist",
+            "dropdownSaveHTML": "Save as HTML",
+            "dropdownSaveJSON": "Save as JSON",
+            "dropdownViewer": "Open in Viewer",
             "errorLabel": "Error!",
             "errorMissingAuditInfo": "Report error: no audit information",
+            "footerIssue": "File an issue",
             "labDataTitle": "Lab Data",
             "lsPerformanceCategoryDescription": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) analysis of the current page on an emulated mobile network. Values are estimated and may vary.",
             "manualAuditsGroupTitle": "Additional items to manually check",
@@ -4133,9 +4183,23 @@
             "opportunityResourceColumnLabel": "Opportunity",
             "opportunitySavingsColumnLabel": "Estimated Savings",
             "passedAuditsGroupTitle": "Passed audits",
+            "runtimeDesktopEmulation": "Emulated Desktop",
+            "runtimeMobileEmulation": "Emulated Nexus 5X",
+            "runtimeNoEmulation": "No emulation",
+            "runtimeSettingsBenchmark": "CPU/Memory Power",
+            "runtimeSettingsCPUThrottling": "CPU throttling",
+            "runtimeSettingsDevice": "Device",
+            "runtimeSettingsFetchTime": "Fetch Time",
+            "runtimeSettingsNetworkThrottling": "Network throttling",
+            "runtimeSettingsTitle": "Runtime Settings",
+            "runtimeSettingsUA": "User agent (host)",
+            "runtimeSettingsUANetwork": "User agent (network)",
+            "runtimeSettingsUrl": "URL",
+            "runtimeUnknown": "Unknown",
             "snippetCollapseButtonLabel": "Collapse snippet",
             "snippetExpandButtonLabel": "Expand snippet",
             "thirdPartyResourcesLabel": "Show 3rd-party resources",
+            "throttlingProvided": "Provided by environment",
             "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:",
             "varianceDisclaimer": "Values are estimated and may vary. The performance score is [based only on these metrics](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted).",
             "warningAuditsGroupTitle": "Passed audits but with warnings",
@@ -4996,6 +5060,12 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:audit:render-blocking-resources",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:computed:UnusedCSS",
                 "startTime": 0.0
             },
             {

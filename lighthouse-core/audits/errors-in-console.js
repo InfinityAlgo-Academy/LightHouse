@@ -124,7 +124,6 @@ class ErrorLogs extends Audit {
 
     return {
       score: Number(numErrors === 0),
-      numericValue: numErrors,
       details,
     };
   }

@@ -2634,10 +2634,10 @@ detective@^5.0.2:
     defined "^1.0.0"
     minimist "^1.1.1"
 
-devtools-protocol@0.0.588129:
-  version "0.0.588129"
-  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.588129.tgz#b93d05b01679471639f2882077f77d4e96eecc18"
-  integrity sha512-5ID10jYNewQpBFo1IhKtYkH1b+EF9DmrnWidSdAnBq8hdJyZKxHvjHPbwTlWeqhzVzUKHSdn5EUj9BZq31U+QQ==
+devtools-protocol@0.0.729809:
+  version "0.0.729809"
+  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.729809.tgz#cfedb8ffdc63a9c5ee04e502d451f5cd1d07b577"
+  integrity sha512-gmSmtI47WSuXmLub16N3FbhJ9PPPZOlj530uZVUQAnm+9OVIB7XTK3q2lk0OH42blGG0BAaKJsdyvYU3nOprhA==
 
 diff-sequences@^24.9.0:
   version "24.9.0"
@@ -4788,10 +4788,10 @@ jpeg-js@0.1.2, jpeg-js@^0.1.2:
   resolved "https://registry.yarnpkg.com/jpeg-js/-/jpeg-js-0.1.2.tgz#135b992c0575c985cfa0f494a3227ed238583ece"
   integrity sha1-E1uZLAV1yYXPoPSUoyJ+0jhYPs4=
 
-js-library-detector@^5.6.0:
-  version "5.6.0"
-  resolved "https://registry.yarnpkg.com/js-library-detector/-/js-library-detector-5.6.0.tgz#a44c95237870b5e4f66f0aff948270df7ec9f277"
-  integrity sha512-s9LeTXee2J+7qXQHJ1EHPbK4Mk5ZU820Wrw+EOxDRQcn2Tay4n+SvZaqJa6T8UpKu5mIomSh6nXoyuP1j2DzUw==
+js-library-detector@^5.7.0:
+  version "5.7.0"
+  resolved "https://registry.yarnpkg.com/js-library-detector/-/js-library-detector-5.7.0.tgz#27199e0728273de9333d69b2be92f144cad94380"
+  integrity sha512-pUHR7ryXqiew2agkQ3NppopqJDi5qkJtI86PyQ9LLtg1iGzwIsMz+QNq3ky5bPogSie7AkL/xvcObXu3Veh61Q==
 
 js-tokens@^1.0.1:
   version "1.0.3"

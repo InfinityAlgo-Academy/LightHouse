@@ -58,7 +58,13 @@ function assertValidPasses(passes, audits) {
   const foundGatherers = new Set(BASE_ARTIFACT_NAMES);
 
   // Log if we are running gathers that are not needed by the audits listed in the config
-  passes.forEach(pass => {
+  passes.forEach((pass, passIndex) => {
+    if (passIndex === 0 && pass.loadFailureMode !== 'fatal') {
+      log.warn(`"${pass.passName}" is the first pass but was marked as non-fatal. ` +
+        `The first pass will always be treated as loadFailureMode=fatal.`);
+      pass.loadFailureMode = 'fatal';
+    }
+
     pass.gatherers.forEach(gathererDefn => {
       const gatherer = gathererDefn.instance;
       foundGatherers.add(gatherer.name);

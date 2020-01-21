@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "मोबाइल स्क्रीन के लिए कोई व्यूपोर्ट मेटा टैग ऑप्टिमाइज़ नहीं किए जाने की वजह से टेक्स्ट पढ़ने लायक नहीं है."
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "टेक्स्ट का {decimalProportion, number, extendedPercent} बहुत छोटा है ({decimalProportionVisited, number, extendedPercent} नमूने पर आधारित)."
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "दस्तावेज़ पढ़ने लायक फ़ॉन्ट आकारों का इस्तेमाल नहीं करता है"
   },

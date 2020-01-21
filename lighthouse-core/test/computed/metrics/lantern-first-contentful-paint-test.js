@@ -24,8 +24,8 @@ describe('Metrics: Lantern FCP', () => {
       optimistic: Math.round(result.optimisticEstimate.timeInMs),
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
     }).toMatchSnapshot();
-    assert.equal(result.optimisticEstimate.nodeTimings.size, 2);
-    assert.equal(result.pessimisticEstimate.nodeTimings.size, 2);
+    assert.equal(result.optimisticEstimate.nodeTimings.size, 3);
+    assert.equal(result.pessimisticEstimate.nodeTimings.size, 3);
     assert.ok(result.optimisticGraph, 'should have created optimistic graph');
     assert.ok(result.pessimisticGraph, 'should have created pessimistic graph');
   });

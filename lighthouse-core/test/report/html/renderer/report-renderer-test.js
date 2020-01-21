@@ -11,6 +11,7 @@ const assert = require('assert');
 const fs = require('fs');
 const jsdom = require('jsdom');
 const Util = require('../../../../report/html/renderer/util.js');
+const I18n = require('../../../../report/html/renderer/i18n.js');
 const URL = require('../../../../lib/url-shim.js');
 const DOM = require('../../../../report/html/renderer/dom.js');
 const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
@@ -30,8 +31,8 @@ describe('ReportRenderer', () => {
   let sampleResults;
 
   beforeAll(() => {
-    global.URL = URL;
     global.Util = Util;
+    global.I18n = I18n;
     global.ReportUIFeatures = ReportUIFeatures;
     global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
     global.DetailsRenderer = DetailsRenderer;
@@ -62,8 +63,8 @@ describe('ReportRenderer', () => {
 
   afterAll(() => {
     global.self = undefined;
-    global.URL = undefined;
     global.Util = undefined;
+    global.I18n = undefined;
     global.ReportUIFeatures = undefined;
     global.matchMedia = undefined;
     global.CriticalRequestChainRenderer = undefined;
@@ -286,6 +287,8 @@ describe('ReportRenderer', () => {
           // https://github.com/dequelabs/axe-core/tree/b573b1c1/doc/examples/jest_react#to-run-the-example
           'color-contrast': {enabled: false},
           'link-in-text-block': {enabled: false},
+          // Report has empty links prior to i18n-ing.
+          'link-name': {enabled: false},
         },
       };
 

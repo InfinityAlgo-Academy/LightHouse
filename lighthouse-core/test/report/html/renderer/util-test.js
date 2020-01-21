@@ -7,85 +7,19 @@
 
 const assert = require('assert');
 const Util = require('../../../../report/html/renderer/util.js');
+const I18n = require('../../../../report/html/renderer/i18n.js');
 const sampleResult = require('../../../results/sample_v2.json');
-
-// Require i18n to make sure Intl is polyfilled in Node without full-icu for testing.
-// When Util is run in a browser, Intl will be supplied natively (IE11+).
-// eslint-disable-next-line no-unused-vars
-const i18n = require('../../../../lib/i18n/i18n.js');
-
-const NBSP = '\xa0';
 
 /* eslint-env jest */
 /* global URL */
 
 describe('util helpers', () => {
-  it('formats a number', () => {
-    assert.strictEqual(Util.formatNumber(10), '10');
-    assert.strictEqual(Util.formatNumber(100.01), '100');
-    assert.strictEqual(Util.formatNumber(13000.456), '13,000.5');
+  beforeEach(() => {
+    Util.i18n = new I18n('en', {...Util.UIStrings});
   });
 
-  it('formats a date', () => {
-    const timestamp = Util.formatDateTime('2017-04-28T23:07:51.189Z');
-    assert.ok(
-      timestamp.includes('Apr 27, 2017') ||
-      timestamp.includes('Apr 28, 2017') ||
-      timestamp.includes('Apr 29, 2017')
-    );
-  });
-
-  it('formats bytes', () => {
-    assert.equal(Util.formatBytesToKB(100), `0.1${NBSP}KB`);
-    assert.equal(Util.formatBytesToKB(2000), `2${NBSP}KB`);
-    assert.equal(Util.formatBytesToKB(1014 * 1024), `1,014${NBSP}KB`);
-  });
-
-  it('formats ms', () => {
-    assert.equal(Util.formatMilliseconds(123), `120${NBSP}ms`);
-    assert.equal(Util.formatMilliseconds(2456.5, 0.1), `2,456.5${NBSP}ms`);
-  });
-
-  it('formats a duration', () => {
-    assert.equal(Util.formatDuration(60 * 1000), `1${NBSP}m`);
-    assert.equal(Util.formatDuration(60 * 60 * 1000 + 5000), `1${NBSP}h 5${NBSP}s`);
-    assert.equal(Util.formatDuration(28 * 60 * 60 * 1000 + 5000), `1${NBSP}d 4${NBSP}h 5${NBSP}s`);
-  });
-
-  it('formats numbers based on locale', () => {
-    // Requires full-icu or Intl polyfill.
-    const number = 12346.858558;
-
-    const originalLocale = Util.numberDateLocale;
-    Util.setNumberDateLocale('de');
-    assert.strictEqual(Util.formatNumber(number), '12.346,9');
-    assert.strictEqual(Util.formatBytesToKB(number), `12,1${NBSP}KB`);
-    assert.strictEqual(Util.formatMilliseconds(number), `12.350${NBSP}ms`);
-    assert.strictEqual(Util.formatSeconds(number), `12,3${NBSP}s`);
-
-    Util.setNumberDateLocale(originalLocale); // reset locale
-    assert.strictEqual(Util.formatNumber(number), '12,346.9');
-    assert.strictEqual(Util.formatBytesToKB(number), `12.1${NBSP}KB`);
-    assert.strictEqual(Util.formatMilliseconds(number), `12,350${NBSP}ms`);
-    assert.strictEqual(Util.formatSeconds(number), `12.3${NBSP}s`);
-  });
-
-  it('uses decimal comma with en-XA test locale', () => {
-    // Requires full-icu or Intl polyfill.
-    const number = 12346.858558;
-
-    const originalLocale = Util.numberDateLocale;
-    Util.setNumberDateLocale('en-XA');
-    assert.strictEqual(Util.formatNumber(number), '12.346,9');
-    assert.strictEqual(Util.formatBytesToKB(number), `12,1${NBSP}KB`);
-    assert.strictEqual(Util.formatMilliseconds(number), `12.350${NBSP}ms`);
-    assert.strictEqual(Util.formatSeconds(number), `12,3${NBSP}s`);
-
-    Util.setNumberDateLocale(originalLocale); // reset locale
-    assert.strictEqual(Util.formatNumber(number), '12,346.9');
-    assert.strictEqual(Util.formatBytesToKB(number), `12.1${NBSP}KB`);
-    assert.strictEqual(Util.formatMilliseconds(number), `12,350${NBSP}ms`);
-    assert.strictEqual(Util.formatSeconds(number), `12.3${NBSP}s`);
+  afterEach(() => {
+    Util.i18n = undefined;
   });
 
   it('calculates a score ratings', () => {

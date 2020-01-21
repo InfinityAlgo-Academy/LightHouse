@@ -1,10 +1,10 @@
 # Goal
 The goal of this document is to explain how scoring works in Lighthouse and what to do to improve your Lighthouse scores across the four sections of the report.
 
-Note 1: if you want a **nice spreadsheet** version of this doc to understand weighting and scoring, check out the [scoring spreadsheet](https://docs.google.com/spreadsheets/d/1Cxzhy5ecqJCucdf1M0iOzM8mIxNc7mmx107o5nj38Eo/edit#gid=0)
+Note 1: if you want a **nice spreadsheet** version of this doc to understand weighting and scoring, check out the [scoring spreadsheet](https://docs.google.com/spreadsheets/d/1up5rxd4EMCoMaxH8cppcK1x76n6HLx0e7jxb0e0FXvc)
 
 ![alt text](https://user-images.githubusercontent.com/39191/32397461-2d20c87a-c0a7-11e7-99d8-61576113a710.png)
-*Screenshot of the [scoring spreadsheet](https://docs.google.com/spreadsheets/d/1Cxzhy5ecqJCucdf1M0iOzM8mIxNc7mmx107o5nj38Eo/edit#gid=0)*
+*Screenshot of the [scoring spreadsheet](https://docs.google.com/spreadsheets/d/1up5rxd4EMCoMaxH8cppcK1x76n6HLx0e7jxb0e0FXvc)*
 
 Note 2: receiving a **score of ?** in any Lighthouse category indicates an error occurred. Please file an [issue](https://github.com/GoogleChrome/lighthouse/issues) so our team can look into it.
 

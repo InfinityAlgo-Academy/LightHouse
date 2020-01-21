@@ -67,6 +67,7 @@ expect.extend({
 async function runLighthouse(url) {
   const result = await lighthouse(url, {
     port: CHROME_DEBUG_PORT,
+    disableStorageReset: true,
     onlyCategories: ['seo'],
   });
   return result.lhr;

@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Hindi nababasa ang text dahil walang viewport meta tag na naka-optimize para sa mga screen ng mobile."
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "Masyadong maliit ang {decimalProportion, number, extendedPercent} ng text (batay sa sample na {decimalProportionVisited, number, extendedPercent})."
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "Hindi gumagamit ng mga nababasang laki ng font ang dokumento"
   },

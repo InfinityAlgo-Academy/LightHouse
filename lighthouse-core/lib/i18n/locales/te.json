@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "మొబైల్ స్క్రీన్‌ల కోసం ఆప్టిమైజ్ చేసిన వీక్షణ పోర్ట్ మెటా ట్యాగ్ అందుబాటులో లేదు కనుక వచనం సముచితంగా లేదు."
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "'{decimalProportion, number, extendedPercent}' వచనం చాలా చిన్నదిగా ఉంది ('{decimalProportionVisited, number, extendedPercent}' నమూనా ఆధారంగా)."
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "పత్రంలో సముచితమైన ఫాంట్ పరిమాణాలను ఉపయోగించలేదు"
   },

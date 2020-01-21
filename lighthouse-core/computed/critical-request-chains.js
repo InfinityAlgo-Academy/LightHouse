@@ -42,7 +42,7 @@ class CriticalRequestChains {
     // XHRs are fetched at High priority, but we exclude them, as they are unlikely to be critical
     // Images are also non-critical.
     // Treat any missed images, primarily favicons, as non-critical resources
-    /** @type {Array<LH.Crdp.Page.ResourceType>} */
+    /** @type {Array<LH.Crdp.Network.ResourceType>} */
     const nonCriticalResourceTypes = [
       NetworkRequest.TYPES.Image,
       NetworkRequest.TYPES.XHR,

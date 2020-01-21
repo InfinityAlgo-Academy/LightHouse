@@ -5,23 +5,14 @@
  */
 'use strict';
 
-const pwaDetailsExpectations = {
-  isParseFailure: false,
-  hasStartUrl: true,
-  hasIconsAtLeast192px: true,
-  hasIconsAtLeast512px: true,
-  hasPWADisplayValue: true,
-  hasBackgroundColor: true,
-  hasThemeColor: true,
-  hasShortName: true,
-  hasName: true,
-};
+const pwaDetailsExpectations = require('./pwa-expectations-details.js');
 
 /**
+ * @type {Array<Smokehouse.ExpectedRunnerResult>}
  * Expected Lighthouse audit values for various sites with stable(ish) PWA
  * results.
  */
-module.exports = [
+const expectations = [
   {
     lhr: {
       requestedUrl: 'https://airhorner.com',
@@ -89,7 +80,7 @@ module.exports = [
 
   {
     lhr: {
-      requestedUrl: 'https://www.chromestatus.com/',
+      requestedUrl: 'https://www.chromestatus.com/features',
       finalUrl: 'https://www.chromestatus.com/features',
       audits: {
         'is-on-https': {
@@ -102,7 +93,7 @@ module.exports = [
           score: 1,
         },
         'works-offline': {
-          score: 0,
+          score: 1,
         },
         'offline-start-url': {
           score: 1,
@@ -153,4 +144,4 @@ module.exports = [
   },
 ];
 
-module.exports.PWA_DETAILS_EXPECTATIONS = pwaDetailsExpectations;
+module.exports = expectations;

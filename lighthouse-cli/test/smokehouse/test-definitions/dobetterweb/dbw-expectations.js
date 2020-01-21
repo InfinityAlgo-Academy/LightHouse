@@ -378,9 +378,6 @@ const expectations = [
               name: 'jQuery',
             },
             {
-              name: 'jQuery (Fast path)',
-            },
-            {
               name: 'WordPress',
             }],
           },

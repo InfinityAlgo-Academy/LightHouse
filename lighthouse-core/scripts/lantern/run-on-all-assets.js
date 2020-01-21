@@ -8,6 +8,20 @@
 
 /* eslint-disable no-console */
 
+/** @typedef {{tracePath: string, devtoolsLogPath: string}} GoldenUnthrottled */
+/** @typedef {Record<string, number|undefined>} GoldenWpt3g */
+/**
+ * @typedef Wpt3gUnthrottled
+ * @property {number|undefined} firstContentfulPaint
+ * @property {number|undefined} firstMeaningfulPaint
+ * @property {number|undefined} timeToFirstInteractive
+ * @property {number|undefined} timeToConsistentlyInteractive
+ * @property {number|undefined} speedIndex
+ * @property {number|undefined} largestContentfulPaint
+ */
+/** @typedef {{url:string, unthrottled: GoldenUnthrottled, wpt3g: Wpt3gUnthrottled}} GoldenSite */
+/** @typedef {{sites: GoldenSite[]}} Golden */
+
 const fs = require('fs');
 const path = require('path');
 const execFileSync = require('child_process').execFileSync;
@@ -20,6 +34,7 @@ const RUN_ONCE_PATH = path.join(__dirname, 'run-once.js');
 
 if (!fs.existsSync(SITE_INDEX_PATH)) throw new Error('Usage $0 <expectations file>');
 
+/** @type {Golden} */
 const expectations = require(SITE_INDEX_PATH);
 
 for (const site of expectations.sites) {

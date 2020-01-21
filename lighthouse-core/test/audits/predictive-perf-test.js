@@ -7,8 +7,8 @@
 
 const PredictivePerf = require('../../audits/predictive-perf.js');
 
-const acceptableTrace = require('../fixtures/traces/progressive-app-m60.json');
-const acceptableDevToolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
+const acceptableTrace = require('../fixtures/traces/lcp-m78.json');
+const acceptableDevToolsLog = require('../fixtures/traces/lcp-m78.devtools.log.json');
 
 /* eslint-env jest */
 describe('Performance: predictive performance audit', () => {
@@ -21,8 +21,9 @@ describe('Performance: predictive performance audit', () => {
         [PredictivePerf.DEFAULT_PASS]: acceptableDevToolsLog,
       },
     };
+    const context = {computedCache: new Map(), settings: {locale: 'en'}};
 
-    return PredictivePerf.audit(artifacts, {computedCache: new Map()}).then(output => {
+    return PredictivePerf.audit(artifacts, context).then(output => {
       const metrics = output.details.items[0];
       for (const [key, value] of Object.entries(metrics)) {
         metrics[key] = Math.round(value);

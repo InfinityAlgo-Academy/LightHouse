@@ -313,7 +313,6 @@ declare global {
       export interface FontSize {
         totalTextLength: number;
         failingTextLength: number;
-        visitedTextLength: number;
         analyzedFailingTextLength: number;
         /** Elements that contain a text node that failed size criteria. */
         analyzedFailingNodesData: Array<{
@@ -371,6 +370,8 @@ declare global {
         resourceSize: number;
         /** The MIME type of the underlying image file. */
         mimeType?: string;
+        /** The loading attribute of the image. */
+        loading?: string;
       }
 
       export interface OptimizedImage {
@@ -439,7 +440,7 @@ declare global {
         }
       }
 
-      export type ManifestValueCheckID = 'hasStartUrl'|'hasIconsAtLeast192px'|'hasIconsAtLeast512px'|'hasPWADisplayValue'|'hasBackgroundColor'|'hasThemeColor'|'hasShortName'|'hasName'|'shortNameLength';
+      export type ManifestValueCheckID = 'hasStartUrl'|'hasIconsAtLeast144px'|'hasIconsAtLeast512px'|'hasPWADisplayValue'|'hasBackgroundColor'|'hasThemeColor'|'hasShortName'|'hasName'|'shortNameLength';
 
       export type ManifestValues = {
         isParseFailure: false;

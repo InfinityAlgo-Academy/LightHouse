@@ -13,7 +13,7 @@ const Audit = require('../audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
 const BaseNode = require('../../lib/dependency-graph/base-node.js');
 const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
-const UnusedCSS = require('./unused-css-rules.js');
+const UnusedCSS = require('../../computed/unused-css.js');
 const NetworkRequest = require('../../lib/network-request.js');
 const TraceOfTab = require('../../computed/trace-of-tab.js');
 const LoadSimulator = require('../../computed/load-simulator.js');
@@ -187,11 +187,13 @@ class RenderBlockingResources extends Audit {
   static async computeWastedCSSBytes(artifacts, context) {
     const wastedBytesByUrl = new Map();
     try {
-      const results = await UnusedCSS.audit(artifacts, context);
-      if (results.details && results.details.type === 'opportunity') {
-        for (const item of results.details.items) {
-          wastedBytesByUrl.set(item.url, item.wastedBytes);
-        }
+      const unusedCssItems = await UnusedCSS.request({
+        CSSUsage: artifacts.CSSUsage,
+        URL: artifacts.URL,
+        devtoolsLog: artifacts.devtoolsLogs[Audit.DEFAULT_PASS],
+      }, context);
+      for (const item of unusedCssItems) {
+        wastedBytesByUrl.set(item.url, item.wastedBytes);
       }
     } catch (_) {}
 
@@ -224,6 +226,7 @@ class RenderBlockingResources extends Audit {
       displayValue,
       score: ByteEfficiencyAudit.scoreForWastedMs(wastedMs),
       numericValue: wastedMs,
+      numericUnit: 'millisecond',
       details,
     };
   }

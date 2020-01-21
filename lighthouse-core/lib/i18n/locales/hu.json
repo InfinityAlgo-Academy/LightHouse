@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "A szöveg olvashatatlan, ugyanis a látható terület metacímkéje nincs optimalizálva a mobilképernyőkre"
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "A szöveg {decimalProportion, number, extendedPercent}-a túl kicsi (az összes szöveg {decimalProportionVisited, number, extendedPercent}-a alapján)."
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "A dokumentum olvashatatlan betűméreteket használ"
   },

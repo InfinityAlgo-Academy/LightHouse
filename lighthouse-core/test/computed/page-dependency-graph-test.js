@@ -367,6 +367,53 @@ describe('PageDependencyGraph computed artifact:', () => {
       assert.deepEqual(getDependencyIds(nodes[5]), [1, 2]);
     });
 
+    it('should not prune short, first tasks of critical events', () => {
+      const request0 = createRequest(0, '0', 0);
+      const networkRecords = [request0];
+
+      const makeShortEvent = firstEventName => {
+        const startTs = traceOfTab.mainThreadEvents.length * 100;
+        addTaskEvents(startTs, 5, [
+          {name: firstEventName, data: {url: '0'}},
+        ]);
+      };
+
+      const criticalEventNames = [
+        'Paint',
+        'Layout',
+        'ParseHTML',
+      ];
+      for (const eventName of criticalEventNames) {
+        makeShortEvent(eventName);
+        makeShortEvent(eventName);
+      }
+
+      const graph = PageDependencyGraph.createGraph(traceOfTab, networkRecords);
+      const cpuNodes = [];
+      graph.traverse(node => node.type === 'cpu' && cpuNodes.push(node));
+
+      expect(cpuNodes.map(node => {
+        return {
+          id: node.id,
+          name: node.childEvents[0].name,
+        };
+      })).toEqual([
+        {
+          id: '1.0',
+          name: 'Paint',
+        },
+        {
+          // ID jumps by 4 between each because each node has 2 CPU tasks and we skip the 2nd of each event type
+          id: '1.400000',
+          name: 'Layout',
+        },
+        {
+          id: '1.800000',
+          name: 'ParseHTML',
+        },
+      ]);
+    });
+
     it('should set isMainDocument on first document request', () => {
       const request1 = createRequest(1, '1', 0, null, NetworkRequest.TYPES.Other);
       const request2 = createRequest(2, '2', 5, null, NetworkRequest.TYPES.Document);

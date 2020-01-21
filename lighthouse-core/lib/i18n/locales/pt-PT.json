@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "O texto é ilegível porque não existe nenhuma metatag de área visível otimizada para ecrãs de dispositivos móveis."
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} do texto é demasiado pequeno (com base na amostra de {decimalProportionVisited, number, extendedPercent})."
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "O documento não utiliza tamanhos de tipo de letra legíveis"
   },

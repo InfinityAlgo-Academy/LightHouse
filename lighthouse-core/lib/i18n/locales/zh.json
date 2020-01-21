@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "无法辨认文字，因为缺少已针对移动设备屏幕进行优化的 viewport meta 标记。"
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} 的文字过小（基于规模为 {decimalProportionVisited, number, extendedPercent} 的样本）。"
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "文档未使用清晰可辨的字体大小"
   },

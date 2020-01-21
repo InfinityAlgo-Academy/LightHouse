@@ -884,9 +884,6 @@
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Tekst is onleesbaar omdat er geen kijkvenstermetatag is geoptimaliseerd voor mobiele schermen."
   },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} van de tekst is te klein (op basis van een voorbeeld van {decimalProportionVisited, number, extendedPercent})."
-  },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "Document gebruikt geen leesbare lettergrootten"
   },

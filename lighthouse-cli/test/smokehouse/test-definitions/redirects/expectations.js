@@ -27,6 +27,9 @@ const expectations = [
           },
         },
       },
+      runWarnings: [
+        /The page may not be loading as expected because your test URL \(.*online-only.html.*\) was redirected to .*redirects-final.html. Try testing the second URL directly./,
+      ],
     },
   },
   {
@@ -44,6 +47,9 @@ const expectations = [
           },
         },
       },
+      runWarnings: [
+        /The page may not be loading as expected because your test URL \(.*online-only.html.*\) was redirected to .*redirects-final.html. Try testing the second URL directly./,
+      ],
     },
   },
 ];
