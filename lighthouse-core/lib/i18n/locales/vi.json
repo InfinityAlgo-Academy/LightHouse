@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "Các thuộc tính `[aria-*]` khớp với vai trò tương ứng"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "Các công nghệ hỗ trợ, chẳng hạn như trình đọc màn hình, sẽ hoạt động không nhất quán khi đặt `aria-hidden=\"true\"` trên tài liệu `<body>`. [Tìm hiểu thêm](https://web.dev/aria-hidden-body/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "Hiện có `[aria-hidden=\"true\"]` trên tài liệu `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "Hiện không có `[aria-hidden=\"true\"]` trên tài liệu `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "Các phần tử theo thứ tự giảm dần có thể lấy tiêu điểm bên trong một phần tử `[aria-hidden=\"true\"]` sẽ giúp ngăn người dùng công nghệ hỗ trợ, chẳng hạn như trình đọc màn hình, tiếp cận với các phần tử tương tác đó. [Tìm hiểu thêm](https://web.dev/aria-hidden-focus/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "Các phần tử `[aria-hidden=\"true\"]` có chứa các phần tử theo thứ tự giảm dần có thể lấy tiêu điểm"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "Các phần tử `[aria-hidden=\"true\"]` không chứa các phần tử theo thứ tự giảm dần có thể lấy tiêu điểm"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "Khi tên của một trường nhập ở trạng thái không thể tiếp cận, thì trình đọc màn hình sẽ gọi trường đó bằng tên gọi chung, khiến người dùng trình đọc màn hình không dùng được trường này. [Tìm hiểu thêm](https://web.dev/aria-input-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "Tên các trường nhập của ARIA ở trạng thái không thể tiếp cận"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "Tên các trường nhập của ARIA ở trạng thái có thể tiếp cận"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Một số vai trò ARIA có các thuộc tính bắt buộc mô tả trạng thái của phần tử cho trình đọc màn hình. [Tìm hiểu thêm](https://web.dev/aria-required-attr/)."
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "Các giá trị của `[role]` là hợp lệ"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "Khi tên của một trường chuyển đổi ở trạng thái không thể tiếp cận, thì trình đọc màn hình sẽ gọi trường đó bằng tên gọi chung, khiến người dùng trình đọc màn hình không dùng được trường này. [Tìm hiểu thêm](https://web.dev/aria-toggle-field-label/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "Tên các trường chuyển đổi của ARIA ở trạng thái không thể tiếp cận"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "Tên các trường chuyển đổi của ARIA ở trạng thái có thể tiếp cận"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "Các công nghệ hỗ trợ, chẳng hạn như trình đọc màn hình, không thể diễn giải thuộc tính của Ứng dụng Internet phong phú dễ dùng (ARIA) có giá trị không hợp lệ. [Tìm hiểu thêm](https://web.dev/aria-valid-attr-value/)."
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Tài liệu có phần tử `<title>`"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "Để có thể hiển thị với các công nghệ hỗ trợ, `id` của các phần tử có thể lấy tiêu điểm không được trùng nhau. [Tìm hiểu thêm](https://web.dev/duplicate-id-active/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "Các thuộc tính `[id]` trên những phần tử có thể lấy tiêu điểm đang hoạt động bị trùng nhau"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "Các thuộc tính `[id]` trên những phần tử có thể lấy tiêu điểm đang hoạt động là duy nhất"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "Để các công nghệ hỗ trợ không bỏ qua các phiên bản khác, giá trị mã nhận dạng của ARIA không được trùng nhau. [Tìm hiểu thêm](https://web.dev/duplicate-id-aria/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "Mã nhận dạng của ARIA bị trùng lặp"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "Mã nhận dạng của Ứng dụng Internet phong phú dễ dùng (ARIA) là duy nhất"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "Các công nghệ hỗ trợ, chẳng hạn như trình đọc màn hình, sử dụng nhãn đầu tiên, nhãn cuối cùng hoặc tất cả các nhãn có thể thông báo nhầm các trường biểu mẫu có nhiều nhãn. [Tìm hiểu thêm](https://web.dev/form-field-multiple-labels/)."
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "Các trường biểu mẫu có nhiều nhãn"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "Không có trường biểu mẫu nào có nhiều nhãn"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Người dùng trình đọc màn hình dựa vào tiêu đề khung để mô tả nội dung của khung. [Tìm hiểu thêm](https://web.dev/frame-title/)."
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "Các phần tử `<frame>` hoặc `<iframe>` có tiêu đề"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "Nhờ cách thức sắp xếp tiêu đề sao cho không bỏ qua các cấp độ thể hiện cấu trúc ngữ nghĩa của trang, người dùng dễ dàng hiểu được nội dung và thực hiện thao tác bằng công nghệ hỗ trợ hơn. [Tìm hiểu thêm](https://web.dev/heading-order/)."
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "Các phần tử tiêu đề không tuân theo trình tự giảm dần"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "Các phần tử tiêu đề xuất hiện theo trình tự giảm dần"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "Nếu một trang chưa chỉ định thuộc tính ngôn ngữ, thì trình đọc màn hình sẽ xem như trang đó đang hiển thị bằng ngôn ngữ mặc định mà người dùng chọn khi thiết lập trình đọc màn hình. Nếu trên thực tế, trang đó không hiển thị bằng ngôn ngữ mặc định, tức là trình đọc màn hình có thể thông báo sai về văn bản của trang đó. [Tìm hiểu thêm](https://web.dev/html-has-lang/)."
@@ -390,7 +462,7 @@
     "message": "Xóa biểu định kiểu xếp chồng (CSS) không dùng"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Xóa JavaScript không dùng để giảm số byte tiêu tốn vào hoạt động mạng."
+    "message": "Xóa JavaScript không còn dùng nữa để giảm số byte dành cho hoạt động mạng. [Tìm hiểu thêm](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Xóa JavaScript không dùng"
@@ -782,14 +854,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "Thời điểm tương tác là khoảng thời gian mà trang cần để trở nên hoàn toàn tương tác. [Tìm hiểu thêm](https://web.dev/interactive)."
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "Chỉ số Hiển thị nội dung có kích thước lớn nhất đánh dấu thời điểm hiển thị văn bản hoặc hình ảnh có kích thước lớn nhất. [Tìm hiểu thêm](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "Chỉ số Hiển thị nội dung có kích thước lớn nhất"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "Thời gian phản hồi lần tương tác đầu tiên tối đa mà người dùng có thể gặp phải là thời gian thực hiện nhiệm vụ lâu nhất (tính bằng mili giây). [Tìm hiểu thêm](https://developers.google.com/web/updates/2018/05/first-input-delay)."
+    "message": "Thời gian phản hồi lần tương tác đầu tiên tối đa mà người dùng có thể gặp phải là thời gian thực hiện nhiệm vụ lâu nhất. [Tìm hiểu thêm](https://web.dev/lighthouse-max-potential-fid)."
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Chỉ số tốc độ cho biết nội dung của một trang hiển thị nhanh chóng đến mức nào. [Tìm hiểu thêm](https://web.dev/speed-index)."
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "Tổng tất cả các khoảng thời gian giữa thời điểm Hiển thị nội dung đầu tiên (FCP) và Thời điểm tương tác khi thời gian nhiệm vụ vượt quá 50 mili giây được biểu thị bằng đơn vị mili giây."
+    "message": "Tổng tất cả các khoảng thời gian giữa thời điểm Hiển thị nội dung đầu tiên (FCP) và Thời điểm tương tác khi thời gian của nhiệm vụ vượt quá 50 mili giây được biểu thị bằng đơn vị mili giây. [Tìm hiểu thêm](https://web.dev/lighthouse-total-blocking-time)."
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "Thời gian trọn vòng (RTT) của mạng có ảnh hưởng lớn đến hiệu suất. Nếu mất nhiều thời gian trọn vòng (RTT) để đến một nguồn gốc, tức là máy chủ càng gần người dùng thì hiệu quả càng cao. [Tìm hiểu thêm](https://hpbn.co/primer-on-latency-and-bandwidth/)."
@@ -805,6 +883,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Trình chạy dịch vụ giúp ứng dụng web của bạn hoạt động ổn định trong điều kiện mạng chập chờn. [Tìm hiểu thêm](https://web.dev/offline-start-url)"
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Lỗi khi tải {url} trong Trình chạy dịch vụ, trả về mã trạng thái {statusCode}"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` không trả về mã trạng thái 200 khi không có mạng"
@@ -1064,6 +1145,18 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Thời gian phản hồi của máy chủ chậm (TTFB)"
   },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "Đo lường"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "Chỉ số"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "Khi đặt giới hạn về thời gian, bạn sẽ có thể theo dõi được hiệu suất trang web của mình. Các trang có hiệu suất cao sẽ tải và phản hồi nhanh với các sự kiện nhập của người dùng. [Tìm hiểu thêm](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "Giới hạn về thời gian"
+  },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "Thời lượng"
   },
@@ -1286,6 +1379,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "Tên"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "Vượt ngân sách"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Số yêu cầu"
   },
@@ -1319,11 +1415,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Tài liệu"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "Thời gian chờ nhập thông tin theo ước tính"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "CPU nhàn rỗi đầu tiên"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "Hình ảnh có nội dung đầu tiên"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "Hình ảnh có ý nghĩa đầu tiên"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "Phông chữ"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Hình ảnh"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "Thời điểm tương tác"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "Thời gian phản hồi lần tương tác đầu tiên tối đa có thể"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "Nội dung nghe nhìn"
@@ -1340,11 +1454,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} giây"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Chỉ số tốc độ"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Biểu định kiểu"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Bên thứ ba"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "Tổng thời gian chặn"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Tổng"

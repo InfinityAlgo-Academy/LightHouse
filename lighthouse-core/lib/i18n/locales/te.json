@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "'`[aria-*]`' లక్షణాలు వాటి పాత్రలతో సరిపోలాలి"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "'`<body>`' డాక్యుమెంట్‌లో '`aria-hidden=\"true\"`'ను సెట్ చేసినప్పుడు స్క్రీన్ రీడర్‌లు లాంటి సహాయకర సాంకేతిక పరిజ్ఞానాలు క్రమరహితంగా పని చేస్తాయి. [మరింత తెలుసుకోండి](https://web.dev/aria-hidden-body/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "`<body>` డాక్యుమెంట్‌లో `[aria-hidden=\"true\"]` ఉంది"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "`[aria-hidden=\"true\"]` అనేది '`<body>`' డాక్యుమెంట్‌లో లేదు"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "`[aria-hidden=\"true\"]` మూలకం లోపల దృష్టి కేంద్రీకరించగల సంక్రమిత అంశాలు అనేవి స్క్రీన్ రీడర్‌లు లాంటి సహాయకర సాంకేతిక పరిజ్ఞానాలను ఉపయోగించే యూజర్‌లకు ఆ సహకార మూలకాలు అందుబాటులో ఉండకుండా నిరోధిస్తాయి. [మరింత తెలుసుకోండి](https://web.dev/aria-hidden-focus/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]` మూలకాలలో దృష్టి కేంద్రీకరించదగిన సంక్రమిత అంశాలు ఉన్నాయి"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "`[aria-hidden=\"true\"]` మూలకాలలో దృష్టి కేంద్రీకరించదగిన సంక్రమిత అంశాలు లేవు"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "ఒక ఇన్‌పుట్ ఫీల్డ్‌కు యాక్సెస్ చేయదగిన పేరు లేనప్పుడు, స్క్రీన్ రీడర్‌లు దానిని సాధారణ పేరుతో ప్రకటిస్తాయి, తద్వారా వాటిని స్క్రీన్ రీడర్‌లపై ఆధారపడే యూజర్‌లకు నిరుపయోగమైనవిగా చేస్తాయి. [మరింత తెలుసుకోండి](https://web.dev/aria-input-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "ARIA ఇన్‌పుట్ ఫీల్డ్‌లకు యాక్సెస్ చేయదగిన పేర్లు లేవు"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "ARIA ఇన్‌పుట్ లేబుల్‌లు యాక్సెస్ చేయదగిన పేర్లను కలిగి ఉన్నాయి"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "కొన్ని ARIA పాత్రలు మూలకం స్థితిని స్క్రీన్ రీడర్‌లకు వివరించే ఆవశ్యక లక్షణాలను కలిగి ఉన్నాయి. [మరింత తెలుసుకోండి](https://web.dev/aria-required-attr/)."
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "`[role]` విలువలు చెల్లుబాటు అయ్యేవి"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "ఒక టోగుల్ ఫీల్డ్‌కు యాక్సెస్ చేయదగిన పేరు లేనప్పుడు, స్క్రీన్ రీడర్‌లు దానిని సాధారణ పేరుతో ప్రకటిస్తాయి, దీని వలన స్క్రీన్ రీడర్‌లపై ఆధారపడే యూజర్‌లకు నిరుపయోగమైనవిగా అవుతాయి. [మరింత తెలుసుకోండి](https://web.dev/aria-toggle-field-label/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "ARIA టోగుల్ ఫీల్డ్‌లకు యాక్సెస్ చేయదగిన పేర్లు లేవు"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "ARIA టోగుల్ ఫీల్డ్‌లకు యాక్సెస్ చేయదగిన పేర్లు ఉన్నాయి"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "స్క్రీన్ రీడర్‌ల లాంటి సహాయక సాంకేతిక పరిజ్ఞానాలు చెల్లుబాటు కాని విలువలు గల ARIA లక్షణాలను అర్థం చేసుకోలేవు. [మరింత తెలుసుకోండి](https://web.dev/aria-valid-attr-value/)."
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "పత్రంలో '`<title>`' మూలకం ఉంది"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "దృష్టి కేంద్రీకరించదగిన అన్ని మూలకాలు సహాయక సాంకేతిక పరిజ్ఞానాలకు కనిపించేలా ఉండటానికి వాటికి తప్పనిసరిగా విభిన్నమైన `id` ఉండాలి. [మరింత తెలుసుకోండి](https://web.dev/duplicate-id-active/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "యాక్టివ్‌గా ఉన్న, దృష్టి కేంద్రీకరించదగిన మూలకాలలో `[id]` లక్షణాలు విభిన్న రీతిలో లేవు"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "యాక్టివ్‌గా ఉన్న, దృష్టి కేంద్రీకరించదగిన మూలకాలలో `[id]` లక్షణాలు విభిన్న రీతిలో ఉన్నాయి"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "సహాయకర సాంకేతిక పరిజ్ఞానాల ద్వారా ఇతర సందర్భాలు విస్మరించబడకుండా నిరోధించడానికి ARIA ID విలువ విభిన్న రీతిలో ఉండాలి. [మరింత తెలుసుకోండి](https://web.dev/duplicate-id-aria/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "ARIA IDలు విభిన్నమైనవి కావు"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "ARIA IDలు విభిన్నంగా ఉన్నాయి"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "మొదటి, చివరి లేదా అన్ని లేబుల్‌లను ఉపయోగించే స్క్రీన్ రీడర్‌ల వంటి సహాయక సాంకేతిక పరిజ్ఞానాలు, పలు లేబుల్‌లను కలిగి ఉండే ఫారమ్ ఫీల్డ్‌లను ప్రకటించేటప్పుడు గందరగోళానికి దారితీయవచ్చు. [మరింత తెలుసుకోండి](https://web.dev/form-field-multiple-labels/)."
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "ఫారమ్ ఫీల్డ్‌లు బహుళ లేబుల్‌లను కలిగి ఉన్నాయి"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "ఫారమ్ ఫీల్డ్‌లు వేటికీ బహుళ లేబుల్‌లు లేవు"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "స్క్రీన్ రీడర్ వినియోగదారులు ఫ్రేమ్‌ల కంటెంట్‌లను వివరించడానికి ఫ్రేమ్ శీర్షికలపై ఆధారపడతారు. [మరింత తెలుసుకోండి](https://web.dev/frame-title/)."
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "'`<frame>`' లేదా '`<iframe>`' మూలకాలలో శీర్షికలు ఉన్నాయి"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "స్థాయిలను దాటవేయని, సక్రమంగా ఆర్డర్ చేసిన ముఖ్య శీర్షికలు అనేవి పేజీకి సంబంధించిన శబ్దార్థ అన్వయ విధానాన్ని సూచిస్తాయి, కనుక సహాయకరమైన సాంకేతిక పరిజ్ఞానాలను ఉపయోగిస్తున్నప్పుడు వీటికి సులభంగా నావిగేట్ చేయగలరు. [మరింత తెలుసుకోండి](https://web.dev/heading-order/)."
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "హెడింగ్ మూలకాలు శ్రేణీకృతంగా అవరోహణ క్రమంలో లేవు"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "హెడింగ్ మూలకాలు శ్రేణీకృతంగా అవరోహణ క్రమంలో కనిపిస్తాయి"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "ఒక పేజీలో భాషా లక్షణాన్ని పేర్కొనకుంటే, స్క్రీన్ రీడర్‌ను సెట్ చేస్తున్నప్పుడు వినియోగదారు ఎంచుకున్న డిఫాల్ట్ భాషలో పేజీ ఉందని స్క్రీన్ రీడర్ భావిస్తుంది. ఒకవేళ ఆ పేజీ డిఫాల్ట్ భాషలో లేకపోతే, ఆ పేజీలోని వచనాన్ని స్క్రీన్ రీడర్ సరిగ్గా చదివి వినిపించలేకపోవచ్చు. [మరింత తెలుసుకోండి](https://web.dev/html-has-lang/)."
@@ -390,7 +462,7 @@
     "message": "ఉపయోగించని CSS తీసివేయబడింది"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "నెట్‌వర్క్ కార్యకలాపం వినియోగించే బైట్‌లను తగ్గించడానికి ఉపయోగించని JavaScriptను తీసివేయండి."
+    "message": "నెట్‌వర్క్ కార్యకలాపం వినియోగించే బైట్‌లను తగ్గించడానికి ఉపయోగించని JavaScriptను తీసివేయండి. [మరింత తెలుసుకోండి](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "ఉపయోగించని JavaScriptను తీసివేయండి"
@@ -782,14 +854,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "పరస్పర చర్య చేయడానికి పేజీ పూర్తిగా సిద్ధం అయ్యేందుకు పట్టే సమయాన్ని 'పేజీలో పూర్తి పరస్పర చర్యకు పట్టే సమయం' అంటారు. [మరింత తెలుసుకోండి](https://web.dev/interactive)."
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "అత్యంత పొడవైన కంటెంట్ గల పెయింట్ అనేది పొడవాటి వచనం లేదా చిత్రానికి పెయింట్ వేసిన సమయాన్ని గుర్తిస్తుంది. [మరింత తెలుసుకోండి](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "కంటెంట్ కలిగి ఉండే అతిపెద్ద పెయింట్"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "మీ వినియోగదారులు ఎదుర్కోగల గరిష్ఠ మొదటి ఇన్‌పుట్ ఆలస్యం అన్నది సుదీర్ఘ టాస్క్‌లో మిల్లీసెకన్ల వ్యవధిలో ఉంటుంది. [మరింత తెలుసుకోండి](https://developers.google.com/web/updates/2018/05/first-input-delay)."
+    "message": "మీ యూజర్‌లు ఎదుర్కోగల గరిష్ఠ మొదటి ఇన్‌పుట్ ఆలస్యం అన్నది సుదీర్ఘ టాస్క్ సమయ వ్యవధిని కలిగి ఉంటుంది. [మరింత తెలుసుకోండి](https://web.dev/lighthouse-max-potential-fid)."
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "వేగం సూచిక అనేది, ఒక పేజీలోని కంటెంట్‌లు ఎంత వేగంగా ప్రత్యక్షంగా చూపించబడతాయో తెలియజేస్తుంది. [మరింత తెలుసుకోండి](https://web.dev/speed-index)."
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "టాస్క్ వ్యవధి 50 మిల్లీసెకన్లు మించిపోయినప్పుడు FCP మరియు పేజీలో పూర్తి పరస్పర చర్యకు పట్టే సమయం మధ్య వేచి ఉండాల్సిన మొత్తం కాలవ్యవధి మిల్లీసెకన్లలో పేర్కొనబడుతుంది."
+    "message": "టాస్క్ వ్యవధి 50 మిల్లీసెకన్లు మించిపోయినప్పుడు FCP, అలాగే పేజీలో పూర్తి పరస్పర చర్యకు పట్టే సమయం మధ్య వేచి ఉండాల్సిన మొత్తం కాలవ్యవధి మిల్లీసెకన్లలో పేర్కొనబడుతుంది. [మరింత తెలుసుకోండి](https://web.dev/lighthouse-total-blocking-time)."
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "నెట్‌వర్క్ రౌండ్ ట్రిప్ సమయాలు (RTT) పనితీరుపై తీవ్రమైన ప్రభావం చూపుతాయి. మూలానికి RTT ఎక్కువగా ఉంటే, వినియోగదారుకు దగ్గరగా ఉన్న సర్వర్‌ల పనితీరు మెరుగ్గా ఉండవచ్చని సంకేతం. [మరింత తెలుసుకోండి](https://hpbn.co/primer-on-latency-and-bandwidth/)."
@@ -805,6 +883,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "సర్వీస్ వర్కర్ సహాయంతో, మీ వెబ్ యాప్ ఇబ్బందికరమైన నెట్‌వర్క్ పరిస్థితులలో కూడా విశ్వసనీయత కోల్పోకుండా పని చేయగలుగుతుంది. [మరింత తెలుసుకోండి](https://web.dev/offline-start-url)."
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "సర్వీస్ వర్కర్‌లో '{url}'ను లోడ్ చేస్తున్నప్పుడు ఎర్రర్ ఏర్పడింది, '{statusCode}' స్టేటస్ కోడ్‌ను అందించింది"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "ఆఫ్‌లైన్‌‌లో ఉన్నప్పుడు `start_url` అన్నది '200' కోడ్‌తో స్పందించలేదు"
@@ -1064,6 +1145,18 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "సర్వర్ ప్రతిస్పందన సమయాలు తక్కువగా ఉన్నాయి (TTFB)"
   },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "కొలమానం"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "కొలమానం"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "మీ సైట్ పనితీరును పర్యవేక్షించడంలో మీకు సహాయపడటానికి ఒక టైమింగ్ బడ్జెట్‌ను సెట్ చేయండి. అమలు చేసే సైట్‌లు వేగంగా లోడ్ అవుతాయి, యూజర్ ఇన్‌పుట్ ఈవెంట్‌లకు సత్వరం స్పందిస్తాయి. [మరింత తెలుసుకోండి](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "సమయం సంబంధిత బడ్జెట్"
+  },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "వ్యవధి"
   },
@@ -1286,6 +1379,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "పేరు"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "బడ్జెట్ దాటిపోయింది"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "అభ్యర్థనలు"
   },
@@ -1319,11 +1415,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "పత్రం"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "అంచనా వేయబడిన ఇన్‌పుట్ ప్రతిస్పందన సమయం"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "CPU మొదటి ఖాళీ సమయం"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "మొదటి కంటెంట్ సహిత పెయింట్"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "మొదటి అర్థవంతమైన పెయింట్"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "ఫాంట్"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "చిత్రం"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "పేజీలో పూర్తి పరస్పర చర్యకు పట్టే సమయం"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "మొదటి ఇన్‌పుట్ ఆలస్య గరిష్ఠ వ్యవధి"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "మీడియా"
@@ -1340,11 +1454,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} సె"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "వేగం సూచిక"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "స్టైల్‌షీట్"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "మూడవ పక్షం"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "మొత్తం బ్లాక్ చేయబడే సమయం"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "మొత్తం"

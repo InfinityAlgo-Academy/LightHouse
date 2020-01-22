@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "`[aria-*]` 属性は役割と一致しています"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "スクリーン リーダーなどの支援技術は、ドキュメントの `<body>` に `aria-hidden=\"true\"` が設定されていると、正常に動作しません。[詳細](https://web.dev/aria-hidden-body/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "ドキュメントの `<body>` に `[aria-hidden=\"true\"]` が設定されています"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "ドキュメントの `<body>` に `[aria-hidden=\"true\"]` は設定されていません"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "`[aria-hidden=\"true\"]` 要素内にフォーカス可能な子要素がある場合、スクリーン リーダーなどの支援技術を使用するユーザーはこれらの操作可能な要素を使用できません。[詳細](https://web.dev/aria-hidden-focus/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]` 要素にフォーカス可能な子要素が含まれています"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "`[aria-hidden=\"true\"]` 要素にフォーカス可能な子要素は含まれていません"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "入力フィールドにユーザー補助機能向けの名前が設定されていない場合、スクリーン リーダーでは一般名で読み上げられるため、スクリーン リーダーのみを使用するユーザーには用途がわかりません。[詳細](https://web.dev/aria-input-field-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "ARIA 入力フィールドにユーザー補助機能向けの名前が設定されていません"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "ARIA 入力フィールドにユーザー補助機能向けの名前が設定されています"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "一部の ARIA 役割には、スクリーン リーダーに要素の状態を伝える必須の属性があります。[詳細](https://web.dev/aria-required-attr/)"
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "`[role]` の値は有効です"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "切り替えフィールドにユーザー補助機能向けの名前が設定されていない場合、スクリーン リーダーでは一般名で読み上げられるため、スクリーン リーダーのみを使用するユーザーには用途がわかりません。[詳細](https://web.dev/aria-toggle-field-label/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "ARIA 切り替えフィールドにユーザー補助機能向けの名前が設定されていません"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "ARIA 切り替えフィールドにユーザー補助機能向けの名前が設定されています"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "支援技術（スクリーン リーダーなど）で、無効な値が指定された ARIA 属性を解釈できません。[詳細](https://web.dev/aria-valid-attr-value/)"
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "ドキュメントに `<title>` 要素が指定されています"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "支援技術で認識できるように、フォーカス可能な要素にはすべて一意の `id` を設定する必要があります。[詳細](https://web.dev/duplicate-id-active/)"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "`[id]` 属性が有効でフォーカス可能な要素の ID が一意ではありません"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "`[id]` 属性が有効でフォーカス可能な要素の ID はすべて一意です"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "他のインスタンスが支援技術によって見落とされることのないように、ARIA ID の値は一意にする必要があります。[詳細](https://web.dev/duplicate-id-aria/)"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "ARIA ID が一意ではありません"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "ARIA ID は一意です"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "フォーム フィールドに複数のラベルが設定されている場合、スクリーン リーダーなどの支援技術で最初または最後のラベルだけ、もしくはすべてのラベルが読み上げられるため、混乱が生じる可能性があります。[詳細](https://web.dev/form-field-multiple-labels/)"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "フォーム フィールドに複数のラベルが設定されています"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "複数のラベルが設定されたフォーム フィールドはありません"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "スクリーン リーダーでは、フレームのコンテンツを説明するためにフレームのタイトルが使用されます。[詳細](https://web.dev/frame-title/)"
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "`<frame>` または `<iframe>` の要素にタイトルが指定されています"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "見出しを適切なレベルの順序で配置すると、ページのセマンティック構造を伝えることができ、支援技術を使用した操作やコンテンツの把握が簡単になります。[詳細](https://web.dev/heading-order/)"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "見出し要素は降順になっていません"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "見出し要素は降順になっています"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "ページで lang 属性が指定されていない場合、スクリーン リーダーは、スクリーン リーダーの設定時にユーザーが選択したデフォルト言語がページで使用されているものと見なします。そのページでデフォルト言語が実際には使用されていない場合、スクリーン リーダーはページのテキストを正しく読み上げられない可能性があります。[詳細](https://web.dev/html-has-lang/)"
@@ -390,7 +462,7 @@
     "message": "使用していない CSS を削除してください"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "使用していない JavaScript を削除して、データ通信量を減らしてください。"
+    "message": "使用していない JavaScript を削除して、データ通信量を減らしてください。[詳細](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "使用していない JavaScript の削除"
@@ -782,14 +854,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "操作可能になるまでの時間とは、ページが完全に操作可能になるのに要する時間です。[詳細](https://web.dev/interactive)"
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "最大コンテンツの描画は、最も大きなテキストまたは画像が描画されるまでにかかった時間です。[詳細](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "最大コンテンツの描画"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "ユーザーに発生する可能性がある初回入力遅延の最大推定時間とは、最も長いタスクの時間（ミリ秒単位）です。[詳細](https://developers.google.com/web/updates/2018/05/first-input-delay)"
+    "message": "初回入力遅延の最大推定時間は、ユーザーが最も長いタスクを行うのにかかると推定される時間です。[詳細](https://web.dev/lighthouse-max-potential-fid)"
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "速度インデックスは、ページのコンテンツが取り込まれて表示される速さを表します。[詳細](https://web.dev/speed-index)"
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "タスクの時間が 50 ミリ秒を上回った場合の、コンテンツの初回ペイントから操作可能になるまでのすべての時間の合計を、ミリ秒単位で表します。"
+    "message": "タスクの処理時間が 50 ミリ秒を上回った場合の、コンテンツの初回描画から操作可能になるまでの合計時間（ミリ秒）です。[詳細](https://web.dev/lighthouse-total-blocking-time)"
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "ネットワークのラウンドトリップ時間（RTT）はパフォーマンスに大きく影響します。発信元への RTT が高い場合は、サーバーの場所をユーザーの近くにするとパフォーマンスを改善できることを示しています。[詳細](https://hpbn.co/primer-on-latency-and-bandwidth/)"
@@ -805,6 +883,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Service Worker によって、ネットワークが予期しない状態になったときでもウェブアプリの安定した動作が可能になります。[詳細](https://web.dev/offline-start-url)"
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Service Worker で {url} の読み込み中にエラーが発生しました。ステータス コード: {statusCode}"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` は、オフライン時にステータス 200 の応答を返しません"
@@ -1064,6 +1145,18 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "サーバーの応答時間が遅い（TTFB）"
   },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "測定値"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "指標"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "タイミング予算を設定すると、サイトのパフォーマンス管理に役立ちます。パフォーマンスが高いサイトは読み込みが早く、ユーザーの入力イベントにすばやく応答できます。[詳細](https://developers.google.com/web/tools/lighthouse/audits/budgets)"
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "タイミング予算"
+  },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "継続時間"
   },
@@ -1286,6 +1379,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "名前"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "予算超過"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "リクエスト"
   },
@@ -1319,11 +1415,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "ドキュメント"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "入力の推定待ち時間"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "CPU の初回アイドル"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "First Contentful Paint"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "First Meaningful Paint"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "フォント"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "画像"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "インタラクティブになるまでの時間"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "初回入力遅延の最大推定時間"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "メディア"
@@ -1340,11 +1454,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} 秒"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "速度インデックス"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "スタイルシート"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "第三者"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "合計ブロック時間"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "合計"
@@ -1488,7 +1608,7 @@
     "message": "Angular CLI を使用している場合は、ソースマップを本番環境用ビルドに含め、バンドルを調べられるようにします。[詳細](https://angular.io/guide/deployment#inspect-the-bundles)"
   },
   "stack-packs/packs/angular.js | uses_rel_preload": {
-    "message": "ナビゲーションの速度を向上するにはルートをプリロードします。[詳細](https://web.dev/route-preloading-in-angular/)"
+    "message": "ナビゲーションの速度を上げるにはルートをプリロードします。[詳細](https://web.dev/route-preloading-in-angular/)"
   },
   "stack-packs/packs/angular.js | uses_responsive_images": {
     "message": "画像のブレークポイントを管理するには、Component Dev Kit（CDK）の `BreakpointObserver` ユーティリティを使用することを検討してください。[詳細](https://material.angular.io/cdk/layout/overview)"

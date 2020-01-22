@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "`[aria-*]` 属性与其角色匹配"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "在文档 `<body>` 上设置 `aria-hidden=\"true\"` 后，辅助技术（如屏幕阅读器）的工作方式不一致。[了解详情](https://web.dev/aria-hidden-body/)。"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "文档 `<body>` 中有 `[aria-hidden=\"true\"]`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "文档 `<body>` 中没有 `[aria-hidden=\"true\"]`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "有一个 `[aria-hidden=\"true\"]` 元素包含可聚焦的下级元素，导致这些交互式元素都无法被辅助技术（如屏幕阅读器）用户使用。[了解详情](https://web.dev/aria-hidden-focus/)。"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]` 元素包含可聚焦的下级元素"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "`[aria-hidden=\"true\"]` 元素都不含可聚焦的下级元素"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "当某个输入字段没有可供访问的名称时，屏幕阅读器会将它读为通用名称，这会导致依赖屏幕阅读器的用户无法使用它。[了解详情](https://web.dev/aria-input-field-name/)。"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "ARIA 输入字段缺少可供访问的名称"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "ARIA 输入字段都有可供访问的名称"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "一些 ARIA 角色有必需属性，这些属性向屏幕阅读器描述了相应元素的状态。[了解详情](https://web.dev/aria-required-attr/)。"
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "`[role]` 值有效"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "当某个切换字段没有可供访问的名称时，屏幕阅读器会将它读为通用名称，这会导致依赖屏幕阅读器的用户无法使用它。[了解详情](https://web.dev/aria-toggle-field-label/)。"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "ARIA 切换字段缺少可供访问的名称"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "ARIA 切换字段都有可供访问的名称"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "辅助技术（如屏幕阅读器）无法解读值无效的 ARIA 属性。[了解详情](https://web.dev/aria-valid-attr-value/)。"
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "文档包含 `<title>` 元素"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "所有可聚焦的元素都必须具有独一无二的 `id`，以确保能被辅助技术识别。[了解详情](https://web.dev/duplicate-id-active/)。"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "处于活动状态的可聚焦元素的 `[id]` 属性不是独一无二的"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "处于活动状态的可聚焦元素的 `[id]` 属性都是独一无二的"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "ARIA ID 的值必须独一无二，才能防止其他实例被辅助技术忽略。[了解详情](https://web.dev/duplicate-id-aria/)。"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "ARIA ID 不是独一无二的"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "ARIA ID 都是独一无二的"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "有多个标签的表单字段可能会被辅助技术（如屏幕阅读器）以令人困惑的方式播报出来，因为这些辅助技术可能会使用第一个标签或最后一个标签，也可能会使用所有标签。[了解详情](https://web.dev/form-field-multiple-labels/)。"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "表单字段有多个标签"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "表单字段都没有多个标签"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "屏幕阅读器用户依靠框架标题来描述框架的内容。[了解详情](https://web.dev/frame-title/)。"
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "`<frame>` 或 `<iframe>` 元素有标题"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "未跳过任何等级且排序正确的标题会准确传达页面的语义结构，从而使得相应页面在使用辅助技术时更易于浏览和理解。[了解详情](https://web.dev/heading-order/)。"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "标题元素未按降序显示"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "标题元素按降序显示"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "如果页面未指定 lang 属性，屏幕阅读器便会假定该页面采用的是用户在设置屏幕阅读器时选择的默认语言。如果该页面实际上并未采用默认语言，则屏幕阅读器可能无法正确读出该页面中的文字。[了解详情](https://web.dev/html-has-lang/)。"
@@ -390,7 +462,7 @@
     "message": "移除未使用的 CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "移除未使用的 JavaScript 可减少网络活动消耗的字节数。"
+    "message": "移除未使用的 JavaScript 以减少网络活动消耗的字节数据。[了解详情](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)。"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "移除未使用的 JavaScript"
@@ -513,7 +585,7 @@
     "message": "值"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "大型 DOM 会增加内存使用量、导致[样式计算](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)用时延长，并产生高昂的[布局重排](https://developers.google.com/speed/articles/reflow)费用。[了解详情](https://web.dev/dom-size)。"
+    "message": "大型 DOM 会增加内存使用量、导致[样式计算](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)用时延长，并产生高昂的[布局重排](https://developers.google.com/speed/articles/reflow)成本。[了解详情](https://web.dev/dom-size)。"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 个元素}other{# 个元素}}"
@@ -782,14 +854,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "可交互时间是指网页需要多长时间才能提供完整交互功能。[了解详情](https://web.dev/interactive)。"
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "最大内容渲染时间标记了渲染出最大文本或图片的时间。[了解详情](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "最大内容渲染"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "您的用户可能会遇到的最长首次输入延迟是用时最长的任务的耗时（以毫秒为单位）。[了解详情](https://developers.google.com/web/updates/2018/05/first-input-delay)。"
+    "message": "您的用户可能会遇到的最长首次输入延迟是用时最长的任务的耗时。[了解详情](https://web.dev/lighthouse-max-potential-fid)。"
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "速度指数表明了网页内容的可见填充速度。[了解详情](https://web.dev/speed-index)。"
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "当任务长度超过 50 毫秒时，首次内容渲染 (FCP) 和可交互时间之间的所有时间段的总和，以毫秒表示。"
+    "message": "首次内容渲染 (FCP) 和可交互时间之间的所有时间段的总和，当任务用时超过 50 毫秒时，该数值以毫秒表示。[了解详情](https://web.dev/lighthouse-total-blocking-time)。"
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "网络往返时间 (RTT) 对性能有很大的影响。如果与来源之间的 RTT 较长，则表明缩短服务器与用户之间的距离可能会提高性能。[了解详情](https://hpbn.co/primer-on-latency-and-bandwidth/)。"
@@ -805,6 +883,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Service Worker 可让您的 Web 应用在无法预测的网络状况下正常运行。[了解详情](https://web.dev/offline-start-url)。"
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "在 Service Worker 中加载 {url} 时出错，状态代码为 {statusCode}"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` 在离线时没有响应，并返回 200"
@@ -1064,6 +1145,18 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "服务器响应用时较短 (TTFB)"
   },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "实测值"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "指标"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "设置时间预算有助于您密切关注网站性能。性能出色的网站既会快速加载，也会快速响应用户输入事件。[了解详情](https://developers.google.com/web/tools/lighthouse/audits/budgets)。"
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "时间预算"
+  },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "时长"
   },
@@ -1286,6 +1379,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "名称"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "超出预算"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "请求"
   },
@@ -1319,11 +1415,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "文档"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "输入延迟（估算值）"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "首次 CPU 闲置时间"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "首次内容绘制时间"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "首次有效绘制时间"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "字体"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "图片"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "可交互前的耗时"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "首次输入延迟最长预估值"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "媒体"
@@ -1340,11 +1454,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} 秒"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "速度指数"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "样式表"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "第三方"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "总阻塞时间"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "总计"
@@ -1467,7 +1587,7 @@
     "message": "使用 [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) 之类的工具[在服务器端呈现 AMP 布局](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)。"
   },
   "stack-packs/packs/amp.js | unminified_css": {
-    "message": "请参阅 [AMP 文档](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/)以确保所有样式均受支持。"
+    "message": "请参阅 [AMP 文档](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/)以确保您的所有样式均受支持。"
   },
   "stack-packs/packs/amp.js | uses_responsive_images": {
     "message": "`amp-img` 元素支持 `srcset` 属性，以便系统根据屏幕尺寸指定要使用的图片资源。[了解详情](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)。"
@@ -1479,7 +1599,7 @@
     "message": "如果要呈现的列表非常大，您不妨使用 Component Dev Kit (CDK) 进行虚拟滚动。[了解详情](https://web.dev/virtualize-lists-with-angular-cdk/)。"
   },
   "stack-packs/packs/angular.js | total_byte_weight": {
-    "message": "应用[路径级代码拆分](https://web.dev/route-level-code-splitting-in-angular/)，以尽量压缩 JavaScript 软件包的大小。您也可考虑使用 [Angular Service Worker](https://web.dev/precaching-with-the-angular-service-worker/) 预缓存资源。"
+    "message": "采用[路径级代码拆分](https://web.dev/route-level-code-splitting-in-angular/)，以尽量压缩 JavaScript 软件包的大小。您也可考虑使用 [Angular Service Worker](https://web.dev/precaching-with-the-angular-service-worker/) 预缓存资源。"
   },
   "stack-packs/packs/angular.js | unminified_warning": {
     "message": "如果您使用的是 Angular CLI，请确保在正式版模式下生成版本。[了解详情](https://angular.io/guide/deployment#enable-runtime-production-mode)。"
@@ -1533,7 +1653,7 @@
     "message": "如果您要在页面上呈现很多重复元素，不妨使用“windowing”库（如 `react-window`）以尽量减少所创建的 DOM 节点数。[了解详情](https://web.dev/virtualize-long-lists-react-window/)。此外，如果您使用 Effect 钩子提高运行时性能，则还要使用 [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action)、[PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) 或 [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) 及[跳过效果](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects)以尽量减少不必要的重复呈现，直到某些依赖项发生更改为止。"
   },
   "stack-packs/packs/react.js | redirects": {
-    "message": "如果您使用的是 React Router，请尽量避免使用 `<Redirect>` 组件进行[路径导航](https://reacttraining.com/react-router/web/api/Redirect)。"
+    "message": "如果您使用了 React Router，请尽量避免使用 `<Redirect>` 组件进行[路径导航](https://reacttraining.com/react-router/web/api/Redirect)。"
   },
   "stack-packs/packs/react.js | time_to_first_byte": {
     "message": "如果您在服务器端呈现任何 React 组件，不妨使用 `renderToNodeStream()` 或 `renderToStaticNodeStream()` 来允许客户端接收并合成标记的各个不同部分，而不是一次性接收整个标记。[了解详情](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)。"
@@ -1548,7 +1668,7 @@
     "message": "如果您不使用服务器端呈现，请使用 `React.lazy()` [拆分 JavaScript 软件包](https://web.dev/code-splitting-suspense/)。否则，请使用第三方库（如 [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)）拆分代码。"
   },
   "stack-packs/packs/react.js | user_timings": {
-    "message": "使用 React DevTools Profiler，从而利用 Profiler API 来衡量组件的呈现效果。[了解详情](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)。"
+    "message": "使用 React DevTools Profiler，从而利用 Profiler API 来衡量组件的呈现性能。[了解详情](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)。"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "建议您将 GIF 上传到可让其作为 HTML5 视频嵌入的服务。"

@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "Tumutugma ang mga attribute na `[aria-*]` sa mga tungkulin ng mga ito"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "Ang mga pantulong na teknolohiya, tulad ng mga screen reader, ay hindi tuloy-tuloy na gumagana kapag nakatakda ang `aria-hidden=\"true\"` sa dokumentong `<body>`. [Matuto pa](https://web.dev/aria-hidden-body/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "May `[aria-hidden=\"true\"]` sa dokumentong `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "Walang `[aria-hidden=\"true\"]` sa dokumentong `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "Pinipigilan ng mga nafo-focus na descendent sa isang element na `[aria-hidden=\"true\"]`ang mga interactive na element na maging available sa mga user ng mga pantulong na teknolohiya tulad ng mga screen reader. [Matuto pa](https://web.dev/aria-hidden-focus/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "May mga nafo-focus na descendent ang mga element na `[aria-hidden=\"true\"]`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "Walang nafo-focus na descendent ang mga element na `[aria-hidden=\"true\"]`"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "Kapag walang naa-access na pangalan ang isang field ng input, iaanunsyo ito ng mga screen reader gamit ang generic na pangalan, kaya hindi ito magagamit ng mga user na umaasa sa mga screen reader. [Matuto pa](https://web.dev/aria-input-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "Walang naa-access na pangalan ang mga field ng input ng ARIA"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "May mga naa-access na pangalan ang mga field ng input ng ARIA"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Ang ilang tungkulin ng ARIA ay may mga kinakailangang attribute na naglalarawan sa status ng element sa mga screen reader. [Matuto pa](https://web.dev/aria-required-attr/)."
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "Valid ang mga value ng `[role]`"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "Kapag walang naa-access na pangalan ang isang toggle field, iaanunsyo ito ng mga screen reader gamit ang generic na pangalan, kaya hindi ito magagamit ng mga user na umaasa sa mga screen reader. [Matuto pa](https://web.dev/aria-toggle-field-label/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "Walang naa-access na pangalan ang mga toggle field ng ARIA"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "May mga naa-access na pangalan ang mga toggle field ng ARIA"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "Hindi mauunawaan ng mga nakakatulong na teknolohiya, gaya ng mga screen reader, ang mga attribute ng ARIA na may mga invalid na value. [Matuto pa](https://web.dev/aria-valid-attr-value/)."
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "May `<title>` na element ang dokumento"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "Ang lahat ng nafo-focus na element ay dapat na may natatanging `id` para matiyak na nakikita ang mga ito ng mga pantulong na teknolohiya. [Matuto pa](https://web.dev/duplicate-id-active/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "Hindi natatangi ang mga attribute na `[id]` sa aktibo at nafo-focus na element"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "Natatangi ang mga attribute na `[id]` sa mga aktibo at nafo-focus na element"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "Dapat ay natatangi ang value ng isang ARIA ID para hindi makaligtaan ng mga pantulong na teknolohiya ang iba pang instance. [Matuto pa](https://web.dev/duplicate-id-aria/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "Hindi natatangi ang mga ARIA ID"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "Natatangi ang mga ARIA ID"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "Ang mga field ng form na may maraming label ay puwedeng hindi sinasadyang ianunsyo ng mga pantulong na teknolohiya tulad ng mga screen reader na ginagamit ang una, huli, o lahat ng label. [Matuto pa](https://web.dev/form-field-multiple-labels/)."
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "May maraming label ang mga field ng form"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "Walang field ng form ang may maraming label"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Umaasa ang mga user ng screen reader sa mga pamagat ng frame para ilarawan ang mga content ng mga frame. [Matuto pa](https://web.dev/frame-title/)."
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "May pamagat ang mga elemento na`<frame>` o `<iframe>`"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "Ipinaparating ng mga mahusay na nakaayos na heading na hindi lumalaktaw ng mga antas ang semantic na istruktura ng page, na mas pinapadali ang pag-navigate at pag-unawa kapag gumagamit ng mga pantulong na teknolohiya. [Matuto pa](https://web.dev/heading-order/)."
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "Hindi sunod-sunod na pababa ang pagkakaayos ng mga heading element"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "Lumalabas ang mga heading element nang sunod-sunod na pababa"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "Kung hindi tutukoy ng lang attribute ang isang page, ipagpapalagay ng screen reader na ang page ay nasa default na wikang pinili ng user noong sine-set up ang screen reader. Kung wala talaga sa default na wika ang page, puwedeng hindi maianunsyo nang tama ng screen reader ang text ng page. [Matuto pa](https://web.dev/html-has-lang/)."
@@ -390,7 +462,7 @@
     "message": "Alisin ang hindi ginagamit na CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Alisin ang hindi nagamit na JavaScript para mabawasan ang mga byte na nakokonsumo ng aktibidad sa network."
+    "message": "Alisin ang hindi nagamit na JavaScript para mabawasan ang mga byte na nakokonsumo ng aktibidad sa network. [Matuto pa](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Alisin ang hindi nagamit na JavaScript"
@@ -782,14 +854,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "Ang oras bago maging interactive ay ang haba ng oras na inaabot bago maging ganap na interactive ang page. [Matuto pa](https://web.dev/interactive)."
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "Minamarkahan ng Largest Contentful Paint ang tagal bago ma-paint ang pinakamalaking text o larawan. [Matuto Pa](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "Largest Contentful Paint"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "Ang maximum na potensyal na First Input Delay na puwedeng maranasan ng iyong mga user ay ang tagal, na nasa millisecond, ng pinakamahabang gawain. [Matuto pa](https://developers.google.com/web/updates/2018/05/first-input-delay)."
+    "message": "Ang maximum na potensyal na First Input Delay na puwedeng maranasan ng iyong mga user ay ang tagal ng pinakamahabang gawain. [Matuto pa](https://web.dev/lighthouse-max-potential-fid)."
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Ipinapakita ng Speed Index ang bilis ng nakikitang pag-populate ng mga content ng isang page. [Matuto pa](https://web.dev/speed-index)."
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "Kabuuan ng lahat ng yugto ng panahon sa pagitan ng FCP at Oras bago maging Interactive, kapag lumampas ang haba ng gawain sa 50ms, ipinahayag sa milliseconds."
+    "message": "Kabuuan ng lahat ng yugto ng panahon sa pagitan ng FCP at Oras bago maging Interactive, kapag lumampas ang haba ng gawain sa 50ms, na ipinapahayag sa milliseconds. [Matuto pa](https://web.dev/lighthouse-total-blocking-time)."
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "Malaki ang epekto ng mga round trip time (RTT) ng network sa performance. Kung mataas ang RTT sa isang pinagmulan, isa itong palatandaan na mapapahusay ng mga server na malapit sa user ang performance. [Matuto pa](https://hpbn.co/primer-on-latency-and-bandwidth/)."
@@ -805,6 +883,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Ine-enable ng isang service worker ang iyong web app para maging maaasahan sa mga pabagu-bagong kundisyon ng network. [Matuto pa](https://web.dev/offline-start-url)."
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Nagkaroon ng error sa pag-load ng {url} sa Service Worker, nakakuha ng status code na {statusCode}"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "Hindi tumutugon ang `start_url` gamit ang 200 kapag offline"
@@ -1064,6 +1145,18 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Masyadong matagal ang pagtugon ng server (TTFB)"
   },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "Pagsukat"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "Sukatan"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "Magtakda ng badyet sa timing para matulungan kang subaybayan ang performance ng iyong site. Mabilis na naglo-load ang mga site na maayos na gumagana at mabilis na tumutugon ang mga ito sa mga input event ng user. [Matuto pa](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "Badyet sa timing"
+  },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "Tagal"
   },
@@ -1113,7 +1206,7 @@
     "message": "May tag na `<meta name=\"viewport\">` na may `width` o `initial-scale`"
   },
   "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Dapat magpakita ng ilang content ang iyong app kapag naka-disable ang JavaScript, kahit isang babala lang sa user na kinakailangan ang Javascript para magamit ang app. [Matuto pa](https://web.dev/without-javascript)."
+    "message": "Dapat magpakita ng ilang content ang iyong app kapag naka-disable ang JavaScript, kahit isang babala lang sa user na kinakailangan ang JavaScript para magamit ang app. [Matuto pa](https://web.dev/without-javascript)."
   },
   "lighthouse-core/audits/without-javascript.js | explanation": {
     "message": "Dapat mag-render ng ilang content ang nilalaman ng page kung hindi available ang mga script nito."
@@ -1286,6 +1379,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "Pangalan"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "Lampas sa Badyet"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Mga Kahilingan"
   },
@@ -1319,11 +1415,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokumento"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "Tinatayang Latency ng Input"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "First CPU Idle"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "First Contentful Paint"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "First Meaningful Paint"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "Font"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Larawan"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "Time to Interactive"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "Max na Potensyal na First Input Delay"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "Media"
@@ -1340,11 +1454,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} s"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Speed Index"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Stylesheet"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Third-party"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "Kabuuang Oras ng Pag-block"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Kabuuan"

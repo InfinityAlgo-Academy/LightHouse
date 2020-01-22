@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "`[aria-*]` 속성이 역할과 일치함"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "스크린 리더와 같은 보조 기술은 `aria-hidden=\"true\"`이(가) 문서 `<body>`에 설정된 경우 일관성 없게 작동합니다. [자세히 알아보기](https://web.dev/aria-hidden-body/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]`이(가) 문서 `<body>`에 있음"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "`[aria-hidden=\"true\"]`이(가) 문서 `<body>`에 없음"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "`[aria-hidden=\"true\"]` 요소 내 포커스할 수 있는 하위 요소는 스크린 리더와 같은 보조 기술 사용자가 상호 작용 가능한 요소를 사용하지 못하게 합니다. [자세히 알아보기](https://web.dev/aria-hidden-focus/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]` 요소에 포커스할 수 있는 하위 요소가 있음"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "`[aria-hidden=\"true\"]` 요소에 포커스할 수 있는 하위 요소가 없음"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "입력란에 접근 가능한 이름이 없는 경우 스크린 리더에서 일반 이름으로 읽기 때문에 스크린 리더에 의존하는 사용자는 사용할 수 없게 됩니다. [자세히 알아보기](https://web.dev/aria-input-field-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "ARIA 입력란에 접근 가능한 이름이 없음"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "ARIA 입력란에 접근 가능한 이름이 있음"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "일부 ARIA 역할에는 스크린 리더에 관한 요소의 상태를 설명하는 속성이 필요합니다. [자세히 알아보기](https://web.dev/aria-required-attr/)"
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "`[role]` 값이 유효함"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "토글 입력란에 접근 가능한 이름이 없는 경우 스크린 리더에서 일반적인 이름으로 읽기 때문에 스크린 리더에 의존하는 사용자는 사용할 수 없게 됩니다. [자세히 알아보기](https://web.dev/aria-toggle-field-label/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "ARIA 토글 입력란에 접근 가능한 이름이 없음"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "ARIA 토글 입력란에 접근 가능한 이름이 있음"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "스크린 리더와 같은 보조 기술은 잘못된 값이 있는 ARIA 속성을 해석하지 못합니다. [자세히 알아보기](https://web.dev/aria-valid-attr-value/)"
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "문서에 `<title>` 요소가 있음"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "포커스할 수 있는 모든 요소에는 고유한 `id`이(가) 있어 보조 기술에 올바르게 표시되어야 합니다. [자세히 알아보기](https://web.dev/duplicate-id-active/)"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "포커스할 수 있는 활성 요소에 중복되는 `[id]` 속성이 있음"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "포커스할 수 있는 활성 요소에 중복되는 `[id]` 속성이 없음"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "중복되는 ARIA ID 값이 없어야 보조 기술이 다른 인스턴스를 놓치지 않습니다. [자세히 알아보기](https://web.dev/duplicate-id-aria/)"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "중복되는 ARIA ID가 있음"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "중복되는 ARIA ID가 없음"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "라벨이 여러 개인 양식 입력란은 첫 번째, 마지막 또는 모든 라벨을 사용하는 스크린 리더와 같은 보조 기술에서 잘못 읽을 수 있습니다. [자세히 알아보기](https://web.dev/form-field-multiple-labels/)"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "양식 입력란에 라벨이 여러 개 있음"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "양식 입력란에 라벨이 여러 개가 아님"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "스크린 리더 사용자는 프레임 콘텐츠를 설명해 주는 프레임 제목을 사용합니다. [자세히 알아보기](https://web.dev/frame-title/)"
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "`<frame>` 또는 `<iframe>` 요소에 제목이 있음"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "레벨을 건너뛰지 않고 제대로 정렬된 제목은 페이지의 시맨틱 구조를 포함하여, 보조 기술을 사용할 때 더 쉽게 이동하고 이해하는 데 도움이 됩니다. [자세히 알아보기](https://web.dev/heading-order/)"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "제목 요소가 내림차순으로 표시되지 않음"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "제목 요소가 내림차순으로 표시됨"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "페이지에서 lang 속성을 지정하지 않는 경우 스크린 리더는 사용자가 스크린 리더를 설정할 때 선택한 기본 언어로 페이지가 작성되어 있다고 가정합니다. 페이지가 기본 언어로 작성되어 있지 않으면 스크린 리더에서 페이지에 있는 텍스트를 제대로 읽어줄 수 없습니다. [자세히 알아보기](https://web.dev/html-has-lang/)"
@@ -390,7 +462,7 @@
     "message": "사용하지 않는 CSS 제거"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "사용하지 않는 자바스크립트를 삭제하고 네트워크 활동에 소비되는 바이트를 줄이세요."
+    "message": "사용하지 않는 자바스크립트를 삭제하여 네트워크 활동에 소비되는 바이트를 줄입니다. [자세히 알아보기](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "사용하지 않는 자바스크립트 삭제하기"
@@ -762,7 +834,7 @@
     "message": "페이지마다 URL이 있음"
   },
   "lighthouse-core/audits/manual/pwa-page-transitions.js | description": {
-    "message": "탭을 했을 때 느린 네트워크에서도 전환이 빠르게 느껴져야 합니다. 이 환경은 사용자가 체감하는 성능의 핵심입니다. [자세히 알아보기](https://web.dev/pwa-page-transitions)"
+    "message": "탭을 했을 때 느린 네트워크에서도 전환이 빠르게 느껴져야 합니다. 이 전환 경험이야말로 사용자의 성능에 대한 인식에 중요한 영향을 미칩니다. [자세히 알아보기](https://web.dev/pwa-page-transitions)"
   },
   "lighthouse-core/audits/manual/pwa-page-transitions.js | title": {
     "message": "페이지 전환 시 네트워크에서 막히는 느낌이 들지 않음"
@@ -782,14 +854,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "사용할 수 있을 때까지 걸리는 시간은 완전히 페이지와 상호작용할 수 있게 될 때까지 걸리는 시간입니다. [자세히 알아보기](https://web.dev/interactive)"
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "콘텐츠가 포함된 최대 페인트는 최대 텍스트 또는 이미지가 표시되는 시간을 나타냅니다. [자세히 알아보기](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "콘텐츠가 포함된 최대 페인트"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "사용자가 경험할 수 있는 최대 첫 입력 지연 예상 시간은 가장 긴 작업의 길이(밀리초)입니다. [자세히 알아보기](https://developers.google.com/web/updates/2018/05/first-input-delay)"
+    "message": "사용자가 경험할 수 있는 최대 첫 입력 지연 예상 시간은 가장 긴 작업의 길이입니다. [자세히 알아보기](https://web.dev/lighthouse-max-potential-fid)"
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "속도 색인은 페이지 콘텐츠가 얼마나 빨리 표시되는지 보여줍니다. [자세히 알아보기](https://web.dev/speed-index)"
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "FCP와 상호작용 시간 사이의 모든 시간의 합으로 작업 지속 시간이 50ms를 넘으면 밀리초 단위로 표현됩니다."
+    "message": "FCP와 상호작용 시간 사이의 모든 시간의 합으로 작업 지속 시간이 50ms를 넘으면 밀리초 단위로 표현됩니다. [자세히 알아보기](https://web.dev/lighthouse-total-blocking-time)"
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "네트워크 왕복 시간(RTT)이 성능에 큰 영향을 줍니다. 출발지로의 RTT가 크면 서버가 사용자에게 가까울 때 성능이 향상될 수 있음을 나타냅니다. [자세히 알아보기](https://hpbn.co/primer-on-latency-and-bandwidth/)"
@@ -805,6 +883,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "서비스 워커를 사용하면 예측 불가능한 네트워크 상태에서도 웹 앱이 안정적으로 작동할 수 있습니다. [자세히 알아보기](https://web.dev/offline-start-url)"
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "서비스 워커에서 {url}을(를) 로드하는 중 오류 발생, {statusCode} 상태 코드 받기"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url`이(가) 오프라인 시 200으로 응답하지 않음"
@@ -1064,6 +1145,18 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "서버 응답 시간 낮음(TTFB)"
   },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "측정값"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "측정항목"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "시기 예산을 설정하면 사이트 실적을 확인하는 데 도움이 됩니다. 성능 기준에 맞는 사이트는 빠르게 로드되고 사용자 입력 이벤트에 빠르게 응답합니다. [자세히 알아보기](https://developers.google.com/web/tools/lighthouse/audits/budgets)"
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "시기 예산"
+  },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "시간"
   },
@@ -1286,6 +1379,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "이름"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "예산 초과"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "요청"
   },
@@ -1319,11 +1415,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "문서"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "예상 입력 대기시간"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "최초 CPU 유휴 상태"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "최초 만족 페인트"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "최초 유의미 페인트"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "글꼴"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "이미지"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "상호작용 시간"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "최대 첫 입력 지연 예상 시간"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "미디어"
@@ -1340,11 +1454,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} 초"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "속도 색인"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "스타일시트"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "타사"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "총 차단 시간"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "합계"

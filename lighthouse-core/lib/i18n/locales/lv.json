@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "Atribūti `[aria-*]` atbilst savām lomām"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "Atbalsta tehnoloģijas, piemēram, ekrāna lasītāji, darbojas nekonsekventi, kad `aria-hidden=\"true\"` ir iestatīts dokumentam `<body>`. [Uzziniet vairāk](https://web.dev/aria-hidden-body/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]` ir dokumentā `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "`[aria-hidden=\"true\"]` nav dokumentā `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "Fokusējami pēcteči `[aria-hidden=\"true\"]` elementā novērš to interaktīvo elementu pieejamību atbalsta tehnoloģiju, piemēram, ekrāna lasītāju, lietotājiem. [Uzziniet vairāk](https://web.dev/aria-hidden-focus/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]` elementi satur fokusējamus pēctečus"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "`[aria-hidden=\"true\"]` elementos nav fokusējamu pēcteču"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "Ja ievades laukam nav pieejama nosaukuma, ekrāna lasītāji nolasa to ar vispārīgu nosaukumu, padarot to nelietojamu ekrāna lasītāju lietotājiem. [Uzziniet vairāk](https://web.dev/aria-input-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "ARIA ievades laukiem nav pieejamu nosaukumu"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "ARIA ievades laukiem ir pieejami nosaukumi"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Dažām ARIA lomām ir obligāti atribūti, kas ekrāna lasītājiem norāda elementa statusu. [Uzziniet vairāk](https://web.dev/aria-required-attr/)."
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "Atribūta `[role]` vērtības ir derīgas"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "Ja pārslēgšanas laukam nav pieejama nosaukuma, ekrāna lasītāji nolasa to ar vispārīgu nosaukumu, padarot to nelietojamu ekrāna lasītāju lietotājiem. [Uzziniet vairāk](https://web.dev/aria-toggle-field-label/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "ARIA pārslēgšanas laukiem nav pieejamu nosaukumu"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "ARIA pārslēgšanas laukiem ir pieejami nosaukumi"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "Palīgtehnoloģijas, piemēram, ekrāna lasītāji, nevar interpretēt ARIA atribūtus ar nederīgām vērtībām. [Uzziniet vairāk](https://web.dev/aria-valid-attr-value/)."
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Dokumentā ir ietverts elements `<title>`"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "Visiem fokusējamiem elementiem ir jābūt unikālam `id`, lai tie būtu redzami atbalsta tehnoloģijām. [Uzziniet vairāk](https://web.dev/duplicate-id-active/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "`[id]` atribūti aktīvos, fokusējamos elementos nav unikāli"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "`[id]` atribūti aktīvos, fokusējamos elementos ir unikāli"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "ARIA ID vērtībai ir jābūt unikālai, lai atbalsta tehnoloģijas neizlaistu citas instances. [Uzziniet vairāk](https://web.dev/duplicate-id-aria/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "ARIA identifikatori nav unikāli"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "ARIA identifikatori ir unikāli"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "Veidlapas laukus ar vairākām iezīmēm var nepareizi nolasīt atbalsta tehnoloģijas, piemēram, ekrāna lasītāji, kuri izmanto pirmo, pēdējo vai visas iezīmes. [Uzziniet vairāk](https://web.dev/form-field-multiple-labels/)."
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "Veidlapas laukiem ir vairākas iezīmes"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "Nevienā veidlapas laukā nav vairāku iezīmju"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Ekrāna lasītāji izmanto ietvaru nosaukumus, lai raksturotu ietvaru saturu. [Uzziniet vairāk](https://web.dev/frame-title/)."
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "Elementiem `<frame>` vai `<iframe>` ir nosaukums"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "Virsraksti, kas ir sakārtoti pareizi un neizlaižot līmeņus, atveido lapas semantisko struktūru, tādējādi atvieglojot navigāciju un izpratni atbalsta tehnoloģiju lietotājiem. [Uzziniet vairāk](https://web.dev/heading-order/)."
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "Virsrakstu elementi nav atveidoti secīgi dilstošā secībā"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "Virsrakstu elementi ir atveidoti secīgi dilstošā secībā"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "Ja lapā nav norādīts atribūts “lang”, ekrāna lasītājā tiek pieņemts, ka lapas saturs ir noklusējuma valodā, kuru lietotājs izvēlējās, iestatot ekrāna lasītāju. Ja lapas saturs nav noklusējuma valodā, iespējams, ekrāna lasītājs tekstu neatskaņos pareizi. [Uzziniet vairāk](https://web.dev/html-has-lang/)."
@@ -390,7 +462,7 @@
     "message": "Noņemt neizmantoto CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Noņemiet neizmantoto JavaScript, lai samazinātu tīkla aktivitātes izmantoto baitu apjomu."
+    "message": "Noņemiet neizmantoto JavaScript, lai samazinātu tīkla aktivitātes izmantoto baitu apjomu. [Uzziniet vairāk](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Noņemiet neizmantoto JavaScript"
@@ -782,14 +854,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "Laiks līdz interaktivitātei ir laika apjoms, kas nepieciešams, lai lapa kļūtu pilnībā interaktīva. [Uzziniet vairāk](https://web.dev/interactive)."
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "Lielākais satura marķējums norāda laiku, kurā tiek atveidots apjomīgākais teksts vai attēls. [Uzziniet vairāk](https://web.dev/largest-contentful-paint)."
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "Lielākais satura marķējums"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "Iespējamā maksimālā pirmās ievades aizkave, ar ko jūsu lietotāji var saskarties, ir ilgākā uzdevuma ilgums milisekundēs. [Uzziniet vairāk](https://developers.google.com/web/updates/2018/05/first-input-delay)."
+    "message": "Iespējamā maksimālā pirmās ievades aizkave, ar ko jūsu lietotāji var saskarties, ir ilgākā uzdevuma ilgums. [Uzziniet vairāk](https://web.dev/lighthouse-max-potential-fid)."
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Ātruma rādītājs norāda, cik ātri tiek parādīts lapas saturs. [Uzziniet vairāk](https://web.dev/speed-index)."
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "Visu laika periodu summa (no PSM līdz “Laiks līdz interaktivitātei”), kad uzdevuma ilgums pārsniedz 50 ms (izteikts milisekundēs)."
+    "message": "Visu laika periodu summa (no PSM līdz “Laiks līdz interaktivitātei”), kad uzdevuma ilgums pārsniedz 50 ms (izteikts milisekundēs). [Uzziniet vairāk](https://web.dev/lighthouse-total-blocking-time)."
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "Tīkla aprites laiks (RTT) spēcīgi ietekmē veiktspēju. Ja aprites laiks uz sākumpunktu ir augsts, tas norāda, ka serveru veiktspēja, kas atrodas tuvāk lietotājam, var tikt uzlabota. [Uzziniet vairāk](https://hpbn.co/primer-on-latency-and-bandwidth/)."
@@ -805,6 +883,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Izmantojot pakalpojumu skriptu, varat nodrošināt uzticamu tīmekļa lietotnes darbību neparedzamos tīkla apstākļos. [Uzziniet vairāk](https://web.dev/offline-start-url)."
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Ielādējot {url} pakalpojumu skriptā, radās kļūda. Statusa kods: {statusCode}."
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` bezsaistē nereaģē ar statusa kodu 200"
@@ -1064,6 +1145,18 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Servera atbildes laiks ir mazs (TTFB)"
   },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "Mērījums"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "Metriskā sistēma"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "Iestatiet laika budžetu, lai uzraudzītu savas vietnes veiktspēju. Vietnes ar labu veiktspēju tiek ātri ielādētas un ātri reaģē uz lietotāju ievades notikumiem. [Uzziniet vairāk](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "Laika budžets"
+  },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "Ilgums"
   },
@@ -1286,6 +1379,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "Vārds"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "Pārsniegts budžets"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Pieprasījumi"
   },
@@ -1319,11 +1415,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokuments"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "Paredzētais ievades latentums"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "Pirmā CPU dīkstāve"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "Pirmais saturīgais satura atveidojums"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "Pirmais nozīmīgais satura atveidojums"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "Fonts"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Attēls"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "Laiks līdz interaktivitātei"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "Maks. potenciālā pirmā ievades aizkave"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "Multivide"
@@ -1340,11 +1454,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} s"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Ātruma rādītājs"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Stilu lapa"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Trešā puse"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "Kopējais bloķēšanas laiks"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Kopā"

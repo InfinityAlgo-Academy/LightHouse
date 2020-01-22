@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "Atributele `[aria-*]` se potrivesc cu rolurile"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "Tehnologiile de asistare, precum cititoarele de ecran, funcționează inconsecvent atunci când `aria-hidden=\"true\"` este setat pentru documentul `<body>`. [Află mai multe](https://web.dev/aria-hidden-body/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]` există în documentul `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "`[aria-hidden=\"true\"]` nu există în documentul `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "Descendenții focalizabili dintr-un element `[aria-hidden=\"true\"]` împiedică disponibilitatea elementelor interactive respective pentru utilizatorii tehnologiilor de asistare, cum ar fi cititoarele de ecran. [Află mai multe](https://web.dev/aria-hidden-focus/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "Elementele `[aria-hidden=\"true\"]` conțin descendenți focalizabili"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "Elementele `[aria-hidden=\"true\"]` nu conțin descendenți focalizabili"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "Când un câmp de introducere nu are un nume accesibil, cititoarele de ecran îl anunță cu o denumire generică, făcându-l inutil pentru utilizatorii care se bazează pe cititoarele de ecran. [Află mai multe](https://web.dev/aria-input-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "Câmpurile de introducere pentru ARIA nu au nume accesibile"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "Câmpurile de introducere pentru ARIA au nume accesibile"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Unele roluri ARIA au atribute obligatorii care descriu starea elementului cititoarelor de ecrane. [Află mai multe](https://web.dev/aria-required-attr/)."
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "Valorile `[role]` sunt valide"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "Când un câmp de comutare nu are un nume accesibil, cititoarele de ecran îl anunță cu o denumire generică, făcându-l inutil pentru utilizatorii care se bazează pe cititoarele de ecran. [Află mai multe](https://web.dev/aria-toggle-field-label/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "Câmpurile de comutare pentru ARIA nu au nume accesibile"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "Câmpurile de comutare pentru ARIA au nume accesibile"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "Tehnologiile care asigură asistență, precum cititoarele de ecran, nu pot interpreta atributele ARIA cu valori nevalide. [Află mai multe](https://web.dev/aria-valid-attr-value/)."
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Documentul are un element `<title>`"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "Toate elementele focalizabile trebuie să aibă un `id` unic ca să fie vizibile pentru tehnologiile de asistare. [Află mai multe](https://web.dev/duplicate-id-active/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "Atributele `[id]` ale elementelor focalizabile active nu sunt unice"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "Atributele `[id]` ale elementelor focalizabile active sunt unice"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "Valoarea unui ID ARIA trebuie să fie unică pentru a preveni omiterea altor instanțe de tehnologiile de asistare. [Află mai multe](https://web.dev/duplicate-id-aria/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "ID-urile ARIA nu sunt unice"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "ID-urile ARIA sunt unice"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "Câmpurile de formular cu etichete multiple pot fi anunțate în mod derutant de tehnologiile de asistare, precum cititoarele de ecran care folosesc prima, ultima sau toate etichetele. [Află mai multe](https://web.dev/form-field-multiple-labels/)."
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "Câmpurile de formular au etichete multiple"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "Niciun câmp de formular nu are etichete multiple"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Utilizatorii cititoarelor de ecran se bazează pe titlurile cadrelor pentru a descrie conținutul cadrelor. [Află mai multe](https://web.dev/frame-title/)."
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "Elementele `<frame>` sau `<iframe>` au un titlu"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "Titlurile ordonate corect care nu omit niveluri preiau structura semantică a paginii, simplificând navigarea și înțelegerea atunci când se folosesc tehnologii de asistare. [Află mai multe](https://web.dev/heading-order/)."
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "Elementele titlului nu apar în ordine descrescătoare succesivă"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "Elementele titlului apar în ordine descrescătoare succesivă"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "Dacă o pagină nu specifică un atribut de limbă, cititorul de ecran presupune că pagina este în limba prestabilită pe care utilizatorul a ales-o când a configurat cititorul de ecran. Dacă pagina nu este în limba prestabilită, atunci cititorul de ecran este posibil să nu citească corect textul paginii. [Află mai multe](https://web.dev/html-has-lang/)."
@@ -390,7 +462,7 @@
     "message": "Elimină conținutul CSS nefolosit"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Elimină codul JavaScript nefolosit pentru a reduce byții consumați de activitatea rețelei."
+    "message": "Elimină codul JavaScript nefolosit pentru a reduce byții consumați de activitatea rețelei. [Află mai multe](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Elimină codul JavaScript nefolosit"
@@ -782,14 +854,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "Timpul până la interactivitate este timpul necesar pentru ca pagina să devină complet interactivă. [Află mai multe](https://web.dev/interactive)."
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "Cea mai mare redare de conținut semnalează momentul în care este redat cel mai mare text sau cea mai mare imagine. [Află mai multe](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "Cea mai mare redare de conținut"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "Timpul maxim potențial de la prima interacțiune cu care utilizatorii se pot confrunta este durata, în milisecunde, a celei mai lungi activități. [Află mai multe](https://developers.google.com/web/updates/2018/05/first-input-delay)."
+    "message": "Timpul maxim potențial de la prima interacțiune cu care utilizatorii se pot confrunta este durata celei mai lungi activități. [Află mai multe](https://web.dev/lighthouse-max-potential-fid)."
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Indexul de viteză arată cât de repede se completează vizibil conținutul unei pagini. [Află mai multe](https://web.dev/speed-index)."
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "Suma tuturor perioadelor de timp dintre FCP și Timpul până la interactivitate, când lungimea activității a depășit 50 ms, exprimate în milisecunde."
+    "message": "Suma tuturor perioadelor de timp dintre FCP și Timpul până la interactivitate, când lungimea activității a depășit 50 ms, exprimate în milisecunde. [Află mai multe](https://web.dev/lighthouse-total-blocking-time)."
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "Durata pingului în rețea (RTT) are impact important asupra performanței. Dacă RTT către o origine este mare, înseamnă că serverele mai apropiate de utilizator pot îmbunătăți performanța. [Află mai multe](https://hpbn.co/primer-on-latency-and-bandwidth/)."
@@ -805,6 +883,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Un service worker permite ca aplicația să fie fiabilă în condiții de rețea imprevizibile. [Află mai multe](https://web.dev/offline-start-url)."
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Eroare la încărcarea {url} în Service Worker. S-a generat codul de stare {statusCode}"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` nu răspunde cu codul de stare 200 când este offline"
@@ -1064,6 +1145,18 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Serverul răspunde repede (TTFB)"
   },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "Cuantificare"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "Valoare"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "Stabilește un buget pentru durată ca să urmărești performanța site-ului. Site-urile performante se încarcă rapid și răspund rapid la evenimentele de intervenție a utilizatorului. [Află mai multe](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "Buget pentru durată"
+  },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "Durată"
   },
@@ -1286,6 +1379,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "Nume"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "Peste buget"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Solicitări"
   },
@@ -1319,11 +1415,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Document"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "Latența estimată a comenzilor"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "Primul „CPU inactiv”"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "Prima redare de conținut"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "Prima redare semnificativă"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "Font"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Imagine"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "Timpul până la interactivitate"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "Timpul maxim potențial de la prima interacțiune"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "Media"
@@ -1340,11 +1454,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} s"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Index de viteză"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Foaie de stil"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Terță parte"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "Durata totală de blocare"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Total"

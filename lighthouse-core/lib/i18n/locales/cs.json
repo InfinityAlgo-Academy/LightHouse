@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "Atributy `[aria-*]` odpovídají příslušným rolím"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "Asistenční technologie, jako jsou čtečky obrazovek, fungují, má-li prvek `<body>` dokumentu nastavenou hodnotu `aria-hidden=\"true\"`. [Další informace](https://web.dev/aria-hidden-body/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "Hodnota `[aria-hidden=\"true\"]` je v prvku `<body>` dokumentu přítomná"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "Hodnota `[aria-hidden=\"true\"]` není v prvku `<body>` dokumentu přítomná"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "Zaměřitelné podřízené prvky v prvku `[aria-hidden=\"true\"]` znemožňují využití těchto interaktivních prvků ze strany uživatelů asistenčních technologií, jako jsou čtečky obrazovky. [Další informace](https://web.dev/aria-hidden-focus/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "Prvky `[aria-hidden=\"true\"]` obsahují zaměřitelné podřízené prvky"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "Prvky `[aria-hidden=\"true\"]` neobsahují zaměřitelné podřízené prvky"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "Když zadávací pole nemá přístupný název, čtečky obrazovek oznamují obecný název a pro jejich uživatele je toto pole v podstatě nepoužitelné. [Další informace](https://web.dev/aria-input-field-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "Zadávací pole ARIA nemají přístupné názvy"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "Zadávací pole ARIA mají přístupné názvy"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Některé role ARIA mají povinné atributy, které čtečkám obrazovek popisují stav prvku. [Další informace](https://web.dev/aria-required-attr/)"
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "Hodnoty atributů `[role]` jsou platné"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "Když pole přepínače nemá přístupný název, čtečky obrazovek oznamují obecný název a pro jejich uživatele je toto pole v podstatě nepoužitelné. [Další informace](https://web.dev/aria-toggle-field-label/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "Pole přepínačů ARIA nemají přístupné názvy"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "Pole přepínačů ARIA mají přístupné názvy"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "Asistenční technologie, jako jsou čtečky obrazovek, atributy ARIA s neplatnými hodnotami nedokážou interpretovat. [Další informace](https://web.dev/aria-valid-attr-value/)"
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Dokument obsahuje prvek `<title>`"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "Všechny zaměřitelné prvky musí mít unikátní atribut `id`, aby bylo zaručeno, že budou viditelné pro asistenční technologie. [Další informace](https://web.dev/duplicate-id-active/)"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "Atributy `[id]` u aktivních, zaměřitelných prvků nejsou unikátní"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "Atributy `[id]` u aktivních, zaměřitelných prvků jsou unikátní"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "Hodnota ID ARIA musí být unikátní, aby asistenční technologie nepřehlížely ostatní instance. [Další informace](https://web.dev/duplicate-id-aria/)"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "ID ARIA nejsou unikátní"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "ID ARIA jsou unikátní"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "Pole formuláře s několika štítky mohou asistenční technologie, jako jsou čtečky obrazovky, oznamovat matoucím způsobem, protože použijí buď první štítek, poslední štítek, nebo všechny. [Další informace](https://web.dev/form-field-multiple-labels/)"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "Pole formulářů mají několik štítků"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "Žádná pole formuláře nemají několik štítků"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Čtečky obrazovek obvykle k popisu obsahu rámců používají jejich atributy title. [Další informace](https://web.dev/frame-title/)"
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "Prvky `<frame>` a `<iframe>` mají atribut title"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "Správně seřazené nadpisy, které nepřeskakují úrovně, předávají sémantickou strukturu stránky a usnadňují tak navigaci a srozumitelnost při použití asistenčních technologií. [Další informace](https://web.dev/heading-order/)"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "Prvky nadpisu se nezobrazují v sestupném pořadí"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "Prvky nadpisu se zobrazují v sestupném pořadí"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "Pokud stránka neuvádí atribut lang, čtečky obrazovky předpokládají, že je ve výchozím jazyce, který uživatel zvolil při nastavování čtečky obrazovky. Pokud stránka ve skutečnosti ve výchozím jazyce není, čtečka obrazovky text nemusí přečíst správně. [Další informace](https://web.dev/html-has-lang/)"
@@ -390,7 +462,7 @@
     "message": "Odstraňte nepoužívané styly CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Odstraněním nepoužívaného JavaScriptu zmenšíte množství přenášených dat."
+    "message": "Odstraněním nepoužívaného JavaScriptu zmenšíte množství přenášených dat. [Další informace](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Odstraňte nepoužívaný JavaScript"
@@ -782,14 +854,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "Doba do interaktivity udává, jak dlouho trvá, než stránka začne být plně interaktivní. [Další informace](https://web.dev/interactive)"
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "Vykreslení největšího obsahu udává čas, kdy byl vykreslen největší text nebo obrázek. [Další informace](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "Vykreslení největšího obsahu"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "Maximální potenciální prodleva prvního vstupu, kterou by uživatelé mohli pocítit, je trvání nejdelší úlohy (v milisekundách). [Další informace](https://developers.google.com/web/updates/2018/05/first-input-delay)"
+    "message": "Maximální potenciální prodleva prvního vstupu, kterou by uživatelé mohli pocítit, je trvání nejdelší úlohy. [Další informace](https://web.dev/lighthouse-max-potential-fid)"
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Index rychlosti ukazuje, jak rychle se viditelně vyplní obsah stránky. [Další informace](https://web.dev/speed-index)"
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "Součet všech dob (uvedený v milisekundách) mezi prvním vykreslením obsahu a dobou do interaktivity, u nichž délka úlohy překročila 50 ms."
+    "message": "Součet všech dob (uvedený v milisekundách) mezi prvním vykreslením obsahu a dobou do interaktivity, u nichž délka úlohy překročila 50 ms. [Další informace](https://web.dev/lighthouse-total-blocking-time)"
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "Na výkon má velký vliv doba odezvy sítě. Pokud je doba odezvy připojení ke zdroji vysoká, značí to, že by se výkon mohl zlepšit při použití serverů méně vzdálených od uživatele. [Další informace](https://hpbn.co/primer-on-latency-and-bandwidth/)"
@@ -805,6 +883,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Soubor service worker vaší webové aplikaci umožňuje, aby byla spolehlivá i za nepředvídatelného stavu sítě. [Další informace](https://web.dev/offline-start-url)"
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Při načítání adresy {url} v Service Workeru došlo k chybě. Stavový kód: {statusCode}"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "V režimu offline `start_url` nereaguje stavovým kódem 200"
@@ -1064,6 +1145,18 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Doby odezvy serveru jsou krátké (TTFB)"
   },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "Míra"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "Metrika"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "Nastavte časový rozpočet, který vám pomůže sledovat výkon vašeho webu. Výkonné weby se načítají rychle a také rychle reagují na interakci uživatelů. [Další informace](https://developers.google.com/web/tools/lighthouse/audits/budgets)"
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "Časový rozpočet"
+  },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "Trvání"
   },
@@ -1286,6 +1379,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "Název"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "Nad rozpočet"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Požadavky"
   },
@@ -1319,11 +1415,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokument"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "Odhadovaná latence vstupu"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "První nečinnost procesoru"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "První vykreslení obsahu"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "První smysluplné vykreslení"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "Písmo"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Obrázek"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "Doba do interaktivity"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "Maximální potenciální prodleva prvního vstupu"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "Média"
@@ -1340,11 +1454,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} s"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Index rychlosti"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Šablona stylů"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Třetí strana"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "Celková doba blokování"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Celkem"

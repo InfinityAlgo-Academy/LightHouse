@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "`[aria-*]` பண்புக்கூறுகள் அவற்றின் பங்களிப்புகளுடன் பொருந்துகின்றன"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "Assistive technologies, like screen readers, work inconsistently when `aria-hidden=\"true\"` is set on the document `<body>`. [Learn more](https://web.dev/aria-hidden-body/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]` is present on the document `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "`[aria-hidden=\"true\"]` is not present on the document `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "Focusable descendents within an `[aria-hidden=\"true\"]` element prevent those interactive elements from being available to users of assistive technologies like screen readers. [Learn more](https://web.dev/aria-hidden-focus/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]` elements contain focusable descendents"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "`[aria-hidden=\"true\"]` elements do not contain focusable descendents"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "When an input field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-input-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "ARIA input fields do not have accessible names"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "ARIA input fields have accessible names"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "சில ARIA பங்களிப்புகளில் ஸ்க்ரீன் ரீடர்களுக்கு உறுப்பின் நிலையை விவரிக்கத் தேவையான பண்புக்கூறுகள் உள்ளன. [மேலும் அறிக](https://web.dev/aria-required-attr/)."
   },
@@ -30,7 +57,7 @@
     "message": "சில ARIA முதல்நிலைப் பங்களிப்புகள், அவற்றுக்கான அணுகல்தன்மை செயல்பாடுகளை செய்ய, குறிப்பிட்ட உபநிலைப் பங்களிப்புகளைக் கொண்டிருக்க வேண்டும். [மேலும் அறிக](https://web.dev/aria-required-children/)."
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | failureTitle": {
-    "message": "குறிப்பிட்ட `[role]` ஐக் கொண்டிருப்பதற்கு உபநிலைகள் தேவைப்படுகின்ற ARIA `[role]` ஐ உடைய உறுப்புகளில் தேவையான சில உபநிலைகளோ அனைத்துமோ காணப்படவில்லை."
+    "message": "குறிப்பிட்ட `[role]` இருந்தாக வேண்டிய ARIA `[role]` ஐக் கொண்டுள்ள உறுப்புகளில், தேவையான சில உபநிலைகளோ அனைத்துமோ காணப்படவில்லை."
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | title": {
     "message": "குறிப்பிட்ட `[role]` ஐக் கொண்டிருப்பதற்கு உபநிலைகள் தேவைப்படுகின்ற ARIA `[role]` ஐ உடைய உறுப்புகளில் தேவையான உபநிலைகள் உள்ளன."
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "`[role]` செல்லுபடியாகும் மதிப்புகளைக் கொண்டுள்ளன"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-toggle-field-label/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "ARIA toggle fields do not have accessible names"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "ARIA toggle fields have accessible names"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "செல்லுபடியாகாத மதிப்புகள் உள்ள ARIA பண்புக்கூறுகளை ஸ்க்ரீன் ரீடர்கள் போன்ற உதவிகரமான தொழில்நுட்பங்களால் புரிந்துகொள்ள இயலாது. [மேலும் அறிக](https://web.dev/aria-valid-attr-value/)."
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "ஆவணத்தில் `<title>` உறுப்பு உள்ளது"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "All focusable elements must have a unique `id` to ensure that they're visible to assistive technologies. [Learn more](https://web.dev/duplicate-id-active/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "`[id]` attributes on active, focusable elements are not unique"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "`[id]` attributes on active, focusable elements are unique"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "The value of an ARIA ID must be unique to prevent other instances from being overlooked by assistive technologies. [Learn more](https://web.dev/duplicate-id-aria/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "ARIA IDs are not unique"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "ARIA IDs are unique"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "Form fields with multiple labels can be confusingly announced by assistive technologies like screen readers which use either the first, the last, or all of the labels. [Learn more](https://web.dev/form-field-multiple-labels/)."
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "Form fields have multiple labels"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "No form fields have multiple labels"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "ஃபிரேம்களில் உள்ளவற்றை விவரிக்க அவற்றின் தலைப்பை ஸ்க்ரீன் ரீடர் பயனர்கள் சார்ந்துள்ளனர். [மேலும் அறிக](https://web.dev/frame-title/)."
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "`<frame>` அல்லது `<iframe>` உறுப்புகளுக்குத் தலைப்பு உள்ளது"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "Properly ordered headings that do not skip levels convey the semantic structure of the page, making it easier to navigate and understand when using assistive technologies. [Learn more](https://web.dev/heading-order/)."
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "Heading elements are not in a sequentially-descending order"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "Heading elements appear in a sequentially-descending order"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "ஒரு பக்கமானது மொழியின் பண்புக்கூறைக் குறிப்பிடவில்லை எனில் ஸ்க்ரீன் ரீடரை அமைக்கும்போது பயனர் தேர்வுசெய்த மொழியையே பக்கத்தின் இயல்பு மொழியாக ஸ்க்ரீன் ரீடர் கருதும். இயல்பு மொழியில் பக்கம் இல்லை எனில் பக்கத்தின் உரையை ஸ்க்ரீன் ரீடர் சரியாக வாசிக்க முடியாமல் போகக்கூடும். [மேலும் அறிக](https://web.dev/html-has-lang/)."
@@ -390,7 +462,7 @@
     "message": "பயன்படுத்தப்படாத CSSசை அகற்றவும்"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "நெட்வொர்க் செயல்பாடு பயன்படுத்தும் பைட்களைக் குறைப்பதற்கு, பயன்படுத்தப்படாத JavaScriptடை அகற்றவும்."
+    "message": "Remove unused JavaScript to reduce bytes consumed by network activity. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "பயன்படுத்தப்படாத JavaScriptடை அகற்றவும்"
@@ -782,14 +854,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "எதிர்வினை நேரம் என்பது பக்கம் முழுமையாக எதிர்வினையாற்றும் வகையில் ஏற்றப்படுவதற்கான கால அளவாகும். [மேலும் அறிக](https://web.dev/interactive)."
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn More](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "Largest Contentful Paint"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "உங்கள் பயனர்கள் எதிர்கொள்ளக்கூடிய அதிக சாத்தியமான ’முதல் உள்ளீட்டுத் தாமதம்’ என்பது மிக நீண்ட பணியின் காலஅளவாகும் (மில்லி வினாடிகளில் குறிப்பிடப்படும்). [மேலும் அறிக](https://developers.google.com/web/updates/2018/05/first-input-delay)."
+    "message": "The maximum potential First Input Delay that your users could experience is the duration of the longest task. [Learn more](https://web.dev/lighthouse-max-potential-fid)."
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "பக்கத்திலுள்ள உள்ளடக்கங்கள் எவ்வளவு விரைவாகத் தெரிகின்றன என்பதை 'வேக அட்டவணை' காண்பிக்கிறது. [மேலும் அறிக](https://web.dev/speed-index)."
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "பணியின் நீளம் 50மி.வி.களைத் தாண்டும்போது FCP மற்றும் எதிர்வினை நேரத்திற்கு இடையில் இருக்கும் மொத்தக் கால அளவுகளின் கூடுதல் (மில்லி வினாடிகளில்)."
+    "message": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more](https://web.dev/lighthouse-total-blocking-time)."
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "நெட்வொர்க் ரவுண்ட் டிரிப் டைம்ஸ் (Round Trip Times - RTT) செயல்திறனில் பெரும் தாக்கத்தை ஏற்படுத்தும். அசல் சேவையகத்துக்கான RTT அதிகமாக இருந்தால் பயனரின் அருகில் இருக்கும் சேவையகங்கள் இணையதளத்தின் செயல்திறனை மேம்படுத்தலாம் என்பதைக் குறிக்கும். [மேலும் அறிக](https://hpbn.co/primer-on-latency-and-bandwidth/)."
@@ -805,6 +883,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "கணிக்க முடியாத நெட்வொர்க் சூழல்களிலும் சேவைச் செயலாக்கி உங்கள் இணைய ஆப்ஸை நம்பகமானதாக மாற்றும். [மேலும் அறிக](https://web.dev/offline-start-url)."
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Error loading {url} in Service Worker, got status code {statusCode}"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "ஆஃப்லைனில் உள்ள போது 200 என்ற HTTP நிலைக் குறியீட்டுடன் `start_url` விரைவாகப் பதிலளிக்கவில்லை"
@@ -1064,6 +1145,18 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "சேவையகம் எதிர்வினையாற்றும் நேரங்கள் குறைவாக உள்ளன (TTFB)"
   },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "Measurement"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "Metric"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "Set a timing budget to help you keep an eye on the performance of your site. Performant sites load fast and respond to user input events quickly. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "Timing budget"
+  },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "கால அளவு"
   },
@@ -1286,6 +1379,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "பெயர்"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "பட்ஜெட்டைத் தாண்டிவிட்டது"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "கோரிக்கைகள்"
   },
@@ -1319,11 +1415,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "ஆவணம்"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "தோராயமான உள்ளீட்டுத் தாமதம்"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "CPU செயல்படாநிலையின் தொடக்க நேரம்"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "உள்ளடக்கமுள்ள முதல் தோற்றம்"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "அர்த்தமுள்ள முதல் தோற்றம்"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "எழுத்துரு"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "படம்"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "எதிர்வினை நேரம்"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "முதல் உள்ளீட்டிற்கு பதிலளிக்கக்கூடிய அதிகபட்ச நேரம்"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "மீடியா"
@@ -1340,11 +1454,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} வி."
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "வேக அட்டவணை"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "ஸ்டைல்ஷீட்"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "மூன்றாம் தரப்பு"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "தடுக்கப்படும் மொத்த நேரம்"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "மொத்தம்"

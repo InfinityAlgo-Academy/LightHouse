@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "`[aria-*]`-kenmerken komen overeen met hun rollen"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "Ondersteunende technologieën, zoals schermlezers, werken inconsistent als `aria-hidden=\"true\"` is ingesteld in het document `<body>`. [Meer informatie](https://web.dev/aria-hidden-body/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]` is aanwezig in het document `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "`[aria-hidden=\"true\"]` is niet aanwezig in het document `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "Focusbare onderliggende elementen in een `[aria-hidden=\"true\"]`-element voorkomen dat die interactieve elementen beschikbaar zijn voor gebruikers van ondersteunende technologieën, zoals schermlezers. [Meer informatie](https://web.dev/aria-hidden-focus/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]`-elementen bevatten focusbare onderliggende elementen"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "`[aria-hidden=\"true\"]`-elementen bevatten geen focusbare onderliggende elementen"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "Als een invoerveld geen toegankelijke naam heeft, kondigen schermlezers dit aan met een generieke naam, waardoor het veld onbruikbaar wordt voor gebruikers die afhankelijk zijn van schermlezers. [Meer informatie](https://web.dev/aria-input-field-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "ARIA-invoervelden hebben geen toegankelijke namen"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "ARIA-invoervelden hebben toegankelijke namen"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Sommige ARIA-rollen hebben vereiste kenmerken die de status van het element beschrijven voor schermlezers. [Meer informatie](https://web.dev/aria-required-attr/)"
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "`[role]`-waarden zijn geldig"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "Als een schakelveld geen toegankelijke naam heeft, kondigen schermlezers dit aan met een generieke naam, waardoor het veld onbruikbaar wordt voor gebruikers die afhankelijk zijn van schermlezers. [Meer informatie](https://web.dev/aria-toggle-field-label/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "ARIA-schakelvelden hebben geen toegankelijke namen"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "ARIA-schakelvelden hebben toegankelijke namen"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "ARIA-kenmerken met ongeldige waarden kunnen niet worden geïnterpreteerd door hulptechnologieën, zoals schermlezers. [Meer informatie](https://web.dev/aria-valid-attr-value/)"
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Document bevat een `<title>`-element"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "Alle focusbare elementen moeten een unieke `id` hebben om ervoor te zorgen dat ze zichtbaar zijn voor ondersteunende technologieën. [Meer informatie](https://web.dev/duplicate-id-active/)"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "`[id]`-kenmerken voor actieve, focusbare elementen zijn niet uniek"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "`[id]`-kenmerken voor actieve, focusbare elementen zijn uniek"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "De waarde van een ARIA-ID moet uniek zijn om te voorkomen dat andere instanties over het hoofd worden gezien door ondersteunende technologieën. [Meer informatie](https://web.dev/duplicate-id-aria/)"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "ARIA-ID's zijn niet uniek"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "ARIA-ID's zijn uniek"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "Formuliervelden met meerdere labels kunnen verwarrend worden aangekondigd door ondersteunende technologieën, zoals schermlezers, die het eerste label, het laatste label of alle labels gebruiken. [Meer informatie](https://web.dev/form-field-multiple-labels/)"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "Er zijn formuliervelden met meerdere labels"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "Er zijn geen formuliervelden met meerdere labels"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Gebruikers van een schermlezer zijn afhankelijk van frametitels die de content van de frames beschrijven. [Meer informatie](https://web.dev/frame-title/)"
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "`<frame>`- of `<iframe>`-elementen hebben een titel"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "Correct geordende koppen die geen niveaus overslaan, brengen de semantische structuur van de pagina over. Zo kan er beter op de pagina worden genavigeerd en kan de pagina beter worden geïnterpreteerd door ondersteunende technologieën. [Meer informatie](https://web.dev/heading-order/)"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "Kopelementen worden niet weergegeven in aflopende volgorde"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "Kopelementen worden weergegeven in aflopende volgorde"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "Als de pagina geen lang-kenmerk specificeert, neemt een schermlezer aan dat de pagina is geschreven in de standaardtaal die de gebruiker heeft gekozen toen de schermlezer werd ingesteld. Als de pagina niet in de standaardtaal is geschreven, kan de schermlezer de tekst van de pagina mogelijk niet juist aankondigen. [Meer informatie](https://web.dev/html-has-lang/)"
@@ -390,7 +462,7 @@
     "message": "Ongebruikte css verwijderen"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Verwijder ongebruikt JavaScript om het aantal bytes te verminderen dat wordt verbruikt door netwerkactiviteit."
+    "message": "Verwijder ongebruikt JavaScript om het aantal bytes te verminderen dat wordt verbruikt door netwerkactiviteit. [Meer informatie](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Verwijder ongebruikt JavaScript"
@@ -782,14 +854,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "Tijd tot interactief is de hoeveelheid tijd die nodig is voordat een pagina volledig interactief is. [Meer informatie](https://web.dev/interactive)"
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "'Grootste tekenbewerking met content' (LCP) geeft het tijdstip aan waarop de grootste tekst of afbeelding is weergegeven. [Meer informatie](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "Grootste weergave met content (LCP)"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "De maximale potentiële vertraging voor de eerste invoer die gebruikers kunnen ervaren, is de duur (in milliseconden) van de langste taak. [Meer informatie](https://developers.google.com/web/updates/2018/05/first-input-delay)"
+    "message": "De maximale potentiële vertraging voor de eerste invoer die gebruikers kunnen ervaren, is de duur van de langste taak. [Meer informatie](https://web.dev/lighthouse-max-potential-fid)"
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Snelheidsindex laat zien hoe snel de content van een pagina zichtbaar is. [Meer informatie](https://web.dev/speed-index)"
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "Som van alle perioden tussen 'Eerste tekenbewerking met content' (FCP) en 'Tijd tot interactief', wanneer de taaklengte langer duurt dan 50 ms, aangegeven in milliseconden."
+    "message": "Som van alle perioden tussen 'Eerste tekenbewerking met content' (FCP) en 'Tijd tot interactief', wanneer de taaklengte langer duurt dan 50 ms, aangegeven in milliseconden. [Meer informatie](https://web.dev/lighthouse-total-blocking-time)"
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "Retourtijden (RTT) van netwerken hebben een grote invloed op de prestaties. Een hoge RTT naar een beginpunt geeft aan dat de prestaties van servers dichter bij de gebruiker kunnen worden verbeterd. [Meer informatie](https://hpbn.co/primer-on-latency-and-bandwidth/)"
@@ -805,6 +883,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Met een service worker kan je web-app betrouwbaar functioneren bij onvoorspelbare netwerkomstandigheden. [Meer informatie](https://web.dev/offline-start-url)"
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Fout bij laden van {url} in Service Worker, statuscode {statusCode} is ontvangen"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` retourneert geen 200-statuscode wanneer de pagina offline is"
@@ -1064,6 +1145,18 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Serverreactietijden zijn laag (TTFB)"
   },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "Meting"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "Statistiek"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "Stel een timingbudget in om de prestaties van je site in de gaten te houden. Sites die goed presteren, worden snel geladen en reageren snel op gebruikersinvoer. [Meer informatie](https://developers.google.com/web/tools/lighthouse/audits/budgets)"
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "Timingbudget"
+  },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "Duur"
   },
@@ -1286,6 +1379,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "Naam"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "Over het budget"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Verzoeken"
   },
@@ -1319,11 +1415,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Document"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "Geschatte invoerwachttijd"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "Eerste keer dat CPU inactief was"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "Eerste weergave met content (FCP)"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "Eerste nuttige weergave (FMP)"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "Lettertype"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Afbeelding"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "Tijd tot interactief"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "Max. potentiële eerste invoervertraging"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "Media"
@@ -1340,11 +1454,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} s"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Snelheidsindex"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Stylesheet"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Derden"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "Totale geblokkeerde tijd"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Totaal"

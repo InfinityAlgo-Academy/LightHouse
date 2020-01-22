@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "سمات `[aria-*]` هي مطابقة لأدوارها"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "لا تعمل التكنولوجيا المساعِدة، مثل برامج قراءة الشاشة، على نحوٍ متواصل عند إعداد `aria-hidden=\"true\"` في المستند `<body>`. [مزيد من المعلومات](https://web.dev/aria-hidden-body/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]` وارد في المستند `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "`[aria-hidden=\"true\"]` غير وارد في المستند `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "تمنع العناصر المنحدرة القابلة للتركيز ضمن `[aria-hidden=\"true\"]` عنصر العناصر التفاعلية من أن تكون متاحة لمستخدمي التكنولوجيا المساعِدة، مثل برامج قراءة الشاشة. [مزيد من المعلومات](https://web.dev/aria-hidden-focus/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "تحتوي عناصر `[aria-hidden=\"true\"]` على عناصر منحدرة قابلة للتركيز"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "لا تحتوي عناصر `[aria-hidden=\"true\"]` على عناصر منحدرة قابلة للتركيز"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "عند عدم احتواء حقل الإدخال على اسم يمكن الوصول إليه، تشير برامج قراءة الشاشة إلى الحقل بصفة عامة، مما يجعله غير قابل للاستخدام بالنسبة إلى المستخدمين الذين يعتمدون على برامج قراءة الشاشة. [مزيد من المعلومات](https://web.dev/aria-input-field-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "لا تحتوي حقول إدخال ARIA على أسماء يمكن الوصول إليها"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "تحتوي حقول إدخال ARIA على أسماء يمكن الوصول إليها"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "تتطلّب بعض أدوار ARIA تزويد برامج قراءة الشاشة بسمات تصف حالة العنصر. [مزيد من المعلومات](https://web.dev/aria-required-attr/)"
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "قيم `[role]` هي صالحة"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "عند عدم احتواء حقول التبديل على اسم يمكن الوصول إليه، تشير برامج قراءة الشاشة إلى الحقل باستخدام بصفة عامة، مما يجعله غير قابل للاستخدام بالنسبة إلى المستخدمين الذين يعتمدون على برامج قراءة الشاشة. [مزيد من المعلومات](https://web.dev/aria-toggle-field-label/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "لا تحتوي حقول تبديل ARIA على أسماء يمكن الوصول إليها"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "تحتوي جميع حقول تبديل ARIA على أسماء يمكن الوصول إليها"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "لا يمكن لتقنيات المساعدة، مثل برامج قراءة الشاشة، تفسير سمات ARIA باستخدام قيم غير صحيحة. [مزيد من المعلومات](https://web.dev/aria-valid-attr-value/)"
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "المستند يحتوي على عنصر `<title>`"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "يجب أن يتوفر لكل العناصر القابلة للتركيز `id` فريدًا للتأكد من كونها مرئية بالنسبة إلى التكنولوجيا المساعِدة. [مزيد من المعلومات](https://web.dev/duplicate-id-active/)"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "سمات `[id]` المتوفّرة في العناصر النشطة والقابلة للتركيز غير فريدة"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "سمات `[id]` المتوفّرة في العناصر النشطة والقابلة للتركيز فريدة"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "يجب أن تكون قيمة رقم تعريف ARIA فريدة حتى لا تغفل التكنولوجيا المساعِدة عن الأمثلة الأخرى. [مزيد من المعلومات](https://web.dev/duplicate-id-aria/)"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "أرقام تعريف ARIA غير فريدة"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "أرقام تعريف ARIA فريدة"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "قد تعلِن التكنولوجيا المساعِدة، مثل برامج قراءة الشاشة التي تستخدم إما الجزء الأول أو الأخير أو كل أجزاء التصنيف، عن طريق الخطأ عن الحقول النموذجية المتعددة التصنيف. [مزيد من المعلومات](https://web.dev/form-field-multiple-labels/)"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "تحتوي الحقول النموذجية على تصنيفات متعددة"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "لا تحتوي الحقول النموذجية على تصنيفات متعددة"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "يعتمد مستخدمو برامج قراءة الشاشة على عناوين الإطارات لوصف محتوى الإطارات. [مزيد من المعلومات](https://web.dev/frame-title/)"
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "عناصر `<frame>` أو `<iframe>` تحتوي على عنوان"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "إنّ العناوين المطلوبة بالطريقة المناسبة والتي لا تتخطى المستويات، تنقل البنية الدلالية للصفحة، مما يسهّل تصفّحها وفهمها عند استخدام التكنولوجيا المساعِدة. [مزيد من المعلومات](https://web.dev/heading-order/)"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "العناصر المُعنوَنة غير مرتبة بشكل تنازلي متسلسل"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "تظهر العناصر المُعنوَنة بترتيب تنازلي متسلسل"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "في حال لم تحدّد الصفحة سمة اللغة، يفترض قارئ الشاشة أن تكون الصفحة باللغة التلقائية التي اختارها المستخدم عند إعداد قارئ الشاشة. في حال لم تكن الصفحة باللغة التلقائية، قد لا يُعلِن قارئ الشاشة عن نص الصفحة بشكل صحيح. [مزيد من المعلومات](https://web.dev/html-has-lang/)"
@@ -237,7 +309,7 @@
     "message": "المستند لا يستخدم `<meta http-equiv=\"refresh\">`"
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | description": {
-    "message": "يسبب إيقاف ميزة التكبير/التصغير مشكلة بالنسبة إلى المستخدمين ضعاف البصر الذين يعتمدون على ميزة تكبير الشاشة لرؤية محتوى صفحة الويب بشكل صحيح. [مزيد من المعلومات](https://web.dev/meta-viewport/)"
+    "message": "يسبب إيقاف ميزة التكبير أو التصغير مشكلة بالنسبة إلى المستخدمين ضعاف البصر الذين يعتمدون على ميزة تكبير الشاشة لرؤية محتوى صفحة الويب بشكل صحيح. [مزيد من المعلومات](https://web.dev/meta-viewport/)"
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | failureTitle": {
     "message": "يتم استخدام `[user-scalable=\"no\"]` في العنصر `<meta name=\"viewport\">` أو السمة `[maximum-scale]` هي أقل من 5."
@@ -390,7 +462,7 @@
     "message": "إزالة خدمة CSS غير المُستخدَمة"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "يمكنك إزالة جافا سكريبت غير المُستخدَم لتقليل وحدات البايت التي يستهلكها نشاط الشبكة."
+    "message": "يمكنك إزالة نصوص JavaScript غير المستخدمة لتقليل وحدات البايت التي يستهلكها نشاط الشبكة. [مزيد من المعلومات](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "إزالة جافا سكريبت غير المستخدم"
@@ -782,14 +854,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "وقت التفاعل هو مقدار الوقت المستغرق حتى تصبح الصفحة تفاعلية بالكامل. [مزيد من المعلومات](https://web.dev/interactive)"
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "تحدد \"سرعة عرض أكبر محتوى على الصفحة\" الوقت الذي يُعرَض فيه أكبر صورة أو نص. [مزيد من المعلومات](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "سرعة عرض أكبر محتوى"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "الحد الأقصى المحتمل من \"مهلة الاستجابة لأوّل إدخال\" الذي قد يواجهه المستخدمون هو المدة بالمللي ثانية لأطول مهمة. [مزيد من المعلومات](https://developers.google.com/web/updates/2018/05/first-input-delay)"
+    "message": "الحد الأقصى المحتمل من \"مهلة الاستجابة لأوّل إدخال\" الذي قد يواجهه المستخدمين، هو مدة أطول مهمّة. [مزيد من المعلومات](https://web.dev/lighthouse-max-potential-fid)"
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "يوضح مؤشر السرعة وتيرة تعبئة محتوى الصفحة على شاشة المستخدم. [مزيد من المعلومات](https://web.dev/speed-index)"
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "مجموع جميع الفترات الزمنية بين \"سرعة عرض المحتوى على الصفحة\" و\"وقت التفاعل\"، عندما تتجاوز مدة المهمة 50 مللي ثانية، معبرًا عنها بالمللي ثانية."
+    "message": "مجموع الفترات الزمنية بين \"سرعة عرض المحتوى على الصفحة\" (FCP) و\"وقت التفاعل\"، عندما تتجاوز مدة المهمة 50 مللي ثانية، معبرًا عنها بالمللي ثانية. [مزيد من المعلومات](https://web.dev/lighthouse-total-blocking-time)"
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "تؤثر مُدد الإرسال والاستقبال للشبكة تأثيرًا كبيرًا في مستوى الأداء. في حال كانت مدة الإرسال والاستقبال كبيرة، يشير ذلك إلى احتمال تحسّن أداء الخوادم الأقرب إلى المستخدم. [مزيد من المعلومات](https://hpbn.co/primer-on-latency-and-bandwidth/)"
@@ -805,6 +883,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "يمكّن مشغّل الخدمات تطبيق الويب من أن يصبح موثوقًا به في ظروف الشبكة التي لا يمكن التنبؤ بها. [مزيد من المعلومات](https://web.dev/offline-start-url)"
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "خطأ أثناء تحميل {url} في مشغّل الخدمات، واستخدام رمز الحالة {statusCode}"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` لا تستجيب باستخدام رمز 200 عند عدم الاتصال بالإنترنت"
@@ -876,7 +957,7 @@
     "message": "المستند يحتوي على سمة `rel=canonical` صالحة"
   },
   "lighthouse-core/audits/seo/font-size.js | description": {
-    "message": "أحجام الخطوط الأقل من 12 بكسل صغيرة جدًا بحيث لا يمكن قراءتها بسهولة وتتطلب من مستخدمي الجوّال \"تحريك الإصبعين للتكبير أو التصغير\" من أجل قراءتها. يمكنك بذل قصارى جهدك للحصول على نسبة أكبر من 60% من نص الصفحة بمقدار أكبر من أو يساوي 12 بكسل. [مزيد من المعلومات](https://web.dev/font-size)"
+    "message": "أحجام الخطوط الأقل من 12 بكسل صغيرة جدًا بحيث لا يمكن قراءتها بسهولة وتتطلب من مستخدمي الجوّال \"التكبير أو التصغير بإصبعين\" من أجل قراءتها. يمكنك بذل قصارى جهدك للحصول على نسبة أكبر من 60% من نص الصفحة بمقدار أكبر من أو يساوي 12 بكسل. [مزيد من المعلومات](https://web.dev/font-size)"
   },
   "lighthouse-core/audits/seo/font-size.js | displayValue": {
     "message": "نص {decimalProportion, number, extendedPercent} قابل للقراءة"
@@ -1064,6 +1145,18 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "أوقات استجابة الخادم منخفضة (TTFB)"
   },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "القياسات"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "المقياس"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "يمكنك إعداد ميزانية قائمة على الوقت لتساعدك في مراقبة أداء موقعك الإلكتروني. إنّ للمواقع الإلكترونية ذات الأداء العالي سرعة في التحميل وفي الردّ على إدخالات المستخدم. [مزيد من المعلومات](https://developers.google.com/web/tools/lighthouse/audits/budgets)"
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "ميزانية قائمة على الوقت"
+  },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "المدة"
   },
@@ -1158,7 +1251,7 @@
     "message": "تحدّد عمليات التحقق هذه الفرص التي تتيح [تحسين إمكانية الوصول إلى تطبيق الويب](https://developers.google.com/web/fundamentals/accessibility). ولا يمكن إجراء رصد تلقائي إلّا لمجموعة فرعية من مشاكل إمكانية الوصول، لذلك يُنصح أيضًا باستخدام الاختبار اليدوي."
   },
   "lighthouse-core/config/default-config.js | a11yCategoryManualDescription": {
-    "message": "تعالج هذه العناصر المناطق التي يتعذر على أداة الاختبار التلقائية تغطيتها. تعرّف على مزيد من المعلومات في دليلنا حول [مراجعة إمكانية الوصول](https://developers.google.com/web/fundamentals/accessibility/how-to-review)."
+    "message": "تعالج هذه العناصر المناطق التي يتعذر على أداة الاختبار المبرمجة تغطيتها. تعرّف على مزيد من المعلومات في دليلنا حول [مراجعة إمكانية الوصول](https://developers.google.com/web/fundamentals/accessibility/how-to-review)."
   },
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "إمكانية الوصول"
@@ -1272,7 +1365,7 @@
     "message": "الزحف والفهرسة"
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupDescription": {
-    "message": "يُرجى التأكّد من أن صفحاتك متوافقة مع الجوّال، حتى لا يحتاج المستخدمون إلى التصغير أو التكبير من أجل الاطّلاع على صفحات المحتوى. [مزيد من المعلومات](https://developers.google.com/search/mobile-sites/)"
+    "message": "يُرجى التأكّد من أن صفحاتك متوافقة مع الأجهزة الجوّالة، حتى لا يحتاج المستخدمون إلى التصغير أو التكبير بإصبعين من أجل الاطّلاع على صفحات المحتوى. [مزيد من المعلومات](https://developers.google.com/search/mobile-sites/)"
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "متوافق مع الجوّال"
@@ -1285,6 +1378,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "الاسم"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "تجاوز الميزانية"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "الطلبات"
@@ -1319,11 +1415,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "المستند"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "وقت الاستجابة المُقدّر للإدخال"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "وحدة المعالجة المركزية الأولى الخاملة"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "First Contentful Paint"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "First Meaningful Paint"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "الخط"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "الصورة"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "وقت التفاعل"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "الحد الأقصى المحتمل من مهلة الاستجابة لأوّل إدخال"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "الوسائط"
@@ -1340,11 +1454,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} ثانية"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "مؤشر السرعة"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "ورقة الأنماط"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "الجهة الخارجية"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "إجمالي حظر الوقت"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "الإجمالي"

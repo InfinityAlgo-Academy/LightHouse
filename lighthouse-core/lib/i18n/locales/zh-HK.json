@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "`[aria-*]` 屬性與其角色相符"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "在 `<body>` 文件上設定 `aria-hidden=\"true\"` 時，輔助技術 (例如螢幕閱讀器) 的運作將無法保持一致。[瞭解詳情](https://web.dev/aria-hidden-body/)。"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]` 有在文件 `<body>` 上顯示"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "`[aria-hidden=\"true\"]` 沒有在文件 `<body>` 上顯示"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "`[aria-hidden=\"true\"]` 元素中可聚焦的子代會禁止使用輔助技術 (例如螢幕閱讀器) 的使用者存取這些互動元素。[瞭解詳情](https://web.dev/aria-hidden-focus/)。"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]` 元素含有可聚焦的子代"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "`[aria-hidden=\"true\"]` 元素不含可聚焦的子代"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "如果輸入欄位沒有輔助名稱，螢幕閱讀器只會讀出一般名稱，導致依賴螢幕閱讀器的使用者無法使用該欄位。[瞭解詳情](https://web.dev/aria-input-field-name/)。"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "ARIA 輸入欄位沒有輔助名稱"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "ARIA 輸入欄位有輔助名稱"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "部分 ARIA 角色的必要屬性會向螢幕閱讀器使用者說明元素的狀態。[瞭解詳情](https://web.dev/aria-required-attr/)。"
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "`[role]` 值有效"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "如果切換欄位沒有輔助名稱，螢幕閱讀器只會讀出一般名稱，導致依賴螢幕閱讀器的使用者無法使用該欄位。[瞭解詳情](https://web.dev/aria-toggle-field-label/)。"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "ARIA 切換欄位沒有輔助名稱"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "ARIA 切換欄位有輔助名稱"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "輔助技術 (如螢幕閱讀器) 無法解讀具有無效值的 ARIA 屬性。[瞭解詳情](https://web.dev/aria-valid-attr-value/)。"
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "文件具備 `<title>` 元素"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "所有可聚焦元素都必須有不重複的 `id`，以確保輔助技術可以查看這些元素。[瞭解詳情](https://web.dev/duplicate-id-active/)。"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "已啟用且可聚焦的元素有重複的 `[id]` 屬性"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "已啟用且可聚焦的元素沒有重複的 `[id]` 屬性"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "ARIA ID 的值不可重複，以免輔助技術忽略其他例項。[瞭解詳情](https://web.dev/duplicate-id-aria/)。"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "ARIA ID 重複"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "ARIA ID 沒有重複"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "使用第一個、最後一個或所有標籤的螢幕閱讀器等輔助技術，可能無法將包含多個標籤的表格欄位正確讀出。[瞭解詳情](https://web.dev/form-field-multiple-labels/)。"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "表格欄位含有多個標籤"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "沒有表格欄位含有多個標籤"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "螢幕閱讀器使用者依賴頁框標題來瞭解頁框內容。[瞭解詳情](https://web.dev/frame-title/)。"
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "`<frame>` 或 `<iframe>` 元素包含名稱"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "排序正確且未略過層級的標題可傳達網頁的語意結構，讓您在使用輔助技術時更容易瀏覽及理解。[瞭解詳情](https://web.dev/heading-order/)。"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "標題元素未遞減排序"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "標題元素已遞減排序"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "如果網頁未指定 [lang] 屬性，螢幕閱讀器會假設網頁採用使用者設定螢幕閱讀器時選擇的預設語言。如果網頁實際並非採用預設語言，螢幕閱讀器可能無法正確朗讀文字。[瞭解詳情](https://web.dev/html-has-lang/)。"
@@ -381,7 +453,7 @@
     "message": "壓縮 JavaScript 檔案可減少負載大小和指令碼剖析時間。[瞭解詳情](https://web.dev/unminified-javascript)。"
   },
   "lighthouse-core/audits/byte-efficiency/unminified-javascript.js | title": {
-    "message": "壓縮 Javascript"
+    "message": "壓縮 JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
     "message": "從樣式表中移除無用的規則，並延遲載在毋需捲動的當眼位置內容中未使用的 CSS，減少網絡活動耗用不必要的位元組。[瞭解詳情](https://web.dev/unused-css-rules)。"
@@ -390,7 +462,7 @@
     "message": "移除未使用的 CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "移除未使用的 JavaScript，以減少網絡活動耗用的位元組。"
+    "message": "移除未使用的 JavaScript，以減少網絡活動耗用的位元組。[瞭解詳情](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)。"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "移除未使用的 JavaScript"
@@ -782,14 +854,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "互動準備時間是網頁進入完整互動狀態前所花的時間。[瞭解詳情](https://web.dev/interactive)。"
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "「最大內容繪製」是指繪製最大的文字或圖片的時間。[瞭解詳情](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "最大內容繪製"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "使用者可以體驗到最長的「首次輸入延遲時間」就是最長的工作持續時間 (以毫秒為單位)。[瞭解詳情](https://developers.google.com/web/updates/2018/05/first-input-delay)。"
+    "message": "使用者可以體驗到最長的「首次輸入延遲時間」就是最長的工作持續時間。[瞭解詳情](https://web.dev/lighthouse-max-potential-fid)。"
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "「速度指數」會顯示頁面內容的展現速度。[瞭解詳情](https://web.dev/speed-index)。"
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "當工作長度超過 50 毫秒時，所有 FCP 和「可互動所需時間」之間的時長總和 (以毫秒為單位)。"
+    "message": "當工作長度超過 50 毫秒時，所有 FCP 和「可互動所需時間」之間的時長總和 (以毫秒為單位)。[瞭解詳情](https://web.dev/lighthouse-total-blocking-time)。"
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "網絡來回通訊時間 (RTT) 對效能有很大影響。如果系統傳送到某個來源的來回通訊時間很高，表示靠近使用者端的伺服器可改善效能。[瞭解詳情](https://hpbn.co/primer-on-latency-and-bandwidth/)。"
@@ -805,6 +883,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Service Worker 可確保您的網絡應用程式運作可靠，即使網絡連線不穩定亦然。[瞭解詳情](https://web.dev/offline-start-url)。"
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "在 Service Worker 中載入 {url} 時發生錯誤，狀態碼為 {statusCode}"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` 在離線時不會傳回狀態碼 200 的回應"
@@ -1064,6 +1145,18 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "伺服器回應時間短 (TTFB)"
   },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "測量"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "數據"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "設定時間預算可助您隨時留意網站的效能。效能穩定的網站能快速載入網頁，並迅速回應使用者的輸入事件。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/budgets)。"
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "時間預算"
+  },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "時間長度"
   },
@@ -1286,6 +1379,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "名稱"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "超出預算"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "要求"
   },
@@ -1319,11 +1415,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "文件"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "預計輸入延遲時間"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "首次 CPU 閒置時間"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "首次內容繪製時間"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "首次有效繪製時間"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "字型"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "圖片"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "可互動所需時間"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "首次輸入延遲時間最長預計值"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "媒體"
@@ -1340,11 +1454,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} 秒"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "速度指數"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "樣式表"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "第三方"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "總封鎖時間"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "總計"

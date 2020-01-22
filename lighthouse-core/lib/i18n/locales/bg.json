@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "Атрибутите `[aria-*]` съответстват на ролите си"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "Помощните технологии, например екранни четци, работят непоследователно, когато за `<body>` за документа е зададено `aria-hidden=\"true\"`. [Научете повече](https://web.dev/aria-hidden-body/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "За `<body>` за документа е зададено `[aria-hidden=\"true\"]`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "За `<body>` за документа не е зададено `[aria-hidden=\"true\"]`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "Дъщерните елементи в елемент `[aria-hidden=\"true\"]`, които могат да получават фокуса, не позволяват тези елементи да бъдат достъпни за потребителите на помощни технологии, например екранни четци. [Научете повече](https://web.dev/aria-hidden-focus/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "Елементите `[aria-hidden=\"true\"]` съдържат дъщерни елементи, които могат да получат фокуса"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "Елементите `[aria-hidden=\"true\"]` не съдържат дъщерни елементи, които могат да получат фокуса"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "Когато дадено поле за въвеждане няма достъпно име, екранните четци ще произнасят за него общо име и то ще бъде неизползваемо за потребителите, разчитащи на тази технология. [Научете повече](https://web.dev/aria-input-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "Полетата за въвеждане за ARIA нямат достъпни имена"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "Полетата за въвеждане за ARIA са с достъпни имена"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Някои роли на ARIA имат задължителни атрибути, от които екранните четци получават описание на състоянието на съответния елемент. [Научете повече](https://web.dev/aria-required-attr/)."
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "Стойностите на `[role]` са валидни"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "Когато дадено поле за превключване няма достъпно име, екранните четци ще произнасят за него общо име и то ще бъде неизползваемо за потребителите, разчитащи на тази технология. [Научете повече](https://web.dev/aria-toggle-field-label/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "Полетата за превключване за ARIA нямат достъпни имена"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "Полетата за превключване за ARIA са с достъпни имена"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "Помощните технологии, като например екранни четци, не могат да интерпретират атрибути на ARIA с невалидни стойности. [Научете повече](https://web.dev/aria-valid-attr-value/)."
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Документът има елемент `<title>`"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "Всички елементи, които могат да получат фокуса, трябва да са с уникален `id`, за да могат помощните технологии да работят с тях. [Научете повече](https://web.dev/duplicate-id-active/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "Атрибутите `[id]` на активните елементи, които могат да получат фокуса, не са уникални"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "Атрибутите `[id]` на активните елементи, които могат да получат фокуса, са уникални"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "Стойността на атрибута за ARIA трябва да е уникална, за да се предотврати пропускането на други екземпляри от страна на помощните технологии. [Научете повече](https://web.dev/duplicate-id-aria/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "Идентификаторите за ARIA не са уникални"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "Идентификаторите за ARIA са уникални"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "Когато полетата във формуляри имат няколко етикета, е възможно да бъдат произнесени объркващо от помощните технологии, например екранни четци, които използват първия, последния или всички етикети. [Научете повече](https://web.dev/form-field-multiple-labels/)."
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "Полета във формуляр са с повече от един етикет"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "Нито едно поле във формуляр няма повече от един етикет"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Потребителите на екранни четци очакват заглавието на рамката да описва съдържанието й. [Научете повече](https://web.dev/frame-title/)."
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "Елементите `<frame>` или `<iframe>` имат заглавие"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "Правилно подредените заглавия без пропускане на нива предават семантичната структура на страницата и улесняват разбирането ѝ и навигацията в нея с помощни технологии. [Научете повече](https://web.dev/heading-order/)."
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "Заглавните елементи не са в последователен низходящ ред"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "Заглавните елементи са в последователен низходящ ред"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "Ако за дадена страница не е посочен атрибут lang, екранният четец приема, че тя е написана на стандартния език, който потребителят е избрал при настройването му. Ако страницата всъщност не е на стандартния език, екранният четец може да не прочете текста й правилно. [Научете повече](https://web.dev/html-has-lang/)."
@@ -390,7 +462,7 @@
     "message": "Премахнете неизползвания CSS код"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Премахнете неизползвания JavaScript, за да намалите преноса на данни при мрежовата активност."
+    "message": "Премахнете неизползвания JavaScript, за да намалите преноса на данни при мрежова активност. [Научете повече](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Премахнете неизползвания JavaScript"
@@ -782,14 +854,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "Времето до интерактивност показва след колко време страницата става напълно интерактивна. [Научете повече](https://web.dev/interactive)."
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "„Изобразяване на най-голямото съдържание“ показва времето, когато се изобразяват най-големите текст или изображение. [Научете повече](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "Изобразяване на най-голямото съдържание"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "Максималното потенциално забавяне при първото взаимодействие на потребителите е продължителността в милисекунди на най-времеемката задача. [Научете повече](https://developers.google.com/web/updates/2018/05/first-input-delay)."
+    "message": "Максималното потенциално забавяне при първото взаимодействие на потребителите е продължителността на най-времеемката задача. [Научете повече](https://web.dev/lighthouse-max-potential-fid)."
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Индексът на скоростта показва колко бързо се постига визуална завършеност на страницата. [Научете повече](https://web.dev/speed-index)."
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "Сумата от всички интервали от време между FCP и „Време до интерактивност“, когато задачата е траела над 50 мсек, изразена в милисекунди."
+    "message": "Сумата в милисекунди от всички интервали от време между FCP и „Време до интерактивност“, когато задачата е траела над 50 мсек. [Научете повече](https://web.dev/lighthouse-total-blocking-time)."
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "Времето за осъществяване на двупосочна комуникация в мрежата оказва голямо влияние върху ефективността. Ако двупосочната комуникация с източника отнема дълго време, това означава, че разположени по-близо до потребителя сървъри биха подобрили ефективността. [Научете повече](https://hpbn.co/primer-on-latency-and-bandwidth/)."
@@ -805,6 +883,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Файлът service worker дава възможност на уеб приложението ви да работи надеждно при непредсказуеми условия в мрежата. [Научете повече](https://web.dev/offline-start-url)."
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Грешка при зареждането на {url} в service worker. Получен код на състоянието: {statusCode}"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` не отговаря с код 200, когато е офлайн"
@@ -1064,6 +1145,18 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Сървърът отговаря бързо (време до първия байт)"
   },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "Измерване"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "Показател"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "Задайте времеви бюджет, за да наблюдавате ефективността на сайта си. Ефективните сайтове се зареждат за кратко време и бързо реагират на събития за въвеждане от страна на потребителя. [Научете повече](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "Времеви бюджет"
+  },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "Продължителност"
   },
@@ -1286,6 +1379,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "Име"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "Надхвърля бюджета"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Заявки"
   },
@@ -1319,11 +1415,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Документ"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "Прогнозно забавяне при входящо действие"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "Първи момент на неактивност на процесора"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "Първо изобразяване на съдържание"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "Първо значимо изобразяване"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "Шрифт"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Изображение"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "Време до интерактивност"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "Макс. потенц. забавяне при 1. взаимодействие"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "Мултимедия"
@@ -1340,11 +1454,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} сек"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Индекс на скоростта"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Стилов лист"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Трети страни"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "Общо време на блокиране"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Общо"

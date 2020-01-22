@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "`[aria-*]`-määritteet vastaavat roolejaan"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "Näytönlukuohjelmat ja muut avustavat teknologiat toimivat arvaamattomasti, kun `aria-hidden=\"true\"` asetetaan dokumentin kohdassa `<body>`. [Lue lisää](https://web.dev/aria-hidden-body/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]` on dokumentin kohdassa `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "`[aria-hidden=\"true\"]` ei ole dokumentin kohdassa `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "Jos `[aria-hidden=\"true\"]`-elementillä on tarkennettavia alaosia, näytönlukuohjelmat ja muut avustavat teknologiat eivät löydä niitä. [Lue lisää](https://web.dev/aria-hidden-focus/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]`-elementeissä on tarkennettavia alaosia"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "`[aria-hidden=\"true\"]`-elementeissä ei ole tarkennettavia alaosia"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "Jos syötekentän nimi ei ole esteetön, näytönlukuohjelmat sanovat sen kohdalla geneerisen nimen, jolloin näytönlukuohjelmien käyttäjät eivät voi käyttää sitä. [Lue lisää](https://web.dev/aria-input-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "ARIA-syötekenttien nimet eivät ole esteettömiä"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "ARIA-syötekenttien nimet ovat esteettömiä"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Joillakin ARIA-rooleilla on pakollisia määritteitä, jotka kuvaavat elementin tilaa näytönlukuohjelmille. [Lue lisää](https://web.dev/aria-required-attr/)."
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "`[role]`-arvot ovat kelvollisia"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "Jos päälle/pois-kentän nimi ei ole esteetön, näytönlukuohjelmat sanovat sen kohdalla geneerisen nimen, jolloin näytönlukuohjelmien käyttäjät eivät voi käyttää sitä. [Lue lisää](https://web.dev/aria-toggle-field-label/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "ARIAn päälle/pois-kenttien nimet eivät ole esteettömiä"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "ARIAn päälle/pois-kenttien nimet ovat esteettömiä"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "Avustustekniikat (kuten näytönlukuohjelmat) eivät voi tulkita ARIA-määritteitä, joissa on virheelliset arvot. [Lue lisää](https://web.dev/aria-valid-attr-value/)."
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Dokumentissa on `<title>`-elementti"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "Tarkentamista tukevilla elementeillä on oltava yksilöllinen `id`, jotta avustava teknologia havaitsee ne. [Lue lisää](https://web.dev/duplicate-id-active/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "Aktiivisten, tarkennettavien elementtien `[id]`-määritteet eivät ole yksilöllisiä"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "Aktiivisten, tarkennettavien elementtien `[id]`-määritteet ovat yksilöllisiä"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "ARIA-tunnisteen on oltava yksilöllinen, jotta avustavat teknologiat eivät jätä muita esiintymiä huomioimatta. [Lue lisää](https://web.dev/duplicate-id-aria/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "ARIA-tunnisteet eivät ole yksilöllisiä"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "ARIA-tunnisteet ovat yksilöllisiä"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "Jos lomakekentillä on useita tunnisteita, näytönlukuohjelmat ja muut avustavat teknologiat saattavat viitata niihin hämmentävästi käyttäen ensimmäistä, viimeistä tai jokaista tunnistetta. [Lue lisää](https://web.dev/form-field-multiple-labels/)."
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "Lomakekentillä on useita tunnisteita"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "Lomakekentillä ei ole useita tunnisteita"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Näytönlukuohjelman käyttäjät saavat tietää kehysten sisällöt vain kehysten nimien avulla. [Lue lisää](https://web.dev/frame-title/)."
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "`<frame>`- tai `<iframe>`-elementeillä on nimi"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "Loogisesti järjestetyt ja kaikki tasot käsittävät otsikot kertovat sivun semanttisesta rakenteesta, jolloin sen selaaminen ja ymmärtäminen avustavilla teknologioilla on helpompaa. [Lue lisää](https://web.dev/heading-order/)."
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "Otsikkoelementit eivät ole laskevassa järjestyksessä"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "Otsikkoelementit ovat laskevassa järjestyksessä"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "Jos sivulla ei ole kielimääritettä, näytönlukuohjelma arvioi kieleksi oletuskielen, jonka käyttäjä valitsi ottaessaan näytönlukuohjelman käyttöön. Jos oletuskieli ei ole käytössä sivulla, näytönlukuohjelma voi ilmoittaa sivun tekstin väärin. [Lue lisää](https://web.dev/html-has-lang/)."
@@ -390,7 +462,7 @@
     "message": "Poista käyttämätön CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Poista käyttämättömät JavaScript-osat, jotta voit vähentää verkkotoiminnan kuluttamia tavuja."
+    "message": "Poista tarpeeton JavaScript pienentääksesi verkkotoiminnan tavunkulutusta. [Lue lisää](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Poista käyttämätön JavaScript"
@@ -666,7 +738,7 @@
     "message": "Konsoliin ei kirjattu selainvirheitä"
   },
   "lighthouse-core/audits/font-display.js | description": {
-    "message": "Käytä CSS:n kirjasimennäyttöominaisuutta, jotta voit varmistaa, että käyttäjä näkee tekstin myös verkkofonttien lataamisen aikana. [Lue lisää](https://web.dev/font-display)."
+    "message": "Käytä CSS:n fontinnäyttöominaisuutta, jotta voit varmistaa, että käyttäjä näkee tekstin myös verkkofonttien lataamisen aikana. [Lue lisää](https://web.dev/font-display)."
   },
   "lighthouse-core/audits/font-display.js | failureTitle": {
     "message": "Varmista, että teksti pysyy näkyvissä verkkofontin lataamisen aikana"
@@ -675,7 +747,7 @@
     "message": "Kaikki teksti pysyy näkyvissä verkkofontin lataamisen aikana"
   },
   "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Lighthouse ei pystynyt tarkistamaan seuraavan URL-osoitteen kirjasimennäyttöarvoa automaattisesti: {fontURL}."
+    "message": "Lighthouse ei pystynyt tarkistamaan seuraavan URL-osoitteen fontinnäyttöarvoa automaattisesti: {fontURL}."
   },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Kuvasuhde (todellinen)"
@@ -782,14 +854,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "Interaktiivisuutta edeltävä aika tarkoittaa aikaa, joka sivulla kestää siihen, että se on täysin interaktiivinen. [Lue lisää](https://web.dev/interactive)."
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "Suurimman sisällön renderöinti mittaa suurimman tekstikohteen tai kuvan renderöintiaikaa. [Lue lisää](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "Suurimman sisällön renderöinti"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "Käyttäjiesi suurin mahdollinen ensimmäisen toiminnon viive on pisimmän tehtävän kesto millisekunneissa. [Lue lisää](https://developers.google.com/web/updates/2018/05/first-input-delay)."
+    "message": "Käyttäjien ensitoiminnon suurin mahdollinen viive on sama kuin pisimmän tehtävän kesto. [Lue lisää](https://web.dev/lighthouse-max-potential-fid)."
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Nopeusindeksi kertoo, kuinka nopeasti sivun sisältö tulee näkyviin. [Lue lisää](https://web.dev/speed-index)."
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "Kaikkien FCP:n ja interaktiivisuutta edeltävän ajan väliset ajanjaksot yhteenlaskettuna, kun tehtävän pituus on yli 50 ms (ilmoitettu millisekunteina)"
+    "message": "Kaikkien FCP:n ja interaktiivisuutta edeltävän ajan väliset ajanjaksot yhteenlaskettuna, kun tehtävän pituus on yli 50 ms (ilmoitettu millisekunteina). [Lue lisää](https://web.dev/lighthouse-total-blocking-time)."
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "Verkon meno-paluuajoilla (RTT) on suuri vaikutus suorituskykyyn. Jos RTT lähtöpaikkaan on korkea, se on merkki siitä, että käyttäjää lähellä olevien palvelimien suorituskyvyssä on parantamisen varaa. [Lue lisää](https://hpbn.co/primer-on-latency-and-bandwidth/)."
@@ -805,6 +883,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Service worker auttaa tekemään verkkosovelluksesta luotettavan, jos verkko-olosuhteet ovat vaikeita ennustaa. [Lue lisää](https://web.dev/offline-start-url)."
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Virhe, kun {url} ladattiin Service Workerissa, tuloksena tilakoodi {statusCode}"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` ei vastaa 200-viestillä offline-tilassa"
@@ -876,7 +957,7 @@
     "message": "Dokumentissa on kelvollinen `rel=canonical`"
   },
   "lighthouse-core/audits/seo/font-size.js | description": {
-    "message": "Alle 12 pikselin kirjasinkoot ovat liian pieniä luettavaksi ja edellyttävät mobiilivierailijoiden zoomaavan nipistämällä voidakseen lukea. Pyri siihen, että >60 % sivun tekstistä on ≥12 px. [Lue lisää](https://web.dev/font-size)."
+    "message": "Alle 12 pikselin fonttikoot ovat liian pieniä luettavaksi ja edellyttävät mobiilivierailijoiden zoomaavan nipistämällä voidakseen lukea. Pyri siihen, että >60 % sivun tekstistä on ≥12 px. [Lue lisää](https://web.dev/font-size)."
   },
   "lighthouse-core/audits/seo/font-size.js | displayValue": {
     "message": "{decimalProportion, number, extendedPercent} lukukelpoista tekstiä"
@@ -885,10 +966,10 @@
     "message": "Teksti on lukukelvotonta, koska näkymän sisällönkuvauskenttää ei ole optimoitu mobiilinäytöille."
   },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
-    "message": "Dokumentissa ei käytetä lukukelpoisia kirjasinkokoja"
+    "message": "Dokumentissa ei käytetä lukukelpoisia fonttikokoja"
   },
   "lighthouse-core/audits/seo/font-size.js | title": {
-    "message": "Dokumentti käyttää lukukelpoisia kirjasinkokoja"
+    "message": "Dokumentti käyttää lukukelpoisia fonttikokoja"
   },
   "lighthouse-core/audits/seo/hreflang.js | description": {
     "message": "hreflang-linkit kertovat hakukoneille, mikä sivuversio niiden pitäisi lisätä tietyn kielen tai alueen hakutuloksiin. [Lue lisää](https://web.dev/hreflang)."
@@ -1063,6 +1144,18 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Palvelimen vastausajat ovat lyhyitä (ensimmäistä tavua edeltävä aika)"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "Arvo"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "Mittari"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "Aseta aikabudjetti, niin voit seurata sivustosi nopeutta. Kun sivusto toimii oikein, sen latausaika on lyhyt ja se vastaa käyttäjän syötteisiin nopeasti. [Lue lisää](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "Aikabudjetti"
   },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "Kesto"
@@ -1286,6 +1379,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "Nimi"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "Ylittää budjetin"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Pyynnöt"
   },
@@ -1319,11 +1415,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokumentti"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "Arvioitu syöttöviive"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "CPU:n ensimmäinen toimettomuusjakso"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "Ensimmäinen sisällön renderöinti"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "Ensimmäinen merkityksellinen renderöinti"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
-    "message": "Kirjasin"
+    "message": "Fontti"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Kuva"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "Interaktiivisuutta edeltävä aika"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "Suurin mahdollinen ensimmäisen toiminnon viive"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "Media"
@@ -1340,11 +1454,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} s"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Nopeusindeksi"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Tyylisivu"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Kolmas osapuoli"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "Estoaika yhteensä"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Yhteensä"

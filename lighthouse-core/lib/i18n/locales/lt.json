@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "Atributai „`[aria-*]`“ atitinka savo vaidmenis"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "Pagalbinės technologijos, pvz., ekrano skaitytuvai, veikia nepastoviai, kai dokumente „`<body>`“ nustatytas elementas „`aria-hidden=\"true\"`“. [Sužinokite daugiau](https://web.dev/aria-hidden-body/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "Dokumente „`<body>`“ yra elementas „`[aria-hidden=\"true\"]`“"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "Dokumente „`<body>`“ nėra elemento „`[aria-hidden=\"true\"]`“"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "Dėl elemente „`[aria-hidden=\"true\"]`“ esančių išryškinamų mažėjančia tvarka pateiktų elementų tie interaktyvūs elementai tampa nepasiekiami pagalbinių technologijų, pvz., ekrano skaitytuvų, naudotojams. [Sužinokite daugiau](https://web.dev/aria-hidden-focus/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "Elementuose „`[aria-hidden=\"true\"]`“ yra išryškinamų mažėjančia tvarka pateiktų elementų"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "Elementuose „`[aria-hidden=\"true\"]`“ nėra išryškinamų mažėjančia tvarka pateiktų elementų"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "Kai nenurodytas neįgaliesiems pritaikytas įvesties lauko pavadinimas, ekrano skaitytuvai apie jį praneša naudodami bendrąjį pavadinimą, todėl jo negali naudoti ekrano skaitytuvo naudotojai. [Sužinokite daugiau](https://web.dev/aria-input-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "Nenurodyti neįgaliesiems pritaikyti ARIA įvesties laukų pavadinimai"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "Nurodyti neįgaliesiems pritaikyti ARIA įvesties laukų pavadinimai"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Kai kuriems ARIA vaidmenims reikia atributų, aprašančių elementų būseną ekrano skaitytuvams. [Sužinokite daugiau](https://web.dev/aria-required-attr/)."
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "Elemento „`[role]`“ vertės yra tinkamos"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "Kai nenurodytas neįgaliesiems pritaikytas perjungimo lauko pavadinimas, ekrano skaitytuvai apie jį praneša naudodami bendrąjį pavadinimą, todėl jo negali naudoti ekrano skaitytuvo naudotojai. [Sužinokite daugiau](https://web.dev/aria-toggle-field-label/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "Nenurodyti neįgaliesiems pritaikyti ARIA perjungimo laukų pavadinimai"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "Nurodyti neįgaliesiems pritaikyti ARIA perjungimo laukų pavadinimai"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "Pagalbinės technologijos, pvz., ekrano skaitytuvai, negali interpretuoti ARIA atributų su netinkamomis vertėmis. [Sužinokite daugiau](https://web.dev/aria-valid-attr-value/)."
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Dokumente yra elementas „`<title>`“"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "Visų išryškinamų elementų `id` turi būti unikalūs, siekiant užtikrinti, kad elementai bus matomi pagalbinėms technologijoms. [Sužinokite daugiau](https://web.dev/duplicate-id-active/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "`[id]` atributai aktyviuose, išryškinamuose elementuose nėra unikalūs"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "`[id]` atributai aktyviuose, išryškinamuose elementuose yra unikalūs"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "ARIA ID vertė turi būti unikali, kad pagalbinės technologijos nepraleistų kitų objektų. [Sužinokite daugiau](https://web.dev/duplicate-id-aria/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "ARIA ID nėra unikalūs"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "ARIA ID yra unikalūs"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "Apie formos laukus su keliomis etiketėmis gali klaidinančiai pranešti pagalbinės technologijos, pvz., ekrano skaitytuvai, naudojantys pirmą, paskutinę arba visas etiketes. [Sužinokite daugiau](https://web.dev/form-field-multiple-labels/)."
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "Formos laukai yra su keliomis etiketėmis"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "Nėra jokių formos laukų su keliomis etiketėmis"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Pagal rėmelių pavadinimus ekrano skaitytuvų naudotojai sužino, koks yra rėmelių turinys. [Sužinokite daugiau](https://web.dev/frame-title/)."
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "Elementai „`<frame>`“ arba „`<iframe>`“ turi pavadinimą"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "Tinkamai pagal lygius surikiuotos antraštės perteikia semantinę puslapio struktūrą, todėl jas galima lengviau naršyti ir suprasti, naudojant pagalbines technologijas. [Sužinokite daugiau](https://web.dev/heading-order/)."
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "Antraščių elementai nepateikiami nuosekliai mažėjimo tvarka"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "Antraščių elementai pateikiami nuosekliai mažėjimo tvarka"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "Jei puslapyje nenurodytas atributas „lang“, ekrano skaitytuvas manys, kad puslapio kalba atitinka naudotojo pasirinktą numatytąją kalbą, kai buvo nustatomas ekrano skaitytuvas. Jei puslapio kalba neatitinka numatytosios kalbos, gali būti, kad ekrano skaitytuvas netinkamai skaitys puslapio tekstą. [Sužinokite daugiau](https://web.dev/html-has-lang/)."
@@ -390,7 +462,7 @@
     "message": "Pašalinkite nevartojamą CSS kalbą"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Pašalinkite nenaudojamą „JavaScript“, kad tinklo veikla sunaudotų mažiau baitų."
+    "message": "Pašalinkite nenaudojamą „JavaScript“, kad tinklo veikla sunaudotų mažiau baitų. [Sužinokite daugiau](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Pašalinkite nenaudojamą „JavaScript“"
@@ -782,14 +854,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "Laikas iki sąveikos yra vertė, nurodanti, kiek laiko reikia, kol puslapis tampa visiškai interaktyvus. [Sužinokite daugiau](https://web.dev/interactive)."
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "Didžiausias turiningas žymėjimas nurodo laiką, kada pažymimas didžiausias tekstas ar vaizdas. [Sužinokite daugiau](https://web.dev/largest-contentful-paint)."
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "Didžiausias turiningas žymėjimas"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "Didžiausia potenciali naudotojų patiriama pirmosios įvesties delsa yra ilgiausios užduoties trukmė milisekundėmis. [Sužinokite daugiau](https://developers.google.com/web/updates/2018/05/first-input-delay)."
+    "message": "Didžiausia potenciali naudotojų patiriama pirmosios įvesties delsa yra ilgiausios užduoties trukmė. [Sužinokite daugiau](https://web.dev/lighthouse-max-potential-fid)."
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Greičio rodiklis parodo, kaip greitai pavaizduojamas puslapio turinys. [Sužinokite daugiau](https://web.dev/speed-index)."
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "Visų laikotarpių tarp PTŽ ir laiko iki sąveikos suma milisekundėmis, kai užduoties atlikimo laikas viršija 50 ms."
+    "message": "Visų laikotarpių tarp PTŽ ir laiko iki sąveikos suma milisekundėmis, kai užduoties atlikimo laikas viršija 50 ms. [Sužinokite daugiau](https://web.dev/lighthouse-total-blocking-time)."
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "Abipusis tinklo laikas (RTT) turi didelės įtakos našumui. Didelė RTT į šaltinį vertė nurodo, kad arčiau naudotojo esantys serveriai galėtų padidinti našumą. [Sužinokite daugiau](https://hpbn.co/primer-on-latency-and-bandwidth/)."
@@ -805,6 +883,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Pagalbinis „JavaScript“ failas įgalina žiniatinklio programą veikti patikimai nenuspėjamomis tinklo sąlygomis. [Sužinokite daugiau](https://web.dev/offline-start-url)"
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Įkeliant {url} įvyko klaida pagalbiniame „JavaScript“ faile, (gautas būsenos kodas: {statusCode})"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "Kai neprisijungta prie interneto, `start_url` neatsako rodydamas klaidos kodą 200."
@@ -1064,6 +1145,18 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Serverio atsako laikas yra trumpas (TTFB)"
   },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "Matavimas"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "Metrika"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "Nustatykite laiko biudžetą, kad galėtumėte lengviau stebėti svetainės našumą. Našios svetainės įkeliamos sparčiau ir greičiau reaguoja į naudotojų įvesties įvykius. [Sužinokite daugiau](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "Laiko biudžetas"
+  },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "Trukmė"
   },
@@ -1286,6 +1379,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "Pavadinimas"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "Viršijo biudžetą"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Užklausos"
   },
@@ -1319,11 +1415,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokumentas"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "Įvertinta įvesties delsa"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "Pirmas cent. procesoriaus laisvas laikas"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "Pirmasis „Contentful“ parodymas"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "Pirmasis reikšmingas parodymas"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "Šriftas"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Vaizdas"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "Laikas iki sąveikos"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "Maksimali potenciali pirmosios įvesties delsa"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "Medija"
@@ -1340,11 +1454,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} sek."
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Greičio rodiklis"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Stiliaus failas"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Trečioji šalis"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "Bendras blokavimo laikas"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Iš viso"

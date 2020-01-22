@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "A(z) `[aria-*]` attribútumok megfelelnek szerepüknek"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "A segítő technológiák (például a képernyőolvasók) nem működnek konzisztensen, ha a(z) `aria-hidden=\"true\"` be van állítva a dokumentum `<body>` elemében. [További információ](https://web.dev/aria-hidden-body/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "A(z) `[aria-hidden=\"true\"]` megtalálható a dokumentum `<body>` elemében"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "A(z) `[aria-hidden=\"true\"]` nem található meg a dokumentum `<body>` elemében"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "A(z) `[aria-hidden=\"true\"]` elemen belüli fókuszálható utódelemek megakadályozzák azt, hogy a segítő technológiák (például a képernyőolvasók) felhasználói hozzáférhessenek az érintett interaktív elemekhez. [További információ](https://web.dev/aria-hidden-focus/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "A(z) `[aria-hidden=\"true\"]` elemek fókuszálható utódelemeket tartalmaznak"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "A(z) `[aria-hidden=\"true\"]` elemek nem tartalmaznak fókuszálható utódelemeket"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "Ha valamelyik beviteli mező nem rendelkezik akadálymentes névvel, a képernyőolvasók általános néven olvassák fel, ami használhatatlan a képernyőolvasóra hagyatkozó felhasználók számára. [További információ](https://web.dev/aria-input-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "Egyes ARIA beviteli mezők nem rendelkeznek akadálymentes névvel"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "Az ARIA beviteli mezők akadálymentes névvel rendelkeznek"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Bizonyos ARIA-szerepkörök kötelező attribútumokkal rendelkeznek, amelyek az elem állapotát írják le a képernyőolvasók számára. [További információ](https://web.dev/aria-required-attr/)."
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "A(z) `[role]` értékek érvényesek"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "Ha valamelyik kapcsolómező nem rendelkezik akadálymentes névvel, a képernyőolvasók általános néven olvassák fel, ami használhatatlan a képernyőolvasóra hagyatkozó felhasználók számára. [További információ](https://web.dev/aria-toggle-field-label/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "Egyes ARIA-kapcsolómezők nem rendelkeznek akadálymentes névvel"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "Az ARIA-kapcsolómezők akadálymentes névvel rendelkeznek"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "A kisegítő technológiák (például a képernyőolvasók) nem tudják értelmezni az érvénytelen értékkel rendelkező ARIA-attribútumokat. [További információ](https://web.dev/aria-valid-attr-value/)."
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "A dokumentum tartalmaz `<title>` elemet"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "Egyéni `id` meglétére van szükség az összes fókuszálható elemnél, hogy biztosan láthatók legyenek a segítő technológiák számára. [További információ](https://web.dev/duplicate-id-active/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "Egyes aktív, fókuszálható elemek `[id]` attribútumai nem egyediek"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "Az aktív, fókuszálható elemek `[id]` attribútumai egyediek"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "Az ARIA-azonosító értékének egyedinek kell lennie, hogy a kisegítő technológiák ne hagyják figyelmen kívül a többi előfordulást. [További információ](https://web.dev/duplicate-id-aria/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "Egyes ARIA-azonosítók nem egyediek"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "Az ARIA-azonosítók egyediek"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "A több címkével rendelkező űrlapmezőket félreérthetően olvashatják fel a segítő technológiák (például a képernyőolvasók), amelyek az első, az utolsó vagy pedig az összes címkét használják. [További információ](https://web.dev/form-field-multiple-labels/)."
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "Az űrlapmezők több címkével rendelkeznek"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "Nincsenek több címkével rendelkező űrlapmezők"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "A képernyőolvasók a keretcímek alapján írják le a keretek tartalmát. [További információ](https://web.dev/frame-title/)."
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "Van címe a(z) `<frame>` és `<iframe>` elemeknek"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "A megfelelően rendezett fejlécek (amelyek nem ugranak át szinteket) megfelelően közvetítik az oldal szemantikai struktúráját, így könnyebbé teszik a navigációt és a megértést a segítő technológiák használata esetén. [További információ](https://web.dev/heading-order/)."
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "A fejlécelemek nem egymást követő csökkenő sorrendben jelennek meg"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "A fejlécelemek egymást követve, csökkenő sorrendben jelennek meg"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "Ha az oldal nem határoz meg „lang” attribútumot, a képernyőolvasók azt feltételezik majd, hogy az oldal nyelve megegyezik azzal az alapértelmezett nyelvvel, amelyet a felhasználó a képernyőolvasó beállításakor választott. Ha az oldal tényleges nyelve eltér az alapértelmezett nyelvtől, akkor előfordulhat, hogy a képernyőolvasók helytelen kiejtéssel olvassák majd fel az oldal szövegét. [További információ](https://web.dev/html-has-lang/)."
@@ -390,7 +462,7 @@
     "message": "Távolítsa el a nem használt CSS-kódot"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "A nem használt JavaScript-kód eltávolítása a hálózati tevékenység adatforgalmának csökkentéséhez."
+    "message": "A nem használt JavaScript-kód eltávolításával csökkentheti a hálózati tevékenység adatforgalmát. [További információ](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Távolítsa el a nem használt JavaScript-kódot"
@@ -782,14 +854,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "Az interaktivitásig eltelt idő az az idő, amely ahhoz szükséges, hogy az oldal teljesen interaktívvá váljon. [További információ](https://web.dev/interactive)."
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "A legnagyobb vizuális tartalomválasz azt az időpontot jelöli, amikor a rendszer megjeleníti a legnagyobb szöveget vagy képet. [További információ](https://web.dev/largest-contentful-paint)."
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "Legnagyobb vizuális tartalomválasz"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "Az első interakciótól számított maximális potenciális válaszkésés a leghosszabb feladat időtartama ezredmásodpercben. [További információ](https://developers.google.com/web/updates/2018/05/first-input-delay)."
+    "message": "A felhasználók által tapasztalható, első interakciótól számított esetleges maximális válaszkésés a leghosszabb feladat időtartama. [További információ](https://web.dev/lighthouse-max-potential-fid)."
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "A Sebességindex mutató azt jelzi, hogy az adott oldal tartalmai milyen gyorsan válnak láthatóvá. [További információ](https://web.dev/speed-index)."
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "Az első vizuális tartalomválasz és az interaktivitásig eltelt idő közötti minden (50 ms-nál hosszabb feladatot jelentő) periódus időtartamának összege milliszekundumban kifejezve."
+    "message": "Az első vizuális tartalomválasz és az interaktivitásig eltelt idő közötti minden (50 ms-nál hosszabb feladatot jelentő) periódus időtartamának összege milliszekundumban kifejezve. [További információ](https://web.dev/lighthouse-total-blocking-time)."
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "A hálózati oda-vissza út ideje (round trip time, RTT) nagy hatással van a teljesítményre. Ha túl magas az RTT értéke valamelyik eredet esetében, az azt jelenti, hogy a felhasználóhoz közelebbi szerverek javíthatják a teljesítményt. [További információ](https://hpbn.co/primer-on-latency-and-bandwidth/)."
@@ -805,6 +883,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "A szolgáltató munkatársnak köszönhetően internetes alkalmazása előre nem látható hálózati körülmények mellett is megbízhatóan fog működni. [További információ](https://web.dev/offline-start-url)."
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Hiba történt a(z) {url} betöltése során a service workerben Állapotkód: {statusCode}"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "A(z) `start_url` nem 200-as állapotkódot küld vissza, amikor offline állapotban van"
@@ -1064,6 +1145,18 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Alacsony a szerver válaszideje (TTFB)"
   },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "Mérés"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "Mutató"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "Időkeret beállításával könnyebben figyelheti a webhelye teljesítményét. A jól teljesítő webhelyek gyorsan töltődnek be, és gyorsan válaszolnak a felhasználói beviteli eseményekre. [További információ](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "Időkeret"
+  },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "Időtartam"
   },
@@ -1286,6 +1379,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "Név"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "Büdzsén kívül"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Kérések"
   },
@@ -1319,11 +1415,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokumentum"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "Becsült bemeneti késés"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "Első processzor-üresjárat"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "Első, tartalommal rendelkező leképezés"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "Első releváns leképezés"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "Betűtípus"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Kép"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "Interaktivitásig eltelt idő"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "Első interakciótól számított max. potenciális késés"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "Média"
@@ -1340,11 +1454,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} mp"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Sebességindex"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Stíluslap"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Harmadik féltől származó"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "Blokkolás összideje"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Összes"

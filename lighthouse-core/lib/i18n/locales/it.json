@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "Gli attributi `[aria-*]` corrispondono ai rispettivi ruoli"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "Le tecnologie per la disabilità, come gli screen reader, funzionano in modo incoerente se viene impostato il valore `aria-hidden=\"true\"` nel documento `<body>`. [Ulteriori informazioni](https://web.dev/aria-hidden-body/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "L'attributo `[aria-hidden=\"true\"]` è presente nel documento `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "L'attributo `[aria-hidden=\"true\"]` non è presente nel documento `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "I discendenti per cui è possibile impostare lo stato attivo all'interno di un elemento `[aria-hidden=\"true\"]` impediscono di mettere tali elementi interattivi a disposizione degli utenti che usano tecnologie per la disabilità come gli screen reader. [Ulteriori informazioni](https://web.dev/aria-hidden-focus/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "Gli elementi `[aria-hidden=\"true\"]` contengono discendenti per cui è possibile impostare lo stato attivo"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "Gli elementi `[aria-hidden=\"true\"]` non contengono discendenti per cui è possibile impostare lo stato attivo"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "Quando un campo di immissione non ha un nome accessibile, gli screen reader lo descrivono con un nome generico, rendendolo inutilizzabile per gli utenti che si affidano agli screen reader. [Ulteriori informazioni](https://web.dev/aria-input-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "I campi di immissione ARIA non hanno nomi accessibili"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "I campi di immissione ARIA hanno nomi accessibili"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Alcuni ruoli di ARIA hanno attributi obbligatori che descrivono lo stato dell'elemento agli screen reader. [Ulteriori informazioni](https://web.dev/aria-required-attr/)."
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "I valori `[role]` sono validi"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "Quando un campo di attivazione/disattivazione non ha un nome accessibile, gli screen reader lo descrivono con un nome generico, rendendolo inutilizzabile per gli utenti che si affidano agli screen reader. [Ulteriori informazioni](https://web.dev/aria-toggle-field-label/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "I campi di attivazione/disattivazione ARIA non hanno nomi accessibili"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "I campi di attivazione/disattivazione ARIA hanno nomi accessibili"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "Le tecnologie di ausilio per la disabilità, come gli screen reader, non sono in grado di interpretare gli attributi di ARIA con valori non validi. [Ulteriori informazioni](https://web.dev/aria-valid-attr-value/)."
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Il documento ha un elemento `<title>`"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "Tutti gli elementi per cui è possibile impostare lo stato attivo devono avere un valore `id` univoco per garantirne la visibilità alle tecnologie per la disabilità. [Ulteriori informazioni](https://web.dev/duplicate-id-active/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "Gli attributi `[id]` in elementi attivi per cui è possibile impostare lo stato attivo non sono univoci"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "Gli attributi `[id]` in elementi attivi per cui è possibile impostare lo stato attivo sono univoci"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "Il valore di un ID ARIA deve essere univoco per evitare che altre istanze vengano ignorate dalle tecnologie per la disabilità. [Ulteriori informazioni](https://web.dev/duplicate-id-aria/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "Gli ID ARIA non sono univoci"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "Gli ID ARIA sono univoci"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "I campi dei moduli con più etichette potrebbero essere descritti in modo confuso dalle tecnologie per la disabilità come gli screen reader, che usano la prima etichetta, l'ultima o tutte le etichette. [Ulteriori informazioni](https://web.dev/form-field-multiple-labels/)."
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "I campi del modulo hanno più etichette"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "Nessun campo del modulo ha più etichette"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Gli screen reader si affidano ai titoli dei frame per descrivere i contenuti dei frame agli utenti. [Ulteriori informazioni](https://web.dev/frame-title/)."
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "Gli elementi `<frame>` o `<iframe>` hanno un titolo"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "Le intestazioni nell'ordine corretto che non saltano livelli descrivono la struttura semantica della pagina, facilitando la navigazione e la comprensione quando vengono usate tecnologie per la disabilità. [Ulteriori informazioni](https://web.dev/heading-order/)."
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "Gli elementi di intestazione non sono in ordine decrescente sequenziale"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "Gli elementi di intestazione vengono visualizzati in ordine decrescente sequenziale"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "Se per una pagina non viene specificato alcun attributo lang, lo screen reader presuppone che la lingua della pagina sia quella predefinita scelta dall'utente durante la configurazione dello screen reader. Se la lingua della pagina non è effettivamente quella predefinita, lo screen reader potrebbe non pronunciare correttamente il testo della pagina. [Ulteriori informazioni](https://web.dev/html-has-lang/)."
@@ -390,7 +462,7 @@
     "message": "Rimuovi il CSS inutilizzato"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Rimuovi il codice JavaScript inutilizzato per ridurre i byte consumati dall'attività di rete."
+    "message": "Rimuovi il codice JavaScript inutilizzato per ridurre i byte consumati dall'attività di rete. [Ulteriori informazioni](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Rimuovi il codice JavaScript inutilizzato"
@@ -782,14 +854,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "La metrica Tempo all'interattività indica il tempo necessario affinché la pagina diventi completamente interattiva. [Ulteriori informazioni](https://web.dev/interactive)."
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "La metrica Largest Contentful Paint (più grande visualizzazione con contenuti) indica il momento in cui vengono visualizzati il testo o l'immagine più grandi. [Ulteriori informazioni](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "Largest Contentful Paint"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "Il potenziale ritardo prima interazione massimo che i tuoi utenti potrebbero riscontrare è la durata, in millisecondi, del task più lungo. [Ulteriori informazioni](https://developers.google.com/web/updates/2018/05/first-input-delay)."
+    "message": "Il potenziale ritardo prima interazione massimo che i tuoi utenti potrebbero riscontrare è la durata del task più lungo. [Ulteriori informazioni](https://web.dev/lighthouse-max-potential-fid)."
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "La metrica Indice velocità mostra la velocità con cui diventano visibili i contenuti di una pagina. [Ulteriori informazioni](https://web.dev/speed-index)."
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "Somma di tutti i periodi di tempo, espressi in millisecondi, tra FCP e Tempo all'interattività, quando la durata del task ha superato 50 ms."
+    "message": "Somma di tutti i periodi di tempo, espressi in millisecondi, tra FCP e Tempo all'interattività, quando la durata del task ha superato 50 ms. [Ulteriori informazioni](https://web.dev/lighthouse-total-blocking-time)."
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "I tempi di round trip della rete (RTT) influiscono notevolmente sulle prestazioni. Quando l'RTT verso un'origine è elevato, significa che i server più vicini all'utente potrebbero migliorare le prestazioni. [Ulteriori informazioni](https://hpbn.co/primer-on-latency-and-bandwidth/)."
@@ -805,6 +883,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Un service worker rende la tua applicazione web affidabile in condizioni di rete imprevedibili. [Ulteriori informazioni](https://web.dev/offline-start-url)."
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Errore durante il caricamento di {url} in Service Worker; ricevuto il codice di stato {statusCode}"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` non risponde con un codice 200 quando è offline"
@@ -1064,6 +1145,18 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "I tempi di risposta del server sono brevi (TTFB)"
   },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "Misurazione"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "Metrica"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "Imposta un budget per le tempistiche per tenere sotto controllo le prestazioni del tuo sito. I siti con ottime prestazioni vengono caricati velocemente e rispondono rapidamente agli eventi di input degli utenti. [Ulteriori informazioni](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "Budget per le tempistiche"
+  },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "Durata"
   },
@@ -1286,6 +1379,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "Nome"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "Oltre il budget"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Richieste"
   },
@@ -1319,11 +1415,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Documento"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "Latenza input stimata"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "Prima inattività CPU"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "Visualizzazione dei primi contenuti"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "Visualizzazione primi contenuti utili"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "Carattere"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Immagine"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "Tempo per interattività"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "Ritardo prima interazione potenziale max"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "Contenuti multimediali"
@@ -1340,11 +1454,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} s"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Indice velocità"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Foglio di stile"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Terze parti"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "Tempo di blocco totale"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Totale"

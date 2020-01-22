@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "Atributi `[aria-*]` se ujemajo s svojimi vlogami"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "Podporne tehnologije, kot so bralniki zaslona, delujejo nedosledno, če je atribut `aria-hidden=\"true\"` nastavljen na dokument `<body>`. [Več o tem](https://web.dev/aria-hidden-body/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "Atribut `[aria-hidden=\"true\"]` je nastavljen na dokumentu `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "Atribut `[aria-hidden=\"true\"]` ni nastavljen na dokumentu `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "Podrejeni elementi elementa `[aria-hidden=\"true\"]`, ki jih je mogoče izbrati, preprečujejo, da bi bili tisti interaktivni elementi na voljo uporabnikom podpornih tehnologij, kot so bralniki zaslona. [Več o tem](https://web.dev/aria-hidden-focus/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "Elementi `[aria-hidden=\"true\"]` vsebujejo podrejene elemente, ki jih je mogoče izbrati"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "Toliko elementov ne vsebuje podrejenih elementov, ki jih je mogoče izbrati: `[aria-hidden=\"true\"]`"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "Če vnosno polje nima dostopnega imena, ga bralniki zaslona predstavijo z generičnim imenom, s čimer je neuporaben za uporabnike, ki se zanašajo na bralnike zaslona. [Več o tem](https://web.dev/aria-input-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "Vnosna polja ARIA nimajo dostopnih imen"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "Vnosna polja ARIA imajo dostopna imena"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Nekatere vloge ARIA imajo zahtevane atribute, ki opišejo stanje elementa bralnikom zaslona. [Več o tem](https://web.dev/aria-required-attr/)."
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "Vrednosti `[role]` so veljavne"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "Če preklopno polje nima dostopnega imena, ga bralniki zaslona predstavijo z generičnim imenom, s čimer je neuporaben za uporabnike, ki se zanašajo na bralnike zaslona. [Več o tem](https://web.dev/aria-toggle-field-label/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "Preklopna polja ARIA nimajo dostopnih imen"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "Preklopna polja ARIA imajo dostopna imena"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "Pomožne tehnologije, kot so bralniki zaslona, ne morejo tolmačiti atributov ARIA z neveljavnimi vrednostmi. [Več o tem](https://web.dev/aria-valid-attr-value/)."
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Dokument ima element `<title>`"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "Vsi elementi, ki jih je mogoče izbrati, morajo imeti enoličen atribut `id`, s čimer se zagotovi, da so vidni podpornim tehnologijam. [Več o tem](https://web.dev/duplicate-id-active/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "Toliko atributov aktivnih elementov, ki jih je mogoče izbrati, ni enoličnih: `[id]`"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "Toliko atributov aktivnih elementov, ki jih je mogoče izbrati, je enoličnih: `[id]`"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "Vrednost ID-ja ARIA mora biti enolična, če želite preprečiti, da bi podporne tehnologije spregledale druge primerke. [Več o tem](https://web.dev/duplicate-id-aria/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "ID-ji ARIA niso enolični"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "ID-ji ARIA so enolični"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "Polja v obrazcih z več oznakami lahko podporne tehnologije, kot so bralniki zaslona, ki uporabljajo prvo, zadnjo ali vse oznake, najavijo tako, da zbegajo uporabnike. [Več o tem](https://web.dev/form-field-multiple-labels/)."
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "Polja v obrazcih imajo več oznak"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "Ni polj v obrazcih z več oznakami"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Uporabniki bralnikov zaslona se zanašajo, da jim vsebino okvirjev opišejo naslovi okvirjev. [Več o tem](https://web.dev/frame-title/)."
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "Elementi `<frame>` ali `<iframe>` imajo naslov"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "Ustrezno razvrščeni naslovi, ki ne preskakujejo stopenj, posredujejo semantično strukturo strani, da jo je z uporabo podpornih tehnologij laže razumeti in se pomikati po njej. [Več o tem](https://web.dev/heading-order/)."
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "Elementi naslovov niso v zaporedno padajočem vrstnem redu"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "Elementi naslovov se pojavljajo v zaporedno padajočem vrstnem redu"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "Če stran ne določi atributa »lang«, bralnik zaslona predvideva, da je stran v privzetem jeziku, ki ga je uporabnik izbral pri nastavljanju bralnika zaslona. Če stran ni v privzetem jeziku, bralnik zaslona morda ne bo pravilno predstavil besedila na strani. [Več o tem](https://web.dev/html-has-lang/)."
@@ -390,7 +462,7 @@
     "message": "Odstranitev neuporabljenega CSS-ja"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Odstranite neuporabljeni JavaScript, če želite zmanjšati število bajtov, uporabljenih v omrežni dejavnosti."
+    "message": "Odstranite neuporabljeni JavaScript, če želite zmanjšati število bajtov, uporabljenih v omrežni dejavnosti. [Več o tem](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Odstranite neuporabljeni JavaScript"
@@ -782,14 +854,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "Čas do interaktivnosti je čas, potreben, da stran postane povsem interaktivna. [Več o tem](https://web.dev/interactive)."
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "Največji vsebinski izris označuje čas, ko je izrisano največje besedilo oziroma je izrisana največja slika. [Več o tem](https://web.dev/largest-contentful-paint)."
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "Največji vsebinski izris"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "Največja potencialna zakasnitev od prvega vnosa, na katero lahko uporabniki naletijo, je trajanje (v ms) najdaljšega opravila. [Več o tem](https://developers.google.com/web/updates/2018/05/first-input-delay)."
+    "message": "Največja potencialna zakasnitev od prvega vnosa, na katero lahko uporabniki naletijo, je trajanje najdaljšega opravila. [Več o tem](https://web.dev/lighthouse-max-potential-fid)."
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Indeks hitrosti prikazuje, kako hitro je vsebina strani vidno izpolnjena. [Več o tem](https://web.dev/speed-index)."
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "Skupek vseh časovnih obdobij med FCP-jem in časom do interaktivnosti, ko je dolžina opravila presegla 50 ms, izražena v milisekundah."
+    "message": "Skupek vseh časovnih obdobij med FCP-jem in časom do interaktivnosti, ko je dolžina opravila presegla 50 ms, izražen v milisekundah. [Več o tem](https://web.dev/lighthouse-total-blocking-time)."
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "Omrežni časi povratnega potovanja (RTT) imajo velik vpliv na učinkovitost delovanja. Če je RTT do izvora velik, to kaže na to, da bi lahko strežniki bližje uporabniku izboljšali učinkovitost delovanja. [Več o tem](https://hpbn.co/primer-on-latency-and-bandwidth/)."
@@ -805,6 +883,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Proces storitve spletni aplikaciji omogoča zanesljivost v nepredvidljivih omrežnih okoliščinah. [Več o tem](https://web.dev/offline-start-url)."
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Napaka pri nalaganju {url} v procesu storitve, prejeta je bila koda stanja {statusCode}"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` se ne odzove s kodo stanja HTTP 200, ko nima povezave"
@@ -1064,6 +1145,18 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Odzivni časi strežnika so nizki (TTFB)"
   },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "Izmerjena vrednost"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "Meritev"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "Nastavite časovni proračun, da boste laže spremljali uspešnost spletnega mesta. Uspešna spletna mesta se hitro naložijo in naglo odzovejo na dogodke uporabniških vnosov. [Več o tem](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "Časovni proračun"
+  },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "Trajanje"
   },
@@ -1286,6 +1379,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "Ime"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "Prek proračuna"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Zahteve"
   },
@@ -1319,11 +1415,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokument"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "Ocenjena zakasnitev vnosa"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "Prva nedejavnost CPE-ja"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "Prvo vsebinsko barvanje"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "Prvo smiselno barvanje"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "Pisava"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Slika"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "Čas do interaktivnosti"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "Najv. potencial. zakasn. od prvega vnosa"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "Predstavnost"
@@ -1340,11 +1454,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} s"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Indeks hitrosti"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Slogovna datoteka"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Drugi ponudniki"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "Skupni čas blokiranja"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Skupno"
