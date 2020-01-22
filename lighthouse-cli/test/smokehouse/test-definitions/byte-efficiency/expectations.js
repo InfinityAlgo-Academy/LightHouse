@@ -169,12 +169,12 @@ const expectations = [
           },
         },
         'uses-responsive-images': {
-          displayValue: 'Potential savings of 69\xa0KB',
+          displayValue: 'Potential savings of 53\xa0KB',
           details: {
-            overallSavingsBytes: '>65000',
+            overallSavingsBytes: '>50000',
             items: {
-              0: {wastedPercent: '<60'},
-              1: {wastedPercent: '<60'},
+              0: {wastedPercent: '<46'},
+              1: {wastedPercent: '<46'},
               length: 2,
             },
           },

@@ -197,10 +197,10 @@ describe('ReportRenderer', () => {
       assert.ok(descriptions.length >= 3);
 
       const descriptionsTxt = descriptions.map(el => el.textContent).join('\n');
-      assert.ok(/Nexus/.test(descriptionsTxt), 'should have added device emulation');
-      assert.ok(/RTT/.test(descriptionsTxt), 'should have added network');
-      assert.ok(/\dx/.test(descriptionsTxt), 'should have added CPU');
-      assert.ok(descriptionsTxt.includes(sampleResults.userAgent), 'user agent populated');
+      expect(descriptionsTxt).toContain('Moto G4');
+      expect(descriptionsTxt).toContain('RTT');
+      expect(descriptionsTxt).toMatch(/\dx/);
+      expect(descriptionsTxt).toContain(sampleResults.userAgent);
     });
   });
 
