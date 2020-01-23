@@ -605,12 +605,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Evita una mida excessiva de DOM"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Objectiu"
-  },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Afegeix `rel=\"noopener\"` o `rel=\"noreferrer\"` a qualsevol enllaç extern per millorar-ne el rendiment i evitar vulnerabilitats de seguretat. [Obtén més informació](https://web.dev/external-anchors-use-rel-noopener)."
   },

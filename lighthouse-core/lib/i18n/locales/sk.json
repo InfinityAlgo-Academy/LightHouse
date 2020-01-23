@@ -605,12 +605,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Zabráni použitiu nadmerne veľkého prvku DOM"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Cieľ"
-  },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Ak chcete zlepšiť výkonnosť a zabrániť chybám zabezpečenia, pridajte k ľubovoľným externým odkazom prvok `rel=\"noopener\"` alebo `rel=\"noreferrer\"`. [Ďalšie informácie](https://web.dev/external-anchors-use-rel-noopener)"
   },

@@ -605,12 +605,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "避免 DOM 過大"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "目標"
-  },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "將 `rel=\"noopener\"` 或 `rel=\"noreferrer\"` 新增至所有外部連結，可提升效能並防範安全漏洞。[瞭解詳情](https://web.dev/external-anchors-use-rel-noopener)。"
   },

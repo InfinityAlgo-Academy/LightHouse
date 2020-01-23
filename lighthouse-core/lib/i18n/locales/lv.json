@@ -605,12 +605,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Nepieļauj pārāk lielus DOM izmērus"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Mērķis"
-  },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Pievienojiet parametru `rel=\"noopener\"` vai `rel=\"noreferrer\"` jebkurām ārējām saitēm, lai uzlabotu veiktspēju un novērstu drošības ievainojamību. [Uzziniet vairāk](https://web.dev/external-anchors-use-rel-noopener)."
   },

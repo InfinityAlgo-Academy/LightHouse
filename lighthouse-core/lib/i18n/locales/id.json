@@ -605,12 +605,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Menghindari ukuran DOM yang berlebihan"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Target"
-  },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Tambahkan `rel=\"noopener\"` atau `rel=\"noreferrer\"` ke link eksternal mana pun untuk menyempurnakan performa dan mencegah kerentanan keamanan. [Pelajari lebih lanjut](https://web.dev/external-anchors-use-rel-noopener)."
   },

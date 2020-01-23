@@ -605,12 +605,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Išvengiama per didelių DOM"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Atributas „rel“"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Taikymas"
-  },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Pridėkite fragmentus „`rel=\"noopener\"`“ arba „`rel=\"noreferrer\"`“ prie bet kurių išorinių nuorodų, kad pagerintumėte našumą ir išvengtumėte saugos pažeidimų. [Sužinokite daugiau](https://web.dev/external-anchors-use-rel-noopener)."
   },

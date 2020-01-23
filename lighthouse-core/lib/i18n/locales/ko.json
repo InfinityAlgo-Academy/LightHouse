@@ -605,12 +605,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "과도한 DOM 크기 지양하기"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "타겟"
-  },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "성능을 개선하고 보안 취약점을 예방하려면 `rel=\"noopener\"` 또는 `rel=\"noreferrer\"`을(를) 외부 링크에 추가합니다. [자세히 알아보기](https://web.dev/external-anchors-use-rel-noopener)"
   },

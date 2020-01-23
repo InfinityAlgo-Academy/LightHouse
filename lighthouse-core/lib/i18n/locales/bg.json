@@ -605,12 +605,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Не се използва DOM с твърде голям размер"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Target"
-  },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Добавете `rel=\"noopener\"` или `rel=\"noreferrer\"` към връзките към външни сайтове, за да подобрите ефективността и да избегнете уязвимости в сигурността. [Научете повече](https://web.dev/external-anchors-use-rel-noopener)."
   },

@@ -2848,35 +2848,46 @@
         "type": "table",
         "headings": [
           {
-            "key": "href",
-            "itemType": "url",
-            "text": "URL"
-          },
-          {
-            "key": "target",
-            "itemType": "text",
-            "text": "Target"
-          },
-          {
-            "key": "rel",
-            "itemType": "text",
-            "text": "Rel"
+            "key": "node",
+            "itemType": "node",
+            "text": "Failing Anchors"
           }
         ],
         "items": [
           {
+            "node": {
+              "type": "node",
+              "path": "",
+              "selector": "",
+              "nodeLabel": "",
+              "snippet": "<a href=\"https://www.google.com/\" target=\"blank\">Hello</a>"
+            },
             "href": "https://www.google.com/",
             "target": "_blank",
             "rel": "",
             "outerHTML": "<a href=\"https://www.google.com/\" target=\"blank\">Hello</a>"
           },
           {
+            "node": {
+              "type": "node",
+              "path": "",
+              "selector": "",
+              "nodeLabel": "",
+              "snippet": "<a target=\"blank\">Hello</a>"
+            },
             "href": "Unknown",
             "target": "_blank",
             "rel": "",
             "outerHTML": "<a target=\"blank\">Hello</a>"
           },
           {
+            "node": {
+              "type": "node",
+              "path": "",
+              "selector": "",
+              "nodeLabel": "",
+              "snippet": "<a rel=\"nofollow\" href=\"https://www.google.com/\" target=\"blank\">Hello</a>"
+            },
             "href": "https://www.google.com/",
             "target": "_blank",
             "rel": "nofollow",
@@ -5600,7 +5611,6 @@
         "audits[unminified-javascript].details.headings[0].label",
         "audits[uses-webp-images].details.headings[1].label",
         "audits[uses-text-compression].details.headings[0].label",
-        "audits[external-anchors-use-rel-noopener].details.headings[0].text",
         "audits[geolocation-on-start].details.headings[0].text",
         "audits[no-document-write].details.headings[0].text",
         "audits[notification-on-start].details.headings[0].text",
@@ -6395,11 +6405,8 @@
           "path": "audits[external-anchors-use-rel-noopener].warnings[0]"
         }
       ],
-      "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": [
-        "audits[external-anchors-use-rel-noopener].details.headings[1].text"
-      ],
-      "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": [
-        "audits[external-anchors-use-rel-noopener].details.headings[2].text"
+      "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": [
+        "audits[external-anchors-use-rel-noopener].details.headings[0].text"
       ],
       "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | failureTitle": [
         "audits[geolocation-on-start].title"

@@ -605,12 +605,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "అధిక DOM పరిమాణాన్ని నివారిస్తుంది"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "లక్ష్యం"
-  },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "పనితీరును మెరుగుపరచడానికి, అలాగే భద్రతా ప్రమాదాలను నిరోధించడానికి ఏవైనా బయటి లింక్‌లకు '`rel=\"noopener\"`' లేదా '`rel=\"noreferrer\"`'లను జోడించండి. [మరింత తెలుసుకోండి](https://web.dev/external-anchors-use-rel-noopener)."
   },

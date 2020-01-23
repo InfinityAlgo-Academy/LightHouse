@@ -605,12 +605,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Undgår en overdreven DOM-størrelse"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Mål"
-  },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Føj `rel=\"noopener\"` eller `rel=\"noreferrer\"` til alle eksterne links for at forbedre ydeevnen og forhindre sikkerhedssårbarheder. [Få flere oplysninger](https://web.dev/external-anchors-use-rel-noopener)."
   },

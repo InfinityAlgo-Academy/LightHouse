@@ -605,11 +605,8 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Âv́ôíd̂ś âń êx́ĉéŝśîv́ê D́ÔḾ ŝíẑé"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "R̂él̂"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "T̂ár̂ǵêt́"
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
+    "message": "F̂áîĺîńĝ Án̂ćĥór̂ś"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Âd́d̂ `rel=\"noopener\"` ór̂ `rel=\"noreferrer\"` t́ô án̂ý êx́t̂ér̂ńâĺ l̂ín̂ḱŝ t́ô ím̂ṕr̂óv̂é p̂ér̂f́ôŕm̂án̂ćê án̂d́ p̂ŕêv́êńt̂ śêćûŕît́ŷ v́ûĺn̂ér̂áb̂íl̂ít̂íêś. [L̂éâŕn̂ ḿôŕê](https://web.dev/external-anchors-use-rel-noopener)."

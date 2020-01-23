@@ -708,34 +708,36 @@
             "details": {
                 "headings": [
                     {
-                        "itemType": "url",
-                        "key": "href",
-                        "text": "URL"
-                    },
-                    {
-                        "itemType": "text",
-                        "key": "target",
-                        "text": "Target"
-                    },
-                    {
-                        "itemType": "text",
-                        "key": "rel",
-                        "text": "Rel"
+                        "itemType": "node",
+                        "key": "node",
+                        "text": "Failing Anchors"
                     }
                 ],
                 "items": [
                     {
                         "href": "https://www.google.com/",
+                        "node": {
+                            "snippet": "<a href=\"https://www.google.com/\" target=\"blank\">Hello</a>",
+                            "type": "node"
+                        },
                         "outerHTML": "<a href=\"https://www.google.com/\" target=\"blank\">Hello</a>",
                         "target": "_blank"
                     },
                     {
                         "href": "Unknown",
+                        "node": {
+                            "snippet": "<a target=\"blank\">Hello</a>",
+                            "type": "node"
+                        },
                         "outerHTML": "<a target=\"blank\">Hello</a>",
                         "target": "_blank"
                     },
                     {
                         "href": "https://www.google.com/",
+                        "node": {
+                            "snippet": "<a rel=\"nofollow\" href=\"https://www.google.com/\" target=\"blank\">Hello</a>",
+                            "type": "node"
+                        },
                         "outerHTML": "<a rel=\"nofollow\" href=\"https://www.google.com/\" target=\"blank\">Hello</a>",
                         "rel": "nofollow",
                         "target": "_blank"

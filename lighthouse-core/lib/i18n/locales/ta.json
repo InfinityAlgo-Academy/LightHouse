@@ -605,12 +605,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "அபரிமிதமான DOM அளவைத் தவிர்க்கிறது"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "இலக்கு"
-  },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "ஏதேனும் புற இணைப்புகளின் செயல்திறனை அதிகரிக்கவும் அவற்றிலுள்ள பாதுகாப்புக் குறைபாடுகளைத் தடுக்கவும் `rel=\"noopener\"` அல்லது `rel=\"noreferrer\"`ஐ சேர்க்கவும். [மேலும் அறிக](https://web.dev/external-anchors-use-rel-noopener)."
   },

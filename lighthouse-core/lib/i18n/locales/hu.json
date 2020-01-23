@@ -605,12 +605,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Kerüli a túlzó DOM-méretet"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Cél"
-  },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Adjon `rel=\"noopener\"` vagy `rel=\"noreferrer\"` címkét a külső linkekhez, hogy javíthassa a teljesítményt és elkerülhesse a sebezhetőségeket. [További információ](https://web.dev/external-anchors-use-rel-noopener)."
   },
