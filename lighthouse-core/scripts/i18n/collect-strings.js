@@ -567,8 +567,8 @@ if (require.main === module) {
   const coreStrings = collectAllStringsInDir(path.join(LH_ROOT, 'lighthouse-core'));
   console.log('Collected from LH core!');
 
-  // const stackPackStrings = collectAllStringsInDir(path.join(LH_ROOT, 'stack-packs/packs'));
-  const stackPackStrings = collectAllStringsInDir(path.join(path.dirname(require.resolve('lighthouse-stack-packs')), 'packs'));
+  const stackPacksRoot = `${LH_ROOT}/node_modules/lighthouse-stack-packs/packs`;
+  const stackPackStrings = collectAllStringsInDir(stackPacksRoot);
   console.log('Collected from Stack Packs!');
 
   if ((collisions) > 0) {
