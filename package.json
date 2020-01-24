@@ -29,7 +29,7 @@
     "test-clients": "jest \"clients/\"",
     "test-viewer": "yarn unit-viewer && jest lighthouse-viewer/test/viewer-test-pptr.js",
     "test-lantern": "bash lighthouse-core/scripts/test-lantern.sh",
-    "test-docs": "yarn --cwd docs/recipes/auth && jest docs/recipes/integration-test",
+    "test-docs": "yarn --cwd docs/recipes/auth && jest docs/recipes/integration-test && yarn --cwd docs/recipes/custom-gatherer-puppeteer test",
     "unit-core": "jest \"lighthouse-core/\"",
     "unit-cli": "jest \"lighthouse-cli/\"",
     "unit-viewer": "jest \"lighthouse-viewer/.*-test.js\"",
