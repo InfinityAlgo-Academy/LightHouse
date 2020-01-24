@@ -278,6 +278,13 @@ yarn smoke
 yarn type-check
 ```
 
+### Docs
+
+Some of our docs have tests that run only in CI by default. If you end up needing to modify our documentation, you'll need to run `yarn test-docs` locally to make sure they pass.
+
+**Additional Dependencies**
+- `brew install jq`
+
 ## Lighthouse Integrations
 This section details services that have integrated Lighthouse data. If you're working on a cool project integrating Lighthouse and would like to be featured here, file an issue to this repo or tweet at us [@_____lighthouse](https://twitter.com/____lighthouse?lang=en)!
 
