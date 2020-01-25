@@ -245,7 +245,30 @@ yarn
 yarn build-all
 ```
 
-If changing audit output, you'll likely also need to have the protocol-buffer compiler installed. See the [official installation instructions](https://github.com/protocolbuffers/protobuf#protocol-compiler-installation) or consult your [favorite package manager](https://formulae.brew.sh/formula/protobuf) for your OS.
+#### installing protobuf
+If changing audit output, you'll need to have v3.7.1 of the protocol-buffer/protobuf compiler installed. (v3.7.1 is known to be compatible, and 3.11.x is known to be **not** compatible.). 
+
+Homebrew should be able to install it correctly: `brew install protobuf@3.7.1`
+
+But if you want to do it manually, these steps that have worked well for us:
+
+```sh
+mkdir protobuf-install && cd protobuf-install
+curl -L -o protobuf-python-3.7.1.zip https://github.com/protocolbuffers/protobuf/releases/download/v3.7.1/protobuf-python-3.7.1.zip
+unzip protobuf-python-3.7.1.zip
+cd protobuf-3.7.1
+
+cd python
+python setup.py build
+python setup.py test
+(cd .. && autogen.sh && configure && make)
+(cd .. && sudo make install)
+python setup.py build --cpp_implementation
+sudo python setup.py install --cpp_implementation
+```
+
+Also, see the [official installation instructions](https://github.com/protocolbuffers/protobuf#protocol-compiler-installation).
+
 
 ### Run
 
