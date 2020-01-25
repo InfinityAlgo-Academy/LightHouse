@@ -1,6 +1,5 @@
 
 repo: GoogleChrome/lighthouse
-startAt: '2020-01-12T16:00:00Z'
 filters:
   - type: issue
     criteria:
