@@ -1817,13 +1817,8 @@
       "id": "form-field-multiple-labels",
       "title": "No form fields have multiple labels",
       "description": "Form fields with multiple labels can be confusingly announced by assistive technologies like screen readers which use either the first, the last, or all of the labels. [Learn more](https://web.dev/form-field-multiple-labels/).",
-      "score": 1,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [],
-        "items": []
-      }
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
     },
     "frame-title": {
       "id": "frame-title",
@@ -3871,7 +3866,7 @@
         },
         {
           "id": "form-field-multiple-labels",
-          "weight": 2,
+          "weight": 0,
           "group": "a11y-names-labels"
         },
         {
@@ -4016,7 +4011,7 @@
         }
       ],
       "id": "accessibility",
-      "score": 0.66
+      "score": 0.65
     },
     "best-practices": {
       "title": "Best Practices",

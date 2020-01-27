@@ -144,23 +144,30 @@ declare global {
       export type TaskNode = _TaskNode;
       export type MetaElement = LH.Artifacts['MetaElements'][0];
 
+      export interface RuleExecutionError {
+        name: string;
+        message: string;
+      }
+
+      export interface AxeResult {
+        id: string;
+        impact: string;
+        tags: Array<string>;
+        nodes: Array<{
+          path: string;
+          html: string;
+          snippet: string;
+          target: Array<string>;
+          failureSummary?: string;
+          nodeLabel?: string;
+        }>;
+        error?: RuleExecutionError;
+      }
+
       export interface Accessibility {
-        violations: {
-          id: string;
-          impact: string;
-          tags: string[];
-          nodes: {
-            path: string;
-            html: string;
-            snippet: string;
-            target: string[];
-            failureSummary?: string;
-            nodeLabel?: string;
-          }[];
-        }[];
-        notApplicable: {
-          id: string
-        }[];
+        violations: Array<AxeResult>;
+        notApplicable: Array<Pick<AxeResult, 'id'>>;
+        incomplete: Array<AxeResult>;
       }
 
       export interface CSSStyleSheetInfo {

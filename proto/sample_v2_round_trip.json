@@ -868,14 +868,9 @@
         },
         "form-field-multiple-labels": {
             "description": "Form fields with multiple labels can be confusingly announced by assistive technologies like screen readers which use either the first, the last, or all of the labels. [Learn more](https://web.dev/form-field-multiple-labels/).",
-            "details": {
-                "headings": [],
-                "items": [],
-                "type": "table"
-            },
             "id": "form-field-multiple-labels",
-            "score": 1.0,
-            "scoreDisplayMode": "binary",
+            "score": null,
+            "scoreDisplayMode": "notApplicable",
             "title": "No form fields have multiple labels"
         },
         "frame-title": {
@@ -3486,7 +3481,7 @@
                 {
                     "group": "a11y-names-labels",
                     "id": "form-field-multiple-labels",
-                    "weight": 2.0
+                    "weight": 0.0
                 },
                 {
                     "group": "a11y-names-labels",
@@ -3632,7 +3627,7 @@
             "description": "These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.",
             "id": "accessibility",
             "manualDescription": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).",
-            "score": 0.66,
+            "score": 0.65,
             "title": "Accessibility"
         },
         "best-practices": {
