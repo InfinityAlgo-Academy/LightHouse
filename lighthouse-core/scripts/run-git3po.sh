@@ -9,7 +9,7 @@ set -ex
 DIRNAME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$DIRNAME"
 
-START_AT=`date +%s -d "1 day ago"`
+START_AT="$(date +%s -d '1 day ago')000"
 
 npm install -g git3po
 
