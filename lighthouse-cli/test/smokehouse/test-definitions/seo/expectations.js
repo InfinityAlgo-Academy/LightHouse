@@ -123,7 +123,7 @@ const expectations = [
                 source: {
                   url: /seo-tester\.html.+$/,
                   urlProvider: 'network',
-                  line: 23,
+                  line: 31,
                   column: 12,
                 },
                 selector: '.small',
@@ -133,7 +133,7 @@ const expectations = [
                 source: {
                   url: /seo-tester\.html.+$/,
                   urlProvider: 'network',
-                  line: 27,
+                  line: 35,
                   column: 55,
                 },
                 selector: '.small-2',
