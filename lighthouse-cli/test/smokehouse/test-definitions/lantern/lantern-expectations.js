@@ -75,4 +75,27 @@ module.exports = [
       },
     },
   },
+  {
+    lhr: {
+      requestedUrl: 'http://localhost:10200/tricky-main-thread.html?xhr',
+      finalUrl: 'http://localhost:10200/tricky-main-thread.html?xhr',
+      audits: {
+        'interactive': {
+          // Make sure all of the CPU time is reflected in the perf metrics as well.
+          // The scripts stalls for 3 seconds and lantern has a 4x multiplier so 12s minimum.
+          numericValue: '>12000',
+        },
+        'bootup-time': {
+          details: {
+            items: {
+              0: {
+                url: /main-thread-consumer/,
+                scripting: '>9000',
+              },
+            },
+          },
+        },
+      },
+    },
+  },
 ];

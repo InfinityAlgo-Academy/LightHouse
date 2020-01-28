@@ -721,7 +721,7 @@
       "description": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn more](https://web.dev/bootup-time).",
       "score": 0.92,
       "scoreDisplayMode": "numeric",
-      "numericValue": 1150.573,
+      "numericValue": 1150.5310000000002,
       "numericUnit": "millisecond",
       "displayValue": "1.2 s",
       "details": {
@@ -754,31 +754,31 @@
         "items": [
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "total": 966.9800000000001,
-            "scripting": 957.494,
+            "total": 1044.3820000000003,
+            "scripting": 963.7010000000001,
             "scriptParseCompile": 2.777
           },
           {
-            "url": "Other",
-            "total": 391.76699999999977,
-            "scripting": 17.790999999999997,
+            "url": "Unattributable",
+            "total": 279.87100000000004,
+            "scripting": 9.61,
             "scriptParseCompile": 0.092
           },
           {
             "url": "http://localhost:10200/zone.js",
-            "total": 101.21099999999998,
-            "scripting": 89.50799999999998,
+            "total": 107.086,
+            "scripting": 90.81299999999999,
             "scriptParseCompile": 1.674
           },
           {
             "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
-            "total": 82.741,
-            "scripting": 80.032,
+            "total": 90.363,
+            "scripting": 80.659,
             "scriptParseCompile": 1.205
           }
         ],
         "summary": {
-          "wastedMs": 1150.573
+          "wastedMs": 1150.5310000000002
         }
       }
     },
@@ -1549,7 +1549,7 @@
               "url": "https://developers.google.com/speed/libraries/"
             },
             "transferSize": 30174,
-            "mainThreadTime": 82.74100000000001,
+            "mainThreadTime": 90.36300000000001,
             "blockingTime": 22.918000000000006
           }
         ],
@@ -5508,7 +5508,7 @@
         },
         {
           "values": {
-            "timeInMs": 1150.573
+            "timeInMs": 1150.5310000000002
           },
           "path": "audits[bootup-time].displayValue"
         }

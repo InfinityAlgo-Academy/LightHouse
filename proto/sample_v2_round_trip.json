@@ -158,38 +158,38 @@
                 "items": [
                     {
                         "scriptParseCompile": 2.777,
-                        "scripting": 957.494,
-                        "total": 966.9800000000001,
+                        "scripting": 963.7010000000001,
+                        "total": 1044.3820000000003,
                         "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
                     },
                     {
                         "scriptParseCompile": 0.092,
-                        "scripting": 17.790999999999997,
-                        "total": 391.76699999999977,
-                        "url": "Other"
+                        "scripting": 9.61,
+                        "total": 279.87100000000004,
+                        "url": "Unattributable"
                     },
                     {
                         "scriptParseCompile": 1.674,
-                        "scripting": 89.50799999999998,
-                        "total": 101.21099999999998,
+                        "scripting": 90.81299999999999,
+                        "total": 107.086,
                         "url": "http://localhost:10200/zone.js"
                     },
                     {
                         "scriptParseCompile": 1.205,
-                        "scripting": 80.032,
-                        "total": 82.741,
+                        "scripting": 80.659,
+                        "total": 90.363,
                         "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"
                     }
                 ],
                 "summary": {
-                    "wastedMs": 1150.573
+                    "wastedMs": 1150.5310000000002
                 },
                 "type": "table"
             },
             "displayValue": "1.2\u00a0s",
             "id": "bootup-time",
             "numericUnit": "millisecond",
-            "numericValue": 1150.573,
+            "numericValue": 1150.5310000000002,
             "score": 0.92,
             "scoreDisplayMode": "numeric",
             "title": "JavaScript execution time"
@@ -2717,7 +2717,7 @@
                             "type": "link",
                             "url": "https://developers.google.com/speed/libraries/"
                         },
-                        "mainThreadTime": 82.74100000000001,
+                        "mainThreadTime": 90.36300000000001,
                         "transferSize": 30174.0
                     }
                 ],
