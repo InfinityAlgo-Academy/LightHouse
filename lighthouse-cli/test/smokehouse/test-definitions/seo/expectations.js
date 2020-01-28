@@ -287,15 +287,15 @@ const expectations = [
           details: {
             items: [
               {
-                "lineMessages": [
+                'lineMessages': [
                   {
-                    "lineNumber": 3,
-                    "message": "Unrecognized schema.org type: http://schema.org/CatConvention"
-                  }
+                    'lineNumber': 3,
+                    'message': 'Unrecognized schema.org type: http://schema.org/CatConvention',
+                  },
                 ],
-              }
-            ]
-          }
+              },
+            ],
+          },
         },
       },
     },
