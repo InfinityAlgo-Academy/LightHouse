@@ -28,10 +28,10 @@ class ManifestValues {
         validate: manifestValue => !!manifestValue.start_url.value,
       },
       {
-        id: 'hasIconsAtLeast192px',
-        failureText: 'Manifest does not have a PNG icon of at least 192px',
+        id: 'hasIconsAtLeast144px',
+        failureText: 'Manifest does not have a PNG icon of at least 144px',
         validate: manifestValue => icons.doExist(manifestValue) &&
-            icons.pngSizedAtLeast(192, manifestValue).length > 0,
+            icons.pngSizedAtLeast(144, manifestValue).length > 0,
       },
       {
         id: 'hasIconsAtLeast512px',

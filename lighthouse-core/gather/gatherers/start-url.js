@@ -6,6 +6,7 @@
 'use strict';
 
 const Gatherer = require('./gatherer.js');
+const URL = require('../../lib/url-shim.js');
 
 /** @typedef {import('../driver.js')} Driver */
 
@@ -37,9 +38,15 @@ class StartUrl extends Gatherer {
     }
 
     try {
-      return await this._attemptStartURLFetch(passContext.driver, startUrlInfo.startUrl);
+      const statusAndExplanation =
+        await this._attemptStartURLFetch(passContext.driver, startUrlInfo.startUrl);
+      return {url: startUrlInfo.startUrl, ...statusAndExplanation};
     } catch (err) {
-      return {statusCode: -1, explanation: 'Error while fetching start_url via service worker.'};
+      return {
+        url: startUrlInfo.startUrl,
+        statusCode: -1,
+        explanation: 'Error while fetching start_url via service worker.',
+      };
     }
   }
 
@@ -75,7 +82,10 @@ class StartUrl extends Gatherer {
     // Wait up to 3s to get a matched network request from the fetch() to work
     const timeoutPromise = new Promise(resolve =>
       setTimeout(
-        () => resolve({statusCode: -1, explanation: 'Timed out waiting for start_url to respond.'}),
+        () => resolve({
+          statusCode: -1,
+          explanation: `Timed out waiting for start_url (${startUrl}) to respond.`,
+        }),
         3000
       )
     );
@@ -87,7 +97,8 @@ class StartUrl extends Gatherer {
       function onResponseReceived(responseEvent) {
         const {response} = responseEvent;
         // ignore mismatched URLs
-        if (response.url !== startUrl) return;
+        if (!URL.equalWithExcludedFragments(response.url, startUrl)) return;
+
         driver.off('Network.responseReceived', onResponseReceived);
 
         if (!response.fromServiceWorker) {
@@ -96,7 +107,7 @@ class StartUrl extends Gatherer {
             explanation: 'The start_url did respond, but not via a service worker.',
           });
         }
-        // Successful SW-served fetch of the start_URL
+        // SW-served fetch of the start_URL. Note, the status code could be anything.
         return resolve({statusCode: response.status});
       }
     });

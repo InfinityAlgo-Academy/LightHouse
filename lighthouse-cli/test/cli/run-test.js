@@ -91,10 +91,15 @@ describe('CLI run', function() {
 
 describe('flag coercing', () => {
   it('should force to array', () => {
-    assert.deepStrictEqual(getFlags(`--only-audits foo chrome://version`).onlyAudits, ['foo']);
+    assert.deepStrictEqual(
+      getFlags('https://www.example.com --only-audits foo').onlyAudits, ['foo']);
+  });
+
+  it('should allow csv', () => {
+    assert.deepStrictEqual(
+      getFlags('https://www.example.com --output html,json').output, ['html', 'json']);
   });
 });
-
 
 describe('saveResults', () => {
   it('will quit early if we\'re in gather mode', async () => {

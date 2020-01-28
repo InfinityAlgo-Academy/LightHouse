@@ -5,7 +5,7 @@
     "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3358.0 Safari/537.36",
     "benchmarkIndex": 1000
   },
-  "lighthouseVersion": "5.2.0",
+  "lighthouseVersion": "5.6.0",
   "fetchTime": "2018-03-13T00:55:45.840Z",
   "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "finalUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
@@ -74,20 +74,32 @@
     "first-contentful-paint": {
       "id": "first-contentful-paint",
       "title": "First Contentful Paint",
-      "description": "First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint).",
+      "description": "First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://web.dev/first-contentful-paint).",
       "score": 0.51,
       "scoreDisplayMode": "numeric",
       "numericValue": 3969.135,
+      "numericUnit": "millisecond",
       "displayValue": "4.0 s"
     },
     "first-meaningful-paint": {
       "id": "first-meaningful-paint",
       "title": "First Meaningful Paint",
-      "description": "First Meaningful Paint measures when the primary content of a page is visible. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint).",
+      "description": "First Meaningful Paint measures when the primary content of a page is visible. [Learn more](https://web.dev/first-meaningful-paint).",
       "score": 0.51,
       "scoreDisplayMode": "numeric",
       "numericValue": 3969.136,
+      "numericUnit": "millisecond",
       "displayValue": "4.0 s"
+    },
+    "largest-contentful-paint": {
+      "id": "largest-contentful-paint",
+      "title": "Largest Contentful Paint",
+      "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn More](https://web.dev/lighthouse-largest-contentful-paint)",
+      "score": 0.31,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 4927.278,
+      "numericUnit": "millisecond",
+      "displayValue": "4.9 s"
     },
     "load-fast-enough-for-pwa": {
       "id": "load-fast-enough-for-pwa",
@@ -95,15 +107,17 @@
       "description": "A fast page load over a cellular network ensures a good mobile user experience. [Learn more](https://web.dev/load-fast-enough-for-pwa).",
       "score": 1,
       "scoreDisplayMode": "binary",
-      "numericValue": 4927.278
+      "numericValue": 4927.278,
+      "numericUnit": "millisecond"
     },
     "speed-index": {
       "id": "speed-index",
       "title": "Speed Index",
-      "description": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/speed-index).",
+      "description": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more](https://web.dev/speed-index).",
       "score": 0.74,
       "scoreDisplayMode": "numeric",
       "numericValue": 4417,
+      "numericUnit": "millisecond",
       "displayValue": "4.4 s"
     },
     "screenshot-thumbnails": {
@@ -185,28 +199,31 @@
     "estimated-input-latency": {
       "id": "estimated-input-latency",
       "title": "Estimated Input Latency",
-      "description": "Estimated Input Latency is an estimate of how long your app takes to respond to user input, in milliseconds, during the busiest 5s window of page load. If your latency is higher than 50 ms, users may perceive your app as laggy. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency).",
+      "description": "Estimated Input Latency is an estimate of how long your app takes to respond to user input, in milliseconds, during the busiest 5s window of page load. If your latency is higher than 50 ms, users may perceive your app as laggy. [Learn more](https://web.dev/estimated-input-latency).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 16,
+      "numericUnit": "millisecond",
       "displayValue": "20 ms"
     },
     "total-blocking-time": {
       "id": "total-blocking-time",
       "title": "Total Blocking Time",
-      "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds.",
+      "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more](https://web.dev/lighthouse-total-blocking-time).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 116.79800000000023,
+      "numericUnit": "millisecond",
       "displayValue": "120 ms"
     },
     "max-potential-fid": {
       "id": "max-potential-fid",
       "title": "Max Potential First Input Delay",
-      "description": "The maximum potential First Input Delay that your users could experience is the duration, in milliseconds, of the longest task. [Learn more](https://developers.google.com/web/updates/2018/05/first-input-delay).",
+      "description": "The maximum potential First Input Delay that your users could experience is the duration of the longest task. [Learn more](https://web.dev/lighthouse-max-potential-fid).",
       "score": 0.92,
       "scoreDisplayMode": "numeric",
       "numericValue": 122.537,
+      "numericUnit": "millisecond",
       "displayValue": "120 ms"
     },
     "errors-in-console": {
@@ -215,7 +232,6 @@
       "description": "Errors logged to the console indicate unresolved problems. They can come from network request failures and other browser concerns. [Learn more](https://web.dev/errors-in-console)",
       "score": 0,
       "scoreDisplayMode": "binary",
-      "numericValue": 5,
       "details": {
         "type": "table",
         "headings": [
@@ -237,6 +253,11 @@
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           },
           {
+            "source": "Runtime.exception",
+            "description": "Error: An error\n    at http://localhost:10200/dobetterweb/dbw_tester.html:42:38",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
+          },
+          {
             "source": "network",
             "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
             "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200"
@@ -250,11 +271,6 @@
             "source": "network",
             "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
             "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200"
-          },
-          {
-            "source": "Runtime.exception",
-            "description": "Error: An error\n    at http://localhost:10200/dobetterweb/dbw_tester.html:42:38",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           }
         ]
       }
@@ -262,10 +278,11 @@
     "time-to-first-byte": {
       "id": "time-to-first-byte",
       "title": "Server response times are low (TTFB)",
-      "description": "Time To First Byte identifies the time at which your server sends a response. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/ttfb).",
+      "description": "Time To First Byte identifies the time at which your server sends a response. [Learn more](https://web.dev/time-to-first-byte).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "numericValue": 570.5630000000001,
+      "numericUnit": "millisecond",
       "displayValue": "Root document took 570 ms",
       "details": {
         "type": "opportunity",
@@ -277,25 +294,27 @@
     "first-cpu-idle": {
       "id": "first-cpu-idle",
       "title": "First CPU Idle",
-      "description": "First CPU Idle marks the first time at which the page's main thread is quiet enough to handle input. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-interactive).",
+      "description": "First CPU Idle marks the first time at which the page's main thread is quiet enough to handle input.  [Learn more](https://web.dev/first-cpu-idle).",
       "score": 0.72,
       "scoreDisplayMode": "numeric",
       "numericValue": 4927.278,
+      "numericUnit": "millisecond",
       "displayValue": "4.9 s"
     },
     "interactive": {
       "id": "interactive",
       "title": "Time to Interactive",
-      "description": "Time to interactive is the amount of time it takes for the page to become fully interactive. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive).",
+      "description": "Time to interactive is the amount of time it takes for the page to become fully interactive. [Learn more](https://web.dev/interactive).",
       "score": 0.78,
       "scoreDisplayMode": "numeric",
       "numericValue": 4927.278,
+      "numericUnit": "millisecond",
       "displayValue": "4.9 s"
     },
     "user-timings": {
       "id": "user-timings",
       "title": "User Timing marks and measures",
-      "description": "Consider instrumenting your app with the User Timing API to measure your app's real-world performance during key user experiences. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/user-timing).",
+      "description": "Consider instrumenting your app with the User Timing API to measure your app's real-world performance during key user experiences. [Learn more](https://web.dev/user-timings).",
       "score": null,
       "scoreDisplayMode": "notApplicable",
       "details": {
@@ -306,8 +325,8 @@
     },
     "critical-request-chains": {
       "id": "critical-request-chains",
-      "title": "Minimize Critical Requests Depth",
-      "description": "The Critical Request Chains below show you what resources are loaded with a high priority. Consider reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains).",
+      "title": "Avoid chaining critical requests",
+      "description": "The Critical Request Chains below show you what resources are loaded with a high priority. Consider reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load. [Learn more](https://web.dev/critical-request-chains).",
       "score": null,
       "scoreDisplayMode": "informative",
       "displayValue": "12 chains found",
@@ -453,10 +472,11 @@
     "redirects": {
       "id": "redirects",
       "title": "Avoid multiple page redirects",
-      "description": "Redirects introduce additional delays before the page can be loaded. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/redirects).",
+      "description": "Redirects introduce additional delays before the page can be loaded. [Learn more](https://web.dev/redirects).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -488,7 +508,7 @@
     "apple-touch-icon": {
       "id": "apple-touch-icon",
       "title": "Does not provide a valid `apple-touch-icon`",
-      "description": "For ideal appearance on iOS when users add a progressive web app to the home screen, define an `apple-touch-icon`. It must point to a non-transparent 192px (or 180px) square PNG. [Learn More](https://developers.google.com/web/fundamentals/design-and-ux/browser-customization/).",
+      "description": "For ideal appearance on iOS when users add a progressive web app to the home screen, define an `apple-touch-icon`. It must point to a non-transparent 192px (or 180px) square PNG. [Learn More](https://web.dev/apple-touch-icon/).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "warnings": []
@@ -600,33 +620,34 @@
             "text": "Deprecation / Warning"
           },
           {
-            "key": "url",
-            "itemType": "url",
+            "key": "source",
+            "itemType": "source-location",
             "text": "URL"
-          },
-          {
-            "key": "lineNumber",
-            "itemType": "text",
-            "text": "Line"
           }
         ],
         "items": [
           {
             "value": "Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/.",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "source": "deprecation",
-            "lineNumber": 322
+            "source": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 322,
+              "column": 6
+            }
           },
           {
             "value": "'window.webkitStorageInfo' is deprecated. Please use 'navigator.webkitTemporaryStorage' or 'navigator.webkitPersistentStorage' instead.",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "source": "deprecation",
-            "lineNumber": 325
+            "source": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 325,
+              "column": 9
+            }
           },
           {
-            "value": "/deep/ combinator is no longer supported in CSS dynamic profile.It is now effectively no-op, acting as if it were a descendant combinator. /deep/ combinator will be removed, and will be invalid at M65. You should remove it. See https://www.chromestatus.com/features/4964279606312960 for more details.",
-            "url": "",
-            "source": "deprecation"
+            "value": "/deep/ combinator is no longer supported in CSS dynamic profile.It is now effectively no-op, acting as if it were a descendant combinator. /deep/ combinator will be removed, and will be invalid at M65. You should remove it. See https://www.chromestatus.com/features/4964279606312960 for more details."
           }
         ]
       }
@@ -634,10 +655,11 @@
     "mainthread-work-breakdown": {
       "id": "mainthread-work-breakdown",
       "title": "Minimizes main-thread work",
-      "description": "Consider reducing the time spent parsing, compiling and executing JS. You may find delivering smaller JS payloads helps with this.",
+      "description": "Consider reducing the time spent parsing, compiling and executing JS. You may find delivering smaller JS payloads helps with this. [Learn more](https://web.dev/mainthread-work-breakdown)",
       "score": 0.96,
       "scoreDisplayMode": "numeric",
       "numericValue": 1548.5690000000002,
+      "numericUnit": "millisecond",
       "displayValue": "1.5 s",
       "details": {
         "type": "table",
@@ -696,10 +718,11 @@
     "bootup-time": {
       "id": "bootup-time",
       "title": "JavaScript execution time",
-      "description": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/bootup).",
+      "description": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn more](https://web.dev/bootup-time).",
       "score": 0.92,
       "scoreDisplayMode": "numeric",
       "numericValue": 1150.573,
+      "numericUnit": "millisecond",
       "displayValue": "1.2 s",
       "details": {
         "type": "table",
@@ -762,10 +785,11 @@
     "uses-rel-preload": {
       "id": "uses-rel-preload",
       "title": "Preload key requests",
-      "description": "Consider using `<link rel=preload>` to prioritize fetching resources that are currently requested later in page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/preload).",
+      "description": "Consider using `<link rel=preload>` to prioritize fetching resources that are currently requested later in page load. [Learn more](https://web.dev/uses-rel-preload).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -777,10 +801,11 @@
     "uses-rel-preconnect": {
       "id": "uses-rel-preconnect",
       "title": "Preconnect to required origins",
-      "description": "Consider adding `preconnect` or `dns-prefetch` resource hints to establish early connections to important third-party origins. [Learn more](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect).",
+      "description": "Consider adding `preconnect` or `dns-prefetch` resource hints to establish early connections to important third-party origins. [Learn more](https://web.dev/uses-rel-preconnect).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "warnings": [],
       "details": {
@@ -793,7 +818,7 @@
     "font-display": {
       "id": "font-display",
       "title": "All text remains visible during webfont loads",
-      "description": "Leverage the font-display CSS feature to ensure text is user-visible while webfonts are loading. [Learn more](https://developers.google.com/web/updates/2016/02/font-display).",
+      "description": "Leverage the font-display CSS feature to ensure text is user-visible while webfonts are loading. [Learn more](https://web.dev/font-display).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "warnings": [],
@@ -840,7 +865,6 @@
       "description": "Lists the network requests that were made during page load.",
       "score": null,
       "scoreDisplayMode": "informative",
-      "numericValue": 18,
       "details": {
         "type": "table",
         "headings": [
@@ -1082,6 +1106,7 @@
       "score": null,
       "scoreDisplayMode": "informative",
       "numericValue": 1.7249999999999943,
+      "numericUnit": "millisecond",
       "displayValue": "0 ms",
       "details": {
         "type": "table",
@@ -1117,6 +1142,7 @@
       "score": null,
       "scoreDisplayMode": "informative",
       "numericValue": 572.829,
+      "numericUnit": "millisecond",
       "displayValue": "570 ms",
       "details": {
         "type": "table",
@@ -1151,7 +1177,6 @@
       "description": "Lists the toplevel main thread tasks that executed during page load.",
       "score": null,
       "scoreDisplayMode": "informative",
-      "numericValue": 16,
       "details": {
         "type": "table",
         "headings": [
@@ -1242,7 +1267,8 @@
       "description": "Collects all available metrics.",
       "score": null,
       "scoreDisplayMode": "informative",
-      "numericValue": 4927.278,
+      "numericValue": 4927,
+      "numericUnit": "millisecond",
       "details": {
         "type": "debugdata",
         "items": [
@@ -1251,6 +1277,8 @@
             "firstContentfulPaintTs": 185607289047,
             "firstMeaningfulPaint": 3969,
             "firstMeaningfulPaintTs": 185607289048,
+            "largestContentfulPaint": 4927,
+            "largestContentfulPaintTs": 185608247190,
             "firstCPUIdle": 4927,
             "firstCPUIdleTs": 185608247190,
             "interactive": 4927,
@@ -1259,6 +1287,7 @@
             "speedIndexTs": 185607736912,
             "estimatedInputLatency": 16,
             "totalBlockingTime": 117,
+            "maxPotentialFID": 123,
             "observedNavigationStart": 0,
             "observedNavigationStartTs": 185603319912,
             "observedFirstPaint": 3969,
@@ -1267,6 +1296,8 @@
             "observedFirstContentfulPaintTs": 185607289047,
             "observedFirstMeaningfulPaint": 3969,
             "observedFirstMeaningfulPaintTs": 185607289048,
+            "observedLargestContentfulPaint": 4927,
+            "observedLargestContentfulPaintTs": 185608247190,
             "observedTraceEnd": 10281,
             "observedTraceEndTs": 185613601189,
             "observedLoad": 4924,
@@ -1279,6 +1310,9 @@
             "observedLastVisualChangeTs": 185608110912,
             "observedSpeedIndex": 4417,
             "observedSpeedIndexTs": 185607736763
+          },
+          {
+            "lcpInvalidated": false
           }
         ]
       }
@@ -1339,17 +1373,17 @@
           {
             "resourceType": "total",
             "label": "Total",
-            "requestCount": 18,
-            "size": 160738,
-            "countOverBudget": "8 requests",
-            "sizeOverBudget": 58338
+            "requestCount": 17,
+            "size": 160517,
+            "countOverBudget": "7 requests",
+            "sizeOverBudget": 58117
           },
           {
             "resourceType": "other",
             "label": "Other",
-            "requestCount": 2,
-            "size": 12861,
-            "sizeOverBudget": 7741
+            "requestCount": 1,
+            "size": 12640,
+            "sizeOverBudget": 7520
           },
           {
             "resourceType": "third-party",
@@ -1401,7 +1435,7 @@
       "description": "To set budgets for the quantity and size of page resources, add a budget.json file. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).",
       "score": null,
       "scoreDisplayMode": "informative",
-      "displayValue": "18 requests • 157 KB",
+      "displayValue": "17 requests • 157 KB",
       "details": {
         "type": "table",
         "headings": [
@@ -1425,8 +1459,8 @@
           {
             "resourceType": "total",
             "label": "Total",
-            "requestCount": 18,
-            "size": 160738
+            "requestCount": 17,
+            "size": 160517
           },
           {
             "resourceType": "script",
@@ -1449,8 +1483,8 @@
           {
             "resourceType": "other",
             "label": "Other",
-            "requestCount": 2,
-            "size": 12861
+            "requestCount": 1,
+            "size": 12640
           },
           {
             "resourceType": "stylesheet",
@@ -1481,7 +1515,7 @@
     },
     "third-party-summary": {
       "id": "third-party-summary",
-      "title": "Third-Party usage",
+      "title": "Minimize third-party usage",
       "description": "Third-party code can significantly impact load performance. Limit the number of redundant third-party providers and try to load third-party code after your page has primarily finished loading. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/).",
       "score": 1,
       "scoreDisplayMode": "binary",
@@ -1560,6 +1594,42 @@
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
+    "aria-hidden-body": {
+      "id": "aria-hidden-body",
+      "title": "`[aria-hidden=\"true\"]` is not present on the document `<body>`",
+      "description": "Assistive technologies, like screen readers, work inconsistently when `aria-hidden=\"true\"` is set on the document `<body>`. [Learn more](https://web.dev/aria-hidden-body/).",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
+    },
+    "aria-hidden-focus": {
+      "id": "aria-hidden-focus",
+      "title": "`[aria-hidden=\"true\"]` elements do not contain focusable descendents",
+      "description": "Focusable descendents within an `[aria-hidden=\"true\"]` element prevent those interactive elements from being available to users of assistive technologies like screen readers. [Learn more](https://web.dev/aria-hidden-focus/).",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
+    },
+    "aria-input-field-name": {
+      "id": "aria-input-field-name",
+      "title": "ARIA input fields have accessible names",
+      "description": "When an input field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-input-field-name/).",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
+    },
     "aria-required-attr": {
       "id": "aria-required-attr",
       "title": "`[role]`s have all required `[aria-*]` attributes",
@@ -1587,6 +1657,18 @@
       "description": "ARIA roles must have valid values in order to perform their intended accessibility functions. [Learn more](https://web.dev/aria-roles/).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
+    },
+    "aria-toggle-field-name": {
+      "id": "aria-toggle-field-name",
+      "title": "ARIA toggle fields have accessible names",
+      "description": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-toggle-field-label/).",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
     },
     "aria-valid-attr-value": {
       "id": "aria-valid-attr-value",
@@ -1707,10 +1789,34 @@
         "items": []
       }
     },
-    "duplicate-id": {
-      "id": "duplicate-id",
-      "title": "`[id]` attributes on the page are unique",
-      "description": "The value of an id attribute must be unique to prevent other instances from being overlooked by assistive technologies. [Learn more](https://web.dev/duplicate-id/).",
+    "duplicate-id-active": {
+      "id": "duplicate-id-active",
+      "title": "`[id]` attributes on active, focusable elements are unique",
+      "description": "All focusable elements must have a unique `id` to ensure that they're visible to assistive technologies. [Learn more](https://web.dev/duplicate-id-active/).",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
+    },
+    "duplicate-id-aria": {
+      "id": "duplicate-id-aria",
+      "title": "ARIA IDs are unique",
+      "description": "The value of an ARIA ID must be unique to prevent other instances from being overlooked by assistive technologies. [Learn more](https://web.dev/duplicate-id-aria/).",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
+    },
+    "form-field-multiple-labels": {
+      "id": "form-field-multiple-labels",
+      "title": "No form fields have multiple labels",
+      "description": "Form fields with multiple labels can be confusingly announced by assistive technologies like screen readers which use either the first, the last, or all of the labels. [Learn more](https://web.dev/form-field-multiple-labels/).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "details": {
@@ -1725,6 +1831,18 @@
       "description": "Screen reader users rely on frame titles to describe the contents of frames. [Learn more](https://web.dev/frame-title/).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
+    },
+    "heading-order": {
+      "id": "heading-order",
+      "title": "Heading elements appear in a sequentially-descending order",
+      "description": "Properly ordered headings that do not skip levels convey the semantic structure of the page, making it easier to navigate and understand when using assistive technologies. [Learn more](https://web.dev/heading-order/).",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
     },
     "html-has-lang": {
       "id": "html-has-lang",
@@ -2120,13 +2238,6 @@
       "score": null,
       "scoreDisplayMode": "manual"
     },
-    "heading-levels": {
-      "id": "heading-levels",
-      "title": "Headings don't skip levels",
-      "description": "Headings are used to create an outline for the page and heading levels are not skipped. [Learn more](https://web.dev/heading-levels/).",
-      "score": null,
-      "scoreDisplayMode": "manual"
-    },
     "interactive-element-affordance": {
       "id": "interactive-element-affordance",
       "title": "Interactive elements indicate their purpose and state",
@@ -2172,10 +2283,11 @@
     "uses-long-cache-ttl": {
       "id": "uses-long-cache-ttl",
       "title": "Serve static assets with an efficient cache policy",
-      "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/cache-policy).",
+      "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more](https://web.dev/uses-long-cache-ttl).",
       "score": 0.58,
       "scoreDisplayMode": "numeric",
       "numericValue": 103455,
+      "numericUnit": "byte",
       "displayValue": "10 resources found",
       "details": {
         "type": "table",
@@ -2279,10 +2391,11 @@
     "total-byte-weight": {
       "id": "total-byte-weight",
       "title": "Avoids enormous network payloads",
-      "description": "Large network payloads cost users real money and are highly correlated with long load times. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/network-payloads).",
+      "description": "Large network payloads cost users real money and are highly correlated with long load times. [Learn more](https://web.dev/total-byte-weight).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 160738,
+      "numericUnit": "byte",
       "displayValue": "Total size was 157 KB",
       "details": {
         "type": "table",
@@ -2345,10 +2458,11 @@
     "offscreen-images": {
       "id": "offscreen-images",
       "title": "Defer offscreen images",
-      "description": "Consider lazy-loading offscreen and hidden images after all critical resources have finished loading to lower time to interactive. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images).",
+      "description": "Consider lazy-loading offscreen and hidden images after all critical resources have finished loading to lower time to interactive. [Learn more](https://web.dev/offscreen-images).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "warnings": [],
       "details": {
@@ -2362,10 +2476,11 @@
     "render-blocking-resources": {
       "id": "render-blocking-resources",
       "title": "Eliminate render-blocking resources",
-      "description": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources).",
+      "description": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. [Learn more](https://web.dev/render-blocking-resources).",
       "score": 0.46,
       "scoreDisplayMode": "numeric",
       "numericValue": 1129,
+      "numericUnit": "millisecond",
       "displayValue": "Potential savings of 1,130 ms",
       "details": {
         "type": "opportunity",
@@ -2419,10 +2534,11 @@
     "unminified-css": {
       "id": "unminified-css",
       "title": "Minify CSS",
-      "description": "Minifying CSS files can reduce network payload sizes. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/minify-css).",
+      "description": "Minifying CSS files can reduce network payload sizes. [Learn more](https://web.dev/unminified-css).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -2435,10 +2551,11 @@
     "unminified-javascript": {
       "id": "unminified-javascript",
       "title": "Minify JavaScript",
-      "description": "Minifying JavaScript files can reduce payload sizes and script parse time. [Learn more](https://developers.google.com/speed/docs/insights/MinifyResources).",
+      "description": "Minifying JavaScript files can reduce payload sizes and script parse time. [Learn more](https://web.dev/unminified-javascript).",
       "score": 0.88,
       "scoreDisplayMode": "numeric",
       "numericValue": 150,
+      "numericUnit": "millisecond",
       "displayValue": "Potential savings of 30 KB",
       "warnings": [],
       "details": {
@@ -2475,10 +2592,28 @@
     "unused-css-rules": {
       "id": "unused-css-rules",
       "title": "Remove unused CSS",
-      "description": "Remove dead rules from stylesheets and defer the loading of CSS not used for above-the-fold content to reduce unnecessary bytes consumed by network activity. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/unused-css).",
+      "description": "Remove dead rules from stylesheets and defer the loading of CSS not used for above-the-fold content to reduce unnecessary bytes consumed by network activity. [Learn more](https://web.dev/unused-css-rules).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
+      "displayValue": "",
+      "details": {
+        "type": "opportunity",
+        "headings": [],
+        "items": [],
+        "overallSavingsMs": 0,
+        "overallSavingsBytes": 0
+      }
+    },
+    "unused-javascript": {
+      "id": "unused-javascript",
+      "title": "Remove unused JavaScript",
+      "description": "Remove unused JavaScript to reduce bytes consumed by network activity. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting).",
+      "score": 1,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -2491,10 +2626,11 @@
     "uses-webp-images": {
       "id": "uses-webp-images",
       "title": "Serve images in next-gen formats",
-      "description": "Image formats like JPEG 2000, JPEG XR, and WebP often provide better compression than PNG or JPEG, which means faster downloads and less data consumption. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/webp).",
+      "description": "Image formats like JPEG 2000, JPEG XR, and WebP often provide better compression than PNG or JPEG, which means faster downloads and less data consumption. [Learn more](https://web.dev/uses-webp-images).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "Potential savings of 9 KB",
       "warnings": [],
       "details": {
@@ -2537,10 +2673,11 @@
     "uses-optimized-images": {
       "id": "uses-optimized-images",
       "title": "Efficiently encode images",
-      "description": "Optimized images load faster and consume less cellular data. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/optimize-images).",
+      "description": "Optimized images load faster and consume less cellular data. [Learn more](https://web.dev/uses-optimized-images).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "warnings": [],
       "details": {
@@ -2554,10 +2691,11 @@
     "uses-text-compression": {
       "id": "uses-text-compression",
       "title": "Enable text compression",
-      "description": "Text-based resources should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/text-compression).",
+      "description": "Text-based resources should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more](https://web.dev/uses-text-compression).",
       "score": 0.75,
       "scoreDisplayMode": "numeric",
       "numericValue": 300,
+      "numericUnit": "millisecond",
       "displayValue": "Potential savings of 63 KB",
       "details": {
         "type": "opportunity",
@@ -2597,10 +2735,11 @@
     "uses-responsive-images": {
       "id": "uses-responsive-images",
       "title": "Properly size images",
-      "description": "Serve images that are appropriately-sized to save cellular data and improve load time. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/oversized-images).",
+      "description": "Serve images that are appropriately-sized to save cellular data and improve load time. [Learn more](https://web.dev/uses-responsive-images).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "warnings": [],
       "details": {
@@ -2614,10 +2753,11 @@
     "efficient-animated-content": {
       "id": "efficient-animated-content",
       "title": "Use video formats for animated content",
-      "description": "Large GIFs are inefficient for delivering animated content. Consider using MPEG4/WebM videos for animations and PNG/WebP for static images instead of GIF to save network bytes. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/replace-animated-gifs-with-video/)",
+      "description": "Large GIFs are inefficient for delivering animated content. Consider using MPEG4/WebM videos for animations and PNG/WebP for static images instead of GIF to save network bytes. [Learn more](https://web.dev/efficient-animated-content)",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -2645,10 +2785,11 @@
     "dom-size": {
       "id": "dom-size",
       "title": "Avoids an excessive DOM size",
-      "description": "Browser engineers recommend pages contain fewer than ~1,500 DOM elements. The sweet spot is a tree depth < 32 elements and fewer than 60 children/parent element. A large DOM can increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://web.dev/dom-size).",
+      "description": "A large DOM will increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://web.dev/dom-size).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 31,
+      "numericUnit": "element",
       "displayValue": "31 elements",
       "details": {
         "type": "table",
@@ -2882,7 +3023,22 @@
             "name": "WordPress"
           }
         ],
-        "summary": {}
+        "summary": {},
+        "debugData": {
+          "type": "debugdata",
+          "stacks": [
+            {
+              "id": "jquery",
+              "version": "2.1.1"
+            },
+            {
+              "id": "jquery-fast"
+            },
+            {
+              "id": "wordpress"
+            }
+          ]
+        }
       }
     },
     "notification-on-start": {
@@ -3091,7 +3247,7 @@
         "headings": [
           {
             "key": "source",
-            "itemType": "url",
+            "itemType": "source-location",
             "text": "Source"
           },
           {
@@ -3112,7 +3268,10 @@
         ],
         "items": [
           {
-            "source": "Legible text",
+            "source": {
+              "type": "code",
+              "value": "Legible text"
+            },
             "selector": "",
             "coverage": "100.00%",
             "fontSize": "≥ 12px"
@@ -3314,6 +3473,7 @@
     "gatherMode": false,
     "disableStorageReset": false,
     "emulatedFormFactor": "mobile",
+    "internalDisableDeviceScreenEmulation": false,
     "channel": "cli",
     "budgets": [
       {
@@ -3397,28 +3557,23 @@
         "timings": [
           {
             "metric": "first-contentful-paint",
-            "budget": 3000,
-            "tolerance": 100
+            "budget": 3000
           },
           {
             "metric": "first-cpu-idle",
-            "budget": 2900,
-            "tolerance": 100
+            "budget": 2900
           },
           {
             "metric": "interactive",
-            "budget": 2900,
-            "tolerance": 100
+            "budget": 2900
           },
           {
             "metric": "first-meaningful-paint",
-            "budget": 2000,
-            "tolerance": 100
+            "budget": 2000
           },
           {
             "metric": "max-potential-fid",
-            "budget": 100,
-            "tolerance": 100
+            "budget": 100
           }
         ]
       }
@@ -3444,6 +3599,11 @@
         {
           "id": "first-meaningful-paint",
           "weight": 1,
+          "group": "metrics"
+        },
+        {
+          "id": "largest-contentful-paint",
+          "weight": 0,
           "group": "metrics"
         },
         {
@@ -3501,6 +3661,11 @@
         },
         {
           "id": "unused-css-rules",
+          "weight": 0,
+          "group": "load-opportunities"
+        },
+        {
+          "id": "unused-javascript",
           "weight": 0,
           "group": "load-opportunities"
         },
@@ -3651,6 +3816,21 @@
           "group": "a11y-aria"
         },
         {
+          "id": "aria-hidden-body",
+          "weight": 10,
+          "group": "a11y-aria"
+        },
+        {
+          "id": "aria-hidden-focus",
+          "weight": 3,
+          "group": "a11y-aria"
+        },
+        {
+          "id": "aria-input-field-name",
+          "weight": 3,
+          "group": "a11y-aria"
+        },
+        {
           "id": "aria-required-attr",
           "weight": 0,
           "group": "a11y-aria"
@@ -3668,6 +3848,11 @@
         {
           "id": "aria-roles",
           "weight": 0,
+          "group": "a11y-aria"
+        },
+        {
+          "id": "aria-toggle-field-name",
+          "weight": 3,
           "group": "a11y-aria"
         },
         {
@@ -3716,14 +3901,29 @@
           "group": "a11y-names-labels"
         },
         {
-          "id": "duplicate-id",
-          "weight": 1,
-          "group": "a11y-best-practices"
+          "id": "duplicate-id-active",
+          "weight": 3,
+          "group": "a11y-navigation"
+        },
+        {
+          "id": "duplicate-id-aria",
+          "weight": 10,
+          "group": "a11y-aria"
+        },
+        {
+          "id": "form-field-multiple-labels",
+          "weight": 2,
+          "group": "a11y-names-labels"
         },
         {
           "id": "frame-title",
           "weight": 0,
           "group": "a11y-names-labels"
+        },
+        {
+          "id": "heading-order",
+          "weight": 2,
+          "group": "a11y-navigation"
         },
         {
           "id": "html-has-lang",
@@ -3852,16 +4052,12 @@
           "weight": 0
         },
         {
-          "id": "heading-levels",
-          "weight": 0
-        },
-        {
           "id": "use-landmarks",
           "weight": 0
         }
       ],
       "id": "accessibility",
-      "score": 0.46
+      "score": 0.66
     },
     "best-practices": {
       "title": "Best Practices",
@@ -4282,6 +4478,18 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:largest-contentful-paint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:LargestContentfulPaint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:load-fast-enough-for-pwa",
         "duration": 100,
         "entryType": "measure"
@@ -4600,6 +4808,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:TimingSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:offline-start-url",
         "duration": 100,
         "entryType": "measure"
@@ -4660,6 +4874,24 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:aria-hidden-body",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:aria-hidden-focus",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:aria-input-field-name",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:aria-required-attr",
         "duration": 100,
         "entryType": "measure"
@@ -4679,6 +4911,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:aria-roles",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:aria-toggle-field-name",
         "duration": 100,
         "entryType": "measure"
       },
@@ -4738,13 +4976,31 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:duplicate-id",
+        "name": "lh:audit:duplicate-id-active",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:duplicate-id-aria",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:form-field-multiple-labels",
         "duration": 100,
         "entryType": "measure"
       },
       {
         "startTime": 0,
         "name": "lh:audit:frame-title",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:heading-order",
         "duration": 100,
         "entryType": "measure"
       },
@@ -4882,12 +5138,6 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:heading-levels",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:audit:interactive-element-affordance",
         "duration": 100,
         "entryType": "measure"
@@ -4948,6 +5198,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:UnusedCSS",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:computed:FirstContentfulPaint",
         "duration": 100,
         "entryType": "measure"
@@ -4973,6 +5229,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:unused-css-rules",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:unused-javascript",
         "duration": 100,
         "entryType": "measure"
       },
@@ -5164,8 +5426,17 @@
       "auditGroupExpandTooltip": "Show audits",
       "crcInitialNavigation": "Initial Navigation",
       "crcLongestDurationLabel": "Maximum critical path latency:",
+      "dropdownCopyJSON": "Copy JSON",
+      "dropdownDarkTheme": "Toggle Dark Theme",
+      "dropdownPrintExpanded": "Print Expanded",
+      "dropdownPrintSummary": "Print Summary",
+      "dropdownSaveGist": "Save as Gist",
+      "dropdownSaveHTML": "Save as HTML",
+      "dropdownSaveJSON": "Save as JSON",
+      "dropdownViewer": "Open in Viewer",
       "errorLabel": "Error!",
       "errorMissingAuditInfo": "Report error: no audit information",
+      "footerIssue": "File an issue",
       "labDataTitle": "Lab Data",
       "lsPerformanceCategoryDescription": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) analysis of the current page on an emulated mobile network. Values are estimated and may vary.",
       "manualAuditsGroupTitle": "Additional items to manually check",
@@ -5173,9 +5444,23 @@
       "opportunityResourceColumnLabel": "Opportunity",
       "opportunitySavingsColumnLabel": "Estimated Savings",
       "passedAuditsGroupTitle": "Passed audits",
+      "runtimeDesktopEmulation": "Emulated Desktop",
+      "runtimeMobileEmulation": "Emulated Moto G4",
+      "runtimeNoEmulation": "No emulation",
+      "runtimeSettingsBenchmark": "CPU/Memory Power",
+      "runtimeSettingsCPUThrottling": "CPU throttling",
+      "runtimeSettingsDevice": "Device",
+      "runtimeSettingsFetchTime": "Fetch Time",
+      "runtimeSettingsNetworkThrottling": "Network throttling",
+      "runtimeSettingsTitle": "Runtime Settings",
+      "runtimeSettingsUA": "User agent (host)",
+      "runtimeSettingsUANetwork": "User agent (network)",
+      "runtimeSettingsUrl": "URL",
+      "runtimeUnknown": "Unknown",
       "snippetCollapseButtonLabel": "Collapse snippet",
       "snippetExpandButtonLabel": "Expand snippet",
       "thirdPartyResourcesLabel": "Show 3rd-party resources",
+      "throttlingProvided": "Provided by environment",
       "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:",
       "varianceDisclaimer": "Values are estimated and may vary. The performance score is [based only on these metrics](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted).",
       "warningAuditsGroupTitle": "Passed audits but with warnings",
@@ -5229,7 +5514,7 @@
       "lighthouse-core/audits/without-javascript.js | description": [
         "audits[without-javascript].description"
       ],
-      "lighthouse-core/audits/metrics/first-contentful-paint.js | title": [
+      "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": [
         "audits[first-contentful-paint].title"
       ],
       "lighthouse-core/audits/metrics/first-contentful-paint.js | description": [
@@ -5247,6 +5532,12 @@
             "timeInMs": 3969.136
           },
           "path": "audits[first-meaningful-paint].displayValue"
+        },
+        {
+          "values": {
+            "timeInMs": 4927.278
+          },
+          "path": "audits[largest-contentful-paint].displayValue"
         },
         {
           "values": {
@@ -5279,11 +5570,17 @@
           "path": "audits[bootup-time].displayValue"
         }
       ],
-      "lighthouse-core/audits/metrics/first-meaningful-paint.js | title": [
+      "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": [
         "audits[first-meaningful-paint].title"
       ],
       "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": [
         "audits[first-meaningful-paint].description"
+      ],
+      "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": [
+        "audits[largest-contentful-paint].title"
+      ],
+      "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": [
+        "audits[largest-contentful-paint].description"
       ],
       "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": [
         "audits[load-fast-enough-for-pwa].title"
@@ -5291,13 +5588,13 @@
       "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": [
         "audits[load-fast-enough-for-pwa].description"
       ],
-      "lighthouse-core/audits/metrics/speed-index.js | title": [
+      "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": [
         "audits[speed-index].title"
       ],
       "lighthouse-core/audits/metrics/speed-index.js | description": [
         "audits[speed-index].description"
       ],
-      "lighthouse-core/audits/metrics/estimated-input-latency.js | title": [
+      "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": [
         "audits[estimated-input-latency].title"
       ],
       "lighthouse-core/audits/metrics/estimated-input-latency.js | description": [
@@ -5335,13 +5632,13 @@
           "path": "audits[network-server-latency].displayValue"
         }
       ],
-      "lighthouse-core/audits/metrics/total-blocking-time.js | title": [
+      "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": [
         "audits[total-blocking-time].title"
       ],
       "lighthouse-core/audits/metrics/total-blocking-time.js | description": [
         "audits[total-blocking-time].description"
       ],
-      "lighthouse-core/audits/metrics/max-potential-fid.js | title": [
+      "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": [
         "audits[max-potential-fid].title"
       ],
       "lighthouse-core/audits/metrics/max-potential-fid.js | description": [
@@ -5390,13 +5687,13 @@
           "path": "audits[time-to-first-byte].displayValue"
         }
       ],
-      "lighthouse-core/audits/metrics/first-cpu-idle.js | title": [
+      "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": [
         "audits[first-cpu-idle].title"
       ],
       "lighthouse-core/audits/metrics/first-cpu-idle.js | description": [
         "audits[first-cpu-idle].description"
       ],
-      "lighthouse-core/audits/metrics/interactive.js | title": [
+      "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": [
         "audits.interactive.title"
       ],
       "lighthouse-core/audits/metrics/interactive.js | description": [
@@ -5487,9 +5784,6 @@
       "lighthouse-core/audits/deprecations.js | columnDeprecate": [
         "audits.deprecations.details.headings[0].text"
       ],
-      "lighthouse-core/audits/deprecations.js | columnLine": [
-        "audits.deprecations.details.headings[2].text"
-      ],
       "lighthouse-core/audits/mainthread-work-breakdown.js | title": [
         "audits[mainthread-work-breakdown].title"
       ],
@@ -5573,7 +5867,7 @@
         "audits[performance-budget].details.headings[2].text",
         "audits[resource-summary].details.headings[2].text"
       ],
-      "lighthouse-core/audits/performance-budget.js | columnOverBudget": [
+      "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": [
         "audits[performance-budget].details.headings[4].text"
       ],
       "lighthouse-core/lib/i18n/i18n.js | scriptResourceType": [
@@ -5589,7 +5883,7 @@
         },
         {
           "values": {
-            "count": 8
+            "count": 7
           },
           "path": "audits[performance-budget].details.items[1].countOverBudget"
         },
@@ -5653,8 +5947,8 @@
       "lighthouse-core/audits/resource-summary.js | displayValue": [
         {
           "values": {
-            "requestCount": 18,
-            "byteCount": 160738
+            "requestCount": 17,
+            "byteCount": 160517
           },
           "path": "audits[resource-summary].displayValue"
         }
@@ -5719,6 +6013,24 @@
       "lighthouse-core/audits/accessibility/aria-allowed-attr.js | description": [
         "audits[aria-allowed-attr].description"
       ],
+      "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": [
+        "audits[aria-hidden-body].title"
+      ],
+      "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": [
+        "audits[aria-hidden-body].description"
+      ],
+      "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": [
+        "audits[aria-hidden-focus].title"
+      ],
+      "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": [
+        "audits[aria-hidden-focus].description"
+      ],
+      "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": [
+        "audits[aria-input-field-name].title"
+      ],
+      "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": [
+        "audits[aria-input-field-name].description"
+      ],
       "lighthouse-core/audits/accessibility/aria-required-attr.js | title": [
         "audits[aria-required-attr].title"
       ],
@@ -5742,6 +6054,12 @@
       ],
       "lighthouse-core/audits/accessibility/aria-roles.js | description": [
         "audits[aria-roles].description"
+      ],
+      "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": [
+        "audits[aria-toggle-field-name].title"
+      ],
+      "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": [
+        "audits[aria-toggle-field-name].description"
       ],
       "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | title": [
         "audits[aria-valid-attr-value].title"
@@ -5805,17 +6123,35 @@
       "lighthouse-core/audits/accessibility/document-title.js | description": [
         "audits[document-title].description"
       ],
-      "lighthouse-core/audits/accessibility/duplicate-id.js | title": [
-        "audits[duplicate-id].title"
+      "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": [
+        "audits[duplicate-id-active].title"
       ],
-      "lighthouse-core/audits/accessibility/duplicate-id.js | description": [
-        "audits[duplicate-id].description"
+      "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": [
+        "audits[duplicate-id-active].description"
+      ],
+      "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": [
+        "audits[duplicate-id-aria].title"
+      ],
+      "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": [
+        "audits[duplicate-id-aria].description"
+      ],
+      "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": [
+        "audits[form-field-multiple-labels].title"
+      ],
+      "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": [
+        "audits[form-field-multiple-labels].description"
       ],
       "lighthouse-core/audits/accessibility/frame-title.js | title": [
         "audits[frame-title].title"
       ],
       "lighthouse-core/audits/accessibility/frame-title.js | description": [
         "audits[frame-title].description"
+      ],
+      "lighthouse-core/audits/accessibility/heading-order.js | title": [
+        "audits[heading-order].title"
+      ],
+      "lighthouse-core/audits/accessibility/heading-order.js | description": [
+        "audits[heading-order].description"
       ],
       "lighthouse-core/audits/accessibility/html-has-lang.js | failureTitle": [
         "audits[html-has-lang].title"
@@ -6019,6 +6355,12 @@
       ],
       "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": [
         "audits[unused-css-rules].description"
+      ],
+      "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": [
+        "audits[unused-javascript].title"
+      ],
+      "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": [
+        "audits[unused-javascript].description"
       ],
       "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | title": [
         "audits[uses-webp-images].title"
@@ -6506,10 +6848,10 @@
         "unminified-javascript": "A number of [WordPress plugins](https://wordpress.org/plugins/search/minify+javascript/) can speed up your site by concatenating, minifying, and compressing your scripts. You may also want to use a build process to do this minification up front if possible.",
         "efficient-animated-content": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video.",
         "unused-javascript": "Consider reducing, or switching, the number of [WordPress plugins](https://wordpress.org/plugins/) loading unused JavaScript in your page. To identify plugins that are adding extraneous JS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/plugin responsible from the URL of the script. Look out for plugins that have many scripts in the list which have a lot of red in code coverage. A plugin should only enqueue a script if it is actually used on the page.",
-        "uses-long-cache-ttl": "Read about [Browser Caching in WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching).",
+        "uses-long-cache-ttl": "Read about [Browser Caching in WordPress](https://wordpress.org/support/article/optimization/#browser-caching).",
         "uses-optimized-images": "Consider using an [image optimization WordPress plugin](https://wordpress.org/plugins/search/optimize+images/) that compresses your images while retaining quality.",
         "uses-text-compression": "You can enable text compression in your web server configuration.",
-        "uses-responsive-images": "Upload images directly through the [media library](https://codex.wordpress.org/Media_Library_Screen) to ensure that the required image sizes are available, and then insert them from the media library or use the image widget to ensure the optimal image sizes are used (including those for the responsive breakpoints). Avoid using `Full Size` images unless the dimensions are adequate for their usage. [Learn More](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size).",
+        "uses-responsive-images": "Upload images directly through the [media library](https://wordpress.org/support/article/media-library-screen/) to ensure that the required image sizes are available, and then insert them from the media library or use the image widget to ensure the optimal image sizes are used (including those for the responsive breakpoints). Avoid using `Full Size` images unless the dimensions are adequate for their usage. [Learn More](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/).",
         "time-to-first-byte": "Themes, plugins, and server specifications all contribute to server response time. Consider finding a more optimized theme, carefully selecting an optimization plugin, and/or upgrading your server."
       }
     }

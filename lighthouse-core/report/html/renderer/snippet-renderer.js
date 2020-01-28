@@ -105,7 +105,7 @@ class SnippetRenderer {
     const {
       snippetCollapseButtonLabel,
       snippetExpandButtonLabel,
-    } = Util.UIStrings;
+    } = Util.i18n.strings;
     dom.find(
       '.lh-snippet__btn-label-collapse',
       header

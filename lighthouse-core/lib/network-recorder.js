@@ -30,7 +30,7 @@ class NetworkRecorder extends EventEmitter {
    * @return {Array<LH.Artifacts.NetworkRequest>}
    */
   getInflightRecords() {
-    return this._records.filter(record => !NetworkRecorder.isNetworkRecordFinished(record));
+    return this._records.filter(record => !record.finished);
   }
 
   getRecords() {
@@ -54,24 +54,35 @@ class NetworkRecorder extends EventEmitter {
   }
 
   isIdle() {
-    return !!this._getActiveIdlePeriod(0);
+    return this._isActiveIdlePeriod(0);
   }
 
   is2Idle() {
-    return !!this._getActiveIdlePeriod(2);
+    return this._isActiveIdlePeriod(2);
   }
 
   /**
+   * Returns whether the number of currently inflight requests is less than or
+   * equal to the number of allowed concurrent requests.
    * @param {number} allowedRequests
+   * @return {boolean}
    */
-  _getActiveIdlePeriod(allowedRequests) {
-    const quietPeriods = NetworkRecorder.findNetworkQuietPeriods(this._records, allowedRequests);
-    return quietPeriods.find(period => !Number.isFinite(period.end));
+  _isActiveIdlePeriod(allowedRequests) {
+    let inflightRequests = 0;
+
+    for (let i = 0; i < this._records.length; i++) {
+      const record = this._records[i];
+      if (record.finished) continue;
+      if (IGNORED_NETWORK_SCHEMES.includes(record.parsedURL.scheme)) continue;
+      inflightRequests++;
+    }
+
+    return inflightRequests <= allowedRequests;
   }
 
   _emitNetworkStatus() {
-    const zeroQuiet = this._getActiveIdlePeriod(0);
-    const twoQuiet = this._getActiveIdlePeriod(2);
+    const zeroQuiet = this.isIdle();
+    const twoQuiet = this.is2Idle();
 
     if (twoQuiet && zeroQuiet) {
       log.verbose('NetworkRecorder', 'network fully-quiet');
@@ -86,28 +97,6 @@ class NetworkRecorder extends EventEmitter {
       this.emit('network-2-busy');
       this.emit('networkbusy');
     }
-  }
-
-  /**
-   * QUIC network requests don't always "finish" even when they're done loading data, use recievedHeaders
-   * @see https://github.com/GoogleChrome/lighthouse/issues/5254
-   * @param {LH.Artifacts.NetworkRequest} record
-   * @return {boolean}
-   */
-  static _isQUICAndFinished(record) {
-    const isQUIC = record.responseHeaders && record.responseHeaders
-        .some(header => header.name.toLowerCase() === 'alt-svc' && /quic/.test(header.value));
-    const receivedHeaders = record.timing && record.timing.receiveHeadersEnd > 0;
-    return !!(isQUIC && receivedHeaders && record.endTime);
-  }
-
-  /**
-   * @param {LH.Artifacts.NetworkRequest} record
-   * @return {boolean}
-   */
-  static isNetworkRecordFinished(record) {
-    return record.finished ||
-      NetworkRecorder._isQUICAndFinished(record);
   }
 
   /**
@@ -130,7 +119,7 @@ class NetworkRecorder extends EventEmitter {
 
       // convert the network record timestamp to ms
       timeBoundaries.push({time: record.startTime * 1000, isStart: true});
-      if (NetworkRecorder.isNetworkRecordFinished(record)) {
+      if (record.finished) {
         timeBoundaries.push({time: record.endTime * 1000, isStart: false});
       }
     });
@@ -196,15 +185,16 @@ class NetworkRecorder extends EventEmitter {
   // DevTools SDK network layer.
 
   /**
-   * @param {{params: LH.Crdp.Network.RequestWillBeSentEvent, source?: LH.Protocol.RawSource}} event
+   * @param {{params: LH.Crdp.Network.RequestWillBeSentEvent, sessionId?: string}} event
    */
   onRequestWillBeSent(event) {
     const data = event.params;
-    const originalRequest = this._findRealRequestAndSetSource(data.requestId, event.source);
+    const originalRequest = this._findRealRequestAndSetSession(data.requestId, event.sessionId);
     // This is a simple new request, create the NetworkRequest object and finish.
     if (!originalRequest) {
       const request = new NetworkRequest();
       request.onRequestWillBeSent(data);
+      request.sessionId = event.sessionId;
       this.onRequestStarted(request);
       return;
     }
@@ -236,63 +226,63 @@ class NetworkRecorder extends EventEmitter {
   }
 
   /**
-   * @param {{params: LH.Crdp.Network.RequestServedFromCacheEvent, source?: LH.Protocol.RawSource}} event
+   * @param {{params: LH.Crdp.Network.RequestServedFromCacheEvent, sessionId?: string}} event
    */
   onRequestServedFromCache(event) {
     const data = event.params;
-    const request = this._findRealRequestAndSetSource(data.requestId, event.source);
+    const request = this._findRealRequestAndSetSession(data.requestId, event.sessionId);
     if (!request) return;
     request.onRequestServedFromCache();
   }
 
   /**
-   * @param {{params: LH.Crdp.Network.ResponseReceivedEvent, source?: LH.Protocol.RawSource}} event
+   * @param {{params: LH.Crdp.Network.ResponseReceivedEvent, sessionId?: string}} event
    */
   onResponseReceived(event) {
     const data = event.params;
-    const request = this._findRealRequestAndSetSource(data.requestId, event.source);
+    const request = this._findRealRequestAndSetSession(data.requestId, event.sessionId);
     if (!request) return;
     request.onResponseReceived(data);
   }
 
   /**
-   * @param {{params: LH.Crdp.Network.DataReceivedEvent, source?: LH.Protocol.RawSource}} event
+   * @param {{params: LH.Crdp.Network.DataReceivedEvent, sessionId?: string}} event
    */
   onDataReceived(event) {
     const data = event.params;
-    const request = this._findRealRequestAndSetSource(data.requestId, event.source);
+    const request = this._findRealRequestAndSetSession(data.requestId, event.sessionId);
     if (!request) return;
     request.onDataReceived(data);
   }
 
   /**
-   * @param {{params: LH.Crdp.Network.LoadingFinishedEvent, source?: LH.Protocol.RawSource}} event
+   * @param {{params: LH.Crdp.Network.LoadingFinishedEvent, sessionId?: string}} event
    */
   onLoadingFinished(event) {
     const data = event.params;
-    const request = this._findRealRequestAndSetSource(data.requestId, event.source);
+    const request = this._findRealRequestAndSetSession(data.requestId, event.sessionId);
     if (!request) return;
     request.onLoadingFinished(data);
     this.onRequestFinished(request);
   }
 
   /**
-   * @param {{params: LH.Crdp.Network.LoadingFailedEvent, source?: LH.Protocol.RawSource}} event
+   * @param {{params: LH.Crdp.Network.LoadingFailedEvent, sessionId?: string}} event
    */
   onLoadingFailed(event) {
     const data = event.params;
-    const request = this._findRealRequestAndSetSource(data.requestId, event.source);
+    const request = this._findRealRequestAndSetSession(data.requestId, event.sessionId);
     if (!request) return;
     request.onLoadingFailed(data);
     this.onRequestFinished(request);
   }
 
   /**
-   * @param {{params: LH.Crdp.Network.ResourceChangedPriorityEvent, source?: LH.Protocol.RawSource}} event
+   * @param {{params: LH.Crdp.Network.ResourceChangedPriorityEvent, sessionId?: string}} event
    */
   onResourceChangedPriority(event) {
     const data = event.params;
-    const request = this._findRealRequestAndSetSource(data.requestId, event.source);
+    const request = this._findRealRequestAndSetSession(data.requestId, event.sessionId);
     if (!request) return;
     request.onResourceChangedPriority(data);
   }
@@ -321,10 +311,10 @@ class NetworkRecorder extends EventEmitter {
    * message is referring.
    *
    * @param {string} requestId
-   * @param {LH.Protocol.RawSource|undefined} source
+   * @param {string|undefined} sessionId
    * @return {NetworkRequest|undefined}
    */
-  _findRealRequestAndSetSource(requestId, source) {
+  _findRealRequestAndSetSession(requestId, sessionId) {
     let request = this._recordsById.get(requestId);
     if (!request || !request.isValid) return undefined;
 
@@ -332,7 +322,8 @@ class NetworkRecorder extends EventEmitter {
       request = request.redirectDestination;
     }
 
-    request.setSource(source);
+    request.setSession(sessionId);
+
     return request;
   }
 

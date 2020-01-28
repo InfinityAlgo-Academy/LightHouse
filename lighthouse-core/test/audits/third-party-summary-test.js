@@ -18,6 +18,7 @@ describe('Third party summary', () => {
     const artifacts = {
       devtoolsLogs: {defaultPass: pwaDevtoolsLog},
       traces: {defaultPass: pwaTrace},
+      URL: {finalUrl: 'https://pwa-rocks.com'},
     };
 
     const results = await ThirdPartySummary.audit(artifacts, {computedCache: new Map()});
@@ -54,6 +55,7 @@ describe('Third party summary', () => {
     const artifacts = {
       devtoolsLogs: {defaultPass: pwaDevtoolsLog},
       traces: {defaultPass: pwaTrace},
+      URL: {finalUrl: 'https://pwa-rocks.com'},
     };
 
     const settings = {throttlingMethod: 'simulate', throttling: {cpuSlowdownMultiplier: 4}};
@@ -71,6 +73,7 @@ describe('Third party summary', () => {
     const artifacts = {
       devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog([{url: 'chrome://version'}])},
       traces: {defaultPass: noThirdPartyTrace},
+      URL: {finalUrl: 'chrome://version'},
     };
 
     const settings = {throttlingMethod: 'simulate', throttling: {cpuSlowdownMultiplier: 4}};
@@ -80,5 +83,38 @@ describe('Third party summary', () => {
       score: 1,
       notApplicable: true,
     });
+  });
+
+  it('does not return third party entity that matches main resource entity', async () => {
+    const externalArtifacts = {
+      devtoolsLogs: {
+        defaultPass: networkRecordsToDevtoolsLog([
+          {url: 'http://example.com'},
+          {url: 'http://photos-c.ak.fbcdn.net/photos-ak-sf2p/photo.jpg'},
+        ]),
+      },
+      traces: {defaultPass: pwaTrace},
+      URL: {finalUrl: 'http://example.com'},
+    };
+    const facebookArtifacts = {
+      devtoolsLogs: {
+        defaultPass: networkRecordsToDevtoolsLog([
+          {url: 'http://facebook.com'},
+          {url: 'http://photos-c.ak.fbcdn.net/photos-ak-sf2p/photo.jpg'},
+        ]),
+      },
+      traces: {defaultPass: pwaTrace},
+      URL: {finalUrl: 'http://facebook.com'},
+    };
+    const context = {computedCache: new Map()};
+
+    const resultsOnExternal = await ThirdPartySummary.audit(externalArtifacts, context);
+    const resultsOnFacebook = await ThirdPartySummary.audit(facebookArtifacts, context);
+
+    const externalEntities = resultsOnExternal.details.items.map(item => item.entity.text);
+    const facebookEntities = resultsOnFacebook.details.items.map(item => item.entity.text);
+
+    expect(externalEntities).toEqual(['Google Tag Manager', 'Facebook', 'Google Analytics']);
+    expect(facebookEntities).toEqual(['Google Tag Manager', 'Google Analytics']);
   });
 });

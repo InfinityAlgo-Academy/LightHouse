@@ -23,5 +23,6 @@ module.exports = {
     '**/lighthouse-viewer/**/*-test.js',
     '**/lighthouse-viewer/**/*-test-pptr.js',
     '**/clients/test/**/*-test.js',
+    '**/docs/**/*.test.js',
   ],
 };

@@ -502,6 +502,26 @@ describe('Config', () => {
     assert.equal(config.passes[0].recordTrace, false, 'turns off tracing if not needed');
   });
 
+  it('forces the first pass to have a fatal loadFailureMode', () => {
+    const warnings = [];
+    const saveWarning = evt => warnings.push(evt);
+    log.events.addListener('warning', saveWarning);
+    const config = new Config({
+      extends: true,
+      settings: {
+        onlyCategories: ['performance', 'pwa'],
+      },
+      passes: [
+        {passName: 'defaultPass', loadFailureMode: 'warn'},
+      ],
+    });
+
+    log.events.removeListener('warning', saveWarning);
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0][0]).toMatch(/loadFailureMode.*fatal/);
+    expect(config.passes[0]).toHaveProperty('loadFailureMode', 'fatal');
+  });
+
   it('filters works with extension', () => {
     const config = new Config({
       extends: true,
@@ -556,7 +576,13 @@ describe('Config', () => {
     assert.deepStrictEqual(config.settings.output, ['html']);
   });
 
-  it('extends the full config', () => {
+  it('does not throw on "lighthouse:full"', () => {
+    const config = new Config({extends: 'lighthouse:full'}, {output: ['html', 'json']});
+    assert.deepStrictEqual(config.settings.throttlingMethod, 'simulate');
+    assert.deepStrictEqual(config.settings.output, ['html', 'json']);
+  });
+
+  it('extends the config', () => {
     class CustomAudit extends Audit {
       static get meta() {
         return {
@@ -574,7 +600,7 @@ describe('Config', () => {
     }
 
     const config = new Config({
-      extends: 'lighthouse:full',
+      extends: 'lighthouse:default',
       audits: [
         CustomAudit,
       ],
@@ -628,7 +654,7 @@ describe('Config', () => {
   it('merges settings with correct priority', () => {
     const config = new Config(
       {
-        extends: 'lighthouse:full',
+        extends: 'lighthouse:default',
         settings: {
           disableStorageReset: true,
           emulatedFormFactor: 'mobile',
@@ -865,7 +891,7 @@ describe('Config', () => {
         plugins: ['lighthouse-plugin-not-a-plugin'],
       };
       assert.throws(() => new Config(configJson, {configPath: configFixturePath}),
-        /^Error: Unable to locate plugin: lighthouse-plugin-not-a-plugin/);
+        /^Error: Unable to locate plugin: `lighthouse-plugin-not-a-plugin/);
     });
 
     it('should throw if the plugin name does not begin with "lighthouse-plugin-"', () => {

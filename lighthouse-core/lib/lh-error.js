@@ -120,10 +120,7 @@ class LighthouseError extends Error {
     // if we find one, use the friendly LighthouseError definition
     const matchedErrorDefinition = protocolErrors.find(e => e.pattern.test(protocolError.message));
     if (matchedErrorDefinition) {
-      return new LighthouseError(matchedErrorDefinition, {
-        protocolMethod: method,
-        protocolError: protocolError.message,
-      });
+      return new LighthouseError(matchedErrorDefinition);
     }
 
     // otherwise fallback to building a generic Error
@@ -251,6 +248,10 @@ const ERRORS = {
   },
   NO_FMP: {
     code: 'NO_FMP',
+    message: UIStrings.badTraceRecording,
+  },
+  NO_LCP: {
+    code: 'NO_LCP',
     message: UIStrings.badTraceRecording,
   },
 

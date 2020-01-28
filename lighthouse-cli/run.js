@@ -57,6 +57,7 @@ function parseChromeFlags(flags = '') {
 function getDebuggableChrome(flags) {
   return ChromeLauncher.launch({
     port: flags.port,
+    ignoreDefaultFlags: flags.chromeIgnoreDefaultFlags,
     chromeFlags: parseChromeFlags(flags.chromeFlags),
     logLevel: flags.logLevel,
   });

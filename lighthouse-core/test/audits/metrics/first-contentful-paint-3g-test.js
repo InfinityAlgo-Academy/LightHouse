@@ -29,7 +29,7 @@ describe('Performance: first-contentful-paint-3g audit', () => {
     expect({score: result.score, value: Math.round(result.numericValue)}).toMatchInlineSnapshot(`
 Object {
   "score": 0.99,
-  "value": 2057,
+  "value": 2087,
 }
 `);
   });

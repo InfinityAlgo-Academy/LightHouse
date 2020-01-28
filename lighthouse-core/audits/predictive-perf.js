@@ -6,7 +6,7 @@
 'use strict';
 
 const Audit = require('./audit.js');
-const Util = require('../report/html/renderer/util.js');
+const I18n = require('../report/html/renderer/i18n.js');
 
 const LanternFcp = require('../computed/metrics/lantern-first-contentful-paint.js');
 const LanternFmp = require('../computed/metrics/lantern-first-meaningful-paint.js');
@@ -14,6 +14,7 @@ const LanternInteractive = require('../computed/metrics/lantern-interactive.js')
 const LanternFirstCPUIdle = require('../computed/metrics/lantern-first-cpu-idle.js');
 const LanternSpeedIndex = require('../computed/metrics/lantern-speed-index.js');
 const LanternEil = require('../computed/metrics/lantern-estimated-input-latency.js');
+const LanternLcp = require('../computed/metrics/lantern-largest-contentful-paint.js');
 
 // Parameters (in ms) for log-normal CDF scoring. To see the curve:
 //   https://www.desmos.com/calculator/rjp0lbit8y
@@ -53,6 +54,7 @@ class PredictivePerf extends Audit {
     const ttfcpui = await LanternFirstCPUIdle.request({trace, devtoolsLog, settings}, context);
     const si = await LanternSpeedIndex.request({trace, devtoolsLog, settings}, context);
     const eil = await LanternEil.request({trace, devtoolsLog, settings}, context);
+    const lcp = await LanternLcp.request({trace, devtoolsLog, settings}, context);
 
     const values = {
       roughEstimateOfFCP: fcp.timing,
@@ -78,6 +80,10 @@ class PredictivePerf extends Audit {
       roughEstimateOfEIL: eil.timing,
       optimisticEIL: eil.optimisticEstimate.timeInMs,
       pessimisticEIL: eil.pessimisticEstimate.timeInMs,
+
+      roughEstimateOfLCP: lcp.timing,
+      optimisticLCP: lcp.optimisticEstimate.timeInMs,
+      pessimisticLCP: lcp.pessimisticEstimate.timeInMs,
     };
 
     const score = Audit.computeLogNormalScore(
@@ -86,10 +92,13 @@ class PredictivePerf extends Audit {
       SCORING_MEDIAN
     );
 
+    const i18n = new I18n(context.settings.locale);
+
     return {
       score,
       numericValue: values.roughEstimateOfTTI,
-      displayValue: Util.formatMilliseconds(values.roughEstimateOfTTI),
+      numericUnit: 'millisecond',
+      displayValue: i18n.formatMilliseconds(values.roughEstimateOfTTI),
       details: {
         type: 'debugdata',
         // TODO: Consider not nesting values under `items`.

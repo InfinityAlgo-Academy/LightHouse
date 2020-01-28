@@ -10,9 +10,9 @@ const fs = require('fs');
 
 const jsdom = require('jsdom');
 
-const URL = require('../../../../lib/url-shim.js');
 const prepareLabData = require('../../../../report/html/renderer/psi.js');
 const Util = require('../../../../report/html/renderer/util.js');
+const I18n = require('../../../../report/html/renderer/i18n.js');
 const DOM = require('../../../../report/html/renderer/dom.js');
 const CategoryRenderer = require('../../../../report/html/renderer/category-renderer.js');
 const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
@@ -35,8 +35,9 @@ const TEMPLATE_FILE = fs.readFileSync(
 describe('DOM', () => {
   let document;
   beforeAll(() => {
-    global.URL = URL; // COMPAT: Needed for Node < 10
     global.Util = Util;
+    global.Util.i18n = new I18n('en', {...Util.UIStrings});
+
     global.DOM = DOM;
     global.CategoryRenderer = CategoryRenderer;
     global.DetailsRenderer = DetailsRenderer;
@@ -52,7 +53,7 @@ describe('DOM', () => {
   });
 
   afterAll(() => {
-    global.URL = undefined;
+    global.Util.i18n = undefined;
     global.Util = undefined;
     global.DOM = undefined;
     global.CategoryRenderer = undefined;

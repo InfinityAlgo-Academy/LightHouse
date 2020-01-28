@@ -11,11 +11,12 @@ const Audit = require('./audit.js');
 const BootupTime = require('./bootup-time.js');
 const i18n = require('../lib/i18n/i18n.js');
 const NetworkRecords = require('../computed/network-records.js');
+const MainResource = require('../computed/main-resource.js');
 const MainThreadTasks = require('../computed/main-thread-tasks.js');
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides details about the code on a web page that the user doesn't control (referred to as "third-party code"). This descriptive title is shown to users when the amount is acceptable and no user action is required. */
-  title: 'Third-Party usage',
+  title: 'Minimize third-party usage',
   /** Title of a diagnostic audit that provides details about the code on a web page that the user doesn't control (referred to as "third-party code"). This imperative title is shown to users when there is a significant amount of page execution time caused by third-party code that should be reduced. */
   failureTitle: 'Reduce the impact of third-party code',
   /** Description of a Lighthouse audit that identifies the code on the page that the user doesn't control. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
@@ -48,7 +49,7 @@ class ThirdPartySummary extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['traces', 'devtoolsLogs'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL'],
     };
   }
 
@@ -119,6 +120,8 @@ class ThirdPartySummary extends Audit {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
+    const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
+    const mainEntity = ThirdPartySummary.getEntitySafe(mainResource.url);
     const tasks = await MainThreadTasks.request(trace, context);
     const multiplier = settings.throttlingMethod === 'simulate' ?
       settings.throttling.cpuSlowdownMultiplier : 1;
@@ -128,6 +131,9 @@ class ThirdPartySummary extends Audit {
     const summary = {wastedBytes: 0, wastedMs: 0};
 
     const results = Array.from(summaryByEntity.entries())
+      // Don't consider the page we're on to be third-party.
+      // e.g. Facebook SDK isn't a third-party script on facebook.com
+      .filter(([entity]) => !(mainEntity && mainEntity.name === entity.name))
       .map(([entity, stats]) => {
         summary.wastedBytes += stats.transferSize;
         summary.wastedMs += stats.blockingTime;

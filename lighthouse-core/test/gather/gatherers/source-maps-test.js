@@ -55,18 +55,23 @@ describe('SourceMaps gatherer', () => {
         throw new Error('should only define map or fetchError, not both.');
       }
 
-      sendCommandMock.mockResponse('Runtime.evaluate', ({expression}) => {
-        // Check that the source map url was resolved correctly. It'll be somewhere
-        // in the code sent to Runtime.evaluate.
-        if (resolvedSourceMapUrl && !expression.includes(resolvedSourceMapUrl)) {
-          throw new Error(`did not request expected url: ${resolvedSourceMapUrl}`);
-        }
+      sendCommandMock
+        .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: 1337}}})
+        .mockResponse('Page.createIsolatedWorld', {executionContextId: 1})
+        .mockResponse('Runtime.evaluate', ({expression, contextId}) => {
+          expect(contextId).toBe(driver._isolatedExecutionContextId);
 
-        const value = fetchError ?
-          Object.assign(new Error(), {message: fetchError, __failedInBrowser: true}) :
-          map;
-        return {result: {value}};
-      });
+          // Check that the source map url was resolved correctly. It'll be somewhere
+          // in the code sent to Runtime.evaluate.
+          if (resolvedSourceMapUrl && !expression.includes(resolvedSourceMapUrl)) {
+            throw new Error(`did not request expected url: ${resolvedSourceMapUrl}`);
+          }
+
+          const value = fetchError ?
+            Object.assign(new Error(), {message: fetchError, __failedInBrowser: true}) :
+            map;
+          return {result: {value}};
+        });
     }
     const connectionStub = new Connection();
     connectionStub.sendCommand = sendCommandMock;
