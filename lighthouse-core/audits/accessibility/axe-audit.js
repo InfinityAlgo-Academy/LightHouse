@@ -48,7 +48,10 @@ class AxeAudit extends Audit {
     const incomplete = artifacts.Accessibility.incomplete || [];
     const incompleteResult = incomplete.find(result => result.id === this.meta.id);
     if (incompleteResult && incompleteResult.error) {
-      return Audit.generateErrorAuditResult(this, incompleteResult.error.message);
+      return {
+        score: null,
+        errorMessage: incompleteResult.error.message,
+      };
     }
 
     const isInformative = this.meta.scoreDisplayMode === Audit.SCORING_MODES.INFORMATIVE;
