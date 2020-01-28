@@ -284,6 +284,18 @@ const expectations = [
         },
         'json-ld': {
           score: 0,
+          details: {
+            items: [
+              {
+                "lineMessages": [
+                  {
+                    "lineNumber": 3,
+                    "message": "Unrecognized schema.org type: http://schema.org/CatConvention"
+                  }
+                ],
+              }
+            ]
+          }
         },
       },
     },
