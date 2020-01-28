@@ -134,7 +134,7 @@
     "typescript": "3.5.3"
   },
   "dependencies": {
-    "axe-core": "3.3.0",
+    "axe-core": "3.4.1",
     "chrome-launcher": "^0.12.0",
     "configstore": "^3.1.1",
     "cssstyle": "1.2.1",
@@ -192,7 +192,7 @@
     },
     {
       "path": "./dist/lighthouse-dt-bundle.js",
-      "maxSize": "415 kB"
+      "maxSize": "440 kB"
     },
     {
       "path": "./dist/lightrider/report-generator-bundle.js",

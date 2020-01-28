@@ -221,8 +221,8 @@ const expectations = [
                   'type': 'node',
                   'selector': '#color-contrast',
                   'snippet': '<div id="color-contrast" style="background-color: red; color: pink;">\n          Hello\n      </div>',
-                  // Default font size is different depending on the platform (e.g. 28.5 on travis, 30.0 on Mac), so use \d\d\.\d.
-                  'explanation': /^Fix any of the following:\n {2}Element has insufficient color contrast of 2\.59 \(foreground color: #ffc0cb, background color: #ff0000, font size: \d\d\.\dpt, font weight: normal\). Expected contrast ratio of 3:1$/,
+                  // Default font size is different depending on the platform (e.g. 28.5 on travis, 30.0 on Mac), and the px-converted units may have variable precision, so use \d+.\d+.
+                  'explanation': /^Fix any of the following:\n {2}Element has insufficient color contrast of 2\.59 \(foreground color: #ffc0cb, background color: #ff0000, font size: \d+.\d+pt \(\d+.\d+px\), font weight: normal\). Expected contrast ratio of 3:1$/,
                   'nodeLabel': 'Hello',
                 },
               },
@@ -475,7 +475,7 @@ const expectations = [
                   'type': 'node',
                   'selector': '#listitem',
                   'snippet': '<li id="listitem"></li>',
-                  'explanation': 'Fix any of the following:\n  List item does not have a <ul>, <ol> or role="list" parent element',
+                  'explanation': 'Fix any of the following:\n  List item does not have a <ul>, <ol> parent element',
                   'nodeLabel': 'li',
                 },
               },
