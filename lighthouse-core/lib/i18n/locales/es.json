@@ -81,7 +81,7 @@
     "message": "Los valores de `[role]` son válidos"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Si un campo de interruptor no tiene un nombre accesible, los lectores de pantalla lo leerán en voz alta con un nombre genérico, por lo que resultan inservibles para los usuarios que necesitan usar lectores de pantalla para navegar. [Más información](https://web.dev/aria-toggle-field-label/)"
+    "message": "Si un campo de interruptor no tiene un nombre accesible, los lectores de pantalla lo leerán en voz alta con un nombre genérico, por lo que resultan inservibles para los usuarios que necesitan usar lectores de pantalla para navegar. [Más información](https://web.dev/aria-toggle-field-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "Los campos de interruptores ARIA no tienen nombres accesibles"

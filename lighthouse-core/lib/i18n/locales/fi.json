@@ -81,7 +81,7 @@
     "message": "`[role]`-arvot ovat kelvollisia"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Jos päälle/pois-kentän nimi ei ole esteetön, näytönlukuohjelmat sanovat sen kohdalla geneerisen nimen, jolloin näytönlukuohjelmien käyttäjät eivät voi käyttää sitä. [Lue lisää](https://web.dev/aria-toggle-field-label/)."
+    "message": "Jos päälle/pois-kentän nimi ei ole esteetön, näytönlukuohjelmat sanovat sen kohdalla geneerisen nimen, jolloin näytönlukuohjelmien käyttäjät eivät voi käyttää sitä. [Lue lisää](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "ARIAn päälle/pois-kenttien nimet eivät ole esteettömiä"

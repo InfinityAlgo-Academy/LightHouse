@@ -81,7 +81,7 @@
     "message": "`[role]` 值有效"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "如果切換欄位沒有輔助名稱，螢幕閱讀器只會讀出一般名稱，導致依賴螢幕閱讀器的使用者無法使用該欄位。[瞭解詳情](https://web.dev/aria-toggle-field-label/)。"
+    "message": "如果切換欄位沒有輔助名稱，螢幕閱讀器只會讀出一般名稱，導致依賴螢幕閱讀器的使用者無法使用該欄位。[瞭解詳情](https://web.dev/aria-toggle-field-name/)。"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "ARIA 切換欄位沒有輔助名稱"

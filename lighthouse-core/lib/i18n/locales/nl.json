@@ -81,7 +81,7 @@
     "message": "`[role]`-waarden zijn geldig"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Als een schakelveld geen toegankelijke naam heeft, kondigen schermlezers dit aan met een generieke naam, waardoor het veld onbruikbaar wordt voor gebruikers die afhankelijk zijn van schermlezers. [Meer informatie](https://web.dev/aria-toggle-field-label/)"
+    "message": "Als een schakelveld geen toegankelijke naam heeft, kondigen schermlezers dit aan met een generieke naam, waardoor het veld onbruikbaar wordt voor gebruikers die afhankelijk zijn van schermlezers. [Meer informatie](https://web.dev/aria-toggle-field-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "ARIA-schakelvelden hebben geen toegankelijke namen"

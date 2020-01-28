@@ -81,7 +81,7 @@
     "message": "قيم `[role]` هي صالحة"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "عند عدم احتواء حقول التبديل على اسم يمكن الوصول إليه، تشير برامج قراءة الشاشة إلى الحقل باستخدام بصفة عامة، مما يجعله غير قابل للاستخدام بالنسبة إلى المستخدمين الذين يعتمدون على برامج قراءة الشاشة. [مزيد من المعلومات](https://web.dev/aria-toggle-field-label/)"
+    "message": "عند عدم احتواء حقول التبديل على اسم يمكن الوصول إليه، تشير برامج قراءة الشاشة إلى الحقل باستخدام بصفة عامة، مما يجعله غير قابل للاستخدام بالنسبة إلى المستخدمين الذين يعتمدون على برامج قراءة الشاشة. [مزيد من المعلومات](https://web.dev/aria-toggle-field-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "لا تحتوي حقول تبديل ARIA على أسماء يمكن الوصول إليها"

@@ -81,7 +81,7 @@
     "message": "Valid ang mga value ng `[role]`"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Kapag walang naa-access na pangalan ang isang toggle field, iaanunsyo ito ng mga screen reader gamit ang generic na pangalan, kaya hindi ito magagamit ng mga user na umaasa sa mga screen reader. [Matuto pa](https://web.dev/aria-toggle-field-label/)."
+    "message": "Kapag walang naa-access na pangalan ang isang toggle field, iaanunsyo ito ng mga screen reader gamit ang generic na pangalan, kaya hindi ito magagamit ng mga user na umaasa sa mga screen reader. [Matuto pa](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "Walang naa-access na pangalan ang mga toggle field ng ARIA"

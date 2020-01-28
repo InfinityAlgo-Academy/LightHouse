@@ -81,7 +81,7 @@
     "message": "Вредности за `[role]` су важеће"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Када поље за прекидач нема назив прилагођен функцији приступачности, читачи екрана га најављују помоћу генеричког назива, па корисници који се ослањају на читаче екрана не могу да га користе. [Сазнајте више](https://web.dev/aria-toggle-field-label/)."
+    "message": "Када поље за прекидач нема назив прилагођен функцији приступачности, читачи екрана га најављују помоћу генеричког назива, па корисници који се ослањају на читаче екрана не могу да га користе. [Сазнајте више](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "ARIA поља прекидача немају називе прилагођене функцији приступачности"

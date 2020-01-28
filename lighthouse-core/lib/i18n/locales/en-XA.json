@@ -81,7 +81,7 @@
     "message": "[ᐅ`[role]`ᐊ våļûéš åŕé våļîð one two three four five]"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "[Ŵĥéñ å ţöĝĝļé ƒîéļð ðöéšñ'ţ ĥåvé åñ åççéššîбļé ñåmé, šçŕééñ ŕéåðéŕš åññöûñçé îţ ŵîţĥ å ĝéñéŕîç ñåmé, måķîñĝ îţ ûñûšåбļé ƒöŕ ûšéŕš ŵĥö ŕéļý öñ šçŕééñ ŕéåðéŕš. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/aria-toggle-field-label/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour]"
+    "message": "[Ŵĥéñ å ţöĝĝļé ƒîéļð ðöéšñ'ţ ĥåvé åñ åççéššîбļé ñåmé, šçŕééñ ŕéåðéŕš åññöûñçé îţ ŵîţĥ å ĝéñéŕîç ñåmé, måķîñĝ îţ ûñûšåбļé ƒöŕ ûšéŕš ŵĥö ŕéļý öñ šçŕééñ ŕéåðéŕš. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/aria-toggle-field-name/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour]"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "[ÅŔÎÅ ţöĝĝļé ƒîéļðš ðö ñöţ ĥåvé åççéššîбļé ñåméš one two three four five six seven eight nine ten]"

@@ -81,7 +81,7 @@
     "message": "Atribūta `[role]` vērtības ir derīgas"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Ja pārslēgšanas laukam nav pieejama nosaukuma, ekrāna lasītāji nolasa to ar vispārīgu nosaukumu, padarot to nelietojamu ekrāna lasītāju lietotājiem. [Uzziniet vairāk](https://web.dev/aria-toggle-field-label/)."
+    "message": "Ja pārslēgšanas laukam nav pieejama nosaukuma, ekrāna lasītāji nolasa to ar vispārīgu nosaukumu, padarot to nelietojamu ekrāna lasītāju lietotājiem. [Uzziniet vairāk](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "ARIA pārslēgšanas laukiem nav pieejamu nosaukumu"

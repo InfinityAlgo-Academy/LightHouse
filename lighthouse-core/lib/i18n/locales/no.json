@@ -81,7 +81,7 @@
     "message": "`[role]`-verdiene er gyldige"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Når av/på-felt ikke har tilgjengelige navn, beskriver skjermlesere dem med generiske navn. Dermed er de ubrukelige for brukere som er avhengige av skjermlesere. [Finn ut mer](https://web.dev/aria-toggle-field-label/)."
+    "message": "Når av/på-felt ikke har tilgjengelige navn, beskriver skjermlesere dem med generiske navn. Dermed er de ubrukelige for brukere som er avhengige av skjermlesere. [Finn ut mer](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "ARIA-av/på-felt har ikke tilgjengelige navn"

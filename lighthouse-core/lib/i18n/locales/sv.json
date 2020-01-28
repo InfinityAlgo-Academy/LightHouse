@@ -81,7 +81,7 @@
     "message": "Alla `[role]`-värden är giltiga"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Utan ett igenkännligt namn läses av/på-fält upp med ett generellt namn av skärmläsarna. Det gör dem oanvändbara för personer som behöver använda en skärmläsare. [Läs mer](https://web.dev/aria-toggle-field-label/)."
+    "message": "Utan ett igenkännligt namn läses av/på-fält upp med ett generellt namn av skärmläsarna. Det gör dem oanvändbara för personer som behöver använda en skärmläsare. [Läs mer](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "Namnen för på/av-fälten för ARIA är inte tillgängliga"

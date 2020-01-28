@@ -81,7 +81,7 @@
     "message": "`[role]`-Werte sind gültig"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Wenn eine Ein-/Aus-Schaltfläche keinen zugänglichen Namen hat, wird sie von Screenreadern mit einer allgemeinen Bezeichnung angesagt. Dadurch ist sie für Nutzer, die auf Screenreader angewiesen sind, unbrauchbar. [Weitere Informationen](https://web.dev/aria-toggle-field-label/)"
+    "message": "Wenn eine Ein-/Aus-Schaltfläche keinen zugänglichen Namen hat, wird sie von Screenreadern mit einer allgemeinen Bezeichnung angesagt. Dadurch ist sie für Nutzer, die auf Screenreader angewiesen sind, unbrauchbar. [Weitere Informationen](https://web.dev/aria-toggle-field-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "ARIA-Ein-/Aus-Schaltflächen haben keine zugänglichen Namen"

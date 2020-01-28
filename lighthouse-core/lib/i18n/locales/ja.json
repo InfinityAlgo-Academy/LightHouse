@@ -81,7 +81,7 @@
     "message": "`[role]` の値は有効です"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "切り替えフィールドにユーザー補助機能向けの名前が設定されていない場合、スクリーン リーダーでは一般名で読み上げられるため、スクリーン リーダーのみを使用するユーザーには用途がわかりません。[詳細](https://web.dev/aria-toggle-field-label/)"
+    "message": "切り替えフィールドにユーザー補助機能向けの名前が設定されていない場合、スクリーン リーダーでは一般名で読み上げられるため、スクリーン リーダーのみを使用するユーザーには用途がわかりません。[詳細](https://web.dev/aria-toggle-field-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "ARIA 切り替えフィールドにユーザー補助機能向けの名前が設定されていません"

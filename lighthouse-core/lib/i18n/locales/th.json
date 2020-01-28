@@ -81,7 +81,7 @@
     "message": "ค่า `[role]` ถูกต้อง"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "เมื่อช่องสลับไม่มีชื่อสำหรับการช่วยเหลือพิเศษ โปรแกรมอ่านหน้าจอจะอ่านปุ่มนั้นโดยใช้ชื่อทั่วไป ซึ่งทำให้ผู้ที่ต้องใช้โปรแกรมอ่านหน้าจอใช้ช่องสลับดังกล่าวไม่ได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/aria-toggle-field-label/)"
+    "message": "เมื่อช่องสลับไม่มีชื่อสำหรับการช่วยเหลือพิเศษ โปรแกรมอ่านหน้าจอจะอ่านปุ่มนั้นโดยใช้ชื่อทั่วไป ซึ่งทำให้ผู้ที่ต้องใช้โปรแกรมอ่านหน้าจอใช้ช่องสลับดังกล่าวไม่ได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/aria-toggle-field-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "ช่องสลับ ARIA ไม่มีชื่อสำหรับการช่วยเหลือพิเศษ"

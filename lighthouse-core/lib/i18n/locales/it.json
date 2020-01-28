@@ -81,7 +81,7 @@
     "message": "I valori `[role]` sono validi"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Quando un campo di attivazione/disattivazione non ha un nome accessibile, gli screen reader lo descrivono con un nome generico, rendendolo inutilizzabile per gli utenti che si affidano agli screen reader. [Ulteriori informazioni](https://web.dev/aria-toggle-field-label/)."
+    "message": "Quando un campo di attivazione/disattivazione non ha un nome accessibile, gli screen reader lo descrivono con un nome generico, rendendolo inutilizzabile per gli utenti che si affidano agli screen reader. [Ulteriori informazioni](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "I campi di attivazione/disattivazione ARIA non hanno nomi accessibili"

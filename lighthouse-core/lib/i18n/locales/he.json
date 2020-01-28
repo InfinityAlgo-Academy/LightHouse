@@ -81,7 +81,7 @@
     "message": "ערכי ה-`[role]` חוקיים"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "כשהשם של שדה החלפת מצב (toggle) אינו נגיש, קוראי מסך מציינים שם גנרי, ובמצב כזה אנשים שמסתמכים על קוראי מסך יתקשו להשתמש בשדה. [מידע נוסף](https://web.dev/aria-toggle-field-label/)"
+    "message": "כשהשם של שדה החלפת מצב (toggle) אינו נגיש, קוראי מסך מציינים שם גנרי, ובמצב כזה אנשים שמסתמכים על קוראי מסך יתקשו להשתמש בשדה. [מידע נוסף](https://web.dev/aria-toggle-field-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "לשדות החלפת מצב (toggle) של ARIA אין שמות נגישים"

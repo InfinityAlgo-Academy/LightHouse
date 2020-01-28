@@ -81,7 +81,7 @@
     "message": "Vrijednosti `[role]` su valjane"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Kad polje prekidača nema pristupačan naziv, čitači zaslona najavljuju ga generičkim nazivom, što ga čini neupotrebljivim za korisnike koji se oslanjaju na čitače zaslona. [Saznajte više](https://web.dev/aria-toggle-field-label/)."
+    "message": "Kad polje prekidača nema pristupačan naziv, čitači zaslona najavljuju ga generičkim nazivom, što ga čini neupotrebljivim za korisnike koji se oslanjaju na čitače zaslona. [Saznajte više](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "ARIA polja prekidača nemaju pristupačne nazive"

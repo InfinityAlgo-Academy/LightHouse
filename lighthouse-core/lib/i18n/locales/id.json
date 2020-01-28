@@ -81,7 +81,7 @@
     "message": "Nilai `[role]` valid"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Jika kolom beralih tidak memiliki nama yang dapat diakses, pembaca layar akan mengucapkannya dengan nama umum, sehingga tidak dapat digunakan oleh pengguna yang mengandalkan pembaca layar. [Pelajari lebih lanjut](https://web.dev/aria-toggle-field-label/)."
+    "message": "Jika kolom beralih tidak memiliki nama yang dapat diakses, pembaca layar akan mengucapkannya dengan nama umum, sehingga tidak dapat digunakan oleh pengguna yang mengandalkan pembaca layar. [Pelajari lebih lanjut](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "Kolom beralih ARIA tidak memiliki nama yang dapat diakses"

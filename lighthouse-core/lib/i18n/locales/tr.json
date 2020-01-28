@@ -81,7 +81,7 @@
     "message": "`[role]` değerleri geçerli"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Bir açma/kapatma alanının erişilebilir özellikli bir adı yoksa ekran okuyucular bu alanı genel adla okuyacağı için bu, ekran okuyuculardan yararlanan kullanıcılar için yararlı olmaz. [Daha fazla bilgi](https://web.dev/aria-toggle-field-label/)."
+    "message": "Bir açma/kapatma alanının erişilebilir özellikli bir adı yoksa ekran okuyucular bu alanı genel adla okuyacağı için bu, ekran okuyuculardan yararlanan kullanıcılar için yararlı olmaz. [Daha fazla bilgi](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "ARIA açma/kapatma alanlarının erişilebilir özellikli adı yok"

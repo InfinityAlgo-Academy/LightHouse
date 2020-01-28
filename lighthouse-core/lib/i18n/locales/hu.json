@@ -81,7 +81,7 @@
     "message": "A(z) `[role]` értékek érvényesek"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Ha valamelyik kapcsolómező nem rendelkezik akadálymentes névvel, a képernyőolvasók általános néven olvassák fel, ami használhatatlan a képernyőolvasóra hagyatkozó felhasználók számára. [További információ](https://web.dev/aria-toggle-field-label/)."
+    "message": "Ha valamelyik kapcsolómező nem rendelkezik akadálymentes névvel, a képernyőolvasók általános néven olvassák fel, ami használhatatlan a képernyőolvasóra hagyatkozó felhasználók számára. [További információ](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "Egyes ARIA-kapcsolómezők nem rendelkeznek akadálymentes névvel"

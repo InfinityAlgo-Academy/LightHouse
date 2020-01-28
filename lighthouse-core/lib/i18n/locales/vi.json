@@ -81,7 +81,7 @@
     "message": "Các giá trị của `[role]` là hợp lệ"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Khi tên của một trường chuyển đổi ở trạng thái không thể tiếp cận, thì trình đọc màn hình sẽ gọi trường đó bằng tên gọi chung, khiến người dùng trình đọc màn hình không dùng được trường này. [Tìm hiểu thêm](https://web.dev/aria-toggle-field-label/)."
+    "message": "Khi tên của một trường chuyển đổi ở trạng thái không thể tiếp cận, thì trình đọc màn hình sẽ gọi trường đó bằng tên gọi chung, khiến người dùng trình đọc màn hình không dùng được trường này. [Tìm hiểu thêm](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "Tên các trường chuyển đổi của ARIA ở trạng thái không thể tiếp cận"

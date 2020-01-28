@@ -81,7 +81,7 @@
     "message": "`[role]` విలువలు చెల్లుబాటు అయ్యేవి"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "ఒక టోగుల్ ఫీల్డ్‌కు యాక్సెస్ చేయదగిన పేరు లేనప్పుడు, స్క్రీన్ రీడర్‌లు దానిని సాధారణ పేరుతో ప్రకటిస్తాయి, దీని వలన స్క్రీన్ రీడర్‌లపై ఆధారపడే యూజర్‌లకు నిరుపయోగమైనవిగా అవుతాయి. [మరింత తెలుసుకోండి](https://web.dev/aria-toggle-field-label/)."
+    "message": "ఒక టోగుల్ ఫీల్డ్‌కు యాక్సెస్ చేయదగిన పేరు లేనప్పుడు, స్క్రీన్ రీడర్‌లు దానిని సాధారణ పేరుతో ప్రకటిస్తాయి, దీని వలన స్క్రీన్ రీడర్‌లపై ఆధారపడే యూజర్‌లకు నిరుపయోగమైనవిగా అవుతాయి. [మరింత తెలుసుకోండి](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "ARIA టోగుల్ ఫీల్డ్‌లకు యాక్సెస్ చేయదగిన పేర్లు లేవు"

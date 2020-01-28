@@ -81,7 +81,7 @@
     "message": "Vrednosti `[role]` so veljavne"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Če preklopno polje nima dostopnega imena, ga bralniki zaslona predstavijo z generičnim imenom, s čimer je neuporaben za uporabnike, ki se zanašajo na bralnike zaslona. [Več o tem](https://web.dev/aria-toggle-field-label/)."
+    "message": "Če preklopno polje nima dostopnega imena, ga bralniki zaslona predstavijo z generičnim imenom, s čimer je neuporaben za uporabnike, ki se zanašajo na bralnike zaslona. [Več o tem](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "Preklopna polja ARIA nimajo dostopnih imen"

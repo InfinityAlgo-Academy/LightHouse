@@ -81,7 +81,7 @@
     "message": "Valorile `[role]` sunt valide"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Când un câmp de comutare nu are un nume accesibil, cititoarele de ecran îl anunță cu o denumire generică, făcându-l inutil pentru utilizatorii care se bazează pe cititoarele de ecran. [Află mai multe](https://web.dev/aria-toggle-field-label/)."
+    "message": "Când un câmp de comutare nu are un nume accesibil, cititoarele de ecran îl anunță cu o denumire generică, făcându-l inutil pentru utilizatorii care se bazează pe cititoarele de ecran. [Află mai multe](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "Câmpurile de comutare pentru ARIA nu au nume accesibile"

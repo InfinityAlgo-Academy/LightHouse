@@ -81,7 +81,7 @@
     "message": "Hodnoty atributů `[role]` jsou platné"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Když pole přepínače nemá přístupný název, čtečky obrazovek oznamují obecný název a pro jejich uživatele je toto pole v podstatě nepoužitelné. [Další informace](https://web.dev/aria-toggle-field-label/)"
+    "message": "Když pole přepínače nemá přístupný název, čtečky obrazovek oznamují obecný název a pro jejich uživatele je toto pole v podstatě nepoužitelné. [Další informace](https://web.dev/aria-toggle-field-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "Pole přepínačů ARIA nemají přístupné názvy"

@@ -81,7 +81,7 @@
     "message": "Wartości `[role]` są prawidłowe"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Gdy pole przełączania nie ma nazwy na potrzeby ułatwień dostępu, czytniki ekranu określają je nazwą ogólną, przez co jest ono bezużyteczne dla ich użytkowników. [Więcej informacji](https://web.dev/aria-toggle-field-label/)"
+    "message": "Gdy pole przełączania nie ma nazwy na potrzeby ułatwień dostępu, czytniki ekranu określają je nazwą ogólną, przez co jest ono bezużyteczne dla ich użytkowników. [Więcej informacji](https://web.dev/aria-toggle-field-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "Pola przełączania ARIA nie mają nazw na potrzeby ułatwień dostępu"

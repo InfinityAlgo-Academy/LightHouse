@@ -81,7 +81,7 @@
     "message": "`[role]` 값이 유효함"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "토글 입력란에 접근 가능한 이름이 없는 경우 스크린 리더에서 일반적인 이름으로 읽기 때문에 스크린 리더에 의존하는 사용자는 사용할 수 없게 됩니다. [자세히 알아보기](https://web.dev/aria-toggle-field-label/)"
+    "message": "토글 입력란에 접근 가능한 이름이 없는 경우 스크린 리더에서 일반적인 이름으로 읽기 때문에 스크린 리더에 의존하는 사용자는 사용할 수 없게 됩니다. [자세히 알아보기](https://web.dev/aria-toggle-field-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "ARIA 토글 입력란에 접근 가능한 이름이 없음"

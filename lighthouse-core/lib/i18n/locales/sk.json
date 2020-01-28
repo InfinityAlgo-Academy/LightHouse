@@ -81,7 +81,7 @@
     "message": "Hodnoty `[role]` sú platné"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Keď pole prepínača nemá dostupný názov, čítačky obrazovky ho oznamujú pod generickým názvom, takže je pre používateľov nanič. [Ďalšie informácie](https://web.dev/aria-toggle-field-label/)"
+    "message": "Keď pole prepínača nemá dostupný názov, čítačky obrazovky ho oznamujú pod generickým názvom, takže je pre používateľov nanič. [Ďalšie informácie](https://web.dev/aria-toggle-field-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "Polia prepínačov ARIA nemajú dostupné názvy"

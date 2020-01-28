@@ -81,7 +81,7 @@
     "message": "Стойностите на `[role]` са валидни"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Когато дадено поле за превключване няма достъпно име, екранните четци ще произнасят за него общо име и то ще бъде неизползваемо за потребителите, разчитащи на тази технология. [Научете повече](https://web.dev/aria-toggle-field-label/)."
+    "message": "Когато дадено поле за превключване няма достъпно име, екранните четци ще произнасят за него общо име и то ще бъде неизползваемо за потребителите, разчитащи на тази технология. [Научете повече](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "Полетата за превключване за ARIA нямат достъпни имена"

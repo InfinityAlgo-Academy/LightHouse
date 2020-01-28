@@ -95,7 +95,7 @@
             "title": "`[role]` values are valid"
         },
         "aria-toggle-field-name": {
-            "description": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-toggle-field-label/).",
+            "description": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-toggle-field-name/).",
             "details": {
                 "headings": [],
                 "items": [],

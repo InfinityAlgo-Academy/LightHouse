@@ -81,7 +81,7 @@
     "message": "Los valores de `[role]` son válidos"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Si un campo de activación no tiene un nombre apto para la accesibilidad, los lectores de pantalla lo leerán en voz alta con un nombre genérico, por lo que resulta inservible para los usuarios que necesitan usar lectores de pantalla. [Obtén más información](https://web.dev/aria-toggle-field-label/)."
+    "message": "Si un campo de activación no tiene un nombre apto para la accesibilidad, los lectores de pantalla lo leerán en voz alta con un nombre genérico, por lo que resulta inservible para los usuarios que necesitan usar lectores de pantalla. [Obtén más información](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "Los campos de activación de ARIA no tienen nombres aptos para la accesibilidad"

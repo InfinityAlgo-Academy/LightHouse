@@ -81,7 +81,7 @@
     "message": "Els valors de l'atribut `[role]` són vàlids"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Si un camp de commutació no té un nom accessible, els lectors de pantalla el llegeixen amb un nom genèric, de manera que resulta inservible per als usuaris que depenen d'aquesta tecnologia. [Obtén més informació](https://web.dev/aria-toggle-field-label/)."
+    "message": "Si un camp de commutació no té un nom accessible, els lectors de pantalla el llegeixen amb un nom genèric, de manera que resulta inservible per als usuaris que depenen d'aquesta tecnologia. [Obtén més informació](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "Els camps de commutació ARIA no tenen noms accessibles"

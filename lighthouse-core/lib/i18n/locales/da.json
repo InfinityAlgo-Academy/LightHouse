@@ -81,7 +81,7 @@
     "message": "`[role]`-værdierne er gyldige"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Hvis et felt med en til/fra-kontakt ikke har et tilgængeligt navn, giver skærmlæsere feltet et generisk navn, så det ikke kan anvendes af brugere, der får læst indhold op af skærmlæsere. [Få flere oplysninger](https://web.dev/aria-toggle-field-label/)."
+    "message": "Hvis et felt med en til/fra-kontakt ikke har et tilgængeligt navn, giver skærmlæsere feltet et generisk navn, så det ikke kan anvendes af brugere, der får læst indhold op af skærmlæsere. [Få flere oplysninger](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "ARIA-kontakterne har ikke tilgængelige navne"

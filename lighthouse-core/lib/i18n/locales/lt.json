@@ -81,7 +81,7 @@
     "message": "Elemento „`[role]`“ vertės yra tinkamos"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Kai nenurodytas neįgaliesiems pritaikytas perjungimo lauko pavadinimas, ekrano skaitytuvai apie jį praneša naudodami bendrąjį pavadinimą, todėl jo negali naudoti ekrano skaitytuvo naudotojai. [Sužinokite daugiau](https://web.dev/aria-toggle-field-label/)."
+    "message": "Kai nenurodytas neįgaliesiems pritaikytas perjungimo lauko pavadinimas, ekrano skaitytuvai apie jį praneša naudodami bendrąjį pavadinimą, todėl jo negali naudoti ekrano skaitytuvo naudotojai. [Sužinokite daugiau](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "Nenurodyti neįgaliesiems pritaikyti ARIA perjungimo laukų pavadinimai"
