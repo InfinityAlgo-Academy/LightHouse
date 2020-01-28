@@ -1595,6 +1595,9 @@
   "lighthouse-core/report/html/renderer/util.js | runtimeSettingsBenchmark": {
     "message": "CPU/Memory Power"
   },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsChannel": {
+    "message": "Channel"
+  },
   "lighthouse-core/report/html/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "CPU throttling"
   },

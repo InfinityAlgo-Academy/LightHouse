@@ -1595,6 +1595,9 @@
   "lighthouse-core/report/html/renderer/util.js | runtimeSettingsBenchmark": {
     "message": "ĈṔÛ/Ḿêḿôŕŷ Ṕôẃêŕ"
   },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsChannel": {
+    "message": "Ĉh́âńn̂él̂"
+  },
   "lighthouse-core/report/html/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "ĈṔÛ t́ĥŕôt́t̂ĺîńĝ"
   },

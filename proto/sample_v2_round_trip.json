@@ -4185,6 +4185,7 @@
             "runtimeNoEmulation": "No emulation",
             "runtimeSettingsBenchmark": "CPU/Memory Power",
             "runtimeSettingsCPUThrottling": "CPU throttling",
+            "runtimeSettingsChannel": "Channel",
             "runtimeSettingsDevice": "Device",
             "runtimeSettingsFetchTime": "Fetch Time",
             "runtimeSettingsNetworkThrottling": "Network throttling",

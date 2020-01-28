@@ -5391,6 +5391,7 @@
       "runtimeMobileEmulation": "Emulated Moto G4",
       "runtimeNoEmulation": "No emulation",
       "runtimeSettingsBenchmark": "CPU/Memory Power",
+      "runtimeSettingsChannel": "Channel",
       "runtimeSettingsCPUThrottling": "CPU throttling",
       "runtimeSettingsDevice": "Device",
       "runtimeSettingsFetchTime": "Fetch Time",
