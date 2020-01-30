@@ -2,6 +2,32 @@
 
 > Lighthouse analyzes web apps and web pages, collecting modern performance metrics and insights on developer best practices.
 
+
+- Using Lighthouse
+  - [Using Lighthouse in Chrome DevTools](#using-lighthouse-in-chrome-devtools)
+  - [Using the Chrome extension](#using-the-chrome-extension)
+  - [Using the Node CLI](#using-the-node-cli)
+    * [CLI options](#cli-options)
+  - [Using the Node module](#using-the-node-module)
+- [Viewing a report](#viewing-a-report)
+  * [Online Viewer](#online-viewer)
+- [Docs & Recipes](#docs--recipes)
+- [Developing Lighthouse](#develop)
+  * [Setup](#setup)
+  * [Run](#run)
+  * [Tests](#tests)
+- Associated Products and Projects
+  - [Lighthouse Integrations](#lighthouse-integrations)
+  - [Plugins](#plugins)
+  - [Related Projects](#related-projects)
+- [FAQ](#faq)
+  * [How does Lighthouse work?](#how-does-lighthouse-work)
+  * [Can I configure the lighthouse run?](#can-i-configure-the-lighthouse-run)
+  * [How does Lighthouse use network throttling, and how can I make it better?](#how-does-lighthouse-use-network-throttling-and-how-can-i-make-it-better)
+  * [Are results sent to a remote server?](#are-results-sent-to-a-remote-server)
+  * [How do I author custom audits to extend Lighthouse?](#how-do-i-author-custom-audits-to-extend-lighthouse)
+  * [How do I contribute?](#how-do-i-contribute)
+
 ## Using Lighthouse in Chrome DevTools
 
 Lighthouse is integrated directly into the Chrome Developer Tools, under the "Audits" panel.
