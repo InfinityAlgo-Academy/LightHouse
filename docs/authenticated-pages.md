@@ -8,6 +8,10 @@ Default runs of Lighthouse load a page as a "new user", with no previous session
 
 See [a working demo at /docs/recipes/auth](./recipes/auth).
 
+View our full documentation for using [Lighthouse along with Puppeteer](https://github.com/GoogleChrome/lighthouse/blob/master/docs/puppeteer.md).
+
+You may want to use Puppeteer's [`page.setCookie`](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagesetcookiecookies).
+
 ## Option 2: Leverage logged-in state with Chrome DevTools
 
 The Audits panel in Chrome DevTools will never clear your cookies, so you can log in to the target site and then run Lighthouse. If `localStorage` or `indexedDB` is important for your authentication purposes, be sure to uncheck `Clear storage`.
@@ -28,7 +32,7 @@ const result = await lighthouse('http://www.example.com', {
 });
 ```
 
-You could also set the `Cookie` header, but beware: it will [override any other Cookies you expect to be there](https://github.com/GoogleChrome/lighthouse/pull/9170). A workaround is to use Puppeteer's [`page.setCookie`](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagesetcookiecookies).
+You could also set the `Cookie` header, but beware: it will [override any other Cookies you expect to be there](https://github.com/GoogleChrome/lighthouse/pull/9170).
 
 ## Option 4: Open a debug instance of Chrome and manually log in
 
