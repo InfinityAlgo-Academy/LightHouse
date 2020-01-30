@@ -266,6 +266,11 @@ declare global {
       args: {
         fileName?: string;
         snapshot?: string;
+        beginData?: {
+          frame?: string;
+          startLine?: number;
+          url?: string;
+        };
         data?: {
           frame?: string;
           isLoadingMainFrame?: boolean;

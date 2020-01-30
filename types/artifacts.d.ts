@@ -8,6 +8,7 @@ import parseManifest = require('../lighthouse-core/lib/manifest-parser.js');
 import _LanternSimulator = require('../lighthouse-core/lib/dependency-graph/simulator/simulator.js');
 import _NetworkRequest = require('../lighthouse-core/lib/network-request.js');
 import speedline = require('speedline-core');
+import TextSourceMap = require('../lighthouse-core/lib/cdt/generated/SourceMap.js');
 
 type _TaskNode = import('../lighthouse-core/lib/tracehouse/main-thread-tasks.js').TaskNode;
 
@@ -144,23 +145,30 @@ declare global {
       export type TaskNode = _TaskNode;
       export type MetaElement = LH.Artifacts['MetaElements'][0];
 
+      export interface RuleExecutionError {
+        name: string;
+        message: string;
+      }
+
+      export interface AxeResult {
+        id: string;
+        impact: string;
+        tags: Array<string>;
+        nodes: Array<{
+          path: string;
+          html: string;
+          snippet: string;
+          target: Array<string>;
+          failureSummary?: string;
+          nodeLabel?: string;
+        }>;
+        error?: RuleExecutionError;
+      }
+
       export interface Accessibility {
-        violations: {
-          id: string;
-          impact: string;
-          tags: string[];
-          nodes: {
-            path: string;
-            html: string;
-            snippet: string;
-            target: string[];
-            failureSummary?: string;
-            nodeLabel?: string;
-          }[];
-        }[];
-        notApplicable: {
-          id: string
-        }[];
+        violations: Array<AxeResult>;
+        notApplicable: Array<Pick<AxeResult, 'id'>>;
+        incomplete: Array<AxeResult>;
       }
 
       export interface CSSStyleSheetInfo {
@@ -289,12 +297,26 @@ declare global {
         map?: undefined;
       }
 
+      export interface Bundle {
+        rawMap: RawSourceMap;
+        script: ScriptElement;
+        map: TextSourceMap;
+        sizes: {
+          files: Record<string, number>;
+          unmappedBytes: number;
+          totalBytes: number;
+        };
+      }
+
       /** @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#Attributes */
       export interface AnchorElement {
         rel: string
         href: string
         text: string
         target: string
+        devtoolsNodePath: string
+        selector: string
+        nodeLabel: string
         outerHTML: string
       }
 
@@ -526,6 +548,8 @@ declare global {
         mainThreadEvents: Array<TraceEvent>;
         /** IDs for the trace's main frame, process, and thread. */
         mainFrameIds: {pid: number, tid: number, frameId: string};
+        /** The list of frames committed in the trace. */
+        frames: Array<{frame: string, url: string}>;
         /** The trace event marking navigationStart. */
         navigationStartEvt: TraceEvent;
         /** The trace event marking firstPaint, if it was found. */

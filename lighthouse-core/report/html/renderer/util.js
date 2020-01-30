@@ -567,6 +567,8 @@ Util.UIStrings = {
   runtimeSettingsNetworkThrottling: 'Network throttling',
   /** Label for a row in a table that describes the CPU throttling conditions that were used during a Lighthouse run, if any.*/
   runtimeSettingsCPUThrottling: 'CPU throttling',
+  /** Label for a row in a table that shows in what tool Lighthouse is being run (e.g. The lighthouse CLI, Chrome DevTools, Lightrider, WebPageTest, etc). */
+  runtimeSettingsChannel: 'Channel',
   /** Label for a row in a table that shows the User Agent that was detected on the Host machine that ran Lighthouse. */
   runtimeSettingsUA: 'User agent (host)',
   /** Label for a row in a table that shows the User Agent that was used to send out all network requests during the Lighthouse run. */
@@ -579,8 +581,8 @@ Util.UIStrings = {
 
   /** Descriptive explanation for emulation setting when no device emulation is set. */
   runtimeNoEmulation: 'No emulation',
-  /** Descriptive explanation for emulation setting when emulating a Nexus 5X mobile device. */
-  runtimeMobileEmulation: 'Emulated Nexus 5X',
+  /** Descriptive explanation for emulation setting when emulating a Moto G4 mobile device. */
+  runtimeMobileEmulation: 'Emulated Moto G4',
   /** Descriptive explanation for emulation setting when emulating a generic desktop form factor, as opposed to a mobile-device like form factor. */
   runtimeDesktopEmulation: 'Emulated Desktop',
   /** Descriptive explanation for a runtime setting that is set to an unknown value. */

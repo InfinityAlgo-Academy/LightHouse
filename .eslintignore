@@ -6,6 +6,7 @@
 **/third_party/**
 **/generated/**
 **/source-maps/**
+
 lighthouse-cli/test/fixtures/byte-efficiency/bundle.js
 
 /dist/**

@@ -8,19 +8,18 @@
 /** @typedef {import('../gather/driver.js')} Driver */
 
 /**
- * Nexus 5X metrics adapted from emulated_devices/module.json
  * @type {LH.Crdp.Emulation.SetDeviceMetricsOverrideRequest}
  */
-const NEXUS5X_EMULATION_METRICS = {
+const MOTOG4_EMULATION_METRICS = {
   mobile: true,
-  screenWidth: 412,
-  screenHeight: 660,
-  width: 412,
-  height: 660,
+  screenWidth: 360,
+  screenHeight: 640,
+  width: 360,
+  height: 640,
   positionX: 0,
   positionY: 0,
   scale: 1,
-  deviceScaleFactor: 2.625,
+  deviceScaleFactor: 3,
   screenOrientation: {
     angle: 0,
     type: 'portraitPrimary',
@@ -39,7 +38,7 @@ const DESKTOP_EMULATION_METRICS = {
 };
 
 // eslint-disable-next-line max-len
-const NEXUS5X_USERAGENT = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3963.0 Mobile Safari/537.36 Chrome-Lighthouse';
+const MOTOG4_USERAGENT = 'Mozilla/5.0 (Linux; Android 6.0.1; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3963.0 Mobile Safari/537.36 Chrome-Lighthouse';
 // eslint-disable-next-line max-len
 const DESKTOP_USERAGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3963.0 Safari/537.36 Chrome-Lighthouse';
 
@@ -64,8 +63,8 @@ const NO_CPU_THROTTLE_METRICS = {
 
 const emulationParams = {
   mobile: {
-    userAgent: NEXUS5X_USERAGENT,
-    metrics: NEXUS5X_EMULATION_METRICS,
+    userAgent: MOTOG4_USERAGENT,
+    metrics: MOTOG4_EMULATION_METRICS,
     touchEnabled: true,
   },
   desktop: {
@@ -161,6 +160,6 @@ module.exports = {
   enableCPUThrottling,
   disableCPUThrottling,
   goOffline,
-  MOBILE_USERAGENT: NEXUS5X_USERAGENT,
+  MOBILE_USERAGENT: MOTOG4_USERAGENT,
   DESKTOP_USERAGENT,
 };

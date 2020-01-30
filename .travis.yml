@@ -29,6 +29,8 @@ before_script:
   - google-chrome-stable --version
   - yarn build-all
 script:
+  # Fail if any changes were written to source files (ex, from: build/build-cdt-lib.js).
+  - git diff --exit-code
   - yarn bundlesize
   - yarn diff:sample-json
   - yarn lint
