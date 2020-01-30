@@ -9,6 +9,7 @@
 /* eslint-disable no-console */
 
 const fs = require('fs');
+const assert = require('assert');
 const path = require('path');
 const constants = require('./constants.js');
 const chalk = require('chalk').default;
@@ -16,6 +17,7 @@ const chalk = require('chalk').default;
 const INPUT_PATH = process.argv[2] || constants.SITE_INDEX_WITH_GOLDEN_WITH_COMPUTED_PATH;
 const HEAD_PATH = path.resolve(process.cwd(), INPUT_PATH);
 const MASTER_PATH = constants.MASTER_COMPUTED_PATH;
+const MASTER_ACCURACY_PATH = constants.MASTER_ACCURACY_PATH;
 
 if (!fs.existsSync(HEAD_PATH) || !fs.existsSync(MASTER_PATH)) {
   throw new Error('Usage $0 <computed file>');
@@ -63,6 +65,10 @@ if (diffs.length) {
 
   process.exit(1);
 } else {
+  assert.deepStrictEqual(
+    constants.evaluateAllMetrics(computedResults, expectedResults),
+    require(MASTER_ACCURACY_PATH)
+  );
   console.log('✅  PASS    No changes between expected and computed!');
 }
 
