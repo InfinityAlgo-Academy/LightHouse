@@ -34,6 +34,7 @@ const BASE_ARTIFACT_BLANKS = {
   NetworkUserAgent: '',
   BenchmarkIndex: '',
   WebAppManifest: '',
+  InstallabilityErrors: '',
   Stacks: '',
   traces: '',
   devtoolsLogs: '',

@@ -45,7 +45,7 @@ class SplashScreen extends MultiCheckAudit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['WebAppManifest'],
+      requiredArtifacts: ['WebAppManifest', 'InstallabilityErrors'],
     };
   }
 
@@ -84,7 +84,7 @@ class SplashScreen extends MultiCheckAudit {
     /** @type {Array<string>} */
     const failures = [];
 
-    const manifestValues = await ManifestValues.request(artifacts.WebAppManifest, context);
+    const manifestValues = await ManifestValues.request(artifacts, context);
     SplashScreen.assessManifest(manifestValues, failures);
 
     return {
