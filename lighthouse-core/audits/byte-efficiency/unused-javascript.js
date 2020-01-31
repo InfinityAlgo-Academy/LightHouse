@@ -6,7 +6,7 @@
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
-const BundleAnalysis = require('../../computed/bundle-analysis.js');
+const JSBundles = require('../../computed/js-bundles.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -80,7 +80,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
   /**
    * @param {LH.Audit.ByteEfficiencyItem} item
    * @param {WasteData[]} wasteData
-   * @param {import('../../computed/bundle-analysis.js').Bundle} bundle
+   * @param {LH.Artifacts.Bundle} bundle
    * @param {ReturnType<typeof UnusedJavaScript.determineLengths>} lengths
    */
   static createBundleMultiData(item, wasteData, bundle, lengths) {
@@ -88,28 +88,6 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
 
     /** @type {Record<string, number>} */
     const files = {};
-
-    // This is 10x slower (~320ms vs 46ms for a big map), but its correctness
-    // is much easier to reason about. The latter method gives the same counts,
-    // except it seems to have +1 byte for each file.
-    // let line = 0;
-    // let column = 0;
-    // for (let i = 0; i < bundle.script.content.length; i++) {
-    //   column += 1;
-    //   if (bundle.script.content[i] === '\n') {
-    //     line += 1;
-    //     column = 0;
-    //   }
-    //   if (wasteData.some(data => data.unusedByIndex[i] === 0)) continue;
-
-    //   // @ts-ignore: ughhhhh the tsc doesn't work for the compiled cdt lib
-    //   const mapping = bundle.map.findExactEntry(line, column);
-    //   // This can be null if the source map has gaps.
-    //   // For example, the webpack CommonsChunkPlugin emits code that is not mapped (`webpackJsonp`).
-    //   if (mapping) {
-    //     files[mapping.sourceURL] = (files[mapping.sourceURL] || 0) + 1;
-    //   }
-    // }
 
     const lineLengths = bundle.script.content.split('\n').map(l => l.length);
     let totalSoFar = 0;
@@ -119,57 +97,23 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       return retVal;
     });
 
-    let output = '';
-    const chalk = require('chalk');
-    // @ts-ignore
+    // @ts-ignore: We will upstream computeLastGeneratedColumns to CDT eventually.
     bundle.map.computeLastGeneratedColumns();
-    // @ts-ignore
     for (const mapping of bundle.map.mappings()) {
       let offset = lineOffsets[mapping.lineNumber];
 
       offset += mapping.columnNumber;
-      // @ts-ignore
       const lastColumnOfMapping =
+        // @ts-ignore: We will upstream lastColumnNumber to CDT eventually.
         (mapping.lastColumnNumber - 1) || lineLengths[mapping.lineNumber];
       for (let i = mapping.columnNumber; i <= lastColumnOfMapping; i++) {
-        // debugging.
-        // @ts-ignore
-        if (mapping.sourceURL.includes('b.js')) {
-          const unused = wasteData.every(data => data.unusedByIndex[offset] === 1);
-          const fn = unused ? chalk.default.bgRedBright : chalk.default.bgGreen;
-          output += fn(bundle.script.content[offset]);
-          if (bundle.script.content[offset] === '\n') output += fn('\\n');
-        }
-
         if (wasteData.every(data => data.unusedByIndex[offset] === 1)) {
           // @ts-ignore
           files[mapping.sourceURL] = (files[mapping.sourceURL] || 0) + 1;
         }
         offset += 1;
       }
-      // @ts-ignore
-      if (mapping.sourceURL.includes('b.js')) {
-        console.log(mapping);
-        // @ts-ignore
-        console.log(files[mapping.sourceURL]);
-        console.log(output);
-        output = '';
-      }
     }
-    console.log(output);
-
-    // debugging.
-    console.log('sizes', bundle.sizes.files, {total: Object.values(bundle.sizes.files).reduce((acc, cur) => acc + cur, 0)});
-    console.log({lengths});
-    console.log('unused', files, {total: Object.values(files).reduce((acc, cur) => acc + cur, 0)});
-    let outputAll = '';
-    for (let i = 0; i < bundle.script.content.length; i++) {
-      const unused = wasteData.every(data => data.unusedByIndex[i] === 1);
-      const fn = unused ? chalk.default.bgRedBright : chalk.default.bgGreen;
-      outputAll += fn(bundle.script.content[i]);
-      if (bundle.script.content[i] === '\n') outputAll += fn('\\n');
-    }
-    console.log(outputAll);
 
     const transferRatio = lengths.transfer / lengths.content;
     const topUnusedFilesSizes = Object.entries(files)
@@ -247,7 +191,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
    * @return {Promise<ByteEfficiencyAudit.ByteEfficiencyProduct>}
    */
   static async audit_(artifacts, networkRecords, context) {
-    const bundles = await BundleAnalysis.request(artifacts, context);
+    const bundles = await JSBundles.request(artifacts, context);
 
     /** @type {Map<string, Array<LH.Crdp.Profiler.ScriptCoverage>>} */
     const scriptsByUrl = new Map();
