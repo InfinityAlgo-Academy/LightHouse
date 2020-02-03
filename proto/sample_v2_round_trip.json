@@ -4571,7 +4571,19 @@
             {
                 "duration": 100.0,
                 "entryType": "measure",
+                "name": "lh:computed:ManifestValues",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
                 "name": "lh:audit:themed-omnibox",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:computed:ManifestValues",
                 "startTime": 0.0
             },
             {

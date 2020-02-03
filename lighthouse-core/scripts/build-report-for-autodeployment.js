@@ -82,6 +82,7 @@ async function generateErrorLHR() {
     NetworkUserAgent: 'Mozilla/5.0 ErrorUserAgent Chrome/66',
     BenchmarkIndex: 1000,
     WebAppManifest: null,
+    InstallabilityErrors: {errors: []},
     Stacks: [],
     settings: defaultSettings,
     URL: {

@@ -1181,6 +1181,9 @@
   "lighthouse-core/audits/uses-rel-preconnect.js | title": {
     "message": "P̂ŕêćôńn̂éĉt́ t̂ó r̂éq̂úîŕêd́ ôŕîǵîńŝ"
   },
+  "lighthouse-core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
+    "message": "M̂ór̂é t̂h́âń 2 p̂ŕêćôńn̂éĉt́ l̂ín̂ḱŝ ẃêŕê f́ôún̂d́. P̂ŕêćôńn̂éĉt́ l̂ín̂ḱŝ śĥóûĺd̂ b́ê úŝéd̂ śp̂ár̂ín̂ǵl̂ý âńd̂ ón̂ĺŷ t́ô t́ĥé m̂óŝt́ îḿp̂ór̂t́âńt̂ ór̂íĝín̂ś."
+  },
   "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
     "message": "Â ṕr̂él̂óâd́ <l̂ín̂ḱ> ŵáŝ f́ôún̂d́ f̂ór̂ \"{preloadURL}\" b́ût́ ŵáŝ ńôt́ ûśêd́ b̂ý t̂h́ê b́r̂óŵśêŕ. Ĉh́êćk̂ t́ĥát̂ ýôú âŕê úŝín̂ǵ t̂h́ê `crossorigin` át̂t́r̂íb̂út̂é p̂ŕôṕêŕl̂ý."
   },

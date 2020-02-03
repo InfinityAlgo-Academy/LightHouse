@@ -42,7 +42,7 @@ class ThemedOmnibox extends MultiCheckAudit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['WebAppManifest', 'MetaElements'],
+      requiredArtifacts: ['WebAppManifest', 'InstallabilityErrors', 'MetaElements'],
     };
   }
 
@@ -93,7 +93,7 @@ class ThemedOmnibox extends MultiCheckAudit {
     const failures = [];
 
     const themeColorMeta = artifacts.MetaElements.find(meta => meta.name === 'theme-color');
-    const manifestValues = await ManifestValues.request(artifacts.WebAppManifest, context);
+    const manifestValues = await ManifestValues.request(artifacts, context);
     ThemedOmnibox.assessManifest(manifestValues, failures);
     ThemedOmnibox.assessMetaThemecolor(themeColorMeta, failures);
 

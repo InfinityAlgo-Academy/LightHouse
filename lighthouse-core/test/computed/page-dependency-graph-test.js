@@ -260,9 +260,9 @@ describe('PageDependencyGraph computed artifact:', () => {
       ]);
 
       addTaskEvents(600, 150, [
-        // CPU 1.4 should depend on Network 4 even though it ends at 410ms
+        // CPU 1.6 should depend on Network 4 even though it ends at 410ms
         {name: 'InvalidateLayout', data: {stackTrace: [{url: '4'}]}},
-        // Network 5 should not depend on CPU 1.4 because it started before CPU 1.4
+        // Network 5 should not depend on CPU 1.6 because it started before CPU 1.6
         {name: 'ResourceSendRequest', data: {requestId: 5}},
       ]);
 
@@ -280,6 +280,29 @@ describe('PageDependencyGraph computed artifact:', () => {
       assert.deepEqual(getDependencyIds(nodes[4]), [1]);
       assert.deepEqual(getDependencyIds(nodes[5]), [1]);
       assert.deepEqual(getDependencyIds(nodes[6]), [4]);
+    });
+
+    it('should not install timer dependency on itself', () => {
+      const request1 = createRequest(1, '1', 0);
+      const networkRecords = [request1];
+
+      addTaskEvents(200, 200, [
+        // CPU 1.2 should depend on Network 1
+        {name: 'EvaluateScript', data: {url: '1'}},
+        // CPU 1.2 will install and fire it's own timer, but should not depend on itself
+        {name: 'TimerInstall', data: {timerId: 'timer1'}},
+        {name: 'TimerFire', data: {timerId: 'timer1'}},
+      ]);
+
+      const graph = PageDependencyGraph.createGraph(traceOfTab, networkRecords);
+      const nodes = [];
+      graph.traverse(node => nodes.push(node));
+
+      const getDependencyIds = node => node.getDependencies().map(node => node.id);
+
+      assert.equal(nodes.length, 2);
+      assert.deepEqual(getDependencyIds(nodes[0]), []);
+      assert.deepEqual(getDependencyIds(nodes[1]), [1]);
     });
 
     it('should prune short tasks', () => {

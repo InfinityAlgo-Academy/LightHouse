@@ -1642,22 +1642,24 @@ describe('GatherRunner', function() {
       passContext = {
         url: 'https://example.com/index.html',
         baseArtifacts: {},
-        driver: fakeDriver,
+        driver,
       };
     });
 
-    it('should pass through manifest when null', async () => {
-      const getAppManifest = jest.spyOn(fakeDriver, 'getAppManifest');
-      getAppManifest.mockResolvedValueOnce(null);
+    it('should return null when there is no manifest', async () => {
+      connectionStub.sendCommand
+        .mockResponse('Page.getAppManifest', {})
+        .mockResponse('Page.getInstallabilityErrors', {errors: []});
       const result = await GatherRunner.getWebAppManifest(passContext);
       expect(result).toEqual(null);
     });
 
     it('should parse the manifest when found', async () => {
       const manifest = {name: 'App'};
-      const getAppManifest = jest.spyOn(fakeDriver, 'getAppManifest');
-      // @ts-ignore: Some terrible @types/jest bug lies here.
-      getAppManifest.mockResolvedValueOnce({data: JSON.stringify(manifest), url: MANIFEST_URL});
+      connectionStub.sendCommand
+        .mockResponse('Page.getAppManifest', {data: JSON.stringify(manifest), url: MANIFEST_URL})
+        .mockResponse('Page.getInstallabilityErrors', {errors: []});
+
       const result = await GatherRunner.getWebAppManifest(passContext);
       expect(result).toHaveProperty('raw', JSON.stringify(manifest));
       expect(result && result.value).toMatchObject({
