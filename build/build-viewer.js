@@ -10,16 +10,16 @@ const path = require('path');
 const {promisify} = require('util');
 const readFileAsync = promisify(fs.readFile);
 const writeFileAsync = promisify(fs.writeFile);
-const stream = require('stream');
+const mkdir = fs.promises.mkdir;
 
 const browserify = require('browserify');
 const cpy = require('cpy');
 const ghPages = require('gh-pages');
 const glob = promisify(require('glob'));
 const lighthousePackage = require('../package.json');
-const makeDir = require('make-dir');
 const rimraf = require('rimraf');
 const terser = require('terser');
+const {minifyFileTransform} = require('./build-utils.js');
 
 const htmlReportAssets = require('../lighthouse-core/report/html/html-report-assets.js');
 const sourceDir = `${__dirname}/../lighthouse-viewer`;
@@ -59,7 +59,7 @@ async function loadFiles(pattern) {
  */
 async function safeWriteFileAsync(filePath, data) {
   const fileDir = path.dirname(filePath);
-  await makeDir(fileDir);
+  await mkdir(fileDir, {recursive: true});
   return writeFileAsync(filePath, data);
 }
 
@@ -100,30 +100,6 @@ async function html() {
 }
 
 /**
- * Minifies file which are read by fs.readFileSync (brfs)
- *
- * @param {string} file
- */
-function minifyReadFileContent(file) {
-  return new stream.Transform({
-    transform(chunk, enc, next) {
-      if (file.endsWith('.js')) {
-        const result = terser.minify(chunk.toString());
-        if (result.error) {
-          throw result.error;
-        }
-
-        this.push(result.code);
-      } else {
-        this.push(chunk);
-      }
-
-      next();
-    },
-  });
-}
-
-/**
  * Combine multiple JS files into single viewer.js file.
  * @return {Promise<void>}
  */
@@ -132,7 +108,7 @@ async function compileJs() {
   const generatorFilename = `${sourceDir}/../lighthouse-core/report/report-generator.js`;
   const generatorBrowserify = browserify(generatorFilename, {standalone: 'ReportGenerator'})
     .transform('@wardpeet/brfs', {
-      readFileSyncTransform: minifyReadFileContent,
+      readFileSyncTransform: minifyFileTransform,
     });
 
   /** @type {Promise<string>} */

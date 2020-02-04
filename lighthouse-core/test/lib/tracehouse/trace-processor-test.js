@@ -19,7 +19,7 @@ const noFMPtrace = require('../../fixtures/traces/no_fmp_event.json');
 const noFCPtrace = require('../../fixtures/traces/airhorner_no_fcp.json');
 const noNavStartTrace = require('../../fixtures/traces/no_navstart_event.json');
 const backgroundTabTrace = require('../../fixtures/traces/backgrounded-tab-missing-paints.json');
-const lcpTrace = require('../../fixtures/traces/lcp-m79.json');
+const lcpTrace = require('../../fixtures/traces/lcp-m78.json');
 
 /* eslint-env jest */
 
@@ -327,14 +327,27 @@ describe('TraceProcessor', () => {
     describe('finds correct LCP', () => {
       it('in a trace', () => {
         const trace = TraceProcessor.computeTraceOfTab(lcpTrace);
-        assert.equal(trace.mainFrameIds.frameId, '906A10385298DD996B521026AF4DA204');
-        assert.equal(trace.navigationStartEvt.ts, 1671221915754);
-        assert.equal(trace.firstContentfulPaintEvt.ts, 1671226617803);
-        assert.equal(trace.largestContentfulPaintEvt.ts, 1671236939268);
-        assert.equal(trace.timings.firstContentfulPaint, 4702.049);
-        assert.equal(trace.timings.largestContentfulPaint, 15023.514);
-        assert.equal(trace.timestamps.firstContentfulPaint, 1671226617803);
-        assert.equal(trace.timestamps.largestContentfulPaint, 1671236939268);
+        expect({
+          'firstContentfulPaintEvt.ts': trace.firstContentfulPaintEvt.ts,
+          'largestContentfulPaintEvt.ts': trace.largestContentfulPaintEvt.ts,
+          'mainFrameIds.frameId': trace.mainFrameIds.frameId,
+          'navigationStartEvt.ts': trace.navigationStartEvt.ts,
+          'timestamps.firstContentfulPaint': trace.timestamps.firstContentfulPaint,
+          'timestamps.largestContentfulPaint': trace.timestamps.largestContentfulPaint,
+          'timings.firstContentfulPaint': trace.timings.firstContentfulPaint,
+          'timings.largestContentfulPaint': trace.timings.largestContentfulPaint,
+        }).toMatchInlineSnapshot(`
+Object {
+  "firstContentfulPaintEvt.ts": 713038144775,
+  "largestContentfulPaintEvt.ts": 713038144775,
+  "mainFrameIds.frameId": "70B6647836A0A07265E532B094184D2A",
+  "navigationStartEvt.ts": 713037023064,
+  "timestamps.firstContentfulPaint": 713038144775,
+  "timestamps.largestContentfulPaint": 713038144775,
+  "timings.firstContentfulPaint": 1121.711,
+  "timings.largestContentfulPaint": 1121.711,
+}
+`);
         assert.ok(!trace.lcpInvalidated);
       });
 

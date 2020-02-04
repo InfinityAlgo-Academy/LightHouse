@@ -11,6 +11,7 @@ const assert = require('assert');
 const fs = require('fs');
 const jsdom = require('jsdom');
 const Util = require('../../../../report/html/renderer/util.js');
+const I18n = require('../../../../report/html/renderer/i18n.js');
 const DOM = require('../../../../report/html/renderer/dom.js');
 const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
 const ReportUIFeatures = require('../../../../report/html/renderer/report-ui-features.js');
@@ -45,6 +46,7 @@ describe('ReportUIFeatures', () => {
 
   beforeAll(() => {
     global.Util = Util;
+    global.I18n = I18n;
     global.ReportUIFeatures = ReportUIFeatures;
     global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
     global.DetailsRenderer = DetailsRenderer;
@@ -86,11 +88,13 @@ describe('ReportUIFeatures', () => {
 
     dom = new DOM(document.window.document);
     sampleResults = Util.prepareReportResult(sampleResultsOrig);
+    render(sampleResults);
   });
 
   afterAll(() => {
     global.self = undefined;
     global.Util = undefined;
+    global.I18n = undefined;
     global.ReportUIFeatures = undefined;
     global.matchMedia = undefined;
     global.self.matchMedia = undefined;
@@ -350,6 +354,22 @@ describe('ReportUIFeatures', () => {
         createDiv = () => dom.document().createElement('div');
       });
 
+      it('should return undefined when nodes is empty', () => {
+        const nodes = [];
+
+        const nextNode = dropDown._getNextSelectableNode(nodes);
+
+        assert.strictEqual(nextNode, undefined);
+      });
+
+      it('should return the only node when start is defined', () => {
+        const node = createDiv();
+
+        const nextNode = dropDown._getNextSelectableNode([node], node);
+
+        assert.strictEqual(nextNode, node);
+      });
+
       it('should return first node when start is undefined', () => {
         const nodes = [createDiv(), createDiv()];
 
@@ -391,6 +411,54 @@ describe('ReportUIFeatures', () => {
 
         assert.strictEqual(nextNode, nodes[2]);
       });
+    });
+
+    describe('onMenuFocusOut', () => {
+      beforeEach(() => {
+        dropDown._toggleEl.click();
+        assert.ok(dropDown._toggleEl.classList.contains('active'));
+      });
+
+      it('should toggle active class when focus relatedTarget is null', () => {
+        const event = new window.FocusEvent('focusout', {relatedTarget: null});
+        dropDown.onMenuFocusOut(event);
+
+        assert.ok(!dropDown._toggleEl.classList.contains('active'));
+      });
+
+      it('should toggle active class when focus relatedTarget is document.body', () => {
+        const relatedTarget = dom.document().body;
+        const event = new window.FocusEvent('focusout', {relatedTarget});
+        dropDown.onMenuFocusOut(event);
+
+        assert.ok(!dropDown._toggleEl.classList.contains('active'));
+      });
+
+      it('should toggle active class when focus relatedTarget is _toggleEl', () => {
+        const relatedTarget = dropDown._toggleEl;
+        const event = new window.FocusEvent('focusout', {relatedTarget});
+        dropDown.onMenuFocusOut(event);
+
+        assert.ok(!dropDown._toggleEl.classList.contains('active'));
+      });
+
+      it('should not toggle active class when focus relatedTarget is a menu item', () => {
+        const relatedTarget = dropDown._getNextMenuItem();
+        const event = new window.FocusEvent('focusout', {relatedTarget});
+        dropDown.onMenuFocusOut(event);
+
+        assert.ok(dropDown._toggleEl.classList.contains('active'));
+      });
+    });
+  });
+
+  describe('data-i18n', () => {
+    it('should have only valid data-i18n values in template', () => {
+      const container = render(sampleResults);
+      for (const node of dom.findAll('[data-i18n]', container)) {
+        const val = node.getAttribute('data-i18n');
+        assert.ok(val in Util.UIStrings, `Invalid data-i18n value of: "${val}" found.`);
+      }
     });
   });
 });

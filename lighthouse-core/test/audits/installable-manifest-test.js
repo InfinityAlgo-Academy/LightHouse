@@ -134,7 +134,7 @@ describe('PWA: webapp install banner audit', () => {
         const details = result.details.items[0];
         assert.strictEqual(details.failures.length, 1, details.failures);
         assert.strictEqual(details.hasStartUrl, true);
-        assert.strictEqual(details.hasIconsAtLeast192px, false);
+        assert.strictEqual(details.hasIconsAtLeast144px, false);
       });
     });
   });
@@ -150,7 +150,7 @@ describe('PWA: webapp install banner audit', () => {
       const details = result.details.items[0];
       assert.strictEqual(details.failures.length, 1, details.failures);
       assert.strictEqual(details.hasStartUrl, true);
-      assert.strictEqual(details.hasIconsAtLeast192px, false);
+      assert.strictEqual(details.hasIconsAtLeast144px, false);
     });
   });
 });

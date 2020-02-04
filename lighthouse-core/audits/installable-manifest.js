@@ -33,7 +33,7 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
  *   * manifest has a valid name
  *   * manifest has a valid shortname
  *   * manifest display property is standalone, minimal-ui, or fullscreen
- *   * manifest contains icon that's a png and size >= 192px
+ *   * manifest contains icon that's a png and size >= 144px
  */
 
 class InstallableManifest extends MultiCheckAudit {
@@ -72,7 +72,7 @@ class InstallableManifest extends MultiCheckAudit {
       'hasShortName',
       'hasStartUrl',
       'hasPWADisplayValue',
-      'hasIconsAtLeast192px',
+      'hasIconsAtLeast144px',
     ];
     manifestValues.allChecks
       .filter(item => bannerCheckIds.includes(item.id))

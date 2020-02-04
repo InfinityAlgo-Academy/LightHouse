@@ -15,7 +15,7 @@ function launchChromeAndRunLighthouse(url, opts, config = null) {
   return chromeLauncher.launch({chromeFlags: opts.chromeFlags}).then(chrome => {
     opts.port = chrome.port;
     return lighthouse(url, opts, config).then(results => {
-      // use results.lhr for the JS-consumeable output
+      // use results.lhr for the JS-consumable output
       // https://github.com/GoogleChrome/lighthouse/blob/master/types/lhr.d.ts
       // use results.report for the HTML/JSON/CSV output as a string
       // use results.artifacts for the trace/screenshots/other specific case you need (rarer)
@@ -100,7 +100,7 @@ In order to extend the Lighthouse configuration programmatically, you need to pa
 }
 ```
 
-You can extend base configuration from either [lighthouse:default](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/default-config.js) or [lighthouse:full](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/full-config.js). Alternatively, you can build up your own configuration from scratch to have complete control.
+You can extend base configuration from [lighthouse:default](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/default-config.js), or you can build up your own configuration from scratch to have complete control.
 
 For more information on the types of config you can provide, see [Lighthouse Configuration](https://github.com/GoogleChrome/lighthouse/blob/master/docs/configuration.md).
 

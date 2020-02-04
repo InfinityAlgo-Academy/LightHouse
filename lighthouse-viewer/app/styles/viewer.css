@@ -69,6 +69,7 @@
 .viewer-placeholder__heading {
   font-weight: 300;
   margin: 0;
+  line-height: 32px;
 }
 .viewer-placeholder__help {
   margin-top: 12px;

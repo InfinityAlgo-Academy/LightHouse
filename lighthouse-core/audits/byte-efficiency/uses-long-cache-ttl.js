@@ -143,7 +143,7 @@ class CacheHeaders extends Audit {
   static isCacheableAsset(record) {
     const CACHEABLE_STATUS_CODES = new Set([200, 203, 206]);
 
-    /** @type {Set<LH.Crdp.Page.ResourceType>} */
+    /** @type {Set<LH.Crdp.Network.ResourceType>} */
     const STATIC_RESOURCE_TYPES = new Set([
       NetworkRequest.TYPES.Font,
       NetworkRequest.TYPES.Image,
@@ -286,6 +286,7 @@ class CacheHeaders extends Audit {
       return {
         score,
         numericValue: totalWastedBytes,
+        numericUnit: 'byte',
         displayValue: str_(UIStrings.displayValue, {itemCount: results.length}),
         extendedInfo: {
           value: {

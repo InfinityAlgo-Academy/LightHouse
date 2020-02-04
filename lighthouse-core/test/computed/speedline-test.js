@@ -50,28 +50,6 @@ describe('Speedline gatherer', () => {
     });
   }, 10000);
 
-  it('uses a cache', () => {
-    let start;
-    let firstResult;
-    const trace = {traceEvents: pwaTrace};
-    const context = {computedCache: new Map()};
-    // repeat with the same input data twice
-    return Promise.resolve()
-      .then(_ => Speedline.request(trace, context))
-      .then(result => {
-        start = Date.now();
-        firstResult = result;
-      })
-      .then(_ => Speedline.request(trace, context))
-      .then(speedline => {
-        // on a MacBook Air, one run is  1000-1500ms
-        assert.ok(Date.now() - start < 50, 'Quick results come from the cache');
-        assert.equal(firstResult, speedline, 'Cache match matches');
-
-        return assert.equal(Math.floor(speedline.speedIndex), 549);
-      });
-  }, 10000);
-
   it('does not change order of events in traces', () => {
     // Use fresh trace in case it has been altered by other require()s.
     const pwaJson = fs.readFileSync(__dirname +

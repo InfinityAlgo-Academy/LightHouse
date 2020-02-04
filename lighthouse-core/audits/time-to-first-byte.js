@@ -70,6 +70,7 @@ class TTFBMetric extends Audit {
 
     return {
       numericValue: ttfb,
+      numericUnit: 'millisecond',
       score: Number(passed),
       displayValue,
       details,

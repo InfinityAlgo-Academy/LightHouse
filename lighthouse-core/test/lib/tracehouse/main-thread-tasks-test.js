@@ -32,8 +32,8 @@ describe('Main Thread Tasks', () => {
   });
 
   function run(trace) {
-    const {mainThreadEvents, timestamps} = TraceProcessor.computeTraceOfTab(trace);
-    return MainThreadTasks.getMainThreadTasks(mainThreadEvents, timestamps.traceEnd);
+    const {mainThreadEvents, frames, timestamps} = TraceProcessor.computeTraceOfTab(trace);
+    return MainThreadTasks.getMainThreadTasks(mainThreadEvents, frames, timestamps.traceEnd);
   }
 
   it('should get all main thread tasks from a trace', () => {
@@ -117,10 +117,10 @@ describe('Main Thread Tasks', () => {
     });
   });
 
-  it('should compute attributableURLs correctly', () => {
+  it('should compute basic attributableURLs correctly', () => {
     const baseTs = 1241250325;
     const url = s => ({args: {data: {url: s}}});
-    const stackFrames = f => ({args: {data: {stackTrace: f.map(url => ({url}))}}});
+    const stackTrace = f => ({args: {data: {stackTrace: f.map(url => ({url}))}}});
 
     /*
     An artistic rendering of the below trace:
@@ -131,10 +131,10 @@ describe('Main Thread Tasks', () => {
     */
     const traceEvents = [
       ...boilerplateTrace,
-      {ph: 'X', name: 'TaskA', pid, tid, ts: baseTs, dur: 100e3, ...url('about:blank')},
-      {ph: 'B', name: 'TaskB', pid, tid, ts: baseTs + 5e3, ...stackFrames(['urlB.1', 'urlB.2'])},
+      {ph: 'X', name: 'TaskA', pid, tid, ts: baseTs, dur: 100e3, ...url('urlIgnoredOnRunTask')},
+      {ph: 'B', name: 'TaskB', pid, tid, ts: baseTs + 5e3, ...stackTrace(['urlB.1', 'urlB.2'])},
       {ph: 'X', name: 'EvaluateScript', pid, tid, ts: baseTs + 10e3, dur: 30e3, ...url('urlC')},
-      {ph: 'X', name: 'TaskD', pid, tid, ts: baseTs + 15e3, dur: 5e3, ...stackFrames(['urlD'])},
+      {ph: 'X', name: 'TaskD', pid, tid, ts: baseTs + 15e3, dur: 5e3, ...stackTrace(['urlD'])},
       {ph: 'E', name: 'TaskB', pid, tid, ts: baseTs + 55e3},
     ];
 
@@ -149,7 +149,7 @@ describe('Main Thread Tasks', () => {
     const taskC = tasks.find(task => task.event.name === 'EvaluateScript');
     const taskD = tasks.find(task => task.event.name === 'TaskD');
 
-    assert.deepStrictEqual(taskA.attributableURLs, []);
+    assert.deepStrictEqual(taskA.attributableURLs, ['urlB.1', 'urlB.2', 'urlC', 'urlD']);
     assert.deepStrictEqual(taskB.attributableURLs, ['urlB.1', 'urlB.2']);
     assert.deepStrictEqual(taskC.attributableURLs, ['urlB.1', 'urlB.2', 'urlC']);
     assert.deepStrictEqual(taskD.attributableURLs, ['urlB.1', 'urlB.2', 'urlC', 'urlD']);
@@ -158,7 +158,7 @@ describe('Main Thread Tasks', () => {
   it('should compute attributableURLs correctly across timers', () => {
     const baseTs = 1241250325;
     const url = s => ({args: {data: {url: s}}});
-    const stackFrames = f => ({args: {data: {stackTrace: f.map(url => ({url}))}}});
+    const stackTrace = f => ({args: {data: {stackTrace: f.map(url => ({url}))}}});
     const timerId = id => ({args: {data: {timerId: id}}});
 
     /*
@@ -171,12 +171,12 @@ describe('Main Thread Tasks', () => {
     const traceEvents = [
       ...boilerplateTrace,
       {ph: 'X', name: 'TaskA', pid, tid, ts: baseTs, dur: 100e3, ...url('about:blank')},
-      {ph: 'B', name: 'TaskB', pid, tid, ts: baseTs + 5e3, ...stackFrames(['urlB.1', 'urlB.2'])},
+      {ph: 'B', name: 'TaskB', pid, tid, ts: baseTs + 5e3, ...stackTrace(['urlB.1', 'urlB.2'])},
       {ph: 'X', name: 'EvaluateScript', pid, tid, ts: baseTs + 10e3, dur: 30e3, ...url('urlC')},
       {ph: 'I', name: 'TimerInstall', pid, tid, ts: baseTs + 15e3, ...timerId(1)},
       {ph: 'E', name: 'TaskB', pid, tid, ts: baseTs + 55e3},
       {ph: 'X', name: 'TimerFire', pid, tid, ts: baseTs + 75e3, dur: 10e3, ...timerId(1)},
-      {ph: 'X', name: 'TaskE', pid, tid, ts: baseTs + 80e3, dur: 5e3, ...stackFrames(['urlD'])},
+      {ph: 'X', name: 'TaskE', pid, tid, ts: baseTs + 80e3, dur: 5e3, ...stackTrace(['urlD'])},
     ];
 
     traceEvents.forEach(evt => {
@@ -191,11 +191,133 @@ describe('Main Thread Tasks', () => {
     const taskD = tasks.find(task => task.event.name === 'TimerFire');
     const taskE = tasks.find(task => task.event.name === 'TaskE');
 
-    expect(taskA.attributableURLs).toEqual([]);
+    expect(taskA.attributableURLs).toEqual(['urlB.1', 'urlB.2', 'urlC', 'urlD']);
     expect(taskB.attributableURLs).toEqual(['urlB.1', 'urlB.2']);
     expect(taskC.attributableURLs).toEqual(['urlB.1', 'urlB.2', 'urlC']);
     expect(taskD.attributableURLs).toEqual(['urlB.1', 'urlB.2', 'urlC']);
     expect(taskE.attributableURLs).toEqual(['urlB.1', 'urlB.2', 'urlC', 'urlD']);
+  });
+
+  it('should compute attributableURLs correctly across XHRs', () => {
+    const baseTs = 1241250325;
+    const url = s => ({args: {data: {url: s}}});
+    const xhr = (s, readyState, stackTrace) => ({
+      args: {data: {
+        url: s,
+        readyState,
+        stackTrace: stackTrace && stackTrace.map(url => ({url})),
+      }},
+    });
+
+    /*
+    An artistic rendering of the below trace:
+    ███████████████TaskA██████████████        ██████████TaskB███████████
+      ██████EvaluateScript███████              ██XHRReadyStateChange4█
+        █XHRReadyStateChange1█                      █TaskE█
+
+    */
+    const traceEvents = [
+      ...boilerplateTrace,
+      {ph: 'X', name: 'TaskA', ts: baseTs, dur: 70e3, ...url('about:blank')},
+      {ph: 'X', name: 'EvaluateScript', ts: baseTs + 10e3, dur: 30e3, ...url('urlA')},
+      {ph: 'X', name: 'XHRReadyStateChange', ts: baseTs + 15e3, dur: 15e3, ...xhr('urlXHR', 1)},
+      {ph: 'X', name: 'TaskB', ts: baseTs + 80e3, dur: 20e3},
+      {ph: 'X', name: 'XHRReadyStateChange', ts: baseTs + 85e3, dur: 15e3, ...xhr('urlXHR', 4, ['urlC'])}, // eslint-disable-line max-len
+      {ph: 'X', name: 'TaskC', ts: baseTs + 89e3, dur: 4e3},
+    ];
+
+    traceEvents.forEach(evt => {
+      evt.pid = pid;
+      evt.tid = tid;
+      evt.cat = 'devtools.timeline';
+      evt.args = evt.args || args;
+    });
+
+    const tasks = run({traceEvents});
+    const taskA = tasks.find(task => task.event.name === 'TaskA');
+    const taskB = tasks.find(task => task.event.name === 'TaskB');
+    const taskC = tasks.find(task => task.event.name === 'TaskC');
+
+    expect(taskA.attributableURLs).toEqual(['urlA']);
+    expect(taskB.attributableURLs).toEqual(['urlA', 'urlC']);
+    expect(taskC.attributableURLs).toEqual(['urlA', 'urlC']);
+  });
+
+  it('should compute attributableURLs correctly based on frame value', () => {
+    const baseTs = 1241250325;
+    const frame = (f, url) => ({args: {data: {frame: f, url}}});
+    const stackTrace = (f, s) => ({args: {data: {frame: f, stackTrace: s.map(url => ({url}))}}});
+
+    /*
+    An artistic rendering of the below trace:
+    ██TaskA██      ███████TaskB███████      ██TaskC███
+     █Paint█        ██EvaluateScript█        █Layout█
+
+    */
+    const traceEvents = [
+      ...boilerplateTrace,
+      {ph: 'I', name: 'FrameCommittedInBrowser', pid, tid: tid + 1, ...frame('A', 'urlA')},
+      {ph: 'I', name: 'FrameCommittedInBrowser', pid, tid: tid + 1, ...frame('B', 'about:blank')},
+      {ph: 'X', name: 'TaskA', pid, tid, ts: baseTs, dur: 30e3},
+      {ph: 'X', name: 'Paint', pid, tid, ts: baseTs + 10e3, dur: 10e3, ...frame('A')},
+      {ph: 'X', name: 'TaskB', pid, tid, ts: baseTs + 50e3, dur: 20e3},
+      {ph: 'X', name: 'EvaluateScript', pid, tid, ts: baseTs + 51e3, dur: 15e3, ...stackTrace('B', ['urlB'])}, // eslint-disable-line max-len
+      {ph: 'X', name: 'TaskC', pid, tid, ts: baseTs + 90e3, dur: 5e3},
+      {ph: 'X', name: 'Layout', pid, tid, ts: baseTs + 90e3, dur: 4e3, ...frame('B')},
+    ];
+
+    traceEvents.forEach(evt => {
+      evt.cat = 'devtools.timeline';
+      evt.args = evt.args || args;
+    });
+
+    const tasks = run({traceEvents});
+    const taskA = tasks.find(task => task.event.name === 'TaskA');
+    const taskB = tasks.find(task => task.event.name === 'TaskB');
+    const taskC = tasks.find(task => task.event.name === 'TaskC');
+
+    expect(taskA.attributableURLs).toEqual(['urlA']);
+    expect(taskB.attributableURLs).toEqual(['urlB']);
+    expect(taskC.attributableURLs).toEqual(['urlB']);
+  });
+
+  it('should compute attributableURLs correctly between tasks with layout', () => {
+    const baseTs = 1241250325;
+    const url = s => ({args: {data: {url: s}}});
+
+    /*
+    An artistic rendering of the below trace:
+    ████████TaskA█████████       ███TaskB██████    ███████████TaskC█████████████
+      █EvaluateScript█             █Layout█         █EvaluateScript█  █Layout█
+    */
+    const traceEvents = [
+      ...boilerplateTrace,
+      {ph: 'X', name: 'TaskA', pid, tid, ts: baseTs, dur: 20e3, ...url('about:blank')},
+      {ph: 'X', name: 'EvaluateScript', pid, tid, ts: baseTs + 5e3, dur: 10e3, ...url('urlA')},
+      {ph: 'X', name: 'TaskB', pid, tid, ts: baseTs + 50e3, dur: 20e3},
+      {ph: 'X', name: 'Layout', pid, tid, ts: baseTs + 55e3, dur: 10e3},
+      {ph: 'X', name: 'TaskC', pid, tid, ts: baseTs + 80e3, dur: 50e3, ...url('about:blank')},
+      {ph: 'X', name: 'EvaluateScript', pid, tid, ts: baseTs + 85e3, dur: 10e3, ...url('urlC')},
+      {ph: 'X', name: 'Layout', pid, tid, ts: baseTs + 100e3, dur: 10e3},
+    ];
+
+    traceEvents.forEach(evt => {
+      evt.cat = 'devtools.timeline';
+      evt.args = evt.args || args;
+    });
+
+    const tasks = run({traceEvents});
+    const taskA = tasks.find(task => task.event.name === 'TaskA');
+    const taskB = tasks.find(task => task.event.name === 'TaskB');
+    const taskC = tasks.find(task => task.event.name === 'TaskC');
+    const soloLayout = tasks.find(task => task.event.ts === baseTs + 55e3);
+    const pairedLayout = tasks.find(task => task.event.ts === baseTs + 100e3);
+
+    expect(taskA.attributableURLs).toEqual(['urlA']);
+    expect(taskB.attributableURLs).toEqual(['urlA']);
+    expect(taskC.attributableURLs).toEqual(['urlC']);
+    expect(soloLayout.attributableURLs).toEqual(['urlA']);
+    expect(pairedLayout.attributableURLs).toEqual(['urlC']);
   });
 
   it('should handle the last trace event not ending', () => {
@@ -430,6 +552,53 @@ describe('Main Thread Tasks', () => {
     ]);
   });
 
+  it('should handle nested tasks of the same name', () => {
+    /*
+    An artistic rendering of the below trace:
+      ████████████████SameName██████████████████
+          ███████████SameName████████████
+    */
+    const traceEvents = [
+      ...boilerplateTrace,
+      {ph: 'B', name: 'SameName', pid, tid, ts: baseTs, args},
+      {ph: 'B', name: 'SameName', pid, tid, ts: baseTs + 25e3, args},
+      {ph: 'E', name: 'SameName', pid, tid, ts: baseTs + 75e3, args},
+      {ph: 'E', name: 'SameName', pid, tid, ts: baseTs + 100e3, args},
+    ];
+
+    traceEvents.forEach(evt => Object.assign(evt, {cat: 'devtools.timeline'}));
+
+    const tasks = run({traceEvents});
+    expect(tasks).toEqual([
+      {
+        parent: undefined,
+        attributableURLs: [],
+
+        children: [tasks[1]],
+        event: traceEvents.find(event => event.name === 'SameName' && event.ts === baseTs),
+        startTime: 0,
+        endTime: 100,
+        duration: 100,
+        selfTime: 50,
+        group: taskGroups.other,
+        unbounded: false,
+      },
+      {
+        parent: tasks[0],
+        attributableURLs: [],
+
+        children: [],
+        event: traceEvents.find(event => event.ts === baseTs + 25e3),
+        startTime: 25,
+        endTime: 75,
+        duration: 50,
+        selfTime: 50,
+        group: taskGroups.other,
+        unbounded: false,
+      },
+    ]);
+  });
+
   it('should handle child events that extend <1ms beyond parent event', () => {
     /*
     An artistic rendering of the below trace:
@@ -526,6 +695,70 @@ describe('Main Thread Tasks', () => {
     ]);
   });
 
+  it('should handle child events that start <1ms before parent event', () => {
+    /*
+    An artistic rendering of the below trace:
+    ████████████████TaskA██████████████████
+            █████████TaskB██████████████
+           ████████TaskC█████████
+    */
+    const traceEvents = [
+      ...boilerplateTrace,
+      {ph: 'B', name: 'TaskA', pid, tid, ts: baseTs, args},
+      {ph: 'B', name: 'TaskB', pid, tid, ts: baseTs + 25e3 + 50, args}, // this is invalid, but happens in practice
+      {ph: 'B', name: 'TaskC', pid, tid, ts: baseTs + 25e3, args},
+      {ph: 'E', name: 'TaskC', pid, tid, ts: baseTs + 60e3, args},
+      {ph: 'E', name: 'TaskB', pid, tid, ts: baseTs + 90e3, args},
+      {ph: 'E', name: 'TaskA', pid, tid, ts: baseTs + 100e3, args},
+    ];
+
+    traceEvents.forEach(evt => Object.assign(evt, {cat: 'devtools.timeline'}));
+
+    const tasks = run({traceEvents});
+    const [taskA, taskB, taskC] = tasks;
+    expect(tasks).toEqual([
+      {
+        parent: undefined,
+        attributableURLs: [],
+
+        children: [taskB],
+        event: traceEvents.find(event => event.name === 'TaskA'),
+        startTime: 0,
+        endTime: 100,
+        duration: 100,
+        selfTime: 35,
+        group: taskGroups.other,
+        unbounded: false,
+      },
+      {
+        parent: taskA,
+        attributableURLs: [],
+
+        children: [taskC],
+        event: traceEvents.find(event => event.name === 'TaskB' && event.ph === 'B'),
+        startTime: 25,
+        endTime: 90,
+        duration: 65,
+        selfTime: 30,
+        group: taskGroups.other,
+        unbounded: false,
+      },
+      {
+        parent: taskB,
+        attributableURLs: [],
+
+        children: [],
+        event: traceEvents.find(event => event.name === 'TaskC' && event.ph === 'B'),
+        startTime: 25,
+        endTime: 60,
+        duration: 35,
+        selfTime: 35,
+        group: taskGroups.other,
+        unbounded: false,
+      },
+    ]);
+  });
+
   // Invalid sets of events.
   // All of these should have `traceEnd` pushed out to avoid falling into one of our mitigation scenarios.
   const invalidEventSets = [
@@ -558,6 +791,15 @@ describe('Main Thread Tasks', () => {
       // TaskB is missing a B event after an X
       {ph: 'X', name: 'TaskA', pid, tid, ts: baseTs, dur: 100e3, args},
       {ph: 'E', name: 'TaskB', pid, tid, ts: baseTs + 10e3, args},
+    ],
+    [
+      // TaskA is starting .5ms too late, but TaskB already has a child
+      {ph: 'B', name: 'TaskA', pid, tid, ts: baseTs + 500, args},
+      {ph: 'B', name: 'TaskB', pid, tid, ts: baseTs, args},
+      {ph: 'X', name: 'TaskC', pid, tid, ts: baseTs + 50, dur: 100, args},
+      {ph: 'E', name: 'TaskB', pid, tid, ts: baseTs + 100e3, args},
+      {ph: 'E', name: 'TaskA', pid, tid, ts: baseTs + 115e3, args},
+      {ph: 'I', name: 'MarkerToPushOutTraceEnd', pid, tid, ts: baseTs + 200e3, args},
     ],
   ];
 

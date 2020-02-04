@@ -60,6 +60,17 @@ describe('Resource summary computed', () => {
     assert.equal(result.other.size, 50);
   });
 
+  it('ignores /favicon.ico', async () => {
+    artifacts = mockArtifacts([
+      {url: 'http://example.com/file.html', resourceType: 'Document', transferSize: 30},
+      {url: 'http://example.com/favicon.ico', resourceType: 'Other', transferSize: 10},
+    ]);
+    const result = await ComputedResourceSummary.request(artifacts, context);
+
+    assert.equal(result.total.count, 1);
+    assert.equal(result.total.size, 30);
+  });
+
   describe('determining third-party resources', () => {
     it('with a third-party resource', async () => {
       artifacts = mockArtifacts([

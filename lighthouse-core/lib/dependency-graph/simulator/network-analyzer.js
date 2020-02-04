@@ -15,7 +15,7 @@ const DEFAULT_SERVER_RESPONSE_PERCENTAGE = 0.4;
 /**
  * For certain resource types, server response time takes up a greater percentage of TTFB (dynamic
  * assets like HTML documents, XHR/API calls, etc)
- * @type {Partial<Record<LH.Crdp.Page.ResourceType, number>>}
+ * @type {Partial<Record<LH.Crdp.Network.ResourceType, number>>}
  */
 const SERVER_RESPONSE_PERCENTAGE_OF_TTFB = {
   Document: 0.9,

@@ -109,6 +109,7 @@ class Redirects extends Audit {
       // We award a passing grade if you only have 1 redirect
       score: redirectRequests.length <= 2 ? 1 : UnusedBytes.scoreForWastedMs(totalWastedMs),
       numericValue: totalWastedMs,
+      numericUnit: 'millisecond',
       displayValue: totalWastedMs ?
         str_(i18n.UIStrings.displayValueMsSavings, {wastedMs: totalWastedMs}) :
         '',

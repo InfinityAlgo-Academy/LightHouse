@@ -524,6 +524,7 @@ class TraceProcessor {
       firstMeaningfulPaint = lastCandidate;
     }
 
+    // LCP's trace event was first introduced in m78. We can't surface an LCP for older Chrome versions
     // LCP comes from the latest `largestContentfulPaint::Candidate`, but it can be invalidated
     // by a `largestContentfulPaint::Invalidate` event. In the case that the last candidate is
     // invalidated, the value will be undefined.
@@ -595,12 +596,20 @@ class TraceProcessor {
       domContentLoaded: maybeGetTiming(timestamps.domContentLoaded),
     };
 
+    const frames = keyEvents
+      .filter(evt => evt.name === 'FrameCommittedInBrowser')
+      .map(evt => evt.args.data)
+      .filter(/** @return {data is {frame: string, url: string}} */ data => {
+        return Boolean(data && data.frame && data.url);
+      });
+
     return {
       timings,
       timestamps,
       processEvents,
       mainThreadEvents,
       mainFrameIds,
+      frames,
       navigationStartEvt: navigationStart,
       firstPaintEvt: firstPaint,
       firstContentfulPaintEvt: firstContentfulPaint,

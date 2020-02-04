@@ -245,7 +245,30 @@ yarn
 yarn build-all
 ```
 
-If changing audit output, you'll likely also need to have the protocol-buffer compiler installed. See the [official installation instructions](https://github.com/protocolbuffers/protobuf#protocol-compiler-installation) or consult your [favorite package manager](https://formulae.brew.sh/formula/protobuf) for your OS.
+#### installing protobuf
+If changing audit output, you'll need to have v3.7.1 of the protocol-buffer/protobuf compiler installed. (v3.7.1 is known to be compatible, and 3.11.x is known to be **not** compatible.). 
+
+Homebrew should be able to install it correctly: `brew install protobuf@3.7.1`
+
+But if you want to do it manually, these steps that have worked well for us:
+
+```sh
+mkdir protobuf-install && cd protobuf-install
+curl -L -o protobuf-python-3.7.1.zip https://github.com/protocolbuffers/protobuf/releases/download/v3.7.1/protobuf-python-3.7.1.zip
+unzip protobuf-python-3.7.1.zip
+cd protobuf-3.7.1
+
+cd python
+python setup.py build
+python setup.py test
+(cd .. && autogen.sh && configure && make)
+(cd .. && sudo make install)
+python setup.py build --cpp_implementation
+sudo python setup.py install --cpp_implementation
+```
+
+Also, see the [official installation instructions](https://github.com/protocolbuffers/protobuf#protocol-compiler-installation).
+
 
 ### Run
 
@@ -278,30 +301,44 @@ yarn smoke
 yarn type-check
 ```
 
+### Docs
+
+Some of our docs have tests that run only in CI by default. If you end up needing to modify our documentation, you'll need to run `yarn test-docs` locally to make sure they pass.
+
+**Additional Dependencies**
+- `brew install jq`
+
 ## Lighthouse Integrations
 This section details services that have integrated Lighthouse data. If you're working on a cool project integrating Lighthouse and would like to be featured here, file an issue to this repo or tweet at us [@_____lighthouse](https://twitter.com/____lighthouse?lang=en)!
 
-* **[Calibre](https://calibreapp.com)** - Calibre is a web performance monitoring tool running Lighthouse continuously or on-demand via an API. Test using emulated devices and connection speeds from a number of geographical locations. Set budgets and improve performance with actionable guidelines. Calibre comes with a free 14-day trial.
-
-* **[DebugBear](https://www.debugbear.com/)** - DebugBear is a website monitoring tool based on Lighthouse. See how your scores and metrics changed over time, with a focus on understanding what caused each change. DebugBear is a paid product with a free 30-day trial.
-
-* **[Fluxguard](https://fluxguard.com/)** - Fluxguard provides website DOM change monitoring orchestrated with Google Puppeteer, and audited by Lighthouse. Fluxguard is a freemium product, with monthly monitoring of up to 75 pages for free.
-
-* **[Foo](https://www.foo.software)** - Foo continuously monitors performance with Lighthouse and provides a timeline chart by day, week, or month. Users can receive alerts via email, Slack, and PagerDuty. Foo offers free and paid products.
+### Free
 
 * **[HTTPArchive](http://httparchive.org/)** - HTTPArchive tracks how the web is built by crawling 500k pages with Web Page Test, including Lighthouse results, and stores the information in BigQuery where it is [publicly available](https://discuss.httparchive.org/t/quickstart-guide-to-exploring-the-http-archive/682).
 
 * **[Lighthouse Keeper](https://lighthouse-keeper.com/)** - Lighthouse Keeper monitors your pages' Lighthouse scores and notifies you if they drop below your thresholds. Lighthouse Keeper is a free service that monitors up to 3 URLs once per day.
 
+* **[Web Page Test](https://www.webpagetest.org)** — An [open source](https://github.com/WPO-Foundation/webpagetest) tool for measuring and analyzing the performance of web pages on real devices. Users can choose to produce a Lighthouse report alongside the analysis of WebPageTest results.
+
+### Paid / Tiered
+
+* **[Automated Lighthouse Check](https://www.automated-lighthouse-check.com/)** - Lighthouse-as-a-service offering free and premium plans. Provides monitoring and historical reporting of Lighthouse audits with CircleCI, GitHub, and other integrations. Features include Slack notifications, PR comment reporting and more.
+
+* **[Calibre](https://calibreapp.com)** - Calibre is a comprehensive performance monitoring platform running on Lighthouse. See the performance impact of your work before it hits production with GitHub Pull Request Reviews. Track the impact of Third Party scripts. Automate your performance system with a developer-first Node.js API. Try Calibre with a free 15-day trial.
+
+* **[DebugBear](https://www.debugbear.com/)** - DebugBear is a website monitoring tool based on Lighthouse. See how your scores and metrics changed over time, with a focus on understanding what caused each change. DebugBear is a paid product with a free 30-day trial.
+
+* **[Fluxguard](https://fluxguard.com/)** - Fluxguard provides website DOM change monitoring orchestrated with Google Puppeteer, and audited by Lighthouse. Fluxguard is a freemium product, with monthly monitoring of up to 75 pages for free.
+
+* **[PageSpeed Green](https://pagespeed.green/)** - New web performance monitoring service for web pages. For now, you can track PageSpeed performance indicators for unlimited domains and web pages. Powered By Google Lighthouse and Puppeteer. PageSpeed Green is a paid product with a free 30-day trial.
+
 * **[SpeedCurve](https://speedcurve.com)** — SpeedCurve is a tool for continuously monitoring web performance across different browsers, devices, and regions. It can aggregate any metric including Lighthouse scores across multiple pages and sites, and allows you to set performance budgets with Slack or email alerts. SpeedCurve is a paid product with a free 30-day trial.
+
+* **[Siteimprove Performance](https://siteimprove.com/en/performance/)** — Siteimprove Performance is a web Performance monitoring solution that enables a marketer, manager or decision maker to understand and optimize website load times. Get easy-to-use insights with a focus on quick and impactful wins. Siteimprove Performance is a paid product with a free 14-day trial.
 
 * **[Speedrank](https://speedrank.app)** - Speedrank monitors the performance of your website in the background. It displays Lighthouse reports over time and delivers recommendations for improvement. Speedrank is a paid product with 14-day-trial.
 
 * **[Treo](https://treo.sh)** - Treo is Lighthouse as a Service. It provides regression testing, geographical regions, custom networks, and integrations with GitHub & Slack. Treo is a paid product with plans for solo-developers and teams.
 
-* **[Web Page Test](https://www.webpagetest.org)** — An [open source](https://github.com/WPO-Foundation/webpagetest) tool for measuring and analyzing the performance of web pages on real devices. Users can choose to produce a Lighthouse report alongside the analysis of WebPageTest results.
-
-* **[is-website-vulnerable](https://github.com/lirantal/is-website-vulnerable)** - An open source Node.js CLI tool that finds publicly known security vulnerabilities in a website's frontend JavaScript libraries.
 
 ## Plugins
 
@@ -310,6 +347,7 @@ This section details services that have integrated Lighthouse data. If you're wo
 ## Related Projects
 Other awesome open source projects that use Lighthouse.
 
+* **[auto-lighthouse](https://github.com/TGiles/auto-lighthouse)** - a CLI for crawling a domain and generating mobile and desktop reports for each page.
 * **[Exthouse](https://github.com/treosh/exthouse)** - Analyze the impact of a browser extension on web performance.
 * **[Garie](https://github.com/boyney123/garie)** - An open source tool for monitoring performance using Lighthouse,  PageSpeed Insights, [Prometheus](https://prometheus.io/), [Grafana](https://grafana.com/) and [Docker](https://www.docker.com/).
 * **[Gimbal](https://labs.moduscreate.com/gimbal-web-performance-audit-budgeting)** - An [open source (MIT licensed)](https://github.com/ModusCreateOrg/gimbal) tool used to measure, analyze, and budget aspects of a web application. Gimbal also integrates reports with GitHub pull requests.
@@ -319,7 +357,8 @@ Other awesome open source projects that use Lighthouse.
 * **[lighthouse-batch](https://www.npmjs.com/package/lighthouse-batch)** - Run Lighthouse over a number of sites and generate a summary of their metrics/scores.
 * **[lighthouse-check-action](https://github.com/foo-software/lighthouse-check-action)** - A Github Action to run Lighthouse in a workflow, featuring Slack notifications and report upload to S3.
 * **[lighthouse-check-orb](https://circleci.com/orbs/registry/orb/foo-software/lighthouse-check)** - A CircleCI Orb to run Lighthouse in a workflow, featuring Slack notifications and report upload to S3.
-* **[lighthouse-ci](https://github.com/andreasonny83/lighthouse-ci)** - Run Lighthouse and assert scores satisfy your custom thresholds.
+* **[andreasonny83/lighthouse-ci](https://github.com/andreasonny83/lighthouse-ci)** - Run Lighthouse and assert scores satisfy your custom thresholds.
+* **[GoogleChrome/lighthouse-ci](https://github.com/GoogleChrome/lighthouse-ci)** - (**official**) Automate running Lighthouse for every commit, viewing the changes, and preventing regressions.
 * **[lighthouse-ci-action](https://github.com/treosh/lighthouse-ci-action)** - A Github Action that makes it easy to run Lighthouse in CI and keep your pages small using performance budgets.
 * **[lighthouse-cron](https://github.com/thearegee/lighthouse-cron)** - Cron multiple batch Lighthouse audits and emit results for sending to remote server.
 * **[lighthouse-gh-reporter](https://github.com/carlesnunez/lighthouse-gh-reporter)** - Run Lighthouse in CI and report back in a comment on your pull requests
@@ -335,6 +374,7 @@ Other awesome open source projects that use Lighthouse.
 * **[pwmetrics](https://github.com/paulirish/pwmetrics/)** - Gather performance metrics
 * **[react-lighthouse-viewer](https://www.npmjs.com/package/react-lighthouse-viewer)** - Render a Lighthouse JSON report in a React Component.
 * **[webpack-lighthouse-plugin](https://github.com/addyosmani/webpack-lighthouse-plugin)** - Run Lighthouse from a Webpack build.
+* **[is-website-vulnerable](https://github.com/lirantal/is-website-vulnerable)** - An open source Node.js CLI tool that finds publicly known security vulnerabilities in a website's frontend JavaScript libraries.
 
 ## FAQ
 

@@ -13,6 +13,20 @@ const NetworkAnalyzer = require('../lib/dependency-graph/simulator/network-analy
 const NetworkRecorder = require('../lib/network-recorder.js');
 const constants = require('../config/constants.js');
 const i18n = require('../lib/i18n/i18n.js');
+const URL = require('../lib/url-shim.js');
+
+const UIStrings = {
+  /**
+   * @description Warning that the web page redirected during testing and that may have affected the load.
+   * @example {https://example.com/requested/page} requested
+   * @example {https://example.com/final/resolved/page} final
+   */
+  warningRedirected: 'The page may not be loading as expected because your test URL ' +
+  `({requested}) was redirected to {final}. ` +
+  'Try testing the second URL directly.',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 /** @typedef {import('../gather/driver.js')} Driver */
 
@@ -56,11 +70,9 @@ class GatherRunner {
    * @return {Promise<{navigationError?: LH.LighthouseError}>}
    */
   static async loadPage(driver, passContext) {
-    const gatherers = passContext.passConfig.gatherers;
     const status = {
       msg: 'Loading page & waiting for onload',
       id: `lh:gather:loadPage-${passContext.passConfig.passName}`,
-      args: [gatherers.map(g => g.instance.name).join(', ')],
     };
     log.time(status);
     try {
@@ -197,8 +209,8 @@ class GatherRunner {
    * main document request failure, a security issue, etc.
    * @param {LH.Gatherer.PassContext} passContext
    * @param {LH.Gatherer.LoadData} loadData
-   * @param {LighthouseError|undefined} navigationError
-   * @return {LighthouseError|undefined}
+   * @param {LH.LighthouseError|undefined} navigationError
+   * @return {LH.LighthouseError|undefined}
    */
   static getPageLoadError(passContext, loadData, navigationError) {
     const {networkRecords} = loadData;
@@ -211,8 +223,9 @@ class GatherRunner {
     const networkError = GatherRunner.getNetworkError(mainRecord);
     const interstitialError = GatherRunner.getInterstitialError(mainRecord, networkRecords);
 
-    // If the driver was offline, the load will fail without offline support. Ignore this case.
-    if (!passContext.driver.online) return;
+    // Check to see if we need to ignore the page load failure.
+    // e.g. When the driver is offline, the load will fail without page offline support.
+    if (passContext.passConfig.loadFailureMode === 'ignore') return;
 
     // We want to special-case the interstitial beyond FAILED_DOCUMENT_REQUEST. See https://github.com/GoogleChrome/lighthouse/pull/8865#issuecomment-497507618
     if (interstitialError) return interstitialError;
@@ -456,14 +469,16 @@ class GatherRunner {
 
     const {emulatedFormFactor} = options.settings;
     // Whether Lighthouse was run on a mobile device (i.e. not on a desktop machine).
-    const IsMobileHost = hostUserAgent.includes('Android') || hostUserAgent.includes('Mobile');
+    const HostFormFactor = hostUserAgent.includes('Android') || hostUserAgent.includes('Mobile') ?
+      'mobile' : 'desktop';
     const TestedAsMobileDevice = emulatedFormFactor === 'mobile' ||
-      (emulatedFormFactor !== 'desktop' && IsMobileHost);
+      (emulatedFormFactor !== 'desktop' && HostFormFactor === 'mobile');
 
     return {
       fetchTime: (new Date()).toJSON(),
       LighthouseRunWarnings: [],
       TestedAsMobileDevice,
+      HostFormFactor,
       HostUserAgent: hostUserAgent,
       NetworkUserAgent: '', // updated later
       BenchmarkIndex: 0, // updated later
@@ -489,6 +504,13 @@ class GatherRunner {
 
     // Copy redirected URL to artifact.
     baseArtifacts.URL.finalUrl = passContext.url;
+    /* eslint-disable max-len */
+    if (!URL.equalWithExcludedFragments(baseArtifacts.URL.requestedUrl, baseArtifacts.URL.finalUrl)) {
+      baseArtifacts.LighthouseRunWarnings.push(str_(UIStrings.warningRedirected, {
+        requested: baseArtifacts.URL.requestedUrl,
+        final: baseArtifacts.URL.finalUrl,
+      }));
+    }
 
     // Fetch the manifest, if it exists.
     baseArtifacts.WebAppManifest = await GatherRunner.getWebAppManifest(passContext);
@@ -574,7 +596,7 @@ class GatherRunner {
         Object.assign(artifacts, passResults.artifacts);
 
         // If we encountered a pageLoadError, don't try to keep loading the page in future passes.
-        if (passResults.pageLoadError) {
+        if (passResults.pageLoadError && passConfig.loadFailureMode === 'fatal') {
           baseArtifacts.PageLoadError = passResults.pageLoadError;
           break;
         }
@@ -597,11 +619,12 @@ class GatherRunner {
   }
 
   /**
-   * Returns whether this pass should be considered to be measuring performance.
+   * Returns whether this pass should clear the caches.
+   * Only if it is a performance run and the settings don't disable it.
    * @param {LH.Gatherer.PassContext} passContext
    * @return {boolean}
    */
-  static isPerfPass(passContext) {
+  static shouldClearCaches(passContext) {
     const {settings, passConfig} = passContext;
     return !settings.disableStorageReset && passConfig.recordTrace && passConfig.useThrottling;
   }
@@ -624,6 +647,13 @@ class GatherRunner {
    * @return {Promise<{artifacts: Partial<LH.GathererArtifacts>, pageLoadError?: LHError}>}
    */
   static async runPass(passContext) {
+    const status = {
+      msg: `Running ${passContext.passConfig.passName} pass`,
+      id: `lh:gather:runPass-${passContext.passConfig.passName}`,
+      args: [passContext.passConfig.gatherers.map(g => g.instance.name).join(', ')],
+    };
+    log.time(status);
+
     /** @type {Partial<GathererResults>} */
     const gathererResults = {};
     const {driver, passConfig} = passContext;
@@ -631,8 +661,9 @@ class GatherRunner {
     // Go to about:blank, set up, and run `beforePass()` on gatherers.
     await GatherRunner.loadBlank(driver, passConfig.blankPage);
     await GatherRunner.setupPassNetwork(passContext);
-    const isPerfPass = GatherRunner.isPerfPass(passContext);
-    if (isPerfPass) await driver.cleanBrowserCaches(); // Clear disk & memory cache if it's a perf run
+    if (GatherRunner.shouldClearCaches(passContext)) {
+      await driver.cleanBrowserCaches(); // Clear disk & memory cache if it's a perf run
+    }
     await GatherRunner.beforePass(passContext, gathererResults);
 
     // Navigate, start recording, and run `pass()` on gatherers.
@@ -655,6 +686,7 @@ class GatherRunner {
       GatherRunner._addLoadDataToBaseArtifacts(passContext, loadData,
           `pageLoadError-${passConfig.passName}`);
 
+      log.timeEnd(status);
       return {artifacts: {}, pageLoadError};
     }
 
@@ -663,8 +695,12 @@ class GatherRunner {
 
     // Run `afterPass()` on gatherers and return collected artifacts.
     await GatherRunner.afterPass(passContext, loadData, gathererResults);
-    return GatherRunner.collectArtifacts(gathererResults);
+    const artifacts = GatherRunner.collectArtifacts(gathererResults);
+
+    log.timeEnd(status);
+    return artifacts;
   }
 }
 
 module.exports = GatherRunner;
+module.exports.UIStrings = UIStrings;

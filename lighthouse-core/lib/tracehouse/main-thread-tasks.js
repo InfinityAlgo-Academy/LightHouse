@@ -40,7 +40,7 @@ const {taskGroups, taskNameToGroup} = require('./task-groups.js');
  * @prop {TaskGroup} group
  */
 
-/** @typedef {{timers: Map<string, TaskNode>}} PriorTaskData */
+/** @typedef {{timers: Map<string, TaskNode>, xhrs: Map<string, TaskNode>, frameURLsById: Map<string, string>, lastTaskURLs: string[]}} PriorTaskData */
 
 class MainThreadTasks {
   /**
@@ -227,7 +227,14 @@ class MainThreadTasks {
     const timerInstallEventsReverseQueue = timerInstallEvents.slice().reverse();
 
     for (let i = 0; i < sortedTasks.length; i++) {
-      const nextTask = sortedTasks[i];
+      let nextTask = sortedTasks[i];
+
+      // Do bookkeeping on XHR requester data.
+      if (nextTask.event.name === 'XHRReadyStateChange') {
+        const data = nextTask.event.args.data;
+        const url = data && data.url;
+        if (data && url && data.readyState === 1) priorTaskData.xhrs.set(url, nextTask);
+      }
 
       // This inner loop updates what our `currentTask` is at `nextTask.startTime - ε`.
       // While `nextTask` starts after our `currentTask`, close out the task, popup to the parent, and repeat.
@@ -262,10 +269,46 @@ class MainThreadTasks {
             // It's ending at traceEndTs, it means we were missing the end event. We'll truncate it to the parent.
             nextTask.endTime = currentTask.endTime;
             nextTask.duration = nextTask.endTime - nextTask.startTime;
+          } else if (
+            nextTask.startTime - currentTask.startTime < 1000 &&
+            !currentTask.children.length
+          ) {
+            // The true parent started less than 1ms before the true child, so we're looking at the relationship backwards.
+            // We'll let it slide and fix the situation by swapping the two tasks into their correct positions
+            // and increasing the duration of the parent.
+
+            // Below is an artistic rendition of the heirarchy we are trying to create.
+            //   ████████████currentTask.parent██████████████████
+            //       █████████nextTask██████████████
+            //      ███████currentTask███████
+            const actualParentTask = nextTask;
+            const actualChildTask = currentTask;
+
+            // We'll grab the grandparent task to see if we need to fix it.
+            // We'll reassign it to be the parent of `actualParentTask` in a bit.
+            const grandparentTask = currentTask.parent;
+            if (grandparentTask) {
+              const lastGrandparentChildIndex = grandparentTask.children.length - 1;
+              if (grandparentTask.children[lastGrandparentChildIndex] !== actualChildTask) {
+                // The child we need to swap should always be the most recently added child.
+                // But if not then there's a serious bug in this code, so double-check.
+                throw new Error('Fatal trace logic error - impossible children');
+              }
+
+              grandparentTask.children.pop();
+              grandparentTask.children.push(actualParentTask);
+            }
+
+            actualParentTask.parent = grandparentTask;
+            actualParentTask.startTime = actualChildTask.startTime;
+            actualParentTask.duration = actualParentTask.endTime - actualParentTask.startTime;
+            currentTask = actualParentTask;
+            nextTask = actualChildTask;
           } else {
             // None of our workarounds matched. It's time to throw an error.
             // When we fall into this error, it's usually because of one of two reasons.
-            //    - There was slop in the opposite direction (child started 1ms before parent) and the child was assumed to be parent instead.
+            //    - There was slop in the opposite direction (child started 1ms before parent),
+            //      the child was assumed to be parent instead, and another task already started.
             //    - The child timestamp ended more than 1ms after tha parent.
             // These have more complicated fixes, so handling separately https://github.com/GoogleChrome/lighthouse/pull/9491#discussion_r327331204.
             /** @type {any} */
@@ -310,6 +353,7 @@ class MainThreadTasks {
    *    2. Create tasks for each X/B event, throwing if a matching E event cannot be found for a given B.
    *    3. Sort the tasks by ↑ startTime, ↓ duration.
    *    4. Match each task to its parent, throwing if there is any invalid overlap between tasks.
+   *    5. Sort the tasks once more by ↑ startTime, ↓ duration in case they changed during relationship creation.
    *
    * @param {LH.TraceEvent[]} mainThreadEvents
    * @param {PriorTaskData} priorTaskData
@@ -346,7 +390,10 @@ class MainThreadTasks {
     // Phase 4 - Match each task to its parent.
     MainThreadTasks._createTaskRelationships(sortedTasks, timerInstallEvents, priorTaskData);
 
-    return sortedTasks;
+    // Phase 5 - Sort once more in case the order changed after wiring up relationships.
+    return sortedTasks.sort(
+      (taskA, taskB) => taskA.startTime - taskB.startTime || taskB.duration - taskA.duration
+    );
   }
 
   /**
@@ -369,11 +416,22 @@ class MainThreadTasks {
   /**
    * @param {TaskNode} task
    * @param {string[]} parentURLs
+   * @param {string[]} allURLsInTree
    * @param {PriorTaskData} priorTaskData
    */
-  static _computeRecursiveAttributableURLs(task, parentURLs, priorTaskData) {
-    const argsData = task.event.args.data || {};
+  static _computeRecursiveAttributableURLs(task, parentURLs, allURLsInTree, priorTaskData) {
+    const args = task.event.args;
+    const argsData = {...(args.beginData || {}), ...(args.data || {})};
+    const frame = argsData.frame || '';
+    let frameURL = priorTaskData.frameURLsById.get(frame);
     const stackFrameURLs = (argsData.stackTrace || []).map(entry => entry.url);
+
+    // If the frame was an `about:blank` style ad frame, the first real URL will be more relevant to the frame's URL.
+    const potentialFrameURL = stackFrameURLs[0];
+    if (frame && frameURL && frameURL.startsWith('about:') && potentialFrameURL) {
+      priorTaskData.frameURLsById.set(frame, potentialFrameURL);
+      frameURL = potentialFrameURL;
+    }
 
     /** @type {Array<string|undefined>} */
     let taskURLs = [];
@@ -386,10 +444,10 @@ class MainThreadTasks {
       case 'v8.compile':
       case 'EvaluateScript':
       case 'FunctionCall':
-        taskURLs = [argsData.url].concat(stackFrameURLs);
+        taskURLs = [argsData.url, frameURL];
         break;
       case 'v8.compileModule':
-        taskURLs = [task.event.args.fileName].concat(stackFrameURLs);
+        taskURLs = [task.event.args.fileName];
         break;
       case 'TimerFire': {
         /** @type {string} */
@@ -397,19 +455,53 @@ class MainThreadTasks {
         const timerId = task.event.args.data.timerId;
         const timerInstallerTaskNode = priorTaskData.timers.get(timerId);
         if (!timerInstallerTaskNode) break;
-        taskURLs = timerInstallerTaskNode.attributableURLs.concat(stackFrameURLs);
+        taskURLs = timerInstallerTaskNode.attributableURLs;
+        break;
+      }
+      case 'ParseHTML':
+        taskURLs = [argsData.url, frameURL];
+        break;
+      case 'ParseAuthorStyleSheet':
+        taskURLs = [argsData.styleSheetUrl, frameURL];
+        break;
+      case 'UpdateLayoutTree':
+      case 'Layout':
+      case 'Paint':
+        // If we had a specific frame we were updating, just attribute it to that frame.
+        if (frameURL) {
+          taskURLs = [frameURL];
+          break;
+        }
+
+        // Otherwise, sometimes Chrome will split layout into separate toplevel task after things have settled.
+        // In this case we want to attribute the work to the prior task.
+        // Inherit from previous task only if we don't have any task data set already.
+        if (allURLsInTree.length) break;
+        taskURLs = priorTaskData.lastTaskURLs;
+        break;
+      case 'XHRReadyStateChange':
+      case 'XHRLoad': {
+        // Inherit from task that issued the XHR
+        const xhrUrl = argsData.url;
+        const readyState = argsData.readyState;
+        if (!xhrUrl || (typeof readyState === 'number' && readyState !== 4)) break;
+        const xhrRequesterTaskNode = priorTaskData.xhrs.get(xhrUrl);
+        if (!xhrRequesterTaskNode) break;
+        taskURLs = xhrRequesterTaskNode.attributableURLs;
         break;
       }
       default:
-        taskURLs = stackFrameURLs;
+        taskURLs = [];
         break;
     }
 
     /** @type {string[]} */
     const attributableURLs = Array.from(parentURLs);
-    for (const url of taskURLs) {
+    for (const url of [...taskURLs, ...stackFrameURLs]) {
       // Don't add empty URLs
       if (!url) continue;
+      // Add unique URLs to our overall tree.
+      if (!allURLsInTree.includes(url)) allURLsInTree.push(url);
       // Don't add consecutive, duplicate URLs
       if (attributableURLs[attributableURLs.length - 1] === url) continue;
       attributableURLs.push(url);
@@ -417,7 +509,36 @@ class MainThreadTasks {
 
     task.attributableURLs = attributableURLs;
     task.children.forEach(child =>
-      MainThreadTasks._computeRecursiveAttributableURLs(child, attributableURLs, priorTaskData)
+      MainThreadTasks._computeRecursiveAttributableURLs(
+        child,
+        attributableURLs,
+        allURLsInTree,
+        priorTaskData
+      )
+    );
+
+    // After we've traversed the entire tree, set all the empty URLs to the set that we found in the task.
+    // This attributes the overhead of browser task management to the scripts that created the work rather than
+    // have it fall into the blackhole of "Other".
+    if (!attributableURLs.length && !task.parent && allURLsInTree.length) {
+      MainThreadTasks._setRecursiveEmptyAttributableURLs(task, allURLsInTree);
+    }
+  }
+
+  /**
+   * @param {TaskNode} task
+   * @param {Array<string>} urls
+   */
+  static _setRecursiveEmptyAttributableURLs(task, urls) {
+    // If this task had any attributableURLs, its children will too, so we can stop here.
+    if (task.attributableURLs.length) return;
+
+    task.attributableURLs = urls.slice();
+    task.children.forEach(child =>
+      MainThreadTasks._setRecursiveEmptyAttributableURLs(
+        child,
+        urls
+      )
     );
   }
 
@@ -433,12 +554,18 @@ class MainThreadTasks {
 
   /**
    * @param {LH.TraceEvent[]} mainThreadEvents
+   * @param {Array<{frame: string, url: string}>} frames
    * @param {number} traceEndTs
    * @return {TaskNode[]}
    */
-  static getMainThreadTasks(mainThreadEvents, traceEndTs) {
+  static getMainThreadTasks(mainThreadEvents, frames, traceEndTs) {
     const timers = new Map();
-    const priorTaskData = {timers};
+    const xhrs = new Map();
+    const frameURLsById = new Map();
+    frames.forEach(({frame, url}) => frameURLsById.set(frame, url));
+    /** @type {Array<string>} */
+    const lastTaskURLs = [];
+    const priorTaskData = {timers, xhrs, frameURLsById, lastTaskURLs};
     const tasks = MainThreadTasks._createTasksFromEvents(
       mainThreadEvents,
       priorTaskData,
@@ -450,8 +577,9 @@ class MainThreadTasks {
       if (task.parent) continue;
 
       MainThreadTasks._computeRecursiveSelfTime(task, undefined);
-      MainThreadTasks._computeRecursiveAttributableURLs(task, [], priorTaskData);
+      MainThreadTasks._computeRecursiveAttributableURLs(task, [], [], priorTaskData);
       MainThreadTasks._computeRecursiveTaskGroup(task);
+      priorTaskData.lastTaskURLs = task.attributableURLs;
     }
 
     // Rebase all the times to be relative to start of trace in ms

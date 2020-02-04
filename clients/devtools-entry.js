@@ -14,13 +14,15 @@ const {registerLocaleData, lookupLocale} = require('../lighthouse-core/lib/i18n/
 
 /**
  * Return a version of the default config, filtered to only run the specified
- * categories.
+ * categories. If `lighthouse-plugin-publisher-ads` is in the list of
+ * `categoryIDs` the plugin will also be run.
  * @param {Array<string>} categoryIDs
  * @return {LH.Config.Json}
  */
 function getDefaultConfigForCategories(categoryIDs) {
   return {
     extends: 'lighthouse:default',
+    plugins: ['lighthouse-plugin-publisher-ads'],
     settings: {
       onlyCategories: categoryIDs,
     },
@@ -29,19 +31,10 @@ function getDefaultConfigForCategories(categoryIDs) {
 
 /**
  * @param {RawProtocol.Port} port
- * @param {string} url
- * @param {LH.Flags} flags Lighthouse flags.
- * @param {Array<string>} categoryIDs Name values of categories to include.
- * @return {Promise<LH.RunnerResult|void>}
+ * @returns {RawProtocol}
  */
-function runLighthouseInWorker(port, url, flags, categoryIDs) {
-  // Default to 'info' logging level.
-  flags.logLevel = flags.logLevel || 'info';
-  flags.channel = 'devtools';
-  const config = getDefaultConfigForCategories(categoryIDs);
-  const connection = new RawProtocol(port);
-
-  return lighthouse(url, flags, config, connection);
+function setUpWorkerConnection(port) {
+  return new RawProtocol(port);
 }
 
 /** @param {(status: [string, string, string]) => void} listenCallback */
@@ -49,21 +42,28 @@ function listenForStatus(listenCallback) {
   log.events.addListener('status', listenCallback);
 }
 
+// For the bundle smoke test.
 if (typeof module !== 'undefined' && module.exports) {
-  // export for require()ing (via browserify).
-  module.exports = {
-    runLighthouseInWorker,
-    listenForStatus,
-    registerLocaleData,
-    lookupLocale,
-  };
+  // Ideally this could be exposed via browserify's `standalone`, but it doesn't
+  // work for LH because of https://github.com/browserify/browserify/issues/968
+  // Instead, since this file is only ever run in node for testing, expose a
+  // bundle entry point as global.
+  // @ts-ignore
+  global.runBundledLighthouse = lighthouse;
 }
 
 // Expose only in DevTools' worker
 // @ts-ignore
 if (typeof self !== 'undefined') {
+  // TODO: refactor and delete `global.isDevtools`.
+  global.isDevtools = true;
+
   // @ts-ignore
-  self.runLighthouseInWorker = runLighthouseInWorker;
+  self.setUpWorkerConnection = setUpWorkerConnection;
+  // @ts-ignore
+  self.runLighthouse = lighthouse;
+  // @ts-ignore
+  self.getDefaultConfigForCategories = getDefaultConfigForCategories;
   // @ts-ignore
   self.listenForStatus = listenForStatus;
   // @ts-ignore
