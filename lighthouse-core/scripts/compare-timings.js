@@ -11,8 +11,6 @@
 //     node lighthouse-core/scripts/compare-timings.js --name base --name pr --compare
 
 const fs = require('fs');
-const mkdirp = require('mkdirp');
-const glob = require('glob');
 const {execSync} = require('child_process');
 const yargs = require('yargs');
 
@@ -25,10 +23,8 @@ const argv = yargs
     // common flags
     'name': 'Unique identifier, makes the folder for storing LHRs. Not a path',
     'report-exclude': 'Regex of properties to exclude. Set to "none" to disable default',
-    // collection
-    'gather': 'Just gathers',
-    'audit': 'Audits from the artifacts on disk',
-    'collect': 'Gathers, audits and saves LHRs to disk',
+    // --collect
+    'collect': 'Saves LHRs to disk',
     'lh-flags': 'Lighthouse flags',
     'urls': 'Urls to run',
     'n': 'Number of times to run',
@@ -49,7 +45,6 @@ const argv = yargs
   .string('lh-flags')
   .default('desc', false)
   .default('lh-flags', '')
-  .strict() // fail on unknown commands
   .wrap(yargs.terminalWidth())
 .argv;
 
@@ -87,14 +82,6 @@ function sampleStdev(values) {
 }
 
 /**
- * @param {string} url
- * @return string
- */
-function urlToFolder(url) {
-  return url.replace(/[^a-zA-Z0-9]/g, '_');
-}
-
-/**
  * Round to the tenth.
  * @param {number} value
  */
@@ -102,46 +89,19 @@ function round(value) {
   return Math.round(value * 10) / 10;
 }
 
-function gather() {
+function collect() {
   const outputDir = dir(argv.name);
-  mkdirp.sync(ROOT_OUTPUT_DIR);
-  // Don't overwrite a previous collection
+  if (!fs.existsSync(ROOT_OUTPUT_DIR)) fs.mkdirSync(ROOT_OUTPUT_DIR);
   if (fs.existsSync(outputDir)) throw new Error(`folder already exists: ${outputDir}`);
   fs.mkdirSync(outputDir);
 
   for (const url of argv.urls) {
     for (let i = 0; i < argv.n; i++) {
-      const gatherDir = `${outputDir}/${urlToFolder(url)}/${i}/`;
-      mkdirp.sync(gatherDir);
-      // TODO include multiple urls too.
-      const progressBar = new Array(Math.round(i * 40/ argv.n)).fill('▄').join('').padEnd(40);
-      console.log(`Gathering:   `, '|', progressBar, '|')
       const cmd = [
         'node',
         `${LH_ROOT}/lighthouse-cli`,
         url,
-        `--gather-mode=${gatherDir}`,
-        argv.lhFlags,
-      ].join(' ');
-      execSync(cmd, {stdio: 'ignore'});
-    }
-  }
-}
-
-function audit() {
-  const outputDir = dir(argv.name);
-  for (const url of argv.urls) {
-    for (let i = 0; i < argv.n; i++) {
-      const gatherDir = `${outputDir}/${urlToFolder(url)}/${i}/`;
-      const progressBar = new Array(Math.round(i * 40/ argv.n)).fill('▄').join('').padEnd(40);
-      console.log(`Auditing:   `, '|', progressBar, '|')
-
-      const cmd = [
-        'node',
-        `${LH_ROOT}/lighthouse-cli`,
-        url,
-        `--audit-mode=${gatherDir}`,
-        `--output-path=${outputDir}/lhr-${urlToFolder(url)}-${i}.json`,
+        `--output-path=${outputDir}/lhr-${url.replace(/[^a-zA-Z0-9]/g, '_')}-${i}.json`,
         '--output=json',
         argv.lhFlags,
       ].join(' ');
@@ -161,21 +121,21 @@ function aggregateResults(name) {
   const durationsMap = new Map();
   const measureFilter = argv.measureFilter ? new RegExp(argv.measureFilter, 'i') : null;
 
-  for (const lhrPath of glob.sync(`${outputDir}/*.json`)) {
-    const lhrJson = fs.readFileSync(lhrPath, 'utf-8');
+  for (const lhrPath of fs.readdirSync(outputDir)) {
+    const lhrJson = fs.readFileSync(`${outputDir}/${lhrPath}`, 'utf-8');
     /** @type {LH.Result} */
     const lhr = JSON.parse(lhrJson);
 
     // Group the durations of each entry of the same name.
     /** @type {Record<string, number[]>} */
     const durationsByName = {};
-    for (const [name, timimg] of Object.entries(lhr.audits.metrics.details.items[0])) {
-      if (measureFilter && !measureFilter.test(name)) {
+    for (const entry of lhr.timing.entries) {
+      if (measureFilter && !measureFilter.test(entry.name)) {
         continue;
       }
 
-      const durations = durationsByName[name] = durationsByName[name] || [];
-      durations.push(timimg);
+      const durations = durationsByName[entry.name] = durationsByName[entry.name] || [];
+      durations.push(entry.duration);
     }
 
     // Push the aggregate time of each unique (by name) entry.
@@ -198,18 +158,17 @@ function aggregateResults(name) {
     const stdev = sampleStdev(durations);
     return {
       key,
-      metric: entryName,
+      measure: entryName,
       url,
       n: durations.length,
       mean: round(mean),
       stdev: round(stdev),
-      cv: (stdev / mean).toFixed(3),
       min: round(min),
       max: round(max),
     };
   }).sort((a, b) => {
     // sort by {measure, url}
-    const measureComp = a.metric.localeCompare(b.metric);
+    const measureComp = a.measure.localeCompare(b.measure);
     if (measureComp !== 0) return measureComp;
     return a.url.localeCompare(b.url);
   });
@@ -223,7 +182,7 @@ function filter(results) {
 
   for (const result of results) {
     for (const key in result) {
-      // if (reportExcludeRegex.test(key)) delete result[key];
+      if (reportExcludeRegex.test(key)) delete result[key];
     }
   }
 }
@@ -273,19 +232,16 @@ function compare() {
 
     const mean = compareValues(baseResult && baseResult.mean, otherResult && otherResult.mean);
     const stdev = compareValues(baseResult && baseResult.stdev, otherResult && otherResult.stdev);
-    const cv = compareValues(baseResult && baseResult.cv, otherResult && otherResult.cv);
     const min = compareValues(baseResult && baseResult.min, otherResult && otherResult.min);
     const max = compareValues(baseResult && baseResult.max, otherResult && otherResult.max);
 
     return {
-      'measure': someResult.metric,
+      'measure': someResult.measure,
       'url': someResult.url,
       'mean': mean.description,
       'mean Δ': exists(mean.delta) ? round(mean.delta) : undefined,
       'stdev': stdev.description,
       'stdev Δ': exists(stdev.delta) ? round(stdev.delta) : undefined,
-      'cv': cv.description,
-      'cv Δ': exists(cv.delta) ? round(cv.delta) : undefined,
       'min': min.description,
       'min Δ': exists(min.delta) ? round(min.delta) : undefined,
       'max': max.description,
@@ -324,12 +280,7 @@ function print(results) {
 }
 
 function main() {
-  if (argv.gather) gather();
-  if (argv.audit) audit();
-  if (argv.collect) {
-    gather();
-    audit();
-  }
+  if (argv.collect) collect();
   if (argv.summarize) summarize();
   if (argv.compare) compare();
 }
