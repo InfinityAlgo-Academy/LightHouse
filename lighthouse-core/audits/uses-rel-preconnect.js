@@ -138,14 +138,6 @@ class UsesRelPreconnectAudit extends Audit {
     const preconnectLinks = artifacts.LinkElements.filter(el => el.rel === 'preconnect');
     const preconnectOrigins = new Set(preconnectLinks.map(link => URL.getOrigin(link.href || '')));
 
-    // https://twitter.com/_tbansal/status/1197771385172480001
-    if (preconnectLinks.length >= 3) {
-      return {
-        score: 1,
-        warnings: [str_(UIStrings.tooManyPreconnectLinksWarning)],
-      };
-    }
-
     /** @type {Array<{url: string, wastedMs: number}>}*/
     let results = [];
     origins.forEach(records => {
@@ -191,6 +183,16 @@ class UsesRelPreconnectAudit extends Audit {
 
     results = results
       .sort((a, b) => b.wastedMs - a.wastedMs);
+
+    // Shortcut early with a pass when the user has already configured preconnect.
+    // https://twitter.com/_tbansal/status/1197771385172480001
+    if (preconnectLinks.length >= 2) {
+      return {
+        score: 1,
+        warnings: preconnectLinks.length >= 3 ?
+          [...warnings, str_(UIStrings.tooManyPreconnectLinksWarning)] : warnings,
+      };
+    }
 
     /** @type {LH.Audit.Details.Opportunity['headings']} */
     const headings = [
