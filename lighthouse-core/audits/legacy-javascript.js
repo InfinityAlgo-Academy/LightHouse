@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * @license Copyright 2020 Google Inc. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -260,17 +260,9 @@ class LegacyJavascript extends Audit {
    * @param {CodePatternMatcher} matcher
    * @param {LH.GathererArtifacts['ScriptElements']} scripts
    * @param {LH.Artifacts.NetworkRequest[]} networkRecords
-   * @return {{
-   *  patternCounter: Map<string, number>,
-   *  patternMatchCounter: Map<PatternMatchResult, number>,
-   *  urlToMatchResults: Map<string, PatternMatchResult[]>,
-   * }}
+   * @return {Map<string, PatternMatchResult[]>}
    */
   static detectCodePatternsAcrossScripts(matcher, scripts, networkRecords) {
-    /** @type {Map<string, number>} */
-    const patternCounter = new Map();
-    /** @type {Map<PatternMatchResult, number>} */
-    const patternMatchCounter = new Map();
     /** @type {Map<string, PatternMatchResult[]>} */
     const urlToMatchResults = new Map();
 
@@ -280,16 +272,10 @@ class LegacyJavascript extends Audit {
       if (!networkRecord) continue;
       const matches = matcher.match(content);
       if (!matches.length) continue;
-
       urlToMatchResults.set(networkRecord.url, matches);
-      for (const match of matches) {
-        const val = patternCounter.get(match.name) || 0;
-        patternMatchCounter.set(match, val);
-        patternCounter.set(match.name, val + 1);
-      }
     }
 
-    return {patternCounter, patternMatchCounter, urlToMatchResults};
+    return urlToMatchResults;
   }
 
   /**
@@ -301,44 +287,46 @@ class LegacyJavascript extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[LegacyJavascript.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
 
-    /** @type {Array<{url: string, description: string, location: string}>} */
+    /** @type {Array<{url: string, signals: string[], locations: LH.Audit.Details.SourceLocationValue[]}>} */
     const tableRows = [];
 
     const matcher = new CodePatternMatcher([
       ...this.getPolyfillPatterns(),
       ...this.getTransformPatterns(),
     ]);
-    const {patternCounter, patternMatchCounter, urlToMatchResults} =
+    const urlToMatchResults =
       this.detectCodePatternsAcrossScripts(matcher, artifacts.ScriptElements, networkRecords);
+    let signalCount = 0;
     urlToMatchResults.forEach((matches, url) => {
+      /** @type {typeof tableRows[number]} */
+      const row = {url, signals: [], locations: []};
       for (const match of matches) {
         const {name, line, column} = match;
-        const patternOccurrences = patternCounter.get(name) || 0;
-        const isMoreThanOne = patternOccurrences > 1;
-        const matchOrdinal = patternMatchCounter.get(match) || 0;
-        // Only show ordinal if there is more than one occurrence across all scripts.
-        const description = isMoreThanOne ?
-          `${name} (${matchOrdinal + 1} / ${patternOccurrences})` :
-          name;
-        tableRows.push({
+        row.signals.push(name);
+        row.locations.push({
+          type: 'source-location',
           url,
-          description,
-          location: `Ln: ${line}, Col: ${column}`,
+          line,
+          column,
+          urlProvider: 'network',
         });
       }
+      tableRows.push(row);
+      signalCount += row.signals.length;
     });
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
-      {key: 'description', itemType: 'code', text: 'Description'},
-      {key: 'location', itemType: 'code', text: str_(i18n.UIStrings.columnLocation)},
+      {key: 'url', itemType: 'url', subRows: {key: 'locations', itemType: 'source-location'}, text: str_(i18n.UIStrings.columnURL)},
+      {key: '_', itemType: 'code', subRows: {key: 'signals'}, text: ''},
     ];
     const details = Audit.makeTableDetails(headings, tableRows);
 
     return {
-      score: Number(patternMatchCounter.size === 0),
-      numericValue: patternMatchCounter.size,
+      score: Number(signalCount === 0),
+      extendedInfo: {
+        signalCount,
+      },
       details,
     };
   }
