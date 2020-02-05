@@ -88,6 +88,7 @@ const nonSimulatedPassConfigOverrides = {
   cpuQuietThresholdMs: 5250,
 };
 
+// TODO: calibrate
 const fixedLanternRtt = {
   globalRtt: 500,
   globalServerResponse: 1000,
