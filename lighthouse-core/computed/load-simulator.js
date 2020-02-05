@@ -17,7 +17,8 @@ class LoadSimulator {
    * @return {Promise<Simulator>}
    */
   static async compute_(data, context) {
-    const {throttlingMethod, throttling, precomputedLanternData} = data.settings;
+    const {throttlingMethod, throttling, precomputedLanternData, useFixedLanternRtt} = 
+        data.settings;
     const networkAnalysis = await NetworkAnalysis.request(data.devtoolsLog, context);
 
     /** @type {LH.Gatherer.Simulation.Options} */
@@ -26,29 +27,28 @@ class LoadSimulator {
       serverResponseTimeByOrigin: networkAnalysis.serverResponseTimeByOrigin,
     };
 
-    // If we have precomputed lantern data, overwrite our observed estimates and use precomputed instead
-    // for increased stability.
+    // The fixedRTT and precomputedLanternData options trade ground truth for metric stability
+
+    // Don't use our observed estimates from the network and used fixed values
+    if (useFixedLanternRtt) {
+      const globalRtt = 500;
+      const globalServerResponse = 1000;
+
+      for (const origin of networkAnalysis.additionalRttByOrigin.keys()) {
+        networkAnalysis.additionalRttByOrigin.set(origin, globalRtt);
+      }
+      for (const origin of networkAnalysis.serverResponseTimeByOrigin.keys()) {
+        networkAnalysis.serverResponseTimeByOrigin.set(origin, globalServerResponse);
+      }
+    }
+
+    // And if there's any have precomputed lantern data, overwrite any observed estimates (or fixedRTT values)
     if (precomputedLanternData) {
-      const additionalRttTimes = Object.entries(precomputedLanternData.additionalRttByOrigin);
-      const serverResponseTimes = Object.entries(precomputedLanternData.serverResponseTimeByOrigin);
-
-      options.additionalRttByOrigin = new Map(additionalRttTimes);
-      options.serverResponseTimeByOrigin = new Map(serverResponseTimes);
-
-      // apply wildcard entry to all origins
-      if ('*' in precomputedLanternData.additionalRttByOrigin) {
-        const globalRtt = precomputedLanternData.additionalRttByOrigin['*'];
-        for (const key of networkAnalysis.additionalRttByOrigin.keys()) {
-          networkAnalysis.additionalRttByOrigin.set(key, globalRtt);
-        }
-      }
-
-      if ('*' in precomputedLanternData.serverResponseTimeByOrigin) {
-        const globalServerResponse = precomputedLanternData.serverResponseTimeByOrigin['*'];
-        for (const key of networkAnalysis.serverResponseTimeByOrigin.keys()) {
-          networkAnalysis.serverResponseTimeByOrigin.set(key, globalServerResponse);
-        }
-      }
+      // apply any specific overrides on top.
+      Object.entries(precomputedLanternData.additionalRttByOrigin)
+          .forEach(([key, rtt]) => networkAnalysis.additionalRttByOrigin.set(key, rtt));
+          Object.entries(precomputedLanternData.serverResponseTimeByOrigin)
+          .forEach(([key, srt]) => networkAnalysis.serverResponseTimeByOrigin.set(key, srt));
     }
 
     switch (throttlingMethod) {
