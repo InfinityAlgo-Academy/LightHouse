@@ -23,7 +23,7 @@ const UIStrings = {
   description:
     'Consider lazy-loading offscreen and hidden images after all critical resources have ' +
     'finished loading to lower time to interactive. ' +
-    '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images).',
+    '[Learn more](https://web.dev/offscreen-images).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -76,9 +76,10 @@ class OffscreenImages extends ByteEfficiencyAudit {
    */
   static computeWaste(image, viewportDimensions, networkRecords) {
     const networkRecord = networkRecords.find(record => record.url === image.src);
-    if (!image.resourceSize || !networkRecord) {
-      return null;
-    }
+    // If we don't know how big it was, we can't really report savings, treat it as passed.
+    if (!image.resourceSize || !networkRecord) return null;
+    // If the image had its loading behavior explicitly controlled already, treat it as passed.
+    if (image.loading === 'lazy' || image.loading === 'eager') return null;
 
     const url = URL.elideDataURI(image.src);
     const totalPixels = image.displayedWidth * image.displayedHeight;

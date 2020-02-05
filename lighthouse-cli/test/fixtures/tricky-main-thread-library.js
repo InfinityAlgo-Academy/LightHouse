@@ -25,6 +25,18 @@ window.library.fetch = (...args) => {
   });
 };
 
+window.library.xhr = url => {
+  console.log('Custom xhr hook 1');
+  return new Promise(resolve => {
+    const oReq = new XMLHttpRequest();
+    oReq.addEventListener('load', resolve);
+    oReq.open('GET', url);
+    oReq.send();
+    console.log('Custom xhr hook 2');
+    window.library.stall(50);
+  });
+};
+
 /**
  * Stalls the main thread for timeInMs
  */

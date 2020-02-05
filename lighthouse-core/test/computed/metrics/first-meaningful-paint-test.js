@@ -51,16 +51,26 @@ describe('Metrics: FMP', () => {
       optimistic: Math.round(result.optimisticEstimate.timeInMs),
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
     }).toMatchSnapshot();
-    assert.equal(result.optimisticEstimate.nodeTimings.size, 5);
-    assert.equal(result.pessimisticEstimate.nodeTimings.size, 8);
+    assert.equal(result.optimisticEstimate.nodeTimings.size, 6);
+    assert.equal(result.pessimisticEstimate.nodeTimings.size, 9);
     assert.ok(result.optimisticGraph, 'should have created optimistic graph');
     assert.ok(result.pessimisticGraph, 'should have created pessimistic graph');
   });
 
-  it('should compute an observed value', async () => {
+  it('should compute an observed value (desktop)', async () => {
     settings = {throttlingMethod: 'provided'};
     const context = {computedCache: new Map()};
     const result = await FirstMeaningfulPaint.request({trace, devtoolsLog, settings}, context);
+
+    assert.equal(Math.round(result.timing), 783);
+    assert.equal(result.timestamp, 225414955343);
+  });
+
+  it('should compute an observed value (mobile)', async () => {
+    settings = {throttlingMethod: 'provided'};
+    const context = {computedCache: new Map()};
+    const result = await FirstMeaningfulPaint.request(
+      {trace, devtoolsLog, settings, TestedAsMobileDevice: true}, context);
 
     assert.equal(Math.round(result.timing), 783);
     assert.equal(result.timestamp, 225414955343);

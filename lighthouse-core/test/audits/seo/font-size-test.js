@@ -41,7 +41,6 @@ describe('SEO: Font size audit', () => {
       MetaElements: makeMetaElements(validViewport),
       FontSize: {
         totalTextLength: 100,
-        visitedTextLength: 100,
         failingTextLength: 41,
         analyzedFailingTextLength: 41,
         analyzedFailingNodesData: [
@@ -63,7 +62,6 @@ describe('SEO: Font size audit', () => {
       MetaElements: makeMetaElements(validViewport),
       FontSize: {
         totalTextLength: 0,
-        visitedTextLength: 0,
         failingTextLength: 0,
         analyzedFailingTextLength: 0,
         analyzedFailingNodesData: [
@@ -83,7 +81,6 @@ describe('SEO: Font size audit', () => {
       MetaElements: makeMetaElements(validViewport),
       FontSize: {
         totalTextLength: 330,
-        visitedTextLength: 330,
         failingTextLength: 33,
         analyzedFailingTextLength: 33,
         analyzedFailingNodesData: [
@@ -120,7 +117,6 @@ describe('SEO: Font size audit', () => {
       MetaElements: makeMetaElements(validViewport),
       FontSize: {
         totalTextLength: 7,
-        visitedTextLength: 7,
         failingTextLength: 7,
         analyzedFailingTextLength: 7,
         analyzedFailingNodesData: [
@@ -145,7 +141,6 @@ describe('SEO: Font size audit', () => {
       MetaElements: makeMetaElements(validViewport),
       FontSize: {
         totalTextLength: 100,
-        visitedTextLength: 100,
         failingTextLength: 50,
         analyzedFailingTextLength: 10,
         analyzedFailingNodesData: [
@@ -157,7 +152,10 @@ describe('SEO: Font size audit', () => {
     const auditResult = await FontSizeAudit.audit(artifacts, getFakeContext());
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 3);
-    assert.equal(auditResult.details.items[1].source, 'Add\'l illegible text');
+    assert.deepEqual(auditResult.details.items[1].source, {
+      type: 'code',
+      value: 'Add\'l illegible text',
+    });
     assert.equal(auditResult.details.items[1].coverage, '40.00%');
     expect(auditResult.displayValue).toBeDisplayString('50% legible text');
   });
@@ -168,7 +166,6 @@ describe('SEO: Font size audit', () => {
       MetaElements: makeMetaElements(validViewport),
       FontSize: {
         totalTextLength: 100,
-        visitedTextLength: 50,
         failingTextLength: 50,
         analyzedFailingTextLength: 50,
         analyzedFailingNodesData: [
@@ -179,10 +176,7 @@ describe('SEO: Font size audit', () => {
     };
     const auditResult = await FontSizeAudit.audit(artifacts, getFakeContext());
     assert.equal(auditResult.score, 0);
-    expect(auditResult.explanation).toBeDisplayString(
-      '100% of text is too small (based on 50% sample).'
-    );
-    expect(auditResult.displayValue).toBeDisplayString('0% legible text');
+    expect(auditResult.displayValue).toBeDisplayString('50% legible text');
   });
 
   it('maintains 2 trailing decimal places', async () => {
@@ -191,7 +185,6 @@ describe('SEO: Font size audit', () => {
       MetaElements: makeMetaElements(validViewport),
       FontSize: {
         totalTextLength: 323,
-        visitedTextLength: 323,
         failingTextLength: 33,
         analyzedFailingTextLength: 33,
         analyzedFailingNodesData: [
@@ -211,7 +204,6 @@ describe('SEO: Font size audit', () => {
       MetaElements: makeMetaElements(validViewport),
       FontSize: {
         totalTextLength: 323,
-        visitedTextLength: 323,
         failingTextLength: 315,
         analyzedFailingTextLength: 315,
         analyzedFailingNodesData: [
@@ -264,7 +256,10 @@ describe('SEO: Font size audit', () => {
       });
 
       expect(auditResult.details.items[0]).toMatchObject({
-        source: URL.finalUrl,
+        source: {
+          type: 'url',
+          value: URL.finalUrl,
+        },
         selector: {
           type: 'node',
           selector: '#my-parent',
@@ -283,12 +278,113 @@ describe('SEO: Font size audit', () => {
       });
 
       expect(auditResult.details.items[0]).toMatchObject({
-        source: URL.finalUrl,
+        source: {
+          type: 'url',
+          value: URL.finalUrl,
+        },
         selector: {
           type: 'node',
           selector: '#my-parent',
           snippet: '<font size="10px">',
         },
+      });
+    });
+
+    it('to external stylesheet', async () => {
+      const auditResult = await runFontSizeAuditWithSingleFailingStyle({
+        stylesheet: {
+          sourceURL: 'http://www.example.com/styles-1.css',
+        },
+        type: 'Regular',
+        range: {
+          startLine: 50,
+          startColumn: 50,
+        },
+      });
+
+      assert.equal(auditResult.details.items.length, 1);
+      assert.deepEqual(auditResult.details.items[0].source, {
+        type: 'source-location',
+        url: 'http://www.example.com/styles-1.css',
+        urlProvider: 'network',
+        line: 50,
+        column: 50,
+      });
+    });
+
+    it('to inline <style>', async () => {
+      const auditResult = await runFontSizeAuditWithSingleFailingStyle({
+        stylesheet: {
+          sourceURL: 'http://www.example.com',
+          isInline: true,
+          startLine: 5,
+          startColumn: 5,
+        },
+        type: 'Regular',
+        range: {
+          startLine: 10,
+          startColumn: 10,
+        },
+      });
+
+      assert.equal(auditResult.details.items.length, 1);
+      assert.deepEqual(auditResult.details.items[0].source, {
+        type: 'source-location',
+        url: 'http://www.example.com',
+        urlProvider: 'network',
+        line: 15,
+        column: 10,
+      });
+    });
+
+    it('to inline <style> with rule on the same line as <style>', async () => {
+      const auditResult = await runFontSizeAuditWithSingleFailingStyle({
+        stylesheet: {
+          sourceURL: 'http://www.example.com',
+          isInline: true,
+          startLine: 5,
+          startColumn: 5,
+        },
+        type: 'Regular',
+        range: {
+          startLine: 0,
+          startColumn: 10,
+        },
+      });
+
+      assert.equal(auditResult.details.items.length, 1);
+      assert.deepEqual(auditResult.details.items[0].source, {
+        type: 'source-location',
+        url: 'http://www.example.com',
+        urlProvider: 'network',
+        line: 5,
+        column: 15,
+      });
+    });
+
+    it('to inline <style> with magic sourceURL comment', async () => {
+      const auditResult = await runFontSizeAuditWithSingleFailingStyle({
+        stylesheet: {
+          sourceURL: 'something-magical.css',
+          isInline: true,
+          hasSourceURL: true,
+          startLine: 5,
+          startColumn: 5,
+        },
+        type: 'Regular',
+        range: {
+          startLine: 10,
+          startColumn: 10,
+        },
+      });
+
+      assert.equal(auditResult.details.items.length, 1);
+      assert.deepEqual(auditResult.details.items[0].source, {
+        type: 'source-location',
+        url: 'something-magical.css',
+        urlProvider: 'comment',
+        line: 10,
+        column: 10,
       });
     });
   });

@@ -6,6 +6,7 @@
 
 declare module NodeJS {
   interface Global {
+    isDevtools?: boolean;
     isLightrider?: boolean;
   }
 }

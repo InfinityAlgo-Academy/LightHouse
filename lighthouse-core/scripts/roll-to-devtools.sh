@@ -19,10 +19,8 @@ check="\033[96m ✓\033[39m"
 if [[ -n "$1" ]]; then
   frontend_dir="$1"
 else
-  frontend_dir="$chromium_dir/third_party/blink/renderer/devtools/front_end"
+  frontend_dir="$chromium_dir/third_party/devtools-frontend/src/front_end"
 fi
-
-tests_dir="$frontend_dir/../../../web_tests/http/tests/devtools/audits"
 
 if [[ ! -d "$frontend_dir" || ! -a "$frontend_dir/Runtime.js" ]]; then
   echo -e "\033[31m✖ Error!\033[39m"
@@ -55,11 +53,6 @@ fe_locales_dir="$frontend_dir/audits_worker/lighthouse/locales"
 mkdir -p "$fe_locales_dir"
 find $lh_locales_dir -name '*.json' ! -name '*.ctc.json'  -exec cp {} "$fe_locales_dir" \;
 echo -e "$check Locale JSON files copied."
-
-# update expected version string in tests
-VERSION=$(node -e "console.log(require('./package.json').version)")
-sed -i '' -e "s/Version:.*/Version: $VERSION/g" "$tests_dir"/*-expected.txt
-echo -e "$check Updated Version string in tests."
 
 echo ""
 echo "Done. To rebase the test expectations, run: "

@@ -36,7 +36,7 @@ describe('Mixed Content audit', () => {
       {url: 'https://example.org/resource1.js', isSecure: true, finished: true, documentURL: 'https://example.org'},
       {url: 'https://third-party.example.com/resource2.js', isSecure: true, finished: true, documentURL: 'https://example.org'},
     ];
-    const context = {computedCache: new Map()};
+    const context = {computedCache: new Map(), settings: {locale: 'en'}};
     return Audit.audit(
       getArtifacts('https://example.org', defaultRecords, upgradeRecords), context
     ).then(result => {
@@ -57,7 +57,7 @@ describe('Mixed Content audit', () => {
       {url: 'https://third-party.example.com/resource2.js', isSecure: true, finished: true, documentURL: 'https://example.org'},
       {url: 'https://fourth-party.example.com/resource3.js', isSecure: true, finished: true, documentURL: 'https://third-party.example.com'},
     ];
-    const context = {computedCache: new Map()};
+    const context = {computedCache: new Map(), settings: {locale: 'en'}};
     return Audit.audit(
       getArtifacts('http://example.org', defaultRecords, upgradeRecords), context
     ).then(result => {

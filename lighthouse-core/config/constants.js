@@ -51,6 +51,7 @@ const defaultSettings = {
   gatherMode: false,
   disableStorageReset: false,
   emulatedFormFactor: 'mobile',
+  internalDisableDeviceScreenEmulation: false,
   channel: 'node',
 
   // the following settings have no defaults but we still want ensure that `key in settings`
@@ -69,6 +70,7 @@ const defaultSettings = {
 /** @type {LH.Config.Pass} */
 const defaultPassConfig = {
   passName: 'defaultPass',
+  loadFailureMode: 'fatal',
   recordTrace: false,
   useThrottling: false,
   pauseAfterLoadMs: 0,

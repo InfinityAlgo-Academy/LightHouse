@@ -28,6 +28,9 @@ Object {
       "path": "metrics/first-meaningful-paint",
     },
     Object {
+      "path": "metrics/largest-contentful-paint",
+    },
+    Object {
       "path": "load-fast-enough-for-pwa",
     },
     Object {
@@ -154,6 +157,15 @@ Object {
       "path": "accessibility/aria-allowed-attr",
     },
     Object {
+      "path": "accessibility/aria-hidden-body",
+    },
+    Object {
+      "path": "accessibility/aria-hidden-focus",
+    },
+    Object {
+      "path": "accessibility/aria-input-field-name",
+    },
+    Object {
       "path": "accessibility/aria-required-attr",
     },
     Object {
@@ -164,6 +176,9 @@ Object {
     },
     Object {
       "path": "accessibility/aria-roles",
+    },
+    Object {
+      "path": "accessibility/aria-toggle-field-name",
     },
     Object {
       "path": "accessibility/aria-valid-attr-value",
@@ -193,10 +208,19 @@ Object {
       "path": "accessibility/document-title",
     },
     Object {
-      "path": "accessibility/duplicate-id",
+      "path": "accessibility/duplicate-id-active",
+    },
+    Object {
+      "path": "accessibility/duplicate-id-aria",
+    },
+    Object {
+      "path": "accessibility/form-field-multiple-labels",
     },
     Object {
       "path": "accessibility/frame-title",
+    },
+    Object {
+      "path": "accessibility/heading-order",
     },
     Object {
       "path": "accessibility/html-has-lang",
@@ -265,9 +289,6 @@ Object {
       "path": "accessibility/manual/focusable-controls",
     },
     Object {
-      "path": "accessibility/manual/heading-levels",
-    },
-    Object {
       "path": "accessibility/manual/interactive-element-affordance",
     },
     Object {
@@ -305,6 +326,9 @@ Object {
     },
     Object {
       "path": "byte-efficiency/unused-css-rules",
+    },
+    Object {
+      "path": "byte-efficiency/unused-javascript",
     },
     Object {
       "path": "byte-efficiency/uses-webp-images",
@@ -406,6 +430,21 @@ Object {
         },
         Object {
           "group": "a11y-aria",
+          "id": "aria-hidden-body",
+          "weight": 10,
+        },
+        Object {
+          "group": "a11y-aria",
+          "id": "aria-hidden-focus",
+          "weight": 3,
+        },
+        Object {
+          "group": "a11y-aria",
+          "id": "aria-input-field-name",
+          "weight": 3,
+        },
+        Object {
+          "group": "a11y-aria",
           "id": "aria-required-attr",
           "weight": 10,
         },
@@ -423,6 +462,11 @@ Object {
           "group": "a11y-aria",
           "id": "aria-roles",
           "weight": 10,
+        },
+        Object {
+          "group": "a11y-aria",
+          "id": "aria-toggle-field-name",
+          "weight": 3,
         },
         Object {
           "group": "a11y-aria",
@@ -470,14 +514,29 @@ Object {
           "weight": 3,
         },
         Object {
-          "group": "a11y-best-practices",
-          "id": "duplicate-id",
-          "weight": 1,
+          "group": "a11y-navigation",
+          "id": "duplicate-id-active",
+          "weight": 3,
+        },
+        Object {
+          "group": "a11y-aria",
+          "id": "duplicate-id-aria",
+          "weight": 10,
+        },
+        Object {
+          "group": "a11y-names-labels",
+          "id": "form-field-multiple-labels",
+          "weight": 2,
         },
         Object {
           "group": "a11y-names-labels",
           "id": "frame-title",
           "weight": 3,
+        },
+        Object {
+          "group": "a11y-navigation",
+          "id": "heading-order",
+          "weight": 2,
         },
         Object {
           "group": "a11y-language",
@@ -606,10 +665,6 @@ Object {
           "weight": 0,
         },
         Object {
-          "id": "heading-levels",
-          "weight": 0,
-        },
-        Object {
           "id": "use-landmarks",
           "weight": 0,
         },
@@ -697,6 +752,11 @@ Object {
         },
         Object {
           "group": "metrics",
+          "id": "largest-contentful-paint",
+          "weight": 0,
+        },
+        Object {
+          "group": "metrics",
           "id": "speed-index",
           "weight": 4,
         },
@@ -751,6 +811,11 @@ Object {
         Object {
           "group": "load-opportunities",
           "id": "unused-css-rules",
+          "weight": 0,
+        },
+        Object {
+          "group": "load-opportunities",
+          "id": "unused-javascript",
           "weight": 0,
         },
         Object {
@@ -1129,6 +1194,9 @@ Object {
           "path": "css-usage",
         },
         Object {
+          "path": "js-usage",
+        },
+        Object {
           "path": "viewport-dimensions",
         },
         Object {
@@ -1154,6 +1222,9 @@ Object {
         },
         Object {
           "path": "iframe-elements",
+        },
+        Object {
+          "path": "main-document-content",
         },
         Object {
           "path": "dobetterweb/appcache",
@@ -1192,6 +1263,7 @@ Object {
           "path": "accessibility",
         },
       ],
+      "loadFailureMode": "fatal",
       "networkQuietThresholdMs": 1000,
       "passName": "defaultPass",
       "pauseAfterLoadMs": 1000,
@@ -1213,6 +1285,7 @@ Object {
           "path": "start-url",
         },
       ],
+      "loadFailureMode": "ignore",
       "networkQuietThresholdMs": 0,
       "passName": "offlinePass",
       "pauseAfterLoadMs": 0,
@@ -1241,6 +1314,7 @@ Object {
           "path": "html-without-javascript",
         },
       ],
+      "loadFailureMode": "warn",
       "networkQuietThresholdMs": 0,
       "passName": "redirectPass",
       "pauseAfterLoadMs": 0,
@@ -1258,6 +1332,7 @@ Object {
     "emulatedFormFactor": "mobile",
     "extraHeaders": null,
     "gatherMode": false,
+    "internalDisableDeviceScreenEmulation": false,
     "locale": "en-US",
     "maxWaitForFcp": 30000,
     "maxWaitForLoad": 45000,
@@ -1375,6 +1450,7 @@ Object {
       "blockedUrlPatterns": Array [],
       "cpuQuietThresholdMs": 1000,
       "gatherers": Array [],
+      "loadFailureMode": "fatal",
       "networkQuietThresholdMs": 1000,
       "passName": "defaultPass",
       "pauseAfterLoadMs": 1000,
@@ -1392,6 +1468,7 @@ Object {
     "emulatedFormFactor": "mobile",
     "extraHeaders": null,
     "gatherMode": false,
+    "internalDisableDeviceScreenEmulation": false,
     "locale": "en-US",
     "maxWaitForFcp": 30000,
     "maxWaitForLoad": 45000,

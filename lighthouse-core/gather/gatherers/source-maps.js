@@ -49,7 +49,9 @@ class SourceMaps extends Gatherer {
     driver.setNextProtocolTimeout(1500);
     /** @type {string} */
     const sourceMapJson =
-      await driver.evaluateAsync(`(${fetchSourceMap})(${JSON.stringify(sourceMapUrl)})`);
+      await driver.evaluateAsync(`(${fetchSourceMap})(${JSON.stringify(sourceMapUrl)})`, {
+        useIsolation: true,
+      });
     return JSON.parse(sourceMapJson);
   }
 
@@ -125,6 +127,9 @@ class SourceMaps extends Gatherer {
       const map = isSourceMapADataUri ?
           this.parseSourceMapFromDataUrl(rawSourceMapUrl) :
           await this.fetchSourceMapInPage(driver, rawSourceMapUrl);
+      if (map.sections) {
+        map.sections = map.sections.filter(section => section.map);
+      }
       return {
         scriptUrl,
         sourceMapUrl,

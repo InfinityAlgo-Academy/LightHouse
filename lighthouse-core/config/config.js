@@ -7,7 +7,6 @@
 
 const defaultConfigPath = './default-config.js';
 const defaultConfig = require('./default-config.js');
-const fullConfig = require('./full-config.js');
 const constants = require('./constants.js');
 const i18n = require('./../lib/i18n/i18n.js');
 
@@ -30,10 +29,12 @@ const BASE_ARTIFACT_BLANKS = {
   fetchTime: '',
   LighthouseRunWarnings: '',
   TestedAsMobileDevice: '',
+  HostFormFactor: '',
   HostUserAgent: '',
   NetworkUserAgent: '',
   BenchmarkIndex: '',
   WebAppManifest: '',
+  InstallabilityErrors: '',
   Stacks: '',
   traces: '',
   devtoolsLogs: '',
@@ -58,7 +59,13 @@ function assertValidPasses(passes, audits) {
   const foundGatherers = new Set(BASE_ARTIFACT_NAMES);
 
   // Log if we are running gathers that are not needed by the audits listed in the config
-  passes.forEach(pass => {
+  passes.forEach((pass, passIndex) => {
+    if (passIndex === 0 && pass.loadFailureMode !== 'fatal') {
+      log.warn(`"${pass.passName}" is the first pass but was marked as non-fatal. ` +
+        `The first pass will always be treated as loadFailureMode=fatal.`);
+      pass.loadFailureMode = 'fatal';
+    }
+
     pass.gatherers.forEach(gathererDefn => {
       const gatherer = gathererDefn.instance;
       foundGatherers.add(gatherer.name);
@@ -314,12 +321,8 @@ class Config {
     // We don't want to mutate the original config object
     configJSON = deepCloneConfigJson(configJSON);
 
-    // Extend the default or full config if specified
-    if (configJSON.extends === 'lighthouse:full') {
-      const explodedFullConfig = Config.extendConfigJSON(deepCloneConfigJson(defaultConfig),
-          deepCloneConfigJson(fullConfig));
-      configJSON = Config.extendConfigJSON(explodedFullConfig, configJSON);
-    } else if (configJSON.extends) {
+    // Extend the default config if specified
+    if (configJSON.extends) {
       configJSON = Config.extendConfigJSON(deepCloneConfigJson(defaultConfig), configJSON);
     }
 
@@ -436,7 +439,10 @@ class Config {
     for (const pluginName of pluginNames) {
       assertValidPluginName(configJSON, pluginName);
 
-      const pluginPath = resolveModule(pluginName, configDir, 'plugin');
+      // TODO: refactor and delete `global.isDevtools`.
+      const pluginPath = global.isDevtools ?
+        pluginName :
+        resolveModule(pluginName, configDir, 'plugin');
       const rawPluginJson = require(pluginPath);
       const pluginJson = ConfigPlugin.parsePlugin(rawPluginJson, pluginName);
 

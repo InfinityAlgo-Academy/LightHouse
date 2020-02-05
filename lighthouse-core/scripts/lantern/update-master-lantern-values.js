@@ -19,6 +19,7 @@ const SITE_INDEX_PATH = path.resolve(process.cwd(), INPUT_PATH);
 const HEAD_COMPUTED_PATH = constants.SITE_INDEX_WITH_GOLDEN_WITH_COMPUTED_PATH;
 const RUN_ALL_SCRIPT_PATH = path.join(__dirname, 'run-on-all-assets.js');
 const OUTPUT_PATH = constants.MASTER_COMPUTED_PATH;
+const OUTPUT_ACCURACY_PATH = constants.MASTER_ACCURACY_PATH;
 
 if (!fs.existsSync(HEAD_COMPUTED_PATH) || process.env.FORCE) {
   if (!fs.existsSync(SITE_INDEX_PATH)) throw new Error('Usage $0 <expectations file>');
@@ -40,5 +41,11 @@ fs.writeFileSync(OUTPUT_PATH, prettyJSONStringify({sites}, {
   spaceInsideObject: '',
   shouldExpand: (_, level) => level < 2,
 }));
+
+fs.writeFileSync(OUTPUT_ACCURACY_PATH, JSON.stringify(
+  constants.evaluateAllMetrics(computedResults, {sites}),
+  null,
+  2
+));
 
 

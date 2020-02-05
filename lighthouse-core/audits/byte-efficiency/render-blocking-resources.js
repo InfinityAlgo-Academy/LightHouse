@@ -13,7 +13,7 @@ const Audit = require('../audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
 const BaseNode = require('../../lib/dependency-graph/base-node.js');
 const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
-const UnusedCSS = require('./unused-css-rules.js');
+const UnusedCSS = require('../../computed/unused-css.js');
 const NetworkRequest = require('../../lib/network-request.js');
 const TraceOfTab = require('../../computed/trace-of-tab.js');
 const LoadSimulator = require('../../computed/load-simulator.js');
@@ -35,7 +35,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should reduce or remove network resources that block the initial render of the page. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Resources are blocking the first paint of your page. Consider ' +
     'delivering critical JS/CSS inline and deferring all non-critical ' +
-    'JS/styles. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources).',
+    'JS/styles. [Learn more](https://web.dev/render-blocking-resources).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -187,11 +187,13 @@ class RenderBlockingResources extends Audit {
   static async computeWastedCSSBytes(artifacts, context) {
     const wastedBytesByUrl = new Map();
     try {
-      const results = await UnusedCSS.audit(artifacts, context);
-      if (results.details && results.details.type === 'opportunity') {
-        for (const item of results.details.items) {
-          wastedBytesByUrl.set(item.url, item.wastedBytes);
-        }
+      const unusedCssItems = await UnusedCSS.request({
+        CSSUsage: artifacts.CSSUsage,
+        URL: artifacts.URL,
+        devtoolsLog: artifacts.devtoolsLogs[Audit.DEFAULT_PASS],
+      }, context);
+      for (const item of unusedCssItems) {
+        wastedBytesByUrl.set(item.url, item.wastedBytes);
       }
     } catch (_) {}
 
@@ -224,6 +226,7 @@ class RenderBlockingResources extends Audit {
       displayValue,
       score: ByteEfficiencyAudit.scoreForWastedMs(wastedMs),
       numericValue: wastedMs,
+      numericUnit: 'millisecond',
       details,
     };
   }

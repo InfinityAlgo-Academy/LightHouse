@@ -35,5 +35,113 @@ describe('Accessibility: axe-audit', () => {
       const output = FakeA11yAudit.audit(artifacts);
       assert.equal(output.score, 0);
     });
+
+    it('returns axe error message to the caller when present', () => {
+      class FakeA11yAudit extends AxeAudit {
+        static get meta() {
+          return {
+            id: 'fake-incomplete-error',
+            title: 'Example title',
+            requiredArtifacts: ['Accessibility'],
+          };
+        }
+      }
+      const artifacts = {
+        Accessibility: {
+          incomplete: [{
+            id: 'fake-incomplete-error',
+            nodes: [],
+            help: 'http://example.com/',
+            error: {
+              name: 'SupportError',
+              message: 'Feature is not supported on your platform',
+            },
+          }],
+        },
+      };
+
+      const output = FakeA11yAudit.audit(artifacts);
+      assert.equal(output.errorMessage, 'Feature is not supported on your platform');
+    });
+
+    it('considers passing axe result as not applicable for informative audit', () => {
+      class FakeA11yAudit extends AxeAudit {
+        static get meta() {
+          return {
+            id: 'fake-axe-pass',
+            title: 'Example title',
+            scoreDisplayMode: 'informative',
+            requiredArtifacts: ['Accessibility'],
+          };
+        }
+      }
+      const artifacts = {
+        Accessibility: {
+          passes: [{
+            id: 'fake-axe-pass',
+            help: 'http://example.com/',
+          }],
+        },
+      };
+
+      const output = FakeA11yAudit.audit(artifacts);
+      assert.ok(output.notApplicable);
+    });
+
+    it('considers failing axe result as failure for informative audit', () => {
+      class FakeA11yAudit extends AxeAudit {
+        static get meta() {
+          return {
+            id: 'fake-axe-failure-case',
+            title: 'Example title',
+            scoreDisplayMode: 'informative',
+            requiredArtifacts: ['Accessibility'],
+          };
+        }
+      }
+      const artifacts = {
+        Accessibility: {
+          incomplete: [{
+            id: 'fake-axe-failure-case',
+            nodes: [{html: '<input id="multi-label-form-element" />'}],
+            help: 'http://example.com/',
+          }],
+          // TODO: remove: axe-core v3.3.0 backwards-compatibility test
+          violations: [{
+            id: 'fake-axe-failure-case',
+            nodes: [{html: '<input id="multi-label-form-element" />'}],
+            help: 'http://example.com/',
+          }],
+        },
+      };
+
+      const output = FakeA11yAudit.audit(artifacts);
+      assert.ok(!output.notApplicable);
+      assert.equal(output.score, 0);
+    });
+
+    it('considers error-free incomplete axe result as failure for informative audit', () => {
+      class FakeA11yAudit extends AxeAudit {
+        static get meta() {
+          return {
+            id: 'fake-incomplete-fail',
+            title: 'Example title',
+            scoreDisplayMode: 'informative',
+            requiredArtifacts: ['Accessibility'],
+          };
+        }
+      }
+      const artifacts = {
+        Accessibility: {
+          incomplete: [{
+            id: 'fake-incomplete-fail',
+            help: 'http://example.com/',
+          }],
+        },
+      };
+
+      const output = FakeA11yAudit.audit(artifacts);
+      assert.equal(output.score, 0);
+    });
   });
 });

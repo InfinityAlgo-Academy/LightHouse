@@ -84,6 +84,11 @@ const SMOKE_TEST_DFNS = [{
   expectations: 'legacy-javascript-expectations.js',
   config: 'legacy-javascript-config.js',
   batch: 'parallel-first',
+}, {
+  id: 'legacy-javascript',
+  expectations: 'legacy-javascript-expectations.js',
+  config: 'legacy-javascript-config.js',
+  batch: 'parallel-first',
 }];
 
 /**

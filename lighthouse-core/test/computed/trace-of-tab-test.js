@@ -75,6 +75,7 @@ describe('TraceOfTabComputed', () => {
         tts: 866553,
       },
       fmpFellBack: false,
+      lcpInvalidated: false,
       loadEvt: {
         args: {
           frame: '0x25a638821e30',
@@ -104,6 +105,7 @@ describe('TraceOfTabComputed', () => {
         ts: 225414172015,
         tts: 455539,
       },
+      frames: [],
       timestamps: {
         domContentLoaded: 225414732309,
         firstContentfulPaint: 225414670885,

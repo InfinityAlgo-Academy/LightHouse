@@ -167,6 +167,7 @@
     /* Pallete */
     --color-gray-200: var(--color-gray-800);
     --color-gray-400: var(--color-gray-600);
+    --color-gray-700: var(--color-gray-400);
     --color-gray-50: #757575;
     --color-gray-600: var(--color-gray-500);
     --color-green-700: var(--color-green);
@@ -994,7 +995,7 @@
   --item-margin: calc(var(--report-line-height) / 6);
   color: var(--color-average);
   margin: var(--audit-padding-vertical) 0;
-  padding: calc(var(--audit-padding-vertical) / 2) var(--audit-padding-vertical);
+  padding: calc(var(--audit-padding-vertical) / 2) calc(var(--audit-description-padding-left));
 }
 .lh-warnings span {
   font-weight: bold;
@@ -1064,13 +1065,12 @@
 .lh-gauge-base {
     opacity: 0.1;
     stroke: var(--circle-background);
-    stroke-width: var(--circle-border-width);
 }
 
 .lh-gauge-arc {
     fill: none;
     stroke: var(--circle-color);
-    stroke-width: var(--circle-border-width);
+    transform-origin: 50% 50%;
     animation: load-gauge var(--transition-length) ease forwards;
     animation-delay: 250ms;
 }
@@ -1134,7 +1134,6 @@
   text-decoration: none;
   padding: var(--score-container-padding);
 
-  --circle-border-width: 8;
   --transition-length: 1s;
 
   /* Contain the layout style paint & layers during animation*/
@@ -1335,6 +1334,7 @@
 
 /* Looks unnecessary, but mostly for keeping the <th>s left-aligned */
 .lh-table-column--text,
+.lh-table-column--source-location,
 .lh-table-column--url,
 /* .lh-table-column--thumbnail, */
 /* .lh-table-column--empty,*/
@@ -1402,6 +1402,11 @@
 
 .lh-text__url > a:hover {
   text-decoration: underline dotted #999;
+}
+
+.lh-sub-rows:not(:first-child) .lh-sub-row {
+  margin-left: 20px;
+  color: var(--color-gray-700);
 }
 
 /* Chevron

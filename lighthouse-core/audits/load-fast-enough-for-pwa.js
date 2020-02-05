@@ -98,6 +98,7 @@ class LoadFastEnough4Pwa extends Audit {
       displayValue,
       explanation,
       numericValue: tti.timing,
+      numericUnit: 'millisecond',
     };
   }
 }

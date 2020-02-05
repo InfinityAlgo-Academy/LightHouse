@@ -33,7 +33,7 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
  *   * manifest has a valid name
  *   * manifest has a valid shortname
  *   * manifest display property is standalone, minimal-ui, or fullscreen
- *   * manifest contains icon that's a png and size >= 192px
+ *   * manifest contains icon that's a png and size >= 144px
  */
 
 class InstallableManifest extends MultiCheckAudit {
@@ -46,7 +46,7 @@ class InstallableManifest extends MultiCheckAudit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['URL', 'WebAppManifest'],
+      requiredArtifacts: ['URL', 'WebAppManifest', 'InstallabilityErrors'],
     };
   }
 
@@ -72,7 +72,8 @@ class InstallableManifest extends MultiCheckAudit {
       'hasShortName',
       'hasStartUrl',
       'hasPWADisplayValue',
-      'hasIconsAtLeast192px',
+      'hasIconsAtLeast144px',
+      'fetchesIcon',
     ];
     manifestValues.allChecks
       .filter(item => bannerCheckIds.includes(item.id))
@@ -91,7 +92,7 @@ class InstallableManifest extends MultiCheckAudit {
    * @return {Promise<{failures: Array<string>, manifestValues: LH.Artifacts.ManifestValues}>}
    */
   static async audit_(artifacts, context) {
-    const manifestValues = await ManifestValues.request(artifacts.WebAppManifest, context);
+    const manifestValues = await ManifestValues.request(artifacts, context);
     const manifestFailures = InstallableManifest.assessManifest(manifestValues);
 
     return {

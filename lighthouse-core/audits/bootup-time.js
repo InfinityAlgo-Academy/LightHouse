@@ -20,7 +20,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user that they should reduce the amount of time spent executing javascript and one method of doing so. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Consider reducing the time spent parsing, compiling, and executing JS. ' +
     'You may find delivering smaller JS payloads helps with this. [Learn ' +
-    'more](https://developers.google.com/web/tools/lighthouse/audits/bootup).',
+    'more](https://web.dev/bootup-time).',
   /** Label for the total time column in a data table; entries will be the number of milliseconds spent executing per resource loaded by the page. */
   columnTotal: 'Total CPU Time',
   /** Label for a time column in a data table; entries will be the number of milliseconds spent evaluating script for every script loaded by the page. */
@@ -33,6 +33,18 @@ const UIStrings = {
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+
+// These trace events, when not triggered by a script inside a particular task, are just general Chrome overhead.
+const BROWSER_TASK_NAMES_SET = new Set([
+  'CpuProfiler::StartProfiling',
+]);
+
+// These trace events, when not triggered by a script inside a particular task, are GC Chrome overhead.
+const BROWSER_GC_TASK_NAMES_SET = new Set([
+  'V8.GCCompactor',
+  'MajorGC',
+  'MinorGC',
+]);
 
 class BootupTime extends Audit {
   /**
@@ -86,8 +98,14 @@ class BootupTime extends Audit {
     const jsURL = task.attributableURLs.find(url => jsURLs.has(url));
     const fallbackURL = task.attributableURLs[0];
     let attributableURL = jsURL || fallbackURL;
-    // If we can't find what URL was responsible for this execution, just attribute it to the root page.
-    if (!attributableURL || attributableURL === 'about:blank') attributableURL = 'Other';
+    // If we can't find what URL was responsible for this execution, attribute it to the root page
+    // or Chrome depending on the type of work.
+    if (!attributableURL || attributableURL === 'about:blank') {
+      if (BROWSER_TASK_NAMES_SET.has(task.event.name)) attributableURL = 'Browser';
+      else if (BROWSER_GC_TASK_NAMES_SET.has(task.event.name)) attributableURL = 'Browser GC';
+      else attributableURL = 'Unattributable';
+    }
+
     return attributableURL;
   }
 
@@ -189,6 +207,7 @@ class BootupTime extends Audit {
     return {
       score,
       numericValue: totalBootupTime,
+      numericUnit: 'millisecond',
       displayValue: totalBootupTime > 0 ?
         str_(i18n.UIStrings.seconds, {timeInMs: totalBootupTime}) : '',
       details,
