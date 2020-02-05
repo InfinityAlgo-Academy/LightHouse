@@ -88,9 +88,15 @@ const nonSimulatedPassConfigOverrides = {
   cpuQuietThresholdMs: 5250,
 };
 
+const fixedLanternRtt = {
+  globalRtt: 500,
+  globalServerResponse: 1000,
+};
+
 module.exports = {
   throttling,
   defaultSettings,
   defaultPassConfig,
   nonSimulatedPassConfigOverrides,
+  fixedLanternRtt,
 };

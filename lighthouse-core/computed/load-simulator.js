@@ -31,14 +31,13 @@ class LoadSimulator {
 
     // Don't use our observed estimates from the network and used fixed values
     if (useFixedLanternRtt) {
-      const globalRtt = 500;
-      const globalServerResponse = 1000;
+      const fixedValues = constants.fixedLanternRtt;
 
       for (const origin of networkAnalysis.additionalRttByOrigin.keys()) {
-        networkAnalysis.additionalRttByOrigin.set(origin, globalRtt);
+        networkAnalysis.additionalRttByOrigin.set(origin, fixedValues.globalRtt);
       }
       for (const origin of networkAnalysis.serverResponseTimeByOrigin.keys()) {
-        networkAnalysis.serverResponseTimeByOrigin.set(origin, globalServerResponse);
+        networkAnalysis.serverResponseTimeByOrigin.set(origin, fixedValues.globalServerResponse);
       }
     }
 
