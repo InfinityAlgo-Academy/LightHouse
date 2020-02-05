@@ -92,12 +92,14 @@ describe('Simulator artifact', () => {
     const {additionalRttByOrigin, serverResponseTimeByOrigin} = simulator._connectionPool._options;
     // Make sure we passed through the right RTT
     expect(additionalRttByOrigin).toEqual(new Map([
+      ["__SUMMARY__", 0],
       ['https://pwa.rocks', 1000],
       ['https://www.googletagmanager.com', 500],
       ['https://www.google-analytics.com', 1000],
     ]));
     // Make sure we passed through the right response time
     expect(serverResponseTimeByOrigin).toEqual(new Map([
+      ["__SUMMARY__", 159.42199996789026],
       ['https://pwa.rocks', 150],
       ['https://www.googletagmanager.com', 200],
       ['https://www.google-analytics.com', 400],
