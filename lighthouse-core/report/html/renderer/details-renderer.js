@@ -348,24 +348,6 @@ class DetailsRenderer {
   }
 
   /**
-   * @param {LH.Audit.Details.TableItem} row
-   * @param {LH.Audit.Details.OpportunityColumnHeading} heading
-   * @return {Element?}
-   */
-  _renderMultiValue(row, heading) {
-    const values = row[heading.key];
-    if (!Array.isArray(values)) return null;
-    const valueElement = this._dom.createElement('div', 'lh-multi-values');
-    for (const childValue of values) {
-      const childValueElement = this._renderTableValue(childValue, heading);
-      if (!childValueElement) continue;
-      childValueElement.classList.add('lh-multi-value-entry');
-      valueElement.appendChild(childValueElement);
-    }
-    return valueElement;
-  }
-
-  /**
    * @param {LH.Audit.Details.Table|LH.Audit.Details.Opportunity} details
    * @return {Element}
    */
