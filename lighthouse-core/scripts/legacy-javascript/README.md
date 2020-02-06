@@ -5,7 +5,7 @@ Run:
 ```sh
 yarn install
 node run.js
-# STAGE=build|audit to just build the audits or run LegacyJavascript on them. Default does both.
+# STAGE=build|audit|all to just build the audits or run LegacyJavascript on them. Defaults to both (`all`).
 ```
 
 `summary-signals.json` - summarizes the signals that LegacyJavascript finds for each variant. Variants in `variantsMissingSignals` (excluding `core-js-3-preset-env-esmodules/true`) signify a lack of detection for that variant. Full coverage isn't necessary.
