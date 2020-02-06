@@ -38,7 +38,7 @@ const argv = yargs
     'desc': 'Set to override default ascending sort',
   })
   .string('measure-filter')
-  .default('report-exclude', 'min|max|stdev|^n$')
+  .default('report-exclude', 'key|min|max|stdev|^n$')
   .default('delta-property-sort', 'mean')
   .default('output', 'table')
   .array('urls')

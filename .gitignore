@@ -32,6 +32,8 @@ last-run-results.html
 !lighthouse-core/test/fixtures/traces/**/*.trace.json
 !lighthouse-core/test/fixtures/traces/**/*.devtoolslog.json
 
+lighthouse-core/scripts/legacy-javascript/variants
+
 latest-run
 lantern-data
 timings-data

@@ -246,7 +246,7 @@ class LegacyJavascript extends Audit {
       },
       {
         name: '@babel/plugin-transform-regenerator',
-        expression: 'regeneratorRuntime.wrap',
+        expression: /regeneratorRuntime\.a?wrap/.source,
       },
       {
         name: '@babel/plugin-transform-spread',
