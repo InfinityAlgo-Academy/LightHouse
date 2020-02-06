@@ -90,8 +90,7 @@ class CodePatternMatcher {
 }
 
 /**
- * Identifies polyfills and transforms that should not be present if using @babel/preset-env with
- * esmodules = true.
+ * Identifies polyfills and transforms that should not be present if using module/nomodule pattern.
  * @see https://docs.google.com/spreadsheets/d/1z28Au8wo8-c2UsM2lDVEOJcI3jOkb2c951xEBqzBKCc/edit?usp=sharing
  */
 class LegacyJavascript extends Audit {
@@ -134,7 +133,7 @@ class LegacyJavascript extends Audit {
       // Minified + mangled pattern found in CDN babel-polyfill.
       // see https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.2.5/polyfill.min.js
       // TODO: perhaps this is the wrong place to check for a CDN polyfill. Remove?
-      expression += `|;e\\([^,]+,${qt(objectWithoutPrototype)},{${property}:`;
+      // expression += `|;e\\([^,]+,${qt(objectWithoutPrototype)},{${property}:`;
 
       // Minified pattern.
       // $export($export.S,"Date",{now:function
@@ -156,6 +155,7 @@ class LegacyJavascript extends Audit {
       'Array.prototype.find',
       'Array.prototype.findIndex',
       'Array.prototype.forEach',
+      'Array.fill',
       'Array.from',
       'Array.prototype.indexOf',
       'Array.isArray',
