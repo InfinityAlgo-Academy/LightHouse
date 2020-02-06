@@ -10,6 +10,8 @@
 
 const Audit = require('./audit.js');
 const NetworkRecords = require('../computed/network-records.js');
+const MainResource = require('../computed/main-resource.js');
+const URL = require('../lib/url-shim.js');
 const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -102,7 +104,7 @@ class LegacyJavascript extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       description: str_(UIStrings.description),
       title: str_(UIStrings.title),
-      requiredArtifacts: ['devtoolsLogs', 'ScriptElements'],
+      requiredArtifacts: ['devtoolsLogs', 'ScriptElements', 'URL'],
     };
   }
 
@@ -286,17 +288,22 @@ class LegacyJavascript extends Audit {
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[LegacyJavascript.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
+    const mainResource = await MainResource.request({
+      URL: artifacts.URL,
+      devtoolsLog,
+    }, context);
 
     /** @type {Array<{url: string, signals: string[], locations: LH.Audit.Details.SourceLocationValue[]}>} */
     const tableRows = [];
+    let signalCount = 0;
 
     const matcher = new CodePatternMatcher([
       ...this.getPolyfillPatterns(),
       ...this.getTransformPatterns(),
     ]);
+
     const urlToMatchResults =
       this.detectCodePatternsAcrossScripts(matcher, artifacts.ScriptElements, networkRecords);
-    let signalCount = 0;
     urlToMatchResults.forEach((matches, url) => {
       /** @type {typeof tableRows[number]} */
       const row = {url, signals: [], locations: []};
@@ -317,13 +324,20 @@ class LegacyJavascript extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
+      /* eslint-disable max-len */
       {key: 'url', itemType: 'url', subRows: {key: 'locations', itemType: 'source-location'}, text: str_(i18n.UIStrings.columnURL)},
       {key: '_', itemType: 'code', subRows: {key: 'signals'}, text: ''},
+      /* eslint-enable max-len */
     ];
     const details = Audit.makeTableDetails(headings, tableRows);
 
+    // Only fail if first party code has legacy code.
+    // TODO(cjamcl): Use third-party-web.
+    const foundSignalInFirstPartyCode = tableRows.some(row => {
+      return row.signals.length && URL.rootDomainsMatch(row.url, mainResource.url);
+    });
     return {
-      score: Number(signalCount === 0),
+      score: Number(foundSignalInFirstPartyCode),
       extendedInfo: {
         signalCount,
       },
