@@ -1,9 +1,8 @@
 {
-  "totalSignals": 185,
+  "totalSignals": 187,
   "variantsMissingSignals": [
     "core-js-2-only-polyfill/es6-array-copy-within",
     "core-js-2-only-polyfill/es6-array-every",
-    "core-js-2-only-polyfill/es6-array-fill",
     "core-js-2-only-polyfill/es6-array-filter",
     "core-js-2-only-polyfill/es6-array-iterator",
     "core-js-2-only-polyfill/es6-array-map",
@@ -56,7 +55,6 @@
     "core-js-2-preset-env-esmodules/true",
     "core-js-3-only-polyfill/es6-array-copy-within",
     "core-js-3-only-polyfill/es6-array-every",
-    "core-js-3-only-polyfill/es6-array-fill",
     "core-js-3-only-polyfill/es6-array-filter",
     "core-js-3-only-polyfill/es6-array-iterator",
     "core-js-3-only-polyfill/es6-array-map",
@@ -119,7 +117,7 @@
     },
     {
       "name": "core-js-2-only-polyfill/es6-array-fill",
-      "signals": ""
+      "signals": "Array.fill"
     },
     {
       "name": "core-js-2-only-polyfill/es6-array-filter",
@@ -571,7 +569,7 @@
     },
     {
       "name": "core-js-3-only-polyfill/es6-array-fill",
-      "signals": ""
+      "signals": "Array.fill"
     },
     {
       "name": "core-js-3-only-polyfill/es6-array-filter",
