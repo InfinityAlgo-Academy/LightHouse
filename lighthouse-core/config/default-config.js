@@ -217,7 +217,8 @@ const defaultConfig = {
     'performance-budget',
     'resource-summary',
     'third-party-summary',
-    'legacy-javascript',
+    // Not enabled yet.
+    // 'legacy-javascript',
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',
     'manual/pwa-each-page-has-url',
@@ -420,7 +421,8 @@ const defaultConfig = {
         {id: 'performance-budget', weight: 0, group: 'budgets'},
         {id: 'resource-summary', weight: 0, group: 'diagnostics'},
         {id: 'third-party-summary', weight: 0, group: 'diagnostics'},
-        {id: 'legacy-javascript', weight: 0, group: 'diagnostics'},
+        // Not enabled yet.
+        // {id: 'legacy-javascript', weight: 0, group: 'diagnostics'},
         // Audits past this point don't belong to a group and will not be shown automatically
         {id: 'network-requests', weight: 0},
         {id: 'network-rtt', weight: 0},

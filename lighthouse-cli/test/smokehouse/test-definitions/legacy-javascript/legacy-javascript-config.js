@@ -18,4 +18,6 @@ module.exports = {
       'legacy-javascript',
     ],
   },
+  // Not in default yet.
+  audits: ['legacy-javascript'],
 };

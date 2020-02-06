@@ -22,6 +22,6 @@ Only some transforms are detectable.
 
 node lighthouse-core/scripts/compare-timings.js --name my-collection --collect -n 3 --lh-flags='--only-audits=legacy-javascript' --urls https://www.coursehero.com/sg https://www.wix.com https://www.wikipedia.org
 
-node lighthouse-core/scripts/compare-timings.js --name my-collection --summarize --measure-filter 'legacy'
+node lighthouse-core/scripts/compare-timings.js --name my-collection --summarize --measure-filter 'legacy-javascript'
 
 
