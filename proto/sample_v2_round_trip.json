@@ -1310,50 +1310,72 @@
                     {
                         "itemType": "url",
                         "key": "url",
+                        "subRows": {
+                            "itemType": "source-location",
+                            "key": "locations"
+                        },
                         "text": "URL"
                     },
                     {
                         "itemType": "code",
-                        "key": "description",
-                        "text": "Description"
-                    },
-                    {
-                        "itemType": "code",
-                        "key": "location",
-                        "text": "Location"
+                        "key": "_",
+                        "subRows": {
+                            "key": "signals"
+                        }
                     }
                 ],
                 "items": [
                     {
-                        "description": "Promise",
-                        "location": "Ln: 376, Col: 14",
-                        "url": "http://localhost:10200/zone.js"
-                    },
-                    {
-                        "description": "Object.defineProperty",
-                        "location": "Ln: 1290, Col: 4",
-                        "url": "http://localhost:10200/zone.js"
-                    },
-                    {
-                        "description": "Object.defineProperties",
-                        "location": "Ln: 1300, Col: 4",
-                        "url": "http://localhost:10200/zone.js"
-                    },
-                    {
-                        "description": "Object.create",
-                        "location": "Ln: 1306, Col: 4",
-                        "url": "http://localhost:10200/zone.js"
-                    },
-                    {
-                        "description": "Object.getOwnPropertyDescriptor",
-                        "location": "Ln: 1314, Col: 4",
+                        "locations": [
+                            {
+                                "column": 14.0,
+                                "line": 376.0,
+                                "type": "source-location",
+                                "url": "http://localhost:10200/zone.js",
+                                "urlProvider": "network"
+                            },
+                            {
+                                "column": 4.0,
+                                "line": 1290.0,
+                                "type": "source-location",
+                                "url": "http://localhost:10200/zone.js",
+                                "urlProvider": "network"
+                            },
+                            {
+                                "column": 4.0,
+                                "line": 1300.0,
+                                "type": "source-location",
+                                "url": "http://localhost:10200/zone.js",
+                                "urlProvider": "network"
+                            },
+                            {
+                                "column": 4.0,
+                                "line": 1306.0,
+                                "type": "source-location",
+                                "url": "http://localhost:10200/zone.js",
+                                "urlProvider": "network"
+                            },
+                            {
+                                "column": 4.0,
+                                "line": 1314.0,
+                                "type": "source-location",
+                                "url": "http://localhost:10200/zone.js",
+                                "urlProvider": "network"
+                            }
+                        ],
+                        "signals": [
+                            "Promise",
+                            "Object.defineProperty",
+                            "Object.defineProperties",
+                            "Object.create",
+                            "Object.getOwnPropertyDescriptor"
+                        ],
                         "url": "http://localhost:10200/zone.js"
                     }
                 ],
                 "type": "table"
             },
             "id": "legacy-javascript",
-            "numericValue": 5.0,
             "score": null,
             "scoreDisplayMode": "informative",
             "title": "Legacy JavaScript"

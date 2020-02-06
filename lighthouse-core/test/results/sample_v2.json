@@ -1565,51 +1565,74 @@
       "description": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)",
       "score": null,
       "scoreDisplayMode": "informative",
-      "numericValue": 5,
       "details": {
         "type": "table",
         "headings": [
           {
             "key": "url",
             "itemType": "url",
+            "subRows": {
+              "key": "locations",
+              "itemType": "source-location"
+            },
             "text": "URL"
           },
           {
-            "key": "description",
+            "key": "_",
             "itemType": "code",
-            "text": "Description"
-          },
-          {
-            "key": "location",
-            "itemType": "code",
-            "text": "Location"
+            "subRows": {
+              "key": "signals"
+            },
+            "text": ""
           }
         ],
         "items": [
           {
             "url": "http://localhost:10200/zone.js",
-            "description": "Promise",
-            "location": "Ln: 376, Col: 14"
-          },
-          {
-            "url": "http://localhost:10200/zone.js",
-            "description": "Object.defineProperty",
-            "location": "Ln: 1290, Col: 4"
-          },
-          {
-            "url": "http://localhost:10200/zone.js",
-            "description": "Object.defineProperties",
-            "location": "Ln: 1300, Col: 4"
-          },
-          {
-            "url": "http://localhost:10200/zone.js",
-            "description": "Object.create",
-            "location": "Ln: 1306, Col: 4"
-          },
-          {
-            "url": "http://localhost:10200/zone.js",
-            "description": "Object.getOwnPropertyDescriptor",
-            "location": "Ln: 1314, Col: 4"
+            "signals": [
+              "Promise",
+              "Object.defineProperty",
+              "Object.defineProperties",
+              "Object.create",
+              "Object.getOwnPropertyDescriptor"
+            ],
+            "locations": [
+              {
+                "type": "source-location",
+                "url": "http://localhost:10200/zone.js",
+                "line": 376,
+                "column": 14,
+                "urlProvider": "network"
+              },
+              {
+                "type": "source-location",
+                "url": "http://localhost:10200/zone.js",
+                "line": 1290,
+                "column": 4,
+                "urlProvider": "network"
+              },
+              {
+                "type": "source-location",
+                "url": "http://localhost:10200/zone.js",
+                "line": 1300,
+                "column": 4,
+                "urlProvider": "network"
+              },
+              {
+                "type": "source-location",
+                "url": "http://localhost:10200/zone.js",
+                "line": 1306,
+                "column": 4,
+                "urlProvider": "network"
+              },
+              {
+                "type": "source-location",
+                "url": "http://localhost:10200/zone.js",
+                "line": 1314,
+                "column": 4,
+                "urlProvider": "network"
+              }
+            ]
           }
         ]
       }
@@ -6011,13 +6034,6 @@
       "lighthouse-core/audits/legacy-javascript.js | description": [
         "audits[legacy-javascript].description"
       ],
-      "lighthouse-core/lib/i18n/i18n.js | columnLocation": [
-        "audits[legacy-javascript].details.headings[2].text",
-        "audits[geolocation-on-start].details.headings[1].text",
-        "audits[no-document-write].details.headings[1].text",
-        "audits[notification-on-start].details.headings[1].text",
-        "audits[uses-passive-event-listeners].details.headings[1].text"
-      ],
       "lighthouse-core/audits/manual/pwa-cross-browser.js | title": [
         "audits[pwa-cross-browser].title"
       ],
@@ -6501,6 +6517,12 @@
       ],
       "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": [
         "audits[geolocation-on-start].description"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnLocation": [
+        "audits[geolocation-on-start].details.headings[1].text",
+        "audits[no-document-write].details.headings[1].text",
+        "audits[notification-on-start].details.headings[1].text",
+        "audits[uses-passive-event-listeners].details.headings[1].text"
       ],
       "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": [
         "audits[no-document-write].title"
