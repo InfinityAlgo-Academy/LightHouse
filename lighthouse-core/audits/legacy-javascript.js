@@ -5,6 +5,13 @@
  */
 'use strict';
 
+/**
+ * @fileoverview Identifies polyfills and transforms that should not be present if using module/nomodule pattern.
+ * @see https://docs.google.com/document/d/1ItjJwAd6e0Ts6yMbvh8TN3BBh_sAd58rYE1whnpuxaA/edit Design document
+ * @see https://docs.google.com/spreadsheets/d/1z28Au8wo8-c2UsM2lDVEOJcI3jOkb2c951xEBqzBKCc/edit?usp=sharing Legacy babel transforms / polyfills
+ * ./lighthouse-core/scripts/legacy-javascript - verification tool.
+ */
+
 /** @typedef {{name: string, expression: string}} Pattern */
 /** @typedef {{name: string, line: number, column: number}} PatternMatchResult */
 
@@ -89,10 +96,6 @@ class CodePatternMatcher {
   }
 }
 
-/**
- * Identifies polyfills and transforms that should not be present if using module/nomodule pattern.
- * @see https://docs.google.com/spreadsheets/d/1z28Au8wo8-c2UsM2lDVEOJcI3jOkb2c951xEBqzBKCc/edit?usp=sharing
- */
 class LegacyJavascript extends Audit {
   /**
    * @return {LH.Audit.Meta}
@@ -347,7 +350,7 @@ class LegacyJavascript extends Audit {
       return row.signals.length && URL.rootDomainsMatch(row.url, mainResource.url);
     });
     return {
-      score: Number(!foundSignalInFirstPartyCode),
+      score: foundSignalInFirstPartyCode ? 0 : 1,
       extendedInfo: {
         signalCount,
       },
