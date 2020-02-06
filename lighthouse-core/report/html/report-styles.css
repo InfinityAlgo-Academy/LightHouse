@@ -1408,6 +1408,9 @@
   margin-left: 20px;
   color: var(--color-gray-700);
 }
+.lh-sub-row {
+  margin-bottom: 0;
+}
 
 /* Chevron
    https://codepen.io/paulirish/pen/LmzEmK
