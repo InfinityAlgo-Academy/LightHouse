@@ -139,9 +139,6 @@ Object {
       "path": "third-party-summary",
     },
     Object {
-      "path": "legacy-javascript",
-    },
-    Object {
       "path": "manual/pwa-cross-browser",
     },
     Object {
@@ -911,11 +908,6 @@ Object {
         Object {
           "group": "diagnostics",
           "id": "third-party-summary",
-          "weight": 0,
-        },
-        Object {
-          "group": "diagnostics",
-          "id": "legacy-javascript",
           "weight": 0,
         },
         Object {
