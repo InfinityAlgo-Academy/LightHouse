@@ -127,12 +127,18 @@ class LegacyJavascript extends Audit {
     // Object.defineProperty(String.prototype, 'startsWith'
     expression += `|defineProperty\\(${object || 'window'},\\s*${qt(property)}`;
 
+    // core-js
     if (object) {
       const objectWithoutPrototype = object.replace('.prototype', '');
       // e(e.S,"Object",{values
-      // minified pattern found in babel-polyfill
+      // Minified + mangled pattern found in CDN babel-polyfill.
       // see https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.2.5/polyfill.min.js
-      expression += `|;e\\([^,]+,${qt(objectWithoutPrototype)},{${property}`;
+      // TODO: perhaps this is the wrong place to check for a CDN polyfill. Remove?
+      expression += `|;e\\([^,]+,${qt(objectWithoutPrototype)},{${property}:`;
+
+      // Minified pattern.
+      // $export($export.S,"Date",{now:function
+      expression += `|;\\$export\\([^,]+,${qt(objectWithoutPrototype)},{${property}:`;
     }
 
     return expression;

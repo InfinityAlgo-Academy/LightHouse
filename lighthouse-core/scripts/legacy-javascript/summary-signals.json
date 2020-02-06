@@ -1,30 +1,18 @@
 {
-  "totalSignals": 77,
+  "totalSignals": 163,
   "variantsMissingSignals": [
     "core-js-2-only-polyfill/es6-array-copy-within",
     "core-js-2-only-polyfill/es6-array-every",
     "core-js-2-only-polyfill/es6-array-fill",
     "core-js-2-only-polyfill/es6-array-filter",
-    "core-js-2-only-polyfill/es6-array-find",
-    "core-js-2-only-polyfill/es6-array-find-index",
-    "core-js-2-only-polyfill/es6-array-for-each",
-    "core-js-2-only-polyfill/es6-array-from",
-    "core-js-2-only-polyfill/es6-array-index-of",
-    "core-js-2-only-polyfill/es6-array-is-array",
     "core-js-2-only-polyfill/es6-array-iterator",
-    "core-js-2-only-polyfill/es6-array-last-index-of",
     "core-js-2-only-polyfill/es6-array-map",
-    "core-js-2-only-polyfill/es6-array-of",
     "core-js-2-only-polyfill/es6-array-reduce",
     "core-js-2-only-polyfill/es6-array-reduce-right",
     "core-js-2-only-polyfill/es6-array-some",
     "core-js-2-only-polyfill/es6-array-species",
-    "core-js-2-only-polyfill/es6-date-now",
-    "core-js-2-only-polyfill/es6-date-to-iso-string",
-    "core-js-2-only-polyfill/es6-date-to-json",
     "core-js-2-only-polyfill/es6-date-to-primitive",
     "core-js-2-only-polyfill/es6-date-to-string",
-    "core-js-2-only-polyfill/es6-function-bind",
     "core-js-2-only-polyfill/es6-function-has-instance",
     "core-js-2-only-polyfill/es6-function-name",
     "core-js-2-only-polyfill/es6-map",
@@ -47,16 +35,8 @@
     "core-js-2-only-polyfill/es6-math-trunc",
     "core-js-2-only-polyfill/es6-number-constructor",
     "core-js-2-only-polyfill/es6-number-epsilon",
-    "core-js-2-only-polyfill/es6-number-is-integer",
-    "core-js-2-only-polyfill/es6-number-is-safe-integer",
     "core-js-2-only-polyfill/es6-number-max-safe-integer",
     "core-js-2-only-polyfill/es6-number-min-safe-integer",
-    "core-js-2-only-polyfill/es6-number-parse-float",
-    "core-js-2-only-polyfill/es6-number-parse-int",
-    "core-js-2-only-polyfill/es6-object-assign",
-    "core-js-2-only-polyfill/es6-object-create",
-    "core-js-2-only-polyfill/es6-object-define-properties",
-    "core-js-2-only-polyfill/es6-object-define-property",
     "core-js-2-only-polyfill/es6-object-freeze",
     "core-js-2-only-polyfill/es6-object-get-own-property-descriptor",
     "core-js-2-only-polyfill/es6-object-get-own-property-names",
@@ -67,63 +47,28 @@
     "core-js-2-only-polyfill/es6-object-keys",
     "core-js-2-only-polyfill/es6-object-prevent-extensions",
     "core-js-2-only-polyfill/es6-object-seal",
-    "core-js-2-only-polyfill/es6-object-set-prototype-of",
     "core-js-2-only-polyfill/es6-object-to-string",
-    "core-js-2-only-polyfill/es6-reflect-apply",
-    "core-js-2-only-polyfill/es6-reflect-construct",
     "core-js-2-only-polyfill/es6-reflect-define-property",
-    "core-js-2-only-polyfill/es6-reflect-delete-property",
     "core-js-2-only-polyfill/es6-reflect-get",
-    "core-js-2-only-polyfill/es6-reflect-get-own-property-descriptor",
-    "core-js-2-only-polyfill/es6-reflect-get-prototype-of",
-    "core-js-2-only-polyfill/es6-reflect-has",
-    "core-js-2-only-polyfill/es6-reflect-is-extensible",
-    "core-js-2-only-polyfill/es6-reflect-own-keys",
-    "core-js-2-only-polyfill/es6-reflect-prevent-extensions",
     "core-js-2-only-polyfill/es6-reflect-set",
     "core-js-2-only-polyfill/es6-reflect-set-prototype-of",
     "core-js-2-only-polyfill/es6-set",
-    "core-js-2-only-polyfill/es6-string-code-point-at",
-    "core-js-2-only-polyfill/es6-string-ends-with",
-    "core-js-2-only-polyfill/es6-string-from-code-point",
-    "core-js-2-only-polyfill/es6-string-includes",
     "core-js-2-only-polyfill/es6-string-iterator",
-    "core-js-2-only-polyfill/es6-string-raw",
-    "core-js-2-only-polyfill/es6-string-repeat",
-    "core-js-2-only-polyfill/es6-string-starts-with",
     "core-js-2-only-polyfill/es6-string-trim",
     "core-js-2-only-polyfill/es6-weak-set",
-    "core-js-2-only-polyfill/es7-array-includes",
-    "core-js-2-only-polyfill/es7-object-entries",
-    "core-js-2-only-polyfill/es7-object-get-own-property-descriptors",
-    "core-js-2-only-polyfill/es7-object-values",
-    "core-js-2-only-polyfill/es7-string-pad-end",
-    "core-js-2-only-polyfill/es7-string-pad-start",
     "core-js-2-preset-env-esmodules/true",
     "core-js-3-only-polyfill/es6-array-copy-within",
     "core-js-3-only-polyfill/es6-array-every",
     "core-js-3-only-polyfill/es6-array-fill",
     "core-js-3-only-polyfill/es6-array-filter",
-    "core-js-3-only-polyfill/es6-array-find",
-    "core-js-3-only-polyfill/es6-array-find-index",
-    "core-js-3-only-polyfill/es6-array-for-each",
-    "core-js-3-only-polyfill/es6-array-from",
-    "core-js-3-only-polyfill/es6-array-index-of",
-    "core-js-3-only-polyfill/es6-array-is-array",
     "core-js-3-only-polyfill/es6-array-iterator",
-    "core-js-3-only-polyfill/es6-array-last-index-of",
     "core-js-3-only-polyfill/es6-array-map",
-    "core-js-3-only-polyfill/es6-array-of",
     "core-js-3-only-polyfill/es6-array-reduce",
     "core-js-3-only-polyfill/es6-array-reduce-right",
     "core-js-3-only-polyfill/es6-array-some",
     "core-js-3-only-polyfill/es6-array-species",
-    "core-js-3-only-polyfill/es6-date-now",
-    "core-js-3-only-polyfill/es6-date-to-iso-string",
-    "core-js-3-only-polyfill/es6-date-to-json",
     "core-js-3-only-polyfill/es6-date-to-primitive",
     "core-js-3-only-polyfill/es6-date-to-string",
-    "core-js-3-only-polyfill/es6-function-bind",
     "core-js-3-only-polyfill/es6-function-has-instance",
     "core-js-3-only-polyfill/es6-function-name",
     "core-js-3-only-polyfill/es6-map",
@@ -146,16 +91,8 @@
     "core-js-3-only-polyfill/es6-math-trunc",
     "core-js-3-only-polyfill/es6-number-constructor",
     "core-js-3-only-polyfill/es6-number-epsilon",
-    "core-js-3-only-polyfill/es6-number-is-integer",
-    "core-js-3-only-polyfill/es6-number-is-safe-integer",
     "core-js-3-only-polyfill/es6-number-max-safe-integer",
     "core-js-3-only-polyfill/es6-number-min-safe-integer",
-    "core-js-3-only-polyfill/es6-number-parse-float",
-    "core-js-3-only-polyfill/es6-number-parse-int",
-    "core-js-3-only-polyfill/es6-object-assign",
-    "core-js-3-only-polyfill/es6-object-create",
-    "core-js-3-only-polyfill/es6-object-define-properties",
-    "core-js-3-only-polyfill/es6-object-define-property",
     "core-js-3-only-polyfill/es6-object-freeze",
     "core-js-3-only-polyfill/es6-object-get-own-property-descriptor",
     "core-js-3-only-polyfill/es6-object-get-own-property-names",
@@ -166,38 +103,15 @@
     "core-js-3-only-polyfill/es6-object-keys",
     "core-js-3-only-polyfill/es6-object-prevent-extensions",
     "core-js-3-only-polyfill/es6-object-seal",
-    "core-js-3-only-polyfill/es6-object-set-prototype-of",
     "core-js-3-only-polyfill/es6-object-to-string",
-    "core-js-3-only-polyfill/es6-reflect-apply",
-    "core-js-3-only-polyfill/es6-reflect-construct",
     "core-js-3-only-polyfill/es6-reflect-define-property",
-    "core-js-3-only-polyfill/es6-reflect-delete-property",
     "core-js-3-only-polyfill/es6-reflect-get",
-    "core-js-3-only-polyfill/es6-reflect-get-own-property-descriptor",
-    "core-js-3-only-polyfill/es6-reflect-get-prototype-of",
-    "core-js-3-only-polyfill/es6-reflect-has",
-    "core-js-3-only-polyfill/es6-reflect-is-extensible",
-    "core-js-3-only-polyfill/es6-reflect-own-keys",
-    "core-js-3-only-polyfill/es6-reflect-prevent-extensions",
     "core-js-3-only-polyfill/es6-reflect-set",
     "core-js-3-only-polyfill/es6-reflect-set-prototype-of",
     "core-js-3-only-polyfill/es6-set",
-    "core-js-3-only-polyfill/es6-string-code-point-at",
-    "core-js-3-only-polyfill/es6-string-ends-with",
-    "core-js-3-only-polyfill/es6-string-from-code-point",
-    "core-js-3-only-polyfill/es6-string-includes",
     "core-js-3-only-polyfill/es6-string-iterator",
-    "core-js-3-only-polyfill/es6-string-raw",
-    "core-js-3-only-polyfill/es6-string-repeat",
-    "core-js-3-only-polyfill/es6-string-starts-with",
     "core-js-3-only-polyfill/es6-string-trim",
     "core-js-3-only-polyfill/es6-weak-set",
-    "core-js-3-only-polyfill/es7-array-includes",
-    "core-js-3-only-polyfill/es7-object-entries",
-    "core-js-3-only-polyfill/es7-object-get-own-property-descriptors",
-    "core-js-3-only-polyfill/es7-object-values",
-    "core-js-3-only-polyfill/es7-string-pad-end",
-    "core-js-3-only-polyfill/es7-string-pad-start",
     "core-js-3-preset-env-esmodules/true"
   ],
   "variants": [
@@ -219,27 +133,27 @@
     },
     {
       "name": "core-js-2-only-polyfill/es6-array-find",
-      "signals": ""
+      "signals": "Array.prototype.find"
     },
     {
       "name": "core-js-2-only-polyfill/es6-array-find-index",
-      "signals": ""
+      "signals": "Array.prototype.findIndex"
     },
     {
       "name": "core-js-2-only-polyfill/es6-array-for-each",
-      "signals": ""
+      "signals": "Array.prototype.forEach"
     },
     {
       "name": "core-js-2-only-polyfill/es6-array-from",
-      "signals": ""
+      "signals": "Array.from"
     },
     {
       "name": "core-js-2-only-polyfill/es6-array-index-of",
-      "signals": ""
+      "signals": "Array.prototype.indexOf"
     },
     {
       "name": "core-js-2-only-polyfill/es6-array-is-array",
-      "signals": ""
+      "signals": "Array.isArray"
     },
     {
       "name": "core-js-2-only-polyfill/es6-array-iterator",
@@ -247,7 +161,7 @@
     },
     {
       "name": "core-js-2-only-polyfill/es6-array-last-index-of",
-      "signals": ""
+      "signals": "Array.prototype.lastIndexOf"
     },
     {
       "name": "core-js-2-only-polyfill/es6-array-map",
@@ -255,7 +169,7 @@
     },
     {
       "name": "core-js-2-only-polyfill/es6-array-of",
-      "signals": ""
+      "signals": "Array.of"
     },
     {
       "name": "core-js-2-only-polyfill/es6-array-reduce",
@@ -275,15 +189,15 @@
     },
     {
       "name": "core-js-2-only-polyfill/es6-date-now",
-      "signals": ""
+      "signals": "Date.now"
     },
     {
       "name": "core-js-2-only-polyfill/es6-date-to-iso-string",
-      "signals": ""
+      "signals": "Date.prototype.toISOString"
     },
     {
       "name": "core-js-2-only-polyfill/es6-date-to-json",
-      "signals": ""
+      "signals": "Date.prototype.toJSON"
     },
     {
       "name": "core-js-2-only-polyfill/es6-date-to-primitive",
@@ -295,7 +209,7 @@
     },
     {
       "name": "core-js-2-only-polyfill/es6-function-bind",
-      "signals": ""
+      "signals": "Function.prototype.bind"
     },
     {
       "name": "core-js-2-only-polyfill/es6-function-has-instance",
@@ -387,11 +301,11 @@
     },
     {
       "name": "core-js-2-only-polyfill/es6-number-is-integer",
-      "signals": ""
+      "signals": "Number.isInteger"
     },
     {
       "name": "core-js-2-only-polyfill/es6-number-is-safe-integer",
-      "signals": ""
+      "signals": "Number.isSafeInteger"
     },
     {
       "name": "core-js-2-only-polyfill/es6-number-max-safe-integer",
@@ -403,27 +317,27 @@
     },
     {
       "name": "core-js-2-only-polyfill/es6-number-parse-float",
-      "signals": ""
+      "signals": "Number.parseFloat"
     },
     {
       "name": "core-js-2-only-polyfill/es6-number-parse-int",
-      "signals": ""
+      "signals": "Number.parseInt"
     },
     {
       "name": "core-js-2-only-polyfill/es6-object-assign",
-      "signals": ""
+      "signals": "Object.assign"
     },
     {
       "name": "core-js-2-only-polyfill/es6-object-create",
-      "signals": ""
+      "signals": "Object.create"
     },
     {
       "name": "core-js-2-only-polyfill/es6-object-define-properties",
-      "signals": ""
+      "signals": "Object.defineProperties"
     },
     {
       "name": "core-js-2-only-polyfill/es6-object-define-property",
-      "signals": ""
+      "signals": "Object.defineProperty"
     },
     {
       "name": "core-js-2-only-polyfill/es6-object-freeze",
@@ -467,7 +381,7 @@
     },
     {
       "name": "core-js-2-only-polyfill/es6-object-set-prototype-of",
-      "signals": ""
+      "signals": "Object.setPrototypeOf"
     },
     {
       "name": "core-js-2-only-polyfill/es6-object-to-string",
@@ -479,11 +393,11 @@
     },
     {
       "name": "core-js-2-only-polyfill/es6-reflect-apply",
-      "signals": ""
+      "signals": "Reflect.apply"
     },
     {
       "name": "core-js-2-only-polyfill/es6-reflect-construct",
-      "signals": ""
+      "signals": "Reflect.construct"
     },
     {
       "name": "core-js-2-only-polyfill/es6-reflect-define-property",
@@ -491,7 +405,7 @@
     },
     {
       "name": "core-js-2-only-polyfill/es6-reflect-delete-property",
-      "signals": ""
+      "signals": "Reflect.deleteProperty"
     },
     {
       "name": "core-js-2-only-polyfill/es6-reflect-get",
@@ -499,27 +413,27 @@
     },
     {
       "name": "core-js-2-only-polyfill/es6-reflect-get-own-property-descriptor",
-      "signals": ""
+      "signals": "Reflect.getOwnPropertyDescriptor"
     },
     {
       "name": "core-js-2-only-polyfill/es6-reflect-get-prototype-of",
-      "signals": ""
+      "signals": "Reflect.getPrototypeOf"
     },
     {
       "name": "core-js-2-only-polyfill/es6-reflect-has",
-      "signals": ""
+      "signals": "Reflect.has"
     },
     {
       "name": "core-js-2-only-polyfill/es6-reflect-is-extensible",
-      "signals": ""
+      "signals": "Reflect.isExtensible"
     },
     {
       "name": "core-js-2-only-polyfill/es6-reflect-own-keys",
-      "signals": ""
+      "signals": "Reflect.ownKeys"
     },
     {
       "name": "core-js-2-only-polyfill/es6-reflect-prevent-extensions",
-      "signals": ""
+      "signals": "Reflect.preventExtensions"
     },
     {
       "name": "core-js-2-only-polyfill/es6-reflect-set",
@@ -535,19 +449,19 @@
     },
     {
       "name": "core-js-2-only-polyfill/es6-string-code-point-at",
-      "signals": ""
+      "signals": "String.prototype.codePointAt"
     },
     {
       "name": "core-js-2-only-polyfill/es6-string-ends-with",
-      "signals": ""
+      "signals": "String.prototype.endsWith"
     },
     {
       "name": "core-js-2-only-polyfill/es6-string-from-code-point",
-      "signals": ""
+      "signals": "String.fromCodePoint"
     },
     {
       "name": "core-js-2-only-polyfill/es6-string-includes",
-      "signals": ""
+      "signals": "String.prototype.includes"
     },
     {
       "name": "core-js-2-only-polyfill/es6-string-iterator",
@@ -555,15 +469,15 @@
     },
     {
       "name": "core-js-2-only-polyfill/es6-string-raw",
-      "signals": ""
+      "signals": "String.raw"
     },
     {
       "name": "core-js-2-only-polyfill/es6-string-repeat",
-      "signals": ""
+      "signals": "String.prototype.repeat"
     },
     {
       "name": "core-js-2-only-polyfill/es6-string-starts-with",
-      "signals": ""
+      "signals": "String.prototype.startsWith"
     },
     {
       "name": "core-js-2-only-polyfill/es6-string-trim",
@@ -623,27 +537,27 @@
     },
     {
       "name": "core-js-2-only-polyfill/es7-array-includes",
-      "signals": ""
+      "signals": "Array.prototype.includes"
     },
     {
       "name": "core-js-2-only-polyfill/es7-object-entries",
-      "signals": ""
+      "signals": "Object.entries"
     },
     {
       "name": "core-js-2-only-polyfill/es7-object-get-own-property-descriptors",
-      "signals": ""
+      "signals": "Object.getOwnPropertyDescriptors"
     },
     {
       "name": "core-js-2-only-polyfill/es7-object-values",
-      "signals": ""
+      "signals": "Object.values"
     },
     {
       "name": "core-js-2-only-polyfill/es7-string-pad-end",
-      "signals": ""
+      "signals": "String.prototype.padEnd"
     },
     {
       "name": "core-js-2-only-polyfill/es7-string-pad-start",
-      "signals": ""
+      "signals": "String.prototype.padStart"
     },
     {
       "name": "core-js-2-preset-env-esmodules/false",
@@ -671,27 +585,27 @@
     },
     {
       "name": "core-js-3-only-polyfill/es6-array-find",
-      "signals": ""
+      "signals": "Array.prototype.find"
     },
     {
       "name": "core-js-3-only-polyfill/es6-array-find-index",
-      "signals": ""
+      "signals": "Array.prototype.findIndex"
     },
     {
       "name": "core-js-3-only-polyfill/es6-array-for-each",
-      "signals": ""
+      "signals": "Array.prototype.forEach"
     },
     {
       "name": "core-js-3-only-polyfill/es6-array-from",
-      "signals": ""
+      "signals": "Array.from"
     },
     {
       "name": "core-js-3-only-polyfill/es6-array-index-of",
-      "signals": ""
+      "signals": "Array.prototype.indexOf"
     },
     {
       "name": "core-js-3-only-polyfill/es6-array-is-array",
-      "signals": ""
+      "signals": "Array.isArray"
     },
     {
       "name": "core-js-3-only-polyfill/es6-array-iterator",
@@ -699,7 +613,7 @@
     },
     {
       "name": "core-js-3-only-polyfill/es6-array-last-index-of",
-      "signals": ""
+      "signals": "Array.prototype.lastIndexOf"
     },
     {
       "name": "core-js-3-only-polyfill/es6-array-map",
@@ -707,7 +621,7 @@
     },
     {
       "name": "core-js-3-only-polyfill/es6-array-of",
-      "signals": ""
+      "signals": "Array.of"
     },
     {
       "name": "core-js-3-only-polyfill/es6-array-reduce",
@@ -727,15 +641,15 @@
     },
     {
       "name": "core-js-3-only-polyfill/es6-date-now",
-      "signals": ""
+      "signals": "Date.now"
     },
     {
       "name": "core-js-3-only-polyfill/es6-date-to-iso-string",
-      "signals": ""
+      "signals": "Date.prototype.toISOString"
     },
     {
       "name": "core-js-3-only-polyfill/es6-date-to-json",
-      "signals": ""
+      "signals": "Date.prototype.toJSON"
     },
     {
       "name": "core-js-3-only-polyfill/es6-date-to-primitive",
@@ -747,7 +661,7 @@
     },
     {
       "name": "core-js-3-only-polyfill/es6-function-bind",
-      "signals": ""
+      "signals": "Function.prototype.bind"
     },
     {
       "name": "core-js-3-only-polyfill/es6-function-has-instance",
@@ -839,11 +753,11 @@
     },
     {
       "name": "core-js-3-only-polyfill/es6-number-is-integer",
-      "signals": ""
+      "signals": "Number.isInteger"
     },
     {
       "name": "core-js-3-only-polyfill/es6-number-is-safe-integer",
-      "signals": ""
+      "signals": "Number.isSafeInteger"
     },
     {
       "name": "core-js-3-only-polyfill/es6-number-max-safe-integer",
@@ -855,27 +769,27 @@
     },
     {
       "name": "core-js-3-only-polyfill/es6-number-parse-float",
-      "signals": ""
+      "signals": "Number.parseFloat"
     },
     {
       "name": "core-js-3-only-polyfill/es6-number-parse-int",
-      "signals": ""
+      "signals": "Number.parseInt"
     },
     {
       "name": "core-js-3-only-polyfill/es6-object-assign",
-      "signals": ""
+      "signals": "Object.assign"
     },
     {
       "name": "core-js-3-only-polyfill/es6-object-create",
-      "signals": ""
+      "signals": "Object.create"
     },
     {
       "name": "core-js-3-only-polyfill/es6-object-define-properties",
-      "signals": ""
+      "signals": "Object.defineProperties"
     },
     {
       "name": "core-js-3-only-polyfill/es6-object-define-property",
-      "signals": ""
+      "signals": "Object.defineProperty"
     },
     {
       "name": "core-js-3-only-polyfill/es6-object-freeze",
@@ -919,7 +833,7 @@
     },
     {
       "name": "core-js-3-only-polyfill/es6-object-set-prototype-of",
-      "signals": ""
+      "signals": "Object.setPrototypeOf"
     },
     {
       "name": "core-js-3-only-polyfill/es6-object-to-string",
@@ -931,11 +845,11 @@
     },
     {
       "name": "core-js-3-only-polyfill/es6-reflect-apply",
-      "signals": ""
+      "signals": "Reflect.apply"
     },
     {
       "name": "core-js-3-only-polyfill/es6-reflect-construct",
-      "signals": ""
+      "signals": "Reflect.construct"
     },
     {
       "name": "core-js-3-only-polyfill/es6-reflect-define-property",
@@ -943,7 +857,7 @@
     },
     {
       "name": "core-js-3-only-polyfill/es6-reflect-delete-property",
-      "signals": ""
+      "signals": "Reflect.deleteProperty"
     },
     {
       "name": "core-js-3-only-polyfill/es6-reflect-get",
@@ -951,27 +865,27 @@
     },
     {
       "name": "core-js-3-only-polyfill/es6-reflect-get-own-property-descriptor",
-      "signals": ""
+      "signals": "Reflect.getOwnPropertyDescriptor"
     },
     {
       "name": "core-js-3-only-polyfill/es6-reflect-get-prototype-of",
-      "signals": ""
+      "signals": "Reflect.getPrototypeOf"
     },
     {
       "name": "core-js-3-only-polyfill/es6-reflect-has",
-      "signals": ""
+      "signals": "Reflect.has"
     },
     {
       "name": "core-js-3-only-polyfill/es6-reflect-is-extensible",
-      "signals": ""
+      "signals": "Reflect.isExtensible"
     },
     {
       "name": "core-js-3-only-polyfill/es6-reflect-own-keys",
-      "signals": ""
+      "signals": "Reflect.ownKeys"
     },
     {
       "name": "core-js-3-only-polyfill/es6-reflect-prevent-extensions",
-      "signals": ""
+      "signals": "Reflect.preventExtensions"
     },
     {
       "name": "core-js-3-only-polyfill/es6-reflect-set",
@@ -987,19 +901,19 @@
     },
     {
       "name": "core-js-3-only-polyfill/es6-string-code-point-at",
-      "signals": ""
+      "signals": "String.prototype.codePointAt"
     },
     {
       "name": "core-js-3-only-polyfill/es6-string-ends-with",
-      "signals": ""
+      "signals": "String.prototype.endsWith"
     },
     {
       "name": "core-js-3-only-polyfill/es6-string-from-code-point",
-      "signals": ""
+      "signals": "String.fromCodePoint"
     },
     {
       "name": "core-js-3-only-polyfill/es6-string-includes",
-      "signals": ""
+      "signals": "String.prototype.includes"
     },
     {
       "name": "core-js-3-only-polyfill/es6-string-iterator",
@@ -1007,15 +921,15 @@
     },
     {
       "name": "core-js-3-only-polyfill/es6-string-raw",
-      "signals": ""
+      "signals": "String.raw"
     },
     {
       "name": "core-js-3-only-polyfill/es6-string-repeat",
-      "signals": ""
+      "signals": "String.prototype.repeat"
     },
     {
       "name": "core-js-3-only-polyfill/es6-string-starts-with",
-      "signals": ""
+      "signals": "String.prototype.startsWith"
     },
     {
       "name": "core-js-3-only-polyfill/es6-string-trim",
@@ -1075,27 +989,27 @@
     },
     {
       "name": "core-js-3-only-polyfill/es7-array-includes",
-      "signals": ""
+      "signals": "Array.prototype.includes"
     },
     {
       "name": "core-js-3-only-polyfill/es7-object-entries",
-      "signals": ""
+      "signals": "Object.entries"
     },
     {
       "name": "core-js-3-only-polyfill/es7-object-get-own-property-descriptors",
-      "signals": ""
+      "signals": "Object.getOwnPropertyDescriptors"
     },
     {
       "name": "core-js-3-only-polyfill/es7-object-values",
-      "signals": ""
+      "signals": "Object.values"
     },
     {
       "name": "core-js-3-only-polyfill/es7-string-pad-end",
-      "signals": ""
+      "signals": "String.prototype.padEnd"
     },
     {
       "name": "core-js-3-only-polyfill/es7-string-pad-start",
-      "signals": ""
+      "signals": "String.prototype.padStart"
     },
     {
       "name": "core-js-3-preset-env-esmodules/false",
