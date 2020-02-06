@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * @license Copyright 2020 Google Inc. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -19,6 +19,7 @@ const createArtifacts = (scripts) => {
     url,
   }));
   return {
+    URL: {finalUrl: '', requestedUrl: ''},
     devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(networkRecords)},
     ScriptElements: scripts.reduce((acc, {code}, index) => {
       acc[String(index)] = {
@@ -53,7 +54,7 @@ describe('LegacyJavaScript audit', () => {
     ]);
     const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 1);
-    assert.equal(result.numericValue, 0);
+    assert.equal(result.extendedInfo.signalCount, 0);
   });
 
   it('fails code with a legacy polyfill', async () => {
@@ -65,8 +66,8 @@ describe('LegacyJavaScript audit', () => {
     ]);
     const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 0);
-    assert.equal(result.numericValue, 1);
-    assert.equal(result.details.items[0].description, 'String.prototype.repeat');
+    assert.equal(result.extendedInfo.signalCount, 1);
+    expect(result.details.items[0].signals).toEqual(['String.prototype.repeat']);
   });
 
   it('fails code with multiple legacy polyfills', async () => {
@@ -78,7 +79,7 @@ describe('LegacyJavaScript audit', () => {
     ]);
     const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 0);
-    assert.equal(result.numericValue, 2);
+    assert.equal(result.extendedInfo.signalCount, 2);
   });
 
   it('counts multiple of the same polyfill from the same script only once', async () => {
@@ -95,72 +96,59 @@ describe('LegacyJavaScript audit', () => {
     ]);
     const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 0);
-    assert.equal(result.numericValue, 1);
-  });
-
-  it('displays a counter for multiple of the same polyfill from different scripts', async () => {
-    const artifacts = createArtifacts([
-      {
-        code: 'String.prototype.repeat = function() {}',
-        url: 'https://www.example.com/a.js',
-      },
-      {
-        code: 'String.prototype["repeat"] = function() {}',
-        url: 'https://www.example.com/b.js',
-      },
-    ]);
-    const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
-    assert.equal(result.score, 0);
-    assert.equal(result.numericValue, 2);
-    assert.equal(result.details.items[0].description, 'String.prototype.repeat (1 / 2)');
-    assert.equal(result.details.items[1].description, 'String.prototype.repeat (2 / 2)');
+    assert.equal(result.extendedInfo.signalCount, 1);
   });
 
   it('should identify polyfills in multiple patterns', async () => {
-    const artifacts = createArtifacts([
+    const scripts = [
       {
         code: 'String.prototype.repeat = function() {}',
-        url: 'https://www.example.com/a.js',
+        url: 'https://www.example.com/1.js',
       },
       {
         code: 'String.prototype["repeat"] = function() {}',
-        url: 'https://www.example.com/b.js',
+        url: 'https://www.example.com/2.js',
       },
       {
         code: 'String.prototype[\'repeat\'] = function() {}',
-        url: 'https://www.example.com/c.js',
+        url: 'https://www.example.com/3.js',
       },
       {
         code: 'Object.defineProperty(String.prototype, "repeat", function() {})',
-        url: 'https://www.example.com/d.js',
+        url: 'https://www.example.com/4.js',
       },
       {
         code: 'Object.defineProperty(String.prototype, \'repeat\', function() {})',
-        url: 'https://www.example.com/e.js',
+        url: 'https://www.example.com/5.js',
       },
       {
         code: 'Object.defineProperty(window, \'WeakMap\', function() {})',
-        url: 'https://www.example.com/e.js',
+        url: 'https://www.example.com/6.js',
       },
       {
-        code: ';e(e.S,"Object",{values:function values(t){return i(t)}})',
-        url: 'https://www.example.com/f.js',
+        code: ';$export($export.S,"Object",{values:function values(t){return i(t)}})',
+        url: 'https://www.example.com/7.js',
       },
       {
         code: 'WeakMap = function() {}',
-        url: 'https://www.example.com/f.js',
+        url: 'https://www.example.com/8.js',
       },
       {
         code: 'window.WeakMap = function() {}',
-        url: 'https://www.example.com/f.js',
+        url: 'https://www.example.com/9.js',
+      },
+      {
+        code: 'function WeakMap() {}',
+        url: 'https://www.example.com/10.js',
       },
       {
         code: 'String.raw = function() {}',
-        url: 'https://www.example.com/f.js',
+        url: 'https://www.example.com/11.js',
       },
-    ]);
+    ];
+    const artifacts = createArtifacts(scripts);
     const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 0);
-    assert.equal(result.numericValue, Object.keys(artifacts.ScriptElements).length);
+    expect(result.details.items.map(item => item.url)).toEqual(scripts.map(script => script.url));
   });
 });

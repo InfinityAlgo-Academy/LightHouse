@@ -347,7 +347,7 @@ class LegacyJavascript extends Audit {
       return row.signals.length && URL.rootDomainsMatch(row.url, mainResource.url);
     });
     return {
-      score: Number(foundSignalInFirstPartyCode),
+      score: Number(!foundSignalInFirstPartyCode),
       extendedInfo: {
         signalCount,
       },

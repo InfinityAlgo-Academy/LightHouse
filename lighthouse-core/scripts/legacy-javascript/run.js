@@ -1,6 +1,15 @@
+/**
+ * @license Copyright 2020 Google Inc. All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ */
+'use strict';
+
+/* eslint-disable no-console */
+
 const fs = require('fs');
 const glob = require('glob');
-const { execFileSync } = require('child_process');
+const {execFileSync} = require('child_process');
 const LegacyJavascript = require('../../audits/legacy-javascript.js');
 const networkRecordsToDevtoolsLog = require('../../test/network-records-to-devtools-log.js');
 const VARIANT_DIR = `${__dirname}/variants`;
@@ -132,11 +141,11 @@ const polyfills = [
  * @param {{group: string, name: string, code: string, babelrc?: *}} options
  */
 async function createVariant(options) {
-  const { group, name, code, babelrc } = options;
+  const {group, name, code, babelrc} = options;
   const dir = `${VARIANT_DIR}/${group}/${name.replace(/[^a-zA-Z0-9]+/g, '-')}`;
 
   if (!fs.existsSync(`${dir}/main.bundle.js`) && (STAGE === 'build' || STAGE === 'all')) {
-    fs.mkdirSync(dir, { recursive: true });
+    fs.mkdirSync(dir, {recursive: true});
     fs.writeFileSync(`${dir}/main.js`, code);
     fs.writeFileSync(`${dir}/.babelrc`, JSON.stringify(babelrc || {}, null, 2));
     // Not used in this script, but useful for running Lighthouse manually.
@@ -173,8 +182,8 @@ async function createVariant(options) {
     const documentUrl = 'http://localhost/index.html'; // These URLs don't matter.
     const scriptUrl = 'https://localhost/main.bundle.min.js';
     const networkRecords = [
-      { url: documentUrl },
-      { url: scriptUrl },
+      {url: documentUrl},
+      {url: scriptUrl},
     ];
     const devtoolsLogs = networkRecordsToDevtoolsLog(networkRecords);
     const jsRequestWillBeSentEvent = devtoolsLogs.find(e =>
@@ -182,15 +191,16 @@ async function createVariant(options) {
     if (!jsRequestWillBeSentEvent) throw new Error('jsRequestWillBeSentEvent is undefined');
     // @ts-ignore
     const jsRequestId = jsRequestWillBeSentEvent.params.requestId;
+    const code = fs.readFileSync(`${dir}/main.bundle.min.js`, 'utf-8').toString();
     /** @type {Pick<LH.Artifacts, 'devtoolsLogs'|'URL'|'ScriptElements'>} */
     const artifacts = {
-      URL: { finalUrl: documentUrl, requestedUrl: documentUrl },
+      URL: {finalUrl: documentUrl, requestedUrl: documentUrl},
       devtoolsLogs: {
         [LegacyJavascript.DEFAULT_PASS]: devtoolsLogs,
       },
       ScriptElements: [
         // @ts-ignore
-        { requestId: jsRequestId, content: fs.readFileSync(`${dir}/main.bundle.min.js`, 'utf-8').toString() },
+        {requestId: jsRequestId, content: code},
       ],
     };
     // @ts-ignore: partial Artifacts.
@@ -205,14 +215,14 @@ async function createVariant(options) {
 function makeSummary() {
   let totalSignals = 0;
   const variants = [];
-  for (const dir of glob.sync('*/*', { cwd: VARIANT_DIR })) {
+  for (const dir of glob.sync('*/*', {cwd: VARIANT_DIR})) {
     const legacyJavascript = require(`${VARIANT_DIR}/${dir}/legacy-javascript.json`);
     // @ts-ignore
     const signals = legacyJavascript.reduce((acc, cur) => {
       totalSignals += cur.signals.length;
       return acc.concat(cur.signals);
     }, []).join(', ');
-    variants.push({ name: dir, signals });
+    variants.push({name: dir, signals});
   }
   return {
     totalSignals,
@@ -228,7 +238,7 @@ function installCoreJs(version) {
   execFileSync('yarn', [
     'add',
     `core-js@${version}`,
-  ], { cwd: __dirname });
+  ], {cwd: __dirname});
 }
 
 function removeCoreJs() {
@@ -236,7 +246,7 @@ function removeCoreJs() {
     execFileSync('yarn', [
       'remove',
       'core-js',
-    ], { cwd: __dirname });
+    ], {cwd: __dirname});
   } catch (e) { }
 }
 
@@ -249,7 +259,7 @@ async function main() {
       babelrc: {
         plugins: [plugin],
       },
-    })
+    });
   }
 
   for (const coreJsVersion of [2, 3]) {
@@ -264,14 +274,14 @@ async function main() {
         babelrc: {
           presets: [
             [
-              "@babel/preset-env",
+              '@babel/preset-env',
               {
-                targets: { esmodules },
-                useBuiltIns: "entry",
+                targets: {esmodules},
+                useBuiltIns: 'entry',
                 corejs: coreJsVersion,
-              }
-            ]
-          ]
+              },
+            ],
+          ],
         },
       });
     }
@@ -289,12 +299,15 @@ async function main() {
 
   const summary = makeSummary();
   fs.writeFileSync(`${__dirname}/summary-signals.json`, JSON.stringify(summary, null, 2));
-  console.log({totalSignals: summary.totalSignals, variantsMissingSignals: summary.variantsMissingSignals});
+  console.log({
+    totalSignals: summary.totalSignals,
+    variantsMissingSignals: summary.variantsMissingSignals,
+  });
   console.table(summary.variants);
 
   execFileSync('sh', [
     'update-sizes.sh',
-  ], { cwd: __dirname });
+  ], {cwd: __dirname});
 }
 
 main();
