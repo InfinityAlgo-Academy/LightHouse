@@ -5,6 +5,9 @@ const LegacyJavascript = require('../../audits/legacy-javascript.js');
 const networkRecordsToDevtoolsLog = require('../../test/network-records-to-devtools-log.js');
 const VARIANT_DIR = `${__dirname}/variants`;
 
+// build, audit, all.
+const STAGE = process.env.STAGE || 'all';
+
 const mainCode = fs.readFileSync(`${__dirname}/main.js`, 'utf-8');
 
 const plugins = LegacyJavascript.getTransformPatterns().map(pattern => pattern.name);
@@ -130,64 +133,66 @@ const polyfills = [
  */
 async function createVariant(options) {
   const { group, name, code, babelrc } = options;
-
   const dir = `${VARIANT_DIR}/${group}/${name.replace(/[^a-zA-Z0-9]+/g, '-')}`;
-  if (fs.existsSync(dir)) return;
 
-  fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(`${dir}/main.js`, code);
-  fs.writeFileSync(`${dir}/.babelrc`, JSON.stringify(babelrc || {}, null, 2));
-  // Not used in this script, but useful for running Lighthouse manually.
-  // Just need to start a web server first.
-  fs.writeFileSync(`${dir}/index.html`, `<title>${name}</title><script src=main.bundle.js>`);
+  if (!fs.existsSync(`${dir}/main.bundle.js`) && (STAGE === 'build' || STAGE === 'all')) {
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(`${dir}/main.js`, code);
+    fs.writeFileSync(`${dir}/.babelrc`, JSON.stringify(babelrc || {}, null, 2));
+    // Not used in this script, but useful for running Lighthouse manually.
+    // Just need to start a web server first.
+    fs.writeFileSync(`${dir}/index.html`, `<title>${name}</title><script src=main.bundle.js>`);
 
-  // Note: No babelrc will make babel a glorified `cp`.
-  execFileSync('yarn', [
-    'babel',
-    `${dir}/main.js`,
-    '--config-file', `${dir}/.babelrc`,
-    '--ignore', 'node_modules/**/*.js',
-    '-o', `${dir}/main.transpiled.js`,
-  ]);
+    // Note: No babelrc will make babel a glorified `cp`.
+    execFileSync('yarn', [
+      'babel',
+      `${dir}/main.js`,
+      '--config-file', `${dir}/.babelrc`,
+      '--ignore', 'node_modules/**/*.js',
+      '-o', `${dir}/main.transpiled.js`,
+    ]);
 
-  // Transform any require statements (like for core-js) into a big bundle.
-  execFileSync('yarn', [
-    'browserify',
-    `${dir}/main.transpiled.js`,
-    '-o', `${dir}/main.bundle.js`,
-  ]);
+    // Transform any require statements (like for core-js) into a big bundle.
+    execFileSync('yarn', [
+      'browserify',
+      `${dir}/main.transpiled.js`,
+      '-o', `${dir}/main.bundle.js`,
+    ]);
+  }
 
-  // Instead of running Lighthouse, use LegacyJavascript directly. Requires some setup.
-  // Much faster than running Lighthouse.
-  const documentUrl = 'http://localhost/index.html';
-  const scriptUrl = 'https://localhost/main.transpiled.js';
-  const networkRecords = [
-    { url: documentUrl },
-    { url: scriptUrl },
-  ];
-  const devtoolsLogs = networkRecordsToDevtoolsLog(networkRecords);
-  const jsRequestWillBeSentEvent = devtoolsLogs.find(e =>
-    e.method === 'Network.requestWillBeSent' && e.params.request.url === scriptUrl);
-  if (!jsRequestWillBeSentEvent) throw new Error('jsRequestWillBeSentEvent is undefined');
-  // @ts-ignore
-  const jsRequestId = jsRequestWillBeSentEvent.params.requestId;
-  /** @type {Pick<LH.Artifacts, 'devtoolsLogs'|'URL'|'ScriptElements'>} */
-  const artifacts = {
-    URL: { finalUrl: documentUrl, requestedUrl: documentUrl },
-    devtoolsLogs: {
-      [LegacyJavascript.DEFAULT_PASS]: devtoolsLogs,
-    },
-    ScriptElements: [
-      // @ts-ignore
-      { requestId: jsRequestId, content: fs.readFileSync(`${dir}/main.bundle.js`, 'utf-8').toString() },
-    ],
-  };
-  // @ts-ignore: partial Artifacts.
-  const legacyJavascriptResults = await LegacyJavascript.audit(artifacts, {
-    computedCache: new Map(),
-  });
-  fs.writeFileSync(`${dir}/legacy-javascript.json`,
-    JSON.stringify(legacyJavascriptResults.details.items, null, 2));
+  if (STAGE === 'audit' || STAGE === 'all') {
+    // Instead of running Lighthouse, use LegacyJavascript directly. Requires some setup.
+    // Much faster than running Lighthouse.
+    const documentUrl = 'http://localhost/index.html';
+    const scriptUrl = 'https://localhost/main.transpiled.js';
+    const networkRecords = [
+      { url: documentUrl },
+      { url: scriptUrl },
+    ];
+    const devtoolsLogs = networkRecordsToDevtoolsLog(networkRecords);
+    const jsRequestWillBeSentEvent = devtoolsLogs.find(e =>
+      e.method === 'Network.requestWillBeSent' && e.params.request.url === scriptUrl);
+    if (!jsRequestWillBeSentEvent) throw new Error('jsRequestWillBeSentEvent is undefined');
+    // @ts-ignore
+    const jsRequestId = jsRequestWillBeSentEvent.params.requestId;
+    /** @type {Pick<LH.Artifacts, 'devtoolsLogs'|'URL'|'ScriptElements'>} */
+    const artifacts = {
+      URL: { finalUrl: documentUrl, requestedUrl: documentUrl },
+      devtoolsLogs: {
+        [LegacyJavascript.DEFAULT_PASS]: devtoolsLogs,
+      },
+      ScriptElements: [
+        // @ts-ignore
+        { requestId: jsRequestId, content: fs.readFileSync(`${dir}/main.bundle.js`, 'utf-8').toString() },
+      ],
+    };
+    // @ts-ignore: partial Artifacts.
+    const legacyJavascriptResults = await LegacyJavascript.audit(artifacts, {
+      computedCache: new Map(),
+    });
+    fs.writeFileSync(`${dir}/legacy-javascript.json`,
+      JSON.stringify(legacyJavascriptResults.details.items, null, 2));
+  }
 }
 
 function makeSummary() {
@@ -203,6 +208,25 @@ function makeSummary() {
   return summary;
 }
 
+/**
+ * @param {2|3} version
+ */
+function installCoreJs(version) {
+  execFileSync('yarn', [
+    'add',
+    `core-js@${coreJsVersion}`,
+  ], { cwd: __dirname });
+}
+
+function removeCoreJs(version) {
+  try {
+    execFileSync('yarn', [
+      'remove',
+      'core-js',
+    ], { cwd: __dirname });
+  } catch (e) { }
+}
+
 async function main() {
   for (const plugin of plugins) {
     await createVariant({
@@ -216,21 +240,12 @@ async function main() {
   }
 
   for (const coreJsVersion of [2, 3]) {
-    try {
-      execFileSync('yarn', [
-        'remove',
-        'core-js',
-      ], { cwd: __dirname });
-    } catch (e) { }
-
-    execFileSync('yarn', [
-      'add',
-      `core-js@${coreJsVersion}`,
-    ], { cwd: __dirname });
+    removeCoreJs();
+    installCoreJs(coreJsVersion);
 
     for (const esmodules of [true, false]) {
       await createVariant({
-        group: `preset-env-esmodules-core-js-${coreJsVersion}`,
+        group: `core-js-${coreJsVersion}-preset-env-esmodules`,
         name: String(esmodules),
         code: mainCode,
         babelrc: {
@@ -250,19 +265,14 @@ async function main() {
 
     for (const polyfill of polyfills) {
       await createVariant({
-        group: `only-polyfill-core-js-${coreJsVersion}`,
+        group: `core-js-${coreJsVersion}-only-polyfill`,
         name: polyfill,
         code: `require("core-js/modules/${polyfill}")`,
       });
     }
   }
 
-  try {
-    execFileSync('yarn', [
-      'remove',
-      'core-js',
-    ], { cwd: __dirname });
-  } catch (e) { }
+  removeCoreJs();
 
   const summary = makeSummary();
   fs.writeFileSync(`${__dirname}/summary-signals.json`, JSON.stringify(summary, null, 2));
