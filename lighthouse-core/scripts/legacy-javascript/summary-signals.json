@@ -1,918 +1,1121 @@
-[
-  {
-    "name": "core-js-2-only-polyfill/es6-array-copy-within",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-array-every",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-array-fill",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-array-filter",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-array-find",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-array-find-index",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-array-for-each",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-array-from",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-array-index-of",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-array-is-array",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-array-iterator",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-array-last-index-of",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-array-map",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-array-of",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-array-reduce",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-array-reduce-right",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-array-some",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-array-species",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-date-now",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-date-to-iso-string",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-date-to-json",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-date-to-primitive",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-date-to-string",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-function-bind",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-function-has-instance",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-function-name",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-map",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-math-acosh",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-math-asinh",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-math-atanh",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-math-cbrt",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-math-clz32",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-math-cosh",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-math-expm1",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-math-fround",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-math-hypot",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-math-imul",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-math-log10",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-math-log1p",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-math-log2",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-math-sign",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-math-sinh",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-math-tanh",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-math-trunc",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-number-constructor",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-number-epsilon",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-number-is-integer",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-number-is-safe-integer",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-number-max-safe-integer",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-number-min-safe-integer",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-number-parse-float",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-number-parse-int",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-object-assign",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-object-create",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-object-define-properties",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-object-define-property",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-object-freeze",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-object-get-own-property-descriptor",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-object-get-own-property-names",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-object-get-prototype-of",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-object-is-extensible",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-object-is-frozen",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-object-is-sealed",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-object-keys",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-object-prevent-extensions",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-object-seal",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-object-set-prototype-of",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-object-to-string",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-promise",
-    "signals": "Promise"
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-reflect-apply",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-reflect-construct",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-reflect-define-property",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-reflect-delete-property",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-reflect-get",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-reflect-get-own-property-descriptor",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-reflect-get-prototype-of",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-reflect-has",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-reflect-is-extensible",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-reflect-own-keys",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-reflect-prevent-extensions",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-reflect-set",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-reflect-set-prototype-of",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-set",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-string-code-point-at",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-string-ends-with",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-string-from-code-point",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-string-includes",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-string-iterator",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-string-raw",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-string-repeat",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-string-starts-with",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-string-trim",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-typed-array-buffer",
-    "signals": "ArrayBuffer, DataView"
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-typed-data-view",
-    "signals": "ArrayBuffer, DataView"
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-typed-float32-array",
-    "signals": "Uint8Array, ArrayBuffer, DataView"
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-typed-float64-array",
-    "signals": "Uint8Array, ArrayBuffer, DataView"
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-typed-int16-array",
-    "signals": "Uint8Array, ArrayBuffer, DataView"
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-typed-int32-array",
-    "signals": "Uint8Array, ArrayBuffer, DataView"
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-typed-int8-array",
-    "signals": "Uint8Array, ArrayBuffer, DataView"
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-typed-uint16-array",
-    "signals": "Uint8Array, ArrayBuffer, DataView"
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-typed-uint32-array",
-    "signals": "Uint8Array, ArrayBuffer, DataView"
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-typed-uint8-array",
-    "signals": "Uint8Array, ArrayBuffer, DataView"
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-typed-uint8-clamped-array",
-    "signals": "Uint8Array, ArrayBuffer, DataView"
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-weak-map",
-    "signals": "WeakMap, Map"
-  },
-  {
-    "name": "core-js-2-only-polyfill/es6-weak-set",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es7-array-includes",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es7-object-entries",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es7-object-get-own-property-descriptors",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es7-object-values",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es7-string-pad-end",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-only-polyfill/es7-string-pad-start",
-    "signals": ""
-  },
-  {
-    "name": "core-js-2-preset-env-esmodules/false",
-    "signals": "@babel/plugin-transform-classes, @babel/plugin-transform-regenerator, @babel/plugin-transform-spread"
-  },
-  {
-    "name": "core-js-2-preset-env-esmodules/true",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-array-copy-within",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-array-every",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-array-fill",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-array-filter",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-array-find",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-array-find-index",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-array-for-each",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-array-from",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-array-index-of",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-array-is-array",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-array-iterator",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-array-last-index-of",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-array-map",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-array-of",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-array-reduce",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-array-reduce-right",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-array-some",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-array-species",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-date-now",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-date-to-iso-string",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-date-to-json",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-date-to-primitive",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-date-to-string",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-function-bind",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-function-has-instance",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-function-name",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-map",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-math-acosh",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-math-asinh",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-math-atanh",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-math-cbrt",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-math-clz32",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-math-cosh",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-math-expm1",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-math-fround",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-math-hypot",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-math-imul",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-math-log10",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-math-log1p",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-math-log2",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-math-sign",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-math-sinh",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-math-tanh",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-math-trunc",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-number-constructor",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-number-epsilon",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-number-is-integer",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-number-is-safe-integer",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-number-max-safe-integer",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-number-min-safe-integer",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-number-parse-float",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-number-parse-int",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-object-assign",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-object-create",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-object-define-properties",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-object-define-property",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-object-freeze",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-object-get-own-property-descriptor",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-object-get-own-property-names",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-object-get-prototype-of",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-object-is-extensible",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-object-is-frozen",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-object-is-sealed",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-object-keys",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-object-prevent-extensions",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-object-seal",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-object-set-prototype-of",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-object-to-string",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-promise",
-    "signals": "Promise"
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-reflect-apply",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-reflect-construct",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-reflect-define-property",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-reflect-delete-property",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-reflect-get",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-reflect-get-own-property-descriptor",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-reflect-get-prototype-of",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-reflect-has",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-reflect-is-extensible",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-reflect-own-keys",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-reflect-prevent-extensions",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-reflect-set",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-reflect-set-prototype-of",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-set",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-string-code-point-at",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-string-ends-with",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-string-from-code-point",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-string-includes",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-string-iterator",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-string-raw",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-string-repeat",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-string-starts-with",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-string-trim",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-typed-array-buffer",
-    "signals": "ArrayBuffer, DataView"
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-typed-data-view",
-    "signals": "ArrayBuffer, DataView"
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-typed-float32-array",
-    "signals": "Uint8Array, ArrayBuffer, DataView"
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-typed-float64-array",
-    "signals": "Uint8Array, ArrayBuffer, DataView"
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-typed-int16-array",
-    "signals": "Uint8Array, ArrayBuffer, DataView"
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-typed-int32-array",
-    "signals": "Uint8Array, ArrayBuffer, DataView"
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-typed-int8-array",
-    "signals": "Uint8Array, ArrayBuffer, DataView"
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-typed-uint16-array",
-    "signals": "Uint8Array, ArrayBuffer, DataView"
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-typed-uint32-array",
-    "signals": "Uint8Array, ArrayBuffer, DataView"
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-typed-uint8-array",
-    "signals": "Uint8Array, ArrayBuffer, DataView"
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-typed-uint8-clamped-array",
-    "signals": "Uint8Array, ArrayBuffer, DataView"
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-weak-map",
-    "signals": "WeakMap, Map"
-  },
-  {
-    "name": "core-js-3-only-polyfill/es6-weak-set",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es7-array-includes",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es7-object-entries",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es7-object-get-own-property-descriptors",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es7-object-values",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es7-string-pad-end",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-only-polyfill/es7-string-pad-start",
-    "signals": ""
-  },
-  {
-    "name": "core-js-3-preset-env-esmodules/false",
-    "signals": "@babel/plugin-transform-classes, @babel/plugin-transform-regenerator, @babel/plugin-transform-spread"
-  },
-  {
-    "name": "core-js-3-preset-env-esmodules/true",
-    "signals": ""
-  },
-  {
-    "name": "only-plugin/-babel-plugin-transform-classes",
-    "signals": "@babel/plugin-transform-classes"
-  },
-  {
-    "name": "only-plugin/-babel-plugin-transform-regenerator",
-    "signals": "@babel/plugin-transform-regenerator"
-  },
-  {
-    "name": "only-plugin/-babel-plugin-transform-spread",
-    "signals": "@babel/plugin-transform-spread"
-  }
-]
+{
+  "totalSignals": 77,
+  "variantsMissingSignals": [
+    "core-js-2-only-polyfill/es6-array-copy-within",
+    "core-js-2-only-polyfill/es6-array-every",
+    "core-js-2-only-polyfill/es6-array-fill",
+    "core-js-2-only-polyfill/es6-array-filter",
+    "core-js-2-only-polyfill/es6-array-find",
+    "core-js-2-only-polyfill/es6-array-find-index",
+    "core-js-2-only-polyfill/es6-array-for-each",
+    "core-js-2-only-polyfill/es6-array-from",
+    "core-js-2-only-polyfill/es6-array-index-of",
+    "core-js-2-only-polyfill/es6-array-is-array",
+    "core-js-2-only-polyfill/es6-array-iterator",
+    "core-js-2-only-polyfill/es6-array-last-index-of",
+    "core-js-2-only-polyfill/es6-array-map",
+    "core-js-2-only-polyfill/es6-array-of",
+    "core-js-2-only-polyfill/es6-array-reduce",
+    "core-js-2-only-polyfill/es6-array-reduce-right",
+    "core-js-2-only-polyfill/es6-array-some",
+    "core-js-2-only-polyfill/es6-array-species",
+    "core-js-2-only-polyfill/es6-date-now",
+    "core-js-2-only-polyfill/es6-date-to-iso-string",
+    "core-js-2-only-polyfill/es6-date-to-json",
+    "core-js-2-only-polyfill/es6-date-to-primitive",
+    "core-js-2-only-polyfill/es6-date-to-string",
+    "core-js-2-only-polyfill/es6-function-bind",
+    "core-js-2-only-polyfill/es6-function-has-instance",
+    "core-js-2-only-polyfill/es6-function-name",
+    "core-js-2-only-polyfill/es6-map",
+    "core-js-2-only-polyfill/es6-math-acosh",
+    "core-js-2-only-polyfill/es6-math-asinh",
+    "core-js-2-only-polyfill/es6-math-atanh",
+    "core-js-2-only-polyfill/es6-math-cbrt",
+    "core-js-2-only-polyfill/es6-math-clz32",
+    "core-js-2-only-polyfill/es6-math-cosh",
+    "core-js-2-only-polyfill/es6-math-expm1",
+    "core-js-2-only-polyfill/es6-math-fround",
+    "core-js-2-only-polyfill/es6-math-hypot",
+    "core-js-2-only-polyfill/es6-math-imul",
+    "core-js-2-only-polyfill/es6-math-log10",
+    "core-js-2-only-polyfill/es6-math-log1p",
+    "core-js-2-only-polyfill/es6-math-log2",
+    "core-js-2-only-polyfill/es6-math-sign",
+    "core-js-2-only-polyfill/es6-math-sinh",
+    "core-js-2-only-polyfill/es6-math-tanh",
+    "core-js-2-only-polyfill/es6-math-trunc",
+    "core-js-2-only-polyfill/es6-number-constructor",
+    "core-js-2-only-polyfill/es6-number-epsilon",
+    "core-js-2-only-polyfill/es6-number-is-integer",
+    "core-js-2-only-polyfill/es6-number-is-safe-integer",
+    "core-js-2-only-polyfill/es6-number-max-safe-integer",
+    "core-js-2-only-polyfill/es6-number-min-safe-integer",
+    "core-js-2-only-polyfill/es6-number-parse-float",
+    "core-js-2-only-polyfill/es6-number-parse-int",
+    "core-js-2-only-polyfill/es6-object-assign",
+    "core-js-2-only-polyfill/es6-object-create",
+    "core-js-2-only-polyfill/es6-object-define-properties",
+    "core-js-2-only-polyfill/es6-object-define-property",
+    "core-js-2-only-polyfill/es6-object-freeze",
+    "core-js-2-only-polyfill/es6-object-get-own-property-descriptor",
+    "core-js-2-only-polyfill/es6-object-get-own-property-names",
+    "core-js-2-only-polyfill/es6-object-get-prototype-of",
+    "core-js-2-only-polyfill/es6-object-is-extensible",
+    "core-js-2-only-polyfill/es6-object-is-frozen",
+    "core-js-2-only-polyfill/es6-object-is-sealed",
+    "core-js-2-only-polyfill/es6-object-keys",
+    "core-js-2-only-polyfill/es6-object-prevent-extensions",
+    "core-js-2-only-polyfill/es6-object-seal",
+    "core-js-2-only-polyfill/es6-object-set-prototype-of",
+    "core-js-2-only-polyfill/es6-object-to-string",
+    "core-js-2-only-polyfill/es6-reflect-apply",
+    "core-js-2-only-polyfill/es6-reflect-construct",
+    "core-js-2-only-polyfill/es6-reflect-define-property",
+    "core-js-2-only-polyfill/es6-reflect-delete-property",
+    "core-js-2-only-polyfill/es6-reflect-get",
+    "core-js-2-only-polyfill/es6-reflect-get-own-property-descriptor",
+    "core-js-2-only-polyfill/es6-reflect-get-prototype-of",
+    "core-js-2-only-polyfill/es6-reflect-has",
+    "core-js-2-only-polyfill/es6-reflect-is-extensible",
+    "core-js-2-only-polyfill/es6-reflect-own-keys",
+    "core-js-2-only-polyfill/es6-reflect-prevent-extensions",
+    "core-js-2-only-polyfill/es6-reflect-set",
+    "core-js-2-only-polyfill/es6-reflect-set-prototype-of",
+    "core-js-2-only-polyfill/es6-set",
+    "core-js-2-only-polyfill/es6-string-code-point-at",
+    "core-js-2-only-polyfill/es6-string-ends-with",
+    "core-js-2-only-polyfill/es6-string-from-code-point",
+    "core-js-2-only-polyfill/es6-string-includes",
+    "core-js-2-only-polyfill/es6-string-iterator",
+    "core-js-2-only-polyfill/es6-string-raw",
+    "core-js-2-only-polyfill/es6-string-repeat",
+    "core-js-2-only-polyfill/es6-string-starts-with",
+    "core-js-2-only-polyfill/es6-string-trim",
+    "core-js-2-only-polyfill/es6-weak-set",
+    "core-js-2-only-polyfill/es7-array-includes",
+    "core-js-2-only-polyfill/es7-object-entries",
+    "core-js-2-only-polyfill/es7-object-get-own-property-descriptors",
+    "core-js-2-only-polyfill/es7-object-values",
+    "core-js-2-only-polyfill/es7-string-pad-end",
+    "core-js-2-only-polyfill/es7-string-pad-start",
+    "core-js-2-preset-env-esmodules/true",
+    "core-js-3-only-polyfill/es6-array-copy-within",
+    "core-js-3-only-polyfill/es6-array-every",
+    "core-js-3-only-polyfill/es6-array-fill",
+    "core-js-3-only-polyfill/es6-array-filter",
+    "core-js-3-only-polyfill/es6-array-find",
+    "core-js-3-only-polyfill/es6-array-find-index",
+    "core-js-3-only-polyfill/es6-array-for-each",
+    "core-js-3-only-polyfill/es6-array-from",
+    "core-js-3-only-polyfill/es6-array-index-of",
+    "core-js-3-only-polyfill/es6-array-is-array",
+    "core-js-3-only-polyfill/es6-array-iterator",
+    "core-js-3-only-polyfill/es6-array-last-index-of",
+    "core-js-3-only-polyfill/es6-array-map",
+    "core-js-3-only-polyfill/es6-array-of",
+    "core-js-3-only-polyfill/es6-array-reduce",
+    "core-js-3-only-polyfill/es6-array-reduce-right",
+    "core-js-3-only-polyfill/es6-array-some",
+    "core-js-3-only-polyfill/es6-array-species",
+    "core-js-3-only-polyfill/es6-date-now",
+    "core-js-3-only-polyfill/es6-date-to-iso-string",
+    "core-js-3-only-polyfill/es6-date-to-json",
+    "core-js-3-only-polyfill/es6-date-to-primitive",
+    "core-js-3-only-polyfill/es6-date-to-string",
+    "core-js-3-only-polyfill/es6-function-bind",
+    "core-js-3-only-polyfill/es6-function-has-instance",
+    "core-js-3-only-polyfill/es6-function-name",
+    "core-js-3-only-polyfill/es6-map",
+    "core-js-3-only-polyfill/es6-math-acosh",
+    "core-js-3-only-polyfill/es6-math-asinh",
+    "core-js-3-only-polyfill/es6-math-atanh",
+    "core-js-3-only-polyfill/es6-math-cbrt",
+    "core-js-3-only-polyfill/es6-math-clz32",
+    "core-js-3-only-polyfill/es6-math-cosh",
+    "core-js-3-only-polyfill/es6-math-expm1",
+    "core-js-3-only-polyfill/es6-math-fround",
+    "core-js-3-only-polyfill/es6-math-hypot",
+    "core-js-3-only-polyfill/es6-math-imul",
+    "core-js-3-only-polyfill/es6-math-log10",
+    "core-js-3-only-polyfill/es6-math-log1p",
+    "core-js-3-only-polyfill/es6-math-log2",
+    "core-js-3-only-polyfill/es6-math-sign",
+    "core-js-3-only-polyfill/es6-math-sinh",
+    "core-js-3-only-polyfill/es6-math-tanh",
+    "core-js-3-only-polyfill/es6-math-trunc",
+    "core-js-3-only-polyfill/es6-number-constructor",
+    "core-js-3-only-polyfill/es6-number-epsilon",
+    "core-js-3-only-polyfill/es6-number-is-integer",
+    "core-js-3-only-polyfill/es6-number-is-safe-integer",
+    "core-js-3-only-polyfill/es6-number-max-safe-integer",
+    "core-js-3-only-polyfill/es6-number-min-safe-integer",
+    "core-js-3-only-polyfill/es6-number-parse-float",
+    "core-js-3-only-polyfill/es6-number-parse-int",
+    "core-js-3-only-polyfill/es6-object-assign",
+    "core-js-3-only-polyfill/es6-object-create",
+    "core-js-3-only-polyfill/es6-object-define-properties",
+    "core-js-3-only-polyfill/es6-object-define-property",
+    "core-js-3-only-polyfill/es6-object-freeze",
+    "core-js-3-only-polyfill/es6-object-get-own-property-descriptor",
+    "core-js-3-only-polyfill/es6-object-get-own-property-names",
+    "core-js-3-only-polyfill/es6-object-get-prototype-of",
+    "core-js-3-only-polyfill/es6-object-is-extensible",
+    "core-js-3-only-polyfill/es6-object-is-frozen",
+    "core-js-3-only-polyfill/es6-object-is-sealed",
+    "core-js-3-only-polyfill/es6-object-keys",
+    "core-js-3-only-polyfill/es6-object-prevent-extensions",
+    "core-js-3-only-polyfill/es6-object-seal",
+    "core-js-3-only-polyfill/es6-object-set-prototype-of",
+    "core-js-3-only-polyfill/es6-object-to-string",
+    "core-js-3-only-polyfill/es6-reflect-apply",
+    "core-js-3-only-polyfill/es6-reflect-construct",
+    "core-js-3-only-polyfill/es6-reflect-define-property",
+    "core-js-3-only-polyfill/es6-reflect-delete-property",
+    "core-js-3-only-polyfill/es6-reflect-get",
+    "core-js-3-only-polyfill/es6-reflect-get-own-property-descriptor",
+    "core-js-3-only-polyfill/es6-reflect-get-prototype-of",
+    "core-js-3-only-polyfill/es6-reflect-has",
+    "core-js-3-only-polyfill/es6-reflect-is-extensible",
+    "core-js-3-only-polyfill/es6-reflect-own-keys",
+    "core-js-3-only-polyfill/es6-reflect-prevent-extensions",
+    "core-js-3-only-polyfill/es6-reflect-set",
+    "core-js-3-only-polyfill/es6-reflect-set-prototype-of",
+    "core-js-3-only-polyfill/es6-set",
+    "core-js-3-only-polyfill/es6-string-code-point-at",
+    "core-js-3-only-polyfill/es6-string-ends-with",
+    "core-js-3-only-polyfill/es6-string-from-code-point",
+    "core-js-3-only-polyfill/es6-string-includes",
+    "core-js-3-only-polyfill/es6-string-iterator",
+    "core-js-3-only-polyfill/es6-string-raw",
+    "core-js-3-only-polyfill/es6-string-repeat",
+    "core-js-3-only-polyfill/es6-string-starts-with",
+    "core-js-3-only-polyfill/es6-string-trim",
+    "core-js-3-only-polyfill/es6-weak-set",
+    "core-js-3-only-polyfill/es7-array-includes",
+    "core-js-3-only-polyfill/es7-object-entries",
+    "core-js-3-only-polyfill/es7-object-get-own-property-descriptors",
+    "core-js-3-only-polyfill/es7-object-values",
+    "core-js-3-only-polyfill/es7-string-pad-end",
+    "core-js-3-only-polyfill/es7-string-pad-start",
+    "core-js-3-preset-env-esmodules/true"
+  ],
+  "variants": [
+    {
+      "name": "core-js-2-only-polyfill/es6-array-copy-within",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-array-every",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-array-fill",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-array-filter",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-array-find",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-array-find-index",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-array-for-each",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-array-from",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-array-index-of",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-array-is-array",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-array-iterator",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-array-last-index-of",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-array-map",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-array-of",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-array-reduce",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-array-reduce-right",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-array-some",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-array-species",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-date-now",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-date-to-iso-string",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-date-to-json",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-date-to-primitive",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-date-to-string",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-function-bind",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-function-has-instance",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-function-name",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-map",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-math-acosh",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-math-asinh",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-math-atanh",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-math-cbrt",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-math-clz32",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-math-cosh",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-math-expm1",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-math-fround",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-math-hypot",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-math-imul",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-math-log10",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-math-log1p",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-math-log2",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-math-sign",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-math-sinh",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-math-tanh",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-math-trunc",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-number-constructor",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-number-epsilon",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-number-is-integer",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-number-is-safe-integer",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-number-max-safe-integer",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-number-min-safe-integer",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-number-parse-float",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-number-parse-int",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-object-assign",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-object-create",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-object-define-properties",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-object-define-property",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-object-freeze",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-object-get-own-property-descriptor",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-object-get-own-property-names",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-object-get-prototype-of",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-object-is-extensible",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-object-is-frozen",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-object-is-sealed",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-object-keys",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-object-prevent-extensions",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-object-seal",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-object-set-prototype-of",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-object-to-string",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-promise",
+      "signals": "Promise"
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-reflect-apply",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-reflect-construct",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-reflect-define-property",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-reflect-delete-property",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-reflect-get",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-reflect-get-own-property-descriptor",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-reflect-get-prototype-of",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-reflect-has",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-reflect-is-extensible",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-reflect-own-keys",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-reflect-prevent-extensions",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-reflect-set",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-reflect-set-prototype-of",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-set",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-string-code-point-at",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-string-ends-with",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-string-from-code-point",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-string-includes",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-string-iterator",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-string-raw",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-string-repeat",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-string-starts-with",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-string-trim",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-typed-array-buffer",
+      "signals": "ArrayBuffer, DataView"
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-typed-data-view",
+      "signals": "ArrayBuffer, DataView"
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-typed-float32-array",
+      "signals": "Uint8Array, ArrayBuffer, DataView"
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-typed-float64-array",
+      "signals": "Uint8Array, ArrayBuffer, DataView"
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-typed-int16-array",
+      "signals": "Uint8Array, ArrayBuffer, DataView"
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-typed-int32-array",
+      "signals": "Uint8Array, ArrayBuffer, DataView"
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-typed-int8-array",
+      "signals": "Uint8Array, ArrayBuffer, DataView"
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-typed-uint16-array",
+      "signals": "Uint8Array, ArrayBuffer, DataView"
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-typed-uint32-array",
+      "signals": "Uint8Array, ArrayBuffer, DataView"
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-typed-uint8-array",
+      "signals": "Uint8Array, ArrayBuffer, DataView"
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-typed-uint8-clamped-array",
+      "signals": "Uint8Array, ArrayBuffer, DataView"
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-weak-map",
+      "signals": "WeakMap, Map"
+    },
+    {
+      "name": "core-js-2-only-polyfill/es6-weak-set",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es7-array-includes",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es7-object-entries",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es7-object-get-own-property-descriptors",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es7-object-values",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es7-string-pad-end",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-only-polyfill/es7-string-pad-start",
+      "signals": ""
+    },
+    {
+      "name": "core-js-2-preset-env-esmodules/false",
+      "signals": "@babel/plugin-transform-classes, @babel/plugin-transform-regenerator, @babel/plugin-transform-spread"
+    },
+    {
+      "name": "core-js-2-preset-env-esmodules/true",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-array-copy-within",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-array-every",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-array-fill",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-array-filter",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-array-find",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-array-find-index",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-array-for-each",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-array-from",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-array-index-of",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-array-is-array",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-array-iterator",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-array-last-index-of",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-array-map",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-array-of",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-array-reduce",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-array-reduce-right",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-array-some",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-array-species",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-date-now",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-date-to-iso-string",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-date-to-json",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-date-to-primitive",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-date-to-string",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-function-bind",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-function-has-instance",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-function-name",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-map",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-math-acosh",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-math-asinh",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-math-atanh",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-math-cbrt",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-math-clz32",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-math-cosh",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-math-expm1",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-math-fround",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-math-hypot",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-math-imul",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-math-log10",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-math-log1p",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-math-log2",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-math-sign",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-math-sinh",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-math-tanh",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-math-trunc",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-number-constructor",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-number-epsilon",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-number-is-integer",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-number-is-safe-integer",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-number-max-safe-integer",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-number-min-safe-integer",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-number-parse-float",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-number-parse-int",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-object-assign",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-object-create",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-object-define-properties",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-object-define-property",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-object-freeze",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-object-get-own-property-descriptor",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-object-get-own-property-names",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-object-get-prototype-of",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-object-is-extensible",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-object-is-frozen",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-object-is-sealed",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-object-keys",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-object-prevent-extensions",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-object-seal",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-object-set-prototype-of",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-object-to-string",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-promise",
+      "signals": "Promise"
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-reflect-apply",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-reflect-construct",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-reflect-define-property",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-reflect-delete-property",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-reflect-get",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-reflect-get-own-property-descriptor",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-reflect-get-prototype-of",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-reflect-has",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-reflect-is-extensible",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-reflect-own-keys",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-reflect-prevent-extensions",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-reflect-set",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-reflect-set-prototype-of",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-set",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-string-code-point-at",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-string-ends-with",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-string-from-code-point",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-string-includes",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-string-iterator",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-string-raw",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-string-repeat",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-string-starts-with",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-string-trim",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-typed-array-buffer",
+      "signals": "ArrayBuffer, DataView"
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-typed-data-view",
+      "signals": "ArrayBuffer, DataView"
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-typed-float32-array",
+      "signals": "Uint8Array, ArrayBuffer, DataView"
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-typed-float64-array",
+      "signals": "Uint8Array, ArrayBuffer, DataView"
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-typed-int16-array",
+      "signals": "Uint8Array, ArrayBuffer, DataView"
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-typed-int32-array",
+      "signals": "Uint8Array, ArrayBuffer, DataView"
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-typed-int8-array",
+      "signals": "Uint8Array, ArrayBuffer, DataView"
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-typed-uint16-array",
+      "signals": "Uint8Array, ArrayBuffer, DataView"
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-typed-uint32-array",
+      "signals": "Uint8Array, ArrayBuffer, DataView"
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-typed-uint8-array",
+      "signals": "Uint8Array, ArrayBuffer, DataView"
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-typed-uint8-clamped-array",
+      "signals": "Uint8Array, ArrayBuffer, DataView"
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-weak-map",
+      "signals": "WeakMap, Map"
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-weak-set",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es7-array-includes",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es7-object-entries",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es7-object-get-own-property-descriptors",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es7-object-values",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es7-string-pad-end",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es7-string-pad-start",
+      "signals": ""
+    },
+    {
+      "name": "core-js-3-preset-env-esmodules/false",
+      "signals": "@babel/plugin-transform-classes, @babel/plugin-transform-regenerator, @babel/plugin-transform-spread"
+    },
+    {
+      "name": "core-js-3-preset-env-esmodules/true",
+      "signals": ""
+    },
+    {
+      "name": "only-plugin/-babel-plugin-transform-classes",
+      "signals": "@babel/plugin-transform-classes"
+    },
+    {
+      "name": "only-plugin/-babel-plugin-transform-regenerator",
+      "signals": "@babel/plugin-transform-regenerator"
+    },
+    {
+      "name": "only-plugin/-babel-plugin-transform-spread",
+      "signals": "@babel/plugin-transform-spread"
+    }
+  ]
+}

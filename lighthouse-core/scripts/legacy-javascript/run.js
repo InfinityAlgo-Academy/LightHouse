@@ -202,18 +202,23 @@ async function createVariant(options) {
   }
 }
 
-// TODO: {variants, totalSignals, variantsMissingSignals}
 function makeSummary() {
-  const summary = [];
+  let totalSignals = 0;
+  const variants = [];
   for (const dir of glob.sync('*/*', { cwd: VARIANT_DIR })) {
     const legacyJavascript = require(`${VARIANT_DIR}/${dir}/legacy-javascript.json`);
     // @ts-ignore
     const signals = legacyJavascript.reduce((acc, cur) => {
+      totalSignals += cur.signals.length;
       return acc.concat(cur.signals);
     }, []).join(', ');
-    summary.push({ name: dir, signals });
+    variants.push({ name: dir, signals });
   }
-  return summary;
+  return {
+    totalSignals,
+    variantsMissingSignals: variants.filter(v => !v.signals).map(v => v.name),
+    variants,
+  };
 }
 
 /**
@@ -284,7 +289,8 @@ async function main() {
 
   const summary = makeSummary();
   fs.writeFileSync(`${__dirname}/summary-signals.json`, JSON.stringify(summary, null, 2));
-  console.table(summary);
+  console.log({totalSignals: summary.totalSignals, variantsMissingSignals: summary.variantsMissingSignals});
+  console.table(summary.variants);
 
   execFileSync('sh', [
     'update-sizes.sh',
