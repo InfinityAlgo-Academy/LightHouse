@@ -141,7 +141,7 @@ async function createVariant(options) {
     fs.writeFileSync(`${dir}/.babelrc`, JSON.stringify(babelrc || {}, null, 2));
     // Not used in this script, but useful for running Lighthouse manually.
     // Just need to start a web server first.
-    fs.writeFileSync(`${dir}/index.html`, `<title>${name}</title><script src=main.bundle.js>`);
+    fs.writeFileSync(`${dir}/index.html`, `<title>${name}</title><script src=main.bundle.min.js>`);
 
     // Note: No babelrc will make babel a glorified `cp`.
     execFileSync('yarn', [
@@ -158,13 +158,20 @@ async function createVariant(options) {
       `${dir}/main.transpiled.js`,
       '-o', `${dir}/main.bundle.js`,
     ]);
+
+    // Minify.
+    execFileSync('yarn', [
+      'terser',
+      `${dir}/main.bundle.js`,
+      '-o', `${dir}/main.bundle.min.js`,
+    ]);
   }
 
   if (STAGE === 'audit' || STAGE === 'all') {
     // Instead of running Lighthouse, use LegacyJavascript directly. Requires some setup.
     // Much faster than running Lighthouse.
-    const documentUrl = 'http://localhost/index.html';
-    const scriptUrl = 'https://localhost/main.transpiled.js';
+    const documentUrl = 'http://localhost/index.html'; // These URLs don't matter.
+    const scriptUrl = 'https://localhost/main.bundle.min.js';
     const networkRecords = [
       { url: documentUrl },
       { url: scriptUrl },
@@ -183,7 +190,7 @@ async function createVariant(options) {
       },
       ScriptElements: [
         // @ts-ignore
-        { requestId: jsRequestId, content: fs.readFileSync(`${dir}/main.bundle.js`, 'utf-8').toString() },
+        { requestId: jsRequestId, content: fs.readFileSync(`${dir}/main.bundle.min.js`, 'utf-8').toString() },
       ],
     };
     // @ts-ignore: partial Artifacts.
@@ -195,6 +202,7 @@ async function createVariant(options) {
   }
 }
 
+// TODO: {variants, totalSignals, variantsMissingSignals}
 function makeSummary() {
   const summary = [];
   for (const dir of glob.sync('*/*', { cwd: VARIANT_DIR })) {
@@ -277,6 +285,10 @@ async function main() {
   const summary = makeSummary();
   fs.writeFileSync(`${__dirname}/summary-signals.json`, JSON.stringify(summary, null, 2));
   console.table(summary);
+
+  execFileSync('sh', [
+    'update-sizes.sh',
+  ], { cwd: __dirname });
 }
 
 main();
