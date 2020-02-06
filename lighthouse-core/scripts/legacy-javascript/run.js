@@ -209,16 +209,16 @@ function makeSummary() {
 }
 
 /**
- * @param {2|3} version
+ * @param {number} version
  */
 function installCoreJs(version) {
   execFileSync('yarn', [
     'add',
-    `core-js@${coreJsVersion}`,
+    `core-js@${version}`,
   ], { cwd: __dirname });
 }
 
-function removeCoreJs(version) {
+function removeCoreJs() {
   try {
     execFileSync('yarn', [
       'remove',
