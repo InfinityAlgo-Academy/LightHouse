@@ -139,6 +139,9 @@ class LegacyJavascript extends Audit {
       // Minified pattern.
       // $export($export.S,"Date",{now:function
       expression += `|;\\$export\\([^,]+,${qt(objectWithoutPrototype)},{${property}:`;
+    } else {
+      // WeakSet, etc.
+      expression += `|function ${property}\\(`;
     }
 
     return expression;
