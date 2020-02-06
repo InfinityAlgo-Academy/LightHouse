@@ -7,29 +7,10 @@ const VARIANT_DIR = `${__dirname}/variants`;
 
 const mainCode = fs.readFileSync(`${__dirname}/main.js`, 'utf-8');
 
-const plugins = [
-  '@babel/plugin-transform-classes',
-  '@babel/plugin-transform-regenerator',
-  '@babel/plugin-transform-spread',
-  // The rest are legacy, but `legacy-javascript` doesn't attempt to detect these.
-  // '@babel/plugin-transform-arrow-functions',
-  // '@babel/plugin-transform-block-scoped-functions',
-  // '@babel/plugin-transform-computed-properties',
-  // '@babel/plugin-transform-destructuring',
-  // '@babel/plugin-transform-duplicate-keys',
-  // '@babel/plugin-transform-exponentiation-operator',
-  // '@babel/plugin-transform-for-of',
-  // '@babel/plugin-transform-literals',
-  // '@babel/plugin-transform-member-expression-literals',
-  // '@babel/plugin-transform-new-target',
-  // '@babel/plugin-transform-object-super',
-  // '@babel/plugin-transform-property-literals',
-  // '@babel/plugin-transform-reserved-words',
-  // '@babel/plugin-transform-shorthand-properties',
-  // '@babel/plugin-transform-sticky-regex',
-  // '@babel/plugin-transform-typeof-symbol',
-];
+const plugins = LegacyJavascript.getTransformPatterns().map(pattern => pattern.name);
 
+// TODO(cjamcl): Get this from `LegacyJavascript`. Data isn't structured ideally yet, but should be
+// done when SourceMap support is in.
 const polyfills = [
   'es6.array.copy-within',
   'es6.array.every',
@@ -145,12 +126,12 @@ const polyfills = [
 ];
 
 /**
- * @param {{name: string, code: string, babelrc?: *}} options
+ * @param {{group: string, name: string, code: string, babelrc?: *}} options
  */
 async function createVariant(options) {
-  const { name, code, babelrc } = options;
+  const { group, name, code, babelrc } = options;
 
-  const dir = `${VARIANT_DIR}/${name.replace(/[^a-zA-Z0-9]+/g, '-')}`;
+  const dir = `${VARIANT_DIR}/${group}/${name.replace(/[^a-zA-Z0-9]+/g, '-')}`;
   if (fs.existsSync(dir)) return;
 
   fs.mkdirSync(dir, { recursive: true });
@@ -159,7 +140,7 @@ async function createVariant(options) {
   // Not used in this script, but useful for running Lighthouse manually.
   // Just need to start a web server first.
   fs.writeFileSync(`${dir}/index.html`, `<title>${name}</title><script src=main.bundle.js>`);
-  
+
   // Note: No babelrc will make babel a glorified `cp`.
   execFileSync('yarn', [
     'babel',
@@ -209,23 +190,24 @@ async function createVariant(options) {
     JSON.stringify(legacyJavascriptResults.details.items, null, 2));
 }
 
-function printSummary() {
-  const table = [];
-  for (const dir of glob.sync('*', {cwd: VARIANT_DIR})) {
+function makeSummary() {
+  const summary = [];
+  for (const dir of glob.sync('*/*', { cwd: VARIANT_DIR })) {
     const legacyJavascript = require(`${VARIANT_DIR}/${dir}/legacy-javascript.json`);
     // @ts-ignore
     const signals = legacyJavascript.reduce((acc, cur) => {
       return acc.concat(cur.signals);
     }, []).join(', ');
-    table.push({name: dir, signals});
+    summary.push({ name: dir, signals });
   }
-  console.table(table);
+  return summary;
 }
 
 async function main() {
   for (const plugin of plugins) {
     await createVariant({
-      name: `only-${plugin}`,
+      group: 'only-plugin',
+      name: plugin,
       code: mainCode,
       babelrc: {
         plugins: [plugin],
@@ -233,32 +215,58 @@ async function main() {
     })
   }
 
-  for (const esmodules of [true, false]) {
-    await createVariant({
-      name: `preset-env-esmodules-${esmodules}`,
-      code: mainCode,
-      babelrc: {
-        presets: [
-          [
-            "@babel/preset-env",
-            {
-              targets: { esmodules },
-              useBuiltIns: "entry"
-            }
+  for (const coreJsVersion of [2, 3]) {
+    try {
+      execFileSync('yarn', [
+        'remove',
+        'core-js',
+      ], { cwd: __dirname });
+    } catch (e) { }
+
+    execFileSync('yarn', [
+      'add',
+      `core-js@${coreJsVersion}`,
+    ], { cwd: __dirname });
+
+    for (const esmodules of [true, false]) {
+      await createVariant({
+        group: `preset-env-esmodules-core-js-${coreJsVersion}`,
+        name: String(esmodules),
+        code: mainCode,
+        babelrc: {
+          presets: [
+            [
+              "@babel/preset-env",
+              {
+                targets: { esmodules },
+                useBuiltIns: "entry",
+                corejs: coreJsVersion,
+              }
+            ]
           ]
-        ]
-      },
-    });
+        },
+      });
+    }
+
+    for (const polyfill of polyfills) {
+      await createVariant({
+        group: `only-polyfill-core-js-${coreJsVersion}`,
+        name: polyfill,
+        code: `require("core-js/modules/${polyfill}")`,
+      });
+    }
   }
 
-  for (const polyfill of polyfills) {
-    await createVariant({
-      name: `core-js-${polyfill}`,
-      code: `require("core-js/modules/${polyfill}")`,
-    });
-  }
+  try {
+    execFileSync('yarn', [
+      'remove',
+      'core-js',
+    ], { cwd: __dirname });
+  } catch (e) { }
 
-  printSummary();
+  const summary = makeSummary();
+  fs.writeFileSync(`${__dirname}/summary-signals.json`, JSON.stringify(summary, null, 2));
+  console.table(summary);
 }
 
 main();

@@ -1,0 +1,249 @@
+variants/core-js-2-only-polyfill
+1930067 total
+  62610 variants/core-js-2-only-polyfill/es6-typed-uint8-clamped-array/main.bundle.js
+  62589 variants/core-js-2-only-polyfill/es6-typed-float64-array/main.bundle.js
+  62589 variants/core-js-2-only-polyfill/es6-typed-float32-array/main.bundle.js
+  62585 variants/core-js-2-only-polyfill/es6-typed-uint32-array/main.bundle.js
+  62585 variants/core-js-2-only-polyfill/es6-typed-uint16-array/main.bundle.js
+  62581 variants/core-js-2-only-polyfill/es6-typed-uint8-array/main.bundle.js
+  62581 variants/core-js-2-only-polyfill/es6-typed-int32-array/main.bundle.js
+  62581 variants/core-js-2-only-polyfill/es6-typed-int16-array/main.bundle.js
+  62577 variants/core-js-2-only-polyfill/es6-typed-int8-array/main.bundle.js
+  40190 variants/core-js-2-only-polyfill/es6-map/main.bundle.js
+  40029 variants/core-js-2-only-polyfill/es6-set/main.bundle.js
+  36446 variants/core-js-2-only-polyfill/es6-weak-map/main.bundle.js
+  33617 variants/core-js-2-only-polyfill/es6-promise/main.bundle.js
+  30547 variants/core-js-2-only-polyfill/es6-weak-set/main.bundle.js
+  29840 variants/core-js-2-only-polyfill/es6-typed-array-buffer/main.bundle.js
+  27137 variants/core-js-2-only-polyfill/es6-typed-data-view/main.bundle.js
+  22976 variants/core-js-2-only-polyfill/es6-array-iterator/main.bundle.js
+  22893 variants/core-js-2-only-polyfill/es6-number-constructor/main.bundle.js
+  22529 variants/core-js-2-only-polyfill/es6-string-iterator/main.bundle.js
+  19857 variants/core-js-2-only-polyfill/es6-reflect-construct/main.bundle.js
+  16340 variants/core-js-2-only-polyfill/es7-object-get-own-property-descriptors/main.bundle.js
+  16178 variants/core-js-2-only-polyfill/es6-object-create/main.bundle.js
+  15853 variants/core-js-2-only-polyfill/es6-array-from/main.bundle.js
+  15650 variants/core-js-2-only-polyfill/es6-object-assign/main.bundle.js
+  15073 variants/core-js-2-only-polyfill/es6-object-get-own-property-names/main.bundle.js
+  14944 variants/core-js-2-only-polyfill/es6-array-find-index/main.bundle.js
+  14912 variants/core-js-2-only-polyfill/es6-array-find/main.bundle.js
+  14753 variants/core-js-2-only-polyfill/es6-array-for-each/main.bundle.js
+  14721 variants/core-js-2-only-polyfill/es6-array-filter/main.bundle.js
+  14713 variants/core-js-2-only-polyfill/es6-array-every/main.bundle.js
+  14706 variants/core-js-2-only-polyfill/es6-array-some/main.bundle.js
+  14698 variants/core-js-2-only-polyfill/es6-array-map/main.bundle.js
+  14691 variants/core-js-2-only-polyfill/es7-object-entries/main.bundle.js
+  14686 variants/core-js-2-only-polyfill/es7-object-values/main.bundle.js
+  14564 variants/core-js-2-only-polyfill/es6-object-keys/main.bundle.js
+  14496 variants/core-js-2-only-polyfill/es6-reflect-own-keys/main.bundle.js
+  14454 variants/core-js-2-only-polyfill/es6-object-define-properties/main.bundle.js
+  13736 variants/core-js-2-only-polyfill/es6-reflect-set/main.bundle.js
+  13490 variants/core-js-2-only-polyfill/es7-array-includes/main.bundle.js
+  13217 variants/core-js-2-only-polyfill/es6-array-index-of/main.bundle.js
+  13165 variants/core-js-2-only-polyfill/es6-reflect-get/main.bundle.js
+  12724 variants/core-js-2-only-polyfill/es6-reflect-set-prototype-of/main.bundle.js
+  12723 variants/core-js-2-only-polyfill/es6-string-ends-with/main.bundle.js
+  12711 variants/core-js-2-only-polyfill/es6-array-copy-within/main.bundle.js
+  12649 variants/core-js-2-only-polyfill/es6-string-starts-with/main.bundle.js
+  12573 variants/core-js-2-only-polyfill/es6-array-reduce-right/main.bundle.js
+  12542 variants/core-js-2-only-polyfill/es6-array-reduce/main.bundle.js
+  12500 variants/core-js-2-only-polyfill/es6-object-set-prototype-of/main.bundle.js
+  12435 variants/core-js-2-only-polyfill/es6-array-fill/main.bundle.js
+  12313 variants/core-js-2-only-polyfill/es6-array-last-index-of/main.bundle.js
+  12211 variants/core-js-2-only-polyfill/es7-string-pad-start/main.bundle.js
+  12204 variants/core-js-2-only-polyfill/es7-string-pad-end/main.bundle.js
+  12168 variants/core-js-2-only-polyfill/es6-object-get-own-property-descriptor/main.bundle.js
+  11973 variants/core-js-2-only-polyfill/es6-object-prevent-extensions/main.bundle.js
+  11882 variants/core-js-2-only-polyfill/es6-object-freeze/main.bundle.js
+  11867 variants/core-js-2-only-polyfill/es6-object-seal/main.bundle.js
+  11858 variants/core-js-2-only-polyfill/es6-string-includes/main.bundle.js
+  11747 variants/core-js-2-only-polyfill/es6-reflect-delete-property/main.bundle.js
+  11721 variants/core-js-2-only-polyfill/es6-reflect-get-own-property-descriptor/main.bundle.js
+  11609 variants/core-js-2-only-polyfill/es6-number-parse-int/main.bundle.js
+  11591 variants/core-js-2-only-polyfill/es6-number-parse-float/main.bundle.js
+  11482 variants/core-js-2-only-polyfill/es6-string-raw/main.bundle.js
+  11454 variants/core-js-2-only-polyfill/es6-object-get-prototype-of/main.bundle.js
+  11372 variants/core-js-2-only-polyfill/es6-function-bind/main.bundle.js
+  11046 variants/core-js-2-only-polyfill/es6-string-trim/main.bundle.js
+  11014 variants/core-js-2-only-polyfill/es6-reflect-get-prototype-of/main.bundle.js
+  10858 variants/core-js-2-only-polyfill/es6-date-to-iso-string/main.bundle.js
+  10852 variants/core-js-2-only-polyfill/es6-string-from-code-point/main.bundle.js
+  10844 variants/core-js-2-only-polyfill/es6-string-code-point-at/main.bundle.js
+  10601 variants/core-js-2-only-polyfill/es6-math-fround/main.bundle.js
+  10494 variants/core-js-2-only-polyfill/es6-string-repeat/main.bundle.js
+  10462 variants/core-js-2-only-polyfill/es6-date-to-json/main.bundle.js
+  10445 variants/core-js-2-only-polyfill/es6-array-of/main.bundle.js
+  10339 variants/core-js-2-only-polyfill/es6-reflect-define-property/main.bundle.js
+  10317 variants/core-js-2-only-polyfill/es6-math-sinh/main.bundle.js
+  10234 variants/core-js-2-only-polyfill/es6-math-acosh/main.bundle.js
+  10208 variants/core-js-2-only-polyfill/es6-object-is-extensible/main.bundle.js
+  10176 variants/core-js-2-only-polyfill/es6-object-is-sealed/main.bundle.js
+  10176 variants/core-js-2-only-polyfill/es6-object-is-frozen/main.bundle.js
+  10169 variants/core-js-2-only-polyfill/es6-reflect-apply/main.bundle.js
+  10167 variants/core-js-2-only-polyfill/es6-math-tanh/main.bundle.js
+  10109 variants/core-js-2-only-polyfill/es6-math-hypot/main.bundle.js
+  10050 variants/core-js-2-only-polyfill/es6-number-is-safe-integer/main.bundle.js
+  10039 variants/core-js-2-only-polyfill/es6-math-expm1/main.bundle.js
+   9995 variants/core-js-2-only-polyfill/es6-math-imul/main.bundle.js
+   9969 variants/core-js-2-only-polyfill/es6-array-is-array/main.bundle.js
+   9918 variants/core-js-2-only-polyfill/es6-reflect-prevent-extensions/main.bundle.js
+   9903 variants/core-js-2-only-polyfill/es6-math-cbrt/main.bundle.js
+   9891 variants/core-js-2-only-polyfill/es6-number-is-integer/main.bundle.js
+   9811 variants/core-js-2-only-polyfill/es6-math-sign/main.bundle.js
+   9809 variants/core-js-2-only-polyfill/es6-reflect-is-extensible/main.bundle.js
+   9792 variants/core-js-2-only-polyfill/es6-math-log1p/main.bundle.js
+   9787 variants/core-js-2-only-polyfill/es6-math-asinh/main.bundle.js
+   9749 variants/core-js-2-only-polyfill/es6-math-atanh/main.bundle.js
+   9723 variants/core-js-2-only-polyfill/es6-object-define-property/main.bundle.js
+   9653 variants/core-js-2-only-polyfill/es6-math-clz32/main.bundle.js
+   9644 variants/core-js-2-only-polyfill/es6-reflect-has/main.bundle.js
+   9630 variants/core-js-2-only-polyfill/es6-math-cosh/main.bundle.js
+   9626 variants/core-js-2-only-polyfill/es6-math-trunc/main.bundle.js
+   9616 variants/core-js-2-only-polyfill/es6-number-min-safe-integer/main.bundle.js
+   9614 variants/core-js-2-only-polyfill/es6-number-max-safe-integer/main.bundle.js
+   9613 variants/core-js-2-only-polyfill/es6-math-log10/main.bundle.js
+   9605 variants/core-js-2-only-polyfill/es6-math-log2/main.bundle.js
+   9595 variants/core-js-2-only-polyfill/es6-date-now/main.bundle.js
+   9578 variants/core-js-2-only-polyfill/es6-number-epsilon/main.bundle.js
+   8719 variants/core-js-2-only-polyfill/es6-object-to-string/main.bundle.js
+   7435 variants/core-js-2-only-polyfill/es6-function-has-instance/main.bundle.js
+   7421 variants/core-js-2-only-polyfill/es6-date-to-string/main.bundle.js
+   6559 variants/core-js-2-only-polyfill/es6-date-to-primitive/main.bundle.js
+   5828 variants/core-js-2-only-polyfill/es6-array-species/main.bundle.js
+   4296 variants/core-js-2-only-polyfill/es6-function-name/main.bundle.js
+
+
+variants/core-js-2-preset-env-esmodules
+4053 total
+2608 variants/core-js-2-preset-env-esmodules/false/main.bundle.js
+1445 variants/core-js-2-preset-env-esmodules/true/main.bundle.js
+
+
+variants/core-js-3-only-polyfill
+1930010 total
+  62609 variants/core-js-3-only-polyfill/es6-typed-uint8-clamped-array/main.bundle.js
+  62588 variants/core-js-3-only-polyfill/es6-typed-float64-array/main.bundle.js
+  62588 variants/core-js-3-only-polyfill/es6-typed-float32-array/main.bundle.js
+  62584 variants/core-js-3-only-polyfill/es6-typed-uint32-array/main.bundle.js
+  62584 variants/core-js-3-only-polyfill/es6-typed-uint16-array/main.bundle.js
+  62580 variants/core-js-3-only-polyfill/es6-typed-uint8-array/main.bundle.js
+  62580 variants/core-js-3-only-polyfill/es6-typed-int32-array/main.bundle.js
+  62580 variants/core-js-3-only-polyfill/es6-typed-int16-array/main.bundle.js
+  62576 variants/core-js-3-only-polyfill/es6-typed-int8-array/main.bundle.js
+  40192 variants/core-js-3-only-polyfill/es6-map/main.bundle.js
+  40031 variants/core-js-3-only-polyfill/es6-set/main.bundle.js
+  36447 variants/core-js-3-only-polyfill/es6-weak-map/main.bundle.js
+  33617 variants/core-js-3-only-polyfill/es6-promise/main.bundle.js
+  30546 variants/core-js-3-only-polyfill/es6-weak-set/main.bundle.js
+  29840 variants/core-js-3-only-polyfill/es6-typed-array-buffer/main.bundle.js
+  27137 variants/core-js-3-only-polyfill/es6-typed-data-view/main.bundle.js
+  22978 variants/core-js-3-only-polyfill/es6-array-iterator/main.bundle.js
+  22893 variants/core-js-3-only-polyfill/es6-number-constructor/main.bundle.js
+  22529 variants/core-js-3-only-polyfill/es6-string-iterator/main.bundle.js
+  19859 variants/core-js-3-only-polyfill/es6-reflect-construct/main.bundle.js
+  16342 variants/core-js-3-only-polyfill/es7-object-get-own-property-descriptors/main.bundle.js
+  16178 variants/core-js-3-only-polyfill/es6-object-create/main.bundle.js
+  15854 variants/core-js-3-only-polyfill/es6-array-from/main.bundle.js
+  15649 variants/core-js-3-only-polyfill/es6-object-assign/main.bundle.js
+  15072 variants/core-js-3-only-polyfill/es6-object-get-own-property-names/main.bundle.js
+  14944 variants/core-js-3-only-polyfill/es6-array-find-index/main.bundle.js
+  14912 variants/core-js-3-only-polyfill/es6-array-find/main.bundle.js
+  14752 variants/core-js-3-only-polyfill/es6-array-for-each/main.bundle.js
+  14720 variants/core-js-3-only-polyfill/es6-array-filter/main.bundle.js
+  14712 variants/core-js-3-only-polyfill/es6-array-every/main.bundle.js
+  14705 variants/core-js-3-only-polyfill/es6-array-some/main.bundle.js
+  14697 variants/core-js-3-only-polyfill/es6-array-map/main.bundle.js
+  14690 variants/core-js-3-only-polyfill/es7-object-entries/main.bundle.js
+  14685 variants/core-js-3-only-polyfill/es7-object-values/main.bundle.js
+  14563 variants/core-js-3-only-polyfill/es6-object-keys/main.bundle.js
+  14495 variants/core-js-3-only-polyfill/es6-reflect-own-keys/main.bundle.js
+  14453 variants/core-js-3-only-polyfill/es6-object-define-properties/main.bundle.js
+  13735 variants/core-js-3-only-polyfill/es6-reflect-set/main.bundle.js
+  13491 variants/core-js-3-only-polyfill/es7-array-includes/main.bundle.js
+  13216 variants/core-js-3-only-polyfill/es6-array-index-of/main.bundle.js
+  13164 variants/core-js-3-only-polyfill/es6-reflect-get/main.bundle.js
+  12723 variants/core-js-3-only-polyfill/es6-reflect-set-prototype-of/main.bundle.js
+  12722 variants/core-js-3-only-polyfill/es6-string-ends-with/main.bundle.js
+  12710 variants/core-js-3-only-polyfill/es6-array-copy-within/main.bundle.js
+  12648 variants/core-js-3-only-polyfill/es6-string-starts-with/main.bundle.js
+  12572 variants/core-js-3-only-polyfill/es6-array-reduce-right/main.bundle.js
+  12541 variants/core-js-3-only-polyfill/es6-array-reduce/main.bundle.js
+  12499 variants/core-js-3-only-polyfill/es6-object-set-prototype-of/main.bundle.js
+  12434 variants/core-js-3-only-polyfill/es6-array-fill/main.bundle.js
+  12312 variants/core-js-3-only-polyfill/es6-array-last-index-of/main.bundle.js
+  12211 variants/core-js-3-only-polyfill/es7-string-pad-start/main.bundle.js
+  12204 variants/core-js-3-only-polyfill/es7-string-pad-end/main.bundle.js
+  12167 variants/core-js-3-only-polyfill/es6-object-get-own-property-descriptor/main.bundle.js
+  11972 variants/core-js-3-only-polyfill/es6-object-prevent-extensions/main.bundle.js
+  11881 variants/core-js-3-only-polyfill/es6-object-freeze/main.bundle.js
+  11866 variants/core-js-3-only-polyfill/es6-object-seal/main.bundle.js
+  11857 variants/core-js-3-only-polyfill/es6-string-includes/main.bundle.js
+  11746 variants/core-js-3-only-polyfill/es6-reflect-delete-property/main.bundle.js
+  11720 variants/core-js-3-only-polyfill/es6-reflect-get-own-property-descriptor/main.bundle.js
+  11610 variants/core-js-3-only-polyfill/es6-number-parse-int/main.bundle.js
+  11592 variants/core-js-3-only-polyfill/es6-number-parse-float/main.bundle.js
+  11481 variants/core-js-3-only-polyfill/es6-string-raw/main.bundle.js
+  11455 variants/core-js-3-only-polyfill/es6-object-get-prototype-of/main.bundle.js
+  11372 variants/core-js-3-only-polyfill/es6-function-bind/main.bundle.js
+  11047 variants/core-js-3-only-polyfill/es6-string-trim/main.bundle.js
+  11014 variants/core-js-3-only-polyfill/es6-reflect-get-prototype-of/main.bundle.js
+  10859 variants/core-js-3-only-polyfill/es6-date-to-iso-string/main.bundle.js
+  10851 variants/core-js-3-only-polyfill/es6-string-from-code-point/main.bundle.js
+  10844 variants/core-js-3-only-polyfill/es6-string-code-point-at/main.bundle.js
+  10600 variants/core-js-3-only-polyfill/es6-math-fround/main.bundle.js
+  10494 variants/core-js-3-only-polyfill/es6-string-repeat/main.bundle.js
+  10463 variants/core-js-3-only-polyfill/es6-date-to-json/main.bundle.js
+  10446 variants/core-js-3-only-polyfill/es6-array-of/main.bundle.js
+  10338 variants/core-js-3-only-polyfill/es6-reflect-define-property/main.bundle.js
+  10316 variants/core-js-3-only-polyfill/es6-math-sinh/main.bundle.js
+  10233 variants/core-js-3-only-polyfill/es6-math-acosh/main.bundle.js
+  10207 variants/core-js-3-only-polyfill/es6-object-is-extensible/main.bundle.js
+  10175 variants/core-js-3-only-polyfill/es6-object-is-sealed/main.bundle.js
+  10175 variants/core-js-3-only-polyfill/es6-object-is-frozen/main.bundle.js
+  10168 variants/core-js-3-only-polyfill/es6-reflect-apply/main.bundle.js
+  10166 variants/core-js-3-only-polyfill/es6-math-tanh/main.bundle.js
+  10108 variants/core-js-3-only-polyfill/es6-math-hypot/main.bundle.js
+  10049 variants/core-js-3-only-polyfill/es6-number-is-safe-integer/main.bundle.js
+  10038 variants/core-js-3-only-polyfill/es6-math-expm1/main.bundle.js
+   9994 variants/core-js-3-only-polyfill/es6-math-imul/main.bundle.js
+   9969 variants/core-js-3-only-polyfill/es6-array-is-array/main.bundle.js
+   9917 variants/core-js-3-only-polyfill/es6-reflect-prevent-extensions/main.bundle.js
+   9902 variants/core-js-3-only-polyfill/es6-math-cbrt/main.bundle.js
+   9890 variants/core-js-3-only-polyfill/es6-number-is-integer/main.bundle.js
+   9810 variants/core-js-3-only-polyfill/es6-math-sign/main.bundle.js
+   9808 variants/core-js-3-only-polyfill/es6-reflect-is-extensible/main.bundle.js
+   9791 variants/core-js-3-only-polyfill/es6-math-log1p/main.bundle.js
+   9786 variants/core-js-3-only-polyfill/es6-math-asinh/main.bundle.js
+   9748 variants/core-js-3-only-polyfill/es6-math-atanh/main.bundle.js
+   9722 variants/core-js-3-only-polyfill/es6-object-define-property/main.bundle.js
+   9652 variants/core-js-3-only-polyfill/es6-math-clz32/main.bundle.js
+   9643 variants/core-js-3-only-polyfill/es6-reflect-has/main.bundle.js
+   9629 variants/core-js-3-only-polyfill/es6-math-cosh/main.bundle.js
+   9625 variants/core-js-3-only-polyfill/es6-math-trunc/main.bundle.js
+   9615 variants/core-js-3-only-polyfill/es6-number-min-safe-integer/main.bundle.js
+   9613 variants/core-js-3-only-polyfill/es6-number-max-safe-integer/main.bundle.js
+   9612 variants/core-js-3-only-polyfill/es6-math-log10/main.bundle.js
+   9604 variants/core-js-3-only-polyfill/es6-math-log2/main.bundle.js
+   9594 variants/core-js-3-only-polyfill/es6-date-now/main.bundle.js
+   9577 variants/core-js-3-only-polyfill/es6-number-epsilon/main.bundle.js
+   8721 variants/core-js-3-only-polyfill/es6-object-to-string/main.bundle.js
+   7434 variants/core-js-3-only-polyfill/es6-function-has-instance/main.bundle.js
+   7420 variants/core-js-3-only-polyfill/es6-date-to-string/main.bundle.js
+   6558 variants/core-js-3-only-polyfill/es6-date-to-primitive/main.bundle.js
+   5827 variants/core-js-3-only-polyfill/es6-array-species/main.bundle.js
+   4296 variants/core-js-3-only-polyfill/es6-function-name/main.bundle.js
+
+
+variants/core-js-3-preset-env-esmodules
+4053 total
+2608 variants/core-js-3-preset-env-esmodules/false/main.bundle.js
+1445 variants/core-js-3-preset-env-esmodules/true/main.bundle.js
+
+
+variants/only-plugin
+2987 total
+1229 variants/only-plugin/-babel-plugin-transform-spread/main.bundle.js
+ 900 variants/only-plugin/-babel-plugin-transform-regenerator/main.bundle.js
+ 858 variants/only-plugin/-babel-plugin-transform-classes/main.bundle.js
+
+
