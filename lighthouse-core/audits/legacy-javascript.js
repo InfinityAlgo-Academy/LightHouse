@@ -306,6 +306,7 @@ class LegacyJavascript extends Audit {
     const tableRows = [];
     let signalCount = 0;
 
+    // TODO(cjamcl): Use SourceMaps, and only pattern match if maps are not available.
     const matcher = new CodePatternMatcher([
       ...this.getPolyfillPatterns(),
       ...this.getTransformPatterns(),
