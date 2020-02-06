@@ -1,4 +1,5 @@
 repo: GoogleChrome/lighthouse
+pullRequests: false
 filters:
   - type: issue
     criteria:
