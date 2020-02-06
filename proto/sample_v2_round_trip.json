@@ -1303,83 +1303,6 @@
             "scoreDisplayMode": "notApplicable",
             "title": "Presentational `<table>` elements avoid using `<th>`, `<caption>` or the `[summary]` attribute."
         },
-        "legacy-javascript": {
-            "description": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)",
-            "details": {
-                "headings": [
-                    {
-                        "itemType": "url",
-                        "key": "url",
-                        "subRows": {
-                            "itemType": "source-location",
-                            "key": "locations"
-                        },
-                        "text": "URL"
-                    },
-                    {
-                        "itemType": "code",
-                        "key": "_",
-                        "subRows": {
-                            "key": "signals"
-                        }
-                    }
-                ],
-                "items": [
-                    {
-                        "locations": [
-                            {
-                                "column": 14.0,
-                                "line": 376.0,
-                                "type": "source-location",
-                                "url": "http://localhost:10200/zone.js",
-                                "urlProvider": "network"
-                            },
-                            {
-                                "column": 4.0,
-                                "line": 1290.0,
-                                "type": "source-location",
-                                "url": "http://localhost:10200/zone.js",
-                                "urlProvider": "network"
-                            },
-                            {
-                                "column": 4.0,
-                                "line": 1300.0,
-                                "type": "source-location",
-                                "url": "http://localhost:10200/zone.js",
-                                "urlProvider": "network"
-                            },
-                            {
-                                "column": 4.0,
-                                "line": 1306.0,
-                                "type": "source-location",
-                                "url": "http://localhost:10200/zone.js",
-                                "urlProvider": "network"
-                            },
-                            {
-                                "column": 4.0,
-                                "line": 1314.0,
-                                "type": "source-location",
-                                "url": "http://localhost:10200/zone.js",
-                                "urlProvider": "network"
-                            }
-                        ],
-                        "signals": [
-                            "Promise",
-                            "Object.defineProperty",
-                            "Object.defineProperties",
-                            "Object.create",
-                            "Object.getOwnPropertyDescriptor"
-                        ],
-                        "url": "http://localhost:10200/zone.js"
-                    }
-                ],
-                "type": "table"
-            },
-            "id": "legacy-javascript",
-            "score": null,
-            "scoreDisplayMode": "informative",
-            "title": "Legacy JavaScript"
-        },
         "link-name": {
             "description": "Link text (and alternate text for images, when used as links) that is discernible, unique, and focusable improves the navigation experience for screen reader users. [Learn more](https://web.dev/link-name/).",
             "details": {
@@ -3950,11 +3873,6 @@
                     "weight": 0.0
                 },
                 {
-                    "group": "diagnostics",
-                    "id": "legacy-javascript",
-                    "weight": 0.0
-                },
-                {
                     "id": "network-requests",
                     "weight": 0.0
                 },
@@ -4798,12 +4716,6 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:audit:third-party-summary",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:audit:legacy-javascript",
                 "startTime": 0.0
             },
             {
