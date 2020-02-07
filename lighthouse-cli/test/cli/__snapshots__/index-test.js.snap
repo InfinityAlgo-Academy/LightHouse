@@ -133,6 +133,9 @@ Object {
       "path": "performance-budget",
     },
     Object {
+      "path": "timing-budget",
+    },
+    Object {
       "path": "resource-summary",
     },
     Object {
@@ -898,6 +901,11 @@ Object {
         Object {
           "group": "budgets",
           "id": "performance-budget",
+          "weight": 0,
+        },
+        Object {
+          "group": "budgets",
+          "id": "timing-budget",
           "weight": 0,
         },
         Object {

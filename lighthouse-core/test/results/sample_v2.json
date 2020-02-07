@@ -1429,6 +1429,65 @@
         ]
       }
     },
+    "timing-budget": {
+      "id": "timing-budget",
+      "title": "Timing budget",
+      "description": "Set a timing budget to help you keep an eye on the performance of your site. Performant sites load fast and respond to user input events quickly. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "label",
+            "itemType": "text",
+            "text": "Metric"
+          },
+          {
+            "key": "measurement",
+            "itemType": "ms",
+            "text": "Measurement"
+          },
+          {
+            "key": "overBudget",
+            "itemType": "ms",
+            "text": "Over Budget"
+          }
+        ],
+        "items": [
+          {
+            "metric": "first-cpu-idle",
+            "label": "First CPU Idle",
+            "measurement": 4927,
+            "overBudget": 2027
+          },
+          {
+            "metric": "interactive",
+            "label": "Time to Interactive",
+            "measurement": 4927,
+            "overBudget": 2027
+          },
+          {
+            "metric": "first-meaningful-paint",
+            "label": "First Meaningful Paint",
+            "measurement": 3969,
+            "overBudget": 1969
+          },
+          {
+            "metric": "first-contentful-paint",
+            "label": "First Contentful Paint",
+            "measurement": 3969,
+            "overBudget": 969
+          },
+          {
+            "metric": "max-potential-fid",
+            "label": "Max Potential First Input Delay",
+            "measurement": 123,
+            "overBudget": 23
+          }
+        ]
+      }
+    },
     "resource-summary": {
       "id": "resource-summary",
       "title": "Keep request counts low and transfer sizes small",
@@ -3709,6 +3768,11 @@
           "group": "budgets"
         },
         {
+          "id": "timing-budget",
+          "weight": 0,
+          "group": "budgets"
+        },
+        {
           "id": "resource-summary",
           "weight": 0,
           "group": "diagnostics"
@@ -4793,6 +4857,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:timing-budget",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:resource-summary",
         "duration": 100,
         "entryType": "measure"
@@ -5471,7 +5541,8 @@
         "audits[without-javascript].description"
       ],
       "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": [
-        "audits[first-contentful-paint].title"
+        "audits[first-contentful-paint].title",
+        "audits[timing-budget].details.items[3].label"
       ],
       "lighthouse-core/audits/metrics/first-contentful-paint.js | description": [
         "audits[first-contentful-paint].description"
@@ -5527,7 +5598,8 @@
         }
       ],
       "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": [
-        "audits[first-meaningful-paint].title"
+        "audits[first-meaningful-paint].title",
+        "audits[timing-budget].details.items[2].label"
       ],
       "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": [
         "audits[first-meaningful-paint].description"
@@ -5595,7 +5667,8 @@
         "audits[total-blocking-time].description"
       ],
       "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": [
-        "audits[max-potential-fid].title"
+        "audits[max-potential-fid].title",
+        "audits[timing-budget].details.items[4].label"
       ],
       "lighthouse-core/audits/metrics/max-potential-fid.js | description": [
         "audits[max-potential-fid].description"
@@ -5643,13 +5716,15 @@
         }
       ],
       "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": [
-        "audits[first-cpu-idle].title"
+        "audits[first-cpu-idle].title",
+        "audits[timing-budget].details.items[0].label"
       ],
       "lighthouse-core/audits/metrics/first-cpu-idle.js | description": [
         "audits[first-cpu-idle].description"
       ],
       "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": [
-        "audits.interactive.title"
+        "audits.interactive.title",
+        "audits[timing-budget].details.items[1].label"
       ],
       "lighthouse-core/audits/metrics/interactive.js | description": [
         "audits.interactive.description"
@@ -5823,7 +5898,8 @@
         "audits[resource-summary].details.headings[2].text"
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": [
-        "audits[performance-budget].details.headings[4].text"
+        "audits[performance-budget].details.headings[4].text",
+        "audits[timing-budget].details.headings[2].text"
       ],
       "lighthouse-core/lib/i18n/i18n.js | scriptResourceType": [
         "audits[performance-budget].details.items[0].label",
@@ -5892,6 +5968,18 @@
       "lighthouse-core/lib/i18n/i18n.js | documentResourceType": [
         "audits[performance-budget].details.items[8].label",
         "audits[resource-summary].details.items[3].label"
+      ],
+      "lighthouse-core/audits/timing-budget.js | title": [
+        "audits[timing-budget].title"
+      ],
+      "lighthouse-core/audits/timing-budget.js | description": [
+        "audits[timing-budget].description"
+      ],
+      "lighthouse-core/audits/timing-budget.js | columnTimingMetric": [
+        "audits[timing-budget].details.headings[0].text"
+      ],
+      "lighthouse-core/audits/timing-budget.js | columnMeasurement": [
+        "audits[timing-budget].details.headings[1].text"
       ],
       "lighthouse-core/audits/resource-summary.js | title": [
         "audits[resource-summary].title"

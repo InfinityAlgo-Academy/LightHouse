@@ -167,17 +167,24 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     }
 
     // Budgets
-    const budgetAudit = category.auditRefs.find(audit => audit.id === 'performance-budget');
-    if (budgetAudit && budgetAudit.result.details) {
-      const table = this.detailsRenderer.render(budgetAudit.result.details);
-      if (table) {
-        table.id = budgetAudit.id;
-        table.classList.add('lh-audit');
-        const budgetsGroupEl = this.renderAuditGroup(groups.budgets);
-        budgetsGroupEl.appendChild(table);
-        budgetsGroupEl.classList.add('lh-audit-group--budgets');
-        element.appendChild(budgetsGroupEl);
+    /** @type {Array<Element>} */
+    const budgetTableEls = [];
+    ['performance-budget', 'timing-budget'].forEach((id) => {
+      const audit = category.auditRefs.find(audit => audit.id === id);
+      if (audit && audit.result.details) {
+        const table = this.detailsRenderer.render(audit.result.details);
+        if (table) {
+          table.id = id;
+          table.classList.add('lh-audit');
+          budgetTableEls.push(table);
+        }
       }
+    });
+    if (budgetTableEls.length > 0) {
+      const budgetsGroupEl = this.renderAuditGroup(groups.budgets);
+      budgetTableEls.forEach(table => budgetsGroupEl.appendChild(table));
+      budgetsGroupEl.classList.add('lh-audit-group--budgets');
+      element.appendChild(budgetsGroupEl);
     }
 
     // Opportunities
