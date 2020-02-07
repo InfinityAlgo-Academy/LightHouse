@@ -138,6 +138,33 @@ const polyfills = [
 ];
 
 /**
+ * @param {string} command
+ * @param {string[]} args
+ */
+function runCommand(command, args) {
+  execFileSync(command, args, {cwd: __dirname});
+}
+
+/**
+ * @param {number} version
+ */
+function installCoreJs(version) {
+  runCommand('yarn', [
+    'add',
+    `core-js@${version}`,
+  ]);
+}
+
+function removeCoreJs() {
+  try {
+    runCommand('yarn', [
+      'remove',
+      'core-js',
+    ]);
+  } catch (e) { }
+}
+
+/**
  * @param {{group: string, name: string, code: string, babelrc?: *}} options
  */
 async function createVariant(options) {
@@ -153,7 +180,7 @@ async function createVariant(options) {
     fs.writeFileSync(`${dir}/index.html`, `<title>${name}</title><script src=main.bundle.min.js>`);
 
     // Note: No babelrc will make babel a glorified `cp`.
-    execFileSync('yarn', [
+    runCommand('yarn', [
       'babel',
       `${dir}/main.js`,
       '--config-file', `${dir}/.babelrc`,
@@ -162,14 +189,14 @@ async function createVariant(options) {
     ]);
 
     // Transform any require statements (like for core-js) into a big bundle.
-    execFileSync('yarn', [
+    runCommand('yarn', [
       'browserify',
       `${dir}/main.transpiled.js`,
       '-o', `${dir}/main.bundle.js`,
     ]);
 
     // Minify.
-    execFileSync('yarn', [
+    runCommand('yarn', [
       'terser',
       `${dir}/main.bundle.js`,
       '-o', `${dir}/main.bundle.min.js`,
@@ -231,25 +258,6 @@ function makeSummary() {
   };
 }
 
-/**
- * @param {number} version
- */
-function installCoreJs(version) {
-  execFileSync('yarn', [
-    'add',
-    `core-js@${version}`,
-  ], {cwd: __dirname});
-}
-
-function removeCoreJs() {
-  try {
-    execFileSync('yarn', [
-      'remove',
-      'core-js',
-    ], {cwd: __dirname});
-  } catch (e) { }
-}
-
 async function main() {
   for (const plugin of plugins) {
     await createVariant({
@@ -305,9 +313,9 @@ async function main() {
   });
   console.table(summary.variants);
 
-  execFileSync('sh', [
+  runCommand('sh', [
     'update-sizes.sh',
-  ], {cwd: __dirname});
+  ]);
 }
 
 main();
