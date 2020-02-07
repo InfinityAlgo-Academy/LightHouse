@@ -117,13 +117,13 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
 
     const transferRatio = lengths.transfer / lengths.content;
     const topUnusedFilesSizes = Object.entries(files)
-      .filter(d => d[1] * transferRatio >= 1024)
-      .sort((a, b) => b[1] - a[1])
+      .filter(([_, unusedBytes]) => unusedBytes * transferRatio >= 1024)
+      .sort(([_, unusedBytes1], [__, unusedBytes2]) => unusedBytes2 - unusedBytes1)
       .slice(0, 5)
-      .map(([key, unused]) => {
+      .map(([key, unusedBytes]) => {
         return {
           key,
-          unused: Math.round(unused * transferRatio),
+          unused: Math.round(unusedBytes * transferRatio),
           total: Math.round(bundle.sizes.files[key] * transferRatio),
         };
       });
