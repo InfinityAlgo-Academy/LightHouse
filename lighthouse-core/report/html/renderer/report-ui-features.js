@@ -618,13 +618,12 @@ class ReportUIFeatures {
 
   _renderBundleVizLinks() {
     if (!this.json.audits['bundle-visualization-data']) return;
+    if (!this.json.audits['bundle-visualization-data'].details) return;
+    const visualizationData = /** @type {LH.Audit.Details.DebugData} */ (
+      this.json.audits['bundle-visualization-data'].details);
 
     for (const urlEl of this._dom.findAll('.lh-text__url', this._document)) {
       const href = /** @type {HTMLAnchorElement} */ (this._dom.find('a', urlEl)).href;
-      if (!this.json.audits['bundle-visualization-data']) continue;
-      if (!this.json.audits['bundle-visualization-data'].details) continue;
-      const visualizationData = /** @type {LH.Audit.Details.DebugData} */ (
-        this.json.audits['bundle-visualization-data'].details);
       const rootNode = visualizationData.rootNodes[href];
       if (!rootNode) continue;
 
