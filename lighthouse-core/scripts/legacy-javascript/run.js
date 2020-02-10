@@ -243,12 +243,12 @@ function makeSummary() {
   let totalSignals = 0;
   const variants = [];
   for (const dir of glob.sync('*/*', {cwd: VARIANT_DIR})) {
-    const legacyJavascript = require(`${VARIANT_DIR}/${dir}/legacy-javascript.json`);
-    // @ts-ignore
-    const signals = legacyJavascript.reduce((acc, cur) => {
+    /** @type {Array<{signals: string[]}>} */
+    const legacyJavascriptItems = require(`${VARIANT_DIR}/${dir}/legacy-javascript.json`);
+    const signals = legacyJavascriptItems.reduce((acc, cur) => {
       totalSignals += cur.signals.length;
       return acc.concat(cur.signals);
-    }, []).join(', ');
+    }, /** @type {string[]} */ ([])).join(', ');
     variants.push({name: dir, signals});
   }
   return {

@@ -378,6 +378,7 @@ class DetailsRenderer {
         const valueFragment = this._dom.createFragment();
 
         if (heading.key === null && !heading.subRows) {
+          // eslint-disable-next-line no-console
           console.warn('A header with a null `key` should define `subRows`.');
         }
 
