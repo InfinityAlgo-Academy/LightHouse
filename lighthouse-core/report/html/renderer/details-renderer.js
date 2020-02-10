@@ -319,6 +319,9 @@ class DetailsRenderer {
     if (heading.subRows) {
       // @ts-ignore: It's ok that there is no text.
       subRows = this._getCanonicalizedHeading(heading.subRows);
+      // Make typescript happy w/ `_getCanonicalizedHeading` by asserting that `.key` is not nullable.
+      if (!subRows.key) throw new Error('key should not be null');
+      subRows = {...subRows, key: subRows.key};
     }
 
     return {
@@ -374,7 +377,7 @@ class DetailsRenderer {
       for (const heading of headings) {
         const valueFragment = this._dom.createFragment();
 
-        if (heading.key === '_') {
+        if (heading.key === null) {
           const emptyElement = this._dom.createElement('div');
           emptyElement.innerHTML = '&nbsp;';
           valueFragment.appendChild(emptyElement);
