@@ -216,7 +216,7 @@ async function createVariant(options) {
     const jsRequestWillBeSentEvent = devtoolsLogs.find(e =>
       e.method === 'Network.requestWillBeSent' && e.params.request.url === scriptUrl);
     if (!jsRequestWillBeSentEvent) throw new Error('jsRequestWillBeSentEvent is undefined');
-    // @ts-ignore
+    // @ts-ignore - the log event is not narrowed to 'Network.requestWillBeSent' event from find
     const jsRequestId = jsRequestWillBeSentEvent.params.requestId;
     const code = fs.readFileSync(`${dir}/main.bundle.min.js`, 'utf-8').toString();
     /** @type {Pick<LH.Artifacts, 'devtoolsLogs'|'URL'|'ScriptElements'>} */
@@ -226,7 +226,7 @@ async function createVariant(options) {
         [LegacyJavascript.DEFAULT_PASS]: devtoolsLogs,
       },
       ScriptElements: [
-        // @ts-ignore
+        // @ts-ignore - partial ScriptElement excluding unused DOM properties
         {requestId: jsRequestId, content: code},
       ],
     };
