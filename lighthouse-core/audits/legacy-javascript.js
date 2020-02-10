@@ -263,7 +263,7 @@ class LegacyJavascript extends Audit {
       },
       {
         name: '@babel/plugin-transform-spread',
-        expression: /\.apply\(void 0/.source,
+        expression: /\.apply\(void 0,\s?_toConsumableArray/.source,
       },
     ];
   }
