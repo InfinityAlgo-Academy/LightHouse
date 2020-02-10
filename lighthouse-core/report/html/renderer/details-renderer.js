@@ -377,6 +377,10 @@ class DetailsRenderer {
       for (const heading of headings) {
         const valueFragment = this._dom.createFragment();
 
+        if (heading.key === null && !heading.subRows) {
+          console.warn('A header with a null `key` should define `subRows`.');
+        }
+
         if (heading.key === null) {
           const emptyElement = this._dom.createElement('div');
           emptyElement.innerHTML = '&nbsp;';
