@@ -15,7 +15,7 @@ const PWA_DISPLAY_VALUES = ['minimal-ui', 'fullscreen', 'standalone'];
 const SUGGESTED_SHORTNAME_LENGTH = 12;
 
 class ManifestValues {
-  /** @typedef {(val: NonNullable<LH.Artifacts.Manifest['value']>, errors: string[]) => boolean} Validator */
+  /** @typedef {(val: NonNullable<LH.Artifacts.Manifest['value']>, errors: LH.Artifacts.InstallabilityErrors['errors']) => boolean} Validator */
 
   /**
    * @return {Array<{id: LH.Artifacts.ManifestValueCheckID, failureText: string, validate: Validator}>}
@@ -43,14 +43,12 @@ class ManifestValues {
         id: 'fetchesIcon',
         failureText: 'Manifest icon failed to be fetched',
         validate: (manifestValue, errors) => {
-          const failedToFetchIconErrors = [
-            // kCannotDownloadIconMessage
-            'Could not download a required icon from the manifest',
-            // kNoIconAvailableMessage
-            'Downloaded icon was empty or corrupted',
+          const failedToFetchIconErrorIds = [
+            'cannot-download-icon',
+            'no-icon-available',
           ];
           return icons.doExist(manifestValue) &&
-            !failedToFetchIconErrors.some(error => errors.includes(error));
+            !errors.some(error => failedToFetchIconErrorIds.includes(error.errorId));
         },
       },
       {
