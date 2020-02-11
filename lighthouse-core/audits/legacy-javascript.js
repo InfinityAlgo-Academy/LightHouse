@@ -129,7 +129,9 @@ class LegacyJavascript extends Audit {
     }
 
     // String.prototype['startsWith'] =
-    expression += `|${object || ''}\\[${qt(property)}\\]\\s?=`;
+    if (object) {
+      expression += `|${object}\\[${qt(property)}\\]\\s?=`;
+    }
 
     // Object.defineProperty(String.prototype, 'startsWith'
     expression += `|defineProperty\\(${object || 'window'},\\s?${qt(property)}`;
