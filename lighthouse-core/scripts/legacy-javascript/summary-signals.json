@@ -1,5 +1,5 @@
 {
-  "totalSignals": 187,
+  "totalSignals": 185,
   "variantsMissingSignals": [
     "core-js-2-only-polyfill/es6-array-copy-within",
     "core-js-2-only-polyfill/es6-array-every",
@@ -521,7 +521,7 @@
     },
     {
       "name": "core-js-2-only-polyfill/es6-weak-map",
-      "signals": "WeakMap, Map"
+      "signals": "WeakMap"
     },
     {
       "name": "core-js-2-only-polyfill/es6-weak-set",
@@ -973,7 +973,7 @@
     },
     {
       "name": "core-js-3-only-polyfill/es6-weak-map",
-      "signals": "WeakMap, Map"
+      "signals": "WeakMap"
     },
     {
       "name": "core-js-3-only-polyfill/es6-weak-set",

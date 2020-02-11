@@ -122,13 +122,17 @@ class LegacyJavascript extends Audit {
     let expression = '';
 
     // String.prototype.startsWith =
-    expression += `${object || ''}\\.?${property}\\s*=`;
+    if (object) {
+      expression += `${object}\\.${property}\\s?=`;
+    } else {
+      expression += `[^a-zA-Z]${property}\\s?=`;
+    }
 
     // String.prototype['startsWith'] =
-    expression += `|${object || ''}\\[${qt(property)}\\]\\s*=`;
+    expression += `|${object || ''}\\[${qt(property)}\\]\\s?=`;
 
     // Object.defineProperty(String.prototype, 'startsWith'
-    expression += `|defineProperty\\(${object || 'window'},\\s*${qt(property)}`;
+    expression += `|defineProperty\\(${object || 'window'},\\s?${qt(property)}`;
 
     // core-js
     if (object) {

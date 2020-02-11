@@ -100,55 +100,41 @@ describe('LegacyJavaScript audit', () => {
   });
 
   it('should identify polyfills in multiple patterns', async () => {
-    const scripts = [
-      {
-        code: 'String.prototype.repeat = function() {}',
-        url: 'https://www.example.com/1.js',
-      },
-      {
-        code: 'String.prototype["repeat"] = function() {}',
-        url: 'https://www.example.com/2.js',
-      },
-      {
-        code: 'String.prototype[\'repeat\'] = function() {}',
-        url: 'https://www.example.com/3.js',
-      },
-      {
-        code: 'Object.defineProperty(String.prototype, "repeat", function() {})',
-        url: 'https://www.example.com/4.js',
-      },
-      {
-        code: 'Object.defineProperty(String.prototype, \'repeat\', function() {})',
-        url: 'https://www.example.com/5.js',
-      },
-      {
-        code: 'Object.defineProperty(window, \'WeakMap\', function() {})',
-        url: 'https://www.example.com/6.js',
-      },
-      {
-        code: ';$export($export.S,"Object",{values:function values(t){return i(t)}})',
-        url: 'https://www.example.com/7.js',
-      },
-      {
-        code: 'WeakMap = function() {}',
-        url: 'https://www.example.com/8.js',
-      },
-      {
-        code: 'window.WeakMap = function() {}',
-        url: 'https://www.example.com/9.js',
-      },
-      {
-        code: 'function WeakMap() {}',
-        url: 'https://www.example.com/10.js',
-      },
-      {
-        code: 'String.raw = function() {}',
-        url: 'https://www.example.com/11.js',
-      },
+    const codeSnippets = [
+      ';String.prototype.repeat = function() {}',
+      ';String.prototype["repeat"] = function() {}',
+      ';String.prototype[\'repeat\'] = function() {}',
+      ';Object.defineProperty(String.prototype, "repeat", function() {})',
+      ';Object.defineProperty(String.prototype, \'repeat\', function() {})',
+      ';Object.defineProperty(window, \'WeakMap\', function() {})',
+      ';$export($export.S,"Object",{values:function values(t){return i(t)}})',
+      ';WeakMap = function() {}',
+      ';window.WeakMap = function() {}',
+      ';function WeakMap() {}',
+      ';String.raw = function() {}',
     ];
+    const scripts = codeSnippets.map((code, i) => {
+      return {code, url: `https://www.example.com/${i}.js`};
+    });
     const artifacts = createArtifacts(scripts);
     const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
-    assert.equal(result.score, 0);
     expect(result.details.items.map(item => item.url)).toEqual(scripts.map(script => script.url));
+    assert.equal(result.score, 0);
+  });
+
+  it('should not misidentify legacy code', async () => {
+    const codeSnippets = [
+      ';i.prototype.toArrayBuffer = blah',
+      ';this.childListChangeMap=void 0',
+      ';t.toPromise=u,t.makePromise=u,t.fromPromise=function(e){return new o.default',
+      ';var n=new Error(h.apply(void 0,[d].concat(f)));n.name="Invariant Violation";',
+    ];
+    const scripts = codeSnippets.map((code, i) => {
+      return {code, url: `https://www.example.com/${i}.js`};
+    });
+    const artifacts = createArtifacts(scripts);
+    const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
+    expect(result.details.items.map(item => item.url)).toEqual([]);
+    assert.equal(result.score, 1);
   });
 });
