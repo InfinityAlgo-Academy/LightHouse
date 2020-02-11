@@ -123,14 +123,14 @@ class LegacyJavascript extends Audit {
 
     // String.prototype.startsWith =
     if (object) {
-      expression += `${object}\\.${property}\\s?=`;
+      expression += `${object}\\.${property}\\s?=[^=]`;
     } else {
-      expression += `[^a-zA-Z]${property}\\s?=`;
+      expression += `[^a-zA-Z]${property}\\s?=[^=]`;
     }
 
     // String.prototype['startsWith'] =
     if (object) {
-      expression += `|${object}\\[${qt(property)}\\]\\s?=`;
+      expression += `|${object}\\[${qt(property)}\\]\\s?=[^=]`;
     }
 
     // Object.defineProperty(String.prototype, 'startsWith'

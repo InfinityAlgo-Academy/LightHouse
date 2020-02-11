@@ -128,13 +128,14 @@ describe('LegacyJavaScript audit', () => {
       ';this.childListChangeMap=void 0',
       ';t.toPromise=u,t.makePromise=u,t.fromPromise=function(e){return new o.default',
       ';var n=new Error(h.apply(void 0,[d].concat(f)));n.name="Invariant Violation";',
+      ';var b=typeof Map==="function"?new Map():void 0',
     ];
     const scripts = codeSnippets.map((code, i) => {
       return {code, url: `https://www.example.com/${i}.js`};
     });
     const artifacts = createArtifacts(scripts);
     const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
-    expect(result.details.items.map(item => item.url)).toEqual([]);
+    expect(result.details.items).toEqual([]);
     assert.equal(result.score, 1);
   });
 });
