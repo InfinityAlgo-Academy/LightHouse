@@ -12,7 +12,21 @@ module.exports = {
   extends: 'lighthouse:default',
   settings: {
     onlyAudits: [
+      'first-contentful-paint',
+      'interactive',
+      'speed-index',
       'redirects',
     ],
+    // Use provided throttling method to test usage of correct navStart.
+    throttlingMethod: 'provided',
+    // While we're using observed metrics, lantern is still used for opportunities.
+    precomputedLanternData: {
+      additionalRttByOrigin: {
+        'http://localhost:10200': 0,
+      },
+      serverResponseTimeByOrigin: {
+        'http://localhost:10200': 1000,
+      }
+    },
   },
 };

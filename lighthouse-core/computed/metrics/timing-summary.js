@@ -71,6 +71,8 @@ class TimingSummary {
       maxPotentialFID: maxPotentialFID && maxPotentialFID.timing,
 
       // Include all timestamps of interest from trace of tab
+      observedTimeOrigin: traceOfTab.timings.timeOrigin,
+      observedTimeOriginTs: traceOfTab.timestamps.timeOrigin,
       observedNavigationStart: traceOfTab.timings.navigationStart,
       observedNavigationStartTs: traceOfTab.timestamps.navigationStart,
       observedFirstPaint: traceOfTab.timings.firstPaint,

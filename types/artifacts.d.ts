@@ -270,7 +270,7 @@ declare global {
         /** An optional name of the generated code (the bundled code that was the result of this build process) that this source map is associated with. */
         file?: string
         /**
-         * An optional array of maps that are associated with an offset into the generated code. 
+         * An optional array of maps that are associated with an offset into the generated code.
          * `map` is optional because the spec defines that either `url` or `map` must be defined.
          * We explicitly only support `map` here.
         */
@@ -529,6 +529,7 @@ declare global {
       export type Speedline = speedline.Output<'speedIndex'>;
 
       export interface TraceTimes {
+        timeOrigin: number;
         navigationStart: number;
         firstPaint?: number;
         firstContentfulPaint: number;
@@ -552,6 +553,8 @@ declare global {
         mainFrameIds: {pid: number, tid: number, frameId: string};
         /** The list of frames committed in the trace. */
         frames: Array<{frame: string, url: string}>;
+        /** The trace event marking the time at which the page load should consider to have begun. Typically the start time of the first document request. */
+        timeOriginEvt: TraceEvent;
         /** The trace event marking navigationStart. */
         navigationStartEvt: TraceEvent;
         /** The trace event marking firstPaint, if it was found. */
@@ -606,6 +609,8 @@ declare global {
         estimatedInputLatencyTs: number | undefined;
         maxPotentialFID: number | undefined;
         totalBlockingTime: number;
+        observedTimeOrigin: number;
+        observedTimeOriginTs: number;
         observedNavigationStart: number;
         observedNavigationStartTs: number;
         observedFirstPaint: number | undefined;

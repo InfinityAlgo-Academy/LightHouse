@@ -1107,7 +1107,13 @@ class Driver {
     // Bring `Page.navigate` errors back into the promise chain. See https://github.com/GoogleChrome/lighthouse/pull/6739.
     await waitforPageNavigateCmd;
 
-    return this._endNetworkStatusMonitoring();
+    const finalUrlViaNetwork = this._endNetworkStatusMonitoring();
+    const finalUrlViaScript = this.evaluateAsync('window.location.href', {useIsolation: true})
+      .catch(err => {
+        log.error('Driver', `Failed to get URL via evaluateAsync: ${err.message}`);
+        return '';
+      });
+    return finalUrlViaScript || finalUrlViaNetwork;
   }
 
   /**

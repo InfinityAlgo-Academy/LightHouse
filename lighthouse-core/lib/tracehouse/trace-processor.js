@@ -62,6 +62,21 @@ class TraceProcessor {
   }
 
   /**
+   * Returns true if the event is a resource send that matches the frame and documentLoaderURL
+   * @param {LH.TraceEvent} event
+   * @param {LH.TraceEvent} navigationStartEvt
+   * @param {string} mainFrameId
+   */
+  static _isFirstResourceSendOfInterest(event, navigationStartEvt, mainFrameId) {
+    if (event.name !== 'ResourceSendRequest') return false;
+
+    const data = event.args.data || {};
+    const navStartData = navigationStartEvt.args.data || {};
+    const documentLoaderURL = navStartData.documentLoaderURL;
+    return data.frame === mainFrameId && data.url === documentLoaderURL;
+  }
+
+  /**
    * This method sorts a group of trace events that have the same timestamp. We want to...
    *
    * 1. Put E events first, we finish off our existing events before we start new ones.
@@ -491,9 +506,21 @@ class TraceProcessor {
     // Filter to just events matching the frame ID for sanity
     const frameEvents = keyEvents.filter(e => e.args.frame === mainFrameIds.frameId);
 
-    // Our navStart will be the last frame navigation in the trace
-    const navigationStart = frameEvents.filter(this._isNavigationStartOfInterest).pop();
+    // To find the correct metric events we will use the *last* frame navigation in the trace.
+    // i.e. we want the firstPaint, largestContentfulPaint, etc of the *finalUrl*.
+    // Our timeOrigin will be the first document request we can find that matches the frame of the *first*
+    // navigation start.
+    // i.e. we want to measure the time from when we start loading the *requestUrl*.
+    // See https://github.com/GoogleChrome/lighthouse/issues/8984 for more discussion.
+    const navigations = frameEvents.filter(this._isNavigationStartOfInterest);
+    const firstNavStart = navigations[0];
+    const lastNavStart = navigations[navigations.length - 1];
+    const navigationStart = lastNavStart;
     if (!navigationStart) throw this.createNoNavstartError();
+
+    const firstDocumentRequestEvt = keyEvents
+      .find(e => this._isFirstResourceSendOfInterest(e, firstNavStart, mainFrameIds.frameId));
+    const timeOriginEvt = firstDocumentRequestEvt || firstNavStart;
 
     // Find our first paint of this frame
     const firstPaint = frameEvents.find(e => e.name === 'firstPaint' && e.ts > navigationStart.ts);
@@ -570,7 +597,8 @@ class TraceProcessor {
     const getTimestamp = (event) => event && event.ts;
     /** @type {TraceTimesWithoutFCP} */
     const timestamps = {
-      navigationStart: navigationStart.ts,
+      timeOrigin: timeOriginEvt.ts,
+      navigationStart: lastNavStart.ts,
       firstPaint: getTimestamp(firstPaint),
       firstContentfulPaint: getTimestamp(firstContentfulPaint),
       firstMeaningfulPaint: getTimestamp(firstMeaningfulPaint),
@@ -581,12 +609,13 @@ class TraceProcessor {
     };
 
     /** @param {number} ts */
-    const getTiming = (ts) => (ts - navigationStart.ts) / 1000;
+    const getTiming = (ts) => (ts - timeOriginEvt.ts) / 1000;
     /** @param {number=} ts */
     const maybeGetTiming = (ts) => ts === undefined ? undefined : getTiming(ts);
     /** @type {TraceTimesWithoutFCP} */
     const timings = {
-      navigationStart: 0,
+      timeOrigin: 0,
+      navigationStart: getTiming(timestamps.navigationStart),
       firstPaint: maybeGetTiming(timestamps.firstPaint),
       firstContentfulPaint: maybeGetTiming(timestamps.firstContentfulPaint),
       firstMeaningfulPaint: maybeGetTiming(timestamps.firstMeaningfulPaint),
@@ -610,7 +639,8 @@ class TraceProcessor {
       mainThreadEvents,
       mainFrameIds,
       frames,
-      navigationStartEvt: navigationStart,
+      timeOriginEvt: timeOriginEvt,
+      navigationStartEvt: lastNavStart,
       firstPaintEvt: firstPaint,
       firstContentfulPaintEvt: firstContentfulPaint,
       firstMeaningfulPaintEvt: firstMeaningfulPaint,

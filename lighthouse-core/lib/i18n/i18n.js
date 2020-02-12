@@ -439,6 +439,10 @@ function _resolveIcuMessageInstanceId(icuMessageInstanceId, locale) {
   const [_, icuMessageId, icuMessageInstanceIndex] = matches;
   const icuMessageInstances = _icuMessageInstanceMap.get(icuMessageId) || [];
   const icuMessageInstance = icuMessageInstances[Number(icuMessageInstanceIndex)];
+  if (!icuMessageInstance) {
+    log.warn('i18n', `${icuMessageId} missing an instance for index ${icuMessageInstanceIndex}`);
+    return {icuMessageInstance: {icuMessageId, icuMessage: 'Unknown'}, formattedString: 'MISSING'};
+  }
 
   const {formattedString} = _formatIcuMessage(locale, icuMessageId,
     icuMessageInstance.icuMessage, icuMessageInstance.values);

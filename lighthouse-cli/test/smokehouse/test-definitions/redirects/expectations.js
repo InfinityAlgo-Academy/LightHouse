@@ -14,21 +14,87 @@ const cacheBuster = Number(new Date());
 const expectations = [
   {
     lhr: {
-      requestedUrl: `http://localhost:10200/online-only.html?delay=500&redirect=%2Foffline-only.html%3Fcb=${cacheBuster}%26delay=500%26redirect%3D%2Fredirects-final.html`,
+      requestedUrl: `http://localhost:10200/online-only.html?delay=1000&redirect_count=3&redirect=%2Fredirects-final.html`,
       finalUrl: 'http://localhost:10200/redirects-final.html',
       audits: {
+        'first-contentful-paint': {
+          numericValue: '>3000',
+        },
+        'interactive': {
+          numericValue: '>3000',
+        },
         'redirects': {
           score: '<1',
-          numericValue: '>=500',
+          numericValue: '>=3000',
           details: {
             items: {
-              length: 3,
+              length: 4,
             },
           },
         },
       },
       runWarnings: [
         /The page may not be loading as expected because your test URL \(.*online-only.html.*\) was redirected to .*redirects-final.html. Try testing the second URL directly./,
+      ],
+    },
+  },
+  {
+    lhr: {
+      // This URL waits 7s before redirecting client-side to finalUrl.
+      requestedUrl: `http://localhost:10200/js-redirect.html?delay=2000&jsDelay=5000&jsRedirect=%2Fredirects-final.html`,
+      finalUrl: 'http://localhost:10200/redirects-final.html',
+      audits: {
+        'first-contentful-paint': {
+          numericValue: '>7000',
+        },
+        'interactive': {
+          numericValue: '>7000',
+        },
+        'speed-index': {
+          numericValue: '>7000',
+        },
+        'redirects': {
+          score: 1,
+          numericValue: '>=7000',
+          details: {
+            items: {
+              length: 2,
+            },
+          },
+        },
+      },
+      runWarnings: [
+        /The page may not be loading as expected because your test URL \(.*js-redirect.html.*\) was redirected to .*redirects-final.html. Try testing the second URL directly./,
+      ],
+    },
+  },
+  {
+    lhr: {
+      // This URL waits 2s to paint the js-redirect content and then waits 5s more before redirecting client-side to finalUrl.
+      requestedUrl: `http://localhost:10200/js-redirect.html?delay=2000&jsDelay=5000&jsRedirect=%2Fredirects-final.html`,
+      finalUrl: 'http://localhost:10200/redirects-final.html',
+      audits: {
+        'first-contentful-paint': {
+          numericValue: '>7000',
+        },
+        'interactive': {
+          numericValue: '>7000',
+        },
+        'speed-index': {
+          numericValue: '>7000',
+        },
+        'redirects': {
+          score: 1,
+          numericValue: '>=7000',
+          details: {
+            items: {
+              length: 2,
+            },
+          },
+        },
+      },
+      runWarnings: [
+        /The page may not be loading as expected because your test URL \(.*js-redirect.html.*\) was redirected to .*redirects-final.html. Try testing the second URL directly./,
       ],
     },
   },

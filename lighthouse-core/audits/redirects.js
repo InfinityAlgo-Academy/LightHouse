@@ -71,14 +71,6 @@ class Redirects extends Audit {
     let totalWastedMs = 0;
     const pageRedirects = [];
 
-    // Kickoff the results table (with the initial request) if there are > 1 redirects
-    if (redirectRequests.length > 1) {
-      pageRedirects.push({
-        url: `(Initial: ${redirectRequests[0].url})`,
-        wastedMs: 0,
-      });
-    }
-
     for (let i = 1; i < redirectRequests.length; i++) {
       const initialRequest = redirectRequests[i - 1];
       const redirectedRequest = redirectRequests[i];
@@ -93,8 +85,16 @@ class Redirects extends Audit {
       totalWastedMs += wastedMs;
 
       pageRedirects.push({
-        url: redirectedRequest.url,
+        url: initialRequest.url,
         wastedMs,
+      });
+    }
+
+    // If we had a redirect, push the main resource onto the end which has no `wastedMs`
+    if (redirectRequests.length > 1) {
+      pageRedirects.push({
+        url: `(Destination: ${mainResource.url})`,
+        wastedMs: 0,
       });
     }
 
