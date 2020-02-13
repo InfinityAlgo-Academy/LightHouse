@@ -173,7 +173,7 @@ describe('ManifestValues computed artifact', () => {
           }],
         });
         const WebAppManifest = noUrlManifestParser(manifestSrc);
-        const InstallabilityErrors = {errors: ['Downloaded icon was empty or corrupted']};
+        const InstallabilityErrors = {errors: [{errorId: 'no-icon-available'}]};
         const artifacts = {WebAppManifest, InstallabilityErrors};
 
         const results = await ManifestValues.request(artifacts, getMockContext());

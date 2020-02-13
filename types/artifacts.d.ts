@@ -41,7 +41,7 @@ declare global {
       /** Parsed version of the page's Web App Manifest, or null if none found. */
       WebAppManifest: Artifacts.Manifest | null;
       /** Errors preventing page being installable as PWA. */
-      InstallabilityErrors: Crdp.Page.GetInstallabilityErrorsResponse;
+      InstallabilityErrors: Artifacts.InstallabilityErrors;
       /** Information on detected tech stacks (e.g. JS libraries) used by the page. */
       Stacks: Artifacts.DetectedStack[];
       /** A set of page-load traces, keyed by passName. */
@@ -366,6 +366,10 @@ declare global {
 
       // TODO(bckenny): real type for parsed manifest.
       export type Manifest = ReturnType<typeof parseManifest>;
+
+      export interface InstallabilityErrors {
+        errors: Crdp.Page.InstallabilityError[];
+      }
 
       export interface ImageElement {
         src: string;
