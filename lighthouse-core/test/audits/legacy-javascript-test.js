@@ -39,9 +39,11 @@ const createVariants = (codeSnippets) => {
   const variants = [];
 
   for (const codeSnippet of codeSnippets) {
-    variants.push(codeSnippet);
-    // variants.push(`;${codeSnippet}`);
-    // variants.push(` ${codeSnippet}`);
+    // Explicitly don't create a variant for just `codeSnippet`,
+    // because making the patterns work with a starting anchor (^)
+    // complicates the expressions more than its worth.
+    variants.push(`;${codeSnippet}`);
+    variants.push(` ${codeSnippet}`);
   }
 
   return variants;
