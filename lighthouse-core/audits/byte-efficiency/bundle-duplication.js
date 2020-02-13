@@ -182,64 +182,64 @@ class BundleDuplication extends ByteEfficiencyAudit {
     }
 
     // TODO: explore a cutoff.
-    if (process.env.DEBUG) {
-      console.log(sourceDataAggregated.keys());
+    // if (process.env.DEBUG) {
+    //   console.log(sourceDataAggregated.keys());
 
-      const all = sum(items);
-      // @ts-ignore
-      function sum(arr) {
-        // @ts-ignore
-        return arr.reduce((acc, cur) => acc + cur.wastedBytes, 0);
-      }
-      function print(x) {
-        const sum_ = sum(items.filter(item => item.wastedBytes >= x));
-        console.log(x, sum_, (all - sum_) / all * 100);
-      }
-      for (let i = 0; i < 100; i += 10) {
-        print(i);
-      }
-      for (let i = 100; i < 1500; i += 100) {
-        print(i);
-      }
-      /*
-      initial thoughts: "0KB" is noisy in the report
+    //   const all = sum(items);
+    //   // @ts-ignore
+    //   function sum(arr) {
+    //     // @ts-ignore
+    //     return arr.reduce((acc, cur) => acc + cur.wastedBytes, 0);
+    //   }
+    //   function print(x) {
+    //     const sum_ = sum(items.filter(item => item.wastedBytes >= x));
+    //     console.log(x, sum_, (all - sum_) / all * 100);
+    //   }
+    //   for (let i = 0; i < 100; i += 10) {
+    //     print(i);
+    //   }
+    //   for (let i = 100; i < 1500; i += 100) {
+    //     print(i);
+    //   }
+    //   /*
+    //   initial thoughts: "0KB" is noisy in the report
 
-      Could make an Other entry, but then that is unactionable.
+    //   Could make an Other entry, but then that is unactionable.
 
-      Just ignoring all the items is not a good idea b/c the sum of all the small items
-      can be meaningful - <500 bytes is ~5.5%. Is that too much to ignore?
+    //   Just ignoring all the items is not a good idea b/c the sum of all the small items
+    //   can be meaningful - <500 bytes is ~5.5%. Is that too much to ignore?
 
-      EDIT: oh, granularity is a thing. let's set that to 0.05 and make 100 bytes the threshold.
+    //   EDIT: oh, granularity is a thing. let's set that to 0.05 and make 100 bytes the threshold.
 
-      https://www.coursehero.com/
+    //   https://www.coursehero.com/
 
-      0 176188.36490136734 0
-      10 176188.36490136734 0
-      20 176188.36490136734 0
-      30 176141.61108744194 0.026536266428022284
-      40 176141.61108744194 0.026536266428022284
-      50 176141.61108744194 0.026536266428022284
-      60 176141.61108744194 0.026536266428022284
-      70 176141.61108744194 0.026536266428022284
-      80 176062.75412877792 0.07129345496778063
-      90 175975.1834931716 0.12099630319805638
-      100 175975.1834931716 0.12099630319805638
-      200 174014.05824632183 1.2340807273299335
-      300 172646.30987490347 2.010379645924272
-      400 169433.15980658625 3.834081267831022
-      500 166372.66452209078 5.5711399471647995
-      600 162028.34675652898 8.036863360849814
-      700 159503.6408045566 9.469821747963366
-      800 157215.92153878932 10.768272566238442
-      900 153868.20003692358 12.668353484600928
-      1000 153868.20003692358 12.668353484600928
-      1100 153868.20003692358 12.668353484600928
-      1200 152701.58106087992 13.330496513566967
-      1300 152701.58106087992 13.330496513566967
-      1400 151370.21055005147 14.086148290898443
+    //   0 176188.36490136734 0
+    //   10 176188.36490136734 0
+    //   20 176188.36490136734 0
+    //   30 176141.61108744194 0.026536266428022284
+    //   40 176141.61108744194 0.026536266428022284
+    //   50 176141.61108744194 0.026536266428022284
+    //   60 176141.61108744194 0.026536266428022284
+    //   70 176141.61108744194 0.026536266428022284
+    //   80 176062.75412877792 0.07129345496778063
+    //   90 175975.1834931716 0.12099630319805638
+    //   100 175975.1834931716 0.12099630319805638
+    //   200 174014.05824632183 1.2340807273299335
+    //   300 172646.30987490347 2.010379645924272
+    //   400 169433.15980658625 3.834081267831022
+    //   500 166372.66452209078 5.5711399471647995
+    //   600 162028.34675652898 8.036863360849814
+    //   700 159503.6408045566 9.469821747963366
+    //   800 157215.92153878932 10.768272566238442
+    //   900 153868.20003692358 12.668353484600928
+    //   1000 153868.20003692358 12.668353484600928
+    //   1100 153868.20003692358 12.668353484600928
+    //   1200 152701.58106087992 13.330496513566967
+    //   1300 152701.58106087992 13.330496513566967
+    //   1400 151370.21055005147 14.086148290898443
 
-      */
-    }
+    //   */
+    // }
 
     /** @type {LH.Audit.Details.OpportunityColumnHeading[]} */
     const headings = [
