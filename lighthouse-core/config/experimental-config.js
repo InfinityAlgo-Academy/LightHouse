@@ -5,8 +5,9 @@
  */
 'use strict';
 
-/** @fileoverview Temporary config for new source map features.
- * Allows for source map audits to land in master without being enabled by default.
+/**
+ * @fileoverview Config for new audits that aren't quite ready for
+ * being enabled by default.
  */
 
 /** @type {LH.Config.Json} */
