@@ -35,6 +35,7 @@ const GatherRunner = {
   beginRecording: makeParamsOptional(GatherRunner_.beginRecording),
   collectArtifacts: makeParamsOptional(GatherRunner_.collectArtifacts),
   endRecording: makeParamsOptional(GatherRunner_.endRecording),
+  getInstallabilityErrors: makeParamsOptional(GatherRunner_.getInstallabilityErrors),
   getInterstitialError: makeParamsOptional(GatherRunner_.getInterstitialError),
   getNetworkError: makeParamsOptional(GatherRunner_.getNetworkError),
   getPageLoadError: makeParamsOptional(GatherRunner_.getPageLoadError),
@@ -1633,6 +1634,40 @@ describe('GatherRunner', function() {
     });
   });
 
+  describe('.getInstallabilityErrors', () => {
+    /** @type {RecursivePartial<LH.Gatherer.PassContext>} */
+    let passContext;
+
+    beforeEach(() => {
+      passContext = {
+        driver,
+      };
+    });
+
+    it('should return the response from the protocol, if in >=M82 format', async () => {
+      connectionStub.sendCommand
+        .mockResponse('Page.getInstallabilityErrors', {
+          installabilityErrors: [{errorId: 'no-icon-available', errorArguments: []}],
+        });
+      const result = await GatherRunner.getInstallabilityErrors(passContext);
+      expect(result).toEqual({
+        errors: [{errorId: 'no-icon-available', errorArguments: []}],
+      });
+    });
+
+    it('should transform the response from the protocol, if in <M82 format', async () => {
+      connectionStub.sendCommand
+        .mockResponse('Page.getInstallabilityErrors', {
+          // @ts-ignore
+          errors: ['Downloaded icon was empty or corrupted'],
+        });
+      const result = await GatherRunner.getInstallabilityErrors(passContext);
+      expect(result).toEqual({
+        errors: [{errorId: 'no-icon-available', errorArguments: []}],
+      });
+    });
+  });
+
   describe('.getWebAppManifest', () => {
     const MANIFEST_URL = 'https://example.com/manifest.json';
     /** @type {RecursivePartial<LH.Gatherer.PassContext>} */
@@ -1649,7 +1684,7 @@ describe('GatherRunner', function() {
     it('should return null when there is no manifest', async () => {
       connectionStub.sendCommand
         .mockResponse('Page.getAppManifest', {})
-        .mockResponse('Page.getInstallabilityErrors', {errors: []});
+        .mockResponse('Page.getInstallabilityErrors', {installabilityErrors: []});
       const result = await GatherRunner.getWebAppManifest(passContext);
       expect(result).toEqual(null);
     });
@@ -1658,7 +1693,7 @@ describe('GatherRunner', function() {
       const manifest = {name: 'App'};
       connectionStub.sendCommand
         .mockResponse('Page.getAppManifest', {data: JSON.stringify(manifest), url: MANIFEST_URL})
-        .mockResponse('Page.getInstallabilityErrors', {errors: []});
+        .mockResponse('Page.getInstallabilityErrors', {installabilityErrors: []});
 
       const result = await GatherRunner.getWebAppManifest(passContext);
       expect(result).toHaveProperty('raw', JSON.stringify(manifest));

@@ -2749,6 +2749,65 @@
             "scoreDisplayMode": "binary",
             "title": "Server response times are low (TTFB)"
         },
+        "timing-budget": {
+            "description": "Set a timing budget to help you keep an eye on the performance of your site. Performant sites load fast and respond to user input events quickly. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).",
+            "details": {
+                "headings": [
+                    {
+                        "itemType": "text",
+                        "key": "label",
+                        "text": "Metric"
+                    },
+                    {
+                        "itemType": "ms",
+                        "key": "measurement",
+                        "text": "Measurement"
+                    },
+                    {
+                        "itemType": "ms",
+                        "key": "overBudget",
+                        "text": "Over Budget"
+                    }
+                ],
+                "items": [
+                    {
+                        "label": "First CPU Idle",
+                        "measurement": 4927.0,
+                        "metric": "first-cpu-idle",
+                        "overBudget": 2027.0
+                    },
+                    {
+                        "label": "Time to Interactive",
+                        "measurement": 4927.0,
+                        "metric": "interactive",
+                        "overBudget": 2027.0
+                    },
+                    {
+                        "label": "First Meaningful Paint",
+                        "measurement": 3969.0,
+                        "metric": "first-meaningful-paint",
+                        "overBudget": 1969.0
+                    },
+                    {
+                        "label": "First Contentful Paint",
+                        "measurement": 3969.0,
+                        "metric": "first-contentful-paint",
+                        "overBudget": 969.0
+                    },
+                    {
+                        "label": "Max Potential First Input Delay",
+                        "measurement": 123.0,
+                        "metric": "max-potential-fid",
+                        "overBudget": 23.0
+                    }
+                ],
+                "type": "table"
+            },
+            "id": "timing-budget",
+            "score": null,
+            "scoreDisplayMode": "informative",
+            "title": "Timing budget"
+        },
         "total-blocking-time": {
             "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more](https://web.dev/lighthouse-total-blocking-time).",
             "displayValue": "120\u00a0ms",
@@ -3863,6 +3922,11 @@
                     "weight": 0.0
                 },
                 {
+                    "group": "budgets",
+                    "id": "timing-budget",
+                    "weight": 0.0
+                },
+                {
                     "group": "diagnostics",
                     "id": "resource-summary",
                     "weight": 0.0
@@ -4704,6 +4768,12 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:computed:ResourceSummary",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:audit:timing-budget",
                 "startTime": 0.0
             },
             {

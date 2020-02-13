@@ -139,7 +139,7 @@ describe('PWA: webapp install banner audit', () => {
 
     it('fails if page had no fetchable icons in the manifest', () => {
       const artifacts = generateMockArtifacts();
-      artifacts.InstallabilityErrors.errors.push('Downloaded icon was empty or corrupted');
+      artifacts.InstallabilityErrors.errors.push({errorId: 'no-icon-available'});
       const context = generateMockAuditContext();
 
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
