@@ -1262,6 +1262,9 @@ Object {
         Object {
           "path": "accessibility",
         },
+        Object {
+          "path": "source-maps",
+        },
       ],
       "loadFailureMode": "fatal",
       "networkQuietThresholdMs": 1000,
