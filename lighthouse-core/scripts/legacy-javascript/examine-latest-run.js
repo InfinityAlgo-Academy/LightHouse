@@ -57,45 +57,46 @@ async function main() {
     auditResults.details.type === 'table' &&
     auditResults.details.items;
 
-  if (items) {
-    console.log(colors.bold(`${items.length} polyfills found!`));
-    for (const item of items) {
-      if (typeof item.url !== 'string') continue;
-      const requestId = requestUrlMap[item.url];
-      const script = scripts.find(s => s.requestId === requestId);
-      const signals = Array.isArray(item.signals) ? item.signals : [];
-      const locations = Array.isArray(item.locations) ? item.locations : [];
+  if (!items) {
+    console.log('No polyfills found!');
+    return;
+  }
 
-      console.log('---------------------------------');
-      console.log(`URL: ${item.url}`);
-      console.log(`Polyfills: ${signals.length}`);
-      if (!script || !script.content) {
-        console.log('\nFailed to find script content! :/');
-        console.log('---------------------------------\n\n');
+  console.log(colors.bold(`${items.length} polyfills found!`));
+  for (const item of items) {
+    if (typeof item.url !== 'string') continue;
+    const requestId = requestUrlMap[item.url];
+    const script = scripts.find(s => s.requestId === requestId);
+    const signals = Array.isArray(item.signals) ? item.signals : [];
+    const locations = Array.isArray(item.locations) ? item.locations : [];
+
+    console.log('---------------------------------');
+    console.log(`URL: ${item.url}`);
+    console.log(`Polyfills: ${signals.length}`);
+    if (!script || !script.content) {
+      console.log('\nFailed to find script content! :/');
+      console.log('---------------------------------\n\n');
+      continue;
+    }
+
+    const lines = script.content.split('\n');
+    for (let i = 0; i < signals.length; i++) {
+      const signal = signals[i];
+      const location = locations[i];
+      if (typeof location !== 'object' || location.type !== 'source-location') {
         continue;
       }
 
-      const lines = script.content.split('\n');
-      for (let i = 0; i < signals.length; i++) {
-        const signal = signals[i];
-        const location = locations[i];
-        if (typeof location !== 'object' || location.type !== 'source-location') {
-          continue;
-        }
-
-        const line = lines[location.line || 0] || '';
-        const locationString = `at ${location.line}:${location.column}`;
-        console.log('');
-        console.log(`${signal} ${colors.dim(locationString)}`);
-        const contentToShow = line.slice(location.column - 10, location.column + 80);
-        const unimportant = contentToShow.split(signal.toString());
-        console.log(unimportant.map(s => colors.dim(s)).join(signal.toString()));
-      }
-
-      console.log('---------------------------------\n\n');
+      const line = lines[location.line || 0] || '';
+      const locationString = `at ${location.line}:${location.column}`;
+      console.log('');
+      console.log(`${signal} ${colors.dim(locationString)}`);
+      const contentToShow = line.slice(location.column - 10, location.column + 80);
+      const unimportant = contentToShow.split(signal.toString());
+      console.log(unimportant.map(s => colors.dim(s)).join(signal.toString()));
     }
-  } else {
-    console.log('No polyfills found!');
+
+    console.log('---------------------------------\n\n');
   }
 }
 
