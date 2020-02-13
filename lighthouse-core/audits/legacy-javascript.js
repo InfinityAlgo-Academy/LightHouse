@@ -121,11 +121,14 @@ class LegacyJavascript extends Audit {
 
     let expression = '';
 
-    // String.prototype.startsWith =
     if (object) {
+      // String.prototype.startsWith =
       expression += `${object}\\.${property}\\s?=[^=]`;
     } else {
-      expression += `[^a-zA-Z]${property}\\s?=[^=]`;
+      // Promise =
+      // window.Promise =// Promise =Z
+      // but not: SomePromise = 
+      expression += `(?:window\.|[\\s;]+)${property}\\s?=[^=]`;
     }
 
     // String.prototype['startsWith'] =
