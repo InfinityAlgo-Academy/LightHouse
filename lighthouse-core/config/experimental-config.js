@@ -16,6 +16,7 @@ const config = {
   audits: [
     'byte-efficiency/duplicated-javascript',
     'legacy-javascript',
+    'valid-source-maps',
   ],
   categories: {
     // @ts-ignore: `title` is required in CategoryJson. setting to the same value as the default
@@ -24,6 +25,7 @@ const config = {
       auditRefs: [
         {id: 'duplicated-javascript', weight: 0, group: 'load-opportunities'},
         {id: 'legacy-javascript', weight: 0, group: 'diagnostics'},
+        {id: 'valid-source-maps', weight: 0},
       ],
     },
   },
