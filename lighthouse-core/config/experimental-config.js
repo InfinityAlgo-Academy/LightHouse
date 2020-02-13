@@ -20,8 +20,7 @@ const config = {
     ],
   }],
   audits: [
-    // About to be added.
-    // 'bundle-duplication',
+    'bundle-visualization-data',
   ],
   // @ts-ignore: `title` is required in CategoryJson. setting to the same value as the default
   // config is awkward - easier to omit the property here. Will defer to default config.
