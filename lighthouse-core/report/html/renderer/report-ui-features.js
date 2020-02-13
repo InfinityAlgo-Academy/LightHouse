@@ -25,6 +25,8 @@
 
 /* globals getFilenamePrefix Util */
 
+const VIEWER_ORIGIN = 'http://localhost:8000';
+
 /**
  * @param {HTMLTableElement} tableEl
  * @return {Array<HTMLTableRowElement>}
@@ -137,13 +139,7 @@ class ReportUIFeatures {
       toggleInputEl.checked = true;
     }
 
-    // Fill in all i18n data.
-    for (const node of this._dom.findAll('[data-i18n]', this._dom.document())) {
-      // These strings are guaranteed to (at least) have a default English string in Util.UIStrings,
-      // so this cannot be undefined as long as `report-ui-features.data-i18n` test passes.
-      const i18nAttr = /** @type {keyof LH.I18NRendererStrings} */ (node.getAttribute('data-i18n'));
-      node.textContent = Util.i18n.strings[i18nAttr];
-    }
+    this._renderBundleVizLinks();
   }
 
   /**
@@ -260,7 +256,7 @@ class ReportUIFeatures {
       this._dom.find('.lh-3p-filter-count', filterTemplate).textContent =
           `${thirdPartyRows.size}`;
       this._dom.find('.lh-3p-ui-string', filterTemplate).textContent =
-          Util.i18n.strings.thirdPartyResourcesLabel;
+          Util.UIStrings.thirdPartyResourcesLabel;
 
       // If all or none of the rows are 3rd party, disable the checkbox.
       if (thirdPartyRows.size === urlItems.length || !thirdPartyRows.size) {
@@ -421,8 +417,7 @@ class ReportUIFeatures {
         break;
       }
       case 'open-viewer': {
-        const viewerPath = '/lighthouse/viewer/';
-        ReportUIFeatures.openTabAndSendJsonReport(this.json, viewerPath);
+        ReportUIFeatures.openTabAndSendJsonReportToViewer(this.json);
         break;
       }
       case 'save-gist': {
@@ -456,33 +451,42 @@ class ReportUIFeatures {
   /**
    * Opens a new tab to the online viewer and sends the local page's JSON results
    * to the online viewer using postMessage.
-   * @param {LH.Result} reportJson
-   * @param {string} viewerPath
+   * @param {LH.Result} json
    * @protected
    */
-  static openTabAndSendJsonReport(reportJson, viewerPath) {
-    const VIEWER_ORIGIN = 'https://googlechrome.github.io';
-    // Chrome doesn't allow us to immediately postMessage to a popup right
-    // after it's created. Normally, we could also listen for the popup window's
-    // load event, however it is cross-domain and won't fire. Instead, listen
-    // for a message from the target app saying "I'm open".
-    const json = reportJson;
-    window.addEventListener('message', function msgHandler(messageEvent) {
-      if (messageEvent.origin !== VIEWER_ORIGIN) {
-        return;
-      }
-      if (popup && messageEvent.data.opened) {
-        popup.postMessage({lhresults: json}, VIEWER_ORIGIN);
-        window.removeEventListener('message', msgHandler);
-      }
-    });
-
+  static openTabAndSendJsonReportToViewer(json) {
     // The popup's window.name is keyed by version+url+fetchTime, so we reuse/select tabs correctly
     // @ts-ignore - If this is a v2 LHR, use old `generatedTime`.
     const fallbackFetchTime = /** @type {string} */ (json.generatedTime);
     const fetchTime = json.fetchTime || fallbackFetchTime;
     const windowName = `${json.lighthouseVersion}-${json.requestedUrl}-${fetchTime}`;
-    const popup = window.open(`${VIEWER_ORIGIN}${viewerPath}`, windowName);
+    ReportUIFeatures.openTabAndSendData(json, `${VIEWER_ORIGIN}/lighthouse/viewer/`, windowName);
+  }
+
+  /**
+   * Opens a new tab to an external page and sends data using postMessage.
+   * @param {Object} data
+   * @param {string} path
+   * @param {string} windowName
+   * @protected
+   */
+  static openTabAndSendData(data, path, windowName) {
+    const origin = new URL(path).origin;
+    // Chrome doesn't allow us to immediately postMessage to a popup right
+    // after it's created. Normally, we could also listen for the popup window's
+    // load event, however it is cross-domain and won't fire. Instead, listen
+    // for a message from the target app saying "I'm open".
+    window.addEventListener('message', function msgHandler(messageEvent) {
+      if (messageEvent.origin !== origin) {
+        return;
+      }
+      if (popup && messageEvent.data.opened) {
+        popup.postMessage(data, origin);
+        window.removeEventListener('message', msgHandler);
+      }
+    });
+
+    const popup = window.open(path, windowName);
   }
 
   /**
@@ -611,6 +615,26 @@ class ReportUIFeatures {
     this.highlightEl.style.transform = `translate(${offset}px)`;
     this.stickyHeaderEl.classList.toggle('lh-sticky-header--visible', showStickyHeader);
   }
+
+  _renderBundleVizLinks() {
+    if (!this.json.audits['bundle-visualization-data']) return;
+    if (!this.json.audits['bundle-visualization-data'].details) return;
+    const visualizationData = /** @type {LH.Audit.Details.DebugData} */ (
+      this.json.audits['bundle-visualization-data'].details);
+
+    for (const urlEl of this._dom.findAll('.lh-text__url', this._document)) {
+      const href = /** @type {HTMLAnchorElement} */ (this._dom.find('a', urlEl)).href;
+      const rootNode = visualizationData.rootNodes[href];
+      if (!rootNode) continue;
+
+      const externalButton = this._dom.createElement('span', 'lh-external-viz');
+      externalButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 18h5v-6h-5v6zm-6 0h5V5H4v13zm12 0h5v-6h-5v6zM10 5v6h11V5H10z"/><path d="M0 0h24v24H0z" fill="none"/></svg>`;
+      externalButton.addEventListener('click', () => {
+        ReportUIFeatures.openTabAndSendData({rootNode, href}, `${VIEWER_ORIGIN}/treemap/`, `viz-${href}`);
+      });
+      urlEl.insertBefore(externalButton, urlEl.lastElementChild);
+    }
+  }
 }
 
 class DropDown {
@@ -628,7 +652,6 @@ class DropDown {
     this.onDocumentKeyDown = this.onDocumentKeyDown.bind(this);
     this.onToggleClick = this.onToggleClick.bind(this);
     this.onToggleKeydown = this.onToggleKeydown.bind(this);
-    this.onMenuFocusOut = this.onMenuFocusOut.bind(this);
     this.onMenuKeydown = this.onMenuKeydown.bind(this);
 
     this._getNextMenuItem = this._getNextMenuItem.bind(this);
@@ -656,7 +679,6 @@ class DropDown {
       // Refocus on the tools button if the drop down last had focus
       this._toggleEl.focus();
     }
-    this._menuEl.removeEventListener('focusout', this.onMenuFocusOut);
     this._dom.document().removeEventListener('keydown', this.onDocumentKeyDown);
   }
 
@@ -676,7 +698,6 @@ class DropDown {
 
     this._toggleEl.classList.add('active');
     this._toggleEl.setAttribute('aria-expanded', 'true');
-    this._menuEl.addEventListener('focusout', this.onMenuFocusOut);
     this._dom.document().addEventListener('keydown', this.onDocumentKeyDown);
   }
 
@@ -751,21 +772,6 @@ class DropDown {
    */
   onDocumentKeyDown(e) {
     if (e.keyCode === 27) { // ESC
-      this.close();
-    }
-  }
-
-  /**
-   * Focus out handler for the drop down menu.
-   * @param {Event} e
-   */
-  onMenuFocusOut(e) {
-    // TODO: The focusout event is not supported in our current version of typescript (3.5.3)
-    // https://github.com/microsoft/TypeScript/issues/30716
-    const focusEvent = /** @type {FocusEvent} */ (e);
-    const focusedEl = /** @type {?HTMLElement} */ (focusEvent.relatedTarget);
-
-    if (!this._menuEl.contains(focusedEl)) {
       this.close();
     }
   }

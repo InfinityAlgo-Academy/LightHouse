@@ -21,6 +21,7 @@ const config = {
   audits: [
     'byte-efficiency/bundle-duplication',
     'valid-source-maps',
+    'bundle-visualization-data',
   ],
   // @ts-ignore: `title` is required in CategoryJson. setting to the same value as the default
   // config is awkward - easier to omit the property here. Will defer to default config.
