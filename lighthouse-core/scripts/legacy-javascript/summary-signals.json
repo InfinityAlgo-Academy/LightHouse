@@ -1,9 +1,10 @@
 {
-  "totalSignals": 209,
+  "totalSignals": 205,
   "variantsMissingSignals": [
     "core-js-2-only-polyfill/es6-array-copy-within",
     "core-js-2-only-polyfill/es6-array-every",
     "core-js-2-only-polyfill/es6-array-filter",
+    "core-js-2-only-polyfill/es6-array-index-of",
     "core-js-2-only-polyfill/es6-array-iterator",
     "core-js-2-only-polyfill/es6-array-map",
     "core-js-2-only-polyfill/es6-array-reduce",
@@ -12,6 +13,7 @@
     "core-js-2-only-polyfill/es6-array-species",
     "core-js-2-only-polyfill/es6-date-to-primitive",
     "core-js-2-only-polyfill/es6-date-to-string",
+    "core-js-2-only-polyfill/es6-function-bind",
     "core-js-2-only-polyfill/es6-function-has-instance",
     "core-js-2-only-polyfill/es6-function-name",
     "core-js-2-only-polyfill/es6-math-acosh",
@@ -53,6 +55,7 @@
     "core-js-3-only-polyfill/es6-array-copy-within",
     "core-js-3-only-polyfill/es6-array-every",
     "core-js-3-only-polyfill/es6-array-filter",
+    "core-js-3-only-polyfill/es6-array-index-of",
     "core-js-3-only-polyfill/es6-array-iterator",
     "core-js-3-only-polyfill/es6-array-map",
     "core-js-3-only-polyfill/es6-array-reduce",
@@ -61,6 +64,7 @@
     "core-js-3-only-polyfill/es6-array-species",
     "core-js-3-only-polyfill/es6-date-to-primitive",
     "core-js-3-only-polyfill/es6-date-to-string",
+    "core-js-3-only-polyfill/es6-function-bind",
     "core-js-3-only-polyfill/es6-function-has-instance",
     "core-js-3-only-polyfill/es6-function-name",
     "core-js-3-only-polyfill/es6-math-acosh",
@@ -135,7 +139,7 @@
     },
     {
       "name": "core-js-2-only-polyfill/es6-array-index-of",
-      "signals": "Array.prototype.indexOf"
+      "signals": ""
     },
     {
       "name": "core-js-2-only-polyfill/es6-array-is-array",
@@ -195,7 +199,7 @@
     },
     {
       "name": "core-js-2-only-polyfill/es6-function-bind",
-      "signals": "Function.prototype.bind"
+      "signals": ""
     },
     {
       "name": "core-js-2-only-polyfill/es6-function-has-instance",
@@ -587,7 +591,7 @@
     },
     {
       "name": "core-js-3-only-polyfill/es6-array-index-of",
-      "signals": "Array.prototype.indexOf"
+      "signals": ""
     },
     {
       "name": "core-js-3-only-polyfill/es6-array-is-array",
@@ -647,7 +651,7 @@
     },
     {
       "name": "core-js-3-only-polyfill/es6-function-bind",
-      "signals": "Function.prototype.bind"
+      "signals": ""
     },
     {
       "name": "core-js-3-only-polyfill/es6-function-has-instance",

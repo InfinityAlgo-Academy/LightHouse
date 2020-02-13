@@ -8,7 +8,7 @@
 /* eslint-disable no-console */
 
 /**
- * @fileoverview - Used to manually examine the polyfills used on a page.
+ * @fileoverview - Used to manually examine the polyfills/transforms used on a page.
  *
  * USAGE:
  *   1. Run `yarn start <url to examine> -G
@@ -58,11 +58,11 @@ async function main() {
     auditResults.details.items;
 
   if (!items) {
-    console.log('No polyfills found!');
+    console.log('No signals found!');
     return;
   }
 
-  console.log(colors.bold(`${items.length} polyfills found!`));
+  console.log(colors.bold(`${items.length} signals found!`));
   for (const item of items) {
     if (typeof item.url !== 'string') continue;
     const requestId = requestUrlMap[item.url];
@@ -72,7 +72,7 @@ async function main() {
 
     console.log('---------------------------------');
     console.log(`URL: ${item.url}`);
-    console.log(`Polyfills: ${signals.length}`);
+    console.log(`Signals: ${signals.length}`);
     if (!script || !script.content) {
       console.log('\nFailed to find script content! :/');
       console.log('---------------------------------\n\n');
