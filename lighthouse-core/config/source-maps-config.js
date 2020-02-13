@@ -19,16 +19,14 @@ const config = {
     ],
   }],
   audits: [
-    // About to be added.
-    // 'bundle-duplication',
+    'byte-efficiency/bundle-duplication',
   ],
   // @ts-ignore: `title` is required in CategoryJson. setting to the same value as the default
   // config is awkward - easier to omit the property here. Will defer to default config.
   categories: {
     'performance': {
       auditRefs: [
-        // About to be added.
-        // {id: 'bundle-duplication', weight: 0, group: 'load-opportunities'},
+        {id: 'bundle-duplication', weight: 0, group: 'load-opportunities'},
       ],
     },
   },
