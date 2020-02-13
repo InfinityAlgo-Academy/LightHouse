@@ -31,6 +31,22 @@ const createArtifacts = (scripts) => {
   };
 };
 
+/**
+ * @param {string[]} codeSnippets
+ * @return {string[]}
+ */
+const createVariants = (codeSnippets) => {
+  const variants = [];
+
+  for (const codeSnippet of codeSnippets) {
+    variants.push(codeSnippet);
+    // variants.push(`;${codeSnippet}`);
+    // variants.push(` ${codeSnippet}`);
+  }
+
+  return variants;
+}
+
 /* eslint-env jest */
 describe('LegacyJavaScript audit', () => {
   it('passes code with no polyfills', async () => {
@@ -101,42 +117,49 @@ describe('LegacyJavaScript audit', () => {
 
   it('should identify polyfills in multiple patterns', async () => {
     const codeSnippets = [
-      ';String.prototype.repeat = function() {}',
-      ';String.prototype["repeat"] = function() {}',
-      ';String.prototype[\'repeat\'] = function() {}',
-      ';Object.defineProperty(String.prototype, "repeat", function() {})',
-      ';Object.defineProperty(String.prototype, \'repeat\', function() {})',
-      ';Object.defineProperty(window, \'WeakMap\', function() {})',
-      ';$export($export.S,"Object",{values:function values(t){return i(t)}})',
-      ';WeakMap = function() {}',
-      ';window.WeakMap = function() {}',
-      ';function WeakMap() {}',
-      ';String.raw = function() {}',
+      'String.prototype.repeat = function() {}',
+      'String.prototype["repeat"] = function() {}',
+      'String.prototype[\'repeat\'] = function() {}',
+      'Object.defineProperty(String.prototype, "repeat", function() {})',
+      'Object.defineProperty(String.prototype, \'repeat\', function() {})',
+      'Object.defineProperty(window, \'WeakMap\', function() {})',
+      '$export($export.S,"Object",{values:function values(t){return i(t)}})',
+      'WeakMap = function() {}',
+      'window.WeakMap = function() {}',
+      'function WeakMap() {}',
+      'String.raw = function() {}',
     ];
-    const scripts = codeSnippets.map((code, i) => {
+    const variants = createVariants(codeSnippets);
+    const scripts = variants.map((code, i) => {
       return {code, url: `https://www.example.com/${i}.js`};
     });
+    const getCodeForUrl = url => scripts.find(script => script.url === url).code;
     const artifacts = createArtifacts(scripts);
+
     const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
-    expect(result.details.items.map(item => item.url)).toEqual(scripts.map(script => script.url));
+    expect(result.details.items.map(item => getCodeForUrl(item.url)))
+      .toEqual(scripts.map(script => getCodeForUrl(script.url)));
     assert.equal(result.score, 0);
   });
 
   it('should not misidentify legacy code', async () => {
     const codeSnippets = [
-      '; i.prototype.toArrayBuffer = blah',
-      '; this.childListChangeMap=void 0',
-      '; t.toPromise=u,t.makePromise=u,t.fromPromise=function(e){return new o.default',
-      '; var n=new Error(h.apply(void 0,[d].concat(f)));n.name="Invariant Violation";',
-      '; var b=typeof Map==="function"?new Map():void 0',
-      '; d.Promise=s;var y,g,v,b=function(n,o,t){if(function(t){if("function"!=typeof t)th',
+      'i.prototype.toArrayBuffer = blah',
+      'this.childListChangeMap=void 0',
+      't.toPromise=u,t.makePromise=u,t.fromPromise=function(e){return new o.default',
+      'var n=new Error(h.apply(void 0,[d].concat(f)));n.name="Invariant Violation";',
+      'var b=typeof Map==="function"?new Map():void 0',
+      'd.Promise=s;var y,g,v,b=function(n,o,t){if(function(t){if("function"!=typeof t)th',
     ];
-    const scripts = codeSnippets.map((code, i) => {
+    const variants = createVariants(codeSnippets);
+    const scripts = variants.map((code, i) => {
       return {code, url: `https://www.example.com/${i}.js`};
     });
+    const getCodeForUrl = url => scripts.find(script => script.url === url).code;
     const artifacts = createArtifacts(scripts);
+
     const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
-    expect(result.details.items).toEqual([]);
+    expect(result.details.items.map(item => getCodeForUrl(item.url))).toEqual([]);
     assert.equal(result.score, 1);
   });
 });
