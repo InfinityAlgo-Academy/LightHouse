@@ -354,10 +354,11 @@ class LegacyJavascript extends Audit {
     // Only fail if first party code has legacy code.
     // TODO(cjamcl): Use third-party-web.
     const foundSignalInFirstPartyCode = tableRows.some(row => {
-      return row.signals.length && URL.rootDomainsMatch(row.url, mainResource.url);
+      return URL.rootDomainsMatch(row.url, mainResource.url);
     });
     return {
       score: foundSignalInFirstPartyCode ? 0 : 1,
+      notApplicable: !foundSignalInFirstPartyCode,
       extendedInfo: {
         signalCount,
       },
