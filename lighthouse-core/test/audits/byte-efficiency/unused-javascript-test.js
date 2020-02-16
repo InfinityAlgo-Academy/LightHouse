@@ -6,6 +6,7 @@
 'use strict';
 
 const UnusedJavaScript = require('../../../audits/byte-efficiency/unused-javascript.js');
+const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
 const assert = require('assert');
 
 /* eslint-env jest */
@@ -80,12 +81,16 @@ describe('UnusedJavaScript audit', () => {
     const recordB = generateRecord('scriptB.js', 50000, 'Script');
     const recordInline = generateRecord('inline.html', 1000000, 'Document');
 
-    const result = UnusedJavaScript.audit_(
-      {JsUsage: [scriptA, scriptB, scriptUnknown, inlineA, inlineB]},
-      [recordA, recordB, recordInline]
-    );
+    const networkRecords = [recordA, recordB, recordInline];
+    const artifacts = {
+      JsUsage: [scriptA, scriptB, scriptUnknown, inlineA, inlineB],
+      devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog([recordA, recordB])},
+      SourceMaps: [],
+    };
 
-    it('should merge duplicates', () => {
+    it('should merge duplicates', async () => {
+      const context = {computedCache: new Map()};
+      const result = await UnusedJavaScript.audit_(artifacts, networkRecords, context);
       assert.equal(result.items.length, 2);
 
       const scriptBWaste = result.items[0];

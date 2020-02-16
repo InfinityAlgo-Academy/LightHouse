@@ -6,6 +6,7 @@
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
+const JSBundles = require('../../computed/js-bundles.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -20,6 +21,13 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 const IGNORE_THRESHOLD_IN_BYTES = 2048;
 
+/**
+ * @typedef WasteData
+ * @property {Uint8Array} unusedByIndex
+ * @property {number} unusedLength
+ * @property {number} contentLength
+ */
+
 class UnusedJavaScript extends ByteEfficiencyAudit {
   /**
    * @return {LH.Audit.Meta}
@@ -30,26 +38,24 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['JsUsage', 'devtoolsLogs', 'traces'],
+      requiredArtifacts: ['JsUsage', 'SourceMaps', 'ScriptElements', 'devtoolsLogs', 'traces'],
     };
   }
 
   /**
-   * @param {LH.Crdp.Profiler.ScriptCoverage} script
-   * @return {{unusedLength: number, contentLength: number}}
+   * @param {LH.Crdp.Profiler.ScriptCoverage} scriptCoverage
+   * @return {WasteData}
    */
-  static computeWaste(script) {
+  static computeWaste(scriptCoverage) {
     let maximumEndOffset = 0;
-    for (const func of script.functions) {
-      for (const range of func.ranges) {
-        maximumEndOffset = Math.max(maximumEndOffset, range.endOffset);
-      }
+    for (const func of scriptCoverage.functions) {
+      maximumEndOffset = Math.max(maximumEndOffset, ...func.ranges.map(r => r.endOffset));
     }
 
     // We only care about unused ranges of the script, so we can ignore all the nesting and safely
     // assume that if a range is unexecuted, all nested ranges within it will also be unexecuted.
     const unusedByIndex = new Uint8Array(maximumEndOffset);
-    for (const func of script.functions) {
+    for (const func of scriptCoverage.functions) {
       for (const range of func.ranges) {
         if (range.count === 0) {
           for (let i = range.startOffset; i < range.endOffset; i++) {
@@ -65,43 +71,128 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
     }
 
     return {
+      unusedByIndex,
       unusedLength: unused,
       contentLength: maximumEndOffset,
     };
   }
 
   /**
-   * @param {Array<{unusedLength: number, contentLength: number}>} wasteData
-   * @param {LH.Artifacts.NetworkRequest} networkRecord
-   * @return {LH.Audit.ByteEfficiencyItem}
+   * @param {LH.Audit.ByteEfficiencyItem} item
+   * @param {WasteData[]} wasteData
+   * @param {LH.Artifacts.Bundle} bundle
+   * @param {ReturnType<typeof UnusedJavaScript.determineLengths>} lengths
    */
-  static mergeWaste(wasteData, networkRecord) {
-    let unusedLength = 0;
-    let contentLength = 0;
-    for (const usage of wasteData) {
-      unusedLength += usage.unusedLength;
-      contentLength += usage.contentLength;
+  static createBundleMultiData(item, wasteData, bundle, lengths) {
+    if (!bundle.script.content) return;
+
+    /** @type {Record<string, number>} */
+    const files = {};
+
+    const lineLengths = bundle.script.content.split('\n').map(l => l.length);
+    let totalSoFar = 0;
+    const lineOffsets = lineLengths.map(len => {
+      const retVal = totalSoFar;
+      totalSoFar += len + 1;
+      return retVal;
+    });
+
+    // @ts-ignore: We will upstream computeLastGeneratedColumns to CDT eventually.
+    bundle.map.computeLastGeneratedColumns();
+    for (const mapping of bundle.map.mappings()) {
+      let offset = lineOffsets[mapping.lineNumber];
+
+      offset += mapping.columnNumber;
+      const lastColumnOfMapping =
+        // @ts-ignore: We will upstream lastColumnNumber to CDT eventually.
+        (mapping.lastColumnNumber - 1) || lineLengths[mapping.lineNumber];
+      for (let i = mapping.columnNumber; i <= lastColumnOfMapping; i++) {
+        if (wasteData.every(data => data.unusedByIndex[offset] === 1)) {
+          // @ts-ignore
+          files[mapping.sourceURL] = (files[mapping.sourceURL] || 0) + 1;
+        }
+        offset += 1;
+      }
     }
 
-    const totalBytes = ByteEfficiencyAudit.estimateTransferSize(networkRecord, contentLength,
-        'Script');
-    const wastedRatio = (unusedLength / contentLength) || 0;
-    const wastedBytes = Math.round(totalBytes * wastedRatio);
+    const transferRatio = lengths.transfer / lengths.content;
+    const topUnusedFilesSizes = Object.entries(files)
+      .filter(([_, unusedBytes]) => unusedBytes * transferRatio >= 1024)
+      .sort(([_, unusedBytes1], [__, unusedBytes2]) => unusedBytes2 - unusedBytes1)
+      .slice(0, 5)
+      .map(([key, unusedBytes]) => {
+        return {
+          key,
+          unused: Math.round(unusedBytes * transferRatio),
+          total: Math.round(bundle.sizes.files[key] * transferRatio),
+        };
+      });
+
+    Object.assign(item, {
+      sources: topUnusedFilesSizes.map(d => d.key),
+      sourceBytes: topUnusedFilesSizes.map(d => d.total),
+      sourceWastedBytes: topUnusedFilesSizes.map(d => d.unused),
+    });
+  }
+
+  /**
+   * @param {WasteData[]} wasteData
+   * @param {string} url
+   * @param {ReturnType<typeof UnusedJavaScript.determineLengths>} lengths
+   * @return {LH.Audit.ByteEfficiencyItem}
+   */
+  static mergeWaste(wasteData, url, lengths) {
+    let unused = 0;
+    let content = 0;
+    // TODO: this is right for multiple script tags in an HTML document,
+    // but may be wrong for multiple frames using the same script resource.
+    for (const usage of wasteData) {
+      unused += usage.unusedLength;
+      content += usage.contentLength;
+    }
+
+    const wastedRatio = (unused / content) || 0;
+    const wastedBytes = Math.round(lengths.transfer * wastedRatio);
 
     return {
-      url: networkRecord.url,
-      totalBytes,
+      url: url,
+      totalBytes: lengths.transfer,
       wastedBytes,
       wastedPercent: 100 * wastedRatio,
     };
   }
 
   /**
+   * @param {WasteData[]} wasteData
+   * @param {LH.Artifacts.NetworkRequest} networkRecord
+   */
+  static determineLengths(wasteData, networkRecord) {
+    let unused = 0;
+    let content = 0;
+    // TODO: this is right for multiple script tags in an HTML document,
+    // but may be wrong for multiple frames using the same script resource.
+    for (const usage of wasteData) {
+      unused += usage.unusedLength;
+      content += usage.contentLength;
+    }
+    const transfer = ByteEfficiencyAudit.estimateTransferSize(networkRecord, content, 'Script');
+
+    return {
+      content,
+      unused,
+      transfer,
+    };
+  }
+
+  /**
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
-   * @return {ByteEfficiencyAudit.ByteEfficiencyProduct}
+   * @param {LH.Audit.Context} context
+   * @return {Promise<ByteEfficiencyAudit.ByteEfficiencyProduct>}
    */
-  static audit_(artifacts, networkRecords) {
+  static async audit_(artifacts, networkRecords, context) {
+    const bundles = await JSBundles.request(artifacts, context);
+
     /** @type {Map<string, Array<LH.Crdp.Profiler.ScriptCoverage>>} */
     const scriptsByUrl = new Map();
     for (const script of artifacts.JsUsage) {
@@ -111,21 +202,28 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
     }
 
     const items = [];
-    for (const [url, scripts] of scriptsByUrl.entries()) {
+    for (const [url, scriptCoverage] of scriptsByUrl.entries()) {
       const networkRecord = networkRecords.find(record => record.url === url);
       if (!networkRecord) continue;
-      const wasteData = scripts.map(UnusedJavaScript.computeWaste);
-      const item = UnusedJavaScript.mergeWaste(wasteData, networkRecord);
+      const wasteData = scriptCoverage.map(UnusedJavaScript.computeWaste);
+      const lengths = UnusedJavaScript.determineLengths(wasteData, networkRecord);
+      const bundle = bundles.find(b => b.script.src === url);
+      const item = UnusedJavaScript.mergeWaste(wasteData, networkRecord.url, lengths);
       if (item.wastedBytes <= IGNORE_THRESHOLD_IN_BYTES) continue;
+      if (bundle) {
+        UnusedJavaScript.createBundleMultiData(item, wasteData, bundle, lengths);
+      }
       items.push(item);
     }
 
     return {
       items,
       headings: [
-        {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
-        {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnSize)},
-        {key: 'wastedBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnWastedBytes)},
+        /* eslint-disable max-len */
+        {key: 'url', valueType: 'url', subRows: {key: 'sources', valueType: 'code'}, label: str_(i18n.UIStrings.columnURL)},
+        {key: 'totalBytes', valueType: 'bytes', subRows: {key: 'sourceBytes'}, label: str_(i18n.UIStrings.columnSize)},
+        {key: 'wastedBytes', valueType: 'bytes', subRows: {key: 'sourceWastedBytes'}, label: str_(i18n.UIStrings.columnWastedBytes)},
+        /* eslint-enable max-len */
       ],
     };
   }
