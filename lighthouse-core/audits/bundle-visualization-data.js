@@ -7,12 +7,20 @@
 
 const Audit = require('./audit.js');
 const JsBundles = require('../computed/js-bundles.js');
+const UnusedJavaScriptSummary = require('../computed/unused-javascript-summary.js');
+const NetworkRecords = require('../computed/network-records.js');
+
+/**
+ * @typedef SourceData
+ * @property {number} size
+ * @property {number=} wastedBytes
+ */
 
 /**
  * @param {LH.Artifacts.RawSourceMap} map
- * @param {Record<string, number>} sourceBytes
+ * @param {Record<string, SourceData>} sourcesData
  */
-function prepareTreemapNodes(map, sourceBytes) {
+function prepareTreemapNodes(map, sourcesData) {
   /**
    * @param {string} id
    */
@@ -20,19 +28,20 @@ function prepareTreemapNodes(map, sourceBytes) {
     return {
       id,
       size: 0,
+      wastedBytes: 0,
     };
   }
 
   /**
-   *
    * @param {string} source
-   * @param {number} size
+   * @param {SourceData} data
    * @param {*} node
    */
-  function addNode(source, size, node) {
+  function addNode(source, data, node) {
     // Strip off the shared root.
     const sourcePathSegments = source.replace(map.sourceRoot || '', '').split('/');
-    node.size += size;
+    node.size += data.size;
+    if (data.wastedBytes) node.wastedBytes += data.wastedBytes;
 
     sourcePathSegments.forEach(sourcePathSegment => {
       if (!node.children) {
@@ -46,14 +55,14 @@ function prepareTreemapNodes(map, sourceBytes) {
         node.children.push(child);
       }
       node = child;
-      node.size += size;
+      node.size += data.size;
+      if (data.wastedBytes) node.wastedBytes += data.wastedBytes;
     });
   }
 
   const rootNode = newNode('/');
-  for (const [sourceURL, bytes] of Object.entries(sourceBytes)) {
-    const source = sourceURL === null ? `<unmapped>` : sourceURL;
-    addNode(source, bytes, rootNode);
+  for (const [source, data] of Object.entries(sourcesData)) {
+    addNode(source || `<unmapped>`, data, rootNode);
   }
 
   /**
@@ -75,11 +84,8 @@ function prepareTreemapNodes(map, sourceBytes) {
   }
   collapse(rootNode, null);
 
-  // sizes for a 1163017 byte bundle
-  // first impl - 26779 bytes
-  // collapse - 25914 bytes
-  // defer addSizeToTitle - 20491 bytes
-  // TODO: flatten to get more savings.
+  // TODO(cjamcl): Should this structure be flattened for space savings?
+  // Less JSON (no super nested children, and no repeated property names).
 
   return rootNode;
 }
@@ -94,8 +100,24 @@ class BundleVisualizationData extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: 'Bundle Visualization Data',
       description: 'Used fom treemap.',
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'SourceMaps', 'ScriptElements'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'SourceMaps', 'ScriptElements', 'JsUsage'],
     };
+  }
+
+  /**
+   * @param {LH.Artifacts.Bundle} bundle
+   * @param {LH.Artifacts.NetworkRequest[]} networkRecords
+   * @param {LH.Artifacts['JsUsage']} JsUsage
+   * @param {LH.Audit.Context} context
+   */
+  static async getSourcesWastedBytes(bundle, networkRecords, JsUsage, context) {
+    const networkRecord = networkRecords.find(record => record.url === bundle.script.src);
+    if (!networkRecord) return;
+    const scriptCoverages = JsUsage[bundle.script.src || ''];
+    if (!scriptCoverages) return;
+    const unusedJsSumary =
+      await UnusedJavaScriptSummary.request({networkRecord, scriptCoverages, bundle}, context);
+    return unusedJsSumary.sourcesWastedBytes;
   }
 
   /**
@@ -105,12 +127,27 @@ class BundleVisualizationData extends Audit {
    */
   static async audit(artifacts, context) {
     const bundles = await JsBundles.request(artifacts, context);
+    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
 
     /** @type {Record<string, any>} */
     const rootNodes = {};
-    for (const {rawMap, script, sizes} of bundles) {
-      if (!script.src) continue; // Make typescript happy.
-      rootNodes[script.src] = prepareTreemapNodes(rawMap, sizes.files);
+    for (const bundle of bundles) {
+      if (!bundle.script.src) continue; // Make typescript happy.
+
+      const sourcesWastedBytes = await BundleVisualizationData.getSourcesWastedBytes(
+        bundle, networkRecords, artifacts.JsUsage, context);
+
+      /** @type {Record<string, SourceData>} */
+      const sourcesData = {};
+      for (const source of Object.keys(bundle.sizes.files)) {
+        sourcesData[source] = {
+          size: bundle.sizes.files[source],
+          wastedBytes: sourcesWastedBytes && sourcesWastedBytes[source],
+        };
+      }
+
+      rootNodes[bundle.script.src] = prepareTreemapNodes(bundle.rawMap, sourcesData);
     }
 
     /** @type {LH.Audit.Details.DebugData} */
