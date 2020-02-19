@@ -15,7 +15,9 @@
     "build-all:task": "(yarn build-cdt-lib & yarn build-extension & yarn build-devtools & yarn build-lr & yarn build-viewer & wait) && yarn build-pack",
     "build-all:task:windows": "yarn build-cdt-lib && yarn build-extension && yarn build-devtools && yarn build-lr && yarn build-viewer",
     "build-cdt-lib": "node ./build/build-cdt-lib.js",
-    "build-extension": "node ./build/build-extension.js",
+    "build-extension": "yarn build-extension-chrome && yarn build-extension-firefox",
+    "build-extension-chrome": "node ./build/build-extension.js chrome",
+    "build-extension-firefox": "node ./build/build-extension.js firefox",
     "build-devtools": "yarn link && yarn link lighthouse && node ./build/build-bundle.js clients/devtools-entry.js dist/lighthouse-dt-bundle.js && node ./build/build-dt-report-resources.js",
     "build-lr": "node ./build/build-lightrider-bundles.js",
     "build-pack": "bash build/build-pack.sh",
@@ -179,7 +181,7 @@
   },
   "bundlesize": [
     {
-      "path": "./dist/extension/scripts/popup-bundle.js",
+      "path": "./dist/extension-chrome/scripts/popup-bundle.js",
       "maxSize": "15 kB"
     },
     {
