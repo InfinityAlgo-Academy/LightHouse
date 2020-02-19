@@ -12,3 +12,5 @@
 coverage/**
 
 !.eslintrc.js
+
+lighthouse-core/scripts/legacy-javascript/variants

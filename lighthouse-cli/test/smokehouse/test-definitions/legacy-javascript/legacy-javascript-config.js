@@ -6,31 +6,18 @@
 'use strict';
 
 /**
- * @fileoverview Config for new audits that aren't quite ready for
- * being enabled by default.
+ * Config file for running PWA smokehouse audits.
  */
-
-/** @type {LH.Config.Json} */
-const config = {
+module.exports = {
   extends: 'lighthouse:default',
-  passes: [{
-    passName: 'defaultPass',
-    gatherers: [
-      'source-maps',
+  settings: {
+    onlyCategories: [
+      'performance',
     ],
-  }],
-  audits: [
-    'legacy-javascript',
-  ],
-  // @ts-ignore: `title` is required in CategoryJson. setting to the same value as the default
-  // config is awkward - easier to omit the property here. Will defer to default config.
-  categories: {
-    'performance': {
-      auditRefs: [
-        {id: 'legacy-javascript', weight: 0, group: 'diagnostics'},
-      ],
-    },
+    onlyAudits: [
+      'legacy-javascript',
+    ],
   },
+  // Not in default yet.
+  audits: ['legacy-javascript'],
 };
-
-module.exports = config;

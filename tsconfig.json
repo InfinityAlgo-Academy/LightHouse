@@ -25,6 +25,7 @@
     "lighthouse-core/test/**/*.js",
     "clients/test/**/*.js",
     "lighthouse-cli/test/fixtures/**/*.js",
+    "lighthouse-core/scripts/legacy-javascript/variants",
   ],
   "files": [
     // Opt-in to typechecking for some core tests.
