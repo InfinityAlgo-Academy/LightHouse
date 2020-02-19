@@ -26,6 +26,7 @@
 /* globals getFilenamePrefix Util */
 
 const VIEWER_ORIGIN = 'http://localhost:8000';
+const TREEMAP_URL = `${VIEWER_ORIGIN}/treemap/`;
 
 /**
  * @param {HTMLTableElement} tableEl
@@ -630,7 +631,13 @@ class ReportUIFeatures {
       const externalButton = this._dom.createElement('span', 'lh-external-viz');
       externalButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 18h5v-6h-5v6zm-6 0h5V5H4v13zm12 0h5v-6h-5v6zM10 5v6h11V5H10z"/><path d="M0 0h24v24H0z" fill="none"/></svg>`;
       externalButton.addEventListener('click', () => {
-        ReportUIFeatures.openTabAndSendData({rootNode, href}, `${VIEWER_ORIGIN}/treemap/`, `viz-${href}`);
+        const windowName = `viz-${this.json.requestedUrl}`;
+        const data = {
+          url: this.json.requestedUrl,
+          bundleUrl: href,
+          rootNodes: visualizationData.rootNodes,
+        };
+        ReportUIFeatures.openTabAndSendData(data, TREEMAP_URL, windowName);
       });
       urlEl.insertBefore(externalButton, urlEl.lastElementChild);
     }
