@@ -109,8 +109,8 @@ async function begin() {
     serverForOffline.listen(10503, 'localhost');
     isPassing = await runSmokehouse(testDefns, options);
   } finally {
-    await new Promise(resolve => server.close(resolve));
-    await new Promise(resolve => serverForOffline.close(resolve));
+    await server.close();
+    await serverForOffline.close();
   }
 
   const exitCode = isPassing ? 0 : 1;
