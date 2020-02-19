@@ -128,6 +128,7 @@ const expectations = [
         {
           name: '',
           content: '',
+          charset: 'utf-8',
         },
         {
           name: 'viewport',

@@ -2836,6 +2836,13 @@
       "score": 1,
       "scoreDisplayMode": "binary"
     },
+    "charset": {
+      "id": "charset",
+      "title": "Charset declaration is missing or occurs too late in the HTML",
+      "description": "A character encoding declaration is required. It can be done with a <meta> tagin the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more](https://www.w3.org/International/questions/qa-html-encoding-declarations).",
+      "score": 0,
+      "scoreDisplayMode": "binary"
+    },
     "dom-size": {
       "id": "dom-size",
       "title": "Avoids an excessive DOM size",
@@ -4113,6 +4120,10 @@
           "weight": 1
         },
         {
+          "id": "charset",
+          "weight": 1
+        },
+        {
           "id": "no-vulnerable-libraries",
           "weight": 1
         },
@@ -5313,6 +5324,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:charset",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:dom-size",
         "duration": 100,
         "entryType": "measure"
@@ -6454,6 +6471,12 @@
       ],
       "lighthouse-core/audits/dobetterweb/doctype.js | description": [
         "audits.doctype.description"
+      ],
+      "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": [
+        "audits.charset.title"
+      ],
+      "lighthouse-core/audits/dobetterweb/charset.js | description": [
+        "audits.charset.description"
       ],
       "lighthouse-core/audits/dobetterweb/dom-size.js | title": [
         "audits[dom-size].title"

@@ -225,6 +225,13 @@
             "scoreDisplayMode": "notApplicable",
             "title": "Document has a valid `rel=canonical`"
         },
+        "charset": {
+            "description": "A character encoding declaration is required. It can be done with a <meta> tagin the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more](https://www.w3.org/International/questions/qa-html-encoding-declarations).",
+            "id": "charset",
+            "score": 0.0,
+            "scoreDisplayMode": "binary",
+            "title": "Charset declaration is missing or occurs too late in the HTML"
+        },
         "color-contrast": {
             "description": "Low-contrast text is difficult or impossible for many users to read. [Learn more](https://web.dev/color-contrast/).",
             "details": {
@@ -3724,6 +3731,10 @@
                     "weight": 1.0
                 },
                 {
+                    "id": "charset",
+                    "weight": 1.0
+                },
+                {
                     "id": "no-vulnerable-libraries",
                     "weight": 1.0
                 },
@@ -5224,6 +5235,12 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:audit:doctype",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:audit:charset",
                 "startTime": 0.0
             },
             {
