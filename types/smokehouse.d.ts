@@ -29,8 +29,21 @@
     runSerially?: boolean;
   }
 
-  export interface FirehouseOptions {
-    runLighthouse: (url: string, config?: LH.Config.Json) => Promise<Omit<LH.RunnerResult, 'report'>>;
+  export type LighthouseRunner =
+    (url: string, configJson?: LH.Config.Json, runnerOptions?: {isDebug?: boolean}) => Promise<{lhr: LH.Result, artifacts: LH.Artifacts, log: string}>;
+
+  export interface SmokehouseOptions {
+    /** If true, performs extra logging from the test runs. */
+    isDebug?: boolean;
+    /** Manually set the number of jobs to run at once. `1` runs all tests serially. */
+    jobs?: number;
+    /** The number of times to retry failing tests before accepting. Defaults to 0. */
+    retries?: number;
+    /** A function that runs Lighthouse with the given options. Defaults to running Lighthouse via the CLI. */
+    lighthouseRunner?: LighthouseRunner;
+  }
+
+  export interface SmokehouseLibOptions extends SmokehouseOptions {
     urlFilterRegex?: RegExp;
     skip?: (test: TestDfn, expectation: ExpectedRunnerResult) => string | false;
     modify?: (test: TestDfn, expectation: ExpectedRunnerResult) => void;

@@ -107,7 +107,7 @@ async function begin() {
   try {
     server.listen(10200, 'localhost');
     serverForOffline.listen(10503, 'localhost');
-    isPassing = await runSmokehouse(testDefns, options);
+    isPassing = (await runSmokehouse(testDefns, options)).success;
   } finally {
     await server.close();
     await serverForOffline.close();
