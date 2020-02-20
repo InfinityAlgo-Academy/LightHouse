@@ -111,6 +111,10 @@ const UIStrings = {
   pwaInstallableGroupTitle: 'Installable',
   /** Title of the "PWA Optimized" section of the web app category. Within this section are audits that check if the developer has taken advantage of features to make their web page more enjoyable and engaging for the user. */
   pwaOptimizedGroupTitle: 'PWA Optimized',
+  /** Title of the Trust & Safety category of audits. This is displayed at the top of a list of audits focused on the safety and security of a website. Also used as a label on a score guage. */
+  safetyCategoryTitle: 'Trust & Safety',
+  /** Description of the Trust & Safety category of audits. This is displayed at the top of a list of audits focused on the safety and security of a website. 'Learn More' becomes link text to additional documentation. */
+  safetyCategoryDescription: 'These checks validate the ',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -502,16 +506,16 @@ const defaultConfig = {
       auditRefs: [
         {id: 'appcache-manifest', weight: 1},
         {id: 'is-on-https', weight: 1},
-        {id: 'uses-http2', weight: 1},
+        // {id: 'uses-http2', weight: 1},
         {id: 'uses-passive-event-listeners', weight: 1},
         {id: 'no-document-write', weight: 1},
-        {id: 'external-anchors-use-rel-noopener', weight: 1},
-        {id: 'geolocation-on-start', weight: 1},
+        // {id: 'external-anchors-use-rel-noopener', weight: 1},
+        // {id: 'geolocation-on-start', weight: 1},
         {id: 'doctype', weight: 1},
         {id: 'charset', weight: 1},
-        {id: 'no-vulnerable-libraries', weight: 1},
+        // {id: 'no-vulnerable-libraries', weight: 1},
         {id: 'js-libraries', weight: 0},
-        {id: 'notification-on-start', weight: 1},
+        // {id: 'notification-on-start', weight: 1},
         {id: 'deprecations', weight: 1},
         {id: 'password-inputs-can-be-pasted-into', weight: 1},
         {id: 'errors-in-console', weight: 1},
@@ -567,6 +571,17 @@ const defaultConfig = {
         {id: 'pwa-each-page-has-url', weight: 0},
       ],
     },
+    'safety': {
+      title: str_(UIStrings.safetyCategoryTitle),
+      description: str_(UIStrings.safetyCategoryDescription),
+      auditRefs: [
+        {id: 'uses-http2', weight: 1},
+        {id: 'external-anchors-use-rel-noopener', weight: 1},
+        {id: 'geolocation-on-start', weight: 1},
+        {id: 'no-vulnerable-libraries', weight: 1},
+        {id: 'notification-on-start', weight: 1},
+      ],
+    }
   },
 };
 
