@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "Atributi `[aria-*]` se podudaraju sa svojim ulogama"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "Tehnologije za pomoć osobama sa invaliditetom, poput čitača ekrana, ne rade dosledno kada se `aria-hidden=\"true\"` podesi za `<body>` dokumenta. [Saznajte više](https://web.dev/aria-hidden-body/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "Element `[aria-hidden=\"true\"]` je prisutan za `<body>` dokumenta"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "Element `[aria-hidden=\"true\"]` nije prisutan za `<body>` dokumenta"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "Elementi po opadajućem redosledu koji mogu da se fokusiraju u okviru elementa `[aria-hidden=\"true\"]` sprečavaju te interaktivne elemente da budu dostupni korisnicima tehnologija za pomoć osobama sa invaliditetom, poput čitača ekrana. [Saznajte više](https://web.dev/aria-hidden-focus/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "Elementi `[aria-hidden=\"true\"]` sadrže elemente po opadajućem redosledu koji mogu da se fokusiraju"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "Elementi `[aria-hidden=\"true\"]` ne obuhvataju elemente po opadajućem redosledu koji mogu da se fokusiraju"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "Kada polje za unos nema naziv prilagođen funkciji pristupačnosti, čitači ekrana ga najavljuju pomoću generičkog naziva, pa korisnici koji se oslanjaju na čitače ekrana ne mogu da ga koriste. [Saznajte više](https://web.dev/aria-input-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "ARIA polja za unos nemaju nazive prilagođene funkciji pristupačnosti"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "ARIA polja za unos imaju nazive prilagođene funkciji pristupačnosti"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Pojedine ARIA uloge imaju obavezne atribute koji status elementa opisuju čitačima ekrana. [Saznajte više](https://web.dev/aria-required-attr/)."
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "Vrednosti za `[role]` su važeće"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "Kada polje za prekidač nema naziv prilagođen funkciji pristupačnosti, čitači ekrana ga najavljuju pomoću generičkog naziva, pa korisnici koji se oslanjaju na čitače ekrana ne mogu da ga koriste. [Saznajte više](https://web.dev/aria-toggle-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "ARIA polja prekidača nemaju nazive prilagođene funkciji pristupačnosti"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "ARIA polja prekidača imaju nazive prilagođene funkciji pristupačnosti"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "Tehnologije za pomoć osobama sa invaliditetom, poput čitača ekrana, ne mogu da interpretiraju ARIA atribute sa nevažećim vrednostima. [Saznajte više](https://web.dev/aria-valid-attr-value/)."
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Dokument ima element `<title>`"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "Da biste se uverili da su vidljivi za tehnologije za pomoć osobama sa invaliditetom, svi elementi koji mogu da se fokusiraju moraju da imaju jedinstveni `id`. [Saznajte više](https://web.dev/duplicate-id-active/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "Atributi `[id]` na aktivnim elementima koji mogu da se fokusiraju nisu jedinstveni"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "Atributi `[id]` na aktivnim elementima koji mogu da se fokusiraju su jedinstveni"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "Vrednost ARIA ID-a mora da bude jedinstvena da bi se sprečilo da tehnologije za pomoć osobama sa invaliditetom propuste druge instance. [Saznajte više](https://web.dev/duplicate-id-aria/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "ARIA ID-ovi nisu jedinstveni"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "ARIA ID-ovi su jedinstveni"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "Tehnologije za pomoć osobama sa invaliditetom, poput čitača ekrana koji koriste prvu, poslednju ili sve oznake, mogu da čitaju polja obrasca sa više oznaka na način koji zbunjuje korisnike. [Saznajte više](https://web.dev/form-field-multiple-labels/)."
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "Polja obrasca imaju više oznaka"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "Nijedno polje obrasca nema više oznaka"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Korisnici čitača ekrana očekuju od naslova okvira da im opišu sadržaj okvira. [Saznajte više](https://web.dev/frame-title/)."
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "Elementi `<frame>` ili `<iframe>` imaju naslov"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "Naslovi sa pravilnim redosledom koji ne preskaču nivoe prenose semantičku strukturu stranice, pa je čine lakšom za kretanje i razumevanje pri korišćenju tehnologija za pomoć osobama sa invaliditetom. [Saznajte više](https://web.dev/heading-order/)."
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "Elementi naslova se ne prikazuju opadajućim redosledom"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "Elementi naslova se prikazuju opadajućim redosledom"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "Ako za stranicu nije naveden atribut za jezik, čitač ekrana pretpostavlja da je stranica na podrazumevanom jeziku koji je korisnik odabrao tokom podešavanja čitača ekrana. Ako stranica zapravo nije na podrazumevanom jeziku, čitač ekrana možda neće pravilno čitati tekst sa stranice. [Saznajte više](https://web.dev/html-has-lang/)."
@@ -390,7 +462,7 @@
     "message": "Uklonite nekorišćeni CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Uklonite nekorišćeni JavaScript da biste smanjili potrošnju podataka tokom mrežnih aktivnosti."
+    "message": "Uklonite nekorišćeni JavaScript da biste smanjili potrošnju podataka tokom mrežnih aktivnosti. [Saznajte više](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Uklonite nekorišćeni JavaScript"
@@ -532,12 +604,6 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Izbegava preveliku veličinu DOM-a"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Cilj"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Dodajte `rel=\"noopener\"` ili`rel=\"noreferrer\"` svim spoljnim linkovima da biste poboljšali učinak i sprečili bezbednosne propuste. [Saznajte više](https://web.dev/external-anchors-use-rel-noopener)."
@@ -782,14 +848,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "Vreme do interakcije je količina vremena koja je potrebna da bi stranica postala potpuno interaktivna. [Saznajte više](https://web.dev/interactive)."
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "Najveće prikazivanje sadržaja označava trenutak u kojem se prikazuju najveći tekst ili slika. [Saznajte više](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "Najveće prikazivanje sadržaja"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "Maksimalno potencijalno kašnjenje prvog unosa koje može da se desi korisnicima je trajanje najdužeg zadatka u milisekundama. [Saznajte više](https://developers.google.com/web/updates/2018/05/first-input-delay)."
+    "message": "Maksimalno potencijalno kašnjenje prvog prikaza koje može da se desi korisnicima je trajanje najdužeg zadatka. [Saznajte više](https://web.dev/lighthouse-max-potential-fid)."
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Indeks brzine prikazuje koliko brzo sadržaj stranice postaje vidljiv za korisnike. [Saznajte više](https://web.dev/speed-index)."
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "Zbir svih perioda između FCP-a i vremena do početka interakcije, kada zadatak traje duže od 50 ms, izraženo u milisekundama."
+    "message": "Zbir svih perioda između FCP-a i vremena do početka interakcije, kada zadatak traje duže od 50 ms, izraženo u milisekundama. [Saznajte više](https://web.dev/lighthouse-total-blocking-time)."
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "Trajanja povratnog puta (RTT) mreže znatno utiču na učinak. Ako je trajanje povratnog puta do početne lokacije veliko, to znači da bi serveri koji su bliži korisniku mogli da poboljšaju učinak. [Saznajte više](https://hpbn.co/primer-on-latency-and-bandwidth/)."
@@ -805,6 +877,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Serviser omogućava da veb-aplikacija bude pouzdana u nepredvidivim uslovima mreže. [Saznajte više](https://web.dev/offline-start-url)."
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Greška pri učitavanju URL-a {url} u serviseru, pronađen je kôd statusa {statusCode}"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` ne odgovara kodom 200 kada je oflajn"
@@ -883,9 +958,6 @@
   },
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Tekst nije čitljiv jer ne postoji metaoznaka oblasti prikaza koja je optimizovana za ekrane na mobilnim uređajima."
-  },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} teksta je premalo (na osnovu uzorka od {decimalProportionVisited, number, extendedPercent})."
   },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "Dokument ne koristi čitljive veličine fontova"
@@ -1066,6 +1138,18 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Vremena odgovora servera su kratka (TTFB)"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "Merenje"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "Pokazatelj"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "Podesite budžet za brzinu učitavanja da biste lakše pratili učinak sajta. Sajtovi sa dobrim učinkom se učitavaju za kratko vreme i brzo reaguju na događaje unosa korisnika. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "Budžet za brzinu učitavanja"
   },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "Trajanje"
@@ -1289,6 +1373,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "Naziv"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "Premašuje cilj"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Zahtevi"
   },
@@ -1322,11 +1409,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokument"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "Procenjeno kašnjenje unosa"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "Vreme prvog neaktivnog procesora"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "Prvo prikazivanje sadržaja"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "Prvo značajno prikazivanje"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "Font"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Slika"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "Vreme početka interakcije"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "Maks. potencijalno kašnjenje prvog prikaza"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "Mediji"
@@ -1343,11 +1448,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} sek"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Indeks brzine"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Opis stila"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Nezavisni resursi"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "Ukupno vreme blokiranja"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Ukupno"
@@ -1581,13 +1692,13 @@
     "message": "Preporučujemo da umanjite ili promenite broj [WordPress dodatnih komponenti](https://wordpress.org/plugins/) koje na stranici učitavaju JavaScript koji se ne koristi. Da biste identifikovali dodatne komponente koje dodaju suvišan JS, probajte da pokrenete [pokrivenost koda](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) u alatki Chrome DevTools. Možete da identifikujete odgovornu temu/dodatnu komponentu u URL-u skripte. Potražite dodatne komponente koje na listi imaju mnogo skripti sa dosta crvenila u pokrivenosti koda. Dodatna komponenta treba da stavi skriptu na listu samo ako se stvarno koristi na stranici."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Pročitajte više o [keširanju pregledača u WordPress-u](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Pročitajte više o [keširanju pregledača u WordPress-u](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Preporučujemo da koristite [WordPress dodatnu komponentu za optimizaciju slika](https://wordpress.org/plugins/search/optimize+images/) koja komprimuje slike bez gubitka kvaliteta."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Otpremajte slike direktno pomoću [biblioteke medija](https://codex.wordpress.org/Media_Library_Screen) da biste se uverili da su dostupne obavezne veličine slika, pa ih umetnite u biblioteku medija ili koristite vidžet stranice da biste se uverili da se koriste optimalne veličine slika (uključujući one za prelomne tačke koje se odazivaju). Izbegavajte korišćenje slika `Full Size` ako dimenzije nisu adekvatne za njihovo korišćenje. [Saznajte više](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Otpremajte slike direktno pomoću [biblioteke medija](https://wordpress.org/support/article/media-library-screen/) da biste se uverili da su dostupne obavezne veličine slika, pa ih umetnite u biblioteku medija ili koristite vidžet stranice da biste se uverili da se koriste optimalne veličine slika (uključujući one za prelomne tačke koje se odazivaju). Izbegavajte korišćenje slika `Full Size` ako dimenzije nisu adekvatne za njihovo korišćenje. [Saznajte više](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Možete da omogućite komprimovanje teksta u konfiguraciji veb-servera."

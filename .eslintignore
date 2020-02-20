@@ -4,9 +4,13 @@
 
 **/node_modules/**
 **/third_party/**
+**/generated/**
+**/source-maps/**
 
 /dist/**
 
 coverage/**
 
 !.eslintrc.js
+
+lighthouse-core/scripts/legacy-javascript/variants

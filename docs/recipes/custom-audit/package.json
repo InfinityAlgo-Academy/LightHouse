@@ -3,6 +3,6 @@
   "private": true,
   "scripts": {},
   "devDependencies": {
-    "lighthouse": "^3.x"
+    "lighthouse": "^5.6.0"
   }
 }

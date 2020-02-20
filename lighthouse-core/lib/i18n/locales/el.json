@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "Τα χαρακτηριστικά `[aria-*]` αντιστοιχούν στους ρόλους τους"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "Οι τεχνολογίες υποβοήθησης χρηστών, όπως οι αναγνώστες οθόνης, λειτουργούν με μη συνεπή τρόπο όταν το `aria-hidden=\"true\"` έχει οριστεί στο έγγραφο `<body>`. [Μάθετε περισσότερα](https://web.dev/aria-hidden-body/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "Το `[aria-hidden=\"true\"]` υπάρχει στο έγγραφο `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "Το `[aria-hidden=\"true\"]` δεν υπάρχει στο έγγραφο `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "Τα εξαρτημένα στοιχεία με δυνατότητα εστίασης εντός ενός στοιχείου `[aria-hidden=\"true\"]` αποτρέπουν τη διάθεση αυτών των στοιχείων αλληλεπίδρασης σε χρήστες τεχνολογιών υποβοήθησης, όπως είναι οι αναγνώστες οθόνης. [Μάθετε περισσότερα](https://web.dev/aria-hidden-focus/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "Τα στοιχεία `[aria-hidden=\"true\"]` περιέχουν εξαρτημένα στοιχεία με δυνατότητα εστίασης"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "Τα στοιχεία `[aria-hidden=\"true\"]` δεν περιέχουν εξαρτημένα στοιχεία με δυνατότητα εστίασης"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "Όταν ένα πεδίο εισαγωγής δεν έχει προσβάσιμο όνομα, οι αναγνώστες οθόνης το ανακοινώνουν με ένα γενικό όνομα, με αποτέλεσμα να μην μπορεί να χρησιμοποιηθεί από χρήστες που βασίζονται σε αναγνώστες οθόνης. [Μάθετε περισσότερα](https://web.dev/aria-input-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "Τα πεδία εισαγωγής ARIA δεν έχουν προσβάσιμα ονόματα"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "Τα πεδία εισαγωγής ARIA διαθέτουν προσβάσιμα ονόματα"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Ορισμένοι ρόλοι ARIA έχουν απαιτούμενα χαρακτηριστικά που περιγράφουν την κατάσταση του στοιχείου στους αναγνώστες οθόνης. [Μάθετε περισσότερα](https://web.dev/aria-required-attr/)."
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "Οι τιμές `[role]` είναι έγκυρες"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "Όταν ένα πεδίο εναλλαγής δεν έχει προσβάσιμο όνομα, οι αναγνώστες οθόνης το ανακοινώνουν με ένα γενικό όνομα, με αποτέλεσμα να μην μπορεί να χρησιμοποιηθεί από χρήστες που βασίζονται σε αναγνώστες οθόνης. [Μάθετε περισσότερα](https://web.dev/aria-toggle-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "Τα πεδία εναλλαγής ARIA δεν έχουν προσβάσιμα ονόματα"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "Τα πεδία εναλλαγής ARIA διαθέτουν προσβάσιμα ονόματα"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "Οι τεχνολογίες υποβοήθησης χρηστών, όπως οι αναγνώστες οθόνης, δεν μπορούν να ερμηνεύσουν τα χαρακτηριστικά ARIA με μη έγκυρες τιμές. [Μάθετε περισσότερα](https://web.dev/aria-valid-attr-value/)."
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Το έγγραφο έχει ένα στοιχείο `<title>`"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "Όλα τα στοιχεία με δυνατότητα εστίασης πρέπει να διαθέτουν ένα μοναδικό `id` για να διασφαλίσουν ότι είναι ορατά σε τεχνολογίες υποβοήθησης χρηστών. [Μάθετε περισσότερα](https://web.dev/duplicate-id-active/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "`[id]` χαρακτηριστικά σε ενεργά στοιχεία με δυνατότητα εστίασης, δεν είναι μοναδικά"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "`[id]` χαρακτηριστικά σε ενεργά στοιχεία με δυνατότητα εστίασης, είναι μοναδικά"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "Η τιμή ενός αναγνωριστικού ARIA πρέπει να είναι μοναδική, προκειμένου να μην παραβλέπονται άλλες παρουσίες κατά τη χρήση τεχνολογιών υποβοήθησης. [Μάθετε περισσότερα](https://web.dev/duplicate-id-aria/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "Τα αναγνωριστικά ARIA δεν είναι μοναδικά"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "Τα αναγνωριστικά ARIA είναι μοναδικά"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "Τα πεδία φόρμας με πολλές ετικέτες ενδέχεται να ανακοινώνονται με τρόπο που δημιουργεί σύγχυση στους χρήστες τεχνολογιών υποβοήθησης, όπως με τους αναγνώστες οθόνης που χρησιμοποιούν είτε την πρώτη, είτε την τελευταία είτε όλες τις ετικέτες. [Μάθετε περισσότερα](https://web.dev/form-field-multiple-labels/)."
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "Τα πεδία φόρμας έχουν πολλές ετικέτες"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "Δεν υπάρχουν πεδία φόρμας με πολλές ετικέτες"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Οι χρήστες ενός αναγνώστη οθόνης βασίζονται στους τίτλους των πλαισίων για την περιγραφή του περιεχομένου των πλαισίων. [Μάθετε περισσότερα](https://web.dev/frame-title/)."
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "Τα στοιχεία `<frame>` ή `<iframe>` έχουν έναν τίτλο"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "Οι σωστά ταξινομημένες κεφαλίδες που δεν παραβλέπουν επίπεδα αποδίδουν τη σημασιολογική δομή της σελίδας, διευκολύνοντας την πλοήγηση και την κατανόηση κατά τη χρήση τεχνολογιών υποβοήθησης. [Μάθετε περισσότερα](https://web.dev/heading-order/)."
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "Τα στοιχεία κεφαλίδας δεν εμφανίζονται με διαδοχικά φθίνουσα σειρά"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "Τα στοιχεία κεφαλίδας εμφανίζονται με διαδοχικά φθίνουσα σειρά"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "Εάν μια σελίδα δεν προσδιορίζει κάποιο χαρακτηριστικό γλώσσας, ο αναγνώστης οθόνης υποθέτει ότι η σελίδα εμφανίζεται στην προεπιλεγμένη γλώσσα που επέλεξε ο χρήστης κατά τη ρύθμιση του αναγνώστη οθόνης. Εάν η σελίδα δεν εμφανίζεται στην προεπιλεγμένη γλώσσα, τότε ο αναγνώστης οθόνης μπορεί να μην εκφωνήσει σωστά το κείμενο της σελίδας. [Μάθετε περισσότερα](https://web.dev/html-has-lang/)."
@@ -390,7 +462,7 @@
     "message": "Κατάργηση CSS που δεν χρησιμοποιείται"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Καταργήστε τυχόν JavaScript που δεν χρησιμοποιείται, για να ελαττώσετε τα byte που καταναλώνονται από τη δραστηριότητα δικτύου."
+    "message": "Καταργήστε τυχόν JavaScript που δεν χρησιμοποιείται, για να μειώσετε τα byte που καταναλώνονται από τη δραστηριότητα δικτύου. [Μάθετε περισσότερα](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Κατάργηση JavaScript που δεν χρησιμοποιείται"
@@ -532,12 +604,6 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Αποφεύγει τα υπερβολικά μεγάλα μεγέθη DOM"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Στόχος"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Προσθέστε ένα στοιχείο `rel=\"noopener\"` ή `rel=\"noreferrer\"` στους εξωτερικούς συνδέσμους για να βελτιώσετε την απόδοση και να αποφύγετε τις ευπάθειες ασφάλειας. [Μάθετε περισσότερα](https://web.dev/external-anchors-use-rel-noopener)."
@@ -782,14 +848,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "Ο χρόνος για αλληλεπίδραση είναι το χρονικό διάστημα που απαιτείται προκειμένου η σελίδα να γίνει πλήρως διαδραστική. [Μάθετε περισσότερα](https://web.dev/interactive)."
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "Η μέτρηση Μεγαλύτερη μορφή με περιεχόμενο, σηματοδοτεί τη χρονική στιγμή στην οποία σχεδιάζεται το μεγαλύτερο κείμενο ή εικόνα. [Μάθετε περισσότερα](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "Μεγαλύτερη μορφή με περιεχόμενο"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "Η μέγιστη δυνητική καθυστέρηση πρώτης εισόδου που θα μπορούσαν να αντιμετωπίσουν οι χρήστες είναι η διάρκεια, σε χιλιοστά δευτερολέπτου, της πιο χρονοβόρας εργασίας. [Μάθετε περισσότερα](https://developers.google.com/web/updates/2018/05/first-input-delay)."
+    "message": "Η μέγιστη δυνητική καθυστέρηση πρώτης εισόδου που θα μπορούσαν να αντιμετωπίσουν οι χρήστες είναι η διάρκεια της πιο χρονοβόρας εργασίας. [Μάθετε περισσότερα](https://web.dev/lighthouse-max-potential-fid)."
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Το ευρετήριο ταχύτητας δηλώνει πόσο γρήγορα γίνεται ορατό το περιεχόμενο μιας σελίδας. [Μάθετε περισσότερα](https://web.dev/speed-index)."
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "Η συνολική διάρκεια, σε χιλιοστά δευτερολέπτου, των χρονικών διαστημάτων από την πρώτη μορφή με περιεχόμενο μέχρι τον χρόνο για αλληλεπίδραση, όταν η διάρκεια της εργασίας υπερβαίνει τα 50 χιλιοστά δευτερολέπτου."
+    "message": "Η συνολική διάρκεια, σε χιλιοστά δευτερολέπτου, όλων των χρονικών περιόδων από το FCP έως και τον Χρόνο για Αλληλεπίδραση, όταν η διάρκεια της εργασίας υπερβαίνει τα 50 χιλιοστά δευτερολέπτου. [Μάθετε περισσότερα](https://web.dev/lighthouse-total-blocking-time)."
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "Οι χρόνοι αποστολής και επιστροφής δικτύου (RTT) έχουν μεγάλο αντίκτυπο στην απόδοση. Εάν ο χρόνος RTT προς μια προέλευση είναι υψηλός, αυτό σημαίνει ότι η χρήση διακομιστών πιο κοντά στον χρήστη θα μπορούσε να βελτιώσει την απόδοση. [Μάθετε περισσότερα](https://hpbn.co/primer-on-latency-and-bandwidth/)."
@@ -805,6 +877,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Ένα service worker επιτρέπει στην εφαρμογή ιστού σας να είναι πιο αξιόπιστη όταν εκτελείται σε απρόβλεπτες συνθήκες δικτύου. [Μάθετε περισσότερα](https://web.dev/offline-start-url)."
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Σφάλμα κατά τη φόρτωση του {url} στο Service Worker. Ελήφθη ο κωδικός σφάλματος {statusCode}"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "Το `start_url` δεν αποκρίνεται με κωδικό 200 όταν είναι εκτός σύνδεσης"
@@ -883,9 +958,6 @@
   },
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Το κείμενο είναι δυσανάγνωστο επειδή δεν υπάρχει βελτιστοποιημένη μεταετικέτα θύρα προβολής για οθόνες κινητών."
-  },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} του κειμένου είναι πολύ μικρό (βάσει ενός δείγματος {decimalProportionVisited, number, extendedPercent})."
   },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "Το έγγραφο δεν χρησιμοποιεί ευανάγνωστα μεγέθη γραμματοσειράς"
@@ -1066,6 +1138,18 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Οι χρόνοι απόκρισης διακομιστή είναι χαμηλοί (TTFB)"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "Μέτρηση"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "Μέτρηση"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "Ορίστε έναν προϋπολογισμό χρονισμού για να σας βοηθήσει με την παρακολούθηση της απόδοσης στον ιστότοπό σας. Οι αποδοτικοί ιστότοποι φορτώνουν και αποκρίνονται με ταχύτητα στα συμβάντα εισαγωγής χρήστη. [Μάθετε περισσότερα](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "Προϋπολογισμός χρονισμού"
   },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "Διάρκεια"
@@ -1289,6 +1373,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "Όνομα"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "Υπέρβαση προϋπολογισμού"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Αιτήματα"
   },
@@ -1322,11 +1409,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Έγγραφο"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "Εκτιμώμενος λανθάνων χρόνος στοιχείων εισόδου"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "Πρώτη αδράνεια CPU"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "Πρώτη μορφή με περιεχόμενο"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "Πρώτη χρήσιμη μορφή"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "Γραμματοσειρά"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Εικόνα"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "Χρόνος για Αλληλεπίδραση"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "Μέγ. δυνατή καθυστέρηση πρώτης εισόδου"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "Μέσα"
@@ -1343,11 +1448,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} δ."
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Ευρετήριο ταχύτητας"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Φύλλο στιλ"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Τρίτο μέρος"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "Συνολικός χρόνος αποκλεισμού"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Σύνολο"
@@ -1581,13 +1692,13 @@
     "message": "Εξετάστε το ενδεχόμενο μείωσης ή αλλαγής των [προσθηκών WordPress](https://wordpress.org/plugins/) που φορτώνουν μη χρησιμοποιούμενη JavaScript στη σελίδα σας. Για να προσδιορίσετε τις προσθήκες που προσθέτουν περιττό κώδικα JS, δοκιμάστε να εκτελέσετε [κάλυψη κώδικα](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) στο Chrome DevTools. Μπορείτε να προσδιορίσετε το θέμα ή την προσθήκη που ευθύνεται μέσω του URL του σεναρίου. Αναζητήστε προσθήκες που διαθέτουν πολλά σενάρια στη λίστα, στα οποία ένα μεγάλο μέρος της κάλυψης κώδικα έχει κόκκινο χρώμα. Μια προσθήκη θα πρέπει να τοποθετεί στην ουρά ένα σενάριο μόνο αν χρησιμοποιείται στη σελίδα."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Διαβάστε σχετικά με την [Κρυφή μνήμη προγράμματος περιήγησης στο WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Διαβάστε σχετικά με την [Κρυφή μνήμη προγράμματος περιήγησης στο WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Εξετάστε το ενδεχόμενο να χρησιμοποιήσετε μια [προσθήκη βελτιστοποίησης εικόνων WordPress](https://wordpress.org/plugins/search/optimize+images/) που συμπιέζει τις εικόνες διατηρώντας όμως την ποιότητά τους."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Ανεβάστε εικόνες απευθείας μέσω της [βιβλιοθήκης μέσων](https://codex.wordpress.org/Media_Library_Screen) για να διασφαλίσετε ότι τα απαιτούμενα μεγέθη εικόνων είναι διαθέσιμα. Στη συνέχεια, μπορείτε να τις εισαγάγετε από τη βιβλιοθήκη μέσων ή να χρησιμοποιήσετε το γραφικό στοιχείο εικόνων για να διασφαλίσετε ότι χρησιμοποιούνται τα βέλτιστα μεγέθη (συμπεριλαμβανομένων αυτών για τα αποκριτικά σημεία διακοπής). Αποφύγετε τη χρήση εικόνων `Full Size`, εκτός αν οι διαστάσεις είναι κατάλληλες για τη χρήση τους. [Μάθετε περισσότερα](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Ανεβάστε εικόνες απευθείας μέσω της [βιβλιοθήκης μέσων](https://wordpress.org/support/article/media-library-screen/) για να διασφαλίσετε ότι τα απαιτούμενα μεγέθη εικόνων είναι διαθέσιμα. Στη συνέχεια, μπορείτε να τις εισαγάγετε από τη βιβλιοθήκη μέσων ή να χρησιμοποιήσετε το γραφικό στοιχείο εικόνων για να διασφαλίσετε ότι χρησιμοποιούνται τα βέλτιστα μεγέθη (συμπεριλαμβανομένων αυτών για τα αποκριτικά σημεία διακοπής). Αποφύγετε τη χρήση εικόνων `Full Size`, εκτός αν οι διαστάσεις είναι κατάλληλες για τη χρήση τους. [Μάθετε περισσότερα](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Μπορείτε να ενεργοποιήσετε τη συμπίεση κειμένου στη διαμόρφωση του διακομιστή ιστού σας."

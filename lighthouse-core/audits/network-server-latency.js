@@ -72,6 +72,7 @@ class NetworkServerLatency extends Audit {
     return {
       score: Math.max(1 - (maxLatency / 500), 0),
       numericValue: maxLatency,
+      numericUnit: 'millisecond',
       displayValue: str_(i18n.UIStrings.ms, {timeInMs: maxLatency}),
       details: tableDetails,
     };

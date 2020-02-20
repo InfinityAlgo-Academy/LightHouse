@@ -6,6 +6,7 @@
 'use strict';
 
 /**
+ * @type {Array<Smokehouse.ExpectedRunnerResult>}
  * Expected Lighthouse audit values for sites with OOPIFS.
  */
 module.exports = [

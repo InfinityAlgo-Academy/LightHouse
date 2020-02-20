@@ -12,7 +12,7 @@ const i18n = require('../../lib/i18n/i18n.js');
 const UIStrings = {
   /** Description of the Maximum Potential First Input Delay metric that marks the maximum estimated time between the page receiving input (a user clicking, tapping, or typing) and the page responding. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'The maximum potential First Input Delay that your users could experience is the ' +
-      'duration, in milliseconds, of the longest task. [Learn more](https://web.dev/lighthouse-max-potential-fid).',
+      'duration of the longest task. [Learn more](https://web.dev/lighthouse-max-potential-fid).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -68,6 +68,7 @@ class MaxPotentialFID extends Audit {
         context.options.scoreMedian
       ),
       numericValue: metricResult.timing,
+      numericUnit: 'millisecond',
       displayValue: str_(i18n.UIStrings.ms, {timeInMs: metricResult.timing}),
     };
   }

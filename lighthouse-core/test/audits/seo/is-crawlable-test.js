@@ -318,6 +318,32 @@ describe('SEO: Is page crawlable audit', () => {
     return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.score, 0);
       assert.equal(auditResult.details.items.length, 4);
+
+      expect(auditResult.details.items).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "source": Object {
+              "snippet": "<meta name=\\"robots\\" content=\\"noindex\\" />",
+              "type": "node",
+            },
+          },
+          Object {
+            "source": "x-robots-tag: none",
+          },
+          Object {
+            "source": "x-robots-tag: noindex",
+          },
+          Object {
+            "source": Object {
+              "column": 0,
+              "line": 1,
+              "type": "source-location",
+              "url": "http://example.com/robots.txt",
+              "urlProvider": "network",
+            },
+          },
+        ]
+      `);
     });
   });
 });

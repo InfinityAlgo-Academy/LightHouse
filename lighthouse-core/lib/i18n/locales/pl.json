@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "Atrybuty `[aria-*]` odpowiadają swoim rolom"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "Technologie wspomagające, takie jak czytniki ekranu, mogą działać nieprawidłowo, gdy dokument `<body>` ma ustawiony atrybut `aria-hidden=\"true\"`. [Więcej informacji](https://web.dev/aria-hidden-body/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "Dokument `<body>` zawiera atrybut `[aria-hidden=\"true\"]`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "Dokument `<body>` nie zawiera atrybutu `[aria-hidden=\"true\"]`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "Element `[aria-hidden=\"true\"]` zawiera interaktywne elementy podrzędne z możliwością zaznaczenia, które są niedostępne dla użytkowników technologii wspomagających, takich jak czytniki ekranu. [Więcej informacji](https://web.dev/aria-hidden-focus/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "Elementy `[aria-hidden=\"true\"]` zawierają elementy podrzędne, które można zaznaczyć"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "Elementy `[aria-hidden=\"true\"]` nie zawierają elementów podrzędnych, które można zaznaczyć"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "Gdy pole do wprowadzania danych nie ma nazwy na potrzeby ułatwień dostępu, czytniki ekranu określają je nazwą ogólną, przez co jest ono bezużyteczne dla ich użytkowników. [Więcej informacji](https://web.dev/aria-input-field-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "Pola do wprowadzania danych ARIA nie mają nazw na potrzeby ułatwień dostępu"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "Pola do wprowadzania danych ARIA mają nazwy na potrzeby ułatwień dostępu"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Niektóre role ARIA mają atrybuty wymagane, które opisują stan elementu na potrzeby czytników ekranu. [Więcej informacji](https://web.dev/aria-required-attr/)"
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "Wartości `[role]` są prawidłowe"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "Gdy pole przełączania nie ma nazwy na potrzeby ułatwień dostępu, czytniki ekranu określają je nazwą ogólną, przez co jest ono bezużyteczne dla ich użytkowników. [Więcej informacji](https://web.dev/aria-toggle-field-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "Pola przełączania ARIA nie mają nazw na potrzeby ułatwień dostępu"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "Pola przełączania ARIA mają nazwy na potrzeby ułatwień dostępu"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "Technologie wspomagające, takie jak czytniki ekranu, nie potrafią interpretować atrybutów ARIA o nieprawidłowej wartości. [Więcej informacji](https://web.dev/aria-valid-attr-value/)"
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Dokument zawiera element `<title>`"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "Wszystkie elementy, które można zaznaczyć, muszą mieć unikalny atrybut `id`, aby były widoczne dla technologii wspomagających. [Więcej informacji](https://web.dev/duplicate-id-active/)"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "Atrybuty `[id]` aktywnych elementów, które można zaznaczyć, nie są unikalne"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "Atrybuty `[id]` aktywnych elementów, które można zaznaczyć, są unikalne"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "Wartość identyfikatora ARIA musi być unikalna, by technologie wspomagające nie pominęły innych wystąpień. [Więcej informacji](https://web.dev/duplicate-id-aria/)"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "Identyfikatory ARIA nie są unikalne"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "Identyfikatory ARIA są unikalne"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "Technologie wspomagające, takie jak czytniki ekranu, które używają pierwszych, ostatnich lub wszystkich etykiet, mogą błędnie interpretować pola formularzy z wieloma etykietami. [Więcej informacji](https://web.dev/form-field-multiple-labels/)"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "Pola formularza mają wiele etykiet"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "Żadne pola formularza nie mają wielu etykiet"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Tytuły ramek służą użytkownikom czytników ekranu jako opisy zawartości ramek. [Więcej informacji](https://web.dev/frame-title/)"
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "Elementy `<frame>` i `<iframe>` mają tytuł"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "Nagłówki w prawidłowej kolejności, które nie pomijają poziomów, odwzorowują semantyczną strukturę strony. Dzięki temu poruszanie się po nich i korzystanie z ich treści za pomocą technologii wspomagających jest łatwiejsze. [Więcej informacji](https://web.dev/heading-order/)"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "Elementy nagłówków nie pojawiają się w kolejności malejącej"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "Elementy nagłówków pojawiają się w kolejności malejącej"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "Jeśli strona nie ma atrybutu lang, czytnik ekranu przyjmuje, że strona jest w języku domyślnym, który użytkownik wybrał podczas konfigurowania czytnika. Jeśli strona nie jest w języku domyślnym, czytnik ekranu może niepoprawnie wymawiać tekst strony. [Więcej informacji](https://web.dev/html-has-lang/)"
@@ -390,7 +462,7 @@
     "message": "Usuń nieużywany kod CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Usuń nieużywany kod JavaScript, by zmniejszyć ilość danych przesyłanych w sieci."
+    "message": "Usuń nieużywany kod JavaScript, by zmniejszyć ilość danych przesyłanych w sieci. [Więcej informacji](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Usuń nieużywany JavaScript"
@@ -532,12 +604,6 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Unika zbyt dużego DOM"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Cel"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Dodaj atrybut `rel=\"noopener\"` lub `rel=\"noreferrer\"` do wszystkich linków zewnętrznych, by przyśpieszyć działanie i zapobiec lukom w zabezpieczeniach. [Więcej informacji](https://web.dev/external-anchors-use-rel-noopener)"
@@ -782,14 +848,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "Czas do pełnej interaktywności to czas, po którym strona staje się w pełni interaktywna. [Więcej informacji](https://web.dev/interactive)"
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "Największe wyrenderowanie treści oznacza czas wyrenderowania największego tekstu lub obrazu. [Więcej informacji](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "Największe wyrenderowanie treści"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "Maksymalne opóźnienie przy pierwszym działaniu, którego mogą doświadczyć użytkownicy, to czas wykonywania (w milisekundach) najdłuższego zadania. [Więcej informacji](https://developers.google.com/web/updates/2018/05/first-input-delay)"
+    "message": "Maksymalne opóźnienie przy pierwszym działaniu, którego mogą doświadczyć użytkownicy, to czas wykonywania najdłuższego zadania. [Więcej informacji](https://web.dev/lighthouse-max-potential-fid)"
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Indeks szybkości wskazuje, jak szybko strona zapełnia się widocznymi treściami. [Więcej informacji](https://web.dev/speed-index)"
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "Wyrażona w milisekundach suma wszystkich okresów między pierwszym wyrenderowaniem treści a czasem do pełnej interaktywności, gdy długość zadania przekroczyła 50 ms."
+    "message": "Wyrażona w milisekundach suma wszystkich okresów między pierwszym wyrenderowaniem treści a czasem do pełnej interaktywności, gdy długość zadania przekroczyła 50 ms. [Więcej informacji](https://web.dev/lighthouse-total-blocking-time)"
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "Czas błądzenia w sieci (RTT) ma duży wpływ na szybkość działania. Jeśli RTT do źródła jest duży, serwery znajdujące się bliżej użytkownika mogą przyśpieszyć działanie. [Więcej informacji](https://hpbn.co/primer-on-latency-and-bandwidth/)"
@@ -805,6 +877,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Skrypt service worker pozwala aplikacji działać stabilnie w nieprzewidywalnych warunkach sieciowych. [Więcej informacji](https://web.dev/offline-start-url)"
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Błąd wczytywania {url} w skrypcie service worker, kod stanu: {statusCode}"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` nie wyświetla błędu 200, kiedy jest offline"
@@ -883,9 +958,6 @@
   },
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Tekst jest nieczytelny z powodu braku metatagu viewport zoptymalizowanego na potrzeby ekranów telefonów."
-  },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} tekstu jest zbyt małe (na podstawie próbki {decimalProportionVisited, number, extendedPercent})."
   },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "W dokumencie nie są używane czytelne rozmiary czcionek"
@@ -1066,6 +1138,18 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Czasy odpowiedzi serwera są krótkie (TTFB)"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "Pomiary"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "Dane"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "Ustaw budżet czasowy, by łatwiej monitorować wydajność witryny. Wydajne strony szybko się ładują i reagują na zdarzenia wejściowe użytkowników. [Więcej informacji](https://developers.google.com/web/tools/lighthouse/audits/budgets)"
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "Budżet czasowy"
   },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "Czas trwania"
@@ -1289,6 +1373,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "Nazwa"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "Przekroczenie budżetu"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Żądania"
   },
@@ -1322,11 +1409,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokument"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "Szacowane opóźnienie reakcji"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "CPU bezczynny po raz pierwszy"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "Pierwsze wyrenderowanie treści"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "Pierwsze wyrenderowanie elementu znaczącego"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "Czcionka"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Obraz"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "Czas do pełnej interaktywności"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "Maks. potencjalne opóźnienie przy 1. działaniu"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "Multimedia"
@@ -1343,11 +1448,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} s"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Indeks szybkości"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Arkusz stylów"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Zewnętrzne"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "Łączny czas zablokowania"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Razem"
@@ -1581,13 +1692,13 @@
     "message": "Dobrym rozwiązaniem może być ograniczenie liczby [wtyczek WordPressa](https://wordpress.org/plugins/) wczytujących na stronie nieużywany kod JavaScript albo zmiana tych wtyczek na inne. Aby zidentyfikować wtyczki, które dodają nieistotny kod JS, uruchom [zasięg kodu](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) w Chrome DevTools. Możesz zidentyfikować taki motyw/wtyczkę w adresie URL skryptu. Szukaj wtyczek, które mają na liście wiele skryptów z dużą ilością czerwonego koloru w zasięgu kodu. Wtyczka powinna umieszczać skrypt w kolejce, tylko jeśli rzeczywiście jest on używany na stronie."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Dowiedz się więcej o [pamięci podręcznej przeglądarki w WordPressie](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Dowiedz się więcej o [pamięci podręcznej przeglądarki w WordPressie](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Pomocna może być [wtyczka WordPressa do optymalizacji obrazów](https://wordpress.org/plugins/search/optimize+images/), która kompresuje obrazy, zachowując ich jakość."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Przesyłaj obrazy bezpośrednio przez [bibliotekę multimediów](https://codex.wordpress.org/Media_Library_Screen), by mieć pewność, że wymagane rozmiary obrazów są dostępne, a następnie wstawiaj je z biblioteki multimediów lub używaj widżetu obrazów, by zapewnić użycie optymalnych rozmiarów obrazów (także w dynamicznych punktach przerwania). Unikaj używania obrazów `Full Size`, chyba że wymiary są adekwatne do danego zastosowania. [Więcej informacji](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)"
+    "message": "Przesyłaj obrazy bezpośrednio przez [bibliotekę multimediów](https://wordpress.org/support/article/media-library-screen/), by mieć pewność, że wymagane rozmiary obrazów są dostępne, a następnie wstawiaj je z biblioteki multimediów lub używaj widżetu obrazów, by zapewnić użycie optymalnych rozmiarów obrazów (także w dynamicznych punktach przerwania). Unikaj używania obrazów `Full Size`, chyba że wymiary są adekwatne do danego zastosowania. [Więcej informacji](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)"
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Możesz włączyć kompresję tekstu w konfiguracji swojego serwera WWW."

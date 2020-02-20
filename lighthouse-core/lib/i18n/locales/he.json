@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "מאפייני ה-`[aria-*]`‎ תואמים לתפקידים שלהם"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "טכנולוגיות מסייעות, כמו קוראי מסך, פועלים באופן לא עקבי כשמוגדר `aria-hidden=\"true\"` ב-`<body>` של המסמך. [מידע נוסף](https://web.dev/aria-hidden-body/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "יש `[aria-hidden=\"true\"]` ב-`<body>` של המסמך"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "אין `[aria-hidden=\"true\"]` ב-`<body>` של המסמך"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "רכיבי צאצא שיכולים לקבל פוקוס וממוקמים בתוך רכיב `[aria-hidden=\"true\"]`, גורמים לכך שהרכיבים האינטראקטיביים האלה לא יהיו זמינים למשתמשים בטכנולוגיות מסייעות, כמו קוראי מסך. [מידע נוסף](https://web.dev/aria-hidden-focus/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "רכיבי `[aria-hidden=\"true\"]` כוללים רכיבי צאצא שיכולים לקבל פוקוס"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "רכיבי `[aria-hidden=\"true\"]` אינם מכילים רכיבי צאצא שיכולים לקבל פוקוס"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "כשאין לשדה להזנת קלט שם נגיש, קוראי מסך מציינים שם גנרי, ובמצב כזה אנשים שמסתמכים על קוראי מסך יתקשו להשתמש בשדה. [מידע נוסף](https://web.dev/aria-input-field-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "לשדות הזנת קלט של ARIA אין שמות נגישים"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "לשדות ARIA להזנת קלט יש שמות נגישים"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "חלק מתפקידי ה-ARIA כוללים מאפיינים נדרשים שמתארים לקוראי המסך את מצב הרכיב. [מידע נוסף](https://web.dev/aria-required-attr/)."
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "ערכי ה-`[role]` חוקיים"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "כשהשם של שדה החלפת מצב (toggle) אינו נגיש, קוראי מסך מציינים שם גנרי, ובמצב כזה אנשים שמסתמכים על קוראי מסך יתקשו להשתמש בשדה. [מידע נוסף](https://web.dev/aria-toggle-field-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "לשדות החלפת מצב (toggle) של ARIA אין שמות נגישים"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "לשדות החלפת מצב (toggle) של ARIA יש שמות נגישים"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "טכנולוגיות לנגישות, כמו קוראי מסך, לא יכולות לפענח מאפייני ARIA שהערכים שלהם לא חוקיים. [מידע נוסף](https://web.dev/aria-valid-attr-value/)."
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "המסמך מכיל רכיב `<title>`"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "כל הרכיבים שיכולים לקבל פוקוס חייבים לכלול `id` ייחודי כדי לוודא שטכנולוגיות מסייעות יוכלו לזהות אותם. [מידע נוסף](https://web.dev/duplicate-id-active/)"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "נעשה שימוש במאפייני `[id]` לא ייחודיים ברכיבים פעילים שיכולים לקבל פוקוס"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "נעשה שימוש במאפייני `[id]` ייחודיים ברכיבים פעילים שיכולים לקבל פוקוס"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "הערך של מזהה ARIA חייב להיות ייחודי כדי למנוע מטכנולוגיות מסייעות להתעלם ממופעים אחרים. [מידע נוסף](https://web.dev/duplicate-id-aria/)"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "מזהי ה-ARIA אינם ייחודיים"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "מזהי ה-ARIA ייחודיים"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "טכנולוגיות מסייעות עלולות להקריא באופן מבלבל שדות טופס עם תוויות מרובות. קוראי מסך, למשל, מקריאים את התווית הראשונה, האחרונה או את כולן. [מידע נוסף](https://web.dev/form-field-multiple-labels/)"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "לשדות טופס יש תוויות מרובות"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "אין שדות טופס עם תוויות מרובות"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "משתמשים הנעזרים בקוראי מסך מסתמכים על כותרות של מסגרות כדי להבין מה תוכן המסגרות. [מידע נוסף](https://web.dev/frame-title/)."
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "לרכיבי `<frame>` או `<iframe>` יש מאפיין title"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "כשהכותרות מופיעות בסדר הנכון ואינן מדלגות על רמות, הן מבהירות את המבנה הסמנטי של הדף. כך קל יותר לנווט ולהבין את הדף כשמשתמשים בטכנולוגיות מסייעות. [מידע נוסף](https://web.dev/heading-order/)"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "רכיבי כותרת אינם מופיעים ברצף יורד"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "רכיבי כותרת מופיעים ברצף יורד"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "אם בדף לא מצוין מאפיין lang, קורא המסך יפעל כאילו שהדף כתוב בשפת ברירת המחדל שהמשתמש בחר במהלך הגדרת קורא המסך. אם שפת הדף שונה משפת ברירת המחדל, ייתכן שקורא המסך לא יקרא בצורה נכונה את הטקסט שבדף. [מידע נוסף](https://web.dev/html-has-lang/)."
@@ -390,7 +462,7 @@
     "message": "יש להסיר CSS שאינו בשימוש"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "יש להסיר JavaScript שאינו בשימוש כדי לצמצם צריכת בייטים על-ידי פעילות ברשת."
+    "message": "יש להסיר JavaScript שאינו בשימוש כדי לצמצם צריכת בייטים על-ידי פעילות ברשת. [מידע נוסף](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "יש להסיר JavaScript שאינו בשימוש"
@@ -532,12 +604,6 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "נמנע מ-DOM גדול מדי"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "יעד"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "כדי לשפר את הביצועים ולמנוע פגיעויות המסכנות את האבטחה, יש להוסיף `rel=\"noopener\"` או `rel=\"noreferrer\"` לקישורים חיצוניים. [מידע נוסף](https://web.dev/external-anchors-use-rel-noopener)."
@@ -782,14 +848,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "הזמן עד לפעילות מלאה הוא משך הזמן שחולף עד שהדף מאפשר פעילות מלאה. [מידע נוסף](https://web.dev/interactive)."
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "הצגת חלק התוכן הגדול ביותר (LCP) מציינת את הזמן שבו התמונה או הטקסט הגדולים ביותר מוצגים. [מידע נוסף](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "הצגת חלק התוכן הגדול ביותר (LCP)"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "ההשהיה הפוטנציאלית המרבית שהמשתמשים יכולים לחוות לאחר קלט ראשוני היא משך הזמן (באלפיות שנייה) של המשימה הארוכה ביותר. [מידע נוסף](https://developers.google.com/web/updates/2018/05/first-input-delay)."
+    "message": "ההשהיה הפוטנציאלית המרבית שהמשתמשים יכולים לחוות לאחר קלט ראשוני (FID) היא משך הזמן של המשימה הארוכה ביותר. [מידע נוסף](https://web.dev/lighthouse-max-potential-fid)"
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "מדד המהירות (Speed Index) מראה באיזו מהירות מוצג התוכן בדף [מידע נוסף](https://web.dev/speed-index)."
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "משך הזמן המצטבר של כל פרקי הזמן מרגע הצגת התוכן הראשוני (FCP) ועד לפעילות מלאה, במקרים שבהם משך המשימה חורג מ-50 אלפיות שנייה. הערך מבוטא באלפיות שנייה."
+    "message": "משך הזמן המצטבר של כל פרקי הזמן מרגע הצגת התוכן הראשוני (FCP) ועד לפעילות מלאה, במקרים שבהם משך המשימה חורג מ-50 אלפיות שנייה. הערך מבוטא באלפיות שנייה. [מידע נוסף](https://web.dev/lighthouse-total-blocking-time)"
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "לזמני הלוך ושוב (RTT) ברשת יש השפעה גדולה על הביצועים. אם נדרש RTT ארוך בתקשורת עם מקור, זה סימן לכך שאפשר לשפר את הביצועים בעזרת שרתים שממוקמים קרוב יותר אל המשתמש. [מידע נוסף](https://hpbn.co/primer-on-latency-and-bandwidth/)."
@@ -805,6 +877,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "קובץ שירות (service worker) מאפשר לאפליקציית האינטרנט שלך להיות אמינה יותר בתנאי רשת לא צפויים. [מידע נוסף](https://web.dev/offline-start-url)."
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "אירעה שגיאה בטעינה של {url} בקובץ השירות (Service Worker). קוד השגיאה: {statusCode}"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` לא מגיב בסטטוס 200 כשהוא במצב לא מקוון"
@@ -883,9 +958,6 @@
   },
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "הטקסט לא קריא כי לא בוצעה אופטימיזציית מטא תג של אזור התצוגה בשביל מסכים של ניידים."
-  },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "הגודל של {decimalProportion, number, extendedPercent} מהטקסט קטן מדי (מבוסס על דגימה של {decimalProportionVisited, number, extendedPercent})."
   },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "מידות הגופן במסך מקשות על הקריאה"
@@ -1066,6 +1138,18 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "זמני התגובה של השרת ארוכים (TTFB)"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "הערך שנמדד"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "מדד"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "עליך להגדיר תקציב תזמון שיעזור לך לעקוב אחר ביצועי האתר. אתרים עם ביצועים טובים נטענים מהר ומגיבים בזריזות כשהמשתמש מזין קלט. [מידע נוסף](https://developers.google.com/web/tools/lighthouse/audits/budgets)"
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "תקציב תזמון"
   },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "משך זמן"
@@ -1289,6 +1373,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "שם"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "גובה החריגה מהתקציב"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "בקשות"
   },
@@ -1322,11 +1409,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "מסמך"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "אומדן זמן האחזור של קלט"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "מצב ראשון של חוסר פעילות ב-CPU"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "הצגת התוכן הראשוני"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "הצגת התוכן העיקרי"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "גופן"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "תמונה"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "זמן עד לאינטראקטיביות"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "השהיה פוטנציאלית מרבית לאחר קלט ראשוני"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "מדיה"
@@ -1343,11 +1448,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} שנ'"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "מדד מהירות (Speed Index)"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "גליון סגנונות"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "צד שלישי"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "זמן החסימה הכולל"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "סה\"כ"
@@ -1581,13 +1692,13 @@
     "message": "כדאי לשקול לצמצם את מספר [יישומי הפלאגין של WordPress](https://wordpress.org/plugins/) שטוענים תוכן JavaScript בלתי נחוץ בדף, או להשבית אותם. כדי לזהות יישומי פלאגין שמוסיפים תוכן JS מיותר, אפשר להפעיל [כיסוי קוד](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) ב-Chrome DevTools. לפי כתובת ה-URL של הסקריפט, ניתן לזהות את העיצוב/הפלאגין שאחראים להוספת התוכן. יישומי הפלאגין הבעייתיים הם אלה שברשימת הסקריפטים שלהם יש כמות גדולה של כיסוי קוד באדום. פלאגין צריך להכניס סקריפט לתור רק אם נעשה בו שימוש בדף."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "למידע על [שמירה במטמון הדפדפן ב-WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "למידע על [שמירה במטמון הדפדפן ב-WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "כדאי לשקול להשתמש ב[פלאגין של WordPress לאופטימיזציית תמונות](https://wordpress.org/plugins/search/optimize+images/) שדוחס את התמונות בלי לפגוע באיכות שלהן."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "העלאה של תמונות באופן ישיר דרך [ספריית המדיה](https://codex.wordpress.org/Media_Library_Screen) תאפשר לך לוודא שהתמונות זמינות במידות הדרושות. אחר כך אפשר להוסיף אותן מספריית המדיה או להשתמש בווידג'ט התמונות כדי לוודא שנעשה שימוש בתמונות במידות האופטימליות (כולל תמונות בשביל נקודות מעבר רספונסיביות). יש להימנע משימוש בתמונות ב`Full Size`, אלא אם המימדים מתאימים לשימוש שנעשה בהן. [מידע נוסף](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "העלאה של תמונות באופן ישיר דרך [ספריית המדיה](https://wordpress.org/support/article/media-library-screen/) תאפשר לך לוודא שהתמונות זמינות במידות הדרושות. אחר כך אפשר להוסיף אותן מספריית המדיה או להשתמש בווידג'ט התמונות כדי לוודא שנעשה שימוש בתמונות במידות האופטימליות (כולל תמונות בשביל נקודות מעבר רספונסיביות). יש להימנע משימוש בתמונות ב`Full Size`, אלא אם המימדים מתאימים לשימוש שנעשה בהן. [מידע נוסף](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "אפשר להפעיל דחיסת טקסט בהגדרות שרת האינטרנט."

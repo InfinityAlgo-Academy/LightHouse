@@ -11,6 +11,7 @@
 <title>DoBetterWeb Mega Tester... Of Death</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta property="og:description" content="Open Graph smoke test description">
 
 <template id="links-blocking-first-paint-tmpl">
   <link rel="stylesheet" href="./dbw_tester.css?scriptActivated&delay=200"> <!-- PASS: initiator is script -->
@@ -436,6 +437,19 @@ if (location.search === '') {
 <!-- FAIL(is-on-https): requires a non-localhost http file
      FAIL(no-vulnerable-libraries): Loads a vulnerable JS library -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<!-- Filesystem URL shouldn't be flagged is-on-https. -->
+<script>
+  function onInitFs(fs) {
+    fs.root.getFile(`empty-${Math.random()}.png`, {create: true, exclusive: true}, function (fileEntry) {
+      const img = document.createElement('img');
+      img.src = fileEntry.toURL();
+      document.body.appendChild(img);
+    }, console.error);
+  }
+    
+  window.webkitRequestFileSystem(window.TEMPORARY, 1024 * 1024, onInitFs, console.error); 
+</script>
 
 </body>
 </html>

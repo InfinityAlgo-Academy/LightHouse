@@ -22,7 +22,6 @@ describe('Network requests audit', () => {
 
     return NetworkRequests.audit(artifacts, {computedCache: new Map()}).then(output => {
       assert.equal(output.score, 1);
-      assert.equal(output.numericValue, 66);
       assert.equal(output.details.items.length, 66);
       assert.equal(output.details.items[0].url, 'https://pwa.rocks/');
       assert.equal(output.details.items[0].startTime, 0);

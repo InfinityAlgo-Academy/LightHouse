@@ -11,6 +11,7 @@ const assert = require('assert');
 const fs = require('fs');
 const jsdom = require('jsdom');
 const Util = require('../../../../report/html/renderer/util.js');
+const I18n = require('../../../../report/html/renderer/i18n.js');
 const URL = require('../../../../lib/url-shim.js');
 const DOM = require('../../../../report/html/renderer/dom.js');
 const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
@@ -28,8 +29,8 @@ describe('PerfCategoryRenderer', () => {
   let sampleResults;
 
   beforeAll(() => {
-    global.URL = URL;
     global.Util = Util;
+    global.Util.i18n = new I18n('en', {...Util.UIStrings});
     global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
     global.CategoryRenderer = CategoryRenderer;
 
@@ -47,7 +48,7 @@ describe('PerfCategoryRenderer', () => {
   });
 
   afterAll(() => {
-    global.URL = undefined;
+    global.Util.i18n = undefined;
     global.Util = undefined;
     global.CriticalRequestChainRenderer = undefined;
     global.CategoryRenderer = undefined;
@@ -189,7 +190,7 @@ describe('PerfCategoryRenderer', () => {
   });
 
   describe('budgets', () => {
-    it('renders a performance budget', () => {
+    it('renders the group and header', () => {
       const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
 
       const budgetsGroup = categoryDOM.querySelector('.lh-audit-group.lh-audit-group--budgets');
@@ -197,8 +198,11 @@ describe('PerfCategoryRenderer', () => {
 
       const header = budgetsGroup.querySelector('.lh-audit-group__header');
       assert.ok(header);
+    });
 
-      const budgetTable = budgetsGroup.querySelector('#performance-budget.lh-table');
+    it('renders the performance budget table', () => {
+      const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
+      const budgetTable = categoryDOM.querySelector('#performance-budget.lh-table');
       assert.ok(budgetTable);
 
       const lhrBudgetEntries = sampleResults.audits['performance-budget'].details.items;
@@ -206,11 +210,23 @@ describe('PerfCategoryRenderer', () => {
       assert.strictEqual(tableRows.length, lhrBudgetEntries.length);
     });
 
-    it('does not render a budget table when performance-budget audit is notApplicable', () => {
+    it('renders the timing budget table', () => {
+      const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
+      const budgetTable = categoryDOM.querySelector('#timing-budget.lh-table');
+      assert.ok(budgetTable);
+
+      const lhrBudgetEntries = sampleResults.audits['timing-budget'].details.items;
+      const tableRows = budgetTable.querySelectorAll('tbody > tr');
+      assert.strictEqual(tableRows.length, lhrBudgetEntries.length);
+    });
+
+    it('does not render the budgets section when all budget audits are notApplicable', () => {
       const budgetlessCategory = JSON.parse(JSON.stringify(category));
-      const budgetRef = budgetlessCategory.auditRefs.find(a => a.id === 'performance-budget');
-      budgetRef.result.scoreDisplayMode = 'notApplicable';
-      delete budgetRef.result.details;
+      ['performance-budget', 'timing-budget'].forEach((id) => {
+        const budgetRef = budgetlessCategory.auditRefs.find(a => a.id === id);
+        budgetRef.result.scoreDisplayMode = 'notApplicable';
+        delete budgetRef.result.details;
+      });
 
       const categoryDOM = renderer.render(budgetlessCategory, sampleResults.categoryGroups);
       const budgetsGroup = categoryDOM.querySelector('.lh-audit-group.lh-audit-group--budgets');

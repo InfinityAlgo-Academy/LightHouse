@@ -11,6 +11,68 @@
  */
 const expectations = [
   {
+    artifacts: {
+      ScriptElements: [
+        {
+          type: null,
+          src: null,
+          async: false,
+          defer: false,
+          source: 'head',
+          devtoolsNodePath: '2,HTML,0,HEAD,3,SCRIPT',
+        },
+        {
+          type: 'application/javascript',
+          src: 'http://localhost:10200/byte-efficiency/script.js',
+          async: false,
+          defer: false,
+          source: 'head',
+          devtoolsNodePath: '2,HTML,0,HEAD,5,SCRIPT',
+        },
+        {
+          type: null,
+          src: null,
+          async: false,
+          defer: false,
+          source: 'body',
+          devtoolsNodePath: '2,HTML,1,BODY,0,DIV,3,SCRIPT',
+        },
+        {
+          type: null,
+          src: null,
+          async: false,
+          defer: false,
+          source: 'body',
+          devtoolsNodePath: '2,HTML,1,BODY,3,SCRIPT',
+        },
+        {
+          type: null,
+          src: 'http://localhost:10200/byte-efficiency/delay-complete.js?delay=8000',
+          async: true,
+          defer: false,
+          source: 'body',
+          devtoolsNodePath: '2,HTML,1,BODY,1438,SCRIPT',
+        },
+        {
+          type: null,
+          src: null,
+          async: false,
+          defer: false,
+          source: 'body',
+          devtoolsNodePath: '2,HTML,1,BODY,1439,SCRIPT',
+          content: /Used block #1/,
+        },
+        {
+          type: null,
+          src: null,
+          async: false,
+          defer: false,
+          source: 'body',
+          devtoolsNodePath: '2,HTML,1,BODY,1440,SCRIPT',
+          content: /Unused block #1/,
+        },
+      ],
+    },
     lhr: {
       requestedUrl: 'http://localhost:10200/byte-efficiency/tester.html',
       finalUrl: 'http://localhost:10200/byte-efficiency/tester.html',
@@ -107,12 +169,12 @@ const expectations = [
           },
         },
         'uses-responsive-images': {
-          displayValue: 'Potential savings of 69\xa0KB',
+          displayValue: 'Potential savings of 53\xa0KB',
           details: {
-            overallSavingsBytes: '>65000',
+            overallSavingsBytes: '>50000',
             items: {
-              0: {wastedPercent: '<60'},
-              1: {wastedPercent: '<60'},
+              0: {wastedPercent: '<46'},
+              1: {wastedPercent: '<46'},
               length: 2,
             },
           },
@@ -133,13 +195,13 @@ const expectations = [
               },
               {
                 url: 'http://localhost:10200/byte-efficiency/script.js?gzip=1',
-                transferSize: 1158,
-                resourceSize: 52997,
+                transferSize: '1100 +/- 100',
+                resourceSize: '53000 +/- 1000',
               },
               {
                 url: 'http://localhost:10200/byte-efficiency/script.js',
-                transferSize: 53203,
-                resourceSize: 52997,
+                transferSize: '53200 +/- 1000',
+                resourceSize: '53000 +/- 1000',
               },
               {
                 url: 'http://localhost:10200/favicon.ico',

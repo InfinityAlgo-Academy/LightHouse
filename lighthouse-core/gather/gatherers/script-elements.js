@@ -39,6 +39,27 @@ function collectAllScriptElements() {
 }
 
 /**
+ * @template T, U
+ * @param {Array<T>} values
+ * @param {(value: T) => Promise<U>} promiseMapper
+ * @param {boolean} runInSeries
+ * @return {Promise<Array<U>>}
+ */
+async function runInSeriesOrParallel(values, promiseMapper, runInSeries) {
+  if (runInSeries) {
+    const results = [];
+    for (const value of values) {
+      const result = await promiseMapper(value);
+      results.push(result);
+    }
+    return results;
+  } else {
+    const promises = values.map(promiseMapper);
+    return await Promise.all(promises);
+  }
+}
+
+/**
  * @fileoverview Gets JavaScript file contents.
  */
 class ScriptElements extends Gatherer {
@@ -68,29 +89,35 @@ class ScriptElements extends Gatherer {
       // Only get the content of script requests
       .filter(record => record.resourceType === NetworkRequest.TYPES.Script);
 
-    for (const record of scriptRecords) {
-      try {
-        const content = await driver.getRequestContent(record.requestId);
-        if (!content) continue;
+    // If run on a mobile device, be sensitive to memory limitations and only request one
+    // record at a time.
+    const scriptRecordContents = await runInSeriesOrParallel(
+      scriptRecords,
+      record => driver.getRequestContent(record.requestId).catch(() => ''),
+      passContext.baseArtifacts.HostFormFactor === 'mobile' /* runInSeries*/ );
 
-        const matchedScriptElement = scripts.find(script => script.src === record.url);
-        if (matchedScriptElement) {
-          matchedScriptElement.requestId = record.requestId;
-          matchedScriptElement.content = content;
-        } else {
-          scripts.push({
-            devtoolsNodePath: '',
-            type: null,
-            src: record.url,
-            id: null,
-            async: false,
-            defer: false,
-            source: 'network',
-            requestId: record.requestId,
-            content,
-          });
-        }
-      } catch (e) {}
+    for (let i = 0; i < scriptRecords.length; i++) {
+      const record = scriptRecords[i];
+      const content = scriptRecordContents[i];
+      if (!content) continue;
+
+      const matchedScriptElement = scripts.find(script => script.src === record.url);
+      if (matchedScriptElement) {
+        matchedScriptElement.requestId = record.requestId;
+        matchedScriptElement.content = content;
+      } else {
+        scripts.push({
+          devtoolsNodePath: '',
+          type: null,
+          src: record.url,
+          id: null,
+          async: false,
+          defer: false,
+          source: 'network',
+          requestId: record.requestId,
+          content,
+        });
+      }
     }
 
     return scripts;

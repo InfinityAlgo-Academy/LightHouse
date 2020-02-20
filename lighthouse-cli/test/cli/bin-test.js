@@ -45,6 +45,7 @@ beforeEach(() => {
   cliFlags = {
     _: ['http://example.com'],
     output: ['html'],
+    chromeIgnoreDefaultFlags: false,
     chromeFlags: '',
     outputPath: '',
     saveAssets: false,

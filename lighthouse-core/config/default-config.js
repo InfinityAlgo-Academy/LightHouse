@@ -154,6 +154,7 @@ const defaultConfig = {
   },
   {
     passName: 'offlinePass',
+    loadFailureMode: 'ignore',
     gatherers: [
       'service-worker',
       'offline',
@@ -162,6 +163,7 @@ const defaultConfig = {
   },
   {
     passName: 'redirectPass',
+    loadFailureMode: 'warn',
     // Speed up the redirect pass by blocking stylesheets, fonts, and images
     blockedUrlPatterns: ['*.css', '*.jpg', '*.jpeg', '*.png', '*.gif', '*.svg', '*.ttf', '*.woff', '*.woff2'],
     gatherers: [
@@ -213,6 +215,7 @@ const defaultConfig = {
     'metrics',
     'offline-start-url',
     'performance-budget',
+    'timing-budget',
     'resource-summary',
     'third-party-summary',
     'manual/pwa-cross-browser',
@@ -285,6 +288,7 @@ const defaultConfig = {
     'byte-efficiency/efficient-animated-content',
     'dobetterweb/appcache-manifest',
     'dobetterweb/doctype',
+    'dobetterweb/charset',
     'dobetterweb/dom-size',
     'dobetterweb/external-anchors-use-rel-noopener',
     'dobetterweb/geolocation-on-start',
@@ -415,6 +419,7 @@ const defaultConfig = {
         {id: 'mainthread-work-breakdown', weight: 0, group: 'diagnostics'},
         {id: 'font-display', weight: 0, group: 'diagnostics'},
         {id: 'performance-budget', weight: 0, group: 'budgets'},
+        {id: 'timing-budget', weight: 0, group: 'budgets'},
         {id: 'resource-summary', weight: 0, group: 'diagnostics'},
         {id: 'third-party-summary', weight: 0, group: 'diagnostics'},
         // Audits past this point don't belong to a group and will not be shown automatically
@@ -503,6 +508,7 @@ const defaultConfig = {
         {id: 'external-anchors-use-rel-noopener', weight: 1},
         {id: 'geolocation-on-start', weight: 1},
         {id: 'doctype', weight: 1},
+        {id: 'charset', weight: 1},
         {id: 'no-vulnerable-libraries', weight: 1},
         {id: 'js-libraries', weight: 0},
         {id: 'notification-on-start', weight: 1},

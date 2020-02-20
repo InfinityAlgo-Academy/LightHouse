@@ -19,6 +19,7 @@ function generateMockArtifacts(src = manifestSrc) {
 
   const clonedArtifacts = JSON.parse(JSON.stringify({
     WebAppManifest: exampleManifest,
+    InstallabilityErrors: {errors: []},
     URL: {finalUrl: 'https://example.com'},
   }));
   return clonedArtifacts;
@@ -44,8 +45,7 @@ describe('PWA: webapp install banner audit', () => {
     });
 
     it('fails with a non-parsable manifest', () => {
-      const artifacts = generateMockArtifacts();
-      artifacts.WebAppManifest = manifestParser('{,:}', EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const artifacts = generateMockArtifacts('{,:}');
       const context = generateMockAuditContext();
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
@@ -54,13 +54,12 @@ describe('PWA: webapp install banner audit', () => {
     });
 
     it('fails when an empty manifest is present', () => {
-      const artifacts = generateMockArtifacts();
-      artifacts.WebAppManifest = manifestParser('{}', EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const artifacts = generateMockArtifacts('{}');
       const context = generateMockAuditContext();
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
         assert.ok(result.explanation);
-        assert.strictEqual(result.details.items[0].failures.length, 4);
+        assert.strictEqual(result.details.items[0].failures.length, 5);
       });
     });
 
@@ -132,9 +131,25 @@ describe('PWA: webapp install banner audit', () => {
         assert.ok(result.explanation.includes('PNG icon'), result.explanation);
 
         const details = result.details.items[0];
+        assert.strictEqual(details.failures.length, 2, details.failures);
+        assert.strictEqual(details.hasStartUrl, true);
+        assert.strictEqual(details.hasIconsAtLeast144px, false);
+      });
+    });
+
+    it('fails if page had no fetchable icons in the manifest', () => {
+      const artifacts = generateMockArtifacts();
+      artifacts.InstallabilityErrors.errors.push({errorId: 'no-icon-available'});
+      const context = generateMockAuditContext();
+
+      return InstallableManifestAudit.audit(artifacts, context).then(result => {
+        assert.strictEqual(result.score, 0);
+        assert.ok(result.explanation.includes('failed to be fetched'), result.explanation);
+
+        const details = result.details.items[0];
         assert.strictEqual(details.failures.length, 1, details.failures);
         assert.strictEqual(details.hasStartUrl, true);
-        assert.strictEqual(details.hasIconsAtLeast192px, false);
+        assert.strictEqual(details.hasIconsAtLeast144px, true);
       });
     });
   });
@@ -150,7 +165,7 @@ describe('PWA: webapp install banner audit', () => {
       const details = result.details.items[0];
       assert.strictEqual(details.failures.length, 1, details.failures);
       assert.strictEqual(details.hasStartUrl, true);
-      assert.strictEqual(details.hasIconsAtLeast192px, false);
+      assert.strictEqual(details.hasIconsAtLeast144px, false);
     });
   });
 });

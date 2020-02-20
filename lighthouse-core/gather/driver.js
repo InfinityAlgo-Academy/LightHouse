@@ -113,7 +113,7 @@ class Driver {
       // Not mandatory but not used much
       'blink.console',
 
-      // Most the events we need come in on these two
+      // Most of the events we need are from these two categories
       'devtools.timeline',
       'disabled-by-default-devtools.timeline',
 
@@ -1352,12 +1352,7 @@ class Driver {
    * @return {Promise<void>}
    */
   async beginEmulation(settings) {
-    if (settings.emulatedFormFactor === 'mobile') {
-      await emulation.enableNexus5X(this);
-    } else if (settings.emulatedFormFactor === 'desktop') {
-      await emulation.enableDesktop(this);
-    }
-
+    await emulation.emulate(this, settings);
     await this.setThrottling(settings, {useThrottling: true});
   }
 

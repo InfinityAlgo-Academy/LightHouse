@@ -25,6 +25,9 @@ class MetaElements extends Gatherer {
         return {
           name: meta.name.toLowerCase(),
           content: meta.content,
+          property: meta.attributes.property ? meta.attributes.property.value : undefined,
+          httpEquiv: meta.httpEquiv ? meta.httpEquiv.toLowerCase() : undefined,
+          charset: meta.attributes.charset ? meta.attributes.charset.value : undefined,
         };
       });
     })()`, {useIsolation: true});

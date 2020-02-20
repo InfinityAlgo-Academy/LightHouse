@@ -62,10 +62,18 @@ class Audit {
   }
 
   /**
+   * Same as requiredArtifacts, but optional. Internal usage only.
+   * @return {Array<keyof LH.Artifacts>}
+   */
+  static get __internalOptionalArtifacts() {
+    return []; // replace this with `this.artifacts(...)`.
+  }
+
+  /**
    * @template T
    * @param {...keyof T} artifactKeys
    * @return {Array<keyof T>}
-  */
+   */
   static artifacts(...artifactKeys) {
     return artifactKeys;
   }
@@ -287,6 +295,12 @@ class Audit {
       }
     }
 
+    // The Audit.Product type is bifurcated to enforce numericUnit accompanying numericValue;
+    // the existence of `numericUnit` is our discriminant.
+    // Make ts happy and enforce this contract programmatically by only pulling numericValue off of
+    // a `NumericProduct` type.
+    const numericProduct = 'numericUnit' in product ? product : undefined;
+
     return {
       id: audit.meta.id,
       title: auditTitle,
@@ -294,7 +308,8 @@ class Audit {
 
       score,
       scoreDisplayMode,
-      numericValue: product.numericValue,
+      numericValue: numericProduct && numericProduct.numericValue,
+      numericUnit: numericProduct && numericProduct.numericUnit,
 
       displayValue: product.displayValue,
       explanation: product.explanation,

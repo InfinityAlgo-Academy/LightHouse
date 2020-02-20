@@ -131,13 +131,16 @@ cd ../lighthouse-pristine
 git status
 git log
 
+# Publish tag.
+git push --follow-tags
+
 # Publish to npm.
 npm publish
 
 # Publish viewer.
 yarn deploy-viewer
 
-# Publish the extension.
+# Publish the extensions (if it changed).
 open https://chrome.google.com/webstore/developer/edit/blipmdconlkpinefehnmjammfjpmpbjk
 cd dist/extension-package/
 echo "Upload the package zip to CWS dev dashboard..."
@@ -145,8 +148,10 @@ echo "Upload the package zip to CWS dev dashboard..."
 # Open <https://chrome.google.com/webstore/developer/dashboard>
 # Click _Edit_ on lighthouse
 # _Upload Updated Package_
-# Select `lighthouse-X.X.X.zip`
+# Select `lighthouse-X.X.X.X.zip`
 # _Publish_ at the bottom
+
+# For Firefox: https://addons.mozilla.org/en-US/developers/addon/google-lighthouse/versions/submit/
 
 # * Tell the world!!! *
 echo "Complete the _Release publicity_ tasks documented above"

@@ -7,6 +7,30 @@
 import _Crdp from 'devtools-protocol/types/protocol';
 import _CrdpMappings from 'devtools-protocol/types/protocol-mapping'
 
+// Convert unions (T1 | T2 | T3) into tuples ([T1, T2, T3]).
+// https://stackoverflow.com/a/52933137/2788187 https://stackoverflow.com/a/50375286
+type UnionToIntersection<U> =
+(U extends any ? (k: U)=>void : never) extends ((k: infer I)=>void) ? I : never
+
+type UnionToFunctions<U> =
+  U extends unknown ? (k: U) => void : never;
+
+type IntersectionOfFunctionsToType<F> =
+  F extends { (a: infer A): void; (b: infer B): void; (c: infer C): void; (d: infer D): void; } ? [A, B, C, D] :
+  F extends { (a: infer A): void; (b: infer B): void; (c: infer C): void; } ? [A, B, C] :
+  F extends { (a: infer A): void; (b: infer B): void; } ? [A, B] :
+  F extends { (a: infer A): void } ? [A] :
+  never;
+
+type SplitType<T> =
+  IntersectionOfFunctionsToType<UnionToIntersection<UnionToFunctions<T>>>;
+
+// (T1 | T2 | T3) -> [RecursivePartial(T1), RecursivePartial(T2), RecursivePartial(T3)]
+type RecursivePartialUnion<T, S=SplitType<T>> = {[P in keyof S]: RecursivePartial<S[P]>};
+
+// Return length of a tuple.
+type GetLength<T extends any[]> = T extends { length: infer L } ? L : never;
+
 declare global {
   // Augment Intl to include
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/getCanonicalLocales
@@ -28,8 +52,27 @@ declare global {
 
   /** Make optional all properties on T and any properties on object properties of T. */
   type RecursivePartial<T> = {
-    [P in keyof T]+?: T[P] extends object ?
-      RecursivePartial<T[P]> :
+    [P in keyof T]+?:
+      // RE: First two conditions.
+      // If type is a union, map each individual component and transform the resultant tuple back into a union.
+      // Only up to 4 components of a union is supported (all but the last few are dropped). For more, modify the second condition
+      // and `IntersectionOfFunctionsToType`.
+      // Ex: `{passes: PassJson[] | null}` - T[P] doesn't exactly match the array-recursing condition, so without these first couple
+      // conditions, it would fall through to the last condition (would just return T[P]).
+
+      // RE: First condition.
+      // Guard against large string unions, which would be unreasonable to support (much more than 4 components is common).
+
+      SplitType<T[P]> extends string[] ? T[P] :
+      GetLength<SplitType<T[P]>> extends 2|3|4 ? RecursivePartialUnion<T[P]>[number] :
+
+      // Recurse into arrays.
+      T[P] extends (infer U)[] ? RecursivePartial<U>[] :
+
+      // Recurse into objects.
+      T[P] extends (object|undefined) ? RecursivePartial<T[P]> :
+
+      // Strings, numbers, etc. (terminal types) end here.
       T[P];
   };
 
@@ -101,8 +144,10 @@ declare global {
       gatherMode?: boolean | string;
       /** Flag indicating that the browser storage should not be reset for the audit. */
       disableStorageReset?: boolean;
-      /** The form factor the emulation should use. */
+      /** How emulation (useragent, device screen metrics, touch) should be applied. `none` indicates Lighthouse should leave the host browser as-is. */
       emulatedFormFactor?: 'mobile'|'desktop'|'none';
+      /** Dangerous setting only to be used by Lighthouse team. Disables the device metrics and touch emulation that emulatedFormFactor defines. Details in emulation.js */
+      internalDisableDeviceScreenEmulation?: boolean
       /** The method used to throttle the network. */
       throttlingMethod?: 'devtools'|'simulate'|'provided';
       /** The throttling config settings. */
@@ -146,6 +191,7 @@ declare global {
      */
     export interface CliFlags extends Flags {
       _: string[];
+      chromeIgnoreDefaultFlags: boolean;
       chromeFlags: string;
       /** Output path for the generated results. */
       outputPath: string;
@@ -220,6 +266,11 @@ declare global {
       args: {
         fileName?: string;
         snapshot?: string;
+        beginData?: {
+          frame?: string;
+          startLine?: number;
+          url?: string;
+        };
         data?: {
           frame?: string;
           isLoadingMainFrame?: boolean;

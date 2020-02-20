@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "`[aria-*]` 屬性與其角色相符"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "在 `<body>` 文件上設定 `aria-hidden=\"true\"` 時，輔助技術 (例如螢幕閱讀器) 無法一致地進行作業。[瞭解詳情](https://web.dev/aria-hidden-body/)。"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "`<body>` 文件中出現 `[aria-hidden=\"true\"]`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "`<body>` 文件中並未出現 `[aria-hidden=\"true\"]`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "`[aria-hidden=\"true\"]` 元素中的可聚焦子系會禁止輔助技術 (例如螢幕閱讀器) 的使用者存取這些互動元素。[瞭解詳情](https://web.dev/aria-hidden-focus/)。"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]` 元素包含可聚焦的子系"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "`[aria-hidden=\"true\"]` 元素不包含可聚焦的子系"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "如果沒有可解讀的輸入欄位名稱，螢幕閱讀器只會讀出通用名稱，這樣仰賴螢幕閱讀器的使用者就無法知道這個輸入欄位的用途。[瞭解詳情](https://web.dev/aria-input-field-name/)。"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "ARIA 輸入欄位沒有可解讀的名稱"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "ARIA 輸入欄位具有可解讀的名稱"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "部分 ARIA 角色的必要屬性會向螢幕閱讀器的使用者說明元素狀態。[瞭解詳情](https://web.dev/aria-required-attr/)。"
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "`[role]` 具備有效的值"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "如果沒有可解讀的切換欄位名稱，螢幕閱讀器只會讀出通用名稱，這樣仰賴螢幕閱讀器的使用者就無法知道這個切換欄位的用途。[瞭解詳情](https://web.dev/aria-toggle-field-name/)。"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "ARIA 切換欄位沒有可解讀的名稱"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "ARIA 切換欄位具有可解讀的名稱"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "輔助技術 (例如螢幕閱讀器) 無法解讀數值無效的 ARIA 屬性。[瞭解詳情](https://web.dev/aria-valid-attr-value/)。"
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "文件具有 `<title>` 元素"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "所有可聚焦的元素都必須擁有專屬的 `id`，以確保輔助技術可查看這些元素。[瞭解詳情](https://web.dev/duplicate-id-active/)。"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "已啟用的可聚焦元素有重複的 `[id]` 屬性"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "已啟用的可聚焦元素有專屬的 `[id]` 屬性"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "ARIA ID 的值不得重複，以免輔助技術忽略其他重複的值。[瞭解詳情](https://web.dev/duplicate-id-aria/)。"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "ARIA ID 重複"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "沒有重複的 ARIA ID"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "如果表單欄位含有多個標籤，可能會造成螢幕閱讀器等輔助技術無法判斷該讀出第一個、最後一個或所有標籤。[瞭解詳情](https://web.dev/form-field-multiple-labels/)。"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "表單欄位包含多個標籤"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "沒有任何表單欄位包含多個標籤"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "螢幕閱讀器需使用頁框標題才能說明頁框內容。[瞭解詳情](https://web.dev/frame-title/)。"
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "`<frame>` 或 `<iframe>` 元素包含名稱"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "排序正確且未略過層級的標題可傳達網頁的語意結構，讓使用者在運用輔助技術時更容易瀏覽及理解。[瞭解詳情](https://web.dev/heading-order/)。"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "標題元素未依遞減順序顯示"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "標題元素已依遞減順序顯示"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "如果網頁未指定 [lang] 屬性，螢幕閱讀器會假設網頁採用的是使用者在設定螢幕閱讀器時所選擇的預設語言。如果網頁實際採用的語言並非預設語言，那麼螢幕閱讀器可能無法正確朗讀網頁文字。[瞭解詳情](https://web.dev/html-has-lang/)。"
@@ -390,7 +462,7 @@
     "message": "移除未使用的 CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "移除未使用的 JavaScript，減少網路活動消耗的流量。"
+    "message": "移除未使用的 JavaScript，減少網路活動消耗的流量。[瞭解詳情](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)。"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "移除未使用的 JavaScript"
@@ -532,12 +604,6 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "避免 DOM 過大"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "目標"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "將 `rel=\"noopener\"` 或 `rel=\"noreferrer\"` 新增至所有外部連結，可提升效能並防範安全漏洞。[瞭解詳情](https://web.dev/external-anchors-use-rel-noopener)。"
@@ -782,14 +848,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "互動準備時間是網頁進入完整互動狀態前花費的時間。[瞭解詳情](https://web.dev/interactive)。"
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "「最大內容繪製」是指繪製最大的文字或圖片所需時間。[瞭解詳情](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "最大內容繪製"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "使用者可能要等待的最長「首次輸入延遲時間」就是耗時最久的工作所需要的處理時間 (以毫秒為單位)。[瞭解詳情](https://developers.google.com/web/updates/2018/05/first-input-delay)。"
+    "message": "使用者可能會遇到的最長「首次輸入延遲時間」就是耗時最久的工作持續時間。[瞭解詳情](https://web.dev/lighthouse-max-potential-fid)。"
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "速度指數會顯示網頁可見內容的填入速度。[瞭解詳情](https://web.dev/speed-index)。"
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "當工作長度超過 50 毫秒時，從 FCP 到互動準備時間的時間範圍總計 (以毫秒為單位)。"
+    "message": "當工作長度超過 50 毫秒時，從 FCP 到互動準備時間的時間範圍總計 (以毫秒為單位)。[瞭解詳情](https://web.dev/lighthouse-total-blocking-time)。"
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "網路封包往返時間 (RTT) 對效能有很大的影響。如果將封包傳送到某個來源的 RTT 很高，表示靠近使用者端的伺服器在效能方面有改善空間。[瞭解詳情](https://hpbn.co/primer-on-latency-and-bandwidth/)。"
@@ -805,6 +877,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Service Worker 可讓你的網路應用程式即使在連線不穩定時依然維持正常運作。[瞭解詳情](https://web.dev/offline-start-url)。"
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "在 Service Worker 中載入 {url} 時發生錯誤，狀態碼為 {statusCode}"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` 在離線時不會傳回狀態碼 200 的回應"
@@ -883,9 +958,6 @@
   },
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "文字難以辨識，這是因為網頁沒有針對行動裝置螢幕設定合適的可視區域中繼標記。"
-  },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} 的文字過小 (根據 {decimalProportionVisited, number, extendedPercent} 的取樣結果)。"
   },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "文件使用的字型大小難以辨識"
@@ -1066,6 +1138,18 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "伺服器回應時間低 (TTFB)"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "測量"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "指標"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "設定時間預算可協助你隨時留意網站的效能。效能穩定的網站能快速載入網頁，並迅速回應使用者的輸入操作。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/budgets)。"
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "時間預算"
   },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "時間長度"
@@ -1289,6 +1373,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "名稱"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "超過預算"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "要求"
   },
@@ -1322,11 +1409,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "文件"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "預估輸入延遲"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "首次 CPU 閒置"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "首次內容繪製"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "首次有效繪製"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "字型"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "圖片"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "可互動時間"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "首次輸入延遲時間最長預估值"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "媒體"
@@ -1343,11 +1448,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} 秒"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "速度指數"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "樣式表"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "第三方"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "封鎖時間總計"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "總計"
@@ -1581,13 +1692,13 @@
     "message": "有些 [WordPress 外掛程式](https://wordpress.org/plugins/)會在網頁中載入未使用的 JavaScript，建議你減少這類外掛程式的數量，或改用其他外掛程式。如要找出會新增多餘 JavaScript 的外掛程式，請嘗試在 Chrome DevTools 中執行[程式碼涵蓋率](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage)功能。你可以透過指令碼網址找出有問題的主題/外掛程式。請留意在清單中包含許多指令碼，且程式碼涵蓋率中有許多紅色標示的外掛程式。外掛程式只應將網頁實際使用的指令碼加入佇列。"
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "瞭解 [WordPress 的瀏覽器快取功能](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)。"
+    "message": "瞭解 [WordPress 的瀏覽器快取功能](https://wordpress.org/support/article/optimization/#browser-caching)。"
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "建議你使用壓縮圖片時不會影響到畫質的[圖片最佳化 WordPress 外掛程式](https://wordpress.org/plugins/search/optimize+images/)。"
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "你可以直接透過[媒體庫](https://codex.wordpress.org/Media_Library_Screen)上傳圖片，確保你可以使用所需的圖片大小，然後透過從媒體庫插入圖片，或使用圖片小工具來確保你使用的是最佳圖片大小 (包括回應式中斷點適用的圖片大小)。除非圖片尺寸符合使用目的，否則請避免使用`Full Size`圖片。[瞭解詳情](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)。"
+    "message": "你可以直接透過[媒體庫](https://wordpress.org/support/article/media-library-screen/)上傳圖片，確保你可以使用所需的圖片大小，然後透過從媒體庫插入圖片，或使用圖片小工具來確保你使用的是最佳圖片大小 (包括回應式中斷點適用的圖片大小)。除非圖片尺寸符合使用目的，否則請避免使用`Full Size`圖片。[瞭解詳情](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)。"
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "你可以在網路伺服器設定中啟用文字壓縮功能。"

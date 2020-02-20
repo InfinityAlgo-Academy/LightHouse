@@ -28,7 +28,7 @@ describe('Metrics: Lantern TTI', () => {
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
     }).toMatchSnapshot();
     assert.equal(result.optimisticEstimate.nodeTimings.size, 19);
-    assert.equal(result.pessimisticEstimate.nodeTimings.size, 79);
+    assert.equal(result.pessimisticEstimate.nodeTimings.size, 80);
     assert.ok(result.optimisticGraph, 'should have created optimistic graph');
     assert.ok(result.pessimisticGraph, 'should have created pessimistic graph');
   });

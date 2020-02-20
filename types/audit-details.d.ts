@@ -82,13 +82,17 @@ declare global {
       }
 
       /** Possible types of values found within table items. */
-      type ItemValueTypes = 'bytes' | 'code' | 'link' | 'ms' | 'node' | 'numeric' | 'text' | 'thumbnail' | 'timespanMs' | 'url';
+      type ItemValueTypes = 'bytes' | 'code' | 'link' | 'ms' | 'multi' | 'node' | 'source-location' | 'numeric' | 'text' | 'thumbnail' | 'timespanMs' | 'url';
+      type Value = string | number | boolean | DebugData | NodeValue | SourceLocationValue | LinkValue | UrlValue | CodeValue;
 
       // TODO(bckenny): unify Table/Opportunity headings and items on next breaking change.
 
       export interface TableColumnHeading {
-        /** The name of the property within items being described. */
-        key: string;
+        /**
+         * The name of the property within items being described.
+         * If null, subRows must be defined, and the first sub-row will be empty.
+         */
+        key: string|null;
         /** Readable text label of the field. */
         text: string;
         /**
@@ -97,6 +101,11 @@ declare global {
          * could also be objects with their own type to override this field.
          */
         itemType: ItemValueTypes;
+        /**
+         * Optional - defines an inner table of values that correspond to this column.
+         * Key is required - if other properties are not provided, the value for the heading is used.
+         */
+        subRows?: {key: string, itemType?: ItemValueTypes, displayUnit?: string, granularity?: number};
 
         displayUnit?: string;
         granularity?: number;
@@ -104,12 +113,15 @@ declare global {
 
       export type TableItem = {
         debugData?: DebugData;
-        [p: string]: string | number | boolean | undefined | DebugData | NodeValue | LinkValue | UrlValue | CodeValue;
+        [p: string]: undefined | Value | Value[];
       }
 
       export interface OpportunityColumnHeading {
-        /** The name of the property within items being described. */
-        key: string;
+        /**
+         * The name of the property within items being described.
+         * If null, subRows must be defined, and the first sub-row will be empty.
+         */
+        key: string|null;
         /** Readable text label of the field. */
         label: string;
         /**
@@ -118,6 +130,11 @@ declare global {
          * could also be objects with their own type to override this field.
          */
         valueType: ItemValueTypes;
+        /**
+         * Optional - defines an inner table of values that correspond to this column.
+         * Key is required - if other properties are not provided, the value for the heading is used.
+         */
+        subRows?: {key: string, valueType?: ItemValueTypes, displayUnit?: string, granularity?: number};
 
         // NOTE: not used by opportunity details, but used in the renderer until table/opportunity unification.
         displayUnit?: string;
@@ -130,7 +147,7 @@ declare global {
         totalBytes?: number;
         wastedMs?: number;
         debugData?: DebugData;
-        [p: string]: number | boolean | string | undefined | DebugData;
+        [p: string]: undefined | Value | Value[];
       }
 
       /**
@@ -165,6 +182,20 @@ declare global {
         snippet?: string;
         /** A human-friendly text descriptor that's used to identify the node more quickly. */
         nodeLabel?: string;
+      }
+
+      /**
+       * A value used within a details object, intended to be displayed as a URL
+       * encoded with line and column info (url:line:column).
+       */
+      export interface SourceLocationValue {
+        type: 'source-location';
+        /** urls from the network are always valid urls. otherwise, urls come from either a comment or header, and may not be well-formed. */
+        url: string;
+        /** 'network' when the url is the actual, observed resource url. 'comment' when the url comes from a sourceMapURL comment or X-SourceMap header */
+        urlProvider: 'network' | 'comment';
+        line: number;
+        column: number;
       }
 
       /**

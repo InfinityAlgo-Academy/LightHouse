@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "Atribut `[aria-*]` cocok dengan perannya"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "Teknologi pendukung seperti pembaca layar tidak berfungsi secara konsisten jika `aria-hidden=\"true\"` ditetapkan pada`<body>` dokumen. [Pelajari lebih lanjut](https://web.dev/aria-hidden-body/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]` tersedia di `<body>` dokumen"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "`[aria-hidden=\"true\"]` tidak tersedia di `<body>` dokumen"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "Turunan yang dapat difokuskan dalam elemen `[aria-hidden=\"true\"]` mencegah elemen interaktif tersebut tersedia bagi pengguna teknologi pendukung seperti pembaca layar. [Pelajari lebih lanjut](https://web.dev/aria-hidden-focus/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "Elemen `[aria-hidden=\"true\"]` memuat turunan yang dapat difokuskan"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "Elemen `[aria-hidden=\"true\"]` tidak memuat turunan yang dapat difokuskan"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "Jika kolom masukan tidak memiliki nama yang dapat diakses, pembaca layar akan mengucapkannya dengan nama umum, sehingga tidak dapat digunakan oleh pengguna yang mengandalkan pembaca layar. [Pelajari lebih lanjut](https://web.dev/aria-input-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "Kolom masukan ARIA tidak memiliki nama yang dapat diakses"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "Kolom masukan ARIA memiliki nama yang dapat diakses"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Beberapa peran ARIA memiliki atribut wajib yang menjelaskan status elemen ke pembaca layar. [Pelajari lebih lanjut](https://web.dev/aria-required-attr/)."
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "Nilai `[role]` valid"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "Jika kolom beralih tidak memiliki nama yang dapat diakses, pembaca layar akan mengucapkannya dengan nama umum, sehingga tidak dapat digunakan oleh pengguna yang mengandalkan pembaca layar. [Pelajari lebih lanjut](https://web.dev/aria-toggle-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "Kolom beralih ARIA tidak memiliki nama yang dapat diakses"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "Kolom beralih ARIA memiliki nama yang dapat diakses"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "Teknologi asistif, seperti pembaca layar, tidak dapat menafsirkan atribut ARIA dengan nilai yang tidak valid. [Pelajari lebih lanjut](https://web.dev/aria-valid-attr-value/)."
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Dokumen memiliki elemen `<title>`"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "Semua elemen yang dapat difokuskan harus memiliki `id` yang unik untuk memastikannya dapat dilihat oleh teknologi pendukung. [Pelajari lebih lanjut](https://web.dev/duplicate-id-active/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "Atribut `[id]` pada elemen aktif yang dapat difokuskan tidak unik"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "Atribut `[id]` pada elemen aktif yang dapat difokuskan unik"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "Nilai ID ARIA harus unik untuk mencegah instance lain terabaikan oleh teknologi pendukung. [Pelajari lebih lanjut](https://web.dev/duplicate-id-aria/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "ID ARIA tidak unik"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "ID ARIA unik"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "Teknologi pendukung seperti pembaca layar yang menggunakan label pertama, terakhir, atau semua label akan mungkin salah mengucapkan kolom formulir yang memiliki beberapa label. [Pelajari lebih lanjut](https://web.dev/form-field-multiple-labels/)."
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "Kolom formulir memiliki beberapa label"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "Tidak ada kolom formulir yang memiliki beberapa label"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Pengguna pembaca layar mengandalkan judul bingkai untuk menjelaskan isi bingkai. [Pelajari lebih lanjut](https://web.dev/frame-title/)."
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "Elemen `<frame>` atau `<iframe>` memiliki judul"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "Judul yang diurutkan dengan benar yang tidak melewati level akan menyampaikan struktur semantik halaman, membuatnya lebih mudah dilihat dan dipahami ketika menggunakan teknologi pendukung. [Pelajari lebih lanjut](https://web.dev/heading-order/)."
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "Elemen judul muncul tidak dalam urutan menurun yang berurutan"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "Elemen judul muncul dalam urutan menurun yang berurutan"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "Jika halaman tidak menentukan atribut bahasa, pembaca layar akan mengasumsikan bahwa halaman menggunakan bahasa default yang dipilih pengguna saat menyiapkan pembaca layar. Jika halaman tidak dalam bahasa default, pembaca layar mungkin tidak dapat mengucapkan teks di halaman tersebut dengan benar. [Pelajari lebih lanjut](https://web.dev/html-has-lang/)."
@@ -390,7 +462,7 @@
     "message": "Hapus CSS yang tidak digunakan"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Menghapus JavaScript yang tidak digunakan untuk mengurangi byte yang digunakan oleh aktivitas jaringan."
+    "message": "Menghapus JavaScript yang tidak digunakan untuk mengurangi byte yang digunakan oleh aktivitas jaringan. [Pelajari lebih lanjut](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Hapus JavaScript yang tidak digunakan"
@@ -532,12 +604,6 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Menghindari ukuran DOM yang berlebihan"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Target"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Tambahkan `rel=\"noopener\"` atau `rel=\"noreferrer\"` ke link eksternal mana pun untuk menyempurnakan performa dan mencegah kerentanan keamanan. [Pelajari lebih lanjut](https://web.dev/external-anchors-use-rel-noopener)."
@@ -782,14 +848,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "Waktu untuk interaktif adalah lamanya waktu yang diperlukan halaman untuk menjadi interaktif sepenuhnya. [Pelajari lebih lanjut](https://web.dev/interactive)."
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "Largest Contentful Paint menandai waktu saat teks atau gambar terbesar di-paint. [Pelajari Lebih Lanjut](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "Largest Contentful Paint"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "Potensi maksimal Penundaan Input Pertama yang dapat dialami pengguna Anda adalah durasi tugas terpanjang, yang dinyatakan dalam milidetik. [Pelajari lebih lanjut](https://developers.google.com/web/updates/2018/05/first-input-delay)."
+    "message": "Potensi maksimal Penundaan Input Pertama yang dapat dialami pengguna Anda adalah durasi tugas terpanjang. [Pelajari lebih lanjut](https://web.dev/lighthouse-max-potential-fid)."
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Indeks Kecepatan menunjukkan seberapa cepat konten halaman terlihat terisi lengkap. [Pelajari lebih lanjut](https://web.dev/speed-index)."
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "Jumlah semua jangka waktu antara FCP dan Waktu untuk Interaktif, ketika durasi tugas melebihi 50 md, dinyatakan dalam milidetik."
+    "message": "Jumlah semua jangka waktu antara FCP dan Waktu untuk Interaktif, ketika durasi tugas melebihi 50 md, dinyatakan dalam milidetik. [Pelajari lebih lanjut](https://web.dev/lighthouse-total-blocking-time)."
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "Waktu round trip (RTT) jaringan berdampak besar pada performa. RTT ke asal yang tinggi merupakan indikasi bahwa server yang berjarak lebih dekat ke pengguna dapat meningkatkan performa. [Pelajari lebih lanjut](https://hpbn.co/primer-on-latency-and-bandwidth/)."
@@ -805,6 +877,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Pekerja layanan memungkinkan aplikasi web dapat diandalkan dalam kondisi jaringan yang tidak terduga. [Pelajari lebih lanjut](https://web.dev/offline-start-url)."
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Error saat memuat {url} di Pekerja Layanan, mendapatkan kode status {statusCode}"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` tidak merespons dengan kode 200 saat offline"
@@ -883,9 +958,6 @@
   },
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Teks tidak terbaca karena tidak ada tag meta viewport yang dioptimalkan untuk layar seluler."
-  },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} teks terlalu kecil (berdasarkan sampel {decimalProportionVisited, number, extendedPercent})."
   },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "Dokumen tidak menggunakan ukuran font yang terbaca"
@@ -1066,6 +1138,18 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Waktu respons server sedikit (TTFB)"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "Pengukuran"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "Metrik"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "Menetapkan anggaran waktu untuk membantu mengawasi performa situs Anda. Situs dengan performa yang baik akan memuat dengan cepat dan merespons peristiwa masukan pengguna dengan cepat. [Pelajari lebih lanjut](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "Anggaran waktu"
   },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "Durasi"
@@ -1289,6 +1373,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "Nama"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "Melebihi Anggaran"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Permintaan"
   },
@@ -1322,11 +1409,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokumen"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "Perkiraan Latensi Masukan"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "CPU Pertama Tidak Ada Aktivitas"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "First Contentful Paint"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "First Meaningful Paint"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "Font"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Gambar"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "Waktu untuk Interaktif"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "Potensi Maksimal Penundaan Input Pertama"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "Media"
@@ -1343,11 +1448,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} dtk"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Indeks Kecepatan"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Stylesheet"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Pihak ketiga"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "Total Waktu Pemblokiran"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Total"
@@ -1581,13 +1692,13 @@
     "message": "Sebaiknya kurangi atau ubah jumlah [plugin WordPress](https://wordpress.org/plugins/) yang memuat JavaScript yang tidak digunakan di halaman Anda. Untuk mengidentifikasi plugin yang menambahkan JS tidak relevan, coba jalankan [cakupan kode](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) di Chrome DevTools. Anda dapat mengidentifikasi tema/plugin yang bertanggung jawab dari URL skrip. Cari plugin dengan banyak skrip dalam daftar yang memiliki banyak warna merah dalam cakupan kode. Plugin sebaiknya hanya menambahkan skrip ke dalam antrean jika memang benar digunakan di halaman."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Baca [Cache Browser di WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Baca [Cache Browser di WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Sebaiknya gunakan [plugin WordPress untuk pengoptimalan gambar](https://wordpress.org/plugins/search/optimize+images/) yang mengompresi gambar Anda dengan tetap mempertahankan kualitas."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Upload gambar langsung melalui [koleksi media](https://codex.wordpress.org/Media_Library_Screen) untuk memastikan ukuran gambar yang diperlukan tersedia, lalu masukkan koleksi media atau gunakan widget gambar untuk memastikan ukuran gambar optimal digunakan (termasuk untuk titik henti sementara responsif). Hindari menggunakan gambar `Full Size`, kecuali dimensinya memungkinkan untuk digunakan. [Pelajari Lebih Lanjut](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Upload gambar langsung melalui [koleksi media](https://wordpress.org/support/article/media-library-screen/) untuk memastikan ukuran gambar yang diperlukan tersedia, lalu masukkan koleksi media atau gunakan widget gambar untuk memastikan ukuran gambar optimal digunakan (termasuk untuk titik henti sementara responsif). Hindari menggunakan gambar `Full Size`, kecuali dimensinya memungkinkan untuk digunakan. [Pelajari Lebih Lanjut](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Anda dapat mengaktifkan kompresi teks di konfigurasi server web."

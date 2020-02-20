@@ -6,6 +6,7 @@
 'use strict';
 
 /**
+ * @type {Array<Smokehouse.ExpectedRunnerResult>}
  * Expected Lighthouse results from testing the defaut audits on local test
  * pages, one of which works offline with a service worker and one of which does
  * not.
@@ -100,6 +101,26 @@ module.exports = [
     },
   },
   {
+    artifacts: {
+      WebAppManifest: {
+        value: {
+          icons: {
+            value: [
+              {value: {src: {value: 'http://localhost:10503/launcher-icon-0-75x.png'}}},
+              {value: {src: {value: 'http://localhost:10503/launcher-icon-1x.png'}}},
+              {value: {src: {value: 'http://localhost:10503/launcher-icon-1-5x.png'}}},
+              {value: {src: {value: 'http://localhost:10503/launcher-icon-2x.png'}}},
+              {value: {src: {value: 'http://localhost:10503/launcher-icon-3x.png'}}},
+            ],
+          },
+        },
+      },
+      InstallabilityErrors: {
+        errors: [
+          {errorId: 'no-icon-available'},
+        ],
+      },
+    },
     lhr: {
       requestedUrl: 'http://localhost:10503/offline-ready.html',
       finalUrl: 'http://localhost:10503/offline-ready.html',
@@ -129,7 +150,8 @@ module.exports = [
           scoreDisplayMode: 'notApplicable',
         },
         'installable-manifest': {
-          score: 1,
+          score: 0,
+          explanation: 'Failures: Manifest icon failed to be fetched.',
         },
         'splash-screen': {
           score: 0,

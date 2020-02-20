@@ -9,6 +9,19 @@ const SettingsController = require('./settings-controller.js');
 
 const VIEWER_URL = 'https://googlechrome.github.io/lighthouse/viewer/';
 const optionsVisibleClass = 'main--options-visible';
+// Replaced with 'chrome' or 'firefox' in the build script.
+/** @type {string} */
+const BROWSER_BRAND = '___BROWSER_BRAND___';
+
+const CHROME_STRINGS = {
+  localhostErrorMessage: 'Use DevTools to audit pages on localhost.',
+};
+
+const FIREFOX_STRINGS = {
+  localhostErrorMessage: 'Use the Lighthouse Node CLI to audit pages on localhost.',
+};
+
+const STRINGS = BROWSER_BRAND === 'chrome' ? CHROME_STRINGS : FIREFOX_STRINGS;
 
 /**
  * Guaranteed context.querySelector. Always returns an element or throws if
@@ -88,7 +101,11 @@ function fillDevToolsShortcut() {
   el.textContent = isMac ? '⌘⌥I (Cmd+Opt+I)' : 'F12';
 }
 
-function persistSettings() {
+/**
+ * Create the settings from the state of the options form, save in storage, and return it.
+ * @returns {SettingsController.Settings}
+ */
+function readSettingsFromDomAndPersist() {
   const optionsEl = find('.section--options');
   // Save settings when options page is closed.
   const checkboxes = /** @type {NodeListOf<HTMLInputElement>} */
@@ -96,10 +113,12 @@ function persistSettings() {
   const selectedCategories = Array.from(checkboxes).map(input => input.value);
   const device = /** @type {HTMLInputElement} */ (find('input[name="device"]:checked')).value;
 
-  SettingsController.saveSettings({
+  const settings = {
     selectedCategories,
     device,
-  });
+  };
+  SettingsController.saveSettings(settings);
+  return settings;
 }
 
 /**
@@ -114,7 +133,7 @@ function getSiteUrl() {
 
       const url = new URL(tabs[0].url);
       if (url.hostname === 'localhost') {
-        reject(new Error('Use DevTools to audit pages on localhost.'));
+        reject(new Error(STRINGS.localhostErrorMessage));
       } else if (/^(chrome|about)/.test(url.protocol)) {
         reject(new Error(`Cannot audit ${url.protocol}// pages.`));
       } else {
@@ -128,7 +147,11 @@ function getSiteUrl() {
  * Initializes the popup's state and UI elements.
  */
 async function initPopup() {
-  fillDevToolsShortcut();
+  if (BROWSER_BRAND === 'chrome') {
+    fillDevToolsShortcut();
+  }
+  const browserBrandEl = find(`.browser-brand--${BROWSER_BRAND}`);
+  browserBrandEl.classList.remove('hidden');
 
   const mainEl = find('main');
   const optionsEl = find('.button--configure');
@@ -171,7 +194,7 @@ async function initPopup() {
   });
 
   optionsFormEl.addEventListener('change', () => {
-    persistSettings();
+    settings = readSettingsFromDomAndPersist();
   });
 }
 

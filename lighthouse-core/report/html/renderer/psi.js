@@ -48,9 +48,9 @@ function prepareLabData(LHResult, document) {
   if (!reportLHR.categoryGroups) throw new Error(`No category groups found.`);
 
   // Use custom title and description.
-  reportLHR.categoryGroups.metrics.title = lhResult.i18n.rendererFormattedStrings.labDataTitle;
+  reportLHR.categoryGroups.metrics.title = Util.i18n.strings.labDataTitle;
   reportLHR.categoryGroups.metrics.description =
-      lhResult.i18n.rendererFormattedStrings.lsPerformanceCategoryDescription;
+      Util.i18n.strings.lsPerformanceCategoryDescription;
 
   const perfRenderer = new PerformanceCategoryRenderer(dom, new DetailsRenderer(dom));
   // PSI environment string will ensure the categoryHeader and permalink elements are excluded

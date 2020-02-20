@@ -49,7 +49,7 @@ const HEADER_FETCHED_SIZE = 'X-TotalFetchedSize';
  * @property {number} responseMs
  */
 
-/** @type {SelfMap<LH.Crdp.Page.ResourceType>} */
+/** @type {SelfMap<LH.Crdp.Network.ResourceType>} */
 const RESOURCE_TYPES = {
   XHR: 'XHR',
   Fetch: 'Fetch',
@@ -112,7 +112,7 @@ class NetworkRequest {
     this.initiator = /** @type {LH.Crdp.Network.Initiator} */ ({type: 'other'});
     /** @type {LH.Crdp.Network.ResourceTiming|undefined} */
     this.timing = undefined;
-    /** @type {LH.Crdp.Page.ResourceType|undefined} */
+    /** @type {LH.Crdp.Network.ResourceType|undefined} */
     this.resourceType = undefined;
     this.mimeType = '';
     /** @type {LH.Crdp.Network.ResourcePriority} */

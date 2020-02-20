@@ -29,6 +29,7 @@
     "gatherMode": "lighthouse-core/test/results/artifacts",
     "disableStorageReset": false,
     "emulatedFormFactor": "mobile",
+    "internalDisableDeviceScreenEmulation": false,
     "channel": "cli",
     "budgets": [
       {
@@ -462,6 +463,7 @@
     "devicePixelRatio": 2.625
   },
   "WebAppManifest": null,
+  "InstallabilityErrors": {"errors": []},
   "MetaElements": [
     {
       "name": "",
@@ -470,6 +472,11 @@
     {
       "name": "viewport",
       "content": "width=device-width, initial-scale=1, minimum-scale=1"
+    },
+    {
+      "name": "",
+      "content": "Open Graph smoke test description",
+      "property": "og:description"
     }
   ],
   "RuntimeExceptions": [
@@ -1834,7 +1841,7 @@
     },
     {
       "detector": "js",
-      "id": "jquery",
+      "id": "jquery-fast",
       "name": "jQuery (Fast path)",
       "npm": "jquery"
     },

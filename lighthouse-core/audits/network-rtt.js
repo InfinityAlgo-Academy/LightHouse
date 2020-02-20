@@ -73,6 +73,7 @@ class NetworkRTT extends Audit {
     return {
       score: 1,
       numericValue: maxRtt,
+      numericUnit: 'millisecond',
       displayValue: str_(i18n.UIStrings.ms, {timeInMs: maxRtt}),
       details: tableDetails,
     };

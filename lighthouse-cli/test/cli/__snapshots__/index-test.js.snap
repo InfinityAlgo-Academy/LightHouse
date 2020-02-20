@@ -133,6 +133,9 @@ Object {
       "path": "performance-budget",
     },
     Object {
+      "path": "timing-budget",
+    },
+    Object {
       "path": "resource-summary",
     },
     Object {
@@ -347,6 +350,9 @@ Object {
     },
     Object {
       "path": "dobetterweb/doctype",
+    },
+    Object {
+      "path": "dobetterweb/charset",
     },
     Object {
       "path": "dobetterweb/dom-size",
@@ -705,6 +711,10 @@ Object {
           "weight": 1,
         },
         Object {
+          "id": "charset",
+          "weight": 1,
+        },
+        Object {
           "id": "no-vulnerable-libraries",
           "weight": 1,
         },
@@ -898,6 +908,11 @@ Object {
         Object {
           "group": "budgets",
           "id": "performance-budget",
+          "weight": 0,
+        },
+        Object {
+          "group": "budgets",
+          "id": "timing-budget",
           "weight": 0,
         },
         Object {
@@ -1255,6 +1270,7 @@ Object {
           "path": "accessibility",
         },
       ],
+      "loadFailureMode": "fatal",
       "networkQuietThresholdMs": 1000,
       "passName": "defaultPass",
       "pauseAfterLoadMs": 1000,
@@ -1276,6 +1292,7 @@ Object {
           "path": "start-url",
         },
       ],
+      "loadFailureMode": "ignore",
       "networkQuietThresholdMs": 0,
       "passName": "offlinePass",
       "pauseAfterLoadMs": 0,
@@ -1304,6 +1321,7 @@ Object {
           "path": "html-without-javascript",
         },
       ],
+      "loadFailureMode": "warn",
       "networkQuietThresholdMs": 0,
       "passName": "redirectPass",
       "pauseAfterLoadMs": 0,
@@ -1321,6 +1339,7 @@ Object {
     "emulatedFormFactor": "mobile",
     "extraHeaders": null,
     "gatherMode": false,
+    "internalDisableDeviceScreenEmulation": false,
     "locale": "en-US",
     "maxWaitForFcp": 30000,
     "maxWaitForLoad": 45000,
@@ -1438,6 +1457,7 @@ Object {
       "blockedUrlPatterns": Array [],
       "cpuQuietThresholdMs": 1000,
       "gatherers": Array [],
+      "loadFailureMode": "fatal",
       "networkQuietThresholdMs": 1000,
       "passName": "defaultPass",
       "pauseAfterLoadMs": 1000,
@@ -1455,6 +1475,7 @@ Object {
     "emulatedFormFactor": "mobile",
     "extraHeaders": null,
     "gatherMode": false,
+    "internalDisableDeviceScreenEmulation": false,
     "locale": "en-US",
     "maxWaitForFcp": 30000,
     "maxWaitForLoad": 45000,

@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "`[aria-*]`-attributtene samsvarer med rollene sine"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "Assisterende teknologi, for eksempel skjermlesere, fungerer ikke konsekvent når `aria-hidden=\"true\"` er angitt på dokumentets `<body>`. [Finn ut mer](https://web.dev/aria-hidden-body/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]` er til stede på dokumentets `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "`[aria-hidden=\"true\"]` er ikke til stede på dokumentets `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "Fokuserbare underelementer i `[aria-hidden=\"true\"]`-elementer gjør at disse interaktive elementene ikke er tilgjengelige for brukere av assisterende teknologi, for eksempel skjermlesere. [Finn ut mer](https://web.dev/aria-hidden-focus/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]`-elementer inneholder fokuserbare underelementer"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "`[aria-hidden=\"true\"]`-elementer inneholder ikke fokuserbare underelementer"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "Når inndatafelt ikke har tilgjengelige navn, beskriver skjermlesere dem med generiske navn. Dermed er de ubrukelige for brukere som er avhengige av skjermlesere. [Finn ut mer](https://web.dev/aria-input-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "ARIA-inndatafelt har ikke tilgjengelige navn"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "ARIA-inndatafelt har tilgjengelige navn"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Noen ARIA-roller har obligatoriske attributter som beskriver elementenes tilstand for skjermlesere. [Finn ut mer](https://web.dev/aria-required-attr/)."
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "`[role]`-verdiene er gyldige"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "Når av/på-felt ikke har tilgjengelige navn, beskriver skjermlesere dem med generiske navn. Dermed er de ubrukelige for brukere som er avhengige av skjermlesere. [Finn ut mer](https://web.dev/aria-toggle-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "ARIA-av/på-felt har ikke tilgjengelige navn"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "ARIA-av/på-felt har tilgjengelige navn"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "Assisterende teknologi, for eksempel skjermlesere, kan ikke tolke ARIA-attributter med ugyldige verdier. [Finn ut mer](https://web.dev/aria-valid-attr-value/)."
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Dokumentet har et `<title>`-element"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "Alle fokuserbare elementer må ha unike `id`-attributter for å sikre at de er synlige for assisterende teknologi. [Finn ut mer](https://web.dev/duplicate-id-active/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "`[id]`-attributter på aktive, fokuserbare elementer er ikke unike"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "`[id]`-attributter på aktive, fokuserbare elementer er unike"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "ARIA-ID-attributter må ha unike verdier for å unngå at andre forekomster blir oversett av assisterende teknologi. [Finn ut mer](https://web.dev/duplicate-id-aria/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "ARIA-ID-er er ikke unike"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "ARIA-ID-er er unike"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "Skjemafelt med flere etiketter kan bli lest opp på en forvirrende måte av assisterende teknologi, for eksempel skjermlesere som bruker enten den første etiketten, den siste etiketten eller alle etikettene. [Finn ut mer](https://web.dev/form-field-multiple-labels/)."
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "Skjemafelter har flere etiketter"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "Det finnes ingen skjemafelt med flere etiketter"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Brukere av skjermlesere er avhengige av titler for «frame»/«iframe»-elementer for å forstå innholdet i dem. [Finn ut mer](https://web.dev/frame-title/)."
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "`<frame>`- og `<iframe>`-elementer har titler"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "Godt organiserte overskrifter som ikke hopper over nivåer, formidler sidens semantiske struktur, slik at den blir enklere å forstå og navigere ved bruk av assisterende teknologi. [Finn ut mer](https://web.dev/heading-order/)."
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "Overskriftselementer vises ikke i sekvensielt synkende rekkefølge"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "Overskriftselementer vises i sekvensielt synkende rekkefølge"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "Hvis en side ikke angir noe «lang»-attributt, antar skjermlesere at siden er på standardspråket brukeren valgte ved konfigurering av skjermleseren. Hvis siden ikke faktisk er på standardspråket, kan det hende skjermleseren leser teksten på siden feil. [Finn ut mer](https://web.dev/html-has-lang/)."
@@ -390,7 +462,7 @@
     "message": "Fjern ubrukt CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Fjern ubrukt JavaScript for å redusere antall byte som brukes av nettverksaktiviteten."
+    "message": "Fjern ubrukt JavaScript for å redusere antall byte som brukes av nettverksaktiviteten. [Finn ut mer](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Fjern ubrukt JavaScript"
@@ -532,12 +604,6 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Unngå for stor DOM-struktur"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Mål"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Legg til `rel=\"noopener\"` eller `rel=\"noreferrer\"` i eksterne linker for å øke ytelsen og forhindre sikkerhetssårbarheter. [Finn ut mer](https://web.dev/external-anchors-use-rel-noopener)."
@@ -782,14 +848,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "Tid til interaktiv vil si hvor lang tid det tar før siden blir helt interaktiv. [Finn ut mer](https://web.dev/interactive)."
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "Største innholdsrike opptegning (LCP) markerer tidspunktet når den største teksten eller det største bildet vises. [Finn ut mer](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "Største innholdsrike opptegning (LCP)"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "Den maksimale potensielle forsinkelsen for første inndata som brukerne dine kan oppleve, er varigheten (i millisekunder) av den lengste oppgaven. [Finn ut mer](https://developers.google.com/web/updates/2018/05/first-input-delay)."
+    "message": "Den maksimale potensielle forsinkelsen for første inndata som brukerne dine kan oppleve, er varigheten av den lengste oppgaven. [Finn ut mer](https://web.dev/lighthouse-max-potential-fid)."
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Hastighetsindeksen viser hvor raskt innholdet på siden blir synlig. [Finn ut mer](https://web.dev/speed-index)."
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "Summen av alle tidsperiodene mellom første innholdsrike opptegning (FCP) og tid til interaktiv, når oppgavelengden har overskredet 50 ms, uttrykt i millisekunder."
+    "message": "Summen av alle tidsperiodene mellom første innholdsrike opptegning (FCP) og tid til interaktiv, når oppgavelengden har overskredet 50 ms, uttrykt i millisekunder. [Finn ut mer](https://web.dev/lighthouse-total-blocking-time)."
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "Rundturstidene (RTT) for nettverket har stor innvirkning på ytelsen. Hvis RTT-en til et bestemt opprinnelsessted er høy, tyder det på at tjenere som befinner seg nærmere brukeren, muligens kan gi bedre ytelse. [Finn ut mer](https://hpbn.co/primer-on-latency-and-bandwidth/)."
@@ -805,6 +877,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Med en tjenestearbeider kan nettprogrammet ditt vært pålitelig under uforutsigbare nettverksforhold. [Finn ut mer](https://web.dev/offline-start-url)."
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Feil ved innlasting av {url} i Service Worker – fikk statuskode {statusCode}"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` svarer ikke med 200 når siden er uten nett"
@@ -883,9 +958,6 @@
   },
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Teksten er uleselig fordi det ikke er noen viewport-metatag som er optimalisert for mobilskjermer."
-  },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} av teksten er for liten (basert på et utvalg på {decimalProportionVisited, number, extendedPercent} av siden)."
   },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "Dokumentet bruker ikke leselige skriftstørrelser"
@@ -1066,6 +1138,18 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Svartiden til tjeneren er lav (TTFB)"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "Måling"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "Verdi"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "Angi et tidsbudsjett, slik at du kan holde øye med ytelsen på nettstedet. Nettsteder med høy ytelse lastes inn raskt og svarer kjapt på brukerinndatahendelser. [Finn ut mer](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "Tidsbudsjett"
   },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "Varighet"
@@ -1289,6 +1373,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "Navn"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "Over budsjett"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Forespørsler"
   },
@@ -1322,11 +1409,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokument"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "Anslått tidsforsinkelse for inndata"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "Første prosessor ledig"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "Første innholdsrike opptegning"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "Første vesentlige opptegning"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "Skrifttype"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Bilde"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "Tid til interaktiv"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "Maks forsinkelse for første inndata"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "Medier"
@@ -1343,11 +1448,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} s"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Hastighetsindeks"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Stilark"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Tredjepart"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "Total blokkeringstid"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Totalt"
@@ -1581,13 +1692,13 @@
     "message": "Vurder å redusere eller endre antall [WordPress-programtillegg](https://wordpress.org/plugins/) som laster inn ubrukt JavaScript på siden. For å identifisere programtillegg som legger til overflødig JavaScript, prøv å kjøre [kodedekning](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) i Chrome DevTools. Du kan finne det ansvarlige temaet eller programtillegget i nettadressen til skriptet. Se opp for programtillegg som har mange skript på listen, og som viser mye rødt i kodedekningen. Programtillegg bør bare legge skript i kø hvis de faktisk brukes på siden."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Les om [nettleserbufring i WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Les om [nettleserbufring i WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Vurder å bruke et [WordPress-programtillegg for bildeoptimalisering](https://wordpress.org/plugins/search/optimize+images/) som komprimerer bildene uten at det går ut over kvaliteten."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Last opp bilder direkte gjennom [mediebiblioteket](https://codex.wordpress.org/Media_Library_Screen) for å sikre at de nødvendige bildestørrelsene er tilgjengelige, og sett dem deretter inn fra mediebiblioteket eller bruk bildemodulen for å sikre at de optimale bildestørrelsene brukes (inkludert dem som brukes for responsive stoppunkter). Unngå å bruke `Full Size`-bilder med mindre størrelsen er tilstrekkelig for bruksområdet. [Finn ut mer](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Last opp bilder direkte gjennom [mediebiblioteket](https://wordpress.org/support/article/media-library-screen/) for å sikre at de nødvendige bildestørrelsene er tilgjengelige, og sett dem deretter inn fra mediebiblioteket eller bruk bildemodulen for å sikre at de optimale bildestørrelsene brukes (inkludert dem som brukes for responsive stoppunkter). Unngå å bruke `Full Size`-bilder med mindre størrelsen er tilstrekkelig for bruksområdet. [Finn ut mer](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Du kan slå på tekstkomprimering i oppsettet av nettjeneren."

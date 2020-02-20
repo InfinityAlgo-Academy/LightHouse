@@ -78,6 +78,8 @@ describe('Security: HTTPS audit', () => {
         true);
       assert.strictEqual(Audit.isSecureRecord({parsedURL: {scheme: 'blob', host: ''}}),
         true);
+      assert.strictEqual(Audit.isSecureRecord({parsedURL: {scheme: 'filesystem', host: ''}}),
+        true);
       assert.strictEqual(Audit.isSecureRecord({parsedURL: {scheme: 'about', host: ''}}),
         true);
       assert.strictEqual(Audit.isSecureRecord({parsedURL: {scheme: '', host: ''},

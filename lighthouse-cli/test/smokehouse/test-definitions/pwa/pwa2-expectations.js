@@ -5,11 +5,11 @@
  */
 'use strict';
 
-const pwaDetailsExpectations = require('./pwa-expectations.js').PWA_DETAILS_EXPECTATIONS;
-
+const pwaDetailsExpectations = require('./pwa-expectations-details.js');
 const jakeExpectations = {...pwaDetailsExpectations, hasShortName: false};
 
 /**
+ * @type {Array<Smokehouse.ExpectedRunnerResult>}
  * Expected Lighthouse audit values for various sites with stable(ish) PWA
  * results.
  */

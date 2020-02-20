@@ -20,6 +20,30 @@ class B extends Audit {
   static audit() {}
 }
 
+class C extends Audit {
+  static get meta() {
+    return {
+      requiredArtifacts: ['ArtifactC'] // Should be ignored.
+    };
+  }
+
+  static get requiredArtifacts() {
+    return this.artifacts('ArtifactA', 'ArtifactB');
+  }
+
+  static audit() {}
+}
+
+class D extends Audit {
+  static get meta() {
+    return {
+      requiredArtifacts: ['ArtifactC'] // Should be used.
+    };
+  }
+
+  static audit() {}
+}
+
 class PassOrFailAudit extends Audit {
   static get meta() {
     return {
@@ -62,6 +86,11 @@ describe('Audit', () => {
 
   it('does not throw if an audit overrides audit()', () => {
     assert.doesNotThrow(_ => B.audit());
+  });
+
+  it('.requiredArtifacts falls back to meta.requiredArtifacts', () => {
+    expect(C.requiredArtifacts).toEqual(['ArtifactA', 'ArtifactB']);
+    expect(D.requiredArtifacts).toEqual(['ArtifactC']);
   });
 
   describe('generateAuditResult', () => {

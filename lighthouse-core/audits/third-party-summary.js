@@ -11,6 +11,7 @@ const Audit = require('./audit.js');
 const BootupTime = require('./bootup-time.js');
 const i18n = require('../lib/i18n/i18n.js');
 const NetworkRecords = require('../computed/network-records.js');
+const MainResource = require('../computed/main-resource.js');
 const MainThreadTasks = require('../computed/main-thread-tasks.js');
 
 const UIStrings = {
@@ -52,7 +53,7 @@ class ThirdPartySummary extends Audit {
   }
 
   static get requiredArtifacts() {
-    return this.artifacts('traces', 'devtoolsLogs');
+    return this.artifacts('traces', 'devtoolsLogs', 'URL');
   }
 
   /**
@@ -122,6 +123,8 @@ class ThirdPartySummary extends Audit {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
+    const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
+    const mainEntity = ThirdPartySummary.getEntitySafe(mainResource.url);
     const tasks = await MainThreadTasks.request(trace, context);
     const multiplier = settings.throttlingMethod === 'simulate' ?
       settings.throttling.cpuSlowdownMultiplier : 1;
@@ -131,6 +134,9 @@ class ThirdPartySummary extends Audit {
     const summary = {wastedBytes: 0, wastedMs: 0};
 
     const results = Array.from(summaryByEntity.entries())
+      // Don't consider the page we're on to be third-party.
+      // e.g. Facebook SDK isn't a third-party script on facebook.com
+      .filter(([entity]) => !(mainEntity && mainEntity.name === entity.name))
       .map(([entity, stats]) => {
         summary.wastedBytes += stats.transferSize;
         summary.wastedMs += stats.blockingTime;

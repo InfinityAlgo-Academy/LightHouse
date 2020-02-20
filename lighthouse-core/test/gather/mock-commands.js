@@ -12,6 +12,16 @@
 /* eslint-env jest */
 
 /**
+ * @template {keyof LH.CrdpCommands} C
+ * @typedef {((...args: LH.CrdpCommands[C]['paramsType']) => MockResponse<C>) | RecursivePartial<LH.CrdpCommands[C]['returnType']> | Promise<Error>} MockResponse
+ */
+
+/**
+ * @template {keyof LH.CrdpEvents} E
+ * @typedef {RecursivePartial<LH.CrdpEvents[E][0]>} MockEvent
+ */
+
+/**
  * Creates a jest mock function whose implementation consumes mocked protocol responses matching the
  * requested command in the order they were mocked.
  *
@@ -21,32 +31,64 @@
  *      returns the protocol message argument.
  */
 function createMockSendCommandFn() {
+  /**
+   * Typescript fails to equate template type `C` here with `C` when pushing to this array.
+   * Instead of sprinkling a couple ts-ignores, make `command` be any, but leave `C` for just
+   * documentation purposes. This is an internal type, so it doesn't matter much.
+   * @template {keyof LH.CrdpCommands} C
+   * @type {Array<{command: C|any, sessionId?: string, response?: MockResponse<C>, delay?: number}>}
+   */
   const mockResponses = [];
-  const mockFn = jest.fn().mockImplementation((command, sessionId, ...args) => {
-    const indexOfResponse = mockResponses
-      .findIndex(entry => entry.command === command && entry.sessionId === sessionId);
-    if (indexOfResponse === -1) throw new Error(`${command} unimplemented`);
-    const {response, delay} = mockResponses[indexOfResponse];
-    mockResponses.splice(indexOfResponse, 1);
-    const returnValue = typeof response === 'function' ? response(...args) : response;
-    if (delay) return new Promise(resolve => setTimeout(() => resolve(returnValue), delay));
-    return Promise.resolve(returnValue);
+  const mockFnImpl = jest.fn().mockImplementation(
+    /**
+     * @template {keyof LH.CrdpCommands} C
+     * @param {C} command
+     * @param {string|undefined=} sessionId
+     * @param {LH.CrdpCommands[C]['paramsType']} args
+     */
+    (command, sessionId, ...args) => {
+      const indexOfResponse = mockResponses
+        .findIndex(entry => entry.command === command && entry.sessionId === sessionId);
+      if (indexOfResponse === -1) throw new Error(`${command} unimplemented`);
+      const {response, delay} = mockResponses[indexOfResponse];
+      mockResponses.splice(indexOfResponse, 1);
+      const returnValue = typeof response === 'function' ? response(...args) : response;
+      if (delay) return new Promise(resolve => setTimeout(() => resolve(returnValue), delay));
+      // @ts-ignore: Some covariant type stuff doesn't work here. idk, I'm not a type scientist.
+      return Promise.resolve(returnValue);
+    });
+
+  const mockFn = Object.assign(mockFnImpl, {
+    /**
+     * @template {keyof LH.CrdpCommands} C
+     * @param {C} command
+     * @param {MockResponse<C>=} response
+     * @param {number=} delay
+     */
+    mockResponse(command, response, delay) {
+      mockResponses.push({command, response, delay});
+      return mockFn;
+    },
+    /**
+     * @template {keyof LH.CrdpCommands} C
+     * @param {C} command
+     * @param {string} sessionId
+     * @param {MockResponse<C>=} response
+     * @param {number=} delay
+     */
+    mockResponseToSession(command, sessionId, response, delay) {
+      mockResponses.push({command, sessionId, response, delay});
+      return mockFn;
+    },
+    /**
+     * @param {keyof LH.CrdpCommands} command
+     * @param {string=} sessionId
+     */
+    findInvocation(command, sessionId) {
+      expect(mockFn).toHaveBeenCalledWith(command, sessionId, expect.anything());
+      return mockFn.mock.calls.find(call => call[0] === command && call[1] === sessionId)[2];
+    },
   });
-
-  mockFn.mockResponse = (command, response, delay) => {
-    mockResponses.push({command, response, delay});
-    return mockFn;
-  };
-
-  mockFn.mockResponseToSession = (command, sessionId, response, delay) => {
-    mockResponses.push({command, sessionId, response, delay});
-    return mockFn;
-  };
-
-  mockFn.findInvocation = (command, sessionId) => {
-    expect(mockFn).toHaveBeenCalledWith(command, sessionId, expect.anything());
-    return mockFn.mock.calls.find(call => call[0] === command && call[1] === sessionId)[2];
-  };
 
   return mockFn;
 }
@@ -61,8 +103,12 @@ function createMockSendCommandFn() {
  *      returns the listener .
  */
 function createMockOnceFn() {
+  /**
+   * @template {keyof LH.CrdpEvents} E
+   * @type {Array<{event: E|any, response?: MockEvent<E>}>}
+   */
   const mockEvents = [];
-  const mockFn = jest.fn().mockImplementation((eventName, listener) => {
+  const mockFnImpl = jest.fn().mockImplementation((eventName, listener) => {
     const indexOfResponse = mockEvents.findIndex(entry => entry.event === eventName);
     if (indexOfResponse === -1) return;
     const {response} = mockEvents[indexOfResponse];
@@ -71,15 +117,24 @@ function createMockOnceFn() {
     setTimeout(() => listener(response), 0);
   });
 
-  mockFn.mockEvent = (event, response) => {
-    mockEvents.push({event, response});
-    return mockFn;
-  };
-
-  mockFn.findListener = event => {
-    expect(mockFn).toHaveBeenCalledWith(event, expect.anything());
-    return mockFn.mock.calls.find(call => call[0] === event)[1];
-  };
+  const mockFn = Object.assign(mockFnImpl, {
+    /**
+     * @template {keyof LH.CrdpEvents} E
+     * @param {E} event
+     * @param {MockEvent<E>} response
+     */
+    mockEvent(event, response) {
+      mockEvents.push({event, response});
+      return mockFn;
+    },
+    /**
+     * @param {keyof LH.CrdpEvents} event
+     */
+    findListener(event) {
+      expect(mockFn).toHaveBeenCalledWith(event, expect.anything());
+      return mockFn.mock.calls.find(call => call[0] === event)[1];
+    },
+  });
 
   return mockFn;
 }
@@ -89,8 +144,12 @@ function createMockOnceFn() {
  * So it's good for .on w/ many events.
  */
 function createMockOnFn() {
+  /**
+   * @template {keyof LH.CrdpEvents} E
+   * @type {Array<{event: E|any, response?: MockEvent<E>}>}
+   */
   const mockEvents = [];
-  const mockFn = jest.fn().mockImplementation((eventName, listener) => {
+  const mockFnImpl = jest.fn().mockImplementation((eventName, listener) => {
     const events = mockEvents.filter(entry => entry.event === eventName);
     if (!events.length) return;
     for (const event of events) {
@@ -105,15 +164,24 @@ function createMockOnFn() {
     }, 0);
   });
 
-  mockFn.mockEvent = (event, response) => {
-    mockEvents.push({event, response});
-    return mockFn;
-  };
-
-  mockFn.findListener = event => {
-    expect(mockFn).toHaveBeenCalledWith(event, expect.anything());
-    return mockFn.mock.calls.find(call => call[0] === event)[1];
-  };
+  const mockFn = Object.assign(mockFnImpl, {
+    /**
+     * @template {keyof LH.CrdpEvents} E
+     * @param {E} event
+     * @param {MockEvent<E>} response
+     */
+    mockEvent(event, response) {
+      mockEvents.push({event, response});
+      return mockFn;
+    },
+    /**
+     * @param {keyof LH.CrdpEvents} event
+     */
+    findListener(event) {
+      expect(mockFn).toHaveBeenCalledWith(event, expect.anything());
+      return mockFn.mock.calls.find(call => call[0] === event)[1];
+    },
+  });
 
   return mockFn;
 }

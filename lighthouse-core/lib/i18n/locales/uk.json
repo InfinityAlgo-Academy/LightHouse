@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "Атрибути `[aria-*]` відповідають своїм ролям"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "Технології для людей з обмеженими можливостями, як-от програми зчитування з екрана, працюють неналежно, коли `aria-hidden=\"true\"` налаштовано в документі `<body>`. [Докладніше](https://web.dev/aria-hidden-body/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]` є в документі `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "`[aria-hidden=\"true\"]` немає в документі `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "Інтерактивні похідні в елементі `[aria-hidden=\"true\"]` забороняють користувачам технологій для людей з обмеженими можливостями (наприклад, програм зчитування з екрана) доступ до цих інтерактивних елементів. [Докладніше](https://web.dev/aria-hidden-focus/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "Елементи `[aria-hidden=\"true\"]` містять інтерактивні похідні"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "Елементи `[aria-hidden=\"true\"]` не містять інтерактивних похідних"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "Коли поле введення не має зрозумілої назви, програми зчитування з екрана озвучують його загальною назвою, через що воно стає непридатним для користувачів. [Докладніше](https://web.dev/aria-input-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "Поля введення ARIA не мають доступних для зчитування назв"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "Поля введення ARIA мають доступні для зчитування назви"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Деякі ролі ARIA мають обов'язкові атрибути, що описують стан елемента для програм зчитування з екрана. [Докладніше](https://web.dev/aria-required-attr/)."
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "Значення `[role]` дійсні"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "Коли поле перемикача не має зрозумілої назви, програми зчитування з екрана озвучують його загальною назвою, через що воно стає непридатним для користувачів. [Докладніше](https://web.dev/aria-toggle-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "Поля перемикача ARIA не мають доступних для зчитування назв"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "Поля перемикача ARIA мають доступні для зчитування назви"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "Допоміжні технології, як-от програми зчитування з екрана, не можуть тлумачити атрибути ARIA з недійсними значеннями. [Докладніше](https://web.dev/aria-valid-attr-value/)."
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Документ містить елемент `<title>`"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "Усі інтерактивні елементи мають містити унікальний `id`, щоб їх могли розпізнавати технології для людей з обмеженими можливостями. [Докладніше](https://web.dev/duplicate-id-active/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "Атрибути `[id]` в активних інтерактивних елементах неунікальні"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "Атрибути `[id]` в активних інтерактивних елементах унікальні"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "Значення ідентифікатора ARIA має бути унікальним, щоб технології для людей з обмеженими можливостями не пропускали інші копії. [Докладніше](https://web.dev/duplicate-id-aria/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "Ідентифікатори ARIA неунікальні"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "Ідентифікатори ARIA унікальні"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "Поля форми з кількома мітками можуть помилково озвучуватися технологіями для людей з обмеженими можливостями (наприклад, програмами зчитування з екрана), які використовують першу, останню або всі мітки. [Докладніше](https://web.dev/form-field-multiple-labels/)."
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "Поля форми містять кілька міток"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "Немає полів форми з кількома мітками"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Користувачі програм зчитування з екрана використовують назви фреймів, щоб дізнатися їх вміст. [Докладніше](https://web.dev/frame-title/)."
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "Елементи `<frame>` або `<iframe>` мають назву"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "Правильно впорядковані заголовки, які не пропускають рівні, передають семантичну структуру сторінки, що полегшує навігацію та розуміння під час використання технологій для людей з обмеженими можливостями. [Докладніше](https://web.dev/heading-order/)."
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "Елементи заголовка не розташовані послідовно в порядку спадання"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "Елементи заголовка розташовані послідовно в порядку спадання"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "Якщо для сторінки не вказано атрибут мови, програма зчитування з екрана припускає, що мовою сторінки є мова за умовчанням, яку користувач вибрав під час налаштування програми зчитування. Якщо насправді мова сторінки інша, програма зчитування з екрана може неправильно озвучувати текст на сторінці. [Докладніше](https://web.dev/html-has-lang/)."
@@ -390,7 +462,7 @@
     "message": "Видаліть вміст CSS, який не використовується"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Видаліть файли JavaScript, які ви не використовуєте, щоб зменшити кількість байтів під час активності в мережі."
+    "message": "Видаліть файли JavaScript, які ви не використовуєте, щоб зменшити кількість байтів під час активності в мережі. [Докладніше](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Вилучіть файли JavaScript, які ви не використовуєте"
@@ -532,12 +604,6 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Уникається надмірний розмір DOM"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Ціль"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Додайте `rel=\"noopener\"` або `rel=\"noreferrer\"` до зовнішніх посилань, щоб покращити ефективність і підвищити їх захищеність. [Докладніше](https://web.dev/external-anchors-use-rel-noopener)."
@@ -782,14 +848,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "Час до повного завантаження – це період часу, через який сторінка стане повністю інтерактивною. [Докладніше](https://web.dev/interactive)."
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "Найбільша візуалізація контенту показує, коли з'являється найбільший текст чи зображення. [Докладніше](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "Найбільша візуалізація контенту"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "Максимальна потенційна затримка відповіді на першу дію – це тривалість найдовшого завдання в мілісекундах. [Докладніше](https://developers.google.com/web/updates/2018/05/first-input-delay)."
+    "message": "Максимальна потенційна затримка відповіді на першу дію – це тривалість найдовшого завдання. [Докладніше](https://web.dev/lighthouse-max-potential-fid)."
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Індекс швидкості показує, через скільки часу відображається вміст сторінки. [Докладніше](https://web.dev/speed-index)."
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "Загальна тривалість усіх періодів часу в мілісекундах між першою візуалізацією вмісту та часом до повного завантаження, коли час виконання завдання перевищує 50 мс."
+    "message": "Загальна тривалість усіх періодів часу в мілісекундах між першою візуалізацією вмісту та часом до повного завантаження, коли час виконання завдання перевищує 50 мс. [Докладніше](https://web.dev/lighthouse-total-blocking-time)."
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "Час затримки передачі сигналу мережі (RTT) суттєво впливає на ефективність. Якщо показник RTT високий, це означає, що сервери, розташовані ближче до користувача, можуть покращити ефективність. [Докладніше](https://hpbn.co/primer-on-latency-and-bandwidth/)."
@@ -805,6 +877,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Синтаксис Service Worker забезпечує надійність вашого веб-додатка в разі непередбачуваних умов у мережі. [Докладніше](https://web.dev/offline-start-url)."
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Не вдалося завантажити {url} у синтаксис Service Worker, код статусу – {statusCode}"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` не надсилає код 200 у режимі офлайн"
@@ -883,9 +958,6 @@
   },
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Текст нечитабельний, оскільки метатег області перегляду не оптимізовано для мобільних пристроїв."
-  },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} тексту має замалий шрифт (на основі {decimalProportionVisited, number, extendedPercent} вибірки)."
   },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "У документі використано нечитабельні розміри шрифтів"
@@ -1066,6 +1138,18 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Сервер довго відповідає (TTFB)"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "Значення"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "Показник"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "Установіть обмеження часу, щоб слідкувати за ефективністю свого сайту. Ефективні сайти швидко завантажуються й миттєво відповідають на ввід користувача. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "Обмеження часу"
   },
   "lighthouse-core/audits/user-timings.js | columnDuration": {
     "message": "Тривалість"
@@ -1289,6 +1373,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "Назва"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "Перевищення бюджету"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Запити"
   },
@@ -1322,11 +1409,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Документ"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "Приблизна затримка введення"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "Перший простій ЦП"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "Перше відображення всього вмісту"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "Перше значне відображення"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "Шрифт"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Зображення"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "Час до повної взаємодії"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "Максимальна потенційна затримка відповіді на першу дію"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "Медіа"
@@ -1343,11 +1448,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} с"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Індекс швидкості"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Таблиця стилів"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Сторонні"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "Загальний час блокування"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Усього"
@@ -1581,13 +1692,13 @@
     "message": "Спробуйте зменшити кількість [плагінів WordPress](https://wordpress.org/plugins/), що завантажують на сторінці непотрібні фрагменти JavaScript. Щоб визначити плагіни, які додають зайвий код JavaScript, перевірте [покриття коду](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) в Chrome DevTools. Ви можете визначити тему чи плагін через URL-адресу сценарію. У покритті коду знайдіть плагіни з багатьма сценаріями за великим обсягом червоного тексту. Плагін має ставити сценарій у чергу, лише коли він дійсно використовується на сторінці."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Дізнайтеся про [кешування веб-переглядача у WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Дізнайтеся про [кешування веб-переглядача у WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Спробуйте [плагін WordPress для оптимізації зображень](https://wordpress.org/plugins/search/optimize+images/), який стискає зображення, але зберігає їх якість."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Завантажуйте зображення через [бібліотеку медіафайлів](https://codex.wordpress.org/Media_Library_Screen), щоб переконатися, що вони доступні в потрібному розмірі. Потім вставляйте їх в оптимальному розмірі з бібліотеки або через віджет для зображень (зокрема для адаптивних точок переходу). Використовуйте зображення, що мають `Full Size`, лише якщо вони повністю поміщаються. [Докладніше](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Завантажуйте зображення через [бібліотеку медіафайлів](https://wordpress.org/support/article/media-library-screen/), щоб переконатися, що вони доступні в потрібному розмірі. Потім вставляйте їх в оптимальному розмірі з бібліотеки або через віджет для зображень (зокрема для адаптивних точок переходу). Використовуйте зображення, що мають `Full Size`, лише якщо вони повністю поміщаються. [Докладніше](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Ви можете ввімкнути стиснення тексту в конфігурації веб-сервера."

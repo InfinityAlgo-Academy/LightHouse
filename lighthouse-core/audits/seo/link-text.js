@@ -13,11 +13,16 @@ const BLOCKLIST = new Set([
   'click this',
   'go',
   'here',
-  'this',
-  'start',
-  'right here',
-  'more',
+  'information',
   'learn more',
+  'more',
+  'more info',
+  'more information',
+  'right here',
+  'read more',
+  'see more',
+  'start',
+  'this',
   // Japanese
   'ここをクリック',
   'こちらをクリック',
@@ -63,6 +68,13 @@ const BLOCKLIST = new Set([
   '계속',
   '이동',
   '전체 보기',
+  // Swedish
+  'här',
+  'klicka här',
+  'läs mer',
+  'mer',
+  'mer info',
+  'mer information',
 ]);
 const i18n = require('../../lib/i18n/i18n.js');
 
