@@ -62,8 +62,10 @@
 }
 .viewer-placeholder-inner.lh-loading {
   filter: blur(2px) grayscale(1);
-  pointer-events: none;
   cursor: wait
+}
+.viewer-placeholder-inner.lh-loading>div {
+  pointer-events: none;
 }
 .viewer-placeholder-inner.dropping {
   border-color: currentColor;
