@@ -27,6 +27,13 @@ const config = {
     ],
     throttlingMethod: 'devtools',
   },
+  // source-maps is not yet in the default config.
+  passes: [{
+    passName: 'defaultPass',
+    gatherers: [
+      'source-maps',
+    ],
+  }],
 };
 
 module.exports = config;

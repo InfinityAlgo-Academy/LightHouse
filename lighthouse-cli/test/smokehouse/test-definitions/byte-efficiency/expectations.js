@@ -31,6 +31,14 @@ const expectations = [
         },
         {
           type: null,
+          src: 'http://localhost:10200/byte-efficiency/bundle.js',
+          async: false,
+          defer: false,
+          source: 'head',
+          devtoolsNodePath: '2,HTML,0,HEAD,6,SCRIPT',
+        },
+        {
+          type: null,
           src: null,
           async: false,
           defer: false,
@@ -106,6 +114,12 @@ const expectations = [
                 wastedBytes: '6559 +/- 100',
                 wastedPercent: 100,
               },
+              {
+                url: 'http://localhost:10200/byte-efficiency/bundle.js',
+                totalBytes: '13000 +/- 1000',
+                wastedBytes: '2350 +/- 100',
+                wastedPercent: '19 +/- 5',
+              },
             ],
           },
         },
@@ -122,9 +136,38 @@ const expectations = [
           details: {
             overallSavingsBytes: '>=25000',
             overallSavingsMs: '>300',
-            items: {
-              length: 2,
-            },
+            items: [
+              {
+                url: 'http://localhost:10200/byte-efficiency/script.js',
+                totalBytes: '53000 +/- 1000',
+                wastedBytes: '22000 +/- 1000',
+              },
+              {
+                url: 'http://localhost:10200/byte-efficiency/tester.html',
+                totalBytes: '15000 +/- 1000',
+                wastedBytes: '6500 +/- 1000',
+              },
+              {
+                url: 'http://localhost:10200/byte-efficiency/bundle.js',
+                totalBytes: 12913,
+                wastedBytes: 5827,
+                sources: [
+                  '…./b.js',
+                  '…./c.js',
+                  '…webpack/bootstrap',
+                ],
+                sourceBytes: [
+                  4417,
+                  2200,
+                  2809,
+                ],
+                sourceWastedBytes: [
+                  2191,
+                  2182,
+                  1259,
+                ],
+              },
+            ],
           },
         },
         'offscreen-images': {
@@ -156,7 +199,7 @@ const expectations = [
             overallSavingsMs: '>700',
             overallSavingsBytes: '>50000',
             items: {
-              length: 2,
+              length: 3,
             },
           },
         },

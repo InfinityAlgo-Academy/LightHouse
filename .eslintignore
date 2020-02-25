@@ -7,6 +7,8 @@
 **/generated/**
 **/source-maps/**
 
+lighthouse-cli/test/fixtures/byte-efficiency/bundle.js
+
 /dist/**
 
 coverage/**

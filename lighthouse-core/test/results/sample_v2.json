@@ -5282,6 +5282,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:JSBundles",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:uses-webp-images",
         "duration": 100,
         "entryType": "measure"

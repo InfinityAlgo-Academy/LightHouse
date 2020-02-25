@@ -404,9 +404,10 @@ class DetailsRenderer {
             label: '',
           };
           const values = row[subRowsHeading.key];
-          if (!Array.isArray(values)) continue;
-          const subRowsElement = this._renderSubRows(values, subRowsHeading);
-          valueFragment.appendChild(subRowsElement);
+          if (Array.isArray(values)) {
+            const subRowsElement = this._renderSubRows(values, subRowsHeading);
+            valueFragment.appendChild(subRowsElement);
+          }
         }
 
         if (valueFragment.childElementCount) {
