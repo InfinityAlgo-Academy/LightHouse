@@ -13,6 +13,7 @@
 
 /* eslint-disable no-console */
 
+const cloneDeep = require('lodash.clonedeep');
 const smokeTests = require('../test-definitions/core-tests.js');
 const {runSmokehouse} = require('../smokehouse.js');
 
@@ -22,8 +23,7 @@ const {runSmokehouse} = require('../smokehouse.js');
 async function smokehouse(options) {
   const {urlFilterRegex, skip, modify, ...smokehouseOptions} = options;
 
-  /** @type {Smokehouse.TestDfn[]} */
-  const clonedTests = JSON.parse(JSON.stringify(smokeTests));
+  const clonedTests = cloneDeep(smokeTests);
   const modifiedTests = clonedTests.map(test => {
     const modifiedExpectations = [];
     for (const expected of test.expectations) {

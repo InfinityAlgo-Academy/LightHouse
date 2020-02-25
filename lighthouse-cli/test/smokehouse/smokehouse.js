@@ -144,7 +144,7 @@ async function runSmokeTestDefn(concurrentMapper, smokeTestDefn, defnOptions) {
       passingTestCount++;
     }
 
-    process.stdout.write(result.log);
+    console.log(result.log);
   }
 
   console.log(`${purpleify(id)} smoketest complete.`);
