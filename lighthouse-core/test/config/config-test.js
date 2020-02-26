@@ -147,6 +147,216 @@ describe('Config', () => {
     })).toThrow('VRMLElements gatherer, required by audit missing-artifact-audit, was not found in config');
   });
 
+  // eslint-disable-next-line max-len
+  it('does not throw when an audit requests an optional artifact with no gatherer supplying it', async () => {
+    class DoesntNeedYourCrap extends Audit {
+      static get meta() {
+        return {
+          id: 'optional-artifact-audit',
+          title: 'none',
+          description: 'none',
+          requiredArtifacts: [
+            'URL', // base artifact
+            'ViewportDimensions', // from gatherer
+          ],
+          __internalOptionalArtifacts: [
+            'SourceMaps', // Not in the config.
+          ],
+        };
+      }
+
+      static audit() {}
+    }
+
+    // Shouldn't throw.
+    const config = new Config({
+      extends: 'lighthouse:default',
+      audits: [DoesntNeedYourCrap],
+    }, {
+      // Trigger filtering logic.
+      onlyAudits: ['optional-artifact-audit'],
+    });
+    expect(config.passes[0].gatherers.map(g => g.path)).toEqual(['viewport-dimensions']);
+  });
+
+  it('should keep optional artifacts in gatherers after filter', async () => {
+    class ButWillStillTakeYourCrap extends Audit {
+      static get meta() {
+        return {
+          id: 'optional-artifact-audit',
+          title: 'none',
+          description: 'none',
+          requiredArtifacts: [
+            'URL', // base artifact
+            'ViewportDimensions', // from gatherer
+          ],
+          __internalOptionalArtifacts: [
+            'SourceMaps', // Is in the config.
+          ],
+        };
+      }
+
+      static audit() {}
+    }
+
+    const config = new Config({
+      extends: 'lighthouse:default',
+      // TODO(cjamcl): remove when source-maps is in default config.
+      passes: [{
+        passName: 'defaultPass',
+        gatherers: [
+          'source-maps',
+        ],
+      }],
+      audits: [ButWillStillTakeYourCrap],
+    }, {
+      // Trigger filtering logic.
+      onlyAudits: ['optional-artifact-audit'],
+    });
+    expect(config.passes[0].gatherers.map(g => g.path))
+      .toEqual(['viewport-dimensions', 'source-maps']);
+  });
+
+  // eslint-disable-next-line max-len
+  it('does not throw when an audit requests an optional artifact with no gatherer supplying it', async () => {
+    class DoesntNeedYourCrap extends Audit {
+      static get meta() {
+        return {
+          id: 'optional-artifact-audit',
+          title: 'none',
+          description: 'none',
+          requiredArtifacts: [
+            'URL', // base artifact
+            'ViewportDimensions', // from gatherer
+          ],
+          __internalOptionalArtifacts: [
+            'SourceMaps', // Not in the config.
+          ],
+        };
+      }
+
+      static audit() {}
+    }
+
+    // Shouldn't throw.
+    const config = new Config({
+      extends: 'lighthouse:default',
+      audits: [DoesntNeedYourCrap],
+    }, {
+      // Trigger filtering logic.
+      onlyAudits: ['optional-artifact-audit'],
+    });
+    expect(config.passes[0].gatherers.map(g => g.path)).toEqual(['viewport-dimensions']);
+  });
+
+  it('should keep optional artifacts in gatherers after filter', async () => {
+    class ButWillStillTakeYourCrap extends Audit {
+      static get meta() {
+        return {
+          id: 'optional-artifact-audit',
+          title: 'none',
+          description: 'none',
+          requiredArtifacts: [
+            'URL', // base artifact
+            'ViewportDimensions', // from gatherer
+          ],
+          __internalOptionalArtifacts: [
+            'SourceMaps', // Is in the config.
+          ],
+        };
+      }
+
+      static audit() {}
+    }
+
+    const config = new Config({
+      extends: 'lighthouse:default',
+      // TODO(cjamcl): remove when source-maps is in default config.
+      passes: [{
+        passName: 'defaultPass',
+        gatherers: [
+          'source-maps',
+        ],
+      }],
+      audits: [ButWillStillTakeYourCrap],
+    }, {
+      // Trigger filtering logic.
+      onlyAudits: ['optional-artifact-audit'],
+    });
+    expect(config.passes[0].gatherers.map(g => g.path))
+      .toEqual(['viewport-dimensions', 'source-maps']);
+  });
+
+  // eslint-disable-next-line max-len
+  it('does not throw when an audit requests an optional artifact with no gatherer supplying it', async () => {
+    class DoesntNeedYourCrap extends Audit {
+      static get meta() {
+        return {
+          id: 'optional-artifact-audit',
+          title: 'none',
+          description: 'none',
+          requiredArtifacts: [
+            'URL', // base artifact
+            'ViewportDimensions', // from gatherer
+          ],
+          __internalOptionalArtifacts: [
+            'SourceMaps', // Not in the config.
+          ],
+        };
+      }
+
+      static audit() {}
+    }
+
+    // Shouldn't throw.
+    const config = new Config({
+      extends: 'lighthouse:default',
+      audits: [DoesntNeedYourCrap],
+    }, {
+      // Trigger filtering logic.
+      onlyAudits: ['optional-artifact-audit'],
+    });
+    expect(config.passes[0].gatherers.map(g => g.path)).toEqual(['viewport-dimensions']);
+  });
+
+  it('should keep optional artifacts in gatherers after filter', async () => {
+    class ButWillStillTakeYourCrap extends Audit {
+      static get meta() {
+        return {
+          id: 'optional-artifact-audit',
+          title: 'none',
+          description: 'none',
+          requiredArtifacts: [
+            'URL', // base artifact
+            'ViewportDimensions', // from gatherer
+          ],
+          __internalOptionalArtifacts: [
+            'SourceMaps', // Is in the config.
+          ],
+        };
+      }
+
+      static audit() {}
+    }
+
+    const config = new Config({
+      extends: 'lighthouse:default',
+      // TODO(cjamcl): remove when source-maps is in default config.
+      passes: [{
+        passName: 'defaultPass',
+        gatherers: [
+          'source-maps',
+        ],
+      }],
+      audits: [ButWillStillTakeYourCrap],
+    }, {
+      // Trigger filtering logic.
+      onlyAudits: ['optional-artifact-audit'],
+    });
+    expect(config.passes[0].gatherers.map(g => g.path))
+      .toEqual(['viewport-dimensions', 'source-maps']);
+  });
+
   it('does not throw when an audit requires only base artifacts', () => {
     class BaseArtifactsAudit extends Audit {
       static get meta() {

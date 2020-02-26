@@ -12,11 +12,14 @@
   },
   "scripts": {
     "build-all": "npm-run-posix-or-windows build-all:task",
-    "build-all:task": "(yarn build-cdt-lib & yarn build-extension & yarn build-devtools & yarn build-lr & yarn build-viewer & wait) && yarn build-pack",
-    "build-all:task:windows": "yarn build-cdt-lib && yarn build-extension && yarn build-devtools && yarn build-lr && yarn build-viewer",
+    "build-all:task": "(yarn build-cdt-lib & yarn build-extension & yarn build-devtools & yarn build-lr & yarn build-viewer & yarn build-smokehouse-bundle & wait) && yarn build-pack",
+    "build-all:task:windows": "yarn build-cdt-lib && yarn build-extension && yarn build-devtools && yarn build-lr && yarn build-viewer && yarn build-smokehouse-bundle",
     "build-cdt-lib": "node ./build/build-cdt-lib.js",
-    "build-extension": "node ./build/build-extension.js",
+    "build-extension": "yarn build-extension-chrome && yarn build-extension-firefox",
+    "build-extension-chrome": "node ./build/build-extension.js chrome",
+    "build-extension-firefox": "node ./build/build-extension.js firefox",
     "build-devtools": "yarn link && yarn link lighthouse && node ./build/build-bundle.js clients/devtools-entry.js dist/lighthouse-dt-bundle.js && node ./build/build-dt-report-resources.js",
+    "build-smokehouse-bundle": "node ./build/build-smokehouse-bundle.js",
     "build-lr": "node ./build/build-lightrider-bundles.js",
     "build-pack": "bash build/build-pack.sh",
     "build-viewer": "node ./build/build-viewer.js",
@@ -30,6 +33,7 @@
     "test-clients": "jest \"clients/\"",
     "test-viewer": "yarn unit-viewer && jest lighthouse-viewer/test/viewer-test-pptr.js",
     "test-lantern": "bash lighthouse-core/scripts/test-lantern.sh",
+    "test-legacy-javascript": "bash lighthouse-core/scripts/test-legacy-javascript.sh",
     "test-docs": "yarn --cwd docs/recipes/auth && jest docs/recipes/integration-test && yarn --cwd docs/recipes/custom-gatherer-puppeteer test",
     "unit-core": "jest \"lighthouse-core/\"",
     "unit-cli": "jest \"lighthouse-cli/\"",
@@ -86,6 +90,7 @@
     "@types/inquirer": "^0.0.35",
     "@types/jest": "^24.0.9",
     "@types/jpeg-js": "^0.3.0",
+    "@types/lodash.clonedeep": "^4.5.6",
     "@types/lodash.isequal": "^4.5.2",
     "@types/lodash.set": "^4.3.6",
     "@types/node": "*",
@@ -124,6 +129,7 @@
     "jest": "^24.9.0",
     "jsdom": "^12.2.0",
     "lighthouse-plugin-publisher-ads": "^0.4.1",
+    "lodash.clonedeep": "^4.5.0",
     "npm-run-posix-or-windows": "^2.0.2",
     "nyc": "^13.3.0",
     "package-json-versionify": "^1.0.4",
@@ -180,7 +186,7 @@
   },
   "bundlesize": [
     {
-      "path": "./dist/extension/scripts/popup-bundle.js",
+      "path": "./dist/extension-chrome/scripts/popup-bundle.js",
       "maxSize": "15 kB"
     },
     {
@@ -193,7 +199,7 @@
     },
     {
       "path": "./dist/lighthouse-dt-bundle.js",
-      "maxSize": "440 kB"
+      "maxSize": "450 kB"
     },
     {
       "path": "./dist/lightrider/report-generator-bundle.js",

@@ -13,11 +13,15 @@ const cpy = require('cpy');
 const browserify = require('browserify');
 const path = require('path');
 
+const argv = process.argv.slice(2);
+const browserBrand = argv[0];
+
 const sourceName = 'popup.js';
 const distName = 'popup-bundle.js';
 
-const sourceDir = __dirname + '/../clients/extension';
-const distDir = __dirname + '/../dist/extension';
+const sourceDir = `${__dirname}/../clients/extension`;
+const distDir = `${__dirname}/../dist/extension-${browserBrand}`;
+const packagePath = `${distDir}/../extension-${browserBrand}-package`;
 
 const manifestVersion = require(`${sourceDir}/manifest.json`).version;
 
@@ -30,13 +34,17 @@ async function buildEntryPoint() {
   const bundleStream = browserify(inFile).bundle();
 
   await mkdir(path.dirname(outFile), {recursive: true});
-  return new Promise((resolve, reject) => {
+  await new Promise((resolve, reject) => {
     const writeStream = fs.createWriteStream(outFile);
     writeStream.on('finish', resolve);
     writeStream.on('error', reject);
 
     bundleStream.pipe(writeStream);
   });
+
+  let outCode = fs.readFileSync(outFile, 'utf-8');
+  outCode = outCode.replace('___BROWSER_BRAND___', browserBrand);
+  fs.writeFileSync(outFile, outCode);
 }
 
 /**
@@ -48,7 +56,6 @@ function copyAssets() {
     'styles/**/*.css',
     'images/**/*',
     'manifest.json',
-    '_locales/**', // currently non-functional
   ], distDir, {
     cwd: sourceDir,
     parents: true,
@@ -61,7 +68,6 @@ function copyAssets() {
  * @return {Promise<void>}
  */
 async function packageExtension() {
-  const packagePath = `${distDir}/../extension-package`;
   await mkdir(packagePath, {recursive: true});
 
   return new Promise((resolve, reject) => {
@@ -81,15 +87,12 @@ async function packageExtension() {
 }
 
 async function run() {
-  const argv = process.argv.slice(2);
-  if (argv.includes('package')) {
-    return packageExtension();
-  }
-
   await Promise.all([
     buildEntryPoint(),
     copyAssets(),
   ]);
+
+  await packageExtension();
 }
 
 run();

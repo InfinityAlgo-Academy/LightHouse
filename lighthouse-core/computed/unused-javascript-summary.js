@@ -147,8 +147,8 @@ class UnusedJavascriptSummary {
         (mapping.lastColumnNumber - 1) || lineLengths[mapping.lineNumber];
       for (let i = mapping.columnNumber; i <= lastColumnOfMapping; i++) {
         if (wasteData.every(data => data.unusedByIndex[offset] === 1)) {
-          // @ts-ignore
-          files[mapping.sourceURL] = (files[mapping.sourceURL] || 0) + 1;
+          const key = mapping.sourceURL || '(unmapped)';
+          files[key] = (files[key] || 0) + 1;
         }
         offset += 1;
       }

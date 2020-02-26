@@ -64,7 +64,8 @@ describe('Icons helper', () => {
       //       value: {
       //         src: { raw: 'icon.png', value: 'icon.png' },
       //         density: { raw: undefined, value: 1 },
-      //         sizes: { raw: '192x192', value: ['192x192'] }
+      //         sizes: { raw: '192x192', value: ['192x192'] },
+      //         purpose: { raw: 'any', value: ['any'] }
       //       }
       //     }]
       //   }
@@ -326,6 +327,75 @@ describe('Icons helper', () => {
       });
       const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.pngSizedAtLeast(192, manifest.value).length, 1);
+    });
+  });
+
+  describe('icons at least one maskable check', () => {
+    it('succeeds when at least one icon has a purpose value of maskable', () => {
+      const manifestSrc = JSON.stringify({
+        icons: [{
+          src: 'icon.png',
+          sizes: '200x200',
+          type: 'image/png',
+          purpose: 'any',
+        }, {
+          src: 'icon-vector.svg',
+          sizes: '100x100',
+          purpose: 'maskable',
+        }],
+      });
+      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      assert.equal(icons.containsMaskableIcon(manifest.value), true);
+    });
+
+    it('succeeds when multiple icons have a purpose value of maskable', () => {
+      const manifestSrc = JSON.stringify({
+        icons: [{
+          src: 'icon.png',
+          sizes: '200x200',
+          type: 'image/png',
+          purpose: 'maskable',
+        }, {
+          src: 'icon-vector.svg',
+          sizes: '100x100',
+          purpose: 'maskable',
+        }],
+      });
+      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      assert.equal(icons.containsMaskableIcon(manifest.value), true);
+    });
+
+    it('succeeds when an icon has multiple purpose values, including maskable', () => {
+      const manifestSrc = JSON.stringify({
+        icons: [{
+          src: 'icon.png',
+          sizes: '200x200',
+          type: 'image/png',
+          purpose: 'any Maskable',
+        }, {
+          src: 'icon-vector.svg',
+          sizes: '100x100',
+          purpose: 'any',
+        }],
+      });
+      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      assert.equal(icons.containsMaskableIcon(manifest.value), true);
+    });
+
+    it('fails when no icons have a purpose value of maskable', () => {
+      const manifestSrc = JSON.stringify({
+        icons: [{
+          src: 'icon.png',
+          sizes: '200x200',
+          type: 'image/png',
+          purpose: 'any',
+        }, {
+          src: 'icon-vector.svg',
+          sizes: '100x100',
+        }],
+      });
+      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      assert.equal(icons.containsMaskableIcon(manifest.value), false);
     });
   });
 });

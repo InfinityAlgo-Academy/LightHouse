@@ -366,7 +366,7 @@ describe('Runner', () => {
       rimraf.sync(resolvedPath);
     });
 
-    it('only passes the required artifacts to the audit', async () => {
+    it('only passes the requested artifacts to the audit (no optional artifacts)', async () => {
       class SimpleAudit extends Audit {
         static get meta() {
           return {
@@ -395,6 +395,40 @@ describe('Runner', () => {
       expect(auditMockFn.mock.calls[0][0]).toEqual({
         ArtifactA: 'apple',
         ArtifactC: 'cherry',
+      });
+    });
+
+    it('only passes the requested artifacts to the audit (w/ optional artifacts)', async () => {
+      class SimpleAudit extends Audit {
+        static get meta() {
+          return {
+            id: 'simple',
+            title: 'Requires some artifacts',
+            failureTitle: 'Artifacts',
+            description: 'Test for always throwing',
+            requiredArtifacts: ['ArtifactA', 'ArtifactC'],
+            __internalOptionalArtifacts: ['ArtifactD'],
+          };
+        }
+      }
+
+      const auditMockFn = SimpleAudit.audit = jest.fn().mockReturnValue({score: 1});
+      const config = new Config({
+        settings: {
+          auditMode: __dirname + '/fixtures/artifacts/alphabet-artifacts/',
+        },
+        audits: [
+          SimpleAudit,
+        ],
+      });
+
+      const results = await Runner.run({}, {config});
+      expect(results.lhr).toMatchObject({audits: {simple: {score: 1}}});
+      expect(auditMockFn).toHaveBeenCalled();
+      expect(auditMockFn.mock.calls[0][0]).toEqual({
+        ArtifactA: 'apple',
+        ArtifactC: 'cherry',
+        ArtifactD: 'date',
       });
     });
   });

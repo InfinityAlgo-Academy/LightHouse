@@ -88,8 +88,11 @@ declare global {
       // TODO(bckenny): unify Table/Opportunity headings and items on next breaking change.
 
       export interface TableColumnHeading {
-        /** The name of the property within items being described. */
-        key: string;
+        /**
+         * The name of the property within items being described.
+         * If null, subRows must be defined, and the first sub-row will be empty.
+         */
+        key: string|null;
         /** Readable text label of the field. */
         text: string;
         /**
@@ -114,8 +117,11 @@ declare global {
       }
 
       export interface OpportunityColumnHeading {
-        /** The name of the property within items being described. */
-        key: string;
+        /**
+         * The name of the property within items being described.
+         * If null, subRows must be defined, and the first sub-row will be empty.
+         */
+        key: string|null;
         /** Readable text label of the field. */
         label: string;
         /**

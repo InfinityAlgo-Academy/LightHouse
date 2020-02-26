@@ -6,8 +6,8 @@
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
-const JsBundles = require('../../computed/js-bundles.js');
 const UnusedJavaScriptSummary = require('../../computed/unused-javascript-summary.js');
+const JsBundles = require('../../computed/js-bundles.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -21,6 +21,41 @@ const UIStrings = {
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 const IGNORE_THRESHOLD_IN_BYTES = 2048;
+const IGNORE_BUNDLE_SOURCE_THRESHOLD_IN_BYTES = 512;
+
+/**
+ * @param {string[]} strings
+ */
+function commonPrefix(strings) {
+  if (!strings.length) {
+    return '';
+  }
+
+  const maxWord = strings.reduce((a, b) => a > b ? a : b);
+  let prefix = strings.reduce((a, b) => a > b ? b : a);
+  while (!maxWord.startsWith(prefix)) {
+    prefix = prefix.slice(0, -1);
+  }
+
+  return prefix;
+}
+
+/**
+ * @param {string[]} strings
+ * @param {string} commonPrefix
+ * @return {string[]}
+ */
+function trimCommonPrefix(strings, commonPrefix) {
+  if (!commonPrefix) return strings;
+  return strings.map(s => s.startsWith(commonPrefix) ? '…' + s.slice(commonPrefix.length) : s);
+}
+
+/**
+ * @typedef WasteData
+ * @property {Uint8Array} unusedByIndex
+ * @property {number} unusedLength
+ * @property {number} contentLength
+ */
 
 class UnusedJavaScript extends ByteEfficiencyAudit {
   /**
@@ -32,7 +67,30 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['JsUsage', 'SourceMaps', 'ScriptElements', 'devtoolsLogs', 'traces'],
+      requiredArtifacts: ['JsUsage', 'ScriptElements', 'devtoolsLogs', 'traces'],
+      __internalOptionalArtifacts: ['SourceMaps'],
+    };
+  }
+
+  /**
+   * @param {WasteData[]} wasteData
+   * @param {LH.Artifacts.NetworkRequest} networkRecord
+   */
+  static determineLengths(wasteData, networkRecord) {
+    let unused = 0;
+    let content = 0;
+    // TODO: this is right for multiple script tags in an HTML document,
+    // but may be wrong for multiple frames using the same script resource.
+    for (const usage of wasteData) {
+      unused += usage.unusedLength;
+      content += usage.contentLength;
+    }
+    const transfer = ByteEfficiencyAudit.estimateTransferSize(networkRecord, content, 'Script');
+
+    return {
+      content,
+      unused,
+      transfer,
     };
   }
 
@@ -44,6 +102,8 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
    */
   static async audit_(artifacts, networkRecords, context) {
     const bundles = await JsBundles.request(artifacts, context);
+    const {bundleSourceUnusedThreshold = IGNORE_BUNDLE_SOURCE_THRESHOLD_IN_BYTES} =
+      context.options || {};
 
     const items = [];
     for (const [url, scriptCoverages] of Object.entries(artifacts.JsUsage)) {
@@ -66,11 +126,14 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
         const topUnusedSourceSizes = Object.entries(unusedJsSummary.sourcesWastedBytes)
           .slice(0, 5)
           .map(([source, unused]) => {
-            return {source, unused, total: bundle.sizes.files[source]};
+            const total = source === '(unmapped)' ? bundle.sizes.unmappedBytes : bundle.sizes.files[source];
+            return {source, unused, total};
           })
-          .filter(d => d.unused >= 1024);
+          .filter(d => d.unused >= bundleSourceUnusedThreshold);
+
+        const commonSourcePrefix = commonPrefix([...bundle.map._sourceInfos.keys()]);
         Object.assign(item, {
-          sources: topUnusedSourceSizes.map(d => d.source),
+          sources: trimCommonPrefix(topUnusedSourceSizes.map(d => d.source), commonSourcePrefix),
           sourceBytes: topUnusedSourceSizes.map(d => d.total),
           sourceWastedBytes: topUnusedSourceSizes.map(d => d.unused),
         });
