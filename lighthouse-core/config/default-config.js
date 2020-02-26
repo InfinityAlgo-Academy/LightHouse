@@ -199,6 +199,7 @@ const defaultConfig = {
     'apple-touch-icon',
     'splash-screen',
     'themed-omnibox',
+    'maskable-icon',
     'content-width',
     'image-aspect-ratio',
     'deprecations',
@@ -561,6 +562,7 @@ const defaultConfig = {
         {id: 'viewport', weight: 2, group: 'pwa-optimized'},
         {id: 'without-javascript', weight: 1, group: 'pwa-optimized'},
         {id: 'apple-touch-icon', weight: 1, group: 'pwa-optimized'},
+        {id: 'maskable-icon', weight: 1, group: 'pwa-optimized'},
         // Manual audits
         {id: 'pwa-cross-browser', weight: 0},
         {id: 'pwa-page-transitions', weight: 0},

@@ -1564,6 +1564,14 @@
             "scoreDisplayMode": "manual",
             "title": "The user's focus is directed to new content added to the page"
         },
+        "maskable-icon": {
+            "description": "A maskable icon ensures that the image fills the entire shape without being letterboxed when installing the app on a device. [Learn more](https://web.dev/maskable-icon/).",
+            "explanation": "No manifest was fetched",
+            "id": "maskable-icon",
+            "score": 0.0,
+            "scoreDisplayMode": "binary",
+            "title": "Manifest doesn't have a maskable icon"
+        },
         "max-potential-fid": {
             "description": "The maximum potential First Input Delay that your users could experience is the duration of the longest task. [Learn more](https://web.dev/lighthouse-max-potential-fid).",
             "displayValue": "120\u00a0ms",
@@ -4052,6 +4060,11 @@
                     "weight": 1.0
                 },
                 {
+                    "group": "pwa-optimized",
+                    "id": "maskable-icon",
+                    "weight": 1.0
+                },
+                {
                     "id": "pwa-cross-browser",
                     "weight": 0.0
                 },
@@ -4067,7 +4080,7 @@
             "description": "These checks validate the aspects of a Progressive Web App. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist).",
             "id": "pwa",
             "manualDescription": "These checks are required by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually.",
-            "score": 0.41,
+            "score": 0.39,
             "title": "Progressive Web App"
         },
         "seo": {
@@ -4659,6 +4672,12 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:computed:ManifestValues",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:audit:maskable-icon",
                 "startTime": 0.0
             },
             {

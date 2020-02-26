@@ -85,6 +85,9 @@ Object {
       "path": "themed-omnibox",
     },
     Object {
+      "path": "maskable-icon",
+    },
+    Object {
       "path": "content-width",
     },
     Object {
@@ -1025,6 +1028,11 @@ Object {
         Object {
           "group": "pwa-optimized",
           "id": "apple-touch-icon",
+          "weight": 1,
+        },
+        Object {
+          "group": "pwa-optimized",
+          "id": "maskable-icon",
           "weight": 1,
         },
         Object {

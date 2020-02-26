@@ -84,6 +84,12 @@ class ManifestValues {
         failureText: 'Manifest does not have `name`',
         validate: manifestValue => !!manifestValue.name.value,
       },
+      {
+        id: 'hasMaskableIcon',
+        failureText: 'Manifest does not have at least one icon that is maskable',
+        validate: ManifestValue => icons.doExist(ManifestValue) &&
+            icons.containsMaskableIcon(ManifestValue),
+      },
     ];
   }
 
