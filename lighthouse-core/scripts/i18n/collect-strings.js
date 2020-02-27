@@ -29,6 +29,7 @@ const ignoredPathComponents = [
   '**/scripts/**',
   // allow lighthouse stack package npm package
   '**/node_modules/!(lighthouse-stack-packs)/**',
+  '**/lighthouse-core/lib/stack-packs.js',
   '**/test/**',
   '**/*-test.js',
   '**/*-renderer.js',
@@ -567,7 +568,8 @@ if (require.main === module) {
   const coreStrings = collectAllStringsInDir(path.join(LH_ROOT, 'lighthouse-core'));
   console.log('Collected from LH core!');
 
-  const stackPacksRoot = `${LH_ROOT}/node_modules/lighthouse-stack-packs/packs`;
+  const stackPacksRoot = path.join(path.dirname(require.resolve('lighthouse-stack-packs')), 'packs');
+  console.log(stackPacksRoot)
   const stackPackStrings = collectAllStringsInDir(stackPacksRoot);
   console.log('Collected from Stack Packs!');
 

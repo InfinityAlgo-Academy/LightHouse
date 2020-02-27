@@ -5080,6 +5080,11 @@ lighthouse-logger@^1.0.0, lighthouse-logger@^1.2.0:
     debug "^2.6.8"
     marky "^1.2.0"
 
+lighthouse-stack-packs@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/lighthouse-stack-packs/-/lighthouse-stack-packs-0.0.1.tgz#6725055c87c1188bcbd7155972a6d6e05f804d25"
+  integrity sha512-hf+iAPscd5Og/XHQ9/R31IOIfS2NuPVaKfb0qFoyXrYTX3EmmYCOx1Gt48iU3pDIJEs2jfXJDK12pbyyy27jig==
+
 load-json-file@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/load-json-file/-/load-json-file-1.1.0.tgz#956905708d58b4bab4c2261b04f59f31c99374c0"

@@ -1,12 +1,13 @@
 /**
  * @license Copyright 2019 Google Inc. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * Licensed under the Apache License, Version 2.0 (the 'License'); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an 'AS IS' BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const stackPacks = require('../../stack-packs/index.js');
 const log = require('lighthouse-logger');
+const stackPacks = require('lighthouse-stack-packs');
+const i18n = require('./i18n/i18n.js');
 
 /**
  * Pairs consisting of a stack pack's ID and the set of stacks needed to be
@@ -60,11 +61,29 @@ function getStackPacks(pageStacks) {
       continue;
     }
 
+    // create i18n handler to get translated strings
+    const str_ = i18n.createMessageInstanceIdFn(
+      require.resolve(`lighthouse-stack-packs/packs/${matchedPack.id}`),
+      matchedPack.UIStrings
+    );
+
+    /** @type {Record<string, string>} */
+    const descriptions = {};
+    /** @type {Record<string, string>} */
+    const UIStrings = matchedPack.UIStrings;
+
+    // convert all strings into the correct translation
+    for (const key in UIStrings) {
+      if (UIStrings[key]) {
+        descriptions[key] = str_(UIStrings[key]);
+      }
+    }
+
     packs.push({
       id: matchedPack.id,
       title: matchedPack.title,
-      iconDataURL: matchedPack.iconDataURL,
-      descriptions: matchedPack.descriptions,
+      iconDataURL: matchedPack.icon,
+      descriptions,
     });
   }
 
