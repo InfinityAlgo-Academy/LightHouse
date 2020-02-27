@@ -114,7 +114,7 @@ const UIStrings = {
   /** Title of the Trust & Safety category of audits. This is displayed at the top of a list of audits focused on the safety and security of a website. Also used as a label on a score guage. */
   safetyCategoryTitle: 'Trust & Safety',
   /** Description of the Trust & Safety category of audits. This is displayed at the top of a list of audits focused on the safety and security of a website. 'Learn More' becomes link text to additional documentation. */
-  safetyCategoryDescription: 'These checks validate the ',
+  safetyCategoryDescription: 'These checks ensure that your page is secure and safe.',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
