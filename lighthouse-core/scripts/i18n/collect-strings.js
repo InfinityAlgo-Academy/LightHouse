@@ -569,7 +569,6 @@ if (require.main === module) {
   console.log('Collected from LH core!');
 
   const stackPacksRoot = path.join(path.dirname(require.resolve('lighthouse-stack-packs')), 'packs');
-  console.log(stackPacksRoot)
   const stackPackStrings = collectAllStringsInDir(stackPacksRoot);
   console.log('Collected from Stack Packs!');
 
