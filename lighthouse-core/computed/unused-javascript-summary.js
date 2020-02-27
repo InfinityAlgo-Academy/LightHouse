@@ -120,9 +120,8 @@ class UnusedJavascriptSummary {
   /**
    * @param {WasteData[]} wasteData
    * @param {LH.Artifacts.Bundle} bundle
-   * @param {ReturnType<typeof UnusedJavascriptSummary.determineLengths>} lengths
    */
-  static createSourceWastedBytes(wasteData, bundle, lengths) {
+  static createSourceWastedBytes(wasteData, bundle) {
     if (!bundle.script.content) return;
 
     /** @type {Record<string, number>} */
@@ -179,7 +178,7 @@ class UnusedJavascriptSummary {
 
     return {
       ...item,
-      sourcesWastedBytes: UnusedJavascriptSummary.createSourceWastedBytes(wasteData, bundle, lengths),
+      sourcesWastedBytes: UnusedJavascriptSummary.createSourceWastedBytes(wasteData, bundle),
     };
   }
 }
