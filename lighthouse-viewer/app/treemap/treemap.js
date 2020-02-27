@@ -53,10 +53,8 @@ function setTitle(node) {
   });
 }
 
-// https://gist.github.com/mlocati/7210513#gistcomment-3060158
-function percentageToColor(percentage, maxHue = 120, minHue = 0) {
-  const hue = percentage * (maxHue - minHue) + minHue;
-  return `hsl(${hue}, 100%, 50%)`;
+function hsl(h, s, l) {
+  return `hsl(${h}, ${s}%, ${l}%)`;
 }
 
 class TreemapViewer {
@@ -66,9 +64,12 @@ class TreemapViewer {
    * @param {HTMLElement} el
    */
   constructor(url, rootNodes, el) {
-    for (const [href, rootNode] of Object.entries(rootNodes)) {
-      rootNode.id = href;
+    for (const [url, rootNode] of Object.entries(rootNodes)) {
+      rootNode.id = url;
       dfs(rootNode, node => node.originalId = node.id);
+      const bundleHash = [...url].reduce((acc, char) => acc + char.charCodeAt(0), 0);
+      dfs(rootNode, node => node.bundleHash = bundleHash);
+      // dfs(rootNode, node => node.bundleUrl = url);
       webtreemap.sort(rootNode);
     }
 
@@ -106,7 +107,17 @@ class TreemapViewer {
     // TODO: recolor on click too.
     dfs(this.currentRootNode, node => {
       if (!node.dom) return;
-      node.dom.style.backgroundColor = percentageToColor(1 - node.wastedBytes / node.size);
+
+      const colors = [
+        {h: 30, s: 60},
+        {h: 94, s: 60},
+        {h: 124, s: 60},
+        {h: 254, s: 60},
+      ];
+      const color = colors[node.bundleHash % colors.length || 0];
+      const l = 25 + (85 - 25) * (1 - node.wastedBytes / node.size); // 25 - 85
+      node.dom.style.backgroundColor = hsl(color.h, color.s, Math.round(l));
+      node.dom.style.color = l > 50 ? 'black' : 'white';
     });
   }
 }
