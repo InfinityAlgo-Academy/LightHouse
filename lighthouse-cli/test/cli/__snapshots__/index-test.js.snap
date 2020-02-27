@@ -85,6 +85,9 @@ Object {
       "path": "themed-omnibox",
     },
     Object {
+      "path": "maskable-icon",
+    },
+    Object {
       "path": "content-width",
     },
     Object {
@@ -131,6 +134,9 @@ Object {
     },
     Object {
       "path": "performance-budget",
+    },
+    Object {
+      "path": "timing-budget",
     },
     Object {
       "path": "resource-summary",
@@ -347,6 +353,9 @@ Object {
     },
     Object {
       "path": "dobetterweb/doctype",
+    },
+    Object {
+      "path": "dobetterweb/charset",
     },
     Object {
       "path": "dobetterweb/dom-size",
@@ -705,6 +714,10 @@ Object {
           "weight": 1,
         },
         Object {
+          "id": "charset",
+          "weight": 1,
+        },
+        Object {
           "id": "no-vulnerable-libraries",
           "weight": 1,
         },
@@ -901,6 +914,11 @@ Object {
           "weight": 0,
         },
         Object {
+          "group": "budgets",
+          "id": "timing-budget",
+          "weight": 0,
+        },
+        Object {
           "group": "diagnostics",
           "id": "resource-summary",
           "weight": 0,
@@ -1010,6 +1028,11 @@ Object {
         Object {
           "group": "pwa-optimized",
           "id": "apple-touch-icon",
+          "weight": 1,
+        },
+        Object {
+          "group": "pwa-optimized",
+          "id": "maskable-icon",
           "weight": 1,
         },
         Object {

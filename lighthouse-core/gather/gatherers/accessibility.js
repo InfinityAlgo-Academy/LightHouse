@@ -47,21 +47,31 @@ function runA11yChecks() {
     },
     // @ts-ignore
   }).then(axeResult => {
-    // Augment the node objects with outerHTML snippet & custom path string
     // @ts-ignore
-    axeResult.violations.forEach(v => v.nodes.forEach(node => {
-      // @ts-ignore - getNodePath put into scope via stringification
-      node.path = getNodePath(node.element);
-      // @ts-ignore - getOuterHTMLSnippet put into scope via stringification
-      node.snippet = getOuterHTMLSnippet(node.element);
-      // @ts-ignore - getNodeLabel put into scope via stringification
-      node.nodeLabel = getNodeLabel(node.element);
-      // avoid circular JSON concerns
-      node.element = node.any = node.all = node.none = undefined;
-    }));
+    const augmentAxeNodes = result => {
+      // @ts-ignore
+      result.nodes.forEach(node => {
+        // @ts-ignore - getNodePath put into scope via stringification
+        node.path = getNodePath(node.element);
+        // @ts-ignore - getOuterHTMLSnippet put into scope via stringification
+        node.snippet = getOuterHTMLSnippet(node.element);
+        // @ts-ignore - getNodeLabel put into scope via stringification
+        node.nodeLabel = getNodeLabel(node.element);
+        // avoid circular JSON concerns
+        node.element = node.any = node.all = node.none = undefined;
+      });
+    };
+
+    // Augment the node objects with outerHTML snippet & custom path string
+    axeResult.violations.forEach(augmentAxeNodes);
+    axeResult.incomplete.forEach(augmentAxeNodes);
 
     // We only need violations, and circular references are possible outside of violations
-    axeResult = {violations: axeResult.violations, notApplicable: axeResult.inapplicable};
+    axeResult = {
+      violations: axeResult.violations,
+      notApplicable: axeResult.inapplicable,
+      incomplete: axeResult.incomplete,
+    };
     return axeResult;
   });
 }

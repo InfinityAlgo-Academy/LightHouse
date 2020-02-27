@@ -115,15 +115,18 @@ describe('ReportRenderer', () => {
       const container = renderer._dom._document.body;
       const output = renderer.renderReport(sampleResultsCopy, container);
 
+      function isPWAGauge(el) {
+        return el.querySelector('.lh-gauge__label').textContent === 'Progressive Web App';
+      }
+      function isPluginGauge(el) {
+        return el.querySelector('.lh-gauge__label').textContent === 'Some Plugin';
+      }
+
       const indexOfPwaGauge = Array.from(output
-        .querySelectorAll('.lh-scores-header > a[class*="lh-gauge"]')).findIndex(el => {
-        return el.matches('.lh-gauge--pwa__wrapper');
-      });
+        .querySelectorAll('.lh-scores-header > a[class*="lh-gauge"]')).findIndex(isPWAGauge);
 
       const indexOfPluginGauge = Array.from(output
-        .querySelectorAll('.lh-scores-header > a[class*="lh-gauge"]')).findIndex(el => {
-        return el.matches('.lh-gauge__wrapper--plugin');
-      });
+        .querySelectorAll('.lh-scores-header > a[class*="lh-gauge"]')).findIndex(isPluginGauge);
 
       const scoresHeaderElem = output.querySelector('.lh-scores-header');
       assert.equal(scoresHeaderElem.children.length - 2, indexOfPwaGauge);
@@ -135,9 +138,9 @@ describe('ReportRenderer', () => {
 
         assert.ok(gauge.classList.contains('lh-gauge__wrapper'));
         if (i >= indexOfPluginGauge) {
-          assert.ok(gauge.classList.contains('lh-gauge__wrapper--plugin'));
+          assert.ok(isPluginGauge(gauge));
         } else if (i >= indexOfPwaGauge) {
-          assert.ok(gauge.classList.contains('lh-gauge--pwa__wrapper'));
+          assert.ok(isPWAGauge(gauge));
         }
       }
     });

@@ -567,6 +567,8 @@ Util.UIStrings = {
   runtimeSettingsNetworkThrottling: 'Network throttling',
   /** Label for a row in a table that describes the CPU throttling conditions that were used during a Lighthouse run, if any.*/
   runtimeSettingsCPUThrottling: 'CPU throttling',
+  /** Label for a row in a table that shows in what tool Lighthouse is being run (e.g. The lighthouse CLI, Chrome DevTools, Lightrider, WebPageTest, etc). */
+  runtimeSettingsChannel: 'Channel',
   /** Label for a row in a table that shows the User Agent that was detected on the Host machine that ran Lighthouse. */
   runtimeSettingsUA: 'User agent (host)',
   /** Label for a row in a table that shows the User Agent that was used to send out all network requests during the Lighthouse run. */

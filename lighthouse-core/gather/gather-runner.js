@@ -483,6 +483,7 @@ class GatherRunner {
       NetworkUserAgent: '', // updated later
       BenchmarkIndex: 0, // updated later
       WebAppManifest: null, // updated later
+      InstallabilityErrors: {errors: []}, // updated later
       Stacks: [], // updated later
       traces: {},
       devtoolsLogs: {},
@@ -491,6 +492,40 @@ class GatherRunner {
       Timing: [],
       PageLoadError: null,
     };
+  }
+
+  /**
+   * Creates an Artifacts.InstallabilityErrors, tranforming data from the protocol
+   * for old versions of Chrome.
+   * @param {LH.Gatherer.PassContext} passContext
+   * @return {Promise<LH.Artifacts.InstallabilityErrors>}
+   */
+  static async getInstallabilityErrors(passContext) {
+    const response =
+      await passContext.driver.sendCommand('Page.getInstallabilityErrors');
+
+    let errors = response.installabilityErrors;
+    // Before M82, `getInstallabilityErrors` was not localized and just english
+    // error strings were returned. Convert the values we care about to the new error id format.
+    if (!errors) {
+      /** @type {string[]} */
+      // @ts-ignore - Support older protocol data.
+      const m81StyleErrors = response.errors || [];
+      errors = m81StyleErrors.map(error => {
+        const englishErrorToErrorId = {
+          'Could not download a required icon from the manifest': 'cannot-download-icon',
+          'Downloaded icon was empty or corrupted': 'no-icon-available',
+        };
+        for (const [englishError, errorId] of Object.entries(englishErrorToErrorId)) {
+          if (error.includes(englishError)) {
+            return {errorId, errorArguments: []};
+          }
+        }
+        return {errorId: '', errorArguments: []};
+      }).filter(error => error.errorId);
+    }
+
+    return {errors};
   }
 
   /**
@@ -514,6 +549,10 @@ class GatherRunner {
 
     // Fetch the manifest, if it exists.
     baseArtifacts.WebAppManifest = await GatherRunner.getWebAppManifest(passContext);
+
+    if (baseArtifacts.WebAppManifest) {
+      baseArtifacts.InstallabilityErrors = await GatherRunner.getInstallabilityErrors(passContext);
+    }
 
     baseArtifacts.Stacks = await stacksGatherer(passContext);
 

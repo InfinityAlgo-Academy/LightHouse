@@ -216,6 +216,11 @@ class ReportUIFeatures {
       // This audit deals explicitly with third party resources.
       'uses-rel-preconnect',
     ];
+    // Some audits should hide third party by default.
+    const thirdPartyFilterAuditHideByDefault = [
+      // Only first party resources are actionable.
+      'legacy-javascript',
+    ];
 
     // Get all tables with a text url column.
     /** @type {Array<HTMLTableElement>} */
@@ -230,8 +235,8 @@ class ReportUIFeatures {
       });
 
     tablesWithUrls.forEach((tableEl, index) => {
-      const urlItems = this._getUrlItems(tableEl);
-      const thirdPartyRows = this._getThirdPartyRows(tableEl, urlItems, this.json.finalUrl);
+      const rowEls = getTableRows(tableEl);
+      const thirdPartyRows = this._getThirdPartyRows(rowEls, this.json.finalUrl);
 
       // create input box
       const filterTemplate = this._dom.cloneTemplate('#tmpl-lh-3p-filter', this._templateContext);
@@ -262,43 +267,52 @@ class ReportUIFeatures {
       this._dom.find('.lh-3p-ui-string', filterTemplate).textContent =
           Util.i18n.strings.thirdPartyResourcesLabel;
 
+      const allThirdParty = thirdPartyRows.size === rowEls.length;
+      const allFirstParty = !thirdPartyRows.size;
+
       // If all or none of the rows are 3rd party, disable the checkbox.
-      if (thirdPartyRows.size === urlItems.length || !thirdPartyRows.size) {
+      if (allThirdParty || allFirstParty) {
         filterInput.disabled = true;
-        filterInput.checked = thirdPartyRows.size === urlItems.length;
+        filterInput.checked = allThirdParty;
       }
 
-      // Finally, add checkbox to the DOM.
+      // Add checkbox to the DOM.
       if (!tableEl.parentNode) return; // Keep tsc happy.
       tableEl.parentNode.insertBefore(filterTemplate, tableEl);
+
+      // Hide third-party rows for some audits by default.
+      const containingAudit = tableEl.closest('.lh-audit');
+      if (!containingAudit) throw new Error('.lh-table not within audit');
+      if (thirdPartyFilterAuditHideByDefault.includes(containingAudit.id) && !allThirdParty) {
+        filterInput.click();
+      }
     });
   }
 
   /**
    * From a table with URL entries, finds the rows containing third-party URLs
    * and returns a Map of those rows, mapping from row index to row Element.
-   * @param {HTMLTableElement} el
+   * @param {HTMLElement[]} rowEls
    * @param {string} finalUrl
-   * @param {Array<HTMLElement>} urlItems
-   * @return {Map<number, HTMLTableRowElement>}
+   * @return {Map<number, HTMLElement>}
    */
-  _getThirdPartyRows(el, urlItems, finalUrl) {
+  _getThirdPartyRows(rowEls, finalUrl) {
+    /** @type {Map<number, HTMLElement>} */
+    const thirdPartyRows = new Map();
     const finalUrlRootDomain = Util.getRootDomain(finalUrl);
 
-    /** @type {Map<number, HTMLTableRowElement>} */
-    const thirdPartyRows = new Map();
-    for (const urlItem of urlItems) {
-      const datasetUrl = urlItem.dataset.url;
-      if (!datasetUrl) continue;
-      const isThirdParty = Util.getRootDomain(datasetUrl) !== finalUrlRootDomain;
-      if (!isThirdParty) continue;
+    rowEls.forEach((rowEl, rowPosition) => {
+      /** @type {HTMLElement|null} */
+      const urlItem = rowEl.querySelector('.lh-text__url');
+      if (!urlItem) return;
 
-      const urlRowEl = urlItem.closest('tr');
-      if (urlRowEl) {
-        const rowPosition = getTableRows(el).indexOf(urlRowEl);
-        thirdPartyRows.set(rowPosition, urlRowEl);
-      }
-    }
+      const datasetUrl = urlItem.dataset.url;
+      if (!datasetUrl) return;
+      const isThirdParty = Util.getRootDomain(datasetUrl) !== finalUrlRootDomain;
+      if (!isThirdParty) return;
+
+      thirdPartyRows.set(Number(rowPosition), rowEl);
+    });
 
     return thirdPartyRows;
   }

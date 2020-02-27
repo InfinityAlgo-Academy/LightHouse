@@ -105,6 +105,7 @@ describe('TraceOfTabComputed', () => {
         ts: 225414172015,
         tts: 455539,
       },
+      frames: [],
       timestamps: {
         domContentLoaded: 225414732309,
         firstContentfulPaint: 225414670885,

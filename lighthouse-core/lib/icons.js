@@ -66,7 +66,21 @@ function pngSizedAtLeast(sizeRequirement, manifest) {
       });
 }
 
+/**
+ * @param {NonNullable<LH.Artifacts.Manifest['value']>} manifest
+ * @return {boolean} Does the manifest icons value contain at least one icon with purpose including "maskable"
+ */
+function containsMaskableIcon(manifest) {
+  const iconValues = manifest.icons.value;
+  return iconValues.some(icon => {
+    return icon.value.purpose &&
+      icon.value.purpose.value &&
+      icon.value.purpose.value.includes('maskable');
+  });
+}
+
 module.exports = {
   doExist,
   pngSizedAtLeast,
+  containsMaskableIcon,
 };

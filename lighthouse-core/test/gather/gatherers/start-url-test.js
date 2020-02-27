@@ -17,7 +17,10 @@ describe('StartUrl Gatherer', () => {
   let gatherer;
 
   function createArtifactsWithURL(url) {
-    return {WebAppManifest: {value: {start_url: {value: url}}}};
+    return {
+      WebAppManifest: {value: {start_url: {value: url}}},
+      InstallabilityErrors: {errors: []},
+    };
   }
 
   function unimplemented() {
@@ -64,8 +67,8 @@ describe('StartUrl Gatherer', () => {
         WebAppManifest: parseManifest(
           'this is invalid',
           'https://example.com/manifest.json',
-          'https://example.com/'
-        ),
+          'https://example.com/'),
+        InstallabilityErrors: {errors: []},
       },
       driver: mockDriver,
     };

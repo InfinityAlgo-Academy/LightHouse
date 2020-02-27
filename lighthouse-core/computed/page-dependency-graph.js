@@ -249,7 +249,7 @@ class PageDependencyGraph {
           case 'TimerFire': {
             // @ts-ignore - 'TimerFire' event means timerId exists.
             const installer = timers.get(evt.args.data.timerId);
-            if (!installer) break;
+            if (!installer || installer.endTime > node.startTime) break;
             installer.addDependent(node);
             break;
           }
