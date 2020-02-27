@@ -141,6 +141,13 @@ class ReportUIFeatures {
     }
 
     this._renderBundleVizLinks();
+    // Fill in all i18n data.
+    for (const node of this._dom.findAll('[data-i18n]', this._dom.document())) {
+      // These strings are guaranteed to (at least) have a default English string in Util.UIStrings,
+      // so this cannot be undefined as long as `report-ui-features.data-i18n` test passes.
+      const i18nAttr = /** @type {keyof LH.I18NRendererStrings} */ (node.getAttribute('data-i18n'));
+      node.textContent = Util.i18n.strings[i18nAttr];
+    }
   }
 
   /**
@@ -262,7 +269,7 @@ class ReportUIFeatures {
       this._dom.find('.lh-3p-filter-count', filterTemplate).textContent =
           `${thirdPartyRows.size}`;
       this._dom.find('.lh-3p-ui-string', filterTemplate).textContent =
-          Util.UIStrings.thirdPartyResourcesLabel;
+        Util.i18n.strings.thirdPartyResourcesLabel;
 
       const allThirdParty = thirdPartyRows.size === rowEls.length;
       const allFirstParty = !thirdPartyRows.size;

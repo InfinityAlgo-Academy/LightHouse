@@ -93,6 +93,7 @@ class TreemapViewer {
     } else {
       this.currentRootNode = this.rootNodes[bundleUrl];
     }
+    this.currentRootNode = JSON.parse(JSON.stringify(this.currentRootNode));
 
     setTitle(this.currentRootNode);
     this.el.innerHTML = '';

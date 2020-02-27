@@ -30,9 +30,16 @@ Unless required by applicable law or agreed to in writing, software distributed 
   <script src="../src/viewer.js"></script>
   <script src="treemap.js"></script>
   <style>
-    main {
+    body {
+      margin: 0;
+      overflow-y: hidden;
       height: 100vh;
-      width: 100vw;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex-grow: 1;
     }
 
     .webtreemap-node {
@@ -54,7 +61,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
       text-align: center;
     }
   </style>
-  <main></main>
   <script>
     (function (i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
