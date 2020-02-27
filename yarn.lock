@@ -5201,7 +5201,7 @@ lighthouse-plugin-publisher-ads@^0.4.1:
 
 lighthouse-stack-packs@^0.0.1:
   version "0.0.1"
-  resolved "http://localhost:4873/lighthouse-stack-packs/-/lighthouse-stack-packs-0.0.1.tgz#4b371363d0e448072097bae09ec64fb7cfc0de57"
+  resolved "https://registry.yarnpkg.com/lighthouse-stack-packs/-/lighthouse-stack-packs-0.0.1.tgz#4b371363d0e448072097bae09ec64fb7cfc0de57"
   integrity sha512-uTOpnW3q+3sw1I7PUbKnuaoAVtqB6eOZ47Wq15LMtBPvgiWWSUZ2f124dSoYjcPZZB1B0a1IrxvTItyIP5gPqA==
 
 load-json-file@^1.0.0:
