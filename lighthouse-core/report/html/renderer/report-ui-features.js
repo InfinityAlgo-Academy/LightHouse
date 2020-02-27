@@ -443,6 +443,20 @@ class ReportUIFeatures {
         this._toggleDarkTheme();
         break;
       }
+      case 'open-treemap': {
+        // WIP test code :)
+        const visualizationData = /** @type {LH.Audit.Details.DebugData} */ (
+          this.json.audits['bundle-visualization-data'].details);
+
+        const windowName = `viz-${this.json.requestedUrl}`;
+        const data = {
+          url: this.json.requestedUrl,
+          // bundleUrl: href,
+          rootNodes: visualizationData.rootNodes,
+        };
+        ReportUIFeatures.openTabAndSendData(data, TREEMAP_URL, windowName);
+        break;
+      }
     }
 
     this._dropDown.close();
