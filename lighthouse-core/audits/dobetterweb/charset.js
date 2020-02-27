@@ -6,7 +6,7 @@
 
 /**
  * @fileoverview Audits a page to ensure charset it configured properly.
- * It must be defined within the first 1024 bytes of the HTML document, defined in the HTTP header, or the document source starts with a BOM.
+ * It must be defined within the first 1024 bytes of the HTML document, defined in the HTTP header, or the document source must start with a BOM.
  *
  * @see: https://github.com/GoogleChrome/lighthouse/issues/10023
  */
@@ -22,7 +22,7 @@ const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on if the charset is set properly for a page. This title is shown when the charset meta tag is missing or defined too late in the page. */
   failureTitle: 'Charset declaration is missing or occurs too late in the HTML',
   /** Description of a Lighthouse audit that tells the user why the charset needs to be defined early on. */
-  description: 'A character encoding declaration is required. It can be done with a <meta> tag' +
+  description: 'A character encoding declaration is required. It can be done with a <meta> tag ' +
     'in the first 1024 bytes of the HTML or in the Content-Type HTTP response header. ' +
     '[Learn more](https://www.w3.org/International/questions/qa-html-encoding-declarations).',
 };
@@ -32,8 +32,8 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 const CONTENT_TYPE_HEADER = 'content-type';
 // /^[a-zA-Z0-9-_:.()]{2,}$/ matches all known IANA charset names (https://www.iana.org/assignments/character-sets/character-sets.xhtml)
 const IANA_REGEX = /^[a-zA-Z0-9-_:.()]{2,}$/;
-const CHARSET_HTML_REGEX = /<meta[^>]+charset[^<]+>/;
-const CHARSET_HTTP_REGEX = /charset\s*=\s*[a-zA-Z0-9-_:.()]{2,}/;
+const CHARSET_HTML_REGEX = /<meta[^>]+charset[^<]+>/i;
+const CHARSET_HTTP_REGEX = /charset\s*=\s*[a-zA-Z0-9-_:.()]{2,}/i;
 
 class CharsetDefined extends Audit {
   /**
@@ -69,7 +69,7 @@ class CharsetDefined extends Audit {
     }
 
     // Check if there is a BOM byte marker
-    const BOM_FIRSTCHAR = 65279;
+    const BOM_FIRSTCHAR = 0xFEFF;
     isCharsetSet = isCharsetSet || artifacts.MainDocumentContent.charCodeAt(0) === BOM_FIRSTCHAR;
 
     // Check if charset-ish meta tag is defined within the first 1024 characters(~1024 bytes) of the HTML document

@@ -226,7 +226,7 @@
             "title": "Document has a valid `rel=canonical`"
         },
         "charset": {
-            "description": "A character encoding declaration is required. It can be done with a <meta> tagin the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more](https://www.w3.org/International/questions/qa-html-encoding-declarations).",
+            "description": "A character encoding declaration is required. It can be done with a <meta> tag in the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more](https://www.w3.org/International/questions/qa-html-encoding-declarations).",
             "id": "charset",
             "score": 0.0,
             "scoreDisplayMode": "binary",

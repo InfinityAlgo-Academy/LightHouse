@@ -41,6 +41,14 @@ describe('Charset defined audit', () => {
     assert.equal(auditResult.score, 1);
   });
 
+  it('succeeds where the page contains the charset meta tag regardless of casing', async () => {
+    const htmlContent = HTML_PRE + '<meta cHaRsEt="uTf-8" >' + HTML_POST;
+    const [artifacts, context] = generateArtifacts(htmlContent);
+    artifacts.MetaElements = [{name: '', content: '', charset: 'utf-8'}];
+    const auditResult = await CharsetDefinedAudit.audit(artifacts, context);
+    assert.equal(auditResult.score, 1);
+  });
+
   it('succeeds when the page has the charset defined in the content-type meta tag', async () => {
     const htmlContent = HTML_PRE +
       '<meta http-equiv="Content-type" content="text/html; charset=utf-8" />' + HTML_POST;
@@ -77,7 +85,7 @@ describe('Charset defined audit', () => {
   });
 
   it('fails when the page has charset defined too late in the page', async () => {
-    const bigString = new Array(1024).fill(' ').join('');
+    const bigString = ' '.repeat(1024);
     const htmlContent = HTML_PRE + bigString + '<meta charset="utf-8" />' + HTML_POST;
     const [artifacts, context] = generateArtifacts(htmlContent);
     artifacts.MetaElements = [{name: '', content: '', charset: 'utf-8'}];
@@ -86,7 +94,7 @@ describe('Charset defined audit', () => {
   });
 
   it('passes when the page has charset defined almost too late in the page', async () => {
-    const bigString = new Array(900).fill(' ').join('');
+    const bigString = ' '.repeat(900);
     const htmlContent = HTML_PRE + bigString + '<meta charset="utf-8" />' + HTML_POST;
     const [artifacts, context] = generateArtifacts(htmlContent);
     artifacts.MetaElements = [{name: '', content: '', charset: 'utf-8'}];
@@ -97,7 +105,7 @@ describe('Charset defined audit', () => {
   it('fails when charset only partially defined in the first 1024 bytes of the page', async () => {
     const charsetHTML = '<meta charset="utf-8" />';
     // 1024 bytes should be halfway through the meta tag
-    const bigString = new Array(1024 - HTML_PRE.length - charsetHTML.length / 2).fill(' ').join('');
+    const bigString = ' '.repeat(1024 - HTML_PRE.length - charsetHTML.length / 2);
     const htmlContent = HTML_PRE + bigString + charsetHTML + HTML_POST;
     const [artifacts, context] = generateArtifacts(htmlContent);
     artifacts.MetaElements = [{name: '', content: '', charset: 'utf-8'}];
