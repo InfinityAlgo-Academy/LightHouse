@@ -69,22 +69,12 @@ class UnusedJavascriptSummary {
   }
 
   /**
-   * @param {WasteData[]} wasteData
    * @param {string} url
    * @param {ReturnType<typeof UnusedJavascriptSummary.determineLengths>} lengths
    * @return {Summary}
    */
-  static mergeWaste(wasteData, url, lengths) {
-    let unused = 0;
-    let content = 0;
-    // TODO: this is right for multiple script tags in an HTML document,
-    // but may be wrong for multiple frames using the same script resource.
-    for (const usage of wasteData) {
-      unused += usage.unusedLength;
-      content += usage.contentLength;
-    }
-
-    const wastedRatio = (unused / content) || 0;
+  static createItem(url, lengths) {
+    const wastedRatio = (lengths.unused / lengths.content) || 0;
     const wastedBytes = Math.round(lengths.transfer * wastedRatio);
 
     return {
@@ -173,7 +163,7 @@ class UnusedJavascriptSummary {
 
     const wasteData = scriptCoverages.map(UnusedJavascriptSummary.computeWaste);
     const lengths = UnusedJavascriptSummary.determineLengths(wasteData, networkRecord);
-    const item = UnusedJavascriptSummary.mergeWaste(wasteData, networkRecord.url, lengths);
+    const item = UnusedJavascriptSummary.createItem(networkRecord.url, lengths);
     if (!bundle) return item;
 
     return {
