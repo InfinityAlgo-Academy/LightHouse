@@ -6,13 +6,21 @@
 'use strict';
 
 // Example:
-//     node lighthouse-core/scripts/compare-timings.js --name my-collection --collect -n 3 --lh-flags='--only-audits=unminified-javascript' --urls https://www.example.com https://www.nyt.com
-//     node lighthouse-core/scripts/compare-timings.js --name my-collection --summarize --measure-filter 'loadPage|connect'
-//     node lighthouse-core/scripts/compare-timings.js --name base --name pr --compare
+//     node lighthouse-core/scripts/compare-runs.js --name my-collection --collect -n 3 --lh-flags='--only-audits=unminified-javascript' --urls https://www.example.com https://www.nyt.com
+//     node lighthouse-core/scripts/compare-runs.js --name my-collection --summarize --measure-filter 'loadPage|connect'
+//     node lighthouse-core/scripts/compare-runs.js --name base --name pr --compare
+
+// The script will report both timings and perf metric results. View just one of them but using --filter:
+//     node lighthouse-core/scripts/compare-runs.js --summarize --name pr --filter=metric
 
 const fs = require('fs');
-const {execSync} = require('child_process');
+const mkdir = fs.promises.mkdir;
+const glob = require('glob');
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
 const yargs = require('yargs');
+
+const {ProgressLogger} = require('./lantern/collect/common.js');
 
 const LH_ROOT = `${__dirname}/../..`;
 const ROOT_OUTPUT_DIR = `${LH_ROOT}/timings-data`;
@@ -23,28 +31,33 @@ const argv = yargs
     // common flags
     'name': 'Unique identifier, makes the folder for storing LHRs. Not a path',
     'report-exclude': 'Regex of properties to exclude. Set to "none" to disable default',
-    // --collect
-    'collect': 'Saves LHRs to disk',
+    'collect': 'Gathers, audits and saves LHRs to disk',
+    // --gather
+    'gather': 'Just gathers',
     'lh-flags': 'Lighthouse flags',
     'urls': 'Urls to run',
     'n': 'Number of times to run',
+    'audit': 'Audits from the artifacts on disk',
     // --summarize
     'summarize': 'Prints statistics report',
-    'measure-filter': 'Regex of measures to include. Optional',
+    'filter': 'Regex inclusion filter applied to key. Optional',
+    'reportExclude': 'Regex of columns keys to exclude.',
     'output': 'table, json',
     // --compare
     'compare': 'Compare two sets of LHRs',
     'delta-property-sort': 'Property to sort by its delta',
     'desc': 'Set to override default ascending sort',
   })
-  .string('measure-filter')
-  .default('report-exclude', 'min|max|stdev|^n$')
+  .string('filter')
+  .alias({'gather': 'G', 'audit': 'A'})
+  .default('report-exclude', 'key|min|max|stdev|^n$')
   .default('delta-property-sort', 'mean')
   .default('output', 'table')
   .array('urls')
   .string('lh-flags')
   .default('desc', false)
   .default('lh-flags', '')
+  .strict() // fail on unknown commands
   .wrap(yargs.terminalWidth())
 .argv;
 
@@ -82,6 +95,14 @@ function sampleStdev(values) {
 }
 
 /**
+ * @param {string} url
+ * @return string
+ */
+function urlToFolder(url) {
+  return url.replace(/[^a-zA-Z0-9]/g, '_');
+}
+
+/**
  * Round to the tenth.
  * @param {number} value
  */
@@ -89,25 +110,68 @@ function round(value) {
   return Math.round(value * 10) / 10;
 }
 
-function collect() {
+/**
+ * Get box-drawing progress bar
+ * @param {number} i
+ * @param {number} total
+ * @return {string}
+ */
+function getProgressBar(i, total = argv.n * argv.urls.length) {
+  return new Array(Math.round(i * 40 / total)).fill('▄').join('').padEnd(40);
+}
+
+async function gather() {
   const outputDir = dir(argv.name);
-  if (!fs.existsSync(ROOT_OUTPUT_DIR)) fs.mkdirSync(ROOT_OUTPUT_DIR);
+  await mkdir(ROOT_OUTPUT_DIR, {recursive: true});
+  // Don't overwrite a previous collection
   if (fs.existsSync(outputDir)) throw new Error(`folder already exists: ${outputDir}`);
-  fs.mkdirSync(outputDir);
+  await mkdir(outputDir);
+
+  const progress = new ProgressLogger();
+  progress.log('Gathering…');
 
   for (const url of argv.urls) {
     for (let i = 0; i < argv.n; i++) {
+      const gatherDir = `${outputDir}/${urlToFolder(url)}/${i}/`;
+      await mkdir(gatherDir, {recursive: true});
+      progress.progress(getProgressBar(i));
+
       const cmd = [
         'node',
         `${LH_ROOT}/lighthouse-cli`,
         url,
-        `--output-path=${outputDir}/lhr-${url.replace(/[^a-zA-Z0-9]/g, '_')}-${i}.json`,
+        `--gather-mode=${gatherDir}`,
+        argv.lhFlags,
+      ].join(' ');
+      await exec(cmd);
+    }
+  }
+  progress.closeProgress();
+}
+
+async function audit() {
+  const outputDir = dir(argv.name);
+  const progress = new ProgressLogger();
+  progress.log('Auditing…');
+
+  for (const url of argv.urls) {
+    for (let i = 0; i < argv.n; i++) {
+      const gatherDir = `${outputDir}/${urlToFolder(url)}/${i}/`;
+      progress.progress(getProgressBar(i));
+
+      const cmd = [
+        'node',
+        `${LH_ROOT}/lighthouse-cli`,
+        url,
+        `--audit-mode=${gatherDir}`,
+        `--output-path=${outputDir}/lhr-${urlToFolder(url)}-${i}.json`,
         '--output=json',
         argv.lhFlags,
       ].join(' ');
-      execSync(cmd, {stdio: 'ignore'});
+      await exec(cmd);
     }
   }
+  progress.closeProgress();
 }
 
 /**
@@ -119,56 +183,64 @@ function aggregateResults(name) {
   // `${url}@@@${entry.name}` -> duration
   /** @type {Map<string, number[]>} */
   const durationsMap = new Map();
-  const measureFilter = argv.measureFilter ? new RegExp(argv.measureFilter, 'i') : null;
 
-  for (const lhrPath of fs.readdirSync(outputDir)) {
-    const lhrJson = fs.readFileSync(`${outputDir}/${lhrPath}`, 'utf-8');
+  for (const lhrPath of glob.sync(`${outputDir}/*.json`)) {
+    const lhrJson = fs.readFileSync(lhrPath, 'utf-8');
     /** @type {LH.Result} */
     const lhr = JSON.parse(lhrJson);
 
-    // Group the durations of each entry of the same name.
-    /** @type {Record<string, number[]>} */
-    const durationsByName = {};
-    for (const entry of lhr.timing.entries) {
-      if (measureFilter && !measureFilter.test(entry.name)) {
-        continue;
+    const metrics = lhr.audits.metrics ?
+    /** @type {!LH.Audit.Details.Table} */ (lhr.audits.metrics.details).items[0] :
+      {};
+    const allEntries = {
+      metric: Object.entries(metrics).filter(([name]) => !name.endsWith('Ts')),
+      timing: lhr.timing.entries.map(entry => ([entry.name, entry.duration])),
+    };
+
+    Object.entries(allEntries).forEach(([kind, entries]) => {
+      // Group the durations of each entry of the same name.
+      /** @type {Record<string, number[]>} */
+      const durationsByName = {};
+
+      for (const [name, duration] of entries) {
+        const durations = durationsByName[name] = durationsByName[name] || [];
+        durations.push(Number(duration));
       }
 
-      const durations = durationsByName[entry.name] = durationsByName[entry.name] || [];
-      durations.push(entry.duration);
-    }
-
-    // Push the aggregate time of each unique (by name) entry.
-    for (const [name, durationsForSingleRun] of Object.entries(durationsByName)) {
-      const key = `${lhr.requestedUrl}@@@${name}`;
-      let durations = durationsMap.get(key);
-      if (!durations) {
-        durations = [];
-        durationsMap.set(key, durations);
+      // Push the aggregate time of each unique (by name) entry.
+      for (const [name, durationsForSingleRun] of Object.entries(durationsByName)) {
+        const key = `${lhr.requestedUrl}@@@${kind}@@@${name}`;
+        let durations = durationsMap.get(key);
+        if (!durations) {
+          durations = [];
+          durationsMap.set(key, durations);
+        }
+        durations.push(sum(durationsForSingleRun));
       }
-      durations.push(sum(durationsForSingleRun));
-    }
+    });
   }
 
   return [...durationsMap].map(([key, durations]) => {
-    const [url, entryName] = key.split('@@@');
+    const [url, _, entryName] = key.split('@@@');
     const mean = average(durations);
     const min = Math.min(...durations);
     const max = Math.max(...durations);
     const stdev = sampleStdev(durations);
     return {
       key,
-      measure: entryName,
+      name: entryName,
       url,
       n: durations.length,
       mean: round(mean),
       stdev: round(stdev),
+      // https://en.wikipedia.org/wiki/Coefficient_of_variation
+      CV: `${(stdev / mean * 100).toLocaleString()}%`,
       min: round(min),
       max: round(max),
     };
   }).sort((a, b) => {
     // sort by {measure, url}
-    const measureComp = a.measure.localeCompare(b.measure);
+    const measureComp = a.name.localeCompare(b.name);
     if (measureComp !== 0) return measureComp;
     return a.url.localeCompare(b.url);
   });
@@ -178,21 +250,25 @@ function aggregateResults(name) {
  * @param {*[]} results
  */
 function filter(results) {
-  if (!reportExcludeRegex) return;
+  const includeFilter = argv.filter ? new RegExp(argv.filter, 'i') : null;
 
-  for (const result of results) {
-    for (const key in result) {
-      if (reportExcludeRegex.test(key)) delete result[key];
+  results.forEach((result, i) => {
+    for (const propName of Object.keys(result)) {
+      if (reportExcludeRegex && reportExcludeRegex.test(propName)) delete result[propName];
     }
-  }
+
+    if (includeFilter && !includeFilter.test(result.key)) {
+      delete results[i];
+    }
+  });
 }
 
 /**
  * @param {number=} value
  * @return {value is number}
  */
-function exists(value) {
-  return typeof value !== 'undefined';
+function isNumber(value) {
+  return typeof value === 'number';
 }
 
 function summarize() {
@@ -206,11 +282,11 @@ function summarize() {
  * @param {number=} other
  */
 function compareValues(base, other) {
-  const basePart = exists(base) ? base : 'N/A';
-  const otherPart = exists(other) ? other : 'N/A';
+  const basePart = isNumber(base) ? base : 'N/A';
+  const otherPart = isNumber(other) ? other : 'N/A';
   return {
     description: `${basePart} -> ${otherPart}`,
-    delta: exists(base) && exists(other) ? (other - base) : undefined,
+    delta: isNumber(base) && isNumber(other) ? (other - base) : undefined,
   };
 }
 
@@ -232,20 +308,24 @@ function compare() {
 
     const mean = compareValues(baseResult && baseResult.mean, otherResult && otherResult.mean);
     const stdev = compareValues(baseResult && baseResult.stdev, otherResult && otherResult.stdev);
+    // eslint-disable-next-line max-len
+    const cv = compareValues(baseResult && parseFloat(baseResult.CV), otherResult && parseFloat(otherResult.CV));
     const min = compareValues(baseResult && baseResult.min, otherResult && otherResult.min);
     const max = compareValues(baseResult && baseResult.max, otherResult && otherResult.max);
 
     return {
-      'measure': someResult.measure,
+      'name': someResult.name,
       'url': someResult.url,
       'mean': mean.description,
-      'mean Δ': exists(mean.delta) ? round(mean.delta) : undefined,
+      'mean Δ': isNumber(mean.delta) ? round(mean.delta) : undefined,
       'stdev': stdev.description,
-      'stdev Δ': exists(stdev.delta) ? round(stdev.delta) : undefined,
+      'stdev Δ': isNumber(stdev.delta) ? round(stdev.delta) : undefined,
+      'cv': cv.description,
+      'cv Δ': isNumber(cv.delta) ? round(cv.delta) : undefined,
       'min': min.description,
-      'min Δ': exists(min.delta) ? round(min.delta) : undefined,
+      'min Δ': isNumber(min.delta) ? round(min.delta) : undefined,
       'max': max.description,
-      'max Δ': exists(max.delta) ? round(max.delta) : undefined,
+      'max Δ': isNumber(max.delta) ? round(max.delta) : undefined,
     };
   });
 
@@ -257,8 +337,8 @@ function compare() {
     const bValue = b[sortByKey];
 
     // Always put the keys missing a result at the bottom of the table.
-    if (!exists(aValue)) return 1;
-    else if (!exists(bValue)) return -1;
+    if (!isNumber(aValue)) return 1;
+    else if (!isNumber(bValue)) return -1;
 
     return (argv.desc ? 1 : -1) * (Math.abs(aValue) - Math.abs(bValue));
   });
@@ -279,8 +359,13 @@ function print(results) {
   }
 }
 
-function main() {
-  if (argv.collect) collect();
+async function main() {
+  if (argv.gather) await gather();
+  if (argv.audit) await audit();
+  if (argv.collect) {
+    await gather();
+    await audit();
+  }
   if (argv.summarize) summarize();
   if (argv.compare) compare();
 }
