@@ -20,7 +20,7 @@ const config = {
     ],
   }],
   audits: [
-    'bundle-visualization-data',
+    'treemap-data',
     'legacy-javascript',
   ],
   // @ts-ignore: `title` is required in CategoryJson. setting to the same value as the default

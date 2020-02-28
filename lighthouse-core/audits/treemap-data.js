@@ -90,16 +90,16 @@ function prepareTreemapNodes(map, sourcesData) {
   return rootNode;
 }
 
-class BundleVisualizationData extends Audit {
+class TreemapData extends Audit {
   /**
    * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
-      id: 'bundle-visualization-data',
+      id: 'treemap-data',
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
-      title: 'Bundle Visualization Data',
-      description: 'Used fom treemap.',
+      title: 'Treemap Data',
+      description: 'Used for treemap visualization.',
       requiredArtifacts: ['traces', 'devtoolsLogs', 'SourceMaps', 'ScriptElements', 'JsUsage'],
     };
   }
@@ -135,7 +135,7 @@ class BundleVisualizationData extends Audit {
     for (const bundle of bundles) {
       if (!bundle.script.src) continue; // Make typescript happy.
 
-      const sourcesWastedBytes = await BundleVisualizationData.getSourcesWastedBytes(
+      const sourcesWastedBytes = await TreemapData.getSourcesWastedBytes(
         bundle, networkRecords, artifacts.JsUsage, context);
 
       /** @type {Record<string, SourceData>} */
@@ -163,4 +163,4 @@ class BundleVisualizationData extends Audit {
   }
 }
 
-module.exports = BundleVisualizationData;
+module.exports = TreemapData;

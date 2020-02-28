@@ -452,14 +452,14 @@ class ReportUIFeatures {
       }
       case 'open-treemap': {
         // WIP test code :)
-        const visualizationData = /** @type {LH.Audit.Details.DebugData} */ (
-          this.json.audits['bundle-visualization-data'].details);
+        const treemapData = /** @type {LH.Audit.Details.DebugData} */ (
+          this.json.audits['treemap-data'].details);
 
         const windowName = `viz-${this.json.requestedUrl}`;
         const data = {
           url: this.json.requestedUrl,
           // bundleUrl: href,
-          rootNodes: visualizationData.rootNodes,
+          rootNodes: treemapData.rootNodes,
         };
         ReportUIFeatures.openTabAndSendData(data, TREEMAP_URL, windowName);
         break;
@@ -653,14 +653,14 @@ class ReportUIFeatures {
   }
 
   _renderBundleVizLinks() {
-    if (!this.json.audits['bundle-visualization-data']) return;
-    if (!this.json.audits['bundle-visualization-data'].details) return;
-    const visualizationData = /** @type {LH.Audit.Details.DebugData} */ (
-      this.json.audits['bundle-visualization-data'].details);
+    if (!this.json.audits['treemap-data']) return;
+    if (!this.json.audits['treemap-data'].details) return;
+    const treemapData = /** @type {LH.Audit.Details.DebugData} */ (
+      this.json.audits['treemap-data'].details);
 
     for (const urlEl of this._dom.findAll('.lh-text__url', this._document)) {
       const href = /** @type {HTMLAnchorElement} */ (this._dom.find('a', urlEl)).href;
-      const rootNode = visualizationData.rootNodes[href];
+      const rootNode = treemapData.rootNodes[href];
       if (!rootNode) continue;
 
       const externalButton = this._dom.createElement('span', 'lh-external-viz');
@@ -670,7 +670,7 @@ class ReportUIFeatures {
         const data = {
           url: this.json.requestedUrl,
           bundleUrl: href,
-          rootNodes: visualizationData.rootNodes,
+          rootNodes: treemapData.rootNodes,
         };
         ReportUIFeatures.openTabAndSendData(data, TREEMAP_URL, windowName);
       });
