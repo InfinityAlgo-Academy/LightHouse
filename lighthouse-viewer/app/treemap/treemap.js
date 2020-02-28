@@ -171,6 +171,17 @@ function main() {
   window.addEventListener('resize', () => {
     treemapViewer && treemapViewer.render();
   });
+
+  window.addEventListener('mouseover', (e) => {
+    const nodeEl = e.target.closest('.webtreemap-node');
+    if (!nodeEl) return;
+    nodeEl.classList.add('webtreemap-node--hover');
+  });
+  window.addEventListener('mouseout', (e) => {
+    const nodeEl = e.target.closest('.webtreemap-node');
+    if (!nodeEl) return;
+    nodeEl.classList.remove('webtreemap-node--hover');
+  });
 }
 
 function showTreeMap() {
