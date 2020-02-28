@@ -433,6 +433,24 @@
             "scoreDisplayMode": "informative",
             "title": "Avoid chaining critical requests"
         },
+        "cumulative-layout-shift": {
+            "description": "Cumulative Layout Shift is the sum of all layout shifts that occurred during a page's load. A layout shift is any movement an element makes once it is visible to the user. All layout shift is recorded, scored, and then aggregated into a cumulative score between 0 and 1; 0 being a perfectly stable page, and >=0.5 being a highly shifting page.",
+            "details": {
+                "items": [
+                    {
+                        "finalLayoutShiftTraceEventFound": true
+                    }
+                ],
+                "type": "debugdata"
+            },
+            "displayValue": "0.42",
+            "id": "cumulative-layout-shift",
+            "numericUnit": "unitless",
+            "numericValue": 0.42,
+            "score": 0.48,
+            "scoreDisplayMode": "numeric",
+            "title": "Cumulative Layout Shift"
+        },
         "custom-controls-labels": {
             "description": "Custom interactive controls have associated labels, provided by aria-label or aria-labelledby. [Learn more](https://web.dev/custom-controls-labels/).",
             "id": "custom-controls-labels",
@@ -1613,6 +1631,7 @@
             "details": {
                 "items": [
                     {
+                        "cumulativeLayoutShift": 0.0,
                         "estimatedInputLatency": 16.0,
                         "firstCPUIdle": 4927.0,
                         "firstCPUIdleTs": 185608247190.0,
@@ -3813,6 +3832,10 @@
                     "weight": 0.0
                 },
                 {
+                    "id": "cumulative-layout-shift",
+                    "weight": 0.0
+                },
+                {
                     "id": "estimated-input-latency",
                     "weight": 0.0
                 },
@@ -4528,6 +4551,18 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:computed:MaxPotentialFID",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:audit:cumulative-layout-shift",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:computed:CumulativeLayoutShift",
                 "startTime": 0.0
             },
             {

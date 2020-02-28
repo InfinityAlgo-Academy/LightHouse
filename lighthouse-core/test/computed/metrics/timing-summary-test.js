@@ -18,6 +18,7 @@ describe('Timing summary', () => {
 
     expect(result.metrics).toMatchInlineSnapshot(`
 Object {
+  "cumulativeLayoutShift": 0,
   "estimatedInputLatency": 77.79999999999995,
   "estimatedInputLatencyTs": undefined,
   "firstCPUIdle": 3351.3320000492968,
@@ -31,6 +32,8 @@ Object {
   "largestContentfulPaint": undefined,
   "largestContentfulPaintTs": undefined,
   "maxPotentialFID": 396.0000000000001,
+  "observedCumulativeLayoutShift": undefined,
+  "observedCumulativeLayoutShiftTs": undefined,
   "observedDomContentLoaded": 560.294,
   "observedDomContentLoadedTs": 225414732309,
   "observedFirstContentfulPaint": 498.87,

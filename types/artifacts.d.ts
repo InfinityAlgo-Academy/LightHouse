@@ -541,6 +541,7 @@ declare global {
         traceEnd: number;
         load?: number;
         domContentLoaded?: number;
+        cumulativeLayoutShift?: number;
       }
 
       export interface TraceOfTab {
@@ -609,9 +610,12 @@ declare global {
         estimatedInputLatency: number;
         estimatedInputLatencyTs: number | undefined;
         maxPotentialFID: number | undefined;
+        cumulativeLayoutShift: number | undefined;
         totalBlockingTime: number;
         observedNavigationStart: number;
         observedNavigationStartTs: number;
+        observedCumulativeLayoutShift: number | undefined;
+        observedCumulativeLayoutShiftTs: number | undefined;
         observedFirstPaint: number | undefined;
         observedFirstPaintTs: number | undefined;
         observedFirstContentfulPaint: number;

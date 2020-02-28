@@ -52,6 +52,9 @@ Object {
       "path": "metrics/max-potential-fid",
     },
     Object {
+      "path": "metrics/cumulative-layout-shift",
+    },
+    Object {
       "path": "errors-in-console",
     },
     Object {
@@ -783,6 +786,10 @@ Object {
         Object {
           "group": "metrics",
           "id": "max-potential-fid",
+          "weight": 0,
+        },
+        Object {
+          "id": "cumulative-layout-shift",
           "weight": 0,
         },
         Object {

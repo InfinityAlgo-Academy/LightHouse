@@ -226,6 +226,24 @@
       "numericUnit": "millisecond",
       "displayValue": "120 ms"
     },
+    "cumulative-layout-shift": {
+      "id": "cumulative-layout-shift",
+      "title": "Cumulative Layout Shift",
+      "description": "Cumulative Layout Shift is the sum of all layout shifts that occurred during a page's load. A layout shift is any movement an element makes once it is visible to the user. All layout shift is recorded, scored, and then aggregated into a cumulative score between 0 and 1; 0 being a perfectly stable page, and >=0.5 being a highly shifting page.",
+      "score": 0.48,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 0.42,
+      "numericUnit": "unitless",
+      "displayValue": "0.42",
+      "details": {
+        "type": "debugdata",
+        "items": [
+          {
+            "finalLayoutShiftTraceEventFound": true
+          }
+        ]
+      }
+    },
     "errors-in-console": {
       "id": "errors-in-console",
       "title": "Browser errors were logged to the console",
@@ -1296,6 +1314,7 @@
             "estimatedInputLatency": 16,
             "totalBlockingTime": 117,
             "maxPotentialFID": 123,
+            "cumulativeLayoutShift": 0,
             "observedNavigationStart": 0,
             "observedNavigationStartTs": 185603319912,
             "observedFirstPaint": 3969,
@@ -3655,6 +3674,10 @@
           "group": "metrics"
         },
         {
+          "id": "cumulative-layout-shift",
+          "weight": 0
+        },
+        {
           "id": "estimated-input-latency",
           "weight": 0
         },
@@ -4612,6 +4635,18 @@
       {
         "startTime": 0,
         "name": "lh:computed:MaxPotentialFID",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:cumulative-layout-shift",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:CumulativeLayoutShift",
         "duration": 100,
         "entryType": "measure"
       },
@@ -5714,6 +5749,12 @@
       ],
       "lighthouse-core/audits/metrics/max-potential-fid.js | description": [
         "audits[max-potential-fid].description"
+      ],
+      "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": [
+        "audits[cumulative-layout-shift].title"
+      ],
+      "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": [
+        "audits[cumulative-layout-shift].description"
       ],
       "lighthouse-core/audits/errors-in-console.js | failureTitle": [
         "audits[errors-in-console].title"

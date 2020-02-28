@@ -188,6 +188,7 @@ const defaultConfig = {
     'metrics/estimated-input-latency',
     'metrics/total-blocking-time',
     'metrics/max-potential-fid',
+    'metrics/cumulative-layout-shift',
     'errors-in-console',
     'time-to-first-byte',
     'metrics/first-cpu-idle',
@@ -394,6 +395,7 @@ const defaultConfig = {
         {id: 'interactive', weight: 5, group: 'metrics'},
         {id: 'first-cpu-idle', weight: 2, group: 'metrics'},
         {id: 'max-potential-fid', weight: 0, group: 'metrics'},
+        {id: 'cumulative-layout-shift', weight: 0}, // intentionally left out of metrics so it won't be displayed
         {id: 'estimated-input-latency', weight: 0}, // intentionally left out of metrics so it won't be displayed
         {id: 'total-blocking-time', weight: 0}, // intentionally left out of metrics so it won't be displayed
         {id: 'render-blocking-resources', weight: 0, group: 'load-opportunities'},
