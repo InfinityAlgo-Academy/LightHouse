@@ -5,10 +5,9 @@
  */
 'use strict';
 
-// TODO
-// * This looks so bad :)
-
 const MODE = 'wastedBytes';
+
+/** @typedef {import('../../../lighthouse-core/audits/treemap-data.js').RootNode} RootNode */
 
 /**
  * Guaranteed context.querySelector. Always returns an element or throws if
@@ -59,41 +58,43 @@ function hsl(h, s, l) {
 
 class TreemapViewer {
   /**
-   * @param {string} url
-   * @param {Record<string, *>} rootNodes
+   * @param {string} documentUrl
+   * @param {RootNode[]} rootNodes
    * @param {HTMLElement} el
    */
-  constructor(url, rootNodes, el) {
-    for (const [url, rootNode] of Object.entries(rootNodes)) {
-      rootNode.id = url;
-      dfs(rootNode, node => node.originalId = node.id);
-      const bundleHash = [...url].reduce((acc, char) => acc + char.charCodeAt(0), 0);
-      dfs(rootNode, node => node.bundleHash = bundleHash);
-      // dfs(rootNode, node => node.bundleUrl = url);
-      webtreemap.sort(rootNode);
+  constructor(documentUrl, rootNodes, el) {
+    for (const rootNode of rootNodes) {
+      rootNode.id = rootNode.id;
+      dfs(rootNode.node, node => node.originalId = node.id);
+      const idHash = [...rootNode.id].reduce((acc, char) => acc + char.charCodeAt(0), 0);
+      dfs(rootNode.node, node => node.idHash = idHash);
+      webtreemap.sort(rootNode.node);
     }
 
-    this.url = url;
+    this.documentUrl = documentUrl;
     this.rootNodes = rootNodes;
     this.el = el;
     this.currentRootNode = null;
   }
 
   /**
-   * @param {*} bundleUrl
+   * @param {string} id
    */
-  show(bundleUrl) {
-    if (bundleUrl === 'all') {
-      const children = Object.values(this.rootNodes);
+  show(id) {
+    if (id === 'javascript') {
+      const children = this.rootNodes
+        .filter(rootNode => rootNode.group === id)
+        .map(rootNode => rootNode.node);
       this.currentRootNode = {
-        originalId: this.url,
+        originalId: this.documentUrl,
         size: children.reduce((acc, cur) => cur.size + acc, 0),
         wastedBytes: children.reduce((acc, cur) => cur.wastedBytes + acc, 0),
         children,
       };
     } else {
-      this.currentRootNode = this.rootNodes[bundleUrl];
+      this.currentRootNode = this.rootNodes.find(rootNode => rootNode.id === id).node;
     }
+    // Clone because treemap view modifies input.
     this.currentRootNode = JSON.parse(JSON.stringify(this.currentRootNode));
 
     setTitle(this.currentRootNode);
@@ -104,7 +105,7 @@ class TreemapViewer {
 
   render() {
     this.treemap.render(this.el);
-    this.updateColors();    
+    this.updateColors();
   }
 
   updateColors() {
@@ -117,7 +118,7 @@ class TreemapViewer {
         {h: 124, s: 60},
         {h: 254, s: 60},
       ];
-      const color = colors[node.bundleHash % colors.length || 0];
+      const color = colors[node.idHash % colors.length || 0];
       const l = 25 + (85 - 25) * (1 - node.wastedBytes / node.size); // 25 - 85
       node.dom.style.backgroundColor = hsl(color.h, color.s, Math.round(l));
       node.dom.style.color = l > 50 ? 'black' : 'white';
@@ -130,8 +131,8 @@ function main() {
 
   window.addEventListener('message', e => {
     if (e.source !== self.opener) return;
-    const {url, bundleUrl = 'all', rootNodes} = e.data;
-    if (!rootNodes || !url) return;
+    const {documentUrl, id, rootNodes} = e.data;
+    if (!rootNodes || !documentUrl || !id) return;
 
     // Init header controls.
     const bundleSelectorEl = find('.bundle-selector');
@@ -141,17 +142,17 @@ function main() {
       optionEl.innerText = text;
       bundleSelectorEl.append(optionEl);
     }
-    makeOption('all', `${url} (all)`);
-    for (const key of Object.keys(rootNodes)) {
-      makeOption(key, key);
+    makeOption('javascript', `${documentUrl} (all javascript)`);
+    for (const rootNode of rootNodes) {
+      makeOption(rootNode.id, rootNode.id);
     }
-    bundleSelectorEl.value = bundleUrl;
+    bundleSelectorEl.value = id;
     bundleSelectorEl.addEventListener('change', () => {
       treemapViewer.show(bundleSelectorEl.value);
     });
 
-    treemapViewer = new TreemapViewer(url, rootNodes, find('main'));
-    treemapViewer.show(bundleUrl);
+    treemapViewer = new TreemapViewer(documentUrl, rootNodes, find('main'));
+    treemapViewer.show(id);
 
     // For debugging.
     window.__treemapViewer = treemapViewer;
@@ -178,7 +179,7 @@ function main() {
   window.addEventListener('click', (e) => {
     const nodeEl = e.target.closest('.webtreemap-node');
     if (!nodeEl) return;
-    treemapViewer && treemapViewer.updateColors();    
+    treemapViewer && treemapViewer.updateColors();
   });
 
   window.addEventListener('mouseover', (e) => {

@@ -457,8 +457,8 @@ class ReportUIFeatures {
 
         const windowName = `viz-${this.json.requestedUrl}`;
         const data = {
-          url: this.json.requestedUrl,
-          // bundleUrl: href,
+          documentUrl: this.json.requestedUrl,
+          id: 'javascript',
           rootNodes: treemapData.rootNodes,
         };
         ReportUIFeatures.openTabAndSendData(data, TREEMAP_URL, windowName);
@@ -668,8 +668,8 @@ class ReportUIFeatures {
       externalButton.addEventListener('click', () => {
         const windowName = `viz-${this.json.requestedUrl}`;
         const data = {
-          url: this.json.requestedUrl,
-          bundleUrl: href,
+          documentUrl: this.json.requestedUrl,
+          id: href,
           rootNodes: treemapData.rootNodes,
         };
         ReportUIFeatures.openTabAndSendData(data, TREEMAP_URL, windowName);

@@ -17,6 +17,13 @@ const NetworkRecords = require('../computed/network-records.js');
  */
 
 /**
+ * @typedef RootNode
+ * @property {string} id
+ * @property {string} group
+ * @property {Record<string, any>} node
+ */
+
+/**
  * @param {LH.Artifacts.RawSourceMap} map
  * @param {Record<string, SourceData>} sourcesData
  */
@@ -130,8 +137,8 @@ class TreemapData extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
 
-    /** @type {Record<string, any>} */
-    const rootNodes = {};
+    /** @type {RootNode[]} */
+    const rootNodes = [];
     for (const bundle of bundles) {
       if (!bundle.script.src) continue; // Make typescript happy.
 
@@ -147,7 +154,11 @@ class TreemapData extends Audit {
         };
       }
 
-      rootNodes[bundle.script.src] = prepareTreemapNodes(bundle.rawMap, sourcesData);
+      rootNodes.push({
+        id: bundle.script.src,
+        group: 'javascript',
+        node: prepareTreemapNodes(bundle.rawMap, sourcesData),
+      });
     }
 
     /** @type {LH.Audit.Details.DebugData} */
