@@ -104,7 +104,10 @@ class TreemapViewer {
 
   render() {
     this.treemap.render(this.el);
-    // TODO: recolor on click too.
+    this.updateColors();    
+  }
+
+  updateColors() {
     dfs(this.currentRootNode, node => {
       if (!node.dom) return;
 
@@ -170,6 +173,12 @@ function main() {
 
   window.addEventListener('resize', () => {
     treemapViewer && treemapViewer.render();
+  });
+
+  window.addEventListener('click', (e) => {
+    const nodeEl = e.target.closest('.webtreemap-node');
+    if (!nodeEl) return;
+    treemapViewer && treemapViewer.updateColors();    
   });
 
   window.addEventListener('mouseover', (e) => {
