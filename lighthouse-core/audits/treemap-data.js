@@ -30,6 +30,7 @@ const ResourceSummary = require('../computed/resource-summary.js');
  * @property {number} size
  * @property {number=} wastedBytes
  * @property {Node[]=} children
+ * @property {string[]=} tags
  */
 
 /**
