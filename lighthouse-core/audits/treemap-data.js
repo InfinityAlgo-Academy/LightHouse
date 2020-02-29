@@ -203,7 +203,6 @@ class TreemapData extends Audit {
 
       let node;
       if (bundle && unusedJavascriptSummary && unusedJavascriptSummary.sourcesWastedBytes) {
-        continue;
         /** @type {Record<string, SourceData>} */
         const sourcesData = {};
         for (const source of Object.keys(bundle.sizes.files)) {
@@ -218,9 +217,8 @@ class TreemapData extends Audit {
           id,
           size: unusedJavascriptSummary.totalBytes,
           wastedBytes: unusedJavascriptSummary.wastedBytes,
-        }
+        };
       } else {
-        continue;
         // ...?
         node = {
           id,

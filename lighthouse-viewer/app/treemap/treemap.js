@@ -6,6 +6,7 @@
 'use strict';
 
 const MODE = 'wastedBytes';
+// const MODE = 'default';
 
 /** @typedef {import('../../../lighthouse-core/audits/treemap-data.js').RootNode} RootNode */
 
@@ -45,15 +46,24 @@ function setTitle(node) {
     // node.id += ` • ${Number.bytesToString(size)} • ${Common.UIString('%.1f\xa0%%', size / total * 100)}`;
 
     if (MODE === 'default') {
-      node.id = `${node.originalId.slice(0, 30)} • ${Math.round(size)} • ${Math.round(size / total * 100)}`;
+      node.id = `${elide(node.originalId, 60)} • ${Math.round(size)} • ${Math.round(size / total * 100)}`;
     } else if (MODE === 'wastedBytes') {
-      node.id = `${node.originalId.slice(0, 30)} • ${Math.round(size)} • ${Math.round(wastedBytes / size * 100)}`;
+      node.id = `${elide(node.originalId, 60)} • ${Math.round(size)} • ${Math.round(wastedBytes / size * 100)}`;
     }
   });
 }
 
 function hsl(h, s, l) {
   return `hsl(${h}, ${s}%, ${l}%)`;
+}
+
+/**
+ * @param {string} string
+ * @param {number} length
+ */
+function elide(string, length) {
+  if (string.length <= length) return string;
+  return string.slice(0, length) + '…';
 }
 
 class TreemapViewer {
@@ -64,6 +74,22 @@ class TreemapViewer {
    */
   constructor(documentUrl, rootNodes, el) {
     for (const rootNode of rootNodes) {
+      // Wrap with the id of the rootNode. Only for bundles.
+      if (rootNode.node.children) {
+        rootNode.node = {
+          id: rootNode.id,
+          children: [rootNode.node],
+          size: rootNode.node.size,
+          wastedBytes: rootNode.node.wastedBytes,
+        };
+
+        // Remove the extra layer of nodes, but only if it is just '/'.
+        // For example, sometimes it is '//webpack'.
+        if (rootNode.node.children[0].id === '/') {
+          rootNode.node.children = rootNode.node.children[0].children;
+        }
+      }
+
       rootNode.id = rootNode.id;
       dfs(rootNode.node, node => node.originalId = node.id);
       const idHash = [...rootNode.id].reduce((acc, char) => acc + char.charCodeAt(0), 0);
@@ -91,6 +117,7 @@ class TreemapViewer {
         wastedBytes: children.reduce((acc, cur) => cur.wastedBytes + acc, 0),
         children,
       };
+      webtreemap.sort(this.currentRootNode);
     } else {
       this.currentRootNode = this.rootNodes.find(rootNode => rootNode.id === id).node;
     }
@@ -118,6 +145,7 @@ class TreemapViewer {
         {h: 124, s: 60},
         {h: 254, s: 60},
       ];
+      // Choose color based on id hash so colors are stable across runs.
       const color = colors[node.idHash % colors.length || 0];
       const l = 25 + (85 - 25) * (1 - node.wastedBytes / node.size); // 25 - 85
       node.dom.style.backgroundColor = hsl(color.h, color.s, Math.round(l));
@@ -142,9 +170,11 @@ function main() {
       optionEl.innerText = text;
       bundleSelectorEl.append(optionEl);
     }
-    makeOption('javascript', `${documentUrl} (all javascript)`);
+    makeOption('javascript', `${elide(documentUrl, 70)} (all javascript)`);
     for (const rootNode of rootNodes) {
-      makeOption(rootNode.id, rootNode.id);
+      if (rootNode.node.children) {
+        makeOption(rootNode.id, elide(rootNode.id, 80));
+      }
     }
     bundleSelectorEl.value = id;
     bundleSelectorEl.addEventListener('change', () => {
