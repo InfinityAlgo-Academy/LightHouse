@@ -5,10 +5,64 @@
  */
 'use strict';
 
-const MODE = 'wastedBytes';
-// const MODE = 'default';
-
 /** @typedef {import('../../../lighthouse-core/audits/treemap-data.js').RootNode} RootNode */
+
+/** @type {TreemapViewer} */
+let treemapViewer;
+
+// From DevTools:
+// https://cs.chromium.org/chromium/src/third_party/devtools-frontend/src/front_end/quick_open/CommandMenu.js?l=255&rcl=ad5c586c30a6bc55962b7a96b0533911c86bd4fc
+const COLOR_HUES = [
+  '#F44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#03A9F4',
+  '#00BCD4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFC107',
+  '#FF9800', '#FF5722', '#795548', '#9E9E9E', '#607D8B',
+].map(hex => {
+  const hexParts = hex.slice(1).split(/(..)/).filter(Boolean);
+  const rgb = hexParts.map(part => parseInt(part, 16));
+  return rgb2hue(...rgb);
+});
+
+/**
+ * Brilliant code by akinuri
+ * https://stackoverflow.com/a/39147465
+ * @param {number} r
+ * @param {number} g
+ * @param {number} b
+ */
+function rgb2hue(r, g, b) {
+  r /= 255;
+  g /= 255;
+  b /= 255;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const c = max - min;
+  let hue;
+  if (c == 0) {
+    hue = 0;
+  } else {
+    switch (max) {
+      case r:
+        var segment = (g - b) / c;
+        var shift = 0 / 60; // R° / (360° / hex sides)
+        if (segment < 0) { // hue > 180, full rotation
+          shift = 360 / 60; // R° / (360° / hex sides)
+        }
+        hue = segment + shift;
+        break;
+      case g:
+        var segment = (b - r) / c;
+        var shift = 120 / 60; // G° / (360° / hex sides)
+        hue = segment + shift;
+        break;
+      case b:
+        var segment = (r - g) / c;
+        var shift = 240 / 60; // B° / (360° / hex sides)
+        hue = segment + shift;
+        break;
+    }
+  }
+  return hue * 60; // hue is in [0,6], scale it up
+}
 
 /**
  * Guaranteed context.querySelector. Always returns an element or throws if
@@ -33,24 +87,6 @@ function dfs(node, fn) {
       dfs(child, fn);
     }
   }
-}
-
-/**
- * DFS to generate each treemap node's text.
- * @param {any} node
- */
-function setTitle(node) {
-  dfs(node, node => {
-    const {size, total, wastedBytes} = node;
-    // TODO: ?
-    // node.id += ` • ${Number.bytesToString(size)} • ${Common.UIString('%.1f\xa0%%', size / total * 100)}`;
-
-    if (MODE === 'default') {
-      node.id = `${elide(node.originalId, 60)} • ${Math.round(size)} • ${Math.round(size / total * 100)}`;
-    } else if (MODE === 'wastedBytes') {
-      node.id = `${elide(node.originalId, 60)} • ${Math.round(size)} • ${Math.round(wastedBytes / size * 100)}`;
-    }
-  });
 }
 
 function hsl(h, s, l) {
@@ -105,8 +141,9 @@ class TreemapViewer {
 
   /**
    * @param {string} id
+   * @param {string} mode
    */
-  show(id) {
+  show(id, mode) {
     if (id === 'javascript') {
       const children = this.rootNodes
         .filter(rootNode => rootNode.group === id)
@@ -123,8 +160,9 @@ class TreemapViewer {
     }
     // Clone because treemap view modifies input.
     this.currentRootNode = JSON.parse(JSON.stringify(this.currentRootNode));
+    this.mode = mode;
 
-    setTitle(this.currentRootNode);
+    this.setTitle(this.currentRootNode);
     this.el.innerHTML = '';
     this.treemap = new webtreemap.TreeMap(this.currentRootNode, {padding: [18, 3, 3, 3]});
     this.render();
@@ -135,52 +173,89 @@ class TreemapViewer {
     this.updateColors();
   }
 
+  /**
+   * DFS to generate each treemap node's text.
+   * @param {any} node
+   */
+  setTitle(node) {
+    dfs(node, node => {
+      const {size, total, wastedBytes} = node;
+      // TODO: ?
+      // node.id += ` • ${Number.bytesToString(size)} • ${Common.UIString('%.1f\xa0%%', size / total * 100)}`;
+
+      if (this.mode === 'default') {
+        node.id = `${elide(node.originalId, 60)} • ${Math.round(size)} • ${Math.round(size / total * 100)}`;
+      } else if (this.mode === 'usage') {
+        node.id = `${elide(node.originalId, 60)} • ${Math.round(size)} • ${Math.round(wastedBytes / size * 100)}`;
+      }
+    });
+  }
+
   updateColors() {
     dfs(this.currentRootNode, node => {
       if (!node.dom) return;
 
-      const colors = [
-        {h: 30, s: 60},
-        {h: 94, s: 60},
-        {h: 124, s: 60},
-        {h: 254, s: 60},
-      ];
       // Choose color based on id hash so colors are stable across runs.
-      const color = colors[node.idHash % colors.length || 0];
-      const l = 25 + (85 - 25) * (1 - node.wastedBytes / node.size); // 25 - 85
-      node.dom.style.backgroundColor = hsl(color.h, color.s, Math.round(l));
-      node.dom.style.color = l > 50 ? 'black' : 'white';
+      const hue = COLOR_HUES[node.idHash % COLOR_HUES.length || 0];
+      const sat = 60;
+      let lum = 40;
+      if (this.mode === 'usage') {
+        lum = 25 + (85 - 25) * (1 - node.wastedBytes / node.size); // 25 - 85
+      }
+
+      node.dom.style.backgroundColor = hsl(hue, sat, Math.round(lum));
+      node.dom.style.color = lum > 50 ? 'black' : 'white';
     });
   }
 }
 
-function main() {
-  let treemapViewer;
+/**
+ * @param {Options} options
+ */
+function createHeader(options) {
+  const bundleSelectorEl = find('.bundle-selector');
+  const modeSelectorEl = find('.mode-selector');
+  function makeOption(value, text) {
+    const optionEl = document.createElement('option');
+    optionEl.value = value;
+    optionEl.innerText = text;
+    bundleSelectorEl.append(optionEl);
+  }
 
+  function onChange() {
+    treemapViewer.show(bundleSelectorEl.value, modeSelectorEl.value);
+  }
+
+  const hasJavascript = options.rootNodes.some(rootNode => rootNode.group === 'javascript');
+  if (hasJavascript) {
+    makeOption('javascript', `${elide(options.documentUrl, 70)} (all javascript)`);
+  }
+
+  for (const rootNode of options.rootNodes) {
+    if (!rootNode.node.children) continue; // Only add bundles.
+    makeOption(rootNode.id, elide(rootNode.id, 80));
+  }
+
+  bundleSelectorEl.value = options.id;
+  bundleSelectorEl.addEventListener('change', onChange);
+  modeSelectorEl.addEventListener('change', onChange);
+}
+
+/**
+ * @typedef Options
+ * @property {string} documentUrl
+ * @property {string} id
+ * @property {RootNode[]} rootNodes
+ */
+
+function main() {
   window.addEventListener('message', e => {
     if (e.source !== self.opener) return;
-    const {documentUrl, id, rootNodes} = e.data;
+    const options = e.data;
+    const {documentUrl, id, rootNodes} = options;
     if (!rootNodes || !documentUrl || !id) return;
 
-    // Init header controls.
-    const bundleSelectorEl = find('.bundle-selector');
-    function makeOption(value, text) {
-      const optionEl = document.createElement('option');
-      optionEl.value = value;
-      optionEl.innerText = text;
-      bundleSelectorEl.append(optionEl);
-    }
-    makeOption('javascript', `${elide(documentUrl, 70)} (all javascript)`);
-    for (const rootNode of rootNodes) {
-      if (rootNode.node.children) {
-        makeOption(rootNode.id, elide(rootNode.id, 80));
-      }
-    }
-    bundleSelectorEl.value = id;
-    bundleSelectorEl.addEventListener('change', () => {
-      treemapViewer.show(bundleSelectorEl.value);
-    });
-
+    createHeader(options);
     treemapViewer = new TreemapViewer(documentUrl, rootNodes, find('main'));
     treemapViewer.show(id);
 
@@ -222,18 +297,6 @@ function main() {
     if (!nodeEl) return;
     nodeEl.classList.remove('webtreemap-node--hover');
   });
-}
-
-function showTreeMap() {
-  const rootNode = {
-    size: 0,
-    wastedBytes: 0,
-    children: rootNodes,
-  };
-
-  dfs(rootNode, node => node.originalId = node.id);
-  setTitle(rootNode);
-  render(rootNode);
 }
 
 main();
