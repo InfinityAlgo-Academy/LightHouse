@@ -659,8 +659,9 @@ class ReportUIFeatures {
       this.json.audits['treemap-data'].details);
 
     for (const urlEl of this._dom.findAll('.lh-text__url', this._document)) {
-      const href = /** @type {HTMLAnchorElement} */ (this._dom.find('a', urlEl)).href;
-      const rootNode = treemapData.rootNodes[href];
+      const anchorEl = /** @type {HTMLAnchorElement=} */ (urlEl.querySelector('a'));
+      if (!anchorEl) continue;
+      const rootNode = treemapData.rootNodes[anchorEl.href];
       if (!rootNode) continue;
 
       const externalButton = this._dom.createElement('span', 'lh-external-viz');
@@ -669,7 +670,7 @@ class ReportUIFeatures {
         const windowName = `viz-${this.json.requestedUrl}`;
         const data = {
           documentUrl: this.json.requestedUrl,
-          id: href,
+          id: anchorEl.href,
           rootNodes: treemapData.rootNodes,
         };
         ReportUIFeatures.openTabAndSendData(data, TREEMAP_URL, windowName);

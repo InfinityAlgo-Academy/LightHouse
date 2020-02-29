@@ -64,6 +64,17 @@ function rgb2hue(r, g, b) {
   return hue * 60; // hue is in [0,6], scale it up
 }
 
+const KB = 1024;
+const MB = KB * KB;
+/**
+ * @param {number} bytes
+ */
+function formatBytes(bytes) {
+  if (bytes >= MB) return (bytes / MB).toFixed(2) + ' MB';
+  if (bytes >= KB) return (bytes / KB).toFixed(2) + ' KB';
+  return bytes + ' B';
+}
+
 /**
  * Guaranteed context.querySelector. Always returns an element or throws if
  * nothing matches query.
@@ -179,14 +190,16 @@ class TreemapViewer {
    */
   setTitle(node) {
     dfs(node, node => {
-      const {size, total, wastedBytes} = node;
-      // TODO: ?
+      const {size, wastedBytes} = node;
+      // TODO: this is from pauls code
       // node.id += ` • ${Number.bytesToString(size)} • ${Common.UIString('%.1f\xa0%%', size / total * 100)}`;
+      //                                                                    ^^ what this?
 
       if (this.mode === 'default') {
-        node.id = `${elide(node.originalId, 60)} • ${Math.round(size)} • ${Math.round(size / total * 100)}`;
+        const total = this.currentRootNode.size;
+        node.id = `${elide(node.originalId, 60)} • ${formatBytes(size)} • ${Math.round(size / total * 100)}%`;
       } else if (this.mode === 'usage') {
-        node.id = `${elide(node.originalId, 60)} • ${Math.round(size)} • ${Math.round(wastedBytes / size * 100)}`;
+        node.id = `${elide(node.originalId, 60)} • ${formatBytes(size)} • ${Math.round((1 - wastedBytes / size) * 100)}% usage`;
       }
     });
   }
@@ -200,7 +213,7 @@ class TreemapViewer {
       const sat = 60;
       let lum = 40;
       if (this.mode === 'usage') {
-        lum = 25 + (85 - 25) * (1 - node.wastedBytes / node.size); // 25 - 85
+        lum = 25 + (85 - 25) * (node.wastedBytes / node.size); // 25 to 85.
       }
 
       node.dom.style.backgroundColor = hsl(hue, sat, Math.round(lum));
@@ -257,7 +270,7 @@ function main() {
 
     createHeader(options);
     treemapViewer = new TreemapViewer(documentUrl, rootNodes, find('main'));
-    treemapViewer.show(id);
+    treemapViewer.show(id, 'default');
 
     // For debugging.
     window.__treemapViewer = treemapViewer;
