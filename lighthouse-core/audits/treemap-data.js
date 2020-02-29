@@ -128,6 +128,24 @@ class TreemapData extends Audit {
   }
 
   /**
+   * @param {LH.Artifacts.ScriptElement} ScriptElement
+   * @param {LH.Artifacts.Bundle[]} bundles
+   * @param {LH.Artifacts.NetworkRequest[]} networkRecords
+   * @param {LH.Artifacts['JsUsage']} JsUsage
+   * @param {LH.Audit.Context} context
+   */
+  static async getUnusedJavascriptSummary(ScriptElement, bundles, networkRecords, JsUsage, context) {
+    const bundle = bundles.find(bundle => bundle.script.src === bundle.script.src);
+    const networkRecord = networkRecords.find(record => record.url === ScriptElement.src);
+    if (!networkRecord) return;
+    const scriptCoverages = JsUsage[ScriptElement.src || ''];
+    if (!scriptCoverages) return;
+    const unusedJsSumary =
+      await UnusedJavaScriptSummary.request({networkRecord, scriptCoverages, bundle}, context);
+    return unusedJsSumary;
+  }
+
+  /**
    * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
@@ -139,25 +157,82 @@ class TreemapData extends Audit {
 
     /** @type {RootNode[]} */
     const rootNodes = [];
-    for (const bundle of bundles) {
-      if (!bundle.script.src) continue; // Make typescript happy.
+    // for (const bundle of bundles) {
+    //   if (!bundle.script.src) continue; // Make typescript happy.
 
-      const sourcesWastedBytes = await TreemapData.getSourcesWastedBytes(
-        bundle, networkRecords, artifacts.JsUsage, context);
+    //   const sourcesWastedBytes = await TreemapData.getSourcesWastedBytes(
+    //     bundle, networkRecords, artifacts.JsUsage, context);
 
-      /** @type {Record<string, SourceData>} */
-      const sourcesData = {};
-      for (const source of Object.keys(bundle.sizes.files)) {
-        sourcesData[source] = {
-          size: bundle.sizes.files[source],
-          wastedBytes: sourcesWastedBytes && sourcesWastedBytes[source],
+    //   /** @type {Record<string, SourceData>} */
+    //   const sourcesData = {};
+    //   for (const source of Object.keys(bundle.sizes.files)) {
+    //     sourcesData[source] = {
+    //       size: bundle.sizes.files[source],
+    //       wastedBytes: sourcesWastedBytes && sourcesWastedBytes[source],
+    //     };
+    //   }
+
+    //   rootNodes.push({
+    //     id: bundle.script.src,
+    //     group: 'javascript',
+    //     node: prepareTreemapNodes(bundle.rawMap, sourcesData),
+    //   });
+    // }
+
+    // Add external JS scripts that are not a bundle.
+    // for (const ScriptElement of artifacts.ScriptElements) {
+    //   if (!ScriptElement.src || bundles.some(bundle => bundle.script.src === ScriptElement.src)) {
+    //     continue;
+    //   }
+
+    //   rootNodes.push({
+    //     id: ScriptElement.src,
+    //     group: 'javascript',
+    //     node: {
+    //       id: '',
+    //       size: 0,
+    //     },
+    //   });
+    // }
+
+    for (const ScriptElement of artifacts.ScriptElements) {
+      const bundle = bundles.find(bundle => bundle.script.src === ScriptElement.src);
+      const unusedJavascriptSummary = await TreemapData.getUnusedJavascriptSummary(
+        ScriptElement, bundles, networkRecords, artifacts.JsUsage, context);
+      const id = ScriptElement.src || `inline (${ScriptElement.devtoolsNodePath})`;
+
+      let node;
+      if (bundle && unusedJavascriptSummary && unusedJavascriptSummary.sourcesWastedBytes) {
+        continue;
+        /** @type {Record<string, SourceData>} */
+        const sourcesData = {};
+        for (const source of Object.keys(bundle.sizes.files)) {
+          sourcesData[source] = {
+            size: bundle.sizes.files[source],
+            wastedBytes: unusedJavascriptSummary.sourcesWastedBytes[source],
+          };
+        }
+        node = prepareTreemapNodes(bundle.rawMap, sourcesData);
+      } else if (unusedJavascriptSummary) {
+        node = {
+          id,
+          size: unusedJavascriptSummary.totalBytes,
+          wastedBytes: unusedJavascriptSummary.wastedBytes,
+        }
+      } else {
+        continue;
+        // ...?
+        node = {
+          id,
+          size: ScriptElement.content ? ScriptElement.content.length : 0,
+          wastedBytes: 0,
         };
       }
 
       rootNodes.push({
-        id: bundle.script.src,
+        id,
         group: 'javascript',
-        node: prepareTreemapNodes(bundle.rawMap, sourcesData),
+        node,
       });
     }
 

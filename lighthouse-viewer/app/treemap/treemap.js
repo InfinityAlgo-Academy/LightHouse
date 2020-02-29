@@ -45,9 +45,9 @@ function setTitle(node) {
     // node.id += ` • ${Number.bytesToString(size)} • ${Common.UIString('%.1f\xa0%%', size / total * 100)}`;
 
     if (MODE === 'default') {
-      node.id = `${node.originalId} • ${Math.round(size)} • ${Math.round(size / total * 100)}`;
+      node.id = `${node.originalId.slice(0, 30)} • ${Math.round(size)} • ${Math.round(size / total * 100)}`;
     } else if (MODE === 'wastedBytes') {
-      node.id = `${node.originalId} • ${Math.round(size)} • ${Math.round(wastedBytes / size * 100)}`;
+      node.id = `${node.originalId.slice(0, 30)} • ${Math.round(size)} • ${Math.round(wastedBytes / size * 100)}`;
     }
   });
 }
