@@ -40,7 +40,7 @@ class IFrameElements extends Gatherer {
     const driver = passContext.driver;
 
     const expression = `(() => {
-      ${pageFunctions.getOuterHTMLSnippetString};
+      ${pageFunctions.getOpeningTagSnippetString};
       ${pageFunctions.getElementsInDocumentString};
       ${pageFunctions.isPositionFixedString};
       return (${collectIFrameElements})();

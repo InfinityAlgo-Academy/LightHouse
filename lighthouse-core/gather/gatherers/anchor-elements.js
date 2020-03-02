@@ -36,7 +36,7 @@ function collectAnchorElements() {
 
   return anchorElements.map(node => {
     // @ts-ignore - put into scope via stringification
-    const outerHTML = getOuterHTMLSnippet(node); // eslint-disable-line no-undef
+    const outerHTML = getOpeningTagSnippet(node); // eslint-disable-line no-undef
     // @ts-ignore - put into scope via stringification
     const nodePath = getNodePath(node); // eslint-disable-line no-undef
     // @ts-ignore - getNodeSelector put into scope via stringification
@@ -78,7 +78,7 @@ class AnchorElements extends Gatherer {
   async afterPass(passContext) {
     const driver = passContext.driver;
     const expression = `(() => {
-      ${pageFunctions.getOuterHTMLSnippetString};
+      ${pageFunctions.getOpeningTagSnippetString};
       ${pageFunctions.getElementsInDocumentString};
       ${pageFunctions.getNodePathString};
       ${pageFunctions.getNodeSelectorString};

@@ -112,7 +112,7 @@ function getElementsInDocument(selector) {
  * @return {string}
  */
 /* istanbul ignore next */
-function getOuterHTMLSnippet(element, ignoreAttrs = []) {
+function getOpeningTagSnippet(element, ignoreAttrs = []) {
   try {
     // ShadowRoots are sometimes passed in; use their hosts' outerHTML.
     if (element instanceof ShadowRoot) {
@@ -308,8 +308,8 @@ module.exports = {
   registerPerformanceObserverInPageString: registerPerformanceObserverInPage.toString(),
   checkTimeSinceLastLongTaskString: checkTimeSinceLastLongTask.toString(),
   getElementsInDocumentString: getElementsInDocument.toString(),
-  getOuterHTMLSnippetString: getOuterHTMLSnippet.toString(),
-  getOuterHTMLSnippet: getOuterHTMLSnippet,
+  getOpeningTagSnippetString: getOpeningTagSnippet.toString(),
+  getOpeningTagSnippet: getOpeningTagSnippet,
   ultradumbBenchmark: ultradumbBenchmark,
   ultradumbBenchmarkString: ultradumbBenchmark.toString(),
   getNodePathString: getNodePath.toString(),

@@ -27,17 +27,17 @@ describe('Page Functions', () => {
 
   describe('get outer HTML snippets', () => {
     it('gets full HTML snippet', () => {
-      assert.equal(pageFunctions.getOuterHTMLSnippet(
+      assert.equal(pageFunctions.getOpeningTagSnippet(
         dom.createElement('div', '', {id: '1', style: 'style'})), '<div id="1" style="style">');
     });
 
     it('removes a specific attribute', () => {
-      assert.equal(pageFunctions.getOuterHTMLSnippet(
+      assert.equal(pageFunctions.getOpeningTagSnippet(
         dom.createElement('div', '', {id: '1', style: 'style'}), ['style']), '<div id="1">');
     });
 
     it('removes multiple attributes', () => {
-      assert.equal(pageFunctions.getOuterHTMLSnippet(
+      assert.equal(pageFunctions.getOpeningTagSnippet(
         dom.createElement('div', '', {'id': '1', 'style': 'style', 'aria-label': 'label'}),
         ['style', 'aria-label']
       ), '<div id="1">');
@@ -48,17 +48,17 @@ describe('Page Functions', () => {
       element.cloneNode = () => {
         throw new Error('oops!');
       };
-      assert.equal(pageFunctions.getOuterHTMLSnippet(element), '<div>');
+      assert.equal(pageFunctions.getOpeningTagSnippet(element), '<div>');
     });
     it('ignores when attribute not found', () => {
-      assert.equal(pageFunctions.getOuterHTMLSnippet(
+      assert.equal(pageFunctions.getOpeningTagSnippet(
         dom.createElement('div', '', {'id': '1', 'style': 'style', 'aria-label': 'label'}),
         ['style-missing', 'aria-label-missing']
       ), '<div id="1" style="style" aria-label="label">');
     });
 
     it('works if attribute values contain line breaks', () => {
-      assert.equal(pageFunctions.getOuterHTMLSnippet(
+      assert.equal(pageFunctions.getOpeningTagSnippet(
         dom.createElement('div', '', {style: 'style1\nstyle2'})), '<div style="style1\nstyle2">');
     });
   });

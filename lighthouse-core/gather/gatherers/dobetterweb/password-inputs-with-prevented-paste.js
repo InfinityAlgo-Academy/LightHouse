@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* global document ClipboardEvent getOuterHTMLSnippet */
+/* global document ClipboardEvent getOpeningTagSnippet */
 
 const Gatherer = require('../gatherer.js');
 const pageFunctions = require('../../../lib/page-functions.js');
@@ -23,8 +23,8 @@ function findPasswordInputsWithPreventedPaste() {
       )
     )
     .map(passwordInput => ({
-      // @ts-ignore - getOuterHTMLSnippet put into scope via stringification
-      snippet: getOuterHTMLSnippet(passwordInput),
+      // @ts-ignore - getOpeningTagSnippet put into scope via stringification
+      snippet: getOpeningTagSnippet(passwordInput),
     }));
 }
 
@@ -35,7 +35,7 @@ class PasswordInputsWithPreventedPaste extends Gatherer {
    */
   afterPass(passContext) {
     return passContext.driver.evaluateAsync(`(() => {
-      ${pageFunctions.getOuterHTMLSnippetString};
+      ${pageFunctions.getOpeningTagSnippetString};
       return (${findPasswordInputsWithPreventedPaste.toString()}());
     })()`);
   }

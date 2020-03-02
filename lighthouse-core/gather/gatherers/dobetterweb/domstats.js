@@ -9,7 +9,7 @@
  * and total number of elements used on the page.
  */
 
-/* global ShadowRoot, getOuterHTMLSnippet */
+/* global ShadowRoot, getOpeningTagSnippet */
 
 'use strict';
 
@@ -126,12 +126,12 @@ function getDOMStats(element, deep = true) {
       max: result.maxDepth,
       pathToElement: elementPathInDOM(deepestElement),
       // ignore style since it will provide no additional context, and is often long
-      snippet: getOuterHTMLSnippet(deepestElement, ['style']),
+      snippet: getOpeningTagSnippet(deepestElement, ['style']),
     },
     width: {
       max: result.maxWidth,
       pathToElement: elementPathInDOM(parentWithMostChildren),
-      snippet: getOuterHTMLSnippet(parentWithMostChildren, ['style']),
+      snippet: getOpeningTagSnippet(parentWithMostChildren, ['style']),
     },
     totalBodyElements: result.numElements,
   };
@@ -146,7 +146,7 @@ class DOMStats extends Gatherer {
     const driver = passContext.driver;
 
     const expression = `(function() {
-      ${pageFunctions.getOuterHTMLSnippetString};
+      ${pageFunctions.getOpeningTagSnippetString};
       ${createSelectorsLabel.toString()};
       ${elementPathInDOM.toString()};
       return (${getDOMStats.toString()}(document.body));
