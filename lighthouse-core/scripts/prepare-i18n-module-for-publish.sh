@@ -1,5 +1,6 @@
-set -eox pipefail
+#!/usr/bin/env bash
 
+set -eox pipefail
 
 pwd="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 lhroot_path=$(realpath "$pwd/../..")
