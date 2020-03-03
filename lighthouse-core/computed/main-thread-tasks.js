@@ -16,8 +16,8 @@ class MainThreadTasks {
    * @return {Promise<Array<LH.Artifacts.TaskNode>>}
    */
   static async compute_(trace, context) {
-    const {mainThreadEvents, timestamps} = await TraceOfTab.request(trace, context);
-    return MainThreadTasks_.getMainThreadTasks(mainThreadEvents, timestamps.traceEnd);
+    const {mainThreadEvents, frames, timestamps} = await TraceOfTab.request(trace, context);
+    return MainThreadTasks_.getMainThreadTasks(mainThreadEvents, frames, timestamps.traceEnd);
   }
 }
 

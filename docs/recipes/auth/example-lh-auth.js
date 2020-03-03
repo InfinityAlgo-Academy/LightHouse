@@ -63,7 +63,7 @@ async function main() {
   // The local server is running on port 10632.
   const url = 'http://localhost:10632/dashboard';
   // Direct Lighthouse to use the same port.
-  const result = await lighthouse(url, {port: PORT});
+  const result = await lighthouse(url, {port: PORT, disableStorageReset: true});
   // Direct Puppeteer to close the browser as we're done with it.
   await browser.close();
 

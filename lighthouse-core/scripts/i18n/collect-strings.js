@@ -463,6 +463,9 @@ const seenStrings = new Map();
 /** @type {number} */
 let collisions = 0;
 
+/** @type {Array<string>} */
+const collisionStrings = [];
+
 /**
  * Collects all LHL messsages defined in UIString from Javascript files in dir,
  * and converts them into CTC.
@@ -530,6 +533,7 @@ function collectAllStringsInDir(dir) {
             strings[seenId].meaning = strings[seenId].description;
             collisions++;
           }
+          collisionStrings.push(ctc.message);
           collisions++;
         }
       }
@@ -565,8 +569,8 @@ if (require.main === module) {
   console.log('Collected from Stack Packs!');
 
   if ((collisions) > 0) {
-    assert.equal(collisions, 15, 'The number of duplicate strings have changed, update this assertion if that is expected, or reword strings.');
     console.log(`MEANING COLLISION: ${collisions} string(s) have the same content.`);
+    assert.equal(collisions, 17, `The number of duplicate strings have changed, update this assertion if that is expected, or reword strings. Collisions: ${collisionStrings}`);
   }
 
   const strings = {...coreStrings, ...stackPackStrings};

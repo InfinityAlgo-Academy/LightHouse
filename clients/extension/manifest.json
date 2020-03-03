@@ -1,14 +1,13 @@
 {
-  "name": "__MSG_appName__",
-  "version": "100.0.0.0",
+  "name": "Lighthouse",
+  "version": "100.0.0.2",
   "minimum_chrome_version": "72",
   "manifest_version": 2,
-  "description": "__MSG_appDescription__",
+  "description": "Lighthouse is an open-source, automated tool for improving the performance, quality, and correctness of your web apps.",
   "icons": {
     "16": "images/lh_favicon_16x16.png",
     "128": "images/lh_logo_128x128.png"
   },
-  "default_locale": "en",
   "permissions": [
     "activeTab",
     "storage"
@@ -19,6 +18,5 @@
     },
     "default_title": "Lighthouse",
     "default_popup": "popup.html"
-  },
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'none'"
+  }
 }

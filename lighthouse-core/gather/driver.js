@@ -100,6 +100,9 @@ class Driver {
       // Used instead of 'toplevel' in Chrome 71+
       'disabled-by-default-lighthouse',
 
+      // Used for Cumulative Layout Shift metric
+      'loading',
+
       // All compile/execute events are captured by parent events in devtools.timeline..
       // But the v8 category provides some nice context for only <0.5% of the trace size
       'v8',
@@ -113,7 +116,7 @@ class Driver {
       // Not mandatory but not used much
       'blink.console',
 
-      // Most the events we need come in on these two
+      // Most of the events we need are from these two categories
       'devtools.timeline',
       'disabled-by-default-devtools.timeline',
 

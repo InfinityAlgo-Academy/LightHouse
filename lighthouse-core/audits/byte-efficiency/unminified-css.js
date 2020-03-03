@@ -6,7 +6,7 @@
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
-const UnusedCSSRules = require('./unused-css-rules.js');
+const UnusedCSS = require('../../computed/unused-css.js');
 const i18n = require('../../lib/i18n/i18n.js');
 const computeTokenLength = require('../../lib/minification-estimator.js').computeCSSTokenLength;
 
@@ -62,7 +62,7 @@ class UnminifiedCSS extends ByteEfficiencyAudit {
 
     let url = stylesheet.header.sourceURL;
     if (!url || url === pageUrl) {
-      const contentPreview = UnusedCSSRules.determineContentPreview(stylesheet.content);
+      const contentPreview = UnusedCSS.determineContentPreview(stylesheet.content);
       url = contentPreview;
     }
 

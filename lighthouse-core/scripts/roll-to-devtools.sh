@@ -11,49 +11,48 @@
 #   yarn devtools
 
 # with a custom devtools front_end location:
-#   yarn devtools node_modules/temp-devtoolsfrontend/front_end/
+#   yarn devtools node_modules/temp-devtoolsfrontend/
 
 chromium_dir="$HOME/chromium/src"
 check="\033[96m ✓\033[39m"
 
 if [[ -n "$1" ]]; then
-  frontend_dir="$1"
+  dt_dir="$1"
 else
-  frontend_dir="$chromium_dir/third_party/devtools-frontend/src/front_end"
+  dt_dir="$chromium_dir/third_party/devtools-frontend/src"
 fi
 
-if [[ ! -d "$frontend_dir" || ! -a "$frontend_dir/Runtime.js" ]]; then
+if [[ ! -d "$dt_dir" || ! -a "$dt_dir/front_end/Runtime.js" ]]; then
   echo -e "\033[31m✖ Error!\033[39m"
   echo "This script requires a devtools frontend folder. We didn't find one here:"
-  echo "    $frontend_dir"
+  echo "    $dt_dir"
   exit 1
 else
   echo -e "$check Chromium folder in place."
 fi
 
-fe_lh_dir="$frontend_dir/audits/lighthouse"
+fe_lh_dir="$dt_dir/front_end/third_party/lighthouse"
+mkdir -p "$fe_lh_dir"
 
 lh_bg_js="dist/lighthouse-dt-bundle.js"
-fe_worker_dir="$frontend_dir/audits_worker/lighthouse"
 
 # copy lighthouse-dt-bundle (potentially stale)
-cp -pPR "$lh_bg_js" "$fe_worker_dir/lighthouse-dt-bundle.js"
+cp -pPR "$lh_bg_js" "$fe_lh_dir/lighthouse-dt-bundle.js"
 echo -e "$check (Potentially stale) lighthouse-dt-bundle copied."
 
 # copy report generator + cached resources into $fe_lh_dir
-# use dir/* format to copy over all files in dt-report-resources directly to $fe_lh_dir
-# dir/ format behavior changes based on if their exists a folder named dir, which can get weird
-cp -r dist/dt-report-resources/* "$fe_lh_dir"
+fe_lh_report_assets_dir="$fe_lh_dir/report-assets/"
+rsync -avh dist/dt-report-resources/ "$fe_lh_report_assets_dir" --delete
 echo -e "$check Report resources copied."
 
 # copy locale JSON files (but not the .ctc.json ones)
-lh_locales_dir="lighthouse-core/lib/i18n/locales"
-fe_locales_dir="$frontend_dir/audits_worker/lighthouse/locales"
+lh_locales_dir="lighthouse-core/lib/i18n/locales/"
+fe_locales_dir="$fe_lh_dir/locales"
 
-mkdir -p "$fe_locales_dir"
-find $lh_locales_dir -name '*.json' ! -name '*.ctc.json'  -exec cp {} "$fe_locales_dir" \;
+rsync -avh "$lh_locales_dir" "$fe_locales_dir" --exclude="*.ctc.json" --delete
 echo -e "$check Locale JSON files copied."
 
 echo ""
 echo "Done. To rebase the test expectations, run: "
-echo "    yarn --cwd ~/chromium/src/third_party/blink/renderer/devtools test 'http/tests/devtools/audits/*.js' --reset-results"
+echo "    yarn --cwd ~/chromium/src/third_party/devtools-frontend/src test 'http/tests/devtools/lighthouse/*.js' --layout-tests-dir test/webtests --reset-results"
+echo " (you also need to do `autoninja -C out/Linux chrome blink_tests` in the chromium checkout)"

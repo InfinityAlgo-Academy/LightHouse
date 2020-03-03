@@ -35,6 +35,9 @@ const UIStrings = {
    * */
   crossoriginWarning: 'A preconnect <link> was found for "{securityOrigin}" but was not used ' +
     'by the browser. Check that you are using the `crossorigin` attribute properly.',
+  /** A warning message that is shown when found more than 2 preconnected links */
+  tooManyPreconnectLinksWarning: 'More than 2 preconnect links were found. ' +
+   'Preconnect links should be used sparingly and only to the most important origins.',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -181,6 +184,16 @@ class UsesRelPreconnectAudit extends Audit {
     results = results
       .sort((a, b) => b.wastedMs - a.wastedMs);
 
+    // Shortcut early with a pass when the user has already configured preconnect.
+    // https://twitter.com/_tbansal/status/1197771385172480001
+    if (preconnectLinks.length >= 2) {
+      return {
+        score: 1,
+        warnings: preconnectLinks.length >= 3 ?
+          [...warnings, str_(UIStrings.tooManyPreconnectLinksWarning)] : warnings,
+      };
+    }
+
     /** @type {LH.Audit.Details.Opportunity['headings']} */
     const headings = [
       {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
@@ -192,6 +205,7 @@ class UsesRelPreconnectAudit extends Audit {
     return {
       score: UnusedBytes.scoreForWastedMs(maxWasted),
       numericValue: maxWasted,
+      numericUnit: 'millisecond',
       displayValue: maxWasted ?
         str_(i18n.UIStrings.displayValueMsSavings, {wastedMs: maxWasted}) :
         '',

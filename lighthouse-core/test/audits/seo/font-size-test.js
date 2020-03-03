@@ -41,7 +41,6 @@ describe('SEO: Font size audit', () => {
       MetaElements: makeMetaElements(validViewport),
       FontSize: {
         totalTextLength: 100,
-        visitedTextLength: 100,
         failingTextLength: 41,
         analyzedFailingTextLength: 41,
         analyzedFailingNodesData: [
@@ -63,7 +62,6 @@ describe('SEO: Font size audit', () => {
       MetaElements: makeMetaElements(validViewport),
       FontSize: {
         totalTextLength: 0,
-        visitedTextLength: 0,
         failingTextLength: 0,
         analyzedFailingTextLength: 0,
         analyzedFailingNodesData: [
@@ -83,7 +81,6 @@ describe('SEO: Font size audit', () => {
       MetaElements: makeMetaElements(validViewport),
       FontSize: {
         totalTextLength: 330,
-        visitedTextLength: 330,
         failingTextLength: 33,
         analyzedFailingTextLength: 33,
         analyzedFailingNodesData: [
@@ -120,7 +117,6 @@ describe('SEO: Font size audit', () => {
       MetaElements: makeMetaElements(validViewport),
       FontSize: {
         totalTextLength: 7,
-        visitedTextLength: 7,
         failingTextLength: 7,
         analyzedFailingTextLength: 7,
         analyzedFailingNodesData: [
@@ -145,7 +141,6 @@ describe('SEO: Font size audit', () => {
       MetaElements: makeMetaElements(validViewport),
       FontSize: {
         totalTextLength: 100,
-        visitedTextLength: 100,
         failingTextLength: 50,
         analyzedFailingTextLength: 10,
         analyzedFailingNodesData: [
@@ -171,7 +166,6 @@ describe('SEO: Font size audit', () => {
       MetaElements: makeMetaElements(validViewport),
       FontSize: {
         totalTextLength: 100,
-        visitedTextLength: 50,
         failingTextLength: 50,
         analyzedFailingTextLength: 50,
         analyzedFailingNodesData: [
@@ -182,10 +176,7 @@ describe('SEO: Font size audit', () => {
     };
     const auditResult = await FontSizeAudit.audit(artifacts, getFakeContext());
     assert.equal(auditResult.score, 0);
-    expect(auditResult.explanation).toBeDisplayString(
-      '100% of text is too small (based on 50% sample).'
-    );
-    expect(auditResult.displayValue).toBeDisplayString('0% legible text');
+    expect(auditResult.displayValue).toBeDisplayString('50% legible text');
   });
 
   it('maintains 2 trailing decimal places', async () => {
@@ -194,7 +185,6 @@ describe('SEO: Font size audit', () => {
       MetaElements: makeMetaElements(validViewport),
       FontSize: {
         totalTextLength: 323,
-        visitedTextLength: 323,
         failingTextLength: 33,
         analyzedFailingTextLength: 33,
         analyzedFailingNodesData: [
@@ -214,7 +204,6 @@ describe('SEO: Font size audit', () => {
       MetaElements: makeMetaElements(validViewport),
       FontSize: {
         totalTextLength: 323,
-        visitedTextLength: 323,
         failingTextLength: 315,
         analyzedFailingTextLength: 315,
         analyzedFailingNodesData: [

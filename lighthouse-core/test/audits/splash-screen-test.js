@@ -22,6 +22,7 @@ function generateMockArtifacts(src = manifestSrc) {
 
   return {
     WebAppManifest: exampleManifest,
+    InstallabilityErrors: {errors: []},
   };
 }
 function generateMockAuditContext() {
@@ -45,8 +46,7 @@ describe('PWA: splash screen audit', () => {
     });
 
     it('fails with a non-parsable manifest', () => {
-      const artifacts = generateMockArtifacts();
-      artifacts.WebAppManifest = manifestParser('{,:}', EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const artifacts = generateMockArtifacts('{,:}');
       const context = generateMockAuditContext();
       return SplashScreenAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
@@ -55,8 +55,7 @@ describe('PWA: splash screen audit', () => {
     });
 
     it('fails when an empty manifest is present', () => {
-      const artifacts = generateMockArtifacts();
-      artifacts.WebAppManifest = manifestParser('{}', EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const artifacts = generateMockArtifacts('{}');
       const context = generateMockAuditContext();
       return SplashScreenAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);

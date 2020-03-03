@@ -80,6 +80,11 @@ describe('DependencyGraph/Node', () => {
       assert.deepEqual(nodeA.getDependencies(), [nodeB]);
       assert.deepEqual(nodeB.getDependents(), [nodeA]);
     });
+
+    it('throw when trying to add a dependency on itself', () => {
+      const nodeA = new BaseNode(1);
+      expect(() => nodeA.addDependency(nodeA)).toThrow();
+    });
   });
 
   describe('.getRootNode', () => {

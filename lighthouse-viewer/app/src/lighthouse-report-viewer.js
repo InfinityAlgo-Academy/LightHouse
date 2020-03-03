@@ -84,7 +84,7 @@ class LighthouseReportViewer {
     placeholderTarget.addEventListener('click', e => {
       const target = /** @type {?Element} */ (e.target);
 
-      if (target && target.localName !== 'input') {
+      if (target && target.localName !== 'input' && target.localName !== 'a') {
         fileInput.click();
       }
     });

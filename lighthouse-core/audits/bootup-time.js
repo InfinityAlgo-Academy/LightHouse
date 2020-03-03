@@ -34,6 +34,18 @@ const UIStrings = {
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
+// These trace events, when not triggered by a script inside a particular task, are just general Chrome overhead.
+const BROWSER_TASK_NAMES_SET = new Set([
+  'CpuProfiler::StartProfiling',
+]);
+
+// These trace events, when not triggered by a script inside a particular task, are GC Chrome overhead.
+const BROWSER_GC_TASK_NAMES_SET = new Set([
+  'V8.GCCompactor',
+  'MajorGC',
+  'MinorGC',
+]);
+
 class BootupTime extends Audit {
   /**
    * @return {LH.Audit.Meta}
@@ -86,8 +98,14 @@ class BootupTime extends Audit {
     const jsURL = task.attributableURLs.find(url => jsURLs.has(url));
     const fallbackURL = task.attributableURLs[0];
     let attributableURL = jsURL || fallbackURL;
-    // If we can't find what URL was responsible for this execution, just attribute it to the root page.
-    if (!attributableURL || attributableURL === 'about:blank') attributableURL = 'Other';
+    // If we can't find what URL was responsible for this execution, attribute it to the root page
+    // or Chrome depending on the type of work.
+    if (!attributableURL || attributableURL === 'about:blank') {
+      if (BROWSER_TASK_NAMES_SET.has(task.event.name)) attributableURL = 'Browser';
+      else if (BROWSER_GC_TASK_NAMES_SET.has(task.event.name)) attributableURL = 'Browser GC';
+      else attributableURL = 'Unattributable';
+    }
+
     return attributableURL;
   }
 
@@ -189,6 +207,7 @@ class BootupTime extends Audit {
     return {
       score,
       numericValue: totalBootupTime,
+      numericUnit: 'millisecond',
       displayValue: totalBootupTime > 0 ?
         str_(i18n.UIStrings.seconds, {timeInMs: totalBootupTime}) : '',
       details,

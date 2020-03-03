@@ -596,12 +596,20 @@ class TraceProcessor {
       domContentLoaded: maybeGetTiming(timestamps.domContentLoaded),
     };
 
+    const frames = keyEvents
+      .filter(evt => evt.name === 'FrameCommittedInBrowser')
+      .map(evt => evt.args.data)
+      .filter(/** @return {data is {frame: string, url: string}} */ data => {
+        return Boolean(data && data.frame && data.url);
+      });
+
     return {
       timings,
       timestamps,
       processEvents,
       mainThreadEvents,
       mainFrameIds,
+      frames,
       navigationStartEvt: navigationStart,
       firstPaintEvt: firstPaint,
       firstContentfulPaintEvt: firstContentfulPaint,

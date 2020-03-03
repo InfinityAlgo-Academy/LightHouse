@@ -61,7 +61,11 @@
   background-color: #fff;
 }
 .viewer-placeholder-inner.lh-loading {
-  filter: blur(2px);
+  filter: blur(2px) grayscale(1);
+  cursor: wait
+}
+.viewer-placeholder-inner.lh-loading>div {
+  pointer-events: none;
 }
 .viewer-placeholder-inner.dropping {
   border-color: currentColor;

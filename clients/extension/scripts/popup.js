@@ -9,6 +9,19 @@ const SettingsController = require('./settings-controller.js');
 
 const VIEWER_URL = 'https://googlechrome.github.io/lighthouse/viewer/';
 const optionsVisibleClass = 'main--options-visible';
+// Replaced with 'chrome' or 'firefox' in the build script.
+/** @type {string} */
+const BROWSER_BRAND = '___BROWSER_BRAND___';
+
+const CHROME_STRINGS = {
+  localhostErrorMessage: 'Use DevTools to audit pages on localhost.',
+};
+
+const FIREFOX_STRINGS = {
+  localhostErrorMessage: 'Use the Lighthouse Node CLI to audit pages on localhost.',
+};
+
+const STRINGS = BROWSER_BRAND === 'chrome' ? CHROME_STRINGS : FIREFOX_STRINGS;
 
 /**
  * Guaranteed context.querySelector. Always returns an element or throws if
@@ -120,7 +133,7 @@ function getSiteUrl() {
 
       const url = new URL(tabs[0].url);
       if (url.hostname === 'localhost') {
-        reject(new Error('Use DevTools to audit pages on localhost.'));
+        reject(new Error(STRINGS.localhostErrorMessage));
       } else if (/^(chrome|about)/.test(url.protocol)) {
         reject(new Error(`Cannot audit ${url.protocol}// pages.`));
       } else {
@@ -134,7 +147,11 @@ function getSiteUrl() {
  * Initializes the popup's state and UI elements.
  */
 async function initPopup() {
-  fillDevToolsShortcut();
+  if (BROWSER_BRAND === 'chrome') {
+    fillDevToolsShortcut();
+  }
+  const browserBrandEl = find(`.browser-brand--${BROWSER_BRAND}`);
+  browserBrandEl.classList.remove('hidden');
 
   const mainEl = find('main');
   const optionsEl = find('.button--configure');

@@ -18,19 +18,22 @@ describe('Timing summary', () => {
 
     expect(result.metrics).toMatchInlineSnapshot(`
 Object {
+  "cumulativeLayoutShift": 0,
   "estimatedInputLatency": 77.79999999999995,
   "estimatedInputLatencyTs": undefined,
   "firstCPUIdle": 3351.3320000492968,
   "firstCPUIdleTs": undefined,
-  "firstContentfulPaint": 1306.6100000208244,
+  "firstContentfulPaint": 1336.6100000208244,
   "firstContentfulPaintTs": undefined,
-  "firstMeaningfulPaint": 1510.6100000208241,
+  "firstMeaningfulPaint": 1540.6100000208244,
   "firstMeaningfulPaintTs": undefined,
   "interactive": 3426.8545000551967,
   "interactiveTs": undefined,
   "largestContentfulPaint": undefined,
   "largestContentfulPaintTs": undefined,
   "maxPotentialFID": 396.0000000000001,
+  "observedCumulativeLayoutShift": undefined,
+  "observedCumulativeLayoutShiftTs": undefined,
   "observedDomContentLoaded": 560.294,
   "observedDomContentLoadedTs": 225414732309,
   "observedFirstContentfulPaint": 498.87,
@@ -53,7 +56,7 @@ Object {
   "observedSpeedIndexTs": 225414776724.39,
   "observedTraceEnd": 12539.872,
   "observedTraceEndTs": 225426711887,
-  "speedIndex": 1656.6335047609864,
+  "speedIndex": 1676.1335047609864,
   "speedIndexTs": undefined,
   "totalBlockingTime": 726.4774999940996,
 }

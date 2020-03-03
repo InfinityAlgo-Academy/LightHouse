@@ -52,6 +52,7 @@ class Metrics extends Audit {
     return {
       score: 1,
       numericValue: metrics.interactive || 0,
+      numericUnit: 'millisecond',
       details,
     };
   }

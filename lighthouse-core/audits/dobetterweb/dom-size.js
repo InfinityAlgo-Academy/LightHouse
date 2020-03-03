@@ -103,6 +103,7 @@ class DOMSize extends Audit {
       {
         statistic: str_(UIStrings.statisticDOMElements),
         element: '',
+        // TODO: these values should be numbers once `_renderNumeric` in details-renderer can handle them
         value: i18n.formatNumber(stats.totalBodyElements),
       },
       {
@@ -126,6 +127,7 @@ class DOMSize extends Audit {
     return {
       score,
       numericValue: stats.totalBodyElements,
+      numericUnit: 'element',
       displayValue: str_(UIStrings.displayValue, {itemCount: stats.totalBodyElements}),
       extendedInfo: {
         value: items,

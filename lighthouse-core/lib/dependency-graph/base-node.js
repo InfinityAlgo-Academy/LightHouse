@@ -129,6 +129,9 @@ class BaseNode {
    * @param {Node} node
    */
   addDependency(node) {
+    // @ts-ignore - in checkJs, ts doesn't know that CPUNode and NetworkNode *are* BaseNodes.
+    if (node === this) throw new Error('Cannot add dependency on itself');
+
     if (this._dependencies.includes(node)) {
       return;
     }

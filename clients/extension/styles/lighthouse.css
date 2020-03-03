@@ -46,6 +46,10 @@ body {
   padding: 16px;
 }
 
+.hidden {
+  display: none;
+}
+
 .header__icon {
   margin: 2px auto 0;
 }
@@ -102,13 +106,13 @@ body {
   padding-bottom: 10px;
 }
 
-.devtools-header {
+.section-header {
   font-size: var(--font-size);
   font-weight: 500;
   margin-bottom: 5px;
 }
 
-.devtools-note {
+.section--description {
   font-size: 14px;
   color: grey;
 }

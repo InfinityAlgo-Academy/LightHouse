@@ -14,7 +14,7 @@ const UIStrings = {
   title: 'Largest Contentful Paint',
   /** Description of the Largest Contentful Paint (LCP) metric, which marks the time at which the largest text or image is painted by the browser. This is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Largest Contentful Paint marks the time at which the largest text or image is ' +
-      `painted. [Learn More](https://web.dev/largest-contentful-paint)`, // TODO: waiting on LH specific doc.
+      `painted. [Learn More](https://web.dev/lighthouse-largest-contentful-paint)`,
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -62,6 +62,7 @@ class LargestContentfulPaint extends Audit {
         context.options.scoreMedian
       ),
       numericValue: metricResult.timing,
+      numericUnit: 'millisecond',
       displayValue: str_(i18n.UIStrings.seconds, {timeInMs: metricResult.timing}),
     };
   }

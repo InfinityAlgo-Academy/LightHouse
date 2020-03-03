@@ -95,19 +95,19 @@ class ServiceWorker extends Audit {
   /**
    * Returns a failure message if there is no start_url or if the start_url isn't
    * contolled by the scopeUrl.
-   * @param {LH.Artifacts['WebAppManifest']} manifest
+   * @param {LH.Artifacts['WebAppManifest']} WebAppManifest
    * @param {string} scopeUrl
    * @return {string|undefined}
    */
-  static checkStartUrl(manifest, scopeUrl) {
-    if (!manifest) {
+  static checkStartUrl(WebAppManifest, scopeUrl) {
+    if (!WebAppManifest) {
       return str_(UIStrings.explanationNoManifest);
     }
-    if (!manifest.value) {
+    if (!WebAppManifest.value) {
       return str_(UIStrings.explanationBadManifest);
     }
 
-    const startUrl = manifest.value.start_url.value;
+    const startUrl = WebAppManifest.value.start_url.value;
     if (!startUrl.startsWith(scopeUrl)) {
       return str_(UIStrings.explanationBadStartUrl, {startUrl, scopeUrl});
     }

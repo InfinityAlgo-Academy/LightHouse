@@ -78,6 +78,7 @@
       "score": 0.51,
       "scoreDisplayMode": "numeric",
       "numericValue": 3969.135,
+      "numericUnit": "millisecond",
       "displayValue": "4.0 s"
     },
     "first-meaningful-paint": {
@@ -87,15 +88,17 @@
       "score": 0.51,
       "scoreDisplayMode": "numeric",
       "numericValue": 3969.136,
+      "numericUnit": "millisecond",
       "displayValue": "4.0 s"
     },
     "largest-contentful-paint": {
       "id": "largest-contentful-paint",
       "title": "Largest Contentful Paint",
-      "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn More](https://web.dev/largest-contentful-paint)",
+      "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn More](https://web.dev/lighthouse-largest-contentful-paint)",
       "score": 0.31,
       "scoreDisplayMode": "numeric",
       "numericValue": 4927.278,
+      "numericUnit": "millisecond",
       "displayValue": "4.9 s"
     },
     "load-fast-enough-for-pwa": {
@@ -104,7 +107,8 @@
       "description": "A fast page load over a cellular network ensures a good mobile user experience. [Learn more](https://web.dev/load-fast-enough-for-pwa).",
       "score": 1,
       "scoreDisplayMode": "binary",
-      "numericValue": 4927.278
+      "numericValue": 4927.278,
+      "numericUnit": "millisecond"
     },
     "speed-index": {
       "id": "speed-index",
@@ -113,6 +117,7 @@
       "score": 0.74,
       "scoreDisplayMode": "numeric",
       "numericValue": 4417,
+      "numericUnit": "millisecond",
       "displayValue": "4.4 s"
     },
     "screenshot-thumbnails": {
@@ -198,6 +203,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 16,
+      "numericUnit": "millisecond",
       "displayValue": "20 ms"
     },
     "total-blocking-time": {
@@ -207,6 +213,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 116.79800000000023,
+      "numericUnit": "millisecond",
       "displayValue": "120 ms"
     },
     "max-potential-fid": {
@@ -216,7 +223,26 @@
       "score": 0.92,
       "scoreDisplayMode": "numeric",
       "numericValue": 122.537,
+      "numericUnit": "millisecond",
       "displayValue": "120 ms"
+    },
+    "cumulative-layout-shift": {
+      "id": "cumulative-layout-shift",
+      "title": "Cumulative Layout Shift",
+      "description": "Cumulative Layout Shift is the sum of all layout shifts that occurred during a page's load. A layout shift is any movement an element makes once it is visible to the user. All layout shift is recorded, scored, and then aggregated into a cumulative score between 0 and 1; 0 being a perfectly stable page, and >=0.5 being a highly shifting page.",
+      "score": 0.48,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 0.42,
+      "numericUnit": "unitless",
+      "displayValue": "0.42",
+      "details": {
+        "type": "debugdata",
+        "items": [
+          {
+            "finalLayoutShiftTraceEventFound": true
+          }
+        ]
+      }
     },
     "errors-in-console": {
       "id": "errors-in-console",
@@ -224,7 +250,6 @@
       "description": "Errors logged to the console indicate unresolved problems. They can come from network request failures and other browser concerns. [Learn more](https://web.dev/errors-in-console)",
       "score": 0,
       "scoreDisplayMode": "binary",
-      "numericValue": 5,
       "details": {
         "type": "table",
         "headings": [
@@ -275,6 +300,7 @@
       "score": 1,
       "scoreDisplayMode": "binary",
       "numericValue": 570.5630000000001,
+      "numericUnit": "millisecond",
       "displayValue": "Root document took 570 ms",
       "details": {
         "type": "opportunity",
@@ -290,6 +316,7 @@
       "score": 0.72,
       "scoreDisplayMode": "numeric",
       "numericValue": 4927.278,
+      "numericUnit": "millisecond",
       "displayValue": "4.9 s"
     },
     "interactive": {
@@ -299,6 +326,7 @@
       "score": 0.78,
       "scoreDisplayMode": "numeric",
       "numericValue": 4927.278,
+      "numericUnit": "millisecond",
       "displayValue": "4.9 s"
     },
     "user-timings": {
@@ -466,6 +494,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -543,6 +572,14 @@
           }
         ]
       }
+    },
+    "maskable-icon": {
+      "id": "maskable-icon",
+      "title": "Manifest doesn't have a maskable icon",
+      "description": "A maskable icon ensures that the image fills the entire shape without being letterboxed when installing the app on a device. [Learn more](https://web.dev/maskable-icon/).",
+      "score": 0,
+      "scoreDisplayMode": "binary",
+      "explanation": "No manifest was fetched"
     },
     "content-width": {
       "id": "content-width",
@@ -648,6 +685,7 @@
       "score": 0.96,
       "scoreDisplayMode": "numeric",
       "numericValue": 1548.5690000000002,
+      "numericUnit": "millisecond",
       "displayValue": "1.5 s",
       "details": {
         "type": "table",
@@ -709,7 +747,8 @@
       "description": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn more](https://web.dev/bootup-time).",
       "score": 0.92,
       "scoreDisplayMode": "numeric",
-      "numericValue": 1150.573,
+      "numericValue": 1150.5310000000002,
+      "numericUnit": "millisecond",
       "displayValue": "1.2 s",
       "details": {
         "type": "table",
@@ -741,31 +780,31 @@
         "items": [
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "total": 966.9800000000001,
-            "scripting": 957.494,
+            "total": 1044.3820000000003,
+            "scripting": 963.7010000000001,
             "scriptParseCompile": 2.777
           },
           {
-            "url": "Other",
-            "total": 391.76699999999977,
-            "scripting": 17.790999999999997,
+            "url": "Unattributable",
+            "total": 279.87100000000004,
+            "scripting": 9.61,
             "scriptParseCompile": 0.092
           },
           {
             "url": "http://localhost:10200/zone.js",
-            "total": 101.21099999999998,
-            "scripting": 89.50799999999998,
+            "total": 107.086,
+            "scripting": 90.81299999999999,
             "scriptParseCompile": 1.674
           },
           {
             "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
-            "total": 82.741,
-            "scripting": 80.032,
+            "total": 90.363,
+            "scripting": 80.659,
             "scriptParseCompile": 1.205
           }
         ],
         "summary": {
-          "wastedMs": 1150.573
+          "wastedMs": 1150.5310000000002
         }
       }
     },
@@ -776,6 +815,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -791,6 +831,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "warnings": [],
       "details": {
@@ -850,7 +891,6 @@
       "description": "Lists the network requests that were made during page load.",
       "score": null,
       "scoreDisplayMode": "informative",
-      "numericValue": 18,
       "details": {
         "type": "table",
         "headings": [
@@ -1092,6 +1132,7 @@
       "score": null,
       "scoreDisplayMode": "informative",
       "numericValue": 1.7249999999999943,
+      "numericUnit": "millisecond",
       "displayValue": "0 ms",
       "details": {
         "type": "table",
@@ -1127,6 +1168,7 @@
       "score": null,
       "scoreDisplayMode": "informative",
       "numericValue": 572.829,
+      "numericUnit": "millisecond",
       "displayValue": "570 ms",
       "details": {
         "type": "table",
@@ -1161,7 +1203,6 @@
       "description": "Lists the toplevel main thread tasks that executed during page load.",
       "score": null,
       "scoreDisplayMode": "informative",
-      "numericValue": 16,
       "details": {
         "type": "table",
         "headings": [
@@ -1253,6 +1294,7 @@
       "score": null,
       "scoreDisplayMode": "informative",
       "numericValue": 4927,
+      "numericUnit": "millisecond",
       "details": {
         "type": "debugdata",
         "items": [
@@ -1272,6 +1314,7 @@
             "estimatedInputLatency": 16,
             "totalBlockingTime": 117,
             "maxPotentialFID": 123,
+            "cumulativeLayoutShift": 0,
             "observedNavigationStart": 0,
             "observedNavigationStartTs": 185603319912,
             "observedFirstPaint": 3969,
@@ -1357,17 +1400,17 @@
           {
             "resourceType": "total",
             "label": "Total",
-            "requestCount": 18,
-            "size": 160738,
-            "countOverBudget": "8 requests",
-            "sizeOverBudget": 58338
+            "requestCount": 17,
+            "size": 160517,
+            "countOverBudget": "7 requests",
+            "sizeOverBudget": 58117
           },
           {
             "resourceType": "other",
             "label": "Other",
-            "requestCount": 2,
-            "size": 12861,
-            "sizeOverBudget": 7741
+            "requestCount": 1,
+            "size": 12640,
+            "sizeOverBudget": 7520
           },
           {
             "resourceType": "third-party",
@@ -1413,13 +1456,72 @@
         ]
       }
     },
+    "timing-budget": {
+      "id": "timing-budget",
+      "title": "Timing budget",
+      "description": "Set a timing budget to help you keep an eye on the performance of your site. Performant sites load fast and respond to user input events quickly. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "label",
+            "itemType": "text",
+            "text": "Metric"
+          },
+          {
+            "key": "measurement",
+            "itemType": "ms",
+            "text": "Measurement"
+          },
+          {
+            "key": "overBudget",
+            "itemType": "ms",
+            "text": "Over Budget"
+          }
+        ],
+        "items": [
+          {
+            "metric": "first-cpu-idle",
+            "label": "First CPU Idle",
+            "measurement": 4927,
+            "overBudget": 2027
+          },
+          {
+            "metric": "interactive",
+            "label": "Time to Interactive",
+            "measurement": 4927,
+            "overBudget": 2027
+          },
+          {
+            "metric": "first-meaningful-paint",
+            "label": "First Meaningful Paint",
+            "measurement": 3969,
+            "overBudget": 1969
+          },
+          {
+            "metric": "first-contentful-paint",
+            "label": "First Contentful Paint",
+            "measurement": 3969,
+            "overBudget": 969
+          },
+          {
+            "metric": "max-potential-fid",
+            "label": "Max Potential First Input Delay",
+            "measurement": 123,
+            "overBudget": 23
+          }
+        ]
+      }
+    },
     "resource-summary": {
       "id": "resource-summary",
       "title": "Keep request counts low and transfer sizes small",
       "description": "To set budgets for the quantity and size of page resources, add a budget.json file. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).",
       "score": null,
       "scoreDisplayMode": "informative",
-      "displayValue": "18 requests • 157 KB",
+      "displayValue": "17 requests • 157 KB",
       "details": {
         "type": "table",
         "headings": [
@@ -1443,8 +1545,8 @@
           {
             "resourceType": "total",
             "label": "Total",
-            "requestCount": 18,
-            "size": 160738
+            "requestCount": 17,
+            "size": 160517
           },
           {
             "resourceType": "script",
@@ -1467,8 +1569,8 @@
           {
             "resourceType": "other",
             "label": "Other",
-            "requestCount": 2,
-            "size": 12861
+            "requestCount": 1,
+            "size": 12640
           },
           {
             "resourceType": "stylesheet",
@@ -1533,7 +1635,7 @@
               "url": "https://developers.google.com/speed/libraries/"
             },
             "transferSize": 30174,
-            "mainThreadTime": 82.74100000000001,
+            "mainThreadTime": 90.36300000000001,
             "blockingTime": 22.918000000000006
           }
         ],
@@ -1645,7 +1747,7 @@
     "aria-toggle-field-name": {
       "id": "aria-toggle-field-name",
       "title": "ARIA toggle fields have accessible names",
-      "description": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-toggle-field-label/).",
+      "description": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-toggle-field-name/).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "details": {
@@ -1801,13 +1903,8 @@
       "id": "form-field-multiple-labels",
       "title": "No form fields have multiple labels",
       "description": "Form fields with multiple labels can be confusingly announced by assistive technologies like screen readers which use either the first, the last, or all of the labels. [Learn more](https://web.dev/form-field-multiple-labels/).",
-      "score": 1,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [],
-        "items": []
-      }
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
     },
     "frame-title": {
       "id": "frame-title",
@@ -2271,6 +2368,7 @@
       "score": 0.58,
       "scoreDisplayMode": "numeric",
       "numericValue": 103455,
+      "numericUnit": "byte",
       "displayValue": "10 resources found",
       "details": {
         "type": "table",
@@ -2378,6 +2476,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 160738,
+      "numericUnit": "byte",
       "displayValue": "Total size was 157 KB",
       "details": {
         "type": "table",
@@ -2444,6 +2543,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "warnings": [],
       "details": {
@@ -2461,6 +2561,7 @@
       "score": 0.46,
       "scoreDisplayMode": "numeric",
       "numericValue": 1129,
+      "numericUnit": "millisecond",
       "displayValue": "Potential savings of 1,130 ms",
       "details": {
         "type": "opportunity",
@@ -2518,6 +2619,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -2534,6 +2636,7 @@
       "score": 0.88,
       "scoreDisplayMode": "numeric",
       "numericValue": 150,
+      "numericUnit": "millisecond",
       "displayValue": "Potential savings of 30 KB",
       "warnings": [],
       "details": {
@@ -2574,6 +2677,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -2590,6 +2694,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -2606,6 +2711,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "Potential savings of 9 KB",
       "warnings": [],
       "details": {
@@ -2652,6 +2758,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "warnings": [],
       "details": {
@@ -2669,6 +2776,7 @@
       "score": 0.75,
       "scoreDisplayMode": "numeric",
       "numericValue": 300,
+      "numericUnit": "millisecond",
       "displayValue": "Potential savings of 63 KB",
       "details": {
         "type": "opportunity",
@@ -2712,6 +2820,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "warnings": [],
       "details": {
@@ -2729,6 +2838,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -2753,6 +2863,13 @@
       "score": 1,
       "scoreDisplayMode": "binary"
     },
+    "charset": {
+      "id": "charset",
+      "title": "Charset declaration is missing or occurs too late in the HTML",
+      "description": "A character encoding declaration is required. It can be done with a <meta> tag in the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more](https://www.w3.org/International/questions/qa-html-encoding-declarations).",
+      "score": 0,
+      "scoreDisplayMode": "binary"
+    },
     "dom-size": {
       "id": "dom-size",
       "title": "Avoids an excessive DOM size",
@@ -2760,6 +2877,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 31,
+      "numericUnit": "element",
       "displayValue": "31 elements",
       "details": {
         "type": "table",
@@ -2818,35 +2936,46 @@
         "type": "table",
         "headings": [
           {
-            "key": "href",
-            "itemType": "url",
-            "text": "URL"
-          },
-          {
-            "key": "target",
-            "itemType": "text",
-            "text": "Target"
-          },
-          {
-            "key": "rel",
-            "itemType": "text",
-            "text": "Rel"
+            "key": "node",
+            "itemType": "node",
+            "text": "Failing Anchors"
           }
         ],
         "items": [
           {
+            "node": {
+              "type": "node",
+              "path": "",
+              "selector": "",
+              "nodeLabel": "",
+              "snippet": "<a href=\"https://www.google.com/\" target=\"blank\">Hello</a>"
+            },
             "href": "https://www.google.com/",
             "target": "_blank",
             "rel": "",
             "outerHTML": "<a href=\"https://www.google.com/\" target=\"blank\">Hello</a>"
           },
           {
+            "node": {
+              "type": "node",
+              "path": "",
+              "selector": "",
+              "nodeLabel": "",
+              "snippet": "<a target=\"blank\">Hello</a>"
+            },
             "href": "Unknown",
             "target": "_blank",
             "rel": "",
             "outerHTML": "<a target=\"blank\">Hello</a>"
           },
           {
+            "node": {
+              "type": "node",
+              "path": "",
+              "selector": "",
+              "nodeLabel": "",
+              "snippet": "<a rel=\"nofollow\" href=\"https://www.google.com/\" target=\"blank\">Hello</a>"
+            },
             "href": "https://www.google.com/",
             "target": "_blank",
             "rel": "nofollow",
@@ -3545,6 +3674,10 @@
           "group": "metrics"
         },
         {
+          "id": "cumulative-layout-shift",
+          "weight": 0
+        },
+        {
           "id": "estimated-input-latency",
           "weight": 0
         },
@@ -3669,6 +3802,11 @@
         },
         {
           "id": "performance-budget",
+          "weight": 0,
+          "group": "budgets"
+        },
+        {
+          "id": "timing-budget",
           "weight": 0,
           "group": "budgets"
         },
@@ -3830,7 +3968,7 @@
         },
         {
           "id": "form-field-multiple-labels",
-          "weight": 2,
+          "weight": 0,
           "group": "a11y-names-labels"
         },
         {
@@ -3975,7 +4113,7 @@
         }
       ],
       "id": "accessibility",
-      "score": 0.66
+      "score": 0.65
     },
     "best-practices": {
       "title": "Best Practices",
@@ -4010,6 +4148,10 @@
         },
         {
           "id": "doctype",
+          "weight": 1
+        },
+        {
+          "id": "charset",
           "weight": 1
         },
         {
@@ -4193,6 +4335,11 @@
           "group": "pwa-optimized"
         },
         {
+          "id": "maskable-icon",
+          "weight": 1,
+          "group": "pwa-optimized"
+        },
+        {
           "id": "pwa-cross-browser",
           "weight": 0
         },
@@ -4206,7 +4353,7 @@
         }
       ],
       "id": "pwa",
-      "score": 0.41
+      "score": 0.39
     }
   },
   "categoryGroups": {
@@ -4493,6 +4640,18 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:cumulative-layout-shift",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:CumulativeLayoutShift",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:errors-in-console",
         "duration": 100,
         "entryType": "measure"
@@ -4619,7 +4778,25 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:ManifestValues",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:themed-omnibox",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:ManifestValues",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:maskable-icon",
         "duration": 100,
         "entryType": "measure"
       },
@@ -4740,6 +4917,12 @@
       {
         "startTime": 0,
         "name": "lh:computed:ResourceSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:timing-budget",
         "duration": 100,
         "entryType": "measure"
       },
@@ -5111,6 +5294,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:UnusedCSS",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:computed:FirstContentfulPaint",
         "duration": 100,
         "entryType": "measure"
@@ -5142,6 +5331,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:unused-javascript",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:JSBundles",
         "duration": 100,
         "entryType": "measure"
       },
@@ -5184,6 +5379,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:doctype",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:charset",
         "duration": 100,
         "entryType": "measure"
       },
@@ -5327,8 +5528,17 @@
       "auditGroupExpandTooltip": "Show audits",
       "crcInitialNavigation": "Initial Navigation",
       "crcLongestDurationLabel": "Maximum critical path latency:",
+      "dropdownCopyJSON": "Copy JSON",
+      "dropdownDarkTheme": "Toggle Dark Theme",
+      "dropdownPrintExpanded": "Print Expanded",
+      "dropdownPrintSummary": "Print Summary",
+      "dropdownSaveGist": "Save as Gist",
+      "dropdownSaveHTML": "Save as HTML",
+      "dropdownSaveJSON": "Save as JSON",
+      "dropdownViewer": "Open in Viewer",
       "errorLabel": "Error!",
       "errorMissingAuditInfo": "Report error: no audit information",
+      "footerIssue": "File an issue",
       "labDataTitle": "Lab Data",
       "lsPerformanceCategoryDescription": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) analysis of the current page on an emulated mobile network. Values are estimated and may vary.",
       "manualAuditsGroupTitle": "Additional items to manually check",
@@ -5336,9 +5546,24 @@
       "opportunityResourceColumnLabel": "Opportunity",
       "opportunitySavingsColumnLabel": "Estimated Savings",
       "passedAuditsGroupTitle": "Passed audits",
+      "runtimeDesktopEmulation": "Emulated Desktop",
+      "runtimeMobileEmulation": "Emulated Moto G4",
+      "runtimeNoEmulation": "No emulation",
+      "runtimeSettingsBenchmark": "CPU/Memory Power",
+      "runtimeSettingsChannel": "Channel",
+      "runtimeSettingsCPUThrottling": "CPU throttling",
+      "runtimeSettingsDevice": "Device",
+      "runtimeSettingsFetchTime": "Fetch Time",
+      "runtimeSettingsNetworkThrottling": "Network throttling",
+      "runtimeSettingsTitle": "Runtime Settings",
+      "runtimeSettingsUA": "User agent (host)",
+      "runtimeSettingsUANetwork": "User agent (network)",
+      "runtimeSettingsUrl": "URL",
+      "runtimeUnknown": "Unknown",
       "snippetCollapseButtonLabel": "Collapse snippet",
       "snippetExpandButtonLabel": "Expand snippet",
       "thirdPartyResourcesLabel": "Show 3rd-party resources",
+      "throttlingProvided": "Provided by environment",
       "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:",
       "varianceDisclaimer": "Values are estimated and may vary. The performance score is [based only on these metrics](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted).",
       "warningAuditsGroupTitle": "Passed audits but with warnings",
@@ -5393,7 +5618,8 @@
         "audits[without-javascript].description"
       ],
       "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": [
-        "audits[first-contentful-paint].title"
+        "audits[first-contentful-paint].title",
+        "audits[timing-budget].details.items[3].label"
       ],
       "lighthouse-core/audits/metrics/first-contentful-paint.js | description": [
         "audits[first-contentful-paint].description"
@@ -5443,13 +5669,14 @@
         },
         {
           "values": {
-            "timeInMs": 1150.573
+            "timeInMs": 1150.5310000000002
           },
           "path": "audits[bootup-time].displayValue"
         }
       ],
       "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": [
-        "audits[first-meaningful-paint].title"
+        "audits[first-meaningful-paint].title",
+        "audits[timing-budget].details.items[2].label"
       ],
       "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": [
         "audits[first-meaningful-paint].description"
@@ -5517,10 +5744,17 @@
         "audits[total-blocking-time].description"
       ],
       "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": [
-        "audits[max-potential-fid].title"
+        "audits[max-potential-fid].title",
+        "audits[timing-budget].details.items[4].label"
       ],
       "lighthouse-core/audits/metrics/max-potential-fid.js | description": [
         "audits[max-potential-fid].description"
+      ],
+      "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": [
+        "audits[cumulative-layout-shift].title"
+      ],
+      "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": [
+        "audits[cumulative-layout-shift].description"
       ],
       "lighthouse-core/audits/errors-in-console.js | failureTitle": [
         "audits[errors-in-console].title"
@@ -5541,7 +5775,6 @@
         "audits[unminified-javascript].details.headings[0].label",
         "audits[uses-webp-images].details.headings[1].label",
         "audits[uses-text-compression].details.headings[0].label",
-        "audits[external-anchors-use-rel-noopener].details.headings[0].text",
         "audits[geolocation-on-start].details.headings[0].text",
         "audits[no-document-write].details.headings[0].text",
         "audits[notification-on-start].details.headings[0].text",
@@ -5566,13 +5799,15 @@
         }
       ],
       "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": [
-        "audits[first-cpu-idle].title"
+        "audits[first-cpu-idle].title",
+        "audits[timing-budget].details.items[0].label"
       ],
       "lighthouse-core/audits/metrics/first-cpu-idle.js | description": [
         "audits[first-cpu-idle].description"
       ],
       "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": [
-        "audits.interactive.title"
+        "audits.interactive.title",
+        "audits[timing-budget].details.items[1].label"
       ],
       "lighthouse-core/audits/metrics/interactive.js | description": [
         "audits.interactive.description"
@@ -5626,6 +5861,12 @@
       ],
       "lighthouse-core/audits/themed-omnibox.js | description": [
         "audits[themed-omnibox].description"
+      ],
+      "lighthouse-core/audits/maskable-icon.js | failureTitle": [
+        "audits[maskable-icon].title"
+      ],
+      "lighthouse-core/audits/maskable-icon.js | description": [
+        "audits[maskable-icon].description"
       ],
       "lighthouse-core/audits/content-width.js | title": [
         "audits[content-width].title"
@@ -5746,7 +5987,8 @@
         "audits[resource-summary].details.headings[2].text"
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": [
-        "audits[performance-budget].details.headings[4].text"
+        "audits[performance-budget].details.headings[4].text",
+        "audits[timing-budget].details.headings[2].text"
       ],
       "lighthouse-core/lib/i18n/i18n.js | scriptResourceType": [
         "audits[performance-budget].details.items[0].label",
@@ -5761,7 +6003,7 @@
         },
         {
           "values": {
-            "count": 8
+            "count": 7
           },
           "path": "audits[performance-budget].details.items[1].countOverBudget"
         },
@@ -5816,6 +6058,18 @@
         "audits[performance-budget].details.items[8].label",
         "audits[resource-summary].details.items[3].label"
       ],
+      "lighthouse-core/audits/timing-budget.js | title": [
+        "audits[timing-budget].title"
+      ],
+      "lighthouse-core/audits/timing-budget.js | description": [
+        "audits[timing-budget].description"
+      ],
+      "lighthouse-core/audits/timing-budget.js | columnTimingMetric": [
+        "audits[timing-budget].details.headings[0].text"
+      ],
+      "lighthouse-core/audits/timing-budget.js | columnMeasurement": [
+        "audits[timing-budget].details.headings[1].text"
+      ],
       "lighthouse-core/audits/resource-summary.js | title": [
         "audits[resource-summary].title"
       ],
@@ -5825,8 +6079,8 @@
       "lighthouse-core/audits/resource-summary.js | displayValue": [
         {
           "values": {
-            "requestCount": 18,
-            "byteCount": 160738
+            "requestCount": 17,
+            "byteCount": 160517
           },
           "path": "audits[resource-summary].displayValue"
         }
@@ -6290,6 +6544,12 @@
       "lighthouse-core/audits/dobetterweb/doctype.js | description": [
         "audits.doctype.description"
       ],
+      "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": [
+        "audits.charset.title"
+      ],
+      "lighthouse-core/audits/dobetterweb/charset.js | description": [
+        "audits.charset.description"
+      ],
       "lighthouse-core/audits/dobetterweb/dom-size.js | title": [
         "audits[dom-size].title"
       ],
@@ -6336,11 +6596,8 @@
           "path": "audits[external-anchors-use-rel-noopener].warnings[0]"
         }
       ],
-      "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": [
-        "audits[external-anchors-use-rel-noopener].details.headings[1].text"
-      ],
-      "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": [
-        "audits[external-anchors-use-rel-noopener].details.headings[2].text"
+      "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": [
+        "audits[external-anchors-use-rel-noopener].details.headings[0].text"
       ],
       "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | failureTitle": [
         "audits[geolocation-on-start].title"

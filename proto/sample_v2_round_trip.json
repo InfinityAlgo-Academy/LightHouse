@@ -95,7 +95,7 @@
             "title": "`[role]` values are valid"
         },
         "aria-toggle-field-name": {
-            "description": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-toggle-field-label/).",
+            "description": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-toggle-field-name/).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -158,37 +158,38 @@
                 "items": [
                     {
                         "scriptParseCompile": 2.777,
-                        "scripting": 957.494,
-                        "total": 966.9800000000001,
+                        "scripting": 963.7010000000001,
+                        "total": 1044.3820000000003,
                         "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
                     },
                     {
                         "scriptParseCompile": 0.092,
-                        "scripting": 17.790999999999997,
-                        "total": 391.76699999999977,
-                        "url": "Other"
+                        "scripting": 9.61,
+                        "total": 279.87100000000004,
+                        "url": "Unattributable"
                     },
                     {
                         "scriptParseCompile": 1.674,
-                        "scripting": 89.50799999999998,
-                        "total": 101.21099999999998,
+                        "scripting": 90.81299999999999,
+                        "total": 107.086,
                         "url": "http://localhost:10200/zone.js"
                     },
                     {
                         "scriptParseCompile": 1.205,
-                        "scripting": 80.032,
-                        "total": 82.741,
+                        "scripting": 80.659,
+                        "total": 90.363,
                         "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"
                     }
                 ],
                 "summary": {
-                    "wastedMs": 1150.573
+                    "wastedMs": 1150.5310000000002
                 },
                 "type": "table"
             },
             "displayValue": "1.2\u00a0s",
             "id": "bootup-time",
-            "numericValue": 1150.573,
+            "numericUnit": "millisecond",
+            "numericValue": 1150.5310000000002,
             "score": 0.92,
             "scoreDisplayMode": "numeric",
             "title": "JavaScript execution time"
@@ -223,6 +224,13 @@
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "title": "Document has a valid `rel=canonical`"
+        },
+        "charset": {
+            "description": "A character encoding declaration is required. It can be done with a <meta> tag in the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more](https://www.w3.org/International/questions/qa-html-encoding-declarations).",
+            "id": "charset",
+            "score": 0.0,
+            "scoreDisplayMode": "binary",
+            "title": "Charset declaration is missing or occurs too late in the HTML"
         },
         "color-contrast": {
             "description": "Low-contrast text is difficult or impossible for many users to read. [Learn more](https://web.dev/color-contrast/).",
@@ -425,6 +433,24 @@
             "scoreDisplayMode": "informative",
             "title": "Avoid chaining critical requests"
         },
+        "cumulative-layout-shift": {
+            "description": "Cumulative Layout Shift is the sum of all layout shifts that occurred during a page's load. A layout shift is any movement an element makes once it is visible to the user. All layout shift is recorded, scored, and then aggregated into a cumulative score between 0 and 1; 0 being a perfectly stable page, and >=0.5 being a highly shifting page.",
+            "details": {
+                "items": [
+                    {
+                        "finalLayoutShiftTraceEventFound": true
+                    }
+                ],
+                "type": "debugdata"
+            },
+            "displayValue": "0.42",
+            "id": "cumulative-layout-shift",
+            "numericUnit": "unitless",
+            "numericValue": 0.42,
+            "score": 0.48,
+            "scoreDisplayMode": "numeric",
+            "title": "Cumulative Layout Shift"
+        },
         "custom-controls-labels": {
             "description": "Custom interactive controls have associated labels, provided by aria-label or aria-labelledby. [Learn more](https://web.dev/custom-controls-labels/).",
             "id": "custom-controls-labels",
@@ -597,6 +623,7 @@
             },
             "displayValue": "31 elements",
             "id": "dom-size",
+            "numericUnit": "element",
             "numericValue": 31.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -636,6 +663,7 @@
                 "type": "opportunity"
             },
             "id": "efficient-animated-content",
+            "numericUnit": "millisecond",
             "numericValue": 0.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -686,7 +714,6 @@
                 "type": "table"
             },
             "id": "errors-in-console",
-            "numericValue": 5.0,
             "score": 0.0,
             "scoreDisplayMode": "binary",
             "title": "Browser errors were logged to the console"
@@ -695,6 +722,7 @@
             "description": "Estimated Input Latency is an estimate of how long your app takes to respond to user input, in milliseconds, during the busiest 5s window of page load. If your latency is higher than 50 ms, users may perceive your app as laggy. [Learn more](https://web.dev/estimated-input-latency).",
             "displayValue": "20\u00a0ms",
             "id": "estimated-input-latency",
+            "numericUnit": "millisecond",
             "numericValue": 16.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -705,34 +733,36 @@
             "details": {
                 "headings": [
                     {
-                        "itemType": "url",
-                        "key": "href",
-                        "text": "URL"
-                    },
-                    {
-                        "itemType": "text",
-                        "key": "target",
-                        "text": "Target"
-                    },
-                    {
-                        "itemType": "text",
-                        "key": "rel",
-                        "text": "Rel"
+                        "itemType": "node",
+                        "key": "node",
+                        "text": "Failing Anchors"
                     }
                 ],
                 "items": [
                     {
                         "href": "https://www.google.com/",
+                        "node": {
+                            "snippet": "<a href=\"https://www.google.com/\" target=\"blank\">Hello</a>",
+                            "type": "node"
+                        },
                         "outerHTML": "<a href=\"https://www.google.com/\" target=\"blank\">Hello</a>",
                         "target": "_blank"
                     },
                     {
                         "href": "Unknown",
+                        "node": {
+                            "snippet": "<a target=\"blank\">Hello</a>",
+                            "type": "node"
+                        },
                         "outerHTML": "<a target=\"blank\">Hello</a>",
                         "target": "_blank"
                     },
                     {
                         "href": "https://www.google.com/",
+                        "node": {
+                            "snippet": "<a rel=\"nofollow\" href=\"https://www.google.com/\" target=\"blank\">Hello</a>",
+                            "type": "node"
+                        },
                         "outerHTML": "<a rel=\"nofollow\" href=\"https://www.google.com/\" target=\"blank\">Hello</a>",
                         "rel": "nofollow",
                         "target": "_blank"
@@ -765,6 +795,7 @@
             "description": "First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://web.dev/first-contentful-paint).",
             "displayValue": "4.0\u00a0s",
             "id": "first-contentful-paint",
+            "numericUnit": "millisecond",
             "numericValue": 3969.135,
             "score": 0.51,
             "scoreDisplayMode": "numeric",
@@ -774,6 +805,7 @@
             "description": "First CPU Idle marks the first time at which the page's main thread is quiet enough to handle input.  [Learn more](https://web.dev/first-cpu-idle).",
             "displayValue": "4.9\u00a0s",
             "id": "first-cpu-idle",
+            "numericUnit": "millisecond",
             "numericValue": 4927.278,
             "score": 0.72,
             "scoreDisplayMode": "numeric",
@@ -783,6 +815,7 @@
             "description": "First Meaningful Paint measures when the primary content of a page is visible. [Learn more](https://web.dev/first-meaningful-paint).",
             "displayValue": "4.0\u00a0s",
             "id": "first-meaningful-paint",
+            "numericUnit": "millisecond",
             "numericValue": 3969.136,
             "score": 0.51,
             "scoreDisplayMode": "numeric",
@@ -860,14 +893,9 @@
         },
         "form-field-multiple-labels": {
             "description": "Form fields with multiple labels can be confusingly announced by assistive technologies like screen readers which use either the first, the last, or all of the labels. [Learn more](https://web.dev/form-field-multiple-labels/).",
-            "details": {
-                "headings": [],
-                "items": [],
-                "type": "table"
-            },
             "id": "form-field-multiple-labels",
-            "score": 1.0,
-            "scoreDisplayMode": "binary",
+            "score": null,
+            "scoreDisplayMode": "notApplicable",
             "title": "No form fields have multiple labels"
         },
         "frame-title": {
@@ -1126,6 +1154,7 @@
             "description": "Time to interactive is the amount of time it takes for the page to become fully interactive. [Learn more](https://web.dev/interactive).",
             "displayValue": "4.9\u00a0s",
             "id": "interactive",
+            "numericUnit": "millisecond",
             "numericValue": 4927.278,
             "score": 0.78,
             "scoreDisplayMode": "numeric",
@@ -1283,9 +1312,10 @@
             "title": "Form elements do not have associated labels"
         },
         "largest-contentful-paint": {
-            "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn More](https://web.dev/largest-contentful-paint)",
+            "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn More](https://web.dev/lighthouse-largest-contentful-paint)",
             "displayValue": "4.9\u00a0s",
             "id": "largest-contentful-paint",
+            "numericUnit": "millisecond",
             "numericValue": 4927.278,
             "score": 0.31,
             "scoreDisplayMode": "numeric",
@@ -1379,6 +1409,7 @@
         "load-fast-enough-for-pwa": {
             "description": "A fast page load over a cellular network ensures a good mobile user experience. [Learn more](https://web.dev/load-fast-enough-for-pwa).",
             "id": "load-fast-enough-for-pwa",
+            "numericUnit": "millisecond",
             "numericValue": 4927.278,
             "score": 1.0,
             "scoreDisplayMode": "binary",
@@ -1477,7 +1508,6 @@
                 "type": "table"
             },
             "id": "main-thread-tasks",
-            "numericValue": 16.0,
             "score": null,
             "scoreDisplayMode": "informative",
             "title": "Tasks"
@@ -1539,6 +1569,7 @@
             },
             "displayValue": "1.5\u00a0s",
             "id": "mainthread-work-breakdown",
+            "numericUnit": "millisecond",
             "numericValue": 1548.5690000000002,
             "score": 0.96,
             "scoreDisplayMode": "numeric",
@@ -1551,10 +1582,19 @@
             "scoreDisplayMode": "manual",
             "title": "The user's focus is directed to new content added to the page"
         },
+        "maskable-icon": {
+            "description": "A maskable icon ensures that the image fills the entire shape without being letterboxed when installing the app on a device. [Learn more](https://web.dev/maskable-icon/).",
+            "explanation": "No manifest was fetched",
+            "id": "maskable-icon",
+            "score": 0.0,
+            "scoreDisplayMode": "binary",
+            "title": "Manifest doesn't have a maskable icon"
+        },
         "max-potential-fid": {
             "description": "The maximum potential First Input Delay that your users could experience is the duration of the longest task. [Learn more](https://web.dev/lighthouse-max-potential-fid).",
             "displayValue": "120\u00a0ms",
             "id": "max-potential-fid",
+            "numericUnit": "millisecond",
             "numericValue": 122.537,
             "score": 0.92,
             "scoreDisplayMode": "numeric",
@@ -1591,6 +1631,7 @@
             "details": {
                 "items": [
                     {
+                        "cumulativeLayoutShift": 0.0,
                         "estimatedInputLatency": 16.0,
                         "firstCPUIdle": 4927.0,
                         "firstCPUIdleTs": 185608247190.0,
@@ -1636,6 +1677,7 @@
                 "type": "debugdata"
             },
             "id": "metrics",
+            "numericUnit": "millisecond",
             "numericValue": 4927.0,
             "score": null,
             "scoreDisplayMode": "informative",
@@ -1877,7 +1919,6 @@
                 "type": "table"
             },
             "id": "network-requests",
-            "numericValue": 18.0,
             "score": null,
             "scoreDisplayMode": "informative",
             "title": "Network Requests"
@@ -1912,6 +1953,7 @@
             },
             "displayValue": "0\u00a0ms",
             "id": "network-rtt",
+            "numericUnit": "millisecond",
             "numericValue": 1.7249999999999943,
             "score": null,
             "scoreDisplayMode": "informative",
@@ -1947,6 +1989,7 @@
             },
             "displayValue": "570\u00a0ms",
             "id": "network-server-latency",
+            "numericUnit": "millisecond",
             "numericValue": 572.829,
             "score": null,
             "scoreDisplayMode": "informative",
@@ -2132,6 +2175,7 @@
                 "type": "opportunity"
             },
             "id": "offscreen-images",
+            "numericUnit": "millisecond",
             "numericValue": 0.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -2208,19 +2252,19 @@
                         "sizeOverBudget": 72955.0
                     },
                     {
-                        "countOverBudget": "8 requests",
+                        "countOverBudget": "7 requests",
                         "label": "Total",
-                        "requestCount": 18.0,
+                        "requestCount": 17.0,
                         "resourceType": "total",
-                        "size": 160738.0,
-                        "sizeOverBudget": 58338.0
+                        "size": 160517.0,
+                        "sizeOverBudget": 58117.0
                     },
                     {
                         "label": "Other",
-                        "requestCount": 2.0,
+                        "requestCount": 1.0,
                         "resourceType": "other",
-                        "size": 12861.0,
-                        "sizeOverBudget": 7741.0
+                        "size": 12640.0,
+                        "sizeOverBudget": 7520.0
                     },
                     {
                         "countOverBudget": "1 request",
@@ -2313,6 +2357,7 @@
                 "type": "opportunity"
             },
             "id": "redirects",
+            "numericUnit": "millisecond",
             "numericValue": 0.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -2377,6 +2422,7 @@
             },
             "displayValue": "Potential savings of 1,130\u00a0ms",
             "id": "render-blocking-resources",
+            "numericUnit": "millisecond",
             "numericValue": 1129.0,
             "score": 0.46,
             "scoreDisplayMode": "numeric",
@@ -2405,9 +2451,9 @@
                 "items": [
                     {
                         "label": "Total",
-                        "requestCount": 18.0,
+                        "requestCount": 17.0,
                         "resourceType": "total",
-                        "size": 160738.0
+                        "size": 160517.0
                     },
                     {
                         "label": "Script",
@@ -2429,9 +2475,9 @@
                     },
                     {
                         "label": "Other",
-                        "requestCount": 2.0,
+                        "requestCount": 1.0,
                         "resourceType": "other",
-                        "size": 12861.0
+                        "size": 12640.0
                     },
                     {
                         "label": "Stylesheet",
@@ -2460,7 +2506,7 @@
                 ],
                 "type": "table"
             },
-            "displayValue": "18 requests \u2022 157 KB",
+            "displayValue": "17 requests \u2022 157 KB",
             "id": "resource-summary",
             "score": null,
             "scoreDisplayMode": "informative",
@@ -2547,6 +2593,7 @@
             "description": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more](https://web.dev/speed-index).",
             "displayValue": "4.4\u00a0s",
             "id": "speed-index",
+            "numericUnit": "millisecond",
             "numericValue": 4417.0,
             "score": 0.74,
             "scoreDisplayMode": "numeric",
@@ -2704,7 +2751,7 @@
                             "type": "link",
                             "url": "https://developers.google.com/speed/libraries/"
                         },
-                        "mainThreadTime": 82.74100000000001,
+                        "mainThreadTime": 90.36300000000001,
                         "transferSize": 30174.0
                     }
                 ],
@@ -2730,15 +2777,76 @@
             },
             "displayValue": "Root document took 570\u00a0ms",
             "id": "time-to-first-byte",
+            "numericUnit": "millisecond",
             "numericValue": 570.5630000000001,
             "score": 1.0,
             "scoreDisplayMode": "binary",
             "title": "Server response times are low (TTFB)"
         },
+        "timing-budget": {
+            "description": "Set a timing budget to help you keep an eye on the performance of your site. Performant sites load fast and respond to user input events quickly. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).",
+            "details": {
+                "headings": [
+                    {
+                        "itemType": "text",
+                        "key": "label",
+                        "text": "Metric"
+                    },
+                    {
+                        "itemType": "ms",
+                        "key": "measurement",
+                        "text": "Measurement"
+                    },
+                    {
+                        "itemType": "ms",
+                        "key": "overBudget",
+                        "text": "Over Budget"
+                    }
+                ],
+                "items": [
+                    {
+                        "label": "First CPU Idle",
+                        "measurement": 4927.0,
+                        "metric": "first-cpu-idle",
+                        "overBudget": 2027.0
+                    },
+                    {
+                        "label": "Time to Interactive",
+                        "measurement": 4927.0,
+                        "metric": "interactive",
+                        "overBudget": 2027.0
+                    },
+                    {
+                        "label": "First Meaningful Paint",
+                        "measurement": 3969.0,
+                        "metric": "first-meaningful-paint",
+                        "overBudget": 1969.0
+                    },
+                    {
+                        "label": "First Contentful Paint",
+                        "measurement": 3969.0,
+                        "metric": "first-contentful-paint",
+                        "overBudget": 969.0
+                    },
+                    {
+                        "label": "Max Potential First Input Delay",
+                        "measurement": 123.0,
+                        "metric": "max-potential-fid",
+                        "overBudget": 23.0
+                    }
+                ],
+                "type": "table"
+            },
+            "id": "timing-budget",
+            "score": null,
+            "scoreDisplayMode": "informative",
+            "title": "Timing budget"
+        },
         "total-blocking-time": {
             "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more](https://web.dev/lighthouse-total-blocking-time).",
             "displayValue": "120\u00a0ms",
             "id": "total-blocking-time",
+            "numericUnit": "millisecond",
             "numericValue": 116.79800000000023,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -2805,6 +2913,7 @@
             },
             "displayValue": "Total size was 157\u00a0KB",
             "id": "total-byte-weight",
+            "numericUnit": "byte",
             "numericValue": 160738.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -2820,6 +2929,7 @@
                 "type": "opportunity"
             },
             "id": "unminified-css",
+            "numericUnit": "millisecond",
             "numericValue": 0.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -2859,6 +2969,7 @@
             },
             "displayValue": "Potential savings of 30\u00a0KB",
             "id": "unminified-javascript",
+            "numericUnit": "millisecond",
             "numericValue": 150.0,
             "score": 0.88,
             "scoreDisplayMode": "numeric",
@@ -2875,6 +2986,7 @@
                 "type": "opportunity"
             },
             "id": "unused-css-rules",
+            "numericUnit": "millisecond",
             "numericValue": 0.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -2890,6 +3002,7 @@
                 "type": "opportunity"
             },
             "id": "unused-javascript",
+            "numericUnit": "millisecond",
             "numericValue": 0.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -3101,6 +3214,7 @@
             },
             "displayValue": "10 resources found",
             "id": "uses-long-cache-ttl",
+            "numericUnit": "byte",
             "numericValue": 103455.0,
             "score": 0.58,
             "scoreDisplayMode": "numeric",
@@ -3116,6 +3230,7 @@
                 "type": "opportunity"
             },
             "id": "uses-optimized-images",
+            "numericUnit": "millisecond",
             "numericValue": 0.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -3167,6 +3282,7 @@
                 "type": "opportunity"
             },
             "id": "uses-rel-preconnect",
+            "numericUnit": "millisecond",
             "numericValue": 0.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -3182,6 +3298,7 @@
                 "type": "opportunity"
             },
             "id": "uses-rel-preload",
+            "numericUnit": "millisecond",
             "numericValue": 0.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -3197,6 +3314,7 @@
                 "type": "opportunity"
             },
             "id": "uses-responsive-images",
+            "numericUnit": "millisecond",
             "numericValue": 0.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -3241,6 +3359,7 @@
             },
             "displayValue": "Potential savings of 63\u00a0KB",
             "id": "uses-text-compression",
+            "numericUnit": "millisecond",
             "numericValue": 300.0,
             "score": 0.75,
             "scoreDisplayMode": "numeric",
@@ -3285,6 +3404,7 @@
             },
             "displayValue": "Potential savings of 9\u00a0KB",
             "id": "uses-webp-images",
+            "numericUnit": "millisecond",
             "numericValue": 0.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
@@ -3454,7 +3574,7 @@
                 {
                     "group": "a11y-names-labels",
                     "id": "form-field-multiple-labels",
-                    "weight": 2.0
+                    "weight": 0.0
                 },
                 {
                     "group": "a11y-names-labels",
@@ -3600,7 +3720,7 @@
             "description": "These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.",
             "id": "accessibility",
             "manualDescription": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).",
-            "score": 0.66,
+            "score": 0.65,
             "title": "Accessibility"
         },
         "best-practices": {
@@ -3635,6 +3755,10 @@
                 },
                 {
                     "id": "doctype",
+                    "weight": 1.0
+                },
+                {
+                    "id": "charset",
                     "weight": 1.0
                 },
                 {
@@ -3705,6 +3829,10 @@
                 {
                     "group": "metrics",
                     "id": "max-potential-fid",
+                    "weight": 0.0
+                },
+                {
+                    "id": "cumulative-layout-shift",
                     "weight": 0.0
                 },
                 {
@@ -3836,6 +3964,11 @@
                     "weight": 0.0
                 },
                 {
+                    "group": "budgets",
+                    "id": "timing-budget",
+                    "weight": 0.0
+                },
+                {
                     "group": "diagnostics",
                     "id": "resource-summary",
                     "weight": 0.0
@@ -3950,6 +4083,11 @@
                     "weight": 1.0
                 },
                 {
+                    "group": "pwa-optimized",
+                    "id": "maskable-icon",
+                    "weight": 1.0
+                },
+                {
                     "id": "pwa-cross-browser",
                     "weight": 0.0
                 },
@@ -3965,7 +4103,7 @@
             "description": "These checks validate the aspects of a Progressive Web App. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist).",
             "id": "pwa",
             "manualDescription": "These checks are required by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually.",
-            "score": 0.41,
+            "score": 0.39,
             "title": "Progressive Web App"
         },
         "seo": {
@@ -4135,8 +4273,17 @@
             "auditGroupExpandTooltip": "Show audits",
             "crcInitialNavigation": "Initial Navigation",
             "crcLongestDurationLabel": "Maximum critical path latency:",
+            "dropdownCopyJSON": "Copy JSON",
+            "dropdownDarkTheme": "Toggle Dark Theme",
+            "dropdownPrintExpanded": "Print Expanded",
+            "dropdownPrintSummary": "Print Summary",
+            "dropdownSaveGist": "Save as Gist",
+            "dropdownSaveHTML": "Save as HTML",
+            "dropdownSaveJSON": "Save as JSON",
+            "dropdownViewer": "Open in Viewer",
             "errorLabel": "Error!",
             "errorMissingAuditInfo": "Report error: no audit information",
+            "footerIssue": "File an issue",
             "labDataTitle": "Lab Data",
             "lsPerformanceCategoryDescription": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) analysis of the current page on an emulated mobile network. Values are estimated and may vary.",
             "manualAuditsGroupTitle": "Additional items to manually check",
@@ -4144,9 +4291,24 @@
             "opportunityResourceColumnLabel": "Opportunity",
             "opportunitySavingsColumnLabel": "Estimated Savings",
             "passedAuditsGroupTitle": "Passed audits",
+            "runtimeDesktopEmulation": "Emulated Desktop",
+            "runtimeMobileEmulation": "Emulated Moto G4",
+            "runtimeNoEmulation": "No emulation",
+            "runtimeSettingsBenchmark": "CPU/Memory Power",
+            "runtimeSettingsCPUThrottling": "CPU throttling",
+            "runtimeSettingsChannel": "Channel",
+            "runtimeSettingsDevice": "Device",
+            "runtimeSettingsFetchTime": "Fetch Time",
+            "runtimeSettingsNetworkThrottling": "Network throttling",
+            "runtimeSettingsTitle": "Runtime Settings",
+            "runtimeSettingsUA": "User agent (host)",
+            "runtimeSettingsUANetwork": "User agent (network)",
+            "runtimeSettingsUrl": "URL",
+            "runtimeUnknown": "Unknown",
             "snippetCollapseButtonLabel": "Collapse snippet",
             "snippetExpandButtonLabel": "Expand snippet",
             "thirdPartyResourcesLabel": "Show 3rd-party resources",
+            "throttlingProvided": "Provided by environment",
             "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:",
             "varianceDisclaimer": "Values are estimated and may vary. The performance score is [based only on these metrics](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted).",
             "warningAuditsGroupTitle": "Passed audits but with warnings",
@@ -4394,6 +4556,18 @@
             {
                 "duration": 100.0,
                 "entryType": "measure",
+                "name": "lh:audit:cumulative-layout-shift",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:computed:CumulativeLayoutShift",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
                 "name": "lh:audit:errors-in-console",
                 "startTime": 0.0
             },
@@ -4520,7 +4694,25 @@
             {
                 "duration": 100.0,
                 "entryType": "measure",
+                "name": "lh:computed:ManifestValues",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
                 "name": "lh:audit:themed-omnibox",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:computed:ManifestValues",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:audit:maskable-icon",
                 "startTime": 0.0
             },
             {
@@ -4641,6 +4833,12 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:computed:ResourceSummary",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:audit:timing-budget",
                 "startTime": 0.0
             },
             {
@@ -5012,6 +5210,12 @@
             {
                 "duration": 100.0,
                 "entryType": "measure",
+                "name": "lh:computed:UnusedCSS",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
                 "name": "lh:computed:FirstContentfulPaint",
                 "startTime": 0.0
             },
@@ -5043,6 +5247,12 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:audit:unused-javascript",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:computed:JSBundles",
                 "startTime": 0.0
             },
             {
@@ -5085,6 +5295,12 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:audit:doctype",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:audit:charset",
                 "startTime": 0.0
             },
             {

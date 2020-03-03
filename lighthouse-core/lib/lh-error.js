@@ -254,6 +254,11 @@ const ERRORS = {
     code: 'NO_LCP',
     message: UIStrings.badTraceRecording,
   },
+  /** Layout Shift trace events are found but without data */
+  LAYOUT_SHIFT_MISSING_DATA: {
+    code: 'LAYOUT_SHIFT_MISSING_DATA',
+    message: UIStrings.badTraceRecording,
+  },
 
   // TTI calculation failures
   FMP_TOO_LATE_FOR_FCPUI: {code: 'FMP_TOO_LATE_FOR_FCPUI', message: UIStrings.pageLoadTookTooLong},
@@ -376,6 +381,7 @@ const ERRORS = {
   },
 
   // Hey! When adding a new error type, update lighthouse-result.proto too.
+  // Only necessary for runtime errors, which come from artifacts or pageLoadErrors.
 };
 
 /** @type {Record<keyof typeof ERRORS, LighthouseErrorDefinition>} */

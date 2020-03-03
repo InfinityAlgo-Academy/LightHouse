@@ -242,12 +242,78 @@ describe('Performance: uses-rel-preconnect audit', () => {
     };
 
     const context = {settings: {}, computedCache: new Map()};
-    const {numericValue, extendedInfo} = await UsesRelPreconnect.audit(artifacts, context);
+    const {
+      numericValue,
+      extendedInfo,
+      warnings,
+    } = await UsesRelPreconnect.audit(artifacts, context);
     assert.equal(numericValue, 300);
     assert.equal(extendedInfo.value.length, 2);
     assert.deepStrictEqual(extendedInfo.value, [
       {url: 'https://othercdn.example.com', wastedMs: 300},
       {url: 'http://cdn.example.com', wastedMs: 150},
     ]);
+    assert.equal(warnings.length, 0);
+  });
+
+  it('should pass if the correct number of preconnects found', async () => {
+    const networkRecords = [
+      mainResource,
+      {
+        url: 'http://cdn.example.com/first',
+        initiator: {},
+        startTime: 2,
+        timing: {
+          dnsStart: 100,
+          connectStart: 250,
+          connectEnd: 300,
+          receiveHeadersEnd: 2.3,
+        },
+      },
+    ];
+    const artifacts = {
+      LinkElements: [
+        {rel: 'preconnect', href: 'https://cdn1.example.com/'},
+        {rel: 'preconnect', href: 'https://cdn2.example.com/'},
+      ],
+      devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
+      URL: {finalUrl: mainResource.url},
+    };
+
+    const context = {settings: {}, computedCache: new Map()};
+    const result = await UsesRelPreconnect.audit(artifacts, context);
+    assert.equal(result.score, 1);
+    assert.deepStrictEqual(result.warnings, []);
+  });
+
+  it('should pass with a warning if too many preconnects found', async () => {
+    const networkRecords = [
+      mainResource,
+      {
+        url: 'http://cdn.example.com/first',
+        initiator: {},
+        startTime: 2,
+        timing: {
+          dnsStart: 100,
+          connectStart: 250,
+          connectEnd: 300,
+          receiveHeadersEnd: 2.3,
+        },
+      },
+    ];
+    const artifacts = {
+      LinkElements: [
+        {rel: 'preconnect', href: 'https://cdn1.example.com/'},
+        {rel: 'preconnect', href: 'https://cdn2.example.com/'},
+        {rel: 'preconnect', href: 'https://cdn3.example.com/'},
+      ],
+      devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
+      URL: {finalUrl: mainResource.url},
+    };
+
+    const context = {settings: {}, computedCache: new Map()};
+    const result = await UsesRelPreconnect.audit(artifacts, context);
+    assert.equal(result.score, 1);
+    assert.equal(result.warnings.length, 1);
   });
 });

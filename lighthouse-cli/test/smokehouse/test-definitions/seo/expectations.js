@@ -162,7 +162,7 @@ const expectations = [
               {
                 source: {type: 'code', value: 'User Agent Stylesheet'},
                 selector: 'h6',
-                fontSize: '10px',
+                fontSize: '10.72px',
               },
               {
                 source: {type: 'url', value: /seo-tester\.html.+$/},

@@ -13,6 +13,20 @@ const NetworkAnalyzer = require('../lib/dependency-graph/simulator/network-analy
 const NetworkRecorder = require('../lib/network-recorder.js');
 const constants = require('../config/constants.js');
 const i18n = require('../lib/i18n/i18n.js');
+const URL = require('../lib/url-shim.js');
+
+const UIStrings = {
+  /**
+   * @description Warning that the web page redirected during testing and that may have affected the load.
+   * @example {https://example.com/requested/page} requested
+   * @example {https://example.com/final/resolved/page} final
+   */
+  warningRedirected: 'The page may not be loading as expected because your test URL ' +
+  `({requested}) was redirected to {final}. ` +
+  'Try testing the second URL directly.',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 /** @typedef {import('../gather/driver.js')} Driver */
 
@@ -56,11 +70,9 @@ class GatherRunner {
    * @return {Promise<{navigationError?: LH.LighthouseError}>}
    */
   static async loadPage(driver, passContext) {
-    const gatherers = passContext.passConfig.gatherers;
     const status = {
       msg: 'Loading page & waiting for onload',
       id: `lh:gather:loadPage-${passContext.passConfig.passName}`,
-      args: [gatherers.map(g => g.instance.name).join(', ')],
     };
     log.time(status);
     try {
@@ -471,6 +483,7 @@ class GatherRunner {
       NetworkUserAgent: '', // updated later
       BenchmarkIndex: 0, // updated later
       WebAppManifest: null, // updated later
+      InstallabilityErrors: {errors: []}, // updated later
       Stacks: [], // updated later
       traces: {},
       devtoolsLogs: {},
@@ -479,6 +492,40 @@ class GatherRunner {
       Timing: [],
       PageLoadError: null,
     };
+  }
+
+  /**
+   * Creates an Artifacts.InstallabilityErrors, tranforming data from the protocol
+   * for old versions of Chrome.
+   * @param {LH.Gatherer.PassContext} passContext
+   * @return {Promise<LH.Artifacts.InstallabilityErrors>}
+   */
+  static async getInstallabilityErrors(passContext) {
+    const response =
+      await passContext.driver.sendCommand('Page.getInstallabilityErrors');
+
+    let errors = response.installabilityErrors;
+    // Before M82, `getInstallabilityErrors` was not localized and just english
+    // error strings were returned. Convert the values we care about to the new error id format.
+    if (!errors) {
+      /** @type {string[]} */
+      // @ts-ignore - Support older protocol data.
+      const m81StyleErrors = response.errors || [];
+      errors = m81StyleErrors.map(error => {
+        const englishErrorToErrorId = {
+          'Could not download a required icon from the manifest': 'cannot-download-icon',
+          'Downloaded icon was empty or corrupted': 'no-icon-available',
+        };
+        for (const [englishError, errorId] of Object.entries(englishErrorToErrorId)) {
+          if (error.includes(englishError)) {
+            return {errorId, errorArguments: []};
+          }
+        }
+        return {errorId: '', errorArguments: []};
+      }).filter(error => error.errorId);
+    }
+
+    return {errors};
   }
 
   /**
@@ -492,9 +539,20 @@ class GatherRunner {
 
     // Copy redirected URL to artifact.
     baseArtifacts.URL.finalUrl = passContext.url;
+    /* eslint-disable max-len */
+    if (!URL.equalWithExcludedFragments(baseArtifacts.URL.requestedUrl, baseArtifacts.URL.finalUrl)) {
+      baseArtifacts.LighthouseRunWarnings.push(str_(UIStrings.warningRedirected, {
+        requested: baseArtifacts.URL.requestedUrl,
+        final: baseArtifacts.URL.finalUrl,
+      }));
+    }
 
     // Fetch the manifest, if it exists.
     baseArtifacts.WebAppManifest = await GatherRunner.getWebAppManifest(passContext);
+
+    if (baseArtifacts.WebAppManifest) {
+      baseArtifacts.InstallabilityErrors = await GatherRunner.getInstallabilityErrors(passContext);
+    }
 
     baseArtifacts.Stacks = await stacksGatherer(passContext);
 
@@ -628,6 +686,13 @@ class GatherRunner {
    * @return {Promise<{artifacts: Partial<LH.GathererArtifacts>, pageLoadError?: LHError}>}
    */
   static async runPass(passContext) {
+    const status = {
+      msg: `Running ${passContext.passConfig.passName} pass`,
+      id: `lh:gather:runPass-${passContext.passConfig.passName}`,
+      args: [passContext.passConfig.gatherers.map(g => g.instance.name).join(', ')],
+    };
+    log.time(status);
+
     /** @type {Partial<GathererResults>} */
     const gathererResults = {};
     const {driver, passConfig} = passContext;
@@ -660,6 +725,7 @@ class GatherRunner {
       GatherRunner._addLoadDataToBaseArtifacts(passContext, loadData,
           `pageLoadError-${passConfig.passName}`);
 
+      log.timeEnd(status);
       return {artifacts: {}, pageLoadError};
     }
 
@@ -668,8 +734,12 @@ class GatherRunner {
 
     // Run `afterPass()` on gatherers and return collected artifacts.
     await GatherRunner.afterPass(passContext, loadData, gathererResults);
-    return GatherRunner.collectArtifacts(gathererResults);
+    const artifacts = GatherRunner.collectArtifacts(gathererResults);
+
+    log.timeEnd(status);
+    return artifacts;
   }
 }
 
 module.exports = GatherRunner;
+module.exports.UIStrings = UIStrings;
