@@ -14,20 +14,21 @@ describe('Performance: Resource summary audit', () => {
   let artifacts;
   let context;
   beforeEach(() => {
-    context = {computedCache: new Map()};
+    context = {computedCache: new Map(), settings: {budgets: null}};
 
     artifacts = {
       devtoolsLogs: {
         defaultPass: networkRecordsToDevtoolsLog([
           {url: 'http://example.com/file.html', resourceType: 'Document', transferSize: 30},
           {url: 'http://example.com/app.js', resourceType: 'Script', transferSize: 10},
+          {url: 'http://my-cdn.com/bin.js', resourceType: 'Script', transferSize: 25},
           {url: 'http://third-party.com/script.js', resourceType: 'Script', transferSize: 50},
           {url: 'http://third-party.com/file.jpg', resourceType: 'Image', transferSize: 70},
-        ])},
-      URL: {requestedUrl: 'https://example.com', finalUrl: 'https://example.com'},
+        ]),
+      },
+      URL: {requestedUrl: 'http://example.com', finalUrl: 'http://example.com'},
     };
   });
-
   it('has three table columns', async () => {
     const result = await ResourceSummaryAudit.audit(artifacts, context);
     expect(result.details.headings).toHaveLength(3);
@@ -40,7 +41,7 @@ describe('Performance: Resource summary audit', () => {
 
   it('has the correct display value', async () => {
     const result = await ResourceSummaryAudit.audit(artifacts, context);
-    expect(result.displayValue).toBeDisplayString('4 requests • 0 KB');
+    expect(result.displayValue).toBeDisplayString('5 requests • 0 KB');
   });
 
   it('includes the correct properties for each table item', async () => {
@@ -48,8 +49,8 @@ describe('Performance: Resource summary audit', () => {
     const item = result.details.items[0];
     expect(item.resourceType).toEqual('total');
     expect(item.label).toBeDisplayString('Total');
-    expect(item.requestCount).toBe(4);
-    expect(item.size).toBe(160);
+    expect(item.requestCount).toBe(5);
+    expect(item.size).toBe(185);
   });
 
   it('includes all resource types, regardless of whether page contains them', async () => {
@@ -62,6 +63,29 @@ describe('Performance: Resource summary audit', () => {
     const fontItem = result.details.items.find(item => item.resourceType === 'font');
     expect(fontItem.requestCount).toBe(0);
     expect(fontItem.size).toBe(0);
+  });
+  describe('third-party resource identification', () => {
+    it('is based on root domain if firstPartyHostnames is NOT set', async () => {
+      const result = await ResourceSummaryAudit.audit(artifacts, context);
+      const thirdParty = result.details.items
+        .find(item => item.resourceType === 'third-party');
+      expect(thirdParty.size).toBe(145);
+      expect(thirdParty.requestCount).toBe(3);
+    });
+
+    it('uses firstPartyHostnames if provided', async () => {
+      context.settings.budgets = [{
+        path: '/',
+        options: {
+          firstPartyHostnames: ['example.com', 'my-cdn.com'],
+        },
+      }];
+      const result = await ResourceSummaryAudit.audit(artifacts, context);
+      const thirdParty = result.details.items
+        .find(item => item.resourceType === 'third-party');
+      expect(thirdParty.size).toBe(120);
+      expect(thirdParty.requestCount).toBe(2);
+    });
   });
 
   describe('table ordering', () => {

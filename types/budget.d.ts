@@ -11,6 +11,8 @@ declare global {
      * More info: https://github.com/GoogleChrome/budget.json
      */
     export interface Budget {
+      /** Budget options */
+      options?: Budget.Options;
       /**
        * Indicates which pages a budget applies to. Uses the robots.txt format.
        * If it is not supplied, the budget applies to all pages.
@@ -22,7 +24,7 @@ declare global {
       /** Budgets based on resource size. */
       resourceSizes?: Array<Budget.ResourceBudget>;
       /** Budgets based on timing metrics. */
-      timings?: Array<Budget.TimingBudget> ;
+      timings?: Array<Budget.TimingBudget>;
     }
 
     module Budget {
@@ -38,6 +40,16 @@ declare global {
         metric: TimingMetric;
         /** Budget for timing measurement, in milliseconds. */
         budget: number;
+      }
+
+      export interface Options {
+        /**
+         * List of hostnames used to classify resources as 1st or 3rd party.
+         * Wildcards can optionally be used to match a hostname and all of its subdomains.
+         * For example e.g.: "*.news.gov.uk" matches both "news.gov.uk" and "en.news.gov.uk"
+         * If this property is not set, the root domain and all its subdomains are considered first party.
+         */
+        firstPartyHostnames?: Array<string>;
       }
 
       /** Supported timing metrics. */

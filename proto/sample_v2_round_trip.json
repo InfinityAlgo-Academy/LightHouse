@@ -2252,9 +2252,9 @@
                         "sizeOverBudget": 72955.0
                     },
                     {
-                        "countOverBudget": "7 requests",
+                        "countOverBudget": "6 requests",
                         "label": "Total",
-                        "requestCount": 17.0,
+                        "requestCount": 16.0,
                         "resourceType": "total",
                         "size": 160517.0,
                         "sizeOverBudget": 58117.0
@@ -2267,9 +2267,8 @@
                         "sizeOverBudget": 7520.0
                     },
                     {
-                        "countOverBudget": "1 request",
                         "label": "Third-party",
-                        "requestCount": 2.0,
+                        "requestCount": 1.0,
                         "resourceType": "third-party",
                         "size": 30174.0,
                         "sizeOverBudget": 4574.0
@@ -2284,7 +2283,7 @@
                     },
                     {
                         "label": "Image",
-                        "requestCount": 2.0,
+                        "requestCount": 1.0,
                         "resourceType": "image",
                         "size": 24741.0
                     },
@@ -2451,7 +2450,7 @@
                 "items": [
                     {
                         "label": "Total",
-                        "requestCount": 17.0,
+                        "requestCount": 16.0,
                         "resourceType": "total",
                         "size": 160517.0
                     },
@@ -2463,7 +2462,7 @@
                     },
                     {
                         "label": "Image",
-                        "requestCount": 2.0,
+                        "requestCount": 1.0,
                         "resourceType": "image",
                         "size": 24741.0
                     },
@@ -2499,14 +2498,14 @@
                     },
                     {
                         "label": "Third-party",
-                        "requestCount": 2.0,
+                        "requestCount": 1.0,
                         "resourceType": "third-party",
                         "size": 30174.0
                     }
                 ],
                 "type": "table"
             },
-            "displayValue": "17 requests \u2022 157 KB",
+            "displayValue": "16 requests \u2022 157 KB",
             "id": "resource-summary",
             "score": null,
             "scoreDisplayMode": "informative",

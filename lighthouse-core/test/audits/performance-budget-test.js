@@ -17,8 +17,9 @@ describe('Performance: Resource budgets audit', () => {
     artifacts = {
       devtoolsLogs: {
         defaultPass: networkRecordsToDevtoolsLog([
-          {url: 'http://example.com/file.html', resourceType: 'Document', transferSize: 30},
+          {url: 'http://example.com', resourceType: 'Document', transferSize: 30},
           {url: 'http://example.com/app.js', resourceType: 'Script', transferSize: 10},
+          {url: 'http://my-cdn.com/styles.css', resourceType: 'Stylesheet', transferSize: 25},
           {url: 'http://third-party.com/script.js', resourceType: 'Script', transferSize: 50},
           {url: 'http://third-party.com/file.jpg', resourceType: 'Image', transferSize: 70},
         ]),
@@ -100,6 +101,53 @@ describe('Performance: Resource budgets audit', () => {
       });
     });
 
+    describe('third-party resource identification', () => {
+      it('guesses root domain if firstPartyHostnames is not provided', async () => {
+        context.settings.budgets = [{
+          path: '/',
+          resourceSizes: [
+            {
+              resourceType: 'third-party',
+              budget: 0,
+            },
+          ],
+          resourceCounts: [
+            {
+              resourceType: 'third-party',
+              budget: 0,
+            },
+          ],
+        }];
+        const result = await ResourceBudgetAudit.audit(artifacts, context);
+        expect(result.details.items[0].size).toBe(145);
+        expect(result.details.items[0].requestCount).toBe(3);
+      });
+
+      it('uses firstPartyHostnames when provided', async () => {
+        context.settings.budgets = [{
+          path: '/',
+          options: {
+            firstPartyHostnames: ['example.com', 'my-cdn.com'],
+          },
+          resourceSizes: [
+            {
+              resourceType: 'third-party',
+              budget: 0,
+            },
+          ],
+          resourceCounts: [
+            {
+              resourceType: 'third-party',
+              budget: 0,
+            },
+          ],
+        }];
+        const result = await ResourceBudgetAudit.audit(artifacts, context);
+        expect(result.details.items[0].size).toBe(120);
+        expect(result.details.items[0].requestCount).toBe(2);
+      });
+    });
+
     it('only includes rows for resource types with budgets', async () => {
       const result = await ResourceBudgetAudit.audit(artifacts, context);
       expect(result.details.items).toHaveLength(2);
@@ -134,6 +182,15 @@ describe('Performance: Resource budgets audit', () => {
   describe('budget selection', () => {
     describe('with a matching budget', () => {
       it('applies the correct budget', async () => {
+        artifacts = {
+          devtoolsLogs: {
+            defaultPass: networkRecordsToDevtoolsLog([
+              {url: 'http://example.com/file.html', resourceType: 'Document', transferSize: 30},
+              {url: 'http://third-party.com/script.js', resourceType: 'Script', transferSize: 50},
+            ]),
+          },
+          URL: {requestedUrl: 'http://example.com/file.html', finalUrl: 'http://example.com/file.html'},
+        };
         context.settings.budgets = [{
           path: '/',
           resourceSizes: [

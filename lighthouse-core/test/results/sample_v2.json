@@ -1400,9 +1400,9 @@
           {
             "resourceType": "total",
             "label": "Total",
-            "requestCount": 17,
+            "requestCount": 16,
             "size": 160517,
-            "countOverBudget": "7 requests",
+            "countOverBudget": "6 requests",
             "sizeOverBudget": 58117
           },
           {
@@ -1415,9 +1415,8 @@
           {
             "resourceType": "third-party",
             "label": "Third-party",
-            "requestCount": 2,
+            "requestCount": 1,
             "size": 30174,
-            "countOverBudget": "1 request",
             "sizeOverBudget": 4574
           },
           {
@@ -1431,7 +1430,7 @@
           {
             "resourceType": "image",
             "label": "Image",
-            "requestCount": 2,
+            "requestCount": 1,
             "size": 24741
           },
           {
@@ -1521,7 +1520,7 @@
       "description": "To set budgets for the quantity and size of page resources, add a budget.json file. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).",
       "score": null,
       "scoreDisplayMode": "informative",
-      "displayValue": "17 requests • 157 KB",
+      "displayValue": "16 requests • 157 KB",
       "details": {
         "type": "table",
         "headings": [
@@ -1545,7 +1544,7 @@
           {
             "resourceType": "total",
             "label": "Total",
-            "requestCount": 17,
+            "requestCount": 16,
             "size": 160517
           },
           {
@@ -1557,7 +1556,7 @@
           {
             "resourceType": "image",
             "label": "Image",
-            "requestCount": 2,
+            "requestCount": 1,
             "size": 24741
           },
           {
@@ -1593,7 +1592,7 @@
           {
             "resourceType": "third-party",
             "label": "Third-party",
-            "requestCount": 2,
+            "requestCount": 1,
             "size": 30174
           }
         ]
@@ -6003,15 +6002,9 @@
         },
         {
           "values": {
-            "count": 7
+            "count": 6
           },
           "path": "audits[performance-budget].details.items[1].countOverBudget"
-        },
-        {
-          "values": {
-            "count": 1
-          },
-          "path": "audits[performance-budget].details.items[3].countOverBudget"
         },
         {
           "values": {
@@ -6079,7 +6072,7 @@
       "lighthouse-core/audits/resource-summary.js | displayValue": [
         {
           "values": {
-            "requestCount": 17,
+            "requestCount": 16,
             "byteCount": 160517
           },
           "path": "audits[resource-summary].displayValue"

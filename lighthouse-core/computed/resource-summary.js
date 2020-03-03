@@ -7,8 +7,10 @@
 
 const makeComputedArtifact = require('./computed-artifact.js');
 const NetworkRecords = require('./network-records.js');
-const MainResource = require('./main-resource.js');
 const URL = require('../lib/url-shim.js');
+const MainResource = require('./main-resource.js');
+const Budget = require('../config/budget.js');
+const Util = require('../report/html/renderer/util.js');
 
 /** @typedef {{count: number, size: number}} ResourceEntry */
 class ResourceSummary {
@@ -33,10 +35,10 @@ class ResourceSummary {
   /**
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @param {string} mainResourceURL
-   * @return {Record<LH.Budget.ResourceType,ResourceEntry>}
+   * @param {LH.Audit.Context} context
+   * @return {Record<LH.Budget.ResourceType, ResourceEntry>}
    */
-  static summarize(networkRecords, mainResourceURL) {
-    /** @type {Record<LH.Budget.ResourceType,ResourceEntry>} */
+  static summarize(networkRecords, mainResourceURL, context) {
     const resourceSummary = {
       'stylesheet': {count: 0, size: 0},
       'image': {count: 0, size: 0},
@@ -48,27 +50,51 @@ class ResourceSummary {
       'total': {count: 0, size: 0},
       'third-party': {count: 0, size: 0},
     };
+    const budget = Budget.getMatchingBudget(context.settings.budgets, mainResourceURL);
+    let firstPartyHosts = /** @type {Array<string>} */ ([]);
+    if (budget && budget.options && budget.options.firstPartyHostnames) {
+      firstPartyHosts = budget.options.firstPartyHostnames;
+    } else {
+      const rootDomain = Util.getRootDomain(mainResourceURL);
+      firstPartyHosts = [`*.${rootDomain}`];
+    }
 
-    for (const record of networkRecords) {
+    networkRecords.filter(record => {
+      // Ignore favicon.co
+      // Headless Chrome does not request /favicon.ico, so don't consider this request.
+      // Makes resource summary consistent across LR / other channels.
       const type = this.determineResourceType(record);
       if (type === 'other' && record.url.endsWith('/favicon.ico')) {
-        // Headless Chrome does not request /favicon.ico, so don't consider this request.
-        // Makes resource summary consistent across LR / other channels.
-        continue;
+        return false;
       }
-
+      // Ignore non-network protocols
+      const url = new URL(record.url);
+      const protocol = url.protocol.slice(0, -1); // Removes trailing ":" from protocol
+      if (URL.NON_NETWORK_PROTOCOLS.includes(protocol)) {
+        return false;
+      }
+      return true;
+    }).forEach((record) => {
+      const type = this.determineResourceType(record);
       resourceSummary[type].count++;
       resourceSummary[type].size += record.transferSize;
 
       resourceSummary.total.count++;
       resourceSummary.total.size += record.transferSize;
 
-      // Ignores subdomains: i.e. blog.example.com & example.com would match
-      if (!URL.rootDomainsMatch(record.url, mainResourceURL)) {
+      const isFirstParty = firstPartyHosts.some((hostExp) => {
+        const url = new URL(record.url);
+        if (hostExp.startsWith('*.')) {
+          return url.hostname.endsWith(hostExp.slice(2));
+        }
+        return url.hostname === hostExp;
+      });
+
+      if (!isFirstParty) {
         resourceSummary['third-party'].count++;
         resourceSummary['third-party'].size += record.transferSize;
       }
-    }
+    });
     return resourceSummary;
   }
 
@@ -82,8 +108,7 @@ class ResourceSummary {
       NetworkRecords.request(data.devtoolsLog, context),
       MainResource.request(data, context),
     ]);
-
-    return ResourceSummary.summarize(networkRecords, mainResource.url);
+    return ResourceSummary.summarize(networkRecords, mainResource.url, context);
   }
 }
 

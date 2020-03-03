@@ -141,7 +141,8 @@ class ResourceBudget extends Audit {
     ];
 
     return {
-      details: Audit.makeTableDetails(headers, this.tableItems(budget, summary)),
+      details: Audit.makeTableDetails(headers,
+        this.tableItems(budget, summary)),
       score: 1,
     };
   }

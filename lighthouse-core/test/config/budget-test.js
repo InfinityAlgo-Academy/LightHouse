@@ -14,6 +14,9 @@ describe('Budget', () => {
   beforeEach(() => {
     budgets = [
       {
+        options: {
+          firstPartyHostnames: ['example.com'],
+        },
         resourceSizes: [
           {
             resourceType: 'script',
@@ -60,6 +63,9 @@ describe('Budget', () => {
   it('initializes correctly', () => {
     const result = Budget.initializeBudget(budgets);
     assert.equal(result.length, 2);
+
+    // Sets options correctly
+    assert.equal(result[0].options.firstPartyHostnames[0], 'example.com');
 
     // Missing paths are not overwritten
     assert.equal(result[0].path, undefined);
@@ -130,6 +136,67 @@ describe('Budget', () => {
       budgets[1].timings = false;
       assert.throws(_ => Budget.initializeBudget(budgets),
         /^Error: Invalid timings entry in budget at index 1$/);
+    });
+
+    it('throws when budget contains an invalid options entry', () => {
+      budgets[0].options = 'Turtles';
+      assert.throws(_ => Budget.initializeBudget(budgets),
+        /^Error: Invalid options property in budget at index 0$/);
+    });
+  });
+
+  describe('firstPartyHostname validation', () => {
+    it('with valid inputs', () => {
+      const validHostnames = [
+        'yolo.com',
+        'so.many.subdomains.org',
+        '127.0.0.1',
+        'localhost',
+        '*.example.gov.uk',
+        '*.example.com',
+      ];
+      budgets[0].options = {firstPartyHostnames: validHostnames};
+
+      const result = Budget.initializeBudget(budgets);
+      expect(result[0].options.firstPartyHostnames).toEqual(validHostnames);
+    });
+
+    it('validates that input does not include a protocol', () => {
+      budgets[0].options = {firstPartyHostnames: ['https://yolo.com']};
+      assert.throws(_ => Budget.initializeBudget(budgets),
+        /https:\/\/yolo.com is not a valid hostname./);
+    });
+
+    it('validates that input does not include ports', () => {
+      budgets[0].options = {firstPartyHostnames: ['yolo.com:8080']};
+      assert.throws(_ => Budget.initializeBudget(budgets),
+        /yolo.com:8080 is not a valid hostname./);
+    });
+
+    it('validates that input does not include path', () => {
+      budgets[0].options = {firstPartyHostnames: ['dogs.com/fido']};
+      assert.throws(_ => Budget.initializeBudget(budgets),
+        /dogs.com\/fido is not a valid hostname./);
+    });
+
+    it('validates that input does not include a trailing slash', () => {
+      budgets[0].options = {firstPartyHostnames: ['dogs.com/']};
+      assert.throws(_ => Budget.initializeBudget(budgets),
+        /dogs.com\/ is not a valid hostname./);
+    });
+
+    describe('wild card validation', () => {
+      it('validates that a wildcard is only used once', () => {
+        budgets[0].options = {firstPartyHostnames: ['*.*.com']};
+        assert.throws(_ => Budget.initializeBudget(budgets),
+          /\*.\*.com is not a valid hostname./);
+      });
+
+      it('validates that a wildcard is only used at the start of the hostname', () => {
+        budgets[0].options = {firstPartyHostnames: ['cats.*.com']};
+        assert.throws(_ => Budget.initializeBudget(budgets),
+          /cats.\*.com is not a valid hostname./);
+      });
     });
   });
 
