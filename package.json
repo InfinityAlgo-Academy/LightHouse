@@ -1,4 +1,4 @@
-lighthouse-core/report/html/templates.html{
+{
   "name": "lighthouse",
   "version": "5.6.0",
   "description": "Lighthouse",

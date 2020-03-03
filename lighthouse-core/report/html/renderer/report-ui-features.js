@@ -25,8 +25,6 @@
 
 /* globals getFilenamePrefix Util */
 
-/** @typedef {import('../../../lib/i18n/locales').LhlMessages} LhlMessages */
-
 /**
  * @param {HTMLTableElement} tableEl
  * @return {Array<HTMLTableRowElement>}
@@ -146,18 +144,6 @@ class ReportUIFeatures {
       const i18nAttr = /** @type {keyof LH.I18NRendererStrings} */ (node.getAttribute('data-i18n'));
       node.textContent = Util.i18n.strings[i18nAttr];
     }
-  }
-
-  /**
-   * @param {{i18nModuleSrc: string, fetchData: (localeModuleName: string) => Promise<LhlMessages|undefined>}} options
-   */
-  initSwapLocale(options) {
-    this._swapLocaleOptions = options;
-    this._enableSwapLocale();
-  }
-
-  _enableSwapLocale() {
-    this._dom.find('a[data-action="swap-locale"]', this._document).removeAttribute('disabled');
   }
 
   /**
@@ -411,7 +397,7 @@ class ReportUIFeatures {
    * Handler for tool button.
    * @param {Event} e
    */
-  async onDropDownMenuClick(e) {
+  onDropDownMenuClick(e) {
     e.preventDefault();
 
     const el = /** @type {?Element} */ (e.target);
@@ -461,51 +447,9 @@ class ReportUIFeatures {
         this._toggleDarkTheme();
         break;
       }
-      case 'swap-locale': {
-        if (!this._swapLocaleOptions) throw new Error('must call .initSwapLocale first');
-
-        // TODO: esmodules would be nice here...
-        // @ts-ignore
-        if (!window.Lighthouse || !window.Lighthouse.i18n) {
-          const script = this._document.createElement('script');
-          script.src = this._swapLocaleOptions.i18nModuleSrc;
-          this._document.body.appendChild(script);
-          await new Promise(r =>
-            this._document.addEventListener('lighthouseModuleLoaded-i18n', r, {once: true}));
-        }
-
-        // Waiting for UI :)
-        const randomLocales = ['es', 'fr', 'vi', 'en-US'];
-        window.__locale_index = window.__locale_index || 0;
-        const locale = randomLocales[window.__locale_index++ % randomLocales.length];
-
-        // TODO: locales.js maps a locale code to a locale module. Need that same mapping,
-        // but for locale code to locale module _name_, so that we can fetch w/ that same
-        // name here.
-        const localeModuleName = locale;
-        const lhlMessages = await this._swapLocaleOptions.fetchData(localeModuleName);
-        if (!lhlMessages) throw new Error(`could not fetch data for locale: ${locale}`);
-
-        window.Lighthouse.i18n.registerLocaleData(locale, lhlMessages);
-        const newLhr = window.Lighthouse.i18n.swapLocale(this.json, locale).lhr;
-        this._refresh(newLhr);
-        break;
-      }
     }
 
     this._dropDown.close();
-  }
-
-  /**
-   * @param {LH.Result=} newLhr
-   */
-  _refresh(newLhr) {
-    this._document.dispatchEvent(new CustomEvent(ReportUIFeatures.Events.refreshLighthouseReport, {
-      detail: {
-        features: this,
-        newLhr,
-      },
-    }));
   }
 
   _print() {
@@ -890,10 +834,6 @@ class DropDown {
     return /** @type {HTMLElement} */ (this._getNextSelectableNode(nodes, startEl));
   }
 }
-
-ReportUIFeatures.Events = {
-  refreshLighthouseReport: 'refreshLighthouseReport',
-};
 
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = ReportUIFeatures;
