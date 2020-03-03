@@ -82,6 +82,12 @@ function formatBytes(bytes) {
   return bytes + ' B';
 }
 
+function format(value, unit) {
+  if (unit === 'bytes') return formatBytes(value);
+  if (unit === 'time') return `${value} ms`;
+  return `${value} ${unit}`;
+}
+
 /**
  * Guaranteed context.querySelector. Always returns an element or throws if
  * nothing matches query.
@@ -222,22 +228,68 @@ class TreemapViewer {
    * @param {any} node
    */
   setTitle(node) {
+    const total = this.currentRootNode[this.mode.partitionBy];
+    const sections = [
+      {
+        calculate: node => elide(node.originalId, 60),
+      },
+      {
+        label: this.mode.partitionBy,
+        calculate: node => {
+          const unit = this.mode.partitionBy === 'executionTime' ? 'time' : 'bytes';
+          const value = node[this.mode.partitionBy];
+          return `${format(value, unit)} (${Math.round(value / total * 100)}%)`;
+        },
+      },
+    ];
+
+    if (this.mode.colorBy !== 'default') {
+      sections.push({
+        label: this.mode.colorBy,
+        calculate: node => {
+          const unit = this.mode.colorBy === 'executionTime' ? 'time' : 'bytes';
+          const value = node[this.mode.colorBy];
+          return format(value, unit);
+        },
+      });
+    }
+
     dfs(node, node => {
-      const {bytes, wastedBytes, executionTime} = node;
+      // const {bytes, wastedBytes, executionTime} = node;
       // TODO: this is from pauls code
       // node.id += ` • ${Number.bytesToString(bytes)} • ${Common.UIString('%.1f\xa0%%', bytes / total * 100)}`;
-      //                                                                    ^^ what this?
 
-      if (this.mode.partitionBy === 'bytes') {
-        const total = this.currentRootNode.bytes;
-        node.id = `${elide(node.originalId, 60)} • ${formatBytes(bytes)} • ${Math.round(bytes / total * 100)}%`;
-      } else if (this.mode.partitionBy === 'wastedBytes') {
-        node.id = `${elide(node.originalId, 60)} • ${formatBytes(wastedBytes)} wasted • ${Math.round((1 - wastedBytes / bytes) * 100)}% usage`;
-      } else if (this.mode.partitionBy === 'executionTime' && executionTime !== undefined) {
-        node.id = `${elide(node.originalId, 60)} • ${Math.round(executionTime)} ms`;
-      } else {
-        node.id = elide(node.originalId, 60);
-      }
+      node.id = sections.map(section => {
+        // Only print the label for the root node.
+        if (node === this.currentRootNode && section.label) {
+          return `${section.label}: ${section.calculate(node)}`;
+        } else {
+          return section.calculate(node);
+        }
+      }).join(' • ');
+
+      // const title = elide(node.originalId, 60);
+      // const value = node[this.mode.partitionBy];
+      // const unit = this.mode.partitionBy === 'executionTime' ? 'time' : 'bytes';
+      // // node.id = `${elide(node.originalId, 60)} • ${formatBytes(bytes)} • ${Math.round(bytes / total * 100)}%`;
+      // node.id = `${title} • ${format(value, unit)} ${this.mode.partitionBy} (${Math.round(value / total * 100)}%)`;
+
+      // if (this.mode.colorBy !== 'default' && node[this.mode.colorBy] !== undefined) {
+      //   node.id += ` • ${format(node[this.mode.colorBy], this.mode.colorBy === 'executionTime' ? 'time' : 'bytes')} ${this.mode.colorBy}`;
+      // }
+
+
+      // if (this.mode.partitionBy === 'bytes') {
+      //   const total = this.currentRootNode.bytes;
+      //   node.id = `${elide(node.originalId, 60)} • ${formatBytes(bytes)} • ${Math.round(bytes / total * 100)}%`;
+      // } else if (this.mode.partitionBy === 'wastedBytes') {
+      //   // node.id = `${elide(node.originalId, 60)} • ${formatBytes(wastedBytes)} wasted • ${Math.round((1 - wastedBytes / bytes) * 100)}% usage`;
+      //   node.id = `${elide(node.originalId, 60)} • ${formatBytes(wastedBytes)} wasted • ${Math.round(wastedBytes / this.currentRootNode.wastedBytes * 100)}%`;
+      // } else if (this.mode.partitionBy === 'executionTime' && executionTime !== undefined) {
+      //   node.id = `${elide(node.originalId, 60)} • ${Math.round(executionTime)} ms • ${Math.round(executionTime / this.currentRootNode.executionTime * 100)}%`;
+      // } else {
+      //   node.id = elide(node.originalId, 60);
+      // }
     });
   }
 
