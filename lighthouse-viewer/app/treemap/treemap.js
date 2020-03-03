@@ -373,33 +373,41 @@ function createHeader(options) {
  * @property {RootNode[]} rootNodes
  */
 
+/**
+ * @param {Options} options
+ */
+function init(options) {
+  createHeader(options);
+  treemapViewer = new TreemapViewer(options.documentUrl, options.rootNodes, find('main'));
+  treemapViewer.show({
+    rootNodeId: options.id,
+    partitionBy: 'bytes',
+    colorBy: 'default',
+  });
+
+  // For debugging.
+  window.__treemapViewer = treemapViewer;
+
+  if (self.opener && !self.opener.closed) {
+    self.opener.postMessage({rendered: true}, '*');
+  }
+  if (window.ga) {
+    // TODO what are these?
+    // window.ga('send', 'event', 'treemap', 'open in viewer');
+    window.ga('send', 'event', 'report', 'open in viewer');
+  }
+}
+
 function main() {
   window.addEventListener('message', e => {
     if (e.source !== self.opener) return;
     const options = e.data;
     const {documentUrl, id, rootNodes} = options;
     if (!rootNodes || !documentUrl || !id) return;
-
-    createHeader(options);
-    treemapViewer = new TreemapViewer(documentUrl, rootNodes, find('main'));
-    treemapViewer.show({
-      rootNodeId: id,
-      partitionBy: 'bytes',
-      colorBy: 'default',
-    });
-
-    // For debugging.
-    window.__treemapViewer = treemapViewer;
-
-    if (self.opener && !self.opener.closed) {
-      self.opener.postMessage({rendered: true}, '*');
-    }
-    if (window.ga) {
-      // TODO what are these?
-      // window.ga('send', 'event', 'treemap', 'open in viewer');
-      window.ga('send', 'event', 'report', 'open in viewer');
-    }
+    init(options);
+    window.__TREEMAP_OPTIONS = options;
   });
+  if (window.__TREEMAP_OPTIONS) init(window.__TREEMAP_OPTIONS);
 
   // If the page was opened as a popup, tell the opening window we're ready.
   if (self.opener && !self.opener.closed) {
