@@ -52,16 +52,16 @@
     "foundation-sites":[
       {"id":"npm:foundation-sites:20170802","severity":"medium","semver":{"vulnerable":["<6.0.0"]}},
       {"id":"npm:foundation-sites:20150619","severity":"medium","semver":{"vulnerable":["<5.5.3"]}},
-      {"id":"npm:foundation-sites:20120717","severity":"medium","semver":{"vulnerable":["<3.0.6 >=3.0.0"]}}
+      {"id":"npm:foundation-sites:20120717","severity":"medium","semver":{"vulnerable":[">=3.0.0 <3.0.6"]}}
     ],
     "google-closure-library":[
       {"id":"SNYK-JS-GOOGLECLOSURELIBRARY-174519","severity":"medium","semver":{"vulnerable":[">=20190121.0.0 <20190301.0.0"]}}
     ],
     "handlebars":[
-      {"id":"SNYK-JS-HANDLEBARS-534988","severity":"high","semver":{"vulnerable":["<4.5.3"]}},
-      {"id":"SNYK-JS-HANDLEBARS-534478","severity":"high","semver":{"vulnerable":["<4.5.3"]}},
+      {"id":"SNYK-JS-HANDLEBARS-534988","severity":"high","semver":{"vulnerable":[">=4.0.0 <4.5.3","<3.0.8"]}},
+      {"id":"SNYK-JS-HANDLEBARS-534478","severity":"high","semver":{"vulnerable":[">=4.0.0 <4.5.3","<3.0.8"]}},
       {"id":"SNYK-JS-HANDLEBARS-480388","severity":"high","semver":{"vulnerable":[">=4.0.0 <4.4.5"]}},
-      {"id":"SNYK-JS-HANDLEBARS-469063","severity":"high","semver":{"vulnerable":["<4.3.0"]}},
+      {"id":"SNYK-JS-HANDLEBARS-469063","severity":"high","semver":{"vulnerable":[">=4.0.0 <4.3.0","<3.8.0"]}},
       {"id":"SNYK-JS-HANDLEBARS-174183","severity":"high","semver":{"vulnerable":[">=3.0.0 <3.0.7",">=4.1.0 <4.1.2",">=4.0.0 <4.0.14"]}},
       {"id":"SNYK-JS-HANDLEBARS-173692","severity":"high","semver":{"vulnerable":["<4.0.14",">=4.1.0 <4.1.2"]}},
       {"id":"npm:handlebars:20151207","severity":"medium","semver":{"vulnerable":["<4.0.0"]}},
