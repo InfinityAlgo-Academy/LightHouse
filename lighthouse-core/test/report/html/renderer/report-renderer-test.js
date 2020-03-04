@@ -278,14 +278,17 @@ describe('ReportRenderer', () => {
     });
 
     it('renders without axe violations', (done) => {
-      const container = renderer._dom._document.body;
+      const container = renderer._dom._document.createElement('main');
       const output = renderer.renderReport(sampleResults, container);
+      renderer._dom._document.body.appendChild(container);
 
       const config = {
         rules: {
           // Reports may have duplicate ids
           // https://github.com/GoogleChrome/lighthouse/issues/9432
           'duplicate-id': {enabled: false},
+          'duplicate-id-aria': {enabled: false},
+          'landmark-no-duplicate-contentinfo': {enabled: false},
           // The following rules are disable for axe-core + jsdom compatibility
           // https://github.com/dequelabs/axe-core/tree/b573b1c1/doc/examples/jest_react#to-run-the-example
           'color-contrast': {enabled: false},

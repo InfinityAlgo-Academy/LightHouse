@@ -35,6 +35,7 @@ function runA11yChecks() {
       'tabindex': {enabled: true},
       'accesskeys': {enabled: true},
       'heading-order': {enabled: true},
+      'meta-viewport': {enabled: true},
       'duplicate-id': {enabled: false},
       'table-fake-caption': {enabled: false},
       'td-has-header': {enabled: false},
@@ -44,6 +45,9 @@ function runA11yChecks() {
       'html-xml-lang-mismatch': {enabled: false},
       'blink': {enabled: false},
       'server-side-image-map': {enabled: false},
+      'identical-links-same-purpose': {enabled: false},
+      'no-autoplay-audio': {enabled: false},
+      'svg-img-alt': {enabled: false},
     },
     // @ts-ignore
   }).then(axeResult => {
