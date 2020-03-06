@@ -413,6 +413,12 @@
   "lighthouse-core/audits/bootup-time.js | title": {
     "message": "Ĵáv̂áŜćr̂íp̂t́ êx́êćût́îón̂ t́îḿê"
   },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | description": {
+    "message": "R̂ém̂óv̂é l̂ár̂ǵê, d́ûṕl̂íĉát̂é Ĵáv̂áŜćr̂íp̂t́ m̂ód̂úl̂éŝ f́r̂óm̂ b́ûńd̂ĺêś t̂ó r̂éd̂úĉé ûńn̂éĉéŝśâŕŷ b́ŷt́êś ĉón̂śûḿêd́ b̂ý n̂ét̂ẃôŕk̂ áĉt́îv́ît́ŷ. "
+  },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | title": {
+    "message": "R̂ém̂óv̂é d̂úp̂ĺîćât́ê ḿôd́ûĺêś îń Ĵáv̂áŜćr̂íp̂t́ b̂ún̂d́l̂éŝ"
+  },
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | description": {
     "message": "L̂ár̂ǵê ǴÎF́ŝ ár̂é îńêf́f̂íĉíêńt̂ f́ôŕ d̂él̂ív̂ér̂ín̂ǵ âńîḿât́êd́ ĉón̂t́êńt̂. Ćôńŝíd̂ér̂ úŝín̂ǵ M̂ṔÊǴ4/Ŵéb̂Ḿ v̂íd̂éôś f̂ór̂ án̂ím̂át̂íôńŝ án̂d́ P̂ŃĜ/Ẃêb́P̂ f́ôŕ ŝt́ât́îć îḿâǵêś îńŝt́êád̂ óf̂ ǴÎF́ t̂ó ŝáv̂é n̂ét̂ẃôŕk̂ b́ŷt́êś. [L̂éâŕn̂ ḿôŕê](https://web.dev/efficient-animated-content)"
   },
@@ -1423,6 +1429,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Ŝíẑé"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnSource": {
+    "message": "Ŝóûŕĉé"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "T̂ím̂é Ŝṕêńt̂"

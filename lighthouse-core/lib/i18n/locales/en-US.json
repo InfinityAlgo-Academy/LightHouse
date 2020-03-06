@@ -413,6 +413,12 @@
   "lighthouse-core/audits/bootup-time.js | title": {
     "message": "JavaScript execution time"
   },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | description": {
+    "message": "Remove large, duplicate JavaScript modules from bundles to reduce unnecessary bytes consumed by network activity. "
+  },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | title": {
+    "message": "Remove duplicate modules in JavaScript bundles"
+  },
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | description": {
     "message": "Large GIFs are inefficient for delivering animated content. Consider using MPEG4/WebM videos for animations and PNG/WebP for static images instead of GIF to save network bytes. [Learn more](https://web.dev/efficient-animated-content)"
   },
@@ -1423,6 +1429,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Size"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnSource": {
+    "message": "Source"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Time Spent"
