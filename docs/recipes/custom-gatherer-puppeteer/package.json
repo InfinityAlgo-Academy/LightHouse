@@ -1,5 +1,5 @@
 {
-  "name": "custom-lighthouse-recipe",
+  "name": "custom-lighthouse-pptr-recipe",
   "private": true,
   "scripts": {
     "test": "sh test.sh"
