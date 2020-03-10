@@ -30,6 +30,25 @@ const COLOR_HUES = [
 });
 
 /**
+ * @template T
+ * @param {T[]} items
+ * @return {T|null}
+ */
+function stableHasher(items) {
+  // Clone.
+  items = [...items];
+
+  const assignedItems = {};
+  return hash => {
+    if (hash in assignedItems) return assignedItems[hash];
+    if (items.length === 0) return null;
+    const [assignedColor] = items.splice(hash % items.length, 1);
+    assignedItems[hash] = assignedColor;
+    return assignedColor;
+  };
+}
+
+/**
  * Brilliant code by akinuri
  * https://stackoverflow.com/a/39147465
  * @param {number} r
@@ -182,6 +201,7 @@ class TreemapViewer {
     this.rootNodes = rootNodes;
     this.el = el;
     this.currentRootNode = null;
+    this.getHue = stableHasher(COLOR_HUES);
   }
 
   /**
@@ -298,9 +318,11 @@ class TreemapViewer {
       if (!node.dom) return;
 
       // Choose color based on id hash so colors are stable across runs.
-      const hue = COLOR_HUES[node.idHash % COLOR_HUES.length || 0];
+      const hue = this.getHue(node.idHash);
+      if (hue === null) return;
+
       const sat = 60;
-      let lum = 40;
+      let lum = 90;
       if (this.mode.colorBy === 'wastedBytes') {
         lum = 25 + (85 - 25) * (1 - (node.wastedBytes / node.bytes)); // 25 to 85.
       } else if (this.mode.colorBy === 'executionTime') {
