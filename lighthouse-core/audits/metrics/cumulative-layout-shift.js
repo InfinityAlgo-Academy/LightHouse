@@ -16,7 +16,8 @@ const UIStrings = {
   description: 'Cumulative Layout Shift is the sum of all layout shifts that occurred during a ' +
       'page\'s load. A layout shift is any movement an element makes once it is visible to the ' +
       'user. All layout shift is recorded, scored, and then aggregated into a cumulative score ' +
-      'between 0 and 1; 0 being a perfectly stable page, and >=0.5 being a highly shifting page.',
+      'between 0 and 1; 0 being a perfectly stable page, and >=0.5 being a highly shifting page. ' +
+      '[Learn more](https://web.dev/cls).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
