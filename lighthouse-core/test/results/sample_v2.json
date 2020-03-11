@@ -81,16 +81,6 @@
       "numericUnit": "millisecond",
       "displayValue": "4.0 s"
     },
-    "first-meaningful-paint": {
-      "id": "first-meaningful-paint",
-      "title": "First Meaningful Paint",
-      "description": "First Meaningful Paint measures when the primary content of a page is visible. [Learn more](https://web.dev/first-meaningful-paint).",
-      "score": 0.51,
-      "scoreDisplayMode": "numeric",
-      "numericValue": 3969.136,
-      "numericUnit": "millisecond",
-      "displayValue": "4.0 s"
-    },
     "largest-contentful-paint": {
       "id": "largest-contentful-paint",
       "title": "Largest Contentful Paint",
@@ -100,6 +90,16 @@
       "numericValue": 4927.278,
       "numericUnit": "millisecond",
       "displayValue": "4.9 s"
+    },
+    "first-meaningful-paint": {
+      "id": "first-meaningful-paint",
+      "title": "First Meaningful Paint",
+      "description": "First Meaningful Paint measures when the primary content of a page is visible. [Learn more](https://web.dev/first-meaningful-paint).",
+      "score": 0.51,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 3969.136,
+      "numericUnit": "millisecond",
+      "displayValue": "4.0 s"
     },
     "load-fast-enough-for-pwa": {
       "id": "load-fast-enough-for-pwa",
@@ -230,7 +230,7 @@
       "id": "cumulative-layout-shift",
       "title": "Cumulative Layout Shift",
       "description": "Cumulative Layout Shift is the sum of all layout shifts that occurred during a page's load. A layout shift is any movement an element makes once it is visible to the user. All layout shift is recorded, scored, and then aggregated into a cumulative score between 0 and 1; 0 being a perfectly stable page, and >=0.5 being a highly shifting page. [Learn more](https://web.dev/cls).",
-      "score": 0.48,
+      "score": 0.21,
       "scoreDisplayMode": "numeric",
       "numericValue": 0.42,
       "numericUnit": "unitless",
@@ -3639,49 +3639,48 @@
       "auditRefs": [
         {
           "id": "first-contentful-paint",
-          "weight": 3,
-          "group": "metrics"
-        },
-        {
-          "id": "first-meaningful-paint",
-          "weight": 1,
-          "group": "metrics"
-        },
-        {
-          "id": "largest-contentful-paint",
-          "weight": 0,
+          "weight": 15,
           "group": "metrics"
         },
         {
           "id": "speed-index",
-          "weight": 4,
+          "weight": 15,
+          "group": "metrics"
+        },
+        {
+          "id": "largest-contentful-paint",
+          "weight": 25,
           "group": "metrics"
         },
         {
           "id": "interactive",
+          "weight": 15,
+          "group": "metrics"
+        },
+        {
+          "id": "total-blocking-time",
+          "weight": 25,
+          "group": "metrics"
+        },
+        {
+          "id": "cumulative-layout-shift",
           "weight": 5,
           "group": "metrics"
         },
         {
           "id": "first-cpu-idle",
-          "weight": 2,
-          "group": "metrics"
+          "weight": 0
         },
         {
           "id": "max-potential-fid",
-          "weight": 0,
-          "group": "metrics"
+          "weight": 0
         },
         {
-          "id": "cumulative-layout-shift",
+          "id": "first-meaningful-paint",
           "weight": 0
         },
         {
           "id": "estimated-input-latency",
-          "weight": 0
-        },
-        {
-          "id": "total-blocking-time",
           "weight": 0
         },
         {
@@ -3853,7 +3852,7 @@
         }
       ],
       "id": "performance",
-      "score": 0.69
+      "score": 0.64
     },
     "accessibility": {
       "title": "Accessibility",
@@ -4525,18 +4524,6 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:first-meaningful-paint",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:FirstMeaningfulPaint",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:audit:largest-contentful-paint",
         "duration": 100,
         "entryType": "measure"
@@ -4544,6 +4531,18 @@
       {
         "startTime": 0,
         "name": "lh:computed:LargestContentfulPaint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:first-meaningful-paint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:FirstMeaningfulPaint",
         "duration": 100,
         "entryType": "measure"
       },
@@ -5632,15 +5631,15 @@
         },
         {
           "values": {
-            "timeInMs": 3969.136
-          },
-          "path": "audits[first-meaningful-paint].displayValue"
-        },
-        {
-          "values": {
             "timeInMs": 4927.278
           },
           "path": "audits[largest-contentful-paint].displayValue"
+        },
+        {
+          "values": {
+            "timeInMs": 3969.136
+          },
+          "path": "audits[first-meaningful-paint].displayValue"
         },
         {
           "values": {
@@ -5673,18 +5672,18 @@
           "path": "audits[bootup-time].displayValue"
         }
       ],
+      "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": [
+        "audits[largest-contentful-paint].title"
+      ],
+      "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": [
+        "audits[largest-contentful-paint].description"
+      ],
       "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": [
         "audits[first-meaningful-paint].title",
         "audits[timing-budget].details.items[2].label"
       ],
       "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": [
         "audits[first-meaningful-paint].description"
-      ],
-      "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": [
-        "audits[largest-contentful-paint].title"
-      ],
-      "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": [
-        "audits[largest-contentful-paint].description"
       ],
       "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": [
         "audits[load-fast-enough-for-pwa].title"

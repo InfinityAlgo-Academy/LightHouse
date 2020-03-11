@@ -86,7 +86,7 @@ describe('Config', () => {
   it('uses the default config when no config is provided', () => {
     const config = new Config();
     assert.deepStrictEqual(config.categories, origConfig.categories);
-    assert.equal(config.audits.length, origConfig.audits.length);
+    assert.deepStrictEqual(config.audits.map(a => a.path), origConfig.audits);
   });
 
   it('throws when a passName is used twice', () => {

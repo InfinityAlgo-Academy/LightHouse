@@ -447,7 +447,7 @@
             "id": "cumulative-layout-shift",
             "numericUnit": "unitless",
             "numericValue": 0.42,
-            "score": 0.48,
+            "score": 0.21,
             "scoreDisplayMode": "numeric",
             "title": "Cumulative Layout Shift"
         },
@@ -3798,48 +3798,47 @@
                 {
                     "group": "metrics",
                     "id": "first-contentful-paint",
-                    "weight": 3.0
-                },
-                {
-                    "group": "metrics",
-                    "id": "first-meaningful-paint",
-                    "weight": 1.0
-                },
-                {
-                    "group": "metrics",
-                    "id": "largest-contentful-paint",
-                    "weight": 0.0
+                    "weight": 15.0
                 },
                 {
                     "group": "metrics",
                     "id": "speed-index",
-                    "weight": 4.0
+                    "weight": 15.0
+                },
+                {
+                    "group": "metrics",
+                    "id": "largest-contentful-paint",
+                    "weight": 25.0
                 },
                 {
                     "group": "metrics",
                     "id": "interactive",
+                    "weight": 15.0
+                },
+                {
+                    "group": "metrics",
+                    "id": "total-blocking-time",
+                    "weight": 25.0
+                },
+                {
+                    "group": "metrics",
+                    "id": "cumulative-layout-shift",
                     "weight": 5.0
                 },
                 {
-                    "group": "metrics",
                     "id": "first-cpu-idle",
-                    "weight": 2.0
+                    "weight": 0.0
                 },
                 {
-                    "group": "metrics",
                     "id": "max-potential-fid",
                     "weight": 0.0
                 },
                 {
-                    "id": "cumulative-layout-shift",
+                    "id": "first-meaningful-paint",
                     "weight": 0.0
                 },
                 {
                     "id": "estimated-input-latency",
-                    "weight": 0.0
-                },
-                {
-                    "id": "total-blocking-time",
                     "weight": 0.0
                 },
                 {
@@ -4011,7 +4010,7 @@
                 }
             ],
             "id": "performance",
-            "score": 0.69,
+            "score": 0.64,
             "title": "Performance"
         },
         "pwa": {
@@ -4441,18 +4440,6 @@
             {
                 "duration": 100.0,
                 "entryType": "measure",
-                "name": "lh:audit:first-meaningful-paint",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:computed:FirstMeaningfulPaint",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
                 "name": "lh:audit:largest-contentful-paint",
                 "startTime": 0.0
             },
@@ -4460,6 +4447,18 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:computed:LargestContentfulPaint",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:audit:first-meaningful-paint",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:computed:FirstMeaningfulPaint",
                 "startTime": 0.0
             },
             {

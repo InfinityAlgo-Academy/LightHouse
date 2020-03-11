@@ -25,10 +25,10 @@ Object {
       "path": "metrics/first-contentful-paint",
     },
     Object {
-      "path": "metrics/first-meaningful-paint",
+      "path": "metrics/largest-contentful-paint",
     },
     Object {
-      "path": "metrics/largest-contentful-paint",
+      "path": "metrics/first-meaningful-paint",
     },
     Object {
       "path": "load-fast-enough-for-pwa",
@@ -756,48 +756,47 @@ Object {
         Object {
           "group": "metrics",
           "id": "first-contentful-paint",
-          "weight": 3,
-        },
-        Object {
-          "group": "metrics",
-          "id": "first-meaningful-paint",
-          "weight": 1,
-        },
-        Object {
-          "group": "metrics",
-          "id": "largest-contentful-paint",
-          "weight": 0,
+          "weight": 15,
         },
         Object {
           "group": "metrics",
           "id": "speed-index",
-          "weight": 4,
+          "weight": 15,
+        },
+        Object {
+          "group": "metrics",
+          "id": "largest-contentful-paint",
+          "weight": 25,
         },
         Object {
           "group": "metrics",
           "id": "interactive",
+          "weight": 15,
+        },
+        Object {
+          "group": "metrics",
+          "id": "total-blocking-time",
+          "weight": 25,
+        },
+        Object {
+          "group": "metrics",
+          "id": "cumulative-layout-shift",
           "weight": 5,
         },
         Object {
-          "group": "metrics",
           "id": "first-cpu-idle",
-          "weight": 2,
+          "weight": 0,
         },
         Object {
-          "group": "metrics",
           "id": "max-potential-fid",
           "weight": 0,
         },
         Object {
-          "id": "cumulative-layout-shift",
+          "id": "first-meaningful-paint",
           "weight": 0,
         },
         Object {
           "id": "estimated-input-latency",
-          "weight": 0,
-        },
-        Object {
-          "id": "total-blocking-time",
           "weight": 0,
         },
         Object {
