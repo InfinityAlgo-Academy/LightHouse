@@ -4313,7 +4313,7 @@
             "warningHeader": "Warnings: "
         }
     },
-    "lighthouseVersion": "5.6.0",
+    "lighthouseVersion": "6.0.0-beta.0",
     "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
     "runWarnings": [],
     "stackPacks": [
