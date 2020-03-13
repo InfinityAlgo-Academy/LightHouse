@@ -65,7 +65,7 @@ class CategoryRenderer {
    * Populate an DOM tree with audit details. Used by renderAudit and renderOpportunity
    * @param {LH.ReportResult.AuditRef} audit
    * @param {DocumentFragment} tmpl
-   * @return {Element}
+   * @return {!Element}
    */
   populateAuditValues(audit, tmpl) {
     const strings = Util.i18n.strings;
@@ -156,7 +156,7 @@ class CategoryRenderer {
    * @param {Element} element DOM node to populate with values.
    * @param {number|null} score
    * @param {string} scoreDisplayMode
-   * @return {Element}
+   * @return {!Element}
    */
   _setRatingClass(element, score, scoreDisplayMode) {
     const rating = Util.calculateRating(score, scoreDisplayMode);
@@ -277,7 +277,7 @@ class CategoryRenderer {
    * in a collapsed state.
    * @param {Exclude<TopLevelClumpId, 'failed'>} clumpId
    * @param {{auditRefs: Array<LH.ReportResult.AuditRef>, description?: string}} clumpOpts
-   * @return {Element}
+   * @return {!Element}
    */
   renderClump(clumpId, {auditRefs, description}) {
     const clumpTmpl = this.dom.cloneTemplate('#tmpl-lh-clump', this.templateContext);

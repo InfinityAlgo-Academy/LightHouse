@@ -336,7 +336,7 @@ class SnippetRenderer {
    * @param {ParentNode} templateContext
    * @param {LH.Audit.Details.SnippetValue} details
    * @param {DetailsRenderer} detailsRenderer
-   * @return {Element}
+   * @return {!Element}
    */
   static render(dom, templateContext, details, detailsRenderer) {
     const tmpl = dom.cloneTemplate('#tmpl-lh-snippet', templateContext);

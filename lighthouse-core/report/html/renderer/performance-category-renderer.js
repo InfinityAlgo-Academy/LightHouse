@@ -23,7 +23,7 @@
 class PerformanceCategoryRenderer extends CategoryRenderer {
   /**
    * @param {LH.ReportResult.AuditRef} audit
-   * @return {Element}
+   * @return {!Element}
    */
   _renderMetric(audit) {
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-metric', this.templateContext);
@@ -54,7 +54,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
   /**
    * @param {LH.ReportResult.AuditRef} audit
    * @param {number} scale
-   * @return {Element}
+   * @return {!Element}
    */
   _renderOpportunity(audit, scale) {
     const oppTmpl = this.dom.cloneTemplate('#tmpl-lh-opportunity', this.templateContext);

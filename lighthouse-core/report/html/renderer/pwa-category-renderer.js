@@ -96,7 +96,7 @@ class PwaCategoryRenderer extends CategoryRenderer {
   /**
    * Returns the group IDs found in auditRefs.
    * @param {Array<LH.ReportResult.AuditRef>} auditRefs
-   * @return {Set<string>}
+   * @return {!Set<string>}
    */
   _getGroupIds(auditRefs) {
     const groupIds = auditRefs.map(ref => ref.group).filter(/** @return {g is string} */ g => !!g);

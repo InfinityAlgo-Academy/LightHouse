@@ -320,7 +320,7 @@ class Util {
 
   /**
    * @param {string|URL} value
-   * @return {URL}
+   * @return {!URL}
    */
   static createOrReturnURL(value) {
     if (value instanceof URL) {
@@ -365,7 +365,7 @@ class Util {
 
   /**
    * @param {LH.Config.Settings} settings
-   * @return {Array<{name: string, description: string}>}
+   * @return {!Array<{name: string, description: string}>}
    */
   static getEnvironmentDisplayValues(settings) {
     const emulationDesc = Util.getEmulationDescriptions(settings);
