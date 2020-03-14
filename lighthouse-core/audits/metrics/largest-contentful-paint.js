@@ -38,7 +38,10 @@ class LargestContentfulPaint extends Audit {
    */
   static get defaultOptions() {
     return {
-      // TODO: Reusing FCP's scoring curve. Set correctly once distribution of results is available.
+      // 75th and 95th percentiles HTTPArchive -> median and PODR.
+      // https://bigquery.cloud.google.com/table/httparchive:lighthouse.2020_02_01_mobile?pli=1
+      // Gives 2.5s roughly a score of 0.9. https://web.dev/lcp/#what-is-a-good-lcp-score
+      // see https://www.desmos.com/calculator/brcfwyox6x
       scorePODR: 2000,
       scoreMedian: 4000,
     };
