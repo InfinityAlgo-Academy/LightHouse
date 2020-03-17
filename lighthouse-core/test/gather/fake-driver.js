@@ -12,6 +12,11 @@ function makeFakeDriver({protocolGetVersionResponse}) {
   let scrollPosition = {x: 0, y: 0};
 
   return {
+    get fetcher() {
+      return {
+        disableRequestInterception: () => Promise.resolve(),
+      };
+    },
     getBrowserVersion() {
       return Promise.resolve(Object.assign({}, protocolGetVersionResponse, {milestone: 71}));
     },
