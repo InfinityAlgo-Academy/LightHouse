@@ -58,6 +58,11 @@ function getHTMLImages(allElements) {
       usesObjectFit: ['cover', 'contain', 'scale-down', 'none'].includes(
         computedStyle.getPropertyValue('object-fit')
       ),
+      usesPixelArtScaling: ['pixelated', 'crisp-edges'].includes(
+        computedStyle.getPropertyValue('image-rendering')
+      ),
+      // https://html.spec.whatwg.org/multipage/images.html#pixel-density-descriptor
+      usesSrcSetDensityDescriptor: / \d+(\.\d+)?x/.test(element.srcset),
     };
   });
 }
@@ -95,6 +100,10 @@ function getCSSImages(allElements) {
       isCss: true,
       isPicture: false,
       usesObjectFit: false,
+      usesPixelArtScaling: ['pixelated', 'crisp-edges'].includes(
+        style.getPropertyValue('image-rendering')
+      ),
+      usesSrcSetDensityDescriptor: false,
       resourceSize: 0, // this will get overwritten below
     });
   }
