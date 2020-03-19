@@ -355,7 +355,7 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[Fluxguard](https://fluxguard.com/)** - Fluxguard provides website DOM change monitoring orchestrated with Google Puppeteer, and audited by Lighthouse. Fluxguard is a freemium product, with monthly monitoring of up to 75 pages for free.
 
-* **[PageSpeed Green](https://pagespeed.green/)** - New web performance monitoring service for web pages. For now, you can track PageSpeed performance indicators for unlimited domains and web pages. Powered By Google Lighthouse and Puppeteer. PageSpeed Green is a paid product with a free 30-day trial.
+* **[PageSpeed Green](https://pagespeed.green/)** - Web performance monitoring service for web sites. Track PageSpeed performance indicators for unlimited web pages from multiple regions. Check all code changes for PageSpeed degradations by integrating to your CD/CI using CLI. Powered By Google Lighthouse and Puppeteer. PageSpeed Green is a paid product with a free 14-day trial.
 
 * **[SpeedCurve](https://speedcurve.com)** — SpeedCurve is a tool for continuously monitoring web performance across different browsers, devices, and regions. It can aggregate any metric including Lighthouse scores across multiple pages and sites, and allows you to set performance budgets with Slack or email alerts. SpeedCurve is a paid product with a free 30-day trial.
 
