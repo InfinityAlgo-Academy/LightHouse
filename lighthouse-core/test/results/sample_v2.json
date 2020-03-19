@@ -630,6 +630,54 @@
         ]
       }
     },
+    "image-size-responsive": {
+      "id": "image-size-responsive",
+      "title": "Displays images with inappropriate size",
+      "description": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive).",
+      "score": 0,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "url",
+            "itemType": "thumbnail",
+            "text": ""
+          },
+          {
+            "key": "elidedUrl",
+            "itemType": "url",
+            "text": "URL"
+          },
+          {
+            "key": "displayedSize",
+            "itemType": "text",
+            "text": "Displayed size"
+          },
+          {
+            "key": "actualSize",
+            "itemType": "text",
+            "text": "Actual size"
+          },
+          {
+            "key": "expectedSize",
+            "itemType": "text",
+            "text": "Expected size"
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
+            "elidedUrl": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
+            "displayedSize": "480 x 318",
+            "actualSize": "480 x 318",
+            "actualPixels": 152640,
+            "expectedSize": "1260 x 835",
+            "expectedPixels": 1052100
+          }
+        ]
+      }
+    },
     "deprecations": {
       "id": "deprecations",
       "title": "Uses deprecated APIs",
@@ -4179,10 +4227,14 @@
         {
           "id": "image-aspect-ratio",
           "weight": 1
+        },
+        {
+          "id": "image-size-responsive",
+          "weight": 1
         }
       ],
       "id": "best-practices",
-      "score": 0.07
+      "score": 0.06
     },
     "seo": {
       "title": "SEO",
@@ -4807,6 +4859,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:image-aspect-ratio",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:image-size-responsive",
         "duration": 100,
         "entryType": "measure"
       },
@@ -5763,6 +5821,7 @@
       "lighthouse-core/lib/i18n/i18n.js | columnURL": [
         "audits[errors-in-console].details.headings[0].text",
         "audits[image-aspect-ratio].details.headings[1].text",
+        "audits[image-size-responsive].details.headings[1].text",
         "audits.deprecations.details.headings[1].text",
         "audits[bootup-time].details.headings[0].text",
         "audits[network-rtt].details.headings[0].text",
@@ -5883,6 +5942,21 @@
       ],
       "lighthouse-core/audits/image-aspect-ratio.js | columnActual": [
         "audits[image-aspect-ratio].details.headings[3].text"
+      ],
+      "lighthouse-core/audits/image-size-responsive.js | failureTitle": [
+        "audits[image-size-responsive].title"
+      ],
+      "lighthouse-core/audits/image-size-responsive.js | description": [
+        "audits[image-size-responsive].description"
+      ],
+      "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": [
+        "audits[image-size-responsive].details.headings[2].text"
+      ],
+      "lighthouse-core/audits/image-size-responsive.js | columnActual": [
+        "audits[image-size-responsive].details.headings[3].text"
+      ],
+      "lighthouse-core/audits/image-size-responsive.js | columnExpected": [
+        "audits[image-size-responsive].details.headings[4].text"
       ],
       "lighthouse-core/audits/deprecations.js | failureTitle": [
         "audits.deprecations.title"

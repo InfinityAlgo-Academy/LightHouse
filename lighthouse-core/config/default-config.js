@@ -203,6 +203,7 @@ const defaultConfig = {
     'maskable-icon',
     'content-width',
     'image-aspect-ratio',
+    'image-size-responsive',
     'deprecations',
     'mainthread-work-breakdown',
     'bootup-time',
@@ -521,6 +522,7 @@ const defaultConfig = {
         {id: 'password-inputs-can-be-pasted-into', weight: 1},
         {id: 'errors-in-console', weight: 1},
         {id: 'image-aspect-ratio', weight: 1},
+        {id: 'image-size-responsive', weight: 1},
       ],
     },
     'seo': {

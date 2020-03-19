@@ -97,6 +97,9 @@ Object {
       "path": "image-aspect-ratio",
     },
     Object {
+      "path": "image-size-responsive",
+    },
+    Object {
       "path": "deprecations",
     },
     Object {
@@ -746,6 +749,10 @@ Object {
         },
         Object {
           "id": "image-aspect-ratio",
+          "weight": 1,
+        },
+        Object {
+          "id": "image-size-responsive",
           "weight": 1,
         },
       ],

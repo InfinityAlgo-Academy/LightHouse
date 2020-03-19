@@ -353,7 +353,19 @@ const expectations = [
           details: {
             items: {
               0: {
-                displayedAspectRatio: /^480 x 57/,
+                displayedAspectRatio: /^120 x 15/,
+                url: 'http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?iar1',
+              },
+              length: 1,
+            },
+          },
+        },
+        'image-size-responsive': {
+          score: 0,
+          details: {
+            items: {
+              0: {
+                url: 'http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr1',
               },
               length: 1,
             },
@@ -385,10 +397,10 @@ const expectations = [
         },
         'dom-size': {
           score: 1,
-          numericValue: 143,
+          numericValue: 147,
           details: {
             items: [
-              {statistic: 'Total DOM Elements', value: '143'},
+              {statistic: 'Total DOM Elements', value: '147'},
               {statistic: 'Maximum DOM Depth', value: '4'},
               {
                 statistic: 'Maximum Child Elements',

@@ -1123,6 +1123,53 @@
             "title": "Displays images with incorrect aspect ratio",
             "warnings": []
         },
+        "image-size-responsive": {
+            "description": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive).",
+            "details": {
+                "headings": [
+                    {
+                        "itemType": "thumbnail",
+                        "key": "url"
+                    },
+                    {
+                        "itemType": "url",
+                        "key": "elidedUrl",
+                        "text": "URL"
+                    },
+                    {
+                        "itemType": "text",
+                        "key": "displayedSize",
+                        "text": "Displayed size"
+                    },
+                    {
+                        "itemType": "text",
+                        "key": "actualSize",
+                        "text": "Actual size"
+                    },
+                    {
+                        "itemType": "text",
+                        "key": "expectedSize",
+                        "text": "Expected size"
+                    }
+                ],
+                "items": [
+                    {
+                        "actualPixels": 152640.0,
+                        "actualSize": "480 x 318",
+                        "displayedSize": "480 x 318",
+                        "elidedUrl": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
+                        "expectedPixels": 1052100.0,
+                        "expectedSize": "1260 x 835",
+                        "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg"
+                    }
+                ],
+                "type": "table"
+            },
+            "id": "image-size-responsive",
+            "score": 0.0,
+            "scoreDisplayMode": "binary",
+            "title": "Displays images with inappropriate size"
+        },
         "input-image-alt": {
             "description": "When an image is being used as an `<input>` button, providing alternative text can help screen reader users understand the purpose of the button. [Learn more](https://web.dev/input-image-alt/).",
             "id": "input-image-alt",
@@ -3787,10 +3834,14 @@
                 {
                     "id": "image-aspect-ratio",
                     "weight": 1.0
+                },
+                {
+                    "id": "image-size-responsive",
+                    "weight": 1.0
                 }
             ],
             "id": "best-practices",
-            "score": 0.07,
+            "score": 0.06,
             "title": "Best Practices"
         },
         "performance": {
@@ -4723,6 +4774,12 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:audit:image-aspect-ratio",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:audit:image-size-responsive",
                 "startTime": 0.0
             },
             {
