@@ -391,7 +391,7 @@ class GatherRunner {
       await artifactPromise.catch(() => {});
     }
 
-    console.log('effectiveTypes', await passContext.driver.evaluateAsync('window.__connectionType'));
+    passContext.baseArtifacts['__EffectiveTypes'] = await passContext.driver.evaluateAsync('window.__connectionType');
 
     log.timeEnd(pStatus);
   }
