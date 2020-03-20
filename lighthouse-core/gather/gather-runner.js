@@ -391,7 +391,10 @@ class GatherRunner {
       await artifactPromise.catch(() => {});
     }
 
-    passContext.baseArtifacts['__EffectiveTypes'] = await passContext.driver.evaluateAsync('window.__connectionType');
+    if (!passContext.baseArtifacts['__EffectiveTypes']) passContext.baseArtifacts['__EffectiveTypes'] = [];
+    passContext.baseArtifacts['__EffectiveTypes'].push(
+      await passContext.driver.evaluateAsync('window.__connectionType')
+    );
 
     log.timeEnd(pStatus);
   }
@@ -670,6 +673,7 @@ class GatherRunner {
 
       await GatherRunner.disposeDriver(driver, options);
       GatherRunner.finalizeBaseArtifacts(baseArtifacts);
+      console.log('__EffectiveTypes', baseArtifacts['__EffectiveTypes']);
       return /** @type {LH.Artifacts} */ ({...baseArtifacts, ...artifacts}); // Cast to drop Partial<>.
     } catch (err) {
       // Clean up on error. Don't await so that the root error, not a disposal error, is shown.
