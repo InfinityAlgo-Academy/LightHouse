@@ -365,6 +365,15 @@ class GatherRunner {
     const pStatus = {msg: `Running pass methods`, id: `lh:gather:pass`};
     log.time(pStatus, 'verbose');
 
+    function evaluate() {
+      const connection = navigator.connection;
+      window.__connectionType = [connection.effectiveType];
+      connection.addEventListener('change', () => {
+        window.__connectionType.push(connection.effectiveType);
+      });
+    }
+    passContext.driver.evaluateAsync(`(${evaluate})()`);
+
     for (const gathererDefn of gatherers) {
       const gatherer = gathererDefn.instance;
       // Abuse the passContext to pass through gatherer options
@@ -381,6 +390,8 @@ class GatherRunner {
       gathererResults[gatherer.name] = gathererResult;
       await artifactPromise.catch(() => {});
     }
+
+    console.log('effectiveTypes', await passContext.driver.evaluateAsync('window.__connectionType'));
 
     log.timeEnd(pStatus);
   }
