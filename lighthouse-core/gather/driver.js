@@ -1192,43 +1192,6 @@ class Driver {
   }
 
   /**
-   * @param {string} selector Selector to find in the DOM
-   * @return {Promise<Array<LHElement>>} The found elements, or [], resolved in a promise
-   */
-  async querySelectorAll(selector) {
-    const documentResponse = await this.sendCommand('DOM.getDocument');
-    const rootNodeId = documentResponse.root.nodeId;
-
-    const targetNodeList = await this.sendCommand('DOM.querySelectorAll', {
-      nodeId: rootNodeId,
-      selector,
-    });
-
-    /** @type {Array<LHElement>} */
-    const elementList = [];
-    targetNodeList.nodeIds.forEach(nodeId => {
-      if (nodeId !== 0) {
-        elementList.push(new LHElement({nodeId}, this));
-      }
-    });
-    return elementList;
-  }
-
-  /**
-   * Returns the flattened list of all DOM elements within the document.
-   * @param {boolean=} pierce Whether to pierce through shadow trees and iframes.
-   *     True by default.
-   * @return {Promise<Array<LHElement>>} The found elements, or [], resolved in a promise
-   */
-  getElementsInDocument(pierce = true) {
-    return this.getNodesInDocument(pierce)
-      .then(nodes => nodes
-        .filter(node => node.nodeType === 1)
-        .map(node => new LHElement({nodeId: node.nodeId}, this))
-      );
-  }
-
-  /**
    * Returns the flattened list of all DOM nodes within the document.
    * @param {boolean=} pierce Whether to pierce through shadow trees and iframes.
    *     True by default.

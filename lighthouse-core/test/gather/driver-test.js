@@ -169,25 +169,6 @@ describe('.querySelector(All)', () => {
     const result = await driver.querySelector('meta head');
     expect(result).toBeInstanceOf(LHElement);
   });
-
-  it('returns [] when DOM.querySelectorAll finds no node', async () => {
-    connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('DOM.getDocument', {root: {nodeId: 249}})
-      .mockResponse('DOM.querySelectorAll', {nodeIds: []});
-
-    const result = await driver.querySelectorAll('#no.matches');
-    expect(result).toEqual([]);
-  });
-
-  it('returns element when DOM.querySelectorAll finds node', async () => {
-    connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('DOM.getDocument', {root: {nodeId: 249}})
-      .mockResponse('DOM.querySelectorAll', {nodeIds: [231]});
-
-    const result = await driver.querySelectorAll('#no.matches');
-    expect(result).toHaveLength(1);
-    expect(result[0]).toBeInstanceOf(LHElement);
-  });
 });
 
 describe('.getObjectProperty', () => {
