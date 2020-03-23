@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2018 Google Inc. All Rights Reserved.
+ * Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@
 class PerformanceCategoryRenderer extends CategoryRenderer {
   /**
    * @param {LH.ReportResult.AuditRef} audit
-   * @return {Element}
+   * @return {!Element}
    */
   _renderMetric(audit) {
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-metric', this.templateContext);
@@ -54,7 +54,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
   /**
    * @param {LH.ReportResult.AuditRef} audit
    * @param {number} scale
-   * @return {Element}
+   * @return {!Element}
    */
   _renderOpportunity(audit, scale) {
     const oppTmpl = this.dom.cloneTemplate('#tmpl-lh-opportunity', this.templateContext);
@@ -132,8 +132,9 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     metricAuditsEl.append(..._toggleEl.childNodes);
 
     const metricAudits = category.auditRefs.filter(audit => audit.group === 'metrics');
-    const keyMetrics = metricAudits.filter(a => a.weight >= 3);
-    const otherMetrics = metricAudits.filter(a => a.weight < 3);
+
+    const keyMetrics = metricAudits.slice(0, 3);
+    const otherMetrics = metricAudits.slice(3);
 
     const metricsBoxesEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-columns');
     const metricsColumn1El = this.dom.createChildOf(metricsBoxesEl, 'div', 'lh-column');

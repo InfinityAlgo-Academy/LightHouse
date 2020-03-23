@@ -2,6 +2,7 @@
 
 exports[`Performance: metrics evaluates valid input (with lcp) correctly 1`] = `
 Object {
+  "cumulativeLayoutShift": 0,
   "estimatedInputLatency": 543,
   "estimatedInputLatencyTs": undefined,
   "firstCPUIdle": 3677,
@@ -15,6 +16,8 @@ Object {
   "largestContentfulPaint": 3419,
   "largestContentfulPaintTs": undefined,
   "maxPotentialFID": 1336,
+  "observedCumulativeLayoutShift": undefined,
+  "observedCumulativeLayoutShiftTs": undefined,
   "observedDomContentLoaded": 1513,
   "observedDomContentLoadedTs": 713038536140,
   "observedFirstContentfulPaint": 1122,
@@ -45,6 +48,7 @@ Object {
 
 exports[`Performance: metrics evaluates valid input correctly 1`] = `
 Object {
+  "cumulativeLayoutShift": 0,
   "estimatedInputLatency": 78,
   "estimatedInputLatencyTs": undefined,
   "firstCPUIdle": 3351,
@@ -58,6 +62,8 @@ Object {
   "largestContentfulPaint": undefined,
   "largestContentfulPaintTs": undefined,
   "maxPotentialFID": 396,
+  "observedCumulativeLayoutShift": undefined,
+  "observedCumulativeLayoutShiftTs": undefined,
   "observedDomContentLoaded": 560,
   "observedDomContentLoadedTs": 225414732309,
   "observedFirstContentfulPaint": 499,

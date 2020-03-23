@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2017 Google Inc. All Rights Reserved.
+ * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ class ReportRenderer {
   /**
    * @param {LH.Result} result
    * @param {Element} container Parent element to render the report into.
-   * @return {Element}
+   * @return {!Element}
    */
   renderReport(result, container) {
     this._dom.setLighthouseChannel(result.configSettings.channel || 'unknown');
@@ -150,7 +150,7 @@ class ReportRenderer {
    * @param {LH.ReportResult} report
    * @param {CategoryRenderer} categoryRenderer
    * @param {Record<string, CategoryRenderer>} specificCategoryRenderers
-   * @return {DocumentFragment[]}
+   * @return {!DocumentFragment[]}
    */
   _renderScoreGauges(report, categoryRenderer, specificCategoryRenderers) {
     // Group gauges in this order: default, pwa, plugins.
@@ -181,7 +181,7 @@ class ReportRenderer {
 
   /**
    * @param {LH.ReportResult} report
-   * @return {DocumentFragment}
+   * @return {!DocumentFragment}
    */
   _renderReport(report) {
     const i18n = new I18n(report.configSettings.locale, {

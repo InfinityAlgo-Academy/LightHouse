@@ -1,10 +1,11 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
+const Fetcher = require('./fetcher.js');
 const NetworkRecorder = require('../lib/network-recorder.js');
 const emulation = require('../lib/emulation.js');
 const LHElement = require('../lib/lh-element.js');
@@ -90,6 +91,9 @@ class Driver {
      * @private
      */
     this._nextProtocolTimeout = DEFAULT_PROTOCOL_TIMEOUT;
+
+    /** @type {Fetcher} */
+    this.fetcher = new Fetcher(this);
   }
 
   static get traceCategories() {
@@ -99,6 +103,9 @@ class Driver {
 
       // Used instead of 'toplevel' in Chrome 71+
       'disabled-by-default-lighthouse',
+
+      // Used for Cumulative Layout Shift metric
+      'loading',
 
       // All compile/execute events are captured by parent events in devtools.timeline..
       // But the v8 category provides some nice context for only <0.5% of the trace size
@@ -1182,43 +1189,6 @@ class Driver {
       return null;
     }
     return new LHElement(targetNode, this);
-  }
-
-  /**
-   * @param {string} selector Selector to find in the DOM
-   * @return {Promise<Array<LHElement>>} The found elements, or [], resolved in a promise
-   */
-  async querySelectorAll(selector) {
-    const documentResponse = await this.sendCommand('DOM.getDocument');
-    const rootNodeId = documentResponse.root.nodeId;
-
-    const targetNodeList = await this.sendCommand('DOM.querySelectorAll', {
-      nodeId: rootNodeId,
-      selector,
-    });
-
-    /** @type {Array<LHElement>} */
-    const elementList = [];
-    targetNodeList.nodeIds.forEach(nodeId => {
-      if (nodeId !== 0) {
-        elementList.push(new LHElement({nodeId}, this));
-      }
-    });
-    return elementList;
-  }
-
-  /**
-   * Returns the flattened list of all DOM elements within the document.
-   * @param {boolean=} pierce Whether to pierce through shadow trees and iframes.
-   *     True by default.
-   * @return {Promise<Array<LHElement>>} The found elements, or [], resolved in a promise
-   */
-  getElementsInDocument(pierce = true) {
-    return this.getNodesInDocument(pierce)
-      .then(nodes => nodes
-        .filter(node => node.nodeType === 1)
-        .map(node => new LHElement({nodeId: node.nodeId}, this))
-      );
   }
 
   /**

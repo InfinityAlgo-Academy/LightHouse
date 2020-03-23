@@ -226,7 +226,7 @@
             "title": "Document has a valid `rel=canonical`"
         },
         "charset": {
-            "description": "A character encoding declaration is required. It can be done with a <meta> tagin the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more](https://www.w3.org/International/questions/qa-html-encoding-declarations).",
+            "description": "A character encoding declaration is required. It can be done with a <meta> tag in the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more](https://www.w3.org/International/questions/qa-html-encoding-declarations).",
             "id": "charset",
             "score": 0.0,
             "scoreDisplayMode": "binary",
@@ -432,6 +432,24 @@
             "score": null,
             "scoreDisplayMode": "informative",
             "title": "Avoid chaining critical requests"
+        },
+        "cumulative-layout-shift": {
+            "description": "Cumulative Layout Shift is the sum of all layout shifts that occurred during a page's load. A layout shift is any movement an element makes once it is visible to the user. All layout shift is recorded, scored, and then aggregated into a cumulative score between 0 and 1; 0 being a perfectly stable page, and >=0.5 being a highly shifting page. [Learn more](https://web.dev/cls).",
+            "details": {
+                "items": [
+                    {
+                        "finalLayoutShiftTraceEventFound": true
+                    }
+                ],
+                "type": "debugdata"
+            },
+            "displayValue": "0.42",
+            "id": "cumulative-layout-shift",
+            "numericUnit": "unitless",
+            "numericValue": 0.42,
+            "score": 0.21,
+            "scoreDisplayMode": "numeric",
+            "title": "Cumulative Layout Shift"
         },
         "custom-controls-labels": {
             "description": "Custom interactive controls have associated labels, provided by aria-label or aria-labelledby. [Learn more](https://web.dev/custom-controls-labels/).",
@@ -1105,6 +1123,53 @@
             "title": "Displays images with incorrect aspect ratio",
             "warnings": []
         },
+        "image-size-responsive": {
+            "description": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive).",
+            "details": {
+                "headings": [
+                    {
+                        "itemType": "thumbnail",
+                        "key": "url"
+                    },
+                    {
+                        "itemType": "url",
+                        "key": "elidedUrl",
+                        "text": "URL"
+                    },
+                    {
+                        "itemType": "text",
+                        "key": "displayedSize",
+                        "text": "Displayed size"
+                    },
+                    {
+                        "itemType": "text",
+                        "key": "actualSize",
+                        "text": "Actual size"
+                    },
+                    {
+                        "itemType": "text",
+                        "key": "expectedSize",
+                        "text": "Expected size"
+                    }
+                ],
+                "items": [
+                    {
+                        "actualPixels": 152640.0,
+                        "actualSize": "480 x 318",
+                        "displayedSize": "480 x 318",
+                        "elidedUrl": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
+                        "expectedPixels": 1052100.0,
+                        "expectedSize": "1260 x 835",
+                        "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg"
+                    }
+                ],
+                "type": "table"
+            },
+            "id": "image-size-responsive",
+            "score": 0.0,
+            "scoreDisplayMode": "binary",
+            "title": "Displays images with inappropriate size"
+        },
         "input-image-alt": {
             "description": "When an image is being used as an `<input>` button, providing alternative text can help screen reader users understand the purpose of the button. [Learn more](https://web.dev/input-image-alt/).",
             "id": "input-image-alt",
@@ -1613,6 +1678,7 @@
             "details": {
                 "items": [
                     {
+                        "cumulativeLayoutShift": 0.0,
                         "estimatedInputLatency": 16.0,
                         "firstCPUIdle": 4927.0,
                         "firstCPUIdleTs": 185608247190.0,
@@ -2233,9 +2299,9 @@
                         "sizeOverBudget": 72955.0
                     },
                     {
-                        "countOverBudget": "7 requests",
+                        "countOverBudget": "6 requests",
                         "label": "Total",
-                        "requestCount": 17.0,
+                        "requestCount": 16.0,
                         "resourceType": "total",
                         "size": 160517.0,
                         "sizeOverBudget": 58117.0
@@ -2248,9 +2314,8 @@
                         "sizeOverBudget": 7520.0
                     },
                     {
-                        "countOverBudget": "1 request",
                         "label": "Third-party",
-                        "requestCount": 2.0,
+                        "requestCount": 1.0,
                         "resourceType": "third-party",
                         "size": 30174.0,
                         "sizeOverBudget": 4574.0
@@ -2265,7 +2330,7 @@
                     },
                     {
                         "label": "Image",
-                        "requestCount": 2.0,
+                        "requestCount": 1.0,
                         "resourceType": "image",
                         "size": 24741.0
                     },
@@ -2432,7 +2497,7 @@
                 "items": [
                     {
                         "label": "Total",
-                        "requestCount": 17.0,
+                        "requestCount": 16.0,
                         "resourceType": "total",
                         "size": 160517.0
                     },
@@ -2444,7 +2509,7 @@
                     },
                     {
                         "label": "Image",
-                        "requestCount": 2.0,
+                        "requestCount": 1.0,
                         "resourceType": "image",
                         "size": 24741.0
                     },
@@ -2480,14 +2545,14 @@
                     },
                     {
                         "label": "Third-party",
-                        "requestCount": 2.0,
+                        "requestCount": 1.0,
                         "resourceType": "third-party",
                         "size": 30174.0
                     }
                 ],
                 "type": "table"
             },
-            "displayValue": "17 requests \u2022 157 KB",
+            "displayValue": "16 requests \u2022 157 KB",
             "id": "resource-summary",
             "score": null,
             "scoreDisplayMode": "informative",
@@ -3769,10 +3834,14 @@
                 {
                     "id": "image-aspect-ratio",
                     "weight": 1.0
+                },
+                {
+                    "id": "image-size-responsive",
+                    "weight": 1.0
                 }
             ],
             "id": "best-practices",
-            "score": 0.07,
+            "score": 0.06,
             "title": "Best Practices"
         },
         "performance": {
@@ -3780,44 +3849,47 @@
                 {
                     "group": "metrics",
                     "id": "first-contentful-paint",
-                    "weight": 3.0
-                },
-                {
-                    "group": "metrics",
-                    "id": "first-meaningful-paint",
-                    "weight": 1.0
-                },
-                {
-                    "group": "metrics",
-                    "id": "largest-contentful-paint",
-                    "weight": 0.0
+                    "weight": 15.0
                 },
                 {
                     "group": "metrics",
                     "id": "speed-index",
-                    "weight": 4.0
+                    "weight": 15.0
+                },
+                {
+                    "group": "metrics",
+                    "id": "largest-contentful-paint",
+                    "weight": 25.0
                 },
                 {
                     "group": "metrics",
                     "id": "interactive",
+                    "weight": 15.0
+                },
+                {
+                    "group": "metrics",
+                    "id": "total-blocking-time",
+                    "weight": 25.0
+                },
+                {
+                    "group": "metrics",
+                    "id": "cumulative-layout-shift",
                     "weight": 5.0
                 },
                 {
-                    "group": "metrics",
                     "id": "first-cpu-idle",
-                    "weight": 2.0
+                    "weight": 0.0
                 },
                 {
-                    "group": "metrics",
                     "id": "max-potential-fid",
                     "weight": 0.0
                 },
                 {
-                    "id": "estimated-input-latency",
+                    "id": "first-meaningful-paint",
                     "weight": 0.0
                 },
                 {
-                    "id": "total-blocking-time",
+                    "id": "estimated-input-latency",
                     "weight": 0.0
                 },
                 {
@@ -3989,7 +4061,7 @@
                 }
             ],
             "id": "performance",
-            "score": 0.69,
+            "score": 0.64,
             "title": "Performance"
         },
         "pwa": {
@@ -4292,7 +4364,7 @@
             "warningHeader": "Warnings: "
         }
     },
-    "lighthouseVersion": "5.6.0",
+    "lighthouseVersion": "6.0.0-beta.0",
     "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
     "runWarnings": [],
     "stackPacks": [
@@ -4419,18 +4491,6 @@
             {
                 "duration": 100.0,
                 "entryType": "measure",
-                "name": "lh:audit:first-meaningful-paint",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:computed:FirstMeaningfulPaint",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
                 "name": "lh:audit:largest-contentful-paint",
                 "startTime": 0.0
             },
@@ -4438,6 +4498,18 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:computed:LargestContentfulPaint",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:audit:first-meaningful-paint",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:computed:FirstMeaningfulPaint",
                 "startTime": 0.0
             },
             {
@@ -4528,6 +4600,18 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:computed:MaxPotentialFID",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:audit:cumulative-layout-shift",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:computed:CumulativeLayoutShift",
                 "startTime": 0.0
             },
             {
@@ -4690,6 +4774,12 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:audit:image-aspect-ratio",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:audit:image-size-responsive",
                 "startTime": 0.0
             },
             {

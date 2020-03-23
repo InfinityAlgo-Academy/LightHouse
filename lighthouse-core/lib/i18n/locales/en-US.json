@@ -413,6 +413,12 @@
   "lighthouse-core/audits/bootup-time.js | title": {
     "message": "JavaScript execution time"
   },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | description": {
+    "message": "Remove large, duplicate JavaScript modules from bundles to reduce unnecessary bytes consumed by network activity. "
+  },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | title": {
+    "message": "Remove duplicate modules in JavaScript bundles"
+  },
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | description": {
     "message": "Large GIFs are inefficient for delivering animated content. Consider using MPEG4/WebM videos for animations and PNG/WebP for static images instead of GIF to save network bytes. [Learn more](https://web.dev/efficient-animated-content)"
   },
@@ -555,7 +561,7 @@
     "message": "Avoids Application Cache"
   },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
-    "message": "A character encoding declaration is required. It can be done with a <meta> tagin the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more](https://www.w3.org/International/questions/qa-html-encoding-declarations)."
+    "message": "A character encoding declaration is required. It can be done with a <meta> tag in the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more](https://www.w3.org/International/questions/qa-html-encoding-declarations)."
   },
   "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
     "message": "Charset declaration is missing or occurs too late in the HTML"
@@ -773,6 +779,24 @@
   "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
     "message": "Invalid image sizing information {url}"
   },
+  "lighthouse-core/audits/image-size-responsive.js | columnActual": {
+    "message": "Actual size"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
+    "message": "Displayed size"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
+    "message": "Expected size"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | description": {
+    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+  },
+  "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
+    "message": "Displays images with inappropriate size"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | title": {
+    "message": "Displays images with appropriate size"
+  },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://web.dev/installable-manifest)."
   },
@@ -859,6 +883,12 @@
   },
   "lighthouse-core/audits/maskable-icon.js | title": {
     "message": "Manifest has a maskable icon"
+  },
+  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
+    "message": "Cumulative Layout Shift is the sum of all layout shifts that occurred during a page's load. A layout shift is any movement an element makes once it is visible to the user. All layout shift is recorded, scored, and then aggregated into a cumulative score between 0 and 1; 0 being a perfectly stable page, and >=0.5 being a highly shifting page. [Learn more](https://web.dev/cls)."
+  },
+  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
+    "message": "Cumulative Layout Shift"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Estimated Input Latency is an estimate of how long your app takes to respond to user input, in milliseconds, during the busiest 5s window of page load. If your latency is higher than 50 ms, users may perceive your app as laggy. [Learn more](https://web.dev/estimated-input-latency)."
@@ -1417,6 +1447,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Size"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnSource": {
+    "message": "Source"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Time Spent"
