@@ -48,9 +48,7 @@ class TraceNodes extends Gatherer {
 		const traceOfTab = TraceProcessor.computeTraceOfTab(loadData.trace);
 		const lcpEvent = traceOfTab.largestContentfulPaintEvt;
 
-		console.log('Hi');
 		const backendNodeId = lcpEvent && lcpEvent.args && lcpEvent.args.data && lcpEvent.args.data.nodeId;
-		console.log(backendNodeId);
 		if (backendNodeId) {
 			// The call below is necessary for pushNodesByBackendIdsToFrontend to properly retrieve nodeIds
 			await driver.sendCommand('DOM.getDocument', {depth: -1});
