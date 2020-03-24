@@ -26,6 +26,7 @@
 /* globals getFilenamePrefix Util */
 
 const VIEWER_ORIGIN = 'http://localhost:8000';
+const TREEMAP_URL = `${VIEWER_ORIGIN}/treemap/`;
 
 /**
  * @param {HTMLTableElement} tableEl
@@ -140,6 +141,13 @@ class ReportUIFeatures {
     }
 
     this._renderBundleVizLinks();
+    // Fill in all i18n data.
+    for (const node of this._dom.findAll('[data-i18n]', this._dom.document())) {
+      // These strings are guaranteed to (at least) have a default English string in Util.UIStrings,
+      // so this cannot be undefined as long as `report-ui-features.data-i18n` test passes.
+      const i18nAttr = /** @type {keyof LH.I18NRendererStrings} */ (node.getAttribute('data-i18n'));
+      node.textContent = Util.i18n.strings[i18nAttr];
+    }
   }
 
   /**
@@ -212,6 +220,11 @@ class ReportUIFeatures {
       // This audit deals explicitly with third party resources.
       'uses-rel-preconnect',
     ];
+    // Some audits should hide third party by default.
+    const thirdPartyFilterAuditHideByDefault = [
+      // Only first party resources are actionable.
+      'legacy-javascript',
+    ];
 
     // Get all tables with a text url column.
     /** @type {Array<HTMLTableElement>} */
@@ -226,8 +239,8 @@ class ReportUIFeatures {
       });
 
     tablesWithUrls.forEach((tableEl, index) => {
-      const urlItems = this._getUrlItems(tableEl);
-      const thirdPartyRows = this._getThirdPartyRows(tableEl, urlItems, this.json.finalUrl);
+      const rowEls = getTableRows(tableEl);
+      const thirdPartyRows = this._getThirdPartyRows(rowEls, this.json.finalUrl);
 
       // create input box
       const filterTemplate = this._dom.cloneTemplate('#tmpl-lh-3p-filter', this._templateContext);
@@ -256,45 +269,54 @@ class ReportUIFeatures {
       this._dom.find('.lh-3p-filter-count', filterTemplate).textContent =
           `${thirdPartyRows.size}`;
       this._dom.find('.lh-3p-ui-string', filterTemplate).textContent =
-          Util.UIStrings.thirdPartyResourcesLabel;
+        Util.i18n.strings.thirdPartyResourcesLabel;
+
+      const allThirdParty = thirdPartyRows.size === rowEls.length;
+      const allFirstParty = !thirdPartyRows.size;
 
       // If all or none of the rows are 3rd party, disable the checkbox.
-      if (thirdPartyRows.size === urlItems.length || !thirdPartyRows.size) {
+      if (allThirdParty || allFirstParty) {
         filterInput.disabled = true;
-        filterInput.checked = thirdPartyRows.size === urlItems.length;
+        filterInput.checked = allThirdParty;
       }
 
-      // Finally, add checkbox to the DOM.
+      // Add checkbox to the DOM.
       if (!tableEl.parentNode) return; // Keep tsc happy.
       tableEl.parentNode.insertBefore(filterTemplate, tableEl);
+
+      // Hide third-party rows for some audits by default.
+      const containingAudit = tableEl.closest('.lh-audit');
+      if (!containingAudit) throw new Error('.lh-table not within audit');
+      if (thirdPartyFilterAuditHideByDefault.includes(containingAudit.id) && !allThirdParty) {
+        filterInput.click();
+      }
     });
   }
 
   /**
    * From a table with URL entries, finds the rows containing third-party URLs
    * and returns a Map of those rows, mapping from row index to row Element.
-   * @param {HTMLTableElement} el
+   * @param {HTMLElement[]} rowEls
    * @param {string} finalUrl
-   * @param {Array<HTMLElement>} urlItems
-   * @return {Map<number, HTMLTableRowElement>}
+   * @return {Map<number, HTMLElement>}
    */
-  _getThirdPartyRows(el, urlItems, finalUrl) {
+  _getThirdPartyRows(rowEls, finalUrl) {
+    /** @type {Map<number, HTMLElement>} */
+    const thirdPartyRows = new Map();
     const finalUrlRootDomain = Util.getRootDomain(finalUrl);
 
-    /** @type {Map<number, HTMLTableRowElement>} */
-    const thirdPartyRows = new Map();
-    for (const urlItem of urlItems) {
-      const datasetUrl = urlItem.dataset.url;
-      if (!datasetUrl) continue;
-      const isThirdParty = Util.getRootDomain(datasetUrl) !== finalUrlRootDomain;
-      if (!isThirdParty) continue;
+    rowEls.forEach((rowEl, rowPosition) => {
+      /** @type {HTMLElement|null} */
+      const urlItem = rowEl.querySelector('.lh-text__url');
+      if (!urlItem) return;
 
-      const urlRowEl = urlItem.closest('tr');
-      if (urlRowEl) {
-        const rowPosition = getTableRows(el).indexOf(urlRowEl);
-        thirdPartyRows.set(rowPosition, urlRowEl);
-      }
-    }
+      const datasetUrl = urlItem.dataset.url;
+      if (!datasetUrl) return;
+      const isThirdParty = Util.getRootDomain(datasetUrl) !== finalUrlRootDomain;
+      if (!isThirdParty) return;
+
+      thirdPartyRows.set(Number(rowPosition), rowEl);
+    });
 
     return thirdPartyRows;
   }
@@ -426,6 +448,20 @@ class ReportUIFeatures {
       }
       case 'toggle-dark': {
         this._toggleDarkTheme();
+        break;
+      }
+      case 'open-treemap': {
+        // WIP test code :)
+        const treemapData = /** @type {LH.Audit.Details.DebugData} */ (
+          this.json.audits['treemap-data'].details);
+
+        const windowName = `viz-${this.json.requestedUrl}`;
+        const data = {
+          documentUrl: this.json.requestedUrl,
+          id: 'javascript',
+          rootNodes: treemapData.rootNodes,
+        };
+        ReportUIFeatures.openTabAndSendData(data, TREEMAP_URL, windowName);
         break;
       }
     }
@@ -617,20 +653,27 @@ class ReportUIFeatures {
   }
 
   _renderBundleVizLinks() {
-    if (!this.json.audits['bundle-visualization-data']) return;
-    if (!this.json.audits['bundle-visualization-data'].details) return;
-    const visualizationData = /** @type {LH.Audit.Details.DebugData} */ (
-      this.json.audits['bundle-visualization-data'].details);
+    if (!this.json.audits['treemap-data']) return;
+    if (!this.json.audits['treemap-data'].details) return;
+    const treemapData = /** @type {LH.Audit.Details.DebugData} */ (
+      this.json.audits['treemap-data'].details);
 
     for (const urlEl of this._dom.findAll('.lh-text__url', this._document)) {
-      const href = /** @type {HTMLAnchorElement} */ (this._dom.find('a', urlEl)).href;
-      const rootNode = visualizationData.rootNodes[href];
+      const anchorEl = /** @type {HTMLAnchorElement=} */ (urlEl.querySelector('a'));
+      if (!anchorEl) continue;
+      const rootNode = treemapData.rootNodes[anchorEl.href];
       if (!rootNode) continue;
 
       const externalButton = this._dom.createElement('span', 'lh-external-viz');
       externalButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 18h5v-6h-5v6zm-6 0h5V5H4v13zm12 0h5v-6h-5v6zM10 5v6h11V5H10z"/><path d="M0 0h24v24H0z" fill="none"/></svg>`;
       externalButton.addEventListener('click', () => {
-        ReportUIFeatures.openTabAndSendData({rootNode, href}, `${VIEWER_ORIGIN}/treemap/`, `viz-${href}`);
+        const windowName = `viz-${this.json.requestedUrl}`;
+        const data = {
+          documentUrl: this.json.requestedUrl,
+          id: anchorEl.href,
+          rootNodes: treemapData.rootNodes,
+        };
+        ReportUIFeatures.openTabAndSendData(data, TREEMAP_URL, windowName);
       });
       urlEl.insertBefore(externalButton, urlEl.lastElementChild);
     }

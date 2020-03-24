@@ -41,7 +41,7 @@ declare global {
       /** Parsed version of the page's Web App Manifest, or null if none found. */
       WebAppManifest: Artifacts.Manifest | null;
       /** Errors preventing page being installable as PWA. */
-      InstallabilityErrors: Crdp.Page.GetInstallabilityErrorsResponse;
+      InstallabilityErrors: Artifacts.InstallabilityErrors;
       /** Information on detected tech stacks (e.g. JS libraries) used by the page. */
       Stacks: Artifacts.DetectedStack[];
       /** A set of page-load traces, keyed by passName. */
@@ -75,7 +75,7 @@ declare global {
       /** All the link elements on the page or equivalently declared in `Link` headers. @see https://html.spec.whatwg.org/multipage/links.html */
       LinkElements: Artifacts.LinkElement[];
       /** The values of the <meta> elements in the head. */
-      MetaElements: Array<{name: string, content?: string, property?: string}>;
+      MetaElements: Array<{name?: string, content?: string, property?: string, httpEquiv?: string, charset?: string}>;
       /** Set of exceptions thrown during page load. */
       RuntimeExceptions: Crdp.Runtime.ExceptionThrownEvent[];
       /** Information on all script elements in the page. Also contains the content of all requested scripts and the networkRecord requestId that contained their content. Note, HTML documents will have one entry per script tag, all with the same requestId. */
@@ -114,8 +114,8 @@ declare global {
       HTMLWithoutJavaScript: {bodyText: string, hasNoScript: boolean};
       /** Whether the page ended up on an HTTPS page after attempting to load the HTTP version. */
       HTTPRedirect: {value: boolean};
-      /** JS coverage information for code used during page load. */
-      JsUsage: Crdp.Profiler.ScriptCoverage[];
+      /** JS coverage information for code used during page load. Keyed by URL. */
+      JsUsage: Record<string, Crdp.Profiler.ScriptCoverage[]>;
       /** Parsed version of the page's Web App Manifest, or null if none found. */
       Manifest: Artifacts.Manifest | null;
       /** The URL loaded with interception */
@@ -304,6 +304,7 @@ declare global {
         script: ScriptElement;
         map: TextSourceMap;
         sizes: {
+          // TODO(cjamcl): Rename to `sources`.
           files: Record<string, number>;
           unmappedBytes: number;
           totalBytes: number;
@@ -366,6 +367,10 @@ declare global {
 
       // TODO(bckenny): real type for parsed manifest.
       export type Manifest = ReturnType<typeof parseManifest>;
+
+      export interface InstallabilityErrors {
+        errors: Crdp.Page.InstallabilityError[];
+      }
 
       export interface ImageElement {
         src: string;
@@ -464,7 +469,7 @@ declare global {
         }
       }
 
-      export type ManifestValueCheckID = 'hasStartUrl'|'hasIconsAtLeast144px'|'hasIconsAtLeast512px'|'fetchesIcon'|'hasPWADisplayValue'|'hasBackgroundColor'|'hasThemeColor'|'hasShortName'|'hasName'|'shortNameLength';
+      export type ManifestValueCheckID = 'hasStartUrl'|'hasIconsAtLeast144px'|'hasIconsAtLeast512px'|'fetchesIcon'|'hasPWADisplayValue'|'hasBackgroundColor'|'hasThemeColor'|'hasShortName'|'hasName'|'shortNameLength'|'hasMaskableIcon';
 
       export type ManifestValues = {
         isParseFailure: false;

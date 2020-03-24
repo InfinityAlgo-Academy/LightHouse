@@ -173,7 +173,7 @@ describe('ManifestValues computed artifact', () => {
           }],
         });
         const WebAppManifest = noUrlManifestParser(manifestSrc);
-        const InstallabilityErrors = {errors: ['Downloaded icon was empty or corrupted']};
+        const InstallabilityErrors = {errors: [{errorId: 'no-icon-available'}]};
         const artifacts = {WebAppManifest, InstallabilityErrors};
 
         const results = await ManifestValues.request(artifacts, getMockContext());
@@ -250,6 +250,44 @@ describe('ManifestValues computed artifact', () => {
         const iconResults = results.allChecks.filter(i => i.id.includes('Icons'));
 
         assert.equal(iconResults.every(i => i.passing === false), true);
+      });
+    });
+
+    describe('manifest has at least one maskable icon', () => {
+      it('fails when no maskable icon exists', async () => {
+        const manifestSrc = JSON.stringify({
+          icons: [{
+            src: 'icon.png',
+            purpose: 'any',
+          }],
+        });
+        const WebAppManifest = noUrlManifestParser(manifestSrc);
+        const InstallabilityErrors = {errors: []};
+        const artifacts = {WebAppManifest, InstallabilityErrors};
+
+        const results = await ManifestValues.request(artifacts, getMockContext());
+        const iconResults = results.allChecks.filter(i => i.id.includes('Maskable'));
+
+        assert.equal(iconResults.every(i => i.passing === false), true);
+      });
+
+      it('passes when an icon has the maskable purpose property', async () => {
+        const manifestSrc = JSON.stringify({
+          icons: [{
+            src: 'icon.png',
+          }, {
+            src: 'icon2.png',
+            purpose: 'maskable',
+          }],
+        });
+        const WebAppManifest = noUrlManifestParser(manifestSrc);
+        const InstallabilityErrors = {errors: []};
+        const artifacts = {WebAppManifest, InstallabilityErrors};
+
+        const results = await ManifestValues.request(artifacts, getMockContext());
+        const iconResults = results.allChecks.filter(i => i.id.includes('Maskable'));
+
+        assert.equal(iconResults.every(i => i.passing === true), true);
       });
     });
   });

@@ -12,7 +12,7 @@ const puppeteer = require('../../../node_modules/puppeteer/index.js');
 const {DEFAULT_CATEGORIES, STORAGE_KEYS} =
   require('../../extension/scripts/settings-controller.js');
 
-const lighthouseExtensionPath = path.resolve(__dirname, '../../../dist/extension');
+const lighthouseExtensionPath = path.resolve(__dirname, '../../../dist/extension-chrome');
 
 const mockStorage = {
   [STORAGE_KEYS.Categories]: {
@@ -66,6 +66,11 @@ describe('Lighthouse chrome popup', function() {
       Object.defineProperty(chrome, 'runtime', {
         get: () => ({
           getManifest: () => ({}),
+        }),
+      });
+      Object.defineProperty(chrome, 'i18n', {
+        get: () => ({
+          getMessage: () => '__LOCALIZED_STRING__',
         }),
       });
     }, mockStorage);

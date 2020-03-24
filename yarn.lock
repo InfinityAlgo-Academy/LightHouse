@@ -569,6 +569,13 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.3.tgz#bdfd69d61e464dcc81b25159c270d75a73c1a636"
   integrity sha512-Il2DtDVRGDcqjDtE+rF8iqg1CArehSK84HZJCT7AMITlyXRBpuPhqGLDQMowraqqu1coEaimg4ZOqggt6L6L+A==
 
+"@types/lodash.clonedeep@^4.5.6":
+  version "4.5.6"
+  resolved "https://registry.yarnpkg.com/@types/lodash.clonedeep/-/lodash.clonedeep-4.5.6.tgz#3b6c40a0affe0799a2ce823b440a6cf33571d32b"
+  integrity sha512-cE1jYr2dEg1wBImvXlNtp0xDoS79rfEdGozQVgliDZj1uERH4k+rmEMTudP9b4VQ8O6nRb5gPqft0QzEQGMQgA==
+  dependencies:
+    "@types/lodash" "*"
+
 "@types/lodash.isequal@^4.5.2":
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/@types/lodash.isequal/-/lodash.isequal-4.5.2.tgz#adbdff67f7c956ed703009e5466a34eeddb0b712"
@@ -2679,10 +2686,10 @@ detective@^5.0.2:
     defined "^1.0.0"
     minimist "^1.1.1"
 
-devtools-protocol@0.0.729809:
-  version "0.0.729809"
-  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.729809.tgz#cfedb8ffdc63a9c5ee04e502d451f5cd1d07b577"
-  integrity sha512-gmSmtI47WSuXmLub16N3FbhJ9PPPZOlj530uZVUQAnm+9OVIB7XTK3q2lk0OH42blGG0BAaKJsdyvYU3nOprhA==
+devtools-protocol@0.0.739646:
+  version "0.0.739646"
+  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.739646.tgz#21890f4695461c7fc7ecd04d64674f5e57e9640b"
+  integrity sha512-n3oUZQktxIGCc0sT0oF/nwlYvnLqNDWPxYHx/0OJhhuQs4UtW2OICj6N7FNfPaam5jMHdP9zXb5raHOJQkNzqA==
 
 diff-sequences@^24.9.0:
   version "24.9.0"
@@ -5230,6 +5237,11 @@ lodash.assign@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/lodash.assign/-/lodash.assign-4.2.0.tgz#0d99f3ccd7a6d261d19bdaeb9245005d285808e7"
   integrity sha1-DZnzzNem0mHRm9rrkkUAXShYCOc=
+
+lodash.clonedeep@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
+  integrity sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=
 
 lodash.defaults@^4.2.0:
   version "4.2.0"

@@ -5,8 +5,9 @@
  */
 'use strict';
 
-/** @fileoverview Temporary config for new source map features.
- * Allows for source map audits to land in master without being enabled by default.
+/**
+ * @fileoverview Config for new audits that aren't quite ready for
+ * being enabled by default.
  */
 
 /** @type {LH.Config.Json} */
@@ -19,15 +20,15 @@ const config = {
     ],
   }],
   audits: [
-    'bundle-visualization-data',
+    'treemap-data',
+    'legacy-javascript',
   ],
   // @ts-ignore: `title` is required in CategoryJson. setting to the same value as the default
   // config is awkward - easier to omit the property here. Will defer to default config.
   categories: {
     'performance': {
       auditRefs: [
-        // About to be added.
-        // {id: 'bundle-duplication', weight: 0, group: 'load-opportunities'},
+        {id: 'legacy-javascript', weight: 0, group: 'diagnostics'},
       ],
     },
   },

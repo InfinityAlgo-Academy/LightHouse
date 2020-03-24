@@ -152,9 +152,9 @@ const expectations = [
                 totalBytes: 12913,
                 wastedBytes: 5827,
                 sources: [
-                  'webpack:///./b.js',
-                  'webpack:///./c.js',
-                  'webpack:///webpack/bootstrap',
+                  '…./b.js',
+                  '…./c.js',
+                  '…webpack/bootstrap',
                 ],
                 sourceBytes: [
                   4417,

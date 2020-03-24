@@ -10,9 +10,9 @@ const fs = require('fs');
 const JSBundles = require('../../computed/js-bundles.js');
 
 function load(name) {
-  const mapData = fs.readFileSync(`${__dirname}/../fixtures/source-maps/${name}.js.map`, 'utf-8');
+  const mapJson = fs.readFileSync(`${__dirname}/../fixtures/source-maps/${name}.js.map`, 'utf-8');
   const content = fs.readFileSync(`${__dirname}/../fixtures/source-maps/${name}.js`, 'utf-8');
-  return {map: JSON.parse(mapData), content};
+  return {map: JSON.parse(mapJson), content};
 }
 
 describe('JSBundles computed artifact', () => {

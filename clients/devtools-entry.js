@@ -9,23 +9,34 @@ const lighthouse = require('../lighthouse-core/index.js');
 const RawProtocol = require('../lighthouse-core/gather/connections/raw.js');
 const log = require('lighthouse-logger');
 const {registerLocaleData, lookupLocale} = require('../lighthouse-core/lib/i18n/i18n.js');
+const desktopDense4G = require('../lighthouse-core/config/constants.js').throttling.desktopDense4G;
 
 /** @typedef {import('../lighthouse-core/gather/connections/connection.js')} Connection */
 
 /**
- * Return a version of the default config, filtered to only run the specified
- * categories. If `lighthouse-plugin-publisher-ads` is in the list of
+ * Returns a config, which runs only certain categories.
+ * Varies the config to use based on device.
+ * If `lighthouse-plugin-publisher-ads` is in the list of
  * `categoryIDs` the plugin will also be run.
+ * Counterpart to the CDT code that sets flags.
+ * @see https://cs.chromium.org/chromium/src/third_party/devtools-frontend/src/front_end/lighthouse/LighthouseController.js?type=cs&q=%22const+RuntimeSettings%22+f:lighthouse+-f:out&g=0&l=250
  * @param {Array<string>} categoryIDs
+ * @param {string} device
  * @return {LH.Config.Json}
  */
-function getDefaultConfigForCategories(categoryIDs) {
+function createConfig(categoryIDs, device) {
+  /** @type {LH.SharedFlagsSettings} */
+  const settings = {
+    onlyCategories: categoryIDs,
+  };
+  if (device === 'desktop') {
+    settings.throttling = desktopDense4G;
+  }
+
   return {
     extends: 'lighthouse:default',
     plugins: ['lighthouse-plugin-publisher-ads'],
-    settings: {
-      onlyCategories: categoryIDs,
-    },
+    settings,
   };
 }
 
@@ -63,7 +74,7 @@ if (typeof self !== 'undefined') {
   // @ts-ignore
   self.runLighthouse = lighthouse;
   // @ts-ignore
-  self.getDefaultConfigForCategories = getDefaultConfigForCategories;
+  self.createConfig = createConfig;
   // @ts-ignore
   self.listenForStatus = listenForStatus;
   // @ts-ignore
