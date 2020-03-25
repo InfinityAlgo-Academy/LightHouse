@@ -3039,7 +3039,7 @@
             "title": "Remove unused CSS"
         },
         "unused-javascript": {
-            "description": "Remove unused JavaScript to reduce bytes consumed by network activity. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting).",
+            "description": "Remove unused JavaScript to reduce bytes consumed by network activity. [Learn more](https://web.dev/remove-unused-code/).",
             "details": {
                 "headings": [],
                 "items": [],
