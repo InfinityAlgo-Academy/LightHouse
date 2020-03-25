@@ -217,9 +217,9 @@ class TreemapViewer {
     this.mode = mode;
 
     if (mode.rootNodeId === 'javascript') {
-      const children = this.rootNodes
-        .filter(rootNode => rootNode.group === mode.rootNodeId)
-        .map(rootNode => rootNode.node);
+      const rootNodes = this.rootNodes
+        .filter(rootNode => rootNode.group === mode.rootNodeId); 
+      const children = rootNodes.map(rootNode => rootNode.node);
       this.currentRootNode = {
         originalId: this.documentUrl,
         bytes: children.reduce((acc, cur) => cur.bytes + acc, 0),
@@ -227,8 +227,11 @@ class TreemapViewer {
         executionTime: children.reduce((acc, cur) => (cur.executionTime || 0) + acc, 0),
         children,
       };
+      createViewModes(rootNodes);
     } else {
-      this.currentRootNode = this.rootNodes.find(rootNode => rootNode.id === mode.rootNodeId).node;
+      const rootNode = this.rootNodes.find(rootNode => rootNode.id === mode.rootNodeId);
+      this.currentRootNode = rootNode.node;
+      createViewModes([rootNode]);
     }
     // Clone because data is modified.
     this.currentRootNode = JSON.parse(JSON.stringify(this.currentRootNode));
@@ -395,17 +398,22 @@ function createHeader(options) {
 }
 
 /**
- * @param {Options} options
+ * @param {RootNode[]} rootNodes
  */
-function createViewModes(options) {
-  const javascriptRootNodes = options.rootNodes.filter(n => n.group === 'javascript');
+function createViewModes(rootNodes) {
+  const javascriptRootNodes = rootNodes.filter(n => n.group === 'javascript');
 
   const viewModesPanel = find('.panel--modals');
   function makeViewMode(name) {
     const viewModeEl = document.createElement('div');
+    viewModeEl.classList.add('view-mode');
     viewModeEl.innerText = name;
     viewModesPanel.append(viewModeEl);
   }
+
+  // TODO: Sort by savings?
+
+  viewModesPanel.innerHTML = '';
 
   let wastedBytes = 0;
   for (const rootNode of javascriptRootNodes) {
@@ -432,7 +440,7 @@ function createViewModes(options) {
     dfs(rootNode.node, node => {
       if (node.children) return; // Only consider leaf nodes.
       if (!node.duplicate) return;
-      duplicateBytes += node.wastedBytes;
+      duplicateBytes += node.bytes / 2;
     });
   }
   makeViewMode(`Duplicate Modules: ${format(duplicateBytes, 'bytes')}`);
@@ -450,7 +458,6 @@ function createViewModes(options) {
  */
 function init(options) {
   createHeader(options);
-  createViewModes(options);
   treemapViewer =
     new TreemapViewer(options.documentUrl, options.rootNodes, find('.panel--treemap'));
   treemapViewer.show({

@@ -8,6 +8,7 @@
 const Audit = require('./audit.js');
 const JsBundles = require('../computed/js-bundles.js');
 const UnusedJavaScriptSummary = require('../computed/unused-javascript-summary.js');
+const ModuleDuplication = require('../computed/module-duplication.js');
 const NetworkRecords = require('../computed/network-records.js');
 const ResourceSummary = require('../computed/resource-summary.js');
 const BootupTime = require('../audits/bootup-time.js');
@@ -18,6 +19,7 @@ const {taskGroups} = require('../lib/tracehouse/task-groups.js');
  * @typedef SourceData
  * @property {number} bytes
  * @property {number=} wastedBytes
+ * @property {boolean=} duplicate
  */
 
 /**
@@ -64,7 +66,7 @@ function prepareTreemapNodes(map, sourcesData) {
     node.bytes += data.bytes;
     if (data.wastedBytes) node.wastedBytes += data.wastedBytes;
 
-    sourcePathSegments.forEach(sourcePathSegment => {
+    sourcePathSegments.forEach((sourcePathSegment, i) => {
       if (!node.children) {
         node.children = [];
       }
@@ -78,6 +80,9 @@ function prepareTreemapNodes(map, sourcesData) {
       node = child;
       node.bytes += data.bytes;
       if (data.wastedBytes) node.wastedBytes += data.wastedBytes;
+      if (data.duplicate !== undefined && i === sourcePathSegments.length - 1) {
+        node.duplicate = data.duplicate;
+      }
     });
   }
 
@@ -248,6 +253,7 @@ class TreemapData extends Audit {
    */
   static async audit(artifacts, context) {
     const bundles = await JsBundles.request(artifacts, context);
+    const duplication = await ModuleDuplication.request(artifacts, context);
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     // TODO: this should be a computed artifact.
@@ -266,11 +272,23 @@ class TreemapData extends Audit {
         /** @type {Record<string, SourceData>} */
         const sourcesData = {};
         for (const source of Object.keys(bundle.sizes.files)) {
-          sourcesData[source] = {
+          /** @type {SourceData} */
+          const sourceData = {
             bytes: bundle.sizes.files[source],
-            wastedBytes: unusedJavascriptSummary.sourcesWastedBytes[source],
           };
+
+          if (unusedJavascriptSummary && unusedJavascriptSummary.sourcesWastedBytes) {
+            sourceData.wastedBytes = unusedJavascriptSummary.sourcesWastedBytes[source];
+          }
+
+          if (duplication) {
+            const key = ModuleDuplication._normalizeSource(source);
+            sourceData.duplicate = duplication.has(key);
+          }
+
+          sourcesData[source] = sourceData;
         }
+
         node = prepareTreemapNodes(bundle.rawMap, sourcesData);
       } else if (unusedJavascriptSummary) {
         node = {
