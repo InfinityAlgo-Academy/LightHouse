@@ -19,24 +19,37 @@ Unless required by applicable law or agreed to in writing, software distributed 
 </head>
 
 <body>
-  <header>
-    <select class="bundle-selector"></select>
-    <label>partition by</label>
-    <select class="partition-selector">
-      <option value="bytes">bytes</option>
-      <option value="wastedBytes">usage</option>
-      <option value="executionTime">execution</option>
-    </select>
-    <label>color by</label>
-    <select class="color-selector">
-      <option value="default">default</option>
-      <option value="wastedBytes">usage</option>
-      <option value="executionTime">execution</option>
-    </select>
-  </header>
-
   <main>
-    <!-- treemap goes here -->
+    <div class="panel panel--modals">
+      <ul>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+      </ul>
+    </div>
+
+    <div class="panel panel--settings">
+      <header>
+        <select class="bundle-selector"></select>
+        <label>partition by</label>
+        <select class="partition-selector">
+          <option value="bytes">bytes</option>
+          <option value="wastedBytes">usage</option>
+          <option value="executionTime">execution</option>
+        </select>
+        <label>color by</label>
+        <select class="color-selector">
+          <option value="default">default</option>
+          <option value="wastedBytes">usage</option>
+          <option value="executionTime">execution</option>
+        </select>
+      </header>
+    </div>
+
+    <div class="panel panel--treemap">
+      <!-- treemap goes here -->
+    </div>
   </main>
 
   <script src="../src/viewer.js"></script>
@@ -51,6 +64,24 @@ Unless required by applicable law or agreed to in writing, software distributed 
     }
 
     main {
+      display: grid;
+      height: 100vh;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: 0.2fr repeat(4, 1fr);
+      grid-column-gap: 0px;
+      grid-row-gap: 0px;
+    }
+
+    .panel--modals {
+      grid-area: 1 / 1 / 6 / 2;
+    }
+
+    .panel--settings {
+      grid-area: 1 / 2 / 2 / 6;
+    }
+
+    .panel--treemap {
+      grid-area: 2 / 2 / 6 / 6;
       flex-grow: 1;
     }
 

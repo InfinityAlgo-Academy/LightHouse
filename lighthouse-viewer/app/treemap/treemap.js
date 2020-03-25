@@ -400,7 +400,8 @@ function createHeader(options) {
  */
 function init(options) {
   createHeader(options);
-  treemapViewer = new TreemapViewer(options.documentUrl, options.rootNodes, find('main'));
+  treemapViewer =
+    new TreemapViewer(options.documentUrl, options.rootNodes, find('.panel--treemap'));
   treemapViewer.show({
     rootNodeId: options.id,
     partitionBy: 'bytes',
