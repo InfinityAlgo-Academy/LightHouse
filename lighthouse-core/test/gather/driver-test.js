@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -168,25 +168,6 @@ describe('.querySelector(All)', () => {
 
     const result = await driver.querySelector('meta head');
     expect(result).toBeInstanceOf(LHElement);
-  });
-
-  it('returns [] when DOM.querySelectorAll finds no node', async () => {
-    connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('DOM.getDocument', {root: {nodeId: 249}})
-      .mockResponse('DOM.querySelectorAll', {nodeIds: []});
-
-    const result = await driver.querySelectorAll('#no.matches');
-    expect(result).toEqual([]);
-  });
-
-  it('returns element when DOM.querySelectorAll finds node', async () => {
-    connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('DOM.getDocument', {root: {nodeId: 249}})
-      .mockResponse('DOM.querySelectorAll', {nodeIds: [231]});
-
-    const result = await driver.querySelectorAll('#no.matches');
-    expect(result).toHaveLength(1);
-    expect(result[0]).toBeInstanceOf(LHElement);
   });
 });
 

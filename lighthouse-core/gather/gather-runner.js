@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -130,6 +130,11 @@ class GatherRunner {
       // If storage was cleared for the run, clear at the end so Lighthouse specifics aren't cached.
       const resetStorage = !options.settings.disableStorageReset;
       if (resetStorage) await driver.clearDataForOrigin(options.requestedUrl);
+
+      // Disable fetcher, in case a gatherer enabled it.
+      // This cleanup should be removed once the only usage of
+      // fetcher (fetching arbitrary URLs) is replaced by new protocol support.
+      await driver.fetcher.disableRequestInterception();
 
       await driver.disconnect();
     } catch (err) {
@@ -644,6 +649,12 @@ class GatherRunner {
           await GatherRunner.populateBaseArtifacts(passContext);
           isFirstPass = false;
         }
+
+        // Disable fetcher for every pass, in case a gatherer enabled it.
+        // Noop if fetcher was never enabled.
+        // This cleanup should be removed once the only usage of
+        // fetcher (fetching arbitrary URLs) is replaced by new protocol support.
+        await driver.fetcher.disableRequestInterception();
       }
 
       await GatherRunner.disposeDriver(driver, options);
