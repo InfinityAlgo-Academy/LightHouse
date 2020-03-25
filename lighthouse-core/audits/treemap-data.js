@@ -32,6 +32,7 @@ const {taskGroups} = require('../lib/tracehouse/task-groups.js');
  * @property {string} id
  * @property {number=} bytes
  * @property {number=} executionTime
+ * @property {boolean=} duplicate
  * @property {Node[]=} children
  */
 

@@ -6,6 +6,7 @@
 'use strict';
 
 /** @typedef {import('../../../lighthouse-core/audits/treemap-data.js').RootNode} RootNode */
+/** @typedef {import('../../../lighthouse-core/audits/treemap-data.js').Node} Node2 */
 
 /**
  * @typedef Mode
@@ -123,6 +124,11 @@ function find(query, context = document) {
   return result;
 }
 
+/**
+ * 
+ * @param {Node2} node
+ * @param {(node: Node2) => void} fn
+ */
 function dfs(node, fn) {
   fn(node);
   if (node.children) {
@@ -389,6 +395,50 @@ function createHeader(options) {
 }
 
 /**
+ * @param {Options} options
+ */
+function createViewModes(options) {
+  const javascriptRootNodes = options.rootNodes.filter(n => n.group === 'javascript');
+
+  const viewModesPanel = find('.panel--modals');
+  function makeViewMode(name) {
+    const viewModeEl = document.createElement('div');
+    viewModeEl.innerText = name;
+    viewModesPanel.append(viewModeEl);
+  }
+
+  let wastedBytes = 0;
+  for (const rootNode of javascriptRootNodes) {
+    wastedBytes += rootNode.node.wastedBytes;
+  }
+  makeViewMode(`Unused JavaScript: ${format(wastedBytes, 'bytes')}`);
+
+  let largeBytes = 0;
+  for (const rootNode of javascriptRootNodes) {
+    if (!rootNode.node.children) continue; // Only consider bundles.
+
+    dfs(rootNode.node, node => {
+      if (node.children) return; // Only consider leaf nodes.
+      if (node.bytes < 250 * 1024) return;
+      largeBytes += node.wastedBytes;
+    });
+  }
+  makeViewMode(`Large Modules: ${format(largeBytes, 'bytes')}`);
+
+  let duplicateBytes = 0;
+  for (const rootNode of javascriptRootNodes) {
+    if (!rootNode.node.children) continue; // Only consider bundles.
+
+    dfs(rootNode.node, node => {
+      if (node.children) return; // Only consider leaf nodes.
+      if (!node.duplicate) return;
+      duplicateBytes += node.wastedBytes;
+    });
+  }
+  makeViewMode(`Duplicate Modules: ${format(duplicateBytes, 'bytes')}`);
+}
+
+/**
  * @typedef Options
  * @property {string} documentUrl
  * @property {string} id
@@ -400,6 +450,7 @@ function createHeader(options) {
  */
 function init(options) {
   createHeader(options);
+  createViewModes(options);
   treemapViewer =
     new TreemapViewer(options.documentUrl, options.rootNodes, find('.panel--treemap'));
   treemapViewer.show({
