@@ -1,7 +1,9 @@
 
 # Running Lighthouse at Scale
 
-Many Lighthouse users want to collect Lighthouse data for hundreds or thousands of URLs daily. There are three primary options for that.
+Many Lighthouse users want to collect Lighthouse data for hundreds or thousands of URLs daily. First, anyone interested should understand [how variability plays into web performance measurement](./variability.md) in the lab.
+
+There are three primary options for gathering Lighthouse data at scale.
 
 ## Option 1: Using the PSI API
 
@@ -13,7 +15,7 @@ A huge benefit of using the PSI API is that you don't need to create and maintai
 * PRO: A simple network request returns complete Lighthouse results
 * CON: The URLs must be web-accessible.
 
-Approximate Eng effort: ~5 minutes for the first result. ~30 minutes for a script that evaluates and saves the results for hundreds of URLs.
+Approx eng effort: ~5 minutes for the first result. ~30 minutes for a script that evaluates and saves the results for hundreds of URLs.
 
 ## Option 2: Using the Lighthouse CLI on cloud hardware
 
@@ -26,7 +28,7 @@ You'll be running Lighthouse CLI on your own machines, and we have guidance on t
 * PRO: Ultimate configurability
 * CON: Must create and maintain testing environment
 
-Approximate Eng effort: 1 day for the first result, after provisioning and setup. Another 2-5 days for calibrating, troubleshooting, handling interaction with cloud machines.
+Approx eng effort: 1 day for the first result, after provisioning and setup. Another 2-5 days for calibrating, troubleshooting, handling interaction with cloud machines.
 
 ## Option 3: Using Lighthouse CI in the cloud
 
@@ -37,4 +39,4 @@ The Lighthouse CI project is designed for running Lighthouse for every pushed gi
 * CON: Must create and maintain testing environment
 * CON: Must setup and maintain Lighthouse CI server
 
-Approximate Eng effort: ½ day for the first result, after provisioning and setup. Another 1-3 days for calibrating, troubleshooting, working with the API/UI.
+Approx eng effort: ½ day for the first result, after provisioning and setup. Another 1-3 days for calibrating, troubleshooting, working with the API/UI.
