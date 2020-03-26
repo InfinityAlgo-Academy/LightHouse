@@ -63,7 +63,7 @@ function prepareTreemapNodes(map, sourcesData) {
    */
   function addNode(source, data, node) {
     // Strip off the shared root.
-    const sourcePathSegments = source.replace(map.sourceRoot || '', '').split('/');
+    const sourcePathSegments = source.replace(map.sourceRoot || '', '').split(/\/+/);
     node.bytes += data.bytes;
     if (data.wastedBytes) node.wastedBytes += data.wastedBytes;
 

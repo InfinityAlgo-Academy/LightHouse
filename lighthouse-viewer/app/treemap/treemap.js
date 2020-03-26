@@ -243,7 +243,7 @@ class TreemapViewer {
 
     this.setTitle(this.currentRootNode);
     this.el.innerHTML = '';
-    this.treemap = new webtreemap.TreeMap(this.currentRootNode, {padding: [18, 3, 3, 3]});
+    this.treemap = new webtreemap.TreeMap(this.currentRootNode, { padding: [18, 3, 3, 3] });
     this.render();
   }
 
@@ -351,6 +351,9 @@ function createHeader(options) {
   const bundleSelectorEl = find('.bundle-selector');
   const partitionBySelectorEl = find('.partition-selector');
   const colorBySelectorEl = find('.color-selector');
+  
+  bundleSelectorEl.innerHTML = '';
+  
   function makeOption(value, text) {
     const optionEl = document.createElement('option');
     optionEl.value = value;
@@ -426,7 +429,7 @@ function createViewModes(rootNodes) {
   for (const rootNode of javascriptRootNodes) {
     wastedBytes += rootNode.node.wastedBytes;
   }
-  makeViewMode(`Unused JavaScript: ${format(wastedBytes, 'bytes')}`, {partitionBy: 'wastedBytes'});
+  makeViewMode(`Unused JavaScript: ${format(wastedBytes, 'bytes')}`, { partitionBy: 'wastedBytes' });
 
   let largeBytes = 0;
   for (const rootNode of javascriptRootNodes) {
@@ -434,11 +437,11 @@ function createViewModes(rootNodes) {
 
     dfs(rootNode.node, node => {
       if (node.children) return; // Only consider leaf nodes.
-      if (node.bytes < 250 * 1024) return;
+      if (node.bytes < 200 * 1024) return;
       largeBytes += node.wastedBytes;
     });
   }
-  makeViewMode(`Large Modules: ${format(largeBytes, 'bytes')}`, {partitionBy: 'bytes', colorBy: 'default'});
+  makeViewMode(`Large Modules: ${format(largeBytes, 'bytes')}`, { partitionBy: 'bytes', colorBy: 'default' });
 
   let duplicateBytes = 0;
   for (const rootNode of javascriptRootNodes) {
@@ -450,7 +453,7 @@ function createViewModes(rootNodes) {
       duplicateBytes += node.bytes / 2;
     });
   }
-  makeViewMode(`Duplicate Modules: ${format(duplicateBytes, 'bytes')}`, {partitionBy: 'bytes'});
+  makeViewMode(`Duplicate Modules: ${format(duplicateBytes, 'bytes')}`, { partitionBy: 'bytes' });
 }
 
 /**
@@ -477,7 +480,7 @@ function init(options) {
   window.__treemapViewer = treemapViewer;
 
   if (self.opener && !self.opener.closed) {
-    self.opener.postMessage({rendered: true}, '*');
+    self.opener.postMessage({ rendered: true }, '*');
   }
   if (window.ga) {
     // TODO what are these?
@@ -487,19 +490,25 @@ function init(options) {
 }
 
 function main() {
-  window.addEventListener('message', e => {
-    if (e.source !== self.opener) return;
-    const options = e.data;
-    const {documentUrl, id, rootNodes} = options;
-    if (!rootNodes || !documentUrl || !id) return;
-    init(options);
-    window.__TREEMAP_OPTIONS = options;
-  });
   if (window.__TREEMAP_OPTIONS) init(window.__TREEMAP_OPTIONS);
+  else {
+    window.addEventListener('message', e => {
+      if (e.source !== self.opener) return;
+      const options = e.data;
+      const { documentUrl, id, rootNodes } = options;
+      if (!rootNodes || !documentUrl || !id) return;
+      init(options);
+
+      // Allows for saving the document and loading with data intact.
+      const scriptEl = document.createElement('script');
+      scriptEl.innerText = `window.__TREEMAP_OPTIONS = ${JSON.stringify(options)};`;
+      document.head.append(scriptEl);
+    });
+  }
 
   // If the page was opened as a popup, tell the opening window we're ready.
   if (self.opener && !self.opener.closed) {
-    self.opener.postMessage({opened: true}, '*');
+    self.opener.postMessage({ opened: true }, '*');
   }
 
   window.addEventListener('resize', () => {
@@ -524,4 +533,4 @@ function main() {
   });
 }
 
-main();
+document.addEventListener('DOMContentLoaded', main);
