@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -395,6 +395,15 @@ declare global {
         isPicture: boolean;
         /** Flags whether this element was sized using a non-default `object-fit` CSS property. */
         usesObjectFit: boolean;
+        /** Flags whether this element was rendered using a pixel art scaling method.
+         *  See https://developer.mozilla.org/en-US/docs/Games/Techniques/Crisp_pixel_art_look for
+         *  details.
+         */
+        usesPixelArtScaling: boolean;
+        /** Flags whether the image has a srcset with density descriptors.
+         *  See https://html.spec.whatwg.org/multipage/images.html#pixel-density-descriptor
+         */
+        usesSrcSetDensityDescriptor: boolean;
         /** The size of the underlying image file in bytes. 0 if the file could not be identified. */
         resourceSize: number;
         /** The MIME type of the underlying image file. */
@@ -542,6 +551,7 @@ declare global {
         traceEnd: number;
         load?: number;
         domContentLoaded?: number;
+        cumulativeLayoutShift?: number;
       }
 
       export interface TraceOfTab {
@@ -610,9 +620,12 @@ declare global {
         estimatedInputLatency: number;
         estimatedInputLatencyTs: number | undefined;
         maxPotentialFID: number | undefined;
+        cumulativeLayoutShift: number | undefined;
         totalBlockingTime: number;
         observedNavigationStart: number;
         observedNavigationStartTs: number;
+        observedCumulativeLayoutShift: number | undefined;
+        observedCumulativeLayoutShiftTs: number | undefined;
         observedFirstPaint: number | undefined;
         observedFirstPaintTs: number | undefined;
         observedFirstContentfulPaint: number;

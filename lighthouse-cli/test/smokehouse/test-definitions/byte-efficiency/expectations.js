@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -149,22 +149,22 @@ const expectations = [
               },
               {
                 url: 'http://localhost:10200/byte-efficiency/bundle.js',
-                totalBytes: 12913,
-                wastedBytes: 5827,
+                totalBytes: '12913 +/- 1000',
+                wastedBytes: '5827 +/- 200',
                 sources: [
                   '…./b.js',
                   '…./c.js',
                   '…webpack/bootstrap',
                 ],
                 sourceBytes: [
-                  4417,
-                  2200,
-                  2809,
+                  '4417 +/- 50',
+                  '2200 +/- 50',
+                  '2809 +/- 50',
                 ],
                 sourceWastedBytes: [
-                  2191,
-                  2182,
-                  1259,
+                  '2191 +/- 50',
+                  '2182 +/- 50',
+                  '1259 +/- 50',
                 ],
               },
             ],

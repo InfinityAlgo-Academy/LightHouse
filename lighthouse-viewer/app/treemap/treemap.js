@@ -6,6 +6,14 @@
 'use strict';
 
 /** @typedef {import('../../../lighthouse-core/audits/treemap-data.js').RootNode} RootNode */
+/** @typedef {import('../../../lighthouse-core/audits/treemap-data.js').Node} Node2 */
+
+/**
+ * @typedef Mode
+ * @property {string} rootNodeId
+ * @property {string} partitionBy
+ * @property {string} colorBy
+ */
 
 /** @type {TreemapViewer} */
 let treemapViewer;
@@ -21,6 +29,25 @@ const COLOR_HUES = [
   const rgb = hexParts.map(part => parseInt(part, 16));
   return rgb2hue(...rgb);
 });
+
+/**
+ * @template T
+ * @param {T[]} items
+ * @return {T|null}
+ */
+function stableHasher(items) {
+  // Clone.
+  items = [...items];
+
+  const assignedItems = {};
+  return hash => {
+    if (hash in assignedItems) return assignedItems[hash];
+    if (items.length === 0) return null;
+    const [assignedColor] = items.splice(hash % items.length, 1);
+    assignedItems[hash] = assignedColor;
+    return assignedColor;
+  };
+}
 
 /**
  * Brilliant code by akinuri
@@ -75,6 +102,12 @@ function formatBytes(bytes) {
   return bytes + ' B';
 }
 
+function format(value, unit) {
+  if (unit === 'bytes') return formatBytes(value);
+  if (unit === 'time') return `${value} ms`;
+  return `${value} ${unit}`;
+}
+
 /**
  * Guaranteed context.querySelector. Always returns an element or throws if
  * nothing matches query.
@@ -91,6 +124,11 @@ function find(query, context = document) {
   return result;
 }
 
+/**
+ *
+ * @param {Node2} node
+ * @param {(node: Node2) => void} fn
+ */
 function dfs(node, fn) {
   fn(node);
   if (node.children) {
@@ -113,6 +151,27 @@ function elide(string, length) {
   return string.slice(0, length) + '…';
 }
 
+function sortByPrecedence(precedence, a, b) {
+  const aIndex = precedence.indexOf(a);
+  const bIndex = precedence.indexOf(b);
+
+  // If neither value has a title with a predefined order, use an alphabetical comparison.
+  if (aIndex === -1 && bIndex === -1) {
+    return a.localeCompare(b);
+  }
+
+  // If just one value has a title with a predefined order, it is greater.
+  if (aIndex === -1 && bIndex >= 0) {
+    return 1;
+  }
+  if (bIndex === -1 && aIndex >= 0) {
+    return -1;
+  }
+
+  // Both values have a title with a predefined order, so do a simple comparison.
+  return aIndex - bIndex;
+}
+
 class TreemapViewer {
   /**
    * @param {string} documentUrl
@@ -126,8 +185,9 @@ class TreemapViewer {
         rootNode.node = {
           id: rootNode.id,
           children: [rootNode.node],
-          size: rootNode.node.size,
+          bytes: rootNode.node.bytes,
           wastedBytes: rootNode.node.wastedBytes,
+          executionTime: rootNode.node.executionTime,
         };
 
         // Remove the extra layer of nodes, but only if it is just '/'.
@@ -141,37 +201,45 @@ class TreemapViewer {
       dfs(rootNode.node, node => node.originalId = node.id);
       const idHash = [...rootNode.id].reduce((acc, char) => acc + char.charCodeAt(0), 0);
       dfs(rootNode.node, node => node.idHash = idHash);
-      webtreemap.sort(rootNode.node);
     }
 
     this.documentUrl = documentUrl;
     this.rootNodes = rootNodes;
     this.el = el;
     this.currentRootNode = null;
+    this.getHue = stableHasher(COLOR_HUES);
   }
 
   /**
-   * @param {string} id
-   * @param {string} mode
+   * @param {Mode} mode
    */
-  show(id, mode) {
-    if (id === 'javascript') {
-      const children = this.rootNodes
-        .filter(rootNode => rootNode.group === id)
-        .map(rootNode => rootNode.node);
+  show(mode) {
+    this.mode = mode;
+
+    if (mode.rootNodeId === 'javascript') {
+      const rootNodes = this.rootNodes
+        .filter(rootNode => rootNode.group === mode.rootNodeId);
+      const children = rootNodes.map(rootNode => rootNode.node);
       this.currentRootNode = {
         originalId: this.documentUrl,
-        size: children.reduce((acc, cur) => cur.size + acc, 0),
+        bytes: children.reduce((acc, cur) => cur.bytes + acc, 0),
         wastedBytes: children.reduce((acc, cur) => cur.wastedBytes + acc, 0),
+        executionTime: children.reduce((acc, cur) => (cur.executionTime || 0) + acc, 0),
         children,
       };
-      webtreemap.sort(this.currentRootNode);
+      createViewModes(rootNodes);
     } else {
-      this.currentRootNode = this.rootNodes.find(rootNode => rootNode.id === id).node;
+      const rootNode = this.rootNodes.find(rootNode => rootNode.id === mode.rootNodeId);
+      this.currentRootNode = rootNode.node;
+      createViewModes([rootNode]);
     }
-    // Clone because treemap view modifies input.
+    // Clone because data is modified.
     this.currentRootNode = JSON.parse(JSON.stringify(this.currentRootNode));
-    this.mode = mode;
+
+    dfs(this.currentRootNode, node => {
+      node.size = node[mode.partitionBy];
+    });
+    webtreemap.sort(this.currentRootNode);
 
     this.setTitle(this.currentRootNode);
     this.el.innerHTML = '';
@@ -189,18 +257,68 @@ class TreemapViewer {
    * @param {any} node
    */
   setTitle(node) {
-    dfs(node, node => {
-      const {size, wastedBytes} = node;
-      // TODO: this is from pauls code
-      // node.id += ` • ${Number.bytesToString(size)} • ${Common.UIString('%.1f\xa0%%', size / total * 100)}`;
-      //                                                                    ^^ what this?
+    const total = this.currentRootNode[this.mode.partitionBy];
+    const sections = [
+      {
+        calculate: node => elide(node.originalId, 60),
+      },
+      {
+        label: this.mode.partitionBy,
+        calculate: node => {
+          const unit = this.mode.partitionBy === 'executionTime' ? 'time' : 'bytes';
+          const value = node[this.mode.partitionBy];
+          return `${format(value, unit)} (${Math.round(value / total * 100)}%)`;
+        },
+      },
+    ];
 
-      if (this.mode === 'default') {
-        const total = this.currentRootNode.size;
-        node.id = `${elide(node.originalId, 60)} • ${formatBytes(size)} • ${Math.round(size / total * 100)}%`;
-      } else if (this.mode === 'usage') {
-        node.id = `${elide(node.originalId, 60)} • ${formatBytes(size)} • ${Math.round((1 - wastedBytes / size) * 100)}% usage`;
-      }
+    if (this.mode.colorBy !== 'default') {
+      sections.push({
+        label: this.mode.colorBy,
+        calculate: node => {
+          const unit = this.mode.colorBy === 'executionTime' ? 'time' : 'bytes';
+          const value = node[this.mode.colorBy];
+          return format(value, unit);
+        },
+      });
+    }
+
+    dfs(node, node => {
+      // const {bytes, wastedBytes, executionTime} = node;
+      // TODO: this is from pauls code
+      // node.id += ` • ${Number.bytesToString(bytes)} • ${Common.UIString('%.1f\xa0%%', bytes / total * 100)}`;
+
+      node.id = sections.map(section => {
+        // Only print the label for the root node.
+        if (node === this.currentRootNode && section.label) {
+          return `${section.label}: ${section.calculate(node)}`;
+        } else {
+          return section.calculate(node);
+        }
+      }).join(' • ');
+
+      // const title = elide(node.originalId, 60);
+      // const value = node[this.mode.partitionBy];
+      // const unit = this.mode.partitionBy === 'executionTime' ? 'time' : 'bytes';
+      // // node.id = `${elide(node.originalId, 60)} • ${formatBytes(bytes)} • ${Math.round(bytes / total * 100)}%`;
+      // node.id = `${title} • ${format(value, unit)} ${this.mode.partitionBy} (${Math.round(value / total * 100)}%)`;
+
+      // if (this.mode.colorBy !== 'default' && node[this.mode.colorBy] !== undefined) {
+      //   node.id += ` • ${format(node[this.mode.colorBy], this.mode.colorBy === 'executionTime' ? 'time' : 'bytes')} ${this.mode.colorBy}`;
+      // }
+
+
+      // if (this.mode.partitionBy === 'bytes') {
+      //   const total = this.currentRootNode.bytes;
+      //   node.id = `${elide(node.originalId, 60)} • ${formatBytes(bytes)} • ${Math.round(bytes / total * 100)}%`;
+      // } else if (this.mode.partitionBy === 'wastedBytes') {
+      //   // node.id = `${elide(node.originalId, 60)} • ${formatBytes(wastedBytes)} wasted • ${Math.round((1 - wastedBytes / bytes) * 100)}% usage`;
+      //   node.id = `${elide(node.originalId, 60)} • ${formatBytes(wastedBytes)} wasted • ${Math.round(wastedBytes / this.currentRootNode.wastedBytes * 100)}%`;
+      // } else if (this.mode.partitionBy === 'executionTime' && executionTime !== undefined) {
+      //   node.id = `${elide(node.originalId, 60)} • ${Math.round(executionTime)} ms • ${Math.round(executionTime / this.currentRootNode.executionTime * 100)}%`;
+      // } else {
+      //   node.id = elide(node.originalId, 60);
+      // }
     });
   }
 
@@ -209,11 +327,15 @@ class TreemapViewer {
       if (!node.dom) return;
 
       // Choose color based on id hash so colors are stable across runs.
-      const hue = COLOR_HUES[node.idHash % COLOR_HUES.length || 0];
+      const hue = this.getHue(node.idHash);
+      if (hue === null) return;
+
       const sat = 60;
-      let lum = 40;
-      if (this.mode === 'usage') {
-        lum = 25 + (85 - 25) * (node.wastedBytes / node.size); // 25 to 85.
+      let lum = 90;
+      if (this.mode.colorBy === 'wastedBytes') {
+        lum = 25 + (85 - 25) * (1 - (node.wastedBytes / node.bytes)); // 25 to 85.
+      } else if (this.mode.colorBy === 'executionTime') {
+        lum = 25 + (85 - 25) * (1 - ((node.executionTime || 0) / this.currentRootNode.executionTime)); // 25 to 85.
       }
 
       node.dom.style.backgroundColor = hsl(hue, sat, Math.round(lum));
@@ -227,7 +349,8 @@ class TreemapViewer {
  */
 function createHeader(options) {
   const bundleSelectorEl = find('.bundle-selector');
-  const modeSelectorEl = find('.mode-selector');
+  const partitionBySelectorEl = find('.partition-selector');
+  const colorBySelectorEl = find('.color-selector');
   function makeOption(value, text) {
     const optionEl = document.createElement('option');
     optionEl.value = value;
@@ -236,22 +359,98 @@ function createHeader(options) {
   }
 
   function onChange() {
-    treemapViewer.show(bundleSelectorEl.value, modeSelectorEl.value);
+    treemapViewer.show({
+      rootNodeId: bundleSelectorEl.value,
+      partitionBy: partitionBySelectorEl.value,
+      colorBy: colorBySelectorEl.value,
+    });
   }
 
-  const hasJavascript = options.rootNodes.some(rootNode => rootNode.group === 'javascript');
-  if (hasJavascript) {
-    makeOption('javascript', `${elide(options.documentUrl, 70)} (all javascript)`);
-  }
-
+  /** @type {Map<string, RootNode[]>} */
+  const nodesByGroup = new Map();
   for (const rootNode of options.rootNodes) {
-    if (!rootNode.node.children) continue; // Only add bundles.
-    makeOption(rootNode.id, elide(rootNode.id, 80));
+    const nodes = nodesByGroup.get(rootNode.group) || [];
+    nodes.push(rootNode);
+    nodesByGroup.set(rootNode.group, nodes);
+  }
+
+  const groups = [...nodesByGroup.keys()]
+    .sort((a, b) => sortByPrecedence(['javascript'], a, b));
+  for (const group of groups) {
+    const rootNodes = nodesByGroup.get(group);
+    const aggregateNodes = rootNodes.length > 1 && group !== 'misc';
+
+    if (aggregateNodes) {
+      makeOption(group, `All ${group}`);
+    }
+
+    for (const rootNode of rootNodes) {
+      if (!rootNode.node.children) continue; // Only add bundles.
+      const title = (aggregateNodes ? '- ' : '') + elide(rootNode.id, 80);
+      makeOption(rootNode.id, title);
+    }
   }
 
   bundleSelectorEl.value = options.id;
   bundleSelectorEl.addEventListener('change', onChange);
-  modeSelectorEl.addEventListener('change', onChange);
+  partitionBySelectorEl.addEventListener('change', onChange);
+  colorBySelectorEl.addEventListener('change', onChange);
+}
+
+/**
+ * @param {RootNode[]} rootNodes
+ */
+function createViewModes(rootNodes) {
+  const javascriptRootNodes = rootNodes.filter(n => n.group === 'javascript');
+
+  const viewModesPanel = find('.panel--modals');
+  function makeViewMode(name, modeOptions) {
+    const viewModeEl = document.createElement('div');
+    viewModeEl.classList.add('view-mode');
+    viewModeEl.innerText = name;
+    viewModeEl.addEventListener('click', () => {
+      treemapViewer.show({
+        ...treemapViewer.mode,
+        ...modeOptions,
+      });
+    });
+
+    viewModesPanel.append(viewModeEl);
+  }
+
+  // TODO: Sort by savings?
+
+  viewModesPanel.innerHTML = '';
+
+  let wastedBytes = 0;
+  for (const rootNode of javascriptRootNodes) {
+    wastedBytes += rootNode.node.wastedBytes;
+  }
+  makeViewMode(`Unused JavaScript: ${format(wastedBytes, 'bytes')}`, {partitionBy: 'wastedBytes'});
+
+  let largeBytes = 0;
+  for (const rootNode of javascriptRootNodes) {
+    if (!rootNode.node.children) continue; // Only consider bundles.
+
+    dfs(rootNode.node, node => {
+      if (node.children) return; // Only consider leaf nodes.
+      if (node.bytes < 250 * 1024) return;
+      largeBytes += node.wastedBytes;
+    });
+  }
+  makeViewMode(`Large Modules: ${format(largeBytes, 'bytes')}`, {partitionBy: 'bytes', colorBy: 'default'});
+
+  let duplicateBytes = 0;
+  for (const rootNode of javascriptRootNodes) {
+    if (!rootNode.node.children) continue; // Only consider bundles.
+
+    dfs(rootNode.node, node => {
+      if (node.children) return; // Only consider leaf nodes.
+      if (!node.duplicate) return;
+      duplicateBytes += node.bytes / 2;
+    });
+  }
+  makeViewMode(`Duplicate Modules: ${format(duplicateBytes, 'bytes')}`, {partitionBy: 'bytes'});
 }
 
 /**
@@ -261,29 +460,42 @@ function createHeader(options) {
  * @property {RootNode[]} rootNodes
  */
 
+/**
+ * @param {Options} options
+ */
+function init(options) {
+  createHeader(options);
+  treemapViewer =
+    new TreemapViewer(options.documentUrl, options.rootNodes, find('.panel--treemap'));
+  treemapViewer.show({
+    rootNodeId: options.id,
+    partitionBy: 'bytes',
+    colorBy: 'default',
+  });
+
+  // For debugging.
+  window.__treemapViewer = treemapViewer;
+
+  if (self.opener && !self.opener.closed) {
+    self.opener.postMessage({rendered: true}, '*');
+  }
+  if (window.ga) {
+    // TODO what are these?
+    // window.ga('send', 'event', 'treemap', 'open in viewer');
+    window.ga('send', 'event', 'report', 'open in viewer');
+  }
+}
+
 function main() {
   window.addEventListener('message', e => {
     if (e.source !== self.opener) return;
     const options = e.data;
     const {documentUrl, id, rootNodes} = options;
     if (!rootNodes || !documentUrl || !id) return;
-
-    createHeader(options);
-    treemapViewer = new TreemapViewer(documentUrl, rootNodes, find('main'));
-    treemapViewer.show(id, 'default');
-
-    // For debugging.
-    window.__treemapViewer = treemapViewer;
-
-    if (self.opener && !self.opener.closed) {
-      self.opener.postMessage({rendered: true}, '*');
-    }
-    if (window.ga) {
-      // TODO what are these?
-      // window.ga('send', 'event', 'treemap', 'open in viewer');
-      window.ga('send', 'event', 'report', 'open in viewer');
-    }
+    init(options);
+    window.__TREEMAP_OPTIONS = options;
   });
+  if (window.__TREEMAP_OPTIONS) init(window.__TREEMAP_OPTIONS);
 
   // If the page was opened as a popup, tell the opening window we're ready.
   if (self.opener && !self.opener.closed) {
@@ -306,7 +518,7 @@ function main() {
     nodeEl.classList.add('webtreemap-node--hover');
   });
   window.addEventListener('mouseout', (e) => {
-    const nodeEl = e.target.closest('.webtreemap-node');
+    const nodeEl = e.target.closest('.webtreemap-node'); COLOR_HUES;
     if (!nodeEl) return;
     nodeEl.classList.remove('webtreemap-node--hover');
   });
