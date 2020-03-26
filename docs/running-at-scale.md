@@ -7,7 +7,7 @@ There are three primary options for gathering Lighthouse data at scale.
 
 ## Option 1: Using the PSI API
 
-The default quota of the [PageSpeed Insights API](https://developers.google.com/speed/docs/insights/v5/get-started) is 25,000 requests per day. Of course, you can't test localhost or firewalled URLs using the PSI API, unless you were to use a security-concerning solution like [ngrok](https://ngrok.com/) to web-expose them.
+The default quota of the [PageSpeed Insights API](https://developers.google.com/speed/docs/insights/v5/get-started) is 25,000 requests per day. Of course, you can't test localhost or firewalled URLs using the PSI API, unless you use a security-concerning solution like [ngrok](https://ngrok.com/) to web-expose them.
 
 A huge benefit of using the PSI API is that you don't need to create and maintain [a stable testing environment](./variability.md#run-on-adequate-hardware) for Lighthouse to run.  The PSI API has Lighthouse running on Google infrastructure which offers good reproducibility.
 
@@ -32,7 +32,7 @@ Approx eng effort: 1 day for the first result, after provisioning and setup. Ano
 
 ## Option 3: Using Lighthouse CI in the cloud
 
-The Lighthouse CI project is designed for running Lighthouse for every pushed git commit, but it's possible to use it for some production monitoring usecases. See [this recipe](https://github.com/GoogleChrome/lighthouse-ci/issues/5#issuecomment-591578507) to fake git commit data while testing production URLs.
+Lighthouse CI leverages the CLI at its core and it provides a complete experience for those who want to understand how every commit affects their Lighthouse results. So while the product is designed for running Lighthouse for every pushed git commit, it's possible to use it for some production monitoring usecases. See [this recipe](https://github.com/GoogleChrome/lighthouse-ci/issues/5#issuecomment-591578507) to fake git commit data while testing production URLs.
 
 * PRO: Easy multiple-run configuration, selection of median run
 * PRO: Server UI offers timeseries graphs [(example)](https://lhci-canary.herokuapp.com/app/projects/d1e4b15c-e644-4552-b136-e975f486a2ce/dashboard) supported by [straightforward APIs](https://github.com/GoogleChrome/lighthouse-ci/blob/master/packages/server/src/api/routes/projects.js).
