@@ -125,7 +125,7 @@ function find(query, context = document) {
 }
 
 /**
- * 
+ *
  * @param {Node2} node
  * @param {(node: Node2) => void} fn
  */
@@ -218,7 +218,7 @@ class TreemapViewer {
 
     if (mode.rootNodeId === 'javascript') {
       const rootNodes = this.rootNodes
-        .filter(rootNode => rootNode.group === mode.rootNodeId); 
+        .filter(rootNode => rootNode.group === mode.rootNodeId);
       const children = rootNodes.map(rootNode => rootNode.node);
       this.currentRootNode = {
         originalId: this.documentUrl,
@@ -404,10 +404,17 @@ function createViewModes(rootNodes) {
   const javascriptRootNodes = rootNodes.filter(n => n.group === 'javascript');
 
   const viewModesPanel = find('.panel--modals');
-  function makeViewMode(name) {
+  function makeViewMode(name, modeOptions) {
     const viewModeEl = document.createElement('div');
     viewModeEl.classList.add('view-mode');
     viewModeEl.innerText = name;
+    viewModeEl.addEventListener('click', () => {
+      treemapViewer.show({
+        ...treemapViewer.mode,
+        ...modeOptions,
+      });
+    });
+
     viewModesPanel.append(viewModeEl);
   }
 
@@ -419,7 +426,7 @@ function createViewModes(rootNodes) {
   for (const rootNode of javascriptRootNodes) {
     wastedBytes += rootNode.node.wastedBytes;
   }
-  makeViewMode(`Unused JavaScript: ${format(wastedBytes, 'bytes')}`);
+  makeViewMode(`Unused JavaScript: ${format(wastedBytes, 'bytes')}`, {partitionBy: 'wastedBytes'});
 
   let largeBytes = 0;
   for (const rootNode of javascriptRootNodes) {
@@ -431,7 +438,7 @@ function createViewModes(rootNodes) {
       largeBytes += node.wastedBytes;
     });
   }
-  makeViewMode(`Large Modules: ${format(largeBytes, 'bytes')}`);
+  makeViewMode(`Large Modules: ${format(largeBytes, 'bytes')}`, {partitionBy: 'bytes', colorBy: 'default'});
 
   let duplicateBytes = 0;
   for (const rootNode of javascriptRootNodes) {
@@ -443,7 +450,7 @@ function createViewModes(rootNodes) {
       duplicateBytes += node.bytes / 2;
     });
   }
-  makeViewMode(`Duplicate Modules: ${format(duplicateBytes, 'bytes')}`);
+  makeViewMode(`Duplicate Modules: ${format(duplicateBytes, 'bytes')}`, {partitionBy: 'bytes'});
 }
 
 /**
