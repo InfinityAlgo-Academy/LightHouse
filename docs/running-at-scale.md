@@ -21,7 +21,7 @@ Approx eng effort: ~5 minutes for the first result. ~30 minutes for a script tha
 
 The [Lighthouse CLI](https://github.com/GoogleChrome/lighthouse#using-the-node-cli) is the foundation of most advanced uses of Lighthouse and provides considerable configuration possibilities. For example, you could launch a fresh Chrome in a debuggable state (`chrome-debug --port=9222`) and then have Lighthouse repeatedly reuse the same Chrome. (`lighthouse <url> --port=9222`). That said, we wouldn't recommend this above a hundred loads, as state can accrue in a Chrome profile. Using a fresh profile for each Lighthouse run is the best approach for reproducible results.
 
-Many teams have wrapped around the Lighthouse CLI with bash or python scripts. [multihouse](https://github.com/samdutton/multihouse) and [lighthouse-batch](https://www.npmjs.com/package/lighthouse-batch) both leverage this pattern.
+Many teams have wrapped around the Lighthouse CLI with bash, python, or node scripts. The npm modules [multihouse](https://github.com/samdutton/multihouse) and [lighthouse-batch](https://www.npmjs.com/package/lighthouse-batch) both leverage this pattern.
 
 You'll be running Lighthouse CLI on your own machines, and we have guidance on the [specs of machines suitable](./variability.md#run-on-adequate-hardware) for running Lighthouse without skewing performance results. The environment must also be able to run either headful Chrome or headless Chrome.
 
@@ -32,7 +32,7 @@ Approx eng effort: 1 day for the first result, after provisioning and setup. Ano
 
 ## Option 3: Using Lighthouse CI in the cloud
 
-Lighthouse CI leverages the CLI at its core and it provides a complete experience for those who want to understand how every commit affects their Lighthouse results. So while the product is designed for running Lighthouse for every pushed git commit, it's possible to use it for some production monitoring usecases. See [this recipe](https://github.com/GoogleChrome/lighthouse-ci/issues/5#issuecomment-591578507) to fake git commit data while testing production URLs.
+[Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci#readme) leverages the CLI at its core and it provides a complete experience for those who want to understand how each commit in development affects their Lighthouse results. So while the product is designed for running Lighthouse for every pushed git commit, it's possible to use it for some production monitoring usecases. See [this recipe](https://github.com/GoogleChrome/lighthouse-ci/issues/5#issuecomment-591578507) to fake git commit data while testing production URLs.
 
 * PRO: Easy multiple-run configuration, selection of median run
 * PRO: Server UI offers timeseries graphs [(example)](https://lhci-canary.herokuapp.com/app/projects/d1e4b15c-e644-4552-b136-e975f486a2ce/dashboard) supported by [straightforward APIs](https://github.com/GoogleChrome/lighthouse-ci/blob/master/packages/server/src/api/routes/projects.js).
