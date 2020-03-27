@@ -196,9 +196,6 @@ Object {
       "path": "accessibility/aria-valid-attr",
     },
     Object {
-      "path": "accessibility/audio-caption",
-    },
-    Object {
       "path": "accessibility/button-name",
     },
     Object {
@@ -488,11 +485,6 @@ Object {
         Object {
           "group": "a11y-aria",
           "id": "aria-valid-attr",
-          "weight": 10,
-        },
-        Object {
-          "group": "a11y-audio-video",
-          "id": "audio-caption",
           "weight": 10,
         },
         Object {

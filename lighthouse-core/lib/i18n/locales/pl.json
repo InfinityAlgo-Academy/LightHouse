@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Atrybuty `[aria-*]` są prawidłowe i nie ma w nich literówek"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Dzięki napisom z elementów audio mogą korzystać osoby niesłyszące i słabosłyszące. Napisy zawierają ważne informacje na przykład o tym, kto i co mówi, a także informacje niedotyczące mowy. [Więcej informacji](https://web.dev/audio-caption/)"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "Elementy `<audio>` nie mają elementu `<track>` z atrybutem `[kind=\"captions\"]`."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "Elementy `<audio>` zawierają element `<track>` z atrybutem `[kind=\"captions\"]`"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Nieprawidłowe elementy"
   },

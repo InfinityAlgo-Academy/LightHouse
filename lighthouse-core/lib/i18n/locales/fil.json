@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Valid at hindi mali ang spelling ng mga attribute na `[aria-*]`"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Ginagawang kapaki-pakinabang ng mga caption ang mga element ng audio para sa mga user na bingi o may problema sa pandinig, nagbibigay ng mahalagang impormasyon gaya ng kung sino ang nagsasalita, ano ang kanilang sinasabi, at iba pang hindi binibigkas na impormasyon. [Matuto pa](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "May kulang na element na `<track>` na may `[kind=\"captions\"]` ang mga element na `<audio>`"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "Naglalaman ng element na `<track>` na may `[kind=\"captions\"]` ang mga element na `<audio>`"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Mga Hindi Nakapasang Element"
   },

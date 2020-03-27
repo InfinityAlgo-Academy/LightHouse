@@ -1817,13 +1817,6 @@
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
-    "audio-caption": {
-      "id": "audio-caption",
-      "title": "`<audio>` elements contain a `<track>` element with `[kind=\"captions\"]`",
-      "description": "Captions make audio elements usable for deaf or hearing-impaired users, providing critical information such as who is talking, what they're saying, and other non-speech information. [Learn more](https://web.dev/audio-caption/).",
-      "score": null,
-      "scoreDisplayMode": "notApplicable"
-    },
     "button-name": {
       "id": "button-name",
       "title": "Buttons have an accessible name",
@@ -3968,11 +3961,6 @@
           "group": "a11y-aria"
         },
         {
-          "id": "audio-caption",
-          "weight": 0,
-          "group": "a11y-audio-video"
-        },
-        {
           "id": "button-name",
           "weight": 10,
           "group": "a11y-names-labels"
@@ -5081,12 +5069,6 @@
       {
         "startTime": 0,
         "name": "lh:audit:aria-valid-attr",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:audit:audio-caption",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6270,12 +6252,6 @@
       ],
       "lighthouse-core/audits/accessibility/aria-valid-attr.js | description": [
         "audits[aria-valid-attr].description"
-      ],
-      "lighthouse-core/audits/accessibility/audio-caption.js | title": [
-        "audits[audio-caption].title"
-      ],
-      "lighthouse-core/audits/accessibility/audio-caption.js | description": [
-        "audits[audio-caption].description"
       ],
       "lighthouse-core/audits/accessibility/button-name.js | title": [
         "audits[button-name].title"

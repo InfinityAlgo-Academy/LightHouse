@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Atributai „`[aria-*]`“ yra tinkami, rašybos klaidų nėra"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Nurodžius antraštes garso įrašų elementus gali naudoti kurtieji arba sutrikusios klausos naudotojai. Jiems teikiama svarbi informacija, pvz., kas kalba, kas sakoma ir kita nekalbinė informacija. [Sužinokite daugiau](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "Elementuose „`<audio>`“ trūksta elemento „`<track>`“ su atributu „`[kind=\"captions\"]`“."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "Elementuose „`<audio>`“ yra elementas „`<track>`“ su atributu „`[kind=\"captions\"]`“"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Netinkami elementai"
   },

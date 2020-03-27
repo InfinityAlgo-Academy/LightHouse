@@ -286,7 +286,7 @@ const expectations = [
                 node: {
                   'type': 'node',
                   'selector': 'textarea[aria-label="text1"]',
-                  'path': '2,HTML,1,BODY,31,SECTION,0,TEXTAREA',
+                  'path': '2,HTML,1,BODY,29,SECTION,0,TEXTAREA',
                   'snippet': '<textarea id="duplicate-id-active" aria-label="text1"></textarea>',
                   'explanation': 'Fix any of the following:\n  Document has active elements with the same id attribute: duplicate-id-active',
                   'nodeLabel': 'text1',
@@ -303,7 +303,7 @@ const expectations = [
                 node: {
                   'type': 'node',
                   'selector': '.duplicate-id-aria',
-                  'path': '2,HTML,1,BODY,33,SECTION,0,DIV',
+                  'path': '2,HTML,1,BODY,31,SECTION,0,DIV',
                   'snippet': '<div id="duplicate-id-aria" class="duplicate-id-aria">\n      <div id="duplicate-id-aria"></div>\n      <div aria-labelledby="duplicate-id-aria"></div>\n    </div>',
                   'explanation': 'Fix any of the following:\n  Document has multiple elements referenced with ARIA with the same id attribute: duplicate-id-aria',
                   'nodeLabel': 'div',
@@ -321,7 +321,7 @@ const expectations = [
                 node: {
                   'type': 'node',
                   'selector': '#form-field-multiple-labels',
-                  'path': '2,HTML,1,BODY,35,SECTION,2,INPUT',
+                  'path': '2,HTML,1,BODY,33,SECTION,2,INPUT',
                   'snippet': '<input type="checkbox" id="form-field-multiple-labels">',
                   'explanation': 'Fix all of the following:\n  Multiple label elements is not widely supported in assistive technologies. Ensure the first label contains all necessary information.',
                   'nodeLabel': 'input',
@@ -354,7 +354,7 @@ const expectations = [
                 node: {
                   'type': 'node',
                   'selector': 'h3',
-                  'path': '2,HTML,1,BODY,39,SECTION,1,H3',
+                  'path': '2,HTML,1,BODY,37,SECTION,1,H3',
                   'snippet': '<h3>sub-sub-header</h3>',
                   'explanation': 'Fix any of the following:\n  Heading order invalid',
                   'nodeLabel': 'sub-sub-header',

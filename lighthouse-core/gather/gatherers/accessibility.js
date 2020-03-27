@@ -48,6 +48,7 @@ function runA11yChecks() {
       'identical-links-same-purpose': {enabled: false},
       'no-autoplay-audio': {enabled: false},
       'svg-img-alt': {enabled: false},
+      'audio-caption': {enabled: false},
     },
     // @ts-ignore
   }).then(axeResult => {

@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Les attributs `[aria-*]` sont valides et correctement orthographiés"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Les sous-titres rendent les contenus audio accessibles aux personnes sourdes et malentendantes, en leur fournissant des informations essentielles (qui est en train de parler, ce que cette personne dit et d'autres informations non contenues dans le dialogue, par exemple). [En savoir plus](https://web.dev/audio-caption/)"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "Il manque un élément `<track>` possédant l'attribut `[kind=\"captions\"]` dans les éléments `<audio>`."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "Les éléments `<audio>` contiennent un élément `<track>` possédant l'attribut `[kind=\"captions\"]`"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Éléments non conformes"
   },

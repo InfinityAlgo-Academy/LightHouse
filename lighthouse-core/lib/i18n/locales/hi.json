@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "`[aria-*]` विशेषताएं सही हैं और उनकी वर्तनी गलत नहीं है"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "ऑडियो एलिमेंट इस्तेमाल करने वाले जो लोग सुन नहीं पाते या जिन्हें कम सुनाई देता है, वे कैप्शन का इस्तेमाल करके एलिमेंट की जानकारी पढ़ सकते हैं. साथ ही, कैप्शन यह भी बताते हैं कि कौन बा़त कर रहा है, वे क्या बोल रहे हैं, और ऐसी ही दूसरी, बोली न जाने वाली जानकारी भी कैप्शन की मदद से लोगों को पता चलती है. [ज़्यादा जानें](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "`<audio>` एलिमेंट में `[kind=\"captions\"]` के साथ `<track>` एलिमेंट नहीं है."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "`<audio>` एलिमेंट में `[kind=\"captions\"]` वाला एक `<track>` एलिमेंट है"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "फ़ेल होने वाले एलिमेंट"
   },
