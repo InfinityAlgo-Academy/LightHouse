@@ -89,7 +89,27 @@
       "scoreDisplayMode": "numeric",
       "numericValue": 4927.278,
       "numericUnit": "millisecond",
-      "displayValue": "4.9 s"
+      "displayValue": "4.9 s",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "node",
+            "itemType": "node",
+            "text": "Culprit"
+          }
+        ],
+        "items": [
+          {
+            "node": {
+              "type": "node",
+              "path": "1,HTML,1,BODY,0,DIV,1,P",
+              "selector": "body > div > p",
+              "nodeLabel": "This domain is for use in illustrative examples in documents. You may use this …"
+            }
+          }
+        ]
+      }
     },
     "first-meaningful-paint": {
       "id": "first-meaningful-paint",

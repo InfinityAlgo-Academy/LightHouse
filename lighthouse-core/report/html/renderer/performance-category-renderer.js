@@ -42,9 +42,8 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     descriptionEl.appendChild(this.dom.convertMarkdownLinkSnippets(audit.result.description));
 
     if (audit.result.details) {
-      const detailsEl = this.dom.find('.lh-metric__details', tmpl);
       const nodeTableEl = this.detailsRenderer.render(audit.result.details);
-      nodeTableEl && detailsEl.appendChild(nodeTableEl);
+      nodeTableEl && descriptionEl.appendChild(nodeTableEl);
     }
 
     if (audit.result.scoreDisplayMode === 'error') {
