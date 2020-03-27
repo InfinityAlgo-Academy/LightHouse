@@ -7,7 +7,7 @@
 
 // Example:
 //     node lighthouse-core/scripts/compare-runs.js --name my-collection --collect -n 3 --lh-flags='--only-audits=unminified-javascript' --urls https://www.example.com https://www.nyt.com
-//     node lighthouse-core/scripts/compare-runs.js --name my-collection --summarize --measure-filter 'loadPage|connect'
+//     node lighthouse-core/scripts/compare-runs.js --name my-collection --summarize --filter 'loadPage|connect'
 //     node lighthouse-core/scripts/compare-runs.js --name base --name pr --compare
 
 // The script will report both timings and perf metric results. View just one of them but using --filter:
@@ -59,7 +59,7 @@ const argv = yargs
   .default('lh-flags', '')
   .strict() // fail on unknown commands
   .wrap(yargs.terminalWidth())
-.argv;
+  .argv;
 
 const reportExcludeRegex =
   argv.reportExclude !== 'none' ? new RegExp(argv.reportExclude, 'i') : null;
@@ -117,24 +117,29 @@ function round(value) {
  * @return {string}
  */
 function getProgressBar(i, total = argv.n * argv.urls.length) {
-  return new Array(Math.round(i * 40 / total)).fill('▄').join('').padEnd(40);
+  return `${i} / ${total} [` + new Array(Math.round(i * 40 / total)).fill('▄').join('').padEnd(40) + ']';
 }
 
 async function gather() {
   const outputDir = dir(argv.name);
-  await mkdir(ROOT_OUTPUT_DIR, {recursive: true});
-  // Don't overwrite a previous collection
-  if (fs.existsSync(outputDir)) throw new Error(`folder already exists: ${outputDir}`);
-  await mkdir(outputDir);
+  if (fs.existsSync(outputDir)) {
+    console.log('Collection already started - resuming.');
+  }
+  await mkdir(outputDir, {recursive: true});
 
   const progress = new ProgressLogger();
   progress.log('Gathering…');
 
   for (const url of argv.urls) {
+    const urlFolder = `${outputDir}/${urlToFolder(url)}`;
+    await mkdir(urlFolder, {recursive: true});
+
     for (let i = 0; i < argv.n; i++) {
-      const gatherDir = `${outputDir}/${urlToFolder(url)}/${i}/`;
-      await mkdir(gatherDir, {recursive: true});
+      const gatherDir = `${urlFolder}/${i}`;
       progress.progress(getProgressBar(i));
+
+      // Skip if already gathered. Allows for restarting collection.
+      if (fs.existsSync(gatherDir)) continue;
 
       const cmd = [
         'node',
@@ -155,8 +160,9 @@ async function audit() {
   progress.log('Auditing…');
 
   for (const url of argv.urls) {
+    const urlDir = `${outputDir}/${urlToFolder(url)}`;
     for (let i = 0; i < argv.n; i++) {
-      const gatherDir = `${outputDir}/${urlToFolder(url)}/${i}/`;
+      const gatherDir = `${urlDir}/${i}`;
       progress.progress(getProgressBar(i));
 
       const cmd = [
@@ -164,7 +170,7 @@ async function audit() {
         `${LH_ROOT}/lighthouse-cli`,
         url,
         `--audit-mode=${gatherDir}`,
-        `--output-path=${outputDir}/lhr-${urlToFolder(url)}-${i}.json`,
+        `--output-path=${urlDir}/lhr-${i}.json`,
         '--output=json',
         argv.lhFlags,
       ].join(' ');
@@ -184,7 +190,7 @@ function aggregateResults(name) {
   /** @type {Map<string, number[]>} */
   const durationsMap = new Map();
 
-  for (const lhrPath of glob.sync(`${outputDir}/*.json`)) {
+  for (const lhrPath of glob.sync(`${outputDir}/**/lhr-*.json`)) {
     const lhrJson = fs.readFileSync(lhrPath, 'utf-8');
     /** @type {LH.Result} */
     const lhr = JSON.parse(lhrJson);
@@ -247,17 +253,20 @@ function aggregateResults(name) {
 }
 
 /**
- * @param {*[]} results
+ * @param {Array<{name: string}>} results
  */
 function filter(results) {
   const includeFilter = argv.filter ? new RegExp(argv.filter, 'i') : null;
 
   results.forEach((result, i) => {
     for (const propName of Object.keys(result)) {
-      if (reportExcludeRegex && reportExcludeRegex.test(propName)) delete result[propName];
+      if (reportExcludeRegex && reportExcludeRegex.test(propName)) {
+        // @ts-ignore: propName is a key.
+        delete result[propName];
+      }
     }
 
-    if (includeFilter && !includeFilter.test(result.key)) {
+    if (includeFilter && !includeFilter.test(result.name)) {
       delete results[i];
     }
   });
