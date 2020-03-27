@@ -18,7 +18,6 @@ function collectTraceNodes() {
 	const markedElements = getElementsInDocument('[lhtemp]'); // eslint-disable-line no-undef
 	/** @type {LH.Artifacts['TraceNodes']} */
 	const traceNodes = [];
-	debugger;
 
 	for (const element of markedElements) {
 		traceNodes.push({
@@ -29,6 +28,8 @@ function collectTraceNodes() {
 			selector: getNodeSelector(element), // eslint-disable-line no-undef
 			// @ts-ignore - put into scope via stringification
 			nodeLabel: getNodeLabel(element), // eslint-disable-line no-undef
+			// @ts-ignore - put into scope via stringification
+			snippet: getOuterHTMLSnippet(element), // eslint-disable-line no-undef
 		});
 	}
 	return traceNodes;
@@ -51,7 +52,7 @@ class TraceNodes extends Gatherer {
 		const backendNodeId = lcpEvent && lcpEvent.args && lcpEvent.args.data && lcpEvent.args.data.nodeId;
 		if (backendNodeId) {
 			// The call below is necessary for pushNodesByBackendIdsToFrontend to properly retrieve nodeIds
-			await driver.sendCommand('DOM.getDocument', {depth: -1});
+			await driver.sendCommand('DOM.getDocument', {depth: -1, pierce: true});
 			const translatedIds = await driver.sendCommand('DOM.pushNodesByBackendIdsToFrontend', {backendNodeIds: [backendNodeId]});
 			driver.setNodeAttribute(translatedIds.nodeIds[0], 'lhtemp', 'lcp');
 		}
@@ -61,6 +62,7 @@ class TraceNodes extends Gatherer {
 			${pageFunctions.getNodePathString};
 			${pageFunctions.getNodeSelectorString};
 			${pageFunctions.getNodeLabelString};
+			${pageFunctions.getOuterHTMLSnippetString};
 
 			return (${collectTraceNodes})();
 		})()`;

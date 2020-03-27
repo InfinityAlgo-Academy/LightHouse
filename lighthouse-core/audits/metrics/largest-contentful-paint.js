@@ -29,7 +29,7 @@ class LargestContentfulPaint extends Audit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['traces', 'devtoolsLogs'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'TraceNodes'],
     };
   }
 
@@ -45,6 +45,27 @@ class LargestContentfulPaint extends Audit {
   }
 
   /**
+   * @param {LH.Artifacts.TraceNode[]} traceNodes
+   * @return {LH.Audit.Details.Table['items']}
+   */
+  static getNodeData(traceNodes) {
+    const lcpNode = traceNodes.find(node => node.type === 'lcp');
+    if (!lcpNode) {
+      return [];
+    }
+
+    return [{
+      node: /** @type {LH.Audit.Details.NodeValue} */ ({
+        type: 'node',
+        path: lcpNode.nodePath,
+        selector: lcpNode.selector,
+        nodeLabel: lcpNode.nodeLabel,
+        snippet: lcpNode.snippet,
+      }),
+    }];
+  }
+
+  /**
    * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
@@ -54,6 +75,15 @@ class LargestContentfulPaint extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const metricComputationData = {trace, devtoolsLog, settings: context.settings};
     const metricResult = await ComputedLcp.request(metricComputationData, context);
+    const metricNodeData = this.getNodeData(artifacts.TraceNodes);
+
+    /** @type {LH.Audit.Details.Table['headings']} */
+    const headings = [
+      {key: 'node', itemType: 'node', text: 'Culprit'},
+    ];
+
+    const details = Audit.makeTableDetails(headings, metricNodeData);
+    
 
     return {
       score: Audit.computeLogNormalScore(
@@ -64,6 +94,7 @@ class LargestContentfulPaint extends Audit {
       numericValue: metricResult.timing,
       numericUnit: 'millisecond',
       displayValue: str_(i18n.UIStrings.seconds, {timeInMs: metricResult.timing}),
+      details,
     };
   }
 }
