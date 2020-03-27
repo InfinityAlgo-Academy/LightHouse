@@ -117,12 +117,14 @@ function round(value) {
  * @return {string}
  */
 function getProgressBar(i, total = argv.n * argv.urls.length) {
-  return `${i} / ${total} [` + new Array(Math.round(i * 40 / total)).fill('▄').join('').padEnd(40) + ']';
+  const bars = new Array(Math.round(i * 40 / total)).fill('▄').join('').padEnd(40);
+  return `${i} / ${total} [${bars}]`;
 }
 
 async function gather() {
   const outputDir = dir(argv.name);
   if (fs.existsSync(outputDir)) {
+    // eslint-disable-next-line no-console
     console.log('Collection already started - resuming.');
   }
   await mkdir(outputDir, {recursive: true});
