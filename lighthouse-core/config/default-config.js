@@ -122,6 +122,7 @@ const defaultConfig = {
     passName: 'defaultPass',
     recordTrace: true,
     useThrottling: true,
+    pauseAfterFcpMs: 1000,
     pauseAfterLoadMs: 1000,
     networkQuietThresholdMs: 1000,
     cpuQuietThresholdMs: 1000,

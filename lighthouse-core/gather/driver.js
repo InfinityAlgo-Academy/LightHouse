@@ -24,6 +24,8 @@ const pageFunctions = require('../lib/page-functions.js');
 // eslint-disable-next-line no-unused-vars
 const Connection = require('./connections/connection.js');
 
+// Controls how long to wait after FCP before continuing
+const DEFAULT_PAUSE_AFTER_FCP = 0;
 // Controls how long to wait after onLoad before continuing
 const DEFAULT_PAUSE_AFTER_LOAD = 0;
 // Controls how long to wait between network requests before determining the network is quiet
@@ -649,10 +651,11 @@ class Driver {
 
   /**
    * Returns a promise that resolve when a frame has a FCP.
+   * @param {number} pauseAfterFcpMs
    * @param {number} maxWaitForFCPMs
    * @return {{promise: Promise<void>, cancel: function(): void}}
    */
-  _waitForFCP(maxWaitForFCPMs) {
+  _waitForFCP(pauseAfterFcpMs, maxWaitForFCPMs) {
     /** @type {(() => void)} */
     let cancel = () => {
       throw new Error('_waitForFCP.cancel() called before it was defined');
@@ -662,12 +665,16 @@ class Driver {
       const maxWaitTimeout = setTimeout(() => {
         reject(new LHError(LHError.errors.NO_FCP));
       }, maxWaitForFCPMs);
+      /** @type {NodeJS.Timeout|undefined} */
+      let loadTimeout;
 
       /** @param {LH.Crdp.Page.LifecycleEventEvent} e */
       const lifecycleListener = e => {
         if (e.name === 'firstContentfulPaint') {
-          resolve();
-          cancel();
+          loadTimeout = setTimeout(() => {
+            resolve();
+            cancel();
+          }, pauseAfterFcpMs);
         }
       };
 
@@ -679,6 +686,7 @@ class Driver {
         canceled = true;
         this.off('Page.lifecycleEvent', lifecycleListener);
         maxWaitTimeout && clearTimeout(maxWaitTimeout);
+        loadTimeout && clearTimeout(loadTimeout);
         reject(new Error('Wait for FCP canceled'));
       };
     });
@@ -904,21 +912,24 @@ class Driver {
    *    - cpuQuietThresholdMs have passed since the last long task after network-2-quiet.
    * - maxWaitForLoadedMs milliseconds have passed.
    * See https://github.com/GoogleChrome/lighthouse/issues/627 for more.
+   * @param {number} pauseAfterFcpMs
    * @param {number} pauseAfterLoadMs
    * @param {number} networkQuietThresholdMs
    * @param {number} cpuQuietThresholdMs
    * @param {number} maxWaitForLoadedMs
-   * @param {number=} maxWaitForFCPMs
+   * @param {number=} maxWaitForFcpMs
    * @return {Promise<void>}
    * @private
    */
-  async _waitForFullyLoaded(pauseAfterLoadMs, networkQuietThresholdMs, cpuQuietThresholdMs,
-      maxWaitForLoadedMs, maxWaitForFCPMs) {
+  async _waitForFullyLoaded(pauseAfterFcpMs, pauseAfterLoadMs, networkQuietThresholdMs,
+      cpuQuietThresholdMs, maxWaitForLoadedMs, maxWaitForFcpMs) {
     /** @type {NodeJS.Timer|undefined} */
     let maxTimeoutHandle;
 
-    // Listener for onload. Resolves on first FCP event.
-    const waitForFCP = maxWaitForFCPMs ? this._waitForFCP(maxWaitForFCPMs) : this._waitForNothing();
+    // Listener for FCP. Resolves pauseAfterFcpMs ms after first FCP event.
+    const waitForFCP = maxWaitForFcpMs ?
+      this._waitForFCP(pauseAfterFcpMs, maxWaitForFcpMs) :
+      this._waitForNothing();
     // Listener for onload. Resolves pauseAfterLoadMs ms after load.
     const waitForLoadEvent = this._waitForLoadEvent(pauseAfterLoadMs);
     // Network listener. Resolves when the network has been idle for networkQuietThresholdMs.
@@ -926,7 +937,7 @@ class Driver {
     // CPU listener. Resolves when the CPU has been idle for cpuQuietThresholdMs after network idle.
     let waitForCPUIdle = this._waitForNothing();
 
-    // Wait for both load promises. Resolves on cleanup function the clears load
+    // Wait for all initial load promises. Resolves on cleanup function the clears load
     // timeout timer.
     const loadPromise = Promise.all([
       waitForFCP.promise,
@@ -1094,11 +1105,13 @@ class Driver {
       await this._waitForFrameNavigated();
     } else if (waitForLoad) {
       const passConfig = /** @type {Partial<LH.Config.Pass>} */ (passContext.passConfig || {});
-      let {pauseAfterLoadMs, networkQuietThresholdMs, cpuQuietThresholdMs} = passConfig;
+
+      /* eslint-disable max-len */
+      let {pauseAfterFcpMs, pauseAfterLoadMs, networkQuietThresholdMs, cpuQuietThresholdMs} = passConfig;
       let maxWaitMs = passContext.settings && passContext.settings.maxWaitForLoad;
       let maxFCPMs = passContext.settings && passContext.settings.maxWaitForFcp;
 
-      /* eslint-disable max-len */
+      if (typeof pauseAfterFcpMs !== 'number') pauseAfterFcpMs = DEFAULT_PAUSE_AFTER_FCP;
       if (typeof pauseAfterLoadMs !== 'number') pauseAfterLoadMs = DEFAULT_PAUSE_AFTER_LOAD;
       if (typeof networkQuietThresholdMs !== 'number') networkQuietThresholdMs = DEFAULT_NETWORK_QUIET_THRESHOLD;
       if (typeof cpuQuietThresholdMs !== 'number') cpuQuietThresholdMs = DEFAULT_CPU_QUIET_THRESHOLD;
@@ -1107,8 +1120,8 @@ class Driver {
       /* eslint-enable max-len */
 
       if (!waitForFCP) maxFCPMs = undefined;
-      await this._waitForFullyLoaded(pauseAfterLoadMs, networkQuietThresholdMs, cpuQuietThresholdMs,
-          maxWaitMs, maxFCPMs);
+      await this._waitForFullyLoaded(pauseAfterFcpMs, pauseAfterLoadMs, networkQuietThresholdMs,
+        cpuQuietThresholdMs, maxWaitMs, maxFCPMs);
     }
 
     // Bring `Page.navigate` errors back into the promise chain. See https://github.com/GoogleChrome/lighthouse/pull/6739.

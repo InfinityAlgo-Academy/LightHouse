@@ -28,6 +28,22 @@ module.exports = [
   },
   {
     lhr: {
+      requestedUrl: 'http://localhost:10200/tricky-tti-late-fcp.html',
+      finalUrl: 'http://localhost:10200/tricky-tti-late-fcp.html',
+      audits: {
+        'first-cpu-idle': {
+          // FCP at ~5 seconds out
+          numericValue: '>4900',
+        },
+        'interactive': {
+          // FCP at ~5 seconds out
+          numericValue: '>4900',
+        },
+      },
+    },
+  },
+  {
+    lhr: {
       requestedUrl: 'http://localhost:10200/delayed-fcp.html',
       finalUrl: 'http://localhost:10200/delayed-fcp.html',
       audits: {

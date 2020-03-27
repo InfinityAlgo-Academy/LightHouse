@@ -659,7 +659,7 @@ describe('._waitForFCP', () => {
   it('should not resolve until FCP fires', async () => {
     driver.on = driver.once = createMockOnceFn();
 
-    const waitPromise = makePromiseInspectable(driver._waitForFCP(60 * 1000).promise);
+    const waitPromise = makePromiseInspectable(driver._waitForFCP(0, 60 * 1000).promise);
     const listener = driver.on.findListener('Page.lifecycleEvent');
 
     await flushAllTimersAndMicrotasks();
@@ -675,10 +675,30 @@ describe('._waitForFCP', () => {
     await waitPromise;
   });
 
+  it('should wait for pauseAfterFcpMs after FCP', async () => {
+    driver.on = driver.once = createMockOnceFn();
+
+    const waitPromise = makePromiseInspectable(driver._waitForFCP(5000, 60 * 1000).promise);
+    const listener = driver.on.findListener('Page.lifecycleEvent');
+
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Resolved without FCP');
+
+    listener({name: 'firstContentfulPaint'});
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Did not wait for pauseAfterFcpMs');
+
+    jest.advanceTimersByTime(5001);
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).toBeDone('Did not resolve after pauseAfterFcpMs');
+
+    await waitPromise;
+  });
+
   it('should timeout', async () => {
     driver.on = driver.once = createMockOnceFn();
 
-    const waitPromise = makePromiseInspectable(driver._waitForFCP(5000).promise);
+    const waitPromise = makePromiseInspectable(driver._waitForFCP(0, 5000).promise);
 
     await flushAllTimersAndMicrotasks();
     expect(waitPromise).not.toBeDone('Resolved before timeout');
@@ -693,7 +713,7 @@ describe('._waitForFCP', () => {
     driver.on = driver.once = createMockOnceFn();
     driver.off = jest.fn();
 
-    const {promise: rawPromise, cancel} = driver._waitForFCP(5000);
+    const {promise: rawPromise, cancel} = driver._waitForFCP(0, 5000);
     const waitPromise = makePromiseInspectable(rawPromise);
 
     await flushAllTimersAndMicrotasks();

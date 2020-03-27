@@ -83,6 +83,7 @@ const defaultPassConfig = {
   loadFailureMode: 'fatal',
   recordTrace: false,
   useThrottling: false,
+  pauseAfterFcpMs: 0,
   pauseAfterLoadMs: 0,
   networkQuietThresholdMs: 0,
   cpuQuietThresholdMs: 0,
@@ -92,6 +93,7 @@ const defaultPassConfig = {
 };
 
 const nonSimulatedPassConfigOverrides = {
+  pauseAfterFcpMs: 5250,
   pauseAfterLoadMs: 5250,
   networkQuietThresholdMs: 5250,
   cpuQuietThresholdMs: 5250,
