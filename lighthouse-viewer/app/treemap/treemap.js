@@ -130,10 +130,11 @@ function find(query, context = document) {
  * @param {(node: Node2, fullId: string) => void} fn
  */
 function dfs(node, fn, fullId = '') {
-  fn(node, fullId + node.id);
+  fullId = fullId ? `${fullId}/${node.id}` : node.id;
+  fn(node, fullId);
   if (node.children) {
     for (const child of node.children) {
-      dfs(child, fn, `${fullId}/${node.id}/`);
+      dfs(child, fn, fullId);
     }
   }
 }
