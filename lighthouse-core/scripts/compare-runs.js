@@ -118,7 +118,7 @@ function round(value) {
  */
 function getProgressBar(i, total = argv.n * argv.urls.length) {
   const bars = new Array(Math.round(i * 40 / total)).fill('▄').join('').padEnd(40);
-  return `${i} / ${total} [${bars}]`;
+  return `${i + 1} / ${total} [${bars}]`;
 }
 
 async function gather() {
@@ -132,13 +132,16 @@ async function gather() {
   const progress = new ProgressLogger();
   progress.log('Gathering…');
 
+  let progressCount = 0;
   for (const url of argv.urls) {
     const urlFolder = `${outputDir}/${urlToFolder(url)}`;
     await mkdir(urlFolder, {recursive: true});
 
     for (let i = 0; i < argv.n; i++) {
       const gatherDir = `${urlFolder}/${i}`;
-      progress.progress(getProgressBar(i));
+
+      progressCount++;
+      progress.progress(getProgressBar(progressCount));
 
       // Skip if already gathered. Allows for restarting collection.
       if (fs.existsSync(gatherDir)) continue;
