@@ -127,13 +127,13 @@ function find(query, context = document) {
 /**
  *
  * @param {Node2} node
- * @param {(node: Node2) => void} fn
+ * @param {(node: Node2, fullId: string) => void} fn
  */
-function dfs(node, fn) {
-  fn(node);
+function dfs(node, fn, fullId = '') {
+  fn(node, fullId + node.id);
   if (node.children) {
     for (const child of node.children) {
-      dfs(child, fn);
+      dfs(child, fn, `${fullId}/${node.id}/`);
     }
   }
 }
@@ -228,10 +228,12 @@ class TreemapViewer {
         children,
       };
       createViewModes(rootNodes);
+      createDataGrid(rootNodes);
     } else {
       const rootNode = this.rootNodes.find(rootNode => rootNode.id === mode.rootNodeId);
       this.currentRootNode = rootNode.node;
       createViewModes([rootNode]);
+      createDataGrid([rootNode]);
     }
     // Clone because data is modified.
     this.currentRootNode = JSON.parse(JSON.stringify(this.currentRootNode));
@@ -351,9 +353,9 @@ function createHeader(options) {
   const bundleSelectorEl = find('.bundle-selector');
   const partitionBySelectorEl = find('.partition-selector');
   const colorBySelectorEl = find('.color-selector');
-  
+
   bundleSelectorEl.innerHTML = '';
-  
+
   function makeOption(value, text) {
     const optionEl = document.createElement('option');
     optionEl.value = value;
@@ -429,7 +431,7 @@ function createViewModes(rootNodes) {
   for (const rootNode of javascriptRootNodes) {
     wastedBytes += rootNode.node.wastedBytes;
   }
-  makeViewMode(`Unused JavaScript: ${format(wastedBytes, 'bytes')}`, { partitionBy: 'wastedBytes' });
+  makeViewMode(`Unused JavaScript: ${format(wastedBytes, 'bytes')}`, { partitionBy: 'bytes', colorBy: 'default' });
 
   let largeBytes = 0;
   for (const rootNode of javascriptRootNodes) {
@@ -453,7 +455,54 @@ function createViewModes(rootNodes) {
       duplicateBytes += node.bytes / 2;
     });
   }
-  makeViewMode(`Duplicate Modules: ${format(duplicateBytes, 'bytes')}`, { partitionBy: 'bytes' });
+  makeViewMode(`Duplicate Modules: ${format(duplicateBytes, 'bytes')}`, { partitionBy: 'bytes', colorBy: 'default' });
+}
+
+/**
+ * @param {RootNode[]} rootNodes
+ */
+function createDataGrid(rootNodes) {
+  const gridPanelEl = find('.panel--datagrid');
+
+  gridPanelEl.innerHTML = '';
+
+  const data = [];
+  for (const rootNode of rootNodes) {
+    let node = rootNode.node;
+    if (node.children) node = node.children[0];
+
+    dfs(node, (node, fullId) => {
+      if (node.children) return;
+
+      data.push({
+        name: fullId,
+        bytes: node.bytes,
+        wastedBytes: node.wastedBytes,
+      });
+    });
+  }
+
+  const gridEl = document.createElement('div');
+  gridPanelEl.append(gridEl);
+  const table = new Tabulator(gridEl, {
+    data,           //load row data from array
+    height: '100%',
+    layout: "fitColumns",      //fit columns to width of table
+    responsiveLayout: "hide",  //hide columns that dont fit on the table
+    tooltips: true,            //show tool tips on cells
+    addRowPos: "top",          //when adding a new row, add it to the top of the table
+    history: true,             //allow undo and redo actions on the table
+    movableColumns: true,      //allow column order to be changed
+    resizableRows: true,       //allow row order to be changed
+    initialSort: [             //set the initial sort order of the data
+      { column: "bytes", dir: "desc" },
+    ],
+    columns: [                 //define the table columns
+      { title: "Name", field: "name" },
+      { title: "Size", field: "bytes", align: "left" },
+      { title: "Unused Bytes", field: "wastedBytes", align: "left" },
+    ],
+  });
 }
 
 /**
