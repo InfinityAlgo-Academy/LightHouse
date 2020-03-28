@@ -140,8 +140,8 @@ async function gather() {
     for (let i = 0; i < argv.n; i++) {
       const gatherDir = `${urlFolder}/${i}`;
 
-      progressCount++;
       progress.progress(getProgressBar(progressCount));
+      progressCount++;
 
       // Skip if already gathered. Allows for restarting collection.
       if (fs.existsSync(gatherDir)) continue;
@@ -258,21 +258,21 @@ function aggregateResults(name) {
 }
 
 /**
- * @param {Array<{name: string}>} results
+ * @param {Array<{key: string, name: string}>} results
  */
 function filter(results) {
   const includeFilter = argv.filter ? new RegExp(argv.filter, 'i') : null;
 
   results.forEach((result, i) => {
+    if (includeFilter && !includeFilter.test(result.key)) {
+      delete results[i];
+    }
+
     for (const propName of Object.keys(result)) {
       if (reportExcludeRegex && reportExcludeRegex.test(propName)) {
         // @ts-ignore: propName is a key.
         delete result[propName];
       }
-    }
-
-    if (includeFilter && !includeFilter.test(result.name)) {
-      delete results[i];
     }
   });
 }
@@ -328,6 +328,7 @@ function compare() {
     const max = compareValues(baseResult && baseResult.max, otherResult && otherResult.max);
 
     return {
+      'key': someResult.key,
       'name': someResult.name,
       'url': someResult.url,
       'mean': mean.description,
