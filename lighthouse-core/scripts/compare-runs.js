@@ -169,16 +169,20 @@ async function audit() {
     const urlDir = `${outputDir}/${urlToFolder(url)}`;
     for (let i = 0; i < argv.n; i++) {
       const gatherDir = `${urlDir}/${i}`;
+      const outputPath = `${urlDir}/lhr-${i}.json`;
 
       progress.progress(getProgressBar(progressCount));
       progressCount++;
+
+      // Skip if already audited. Allows for restarting collection.
+      if (fs.existsSync(outputPath)) continue;
 
       const cmd = [
         'node',
         `${LH_ROOT}/lighthouse-cli`,
         url,
         `--audit-mode=${gatherDir}`,
-        `--output-path=${urlDir}/lhr-${i}.json`,
+        `--output-path=${outputPath}`,
         '--output=json',
         argv.lhFlags,
       ].join(' ');
