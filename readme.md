@@ -232,6 +232,7 @@ Useful documentation, examples, and recipes to get you started.
 - [Using Lighthouse programmatically](./docs/readme.md#using-programmatically)
 - [Testing a site with authentication](./docs/authenticated-pages.md)
 - [Developing Plugins](./docs/plugins.md)
+- [Making a New Audit](./docs/new-audits.md)
 - [Testing on a mobile device](./docs/readme.md#testing-on-a-mobile-device)
 - [Lighthouse Architecture](./docs/architecture.md)
 

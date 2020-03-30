@@ -17,7 +17,7 @@
 
 ## Introduction
 
-If you're new to Lighthouse development, start by reading up on the overall [architecture](./architecture.md) and how [configuration](./configuration.md) works before continuing.
+If you're new to Lighthouse development, start by reading up on the overall [architecture](./architecture.md), how [configuration](./configuration.md) works, and what makes a [good audit](./new-audits.md) before continuing.
 
 ### What is a Lighthouse Plugin?
 
