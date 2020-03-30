@@ -128,7 +128,7 @@
   --scorescale-width: 18px;
   --section-padding-vertical: 12px;
   --snippet-background-color: var(--color-gray-50);
-  --snippet-color: var(--color-gray-800);
+  --snippet-color: #0938C2;
   --sparkline-height: 5px;
   --stackpack-padding-horizontal: 10px;
   --sticky-header-background-color: var(--report-background-color);
@@ -187,6 +187,7 @@
     --report-text-color-secondary: var(--color-gray-400);
     --report-text-color: var(--color-gray-100);
     --topbar-background-color: var(--color-gray);
+    --snippet-color: var(--color-cyan-500);
 
     /* SVGs */
     --plugin-icon-url: var(--plugin-icon-url-dark);
@@ -413,9 +414,9 @@
 /* Node */
 .lh-node__snippet {
   font-family: var(--report-font-family-monospace);
-  color: var(--color-teal-600);
-  font-size: 12px;
-  line-height: 1.5em;
+  color: var(--snippet-color);
+  font-size: 14px;
+  line-height: 20px;
 }
 
 /* Score */
@@ -496,6 +497,11 @@
 
 .lh-audit__title-and-text {
   flex: 1;
+}
+
+.lh-audit__title-and-text code {
+  color: var(--snippet-color);
+  font-size: 15px;
 }
 
 /* Prepend display text with em dash separator. But not in Opportunities. */
@@ -1339,6 +1345,10 @@
   padding-right: 0;
 }
 
+.lh-table tr {
+  vertical-align: baseline;
+}
+
 /* Looks unnecessary, but mostly for keeping the <th>s left-aligned */
 .lh-table-column--text,
 .lh-table-column--source-location,
@@ -1367,6 +1377,10 @@
 
 .lh-table-column--url {
   min-width: 250px;
+}
+
+.lh-table-column--text {
+  min-width: 80px;
 }
 
 /* Keep columns narrow if they follow the URL column */
