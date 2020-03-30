@@ -1240,7 +1240,7 @@ class Driver {
   /**
    * @param {number} nodeId
    * @param {string} attributeName
-   * @param {string} attributeValue 
+   * @param {string} attributeValue
    */
   async setNodeAttribute(nodeId, attributeName, attributeValue) {
     await this.sendCommand('DOM.setAttributeValue', {
