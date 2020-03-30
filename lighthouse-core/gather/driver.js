@@ -652,19 +652,19 @@ class Driver {
   /**
    * Returns a promise that resolve when a frame has a FCP.
    * @param {number} pauseAfterFcpMs
-   * @param {number} maxWaitForFCPMs
+   * @param {number} maxWaitForFcpMs
    * @return {{promise: Promise<void>, cancel: function(): void}}
    */
-  _waitForFCP(pauseAfterFcpMs, maxWaitForFCPMs) {
+  _waitForFcp(pauseAfterFcpMs, maxWaitForFcpMs) {
     /** @type {(() => void)} */
     let cancel = () => {
-      throw new Error('_waitForFCP.cancel() called before it was defined');
+      throw new Error('_waitForFcp.cancel() called before it was defined');
     };
 
     const promise = new Promise((resolve, reject) => {
       const maxWaitTimeout = setTimeout(() => {
         reject(new LHError(LHError.errors.NO_FCP));
-      }, maxWaitForFCPMs);
+      }, maxWaitForFcpMs);
       /** @type {NodeJS.Timeout|undefined} */
       let loadTimeout;
 
@@ -927,8 +927,8 @@ class Driver {
     let maxTimeoutHandle;
 
     // Listener for FCP. Resolves pauseAfterFcpMs ms after first FCP event.
-    const waitForFCP = maxWaitForFcpMs ?
-      this._waitForFCP(pauseAfterFcpMs, maxWaitForFcpMs) :
+    const waitForFcp = maxWaitForFcpMs ?
+      this._waitForFcp(pauseAfterFcpMs, maxWaitForFcpMs) :
       this._waitForNothing();
     // Listener for onload. Resolves pauseAfterLoadMs ms after load.
     const waitForLoadEvent = this._waitForLoadEvent(pauseAfterLoadMs);
@@ -940,7 +940,7 @@ class Driver {
     // Wait for all initial load promises. Resolves on cleanup function the clears load
     // timeout timer.
     const loadPromise = Promise.all([
-      waitForFCP.promise,
+      waitForFcp.promise,
       waitForLoadEvent.promise,
       waitForNetworkIdle.promise,
     ]).then(() => {
@@ -980,7 +980,7 @@ class Driver {
     ]);
 
     maxTimeoutHandle && clearTimeout(maxTimeoutHandle);
-    waitForFCP.cancel();
+    waitForFcp.cancel();
     waitForLoadEvent.cancel();
     waitForNetworkIdle.cancel();
     waitForCPUIdle.cancel();
@@ -1070,17 +1070,17 @@ class Driver {
    * possible workaround.
    * Resolves on the url of the loaded page, taking into account any redirects.
    * @param {string} url
-   * @param {{waitForFCP?: boolean, waitForLoad?: boolean, waitForNavigated?: boolean, passContext?: LH.Gatherer.PassContext}} options
+   * @param {{waitForFcp?: boolean, waitForLoad?: boolean, waitForNavigated?: boolean, passContext?: LH.Gatherer.PassContext}} options
    * @return {Promise<string>}
    */
   async gotoURL(url, options = {}) {
-    const waitForFCP = options.waitForFCP || false;
+    const waitForFcp = options.waitForFcp || false;
     const waitForNavigated = options.waitForNavigated || false;
     const waitForLoad = options.waitForLoad || false;
     const passContext = /** @type {Partial<LH.Gatherer.PassContext>} */ (options.passContext || {});
     const disableJS = passContext.disableJavaScript || false;
 
-    if (waitForNavigated && (waitForFCP || waitForLoad)) {
+    if (waitForNavigated && (waitForFcp || waitForLoad)) {
       throw new Error('Cannot use both waitForNavigated and another event, pick just one');
     }
 
@@ -1119,7 +1119,7 @@ class Driver {
       if (typeof maxFCPMs !== 'number') maxFCPMs = constants.defaultSettings.maxWaitForFcp;
       /* eslint-enable max-len */
 
-      if (!waitForFCP) maxFCPMs = undefined;
+      if (!waitForFcp) maxFCPMs = undefined;
       await this._waitForFullyLoaded(pauseAfterFcpMs, pauseAfterLoadMs, networkQuietThresholdMs,
         cpuQuietThresholdMs, maxWaitMs, maxFCPMs);
     }

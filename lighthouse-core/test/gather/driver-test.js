@@ -125,7 +125,7 @@ async function flushAllTimersAndMicrotasks(ms = 1000) {
  * @typedef DriverMockMethods
  * @property {ReturnType<typeof createMockOnceFn>} on
  * @property {ReturnType<typeof createMockOnceFn>} once
- * @property {ReturnType<typeof createMockWaitForFn>} _waitForFCP
+ * @property {ReturnType<typeof createMockWaitForFn>} _waitForFcp
  * @property {ReturnType<typeof createMockWaitForFn>} _waitForLoadEvent
  * @property {ReturnType<typeof createMockWaitForFn>} _waitForNetworkIdle
  * @property {ReturnType<typeof createMockWaitForFn>} _waitForCPUIdle
@@ -544,9 +544,9 @@ describe('.gotoURL', () => {
   describe('when waitForLoad', () => {
     const url = 'https://example.com';
 
-    ['FCP', 'LoadEvent', 'NetworkIdle', 'CPUIdle'].forEach(name => {
+    ['Fcp', 'LoadEvent', 'NetworkIdle', 'CPUIdle'].forEach(name => {
       it(`should wait for ${name}`, async () => {
-        driver._waitForFCP = createMockWaitForFn();
+        driver._waitForFcp = createMockWaitForFn();
         driver._waitForLoadEvent = createMockWaitForFn();
         driver._waitForNetworkIdle = createMockWaitForFn();
         driver._waitForCPUIdle = createMockWaitForFn();
@@ -554,14 +554,14 @@ describe('.gotoURL', () => {
         // @ts-ignore - dynamic property access, tests will definitely fail if the property were to change
         const waitForResult = driver[`_waitFor${name}`];
         const otherWaitForResults = [
-          driver._waitForFCP,
+          driver._waitForFcp,
           driver._waitForLoadEvent,
           driver._waitForNetworkIdle,
           driver._waitForCPUIdle,
         ].filter(l => l !== waitForResult);
 
         const loadPromise = makePromiseInspectable(driver.gotoURL(url, {
-          waitForFCP: true,
+          waitForFcp: true,
           waitForLoad: true,
         }));
 
@@ -655,11 +655,11 @@ describe('.gotoURL', () => {
   });
 });
 
-describe('._waitForFCP', () => {
+describe('._waitForFcp', () => {
   it('should not resolve until FCP fires', async () => {
     driver.on = driver.once = createMockOnceFn();
 
-    const waitPromise = makePromiseInspectable(driver._waitForFCP(0, 60 * 1000).promise);
+    const waitPromise = makePromiseInspectable(driver._waitForFcp(0, 60 * 1000).promise);
     const listener = driver.on.findListener('Page.lifecycleEvent');
 
     await flushAllTimersAndMicrotasks();
@@ -678,7 +678,7 @@ describe('._waitForFCP', () => {
   it('should wait for pauseAfterFcpMs after FCP', async () => {
     driver.on = driver.once = createMockOnceFn();
 
-    const waitPromise = makePromiseInspectable(driver._waitForFCP(5000, 60 * 1000).promise);
+    const waitPromise = makePromiseInspectable(driver._waitForFcp(5000, 60 * 1000).promise);
     const listener = driver.on.findListener('Page.lifecycleEvent');
 
     await flushAllTimersAndMicrotasks();
@@ -698,7 +698,7 @@ describe('._waitForFCP', () => {
   it('should timeout', async () => {
     driver.on = driver.once = createMockOnceFn();
 
-    const waitPromise = makePromiseInspectable(driver._waitForFCP(0, 5000).promise);
+    const waitPromise = makePromiseInspectable(driver._waitForFcp(0, 5000).promise);
 
     await flushAllTimersAndMicrotasks();
     expect(waitPromise).not.toBeDone('Resolved before timeout');
@@ -713,7 +713,7 @@ describe('._waitForFCP', () => {
     driver.on = driver.once = createMockOnceFn();
     driver.off = jest.fn();
 
-    const {promise: rawPromise, cancel} = driver._waitForFCP(0, 5000);
+    const {promise: rawPromise, cancel} = driver._waitForFcp(0, 5000);
     const waitPromise = makePromiseInspectable(rawPromise);
 
     await flushAllTimersAndMicrotasks();

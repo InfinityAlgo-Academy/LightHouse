@@ -5,8 +5,14 @@
  */
 'use strict';
 
+/**
+ * A config with no throttling used for tricky-metrics tests.
+ * Those class of tricky metrics need to use observed metrics and DevTools throttling has too many bugs
+ * to capture the nuances we're testing.
+ */
+
 /** @type {LH.Config.Json} */
-const perfConfig = {
+const noThrottlingConfig = {
   extends: 'lighthouse:default',
   settings: {
     throttlingMethod: 'provided',
@@ -14,4 +20,4 @@ const perfConfig = {
   },
 };
 
-module.exports = perfConfig;
+module.exports = noThrottlingConfig;
