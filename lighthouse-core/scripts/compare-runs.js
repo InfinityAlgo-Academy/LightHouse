@@ -20,7 +20,7 @@ const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 const yargs = require('yargs');
 
-const { ProgressLogger } = require('./lantern/collect/common.js');
+const {ProgressLogger} = require('./lantern/collect/common.js');
 
 const LH_ROOT = `${__dirname}/../..`;
 const ROOT_OUTPUT_DIR = `${LH_ROOT}/timings-data`;
@@ -49,7 +49,7 @@ const argv = yargs
     'desc': 'Set to override default ascending sort',
   })
   .string('filter')
-  .alias({ 'gather': 'G', 'audit': 'A' })
+  .alias({'gather': 'G', 'audit': 'A'})
   .default('report-exclude', 'key|min|max|stdev|^n$')
   .default('delta-property-sort', 'mean')
   .default('output', 'table')
@@ -127,7 +127,7 @@ async function gather() {
     // eslint-disable-next-line no-console
     console.log('Collection already started - resuming.');
   }
-  await mkdir(outputDir, { recursive: true });
+  await mkdir(outputDir, {recursive: true});
 
   const progress = new ProgressLogger();
   progress.log('Gathering…');
@@ -135,7 +135,7 @@ async function gather() {
   let progressCount = 0;
   for (const url of argv.urls) {
     const urlFolder = `${outputDir}/${urlToFolder(url)}`;
-    await mkdir(urlFolder, { recursive: true });
+    await mkdir(urlFolder, {recursive: true});
 
     for (let i = 0; i < argv.n; i++) {
       const gatherDir = `${urlFolder}/${i}`;
@@ -212,9 +212,8 @@ function aggregateResults(name) {
       {};
     const allEntries = {
       metric: Object.entries(metrics).filter(([name]) => !name.endsWith('Ts')),
-      // timing: lhr.timing.entries.map(entry => ([entry.name, entry.duration])),
+      timing: lhr.timing.entries.map(entry => ([entry.name, entry.duration])),
     };
-    console.log(Object.keys(lhr.audits))
 
     Object.entries(allEntries).forEach(([kind, entries]) => {
       // Group the durations of each entry of the same name.
