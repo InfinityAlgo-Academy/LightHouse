@@ -87,7 +87,7 @@ function prepareTreemapNodes(map, sourcesData) {
     });
   }
 
-  const rootNode = newNode('/');
+  const rootNode = newNode(map.sourceRoot || '/');
   for (const [source, data] of Object.entries(sourcesData)) {
     addNode(source || `<unmapped>`, data, rootNode);
   }
@@ -95,21 +95,20 @@ function prepareTreemapNodes(map, sourcesData) {
   /**
    * Collapse nodes that have just one child + grandchild.
    * @param {*} node
-   * @param {*} parent
    */
-  function collapse(node, parent) {
-    if (parent && parent.children && parent.children.length === 1 && node.children && node.children.length === 1) {
-      parent.id += '/' + node.id;
-      parent.children = node.children;
+  function collapse(node) {
+    if (node.children && node.children.length === 1) {
+      node.id += '/' + node.children[0].id;
+      node.children = node.children[0].children;
     }
 
     if (node.children) {
       for (const child of node.children) {
-        collapse(child, node);
+        collapse(child);
       }
     }
   }
-  collapse(rootNode, null);
+  collapse(rootNode);
 
   // TODO(cjamcl): Should this structure be flattened for space savings?
   // Less JSON (no super nested children, and no repeated property names).
@@ -257,6 +256,7 @@ class TreemapData extends Audit {
     const duplication = await ModuleDuplication.request(artifacts, context);
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
+    const origin = new URL(artifacts.URL.finalUrl).origin;
     // TODO: this should be a computed artifact.
     const executionTimings = await TreemapData.getExecutionTimings(artifacts, context);
 
@@ -266,7 +266,14 @@ class TreemapData extends Audit {
       const bundle = bundles.find(bundle => bundle.script.src === ScriptElement.src);
       const unusedJavascriptSummary = await TreemapData.getUnusedJavascriptSummary(
         ScriptElement, bundles, networkRecords, artifacts.JsUsage, context);
-      const id = ScriptElement.src || `inline (${ScriptElement.devtoolsNodePath})`;
+
+      let id;
+      if (ScriptElement.src) {
+        id = ScriptElement.src;
+        if (id.startsWith(origin)) id = id.replace(origin, '/');
+      } else {
+        id = `inline (${ScriptElement.devtoolsNodePath})`;
+      }
 
       let node;
       if (bundle && unusedJavascriptSummary && unusedJavascriptSummary.sourcesWastedBytes) {

@@ -181,24 +181,7 @@ class TreemapViewer {
    */
   constructor(documentUrl, rootNodes, el) {
     for (const rootNode of rootNodes) {
-      // Wrap with the id of the rootNode. Only for bundles.
-      if (rootNode.node.children) {
-        rootNode.node = {
-          id: rootNode.id,
-          children: [rootNode.node],
-          bytes: rootNode.node.bytes,
-          wastedBytes: rootNode.node.wastedBytes,
-          executionTime: rootNode.node.executionTime,
-        };
-
-        // Remove the extra layer of nodes, but only if it is just '/'.
-        // For example, sometimes it is '//webpack'.
-        if (rootNode.node.children[0].id === '/') {
-          rootNode.node.children = rootNode.node.children[0].children;
-        }
-      }
-
-      rootNode.id = rootNode.id;
+      // TODO: remove.
       dfs(rootNode.node, node => node.originalId = node.id);
       const idHash = [...rootNode.id].reduce((acc, char) => acc + char.charCodeAt(0), 0);
       dfs(rootNode.node, node => node.idHash = idHash);
@@ -220,7 +203,23 @@ class TreemapViewer {
     if (mode.rootNodeId === 'javascript') {
       const rootNodes = this.rootNodes
         .filter(rootNode => rootNode.group === mode.rootNodeId);
-      const children = rootNodes.map(rootNode => rootNode.node);
+
+      const children = rootNodes.map(rootNode => {
+        // Wrap with the id of the rootNode. Only for bundles.
+        if (rootNode.node.children) {
+          return {
+            originalId: rootNode.id,
+            idHash: rootNode.node.idHash,
+            children: [rootNode.node],
+            bytes: rootNode.node.bytes,
+            wastedBytes: rootNode.node.wastedBytes,
+            executionTime: rootNode.node.executionTime,
+          };
+        }
+
+        return rootNode.node;
+      });
+
       this.currentRootNode = {
         originalId: this.documentUrl,
         bytes: children.reduce((acc, cur) => cur.bytes + acc, 0),
@@ -236,6 +235,7 @@ class TreemapViewer {
       createViewModes([rootNode]);
       createDataGrid([rootNode]);
     }
+
     // Clone because data is modified.
     this.currentRootNode = JSON.parse(JSON.stringify(this.currentRootNode));
 
@@ -246,7 +246,7 @@ class TreemapViewer {
 
     this.setTitle(this.currentRootNode);
     this.el.innerHTML = '';
-    this.treemap = new webtreemap.TreeMap(this.currentRootNode, { padding: [18, 3, 3, 3] });
+    this.treemap = new webtreemap.TreeMap(this.currentRootNode, {padding: [18, 3, 3, 3]});
     this.render();
   }
 
@@ -432,7 +432,7 @@ function createViewModes(rootNodes) {
   for (const rootNode of javascriptRootNodes) {
     wastedBytes += rootNode.node.wastedBytes;
   }
-  makeViewMode(`Unused JavaScript: ${format(wastedBytes, 'bytes')}`, { partitionBy: 'bytes', colorBy: 'default' });
+  makeViewMode(`Unused JavaScript: ${format(wastedBytes, 'bytes')}`, {partitionBy: 'bytes', colorBy: 'default'});
 
   let largeBytes = 0;
   for (const rootNode of javascriptRootNodes) {
@@ -444,7 +444,7 @@ function createViewModes(rootNodes) {
       largeBytes += node.wastedBytes;
     });
   }
-  makeViewMode(`Large Modules: ${format(largeBytes, 'bytes')}`, { partitionBy: 'bytes', colorBy: 'default' });
+  makeViewMode(`Large Modules: ${format(largeBytes, 'bytes')}`, {partitionBy: 'bytes', colorBy: 'default'});
 
   let duplicateBytes = 0;
   for (const rootNode of javascriptRootNodes) {
@@ -456,7 +456,7 @@ function createViewModes(rootNodes) {
       duplicateBytes += node.bytes / 2;
     });
   }
-  makeViewMode(`Duplicate Modules: ${format(duplicateBytes, 'bytes')}`, { partitionBy: 'bytes', colorBy: 'default' });
+  makeViewMode(`Duplicate Modules: ${format(duplicateBytes, 'bytes')}`, {partitionBy: 'bytes', colorBy: 'default'});
 }
 
 /**
@@ -468,12 +468,17 @@ function createDataGrid(rootNodes) {
   gridPanelEl.innerHTML = '';
 
   const data = [];
+  let maxSize = 0;
+  let maxWastedBytes = 0;
   for (const rootNode of rootNodes) {
     let node = rootNode.node;
     if (node.children) node = node.children[0];
 
     dfs(node, (node, fullId) => {
       if (node.children) return;
+
+      if (node.bytes) maxSize = Math.max(maxSize, node.bytes);
+      if (node.wastedBytes) maxWastedBytes = Math.max(maxWastedBytes, node.wastedBytes);
 
       data.push({
         name: fullId,
@@ -486,22 +491,22 @@ function createDataGrid(rootNodes) {
   const gridEl = document.createElement('div');
   gridPanelEl.append(gridEl);
   const table = new Tabulator(gridEl, {
-    data,           //load row data from array
+    data, // load row data from array
     height: '100%',
-    layout: "fitColumns",      //fit columns to width of table
-    responsiveLayout: "hide",  //hide columns that dont fit on the table
-    tooltips: true,            //show tool tips on cells
-    addRowPos: "top",          //when adding a new row, add it to the top of the table
-    history: true,             //allow undo and redo actions on the table
-    movableColumns: true,      //allow column order to be changed
-    resizableRows: true,       //allow row order to be changed
-    initialSort: [             //set the initial sort order of the data
-      { column: "bytes", dir: "desc" },
+    layout: 'fitColumns', // fit columns to width of table
+    tooltips: true, // show tool tips on cells
+    addRowPos: 'top', // when adding a new row, add it to the top of the table
+    history: true, // allow undo and redo actions on the table
+    resizableRows: true, // allow row order to be changed
+    initialSort: [ // set the initial sort order of the data
+      {column: 'bytes', dir: 'desc'},
     ],
-    columns: [                 //define the table columns
-      { title: "Name", field: "name" },
-      { title: "Size", field: "bytes", align: "left" },
-      { title: "Unused Bytes", field: "wastedBytes", align: "left" },
+    columns: [ // define the table columns
+      {title: 'Name', field: 'name'},
+      {title: 'Size', field: 'bytes', align: 'left'},
+      {title: 'Size', field: 'bytes', formatter: 'progress', formatterParams: {min: 0, max: maxSize, width: '25%'}},
+      {title: 'Unused Bytes', field: 'wastedBytes', align: 'left'},
+      {title: 'Unused Bytes', field: 'wastedBytes', formatter: 'progress', formatterParams: {min: 0, max: maxWastedBytes, width: '25%'}},
     ],
   });
 }
@@ -530,7 +535,7 @@ function init(options) {
   window.__treemapViewer = treemapViewer;
 
   if (self.opener && !self.opener.closed) {
-    self.opener.postMessage({ rendered: true }, '*');
+    self.opener.postMessage({rendered: true}, '*');
   }
   if (window.ga) {
     // TODO what are these?
@@ -545,20 +550,21 @@ function main() {
     window.addEventListener('message', e => {
       if (e.source !== self.opener) return;
       const options = e.data;
-      const { documentUrl, id, rootNodes } = options;
+      const {documentUrl, id, rootNodes} = options;
       if (!rootNodes || !documentUrl || !id) return;
-      init(options);
 
       // Allows for saving the document and loading with data intact.
       const scriptEl = document.createElement('script');
       scriptEl.innerText = `window.__TREEMAP_OPTIONS = ${JSON.stringify(options)};`;
       document.head.append(scriptEl);
+
+      init(options);
     });
   }
 
   // If the page was opened as a popup, tell the opening window we're ready.
   if (self.opener && !self.opener.closed) {
-    self.opener.postMessage({ opened: true }, '*');
+    self.opener.postMessage({opened: true}, '*');
   }
 
   window.addEventListener('resize', () => {
