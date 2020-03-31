@@ -472,7 +472,7 @@ function createDataGrid(rootNodes) {
   let maxWastedBytes = 0;
   for (const rootNode of rootNodes) {
     let node = rootNode.node;
-    if (node.children) node = node.children[0];
+    // if (node.children) node = node.children[0];
 
     dfs(node, (node, fullId) => {
       if (node.children) return;
