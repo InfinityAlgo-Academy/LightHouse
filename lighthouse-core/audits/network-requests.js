@@ -50,6 +50,7 @@ class NetworkRequests extends Audit {
           url: URL.elideDataURI(record.url),
           startTime: timeToMs(record.startTime),
           endTime: timeToMs(record.endTime),
+          finished: record.finished,
           transferSize: record.transferSize,
           resourceSize: record.resourceSize,
           statusCode: record.statusCode,
@@ -62,6 +63,7 @@ class NetworkRequests extends Audit {
         };
       });
 
+      // NOTE(i18n): this audit is only for debug info in the LHR and does not appear in the report.
       /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
         {key: 'url', itemType: 'url', text: 'URL'},
@@ -72,7 +74,7 @@ class NetworkRequests extends Audit {
           itemType: 'bytes',
           displayUnit: 'kb',
           granularity: 1,
-          text: 'Transfer Size', // TODO(exterkamp): i18n this when i18n'ing this file
+          text: 'Transfer Size',
         },
         {
           key: 'resourceSize',

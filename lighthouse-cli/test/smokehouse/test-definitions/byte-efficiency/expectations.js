@@ -235,19 +235,23 @@ const expectations = [
             items: [
               {
                 url: 'http://localhost:10200/byte-efficiency/gzip.html',
+                finished: true,
               },
               {
                 url: 'http://localhost:10200/byte-efficiency/script.js?gzip=1',
                 transferSize: '1100 +/- 100',
                 resourceSize: '53000 +/- 1000',
+                finished: true,
               },
               {
                 url: 'http://localhost:10200/byte-efficiency/script.js',
                 transferSize: '53200 +/- 1000',
                 resourceSize: '53000 +/- 1000',
+                finished: true,
               },
               {
                 url: 'http://localhost:10200/favicon.ico',
+                finished: true,
               },
             ],
           },

@@ -1777,6 +1777,7 @@
                 "items": [
                     {
                         "endTime": 640.1550000009593,
+                        "finished": true,
                         "mimeType": "text/html",
                         "resourceSize": 12519.0,
                         "resourceType": "Document",
@@ -1787,6 +1788,7 @@
                     },
                     {
                         "endTime": 2635.035000013886,
+                        "finished": true,
                         "mimeType": "text/css",
                         "resourceSize": 677.0,
                         "resourceType": "Stylesheet",
@@ -1797,6 +1799,7 @@
                     },
                     {
                         "endTime": 1204.6590000099968,
+                        "finished": true,
                         "mimeType": "text/css",
                         "resourceSize": 677.0,
                         "resourceType": "Stylesheet",
@@ -1807,6 +1810,7 @@
                     },
                     {
                         "endTime": 1213.2910000218544,
+                        "finished": true,
                         "mimeType": "text/css",
                         "resourceSize": 0.0,
                         "resourceType": "Stylesheet",
@@ -1817,6 +1821,7 @@
                     },
                     {
                         "endTime": 2849.3670000170823,
+                        "finished": true,
                         "mimeType": "text/css",
                         "resourceSize": 677.0,
                         "resourceType": "Stylesheet",
@@ -1827,6 +1832,7 @@
                     },
                     {
                         "endTime": 1220.04100002232,
+                        "finished": true,
                         "mimeType": "text/css",
                         "resourceSize": 964.0,
                         "resourceType": "Stylesheet",
@@ -1837,6 +1843,7 @@
                     },
                     {
                         "endTime": 1228.5180000180844,
+                        "finished": true,
                         "mimeType": "text/html",
                         "resourceSize": 616.0,
                         "resourceType": "Document",
@@ -1847,6 +1854,7 @@
                     },
                     {
                         "endTime": 1776.4320000133011,
+                        "finished": true,
                         "mimeType": "text/html",
                         "resourceSize": 613.0,
                         "resourceType": "Document",
@@ -1857,6 +1865,7 @@
                     },
                     {
                         "endTime": 4216.161000018474,
+                        "finished": true,
                         "mimeType": "text/css",
                         "resourceSize": 677.0,
                         "resourceType": "Stylesheet",
@@ -1867,6 +1876,7 @@
                     },
                     {
                         "endTime": 1792.0860000012908,
+                        "finished": true,
                         "mimeType": "text/javascript",
                         "resourceSize": 1552.0,
                         "resourceType": "Script",
@@ -1877,6 +1887,7 @@
                     },
                     {
                         "endTime": 1236.1859999946319,
+                        "finished": true,
                         "mimeType": "text/javascript",
                         "resourceSize": 0.0,
                         "resourceType": "Script",
@@ -1887,6 +1898,7 @@
                     },
                     {
                         "endTime": 4779.641000000993,
+                        "finished": true,
                         "mimeType": "image/jpeg",
                         "resourceSize": 24620.0,
                         "resourceType": "Image",
@@ -1897,6 +1909,7 @@
                     },
                     {
                         "endTime": 3961.049000005005,
+                        "finished": true,
                         "mimeType": "text/javascript",
                         "resourceSize": 71501.0,
                         "resourceType": "Script",
@@ -1907,6 +1920,7 @@
                     },
                     {
                         "endTime": 4796.288000012282,
+                        "finished": true,
                         "mimeType": "text/javascript",
                         "resourceSize": 84245.0,
                         "resourceType": "Script",
@@ -1917,6 +1931,7 @@
                     },
                     {
                         "endTime": 3964.233000006061,
+                        "finished": true,
                         "mimeType": "text/css",
                         "resourceSize": 677.0,
                         "resourceType": "Stylesheet",
@@ -1927,6 +1942,7 @@
                     },
                     {
                         "endTime": 3772.7560000203084,
+                        "finished": true,
                         "mimeType": "text/html",
                         "resourceSize": 12519.0,
                         "resourceType": "XHR",
@@ -1937,6 +1953,7 @@
                     },
                     {
                         "endTime": 3968.59800000675,
+                        "finished": true,
                         "mimeType": "text/plain",
                         "resourceSize": 4.0,
                         "resourceType": "Image",
@@ -1947,6 +1964,7 @@
                     },
                     {
                         "endTime": 5536.498000001302,
+                        "finished": true,
                         "mimeType": "text/plain",
                         "resourceSize": 95.0,
                         "resourceType": "Other",

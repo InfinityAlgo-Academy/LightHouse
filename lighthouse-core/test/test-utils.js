@@ -8,6 +8,7 @@
 /* eslint-env jest */
 
 const i18n = require('../lib/i18n/i18n.js');
+const {default: {toBeCloseTo}} = require('expect/build/matchers.js');
 
 expect.extend({
   toBeDisplayString(received, expected) {
@@ -26,5 +27,17 @@ expect.extend({
       ].join('\n');
 
     return {actual, message, pass};
+  },
+
+  // Expose toBeCloseTo() so it can be used as an asymmetric matcher.
+  toBeApproximately(...args) {
+    // If called asymmetrically, a fake matcher `this` object needs to be passed
+    // in (see https://github.com/facebook/jest/issues/8295). There's no effect
+    // because it's only used for the printing of full failures, which isn't
+    // done for asymmetric matchers anyways.
+    const thisObj = (this && this.utils) ? this :
+        {isNot: false, promise: ''};
+
+    return toBeCloseTo.call(thisObj, ...args);
   },
 });
