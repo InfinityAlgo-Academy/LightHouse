@@ -21,7 +21,7 @@ function collectTraceNodes() {
 
   for (const element of markedElements) {
     traceNodes.push({
-      type: element.getAttribute('lhtemp') || '',
+      metricTag: element.getAttribute('lhtemp') || '',
       // @ts-ignore - put into scope via stringification
       nodePath: getNodePath(element), // eslint-disable-line no-undef
       // @ts-ignore - put into scope via stringification
@@ -56,7 +56,11 @@ class TraceNodes extends Gatherer {
       await driver.sendCommand('DOM.getDocument', {depth: -1, pierce: true});
       const translatedIds = await driver.sendCommand('DOM.pushNodesByBackendIdsToFrontend',
         {backendNodeIds: [backendNodeId]});
-      driver.setNodeAttribute(translatedIds.nodeIds[0], 'lhtemp', 'lcp');
+      await driver.sendCommand('DOM.setAttributeValue', {
+        nodeId: translatedIds.nodeIds[0],
+        name: 'lhtemp',
+        value: 'lcp',
+      });
     }
 
     const expression = `(() => {
