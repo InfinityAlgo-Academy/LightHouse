@@ -518,13 +518,6 @@
   dependencies:
     "@types/node" "*"
 
-"@types/intl-messageformat@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@types/intl-messageformat/-/intl-messageformat-3.0.0.tgz#a405302abfa55c427cbcd374cecb12c0b90e6915"
-  integrity sha512-sOzBp/B4GlQZnh1ZHCJ/vVoIkhaErXHVQJnFE0P7LtEcdaIy5qCMMevXy5aOu73VWzZQ5MCv2PdOTFOpEDLQhw==
-  dependencies:
-    intl-messageformat "*"
-
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@types/istanbul-lib-coverage/-/istanbul-lib-coverage-2.0.1.tgz#42995b446db9a48a11a07ec083499a860e9138ff"
@@ -4075,28 +4068,10 @@ insert-module-globals@^7.0.0:
     undeclared-identifiers "^1.1.2"
     xtend "^4.0.0"
 
-intl-format-cache@^4.2.5:
-  version "4.2.5"
-  resolved "https://registry.yarnpkg.com/intl-format-cache/-/intl-format-cache-4.2.5.tgz#6319f5707cdc766ab5c196990a6e55b0df9cc70f"
-  integrity sha512-xvvog/4HTVhJIg5dexcs6Ji/ROlolCgtz3std23bLEmucoGPrUVrYQPTcBWR314NM9khm4JSrdOamv9SEtvCUg==
-
 intl-messageformat-parser@^1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-1.8.1.tgz#0eb14c5618333be4c95c409457b66c8c33ddcc01"
   integrity sha512-IMSCKVf0USrM/959vj3xac7s8f87sc+80Y/ipBzdKy4ifBv5Gsj2tZ41EAaURVg01QU71fYr77uA8Meh6kELbg==
-
-intl-messageformat-parser@^3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-3.2.2.tgz#28cacc80a53823a28b5ecaf16b3b35d0a1d5f9d2"
-  integrity sha512-ax9639ST77YimAddTH/0Q9qhXuYS8ZVsoqOZinqnS90MbXaNuIq+KIdifaIndwI+lMEv3o+qNaGycXYvlh17rw==
-
-intl-messageformat@*:
-  version "7.5.0"
-  resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-7.5.0.tgz#53582b6e911d4f41434e9d897b4789d2a2b2ff8e"
-  integrity sha512-s08OFUbRVUPTiXS8OOP06OhfehM1K4ughymhOazY4OhQMO+RiY4bnmsqRgYe7XorETg7mZnwJX1M34sJrzKoOA==
-  dependencies:
-    intl-format-cache "^4.2.5"
-    intl-messageformat-parser "^3.2.2"
 
 intl-messageformat@^4.1.2, intl-messageformat@^4.4.0:
   version "4.4.0"
@@ -5188,13 +5163,12 @@ lighthouse-logger@^1.0.0, lighthouse-logger@^1.2.0:
     debug "^2.6.8"
     marky "^1.2.0"
 
-lighthouse-plugin-publisher-ads@^0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/lighthouse-plugin-publisher-ads/-/lighthouse-plugin-publisher-ads-0.4.1.tgz#745aa00d691d329fcf3ed58ec5ef1e4cd0798e71"
-  integrity sha512-ksq9VMoHS3oH4naCGm6x0oCHnm7uMvAxcQpB57wZbJUQpPNmfeXRXwKuTyAei+TyO4HzVMkhCzuYzvVRcXpYdQ==
+lighthouse-plugin-publisher-ads@^0.4.3:
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/lighthouse-plugin-publisher-ads/-/lighthouse-plugin-publisher-ads-0.4.3.tgz#3b03e966fa18a940e9bd35380374f8b612fa0c3a"
+  integrity sha512-Ra5Xqd3EqK8mzs0YzHnk9evj9WQc2z+WbyyjK1LXcuaQIn2p8jmE7C/5NH1fqMsGiSBN2LBvbvGCgcopn1wjdg==
   dependencies:
     "@tusbar/cache-control" "^0.3.1"
-    "@types/intl-messageformat" "^3.0.0"
     esprima "^4.0.1"
     intl-messageformat "^4.1.2"
     yargs "^13.3.0"
