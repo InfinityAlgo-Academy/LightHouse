@@ -212,13 +212,13 @@ const expectations = [
           },
         },
         'uses-responsive-images': {
-          displayValue: 'Potential savings of 53\xa0KB',
           details: {
-            overallSavingsBytes: '>50000',
+            overallSavingsBytes: '82000 +/- 5000',
             items: {
-              0: {wastedPercent: '<46'},
-              1: {wastedPercent: '<46'},
-              length: 2,
+              0: {wastedPercent: '45 +/- 5', url: /lighthouse-1024x680.jpg/},
+              1: {wastedPercent: '72 +/- 5', url: /lighthouse-2048x1356.webp\?size0/},
+              2: {wastedPercent: '45 +/- 5', url: /lighthouse-480x320.webp/},
+              length: 3,
             },
           },
         },
