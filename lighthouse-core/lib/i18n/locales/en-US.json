@@ -1433,6 +1433,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Requests"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
+    "message": "Resource Size"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "Resource Type"
   },

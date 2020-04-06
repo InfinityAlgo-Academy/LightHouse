@@ -1683,7 +1683,7 @@
             "key": "transferSize",
             "granularity": 1,
             "itemType": "bytes",
-            "text": "Size"
+            "text": "Transfer Size"
           },
           {
             "key": "blockingTime",
@@ -2445,7 +2445,7 @@
           {
             "key": "totalBytes",
             "itemType": "bytes",
-            "text": "Size",
+            "text": "Transfer Size",
             "displayUnit": "kb",
             "granularity": 1
           }
@@ -2547,7 +2547,7 @@
           {
             "key": "totalBytes",
             "itemType": "bytes",
-            "text": "Size"
+            "text": "Transfer Size"
           }
         ],
         "items": [
@@ -2632,7 +2632,7 @@
           {
             "key": "totalBytes",
             "valueType": "bytes",
-            "label": "Size"
+            "label": "Transfer Size"
           },
           {
             "key": "wastedMs",
@@ -2708,7 +2708,7 @@
           {
             "key": "totalBytes",
             "valueType": "bytes",
-            "label": "Size"
+            "label": "Transfer Size"
           },
           {
             "key": "wastedBytes",
@@ -2788,7 +2788,7 @@
           {
             "key": "totalBytes",
             "valueType": "bytes",
-            "label": "Size"
+            "label": "Resource Size"
           },
           {
             "key": "wastedBytes",
@@ -2847,7 +2847,7 @@
           {
             "key": "totalBytes",
             "valueType": "bytes",
-            "label": "Size"
+            "label": "Transfer Size"
           },
           {
             "key": "wastedBytes",
@@ -6056,7 +6056,13 @@
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnTransferSize": [
         "audits[performance-budget].details.headings[2].text",
-        "audits[resource-summary].details.headings[2].text"
+        "audits[resource-summary].details.headings[2].text",
+        "audits[third-party-summary].details.headings[1].text",
+        "audits[uses-long-cache-ttl].details.headings[2].text",
+        "audits[total-byte-weight].details.headings[1].text",
+        "audits[render-blocking-resources].details.headings[1].label",
+        "audits[unminified-javascript].details.headings[1].label",
+        "audits[uses-text-compression].details.headings[1].label"
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": [
         "audits[performance-budget].details.headings[4].text",
@@ -6167,16 +6173,6 @@
       ],
       "lighthouse-core/audits/third-party-summary.js | columnThirdParty": [
         "audits[third-party-summary].details.headings[0].text"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | columnSize": [
-        "audits[third-party-summary].details.headings[1].text",
-        "audits[uses-long-cache-ttl].details.headings[2].text",
-        "audits[total-byte-weight].details.headings[1].text",
-        "audits[render-blocking-resources].details.headings[1].label",
-        "audits[unminified-javascript].details.headings[1].label",
-        "audits[uses-webp-images].details.headings[2].label",
-        "audits[uses-text-compression].details.headings[1].label",
-        "audits[tap-targets].details.headings[1].text"
       ],
       "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": [
         "audits[third-party-summary].details.headings[2].text"
@@ -6560,6 +6556,9 @@
       "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | description": [
         "audits[uses-webp-images].description"
       ],
+      "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": [
+        "audits[uses-webp-images].details.headings[2].label"
+      ],
       "lighthouse-core/audits/byte-efficiency/uses-optimized-images.js | title": [
         "audits[uses-optimized-images].title"
       ],
@@ -6813,6 +6812,9 @@
       ],
       "lighthouse-core/audits/seo/tap-targets.js | tapTargetHeader": [
         "audits[tap-targets].details.headings[0].text"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnSize": [
+        "audits[tap-targets].details.headings[1].text"
       ],
       "lighthouse-core/audits/seo/tap-targets.js | overlappingTargetHeader": [
         "audits[tap-targets].details.headings[2].text"

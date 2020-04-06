@@ -1433,6 +1433,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "R̂éq̂úêśt̂ś"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
+    "message": "R̂éŝóûŕĉé Ŝíẑé"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "R̂éŝóûŕĉé T̂ýp̂é"
   },

@@ -2438,7 +2438,7 @@
                     },
                     {
                         "key": "totalBytes",
-                        "label": "Size",
+                        "label": "Transfer Size",
                         "valueType": "bytes"
                     },
                     {
@@ -2791,7 +2791,7 @@
                         "granularity": 1.0,
                         "itemType": "bytes",
                         "key": "transferSize",
-                        "text": "Size"
+                        "text": "Transfer Size"
                     },
                     {
                         "granularity": 1.0,
@@ -2921,7 +2921,7 @@
                     {
                         "itemType": "bytes",
                         "key": "totalBytes",
-                        "text": "Size"
+                        "text": "Transfer Size"
                     }
                 ],
                 "items": [
@@ -3003,7 +3003,7 @@
                     },
                     {
                         "key": "totalBytes",
-                        "label": "Size",
+                        "label": "Transfer Size",
                         "valueType": "bytes"
                     },
                     {
@@ -3189,7 +3189,7 @@
                         "granularity": 1.0,
                         "itemType": "bytes",
                         "key": "totalBytes",
-                        "text": "Size"
+                        "text": "Transfer Size"
                     }
                 ],
                 "items": [
@@ -3389,7 +3389,7 @@
                     },
                     {
                         "key": "totalBytes",
-                        "label": "Size",
+                        "label": "Transfer Size",
                         "valueType": "bytes"
                     },
                     {
@@ -3437,7 +3437,7 @@
                     },
                     {
                         "key": "totalBytes",
-                        "label": "Size",
+                        "label": "Resource Size",
                         "valueType": "bytes"
                     },
                     {
