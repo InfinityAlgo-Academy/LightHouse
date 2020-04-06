@@ -235,7 +235,6 @@ Useful documentation, examples, and recipes to get you started.
 - [Developing Plugins](./docs/plugins.md)
 - [Making a New Audit](./docs/new-audits.md)
 - [Testing on a mobile device](./docs/readme.md#testing-on-a-mobile-device)
-- [Setting a performance budget](https://developers.google.com/web/tools/lighthouse/audits/budgets)
 - [Lighthouse Architecture](./docs/architecture.md)
 
 **Recipes**
