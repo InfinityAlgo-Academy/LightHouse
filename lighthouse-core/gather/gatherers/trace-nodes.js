@@ -37,6 +37,35 @@ function collectTraceNodes() {
 
 class TraceNodes extends Gatherer {
   /**
+   * @param {LH.TraceEvent} lcpEvent
+   * @return {number | undefined}
+   */
+  static getLCPNodeFromTraceEvent(lcpEvent) {
+    return lcpEvent && lcpEvent.args &&
+    lcpEvent.args.data && lcpEvent.args.data.nodeId;
+  }
+
+  /**
+   * @param {Array<LH.TraceEvent>} mainThreadEvents 
+   * @return {Array<number>}
+   */
+  static getCLSNodesFromMainThreadEvents(mainThreadEvents) {
+    /** @type {Set<number>} */
+    const clsNodeIds = new Set();
+    const shiftEvents = mainThreadEvents.filter(e => e.name === 'LayoutShift').map(e => e.args && e.args.data);
+
+    shiftEvents.forEach(event => {
+      if (!event) {
+        return;
+      }
+
+      event.impacted_nodes && event.impacted_nodes.forEach(node => node.node_id && clsNodeIds.add(node.node_id));
+    });
+    
+    return Array.from(clsNodeIds);
+  }
+
+  /**
    * @param {LH.Gatherer.PassContext} passContext
    * @param {LH.Gatherer.LoadData} loadData
    * @return {Promise<LH.Artifacts['TraceNodes']>}
@@ -48,18 +77,30 @@ class TraceNodes extends Gatherer {
     }
     const traceOfTab = TraceProcessor.computeTraceOfTab(loadData.trace);
     const lcpEvent = traceOfTab.largestContentfulPaintEvt;
+    const mainThreadEvents = traceOfTab.mainThreadEvents;
+    /** @type {Array<number>} */
+    const backendNodeIds = [];
+    
+    const lcpNodeId = lcpEvent && TraceNodes.getLCPNodeFromTraceEvent(lcpEvent);
+    const clsNodeIds = TraceNodes.getCLSNodesFromMainThreadEvents(mainThreadEvents);
 
-    const backendNodeId = lcpEvent && lcpEvent.args &&
-      lcpEvent.args.data && lcpEvent.args.data.nodeId;
-    if (backendNodeId) {
-      // The call below is necessary for pushNodesByBackendIdsToFrontend to properly retrieve nodeIds
-      await driver.sendCommand('DOM.getDocument', {depth: -1, pierce: true});
-      const translatedIds = await driver.sendCommand('DOM.pushNodesByBackendIdsToFrontend',
-        {backendNodeIds: [backendNodeId]});
+    if (lcpNodeId) {
+      backendNodeIds.push(lcpNodeId);
+    }
+    backendNodeIds.push(...clsNodeIds);
+
+    // The call below is necessary for pushNodesByBackendIdsToFrontend to properly retrieve nodeIds
+    await driver.sendCommand('DOM.getDocument', {depth: -1, pierce: true});
+    const translatedIds = await driver.sendCommand('DOM.pushNodesByBackendIdsToFrontend',
+      {backendNodeIds: backendNodeIds});
+    
+    for (let i = 0; i < backendNodeIds.length; i++) {
+      // A bit hacky,
+      const metricTag = lcpNodeId === backendNodeIds[i] ? 'lcp' : 'cls';
       await driver.sendCommand('DOM.setAttributeValue', {
-        nodeId: translatedIds.nodeIds[0],
+        nodeId: translatedIds.nodeIds[i],
         name: 'lhtemp',
-        value: 'lcp',
+        value: metricTag,
       });
     }
 
@@ -73,7 +114,8 @@ class TraceNodes extends Gatherer {
       return (${collectTraceNodes})();
     })()`;
 
-    return driver.evaluateAsync(expression, {useIsolation: true});
+    const traceNodes = driver.evaluateAsync(expression, {useIsolation: true});
+    return traceNodes;
   }
 }
 
