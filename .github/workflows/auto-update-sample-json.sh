@@ -1,4 +1,4 @@
-set +ex
+set -ex
 
 yarn update:sample-json
 
