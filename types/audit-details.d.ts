@@ -82,7 +82,7 @@ declare global {
       }
 
       /** Possible types of values found within table items. */
-      type ItemValueTypes = 'bytes' | 'code' | 'link' | 'ms' | 'multi' | 'node' | 'source-location' | 'numeric' | 'text' | 'thumbnail' | 'timespanMs' | 'url';
+      type ItemValueTypes = 'bytes' | 'code' | 'link' | 'ms' | 'node' | 'source-location' | 'numeric' | 'text' | 'thumbnail' | 'timespanMs' | 'url';
       type Value = string | number | boolean | DebugData | NodeValue | SourceLocationValue | LinkValue | UrlValue | CodeValue;
 
       // TODO(bckenny): unify Table/Opportunity headings and items on next breaking change.

@@ -1425,8 +1425,12 @@
   text-decoration: underline dotted #999;
 }
 
-.lh-sub-rows:not(:first-child) .lh-sub-row {
+.lh-sub-row td:first-child {
+  display: block;
   margin-left: 20px;
+  color: var(--color-gray-700);
+}
+.lh-sub-row td {
   color: var(--color-gray-700);
 }
 .lh-sub-row {

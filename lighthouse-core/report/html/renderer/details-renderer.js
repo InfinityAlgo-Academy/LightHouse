@@ -214,7 +214,7 @@ class DetailsRenderer {
    * @return {Element|null}
    */
   _renderTableValue(value, heading) {
-    if (typeof value === 'undefined' || value === null) {
+    if (value === undefined || value === null) {
       return null;
     }
 
@@ -353,6 +353,37 @@ class DetailsRenderer {
   }
 
   /**
+   * Renders a table cell for each column, defined by the provided heading and value pairs.
+   * @param {Array<{heading: LH.Audit.Details.OpportunityColumnHeading, value?: LH.Audit.Details.Value}|null>} headingAndValuePairs
+   */
+  _renderRow(headingAndValuePairs) {
+    const rowElem = this._dom.createElement('tr');
+
+    for (const pair of headingAndValuePairs) {
+      const heading = pair && pair.heading;
+      const value = pair && pair.value;
+
+      let valueElement;
+      if (heading && heading.key !== null && value !== undefined && value !== null) {
+        valueElement = this._renderTableValue(value, heading);
+      }
+
+      if (heading && valueElement) {
+        const classes = `lh-table-column--${heading.valueType}`;
+        this._dom.createChildOf(rowElem, 'td', classes).appendChild(valueElement);
+      } else {
+        // Empty cell is rendered for a column if:
+        // - the pair is null
+        // - the heading key is null
+        // - the value is undefined/null
+        this._dom.createChildOf(rowElem, 'td', 'lh-table-column--empty');
+      }
+    }
+
+    return rowElem;
+  }
+
+  /**
    * @param {LH.Audit.Details.Table|LH.Audit.Details.Opportunity} details
    * @return {Element}
    */
@@ -375,49 +406,66 @@ class DetailsRenderer {
 
     const tbodyElem = this._dom.createChildOf(tableElem, 'tbody');
     for (const row of details.items) {
-      const rowElem = this._dom.createChildOf(tbodyElem, 'tr');
+      // Render the main row.
+      const headingAndValuePairs = [];
       for (const heading of headings) {
-        const valueFragment = this._dom.createFragment();
-
-        if (heading.key === null && !heading.subRows) {
-          // eslint-disable-next-line no-console
-          console.warn('A header with a null `key` should define `subRows`.');
+        const value = heading.key && row[heading.key];
+        if (value === undefined || value === null || Array.isArray(value)) {
+          headingAndValuePairs.push(null);
+          continue;
         }
 
-        if (heading.key === null) {
-          const emptyElement = this._dom.createElement('div');
-          emptyElement.innerHTML = '&nbsp;';
-          valueFragment.appendChild(emptyElement);
-        } else {
-          const value = row[heading.key];
-          const valueElement =
-            value !== undefined && !Array.isArray(value) && this._renderTableValue(value, heading);
-          if (valueElement) valueFragment.appendChild(valueElement);
-        }
+        headingAndValuePairs.push({heading, value});
+      }
 
-        if (heading.subRows) {
-          const subRowsHeading = {
-            key: heading.subRows.key,
-            valueType: heading.subRows.valueType || heading.valueType,
-            granularity: heading.subRows.granularity || heading.granularity,
-            displayUnit: heading.subRows.displayUnit || heading.displayUnit,
-            label: '',
-          };
-          const values = row[subRowsHeading.key];
-          if (Array.isArray(values)) {
-            const subRowsElement = this._renderSubRows(values, subRowsHeading);
-            valueFragment.appendChild(subRowsElement);
+      tbodyElem.append(this._renderRow(headingAndValuePairs));
+
+      // A single row data value can expand into multiple rows. These additional rows
+      // are called sub-rows.
+
+      const subRowHeadings = headings.map(heading => {
+        if (!heading.subRows) return null;
+        return {
+          key: heading.subRows.key,
+          valueType: heading.subRows.valueType || heading.valueType,
+          granularity: heading.subRows.granularity || heading.granularity,
+          displayUnit: heading.subRows.displayUnit || heading.displayUnit,
+          label: '',
+        };
+      });
+
+      if (!subRowHeadings.some(Boolean)) continue;
+
+      // All sub-row data arrays should be the same length, but just in case they are not,
+      // determine the longest data array and fill the missing values with an
+      // null pair (which creates an empty cell).
+      let numSubRows = 0;
+      for (const heading of subRowHeadings) {
+        if (!heading) continue;
+        const values = row[heading.key];
+        if (!Array.isArray(values)) continue;
+        numSubRows = Math.max(numSubRows, values.length);
+      }
+
+      for (let i = 0; i < numSubRows; i++) {
+        const subRowData = [];
+        for (const heading of subRowHeadings) {
+          if (!heading) {
+            subRowData.push(null);
+            continue;
           }
+
+          const values = row[heading.key];
+          if (!Array.isArray(values)) continue;
+          subRowData.push({heading, value: values[i]});
         }
 
-        if (valueFragment.childElementCount) {
-          const classes = `lh-table-column--${heading.valueType}`;
-          this._dom.createChildOf(rowElem, 'td', classes).appendChild(valueFragment);
-        } else {
-          this._dom.createChildOf(rowElem, 'td', 'lh-table-column--empty');
-        }
+        const rowEl = this._renderRow(subRowData);
+        rowEl.classList.add('lh-sub-row');
+        tbodyElem.append(rowEl);
       }
     }
+
     return tableElem;
   }
 
