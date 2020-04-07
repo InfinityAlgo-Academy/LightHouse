@@ -1428,13 +1428,9 @@
 .lh-sub-row td:first-child {
   display: block;
   margin-left: 20px;
-  color: var(--color-gray-700);
 }
 .lh-sub-row td {
   color: var(--color-gray-700);
-}
-.lh-sub-row {
-  margin-bottom: 0;
 }
 
 /* Chevron
