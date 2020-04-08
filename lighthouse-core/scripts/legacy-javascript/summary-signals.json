@@ -1,42 +1,13 @@
 {
-  "totalSignals": 205,
+  "totalSignals": 203,
   "variantsMissingSignals": [
-    "core-js-2-only-polyfill/es6-array-copy-within",
-    "core-js-2-only-polyfill/es6-array-every",
     "core-js-2-only-polyfill/es6-array-filter",
-    "core-js-2-only-polyfill/es6-array-index-of",
-    "core-js-2-only-polyfill/es6-array-iterator",
     "core-js-2-only-polyfill/es6-array-map",
     "core-js-2-only-polyfill/es6-array-reduce",
     "core-js-2-only-polyfill/es6-array-reduce-right",
     "core-js-2-only-polyfill/es6-array-some",
-    "core-js-2-only-polyfill/es6-array-species",
-    "core-js-2-only-polyfill/es6-date-to-primitive",
     "core-js-2-only-polyfill/es6-date-to-string",
-    "core-js-2-only-polyfill/es6-function-bind",
-    "core-js-2-only-polyfill/es6-function-has-instance",
     "core-js-2-only-polyfill/es6-function-name",
-    "core-js-2-only-polyfill/es6-math-acosh",
-    "core-js-2-only-polyfill/es6-math-asinh",
-    "core-js-2-only-polyfill/es6-math-atanh",
-    "core-js-2-only-polyfill/es6-math-cbrt",
-    "core-js-2-only-polyfill/es6-math-clz32",
-    "core-js-2-only-polyfill/es6-math-cosh",
-    "core-js-2-only-polyfill/es6-math-expm1",
-    "core-js-2-only-polyfill/es6-math-fround",
-    "core-js-2-only-polyfill/es6-math-hypot",
-    "core-js-2-only-polyfill/es6-math-imul",
-    "core-js-2-only-polyfill/es6-math-log10",
-    "core-js-2-only-polyfill/es6-math-log1p",
-    "core-js-2-only-polyfill/es6-math-log2",
-    "core-js-2-only-polyfill/es6-math-sign",
-    "core-js-2-only-polyfill/es6-math-sinh",
-    "core-js-2-only-polyfill/es6-math-tanh",
-    "core-js-2-only-polyfill/es6-math-trunc",
-    "core-js-2-only-polyfill/es6-number-constructor",
-    "core-js-2-only-polyfill/es6-number-epsilon",
-    "core-js-2-only-polyfill/es6-number-max-safe-integer",
-    "core-js-2-only-polyfill/es6-number-min-safe-integer",
     "core-js-2-only-polyfill/es6-object-freeze",
     "core-js-2-only-polyfill/es6-object-get-own-property-descriptor",
     "core-js-2-only-polyfill/es6-object-get-own-property-names",
@@ -47,47 +18,16 @@
     "core-js-2-only-polyfill/es6-object-keys",
     "core-js-2-only-polyfill/es6-object-prevent-extensions",
     "core-js-2-only-polyfill/es6-object-seal",
-    "core-js-2-only-polyfill/es6-object-to-string",
     "core-js-2-only-polyfill/es6-reflect-define-property",
-    "core-js-2-only-polyfill/es6-string-iterator",
     "core-js-2-only-polyfill/es6-string-trim",
     "core-js-2-preset-env-esmodules/true",
-    "core-js-3-only-polyfill/es6-array-copy-within",
-    "core-js-3-only-polyfill/es6-array-every",
     "core-js-3-only-polyfill/es6-array-filter",
-    "core-js-3-only-polyfill/es6-array-index-of",
-    "core-js-3-only-polyfill/es6-array-iterator",
     "core-js-3-only-polyfill/es6-array-map",
     "core-js-3-only-polyfill/es6-array-reduce",
     "core-js-3-only-polyfill/es6-array-reduce-right",
     "core-js-3-only-polyfill/es6-array-some",
-    "core-js-3-only-polyfill/es6-array-species",
-    "core-js-3-only-polyfill/es6-date-to-primitive",
     "core-js-3-only-polyfill/es6-date-to-string",
-    "core-js-3-only-polyfill/es6-function-bind",
-    "core-js-3-only-polyfill/es6-function-has-instance",
     "core-js-3-only-polyfill/es6-function-name",
-    "core-js-3-only-polyfill/es6-math-acosh",
-    "core-js-3-only-polyfill/es6-math-asinh",
-    "core-js-3-only-polyfill/es6-math-atanh",
-    "core-js-3-only-polyfill/es6-math-cbrt",
-    "core-js-3-only-polyfill/es6-math-clz32",
-    "core-js-3-only-polyfill/es6-math-cosh",
-    "core-js-3-only-polyfill/es6-math-expm1",
-    "core-js-3-only-polyfill/es6-math-fround",
-    "core-js-3-only-polyfill/es6-math-hypot",
-    "core-js-3-only-polyfill/es6-math-imul",
-    "core-js-3-only-polyfill/es6-math-log10",
-    "core-js-3-only-polyfill/es6-math-log1p",
-    "core-js-3-only-polyfill/es6-math-log2",
-    "core-js-3-only-polyfill/es6-math-sign",
-    "core-js-3-only-polyfill/es6-math-sinh",
-    "core-js-3-only-polyfill/es6-math-tanh",
-    "core-js-3-only-polyfill/es6-math-trunc",
-    "core-js-3-only-polyfill/es6-number-constructor",
-    "core-js-3-only-polyfill/es6-number-epsilon",
-    "core-js-3-only-polyfill/es6-number-max-safe-integer",
-    "core-js-3-only-polyfill/es6-number-min-safe-integer",
     "core-js-3-only-polyfill/es6-object-freeze",
     "core-js-3-only-polyfill/es6-object-get-own-property-descriptor",
     "core-js-3-only-polyfill/es6-object-get-own-property-names",
@@ -98,25 +38,11 @@
     "core-js-3-only-polyfill/es6-object-keys",
     "core-js-3-only-polyfill/es6-object-prevent-extensions",
     "core-js-3-only-polyfill/es6-object-seal",
-    "core-js-3-only-polyfill/es6-object-to-string",
     "core-js-3-only-polyfill/es6-reflect-define-property",
-    "core-js-3-only-polyfill/es6-string-iterator",
     "core-js-3-only-polyfill/es6-string-trim",
     "core-js-3-preset-env-esmodules/true"
   ],
   "variants": [
-    {
-      "name": "core-js-2-only-polyfill/es6-array-copy-within",
-      "signals": ""
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-array-every",
-      "signals": ""
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-array-fill",
-      "signals": "Array.fill"
-    },
     {
       "name": "core-js-2-only-polyfill/es6-array-filter",
       "signals": ""
@@ -138,16 +64,8 @@
       "signals": "Array.from"
     },
     {
-      "name": "core-js-2-only-polyfill/es6-array-index-of",
-      "signals": ""
-    },
-    {
       "name": "core-js-2-only-polyfill/es6-array-is-array",
       "signals": "Array.isArray"
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-array-iterator",
-      "signals": ""
     },
     {
       "name": "core-js-2-only-polyfill/es6-array-last-index-of",
@@ -174,10 +92,6 @@
       "signals": ""
     },
     {
-      "name": "core-js-2-only-polyfill/es6-array-species",
-      "signals": ""
-    },
-    {
       "name": "core-js-2-only-polyfill/es6-date-now",
       "signals": "Date.now"
     },
@@ -190,19 +104,7 @@
       "signals": "Date.prototype.toJSON"
     },
     {
-      "name": "core-js-2-only-polyfill/es6-date-to-primitive",
-      "signals": ""
-    },
-    {
       "name": "core-js-2-only-polyfill/es6-date-to-string",
-      "signals": ""
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-function-bind",
-      "signals": ""
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-function-has-instance",
       "signals": ""
     },
     {
@@ -214,96 +116,12 @@
       "signals": "Map"
     },
     {
-      "name": "core-js-2-only-polyfill/es6-math-acosh",
-      "signals": ""
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-math-asinh",
-      "signals": ""
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-math-atanh",
-      "signals": ""
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-math-cbrt",
-      "signals": ""
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-math-clz32",
-      "signals": ""
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-math-cosh",
-      "signals": ""
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-math-expm1",
-      "signals": ""
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-math-fround",
-      "signals": ""
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-math-hypot",
-      "signals": ""
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-math-imul",
-      "signals": ""
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-math-log10",
-      "signals": ""
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-math-log1p",
-      "signals": ""
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-math-log2",
-      "signals": ""
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-math-sign",
-      "signals": ""
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-math-sinh",
-      "signals": ""
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-math-tanh",
-      "signals": ""
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-math-trunc",
-      "signals": ""
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-number-constructor",
-      "signals": ""
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-number-epsilon",
-      "signals": ""
-    },
-    {
       "name": "core-js-2-only-polyfill/es6-number-is-integer",
       "signals": "Number.isInteger"
     },
     {
       "name": "core-js-2-only-polyfill/es6-number-is-safe-integer",
       "signals": "Number.isSafeInteger"
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-number-max-safe-integer",
-      "signals": ""
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-number-min-safe-integer",
-      "signals": ""
     },
     {
       "name": "core-js-2-only-polyfill/es6-number-parse-float",
@@ -372,10 +190,6 @@
     {
       "name": "core-js-2-only-polyfill/es6-object-set-prototype-of",
       "signals": "Object.setPrototypeOf"
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-object-to-string",
-      "signals": ""
     },
     {
       "name": "core-js-2-only-polyfill/es6-promise",
@@ -452,10 +266,6 @@
     {
       "name": "core-js-2-only-polyfill/es6-string-includes",
       "signals": "String.prototype.includes"
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-string-iterator",
-      "signals": ""
     },
     {
       "name": "core-js-2-only-polyfill/es6-string-raw",
@@ -558,18 +368,6 @@
       "signals": ""
     },
     {
-      "name": "core-js-3-only-polyfill/es6-array-copy-within",
-      "signals": ""
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-array-every",
-      "signals": ""
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-array-fill",
-      "signals": "Array.fill"
-    },
-    {
       "name": "core-js-3-only-polyfill/es6-array-filter",
       "signals": ""
     },
@@ -590,16 +388,8 @@
       "signals": "Array.from"
     },
     {
-      "name": "core-js-3-only-polyfill/es6-array-index-of",
-      "signals": ""
-    },
-    {
       "name": "core-js-3-only-polyfill/es6-array-is-array",
       "signals": "Array.isArray"
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-array-iterator",
-      "signals": ""
     },
     {
       "name": "core-js-3-only-polyfill/es6-array-last-index-of",
@@ -626,10 +416,6 @@
       "signals": ""
     },
     {
-      "name": "core-js-3-only-polyfill/es6-array-species",
-      "signals": ""
-    },
-    {
       "name": "core-js-3-only-polyfill/es6-date-now",
       "signals": "Date.now"
     },
@@ -642,19 +428,7 @@
       "signals": "Date.prototype.toJSON"
     },
     {
-      "name": "core-js-3-only-polyfill/es6-date-to-primitive",
-      "signals": ""
-    },
-    {
       "name": "core-js-3-only-polyfill/es6-date-to-string",
-      "signals": ""
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-function-bind",
-      "signals": ""
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-function-has-instance",
       "signals": ""
     },
     {
@@ -666,96 +440,12 @@
       "signals": "Map"
     },
     {
-      "name": "core-js-3-only-polyfill/es6-math-acosh",
-      "signals": ""
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-math-asinh",
-      "signals": ""
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-math-atanh",
-      "signals": ""
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-math-cbrt",
-      "signals": ""
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-math-clz32",
-      "signals": ""
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-math-cosh",
-      "signals": ""
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-math-expm1",
-      "signals": ""
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-math-fround",
-      "signals": ""
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-math-hypot",
-      "signals": ""
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-math-imul",
-      "signals": ""
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-math-log10",
-      "signals": ""
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-math-log1p",
-      "signals": ""
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-math-log2",
-      "signals": ""
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-math-sign",
-      "signals": ""
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-math-sinh",
-      "signals": ""
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-math-tanh",
-      "signals": ""
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-math-trunc",
-      "signals": ""
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-number-constructor",
-      "signals": ""
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-number-epsilon",
-      "signals": ""
-    },
-    {
       "name": "core-js-3-only-polyfill/es6-number-is-integer",
       "signals": "Number.isInteger"
     },
     {
       "name": "core-js-3-only-polyfill/es6-number-is-safe-integer",
       "signals": "Number.isSafeInteger"
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-number-max-safe-integer",
-      "signals": ""
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-number-min-safe-integer",
-      "signals": ""
     },
     {
       "name": "core-js-3-only-polyfill/es6-number-parse-float",
@@ -824,10 +514,6 @@
     {
       "name": "core-js-3-only-polyfill/es6-object-set-prototype-of",
       "signals": "Object.setPrototypeOf"
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-object-to-string",
-      "signals": ""
     },
     {
       "name": "core-js-3-only-polyfill/es6-promise",
@@ -904,10 +590,6 @@
     {
       "name": "core-js-3-only-polyfill/es6-string-includes",
       "signals": "String.prototype.includes"
-    },
-    {
-      "name": "core-js-3-only-polyfill/es6-string-iterator",
-      "signals": ""
     },
     {
       "name": "core-js-3-only-polyfill/es6-string-raw",
