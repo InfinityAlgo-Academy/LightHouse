@@ -918,7 +918,7 @@ class Driver {
    * @param {number} cpuQuietThresholdMs
    * @param {number} maxWaitForLoadedMs
    * @param {number=} maxWaitForFcpMs
-   * @return {Promise<void>}
+   * @return {Promise<{timedOut: boolean}>}
    * @private
    */
   async _waitForFullyLoaded(pauseAfterFcpMs, pauseAfterLoadMs, networkQuietThresholdMs,
@@ -939,6 +939,7 @@ class Driver {
 
     // Wait for all initial load promises. Resolves on cleanup function the clears load
     // timeout timer.
+    /** @type {Promise<() => Promise<{timedOut: boolean}>>} */
     const loadPromise = Promise.all([
       waitForFcp.promise,
       waitForLoadEvent.promise,
@@ -947,9 +948,13 @@ class Driver {
       waitForCPUIdle = this._waitForCPUIdle(cpuQuietThresholdMs);
       return waitForCPUIdle.promise;
     }).then(() => {
-      return function() {
+      /** @return {Promise<{timedOut: boolean}>} */
+      const cleanupFn = async function() {
         log.verbose('Driver', 'loadEventFired and network considered idle');
+        return {timedOut: false};
       };
+
+      return cleanupFn;
     }).catch(err => {
       // Throw the error in the cleanupFn so we still cleanup all our handlers.
       return function() {
@@ -959,6 +964,7 @@ class Driver {
 
     // Last resort timeout. Resolves maxWaitForLoadedMs ms from now on
     // cleanup function that removes loadEvent and network idle listeners.
+    /** @type {Promise<() => Promise<{timedOut: boolean}>>} */
     const maxTimeoutPromise = new Promise((resolve, reject) => {
       maxTimeoutHandle = setTimeout(resolve, maxWaitForLoadedMs);
     }).then(_ => {
@@ -970,6 +976,8 @@ class Driver {
           await this.sendCommand('Runtime.terminateExecution');
           throw new LHError(LHError.errors.PAGE_HUNG);
         }
+
+        return {timedOut: true};
       };
     });
 
@@ -985,7 +993,7 @@ class Driver {
     waitForNetworkIdle.cancel();
     waitForCPUIdle.cancel();
 
-    await cleanupFn();
+    return cleanupFn();
   }
 
   /**
@@ -1071,7 +1079,7 @@ class Driver {
    * Resolves on the url of the loaded page, taking into account any redirects.
    * @param {string} url
    * @param {{waitForFcp?: boolean, waitForLoad?: boolean, waitForNavigated?: boolean, passContext?: LH.Gatherer.PassContext}} options
-   * @return {Promise<string>}
+   * @return {Promise<{finalUrl: string, timedOut: boolean}>}
    */
   async gotoURL(url, options = {}) {
     const waitForFcp = options.waitForFcp || false;
@@ -1101,6 +1109,7 @@ class Driver {
     // No timeout needed for Page.navigate. See https://github.com/GoogleChrome/lighthouse/pull/6413.
     const waitforPageNavigateCmd = this._innerSendCommand('Page.navigate', undefined, {url});
 
+    let timedOut = false;
     if (waitForNavigated) {
       await this._waitForFrameNavigated();
     } else if (waitForLoad) {
@@ -1120,14 +1129,18 @@ class Driver {
       /* eslint-enable max-len */
 
       if (!waitForFcp) maxFCPMs = undefined;
-      await this._waitForFullyLoaded(pauseAfterFcpMs, pauseAfterLoadMs, networkQuietThresholdMs,
-        cpuQuietThresholdMs, maxWaitMs, maxFCPMs);
+      const loadResult = await this._waitForFullyLoaded(pauseAfterFcpMs, pauseAfterLoadMs,
+        networkQuietThresholdMs, cpuQuietThresholdMs, maxWaitMs, maxFCPMs);
+      timedOut = loadResult.timedOut;
     }
 
     // Bring `Page.navigate` errors back into the promise chain. See https://github.com/GoogleChrome/lighthouse/pull/6739.
     await waitforPageNavigateCmd;
 
-    return this._endNetworkStatusMonitoring();
+    return {
+      finalUrl: this._endNetworkStatusMonitoring(),
+      timedOut,
+    };
   }
 
   /**

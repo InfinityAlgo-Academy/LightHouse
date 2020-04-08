@@ -749,10 +749,10 @@ describe('Runner', () => {
         online: true,
         // Loads the page successfully in the first pass, fails with PAGE_HUNG in the second.
         async gotoURL(url) {
-          if (url.includes('blank')) return null;
+          if (url.includes('blank')) return {finalUrl: '', timedOut: false};
           if (firstLoad) {
             firstLoad = false;
-            return url;
+            return {finalUrl: url, timedOut: false};
           } else {
             throw new LHError(LHError.errors.PAGE_HUNG);
           }

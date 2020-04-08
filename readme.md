@@ -273,9 +273,9 @@ yarn build-all
 ```
 
 #### installing protobuf
-If changing audit output, you'll need to have v3.7.1 of the protocol-buffer/protobuf compiler installed. (v3.7.1 is known to be compatible, and 3.11.x is known to be **not** compatible.). 
+If changing audit output, you'll need to have v3.7.1 of the protocol-buffer/protobuf compiler installed. (v3.7.1 is known to be compatible, and 3.11.x is known to be **not** compatible.).
 
-Homebrew should be able to install it correctly: `brew install protobuf@3.7.1`
+Homebrew should be able to install it correctly: `brew install protobuf@3.7`
 
 But if you want to do it manually, these steps that have worked well for us:
 

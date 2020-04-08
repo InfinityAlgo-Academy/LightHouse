@@ -514,8 +514,7 @@ describe('.gotoURL', () => {
     const loadPromise = driver.gotoURL(startUrl, loadOptions);
 
     await flushAllTimersAndMicrotasks();
-    const loadedUrl = await loadPromise;
-    expect(loadedUrl).toEqual(finalUrl);
+    expect(await loadPromise).toEqual({finalUrl, timedOut: false});
   });
 
   describe('when waitForNavigated', () => {
@@ -577,7 +576,7 @@ describe('.gotoURL', () => {
         waitForResult.mockResolve();
         await flushAllTimersAndMicrotasks();
         expect(loadPromise).toBeDone(`Did not resolve on ${name}`);
-        await loadPromise;
+        expect(await loadPromise).toMatchObject({timedOut: false});
       });
     });
 
@@ -607,7 +606,7 @@ describe('.gotoURL', () => {
       driver._waitForCPUIdle.mockResolve();
       await flushAllTimersAndMicrotasks();
       expect(loadPromise).toBeDone(`Did not resolve on CPU idle`);
-      await loadPromise;
+      expect(await loadPromise).toMatchObject({timedOut: false});
     });
 
     it('should timeout when not resolved fast enough', async () => {
@@ -638,6 +637,7 @@ describe('.gotoURL', () => {
       expect(driver._waitForLoadEvent.getMockCancelFn()).toHaveBeenCalled();
       expect(driver._waitForNetworkIdle.getMockCancelFn()).toHaveBeenCalled();
       expect(driver._waitForCPUIdle.getMockCancelFn()).toHaveBeenCalled();
+      expect(await loadPromise).toMatchObject({timedOut: true});
     });
 
     it('should cleanup listeners even when waits reject', async () => {
