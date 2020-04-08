@@ -8,6 +8,7 @@
 /* globals self, Util */
 
 /** @typedef {import('./details-renderer')} DetailsRenderer */
+/** @typedef {import('./dom')} DOM */
 
 /** @enum {number} */
 const LineVisibility = {

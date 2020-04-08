@@ -133,7 +133,7 @@ async function flushAllTimersAndMicrotasks(ms = 1000) {
  * @property {(...args: RecursivePartial<Parameters<Driver['goOnline']>>) => ReturnType<Driver['goOnline']>} goOnline
 */
 
-/** @typedef {Driver & DriverMockMethods} TestDriver */
+/** @typedef {Omit<Driver, keyof DriverMockMethods> & DriverMockMethods} TestDriver */
 
 /** @type {TestDriver} */
 let driver;
@@ -492,8 +492,7 @@ describe('.gotoURL', () => {
       }
     }
     const replayConnection = new ReplayConnection();
-
-    const driver = /** @type {TestDriver} */ (new Driver(replayConnection));
+    const driver = new Driver(replayConnection);
 
     // Redirect in log will go through
     const startUrl = 'http://en.wikipedia.org/';
@@ -503,6 +502,8 @@ describe('.gotoURL', () => {
 
     const loadOptions = {
       waitForLoad: true,
+      /** @type {LH.Gatherer.PassContext} */
+      // @ts-ignore - we don't need the entire context for the test.
       passContext: {
         passConfig: {
           pauseAfterLoadMs: 0,

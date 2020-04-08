@@ -22,7 +22,7 @@ const {createMockSendCommandFn} = require('./mock-commands.js');
 jest.mock('../../lib/stack-collector.js', () => () => Promise.resolve([]));
 
 /**
- * @template {Array} TParams
+ * @template {unknown[]} TParams
  * @template TReturn
  * @param {(...args: TParams) => TReturn} fn
  */
