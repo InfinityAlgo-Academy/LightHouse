@@ -96,8 +96,10 @@ const expectations = [
         'unminified-javascript': {
           score: '<1',
           details: {
-            overallSavingsBytes: '>45000',
+            // the specific ms value is not meaningful for this smoketest
+            // *some largish amount* of savings should be reported
             overallSavingsMs: '>500',
+            overallSavingsBytes: '>45000',
             items: [
               {
                 url: 'http://localhost:10200/byte-efficiency/script.js',
@@ -134,8 +136,10 @@ const expectations = [
         'unused-javascript': {
           score: '<1',
           details: {
+            // the specific ms value here is not meaningful for this smoketest
+            // *some* savings should be reported
+            overallSavingsMs: '>0',
             overallSavingsBytes: '>=25000',
-            overallSavingsMs: '>300',
             items: [
               {
                 url: 'http://localhost:10200/byte-efficiency/script.js',
@@ -196,6 +200,8 @@ const expectations = [
         'uses-text-compression': {
           score: '<1',
           details: {
+            // the specific ms value is not meaningful for this smoketest
+            // *some largish amount* of savings should be reported
             overallSavingsMs: '>700',
             overallSavingsBytes: '>50000',
             items: {
