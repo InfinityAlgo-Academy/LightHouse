@@ -126,7 +126,7 @@
       {"id":"npm:vue:20180222","severity":"low","semver":{"vulnerable":["<2.5.14"]}}
     ],
     "yui":[
-      {"id":"npm:yui:20130604","severity":"medium","semver":{"vulnerable":[">=3.0.0 <3.10.1 || =3.10.2"]}},
+      {"id":"npm:yui:20130604","severity":"medium","semver":{"vulnerable":[">=3.0.0 <3.10.1","=3.10.2"]}},
       {"id":"npm:yui:20130515","severity":"medium","semver":{"vulnerable":["<3.10.0 >=3.0.0"]}},
       {"id":"npm:yui:20121030","severity":"medium","semver":{"vulnerable":["<3.0.0 >=2.4.0"]}},
       {"id":"npm:yui:20120428","severity":"medium","semver":{"vulnerable":["<3.5.1 >=3.5.0-PR1"]}},
