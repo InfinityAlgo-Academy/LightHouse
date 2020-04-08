@@ -63,7 +63,7 @@ async function createVariant(options) {
     // Not used in this script, but useful for running Lighthouse manually.
     // Just need to start a web server first.
     fs.writeFileSync(`${dir}/index.html`,
-      `<title>${name}</title><script src=main.bundle.min.js></script>`);
+      `<title>${name}</title><script src=main.bundle.min.js></script><p>${name}</p>`);
 
     // Note: No babelrc will make babel a glorified `cp`.
     runCommand('yarn', [
