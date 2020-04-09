@@ -83,6 +83,7 @@ Configuration:
   --additional-trace-categories  Additional categories to capture with the trace (comma-delimited).
   --config-path                  The path to the config JSON.
                                  An example config file: lighthouse-core/config/lr-desktop-config.js
+  --budget-path                  The path to the budget.json file for LightWallet.
   --chrome-flags                 Custom flags to pass to Chrome (space-delimited). For a full list of flags, see
                                  http://peter.sh/experiments/chromium-command-line-switches/.
 
@@ -234,6 +235,7 @@ Useful documentation, examples, and recipes to get you started.
 - [Developing Plugins](./docs/plugins.md)
 - [Making a New Audit](./docs/new-audits.md)
 - [Testing on a mobile device](./docs/readme.md#testing-on-a-mobile-device)
+- [Setting a performance budget](./docs/performance-budgets.md)
 - [Lighthouse Architecture](./docs/architecture.md)
 
 **Recipes**
