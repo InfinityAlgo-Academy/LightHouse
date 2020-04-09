@@ -49,7 +49,7 @@ class LargestContentfulPaint extends Audit {
    * @return {LH.Audit.Details.Table['items']}
    */
   static getNodeData(traceNodes) {
-    const lcpNode = traceNodes.find(node => node.metricTag === 'lcp');
+    const lcpNode = traceNodes.find(node => node.type === 'lcp');
     if (!lcpNode) {
       return [];
     }
