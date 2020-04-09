@@ -463,7 +463,7 @@
             "id": "definition-list",
             "score": null,
             "scoreDisplayMode": "notApplicable",
-            "title": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>` or `<template>` elements."
+            "title": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
         },
         "deprecations": {
             "description": "Deprecated APIs will eventually be removed from the browser. [Learn more](https://web.dev/deprecations).",
