@@ -8,6 +8,11 @@
 const Gatherer = require('./gatherer.js');
 const pageFunctions = require('../../lib/page-functions.js');
 const TraceProcessor = require('../../lib/tracehouse/trace-processor.js');
+const {
+  addRectTopAndBottom,
+  getRectOverlapArea,
+  getRectArea,
+} = require('../../lib/rect-helpers.js');
 
 /**
  * @return {LH.Artifacts['TraceNodes']}
@@ -46,10 +51,25 @@ class TraceNodes extends Gatherer {
   }
 
   /**
+   * @param {Array<number>} rect
+   * @return {LH.Artifacts.Rect}
+   */
+  static traceRectToLHRect(rect) {
+    const rectArgs = {
+      x: rect[0],
+      y: rect[1],
+      width: rect[2],
+      height: rect[3],
+    };
+    return addRectTopAndBottom(rectArgs);
+  }
+
+  /**
    * @param {Array<LH.TraceEvent>} mainThreadEvents 
    * @return {Array<number>}
    */
   static getCLSNodesFromMainThreadEvents(mainThreadEvents) {
+    const clsPerNodeMap = new Map();
     /** @type {Set<number>} */
     const clsNodeIds = new Set();
     const shiftEvents = mainThreadEvents.filter(e => e.name === 'LayoutShift').map(e => e.args && e.args.data);
@@ -59,10 +79,39 @@ class TraceNodes extends Gatherer {
         return;
       }
 
-      event.impacted_nodes && event.impacted_nodes.forEach(node => node.node_id && clsNodeIds.add(node.node_id));
+      event.impacted_nodes && event.impacted_nodes.forEach(node => {
+        if (!node.node_id || !node.old_rect || !node.new_rect) {
+          return;
+        }
+
+        const oldRect = TraceNodes.traceRectToLHRect(node.old_rect);
+        const newRect = TraceNodes.traceRectToLHRect(node.new_rect);
+        const areaOfImpact = getRectArea(oldRect) +
+          getRectArea(newRect) - 
+          getRectOverlapArea(oldRect, newRect);
+        
+        let prevShiftTotal = 0;
+        if (clsPerNodeMap.has(node.node_id)) {
+          prevShiftTotal += clsPerNodeMap.get(node.node_id);
+        }
+        clsPerNodeMap.set(node.node_id, prevShiftTotal + areaOfImpact);
+        clsNodeIds.add(node.node_id);
+      });
     });
+
+    console.log('=====================');
+    console.log(clsPerNodeMap);
+    console.log('=====================');
     
-    return Array.from(clsNodeIds);
+    const topFive = [...clsPerNodeMap.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5).map(entry => Number(entry[0]));
+
+    console.log('=====================');
+    console.log(topFive);
+    console.log('=====================');
+    
+    return topFive;
   }
 
   /**
