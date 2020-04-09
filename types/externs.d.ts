@@ -76,6 +76,23 @@ declare global {
       T[P];
   };
 
+  /** Recursively makes all properties of T read-only. */
+  export type Immutable<T> =
+    T extends Function ? T :
+    T extends Array<infer R> ? ImmutableArray<R> :
+    T extends Map<infer K, infer V> ? ImmutableMap<K, V> :
+    T extends Set<infer M> ? ImmutableSet<M> :
+    T extends object ? ImmutableObject<T> :
+    T
+
+  // Intermediate immutable types. Prefer e.g. Immutable<Set<T>> over direct use.
+  type ImmutableArray<T> = ReadonlyArray<Immutable<T>>;
+  type ImmutableMap<K, V> = ReadonlyMap<Immutable<K>, Immutable<V>>;
+  type ImmutableSet<T> = ReadonlySet<Immutable<T>>;
+  type ImmutableObject<T> = {
+    readonly [K in keyof T]: Immutable<T[K]>;
+  };
+
   /**
    * Exclude void from T
    */

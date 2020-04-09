@@ -248,14 +248,14 @@ class Runner {
     // Members of LH.Audit.Context that are shared across all audits.
     const sharedAuditContext = {
       settings,
-      LighthouseRunWarnings: runWarnings,
       computedCache: new Map(),
     };
 
     // Run each audit sequentially
     const auditResults = [];
     for (const auditDefn of audits) {
-      const auditResult = await Runner._runAudit(auditDefn, artifacts, sharedAuditContext);
+      const auditResult = await Runner._runAudit(auditDefn, artifacts, sharedAuditContext,
+          runWarnings);
       auditResults.push(auditResult);
     }
 
@@ -268,11 +268,12 @@ class Runner {
    * Otherwise returns error audit result.
    * @param {LH.Config.AuditDefn} auditDefn
    * @param {LH.Artifacts} artifacts
-   * @param {Pick<LH.Audit.Context, 'settings'|'LighthouseRunWarnings'|'computedCache'>} sharedAuditContext
+   * @param {Pick<LH.Audit.Context, 'settings'|'computedCache'>} sharedAuditContext
+   * @param {Array<string>} runWarnings
    * @return {Promise<LH.Audit.Result>}
    * @private
    */
-  static async _runAudit(auditDefn, artifacts, sharedAuditContext) {
+  static async _runAudit(auditDefn, artifacts, sharedAuditContext, runWarnings) {
     const audit = auditDefn.implementation;
     const status = {
       msg: `Auditing: ${i18n.getFormatted(audit.meta.title, 'en-US')}`,
@@ -341,6 +342,8 @@ class Runner {
           return narrowedArtifacts;
         }, /** @type {LH.Artifacts} */ ({}));
       const product = await audit.audit(narrowedArtifacts, auditContext);
+      runWarnings.push(...product.runWarnings || []);
+
       auditResult = Audit.generateAuditResult(audit, product);
     } catch (err) {
       // Log error if it hasn't already been logged above.
