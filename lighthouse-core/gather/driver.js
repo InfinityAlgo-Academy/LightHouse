@@ -1238,19 +1238,6 @@ class Driver {
   }
 
   /**
-   * @param {number} nodeId
-   * @param {string} attributeName
-   * @param {string} attributeValue
-   */
-  async setNodeAttribute(nodeId, attributeName, attributeValue) {
-    await this.sendCommand('DOM.setAttributeValue', {
-      nodeId: nodeId,
-      name: attributeName,
-      value: attributeValue,
-    });
-  }
-
-  /**
    * @param {{x: number, y: number}} position
    * @return {Promise<void>}
    */

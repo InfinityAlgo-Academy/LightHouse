@@ -51,13 +51,18 @@ class TraceNodes extends Gatherer {
 
     const backendNodeId = lcpEvent && lcpEvent.args &&
       lcpEvent.args.data && lcpEvent.args.data.nodeId;
-    if (backendNodeId) {
-      // The call below is necessary for pushNodesByBackendIdsToFrontend to properly retrieve nodeIds
-      await driver.sendCommand('DOM.getDocument', {depth: -1, pierce: true});
-      const translatedIds = await driver.sendCommand('DOM.pushNodesByBackendIdsToFrontend',
-        {backendNodeIds: [backendNodeId]});
-      driver.setNodeAttribute(translatedIds.nodeIds[0], 'lhtemp', 'lcp');
+    if (!backendNodeId) {
+      return [];
     }
+    // The call below is necessary for pushNodesByBackendIdsToFrontend to properly retrieve nodeIds
+    await driver.sendCommand('DOM.getDocument', {depth: -1, pierce: true});
+    const translatedIds = await driver.sendCommand('DOM.pushNodesByBackendIdsToFrontend',
+      {backendNodeIds: [backendNodeId]});
+      await driver.sendCommand('DOM.setAttributeValue', {
+        nodeId: translatedIds.nodeIds[0],
+        name: 'lhtemp',
+        value: 'lcp',
+      });
 
     const expression = `(() => {
       ${pageFunctions.getElementsInDocumentString};
@@ -69,7 +74,12 @@ class TraceNodes extends Gatherer {
       return (${collectTraceNodes})();
     })()`;
 
-    return driver.evaluateAsync(expression, {useIsolation: true});
+    const traceNodes = await driver.evaluateAsync(expression, {useIsolation: true});
+    await driver.sendCommand('DOM.removeAttribute', {
+      nodeId: translatedIds.nodeIds[0],
+      name: 'lhtemp',
+    });
+    return traceNodes;
   }
 }
 
