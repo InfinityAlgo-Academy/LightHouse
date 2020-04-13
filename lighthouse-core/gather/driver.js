@@ -1184,21 +1184,6 @@ class Driver {
   }
 
   /**
-   * @param {string} name The name of API whose permission you wish to query
-   * @return {Promise<string>} The state of permissions, resolved in a promise.
-   *    See https://developer.mozilla.org/en-US/docs/Web/API/Permissions/query.
-   */
-  queryPermissionState(name) {
-    const expressionToEval = `
-      navigator.permissions.query({name: '${name}'}).then(result => {
-        return result.state;
-      })
-    `;
-
-    return this.evaluateAsync(expressionToEval);
-  }
-
-  /**
    * @param {string} selector Selector to find in the DOM
    * @return {Promise<LHElement|null>} The found element, or null, resolved in a promise
    */
