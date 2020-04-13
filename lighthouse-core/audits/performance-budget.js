@@ -64,7 +64,7 @@ class ResourceBudget extends Audit {
   }
 
   /**
-   * @param {LH.Budget} budget
+   * @param {Immutable<LH.Budget>} budget
    * @param {Record<LH.Budget.ResourceType,ResourceEntry>} summary
    * @return {Array<BudgetItem>}
    */

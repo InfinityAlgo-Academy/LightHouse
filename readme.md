@@ -83,6 +83,7 @@ Configuration:
   --additional-trace-categories  Additional categories to capture with the trace (comma-delimited).
   --config-path                  The path to the config JSON.
                                  An example config file: lighthouse-core/config/lr-desktop-config.js
+  --budget-path                  The path to the budget.json file for LightWallet.
   --chrome-flags                 Custom flags to pass to Chrome (space-delimited). For a full list of flags, see
                                  http://peter.sh/experiments/chromium-command-line-switches/.
 
@@ -234,6 +235,7 @@ Useful documentation, examples, and recipes to get you started.
 - [Developing Plugins](./docs/plugins.md)
 - [Making a New Audit](./docs/new-audits.md)
 - [Testing on a mobile device](./docs/readme.md#testing-on-a-mobile-device)
+- [Setting a performance budget](./docs/performance-budgets.md)
 - [Lighthouse Architecture](./docs/architecture.md)
 
 **Recipes**
@@ -273,9 +275,9 @@ yarn build-all
 ```
 
 #### installing protobuf
-If changing audit output, you'll need to have v3.7.1 of the protocol-buffer/protobuf compiler installed. (v3.7.1 is known to be compatible, and 3.11.x is known to be **not** compatible.). 
+If changing audit output, you'll need to have v3.7.1 of the protocol-buffer/protobuf compiler installed. (v3.7.1 is known to be compatible, and 3.11.x is known to be **not** compatible.).
 
-Homebrew should be able to install it correctly: `brew install protobuf@3.7.1`
+Homebrew should be able to install it correctly: `brew install protobuf@3.7`
 
 But if you want to do it manually, these steps that have worked well for us:
 

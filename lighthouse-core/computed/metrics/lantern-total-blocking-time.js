@@ -43,10 +43,13 @@ class LanternTotalBlockingTime extends LanternMetric {
 
   /**
    * @param {LH.Gatherer.Simulation.Result} simulation
-   * @param {Object} extras
+   * @param {import('./lantern-metric.js').Extras} extras
    * @return {LH.Gatherer.Simulation.Result}
    */
   static getEstimateFromSimulation(simulation, extras) {
+    if (!extras.fcpResult) throw new Error('missing fcpResult');
+    if (!extras.interactiveResult) throw new Error('missing interactiveResult');
+
     // Intentionally use the opposite FCP estimate. A pessimistic FCP is higher than equal to an
     // optimistic FCP, which means potentially more tasks are excluded from the Total Blocking Time
     // computation. So a more pessimistic FCP gives a more optimistic Total Blocking Time for the

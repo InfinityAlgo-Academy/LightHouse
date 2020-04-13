@@ -12,7 +12,7 @@ const NetworkAnalysis = require('./network-analysis.js');
 
 class LoadSimulator {
   /**
-   * @param {{devtoolsLog: LH.DevtoolsLog, settings: LH.Config.Settings}} data
+   * @param {{devtoolsLog: LH.DevtoolsLog, settings: Immutable<LH.Config.Settings>}} data
    * @param {LH.Audit.Context} context
    * @return {Promise<Simulator>}
    */

@@ -141,10 +141,10 @@
     "message": "Ŵh́êń d̂éf̂ín̂ít̂íôń l̂íŝt́ŝ ár̂é n̂ót̂ ṕr̂óp̂ér̂ĺŷ ḿâŕk̂éd̂ úp̂, śĉŕêén̂ ŕêád̂ér̂ś m̂áŷ ṕr̂ód̂úĉé ĉón̂f́ûśîńĝ ór̂ ín̂áĉćûŕât́ê óût́p̂út̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`'ŝ d́ô ńôt́ ĉón̂t́âín̂ ón̂ĺŷ ṕr̂óp̂ér̂ĺŷ-ór̂d́êŕêd́ `<dt>` âńd̂ `<dd>` ǵr̂óûṕŝ, `<script>` ór̂ `<template>` él̂ém̂én̂t́ŝ."
+    "message": "`<dl>`'ŝ d́ô ńôt́ ĉón̂t́âín̂ ón̂ĺŷ ṕr̂óp̂ér̂ĺŷ-ór̂d́êŕêd́ `<dt>` âńd̂ `<dd>` ǵr̂óûṕŝ, `<script>`, `<template>` ór̂ `<div>` él̂ém̂én̂t́ŝ."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`'ŝ ćôńt̂áîń ôńl̂ý p̂ŕôṕêŕl̂ý-ôŕd̂ér̂éd̂ `<dt>` án̂d́ `<dd>` ĝŕôúp̂ś, `<script>` ôŕ `<template>` êĺêḿêńt̂ś."
+    "message": "`<dl>`'ŝ ćôńt̂áîń ôńl̂ý p̂ŕôṕêŕl̂ý-ôŕd̂ér̂éd̂ `<dt>` án̂d́ `<dd>` ĝŕôúp̂ś, `<script>`, `<template>` ôŕ `<div>` êĺêḿêńt̂ś."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "D̂éf̂ín̂ít̂íôń l̂íŝt́ ît́êḿŝ (`<dt>` án̂d́ `<dd>`) m̂úŝt́ b̂é ŵŕâṕp̂éd̂ ín̂ á p̂ár̂én̂t́ `<dl>` êĺêḿêńt̂ t́ô én̂śûŕê t́ĥát̂ śĉŕêén̂ ŕêád̂ér̂ś ĉán̂ ṕr̂óp̂ér̂ĺŷ án̂ńôún̂ćê t́ĥém̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/dlitem/)."
@@ -1417,6 +1417,9 @@
   },
   "lighthouse-core/gather/gather-runner.js | warningRedirected": {
     "message": "T̂h́ê ṕâǵê ḿâý n̂ót̂ b́ê ĺôád̂ín̂ǵ âś êx́p̂éĉt́êd́ b̂éĉáûśê ýôúr̂ t́êśt̂ ÚR̂Ĺ ({requested}) ŵáŝ ŕêd́îŕêćt̂éd̂ t́ô {final}. T́r̂ý t̂éŝt́îńĝ t́ĥé ŝéĉón̂d́ ÛŔL̂ d́îŕêćt̂ĺŷ."
+  },
+  "lighthouse-core/gather/gather-runner.js | warningTimeout": {
+    "message": "T̂h́ê ṕâǵê ĺôád̂éd̂ t́ôó ŝĺôẃl̂ý t̂ó f̂ín̂íŝh́ ŵít̂h́îń t̂h́ê t́îḿê ĺîḿît́. R̂éŝúl̂t́ŝ ḿâý b̂é îńĉóm̂ṕl̂ét̂é."
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Ĉáĉh́ê T́T̂Ĺ"

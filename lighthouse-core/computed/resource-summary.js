@@ -51,7 +51,8 @@ class ResourceSummary {
       'third-party': {count: 0, size: 0},
     };
     const budget = Budget.getMatchingBudget(context.settings.budgets, mainResourceURL);
-    let firstPartyHosts = /** @type {Array<string>} */ ([]);
+    /** @type {ReadonlyArray<string>} */
+    let firstPartyHosts = [];
     if (budget && budget.options && budget.options.firstPartyHostnames) {
       firstPartyHosts = budget.options.firstPartyHostnames;
     } else {

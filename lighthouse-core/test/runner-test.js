@@ -654,37 +654,12 @@ describe('Runner', () => {
           static get meta() {
             return basicAuditMeta;
           }
-          static audit(artifacts, context) {
-            context.LighthouseRunWarnings.push(warningString);
+          static audit() {
             return {
               numericValue: 5,
               score: 1,
+              runWarnings: [warningString],
             };
-          }
-        },
-      ],
-    });
-
-    return Runner.run(null, {config, driverMock}).then(results => {
-      assert.deepStrictEqual(results.lhr.runWarnings, [warningString]);
-    });
-  });
-
-  it('includes any LighthouseRunWarnings from errored audits in LHR', () => {
-    const warningString = 'Audit warning just before a terrible error!';
-
-    const config = new Config({
-      settings: {
-        auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
-      },
-      audits: [
-        class WarningAudit extends Audit {
-          static get meta() {
-            return basicAuditMeta;
-          }
-          static audit(artifacts, context) {
-            context.LighthouseRunWarnings.push(warningString);
-            throw new Error('Terrible.');
           }
         },
       ],
@@ -749,10 +724,10 @@ describe('Runner', () => {
         online: true,
         // Loads the page successfully in the first pass, fails with PAGE_HUNG in the second.
         async gotoURL(url) {
-          if (url.includes('blank')) return null;
+          if (url.includes('blank')) return {finalUrl: '', timedOut: false};
           if (firstLoad) {
             firstLoad = false;
-            return url;
+            return {finalUrl: url, timedOut: false};
           } else {
             throw new LHError(LHError.errors.PAGE_HUNG);
           }

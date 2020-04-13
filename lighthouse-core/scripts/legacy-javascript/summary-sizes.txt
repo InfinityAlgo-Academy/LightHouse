@@ -113,8 +113,8 @@ variants/core-js-2-only-polyfill
    3410 variants/core-js-2-only-polyfill/es6-function-name/main.bundle.min.js
 
 variants/core-js-2-preset-env-esmodules
-3567 total
-2259 variants/core-js-2-preset-env-esmodules/false/main.bundle.min.js
+4121 total
+2813 variants/core-js-2-preset-env-esmodules/false/main.bundle.min.js
 1308 variants/core-js-2-preset-env-esmodules/true/main.bundle.min.js
 
 variants/core-js-3-only-polyfill
@@ -232,13 +232,13 @@ variants/core-js-3-only-polyfill
    3410 variants/core-js-3-only-polyfill/es6-function-name/main.bundle.min.js
 
 variants/core-js-3-preset-env-esmodules
-3567 total
-2259 variants/core-js-3-preset-env-esmodules/false/main.bundle.min.js
+4121 total
+2813 variants/core-js-3-preset-env-esmodules/false/main.bundle.min.js
 1308 variants/core-js-3-preset-env-esmodules/true/main.bundle.min.js
 
 variants/only-plugin
-2793 total
-1152 variants/only-plugin/-babel-plugin-transform-spread/main.bundle.min.js
+3347 total
+1706 variants/only-plugin/-babel-plugin-transform-spread/main.bundle.min.js
  827 variants/only-plugin/-babel-plugin-transform-regenerator/main.bundle.min.js
  814 variants/only-plugin/-babel-plugin-transform-classes/main.bundle.min.js
 

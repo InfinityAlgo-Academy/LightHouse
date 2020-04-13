@@ -5,12 +5,14 @@
  */
 'use strict';
 
+/* eslint-disable no-console */
+
 // Example:
 //     node lighthouse-core/scripts/compare-runs.js --name my-collection --collect -n 3 --lh-flags='--only-audits=unminified-javascript' --urls https://www.example.com https://www.nyt.com
 //     node lighthouse-core/scripts/compare-runs.js --name my-collection --summarize --filter 'loadPage|connect'
 //     node lighthouse-core/scripts/compare-runs.js --name base --name pr --compare
 
-// The script will report both timings and perf metric results. View just one of them but using --filter:
+// The script will report both timings and perf metric results. View just one of them by using --filter:
 //     node lighthouse-core/scripts/compare-runs.js --summarize --name pr --filter=metric
 
 const fs = require('fs');
@@ -41,6 +43,7 @@ const argv = yargs
     // --summarize
     'summarize': 'Prints statistics report',
     'filter': 'Regex inclusion filter applied to key. Optional',
+    'url-filter': 'Regex inclusion filter applied to url. Optional',
     'reportExclude': 'Regex of columns keys to exclude.',
     'output': 'table, json',
     // --compare
@@ -56,6 +59,7 @@ const argv = yargs
   .array('urls')
   .string('lh-flags')
   .default('desc', false)
+  .default('sort-by-absolute-value', false)
   .default('lh-flags', '')
   .strict() // fail on unknown commands
   .wrap(yargs.terminalWidth())
@@ -124,7 +128,6 @@ function getProgressBar(i, total = argv.n * argv.urls.length) {
 async function gather() {
   const outputDir = dir(argv.name);
   if (fs.existsSync(outputDir)) {
-    // eslint-disable-next-line no-console
     console.log('Collection already started - resuming.');
   }
   await mkdir(outputDir, {recursive: true});
@@ -186,7 +189,12 @@ async function audit() {
         '--output=json',
         argv.lhFlags,
       ].join(' ');
-      await exec(cmd);
+
+      try {
+        await exec(cmd);
+      } catch (e) {
+        console.error('audit error:', e);
+      }
     }
   }
   progress.closeProgress();
@@ -205,14 +213,24 @@ function aggregateResults(name) {
   for (const lhrPath of glob.sync(`${outputDir}/**/lhr-*.json`)) {
     const lhrJson = fs.readFileSync(lhrPath, 'utf-8');
     /** @type {LH.Result} */
-    const lhr = JSON.parse(lhrJson);
+    const lhr = lhrJson && JSON.parse(lhrJson);
+    if (!lhr || !lhr.audits) {
+      console.warn(`lhr not found at ${lhrPath}`);
+      continue;
+    }
 
-    const metrics = lhr.audits.metrics ?
+    if (argv.urlFilter && !lhr.requestedUrl.includes(argv.urlFilter)) continue;
+
+    const metrics = lhr.audits.metrics && lhr.audits.metrics.details ?
     /** @type {!LH.Audit.Details.Table} */ (lhr.audits.metrics.details).items[0] :
       {};
     const allEntries = {
       metric: Object.entries(metrics).filter(([name]) => !name.endsWith('Ts')),
       timing: lhr.timing.entries.map(entry => ([entry.name, entry.duration])),
+      categories: Object.values(lhr.categories).reduce((acc, cur) => {
+        acc.push([cur.id, (cur.score || 0) * 100]);
+        return acc;
+      }, /** @type {Array<[string, number]>} */ ([])),
     };
 
     Object.entries(allEntries).forEach(([kind, entries]) => {
@@ -270,9 +288,9 @@ function aggregateResults(name) {
 function filter(results) {
   const includeFilter = argv.filter ? new RegExp(argv.filter, 'i') : null;
 
-  results.forEach((result, i) => {
+  return results.filter(result => {
     if (includeFilter && !includeFilter.test(result.key)) {
-      delete results[i];
+      return false;
     }
 
     for (const propName of Object.keys(result)) {
@@ -281,6 +299,8 @@ function filter(results) {
         delete result[propName];
       }
     }
+
+    return true;
   });
 }
 
@@ -294,8 +314,7 @@ function isNumber(value) {
 
 function summarize() {
   const results = aggregateResults(argv.name);
-  filter(results);
-  print(results);
+  print(filter(results));
 }
 
 /**
@@ -354,18 +373,22 @@ function compare() {
   const sortByKey = `${argv.deltaPropertySort} Δ`;
   results.sort((a, b) => {
     // @ts-ignore - shhh tsc.
-    const aValue = a[sortByKey];
+    let aValue = a[sortByKey];
     // @ts-ignore - shhh tsc.
-    const bValue = b[sortByKey];
+    let bValue = b[sortByKey];
 
     // Always put the keys missing a result at the bottom of the table.
     if (!isNumber(aValue)) return 1;
     else if (!isNumber(bValue)) return -1;
 
-    return (argv.desc ? 1 : -1) * (Math.abs(aValue) - Math.abs(bValue));
+    if (argv.sortByAbsoluteValue) {
+      aValue = Math.abs(aValue);
+      bValue = Math.abs(bValue);
+    }
+
+    return (argv.desc ? 1 : -1) * (aValue - bValue);
   });
-  filter(results);
-  print(results);
+  print(filter(results));
 }
 
 /**
@@ -373,10 +396,8 @@ function compare() {
  */
 function print(results) {
   if (argv.output === 'table') {
-    // eslint-disable-next-line no-console
     console.table(results);
   } else if (argv.output === 'json') {
-    // eslint-disable-next-line no-console
     console.log(JSON.stringify(results, null, 2));
   }
 }

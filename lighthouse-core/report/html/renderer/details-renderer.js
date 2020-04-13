@@ -487,7 +487,6 @@ class DetailsRenderer {
   /**
    * @param {LH.Audit.Details.NodeValue} item
    * @return {Element}
-   * @protected
    */
   renderNode(item) {
     const element = this._dom.createElement('span', 'lh-node');

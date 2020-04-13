@@ -509,7 +509,7 @@ declare global {
       export interface MetricComputationDataInput {
         devtoolsLog: DevtoolsLog;
         trace: Trace;
-        settings: Config.Settings;
+        settings: Immutable<Config.Settings>;
         simulator?: LanternSimulator;
       }
 

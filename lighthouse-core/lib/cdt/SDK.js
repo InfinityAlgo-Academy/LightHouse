@@ -14,7 +14,7 @@ const SDK = {
  * relies on this, but only for a couple method return values. To avoid global pollution,
  * we explicitly set the extension functions on the return values.
  *
- * @param {Array} array
+ * @param {unknown[]} array
  */
 function extendArray(array) {
   // @ts-ignore

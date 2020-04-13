@@ -22,7 +22,7 @@ const {createMockSendCommandFn} = require('./mock-commands.js');
 jest.mock('../../lib/stack-collector.js', () => () => Promise.resolve([]));
 
 /**
- * @template {Array} TParams
+ * @template {unknown[]} TParams
  * @template TReturn
  * @param {(...args: TParams) => TReturn} fn
  */
@@ -143,7 +143,7 @@ describe('GatherRunner', function() {
     const url2 = 'https://example.com/interstitial';
     const driver = {
       gotoURL() {
-        return Promise.resolve(url2);
+        return Promise.resolve({finalUrl: url2, timedOut: false});
       },
     };
 
@@ -216,7 +216,7 @@ describe('GatherRunner', function() {
     const finalUrl = 'https://example.com/interstitial';
     const driver = Object.assign({}, fakeDriver, {
       gotoURL() {
-        return Promise.resolve(finalUrl);
+        return Promise.resolve({finalUrl, timedOut: false});
       },
     });
     const config = makeConfig({passes: [{}]});
@@ -427,7 +427,7 @@ describe('GatherRunner', function() {
     const driver = {
       beginDevtoolsLog: asyncFunc,
       beginTrace: asyncFunc,
-      gotoURL: asyncFunc,
+      gotoURL: async () => ({}),
       cleanBrowserCaches: createCheck('calledCleanBrowserCaches'),
       setThrottling: asyncFunc,
       blockUrlPatterns: asyncFunc,
@@ -534,9 +534,9 @@ describe('GatherRunner', function() {
     // NO_FCP should be ignored because it's a warn pass.
     const navigationError = new LHError(LHError.errors.NO_FCP);
 
-    const gotoUrlForAboutBlank = jest.fn().mockResolvedValue(null);
+    const gotoUrlForAboutBlank = jest.fn().mockResolvedValue({});
     const gotoUrlForRealUrl = jest.fn()
-      .mockResolvedValueOnce(requestedUrl)
+      .mockResolvedValueOnce({finalUrl: requestedUrl, timedOut: false})
       .mockRejectedValueOnce(navigationError);
     const driver = Object.assign({}, fakeDriver, {
       online: true,
@@ -709,7 +709,7 @@ describe('GatherRunner', function() {
         return Promise.resolve();
       },
       gotoURL() {
-        return Promise.resolve();
+        return Promise.resolve({finalUrl: '', timedOut: false});
       },
     };
 
@@ -895,7 +895,7 @@ describe('GatherRunner', function() {
         if (url.includes('blank')) return null;
         if (firstLoad) {
           firstLoad = false;
-          return requestedUrl;
+          return {finalUrl: requestedUrl, timedOut: false};
         } else {
           throw new LHError(LHError.errors.NO_FCP);
         }
@@ -1584,7 +1584,7 @@ describe('GatherRunner', function() {
       const unresolvedDriver = Object.assign({}, fakeDriver, {
         online: true,
         gotoURL() {
-          return Promise.resolve(requestedUrl);
+          return Promise.resolve({finalUrl: requestedUrl, timedOut: false});
         },
         endDevtoolsLog() {
           return unresolvedPerfLog;
@@ -1602,6 +1602,34 @@ describe('GatherRunner', function() {
       });
     });
 
+    it('resolves but warns when page times out', () => {
+      const config = makeConfig({
+        passes: [{
+          recordTrace: true,
+          passName: 'firstPass',
+          gatherers: [],
+        }],
+      });
+
+      const requestedUrl = 'http://www.slow-loading-page.com/';
+      const timedoutDriver = Object.assign({}, fakeDriver, {
+        online: true,
+        gotoURL() {
+          return Promise.resolve({finalUrl: requestedUrl, timedOut: true});
+        },
+      });
+
+      return GatherRunner.run(config.passes, {
+        driver: timedoutDriver,
+        requestedUrl,
+        settings: config.settings,
+      }).then(artifacts => {
+        assert.equal(artifacts.LighthouseRunWarnings.length, 1);
+        expect(artifacts.LighthouseRunWarnings[0])
+          .toBeDisplayString(/too slow/);
+      });
+    });
+
     it('resolves when domain name can\'t be resolved but is offline', () => {
       const config = makeConfig({
         passes: [{
@@ -1616,7 +1644,7 @@ describe('GatherRunner', function() {
       const unresolvedDriver = Object.assign({}, fakeDriver, {
         online: false,
         gotoURL() {
-          return Promise.resolve(requestedUrl);
+          return Promise.resolve({finalUrl: requestedUrl, timedOut: false});
         },
         endDevtoolsLog() {
           return unresolvedPerfLog;

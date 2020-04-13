@@ -24,6 +24,11 @@ const UIStrings = {
   warningRedirected: 'The page may not be loading as expected because your test URL ' +
   `({requested}) was redirected to {final}. ` +
   'Try testing the second URL directly.',
+  /**
+   * @description Warning that Lighthouse timed out while waiting for the page to load.
+   */
+  warningTimeout: 'The page loaded too slowly to finish within the time limit. ' +
+  'Results may be incomplete.',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -76,12 +81,13 @@ class GatherRunner {
     };
     log.time(status);
     try {
-      const finalUrl = await driver.gotoURL(passContext.url, {
+      const {finalUrl, timedOut} = await driver.gotoURL(passContext.url, {
         waitForFcp: passContext.passConfig.recordTrace,
         waitForLoad: true,
         passContext,
       });
       passContext.url = finalUrl;
+      if (timedOut) passContext.LighthouseRunWarnings.push(str_(UIStrings.warningTimeout));
     } catch (err) {
       // If it's one of our loading-based LHErrors, we'll treat it as a page load error.
       if (err.code === 'NO_FCP' || err.code === 'PAGE_HUNG') {

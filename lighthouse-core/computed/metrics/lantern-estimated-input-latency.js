@@ -42,10 +42,12 @@ class LanternEstimatedInputLatency extends LanternMetric {
 
   /**
    * @param {LH.Gatherer.Simulation.Result} simulation
-   * @param {Object} extras
+   * @param {import('./lantern-metric.js').Extras} extras
    * @return {LH.Gatherer.Simulation.Result}
    */
   static getEstimateFromSimulation(simulation, extras) {
+    if (!extras.fmpResult) throw new Error('missing fmpResult');
+
     // Intentionally use the opposite FMP estimate, a more pessimistic FMP means that more tasks
     // are excluded from the EIL computation, so a higher FMP means lower EIL for same work.
     const fmpTimeInMs = extras.optimistic

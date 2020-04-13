@@ -49,7 +49,6 @@ async function main() {
     computedCache: new Map(),
     options: {},
     settings: /** @type {any} */ ({}),
-    LighthouseRunWarnings: [],
   });
 
   const items =
