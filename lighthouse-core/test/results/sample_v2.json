@@ -89,27 +89,7 @@
       "scoreDisplayMode": "numeric",
       "numericValue": 4927.278,
       "numericUnit": "millisecond",
-      "displayValue": "4.9 s",
-      "details": {
-        "type": "table",
-        "headings": [
-          {
-            "key": "node",
-            "itemType": "node",
-            "text": "Culprit"
-          }
-        ],
-        "items": [
-          {
-            "node": {
-              "type": "node",
-              "path": "1,HTML,1,BODY,0,DIV,1,P",
-              "selector": "body > div > p",
-              "nodeLabel": "This domain is for use in illustrative examples in documents. You may use this …"
-            }
-          }
-        ]
-      }
+      "displayValue": "4.9 s"
     },
     "first-meaningful-paint": {
       "id": "first-meaningful-paint",
@@ -1662,6 +1642,18 @@
           "wastedBytes": 30174,
           "wastedMs": 22.918000000000006
         }
+      }
+    },
+    "lcp-node": {
+      "id": "lcp-node",
+      "title": "Largest Contentful Paint element",
+      "description": "This is the element that was identified as the Largest Contentful Paint. [Learn More](https://web.dev/lighthouse-largest-contentful-paint)",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
       }
     },
     "pwa-cross-browser": {
@@ -3839,6 +3831,11 @@
           "group": "diagnostics"
         },
         {
+          "id": "lcp-node",
+          "weight": 0,
+          "group": "diagnostics"
+        },
+        {
           "id": "network-requests",
           "weight": 0
         },
@@ -4953,6 +4950,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:third-party-summary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:lcp-node",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6126,6 +6129,12 @@
       ],
       "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": [
         "audits[third-party-summary].details.headings[2].text"
+      ],
+      "lighthouse-core/audits/lcp-node.js | title": [
+        "audits[lcp-node].title"
+      ],
+      "lighthouse-core/audits/lcp-node.js | description": [
+        "audits[lcp-node].description"
       ],
       "lighthouse-core/audits/manual/pwa-cross-browser.js | title": [
         "audits[pwa-cross-browser].title"

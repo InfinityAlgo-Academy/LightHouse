@@ -11,9 +11,13 @@ const i18n = require('../lib/i18n/i18n.js');
 const UIStrings = {
   /** Descriptive title of a diagnostic audit that provides the element that was determined to be the Largest Contentful Paint. */
   title: 'Largest Contentful Paint element',
-  /** Description of a Lighthouse audit that tells the user  */
+  /** Description of a Lighthouse audit that tells the user that the element shown was determined to be the Largest Contentful Paint. */
   description: 'This is the element that was identified as the Largest Contentful Paint. ' +
     '[Learn More](https://web.dev/lighthouse-largest-contentful-paint)',
+  /** Label for the audit identifying if an element was found. */
+  displayValue: '1 element found',
+  /** Label for the Element column in the LCP Node event data table. */
+  columnHeader: 'Element',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -62,13 +66,19 @@ class LCPNode extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'node', itemType: 'node', text: 'Culprit'},
+      {key: 'node', itemType: 'node', text: str_(UIStrings.columnHeader)},
     ];
 
     const details = Audit.makeTableDetails(headings, lcpNodeData);
 
+    let displayValue;
+    if (lcpNodeData.length) {
+      displayValue = str_(UIStrings.displayValue);
+    }
+
     return {
-      score: 1,    
+      score: Number(lcpNodeData.length !== 0),
+      displayValue,
       details,
     };
   }

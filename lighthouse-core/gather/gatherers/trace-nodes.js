@@ -58,11 +58,11 @@ class TraceNodes extends Gatherer {
     await driver.sendCommand('DOM.getDocument', {depth: -1, pierce: true});
     const translatedIds = await driver.sendCommand('DOM.pushNodesByBackendIdsToFrontend',
       {backendNodeIds: [backendNodeId]});
-      await driver.sendCommand('DOM.setAttributeValue', {
-        nodeId: translatedIds.nodeIds[0],
-        name: 'lhtemp',
-        value: 'lcp',
-      });
+    await driver.sendCommand('DOM.setAttributeValue', {
+      nodeId: translatedIds.nodeIds[0],
+      name: 'lhtemp',
+      value: 'lcp',
+    });
 
     const expression = `(() => {
       ${pageFunctions.getElementsInDocumentString};
