@@ -20,6 +20,8 @@ function collectTraceNodes() {
   const traceNodes = [];
 
   for (const element of markedElements) {
+    // @ts-ignore - put into scope via stringification
+    const htmlSnippet = getOuterHTMLSnippet(element); // eslint-disable-line no-undef
     traceNodes.push({
       metricTag: element.getAttribute('lhtemp') || '',
       // @ts-ignore - put into scope via stringification
@@ -28,8 +30,7 @@ function collectTraceNodes() {
       selector: getNodeSelector(element), // eslint-disable-line no-undef
       // @ts-ignore - put into scope via stringification
       nodeLabel: getNodeLabel(element), // eslint-disable-line no-undef
-      // @ts-ignore - put into scope via stringification
-      snippet: getOuterHTMLSnippet(element), // eslint-disable-line no-undef
+      snippet: htmlSnippet.replace(' lhtemp="lcp"', ''),
     });
   }
   return traceNodes;
@@ -90,14 +91,7 @@ class TraceNodes extends Gatherer {
       return (${collectTraceNodes})();
     })()`;
 
-    const traceNodes = await driver.evaluateAsync(expression, {useIsolation: true});
-    for (let i = 0; i < backendNodeIds.length; i++) {
-      await driver.sendCommand('DOM.removeAttribute', {
-        nodeId: translatedIds.nodeIds[i],
-        name: 'lhtemp',
-      });
-    }
-    return traceNodes;
+    return driver.evaluateAsync(expression, {useIsolation: true});
   }
 }
 
