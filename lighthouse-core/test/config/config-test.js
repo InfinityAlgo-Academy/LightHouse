@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -86,7 +86,7 @@ describe('Config', () => {
   it('uses the default config when no config is provided', () => {
     const config = new Config();
     assert.deepStrictEqual(config.categories, origConfig.categories);
-    assert.equal(config.audits.length, origConfig.audits.length);
+    assert.deepStrictEqual(config.audits.map(a => a.path), origConfig.audits);
   });
 
   it('throws when a passName is used twice', () => {
@@ -145,6 +145,216 @@ describe('Config', () => {
       audits: [NeedsWhatYouCantGive],
     // eslint-disable-next-line max-len
     })).toThrow('VRMLElements gatherer, required by audit missing-artifact-audit, was not found in config');
+  });
+
+  // eslint-disable-next-line max-len
+  it('does not throw when an audit requests an optional artifact with no gatherer supplying it', async () => {
+    class DoesntNeedYourCrap extends Audit {
+      static get meta() {
+        return {
+          id: 'optional-artifact-audit',
+          title: 'none',
+          description: 'none',
+          requiredArtifacts: [
+            'URL', // base artifact
+            'ViewportDimensions', // from gatherer
+          ],
+          __internalOptionalArtifacts: [
+            'SourceMaps', // Not in the config.
+          ],
+        };
+      }
+
+      static audit() {}
+    }
+
+    // Shouldn't throw.
+    const config = new Config({
+      extends: 'lighthouse:default',
+      audits: [DoesntNeedYourCrap],
+    }, {
+      // Trigger filtering logic.
+      onlyAudits: ['optional-artifact-audit'],
+    });
+    expect(config.passes[0].gatherers.map(g => g.path)).toEqual(['viewport-dimensions']);
+  });
+
+  it('should keep optional artifacts in gatherers after filter', async () => {
+    class ButWillStillTakeYourCrap extends Audit {
+      static get meta() {
+        return {
+          id: 'optional-artifact-audit',
+          title: 'none',
+          description: 'none',
+          requiredArtifacts: [
+            'URL', // base artifact
+            'ViewportDimensions', // from gatherer
+          ],
+          __internalOptionalArtifacts: [
+            'SourceMaps', // Is in the config.
+          ],
+        };
+      }
+
+      static audit() {}
+    }
+
+    const config = new Config({
+      extends: 'lighthouse:default',
+      // TODO(cjamcl): remove when source-maps is in default config.
+      passes: [{
+        passName: 'defaultPass',
+        gatherers: [
+          'source-maps',
+        ],
+      }],
+      audits: [ButWillStillTakeYourCrap],
+    }, {
+      // Trigger filtering logic.
+      onlyAudits: ['optional-artifact-audit'],
+    });
+    expect(config.passes[0].gatherers.map(g => g.path))
+      .toEqual(['viewport-dimensions', 'source-maps']);
+  });
+
+  // eslint-disable-next-line max-len
+  it('does not throw when an audit requests an optional artifact with no gatherer supplying it', async () => {
+    class DoesntNeedYourCrap extends Audit {
+      static get meta() {
+        return {
+          id: 'optional-artifact-audit',
+          title: 'none',
+          description: 'none',
+          requiredArtifacts: [
+            'URL', // base artifact
+            'ViewportDimensions', // from gatherer
+          ],
+          __internalOptionalArtifacts: [
+            'SourceMaps', // Not in the config.
+          ],
+        };
+      }
+
+      static audit() {}
+    }
+
+    // Shouldn't throw.
+    const config = new Config({
+      extends: 'lighthouse:default',
+      audits: [DoesntNeedYourCrap],
+    }, {
+      // Trigger filtering logic.
+      onlyAudits: ['optional-artifact-audit'],
+    });
+    expect(config.passes[0].gatherers.map(g => g.path)).toEqual(['viewport-dimensions']);
+  });
+
+  it('should keep optional artifacts in gatherers after filter', async () => {
+    class ButWillStillTakeYourCrap extends Audit {
+      static get meta() {
+        return {
+          id: 'optional-artifact-audit',
+          title: 'none',
+          description: 'none',
+          requiredArtifacts: [
+            'URL', // base artifact
+            'ViewportDimensions', // from gatherer
+          ],
+          __internalOptionalArtifacts: [
+            'SourceMaps', // Is in the config.
+          ],
+        };
+      }
+
+      static audit() {}
+    }
+
+    const config = new Config({
+      extends: 'lighthouse:default',
+      // TODO(cjamcl): remove when source-maps is in default config.
+      passes: [{
+        passName: 'defaultPass',
+        gatherers: [
+          'source-maps',
+        ],
+      }],
+      audits: [ButWillStillTakeYourCrap],
+    }, {
+      // Trigger filtering logic.
+      onlyAudits: ['optional-artifact-audit'],
+    });
+    expect(config.passes[0].gatherers.map(g => g.path))
+      .toEqual(['viewport-dimensions', 'source-maps']);
+  });
+
+  // eslint-disable-next-line max-len
+  it('does not throw when an audit requests an optional artifact with no gatherer supplying it', async () => {
+    class DoesntNeedYourCrap extends Audit {
+      static get meta() {
+        return {
+          id: 'optional-artifact-audit',
+          title: 'none',
+          description: 'none',
+          requiredArtifacts: [
+            'URL', // base artifact
+            'ViewportDimensions', // from gatherer
+          ],
+          __internalOptionalArtifacts: [
+            'SourceMaps', // Not in the config.
+          ],
+        };
+      }
+
+      static audit() {}
+    }
+
+    // Shouldn't throw.
+    const config = new Config({
+      extends: 'lighthouse:default',
+      audits: [DoesntNeedYourCrap],
+    }, {
+      // Trigger filtering logic.
+      onlyAudits: ['optional-artifact-audit'],
+    });
+    expect(config.passes[0].gatherers.map(g => g.path)).toEqual(['viewport-dimensions']);
+  });
+
+  it('should keep optional artifacts in gatherers after filter', async () => {
+    class ButWillStillTakeYourCrap extends Audit {
+      static get meta() {
+        return {
+          id: 'optional-artifact-audit',
+          title: 'none',
+          description: 'none',
+          requiredArtifacts: [
+            'URL', // base artifact
+            'ViewportDimensions', // from gatherer
+          ],
+          __internalOptionalArtifacts: [
+            'SourceMaps', // Is in the config.
+          ],
+        };
+      }
+
+      static audit() {}
+    }
+
+    const config = new Config({
+      extends: 'lighthouse:default',
+      // TODO(cjamcl): remove when source-maps is in default config.
+      passes: [{
+        passName: 'defaultPass',
+        gatherers: [
+          'source-maps',
+        ],
+      }],
+      audits: [ButWillStillTakeYourCrap],
+    }, {
+      // Trigger filtering logic.
+      onlyAudits: ['optional-artifact-audit'],
+    });
+    expect(config.passes[0].gatherers.map(g => g.path))
+      .toEqual(['viewport-dimensions', 'source-maps']);
   });
 
   it('does not throw when an audit requires only base artifacts', () => {
@@ -623,6 +833,7 @@ describe('Config', () => {
 
     assert.equal(config.settings.throttlingMethod, 'devtools');
     assert.equal(config.passes[0].passName, 'defaultPass');
+    assert.ok(config.passes[0].pauseAfterFcpMs >= 5000, 'did not adjust fcp quiet ms');
     assert.ok(config.passes[0].pauseAfterLoadMs >= 5000, 'did not adjust load quiet ms');
     assert.ok(config.passes[0].cpuQuietThresholdMs >= 5000, 'did not adjust cpu quiet ms');
     assert.ok(config.passes[0].networkQuietThresholdMs >= 5000, 'did not adjust network quiet ms');

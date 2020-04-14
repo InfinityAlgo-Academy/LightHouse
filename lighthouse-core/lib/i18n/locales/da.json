@@ -81,7 +81,7 @@
     "message": "`[role]`-værdierne er gyldige"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Hvis et felt med en til/fra-kontakt ikke har et tilgængeligt navn, giver skærmlæsere feltet et generisk navn, så det ikke kan anvendes af brugere, der får læst indhold op af skærmlæsere. [Få flere oplysninger](https://web.dev/aria-toggle-field-label/)."
+    "message": "Hvis et felt med en til/fra-kontakt ikke har et tilgængeligt navn, giver skærmlæsere feltet et generisk navn, så det ikke kan anvendes af brugere, der får læst indhold op af skærmlæsere. [Få flere oplysninger](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "ARIA-kontakterne har ikke tilgængelige navne"
@@ -106,15 +106,6 @@
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "`[aria-*]`-attributterne er gyldige og er stavet korrekt"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Undertekster hjælper døve og hørehæmmede med at forstå lydelementer, idet de giver vigtige oplysninger som f.eks., hvem der taler, hvad de siger, og andre oplysninger, som ikke er relateret til tale. [Få flere oplysninger](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "`<audio>`-elementerne mangler et `<track>`-element med `[kind=\"captions\"]`."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "`<audio>`-elementerne indeholder et `<track>`-element med `[kind=\"captions\"]`"
   },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Elementer, der ikke bestod gennemgangen"
@@ -604,12 +595,6 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Undgår en overdreven DOM-størrelse"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Mål"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Føj `rel=\"noopener\"` eller `rel=\"noreferrer\"` til alle eksterne links for at forbedre ydeevnen og forhindre sikkerhedssårbarheder. [Få flere oplysninger](https://web.dev/external-anchors-use-rel-noopener)."

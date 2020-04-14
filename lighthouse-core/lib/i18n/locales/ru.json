@@ -81,7 +81,7 @@
     "message": "Недействительные значения атрибутов `[role]` отсутствуют"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Если у переключателя нет названия, доступного программам чтения с экрана, пользователи услышат слово \"переключатель\", но не поймут, для чего он нужен. [Подробнее…](https://web.dev/aria-toggle-field-label/)"
+    "message": "Если у переключателя нет названия, доступного программам чтения с экрана, пользователи услышат слово \"переключатель\", но не поймут, для чего он нужен. [Подробнее…](https://web.dev/aria-toggle-field-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "У переключателей ARIA нет доступных названий"
@@ -106,15 +106,6 @@
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Атрибуты `[aria-*]` действительны и написаны без ошибок"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Чтобы ваш аудиоконтент был доступен людям с нарушениями слуха, добавьте субтитры. В них можно включить описания сцен, у которых нет звукового сопровождения. [Подробнее…](https://web.dev/audio-caption/)"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "Элементы `<audio>` не содержат элемент `<track>` с атрибутом `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "Элементы `<audio>` содержат элемент `<track>` с атрибутом `[kind=\"captions\"]`"
   },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Элементы, не прошедшие проверку"
@@ -604,12 +595,6 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Сокращение размера структуры DOM"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Атрибут target"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Добавьте атрибут `rel=\"noopener\"` или `rel=\"noreferrer\"` ко всем внешним ссылкам, чтобы повысить производительность и избежать уязвимостей в защите. [Подробнее…](https://web.dev/external-anchors-use-rel-noopener)"

@@ -81,7 +81,7 @@
     "message": "Wartości `[role]` są prawidłowe"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Gdy pole przełączania nie ma nazwy na potrzeby ułatwień dostępu, czytniki ekranu określają je nazwą ogólną, przez co jest ono bezużyteczne dla ich użytkowników. [Więcej informacji](https://web.dev/aria-toggle-field-label/)"
+    "message": "Gdy pole przełączania nie ma nazwy na potrzeby ułatwień dostępu, czytniki ekranu określają je nazwą ogólną, przez co jest ono bezużyteczne dla ich użytkowników. [Więcej informacji](https://web.dev/aria-toggle-field-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "Pola przełączania ARIA nie mają nazw na potrzeby ułatwień dostępu"
@@ -106,15 +106,6 @@
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Atrybuty `[aria-*]` są prawidłowe i nie ma w nich literówek"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Dzięki napisom z elementów audio mogą korzystać osoby niesłyszące i słabosłyszące. Napisy zawierają ważne informacje na przykład o tym, kto i co mówi, a także informacje niedotyczące mowy. [Więcej informacji](https://web.dev/audio-caption/)"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "Elementy `<audio>` nie mają elementu `<track>` z atrybutem `[kind=\"captions\"]`."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "Elementy `<audio>` zawierają element `<track>` z atrybutem `[kind=\"captions\"]`"
   },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Nieprawidłowe elementy"
@@ -604,12 +595,6 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Unika zbyt dużego DOM"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Cel"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Dodaj atrybut `rel=\"noopener\"` lub `rel=\"noreferrer\"` do wszystkich linków zewnętrznych, by przyśpieszyć działanie i zapobiec lukom w zabezpieczeniach. [Więcej informacji](https://web.dev/external-anchors-use-rel-noopener)"

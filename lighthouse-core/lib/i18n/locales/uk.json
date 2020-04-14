@@ -81,7 +81,7 @@
     "message": "Значення `[role]` дійсні"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Коли поле перемикача не має зрозумілої назви, програми зчитування з екрана озвучують його загальною назвою, через що воно стає непридатним для користувачів. [Докладніше](https://web.dev/aria-toggle-field-label/)."
+    "message": "Коли поле перемикача не має зрозумілої назви, програми зчитування з екрана озвучують його загальною назвою, через що воно стає непридатним для користувачів. [Докладніше](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "Поля перемикача ARIA не мають доступних для зчитування назв"
@@ -106,15 +106,6 @@
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Атрибути `[aria-*]` дійсні та написані правильно"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Субтитри роблять звукові елементи ефективнішими для користувачів із вадами слуху, зокрема надають важливу інформацію про те, хто й що говорить, а також інші непов'язані з мовленням деталі. [Докладніше](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "Елементи `<audio>` не містять елемент `<track>` з атрибутом `[kind=\"captions\"]`."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "Елементи `<audio>` містять елемент `<track>` з атрибутом `[kind=\"captions\"]`"
   },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Елементи, що не пройшли перевірку"
@@ -604,12 +595,6 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Уникається надмірний розмір DOM"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Ціль"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Додайте `rel=\"noopener\"` або `rel=\"noreferrer\"` до зовнішніх посилань, щоб покращити ефективність і підвищити їх захищеність. [Докладніше](https://web.dev/external-anchors-use-rel-noopener)."

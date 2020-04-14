@@ -81,7 +81,7 @@
     "message": "Vrednosti za `[role]` su važeće"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Kada polje za prekidač nema naziv prilagođen funkciji pristupačnosti, čitači ekrana ga najavljuju pomoću generičkog naziva, pa korisnici koji se oslanjaju na čitače ekrana ne mogu da ga koriste. [Saznajte više](https://web.dev/aria-toggle-field-label/)."
+    "message": "Kada polje za prekidač nema naziv prilagođen funkciji pristupačnosti, čitači ekrana ga najavljuju pomoću generičkog naziva, pa korisnici koji se oslanjaju na čitače ekrana ne mogu da ga koriste. [Saznajte više](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "ARIA polja prekidača nemaju nazive prilagođene funkciji pristupačnosti"
@@ -106,15 +106,6 @@
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Atributi `[aria-*]` su važeći i nisu pogrešno napisani"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Titlovi omogućavaju da gluvi korisnici ili korisnici sa oštećenjem sluha koriste audio elemente, čime se pružaju važne informacije, na primer, informacije o tome koja osoba govori, šta govori, kao i druge informacije koje nisu vezane za govor. [Saznajte više](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "Elementima `<audio>` nedostaje element `<track>` sa atributom `[kind=\"captions\"]`."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "Elementi `<audio>` sadrže element `<track>` sa atributom `[kind=\"captions\"]`"
   },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Elementi koji nisu prošli proveru"
@@ -604,12 +595,6 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Izbegava preveliku veličinu DOM-a"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Cilj"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Dodajte `rel=\"noopener\"` ili`rel=\"noreferrer\"` svim spoljnim linkovima da biste poboljšali učinak i sprečili bezbednosne propuste. [Saznajte više](https://web.dev/external-anchors-use-rel-noopener)."

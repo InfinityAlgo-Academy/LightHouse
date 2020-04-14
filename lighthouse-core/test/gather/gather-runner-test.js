@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -22,7 +22,7 @@ const {createMockSendCommandFn} = require('./mock-commands.js');
 jest.mock('../../lib/stack-collector.js', () => () => Promise.resolve([]));
 
 /**
- * @template {Array} TParams
+ * @template {unknown[]} TParams
  * @template TReturn
  * @param {(...args: TParams) => TReturn} fn
  */
@@ -35,6 +35,7 @@ const GatherRunner = {
   beginRecording: makeParamsOptional(GatherRunner_.beginRecording),
   collectArtifacts: makeParamsOptional(GatherRunner_.collectArtifacts),
   endRecording: makeParamsOptional(GatherRunner_.endRecording),
+  getInstallabilityErrors: makeParamsOptional(GatherRunner_.getInstallabilityErrors),
   getInterstitialError: makeParamsOptional(GatherRunner_.getInterstitialError),
   getNetworkError: makeParamsOptional(GatherRunner_.getNetworkError),
   getPageLoadError: makeParamsOptional(GatherRunner_.getPageLoadError),
@@ -142,7 +143,7 @@ describe('GatherRunner', function() {
     const url2 = 'https://example.com/interstitial';
     const driver = {
       gotoURL() {
-        return Promise.resolve(url2);
+        return Promise.resolve({finalUrl: url2, timedOut: false});
       },
     };
 
@@ -215,7 +216,7 @@ describe('GatherRunner', function() {
     const finalUrl = 'https://example.com/interstitial';
     const driver = Object.assign({}, fakeDriver, {
       gotoURL() {
-        return Promise.resolve(finalUrl);
+        return Promise.resolve({finalUrl, timedOut: false});
       },
     });
     const config = makeConfig({passes: [{}]});
@@ -426,7 +427,7 @@ describe('GatherRunner', function() {
     const driver = {
       beginDevtoolsLog: asyncFunc,
       beginTrace: asyncFunc,
-      gotoURL: asyncFunc,
+      gotoURL: async () => ({}),
       cleanBrowserCaches: createCheck('calledCleanBrowserCaches'),
       setThrottling: asyncFunc,
       blockUrlPatterns: asyncFunc,
@@ -533,9 +534,9 @@ describe('GatherRunner', function() {
     // NO_FCP should be ignored because it's a warn pass.
     const navigationError = new LHError(LHError.errors.NO_FCP);
 
-    const gotoUrlForAboutBlank = jest.fn().mockResolvedValue(null);
+    const gotoUrlForAboutBlank = jest.fn().mockResolvedValue({});
     const gotoUrlForRealUrl = jest.fn()
-      .mockResolvedValueOnce(requestedUrl)
+      .mockResolvedValueOnce({finalUrl: requestedUrl, timedOut: false})
       .mockRejectedValueOnce(navigationError);
     const driver = Object.assign({}, fakeDriver, {
       online: true,
@@ -708,7 +709,7 @@ describe('GatherRunner', function() {
         return Promise.resolve();
       },
       gotoURL() {
-        return Promise.resolve();
+        return Promise.resolve({finalUrl: '', timedOut: false});
       },
     };
 
@@ -894,7 +895,7 @@ describe('GatherRunner', function() {
         if (url.includes('blank')) return null;
         if (firstLoad) {
           firstLoad = false;
-          return requestedUrl;
+          return {finalUrl: requestedUrl, timedOut: false};
         } else {
           throw new LHError(LHError.errors.NO_FCP);
         }
@@ -1583,7 +1584,7 @@ describe('GatherRunner', function() {
       const unresolvedDriver = Object.assign({}, fakeDriver, {
         online: true,
         gotoURL() {
-          return Promise.resolve(requestedUrl);
+          return Promise.resolve({finalUrl: requestedUrl, timedOut: false});
         },
         endDevtoolsLog() {
           return unresolvedPerfLog;
@@ -1601,6 +1602,34 @@ describe('GatherRunner', function() {
       });
     });
 
+    it('resolves but warns when page times out', () => {
+      const config = makeConfig({
+        passes: [{
+          recordTrace: true,
+          passName: 'firstPass',
+          gatherers: [],
+        }],
+      });
+
+      const requestedUrl = 'http://www.slow-loading-page.com/';
+      const timedoutDriver = Object.assign({}, fakeDriver, {
+        online: true,
+        gotoURL() {
+          return Promise.resolve({finalUrl: requestedUrl, timedOut: true});
+        },
+      });
+
+      return GatherRunner.run(config.passes, {
+        driver: timedoutDriver,
+        requestedUrl,
+        settings: config.settings,
+      }).then(artifacts => {
+        assert.equal(artifacts.LighthouseRunWarnings.length, 1);
+        expect(artifacts.LighthouseRunWarnings[0])
+          .toBeDisplayString(/too slow/);
+      });
+    });
+
     it('resolves when domain name can\'t be resolved but is offline', () => {
       const config = makeConfig({
         passes: [{
@@ -1615,7 +1644,7 @@ describe('GatherRunner', function() {
       const unresolvedDriver = Object.assign({}, fakeDriver, {
         online: false,
         gotoURL() {
-          return Promise.resolve(requestedUrl);
+          return Promise.resolve({finalUrl: requestedUrl, timedOut: false});
         },
         endDevtoolsLog() {
           return unresolvedPerfLog;
@@ -1633,6 +1662,40 @@ describe('GatherRunner', function() {
     });
   });
 
+  describe('.getInstallabilityErrors', () => {
+    /** @type {RecursivePartial<LH.Gatherer.PassContext>} */
+    let passContext;
+
+    beforeEach(() => {
+      passContext = {
+        driver,
+      };
+    });
+
+    it('should return the response from the protocol, if in >=M82 format', async () => {
+      connectionStub.sendCommand
+        .mockResponse('Page.getInstallabilityErrors', {
+          installabilityErrors: [{errorId: 'no-icon-available', errorArguments: []}],
+        });
+      const result = await GatherRunner.getInstallabilityErrors(passContext);
+      expect(result).toEqual({
+        errors: [{errorId: 'no-icon-available', errorArguments: []}],
+      });
+    });
+
+    it('should transform the response from the protocol, if in <M82 format', async () => {
+      connectionStub.sendCommand
+        .mockResponse('Page.getInstallabilityErrors', {
+          // @ts-ignore
+          errors: ['Downloaded icon was empty or corrupted'],
+        });
+      const result = await GatherRunner.getInstallabilityErrors(passContext);
+      expect(result).toEqual({
+        errors: [{errorId: 'no-icon-available', errorArguments: []}],
+      });
+    });
+  });
+
   describe('.getWebAppManifest', () => {
     const MANIFEST_URL = 'https://example.com/manifest.json';
     /** @type {RecursivePartial<LH.Gatherer.PassContext>} */
@@ -1642,22 +1705,24 @@ describe('GatherRunner', function() {
       passContext = {
         url: 'https://example.com/index.html',
         baseArtifacts: {},
-        driver: fakeDriver,
+        driver,
       };
     });
 
-    it('should pass through manifest when null', async () => {
-      const getAppManifest = jest.spyOn(fakeDriver, 'getAppManifest');
-      getAppManifest.mockResolvedValueOnce(null);
+    it('should return null when there is no manifest', async () => {
+      connectionStub.sendCommand
+        .mockResponse('Page.getAppManifest', {})
+        .mockResponse('Page.getInstallabilityErrors', {installabilityErrors: []});
       const result = await GatherRunner.getWebAppManifest(passContext);
       expect(result).toEqual(null);
     });
 
     it('should parse the manifest when found', async () => {
       const manifest = {name: 'App'};
-      const getAppManifest = jest.spyOn(fakeDriver, 'getAppManifest');
-      // @ts-ignore: Some terrible @types/jest bug lies here.
-      getAppManifest.mockResolvedValueOnce({data: JSON.stringify(manifest), url: MANIFEST_URL});
+      connectionStub.sendCommand
+        .mockResponse('Page.getAppManifest', {data: JSON.stringify(manifest), url: MANIFEST_URL})
+        .mockResponse('Page.getInstallabilityErrors', {installabilityErrors: []});
+
       const result = await GatherRunner.getWebAppManifest(passContext);
       expect(result).toHaveProperty('raw', JSON.stringify(manifest));
       expect(result && result.value).toMatchObject({

@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -26,26 +26,17 @@ const DEFAULT_CONCURRENT_RUNS = 5;
 const DEFAULT_RETRIES = 0;
 
 /**
- * @typedef SmokehouseOptions
- * @property {boolean=} isDebug If true, performs extra logging from the test runs.
- * @property {number=} jobs Manually set the number of jobs to run at once. `1` runs all tests serially.
- * @property {number=} retries The number of times to retry failing tests before accepting. Defaults to 0.
- * @property {LighthouseRunner=} lighthouseRunner A function that runs Lighthouse with the given options. Defaults to running Lighthouse via the CLI.
- */
-
-/**
- * @callback LighthouseRunner
- * @param {string} url
- * @param {LH.Config.Json=} configJson
- * @param {{isDebug?: boolean}=} runnerOptions
- * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts, log: string}>}
+ * @typedef SmokehouseResult
+ * @property {string} id
+ * @property {boolean} success
+ * @property {Array<{passed: number, failed: number, log: string}>} expectationResults
  */
 
 /**
  * Runs the selected smoke tests. Returns whether all assertions pass.
  * @param {Array<Smokehouse.TestDfn>} smokeTestDefns
- * @param {SmokehouseOptions=} smokehouseOptions
- * @return {Promise<boolean>}
+ * @param {Smokehouse.SmokehouseOptions=} smokehouseOptions
+ * @return {Promise<{success: boolean, testResults: SmokehouseResult[]}>}
  */
 async function runSmokehouse(smokeTestDefns, smokehouseOptions = {}) {
   const {
@@ -67,17 +58,32 @@ async function runSmokehouse(smokeTestDefns, smokehouseOptions = {}) {
     const result = runSmokeTestDefn(concurrentMapper, testDefn, options);
     smokePromises.push(result);
   }
-  const smokeResults = await Promise.all(smokePromises);
+  const testResults = await Promise.all(smokePromises);
+
+  let passingCount = 0;
+  let failingCount = 0;
+  for (const testResult of testResults) {
+    for (const expectationResult of testResult.expectationResults) {
+      passingCount += expectationResult.passed;
+      failingCount += expectationResult.failed;
+    }
+  }
+  if (passingCount) {
+    console.log(log.greenify(`${passingCount} expectations passing`));
+  }
+  if (failingCount) {
+    console.log(log.redify(`${failingCount} expectations failing`));
+  }
 
   // Print and fail if there were failing tests.
-  const failingDefns = smokeResults.filter(result => !result.success);
+  const failingDefns = testResults.filter(result => !result.success);
   if (failingDefns.length) {
     const testNames = failingDefns.map(d => d.id).join(', ');
     console.error(log.redify(`We have ${failingDefns.length} failing smoketests: ${testNames}`));
-    return false;
+    return {success: false, testResults};
   }
 
-  return true;
+  return {success: true, testResults};
 }
 
 /**
@@ -104,8 +110,8 @@ function assertNonNegativeInteger(loggableName, value) {
  * once all are finished.
  * @param {ConcurrentMapper} concurrentMapper
  * @param {Smokehouse.TestDfn} smokeTestDefn
- * @param {{concurrency: number, retries: number, lighthouseRunner: LighthouseRunner, isDebug?: boolean}} defnOptions
- * @return {Promise<{id: string, success: boolean}>}
+ * @param {{concurrency: number, retries: number, lighthouseRunner: Smokehouse.LighthouseRunner, isDebug?: boolean}} defnOptions
+ * @return {Promise<SmokehouseResult>}
  */
 async function runSmokeTestDefn(concurrentMapper, smokeTestDefn, defnOptions) {
   const {id, config: configJson, expectations} = smokeTestDefn;
@@ -138,7 +144,7 @@ async function runSmokeTestDefn(concurrentMapper, smokeTestDefn, defnOptions) {
       passingTestCount++;
     }
 
-    process.stdout.write(result.log);
+    console.log(result.log);
   }
 
   console.log(`${purpleify(id)} smoketest complete.`);
@@ -153,6 +159,7 @@ async function runSmokeTestDefn(concurrentMapper, smokeTestDefn, defnOptions) {
   return {
     id,
     success: failingTestCount === 0,
+    expectationResults: results,
   };
 }
 
@@ -164,7 +171,7 @@ function purpleify(str) {
 /**
  * Run Lighthouse in the selected runner. Returns `log`` for logging once
  * all tests in a defn are complete.
- * @param {{requestedUrl: string, configJson?: LH.Config.Json, expectation: Smokehouse.ExpectedRunnerResult, lighthouseRunner: LighthouseRunner, retries: number, isDebug?: boolean}} testOptions
+ * @param {{requestedUrl: string, configJson?: LH.Config.Json, expectation: Smokehouse.ExpectedRunnerResult, lighthouseRunner: Smokehouse.LighthouseRunner, retries: number, isDebug?: boolean}} testOptions
  * @return {Promise<{passed: number, failed: number, log: string}>}
  */
 async function runSmokeTest(testOptions) {

@@ -81,7 +81,7 @@
     "message": "`[role]` değerleri geçerli"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Bir açma/kapatma alanının erişilebilir özellikli bir adı yoksa ekran okuyucular bu alanı genel adla okuyacağı için bu, ekran okuyuculardan yararlanan kullanıcılar için yararlı olmaz. [Daha fazla bilgi](https://web.dev/aria-toggle-field-label/)."
+    "message": "Bir açma/kapatma alanının erişilebilir özellikli bir adı yoksa ekran okuyucular bu alanı genel adla okuyacağı için bu, ekran okuyuculardan yararlanan kullanıcılar için yararlı olmaz. [Daha fazla bilgi](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "ARIA açma/kapatma alanlarının erişilebilir özellikli adı yok"
@@ -106,15 +106,6 @@
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "`[aria-*]` özellikleri geçerli ve yanlış yazılmamış"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Altyazılar kimin konuştuğu, neler dediği gibi önemli bilgiler ve konuşma dışında başka bilgiler sağlayarak ses öğelerinin işitme engelli veya işitme zorluğuna sahip kullanıcılar tarafından kullanılabilmesini sağlar. [Daha fazla bilgi](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "`<audio>` öğelerinde `[kind=\"captions\"]` içeren bir `<track>` öğesi bulunmuyor."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "`<audio>` öğelerinde `[kind=\"captions\"]`içeren bir `<track>` öğesi bulunuyor"
   },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Başarısız Öğeler"
@@ -604,12 +595,6 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Aşırı büyük bir DOM boyutunu önler"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Hedef"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Performansı artırmak ve güvenlik açıklarını önlemek için harici bağlantılara `rel=\"noopener\"` veya `rel=\"noreferrer\"` ekleyin. [Daha fazla bilgi](https://web.dev/external-anchors-use-rel-noopener)."

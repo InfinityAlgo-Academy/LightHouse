@@ -81,7 +81,7 @@
     "message": "Los valores de `[role]` son válidos"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Si un campo de interruptor no tiene un nombre accesible, los lectores de pantalla lo leerán en voz alta con un nombre genérico, por lo que resultan inservibles para los usuarios que necesitan usar lectores de pantalla para navegar. [Más información](https://web.dev/aria-toggle-field-label/)"
+    "message": "Si un campo de interruptor no tiene un nombre accesible, los lectores de pantalla lo leerán en voz alta con un nombre genérico, por lo que resultan inservibles para los usuarios que necesitan usar lectores de pantalla para navegar. [Más información](https://web.dev/aria-toggle-field-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "Los campos de interruptores ARIA no tienen nombres accesibles"
@@ -106,15 +106,6 @@
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Los atributos `[aria-*]` son válidos y están bien escritos"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Los subtítulos permiten a los usuarios sordos o con problemas auditivos utilizar elementos de audio, ya que proporcionan detalles esenciales como quién habla, qué se dice e información no verbal adicional. [Más información](https://web.dev/audio-caption/)"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "A los elementos `<audio>` les falta un elemento `<track>` con el atributo `[kind=\"captions\"]`."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "Los elementos `<audio>` contienen un elemento `<track>` con el atributo `[kind=\"captions\"]`"
   },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Elementos con errores"
@@ -604,12 +595,6 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Evita un tamaño excesivo de DOM"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Destino"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Añade `rel=\"noopener\"` o `rel=\"noreferrer\"` a cualquier enlace externo para mejorar el rendimiento y evitar vulnerabilidades de seguridad. [Más información](https://web.dev/external-anchors-use-rel-noopener)"

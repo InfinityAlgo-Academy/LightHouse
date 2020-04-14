@@ -435,6 +435,9 @@ message I18n {
     
     // Descriptive explanation for environment throttling that was provided by the runtime environment instead of provided by Lighthouse throttling.
     string throttling_provided = 43;
+
+    // Label for a row in a table that shows in what tool Lighthouse is being run (e.g. The lighthouse CLI, Chrome DevTools, Lightrider, WebPageTest, etc).
+    string runtime_settings_channel = 44;
   }
 
   // The message holding all formatted strings

@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -32,6 +32,11 @@ const gatherers = LighthouseRunner.getGathererList()
 
 const locales = fs.readdirSync(__dirname + '/../lighthouse-core/lib/i18n/locales/')
     .map(f => require.resolve(`../lighthouse-core/lib/i18n/locales/${f}`));
+
+// HACK: manually include the lighthouse-plugin-publisher-ads audits.
+/** @type {Array<string>} */
+// @ts-ignore
+const pubAdsAudits = require('lighthouse-plugin-publisher-ads/plugin.js').audits.map(a => a.path);
 
 /** @param {string} file */
 const isDevtools = file => path.basename(file).includes('devtools');
@@ -91,6 +96,7 @@ async function browserifyFile(entryPath, distPath) {
   }
 
   // Expose the audits, gatherers, and computed artifacts so they can be dynamically loaded.
+  // Exposed path must be a relative path from lighthouse-core/config/config-helpers.js (where loading occurs).
   const corePath = './lighthouse-core/';
   const driverPath = `${corePath}gather/`;
   audits.forEach(audit => {
@@ -99,6 +105,15 @@ async function browserifyFile(entryPath, distPath) {
   gatherers.forEach(gatherer => {
     bundle = bundle.require(gatherer, {expose: gatherer.replace(driverPath, '../gather/')});
   });
+
+  // HACK: manually include the lighthouse-plugin-publisher-ads audits.
+  // TODO: there should be a test for this.
+  if (isDevtools(entryPath)) {
+    bundle.require('lighthouse-plugin-publisher-ads');
+    pubAdsAudits.forEach(pubAdAudit => {
+      bundle = bundle.require(pubAdAudit);
+    });
+  }
 
   // browerify's url shim doesn't work with .URL in node_modules,
   // and within robots-parser, it does `var URL = require('url').URL`, so we expose our own.

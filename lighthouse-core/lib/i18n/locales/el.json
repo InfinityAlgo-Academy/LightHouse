@@ -81,7 +81,7 @@
     "message": "Οι τιμές `[role]` είναι έγκυρες"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Όταν ένα πεδίο εναλλαγής δεν έχει προσβάσιμο όνομα, οι αναγνώστες οθόνης το ανακοινώνουν με ένα γενικό όνομα, με αποτέλεσμα να μην μπορεί να χρησιμοποιηθεί από χρήστες που βασίζονται σε αναγνώστες οθόνης. [Μάθετε περισσότερα](https://web.dev/aria-toggle-field-label/)."
+    "message": "Όταν ένα πεδίο εναλλαγής δεν έχει προσβάσιμο όνομα, οι αναγνώστες οθόνης το ανακοινώνουν με ένα γενικό όνομα, με αποτέλεσμα να μην μπορεί να χρησιμοποιηθεί από χρήστες που βασίζονται σε αναγνώστες οθόνης. [Μάθετε περισσότερα](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "Τα πεδία εναλλαγής ARIA δεν έχουν προσβάσιμα ονόματα"
@@ -106,15 +106,6 @@
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Τα χαρακτηριστικά `[aria-*]` είναι έγκυρα και δεν έχουν ορθογραφικά λάθη"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Οι υπότιτλοι καθιστούν τα στοιχεία ήχου προσβάσιμα από τους χρήστες που είναι κωφοί ή έχουν προβλήματα ακοής, καθώς παρέχουν σημαντικές πληροφορίες όπως το ποιος μιλάει, το τι λέει και άλλες μη λεκτικές πληροφορίες. [Μάθετε περισσότερα](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "Λείπει ένα στοιχείο `<track>` με `[kind=\"captions\"]` από τα στοιχεία `<audio>`."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "Τα στοιχεία `<audio>` περιέχουν ένα στοιχείο `<track>` με `[kind=\"captions\"]`"
   },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Στοιχεία που απέτυχαν"
@@ -604,12 +595,6 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Αποφεύγει τα υπερβολικά μεγάλα μεγέθη DOM"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Στόχος"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Προσθέστε ένα στοιχείο `rel=\"noopener\"` ή `rel=\"noreferrer\"` στους εξωτερικούς συνδέσμους για να βελτιώσετε την απόδοση και να αποφύγετε τις ευπάθειες ασφάλειας. [Μάθετε περισσότερα](https://web.dev/external-anchors-use-rel-noopener)."

@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -118,15 +118,18 @@ describe('ReportRenderer', () => {
       const container = renderer._dom._document.body;
       const output = renderer.renderReport(sampleResultsCopy, container);
 
+      function isPWAGauge(el) {
+        return el.querySelector('.lh-gauge__label').textContent === 'Progressive Web App';
+      }
+      function isPluginGauge(el) {
+        return el.querySelector('.lh-gauge__label').textContent === 'Some Plugin';
+      }
+
       const indexOfPwaGauge = Array.from(output
-        .querySelectorAll('.lh-scores-header > a[class*="lh-gauge"]')).findIndex(el => {
-        return el.matches('.lh-gauge--pwa__wrapper');
-      });
+        .querySelectorAll('.lh-scores-header > a[class*="lh-gauge"]')).findIndex(isPWAGauge);
 
       const indexOfPluginGauge = Array.from(output
-        .querySelectorAll('.lh-scores-header > a[class*="lh-gauge"]')).findIndex(el => {
-        return el.matches('.lh-gauge__wrapper--plugin');
-      });
+        .querySelectorAll('.lh-scores-header > a[class*="lh-gauge"]')).findIndex(isPluginGauge);
 
       const scoresHeaderElem = output.querySelector('.lh-scores-header');
       assert.equal(scoresHeaderElem.children.length - 2, indexOfPwaGauge);
@@ -138,9 +141,9 @@ describe('ReportRenderer', () => {
 
         assert.ok(gauge.classList.contains('lh-gauge__wrapper'));
         if (i >= indexOfPluginGauge) {
-          assert.ok(gauge.classList.contains('lh-gauge__wrapper--plugin'));
+          assert.ok(isPluginGauge(gauge));
         } else if (i >= indexOfPwaGauge) {
-          assert.ok(gauge.classList.contains('lh-gauge--pwa__wrapper'));
+          assert.ok(isPWAGauge(gauge));
         }
       }
     });
@@ -278,14 +281,17 @@ describe('ReportRenderer', () => {
     });
 
     it('renders without axe violations', (done) => {
-      const container = renderer._dom._document.body;
+      const container = renderer._dom._document.createElement('main');
       const output = renderer.renderReport(sampleResults, container);
+      renderer._dom._document.body.appendChild(container);
 
       const config = {
         rules: {
           // Reports may have duplicate ids
           // https://github.com/GoogleChrome/lighthouse/issues/9432
           'duplicate-id': {enabled: false},
+          'duplicate-id-aria': {enabled: false},
+          'landmark-no-duplicate-contentinfo': {enabled: false},
           // The following rules are disable for axe-core + jsdom compatibility
           // https://github.com/dequelabs/axe-core/tree/b573b1c1/doc/examples/jest_react#to-run-the-example
           'color-contrast': {enabled: false},

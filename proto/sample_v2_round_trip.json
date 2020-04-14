@@ -95,7 +95,7 @@
             "title": "`[role]` values are valid"
         },
         "aria-toggle-field-name": {
-            "description": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-toggle-field-label/).",
+            "description": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-toggle-field-name/).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -119,13 +119,6 @@
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "title": "`[aria-*]` attributes have valid values"
-        },
-        "audio-caption": {
-            "description": "Captions make audio elements usable for deaf or hearing-impaired users, providing critical information such as who is talking, what they're saying, and other non-speech information. [Learn more](https://web.dev/audio-caption/).",
-            "id": "audio-caption",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
-            "title": "`<audio>` elements contain a `<track>` element with `[kind=\"captions\"]`"
         },
         "bootup-time": {
             "description": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn more](https://web.dev/bootup-time).",
@@ -158,38 +151,38 @@
                 "items": [
                     {
                         "scriptParseCompile": 2.777,
-                        "scripting": 957.494,
-                        "total": 966.9800000000001,
+                        "scripting": 963.7010000000001,
+                        "total": 1044.3820000000003,
                         "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
                     },
                     {
                         "scriptParseCompile": 0.092,
-                        "scripting": 17.790999999999997,
-                        "total": 391.76699999999977,
-                        "url": "Other"
+                        "scripting": 9.61,
+                        "total": 279.87100000000004,
+                        "url": "Unattributable"
                     },
                     {
                         "scriptParseCompile": 1.674,
-                        "scripting": 89.50799999999998,
-                        "total": 101.21099999999998,
+                        "scripting": 90.81299999999999,
+                        "total": 107.086,
                         "url": "http://localhost:10200/zone.js"
                     },
                     {
                         "scriptParseCompile": 1.205,
-                        "scripting": 80.032,
-                        "total": 82.741,
+                        "scripting": 80.659,
+                        "total": 90.363,
                         "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"
                     }
                 ],
                 "summary": {
-                    "wastedMs": 1150.573
+                    "wastedMs": 1150.5310000000002
                 },
                 "type": "table"
             },
             "displayValue": "1.2\u00a0s",
             "id": "bootup-time",
             "numericUnit": "millisecond",
-            "numericValue": 1150.573,
+            "numericValue": 1150.5310000000002,
             "score": 0.92,
             "scoreDisplayMode": "numeric",
             "title": "JavaScript execution time"
@@ -224,6 +217,13 @@
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "title": "Document has a valid `rel=canonical`"
+        },
+        "charset": {
+            "description": "A character encoding declaration is required. It can be done with a <meta> tag in the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more](https://www.w3.org/International/questions/qa-html-encoding-declarations).",
+            "id": "charset",
+            "score": 0.0,
+            "scoreDisplayMode": "binary",
+            "title": "Charset declaration is missing or occurs too late in the HTML"
         },
         "color-contrast": {
             "description": "Low-contrast text is difficult or impossible for many users to read. [Learn more](https://web.dev/color-contrast/).",
@@ -426,6 +426,24 @@
             "scoreDisplayMode": "informative",
             "title": "Avoid chaining critical requests"
         },
+        "cumulative-layout-shift": {
+            "description": "Cumulative Layout Shift is the sum of all layout shifts that occurred during a page's load. A layout shift is any movement an element makes once it is visible to the user. All layout shift is recorded, scored, and then aggregated into a cumulative score between 0 and 1; 0 being a perfectly stable page, and >=0.5 being a highly shifting page. [Learn more](https://web.dev/cls).",
+            "details": {
+                "items": [
+                    {
+                        "finalLayoutShiftTraceEventFound": true
+                    }
+                ],
+                "type": "debugdata"
+            },
+            "displayValue": "0.42",
+            "id": "cumulative-layout-shift",
+            "numericUnit": "unitless",
+            "numericValue": 0.42,
+            "score": 0.21,
+            "scoreDisplayMode": "numeric",
+            "title": "Cumulative Layout Shift"
+        },
         "custom-controls-labels": {
             "description": "Custom interactive controls have associated labels, provided by aria-label or aria-labelledby. [Learn more](https://web.dev/custom-controls-labels/).",
             "id": "custom-controls-labels",
@@ -445,7 +463,7 @@
             "id": "definition-list",
             "score": null,
             "scoreDisplayMode": "notApplicable",
-            "title": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>` or `<template>` elements."
+            "title": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
         },
         "deprecations": {
             "description": "Deprecated APIs will eventually be removed from the browser. [Learn more](https://web.dev/deprecations).",
@@ -708,34 +726,36 @@
             "details": {
                 "headings": [
                     {
-                        "itemType": "url",
-                        "key": "href",
-                        "text": "URL"
-                    },
-                    {
-                        "itemType": "text",
-                        "key": "target",
-                        "text": "Target"
-                    },
-                    {
-                        "itemType": "text",
-                        "key": "rel",
-                        "text": "Rel"
+                        "itemType": "node",
+                        "key": "node",
+                        "text": "Failing Anchors"
                     }
                 ],
                 "items": [
                     {
                         "href": "https://www.google.com/",
+                        "node": {
+                            "snippet": "<a href=\"https://www.google.com/\" target=\"blank\">Hello</a>",
+                            "type": "node"
+                        },
                         "outerHTML": "<a href=\"https://www.google.com/\" target=\"blank\">Hello</a>",
                         "target": "_blank"
                     },
                     {
                         "href": "Unknown",
+                        "node": {
+                            "snippet": "<a target=\"blank\">Hello</a>",
+                            "type": "node"
+                        },
                         "outerHTML": "<a target=\"blank\">Hello</a>",
                         "target": "_blank"
                     },
                     {
                         "href": "https://www.google.com/",
+                        "node": {
+                            "snippet": "<a rel=\"nofollow\" href=\"https://www.google.com/\" target=\"blank\">Hello</a>",
+                            "type": "node"
+                        },
                         "outerHTML": "<a rel=\"nofollow\" href=\"https://www.google.com/\" target=\"blank\">Hello</a>",
                         "rel": "nofollow",
                         "target": "_blank"
@@ -866,14 +886,9 @@
         },
         "form-field-multiple-labels": {
             "description": "Form fields with multiple labels can be confusingly announced by assistive technologies like screen readers which use either the first, the last, or all of the labels. [Learn more](https://web.dev/form-field-multiple-labels/).",
-            "details": {
-                "headings": [],
-                "items": [],
-                "type": "table"
-            },
             "id": "form-field-multiple-labels",
-            "score": 1.0,
-            "scoreDisplayMode": "binary",
+            "score": null,
+            "scoreDisplayMode": "notApplicable",
             "title": "No form fields have multiple labels"
         },
         "frame-title": {
@@ -1100,6 +1115,53 @@
             "scoreDisplayMode": "binary",
             "title": "Displays images with incorrect aspect ratio",
             "warnings": []
+        },
+        "image-size-responsive": {
+            "description": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive).",
+            "details": {
+                "headings": [
+                    {
+                        "itemType": "thumbnail",
+                        "key": "url"
+                    },
+                    {
+                        "itemType": "url",
+                        "key": "elidedUrl",
+                        "text": "URL"
+                    },
+                    {
+                        "itemType": "text",
+                        "key": "displayedSize",
+                        "text": "Displayed size"
+                    },
+                    {
+                        "itemType": "text",
+                        "key": "actualSize",
+                        "text": "Actual size"
+                    },
+                    {
+                        "itemType": "text",
+                        "key": "expectedSize",
+                        "text": "Expected size"
+                    }
+                ],
+                "items": [
+                    {
+                        "actualPixels": 152640.0,
+                        "actualSize": "480 x 318",
+                        "displayedSize": "480 x 318",
+                        "elidedUrl": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
+                        "expectedPixels": 1052100.0,
+                        "expectedSize": "1260 x 835",
+                        "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg"
+                    }
+                ],
+                "type": "table"
+            },
+            "id": "image-size-responsive",
+            "score": 0.0,
+            "scoreDisplayMode": "binary",
+            "title": "Displays images with inappropriate size"
         },
         "input-image-alt": {
             "description": "When an image is being used as an `<input>` button, providing alternative text can help screen reader users understand the purpose of the button. [Learn more](https://web.dev/input-image-alt/).",
@@ -1612,6 +1674,14 @@
             "scoreDisplayMode": "manual",
             "title": "The user's focus is directed to new content added to the page"
         },
+        "maskable-icon": {
+            "description": "A maskable icon ensures that the image fills the entire shape without being letterboxed when installing the app on a device. [Learn more](https://web.dev/maskable-icon/).",
+            "explanation": "No manifest was fetched",
+            "id": "maskable-icon",
+            "score": 0.0,
+            "scoreDisplayMode": "binary",
+            "title": "Manifest doesn't have a maskable icon"
+        },
         "max-potential-fid": {
             "description": "The maximum potential First Input Delay that your users could experience is the duration of the longest task. [Learn more](https://web.dev/lighthouse-max-potential-fid).",
             "displayValue": "120\u00a0ms",
@@ -1653,6 +1723,7 @@
             "details": {
                 "items": [
                     {
+                        "cumulativeLayoutShift": 0.0,
                         "estimatedInputLatency": 16.0,
                         "firstCPUIdle": 4927.0,
                         "firstCPUIdleTs": 185608247190.0,
@@ -1758,6 +1829,7 @@
                 "items": [
                     {
                         "endTime": 640.1550000009593,
+                        "finished": true,
                         "mimeType": "text/html",
                         "resourceSize": 12519.0,
                         "resourceType": "Document",
@@ -1768,6 +1840,7 @@
                     },
                     {
                         "endTime": 2635.035000013886,
+                        "finished": true,
                         "mimeType": "text/css",
                         "resourceSize": 677.0,
                         "resourceType": "Stylesheet",
@@ -1778,6 +1851,7 @@
                     },
                     {
                         "endTime": 1204.6590000099968,
+                        "finished": true,
                         "mimeType": "text/css",
                         "resourceSize": 677.0,
                         "resourceType": "Stylesheet",
@@ -1788,6 +1862,7 @@
                     },
                     {
                         "endTime": 1213.2910000218544,
+                        "finished": true,
                         "mimeType": "text/css",
                         "resourceSize": 0.0,
                         "resourceType": "Stylesheet",
@@ -1798,6 +1873,7 @@
                     },
                     {
                         "endTime": 2849.3670000170823,
+                        "finished": true,
                         "mimeType": "text/css",
                         "resourceSize": 677.0,
                         "resourceType": "Stylesheet",
@@ -1808,6 +1884,7 @@
                     },
                     {
                         "endTime": 1220.04100002232,
+                        "finished": true,
                         "mimeType": "text/css",
                         "resourceSize": 964.0,
                         "resourceType": "Stylesheet",
@@ -1818,6 +1895,7 @@
                     },
                     {
                         "endTime": 1228.5180000180844,
+                        "finished": true,
                         "mimeType": "text/html",
                         "resourceSize": 616.0,
                         "resourceType": "Document",
@@ -1828,6 +1906,7 @@
                     },
                     {
                         "endTime": 1776.4320000133011,
+                        "finished": true,
                         "mimeType": "text/html",
                         "resourceSize": 613.0,
                         "resourceType": "Document",
@@ -1838,6 +1917,7 @@
                     },
                     {
                         "endTime": 4216.161000018474,
+                        "finished": true,
                         "mimeType": "text/css",
                         "resourceSize": 677.0,
                         "resourceType": "Stylesheet",
@@ -1848,6 +1928,7 @@
                     },
                     {
                         "endTime": 1792.0860000012908,
+                        "finished": true,
                         "mimeType": "text/javascript",
                         "resourceSize": 1552.0,
                         "resourceType": "Script",
@@ -1858,6 +1939,7 @@
                     },
                     {
                         "endTime": 1236.1859999946319,
+                        "finished": true,
                         "mimeType": "text/javascript",
                         "resourceSize": 0.0,
                         "resourceType": "Script",
@@ -1868,6 +1950,7 @@
                     },
                     {
                         "endTime": 4779.641000000993,
+                        "finished": true,
                         "mimeType": "image/jpeg",
                         "resourceSize": 24620.0,
                         "resourceType": "Image",
@@ -1878,6 +1961,7 @@
                     },
                     {
                         "endTime": 3961.049000005005,
+                        "finished": true,
                         "mimeType": "text/javascript",
                         "resourceSize": 71501.0,
                         "resourceType": "Script",
@@ -1888,6 +1972,7 @@
                     },
                     {
                         "endTime": 4796.288000012282,
+                        "finished": true,
                         "mimeType": "text/javascript",
                         "resourceSize": 84245.0,
                         "resourceType": "Script",
@@ -1898,6 +1983,7 @@
                     },
                     {
                         "endTime": 3964.233000006061,
+                        "finished": true,
                         "mimeType": "text/css",
                         "resourceSize": 677.0,
                         "resourceType": "Stylesheet",
@@ -1908,6 +1994,7 @@
                     },
                     {
                         "endTime": 3772.7560000203084,
+                        "finished": true,
                         "mimeType": "text/html",
                         "resourceSize": 12519.0,
                         "resourceType": "XHR",
@@ -1918,6 +2005,7 @@
                     },
                     {
                         "endTime": 3968.59800000675,
+                        "finished": true,
                         "mimeType": "text/plain",
                         "resourceSize": 4.0,
                         "resourceType": "Image",
@@ -1928,6 +2016,7 @@
                     },
                     {
                         "endTime": 5536.498000001302,
+                        "finished": true,
                         "mimeType": "text/plain",
                         "resourceSize": 95.0,
                         "resourceType": "Other",
@@ -2273,9 +2362,9 @@
                         "sizeOverBudget": 72955.0
                     },
                     {
-                        "countOverBudget": "7 requests",
+                        "countOverBudget": "6 requests",
                         "label": "Total",
-                        "requestCount": 17.0,
+                        "requestCount": 16.0,
                         "resourceType": "total",
                         "size": 160517.0,
                         "sizeOverBudget": 58117.0
@@ -2288,9 +2377,8 @@
                         "sizeOverBudget": 7520.0
                     },
                     {
-                        "countOverBudget": "1 request",
                         "label": "Third-party",
-                        "requestCount": 2.0,
+                        "requestCount": 1.0,
                         "resourceType": "third-party",
                         "size": 30174.0,
                         "sizeOverBudget": 4574.0
@@ -2305,7 +2393,7 @@
                     },
                     {
                         "label": "Image",
-                        "requestCount": 2.0,
+                        "requestCount": 1.0,
                         "resourceType": "image",
                         "size": 24741.0
                     },
@@ -2402,7 +2490,7 @@
                     },
                     {
                         "key": "totalBytes",
-                        "label": "Size",
+                        "label": "Transfer Size",
                         "valueType": "bytes"
                     },
                     {
@@ -2472,7 +2560,7 @@
                 "items": [
                     {
                         "label": "Total",
-                        "requestCount": 17.0,
+                        "requestCount": 16.0,
                         "resourceType": "total",
                         "size": 160517.0
                     },
@@ -2484,7 +2572,7 @@
                     },
                     {
                         "label": "Image",
-                        "requestCount": 2.0,
+                        "requestCount": 1.0,
                         "resourceType": "image",
                         "size": 24741.0
                     },
@@ -2520,14 +2608,14 @@
                     },
                     {
                         "label": "Third-party",
-                        "requestCount": 2.0,
+                        "requestCount": 1.0,
                         "resourceType": "third-party",
                         "size": 30174.0
                     }
                 ],
                 "type": "table"
             },
-            "displayValue": "17 requests \u2022 157 KB",
+            "displayValue": "16 requests \u2022 157 KB",
             "id": "resource-summary",
             "score": null,
             "scoreDisplayMode": "informative",
@@ -2755,7 +2843,7 @@
                         "granularity": 1.0,
                         "itemType": "bytes",
                         "key": "transferSize",
-                        "text": "Size"
+                        "text": "Transfer Size"
                     },
                     {
                         "granularity": 1.0,
@@ -2772,7 +2860,7 @@
                             "type": "link",
                             "url": "https://developers.google.com/speed/libraries/"
                         },
-                        "mainThreadTime": 82.74100000000001,
+                        "mainThreadTime": 90.36300000000001,
                         "transferSize": 30174.0
                     }
                 ],
@@ -2804,6 +2892,65 @@
             "scoreDisplayMode": "binary",
             "title": "Server response times are low (TTFB)"
         },
+        "timing-budget": {
+            "description": "Set a timing budget to help you keep an eye on the performance of your site. Performant sites load fast and respond to user input events quickly. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).",
+            "details": {
+                "headings": [
+                    {
+                        "itemType": "text",
+                        "key": "label",
+                        "text": "Metric"
+                    },
+                    {
+                        "itemType": "ms",
+                        "key": "measurement",
+                        "text": "Measurement"
+                    },
+                    {
+                        "itemType": "ms",
+                        "key": "overBudget",
+                        "text": "Over Budget"
+                    }
+                ],
+                "items": [
+                    {
+                        "label": "First CPU Idle",
+                        "measurement": 4927.0,
+                        "metric": "first-cpu-idle",
+                        "overBudget": 2027.0
+                    },
+                    {
+                        "label": "Time to Interactive",
+                        "measurement": 4927.0,
+                        "metric": "interactive",
+                        "overBudget": 2027.0
+                    },
+                    {
+                        "label": "First Meaningful Paint",
+                        "measurement": 3969.0,
+                        "metric": "first-meaningful-paint",
+                        "overBudget": 1969.0
+                    },
+                    {
+                        "label": "First Contentful Paint",
+                        "measurement": 3969.0,
+                        "metric": "first-contentful-paint",
+                        "overBudget": 969.0
+                    },
+                    {
+                        "label": "Max Potential First Input Delay",
+                        "measurement": 123.0,
+                        "metric": "max-potential-fid",
+                        "overBudget": 23.0
+                    }
+                ],
+                "type": "table"
+            },
+            "id": "timing-budget",
+            "score": null,
+            "scoreDisplayMode": "informative",
+            "title": "Timing budget"
+        },
         "total-blocking-time": {
             "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more](https://web.dev/lighthouse-total-blocking-time).",
             "displayValue": "120\u00a0ms",
@@ -2826,7 +2973,7 @@
                     {
                         "itemType": "bytes",
                         "key": "totalBytes",
-                        "text": "Size"
+                        "text": "Transfer Size"
                     }
                 ],
                 "items": [
@@ -2908,7 +3055,7 @@
                     },
                     {
                         "key": "totalBytes",
-                        "label": "Size",
+                        "label": "Transfer Size",
                         "valueType": "bytes"
                     },
                     {
@@ -2955,7 +3102,7 @@
             "title": "Remove unused CSS"
         },
         "unused-javascript": {
-            "description": "Remove unused JavaScript to reduce bytes consumed by network activity. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting).",
+            "description": "Remove unused JavaScript to reduce bytes consumed by network activity. [Learn more](https://web.dev/remove-unused-code/).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -3094,7 +3241,7 @@
                         "granularity": 1.0,
                         "itemType": "bytes",
                         "key": "totalBytes",
-                        "text": "Size"
+                        "text": "Transfer Size"
                     }
                 ],
                 "items": [
@@ -3294,7 +3441,7 @@
                     },
                     {
                         "key": "totalBytes",
-                        "label": "Size",
+                        "label": "Transfer Size",
                         "valueType": "bytes"
                     },
                     {
@@ -3342,7 +3489,7 @@
                     },
                     {
                         "key": "totalBytes",
-                        "label": "Size",
+                        "label": "Resource Size",
                         "valueType": "bytes"
                     },
                     {
@@ -3489,11 +3636,6 @@
                     "weight": 0.0
                 },
                 {
-                    "group": "a11y-audio-video",
-                    "id": "audio-caption",
-                    "weight": 0.0
-                },
-                {
                     "group": "a11y-names-labels",
                     "id": "button-name",
                     "weight": 10.0
@@ -3536,7 +3678,7 @@
                 {
                     "group": "a11y-names-labels",
                     "id": "form-field-multiple-labels",
-                    "weight": 2.0
+                    "weight": 0.0
                 },
                 {
                     "group": "a11y-names-labels",
@@ -3682,7 +3824,7 @@
             "description": "These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.",
             "id": "accessibility",
             "manualDescription": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).",
-            "score": 0.66,
+            "score": 0.65,
             "title": "Accessibility"
         },
         "best-practices": {
@@ -3720,6 +3862,10 @@
                     "weight": 1.0
                 },
                 {
+                    "id": "charset",
+                    "weight": 1.0
+                },
+                {
                     "id": "no-vulnerable-libraries",
                     "weight": 1.0
                 },
@@ -3746,10 +3892,14 @@
                 {
                     "id": "image-aspect-ratio",
                     "weight": 1.0
+                },
+                {
+                    "id": "image-size-responsive",
+                    "weight": 1.0
                 }
             ],
             "id": "best-practices",
-            "score": 0.07,
+            "score": 0.06,
             "title": "Best Practices"
         },
         "performance": {
@@ -3757,44 +3907,47 @@
                 {
                     "group": "metrics",
                     "id": "first-contentful-paint",
-                    "weight": 3.0
-                },
-                {
-                    "group": "metrics",
-                    "id": "first-meaningful-paint",
-                    "weight": 1.0
-                },
-                {
-                    "group": "metrics",
-                    "id": "largest-contentful-paint",
-                    "weight": 0.0
+                    "weight": 15.0
                 },
                 {
                     "group": "metrics",
                     "id": "speed-index",
-                    "weight": 4.0
+                    "weight": 15.0
+                },
+                {
+                    "group": "metrics",
+                    "id": "largest-contentful-paint",
+                    "weight": 25.0
                 },
                 {
                     "group": "metrics",
                     "id": "interactive",
+                    "weight": 15.0
+                },
+                {
+                    "group": "metrics",
+                    "id": "total-blocking-time",
+                    "weight": 25.0
+                },
+                {
+                    "group": "metrics",
+                    "id": "cumulative-layout-shift",
                     "weight": 5.0
                 },
                 {
-                    "group": "metrics",
                     "id": "first-cpu-idle",
-                    "weight": 2.0
+                    "weight": 0.0
                 },
                 {
-                    "group": "metrics",
                     "id": "max-potential-fid",
                     "weight": 0.0
                 },
                 {
-                    "id": "estimated-input-latency",
+                    "id": "first-meaningful-paint",
                     "weight": 0.0
                 },
                 {
-                    "id": "total-blocking-time",
+                    "id": "estimated-input-latency",
                     "weight": 0.0
                 },
                 {
@@ -3918,6 +4071,11 @@
                     "weight": 0.0
                 },
                 {
+                    "group": "budgets",
+                    "id": "timing-budget",
+                    "weight": 0.0
+                },
+                {
                     "group": "diagnostics",
                     "id": "resource-summary",
                     "weight": 0.0
@@ -3961,7 +4119,7 @@
                 }
             ],
             "id": "performance",
-            "score": 0.69,
+            "score": 0.64,
             "title": "Performance"
         },
         "pwa": {
@@ -4032,6 +4190,11 @@
                     "weight": 1.0
                 },
                 {
+                    "group": "pwa-optimized",
+                    "id": "maskable-icon",
+                    "weight": 1.0
+                },
+                {
                     "id": "pwa-cross-browser",
                     "weight": 0.0
                 },
@@ -4047,7 +4210,7 @@
             "description": "These checks validate the aspects of a Progressive Web App. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist).",
             "id": "pwa",
             "manualDescription": "These checks are required by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually.",
-            "score": 0.41,
+            "score": 0.39,
             "title": "Progressive Web App"
         },
         "seo": {
@@ -4245,6 +4408,7 @@
             "runtimeNoEmulation": "No emulation",
             "runtimeSettingsBenchmark": "CPU/Memory Power",
             "runtimeSettingsCPUThrottling": "CPU throttling",
+            "runtimeSettingsChannel": "Channel",
             "runtimeSettingsDevice": "Device",
             "runtimeSettingsFetchTime": "Fetch Time",
             "runtimeSettingsNetworkThrottling": "Network throttling",
@@ -4263,7 +4427,7 @@
             "warningHeader": "Warnings: "
         }
     },
-    "lighthouseVersion": "5.6.0",
+    "lighthouseVersion": "6.0.0-beta.0",
     "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
     "runWarnings": [],
     "stackPacks": [
@@ -4390,18 +4554,6 @@
             {
                 "duration": 100.0,
                 "entryType": "measure",
-                "name": "lh:audit:first-meaningful-paint",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:computed:FirstMeaningfulPaint",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
                 "name": "lh:audit:largest-contentful-paint",
                 "startTime": 0.0
             },
@@ -4409,6 +4561,18 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:computed:LargestContentfulPaint",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:audit:first-meaningful-paint",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:computed:FirstMeaningfulPaint",
                 "startTime": 0.0
             },
             {
@@ -4499,6 +4663,18 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:computed:MaxPotentialFID",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:audit:cumulative-layout-shift",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:computed:CumulativeLayoutShift",
                 "startTime": 0.0
             },
             {
@@ -4630,7 +4806,25 @@
             {
                 "duration": 100.0,
                 "entryType": "measure",
+                "name": "lh:computed:ManifestValues",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
                 "name": "lh:audit:themed-omnibox",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:computed:ManifestValues",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:audit:maskable-icon",
                 "startTime": 0.0
             },
             {
@@ -4643,6 +4837,12 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:audit:image-aspect-ratio",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:audit:image-size-responsive",
                 "startTime": 0.0
             },
             {
@@ -4756,6 +4956,12 @@
             {
                 "duration": 100.0,
                 "entryType": "measure",
+                "name": "lh:audit:timing-budget",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
                 "name": "lh:audit:resource-summary",
                 "startTime": 0.0
             },
@@ -4853,12 +5059,6 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:audit:aria-valid-attr",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:audit:audio-caption",
                 "startTime": 0.0
             },
             {
@@ -5164,6 +5364,12 @@
             {
                 "duration": 100.0,
                 "entryType": "measure",
+                "name": "lh:computed:JSBundles",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
                 "name": "lh:audit:uses-webp-images",
                 "startTime": 0.0
             },
@@ -5201,6 +5407,12 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:audit:doctype",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:audit:charset",
                 "startTime": 0.0
             },
             {

@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -328,6 +328,42 @@ class NetworkRecorder extends EventEmitter {
   }
 
   /**
+   * @param {NetworkRequest} record The record to find the initiator of
+   * @param {Map<string, NetworkRequest[]>} recordsByURL
+   * @return {NetworkRequest|null}
+   * @private
+   */
+  static _chooseInitiator(record, recordsByURL) {
+    if (record.redirectSource) {
+      return record.redirectSource;
+    }
+    const stackFrames = (record.initiator.stack && record.initiator.stack.callFrames) || [];
+    const initiatorURL = record.initiator.url || (stackFrames[0] && stackFrames[0].url);
+
+    let candidates = recordsByURL.get(initiatorURL) || [];
+    // The initiator must come before the initiated request.
+    candidates = candidates.filter(cand => cand.responseReceivedTime <= record.startTime);
+    if (candidates.length > 1) {
+      // Disambiguate based on resource type. Prefetch requests have type 'Other' and cannot
+      // initiate requests, so we drop them here.
+      const nonPrefetchCandidates = candidates.filter(
+          cand => cand.resourceType !== NetworkRequest.TYPES.Other);
+      if (nonPrefetchCandidates.length) {
+        candidates = nonPrefetchCandidates;
+      }
+    }
+    if (candidates.length > 1) {
+      // Disambiguate based on frame. It's likely that the initiator comes from the same frame.
+      const sameFrameCandidates = candidates.filter(cand => cand.frameId === record.frameId);
+      if (sameFrameCandidates.length) {
+        candidates = sameFrameCandidates;
+      }
+    }
+
+    return candidates.length ? candidates[0] : null;
+  }
+
+  /**
    * Construct network records from a log of devtools protocol messages.
    * @param {LH.DevtoolsLog} devtoolsLog
    * @return {Array<LH.Artifacts.NetworkRequest>}
@@ -340,20 +376,17 @@ class NetworkRecorder extends EventEmitter {
     // get out the list of records & filter out invalid records
     const records = networkRecorder.getRecords().filter(record => record.isValid);
 
-    // create a map of all the records by URL to link up initiator
+    /** @type {Map<string, NetworkRequest[]>} */
     const recordsByURL = new Map();
     for (const record of records) {
-      if (recordsByURL.has(record.url)) continue;
-      recordsByURL.set(record.url, record);
+      const records = recordsByURL.get(record.url) || [];
+      records.push(record);
+      recordsByURL.set(record.url, records);
     }
 
     // set the initiator and redirects array
     for (const record of records) {
-      const stackFrames = (record.initiator.stack && record.initiator.stack.callFrames) || [];
-      const initiatorURL = record.initiator.url || (stackFrames[0] && stackFrames[0].url);
-      // If we were redirected to this request, our initiator is that redirect, otherwise, it's the
-      // initiator provided by the protocol. See https://github.com/GoogleChrome/lighthouse/pull/7352/
-      const initiator = record.redirectSource || recordsByURL.get(initiatorURL);
+      const initiator = NetworkRecorder._chooseInitiator(record, recordsByURL);
       if (initiator) {
         record.setInitiatorRequest(initiator);
       }

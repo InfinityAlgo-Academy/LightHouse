@@ -81,7 +81,7 @@
     "message": "A(z) `[role]` értékek érvényesek"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Ha valamelyik kapcsolómező nem rendelkezik akadálymentes névvel, a képernyőolvasók általános néven olvassák fel, ami használhatatlan a képernyőolvasóra hagyatkozó felhasználók számára. [További információ](https://web.dev/aria-toggle-field-label/)."
+    "message": "Ha valamelyik kapcsolómező nem rendelkezik akadálymentes névvel, a képernyőolvasók általános néven olvassák fel, ami használhatatlan a képernyőolvasóra hagyatkozó felhasználók számára. [További információ](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "Egyes ARIA-kapcsolómezők nem rendelkeznek akadálymentes névvel"
@@ -106,15 +106,6 @@
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "A(z) `[aria-*]` attribútumok érvényesek és nincsenek elgépelve"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "A feliratok a legfontosabb információk közlésével teszik használhatóvá az audioelemeket a siket és hallássérült felhasználók számára (például ki beszél, mit mond, valamint egyéb, nem beszédhez kötődő információk). [További információ](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "A(z) `<audio>` elemek nem rendelkeznek `[kind=\"captions\"]` tartalmú `<track>` elemmel."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "A(z) `<audio>` elemekhez `[kind=\"captions\"]` tartalmú `<track>` elem tartozik"
   },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Hibás elemek"
@@ -604,12 +595,6 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Kerüli a túlzó DOM-méretet"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Cél"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Adjon `rel=\"noopener\"` vagy `rel=\"noreferrer\"` címkét a külső linkekhez, hogy javíthassa a teljesítményt és elkerülhesse a sebezhetőségeket. [További információ](https://web.dev/external-anchors-use-rel-noopener)."

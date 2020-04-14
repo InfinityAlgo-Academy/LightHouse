@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -31,8 +31,8 @@ class StartUrl extends Gatherer {
    * @return {Promise<LH.Artifacts['StartUrl']>}
    */
   async _determineStartUrlAvailability(passContext) {
-    const manifest = passContext.baseArtifacts.WebAppManifest;
-    const startUrlInfo = this._readManifestStartUrl(manifest);
+    const WebAppManifest = passContext.baseArtifacts.WebAppManifest;
+    const startUrlInfo = this._readManifestStartUrl(WebAppManifest);
     if (startUrlInfo.isReadFailure) {
       return {statusCode: -1, explanation: startUrlInfo.reason};
     }
@@ -52,12 +52,12 @@ class StartUrl extends Gatherer {
 
   /**
    * Read the parsed manifest and return failure reasons or the startUrl
-   * @param {LH.Artifacts.Manifest|null} manifest
+   * @param {LH.Artifacts.Manifest|null} WebAppManifest
    * @return {{isReadFailure: true, reason: string}|{isReadFailure: false, startUrl: string}}
    */
-  _readManifestStartUrl(manifest) {
-    if (!manifest || !manifest.value) {
-      const detailedMsg = manifest && manifest.warning;
+  _readManifestStartUrl(WebAppManifest) {
+    if (!WebAppManifest || !WebAppManifest.value) {
+      const detailedMsg = WebAppManifest && WebAppManifest.warning;
 
       if (detailedMsg) {
         return {isReadFailure: true, reason: `Error fetching web app manifest: ${detailedMsg}.`};
@@ -67,7 +67,7 @@ class StartUrl extends Gatherer {
     }
 
     // Even if the start URL had a parser warning, the browser will still supply a fallback URL.
-    return {isReadFailure: false, startUrl: manifest.value.start_url.value};
+    return {isReadFailure: false, startUrl: WebAppManifest.value.start_url.value};
   }
 
   /**

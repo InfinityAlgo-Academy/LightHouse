@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -125,7 +125,7 @@ async function flushAllTimersAndMicrotasks(ms = 1000) {
  * @typedef DriverMockMethods
  * @property {ReturnType<typeof createMockOnceFn>} on
  * @property {ReturnType<typeof createMockOnceFn>} once
- * @property {ReturnType<typeof createMockWaitForFn>} _waitForFCP
+ * @property {ReturnType<typeof createMockWaitForFn>} _waitForFcp
  * @property {ReturnType<typeof createMockWaitForFn>} _waitForLoadEvent
  * @property {ReturnType<typeof createMockWaitForFn>} _waitForNetworkIdle
  * @property {ReturnType<typeof createMockWaitForFn>} _waitForCPUIdle
@@ -133,7 +133,7 @@ async function flushAllTimersAndMicrotasks(ms = 1000) {
  * @property {(...args: RecursivePartial<Parameters<Driver['goOnline']>>) => ReturnType<Driver['goOnline']>} goOnline
 */
 
-/** @typedef {Driver & DriverMockMethods} TestDriver */
+/** @typedef {Omit<Driver, keyof DriverMockMethods> & DriverMockMethods} TestDriver */
 
 /** @type {TestDriver} */
 let driver;
@@ -168,25 +168,6 @@ describe('.querySelector(All)', () => {
 
     const result = await driver.querySelector('meta head');
     expect(result).toBeInstanceOf(LHElement);
-  });
-
-  it('returns [] when DOM.querySelectorAll finds no node', async () => {
-    connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('DOM.getDocument', {root: {nodeId: 249}})
-      .mockResponse('DOM.querySelectorAll', {nodeIds: []});
-
-    const result = await driver.querySelectorAll('#no.matches');
-    expect(result).toEqual([]);
-  });
-
-  it('returns element when DOM.querySelectorAll finds node', async () => {
-    connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('DOM.getDocument', {root: {nodeId: 249}})
-      .mockResponse('DOM.querySelectorAll', {nodeIds: [231]});
-
-    const result = await driver.querySelectorAll('#no.matches');
-    expect(result).toHaveLength(1);
-    expect(result[0]).toBeInstanceOf(LHElement);
   });
 });
 
@@ -511,8 +492,7 @@ describe('.gotoURL', () => {
       }
     }
     const replayConnection = new ReplayConnection();
-
-    const driver = /** @type {TestDriver} */ (new Driver(replayConnection));
+    const driver = new Driver(replayConnection);
 
     // Redirect in log will go through
     const startUrl = 'http://en.wikipedia.org/';
@@ -522,6 +502,8 @@ describe('.gotoURL', () => {
 
     const loadOptions = {
       waitForLoad: true,
+      /** @type {LH.Gatherer.PassContext} */
+      // @ts-ignore - we don't need the entire context for the test.
       passContext: {
         passConfig: {
           pauseAfterLoadMs: 0,
@@ -533,8 +515,7 @@ describe('.gotoURL', () => {
     const loadPromise = driver.gotoURL(startUrl, loadOptions);
 
     await flushAllTimersAndMicrotasks();
-    const loadedUrl = await loadPromise;
-    expect(loadedUrl).toEqual(finalUrl);
+    expect(await loadPromise).toEqual({finalUrl, timedOut: false});
   });
 
   describe('when waitForNavigated', () => {
@@ -563,9 +544,9 @@ describe('.gotoURL', () => {
   describe('when waitForLoad', () => {
     const url = 'https://example.com';
 
-    ['FCP', 'LoadEvent', 'NetworkIdle', 'CPUIdle'].forEach(name => {
+    ['Fcp', 'LoadEvent', 'NetworkIdle', 'CPUIdle'].forEach(name => {
       it(`should wait for ${name}`, async () => {
-        driver._waitForFCP = createMockWaitForFn();
+        driver._waitForFcp = createMockWaitForFn();
         driver._waitForLoadEvent = createMockWaitForFn();
         driver._waitForNetworkIdle = createMockWaitForFn();
         driver._waitForCPUIdle = createMockWaitForFn();
@@ -573,14 +554,14 @@ describe('.gotoURL', () => {
         // @ts-ignore - dynamic property access, tests will definitely fail if the property were to change
         const waitForResult = driver[`_waitFor${name}`];
         const otherWaitForResults = [
-          driver._waitForFCP,
+          driver._waitForFcp,
           driver._waitForLoadEvent,
           driver._waitForNetworkIdle,
           driver._waitForCPUIdle,
         ].filter(l => l !== waitForResult);
 
         const loadPromise = makePromiseInspectable(driver.gotoURL(url, {
-          waitForFCP: true,
+          waitForFcp: true,
           waitForLoad: true,
         }));
 
@@ -596,7 +577,7 @@ describe('.gotoURL', () => {
         waitForResult.mockResolve();
         await flushAllTimersAndMicrotasks();
         expect(loadPromise).toBeDone(`Did not resolve on ${name}`);
-        await loadPromise;
+        expect(await loadPromise).toMatchObject({timedOut: false});
       });
     });
 
@@ -626,7 +607,7 @@ describe('.gotoURL', () => {
       driver._waitForCPUIdle.mockResolve();
       await flushAllTimersAndMicrotasks();
       expect(loadPromise).toBeDone(`Did not resolve on CPU idle`);
-      await loadPromise;
+      expect(await loadPromise).toMatchObject({timedOut: false});
     });
 
     it('should timeout when not resolved fast enough', async () => {
@@ -657,6 +638,7 @@ describe('.gotoURL', () => {
       expect(driver._waitForLoadEvent.getMockCancelFn()).toHaveBeenCalled();
       expect(driver._waitForNetworkIdle.getMockCancelFn()).toHaveBeenCalled();
       expect(driver._waitForCPUIdle.getMockCancelFn()).toHaveBeenCalled();
+      expect(await loadPromise).toMatchObject({timedOut: true});
     });
 
     it('should cleanup listeners even when waits reject', async () => {
@@ -674,11 +656,11 @@ describe('.gotoURL', () => {
   });
 });
 
-describe('._waitForFCP', () => {
+describe('._waitForFcp', () => {
   it('should not resolve until FCP fires', async () => {
     driver.on = driver.once = createMockOnceFn();
 
-    const waitPromise = makePromiseInspectable(driver._waitForFCP(60 * 1000).promise);
+    const waitPromise = makePromiseInspectable(driver._waitForFcp(0, 60 * 1000).promise);
     const listener = driver.on.findListener('Page.lifecycleEvent');
 
     await flushAllTimersAndMicrotasks();
@@ -694,10 +676,30 @@ describe('._waitForFCP', () => {
     await waitPromise;
   });
 
+  it('should wait for pauseAfterFcpMs after FCP', async () => {
+    driver.on = driver.once = createMockOnceFn();
+
+    const waitPromise = makePromiseInspectable(driver._waitForFcp(5000, 60 * 1000).promise);
+    const listener = driver.on.findListener('Page.lifecycleEvent');
+
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Resolved without FCP');
+
+    listener({name: 'firstContentfulPaint'});
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Did not wait for pauseAfterFcpMs');
+
+    jest.advanceTimersByTime(5001);
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).toBeDone('Did not resolve after pauseAfterFcpMs');
+
+    await waitPromise;
+  });
+
   it('should timeout', async () => {
     driver.on = driver.once = createMockOnceFn();
 
-    const waitPromise = makePromiseInspectable(driver._waitForFCP(5000).promise);
+    const waitPromise = makePromiseInspectable(driver._waitForFcp(0, 5000).promise);
 
     await flushAllTimersAndMicrotasks();
     expect(waitPromise).not.toBeDone('Resolved before timeout');
@@ -712,7 +714,7 @@ describe('._waitForFCP', () => {
     driver.on = driver.once = createMockOnceFn();
     driver.off = jest.fn();
 
-    const {promise: rawPromise, cancel} = driver._waitForFCP(5000);
+    const {promise: rawPromise, cancel} = driver._waitForFcp(0, 5000);
     const waitPromise = makePromiseInspectable(rawPromise);
 
     await flushAllTimersAndMicrotasks();

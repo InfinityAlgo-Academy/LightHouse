@@ -81,7 +81,7 @@
     "message": "`[role]` values are valid"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-toggle-field-label/)."
+    "message": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-toggle-field-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "ARIA toggle fields do not have accessible names"
@@ -106,15 +106,6 @@
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "`[aria-*]` attributes are valid and not misspelled"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Captions make audio elements usable for deaf or hearing-impaired users, providing critical information such as who is talking, what they're saying, and other non-speech information. [Learn more](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "`<audio>` elements are missing a `<track>` element with `[kind=\"captions\"]`."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "`<audio>` elements contain a `<track>` element with `[kind=\"captions\"]`"
   },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Failing Elements"
@@ -150,10 +141,10 @@
     "message": "When definition lists are not properly marked up, screen readers may produce confusing or inaccurate output. [Learn more](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>` or `<template>` elements."
+    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>` or `<template>` elements."
+    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "Definition list items (`<dt>` and `<dd>`) must be wrapped in a parent `<dl>` element to ensure that screen readers can properly announce them. [Learn more](https://web.dev/dlitem/)."
@@ -413,6 +404,12 @@
   "lighthouse-core/audits/bootup-time.js | title": {
     "message": "JavaScript execution time"
   },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | description": {
+    "message": "Remove large, duplicate JavaScript modules from bundles to reduce unnecessary bytes consumed by network activity. "
+  },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | title": {
+    "message": "Remove duplicate modules in JavaScript bundles"
+  },
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | description": {
     "message": "Large GIFs are inefficient for delivering animated content. Consider using MPEG4/WebM videos for animations and PNG/WebP for static images instead of GIF to save network bytes. [Learn more](https://web.dev/efficient-animated-content)"
   },
@@ -462,7 +459,7 @@
     "message": "Remove unused CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Remove unused JavaScript to reduce bytes consumed by network activity. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)."
+    "message": "Remove unused JavaScript to reduce bytes consumed by network activity. [Learn more](https://web.dev/remove-unused-code/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Remove unused JavaScript"
@@ -554,6 +551,15 @@
   "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
     "message": "Avoids Application Cache"
   },
+  "lighthouse-core/audits/dobetterweb/charset.js | description": {
+    "message": "A character encoding declaration is required. It can be done with a <meta> tag in the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more](https://www.w3.org/International/questions/qa-html-encoding-declarations)."
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
+    "message": "Charset declaration is missing or occurs too late in the HTML"
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | title": {
+    "message": "Properly defines charset"
+  },
   "lighthouse-core/audits/dobetterweb/doctype.js | description": {
     "message": "Specifying a doctype prevents the browser from switching to quirks-mode. [Learn more](https://web.dev/doctype)."
   },
@@ -605,11 +611,8 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Avoids an excessive DOM size"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Target"
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
+    "message": "Failing Anchors"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Add `rel=\"noopener\"` or `rel=\"noreferrer\"` to any external links to improve performance and prevent security vulnerabilities. [Learn more](https://web.dev/external-anchors-use-rel-noopener)."
@@ -767,6 +770,24 @@
   "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
     "message": "Invalid image sizing information {url}"
   },
+  "lighthouse-core/audits/image-size-responsive.js | columnActual": {
+    "message": "Actual size"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
+    "message": "Displayed size"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
+    "message": "Expected size"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | description": {
+    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+  },
+  "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
+    "message": "Displays images with inappropriate size"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | title": {
+    "message": "Displays images with appropriate size"
+  },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://web.dev/installable-manifest)."
   },
@@ -790,6 +811,12 @@
   },
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Uses HTTPS"
+  },
+  "lighthouse-core/audits/legacy-javascript.js | description": {
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
+  },
+  "lighthouse-core/audits/legacy-javascript.js | title": {
+    "message": "Legacy JavaScript"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "A fast page load over a cellular network ensures a good mobile user experience. [Learn more](https://web.dev/load-fast-enough-for-pwa)."
@@ -838,6 +865,21 @@
   },
   "lighthouse-core/audits/manual/pwa-page-transitions.js | title": {
     "message": "Page transitions don't feel like they block on the network"
+  },
+  "lighthouse-core/audits/maskable-icon.js | description": {
+    "message": "A maskable icon ensures that the image fills the entire shape without being letterboxed when installing the app on a device. [Learn more](https://web.dev/maskable-icon/)."
+  },
+  "lighthouse-core/audits/maskable-icon.js | failureTitle": {
+    "message": "Manifest doesn't have a maskable icon"
+  },
+  "lighthouse-core/audits/maskable-icon.js | title": {
+    "message": "Manifest has a maskable icon"
+  },
+  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
+    "message": "Cumulative Layout Shift is the sum of all layout shifts that occurred during a page's load. A layout shift is any movement an element makes once it is visible to the user. All layout shift is recorded, scored, and then aggregated into a cumulative score between 0 and 1; 0 being a perfectly stable page, and >=0.5 being a highly shifting page. [Learn more](https://web.dev/cls)."
+  },
+  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
+    "message": "Cumulative Layout Shift"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Estimated Input Latency is an estimate of how long your app takes to respond to user input, in milliseconds, during the busiest 5s window of page load. If your latency is higher than 50 ms, users may perceive your app as laggy. [Learn more](https://web.dev/estimated-input-latency)."
@@ -1196,6 +1238,9 @@
   "lighthouse-core/audits/uses-rel-preconnect.js | title": {
     "message": "Preconnect to required origins"
   },
+  "lighthouse-core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
+    "message": "More than 2 preconnect links were found. Preconnect links should be used sparingly and only to the most important origins."
+  },
   "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
     "message": "A preload <link> was found for \"{preloadURL}\" but was not used by the browser. Check that you are using the `crossorigin` attribute properly."
   },
@@ -1385,6 +1430,9 @@
   "lighthouse-core/gather/gather-runner.js | warningRedirected": {
     "message": "The page may not be loading as expected because your test URL ({requested}) was redirected to {final}. Try testing the second URL directly."
   },
+  "lighthouse-core/gather/gather-runner.js | warningTimeout": {
+    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Cache TTL"
   },
@@ -1400,11 +1448,17 @@
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Requests"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
+    "message": "Resource Size"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "Resource Type"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Size"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnSource": {
+    "message": "Source"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Time Spent"
@@ -1609,6 +1663,9 @@
   },
   "lighthouse-core/report/html/renderer/util.js | runtimeSettingsBenchmark": {
     "message": "CPU/Memory Power"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsChannel": {
+    "message": "Channel"
   },
   "lighthouse-core/report/html/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "CPU throttling"

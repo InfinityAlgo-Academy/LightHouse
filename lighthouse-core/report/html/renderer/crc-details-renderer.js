@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2017 Google Inc. All Rights Reserved.
+ * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@
 /* globals self Util */
 
 /** @typedef {import('./dom.js')} DOM */
+/** @typedef {import('./details-renderer.js')} DetailsRenderer */
 
 class CriticalRequestChainRenderer {
   /**

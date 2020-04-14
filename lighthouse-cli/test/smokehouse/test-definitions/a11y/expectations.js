@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -114,7 +114,7 @@ const expectations = [
                   'type': 'node',
                   'selector': 'div[role="foo"]',
                   'snippet': '<div role="foo"></div>',
-                  'explanation': 'Fix all of the following:\n  Role must be one of the valid ARIA roles',
+                  'explanation': 'Fix all of the following:\n  Role must be one of the valid ARIA roles: foo',
                   'nodeLabel': 'div',
                 },
               },
@@ -221,8 +221,8 @@ const expectations = [
                   'type': 'node',
                   'selector': '#color-contrast',
                   'snippet': '<div id="color-contrast" style="background-color: red; color: pink;">\n          Hello\n      </div>',
-                  // Default font size is different depending on the platform (e.g. 28.5 on travis, 30.0 on Mac), so use \d\d\.\d.
-                  'explanation': /^Fix any of the following:\n {2}Element has insufficient color contrast of 2\.59 \(foreground color: #ffc0cb, background color: #ff0000, font size: \d\d\.\dpt, font weight: normal\). Expected contrast ratio of 3:1$/,
+                  // Default font size is different depending on the platform (e.g. 28.5 on travis, 30.0 on Mac), and the px-converted units may have variable precision, so use \d+.\d+.
+                  'explanation': /^Fix any of the following:\n {2}Element has insufficient color contrast of 2\.59 \(foreground color: #ffc0cb, background color: #ff0000, font size: \d+.\d+pt \(\d+.\d+px\), font weight: normal\). Expected contrast ratio of 3:1$/,
                   'nodeLabel': 'Hello',
                 },
               },
@@ -286,7 +286,7 @@ const expectations = [
                 node: {
                   'type': 'node',
                   'selector': 'textarea[aria-label="text1"]',
-                  'path': '2,HTML,1,BODY,31,SECTION,0,TEXTAREA',
+                  'path': '2,HTML,1,BODY,29,SECTION,0,TEXTAREA',
                   'snippet': '<textarea id="duplicate-id-active" aria-label="text1"></textarea>',
                   'explanation': 'Fix any of the following:\n  Document has active elements with the same id attribute: duplicate-id-active',
                   'nodeLabel': 'text1',
@@ -303,7 +303,7 @@ const expectations = [
                 node: {
                   'type': 'node',
                   'selector': '.duplicate-id-aria',
-                  'path': '2,HTML,1,BODY,33,SECTION,0,DIV',
+                  'path': '2,HTML,1,BODY,31,SECTION,0,DIV',
                   'snippet': '<div id="duplicate-id-aria" class="duplicate-id-aria">\n      <div id="duplicate-id-aria"></div>\n      <div aria-labelledby="duplicate-id-aria"></div>\n    </div>',
                   'explanation': 'Fix any of the following:\n  Document has multiple elements referenced with ARIA with the same id attribute: duplicate-id-aria',
                   'nodeLabel': 'div',
@@ -313,16 +313,17 @@ const expectations = [
           },
         },
         'form-field-multiple-labels': {
-          score: 0,
+          score: null,
+          scoreDisplayMode: 'informative',
           details: {
             items: [
               {
                 node: {
                   'type': 'node',
                   'selector': '#form-field-multiple-labels',
-                  'path': '2,HTML,1,BODY,35,SECTION,2,INPUT',
+                  'path': '2,HTML,1,BODY,33,SECTION,2,INPUT',
                   'snippet': '<input type="checkbox" id="form-field-multiple-labels">',
-                  'explanation': 'Fix all of the following:\n  Multiple label elements is not widely supported in assistive technologies',
+                  'explanation': 'Fix all of the following:\n  Multiple label elements is not widely supported in assistive technologies. Ensure the first label contains all necessary information.',
                   'nodeLabel': 'input',
                 },
               },
@@ -353,7 +354,7 @@ const expectations = [
                 node: {
                   'type': 'node',
                   'selector': 'h3',
-                  'path': '2,HTML,1,BODY,39,SECTION,1,H3',
+                  'path': '2,HTML,1,BODY,37,SECTION,1,H3',
                   'snippet': '<h3>sub-sub-header</h3>',
                   'explanation': 'Fix any of the following:\n  Heading order invalid',
                   'nodeLabel': 'sub-sub-header',
@@ -475,7 +476,7 @@ const expectations = [
                   'type': 'node',
                   'selector': '#listitem',
                   'snippet': '<li id="listitem"></li>',
-                  'explanation': 'Fix any of the following:\n  List item does not have a <ul>, <ol> or role="list" parent element',
+                  'explanation': 'Fix any of the following:\n  List item does not have a <ul>, <ol> parent element',
                   'nodeLabel': 'li',
                 },
               },

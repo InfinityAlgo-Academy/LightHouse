@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -47,17 +47,17 @@ function createSWArtifact(swOpts) {
  * Create a set of artifacts for the ServiceWorker audit.
  * @param {Array<{scriptURL: string, status: string, scopeURL?: string}>} swOpts
  * @param {string} finalUrl
- * @param {{}}} manifestJson WebAppManifest object or null if no manifest desired.
+ * @param {{}|string|null} manifestJsonOrObject WebAppManifest object or string or null if no manifest desired.
  */
-function createArtifacts(swOpts, finalUrl, manifestJson) {
+function createArtifacts(swOpts, finalUrl, manifestJsonOrObject) {
   const manifestUrl = getBaseDirectory(finalUrl) + 'manifest.json';
   let WebAppManifest;
-  if (manifestJson === null) {
+  if (manifestJsonOrObject === null) {
     WebAppManifest = null;
-  } else if (typeof manifestJson === 'object') {
-    WebAppManifest = manifestParser(JSON.stringify(manifestJson), manifestUrl, finalUrl);
   } else {
-    throw new Error('unsupported test manifest format');
+    const manifestJson = typeof manifestJsonOrObject === 'object' ?
+      JSON.stringify(manifestJsonOrObject) : manifestJsonOrObject;
+    WebAppManifest = manifestParser(manifestJson, manifestUrl, finalUrl);
   }
 
   return {
@@ -281,9 +281,7 @@ describe('Offline: service worker audit', () => {
       status: 'activated',
       scriptURL: 'https://example.com/sw.js',
     }];
-
-    const artifacts = createArtifacts(swOpts, finalUrl, {});
-    artifacts.WebAppManifest = manifestParser('{,;}', finalUrl, finalUrl);
+    const artifacts = createArtifacts(swOpts, finalUrl, '{,;}');
 
     const output = ServiceWorker.audit(artifacts);
     assert.strictEqual(output.score, 0);

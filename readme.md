@@ -2,6 +2,32 @@
 
 > Lighthouse analyzes web apps and web pages, collecting modern performance metrics and insights on developer best practices.
 
+
+- Using Lighthouse
+  - [Using Lighthouse in Chrome DevTools](#using-lighthouse-in-chrome-devtools)
+  - [Using the Chrome extension](#using-the-chrome-extension)
+  - [Using the Node CLI](#using-the-node-cli)
+    * [CLI options](#cli-options)
+  - [Using the Node module](#using-the-node-module)
+- [Viewing a report](#viewing-a-report)
+  * [Online Viewer](#online-viewer)
+- [Docs & Recipes](#docs--recipes)
+- [Developing Lighthouse](#develop)
+  * [Setup](#setup)
+  * [Run](#run)
+  * [Tests](#tests)
+- Associated Products and Projects
+  - [Lighthouse Integrations](#lighthouse-integrations)
+  - [Plugins](#plugins)
+  - [Related Projects](#related-projects)
+- [FAQ](#faq)
+  * [How does Lighthouse work?](#how-does-lighthouse-work)
+  * [Can I configure the lighthouse run?](#can-i-configure-the-lighthouse-run)
+  * [How does Lighthouse use network throttling, and how can I make it better?](#how-does-lighthouse-use-network-throttling-and-how-can-i-make-it-better)
+  * [Are results sent to a remote server?](#are-results-sent-to-a-remote-server)
+  * [How do I author custom audits to extend Lighthouse?](#how-do-i-author-custom-audits-to-extend-lighthouse)
+  * [How do I contribute?](#how-do-i-contribute)
+
 ## Using Lighthouse in Chrome DevTools
 
 Lighthouse is integrated directly into the Chrome Developer Tools, under the "Audits" panel.
@@ -57,6 +83,7 @@ Configuration:
   --additional-trace-categories  Additional categories to capture with the trace (comma-delimited).
   --config-path                  The path to the config JSON.
                                  An example config file: lighthouse-core/config/lr-desktop-config.js
+  --budget-path                  The path to the budget.json file for LightWallet.
   --chrome-flags                 Custom flags to pass to Chrome (space-delimited). For a full list of flags, see
                                  http://peter.sh/experiments/chromium-command-line-switches/.
 
@@ -206,7 +233,9 @@ Useful documentation, examples, and recipes to get you started.
 - [Using Lighthouse programmatically](./docs/readme.md#using-programmatically)
 - [Testing a site with authentication](./docs/authenticated-pages.md)
 - [Developing Plugins](./docs/plugins.md)
+- [Making a New Audit](./docs/new-audits.md)
 - [Testing on a mobile device](./docs/readme.md#testing-on-a-mobile-device)
+- [Setting a performance budget](./docs/performance-budgets.md)
 - [Lighthouse Architecture](./docs/architecture.md)
 
 **Recipes**
@@ -245,7 +274,30 @@ yarn
 yarn build-all
 ```
 
-If changing audit output, you'll likely also need to have the protocol-buffer compiler installed. See the [official installation instructions](https://github.com/protocolbuffers/protobuf#protocol-compiler-installation) or consult your [favorite package manager](https://formulae.brew.sh/formula/protobuf) for your OS.
+#### installing protobuf
+If changing audit output, you'll need to have v3.7.1 of the protocol-buffer/protobuf compiler installed. (v3.7.1 is known to be compatible, and 3.11.x is known to be **not** compatible.).
+
+Homebrew should be able to install it correctly: `brew install protobuf@3.7`
+
+But if you want to do it manually, these steps that have worked well for us:
+
+```sh
+mkdir protobuf-install && cd protobuf-install
+curl -L -o protobuf-python-3.7.1.zip https://github.com/protocolbuffers/protobuf/releases/download/v3.7.1/protobuf-python-3.7.1.zip
+unzip protobuf-python-3.7.1.zip
+cd protobuf-3.7.1
+
+cd python
+python setup.py build
+python setup.py test
+(cd .. && autogen.sh && configure && make)
+(cd .. && sudo make install)
+python setup.py build --cpp_implementation
+sudo python setup.py install --cpp_implementation
+```
+
+Also, see the [official installation instructions](https://github.com/protocolbuffers/protobuf#protocol-compiler-installation).
+
 
 ### Run
 
@@ -278,6 +330,13 @@ yarn smoke
 yarn type-check
 ```
 
+### Docs
+
+Some of our docs have tests that run only in CI by default. If you end up needing to modify our documentation, you'll need to run `yarn test-docs` locally to make sure they pass.
+
+**Additional Dependencies**
+- `brew install jq`
+
 ## Lighthouse Integrations
 This section details services that have integrated Lighthouse data. If you're working on a cool project integrating Lighthouse and would like to be featured here, file an issue to this repo or tweet at us [@_____lighthouse](https://twitter.com/____lighthouse?lang=en)!
 
@@ -289,6 +348,8 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[Web Page Test](https://www.webpagetest.org)** — An [open source](https://github.com/WPO-Foundation/webpagetest) tool for measuring and analyzing the performance of web pages on real devices. Users can choose to produce a Lighthouse report alongside the analysis of WebPageTest results.
 
+* **[AwesomeTechStack](https://awesometechstack.com)** — AwesomeTechStack is a free to use website tech stack analyzer. AwesomeTechStack provides insights into the security, modernity, and performance of any website's technology stack and guidance to improve performance. Lighthouse insights are a crucial part of a website's tech stack rating.
+
 ### Paid / Tiered
 
 * **[Automated Lighthouse Check](https://www.automated-lighthouse-check.com/)** - Lighthouse-as-a-service offering free and premium plans. Provides monitoring and historical reporting of Lighthouse audits with CircleCI, GitHub, and other integrations. Features include Slack notifications, PR comment reporting and more.
@@ -299,9 +360,11 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[Fluxguard](https://fluxguard.com/)** - Fluxguard provides website DOM change monitoring orchestrated with Google Puppeteer, and audited by Lighthouse. Fluxguard is a freemium product, with monthly monitoring of up to 75 pages for free.
 
-* **[PageSpeed Green](https://pagespeed.green/)** - New web performance monitoring service for web pages. For now, you can track PageSpeed performance indicators for unlimited domains and web pages. Powered By Google Lighthouse and Puppeteer. PageSpeed Green is a paid product with a free 30-day trial.
+* **[PageSpeed Green](https://pagespeed.green/)** - Web performance monitoring service for web sites. Track PageSpeed performance indicators for unlimited web pages from multiple regions. Check all code changes for PageSpeed degradations by integrating to your CD/CI using CLI. Powered By Google Lighthouse and Puppeteer. PageSpeed Green is a paid product with a free 14-day trial.
 
 * **[SpeedCurve](https://speedcurve.com)** — SpeedCurve is a tool for continuously monitoring web performance across different browsers, devices, and regions. It can aggregate any metric including Lighthouse scores across multiple pages and sites, and allows you to set performance budgets with Slack or email alerts. SpeedCurve is a paid product with a free 30-day trial.
+
+* **[Siteimprove Performance](https://siteimprove.com/en/performance/)** — Siteimprove Performance is a web Performance monitoring solution that enables a marketer, manager or decision maker to understand and optimize website load times. Get easy-to-use insights with a focus on quick and impactful wins. Siteimprove Performance is a paid product with a free 14-day trial.
 
 * **[Speedrank](https://speedrank.app)** - Speedrank monitors the performance of your website in the background. It displays Lighthouse reports over time and delivers recommendations for improvement. Speedrank is a paid product with 14-day-trial.
 
@@ -323,6 +386,7 @@ Other awesome open source projects that use Lighthouse.
 * **[lightcrawler](https://github.com/github/lightcrawler)** - Crawl a website and run each page found through Lighthouse.
 * **[lighthouse-badges](https://github.com/emazzotta/lighthouse-badges)** - Generate gh-badges (shields.io) based on Lighthouse performance.
 * **[lighthouse-batch](https://www.npmjs.com/package/lighthouse-batch)** - Run Lighthouse over a number of sites and generate a summary of their metrics/scores.
+* **[lighthouse-batch-parallel](https://www.npmjs.com/package/lighthouse-batch-parallel)** - Run multiple Lighthouse runs in parallel to accelerate the data collecting process, get the result stream (csv, json, js object) in your own process (warning: performance results may be volatile).
 * **[lighthouse-check-action](https://github.com/foo-software/lighthouse-check-action)** - A Github Action to run Lighthouse in a workflow, featuring Slack notifications and report upload to S3.
 * **[lighthouse-check-orb](https://circleci.com/orbs/registry/orb/foo-software/lighthouse-check)** - A CircleCI Orb to run Lighthouse in a workflow, featuring Slack notifications and report upload to S3.
 * **[andreasonny83/lighthouse-ci](https://github.com/andreasonny83/lighthouse-ci)** - Run Lighthouse and assert scores satisfy your custom thresholds.
