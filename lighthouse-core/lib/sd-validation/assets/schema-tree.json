@@ -13,15 +13,15 @@
       ]
     },
     {
-      "name": "Recipe",
+      "name": "FoodService",
       "parent": [
-        "HowTo"
+        "Service"
       ]
     },
     {
-      "name": "Photograph",
+      "name": "Recipe",
       "parent": [
-        "CreativeWork"
+        "HowTo"
       ]
     },
     {
@@ -29,10 +29,6 @@
       "parent": [
         "Landform"
       ]
-    },
-    {
-      "name": "STI Accommodation Ontology",
-      "parent": []
     },
     {
       "name": "SportsTeam",
@@ -75,12 +71,6 @@
       ]
     },
     {
-      "name": "FoodService",
-      "parent": [
-        "Service"
-      ]
-    },
-    {
       "name": "EBook",
       "parent": []
     },
@@ -91,8 +81,10 @@
       ]
     },
     {
-      "name": "VeganDiet",
-      "parent": []
+      "name": "Trip",
+      "parent": [
+        "Intangible"
+      ]
     },
     {
       "name": "Dataset",
@@ -133,6 +125,12 @@
       ]
     },
     {
+      "name": "Game",
+      "parent": [
+        "CreativeWork"
+      ]
+    },
+    {
       "name": "AlbumRelease",
       "parent": []
     },
@@ -149,8 +147,8 @@
     {
       "name": "AutoPartsStore",
       "parent": [
-        "AutomotiveBusiness",
-        "Store"
+        "Store",
+        "AutomotiveBusiness"
       ]
     },
     {
@@ -208,12 +206,6 @@
       ]
     },
     {
-      "name": "HomeGoodsStore",
-      "parent": [
-        "Store"
-      ]
-    },
-    {
       "name": "LikeAction",
       "parent": [
         "ReactAction"
@@ -229,6 +221,12 @@
       "name": "Course",
       "parent": [
         "CreativeWork"
+      ]
+    },
+    {
+      "name": "MobileApplication",
+      "parent": [
+        "SoftwareApplication"
       ]
     },
     {
@@ -265,10 +263,16 @@
       "parent": []
     },
     {
+      "name": "DigitalDocument",
+      "parent": [
+        "CreativeWork"
+      ]
+    },
+    {
       "name": "HealthClub",
       "parent": [
-        "SportsActivityLocation",
-        "HealthAndBeautyBusiness"
+        "HealthAndBeautyBusiness",
+        "SportsActivityLocation"
       ]
     },
     {
@@ -302,9 +306,9 @@
       ]
     },
     {
-      "name": "Bakery",
+      "name": "WorkersUnion",
       "parent": [
-        "FoodEstablishment"
+        "Organization"
       ]
     },
     {
@@ -314,9 +318,9 @@
     {
       "name": "HowToSection",
       "parent": [
+        "ListItem",
         "CreativeWork",
-        "ItemList",
-        "ListItem"
+        "ItemList"
       ]
     },
     {
@@ -446,15 +450,7 @@
       ]
     },
     {
-      "name": "MBZ",
-      "parent": []
-    },
-    {
       "name": "Time",
-      "parent": []
-    },
-    {
-      "name": "VegetarianDiet",
       "parent": []
     },
     {
@@ -480,12 +476,6 @@
       ]
     },
     {
-      "name": "Trip",
-      "parent": [
-        "Intangible"
-      ]
-    },
-    {
       "name": "MovieRentalStore",
       "parent": [
         "Store"
@@ -508,6 +498,10 @@
       "parent": [
         "Event"
       ]
+    },
+    {
+      "name": "VeganDiet",
+      "parent": []
     },
     {
       "name": "ResumeAction",
@@ -550,9 +544,9 @@
       ]
     },
     {
-      "name": "EventVenue",
+      "name": "Distillery",
       "parent": [
-        "CivicStructure"
+        "FoodEstablishment"
       ]
     },
     {
@@ -570,8 +564,10 @@
       "parent": []
     },
     {
-      "name": "DJMixAlbum",
-      "parent": []
+      "name": "BuyAction",
+      "parent": [
+        "TradeAction"
+      ]
     },
     {
       "name": "PostOffice",
@@ -592,16 +588,6 @@
       ]
     },
     {
-      "name": "ActionCollabClass",
-      "parent": []
-    },
-    {
-      "name": "LandmarksOrHistoricalBuildings",
-      "parent": [
-        "Place"
-      ]
-    },
-    {
       "name": "DiabeticDiet",
       "parent": []
     },
@@ -610,9 +596,9 @@
       "parent": []
     },
     {
-      "name": "Barcode",
+      "name": "PerformingArtsTheater",
       "parent": [
-        "ImageObject"
+        "CivicStructure"
       ]
     },
     {
@@ -686,12 +672,6 @@
       ]
     },
     {
-      "name": "TrackAction",
-      "parent": [
-        "FindAction"
-      ]
-    },
-    {
       "name": "HomeAndConstructionBusiness",
       "parent": [
         "LocalBusiness"
@@ -716,18 +696,6 @@
       ]
     },
     {
-      "name": "DanceGroup",
-      "parent": [
-        "PerformingGroup"
-      ]
-    },
-    {
-      "name": "Game",
-      "parent": [
-        "CreativeWork"
-      ]
-    },
-    {
       "name": "EPRelease",
       "parent": []
     },
@@ -739,12 +707,6 @@
       "name": "DiscussionForumPosting",
       "parent": [
         "SocialMediaPosting"
-      ]
-    },
-    {
-      "name": "IceCreamShop",
-      "parent": [
-        "FoodEstablishment"
       ]
     },
     {
@@ -763,6 +725,12 @@
       "name": "PriceSpecification",
       "parent": [
         "StructuredValue"
+      ]
+    },
+    {
+      "name": "AdministrativeArea",
+      "parent": [
+        "Place"
       ]
     },
     {
@@ -793,8 +761,8 @@
     {
       "name": "LocalBusiness",
       "parent": [
-        "Organization",
-        "Place"
+        "Place",
+        "Organization"
       ]
     },
     {
@@ -814,8 +782,10 @@
       ]
     },
     {
-      "name": "FIBO",
-      "parent": []
+      "name": "CommunicateAction",
+      "parent": [
+        "InteractAction"
+      ]
     },
     {
       "name": "MusicRecording",
@@ -842,21 +812,15 @@
       ]
     },
     {
-      "name": "MenuItem",
+      "name": "Duration",
       "parent": [
-        "Intangible"
+        "Quantity"
       ]
     },
     {
       "name": "RealEstateAgent",
       "parent": [
         "LocalBusiness"
-      ]
-    },
-    {
-      "name": "ApplyAction",
-      "parent": [
-        "OrganizeAction"
       ]
     },
     {
@@ -901,10 +865,6 @@
         "CreativeWork",
         "CreativeWorkSeason"
       ]
-    },
-    {
-      "name": "GoodRelationsTerms",
-      "parent": []
     },
     {
       "name": "SearchResultsPage",
@@ -961,14 +921,16 @@
       ]
     },
     {
+      "name": "OrderAction",
+      "parent": [
+        "TradeAction"
+      ]
+    },
+    {
       "name": "InviteAction",
       "parent": [
         "CommunicateAction"
       ]
-    },
-    {
-      "name": "GLEIF",
-      "parent": []
     },
     {
       "name": "TVEpisode",
@@ -995,16 +957,6 @@
       ]
     },
     {
-      "name": "WikiDoc",
-      "parent": []
-    },
-    {
-      "name": "MobilePhoneStore",
-      "parent": [
-        "Store"
-      ]
-    },
-    {
       "name": "Casino",
       "parent": [
         "EntertainmentBusiness"
@@ -1012,10 +964,6 @@
     },
     {
       "name": "HearingImpairedSupported",
-      "parent": []
-    },
-    {
-      "name": "rNews",
       "parent": []
     },
     {
@@ -1078,10 +1026,6 @@
       ]
     },
     {
-      "name": "BibExTerm",
-      "parent": []
-    },
-    {
       "name": "InternetCafe",
       "parent": [
         "LocalBusiness"
@@ -1102,6 +1046,7 @@
     {
       "name": "Pharmacy",
       "parent": [
+        "MedicalBusiness",
         "MedicalOrganization"
       ]
     },
@@ -1146,12 +1091,6 @@
       ]
     },
     {
-      "name": "Continent",
-      "parent": [
-        "Landform"
-      ]
-    },
-    {
       "name": "Article",
       "parent": [
         "CreativeWork"
@@ -1164,11 +1103,13 @@
       ]
     },
     {
-      "name": "ParkingMap",
-      "parent": []
+      "name": "Enumeration",
+      "parent": [
+        "Intangible"
+      ]
     },
     {
-      "name": "The Trust Project",
+      "name": "ParkingMap",
       "parent": []
     },
     {
@@ -1188,6 +1129,12 @@
       "name": "UserInteraction",
       "parent": [
         "Event"
+      ]
+    },
+    {
+      "name": "MobilePhoneStore",
+      "parent": [
+        "Store"
       ]
     },
     {
@@ -1225,10 +1172,6 @@
       ]
     },
     {
-      "name": "DigitalFormat",
-      "parent": []
-    },
-    {
       "name": "AutoRental",
       "parent": [
         "AutomotiveBusiness"
@@ -1243,25 +1186,15 @@
       "parent": []
     },
     {
-      "name": "AchieveAction",
+      "name": "LoanOrCredit",
       "parent": [
-        "Action"
+        "FinancialProduct"
       ]
-    },
-    {
-      "name": "CDFormat",
-      "parent": []
     },
     {
       "name": "HotelRoom",
       "parent": [
         "Room"
-      ]
-    },
-    {
-      "name": "Zoo",
-      "parent": [
-        "CivicStructure"
       ]
     },
     {
@@ -1333,9 +1266,9 @@
       ]
     },
     {
-      "name": "TravelAction",
+      "name": "DepartmentStore",
       "parent": [
-        "MoveAction"
+        "Store"
       ]
     },
     {
@@ -1345,10 +1278,8 @@
       ]
     },
     {
-      "name": "MobileApplication",
-      "parent": [
-        "SoftwareApplication"
-      ]
+      "name": "Tuesday",
+      "parent": []
     },
     {
       "name": "SoftwareApplication",
@@ -1377,6 +1308,12 @@
     {
       "name": "DemoAlbum",
       "parent": []
+    },
+    {
+      "name": "QuantitativeValueDistribution",
+      "parent": [
+        "StructuredValue"
+      ]
     },
     {
       "name": "CoOp",
@@ -1411,13 +1348,15 @@
     {
       "name": "MovieTheater",
       "parent": [
-        "EntertainmentBusiness",
-        "CivicStructure"
+        "CivicStructure",
+        "EntertainmentBusiness"
       ]
     },
     {
-      "name": "Stack Exchange",
-      "parent": []
+      "name": "Bakery",
+      "parent": [
+        "FoodEstablishment"
+      ]
     },
     {
       "name": "GatedResidenceCommunity",
@@ -1440,8 +1379,8 @@
     {
       "name": "HowToTip",
       "parent": [
-        "ListItem",
-        "CreativeWork"
+        "CreativeWork",
+        "ListItem"
       ]
     },
     {
@@ -1466,6 +1405,12 @@
       "name": "PerformAction",
       "parent": [
         "PlayAction"
+      ]
+    },
+    {
+      "name": "BedType",
+      "parent": [
+        "QualitativeValue"
       ]
     },
     {
@@ -1539,6 +1484,12 @@
       ]
     },
     {
+      "name": "BroadcastFrequencySpecification",
+      "parent": [
+        "Intangible"
+      ]
+    },
+    {
       "name": "BlogPosting",
       "parent": [
         "SocialMediaPosting"
@@ -1548,6 +1499,18 @@
       "name": "LodgingReservation",
       "parent": [
         "Reservation"
+      ]
+    },
+    {
+      "name": "PreOrderAction",
+      "parent": [
+        "TradeAction"
+      ]
+    },
+    {
+      "name": "MediaSubscription",
+      "parent": [
+        "Intangible"
       ]
     },
     {
@@ -1653,6 +1616,12 @@
       "parent": []
     },
     {
+      "name": "ActionAccessSpecification",
+      "parent": [
+        "Intangible"
+      ]
+    },
+    {
       "name": "Number",
       "parent": []
     },
@@ -1666,6 +1635,12 @@
       "name": "ShoeStore",
       "parent": [
         "Store"
+      ]
+    },
+    {
+      "name": "FMRadioChannel",
+      "parent": [
+        "RadioChannel"
       ]
     },
     {
@@ -1745,6 +1720,10 @@
       ]
     },
     {
+      "name": "EventMovedOnline",
+      "parent": []
+    },
+    {
       "name": "SendAction",
       "parent": [
         "TransferAction"
@@ -1813,14 +1792,16 @@
       ]
     },
     {
+      "name": "Aquarium",
+      "parent": [
+        "CivicStructure"
+      ]
+    },
+    {
       "name": "SelfStorage",
       "parent": [
         "LocalBusiness"
       ]
-    },
-    {
-      "name": "Tourism",
-      "parent": []
     },
     {
       "name": "ReservationPending",
@@ -1879,6 +1860,12 @@
       ]
     },
     {
+      "name": "Barcode",
+      "parent": [
+        "ImageObject"
+      ]
+    },
+    {
       "name": "WebPage",
       "parent": [
         "CreativeWork"
@@ -1901,15 +1888,9 @@
       "parent": []
     },
     {
-      "name": "Room",
+      "name": "Continent",
       "parent": [
-        "Accommodation"
-      ]
-    },
-    {
-      "name": "ReplyAction",
-      "parent": [
-        "CommunicateAction"
+        "Landform"
       ]
     },
     {
@@ -1949,15 +1930,9 @@
     {
       "name": "HowToStep",
       "parent": [
+        "ItemList",
         "ListItem",
-        "CreativeWork",
-        "ItemList"
-      ]
-    },
-    {
-      "name": "ActionStatusType",
-      "parent": [
-        "Enumeration"
+        "CreativeWork"
       ]
     },
     {
@@ -2012,10 +1987,6 @@
       ]
     },
     {
-      "name": "AutomotiveOntologyWGClass",
-      "parent": []
-    },
-    {
       "name": "AppendAction",
       "parent": [
         "InsertAction"
@@ -2026,10 +1997,6 @@
       "parent": [
         "StructuredValue"
       ]
-    },
-    {
-      "name": "PaymentAutomaticallyApplied",
-      "parent": []
     },
     {
       "name": "ParkingFacility",
@@ -2062,6 +2029,12 @@
     {
       "name": "SpokenWordAlbum",
       "parent": []
+    },
+    {
+      "name": "BeautySalon",
+      "parent": [
+        "HealthAndBeautyBusiness"
+      ]
     },
     {
       "name": "UserDownloads",
@@ -2116,12 +2089,6 @@
       ]
     },
     {
-      "name": "Aquarium",
-      "parent": [
-        "CivicStructure"
-      ]
-    },
-    {
       "name": "OrderDelivered",
       "parent": []
     },
@@ -2141,12 +2108,6 @@
       "name": "TrainStation",
       "parent": [
         "CivicStructure"
-      ]
-    },
-    {
-      "name": "Conversation",
-      "parent": [
-        "CreativeWork"
       ]
     },
     {
@@ -2180,6 +2141,12 @@
       ]
     },
     {
+      "name": "SpeakableSpecification",
+      "parent": [
+        "Intangible"
+      ]
+    },
+    {
       "name": "RsvpResponseNo",
       "parent": []
     },
@@ -2187,6 +2154,12 @@
       "name": "InteractAction",
       "parent": [
         "Action"
+      ]
+    },
+    {
+      "name": "AMRadioChannel",
+      "parent": [
+        "RadioChannel"
       ]
     },
     {
@@ -2221,6 +2194,12 @@
       "name": "TelevisionStation",
       "parent": [
         "LocalBusiness"
+      ]
+    },
+    {
+      "name": "HomeGoodsStore",
+      "parent": [
+        "Store"
       ]
     },
     {
@@ -2282,19 +2261,27 @@
       ]
     },
     {
+      "name": "LandmarksOrHistoricalBuildings",
+      "parent": [
+        "Place"
+      ]
+    },
+    {
       "name": "MarryAction",
       "parent": [
         "InteractAction"
       ]
     },
     {
-      "name": "DatasetClass",
-      "parent": []
-    },
-    {
       "name": "Notary",
       "parent": [
         "LegalService"
+      ]
+    },
+    {
+      "name": "IceCreamShop",
+      "parent": [
+        "FoodEstablishment"
       ]
     },
     {
@@ -2370,9 +2357,15 @@
       ]
     },
     {
-      "name": "LoanOrCredit",
+      "name": "AchieveAction",
       "parent": [
-        "FinancialProduct"
+        "Action"
+      ]
+    },
+    {
+      "name": "Zoo",
+      "parent": [
+        "CivicStructure"
       ]
     },
     {
@@ -2384,10 +2377,6 @@
       "parent": [
         "Enumeration"
       ]
-    },
-    {
-      "name": "Tuesday",
-      "parent": []
     },
     {
       "name": "ComedyClub",
@@ -2557,6 +2546,12 @@
       ]
     },
     {
+      "name": "CollectionPage",
+      "parent": [
+        "WebPage"
+      ]
+    },
+    {
       "name": "Menu",
       "parent": [
         "CreativeWork"
@@ -2581,6 +2576,10 @@
       ]
     },
     {
+      "name": "VegetarianDiet",
+      "parent": []
+    },
+    {
       "name": "Electrician",
       "parent": [
         "HomeAndConstructionBusiness"
@@ -2590,12 +2589,6 @@
       "name": "WarrantyScope",
       "parent": [
         "Enumeration"
-      ]
-    },
-    {
-      "name": "CollectionPage",
-      "parent": [
-        "WebPage"
       ]
     },
     {
@@ -2623,21 +2616,9 @@
       ]
     },
     {
-      "name": "PerformingArtsTheater",
-      "parent": [
-        "CivicStructure"
-      ]
-    },
-    {
       "name": "VideoGameSeries",
       "parent": [
         "CreativeWorkSeries"
-      ]
-    },
-    {
-      "name": "BroadcastService",
-      "parent": [
-        "Service"
       ]
     },
     {
@@ -2683,7 +2664,7 @@
     {
       "name": "VideoGallery",
       "parent": [
-        "CollectionPage"
+        "MediaGallery"
       ]
     },
     {
@@ -2789,15 +2770,15 @@
       ]
     },
     {
-      "name": "Event",
+      "name": "EmployerAggregateRating",
       "parent": [
-        "Thing"
+        "AggregateRating"
       ]
     },
     {
-      "name": "House",
+      "name": "Event",
       "parent": [
-        "Accommodation"
+        "Thing"
       ]
     },
     {
@@ -2863,6 +2844,12 @@
       ]
     },
     {
+      "name": "BookmarkAction",
+      "parent": [
+        "OrganizeAction"
+      ]
+    },
+    {
       "name": "EventCancelled",
       "parent": []
     },
@@ -2881,14 +2868,21 @@
     {
       "name": "Dentist",
       "parent": [
-        "MedicalOrganization",
-        "LocalBusiness"
+        "LocalBusiness",
+        "MedicalBusiness",
+        "MedicalOrganization"
       ]
     },
     {
       "name": "DiscoverAction",
       "parent": [
         "FindAction"
+      ]
+    },
+    {
+      "name": "EndorsementRating",
+      "parent": [
+        "Rating"
       ]
     },
     {
@@ -2940,6 +2934,12 @@
       ]
     },
     {
+      "name": "EventVenue",
+      "parent": [
+        "CivicStructure"
+      ]
+    },
+    {
       "name": "RadioEpisode",
       "parent": [
         "Episode"
@@ -2960,8 +2960,8 @@
     {
       "name": "CreditCard",
       "parent": [
-        "LoanOrCredit",
-        "PaymentCard"
+        "PaymentCard",
+        "LoanOrCredit"
       ]
     },
     {
@@ -2986,6 +2986,12 @@
       "name": "BankOrCreditUnion",
       "parent": [
         "FinancialService"
+      ]
+    },
+    {
+      "name": "FAQPage",
+      "parent": [
+        "WebPage"
       ]
     },
     {
@@ -3041,9 +3047,9 @@
       "parent": []
     },
     {
-      "name": "OrderAction",
+      "name": "MonetaryAmountDistribution",
       "parent": [
-        "TradeAction"
+        "QuantitativeValueDistribution"
       ]
     },
     {
@@ -3064,10 +3070,8 @@
       "parent": []
     },
     {
-      "name": "BuyAction",
-      "parent": [
-        "TradeAction"
-      ]
+      "name": "DJMixAlbum",
+      "parent": []
     },
     {
       "name": "SearchAction",
@@ -3096,7 +3100,7 @@
     {
       "name": "CatholicChurch",
       "parent": [
-        "PlaceOfWorship"
+        "Church"
       ]
     },
     {
@@ -3106,8 +3110,10 @@
       ]
     },
     {
-      "name": "GoodRelationsClass",
-      "parent": []
+      "name": "ActionStatusType",
+      "parent": [
+        "Enumeration"
+      ]
     },
     {
       "name": "WriteAction",
@@ -3120,6 +3126,20 @@
       "parent": [
         "Enumeration"
       ]
+    },
+    {
+      "name": "ApplyAction",
+      "parent": [
+        "OrganizeAction"
+      ]
+    },
+    {
+      "name": "DigitalFormat",
+      "parent": []
+    },
+    {
+      "name": "CDFormat",
+      "parent": []
     },
     {
       "name": "Locksmith",
@@ -3260,7 +3280,7 @@
       ]
     },
     {
-      "name": "Ticket",
+      "name": "Occupation",
       "parent": [
         "Intangible"
       ]
@@ -3270,6 +3290,10 @@
       "parent": [
         "EntertainmentBusiness"
       ]
+    },
+    {
+      "name": "GroupBoardingPolicy",
+      "parent": []
     },
     {
       "name": "Plumber",
@@ -3408,6 +3432,12 @@
       ]
     },
     {
+      "name": "DataCatalog",
+      "parent": [
+        "CreativeWork"
+      ]
+    },
+    {
       "name": "PaymentChargeSpecification",
       "parent": [
         "PriceSpecification"
@@ -3434,12 +3464,15 @@
       ]
     },
     {
-      "name": "GroupBoardingPolicy",
-      "parent": []
+      "name": "ItemPage",
+      "parent": [
+        "WebPage"
+      ]
     },
     {
       "name": "Physician",
       "parent": [
+        "MedicalBusiness",
         "MedicalOrganization"
       ]
     },
@@ -3450,19 +3483,9 @@
       ]
     },
     {
-      "name": "IITCNRit",
-      "parent": []
-    },
-    {
       "name": "OrderItem",
       "parent": [
         "Intangible"
-      ]
-    },
-    {
-      "name": "DayOfWeek",
-      "parent": [
-        "Enumeration"
       ]
     },
     {
@@ -3483,10 +3506,6 @@
         "CreativeWork",
         "ListItem"
       ]
-    },
-    {
-      "name": "LRMIClass",
-      "parent": []
     },
     {
       "name": "Apartment",
@@ -3528,6 +3547,12 @@
       "parent": []
     },
     {
+      "name": "Photograph",
+      "parent": [
+        "CreativeWork"
+      ]
+    },
+    {
       "name": "SubwayStation",
       "parent": [
         "CivicStructure"
@@ -3541,6 +3566,12 @@
       "name": "Courthouse",
       "parent": [
         "GovernmentBuilding"
+      ]
+    },
+    {
+      "name": "BroadcastService",
+      "parent": [
+        "Service"
       ]
     },
     {
@@ -3586,27 +3617,21 @@
       ]
     },
     {
-      "name": "DigitalDocument",
+      "name": "TrackAction",
       "parent": [
-        "CreativeWork"
+        "FindAction"
       ]
     },
     {
-      "name": "BeautySalon",
+      "name": "DanceGroup",
       "parent": [
-        "HealthAndBeautyBusiness"
+        "PerformingGroup"
       ]
     },
     {
-      "name": "CommunicateAction",
+      "name": "MenuItem",
       "parent": [
-        "InteractAction"
-      ]
-    },
-    {
-      "name": "Duration",
-      "parent": [
-        "Quantity"
+        "Intangible"
       ]
     },
     {
@@ -3670,12 +3695,6 @@
       "parent": []
     },
     {
-      "name": "Enumeration",
-      "parent": [
-        "Intangible"
-      ]
-    },
-    {
       "name": "SingleFamilyResidence",
       "parent": [
         "House"
@@ -3688,12 +3707,6 @@
     {
       "name": "ActiveActionStatus",
       "parent": []
-    },
-    {
-      "name": "DataCatalog",
-      "parent": [
-        "CreativeWork"
-      ]
     },
     {
       "name": "WholesaleStore",
@@ -3714,9 +3727,9 @@
       ]
     },
     {
-      "name": "DepartmentStore",
+      "name": "TravelAction",
       "parent": [
-        "Store"
+        "MoveAction"
       ]
     },
     {
@@ -3754,12 +3767,6 @@
       "parent": [
         "CreativeWork",
         "CreativeWorkSeries"
-      ]
-    },
-    {
-      "name": "AdministrativeArea",
-      "parent": [
-        "Place"
       ]
     },
     {
@@ -3817,6 +3824,12 @@
       ]
     },
     {
+      "name": "MediaGallery",
+      "parent": [
+        "CollectionPage"
+      ]
+    },
+    {
       "name": "False",
       "parent": []
     },
@@ -3839,10 +3852,8 @@
       ]
     },
     {
-      "name": "ItemPage",
-      "parent": [
-        "WebPage"
-      ]
+      "name": "PaymentAutomaticallyApplied",
+      "parent": []
     },
     {
       "name": "Language",
@@ -3872,6 +3883,12 @@
       "name": "BoardingPolicyType",
       "parent": [
         "Enumeration"
+      ]
+    },
+    {
+      "name": "Pond",
+      "parent": [
+        "BodyOfWater"
       ]
     },
     {
@@ -3913,6 +3930,12 @@
       ]
     },
     {
+      "name": "Room",
+      "parent": [
+        "Accommodation"
+      ]
+    },
+    {
       "name": "PublicSwimmingPool",
       "parent": [
         "SportsActivityLocation"
@@ -3932,6 +3955,12 @@
       "name": "MusicReleaseFormatType",
       "parent": [
         "Enumeration"
+      ]
+    },
+    {
+      "name": "Conversation",
+      "parent": [
+        "CreativeWork"
       ]
     },
     {
@@ -3959,6 +3988,12 @@
       ]
     },
     {
+      "name": "DayOfWeek",
+      "parent": [
+        "Enumeration"
+      ]
+    },
+    {
       "name": "BusinessAudience",
       "parent": [
         "Audience"
@@ -3968,6 +4003,12 @@
       "name": "LodgingBusiness",
       "parent": [
         "LocalBusiness"
+      ]
+    },
+    {
+      "name": "House",
+      "parent": [
+        "Accommodation"
       ]
     },
     {
@@ -3984,6 +4025,12 @@
       "name": "EventStatusType",
       "parent": [
         "Enumeration"
+      ]
+    },
+    {
+      "name": "Ticket",
+      "parent": [
+        "Intangible"
       ]
     },
     {
@@ -4017,8 +4064,8 @@
     {
       "name": "Hospital",
       "parent": [
-        "EmergencyService",
         "MedicalOrganization",
+        "EmergencyService",
         "CivicStructure"
       ]
     },
@@ -4041,12 +4088,6 @@
       ]
     },
     {
-      "name": "BookmarkAction",
-      "parent": [
-        "OrganizeAction"
-      ]
-    },
-    {
       "name": "RadioSeason",
       "parent": [
         "CreativeWorkSeason"
@@ -4066,6 +4107,12 @@
       "name": "AggregateRating",
       "parent": [
         "Rating"
+      ]
+    },
+    {
+      "name": "ReplyAction",
+      "parent": [
+        "CommunicateAction"
       ]
     },
     {
@@ -4097,7 +4144,7 @@
     {
       "name": "ImageGallery",
       "parent": [
-        "CollectionPage"
+        "MediaGallery"
       ]
     },
     {
@@ -4146,12 +4193,6 @@
       "name": "LiteraryEvent",
       "parent": [
         "Event"
-      ]
-    },
-    {
-      "name": "Pond",
-      "parent": [
-        "BodyOfWater"
       ]
     },
     {
@@ -4205,17 +4246,10 @@
     {
       "name": "pagination",
       "parent": [
+        "Chapter",
         "Article",
-        "PublicationVolume",
-        "PublicationIssue"
-      ]
-    },
-    {
-      "name": "about",
-      "parent": [
-        "CommunicateAction",
-        "CreativeWork",
-        "Event"
+        "PublicationIssue",
+        "PublicationVolume"
       ]
     },
     {
@@ -4223,6 +4257,12 @@
       "parent": [
         "VideoGameSeries",
         "Game"
+      ]
+    },
+    {
+      "name": "duringMedia",
+      "parent": [
+        "HowToDirection"
       ]
     },
     {
@@ -4250,29 +4290,37 @@
       ]
     },
     {
+      "name": "occupationLocation",
+      "parent": [
+        "Occupation"
+      ]
+    },
+    {
+      "name": "about",
+      "parent": [
+        "Event",
+        "CreativeWork",
+        "CommunicateAction"
+      ]
+    },
+    {
       "name": "accessibilitySummary",
       "parent": [
         "CreativeWork"
       ]
     },
     {
-      "name": "orderDate",
+      "name": "serviceAudience",
       "parent": [
-        "Order"
+        "Service"
       ]
     },
     {
       "name": "serviceArea",
       "parent": [
         "ContactPoint",
-        "Organization",
-        "Service"
-      ]
-    },
-    {
-      "name": "vehicleSpecialUsage",
-      "parent": [
-        "Vehicle"
+        "Service",
+        "Organization"
       ]
     },
     {
@@ -4295,15 +4343,23 @@
       ]
     },
     {
+      "name": "geoWithin",
+      "parent": [
+        "Place",
+        "GeospatialGeometry"
+      ]
+    },
+    {
       "name": "audienceType",
       "parent": [
         "Audience"
       ]
     },
     {
-      "name": "appliesToPaymentMethod",
+      "name": "broadcastFrequency",
       "parent": [
-        "PaymentChargeSpecification"
+        "BroadcastService",
+        "BroadcastChannel"
       ]
     },
     {
@@ -4316,6 +4372,13 @@
       "name": "targetDescription",
       "parent": [
         "AlignmentObject"
+      ]
+    },
+    {
+      "name": "geoContains",
+      "parent": [
+        "GeospatialGeometry",
+        "Place"
       ]
     },
     {
@@ -4333,11 +4396,11 @@
     {
       "name": "address",
       "parent": [
-        "GeoShape",
         "Organization",
+        "Place",
+        "GeoShape",
         "GeoCoordinates",
-        "Person",
-        "Place"
+        "Person"
       ]
     },
     {
@@ -4349,8 +4412,9 @@
     {
       "name": "startTime",
       "parent": [
-        "Action",
-        "FoodEstablishmentReservation"
+        "FoodEstablishmentReservation",
+        "MediaObject",
+        "Action"
       ]
     },
     {
@@ -4368,7 +4432,9 @@
     {
       "name": "manufacturer",
       "parent": [
-        "Product"
+        "Product",
+        "DietarySupplement",
+        "Drug"
       ]
     },
     {
@@ -4378,10 +4444,9 @@
       ]
     },
     {
-      "name": "upvoteCount",
+      "name": "discusses",
       "parent": [
-        "Comment",
-        "Question"
+        "UserComments"
       ]
     },
     {
@@ -4405,6 +4470,12 @@
       ]
     },
     {
+      "name": "exifData",
+      "parent": [
+        "ImageObject"
+      ]
+    },
+    {
       "name": "query",
       "parent": [
         "SearchAction"
@@ -4419,16 +4490,10 @@
     {
       "name": "funder",
       "parent": [
-        "Organization",
-        "CreativeWork",
         "Event",
-        "Person"
-      ]
-    },
-    {
-      "name": "position",
-      "parent": [
-        "ListItem",
+        "MonetaryGrant",
+        "Person",
+        "Organization",
         "CreativeWork"
       ]
     },
@@ -4447,22 +4512,24 @@
     {
       "name": "sponsor",
       "parent": [
-        "Event",
-        "CreativeWork",
+        "Grant",
+        "MedicalStudy",
+        "Person",
         "Organization",
-        "Person"
+        "Event",
+        "CreativeWork"
       ]
     },
     {
-      "name": "productionDate",
+      "name": "produces",
       "parent": [
-        "Product",
-        "Vehicle"
+        "Service"
       ]
     },
     {
       "name": "latitude",
       "parent": [
+        "Place",
         "GeoCoordinates"
       ]
     },
@@ -4487,8 +4554,8 @@
     {
       "name": "typeOfGood",
       "parent": [
-        "TypeAndQuantityNode",
-        "OwnershipInfo"
+        "OwnershipInfo",
+        "TypeAndQuantityNode"
       ]
     },
     {
@@ -4530,9 +4597,9 @@
     {
       "name": "seasons",
       "parent": [
-        "TVSeries",
+        "RadioSeries",
         "VideoGameSeries",
-        "RadioSeries"
+        "TVSeries"
       ]
     },
     {
@@ -4550,12 +4617,13 @@
     {
       "name": "provider",
       "parent": [
-        "Service",
-        "Reservation",
         "Invoice",
+        "CreativeWork",
+        "Reservation",
         "Trip",
+        "EducationalOccupationalProgram",
         "ParcelDelivery",
-        "CreativeWork"
+        "Service"
       ]
     },
     {
@@ -4588,8 +4656,9 @@
     {
       "name": "availabilityStarts",
       "parent": [
+        "Demand",
         "Offer",
-        "Demand"
+        "ActionAccessSpecification"
       ]
     },
     {
@@ -4617,10 +4686,16 @@
       ]
     },
     {
+      "name": "authenticator",
+      "parent": [
+        "MediaSubscription"
+      ]
+    },
+    {
       "name": "gamePlatform",
       "parent": [
-        "VideoGame",
-        "VideoGameSeries"
+        "VideoGameSeries",
+        "VideoGame"
       ]
     },
     {
@@ -4660,6 +4735,12 @@
       ]
     },
     {
+      "name": "percentile10",
+      "parent": [
+        "QuantitativeValueDistribution"
+      ]
+    },
+    {
       "name": "membershipNumber",
       "parent": [
         "ProgramMembership"
@@ -4669,12 +4750,6 @@
       "name": "recipeYield",
       "parent": [
         "Recipe"
-      ]
-    },
-    {
-      "name": "qualifications",
-      "parent": [
-        "JobPosting"
       ]
     },
     {
@@ -4698,8 +4773,8 @@
     {
       "name": "bed",
       "parent": [
-        "Suite",
-        "HotelRoom"
+        "HotelRoom",
+        "Suite"
       ]
     },
     {
@@ -4716,21 +4791,27 @@
       ]
     },
     {
+      "name": "buyer",
+      "parent": [
+        "SellAction"
+      ]
+    },
+    {
       "name": "maps",
       "parent": [
         "Place"
       ]
     },
     {
-      "name": "workFeatured",
+      "name": "orderDate",
       "parent": [
-        "Event"
+        "Order"
       ]
     },
     {
-      "name": "serviceAudience",
+      "name": "workFeatured",
       "parent": [
-        "Service"
+        "Event"
       ]
     },
     {
@@ -4755,11 +4836,11 @@
       "name": "areaServed",
       "parent": [
         "Organization",
-        "Demand",
-        "Service",
         "Offer",
+        "Demand",
         "ContactPoint",
-        "DeliveryChargeSpecification"
+        "DeliveryChargeSpecification",
+        "Service"
       ]
     },
     {
@@ -4771,12 +4852,12 @@
     {
       "name": "audience",
       "parent": [
-        "Event",
-        "CreativeWork",
-        "Service",
-        "Product",
+        "LodgingBusiness",
         "PlayAction",
-        "LodgingBusiness"
+        "CreativeWork",
+        "Product",
+        "Event",
+        "Service"
       ]
     },
     {
@@ -4812,9 +4893,9 @@
     {
       "name": "mpn",
       "parent": [
+        "Product",
         "Demand",
-        "Offer",
-        "Product"
+        "Offer"
       ]
     },
     {
@@ -4824,19 +4905,25 @@
       ]
     },
     {
+      "name": "cargoVolume",
+      "parent": [
+        "Vehicle"
+      ]
+    },
+    {
       "name": "actor",
       "parent": [
-        "VideoObject",
         "Episode",
-        "CreativeWorkSeason",
         "TVSeries",
         "Movie",
-        "Clip",
+        "Event",
         "RadioSeries",
-        "VideoGame",
+        "VideoObject",
+        "Clip",
         "VideoGameSeries",
         "MovieSeries",
-        "Event"
+        "VideoGame",
+        "CreativeWorkSeason"
       ]
     },
     {
@@ -4860,10 +4947,10 @@
     {
       "name": "height",
       "parent": [
-        "Product",
         "Person",
-        "MediaObject",
-        "VisualArtwork"
+        "VisualArtwork",
+        "Product",
+        "MediaObject"
       ]
     },
     {
@@ -4882,8 +4969,8 @@
       "name": "serialNumber",
       "parent": [
         "Offer",
-        "Demand",
-        "IndividualProduct"
+        "IndividualProduct",
+        "Demand"
       ]
     },
     {
@@ -4925,6 +5012,12 @@
       ]
     },
     {
+      "name": "lyrics",
+      "parent": [
+        "MusicComposition"
+      ]
+    },
+    {
       "name": "coverageStartTime",
       "parent": [
         "LiveBlogPosting"
@@ -4949,6 +5042,19 @@
       ]
     },
     {
+      "name": "floorSize",
+      "parent": [
+        "Accommodation",
+        "FloorPlan"
+      ]
+    },
+    {
+      "name": "appliesToPaymentMethod",
+      "parent": [
+        "PaymentChargeSpecification"
+      ]
+    },
+    {
       "name": "departureBusStop",
       "parent": [
         "BusTrip"
@@ -4961,25 +5067,18 @@
       ]
     },
     {
-      "name": "netWorth",
+      "name": "events",
       "parent": [
-        "Person"
+        "Organization",
+        "Place"
       ]
     },
     {
       "name": "videoFormat",
       "parent": [
-        "BroadcastService",
         "BroadcastEvent",
-        "ScreeningEvent"
-      ]
-    },
-    {
-      "name": "ineligibleRegion",
-      "parent": [
-        "Demand",
-        "Offer",
-        "DeliveryChargeSpecification"
+        "ScreeningEvent",
+        "BroadcastService"
       ]
     },
     {
@@ -4991,32 +5090,33 @@
     {
       "name": "paymentDue",
       "parent": [
-        "Order",
-        "Invoice"
+        "Invoice",
+        "Order"
       ]
     },
     {
       "name": "numberOfEpisodes",
       "parent": [
-        "VideoGameSeries",
-        "TVSeries",
+        "RadioSeries",
         "CreativeWorkSeason",
-        "RadioSeries"
+        "VideoGameSeries",
+        "TVSeries"
       ]
     },
     {
       "name": "requiresSubscription",
       "parent": [
-        "MediaObject"
+        "MediaObject",
+        "ActionAccessSpecification"
       ]
     },
     {
-      "name": "faxNumber",
+      "name": "minValue",
       "parent": [
-        "Place",
-        "ContactPoint",
-        "Person",
-        "Organization"
+        "MonetaryAmount",
+        "QuantitativeValue",
+        "PropertyValue",
+        "PropertyValueSpecification"
       ]
     },
     {
@@ -5028,20 +5128,14 @@
     {
       "name": "trailer",
       "parent": [
-        "VideoGameSeries",
-        "Movie",
         "CreativeWorkSeason",
+        "Movie",
         "VideoGame",
         "RadioSeries",
-        "MovieSeries",
         "TVSeries",
+        "MovieSeries",
+        "VideoGameSeries",
         "Episode"
-      ]
-    },
-    {
-      "name": "steeringPosition",
-      "parent": [
-        "Vehicle"
       ]
     },
     {
@@ -5069,9 +5163,9 @@
       ]
     },
     {
-      "name": "line",
+      "name": "alternateName",
       "parent": [
-        "GeoShape"
+        "Thing"
       ]
     },
     {
@@ -5090,6 +5184,12 @@
       "name": "priceRange",
       "parent": [
         "LocalBusiness"
+      ]
+    },
+    {
+      "name": "children",
+      "parent": [
+        "Person"
       ]
     },
     {
@@ -5115,11 +5215,13 @@
     {
       "name": "endDate",
       "parent": [
-        "CreativeWorkSeason",
-        "Event",
+        "EducationalOccupationalProgram",
+        "Role",
+        "Schedule",
         "DatedMoneySpecification",
-        "CreativeWorkSeries",
-        "Role"
+        "Event",
+        "CreativeWorkSeason",
+        "CreativeWorkSeries"
       ]
     },
     {
@@ -5136,16 +5238,16 @@
       ]
     },
     {
-      "name": "flightNumber",
+      "name": "numTracks",
       "parent": [
-        "Flight"
+        "MusicPlaylist"
       ]
     },
     {
       "name": "season",
       "parent": [
-        "TVSeries",
         "RadioSeries",
+        "TVSeries",
         "VideoGameSeries"
       ]
     },
@@ -5192,9 +5294,10 @@
       ]
     },
     {
-      "name": "seatRow",
+      "name": "prepTime",
       "parent": [
-        "Seat"
+        "HowToDirection",
+        "HowTo"
       ]
     },
     {
@@ -5216,21 +5319,16 @@
       ]
     },
     {
-      "name": "namedPosition",
+      "name": "vehicleSeatingCapacity",
       "parent": [
-        "Role"
+        "Vehicle"
       ]
     },
     {
       "name": "validFor",
       "parent": [
+        "EducationalOccupationalCredential",
         "Permit"
-      ]
-    },
-    {
-      "name": "tickerSymbol",
-      "parent": [
-        "Corporation"
       ]
     },
     {
@@ -5246,7 +5344,7 @@
       ]
     },
     {
-      "name": "jobTitle",
+      "name": "hasOccupation",
       "parent": [
         "Person"
       ]
@@ -5260,8 +5358,8 @@
     {
       "name": "appliesToDeliveryMethod",
       "parent": [
-        "PaymentChargeSpecification",
-        "DeliveryChargeSpecification"
+        "DeliveryChargeSpecification",
+        "PaymentChargeSpecification"
       ]
     },
     {
@@ -5279,10 +5377,10 @@
     {
       "name": "episodes",
       "parent": [
-        "RadioSeries",
         "VideoGameSeries",
-        "CreativeWorkSeason",
-        "TVSeries"
+        "TVSeries",
+        "RadioSeries",
+        "CreativeWorkSeason"
       ]
     },
     {
@@ -5310,15 +5408,40 @@
       ]
     },
     {
+      "name": "publisher",
+      "parent": [
+        "CreativeWork"
+      ]
+    },
+    {
+      "name": "billingIncrement",
+      "parent": [
+        "UnitPriceSpecification"
+      ]
+    },
+    {
       "name": "workHours",
       "parent": [
         "JobPosting"
       ]
     },
     {
+      "name": "numberedPosition",
+      "parent": [
+        "OrganizationRole"
+      ]
+    },
+    {
       "name": "broadcastServiceTier",
       "parent": [
         "BroadcastChannel"
+      ]
+    },
+    {
+      "name": "geoOverlaps",
+      "parent": [
+        "GeospatialGeometry",
+        "Place"
       ]
     },
     {
@@ -5330,9 +5453,9 @@
     {
       "name": "hasOfferCatalog",
       "parent": [
+        "Person",
         "Organization",
-        "Service",
-        "Person"
+        "Service"
       ]
     },
     {
@@ -5356,8 +5479,8 @@
     {
       "name": "underName",
       "parent": [
-        "Ticket",
-        "Reservation"
+        "Reservation",
+        "Ticket"
       ]
     },
     {
@@ -5407,9 +5530,9 @@
     {
       "name": "globalLocationNumber",
       "parent": [
-        "Person",
+        "Organization",
         "Place",
-        "Organization"
+        "Person"
       ]
     },
     {
@@ -5439,8 +5562,8 @@
     {
       "name": "cheatCode",
       "parent": [
-        "VideoGame",
-        "VideoGameSeries"
+        "VideoGameSeries",
+        "VideoGame"
       ]
     },
     {
@@ -5463,12 +5586,6 @@
       ]
     },
     {
-      "name": "publisher",
-      "parent": [
-        "CreativeWork"
-      ]
-    },
-    {
       "name": "coursePrerequisites",
       "parent": [
         "Course"
@@ -5477,8 +5594,8 @@
     {
       "name": "characterAttribute",
       "parent": [
-        "VideoGameSeries",
-        "Game"
+        "Game",
+        "VideoGameSeries"
       ]
     },
     {
@@ -5506,16 +5623,10 @@
       ]
     },
     {
-      "name": "ownedFrom",
-      "parent": [
-        "OwnershipInfo"
-      ]
-    },
-    {
       "name": "checkinTime",
       "parent": [
-        "LodgingReservation",
-        "LodgingBusiness"
+        "LodgingBusiness",
+        "LodgingReservation"
       ]
     },
     {
@@ -5535,20 +5646,14 @@
     {
       "name": "carrier",
       "parent": [
-        "Flight",
-        "ParcelDelivery"
+        "ParcelDelivery",
+        "Flight"
       ]
     },
     {
       "name": "unsaturatedFatContent",
       "parent": [
         "NutritionInformation"
-      ]
-    },
-    {
-      "name": "numberedPosition",
-      "parent": [
-        "OrganizationRole"
       ]
     },
     {
@@ -5573,11 +5678,24 @@
     {
       "name": "reviews",
       "parent": [
-        "Place",
-        "Offer",
         "Product",
+        "Offer",
+        "Place",
         "Organization",
         "CreativeWork"
+      ]
+    },
+    {
+      "name": "menuAddOn",
+      "parent": [
+        "MenuItem"
+      ]
+    },
+    {
+      "name": "geoCrosses",
+      "parent": [
+        "GeospatialGeometry",
+        "Place"
       ]
     },
     {
@@ -5608,8 +5726,9 @@
     {
       "name": "endTime",
       "parent": [
+        "Action",
         "FoodEstablishmentReservation",
-        "Action"
+        "MediaObject"
       ]
     },
     {
@@ -5623,12 +5742,6 @@
       "name": "billingPeriod",
       "parent": [
         "Invoice"
-      ]
-    },
-    {
-      "name": "gender",
-      "parent": [
-        "Person"
       ]
     },
     {
@@ -5652,9 +5765,9 @@
     {
       "name": "hoursAvailable",
       "parent": [
-        "Service",
         "LocationFeatureSpecification",
-        "ContactPoint"
+        "ContactPoint",
+        "Service"
       ]
     },
     {
@@ -5662,6 +5775,18 @@
       "parent": [
         "Airline",
         "Airport"
+      ]
+    },
+    {
+      "name": "foodEstablishment",
+      "parent": [
+        "CookAction"
+      ]
+    },
+    {
+      "name": "parents",
+      "parent": [
+        "Person"
       ]
     },
     {
@@ -5677,10 +5802,22 @@
       ]
     },
     {
+      "name": "actionAccessibilityRequirement",
+      "parent": [
+        "ConsumeAction"
+      ]
+    },
+    {
+      "name": "percentile25",
+      "parent": [
+        "QuantitativeValueDistribution"
+      ]
+    },
+    {
       "name": "pickupTime",
       "parent": [
-        "RentalCarReservation",
-        "TaxiReservation"
+        "TaxiReservation",
+        "RentalCarReservation"
       ]
     },
     {
@@ -5696,6 +5833,12 @@
       ]
     },
     {
+      "name": "lastReviewed",
+      "parent": [
+        "WebPage"
+      ]
+    },
+    {
       "name": "broadcastDisplayName",
       "parent": [
         "BroadcastService"
@@ -5704,8 +5847,8 @@
     {
       "name": "members",
       "parent": [
-        "Organization",
-        "ProgramMembership"
+        "ProgramMembership",
+        "Organization"
       ]
     },
     {
@@ -5727,9 +5870,10 @@
       ]
     },
     {
-      "name": "athlete",
+      "name": "position",
       "parent": [
-        "SportsTeam"
+        "CreativeWork",
+        "ListItem"
       ]
     },
     {
@@ -5790,6 +5934,12 @@
       ]
     },
     {
+      "name": "median",
+      "parent": [
+        "QuantitativeValueDistribution"
+      ]
+    },
+    {
       "name": "priceSpecification",
       "parent": [
         "Demand",
@@ -5810,6 +5960,13 @@
       ]
     },
     {
+      "name": "speakable",
+      "parent": [
+        "WebPage",
+        "Article"
+      ]
+    },
+    {
       "name": "educationalUse",
       "parent": [
         "CreativeWork"
@@ -5818,8 +5975,8 @@
     {
       "name": "itemReviewed",
       "parent": [
-        "Review",
-        "AggregateRating"
+        "AggregateRating",
+        "Review"
       ]
     },
     {
@@ -5843,7 +6000,10 @@
     {
       "name": "currency",
       "parent": [
+        "ExchangeRateSpecification",
+        "LoanOrCredit",
         "DatedMoneySpecification",
+        "MonetaryAmountDistribution",
         "MonetaryAmount"
       ]
     },
@@ -5851,8 +6011,8 @@
       "name": "inventoryLevel",
       "parent": [
         "Demand",
-        "SomeProducts",
-        "Offer"
+        "Offer",
+        "SomeProducts"
       ]
     },
     {
@@ -5871,8 +6031,8 @@
     {
       "name": "confirmationNumber",
       "parent": [
-        "Order",
-        "Invoice"
+        "Invoice",
+        "Order"
       ]
     },
     {
@@ -5926,22 +6086,14 @@
     {
       "name": "aggregateRating",
       "parent": [
-        "CreativeWork",
         "Brand",
-        "Event",
         "Organization",
+        "Event",
+        "CreativeWork",
         "Offer",
-        "Place",
         "Product",
+        "Place",
         "Service"
-      ]
-    },
-    {
-      "name": "subtitleLanguage",
-      "parent": [
-        "TVEpisode",
-        "ScreeningEvent",
-        "Movie"
       ]
     },
     {
@@ -6031,9 +6183,9 @@
     {
       "name": "eligibleTransactionVolume",
       "parent": [
-        "PriceSpecification",
+        "Demand",
         "Offer",
-        "Demand"
+        "PriceSpecification"
       ]
     },
     {
@@ -6069,8 +6221,8 @@
     {
       "name": "nutrition",
       "parent": [
-        "MenuItem",
-        "Recipe"
+        "Recipe",
+        "MenuItem"
       ]
     },
     {
@@ -6088,8 +6240,8 @@
     {
       "name": "partOfSeason",
       "parent": [
-        "Episode",
-        "Clip"
+        "Clip",
+        "Episode"
       ]
     },
     {
@@ -6107,8 +6259,8 @@
     {
       "name": "totalPrice",
       "parent": [
-        "Ticket",
-        "Reservation"
+        "Reservation",
+        "Ticket"
       ]
     },
     {
@@ -6132,8 +6284,8 @@
     {
       "name": "availableAtOrFrom",
       "parent": [
-        "Offer",
-        "Demand"
+        "Demand",
+        "Offer"
       ]
     },
     {
@@ -6146,16 +6298,15 @@
       "name": "countryOfOrigin",
       "parent": [
         "Movie",
+        "TVEpisode",
         "TVSeries",
-        "TVSeason",
-        "TVEpisode"
+        "TVSeason"
       ]
     },
     {
-      "name": "prepTime",
+      "name": "tickerSymbol",
       "parent": [
-        "HowTo",
-        "HowToDirection"
+        "Corporation"
       ]
     },
     {
@@ -6205,8 +6356,8 @@
     {
       "name": "taxID",
       "parent": [
-        "Organization",
-        "Person"
+        "Person",
+        "Organization"
       ]
     },
     {
@@ -6236,14 +6387,14 @@
     {
       "name": "musicBy",
       "parent": [
-        "RadioSeries",
-        "VideoObject",
         "Episode",
+        "VideoObject",
         "MovieSeries",
-        "VideoGame",
-        "Movie",
-        "TVSeries",
         "VideoGameSeries",
+        "TVSeries",
+        "Movie",
+        "VideoGame",
+        "RadioSeries",
         "Clip"
       ]
     },
@@ -6256,9 +6407,11 @@
     {
       "name": "amount",
       "parent": [
+        "DatedMoneySpecification",
+        "MoneyTransfer",
+        "MonetaryGrant",
         "LoanOrCredit",
-        "InvestmentOrDeposit",
-        "DatedMoneySpecification"
+        "InvestmentOrDeposit"
       ]
     },
     {
@@ -6277,10 +6430,11 @@
     {
       "name": "priceCurrency",
       "parent": [
-        "PriceSpecification",
+        "Ticket",
+        "TradeAction",
         "Reservation",
         "Offer",
-        "Ticket"
+        "PriceSpecification"
       ]
     },
     {
@@ -6328,13 +6482,14 @@
     {
       "name": "offers",
       "parent": [
-        "Trip",
-        "Service",
+        "EducationalOccupationalProgram",
         "Product",
-        "AggregateOffer",
-        "MenuItem",
         "CreativeWork",
-        "Event"
+        "AggregateOffer",
+        "Trip",
+        "Event",
+        "MenuItem",
+        "Service"
       ]
     },
     {
@@ -6347,6 +6502,13 @@
       "name": "discussionUrl",
       "parent": [
         "CreativeWork"
+      ]
+    },
+    {
+      "name": "educationalCredentialAwarded",
+      "parent": [
+        "Course",
+        "EducationalOccupationalProgram"
       ]
     },
     {
@@ -6383,8 +6545,10 @@
     {
       "name": "petsAllowed",
       "parent": [
-        "Accommodation",
-        "LodgingBusiness"
+        "FloorPlan",
+        "LodgingBusiness",
+        "ApartmentComplex",
+        "Accommodation"
       ]
     },
     {
@@ -6396,10 +6560,10 @@
     {
       "name": "award",
       "parent": [
-        "Service",
+        "Organization",
         "Product",
         "Person",
-        "Organization",
+        "Service",
         "CreativeWork"
       ]
     },
@@ -6426,9 +6590,14 @@
     {
       "name": "category",
       "parent": [
-        "Product",
+        "ActionAccessSpecification",
+        "URL",
+        "PhysicalActivity",
+        "Recommendation",
+        "SpecialAnnouncement",
         "Invoice",
         "Offer",
+        "Product",
         "Service"
       ]
     },
@@ -6449,6 +6618,7 @@
       "parent": [
         "PublicationVolume",
         "Article",
+        "Chapter",
         "PublicationIssue"
       ]
     },
@@ -6473,20 +6643,14 @@
     {
       "name": "makesOffer",
       "parent": [
-        "Person",
-        "Organization"
+        "Organization",
+        "Person"
       ]
     },
     {
       "name": "map",
       "parent": [
         "Place"
-      ]
-    },
-    {
-      "name": "instrument",
-      "parent": [
-        "Action"
       ]
     },
     {
@@ -6498,9 +6662,9 @@
     {
       "name": "width",
       "parent": [
-        "Product",
+        "VisualArtwork",
         "MediaObject",
-        "VisualArtwork"
+        "Product"
       ]
     },
     {
@@ -6510,9 +6674,9 @@
       ]
     },
     {
-      "name": "nonEqual",
+      "name": "givenName",
       "parent": [
-        "QualitativeValue"
+        "Person"
       ]
     },
     {
@@ -6548,21 +6712,24 @@
     {
       "name": "datePosted",
       "parent": [
-        "JobPosting"
+        "RealEstateListing",
+        "JobPosting",
+        "SpecialAnnouncement",
+        "CDCPMDRecord"
       ]
     },
     {
       "name": "directors",
       "parent": [
-        "Episode",
         "RadioSeries",
+        "Clip",
+        "Episode",
+        "TVSeries",
+        "Movie",
+        "MovieSeries",
         "VideoGame",
         "VideoGameSeries",
-        "VideoObject",
-        "Clip",
-        "MovieSeries",
-        "Movie",
-        "TVSeries"
+        "VideoObject"
       ]
     },
     {
@@ -6574,13 +6741,14 @@
     {
       "name": "contactPoints",
       "parent": [
-        "Person",
-        "Organization"
+        "Organization",
+        "Person"
       ]
     },
     {
       "name": "skills",
       "parent": [
+        "Occupation",
         "JobPosting"
       ]
     },
@@ -6629,10 +6797,10 @@
     {
       "name": "broker",
       "parent": [
-        "Service",
-        "Reservation",
+        "Invoice",
         "Order",
-        "Invoice"
+        "Service",
+        "Reservation"
       ]
     },
     {
@@ -6710,14 +6878,15 @@
     {
       "name": "distance",
       "parent": [
-        "TravelAction",
-        "ExerciseAction"
+        "ExerciseAction",
+        "TravelAction"
       ]
     },
     {
       "name": "longitude",
       "parent": [
-        "GeoCoordinates"
+        "GeoCoordinates",
+        "Place"
       ]
     },
     {
@@ -6738,10 +6907,16 @@
     {
       "name": "awards",
       "parent": [
-        "CreativeWork",
-        "Organization",
         "Person",
-        "Product"
+        "Product",
+        "CreativeWork",
+        "Organization"
+      ]
+    },
+    {
+      "name": "hasBroadcastChannel",
+      "parent": [
+        "BroadcastService"
       ]
     },
     {
@@ -6775,12 +6950,6 @@
       ]
     },
     {
-      "name": "educationRequirements",
-      "parent": [
-        "JobPosting"
-      ]
-    },
-    {
       "name": "menu",
       "parent": [
         "FoodEstablishment"
@@ -6793,6 +6962,12 @@
       ]
     },
     {
+      "name": "videoQuality",
+      "parent": [
+        "VideoObject"
+      ]
+    },
+    {
       "name": "warranty",
       "parent": [
         "Offer",
@@ -6800,10 +6975,9 @@
       ]
     },
     {
-      "name": "includesObject",
+      "name": "foundingDate",
       "parent": [
-        "Offer",
-        "Demand"
+        "Organization"
       ]
     },
     {
@@ -6859,16 +7033,16 @@
     {
       "name": "spatial",
       "parent": [
-        "Dataset"
+        "CreativeWork"
       ]
     },
     {
       "name": "additionalProperty",
       "parent": [
-        "QualitativeValue",
         "Place",
         "QuantitativeValue",
-        "Product"
+        "Product",
+        "QualitativeValue"
       ]
     },
     {
@@ -6908,12 +7082,6 @@
       ]
     },
     {
-      "name": "vendor",
-      "parent": [
-        "BuyAction"
-      ]
-    },
-    {
       "name": "winner",
       "parent": [
         "LoseAction"
@@ -6938,9 +7106,21 @@
       ]
     },
     {
+      "name": "instrument",
+      "parent": [
+        "Action"
+      ]
+    },
+    {
       "name": "validUntil",
       "parent": [
         "Permit"
+      ]
+    },
+    {
+      "name": "typeOfBed",
+      "parent": [
+        "BedDetails"
       ]
     },
     {
@@ -6971,20 +7151,22 @@
     {
       "name": "seeks",
       "parent": [
-        "Person",
-        "Organization"
+        "Organization",
+        "Person"
       ]
     },
     {
       "name": "member",
       "parent": [
-        "ProgramMembership",
-        "Organization"
+        "Organization",
+        "ProgramMembership"
       ]
     },
     {
       "name": "touristType",
       "parent": [
+        "TouristDestination",
+        "TouristTrip",
         "TouristAttraction"
       ]
     },
@@ -7015,7 +7197,7 @@
     {
       "name": "temporal",
       "parent": [
-        "Dataset"
+        "CreativeWork"
       ]
     },
     {
@@ -7033,8 +7215,8 @@
     {
       "name": "orderedItem",
       "parent": [
-        "OrderItem",
-        "Order"
+        "Order",
+        "OrderItem"
       ]
     },
     {
@@ -7046,8 +7228,8 @@
     {
       "name": "playMode",
       "parent": [
-        "VideoGame",
-        "VideoGameSeries"
+        "VideoGameSeries",
+        "VideoGame"
       ]
     },
     {
@@ -7088,12 +7270,6 @@
       ]
     },
     {
-      "name": "exifData",
-      "parent": [
-        "ImageObject"
-      ]
-    },
-    {
       "name": "circle",
       "parent": [
         "GeoShape"
@@ -7102,10 +7278,10 @@
     {
       "name": "availableLanguage",
       "parent": [
-        "ContactPoint",
         "ServiceChannel",
         "LodgingBusiness",
-        "TouristAttraction"
+        "TouristAttraction",
+        "ContactPoint"
       ]
     },
     {
@@ -7129,6 +7305,7 @@
     {
       "name": "responsibilities",
       "parent": [
+        "Occupation",
         "JobPosting"
       ]
     },
@@ -7139,15 +7316,21 @@
       ]
     },
     {
+      "name": "referencesOrder",
+      "parent": [
+        "Invoice"
+      ]
+    },
+    {
       "name": "validFrom",
       "parent": [
         "Permit",
-        "OpeningHoursSpecification",
-        "MonetaryAmount",
-        "Offer",
         "LocationFeatureSpecification",
         "PriceSpecification",
-        "Demand"
+        "MonetaryAmount",
+        "Offer",
+        "Demand",
+        "OpeningHoursSpecification"
       ]
     },
     {
@@ -7175,17 +7358,10 @@
       ]
     },
     {
-      "name": "advanceBookingRequirement",
-      "parent": [
-        "Demand",
-        "Offer"
-      ]
-    },
-    {
       "name": "baseSalary",
       "parent": [
-        "EmployeeRole",
-        "JobPosting"
+        "JobPosting",
+        "EmployeeRole"
       ]
     },
     {
@@ -7214,13 +7390,6 @@
       ]
     },
     {
-      "name": "events",
-      "parent": [
-        "Organization",
-        "Place"
-      ]
-    },
-    {
       "name": "honorificPrefix",
       "parent": [
         "Person"
@@ -7235,8 +7404,8 @@
     {
       "name": "byArtist",
       "parent": [
-        "MusicAlbum",
-        "MusicRecording"
+        "MusicRecording",
+        "MusicAlbum"
       ]
     },
     {
@@ -7260,24 +7429,26 @@
     {
       "name": "addressCountry",
       "parent": [
-        "PostalAddress",
         "GeoShape",
+        "PostalAddress",
         "GeoCoordinates"
       ]
     },
     {
       "name": "toLocation",
       "parent": [
-        "MoveAction",
         "InsertAction",
         "ExerciseAction",
-        "TransferAction"
+        "TransferAction",
+        "MoveAction"
       ]
     },
     {
       "name": "interactionStatistic",
       "parent": [
-        "CreativeWork"
+        "CreativeWork",
+        "Organization",
+        "Person"
       ]
     },
     {
@@ -7289,13 +7460,13 @@
     {
       "name": "validThrough",
       "parent": [
-        "MonetaryAmount",
         "PriceSpecification",
-        "Demand",
-        "Offer",
         "JobPosting",
         "OpeningHoursSpecification",
-        "LocationFeatureSpecification"
+        "Offer",
+        "MonetaryAmount",
+        "LocationFeatureSpecification",
+        "Demand"
       ]
     },
     {
@@ -7307,15 +7478,15 @@
     {
       "name": "recipient",
       "parent": [
-        "SendAction",
-        "Message",
-        "DonateAction",
         "CommunicateAction",
+        "PayAction",
+        "DonateAction",
+        "SendAction",
+        "TipAction",
+        "ReturnAction",
         "GiveAction",
         "AuthorizeAction",
-        "ReturnAction",
-        "PayAction",
-        "TipAction"
+        "Message"
       ]
     },
     {
@@ -7337,6 +7508,12 @@
       ]
     },
     {
+      "name": "subjectOf",
+      "parent": [
+        "Thing"
+      ]
+    },
+    {
       "name": "siblings",
       "parent": [
         "Person"
@@ -7345,8 +7522,9 @@
     {
       "name": "amenityFeature",
       "parent": [
-        "LodgingBusiness",
         "Place",
+        "FloorPlan",
+        "LodgingBusiness",
         "Accommodation"
       ]
     },
@@ -7384,17 +7562,17 @@
     {
       "name": "logo",
       "parent": [
-        "Service",
-        "Brand",
         "Organization",
+        "Brand",
+        "Service",
         "Place",
         "Product"
       ]
     },
     {
-      "name": "lastReviewed",
+      "name": "athlete",
       "parent": [
-        "WebPage"
+        "SportsTeam"
       ]
     },
     {
@@ -7430,9 +7608,9 @@
     {
       "name": "price",
       "parent": [
-        "Offer",
+        "TradeAction",
         "PriceSpecification",
-        "TradeAction"
+        "Offer"
       ]
     },
     {
@@ -7444,8 +7622,8 @@
     {
       "name": "numberOfSeasons",
       "parent": [
-        "RadioSeries",
         "TVSeries",
+        "RadioSeries",
         "VideoGameSeries"
       ]
     },
@@ -7482,25 +7660,25 @@
     {
       "name": "gtin14",
       "parent": [
-        "Offer",
         "Demand",
-        "Product"
+        "Product",
+        "Offer"
       ]
     },
     {
       "name": "gtin13",
       "parent": [
-        "Product",
+        "Demand",
         "Offer",
-        "Demand"
+        "Product"
       ]
     },
     {
       "name": "gtin12",
       "parent": [
-        "Offer",
+        "Demand",
         "Product",
-        "Demand"
+        "Offer"
       ]
     },
     {
@@ -7531,8 +7709,8 @@
     {
       "name": "valueReference",
       "parent": [
-        "QualitativeValue",
         "PropertyValue",
+        "QualitativeValue",
         "QuantitativeValue"
       ]
     },
@@ -7545,20 +7723,22 @@
     {
       "name": "startDate",
       "parent": [
-        "Role",
-        "CreativeWorkSeries",
         "DatedMoneySpecification",
         "Event",
+        "CreativeWorkSeries",
+        "Schedule",
+        "Role",
+        "EducationalOccupationalProgram",
         "CreativeWorkSeason"
       ]
     },
     {
       "name": "telephone",
       "parent": [
-        "ContactPoint",
-        "Person",
         "Place",
-        "Organization"
+        "Person",
+        "Organization",
+        "ContactPoint"
       ]
     },
     {
@@ -7582,17 +7762,17 @@
     {
       "name": "director",
       "parent": [
-        "Movie",
-        "VideoGameSeries",
-        "MovieSeries",
-        "Clip",
         "VideoObject",
-        "VideoGame",
-        "RadioSeries",
+        "Clip",
+        "MovieSeries",
+        "VideoGameSeries",
         "Event",
+        "VideoGame",
         "CreativeWorkSeason",
+        "Movie",
+        "Episode",
         "TVSeries",
-        "Episode"
+        "RadioSeries"
       ]
     },
     {
@@ -7623,35 +7803,29 @@
     {
       "name": "material",
       "parent": [
-        "CreativeWork",
-        "Product"
+        "Product",
+        "CreativeWork"
       ]
     },
     {
       "name": "issuedBy",
       "parent": [
-        "Ticket",
-        "Permit"
+        "Permit",
+        "Ticket"
       ]
     },
     {
       "name": "email",
       "parent": [
-        "Person",
         "ContactPoint",
-        "Organization"
+        "Organization",
+        "Person"
       ]
     },
     {
       "name": "albumRelease",
       "parent": [
         "MusicAlbum"
-      ]
-    },
-    {
-      "name": "potentialAction",
-      "parent": [
-        "Thing"
       ]
     },
     {
@@ -7663,8 +7837,8 @@
     {
       "name": "weight",
       "parent": [
-        "Product",
-        "Person"
+        "Person",
+        "Product"
       ]
     },
     {
@@ -7677,12 +7851,6 @@
       "name": "numberOfBeds",
       "parent": [
         "BedDetails"
-      ]
-    },
-    {
-      "name": "buyer",
-      "parent": [
-        "SellAction"
       ]
     },
     {
@@ -7704,22 +7872,34 @@
       ]
     },
     {
+      "name": "potentialAction",
+      "parent": [
+        "Thing"
+      ]
+    },
+    {
       "name": "vehicleInteriorType",
       "parent": [
         "Vehicle"
       ]
     },
     {
-      "name": "performTime",
+      "name": "relevantOccupation",
       "parent": [
-        "HowToDirection",
-        "HowTo"
+        "JobPosting"
       ]
     },
     {
-      "name": "branchOf",
+      "name": "performTime",
       "parent": [
-        "LocalBusiness"
+        "HowTo",
+        "HowToDirection"
+      ]
+    },
+    {
+      "name": "exampleOfWork",
+      "parent": [
+        "CreativeWork"
       ]
     },
     {
@@ -7737,8 +7917,8 @@
     {
       "name": "paymentMethod",
       "parent": [
-        "Order",
-        "Invoice"
+        "Invoice",
+        "Order"
       ]
     },
     {
@@ -7755,7 +7935,7 @@
       ]
     },
     {
-      "name": "keywords",
+      "name": "mainEntity",
       "parent": [
         "CreativeWork"
       ]
@@ -7763,23 +7943,23 @@
     {
       "name": "productionCompany",
       "parent": [
-        "VideoGameSeries",
         "MediaObject",
-        "MovieSeries",
-        "RadioSeries",
         "Movie",
-        "TVSeries",
         "CreativeWorkSeason",
-        "Episode"
+        "TVSeries",
+        "RadioSeries",
+        "Episode",
+        "MovieSeries",
+        "VideoGameSeries"
       ]
     },
     {
       "name": "deliveryMethod",
       "parent": [
-        "TrackAction",
-        "SendAction",
+        "OrderAction",
         "ReceiveAction",
-        "OrderAction"
+        "SendAction",
+        "TrackAction"
       ]
     },
     {
@@ -7801,9 +7981,9 @@
       ]
     },
     {
-      "name": "exampleOfWork",
+      "name": "branchOf",
       "parent": [
-        "CreativeWork"
+        "LocalBusiness"
       ]
     },
     {
@@ -7858,13 +8038,14 @@
     {
       "name": "estimatedCost",
       "parent": [
-        "HowToSupply",
-        "HowTo"
+        "HowTo",
+        "HowToSupply"
       ]
     },
     {
       "name": "contactPoint",
       "parent": [
+        "HealthInsurancePlan",
         "Organization",
         "Person"
       ]
@@ -7872,9 +8053,9 @@
     {
       "name": "genre",
       "parent": [
-        "CreativeWork",
+        "BroadcastChannel",
         "MusicGroup",
-        "BroadcastChannel"
+        "CreativeWork"
       ]
     },
     {
@@ -7892,8 +8073,8 @@
     {
       "name": "maxValue",
       "parent": [
-        "PropertyValueSpecification",
         "MonetaryAmount",
+        "PropertyValueSpecification",
         "PropertyValue",
         "QuantitativeValue"
       ]
@@ -7907,11 +8088,14 @@
     {
       "name": "duration",
       "parent": [
-        "Event",
         "MusicRecording",
-        "Movie",
+        "Event",
+        "Audiobook",
+        "QuantitativeValueDistribution",
         "MediaObject",
-        "MusicRelease"
+        "MusicRelease",
+        "Schedule",
+        "Movie"
       ]
     },
     {
@@ -7923,13 +8107,13 @@
     {
       "name": "fromLocation",
       "parent": [
-        "ExerciseAction",
+        "MoveAction",
         "TransferAction",
-        "MoveAction"
+        "ExerciseAction"
       ]
     },
     {
-      "name": "mainEntity",
+      "name": "keywords",
       "parent": [
         "CreativeWork"
       ]
@@ -7965,9 +8149,10 @@
       ]
     },
     {
-      "name": "children",
+      "name": "sender",
       "parent": [
-        "Person"
+        "ReceiveAction",
+        "Message"
       ]
     },
     {
@@ -7991,11 +8176,11 @@
     {
       "name": "seller",
       "parent": [
+        "BuyAction",
+        "Order",
         "Demand",
         "Offer",
-        "Flight",
-        "Order",
-        "BuyAction"
+        "Flight"
       ]
     },
     {
@@ -8005,8 +8190,8 @@
     {
       "name": "author",
       "parent": [
-        "CreativeWork",
-        "Rating"
+        "Rating",
+        "CreativeWork"
       ]
     },
     {
@@ -8052,18 +8237,6 @@
       ]
     },
     {
-      "name": "knownVehicleDamages",
-      "parent": [
-        "Vehicle"
-      ]
-    },
-    {
-      "name": "occupationalCategory",
-      "parent": [
-        "JobPosting"
-      ]
-    },
-    {
       "name": "securityScreening",
       "parent": [
         "FlightReservation"
@@ -8085,6 +8258,13 @@
       "name": "assembly",
       "parent": [
         "APIReference"
+      ]
+    },
+    {
+      "name": "geoCovers",
+      "parent": [
+        "Place",
+        "GeospatialGeometry"
       ]
     },
     {
@@ -8119,6 +8299,12 @@
       ]
     },
     {
+      "name": "ownedThrough",
+      "parent": [
+        "OwnershipInfo"
+      ]
+    },
+    {
       "name": "webCheckinTime",
       "parent": [
         "Flight"
@@ -8143,9 +8329,16 @@
       ]
     },
     {
-      "name": "discusses",
+      "name": "upvoteCount",
       "parent": [
-        "UserComments"
+        "Question",
+        "Comment"
+      ]
+    },
+    {
+      "name": "broadcastFrequencyValue",
+      "parent": [
+        "BroadcastFrequencySpecification"
       ]
     },
     {
@@ -8161,16 +8354,17 @@
       ]
     },
     {
-      "name": "numberOfPages",
+      "name": "geoEquals",
       "parent": [
-        "Book"
+        "GeospatialGeometry",
+        "Place"
       ]
     },
     {
       "name": "translator",
       "parent": [
-        "CreativeWork",
-        "Event"
+        "Event",
+        "CreativeWork"
       ]
     },
     {
@@ -8188,9 +8382,10 @@
     {
       "name": "pageStart",
       "parent": [
+        "Chapter",
+        "Article",
         "PublicationVolume",
-        "PublicationIssue",
-        "Article"
+        "PublicationIssue"
       ]
     },
     {
@@ -8237,6 +8432,12 @@
       ]
     },
     {
+      "name": "seatRow",
+      "parent": [
+        "Seat"
+      ]
+    },
+    {
       "name": "proteinContent",
       "parent": [
         "NutritionInformation"
@@ -8263,6 +8464,7 @@
     {
       "name": "availabilityEnds",
       "parent": [
+        "ActionAccessSpecification",
         "Demand",
         "Offer"
       ]
@@ -8286,9 +8488,9 @@
       ]
     },
     {
-      "name": "vehicleSeatingCapacity",
+      "name": "namedPosition",
       "parent": [
-        "Vehicle"
+        "Role"
       ]
     },
     {
@@ -8317,15 +8519,10 @@
       ]
     },
     {
-      "name": "videoQuality",
-      "parent": [
-        "VideoObject"
-      ]
-    },
-    {
       "name": "experienceRequirements",
       "parent": [
-        "JobPosting"
+        "JobPosting",
+        "Occupation"
       ]
     },
     {
@@ -8335,21 +8532,10 @@
       ]
     },
     {
-      "name": "foodEstablishment",
+      "name": "includesObject",
       "parent": [
-        "CookAction"
-      ]
-    },
-    {
-      "name": "parents",
-      "parent": [
-        "Person"
-      ]
-    },
-    {
-      "name": "foundingDate",
-      "parent": [
-        "Organization"
+        "Demand",
+        "Offer"
       ]
     },
     {
@@ -8391,12 +8577,6 @@
       ]
     },
     {
-      "name": "cargoVolume",
-      "parent": [
-        "Vehicle"
-      ]
-    },
-    {
       "name": "broadcaster",
       "parent": [
         "BroadcastService"
@@ -8429,8 +8609,8 @@
     {
       "name": "warrantyPromise",
       "parent": [
-        "SellAction",
-        "BuyAction"
+        "BuyAction",
+        "SellAction"
       ]
     },
     {
@@ -8460,8 +8640,8 @@
     {
       "name": "comment",
       "parent": [
-        "RsvpAction",
-        "CreativeWork"
+        "CreativeWork",
+        "RsvpAction"
       ]
     },
     {
@@ -8471,9 +8651,9 @@
       ]
     },
     {
-      "name": "givenName",
+      "name": "nonEqual",
       "parent": [
-        "Person"
+        "QualitativeValue"
       ]
     },
     {
@@ -8486,8 +8666,8 @@
     {
       "name": "naics",
       "parent": [
-        "Organization",
-        "Person"
+        "Person",
+        "Organization"
       ]
     },
     {
@@ -8550,10 +8730,13 @@
     {
       "name": "inLanguage",
       "parent": [
-        "CreativeWork",
-        "WriteAction",
+        "LinkRole",
         "CommunicateAction",
-        "Event"
+        "BroadcastService",
+        "CreativeWork",
+        "Event",
+        "PronounceableText",
+        "WriteAction"
       ]
     },
     {
@@ -8603,21 +8786,21 @@
     {
       "name": "thumbnail",
       "parent": [
-        "VideoObject",
-        "ImageObject"
+        "ImageObject",
+        "VideoObject"
       ]
     },
     {
       "name": "review",
       "parent": [
-        "Product",
-        "Service",
-        "Brand",
         "Event",
+        "Place",
         "CreativeWork",
         "Offer",
+        "Product",
         "Organization",
-        "Place"
+        "Service",
+        "Brand"
       ]
     },
     {
@@ -8657,7 +8840,7 @@
       ]
     },
     {
-      "name": "containedIn",
+      "name": "publicAccess",
       "parent": [
         "Place"
       ]
@@ -8751,19 +8934,13 @@
     {
       "name": "event",
       "parent": [
-        "PlayAction",
-        "JoinAction",
         "InviteAction",
-        "InformAction",
+        "Organization",
+        "PlayAction",
         "LeaveAction",
+        "InformAction",
         "Place",
-        "Organization"
-      ]
-    },
-    {
-      "name": "sport",
-      "parent": [
-        "SportsOrganization"
+        "JoinAction"
       ]
     },
     {
@@ -8773,9 +8950,10 @@
       ]
     },
     {
-      "name": "productSupported",
+      "name": "purchaseDate",
       "parent": [
-        "ContactPoint"
+        "Product",
+        "Vehicle"
       ]
     },
     {
@@ -8791,6 +8969,12 @@
       ]
     },
     {
+      "name": "percentile90",
+      "parent": [
+        "QuantitativeValueDistribution"
+      ]
+    },
+    {
       "name": "cookingMethod",
       "parent": [
         "Recipe"
@@ -8799,9 +8983,9 @@
     {
       "name": "businessFunction",
       "parent": [
+        "TypeAndQuantityNode",
         "Offer",
-        "Demand",
-        "TypeAndQuantityNode"
+        "Demand"
       ]
     },
     {
@@ -8811,9 +8995,9 @@
       ]
     },
     {
-      "name": "sampleType",
+      "name": "headline",
       "parent": [
-        "SoftwareSourceCode"
+        "CreativeWork"
       ]
     },
     {
@@ -8823,18 +9007,25 @@
       ]
     },
     {
+      "name": "geoTouches",
+      "parent": [
+        "GeospatialGeometry",
+        "Place"
+      ]
+    },
+    {
       "name": "postalCode",
       "parent": [
+        "GeoCoordinates",
         "GeoShape",
-        "PostalAddress",
-        "GeoCoordinates"
+        "PostalAddress"
       ]
     },
     {
       "name": "resultComment",
       "parent": [
-        "ReplyAction",
-        "CommentAction"
+        "CommentAction",
+        "ReplyAction"
       ]
     },
     {
@@ -8857,10 +9048,9 @@
       ]
     },
     {
-      "name": "purchaseDate",
+      "name": "productSupported",
       "parent": [
-        "Product",
-        "Vehicle"
+        "ContactPoint"
       ]
     },
     {
@@ -8872,23 +9062,23 @@
     {
       "name": "language",
       "parent": [
-        "CommunicateAction",
-        "WriteAction"
+        "WriteAction",
+        "CommunicateAction"
       ]
     },
     {
       "name": "itemCondition",
       "parent": [
+        "Offer",
         "Demand",
-        "Product",
-        "Offer"
+        "Product"
       ]
     },
     {
       "name": "elevation",
       "parent": [
-        "GeoCoordinates",
-        "GeoShape"
+        "GeoShape",
+        "GeoCoordinates"
       ]
     },
     {
@@ -8936,8 +9126,8 @@
     {
       "name": "creator",
       "parent": [
-        "CreativeWork",
-        "UserComments"
+        "UserComments",
+        "CreativeWork"
       ]
     },
     {
@@ -8947,16 +9137,10 @@
       ]
     },
     {
-      "name": "rsvpResponse",
-      "parent": [
-        "RsvpAction"
-      ]
-    },
-    {
       "name": "itemOffered",
       "parent": [
-        "Demand",
-        "Offer"
+        "Offer",
+        "Demand"
       ]
     },
     {
@@ -9021,6 +9205,13 @@
       ]
     },
     {
+      "name": "geoIntersects",
+      "parent": [
+        "GeospatialGeometry",
+        "Place"
+      ]
+    },
+    {
       "name": "courseCode",
       "parent": [
         "Course"
@@ -9030,6 +9221,19 @@
       "name": "polygon",
       "parent": [
         "GeoShape"
+      ]
+    },
+    {
+      "name": "cssSelector",
+      "parent": [
+        "SpeakableSpecification",
+        "WebPageElement"
+      ]
+    },
+    {
+      "name": "numberOfPages",
+      "parent": [
+        "Book"
       ]
     },
     {
@@ -9054,17 +9258,12 @@
     {
       "name": "validIn",
       "parent": [
+        "EducationalOccupationalCredential",
         "Permit"
       ]
     },
     {
       "name": "afterMedia",
-      "parent": [
-        "HowToDirection"
-      ]
-    },
-    {
-      "name": "duringMedia",
       "parent": [
         "HowToDirection"
       ]
@@ -9100,20 +9299,27 @@
       ]
     },
     {
+      "name": "geoDisjoint",
+      "parent": [
+        "Place",
+        "GeospatialGeometry"
+      ]
+    },
+    {
       "name": "publishingPrinciples",
       "parent": [
         "Organization",
-        "Person",
-        "CreativeWork"
+        "CreativeWork",
+        "Person"
       ]
     },
     {
       "name": "unitCode",
       "parent": [
-        "UnitPriceSpecification",
+        "QuantitativeValue",
         "PropertyValue",
         "TypeAndQuantityNode",
-        "QuantitativeValue"
+        "UnitPriceSpecification"
       ]
     },
     {
@@ -9123,9 +9329,10 @@
       ]
     },
     {
-      "name": "produces",
+      "name": "productionDate",
       "parent": [
-        "Service"
+        "Product",
+        "Vehicle"
       ]
     },
     {
@@ -9135,9 +9342,10 @@
       ]
     },
     {
-      "name": "lyrics",
+      "name": "estimatedSalary",
       "parent": [
-        "MusicComposition"
+        "JobPosting",
+        "Occupation"
       ]
     },
     {
@@ -9174,9 +9382,9 @@
     {
       "name": "isicV4",
       "parent": [
-        "Organization",
         "Place",
-        "Person"
+        "Person",
+        "Organization"
       ]
     },
     {
@@ -9192,9 +9400,9 @@
       ]
     },
     {
-      "name": "floorSize",
+      "name": "vendor",
       "parent": [
-        "Accommodation"
+        "BuyAction"
       ]
     },
     {
@@ -9210,6 +9418,12 @@
       ]
     },
     {
+      "name": "steeringPosition",
+      "parent": [
+        "Vehicle"
+      ]
+    },
+    {
       "name": "openingHours",
       "parent": [
         "CivicStructure",
@@ -9217,15 +9431,27 @@
       ]
     },
     {
-      "name": "numTracks",
+      "name": "flightNumber",
       "parent": [
-        "MusicPlaylist"
+        "Flight"
       ]
     },
     {
       "name": "expectsAcceptanceOf",
       "parent": [
-        "ConsumeAction"
+        "ConsumeAction",
+        "ActionAccessSpecification",
+        "MediaSubscription"
+      ]
+    },
+    {
+      "name": "slogan",
+      "parent": [
+        "Product",
+        "Organization",
+        "Service",
+        "Brand",
+        "Place"
       ]
     },
     {
@@ -9237,8 +9463,8 @@
     {
       "name": "tracks",
       "parent": [
-        "MusicPlaylist",
-        "MusicGroup"
+        "MusicGroup",
+        "MusicPlaylist"
       ]
     },
     {
@@ -9262,8 +9488,8 @@
     {
       "name": "location",
       "parent": [
-        "Action",
         "Event",
+        "Action",
         "Organization"
       ]
     },
@@ -9274,9 +9500,11 @@
       ]
     },
     {
-      "name": "billingIncrement",
+      "name": "reviewAspect",
       "parent": [
-        "UnitPriceSpecification"
+        "Review",
+        "Rating",
+        "Guide"
       ]
     },
     {
@@ -9305,17 +9533,30 @@
       ]
     },
     {
+      "name": "ownedFrom",
+      "parent": [
+        "OwnershipInfo"
+      ]
+    },
+    {
       "name": "caption",
       "parent": [
+        "ImageObject",
         "VideoObject",
-        "ImageObject"
+        "AudioObject"
+      ]
+    },
+    {
+      "name": "rsvpResponse",
+      "parent": [
+        "RsvpAction"
       ]
     },
     {
       "name": "acceptedPaymentMethod",
       "parent": [
-        "Offer",
-        "Demand"
+        "Demand",
+        "Offer"
       ]
     },
     {
@@ -9339,8 +9580,8 @@
     {
       "name": "brand",
       "parent": [
-        "Product",
         "Organization",
+        "Product",
         "Person",
         "Service"
       ]
@@ -9373,11 +9614,19 @@
     {
       "name": "numberOfRooms",
       "parent": [
+        "FloorPlan",
+        "LodgingBusiness",
         "House",
+        "Apartment",
         "SingleFamilyResidence",
         "Suite",
-        "Apartment",
         "Accommodation"
+      ]
+    },
+    {
+      "name": "netWorth",
+      "parent": [
+        "Person"
       ]
     },
     {
@@ -9420,15 +9669,15 @@
     {
       "name": "actors",
       "parent": [
-        "VideoObject",
-        "RadioSeries",
-        "VideoGame",
         "TVSeries",
+        "Clip",
+        "VideoObject",
         "MovieSeries",
-        "Episode",
-        "Movie",
         "VideoGameSeries",
-        "Clip"
+        "Movie",
+        "VideoGame",
+        "Episode",
+        "RadioSeries"
       ]
     },
     {
@@ -9441,9 +9690,9 @@
       "name": "unitText",
       "parent": [
         "QuantitativeValue",
-        "TypeAndQuantityNode",
+        "PropertyValue",
         "UnitPriceSpecification",
-        "PropertyValue"
+        "TypeAndQuantityNode"
       ]
     },
     {
@@ -9480,16 +9729,16 @@
       "name": "episode",
       "parent": [
         "RadioSeries",
+        "VideoGameSeries",
         "CreativeWorkSeason",
-        "TVSeries",
-        "VideoGameSeries"
+        "TVSeries"
       ]
     },
     {
       "name": "tool",
       "parent": [
-        "HowToDirection",
-        "HowTo"
+        "HowTo",
+        "HowToDirection"
       ]
     },
     {
@@ -9511,16 +9760,10 @@
       ]
     },
     {
-      "name": "roleName",
-      "parent": [
-        "Role"
-      ]
-    },
-    {
       "name": "composer",
       "parent": [
-        "Event",
-        "MusicComposition"
+        "MusicComposition",
+        "Event"
       ]
     },
     {
@@ -9539,12 +9782,6 @@
       "name": "serviceSmsNumber",
       "parent": [
         "ServiceChannel"
-      ]
-    },
-    {
-      "name": "referencesOrder",
-      "parent": [
-        "Invoice"
       ]
     },
     {
@@ -9590,18 +9827,12 @@
       ]
     },
     {
-      "name": "minValue",
+      "name": "faxNumber",
       "parent": [
-        "QuantitativeValue",
-        "MonetaryAmount",
-        "PropertyValueSpecification",
-        "PropertyValue"
-      ]
-    },
-    {
-      "name": "typeOfBed",
-      "parent": [
-        "BedDetails"
+        "Person",
+        "ContactPoint",
+        "Organization",
+        "Place"
       ]
     },
     {
@@ -9625,17 +9856,17 @@
     {
       "name": "isAccessibleForFree",
       "parent": [
+        "Event",
         "Place",
         "CreativeWork",
-        "Event",
         "PublicationEvent"
       ]
     },
     {
-      "name": "sender",
+      "name": "geoCoveredBy",
       "parent": [
-        "Message",
-        "ReceiveAction"
+        "Place",
+        "GeospatialGeometry"
       ]
     },
     {
@@ -9645,15 +9876,16 @@
       ]
     },
     {
-      "name": "orderItemNumber",
+      "name": "xpath",
       "parent": [
-        "OrderItem"
+        "SpeakableSpecification",
+        "WebPageElement"
       ]
     },
     {
-      "name": "ownedThrough",
+      "name": "orderItemNumber",
       "parent": [
-        "OwnershipInfo"
+        "OrderItem"
       ]
     },
     {
@@ -9666,6 +9898,12 @@
       "name": "processingTime",
       "parent": [
         "ServiceChannel"
+      ]
+    },
+    {
+      "name": "percentile75",
+      "parent": [
+        "QuantitativeValueDistribution"
       ]
     },
     {
@@ -9688,13 +9926,19 @@
       ]
     },
     {
+      "name": "knownVehicleDamages",
+      "parent": [
+        "Vehicle"
+      ]
+    },
+    {
       "name": "fileSize",
       "parent": [
         "SoftwareApplication"
       ]
     },
     {
-      "name": "publicAccess",
+      "name": "containedIn",
       "parent": [
         "Place"
       ]
@@ -9706,16 +9950,16 @@
       ]
     },
     {
-      "name": "headline",
+      "name": "sampleType",
       "parent": [
-        "CreativeWork"
+        "SoftwareSourceCode"
       ]
     },
     {
       "name": "hasMenuSection",
       "parent": [
-        "MenuSection",
-        "Menu"
+        "Menu",
+        "MenuSection"
       ]
     },
     {
@@ -9737,9 +9981,9 @@
       ]
     },
     {
-      "name": "alternateName",
+      "name": "line",
       "parent": [
-        "Thing"
+        "GeoShape"
       ]
     },
     {
@@ -9769,6 +10013,7 @@
     {
       "name": "dayOfWeek",
       "parent": [
+        "EducationalOccupationalProgram",
         "OpeningHoursSpecification"
       ]
     },
@@ -9782,15 +10027,16 @@
       "name": "eligibleRegion",
       "parent": [
         "Demand",
+        "Offer",
         "DeliveryChargeSpecification",
-        "Offer"
+        "ActionAccessSpecification"
       ]
     },
     {
       "name": "downvoteCount",
       "parent": [
-        "Comment",
-        "Question"
+        "Question",
+        "Comment"
       ]
     },
     {
@@ -9837,9 +10083,22 @@
       ]
     },
     {
+      "name": "roleName",
+      "parent": [
+        "Role"
+      ]
+    },
+    {
       "name": "discountCode",
       "parent": [
         "Order"
+      ]
+    },
+    {
+      "name": "advanceBookingRequirement",
+      "parent": [
+        "Offer",
+        "Demand"
       ]
     },
     {
