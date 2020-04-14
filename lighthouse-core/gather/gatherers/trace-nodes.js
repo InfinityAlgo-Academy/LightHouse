@@ -37,6 +37,15 @@ function collectTraceNodes() {
 
 class TraceNodes extends Gatherer {
   /**
+   * @param {LH.TraceEvent | undefined} lcpEvent 
+   * @return {number | undefined}
+   */
+  static getLCPNodeIDFromTraceEvent(lcpEvent) {
+    return lcpEvent && lcpEvent.args &&
+      lcpEvent.args.data && lcpEvent.args.data.nodeId;
+  }
+
+  /**
    * @param {LH.Gatherer.PassContext} passContext
    * @param {LH.Gatherer.LoadData} loadData
    * @return {Promise<LH.Artifacts['TraceNodes']>}
@@ -48,21 +57,28 @@ class TraceNodes extends Gatherer {
     }
     const traceOfTab = TraceProcessor.computeTraceOfTab(loadData.trace);
     const lcpEvent = traceOfTab.largestContentfulPaintEvt;
+    /** @type {Array<number>} */
+    const backendNodeIds = [];
 
-    const backendNodeId = lcpEvent && lcpEvent.args &&
-      lcpEvent.args.data && lcpEvent.args.data.nodeId;
-    if (!backendNodeId) {
-      return [];
+    const lcpNodeId = TraceNodes.getLCPNodeIDFromTraceEvent(lcpEvent);
+    if (lcpNodeId) {
+      backendNodeIds.push(lcpNodeId);
     }
     // The call below is necessary for pushNodesByBackendIdsToFrontend to properly retrieve nodeIds
     await driver.sendCommand('DOM.getDocument', {depth: -1, pierce: true});
     const translatedIds = await driver.sendCommand('DOM.pushNodesByBackendIdsToFrontend',
-      {backendNodeIds: [backendNodeId]});
-    await driver.sendCommand('DOM.setAttributeValue', {
-      nodeId: translatedIds.nodeIds[0],
-      name: 'lhtemp',
-      value: 'lcp',
-    });
+      {backendNodeIds: backendNodeIds});
+
+    
+    for (let i = 0; i < backendNodeIds.length; i++) {
+      // A bit hacky,
+      const metricTag = lcpNodeId === backendNodeIds[i] ? 'lcp' : 'cls';
+      await driver.sendCommand('DOM.setAttributeValue', {
+        nodeId: translatedIds.nodeIds[i],
+        name: 'lhtemp',
+        value: metricTag,
+      });
+    }
 
     const expression = `(() => {
       ${pageFunctions.getElementsInDocumentString};
@@ -75,10 +91,12 @@ class TraceNodes extends Gatherer {
     })()`;
 
     const traceNodes = await driver.evaluateAsync(expression, {useIsolation: true});
-    await driver.sendCommand('DOM.removeAttribute', {
-      nodeId: translatedIds.nodeIds[0],
-      name: 'lhtemp',
-    });
+    for (let i = 0; i < backendNodeIds.length; i++) {
+      await driver.sendCommand('DOM.removeAttribute', {
+        nodeId: translatedIds.nodeIds[i],
+        name: 'lhtemp',
+      });
+    }
     return traceNodes;
   }
 }
