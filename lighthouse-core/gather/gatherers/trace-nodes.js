@@ -37,7 +37,7 @@ function collectTraceNodes() {
 
 class TraceNodes extends Gatherer {
   /**
-   * @param {LH.TraceEvent | undefined} lcpEvent 
+   * @param {LH.TraceEvent | undefined} lcpEvent
    * @return {number | undefined}
    */
   static getLCPNodeIDFromTraceEvent(lcpEvent) {
@@ -69,7 +69,7 @@ class TraceNodes extends Gatherer {
     const translatedIds = await driver.sendCommand('DOM.pushNodesByBackendIdsToFrontend',
       {backendNodeIds: backendNodeIds});
 
-    
+
     for (let i = 0; i < backendNodeIds.length; i++) {
       // A bit hacky,
       const metricTag = lcpNodeId === backendNodeIds[i] ? 'lcp' : 'cls';
