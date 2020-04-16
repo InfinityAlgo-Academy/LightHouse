@@ -23,12 +23,12 @@ describe('Metrics: Lantern Speed Index', () => {
       optimistic: Math.round(result.optimisticEstimate.timeInMs),
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
     }).toMatchInlineSnapshot(`
-Object {
-  "optimistic": 605,
-  "pessimistic": 1661,
-  "timing": 1676,
-}
-`);
+      Object {
+        "optimistic": 605,
+        "pessimistic": 1661,
+        "timing": 1676,
+      }
+    `);
   });
 
   it('should compute predicted value for different settings', async () => {
@@ -41,12 +41,12 @@ Object {
       optimistic: Math.round(result.optimisticEstimate.timeInMs),
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
     }).toMatchInlineSnapshot(`
-Object {
-  "optimistic": 605,
-  "pessimistic": 2411,
-  "timing": 2983,
-}
-`);
+      Object {
+        "optimistic": 605,
+        "pessimistic": 2439,
+        "timing": 3007,
+      }
+    `);
   });
 
   it('should not scale coefficients at default', async () => {
@@ -62,11 +62,11 @@ Object {
   it('should scale coefficients forward', async () => {
     const result = LanternSpeedIndex.getScaledCoefficients(300);
     expect(result).toMatchInlineSnapshot(`
-Object {
-  "intercept": -562.5,
-  "optimistic": 2.525,
-  "pessimistic": 0.8375,
-}
-`);
+      Object {
+        "intercept": -562.5,
+        "optimistic": 2.525,
+        "pessimistic": 0.8375,
+      }
+    `);
   });
 });
