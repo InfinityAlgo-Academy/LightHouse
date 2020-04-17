@@ -144,7 +144,7 @@ module.exports = [
               {
                 node: {
                   type: 'node',
-                  nodeLabel: 'img',
+                  nodeLabel: 'img', // Check that expected element is labeled LCP
                 },
               },
             ],
