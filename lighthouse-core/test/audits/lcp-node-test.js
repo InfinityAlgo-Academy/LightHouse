@@ -35,7 +35,7 @@ describe('Performance: lcp-node audit', () => {
     };
 
     const auditResult = await LCPNodeAudit.audit(artifacts);
-    expect(auditResult.score).toEqual(0);
+    expect(auditResult.score).toEqual(1);
     expect(auditResult.displayValue).toBeUndefined();
     expect(auditResult.details.items).toHaveLength(0);
   });
