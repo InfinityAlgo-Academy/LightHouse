@@ -77,7 +77,7 @@ class LCPNode extends Audit {
     }
 
     return {
-      score: Number(lcpNodeData.length !== 0),
+      score: 1,
       displayValue,
       details,
     };

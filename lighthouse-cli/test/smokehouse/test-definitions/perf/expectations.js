@@ -136,6 +136,20 @@ module.exports = [
             ],
           },
         },
+        'lcp-node': {
+          score: null,
+          displayValue: '1 element found',
+          details: {
+            items: [
+              {
+                node: {
+                  type: 'node',
+                  nodeLabel: 'img',
+                },
+              },
+            ],
+          },
+        },
       },
     },
   },
