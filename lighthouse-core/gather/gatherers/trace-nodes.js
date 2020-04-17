@@ -12,6 +12,7 @@ const TraceProcessor = require('../../lib/tracehouse/trace-processor.js');
 /**
  * @return {LH.Artifacts['TraceNodes']}
  */
+/* istanbul ignore next */
 function collectTraceNodes() {
   /** @type {Array<HTMLElement>} */
   // @ts-ignore - put into scope via stringification
