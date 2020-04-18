@@ -9,6 +9,14 @@ const log = require('lighthouse-logger');
 const stackPacks = require('lighthouse-stack-packs');
 const i18n = require('./i18n/i18n.js');
 
+function resolve(module) {
+  if (!require.resolve) {
+    return `node_modules/${module}`;
+  }
+
+  return require.resolve(module);
+}
+
 /**
  * Pairs consisting of a stack pack's ID and the set of stacks needed to be
  * detected in a page to display that pack's advice.
@@ -63,7 +71,7 @@ function getStackPacks(pageStacks) {
 
     // create i18n handler to get translated strings
     const str_ = i18n.createMessageInstanceIdFn(
-      require.resolve(`lighthouse-stack-packs/packs/${matchedPack.id}`),
+      resolve(`lighthouse-stack-packs/packs/${matchedPack.id}`),
       matchedPack.UIStrings
     );
 
