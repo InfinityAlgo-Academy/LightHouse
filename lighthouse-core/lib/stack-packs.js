@@ -9,6 +9,10 @@ const log = require('lighthouse-logger');
 const stackPacks = require('lighthouse-stack-packs');
 const i18n = require('./i18n/i18n.js');
 
+/**
+ * Resolve a module on web and node
+ * @param {string} module
+ */
 function resolve(module) {
   if (!require.resolve) {
     return `node_modules/${module}`;
