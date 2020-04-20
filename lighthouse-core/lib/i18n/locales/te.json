@@ -141,10 +141,10 @@
     "message": "నిర్వచన జాబితాలను సరిగ్గా గుర్తు పట్టే విధంగా సెట్ చేయనప్పుడు, స్క్రీన్ రీడర్‌లు అయోమయానికి గురి చేసే లేదా అనిర్దిష్టమైన అవుట్‌పుట్‌ను అందించవచ్చు. [మరింత తెలుసుకోండి](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "'`<dl>`'లకు సంబంధించి కేవలం సక్రమంగా ఆర్డర్ చేసిన ఏకైక '`<dt>`', '`<dd>`' సమూహాలు, '`<script>`' లేదా '`<template>`' మూలకాలతో ఉండకూడదు."
+    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "'`<dl>`'లలో కేవలం సక్రమంగా ఆర్డర్ చేసిన '`<dt>`', '`<dd>`' సమూహాలు, '`<script>`' లేదా '`<template>`' మూలకాలు ఉన్నాయి."
+    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "స్క్రీన్ రీడర్‌లు నిర్వచన జాబితా అంశాలను ('`<dt>`', '`<dd>`') సక్రమంగా ప్రకటించడం కోసం వాటిని తప్పనిసరిగా మూలాధార '`<dl>`' మూలకంలో సర్దుబాటు చేయాలి. [మరింత తెలుసుకోండి](https://web.dev/dlitem/)."
@@ -404,6 +404,12 @@
   "lighthouse-core/audits/bootup-time.js | title": {
     "message": "JavaScript అమలు సమయం"
   },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | description": {
+    "message": "నెట్‌వర్క్ కార్యకలాపంలో అనవసరమైన బైట్‌ల వినియోగం తగ్గించడానికి బండిల్స్ నుండి పెద్దగా ఉండే, డూప్లికేట్ JavaScript మాడ్యూల్స్‌ను తీసివేయండి. "
+  },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | title": {
+    "message": "JavaScript బండిల్స్‌లోని డూప్లికేట్‌ మాడ్యూల్‌లను తీసివేయండి"
+  },
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | description": {
     "message": "యానిమేట్ చేయబడిన కంటెంట్‌ను అందించడంలో పెద్ద GIFలు సమర్థవంతంగా పని చేయవు. నెట్‌వర్క్ బైట్‌లను పొదుపు చేయడానికి, యానిమేషన్‌ల కోసం MPEG4/WebM వీడియోలను, GIFకి బదులుగా నిశ్చల చిత్రాల కోసం PNG/WebPను ఉపయోగించడం పరిశీలించండి. [మరింత తెలుసుకోండి](https://web.dev/efficient-animated-content)"
   },
@@ -453,7 +459,7 @@
     "message": "ఉపయోగించని CSS తీసివేయబడింది"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "నెట్‌వర్క్ కార్యకలాపం వినియోగించే బైట్‌లను తగ్గించడానికి ఉపయోగించని JavaScriptను తీసివేయండి. [మరింత తెలుసుకోండి](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)."
+    "message": "నెట్‌వర్క్ కార్యకలాపం వినియోగించే బైట్‌లను తగ్గించడానికి ఉపయోగించని JavaScriptను తీసివేయండి. [మరింత తెలుసుకోండి](https://web.dev/remove-unused-code/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "ఉపయోగించని JavaScriptను తీసివేయండి"
@@ -545,6 +551,15 @@
   "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
     "message": "అప్లికేషన్ కాష్‌ను నివారిస్తోంది"
   },
+  "lighthouse-core/audits/dobetterweb/charset.js | description": {
+    "message": "అక్షర ఎన్‌కోడింగ్ డిక్లేరేషన్ అవసరం. HTMLలోని మొదటి 1024 బైట్‌లలో లేదా కంటెంట్ రకం HTTP ప్రతిస్పందన హెడర్‌లో <meta> ట్యాగ్‌తో దీనిని పూర్తి చేయవచ్చు. [మరింత తెలుసుకోండి](https://www.w3.org/International/questions/qa-html-encoding-declarations)."
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
+    "message": "Charset డిక్లేరేషన్ అందించలేదు లేదా HTMLలో చాలా ఆలస్యంగా వస్తోంది"
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | title": {
+    "message": "charsetను సక్రమంగా నిర్వచిస్తుంది"
+  },
   "lighthouse-core/audits/dobetterweb/doctype.js | description": {
     "message": "'doctype'ను పేర్కొనడం వలన క్విర్క్స్-మోడ్‌కు మారనివ్వకుండా బ్రౌజర్ నిరోధించబడుతుంది. [మరింత తెలుసుకోండి](https://web.dev/doctype)."
   },
@@ -595,6 +610,9 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "అధిక DOM పరిమాణాన్ని నివారిస్తుంది"
+  },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
+    "message": "విఫలం అవుతున్న యాంకర్‌లు"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "పనితీరును మెరుగుపరచడానికి, అలాగే భద్రతా ప్రమాదాలను నిరోధించడానికి ఏవైనా బయటి లింక్‌లకు '`rel=\"noopener\"`' లేదా '`rel=\"noreferrer\"`'లను జోడించండి. [మరింత తెలుసుకోండి](https://web.dev/external-anchors-use-rel-noopener)."
@@ -752,6 +770,24 @@
   "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
     "message": "చెల్లుబాటు కాని చిత్ర పరిమాణ సమాచారం {url}"
   },
+  "lighthouse-core/audits/image-size-responsive.js | columnActual": {
+    "message": "Actual size"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
+    "message": "Displayed size"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
+    "message": "Expected size"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | description": {
+    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+  },
+  "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
+    "message": "Displays images with inappropriate size"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | title": {
+    "message": "Displays images with appropriate size"
+  },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "మీ యాప్‌ను హోమ్ స్క్రీన్‌కు జోడించుకోవాల్సిందిగా బ్రౌజర్‌లు క్రియాశీలంగా వినియోగదారులను ప్రాంప్ట్ చేయగలవు, దీని వలన అధిక మంది జనాభాకు చేరువయ్యే అవకాశం పెరగవచ్చు. [మరింత తెలుసుకోండి](https://web.dev/installable-manifest)."
   },
@@ -775,6 +811,12 @@
   },
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "HTTPSను ఉపయోగిస్తుంది"
+  },
+  "lighthouse-core/audits/legacy-javascript.js | description": {
+    "message": "బహుళ పూరణలు, రూపం మార్పులు అనేవి కొత్త JavaScript ఫీచర్‌లు ఉపయోగించగలిగేలా లెగసీ బ్రౌజర్‌లను ఎనేబుల్ చేస్తాయి. అయితే, ఆధునిక బ్రౌజర్‌లకు అనేకం అవసరం లేదు. మీ బండిల్ JavaScript కోసం, లెగసీ బ్రౌజర్‌లకు సపోర్ట్ అలాగే ఉంచుతూ, ఆధునిక బ్రౌజర్‌లకు షిప్పింగ్ అయ్యే కోడ్ పరిమాణం తగ్గించడానికి 'module/nomodule' ఫీచర్ గుర్తింపును ఉపయోగించి ఆధునిక స్క్రిప్ట్ అమలు వ్యూహం అనుసరించండి. [మరింత తెలుసుకోండి](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
+  },
+  "lighthouse-core/audits/legacy-javascript.js | title": {
+    "message": "లెగసీ JavaScript"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "పేజీ కనుక సెల్యులార్ నెట్‌వర్క్‌లో వేగంగా లోడ్ అయితే తప్పకుండా మంచి మొబైల్ వినియోగదారు అనుభవాన్ని అందిస్తుంది. [మరింత తెలుసుకోండి](https://web.dev/load-fast-enough-for-pwa)."
@@ -824,6 +866,21 @@
   "lighthouse-core/audits/manual/pwa-page-transitions.js | title": {
     "message": "పేజీ పరివర్తనలు నెట్‌వర్క్‌లో లోడ్ అవుతున్నప్పుడు బ్లాక్ అవుతున్నట్లుగా కనిపించకూడదు"
   },
+  "lighthouse-core/audits/maskable-icon.js | description": {
+    "message": "మాస్క్ చిహ్నం అన్నది యాప్‌ను పరికరంలో ఇన్‌స్టాల్ చేస్తున్నప్పుడు, లెటర్‌బాక్స్ సైజ్‌లో కాకుండా మొత్తం ఆకారానికి తగినట్లుగా ఇమేజ్ నిండేలా చేస్తుంది. [మరింత తెలుసుకోండి](https://web.dev/maskable-icon/)."
+  },
+  "lighthouse-core/audits/maskable-icon.js | failureTitle": {
+    "message": "మ్యానిఫెస్ట్‌లో మాస్క్ వేయగలిగే చిహ్నం లేదు"
+  },
+  "lighthouse-core/audits/maskable-icon.js | title": {
+    "message": "మ్యానిఫెస్ట్‌లో మాస్క్ వేయగల చిహ్నం ఉంది"
+  },
+  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
+    "message": "పేజీ లోడ్ అయ్యే సమయంలో ఏర్పడే మొత్తం లేఅవుట్ షిఫ్ట్‌లు కలిపితే వచ్చేది క్యుములేటివ్ లేఅవుట్ షిఫ్ట్ అవుతుంది. ఒక ఎలిమెంట్, యూజర్‌కు కనిపించిన తర్వాత జరిగే ఎలాంటి కదలిక అయినా లేఅవుట్ షిఫ్ట్ అవుతుంది. మొత్తం లేఅవుట్ షిఫ్ట్ రికార్డ్ అవుతుంది, స్కోర్ విధించబడుతుంది, ఆపై 0 నుండి 1 మధ్య క్యుములేటివ్ స్కోర్ రూపంలో ఏకీకృతం అవుతుంది; 0 అంటే ఖచ్చితంగా స్థిరమైన పేజీ అవుతుంది, అదే విధంగా >=0.5 అంటే అధికంగా షిఫ్టింగ్ ఉండే పేజీ అవుతుంది. [మరింత తెలుసుకోండి](https://web.dev/cls)."
+  },
+  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
+    "message": "క్యుములేటివ్ లేఅవుట్ షిఫ్ట్"
+  },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "పేజీ లోడ్‌కు అత్యంత రద్దీ అయిన 5 సెకన్ల విండో సమయంలో, వినియోగదారు ఇన్‌పుట్‌కు ప్రతిస్పందించడానికి, మిల్లీ సెకన్లలో, మీ యాప్ తీసుకునే సమయం యొక్క అంచనాను 'అంచనా వేసిన ఇన్‌పుట్ ప్రతిస్పందన సమయం' అని అంటారు. మీ ప్రతిస్పందన సమయం 50 మిల్లీ సెక‌న్ల‌ కన్నా ఎక్కువ అయితే, మీ యాప్ వేగవంతంగా పని చేయట్లేదని వినియోగదారులు భావించవచ్చు. [మరింత తెలుసుకోండి](https://web.dev/estimated-input-latency)."
   },
@@ -840,7 +897,7 @@
     "message": "పరస్పర చర్య చేయడానికి పేజీ పూర్తిగా సిద్ధం అయ్యేందుకు పట్టే సమయాన్ని 'పేజీలో పూర్తి పరస్పర చర్యకు పట్టే సమయం' అంటారు. [మరింత తెలుసుకోండి](https://web.dev/interactive)."
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
-    "message": "అత్యంత పొడవైన కంటెంట్ గల పెయింట్ అనేది పొడవాటి వచనం లేదా చిత్రానికి పెయింట్ వేసిన సమయాన్ని గుర్తిస్తుంది. [మరింత తెలుసుకోండి](https://web.dev/largest-contentful-paint)"
+    "message": "అత్యంత పొడవైన కంటెంట్ గల పెయింట్ అనేది పొడవాటి వచనం లేదా చిత్రానికి పెయింట్ వేసిన సమయాన్ని గుర్తిస్తుంది. [మరింత తెలుసుకోండి](https://web.dev/lighthouse-largest-contentful-paint)"
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
     "message": "కంటెంట్ కలిగి ఉండే అతిపెద్ద పెయింట్"
@@ -1169,6 +1226,9 @@
   "lighthouse-core/audits/uses-rel-preconnect.js | title": {
     "message": "అవసరమైన మూలాలకు ముందుగా కనెక్ట్ చేయండి"
   },
+  "lighthouse-core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
+    "message": "2 కంటే ఎక్కువ ముందస్తు కనెక్ట్ లింక్‌లు కనుగొనబడ్డాయి. ముందస్తు కనెక్ట్ లింక్‌లను పరిమితంగా, కేవలం అత్యంత ముఖ్యమైన మూల స్థానాలలో మాత్రమే ఉపయోగించాలి."
+  },
   "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
     "message": "'{preloadURL}' కోసం ముందే లోడ్ చేసిన ఒక <link> కనుగొనబడింది. కానీ దానిని బ్రౌజర్ ఉపయోగించలేదు. మీరు ``crossorigin`` లక్షణాన్ని సక్రమంగా ఉపయోగిస్తున్నారో లేదో తనిఖీ చేయండి."
   },
@@ -1355,6 +1415,12 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "మొబైల్-అనుకూలం"
   },
+  "lighthouse-core/gather/gather-runner.js | warningRedirected": {
+    "message": "మీ పరీక్ష URL ({requested})ను {final}కు మళ్లించినందున, పేజీ అనుకున్న విధంగా లోడ్ కాలేకపోతుండవచ్చు. నేరుగా రెండవ URLను పరీక్షించడం ట్రై చేయండి."
+  },
+  "lighthouse-core/gather/gather-runner.js | warningTimeout": {
+    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "కాష్ TTL"
   },
@@ -1370,11 +1436,17 @@
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "అభ్యర్థనలు"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
+    "message": "Resource Size"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "వనరు రకం"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "పరిమాణం"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnSource": {
+    "message": "సోర్స్"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "వెచ్చించిన సమయం"
@@ -1514,11 +1586,38 @@
   "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
     "message": "గరిష్ట క్లిష్టమైన మార్గ ప్రతిస్పందన సమయం:"
   },
+  "lighthouse-core/report/html/renderer/util.js | dropdownCopyJSON": {
+    "message": "JSONను కాపీ చేయి"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownDarkTheme": {
+    "message": "ముదురు రంగు థీమ్‌ను టోగుల్ చేయి"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownPrintExpanded": {
+    "message": "ప్రింట్ విస్తరించబడింది"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownPrintSummary": {
+    "message": "ప్రింట్ సారాంశం"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveGist": {
+    "message": "Gist లాగా సేవ్ చేయి"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveHTML": {
+    "message": "HTML లాగా సేవ్ చేయి"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveJSON": {
+    "message": "JSON లాగా సేవ్ చేయి"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownViewer": {
+    "message": "వ్యూయర్‌లో తెరువు"
+  },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "ఎర్రర్ ఏర్పడింది!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "నివేదిక ఎర్రర్: ఆడిట్ సమాచారం లేదు"
+  },
+  "lighthouse-core/report/html/renderer/util.js | footerIssue": {
+    "message": "సమస్యను ఫైల్ చేయండి"
   },
   "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
     "message": "ల్యాబ్ డేటా"
@@ -1541,6 +1640,48 @@
   "lighthouse-core/report/html/renderer/util.js | passedAuditsGroupTitle": {
     "message": "ఉత్తీర్ణత సాధించిన ఆడిట్‌లు"
   },
+  "lighthouse-core/report/html/renderer/util.js | runtimeDesktopEmulation": {
+    "message": "అనుకరణ డెస్క్‌టాప్"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeMobileEmulation": {
+    "message": "అనుకరణ Moto G4"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeNoEmulation": {
+    "message": "అనుకరణ లేదు"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsBenchmark": {
+    "message": "CPU/మెమరీ పవర్"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsCPUThrottling": {
+    "message": "CPU త్రోట్లింగ్"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsChannel": {
+    "message": "ఛానెల్"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsDevice": {
+    "message": "పరికరం"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsFetchTime": {
+    "message": "పొందే సమయం"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsNetworkThrottling": {
+    "message": "నెట్‌వర్క్ త్రోట్లింగ్"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsTitle": {
+    "message": "రన్‌టైమ్ సెట్టింగ్‌లు"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUA": {
+    "message": "వెబ్‌సైట్ యాక్సెస్ సాధనం (హోస్ట్)"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUANetwork": {
+    "message": "వెబ్‌సైట్ యాక్సెస్ సాధనం (నెట్‌వర్క్)"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUrl": {
+    "message": "URL"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
+    "message": "తెలియదు"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "స్నిప్పెట్‌ను కుదించు"
   },
@@ -1549,6 +1690,9 @@
   },
   "lighthouse-core/report/html/renderer/util.js | thirdPartyResourcesLabel": {
     "message": "3వ పక్షం వనరులను చూపు"
+  },
+  "lighthouse-core/report/html/renderer/util.js | throttlingProvided": {
+    "message": "ఎన్విరాన్మెంట్ ద్వారా అందించబడింది"
   },
   "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
     "message": "Lighthouse యొక్క ఈ అమలును ప్రభావితం చేసిన సమస్యలు ఉన్నాయి:"

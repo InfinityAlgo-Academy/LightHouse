@@ -141,10 +141,10 @@
     "message": "Se il markup degli elenchi di definizioni non è stato eseguito in modo corretto, gli screen reader possono generare risultati ambigui o imprecisi. [Ulteriori informazioni](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "Gli elementi `<dl>` non contengono solo gruppi `<dt>` e `<dd>` ed elementi `<script>` o `<template>` nell'ordine corretto."
+    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "Gli elementi `<dl>` contengono solo gruppi `<dt>` e `<dd>` ed elementi `<script>` o `<template>` nell'ordine corretto."
+    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "Gli elementi dell'elenco di definizioni (`<dt>` e `<dd>`) devono essere aggregati in un elemento `<dl>` principale affinché gli screen reader possano descriverli correttamente. [Ulteriori informazioni](https://web.dev/dlitem/)."
@@ -404,6 +404,12 @@
   "lighthouse-core/audits/bootup-time.js | title": {
     "message": "Tempo di esecuzione JavaScript"
   },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | description": {
+    "message": "Rimuovi i moduli JavaScript duplicati di grandi dimensioni dai bundle per ridurre i byte superflui consumati dall'attività di rete. "
+  },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | title": {
+    "message": "Rimuovi moduli duplicati nei bundle JavaScript"
+  },
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | description": {
     "message": "I file GIF di grandi dimensioni non sono efficaci per la pubblicazione di contenuti animati. Anziché il formato GIF potresti usare video MPEG4/WebM per le animazioni e PNG/WebP per le immagini statiche. In questo modo userai meno byte di rete. [Ulteriori informazioni](https://web.dev/efficient-animated-content)"
   },
@@ -453,7 +459,7 @@
     "message": "Rimuovi il CSS inutilizzato"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Rimuovi il codice JavaScript inutilizzato per ridurre i byte consumati dall'attività di rete. [Ulteriori informazioni](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)."
+    "message": "Rimuovi il codice JavaScript inutilizzato per ridurre i byte consumati dall'attività di rete. [Ulteriori informazioni](https://web.dev/remove-unused-code/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Rimuovi il codice JavaScript inutilizzato"
@@ -545,6 +551,15 @@
   "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
     "message": "Evita l'API Cache applicazione"
   },
+  "lighthouse-core/audits/dobetterweb/charset.js | description": {
+    "message": "Dichiarazione della codifica dei caratteri obbligatoria. Può essere inserita con un tag <meta> nei primi 1024 byte del codice HTML oppure nell'intestazione della risposta HTTP Content-Type. [Ulteriori informazioni](https://www.w3.org/International/questions/qa-html-encoding-declarations)."
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
+    "message": "La dichiarazione del set di caratteri non è presente o è definita troppo tardi nel codice HTML"
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | title": {
+    "message": "Set di caratteri definito correttamente"
+  },
   "lighthouse-core/audits/dobetterweb/doctype.js | description": {
     "message": "La specifica di un doctype impedisce al browser di passare alla modalità non standard. [Ulteriori informazioni](https://web.dev/doctype)."
   },
@@ -595,6 +610,9 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Viene evitato un DOM di dimensioni eccessive"
+  },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
+    "message": "Anchor respinti"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Aggiungi `rel=\"noopener\"` o `rel=\"noreferrer\"` a eventuali link esterni per migliorare le prestazioni ed evitare vulnerabilità di sicurezza. [Ulteriori informazioni](https://web.dev/external-anchors-use-rel-noopener)."
@@ -752,6 +770,24 @@
   "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
     "message": "Informazioni sulle dimensioni dell'immagine {url} non valide"
   },
+  "lighthouse-core/audits/image-size-responsive.js | columnActual": {
+    "message": "Actual size"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
+    "message": "Displayed size"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
+    "message": "Expected size"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | description": {
+    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+  },
+  "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
+    "message": "Displays images with inappropriate size"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | title": {
+    "message": "Displays images with appropriate size"
+  },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "I browser possono chiedere proattivamente agli utenti di aggiungere la tua app alla schermata Home, che potrebbe comportare un maggiore coinvolgimento. [Ulteriori informazioni](https://web.dev/installable-manifest)."
   },
@@ -775,6 +811,12 @@
   },
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Usa HTTPS"
+  },
+  "lighthouse-core/audits/legacy-javascript.js | description": {
+    "message": "Polyfill e trasformazioni consentono ai browser precedenti di usare nuove funzionalità JavaScript. Tanti non sono però necessari per i browser moderni. Per il tuo codice JavaScript in bundle, adotta una moderna strategia di deployment degli script usando il rilevamento di funzionalità module/nomodule per ridurre la quantità di codice inviata ai browser moderni e mantenere il supporto dei browser precedenti. [Ulteriori informazioni](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
+  },
+  "lighthouse-core/audits/legacy-javascript.js | title": {
+    "message": "JavaScript precedente"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "Il caricamento veloce delle pagine su una rete cellulare assicura una buona esperienza utente sui dispositivi mobili. [Ulteriori informazioni](https://web.dev/load-fast-enough-for-pwa)."
@@ -824,6 +866,21 @@
   "lighthouse-core/audits/manual/pwa-page-transitions.js | title": {
     "message": "Non sembra che le transizioni di pagina si blocchino sulla rete"
   },
+  "lighthouse-core/audits/maskable-icon.js | description": {
+    "message": "Un'icona mascherabile assicura che l'immagine riempia l'intera forma senza effetto letterbox durante l'installazione dell'app su un dispositivo. [Ulteriori informazioni](https://web.dev/maskable-icon/)."
+  },
+  "lighthouse-core/audits/maskable-icon.js | failureTitle": {
+    "message": "Il file manifest non contiene un'icona mascherabile"
+  },
+  "lighthouse-core/audits/maskable-icon.js | title": {
+    "message": "Il file manifest contiene un'icona mascherabile"
+  },
+  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
+    "message": "La metrica Variazione layout cumulativa indica la somma di tutte le variazioni di layout che si sono verificate durante il caricamento di una pagina. Con \"variazione di layout\" si intende qualsiasi movimento di un elemento quando è visibile all'utente. Tutte le variazioni di layout vengono registrate, vi viene assegnato un punteggio e vengono poi aggregate in un punteggio cumulativo compreso tra 0 e 1; 0 indica una pagina perfettamente stabile, mentre valori >= 0,5 indicano una pagina con tante variazioni. [Ulteriori informazioni](https://web.dev/cls)."
+  },
+  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
+    "message": "Variazione layout cumulativa"
+  },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "La metrica Latenza input stimata fornisce una stima del tempo impiegato dall'app, espresso in millisecondi, per rispondere all'input dell'utente durante il periodo di 5 s più impegnativo del caricamento della pagina. Se la latenza è superiore a 50 ms, gli utenti potrebbero considerare lenta la tua app. [Ulteriori informazioni](https://web.dev/estimated-input-latency)."
   },
@@ -840,7 +897,7 @@
     "message": "La metrica Tempo all'interattività indica il tempo necessario affinché la pagina diventi completamente interattiva. [Ulteriori informazioni](https://web.dev/interactive)."
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
-    "message": "La metrica Largest Contentful Paint (più grande visualizzazione con contenuti) indica il momento in cui vengono visualizzati il testo o l'immagine più grandi. [Ulteriori informazioni](https://web.dev/largest-contentful-paint)"
+    "message": "La metrica Largest Contentful Paint (più grande visualizzazione con contenuti) indica il momento in cui vengono visualizzati il testo o l'immagine più grandi. [Ulteriori informazioni](https://web.dev/lighthouse-largest-contentful-paint)"
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
     "message": "Largest Contentful Paint"
@@ -1169,6 +1226,9 @@
   "lighthouse-core/audits/uses-rel-preconnect.js | title": {
     "message": "Precollegati alle origini necessarie"
   },
+  "lighthouse-core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
+    "message": "Sono stati trovati più di due link di preconnessione. I link di preconnessione devono essere usati con moderazione e soltanto per le origini più importanti."
+  },
   "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
     "message": "È stato trovato un elemento <link> di precaricamento per \"{preloadURL}\", ma non è stato utilizzato dal browser. Verifica che l'attributo `crossorigin` sia utilizzato in modo corretto."
   },
@@ -1355,6 +1415,12 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Ottimizzata per i dispositivi mobili"
   },
+  "lighthouse-core/gather/gather-runner.js | warningRedirected": {
+    "message": "La pagina potrebbe non essere caricata come previsto perché l'URL di prova ({requested}) è stato reindirizzato a {final}. Prova a testare direttamente il secondo URL."
+  },
+  "lighthouse-core/gather/gather-runner.js | warningTimeout": {
+    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL cache"
   },
@@ -1370,11 +1436,17 @@
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Richieste"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
+    "message": "Resource Size"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "Tipo di risorsa"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Dimensioni"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnSource": {
+    "message": "Origine"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Tempo trascorso"
@@ -1514,11 +1586,38 @@
   "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
     "message": "Latenza massima del percorso critico:"
   },
+  "lighthouse-core/report/html/renderer/util.js | dropdownCopyJSON": {
+    "message": "Copia JSON"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownDarkTheme": {
+    "message": "Attiva/disattiva Tema scuro"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownPrintExpanded": {
+    "message": "Stampa espansa"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownPrintSummary": {
+    "message": "Stampa riepilogo"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveGist": {
+    "message": "Salva come Gist"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveHTML": {
+    "message": "Salva come HTML"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveJSON": {
+    "message": "Salva come JSON"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownViewer": {
+    "message": "Apri nell'app Viewer"
+  },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Errore"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Errore segnalato: nessuna informazione sul controllo"
+  },
+  "lighthouse-core/report/html/renderer/util.js | footerIssue": {
+    "message": "Segnala un problema"
   },
   "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
     "message": "Dati di prova controllati"
@@ -1541,6 +1640,48 @@
   "lighthouse-core/report/html/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Controlli superati"
   },
+  "lighthouse-core/report/html/renderer/util.js | runtimeDesktopEmulation": {
+    "message": "Desktop emulato"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeMobileEmulation": {
+    "message": "Moto G4 emulato"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeNoEmulation": {
+    "message": "Nessuna emulazione"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsBenchmark": {
+    "message": "Potenza CPU/memoria"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsCPUThrottling": {
+    "message": "Limitazione CPU"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsChannel": {
+    "message": "Canale"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsDevice": {
+    "message": "Dispositivo"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsFetchTime": {
+    "message": "Data/ora recupero"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsNetworkThrottling": {
+    "message": "Limitazione della larghezza di banda della rete"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsTitle": {
+    "message": "Impostazioni runtime"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUA": {
+    "message": "User-agent (host)"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUANetwork": {
+    "message": "User-agent (rete)"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUrl": {
+    "message": "URL"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
+    "message": "Valore sconosciuto"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "Comprimi snippet"
   },
@@ -1549,6 +1690,9 @@
   },
   "lighthouse-core/report/html/renderer/util.js | thirdPartyResourcesLabel": {
     "message": "Mostra risorse di terze parti"
+  },
+  "lighthouse-core/report/html/renderer/util.js | throttlingProvided": {
+    "message": "Fornita dall'ambiente"
   },
   "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
     "message": "Si sono verificati dei problemi che incidono su questa esecuzione di Lighthouse:"

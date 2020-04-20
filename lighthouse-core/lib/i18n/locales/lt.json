@@ -141,10 +141,10 @@
     "message": "Kai aprašo sąrašai netinkamai pažymėti, ekrano skaitytuvai gali pateikti klaidinančią arba netikslią išvestį. [Sužinokite daugiau](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "Elementuose „`<dl>`“ nurodytos ne tik tinkamai surikiuotos grupės „`<dt>`“ ir „`<dd>`“ bei elementai „`<script>`“ arba „`<template>`“."
+    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "Elementuose „`<dl>`“ nurodytos tik tinkamai surikiuotos grupės „`<dt>`“ ir „`<dd>`“ ir elementai „`<script>`“ arba „`<template>`“."
+    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "Aprašo sąrašo elementai („`<dt>`“ ir „`<dd>`“) turi būti sujungti pirminiame elemente „`<dl>`“, kad ekrano skaitytuvai galėtų apie juos tinkamai pranešti. [Sužinokite daugiau](https://web.dev/dlitem/)."
@@ -404,6 +404,12 @@
   "lighthouse-core/audits/bootup-time.js | title": {
     "message": "„JavaScript“ vykdymo laikas"
   },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | description": {
+    "message": "Pašalinkite didelius, pasikartojančius „JavaScript“ modulius iš grupių, kad tinklo veikla be reikalo nenaudotų baitų. "
+  },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | title": {
+    "message": "Pašalinkite tikslias modulių kopijas „JavaScript“ grupėse"
+  },
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | description": {
     "message": "Dideli GIF failai nėra efektyvus animuoto turinio pateikimo būdas. Kad sutaupytumėte tinklo baitų, vietoje GIF failų galite naudoti MPEG4 ar „WebM“ vaizdo įrašų animacijai ir PNG ar „WebP“ statiniams vaizdams pateikti. [Sužinokite daugiau](https://web.dev/efficient-animated-content)"
   },
@@ -453,7 +459,7 @@
     "message": "Pašalinkite nevartojamą CSS kalbą"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Pašalinkite nenaudojamą „JavaScript“, kad tinklo veikla sunaudotų mažiau baitų. [Sužinokite daugiau](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)."
+    "message": "Pašalinkite nenaudojamą „JavaScript“, kad tinklo veikla sunaudotų mažiau baitų. [Sužinokite daugiau](https://web.dev/remove-unused-code/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Pašalinkite nenaudojamą „JavaScript“"
@@ -545,6 +551,15 @@
   "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
     "message": "Vengiama naudoti programos talpyklą"
   },
+  "lighthouse-core/audits/dobetterweb/charset.js | description": {
+    "message": "Reikalinga ženklų koduotės deklaracija. Tai galima atlikti naudojant žymą <meta> pirmuose 1 024 HTML baituose arba turinio tipo HTTP atsako antraštėje. [Sužinokite daugiau](https://www.w3.org/International/questions/qa-html-encoding-declarations)."
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
+    "message": "Nėra simbolių rinkinio deklaracijos arba HTML ji pateikiama per vėlai"
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | title": {
+    "message": "Tinkamai apibrėžia simbolių rinkinį"
+  },
   "lighthouse-core/audits/dobetterweb/doctype.js | description": {
     "message": "Nurodžius DOCTYPE, naršyklė neperjungia į seno standarto tinklalapių palaikymo režimą. [Sužinokite daugiau](https://web.dev/doctype)"
   },
@@ -595,6 +610,9 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Išvengiama per didelių DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
+    "message": "Netinkami prieraišai"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Pridėkite fragmentus „`rel=\"noopener\"`“ arba „`rel=\"noreferrer\"`“ prie bet kurių išorinių nuorodų, kad pagerintumėte našumą ir išvengtumėte saugos pažeidimų. [Sužinokite daugiau](https://web.dev/external-anchors-use-rel-noopener)."
@@ -752,6 +770,24 @@
   "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
     "message": "Netinkama vaizdo dydžio informacija: {url}"
   },
+  "lighthouse-core/audits/image-size-responsive.js | columnActual": {
+    "message": "Actual size"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
+    "message": "Displayed size"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
+    "message": "Expected size"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | description": {
+    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+  },
+  "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
+    "message": "Displays images with inappropriate size"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | title": {
+    "message": "Displays images with appropriate size"
+  },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Naršyklės gali aktyviai raginti naudotojus pridėti jūsų programą prie pagrindinio ekrano, tai paskatintų geresnį įtraukimą. [Sužinokite daugiau](https://web.dev/installable-manifest)"
   },
@@ -775,6 +811,12 @@
   },
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Naudojamas HTTPS"
+  },
+  "lighthouse-core/audits/legacy-javascript.js | description": {
+    "message": "Naudojant kodus ir transformacijas pasenusiose naršyklėse galima naudoti naujas „JavaScript“ funkcijas. Tačiau dauguma jų nereikalingi modernioms naršyklėms. Į grupę įtrauktai „JavaScript“ pritaikykite modernią scenarijaus diegimo strategiją naudodami modulio ir (arba) ne modulio funkcijos aptikimą, kad sumažintumėte į modernias naršykles siunčiamo kodo kiekį, išlaikydami pasenusių naršyklių palaikymą. [Sužinokite daugiau](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
+  },
+  "lighthouse-core/audits/legacy-javascript.js | title": {
+    "message": "Pasenusi „JavaScript“"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "Spartus puslapių įkėlimas mobiliojo ryšio tinkle užtikrina gerą mobiliųjų įrenginių naudotojų patirtį. [Sužinokite daugiau](https://web.dev/load-fast-enough-for-pwa)."
@@ -824,6 +866,21 @@
   "lighthouse-core/audits/manual/pwa-page-transitions.js | title": {
     "message": "Neatrodo, kad puslapio perėjimai būtų blokuojami tinklo"
   },
+  "lighthouse-core/audits/maskable-icon.js | description": {
+    "message": "Maskuojama piktograma užtikrina, kad vaizdas užpildytų visą formą netaikant pašto dėžutės efekto, įdiegiant programą įrenginyje. [Sužinokite daugiau](https://web.dev/maskable-icon/)."
+  },
+  "lighthouse-core/audits/maskable-icon.js | failureTitle": {
+    "message": "Nėra maskuojamos aprašo piktogramos"
+  },
+  "lighthouse-core/audits/maskable-icon.js | title": {
+    "message": "Pateikta maskuojama aprašo piktograma"
+  },
+  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
+    "message": "Kaupiamasis išdėstymo poslinkis – tai visų išdėstymo poslinkių, įvykusių įkeliant puslapį, suma. Išdėstymo poslinkis – tai bet koks naudotojui jau matomo elemento judesys. Visas išdėstymo poslinkis įrašomas, įvertinamas ir kaupiamas nustatant kaupiamąjį balą nuo 0 iki 1; 0 nurodo, kad tai visiškai stabilus puslapis, o >= 0,5 – itin kintantis puslapis. [Sužinokite daugiau](https://web.dev/cls)."
+  },
+  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
+    "message": "Kaupiamasis išdėstymo poslinkis"
+  },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Įvertinta įvesties delsa yra įvertintas laikas milisekundėmis, per kurį programa atsako į naudotojo įvestį per labiausiai užimtas puslapio įkėlimo 5 sekundes. Jei delsa ilgesnė nei 50 ms, naudotojams gali atrodyti, kad programa veikia lėtai. [Sužinokite daugiau](https://web.dev/estimated-input-latency)."
   },
@@ -840,7 +897,7 @@
     "message": "Laikas iki sąveikos yra vertė, nurodanti, kiek laiko reikia, kol puslapis tampa visiškai interaktyvus. [Sužinokite daugiau](https://web.dev/interactive)."
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
-    "message": "Didžiausias turiningas žymėjimas nurodo laiką, kada pažymimas didžiausias tekstas ar vaizdas. [Sužinokite daugiau](https://web.dev/largest-contentful-paint)."
+    "message": "Didžiausias turiningas žymėjimas nurodo laiką, kada pažymimas didžiausias tekstas ar vaizdas. [Sužinokite daugiau](https://web.dev/lighthouse-largest-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
     "message": "Didžiausias turiningas žymėjimas"
@@ -1169,6 +1226,9 @@
   "lighthouse-core/audits/uses-rel-preconnect.js | title": {
     "message": "Iš anksto prisijunkite prie reikiamų šaltinių"
   },
+  "lighthouse-core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
+    "message": "Rastos daugiau nei dvi išankstinio susiejimo nuorodos. Išankstinio susiejimo nuorodos turi būti naudojamos taupiai ir susiejant tik su svarbiausiais šaltiniais."
+  },
   "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
     "message": "Rasta atributo „{preloadURL}“ išankstinio įkėlimo nuoroda „<link>“, bet naršyklė jos nenaudojo. Patikrinkite, ar atributas „`crossorigin`“ naudojamas tinkamai."
   },
@@ -1355,6 +1415,12 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Pritaikyta mobiliesiems"
   },
+  "lighthouse-core/gather/gather-runner.js | warningRedirected": {
+    "message": "Puslapis gali būti neįkeliamas, kaip numatyta, nes bandomasis URL ({requested}) peradresavo į {final}. Išbandykite antrąjį URL tiesiogiai."
+  },
+  "lighthouse-core/gather/gather-runner.js | warningTimeout": {
+    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Talpyklos TTL"
   },
@@ -1370,11 +1436,17 @@
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Užklausos"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
+    "message": "Resource Size"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "Ištekliaus tipas"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Dydis"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnSource": {
+    "message": "Šaltinis"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Sugaištas laikas"
@@ -1514,11 +1586,38 @@
   "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
     "message": "Didžiausia svarbiausio kelio delsa:"
   },
+  "lighthouse-core/report/html/renderer/util.js | dropdownCopyJSON": {
+    "message": "Kopijuoti JSON"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownDarkTheme": {
+    "message": "Perjungti Tamsiąją temą"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownPrintExpanded": {
+    "message": "Išskleista spausdintinė kopija"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownPrintSummary": {
+    "message": "Spausdintinė suvestinė"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveGist": {
+    "message": "Išsaugoti kaip „Gist“"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveHTML": {
+    "message": "Išsaugoti kaip HTML"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveJSON": {
+    "message": "Išsaugoti kaip JSON"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownViewer": {
+    "message": "Atidaryti naudojant žiūriklį"
+  },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Klaida!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Ataskaitos klaida: nėra patikros informacijos"
+  },
+  "lighthouse-core/report/html/renderer/util.js | footerIssue": {
+    "message": "Pateikti problemą"
   },
   "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
     "message": "Laboratorijos duomenys"
@@ -1541,6 +1640,48 @@
   "lighthouse-core/report/html/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Sėkmingos patikros"
   },
+  "lighthouse-core/report/html/renderer/util.js | runtimeDesktopEmulation": {
+    "message": "Emuliuotas stalinis kompiuteris"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeMobileEmulation": {
+    "message": "Emuliuotas „Moto G4“"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeNoEmulation": {
+    "message": "Nėra emuliacijos"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsBenchmark": {
+    "message": "Centrinio procesoriaus ir (arba) atminties galia"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsCPUThrottling": {
+    "message": "Centrinio procesoriaus pralaidumo ribojimas"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsChannel": {
+    "message": "Kanalas"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsDevice": {
+    "message": "Įrenginys"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsFetchTime": {
+    "message": "Gavimo laikas"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsNetworkThrottling": {
+    "message": "Tinklo pralaidumo ribojimas"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsTitle": {
+    "message": "Vykdymo laiko nustatymai"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUA": {
+    "message": "Naudotojo priemonė (priegloba)"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUANetwork": {
+    "message": "Naudotojo priemonė (tinklas)"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUrl": {
+    "message": "URL"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
+    "message": "Nežinoma"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "Sutraukti fragmentą"
   },
@@ -1549,6 +1690,9 @@
   },
   "lighthouse-core/report/html/renderer/util.js | thirdPartyResourcesLabel": {
     "message": "Rodyti trečiųjų šalių išteklius"
+  },
+  "lighthouse-core/report/html/renderer/util.js | throttlingProvided": {
+    "message": "Pateikta pagal aplinką"
   },
   "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
     "message": "Paleidžiant „Lighthouse“ kilo problemų."
