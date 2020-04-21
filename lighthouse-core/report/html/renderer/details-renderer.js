@@ -209,7 +209,7 @@ class DetailsRenderer {
    * Render a details item value for embedding in a table. Renders the value
    * based on the heading's valueType, unless the value itself has a `type`
    * property to override it.
-   * @param {LH.Audit.Details.Value} value
+   * @param {LH.Audit.Details.ItemValue} value
    * @param {LH.Audit.Details.OpportunityColumnHeading} heading
    * @return {Element|null}
    */
@@ -338,7 +338,7 @@ class DetailsRenderer {
 
   /**
    * Renders a table cell for each column, defined by the provided heading and value pairs.
-   * @param {Array<{heading: LH.Audit.Details.OpportunityColumnHeading, value?: LH.Audit.Details.Value}|null>} headingAndValuePairs
+   * @param {Array<{heading: LH.Audit.Details.OpportunityColumnHeading, value?: LH.Audit.Details.ItemValue}|null>} headingAndValuePairs
    */
   _renderRow(headingAndValuePairs) {
     const rowElem = this._dom.createElement('tr');
