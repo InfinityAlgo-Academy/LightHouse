@@ -133,6 +133,7 @@
   --stackpack-padding-horizontal: 10px;
   --sticky-header-background-color: var(--report-background-color);
   --table-higlight-background-color: hsla(0, 0%, 75%, 0.1);
+  --table-sub-row-font-size: 15px;
   --tools-icon-color: var(--color-gray-600);
   --tools-icon-size: var(--score-icon-background-size);
   --topbar-background-color: var(--color-gray-100);
@@ -1333,9 +1334,6 @@
 .lh-table tbody tr.lh-row--even {
   background-color: var(--table-higlight-background-color);
 }
-/* .lh-table tbody tr.lh-row--odd {
-  background-color: var(--table-higlight-background-color);
-} */
 
 .lh-table th,
 .lh-table td {
@@ -1434,6 +1432,7 @@
 }
 .lh-sub-row td {
   color: var(--color-gray-700);
+  font-size: var(--table-sub-row-font-size);
 }
 
 /* Chevron
