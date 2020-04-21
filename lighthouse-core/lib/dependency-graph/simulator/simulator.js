@@ -29,6 +29,15 @@ const NodeState = {
   Complete: 3,
 };
 
+/** @type {Record<NetworkNode['record']['priority'], number>} */
+const PriorityStartTimePenalty = {
+  VeryHigh: 0,
+  High: 0.25,
+  Medium: 0.5,
+  Low: 1,
+  VeryLow: 2,
+};
+
 /** @type {Map<string, LH.Gatherer.Simulation.Result['nodeTimings']>} */
 const ALL_SIMULATION_NODE_TIMINGS = new Map();
 
@@ -60,7 +69,7 @@ class Simulator {
     this._cpuSlowdownMultiplier = this._options.cpuSlowdownMultiplier;
     this._layoutTaskMultiplier = this._cpuSlowdownMultiplier * this._options.layoutTaskMultiplier;
     /** @type {Array<Node>} */
-    this._cachedNodeListByStartTime = [];
+    this._cachedNodeListByStartPosition = [];
 
     // Properties reset on every `.simulate` call but duplicated here for type checking
     this._flexibleOrdering = false;
@@ -103,7 +112,7 @@ class Simulator {
     this._numberInProgressByType = new Map();
 
     this._nodes = {};
-    this._cachedNodeListByStartTime = [];
+    this._cachedNodeListByStartPosition = [];
     // NOTE: We don't actually need *all* of these sets, but the clarity that each node progresses
     // through the system is quite nice.
     for (const state of Object.values(NodeState)) {
@@ -144,11 +153,12 @@ class Simulator {
    * @param {number} queuedTime
    */
   _markNodeAsReadyToStart(node, queuedTime) {
-    const firstNodeIndexWithGreaterStartTime = this._cachedNodeListByStartTime
-      .findIndex(candidate => candidate.startTime > node.startTime);
-    const insertionIndex = firstNodeIndexWithGreaterStartTime === -1 ?
-      this._cachedNodeListByStartTime.length : firstNodeIndexWithGreaterStartTime;
-    this._cachedNodeListByStartTime.splice(insertionIndex, 0, node);
+    const nodeStartPosition = Simulator._computeNodeStartPosition(node);
+    const firstNodeIndexWithGreaterStartPosition = this._cachedNodeListByStartPosition
+      .findIndex(candidate => Simulator._computeNodeStartPosition(candidate) > nodeStartPosition);
+    const insertionIndex = firstNodeIndexWithGreaterStartPosition === -1 ?
+      this._cachedNodeListByStartPosition.length : firstNodeIndexWithGreaterStartPosition;
+    this._cachedNodeListByStartPosition.splice(insertionIndex, 0, node);
 
     this._nodes[NodeState.ReadyToStart].add(node);
     this._nodes[NodeState.NotReadyToStart].delete(node);
@@ -160,8 +170,8 @@ class Simulator {
    * @param {number} startTime
    */
   _markNodeAsInProgress(node, startTime) {
-    const indexOfNodeToStart = this._cachedNodeListByStartTime.indexOf(node);
-    this._cachedNodeListByStartTime.splice(indexOfNodeToStart, 1);
+    const indexOfNodeToStart = this._cachedNodeListByStartPosition.indexOf(node);
+    this._cachedNodeListByStartPosition.splice(indexOfNodeToStart, 1);
 
     this._nodes[NodeState.InProgress].add(node);
     this._nodes[NodeState.ReadyToStart].delete(node);
@@ -203,9 +213,9 @@ class Simulator {
   /**
    * @return {Node[]}
    */
-  _getNodesSortedByStartTime() {
+  _getNodesSortedByStartPosition() {
     // Make a copy so we don't skip nodes due to concurrent modification
-    return Array.from(this._cachedNodeListByStartTime);
+    return Array.from(this._cachedNodeListByStartPosition);
   }
 
   /**
@@ -456,7 +466,7 @@ class Simulator {
     // loop as long as we have nodes in the queue or currently in progress
     while (nodesReadyToStart.size || nodesInProgress.size) {
       // move all possible queued nodes to in progress
-      for (const node of this._getNodesSortedByStartTime()) {
+      for (const node of this._getNodesSortedByStartPosition()) {
         this._startNodeIfPossible(node, totalElapsedTime);
       }
 
@@ -499,6 +509,17 @@ class Simulator {
   /** @return {Map<string, LH.Gatherer.Simulation.Result['nodeTimings']>} */
   static get ALL_NODE_TIMINGS() {
     return ALL_SIMULATION_NODE_TIMINGS;
+  }
+
+  /**
+   * We attempt to start nodes by their observed start time using the record priority as a tie breaker.
+   * When simulating, just because a low priority image started 5ms before a high priority image doesn't mean
+   * it would have happened like that when the network was slower.
+   * @param {Node} node
+   */
+  static _computeNodeStartPosition(node) {
+    if (node.type === 'cpu') return node.startTime;
+    return node.startTime + (PriorityStartTimePenalty[node.record.priority] * 1000 * 1000 || 0);
   }
 }
 

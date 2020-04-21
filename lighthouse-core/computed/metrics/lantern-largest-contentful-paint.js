@@ -17,7 +17,6 @@ class LanternLargestContentfulPaint extends LanternMetric {
    * @return {LH.Gatherer.Simulation.MetricCoefficients}
    */
   static get COEFFICIENTS() {
-    // TODO: Calibrate
     return {
       intercept: 0,
       optimistic: 0.5,
@@ -26,7 +25,21 @@ class LanternLargestContentfulPaint extends LanternMetric {
   }
 
   /**
-   * TODO: Validate.
+   * Low priority image nodes are usually offscreen and very unlikely to be the
+   * resource that is required for LCP. Our LCP graphs include everything except for these images.
+   *
+   * @param {Node} node
+   * @return {boolean}
+   */
+  static isNotLowPriorityImageNode(node) {
+    if (node.type !== 'network') return true;
+
+    const isImage = node.record.resourceType === 'Image';
+    const isLowPriority = node.record.priority === 'Low' || node.record.priority === 'VeryLow';
+    return !isImage || !isLowPriority;
+  }
+
+  /**
    * @param {Node} dependencyGraph
    * @param {LH.Artifacts.TraceOfTab} traceOfTab
    * @return {Node}
@@ -40,12 +53,11 @@ class LanternLargestContentfulPaint extends LanternMetric {
     return LanternFirstContentfulPaint.getFirstPaintBasedGraph(
       dependencyGraph,
       lcp,
-      _ => true
+      LanternLargestContentfulPaint.isNotLowPriorityImageNode
     );
   }
 
   /**
-   * TODO: Validate.
    * @param {Node} dependencyGraph
    * @param {LH.Artifacts.TraceOfTab} traceOfTab
    * @return {Node}
@@ -63,6 +75,21 @@ class LanternLargestContentfulPaint extends LanternMetric {
       // For pessimistic LCP we'll include *all* layout nodes
       node => node.didPerformLayout()
     );
+  }
+
+  /**
+   * @param {LH.Gatherer.Simulation.Result} simulationResult
+   * @return {LH.Gatherer.Simulation.Result}
+   */
+  static getEstimateFromSimulation(simulationResult) {
+    const nodeTimesNotOffscreenImages = Array.from(simulationResult.nodeTimings.entries())
+      .filter(entry => LanternLargestContentfulPaint.isNotLowPriorityImageNode(entry[0]))
+      .map(entry => entry[1].endTime);
+
+    return {
+      timeInMs: Math.max(...nodeTimesNotOffscreenImages),
+      nodeTimings: simulationResult.nodeTimings,
+    };
   }
 
   /**

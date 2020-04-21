@@ -26,6 +26,7 @@ lighthouse-logger/
 
 results/
 lantern-data/
+timings-data/
 
 # ignore all folders named as such
 node_modules

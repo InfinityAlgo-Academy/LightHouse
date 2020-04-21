@@ -11,9 +11,9 @@ Object {
   "firstContentfulPaintTs": undefined,
   "firstMeaningfulPaint": 2758,
   "firstMeaningfulPaintTs": undefined,
-  "interactive": 4614,
+  "interactive": 4462,
   "interactiveTs": undefined,
-  "largestContentfulPaint": 3419,
+  "largestContentfulPaint": 2758,
   "largestContentfulPaintTs": undefined,
   "maxPotentialFID": 1336,
   "observedCumulativeLayoutShift": undefined,
@@ -40,9 +40,9 @@ Object {
   "observedSpeedIndexTs": 713038416494,
   "observedTraceEnd": 7416,
   "observedTraceEndTs": 713044438781,
-  "speedIndex": 3663,
+  "speedIndex": 3681,
   "speedIndexTs": undefined,
-  "totalBlockingTime": 1191,
+  "totalBlockingTime": 1167,
 }
 `;
 
@@ -55,7 +55,7 @@ Object {
   "firstCPUIdleTs": undefined,
   "firstContentfulPaint": 1337,
   "firstContentfulPaintTs": undefined,
-  "firstMeaningfulPaint": 1541,
+  "firstMeaningfulPaint": 1553,
   "firstMeaningfulPaintTs": undefined,
   "interactive": 3427,
   "interactiveTs": undefined,
