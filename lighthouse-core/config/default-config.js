@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -122,6 +122,7 @@ const defaultConfig = {
     passName: 'defaultPass',
     recordTrace: true,
     useThrottling: true,
+    pauseAfterFcpMs: 1000,
     pauseAfterLoadMs: 1000,
     networkQuietThresholdMs: 1000,
     cpuQuietThresholdMs: 1000,
@@ -204,6 +205,7 @@ const defaultConfig = {
     'maskable-icon',
     'content-width',
     'image-aspect-ratio',
+    'image-size-responsive',
     'deprecations',
     'mainthread-work-breakdown',
     'bootup-time',
@@ -237,7 +239,6 @@ const defaultConfig = {
     'accessibility/aria-toggle-field-name',
     'accessibility/aria-valid-attr-value',
     'accessibility/aria-valid-attr',
-    'accessibility/audio-caption',
     'accessibility/button-name',
     'accessibility/bypass',
     'accessibility/color-contrast',
@@ -462,7 +463,6 @@ const defaultConfig = {
         {id: 'aria-toggle-field-name', weight: 3, group: 'a11y-aria'},
         {id: 'aria-valid-attr-value', weight: 10, group: 'a11y-aria'},
         {id: 'aria-valid-attr', weight: 10, group: 'a11y-aria'},
-        {id: 'audio-caption', weight: 10, group: 'a11y-audio-video'},
         {id: 'button-name', weight: 10, group: 'a11y-names-labels'},
         {id: 'bypass', weight: 3, group: 'a11y-navigation'},
         {id: 'color-contrast', weight: 3, group: 'a11y-color-contrast'},
@@ -524,6 +524,7 @@ const defaultConfig = {
         {id: 'password-inputs-can-be-pasted-into', weight: 1},
         {id: 'errors-in-console', weight: 1},
         {id: 'image-aspect-ratio', weight: 1},
+        {id: 'image-size-responsive', weight: 1},
       ],
     },
     'seo': {

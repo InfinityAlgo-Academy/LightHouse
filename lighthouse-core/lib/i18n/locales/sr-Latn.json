@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Atributi `[aria-*]` su važeći i nisu pogrešno napisani"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Titlovi omogućavaju da gluvi korisnici ili korisnici sa oštećenjem sluha koriste audio elemente, čime se pružaju važne informacije, na primer, informacije o tome koja osoba govori, šta govori, kao i druge informacije koje nisu vezane za govor. [Saznajte više](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "Elementima `<audio>` nedostaje element `<track>` sa atributom `[kind=\"captions\"]`."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "Elementi `<audio>` sadrže element `<track>` sa atributom `[kind=\"captions\"]`"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Elementi koji nisu prošli proveru"
   },

@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "`[aria-*]` 属性は有効で、スペルミスもありません"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "字幕を使用すると、聴覚障がいのあるユーザーが音声要素を利用できるようになります。話している人物やその内容、その他の会話以外の情報など、重要な情報を字幕で伝えることができます。[詳細](https://web.dev/audio-caption/)"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "`<audio>` 要素に `[kind=\"captions\"]` が指定された `<track>` 要素がありません。"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "`<audio>` 要素に `[kind=\"captions\"]` が指定された `<track>` 要素が含まれています"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "問題のある要素"
   },

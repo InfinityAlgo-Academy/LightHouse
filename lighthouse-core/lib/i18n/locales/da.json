@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "`[aria-*]`-attributterne er gyldige og er stavet korrekt"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Undertekster hjælper døve og hørehæmmede med at forstå lydelementer, idet de giver vigtige oplysninger som f.eks., hvem der taler, hvad de siger, og andre oplysninger, som ikke er relateret til tale. [Få flere oplysninger](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "`<audio>`-elementerne mangler et `<track>`-element med `[kind=\"captions\"]`."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "`<audio>`-elementerne indeholder et `<track>`-element med `[kind=\"captions\"]`"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Elementer, der ikke bestod gennemgangen"
   },

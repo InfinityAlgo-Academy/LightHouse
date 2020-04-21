@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -34,11 +34,20 @@ describe('SourceMaps gatherer', () => {
    * @return {Promise<LH.Artifacts['SourceMaps']>}
    */
   async function runSourceMaps(mapsAndEvents) {
-    const onMock = createMockOnFn();
+    // pre-condition: should only define map or fetchError, not both.
+    for (const {map, fetchError} of mapsAndEvents) {
+      if (map && fetchError) {
+        throw new Error('should only define map or fetchError, not both.');
+      }
+    }
 
+    const onMock = createMockOnFn();
     const sendCommandMock = createMockSendCommandFn()
       .mockResponse('Debugger.enable', {})
-      .mockResponse('Debugger.disable', {});
+      .mockResponse('Debugger.disable', {})
+      .mockResponse('Fetch.enable', {})
+      .mockResponse('Fetch.disable', {});
+    const fetchMock = jest.fn();
 
     for (const {scriptParsedEvent, map, resolvedSourceMapUrl, fetchError} of mapsAndEvents) {
       onMock.mockEvent('protocolevent', {
@@ -47,37 +56,29 @@ describe('SourceMaps gatherer', () => {
       });
 
       if (scriptParsedEvent.sourceMapURL.startsWith('data:')) {
-        // Only the source maps that need to be fetched use the `evaluateAsync` code path.
+        // Only the source maps that need to be fetched use the `fetchMock` code path.
         continue;
       }
 
-      if (map && fetchError) {
-        throw new Error('should only define map or fetchError, not both.');
-      }
+      fetchMock.mockImplementationOnce(async (sourceMapUrl) => {
+        // Check that the source map url was resolved correctly.
+        if (resolvedSourceMapUrl) {
+          expect(sourceMapUrl).toBe(resolvedSourceMapUrl);
+        }
 
-      sendCommandMock
-        .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: 1337}}})
-        .mockResponse('Page.createIsolatedWorld', {executionContextId: 1})
-        .mockResponse('Runtime.evaluate', ({expression, contextId}) => {
-          expect(contextId).toBe(driver._isolatedExecutionContextId);
+        if (fetchError) {
+          throw new Error(fetchError);
+        }
 
-          // Check that the source map url was resolved correctly. It'll be somewhere
-          // in the code sent to Runtime.evaluate.
-          if (resolvedSourceMapUrl && !expression.includes(resolvedSourceMapUrl)) {
-            throw new Error(`did not request expected url: ${resolvedSourceMapUrl}`);
-          }
-
-          const value = fetchError ?
-            Object.assign(new Error(), {message: fetchError, __failedInBrowser: true}) :
-            map;
-          return {result: {value}};
-        });
+        return map;
+      });
     }
     const connectionStub = new Connection();
     connectionStub.sendCommand = sendCommandMock;
     connectionStub.on = onMock;
 
     const driver = new Driver(connectionStub);
+    driver.fetcher.fetchResource = fetchMock;
 
     const sourceMaps = new SourceMaps();
     await sourceMaps.beforePass({driver});

@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -56,8 +56,12 @@ const UIStrings = {
   displayValueMsSavings: 'Potential savings of {wastedMs, number, milliseconds}\xa0ms',
   /** Label for a column in a data table; entries will be the URL of a web resource */
   columnURL: 'URL',
-  /** Label for a column in a data table; entries will be the size of a web resource in kilobytes. */
+  /** Label for a column in a data table; entries will be the size or quantity of some resource, e.g. the width and height dimensions of an image or the number of images in a web page. */
   columnSize: 'Size',
+  /** Label for a column in a data table; entries will be the file size of a web resource in kilobytes. */
+  columnResourceSize: 'Resource Size',
+  /** Label for a column in a data table; entries will be the download size of a web resource in kilobytes. */
+  columnTransferSize: 'Transfer Size',
   /** Label for a column in a data table; entries will be the time to live value of the cache header on a web resource. */
   columnCacheTTL: 'Cache TTL',
   /** Label for a column in a data table; entries will be the number of kilobytes the user could reduce their page by if they implemented the suggestions. */
@@ -72,8 +76,6 @@ const UIStrings = {
   columnResourceType: 'Resource Type',
   /** Label for a column in a data table; entries will be the number of network requests done by a webpage. */
   columnRequests: 'Requests',
-  /** Label for a column in a data table; entries will be the number of kilobytes transferred to load a set of files. */
-  columnTransferSize: 'Transfer Size',
   /** Label for a column in a data table; entries will be the names of arbitrary objects, e.g. the name of a Javascript library, or the name of a user defined timing event. */
   columnName: 'Name',
   /** Label for a column in a data table; entries will be the names of JavaScript code, e.g. the name of a Javascript package or module. */

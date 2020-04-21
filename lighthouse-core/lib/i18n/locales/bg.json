@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Атрибутите `[aria-*]` са валидни и са изписани правилно"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Надписите правят аудиоелементите използваеми за потребителите със слухови увреждания, като предоставят важна информация, например кой говори и какво казва, както и друга информация, несвързана с речта. [Научете повече](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "За някои елементи `<audio>` липсва елемент `<track>` с `[kind=\"captions\"]`."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "Елементите `<audio>` съдържат елемент `<track>` с `[kind=\"captions\"]`"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Елементи с грешки"
   },

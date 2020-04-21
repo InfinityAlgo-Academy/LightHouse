@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -96,8 +96,10 @@ const expectations = [
         'unminified-javascript': {
           score: '<1',
           details: {
-            overallSavingsBytes: '>45000',
+            // the specific ms value is not meaningful for this smoketest
+            // *some largish amount* of savings should be reported
             overallSavingsMs: '>500',
+            overallSavingsBytes: '>45000',
             items: [
               {
                 url: 'http://localhost:10200/byte-efficiency/script.js',
@@ -134,8 +136,10 @@ const expectations = [
         'unused-javascript': {
           score: '<1',
           details: {
+            // the specific ms value here is not meaningful for this smoketest
+            // *some* savings should be reported
+            overallSavingsMs: '>0',
             overallSavingsBytes: '>=25000',
-            overallSavingsMs: '>300',
             items: [
               {
                 url: 'http://localhost:10200/byte-efficiency/script.js',
@@ -149,22 +153,22 @@ const expectations = [
               },
               {
                 url: 'http://localhost:10200/byte-efficiency/bundle.js',
-                totalBytes: 12913,
-                wastedBytes: 5827,
+                totalBytes: '12913 +/- 1000',
+                wastedBytes: '5827 +/- 200',
                 sources: [
                   '…./b.js',
                   '…./c.js',
                   '…webpack/bootstrap',
                 ],
                 sourceBytes: [
-                  4417,
-                  2200,
-                  2809,
+                  '4417 +/- 50',
+                  '2200 +/- 50',
+                  '2809 +/- 50',
                 ],
                 sourceWastedBytes: [
-                  2191,
-                  2182,
-                  1259,
+                  '2191 +/- 50',
+                  '2182 +/- 50',
+                  '1259 +/- 50',
                 ],
               },
             ],
@@ -196,6 +200,8 @@ const expectations = [
         'uses-text-compression': {
           score: '<1',
           details: {
+            // the specific ms value is not meaningful for this smoketest
+            // *some largish amount* of savings should be reported
             overallSavingsMs: '>700',
             overallSavingsBytes: '>50000',
             items: {
@@ -212,13 +218,13 @@ const expectations = [
           },
         },
         'uses-responsive-images': {
-          displayValue: 'Potential savings of 53\xa0KB',
           details: {
-            overallSavingsBytes: '>50000',
+            overallSavingsBytes: '82000 +/- 5000',
             items: {
-              0: {wastedPercent: '<46'},
-              1: {wastedPercent: '<46'},
-              length: 2,
+              0: {wastedPercent: '45 +/- 5', url: /lighthouse-1024x680.jpg/},
+              1: {wastedPercent: '72 +/- 5', url: /lighthouse-2048x1356.webp\?size0/},
+              2: {wastedPercent: '45 +/- 5', url: /lighthouse-480x320.webp/},
+              length: 3,
             },
           },
         },
@@ -235,19 +241,23 @@ const expectations = [
             items: [
               {
                 url: 'http://localhost:10200/byte-efficiency/gzip.html',
+                finished: true,
               },
               {
                 url: 'http://localhost:10200/byte-efficiency/script.js?gzip=1',
                 transferSize: '1100 +/- 100',
                 resourceSize: '53000 +/- 1000',
+                finished: true,
               },
               {
                 url: 'http://localhost:10200/byte-efficiency/script.js',
                 transferSize: '53200 +/- 1000',
                 resourceSize: '53000 +/- 1000',
+                finished: true,
               },
               {
                 url: 'http://localhost:10200/favicon.ico',
+                finished: true,
               },
             ],
           },

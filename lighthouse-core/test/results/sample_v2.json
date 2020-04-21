@@ -5,7 +5,7 @@
     "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3358.0 Safari/537.36",
     "benchmarkIndex": 1000
   },
-  "lighthouseVersion": "5.6.0",
+  "lighthouseVersion": "6.0.0-beta.0",
   "fetchTime": "2018-03-13T00:55:45.840Z",
   "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "finalUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
@@ -630,6 +630,54 @@
         ]
       }
     },
+    "image-size-responsive": {
+      "id": "image-size-responsive",
+      "title": "Displays images with inappropriate size",
+      "description": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive).",
+      "score": 0,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "url",
+            "itemType": "thumbnail",
+            "text": ""
+          },
+          {
+            "key": "elidedUrl",
+            "itemType": "url",
+            "text": "URL"
+          },
+          {
+            "key": "displayedSize",
+            "itemType": "text",
+            "text": "Displayed size"
+          },
+          {
+            "key": "actualSize",
+            "itemType": "text",
+            "text": "Actual size"
+          },
+          {
+            "key": "expectedSize",
+            "itemType": "text",
+            "text": "Expected size"
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
+            "elidedUrl": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
+            "displayedSize": "480 x 318",
+            "actualSize": "480 x 318",
+            "actualPixels": 152640,
+            "expectedSize": "1260 x 835",
+            "expectedPixels": 1052100
+          }
+        ]
+      }
+    },
     "deprecations": {
       "id": "deprecations",
       "title": "Uses deprecated APIs",
@@ -946,6 +994,7 @@
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
             "startTime": 0,
             "endTime": 640.1550000009593,
+            "finished": true,
             "transferSize": 12640,
             "resourceSize": 12519,
             "statusCode": 200,
@@ -956,6 +1005,7 @@
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true",
             "startTime": 630.2950000099372,
             "endTime": 2635.035000013886,
+            "finished": true,
             "transferSize": 821,
             "resourceSize": 677,
             "statusCode": 200,
@@ -966,6 +1016,7 @@
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
             "startTime": 635.496000002604,
             "endTime": 1204.6590000099968,
+            "finished": true,
             "transferSize": 821,
             "resourceSize": 677,
             "statusCode": 200,
@@ -976,6 +1027,7 @@
             "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
             "startTime": 636.6400000115391,
             "endTime": 1213.2910000218544,
+            "finished": true,
             "transferSize": 139,
             "resourceSize": 0,
             "statusCode": 404,
@@ -986,6 +1038,7 @@
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
             "startTime": 638.0040000076406,
             "endTime": 2849.3670000170823,
+            "finished": true,
             "transferSize": 821,
             "resourceSize": 677,
             "statusCode": 200,
@@ -996,6 +1049,7 @@
             "url": "http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
             "startTime": 638.7899999972433,
             "endTime": 1220.04100002232,
+            "finished": true,
             "transferSize": 1108,
             "resourceSize": 964,
             "statusCode": 200,
@@ -1006,6 +1060,7 @@
             "url": "http://localhost:10200/dobetterweb/dbw_partial_a.html?delay=200",
             "startTime": 640.5979999981355,
             "endTime": 1228.5180000180844,
+            "finished": true,
             "transferSize": 736,
             "resourceSize": 616,
             "statusCode": 200,
@@ -1016,6 +1071,7 @@
             "url": "http://localhost:10200/dobetterweb/dbw_partial_b.html?delay=200&isasync",
             "startTime": 641.3450000109151,
             "endTime": 1776.4320000133011,
+            "finished": true,
             "transferSize": 733,
             "resourceSize": 613,
             "statusCode": 200,
@@ -1026,6 +1082,7 @@
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
             "startTime": 642.8679999953602,
             "endTime": 4216.161000018474,
+            "finished": true,
             "transferSize": 821,
             "resourceSize": 677,
             "statusCode": 200,
@@ -1036,6 +1093,7 @@
             "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
             "startTime": 644.0820000134408,
             "endTime": 1792.0860000012908,
+            "finished": true,
             "transferSize": 1703,
             "resourceSize": 1552,
             "statusCode": 200,
@@ -1046,6 +1104,7 @@
             "url": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
             "startTime": 645.529000001261,
             "endTime": 1236.1859999946319,
+            "finished": true,
             "transferSize": 144,
             "resourceSize": 0,
             "statusCode": 200,
@@ -1056,6 +1115,7 @@
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
             "startTime": 3951.6250000160653,
             "endTime": 4779.641000000993,
+            "finished": true,
             "transferSize": 24741,
             "resourceSize": 24620,
             "statusCode": 200,
@@ -1066,6 +1126,7 @@
             "url": "http://localhost:10200/zone.js",
             "startTime": 2849.7340000176337,
             "endTime": 3961.049000005005,
+            "finished": true,
             "transferSize": 71654,
             "resourceSize": 71501,
             "statusCode": 200,
@@ -1076,6 +1137,7 @@
             "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
             "startTime": 3874.7540000185836,
             "endTime": 4796.288000012282,
+            "finished": true,
             "transferSize": 30174,
             "resourceSize": 84245,
             "statusCode": 200,
@@ -1086,6 +1148,7 @@
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
             "startTime": 2924.34100000537,
             "endTime": 3964.233000006061,
+            "finished": true,
             "transferSize": 821,
             "resourceSize": 677,
             "statusCode": 200,
@@ -1096,6 +1159,7 @@
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
             "startTime": 3066.252999997232,
             "endTime": 3772.7560000203084,
+            "finished": true,
             "transferSize": 12640,
             "resourceSize": 12519,
             "statusCode": 200,
@@ -1106,6 +1170,7 @@
             "url": "blob:http://localhost:10200/ae0eac03-ab9b-4a6a-b299-f5212153e277",
             "startTime": 3829.6360000094865,
             "endTime": 3968.59800000675,
+            "finished": true,
             "transferSize": 0,
             "resourceSize": 4,
             "statusCode": 200,
@@ -1116,6 +1181,7 @@
             "url": "http://localhost:10200/favicon.ico",
             "startTime": 4967.373000021325,
             "endTime": 5536.498000001302,
+            "finished": true,
             "transferSize": 221,
             "resourceSize": 95,
             "statusCode": 404,
@@ -1617,7 +1683,7 @@
             "key": "transferSize",
             "granularity": 1,
             "itemType": "bytes",
-            "text": "Size"
+            "text": "Transfer Size"
           },
           {
             "key": "blockingTime",
@@ -1781,13 +1847,6 @@
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
-    "audio-caption": {
-      "id": "audio-caption",
-      "title": "`<audio>` elements contain a `<track>` element with `[kind=\"captions\"]`",
-      "description": "Captions make audio elements usable for deaf or hearing-impaired users, providing critical information such as who is talking, what they're saying, and other non-speech information. [Learn more](https://web.dev/audio-caption/).",
-      "score": null,
-      "scoreDisplayMode": "notApplicable"
-    },
     "button-name": {
       "id": "button-name",
       "title": "Buttons have an accessible name",
@@ -1862,7 +1921,7 @@
     },
     "definition-list": {
       "id": "definition-list",
-      "title": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>` or `<template>` elements.",
+      "title": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements.",
       "description": "When definition lists are not properly marked up, screen readers may produce confusing or inaccurate output. [Learn more](https://web.dev/definition-list/).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
@@ -2398,7 +2457,7 @@
           {
             "key": "totalBytes",
             "itemType": "bytes",
-            "text": "Size",
+            "text": "Transfer Size",
             "displayUnit": "kb",
             "granularity": 1
           }
@@ -2500,7 +2559,7 @@
           {
             "key": "totalBytes",
             "itemType": "bytes",
-            "text": "Size"
+            "text": "Transfer Size"
           }
         ],
         "items": [
@@ -2585,7 +2644,7 @@
           {
             "key": "totalBytes",
             "valueType": "bytes",
-            "label": "Size"
+            "label": "Transfer Size"
           },
           {
             "key": "wastedMs",
@@ -2661,7 +2720,7 @@
           {
             "key": "totalBytes",
             "valueType": "bytes",
-            "label": "Size"
+            "label": "Transfer Size"
           },
           {
             "key": "wastedBytes",
@@ -2701,7 +2760,7 @@
     "unused-javascript": {
       "id": "unused-javascript",
       "title": "Remove unused JavaScript",
-      "description": "Remove unused JavaScript to reduce bytes consumed by network activity. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting).",
+      "description": "Remove unused JavaScript to reduce bytes consumed by network activity. [Learn more](https://web.dev/remove-unused-code/).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
@@ -2741,7 +2800,7 @@
           {
             "key": "totalBytes",
             "valueType": "bytes",
-            "label": "Size"
+            "label": "Resource Size"
           },
           {
             "key": "wastedBytes",
@@ -2800,7 +2859,7 @@
           {
             "key": "totalBytes",
             "valueType": "bytes",
-            "label": "Size"
+            "label": "Transfer Size"
           },
           {
             "key": "wastedBytes",
@@ -3937,11 +3996,6 @@
           "group": "a11y-aria"
         },
         {
-          "id": "audio-caption",
-          "weight": 0,
-          "group": "a11y-audio-video"
-        },
-        {
           "id": "button-name",
           "weight": 10,
           "group": "a11y-names-labels"
@@ -4196,10 +4250,14 @@
         {
           "id": "image-aspect-ratio",
           "weight": 1
+        },
+        {
+          "id": "image-size-responsive",
+          "weight": 1
         }
       ],
       "id": "best-practices",
-      "score": 0.07
+      "score": 0.06
     },
     "seo": {
       "title": "SEO",
@@ -4829,6 +4887,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:image-size-responsive",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:deprecations",
         "duration": 100,
         "entryType": "measure"
@@ -5046,12 +5110,6 @@
       {
         "startTime": 0,
         "name": "lh:audit:aria-valid-attr",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:audit:audio-caption",
         "duration": 100,
         "entryType": "measure"
       },
@@ -5786,6 +5844,7 @@
       "lighthouse-core/lib/i18n/i18n.js | columnURL": [
         "audits[errors-in-console].details.headings[0].text",
         "audits[image-aspect-ratio].details.headings[1].text",
+        "audits[image-size-responsive].details.headings[1].text",
         "audits.deprecations.details.headings[1].text",
         "audits[bootup-time].details.headings[0].text",
         "audits[network-rtt].details.headings[0].text",
@@ -5907,6 +5966,21 @@
       "lighthouse-core/audits/image-aspect-ratio.js | columnActual": [
         "audits[image-aspect-ratio].details.headings[3].text"
       ],
+      "lighthouse-core/audits/image-size-responsive.js | failureTitle": [
+        "audits[image-size-responsive].title"
+      ],
+      "lighthouse-core/audits/image-size-responsive.js | description": [
+        "audits[image-size-responsive].description"
+      ],
+      "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": [
+        "audits[image-size-responsive].details.headings[2].text"
+      ],
+      "lighthouse-core/audits/image-size-responsive.js | columnActual": [
+        "audits[image-size-responsive].details.headings[3].text"
+      ],
+      "lighthouse-core/audits/image-size-responsive.js | columnExpected": [
+        "audits[image-size-responsive].details.headings[4].text"
+      ],
       "lighthouse-core/audits/deprecations.js | failureTitle": [
         "audits.deprecations.title"
       ],
@@ -6005,7 +6079,13 @@
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnTransferSize": [
         "audits[performance-budget].details.headings[2].text",
-        "audits[resource-summary].details.headings[2].text"
+        "audits[resource-summary].details.headings[2].text",
+        "audits[third-party-summary].details.headings[1].text",
+        "audits[uses-long-cache-ttl].details.headings[2].text",
+        "audits[total-byte-weight].details.headings[1].text",
+        "audits[render-blocking-resources].details.headings[1].label",
+        "audits[unminified-javascript].details.headings[1].label",
+        "audits[uses-text-compression].details.headings[1].label"
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": [
         "audits[performance-budget].details.headings[4].text",
@@ -6117,16 +6197,6 @@
       "lighthouse-core/audits/third-party-summary.js | columnThirdParty": [
         "audits[third-party-summary].details.headings[0].text"
       ],
-      "lighthouse-core/lib/i18n/i18n.js | columnSize": [
-        "audits[third-party-summary].details.headings[1].text",
-        "audits[uses-long-cache-ttl].details.headings[2].text",
-        "audits[total-byte-weight].details.headings[1].text",
-        "audits[render-blocking-resources].details.headings[1].label",
-        "audits[unminified-javascript].details.headings[1].label",
-        "audits[uses-webp-images].details.headings[2].label",
-        "audits[uses-text-compression].details.headings[1].label",
-        "audits[tap-targets].details.headings[1].text"
-      ],
       "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": [
         "audits[third-party-summary].details.headings[2].text"
       ],
@@ -6225,12 +6295,6 @@
       ],
       "lighthouse-core/audits/accessibility/aria-valid-attr.js | description": [
         "audits[aria-valid-attr].description"
-      ],
-      "lighthouse-core/audits/accessibility/audio-caption.js | title": [
-        "audits[audio-caption].title"
-      ],
-      "lighthouse-core/audits/accessibility/audio-caption.js | description": [
-        "audits[audio-caption].description"
       ],
       "lighthouse-core/audits/accessibility/button-name.js | title": [
         "audits[button-name].title"
@@ -6521,6 +6585,9 @@
       "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | description": [
         "audits[uses-webp-images].description"
       ],
+      "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": [
+        "audits[uses-webp-images].details.headings[2].label"
+      ],
       "lighthouse-core/audits/byte-efficiency/uses-optimized-images.js | title": [
         "audits[uses-optimized-images].title"
       ],
@@ -6774,6 +6841,9 @@
       ],
       "lighthouse-core/audits/seo/tap-targets.js | tapTargetHeader": [
         "audits[tap-targets].details.headings[0].text"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnSize": [
+        "audits[tap-targets].details.headings[1].text"
       ],
       "lighthouse-core/audits/seo/tap-targets.js | overlappingTargetHeader": [
         "audits[tap-targets].details.headings[2].text"

@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Atribúty `[aria-*]` sú platné a neobsahujú preklepy"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Titulky sprístupňujú nepočujúcim a sluchovo postihnutým používateľom zvukové prvky pomocou dôležitých informácií, napríklad údajov o tom, kto hovorí, čo hovorí a ďalších informácií nesúvisiacich s rečou. [Ďalšie informácie](https://web.dev/audio-caption/)"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "Prvkom `<audio>` chýba prvok `<track>` s titulkami `[kind=\"captions\"]`."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "Prvky `<audio>` obsahujú prvok `<track>` s titulkami `[kind=\"captions\"]`"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Prvky s chybami"
   },

@@ -11,6 +11,9 @@ jobs:
   basics:
 
     runs-on: ubuntu-latest
+    strategy:
+      # e.g. if lint fails, continue to the unit tests anyway
+      fail-fast: false
 
     steps:
     - name: git clone
@@ -21,7 +24,7 @@ jobs:
       with:
         node-version: 10.x
 
-   # Cache yarn deps. thx https://github.com/actions/cache/blob/master/examples.md#node---yarn
+    # Cache yarn deps. thx https://github.com/actions/cache/blob/master/examples.md#node---yarn
     - name: Get yarn cache directory path
       id: yarn-cache-dir-path
       run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -40,3 +43,12 @@ jobs:
     - run: yarn lint
     - run: yarn unit-core
     - run: yarn tsc -p .
+
+    # buildtracker runs `git merge-base HEAD origin/master` which needs more history than depth=1. https://github.com/paularmstrong/build-tracker/issues/106
+    - name: Deepen git fetch (for buildtracker)
+      run: git fetch --deepen=100
+    - name: Store in buildtracker
+      run: yarn bt-cli upload-build
+      env:
+        # https://buildtracker.dev/docs/guides/github-actions#configuration
+        BT_API_AUTH_TOKEN: ${{ secrets.BT_API_AUTH_TOKEN }}

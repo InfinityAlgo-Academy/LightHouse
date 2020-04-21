@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "`[aria-*]` பண்புக்கூறுகள் செல்லுபடியாகும் மதிப்புகளைக் கொண்டுள்ளன, மேலும் அவை சரியாக உள்ளிடப்பட்டுள்ளன"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "காது கேளாதோர், செவித்திறன் குறைவானவர்கள் வசதிக்காக யார் என்ன பேசுகிறார்கள் என்பதையும் பேச்சல்லாத பிற தகவல்கள் போன்ற முக்கியமான தகவல்களையும் வழங்குவதன் மூலம் ஆடியோ உறுப்புகளைப் பயனுள்ளதாக்க தலைப்புகள் உதவுகின்றன. [மேலும் அறிக](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "`<audio>` உறுப்புகளில் `[kind=\"captions\"]` உடன் இருக்கும்`<track>` உறுப்பு ஒன்று விடுபட்டுள்ளது."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "`<audio>` உறுப்புகளில் `[kind=\"captions\"]`ஐக் கொண்டுள்ள`<track>` உறுப்பு உள்ளது"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "தோல்வியுற்ற உறுப்புகள்"
   },

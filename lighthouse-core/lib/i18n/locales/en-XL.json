@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "`[aria-*]` ât́t̂ŕîb́ût́êś âŕê v́âĺîd́ âńd̂ ńôt́ m̂íŝśp̂él̂ĺêd́"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Ĉáp̂t́îón̂ś m̂ák̂é âúd̂íô él̂ém̂én̂t́ŝ úŝáb̂ĺê f́ôŕ d̂éâf́ ôŕ ĥéâŕîńĝ-ím̂ṕâír̂éd̂ úŝér̂ś, p̂ŕôv́îd́îńĝ ćr̂ít̂íĉál̂ ín̂f́ôŕm̂át̂íôń ŝúĉh́ âś ŵh́ô íŝ t́âĺk̂ín̂ǵ, ŵh́ât́ t̂h́êý'r̂é ŝáŷín̂ǵ, âńd̂ ót̂h́êŕ n̂ón̂-śp̂éêćĥ ín̂f́ôŕm̂át̂íôń. [L̂éâŕn̂ ḿôŕê](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "`<audio>` êĺêḿêńt̂ś âŕê ḿîśŝín̂ǵ â `<track>` él̂ém̂én̂t́ ŵít̂h́ `[kind=\"captions\"]`."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "`<audio>` êĺêḿêńt̂ś ĉón̂t́âín̂ á `<track>` êĺêḿêńt̂ ẃît́ĥ `[kind=\"captions\"]`"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "F̂áîĺîńĝ Él̂ém̂én̂t́ŝ"
   },
@@ -150,10 +141,10 @@
     "message": "Ŵh́êń d̂éf̂ín̂ít̂íôń l̂íŝt́ŝ ár̂é n̂ót̂ ṕr̂óp̂ér̂ĺŷ ḿâŕk̂éd̂ úp̂, śĉŕêén̂ ŕêád̂ér̂ś m̂áŷ ṕr̂ód̂úĉé ĉón̂f́ûśîńĝ ór̂ ín̂áĉćûŕât́ê óût́p̂út̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`'ŝ d́ô ńôt́ ĉón̂t́âín̂ ón̂ĺŷ ṕr̂óp̂ér̂ĺŷ-ór̂d́êŕêd́ `<dt>` âńd̂ `<dd>` ǵr̂óûṕŝ, `<script>` ór̂ `<template>` él̂ém̂én̂t́ŝ."
+    "message": "`<dl>`'ŝ d́ô ńôt́ ĉón̂t́âín̂ ón̂ĺŷ ṕr̂óp̂ér̂ĺŷ-ór̂d́êŕêd́ `<dt>` âńd̂ `<dd>` ǵr̂óûṕŝ, `<script>`, `<template>` ór̂ `<div>` él̂ém̂én̂t́ŝ."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`'ŝ ćôńt̂áîń ôńl̂ý p̂ŕôṕêŕl̂ý-ôŕd̂ér̂éd̂ `<dt>` án̂d́ `<dd>` ĝŕôúp̂ś, `<script>` ôŕ `<template>` êĺêḿêńt̂ś."
+    "message": "`<dl>`'ŝ ćôńt̂áîń ôńl̂ý p̂ŕôṕêŕl̂ý-ôŕd̂ér̂éd̂ `<dt>` án̂d́ `<dd>` ĝŕôúp̂ś, `<script>`, `<template>` ôŕ `<div>` êĺêḿêńt̂ś."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "D̂éf̂ín̂ít̂íôń l̂íŝt́ ît́êḿŝ (`<dt>` án̂d́ `<dd>`) m̂úŝt́ b̂é ŵŕâṕp̂éd̂ ín̂ á p̂ár̂én̂t́ `<dl>` êĺêḿêńt̂ t́ô én̂śûŕê t́ĥát̂ śĉŕêén̂ ŕêád̂ér̂ś ĉán̂ ṕr̂óp̂ér̂ĺŷ án̂ńôún̂ćê t́ĥém̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/dlitem/)."
@@ -468,7 +459,7 @@
     "message": "R̂ém̂óv̂é ûńûśêd́ ĈŚŜ"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "R̂ém̂óv̂é ûńûśêd́ Ĵáv̂áŜćr̂íp̂t́ t̂ó r̂éd̂úĉé b̂ýt̂éŝ ćôńŝúm̂éd̂ b́ŷ ńêt́ŵór̂ḱ âćt̂ív̂ít̂ý. [L̂éâŕn̂ ḿôŕê](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)."
+    "message": "R̂ém̂óv̂é ûńûśêd́ Ĵáv̂áŜćr̂íp̂t́ t̂ó r̂éd̂úĉé b̂ýt̂éŝ ćôńŝúm̂éd̂ b́ŷ ńêt́ŵór̂ḱ âćt̂ív̂ít̂ý. [L̂éâŕn̂ ḿôŕê](https://web.dev/remove-unused-code/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "R̂ém̂óv̂é ûńûśêd́ Ĵáv̂áŜćr̂íp̂t́"
@@ -778,6 +769,24 @@
   },
   "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
     "message": "Îńv̂ál̂íd̂ ím̂áĝé ŝíẑín̂ǵ îńf̂ór̂ḿât́îón̂ {url}"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnActual": {
+    "message": "Âćt̂úâĺ ŝíẑé"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
+    "message": "D̂íŝṕl̂áŷéd̂ śîźê"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
+    "message": "Êx́p̂éĉt́êd́ ŝíẑé"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | description": {
+    "message": "Îḿâǵê ńât́ûŕâĺ d̂ím̂én̂śîón̂ś ŝh́ôúl̂d́ b̂é p̂ŕôṕôŕt̂íôńâĺ t̂ó t̂h́ê d́îśp̂ĺâý ŝíẑé âńd̂ t́ĥé p̂íx̂él̂ ŕât́îó t̂ó m̂áx̂ím̂íẑé îḿâǵê ćl̂ár̂ít̂ý. [L̂éâŕn̂ ḿôŕê](https://web.dev/image-size-responsive)."
+  },
+  "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
+    "message": "D̂íŝṕl̂áŷś îḿâǵêś ŵít̂h́ îńâṕp̂ŕôṕr̂íât́ê śîźê"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | title": {
+    "message": "D̂íŝṕl̂áŷś îḿâǵêś ŵít̂h́ âṕp̂ŕôṕr̂íât́ê śîźê"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "B̂ŕôẃŝér̂ś ĉán̂ ṕr̂óâćt̂ív̂él̂ý p̂ŕôḿp̂t́ ûśêŕŝ t́ô ád̂d́ ŷóûŕ âṕp̂ t́ô t́ĥéîŕ ĥóm̂éŝćr̂éêń, ŵh́îćĥ ćâń l̂éâd́ t̂ó ĥíĝh́êŕ êńĝáĝém̂én̂t́. [L̂éâŕn̂ ḿôŕê](https://web.dev/installable-manifest)."
@@ -1421,6 +1430,9 @@
   "lighthouse-core/gather/gather-runner.js | warningRedirected": {
     "message": "T̂h́ê ṕâǵê ḿâý n̂ót̂ b́ê ĺôád̂ín̂ǵ âś êx́p̂éĉt́êd́ b̂éĉáûśê ýôúr̂ t́êśt̂ ÚR̂Ĺ ({requested}) ŵáŝ ŕêd́îŕêćt̂éd̂ t́ô {final}. T́r̂ý t̂éŝt́îńĝ t́ĥé ŝéĉón̂d́ ÛŔL̂ d́îŕêćt̂ĺŷ."
   },
+  "lighthouse-core/gather/gather-runner.js | warningTimeout": {
+    "message": "T̂h́ê ṕâǵê ĺôád̂éd̂ t́ôó ŝĺôẃl̂ý t̂ó f̂ín̂íŝh́ ŵít̂h́îń t̂h́ê t́îḿê ĺîḿît́. R̂éŝúl̂t́ŝ ḿâý b̂é îńĉóm̂ṕl̂ét̂é."
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Ĉáĉh́ê T́T̂Ĺ"
   },
@@ -1435,6 +1447,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "R̂éq̂úêśt̂ś"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
+    "message": "R̂éŝóûŕĉé Ŝíẑé"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "R̂éŝóûŕĉé T̂ýp̂é"

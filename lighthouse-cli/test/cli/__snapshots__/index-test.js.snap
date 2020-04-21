@@ -97,6 +97,9 @@ Object {
       "path": "image-aspect-ratio",
     },
     Object {
+      "path": "image-size-responsive",
+    },
+    Object {
       "path": "deprecations",
     },
     Object {
@@ -194,9 +197,6 @@ Object {
     },
     Object {
       "path": "accessibility/aria-valid-attr",
-    },
-    Object {
-      "path": "accessibility/audio-caption",
     },
     Object {
       "path": "accessibility/button-name",
@@ -491,11 +491,6 @@ Object {
           "weight": 10,
         },
         Object {
-          "group": "a11y-audio-video",
-          "id": "audio-caption",
-          "weight": 10,
-        },
-        Object {
           "group": "a11y-names-labels",
           "id": "button-name",
           "weight": 10,
@@ -749,6 +744,10 @@ Object {
         },
         Object {
           "id": "image-aspect-ratio",
+          "weight": 1,
+        },
+        Object {
+          "id": "image-size-responsive",
           "weight": 1,
         },
       ],
@@ -1298,6 +1297,7 @@ Object {
       "loadFailureMode": "fatal",
       "networkQuietThresholdMs": 1000,
       "passName": "defaultPass",
+      "pauseAfterFcpMs": 1000,
       "pauseAfterLoadMs": 1000,
       "recordTrace": true,
       "useThrottling": true,
@@ -1320,6 +1320,7 @@ Object {
       "loadFailureMode": "ignore",
       "networkQuietThresholdMs": 0,
       "passName": "offlinePass",
+      "pauseAfterFcpMs": 0,
       "pauseAfterLoadMs": 0,
       "recordTrace": false,
       "useThrottling": false,
@@ -1349,6 +1350,7 @@ Object {
       "loadFailureMode": "warn",
       "networkQuietThresholdMs": 0,
       "passName": "redirectPass",
+      "pauseAfterFcpMs": 0,
       "pauseAfterLoadMs": 0,
       "recordTrace": false,
       "useThrottling": false,
@@ -1485,6 +1487,7 @@ Object {
       "loadFailureMode": "fatal",
       "networkQuietThresholdMs": 1000,
       "passName": "defaultPass",
+      "pauseAfterFcpMs": 1000,
       "pauseAfterLoadMs": 1000,
       "recordTrace": true,
       "useThrottling": true,

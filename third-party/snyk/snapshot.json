@@ -40,6 +40,7 @@
       {"id":"npm:bootstrap:20120510","severity":"medium","semver":{"vulnerable":["<2.1.0"]}}
     ],
     "dojo":[
+      {"id":"SNYK-JS-DOJO-559224","severity":"medium","semver":{"vulnerable":["<1.11.10",">=1.12.0 <1.12.8",">=1.13.0 <1.13.7",">=1.14.0 <1.14.6",">=1.15.0 <1.15.3",">=1.16.0 <1.16.2"]}},
       {"id":"SNYK-JS-DOJO-174934","severity":"medium","semver":{"vulnerable":[">=1.0.0 <1.0.3",">=1.1.0 <1.1.2",">=1.2.0 <1.2.4",">=1.3.0 <1.3.3",">=1.4.0 <1.4.2"]}},
       {"id":"SNYK-JS-DOJO-174933","severity":"medium","semver":{"vulnerable":["<1.2.0"]}},
       {"id":"SNYK-JS-DOJO-72305","severity":"medium","semver":{"vulnerable":["<1.14"]}},
@@ -55,6 +56,7 @@
       {"id":"npm:foundation-sites:20120717","severity":"medium","semver":{"vulnerable":[">=3.0.0 <3.0.6"]}}
     ],
     "google-closure-library":[
+      {"id":"SNYK-JS-GOOGLECLOSURELIBRARY-561341","severity":"medium","semver":{"vulnerable":["<20200315.0.0"]}},
       {"id":"SNYK-JS-GOOGLECLOSURELIBRARY-174519","severity":"medium","semver":{"vulnerable":[">=20190121.0.0 <20190301.0.0"]}}
     ],
     "handlebars":[
@@ -124,7 +126,7 @@
       {"id":"npm:vue:20180222","severity":"low","semver":{"vulnerable":["<2.5.14"]}}
     ],
     "yui":[
-      {"id":"npm:yui:20130604","severity":"medium","semver":{"vulnerable":[">=3.0.0 <3.10.1 || =3.10.2"]}},
+      {"id":"npm:yui:20130604","severity":"medium","semver":{"vulnerable":[">=3.0.0 <3.10.1","=3.10.2"]}},
       {"id":"npm:yui:20130515","severity":"medium","semver":{"vulnerable":["<3.10.0 >=3.0.0"]}},
       {"id":"npm:yui:20121030","severity":"medium","semver":{"vulnerable":["<3.0.0 >=2.4.0"]}},
       {"id":"npm:yui:20120428","severity":"medium","semver":{"vulnerable":["<3.5.1 >=3.5.0-PR1"]}},
