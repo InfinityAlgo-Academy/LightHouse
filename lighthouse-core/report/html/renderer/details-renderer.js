@@ -384,6 +384,76 @@ class DetailsRenderer {
   }
 
   /**
+   * Renders one or more rows from a details item.
+   * @param {LH.Audit.Details.OpportunityItem | LH.Audit.Details.TableItem} row
+   * @param {LH.Audit.Details.OpportunityColumnHeading[]} headings
+   */
+  _renderTableRow(row, headings) {
+    const fragment = this._dom.createFragment();
+
+    // Render the main row.
+    const headingAndValuePairs = [];
+    for (const heading of headings) {
+      const value = heading.key && row[heading.key];
+      if (value === undefined || value === null || Array.isArray(value)) {
+        headingAndValuePairs.push(null);
+        continue;
+      }
+
+      headingAndValuePairs.push({heading, value});
+    }
+
+    fragment.append(this._renderRow(headingAndValuePairs));
+
+    // A single details item can expand into multiple table rows. These additional table rows
+    // are called sub-rows.
+
+    const subRowHeadings = headings.map(heading => {
+      if (!heading.subRows) return null;
+      return {
+        key: heading.subRows.key,
+        valueType: heading.subRows.valueType || heading.valueType,
+        granularity: heading.subRows.granularity || heading.granularity,
+        displayUnit: heading.subRows.displayUnit || heading.displayUnit,
+        label: '',
+      };
+    });
+
+    if (!subRowHeadings.some(Boolean)) return fragment;
+
+    // All sub-row data arrays should be the same length, but just in case they are not,
+    // determine the longest data array and fill the missing values with an
+    // null pair (which creates an empty cell).
+    let numSubRows = 0;
+    for (const heading of subRowHeadings) {
+      if (!heading) continue;
+      const values = row[heading.key];
+      if (!Array.isArray(values)) continue;
+      numSubRows = Math.max(numSubRows, values.length);
+    }
+
+    for (let i = 0; i < numSubRows; i++) {
+      const subRowData = [];
+      for (const heading of subRowHeadings) {
+        if (!heading) {
+          subRowData.push(null);
+          continue;
+        }
+
+        const values = row[heading.key];
+        if (!Array.isArray(values)) continue;
+        subRowData.push({heading, value: values[i]});
+      }
+
+      const rowEl = this._renderRow(subRowData);
+      rowEl.classList.add('lh-sub-row');
+      fragment.append(rowEl);
+    }
+
+    return fragment;
+  }
+
+  /**
    * @param {LH.Audit.Details.Table|LH.Audit.Details.Opportunity} details
    * @return {Element}
    */
@@ -406,64 +476,7 @@ class DetailsRenderer {
 
     const tbodyElem = this._dom.createChildOf(tableElem, 'tbody');
     for (const row of details.items) {
-      // Render the main row.
-      const headingAndValuePairs = [];
-      for (const heading of headings) {
-        const value = heading.key && row[heading.key];
-        if (value === undefined || value === null || Array.isArray(value)) {
-          headingAndValuePairs.push(null);
-          continue;
-        }
-
-        headingAndValuePairs.push({heading, value});
-      }
-
-      tbodyElem.append(this._renderRow(headingAndValuePairs));
-
-      // A single details item can expand into multiple table rows. These additional table rows
-      // are called sub-rows.
-
-      const subRowHeadings = headings.map(heading => {
-        if (!heading.subRows) return null;
-        return {
-          key: heading.subRows.key,
-          valueType: heading.subRows.valueType || heading.valueType,
-          granularity: heading.subRows.granularity || heading.granularity,
-          displayUnit: heading.subRows.displayUnit || heading.displayUnit,
-          label: '',
-        };
-      });
-
-      if (!subRowHeadings.some(Boolean)) continue;
-
-      // All sub-row data arrays should be the same length, but just in case they are not,
-      // determine the longest data array and fill the missing values with an
-      // null pair (which creates an empty cell).
-      let numSubRows = 0;
-      for (const heading of subRowHeadings) {
-        if (!heading) continue;
-        const values = row[heading.key];
-        if (!Array.isArray(values)) continue;
-        numSubRows = Math.max(numSubRows, values.length);
-      }
-
-      for (let i = 0; i < numSubRows; i++) {
-        const subRowData = [];
-        for (const heading of subRowHeadings) {
-          if (!heading) {
-            subRowData.push(null);
-            continue;
-          }
-
-          const values = row[heading.key];
-          if (!Array.isArray(values)) continue;
-          subRowData.push({heading, value: values[i]});
-        }
-
-        const rowEl = this._renderRow(subRowData);
-        rowEl.classList.add('lh-sub-row');
-        tbodyElem.append(rowEl);
-      }
+      tbodyElem.append(this._renderTableRow(row, headings));
     }
 
     return tableElem;
