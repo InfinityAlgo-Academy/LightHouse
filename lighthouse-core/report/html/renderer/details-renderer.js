@@ -337,22 +337,6 @@ class DetailsRenderer {
   }
 
   /**
-   * @param {LH.Audit.Details.Value[]} values
-   * @param {LH.Audit.Details.OpportunityColumnHeading} heading
-   * @return {Element}
-   */
-  _renderSubRows(values, heading) {
-    const subRowsElement = this._dom.createElement('div', 'lh-sub-rows');
-    for (const childValue of values) {
-      const subRowElement = this._renderTableValue(childValue, heading);
-      if (!subRowElement) continue;
-      subRowElement.classList.add('lh-sub-row');
-      subRowsElement.appendChild(subRowElement);
-    }
-    return subRowsElement;
-  }
-
-  /**
    * Renders a table cell for each column, defined by the provided heading and value pairs.
    * @param {Array<{heading: LH.Audit.Details.OpportunityColumnHeading, value?: LH.Audit.Details.Value}|null>} headingAndValuePairs
    */
