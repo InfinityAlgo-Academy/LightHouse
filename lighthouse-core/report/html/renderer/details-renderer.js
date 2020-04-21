@@ -459,8 +459,15 @@ class DetailsRenderer {
     }
 
     const tbodyElem = this._dom.createChildOf(tableElem, 'tbody');
+    let even = true;
     for (const row of details.items) {
-      tbodyElem.append(this._renderTableRow(row, headings));
+      const rowFragment = this._renderTableRow(row, headings);
+      for (const rowEl of this._dom.findAll('tr', rowFragment)) {
+        // For zebra striping.
+        rowEl.classList.add(even ? 'lh-row--even' : 'lh-row--odd');
+      }
+      tbodyElem.append(rowFragment);
+      even = !even;
     }
 
     return tableElem;

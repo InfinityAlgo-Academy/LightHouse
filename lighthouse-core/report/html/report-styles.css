@@ -1330,9 +1330,12 @@
   word-break: normal;
 }
 
-.lh-table tbody tr:nth-child(odd) {
+.lh-table tbody tr.lh-row--even {
   background-color: var(--table-higlight-background-color);
 }
+/* .lh-table tbody tr.lh-row--odd {
+  background-color: var(--table-higlight-background-color);
+} */
 
 .lh-table th,
 .lh-table td {
