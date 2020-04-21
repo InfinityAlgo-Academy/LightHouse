@@ -420,7 +420,7 @@ class DetailsRenderer {
 
       tbodyElem.append(this._renderRow(headingAndValuePairs));
 
-      // A single row data value can expand into multiple table rows. These additional table rows
+      // A single details item can expand into multiple table rows. These additional table rows
       // are called sub-rows.
 
       const subRowHeadings = headings.map(heading => {
