@@ -55,5 +55,7 @@ jobs:
           ${{ runner.os }}-yarn-
 
     - run: yarn --frozen-lockfile
+      if: always()
     - run: yarn build-all
+      if: always()
 
