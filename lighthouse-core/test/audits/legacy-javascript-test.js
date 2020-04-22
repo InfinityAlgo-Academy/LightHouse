@@ -165,3 +165,16 @@ describe('LegacyJavaScript audit', () => {
     assert.equal(result.score, 1);
   });
 });
+
+describe('LegacyJavaScript signals', () => {
+  it('expect babel-preset-env = true variant to not have any signals', () => {
+    const signalSummary = require('../../scripts/legacy-javascript/summary-signals.json');
+    const expectedMissingSignals = [
+      'core-js-2-preset-env-esmodules/true',
+      'core-js-3-preset-env-esmodules/true',
+    ];
+    for (const expectedVariant of expectedMissingSignals) {
+      expect(signalSummary.variantsMissingSignals).toContain(expectedVariant);
+    }
+  });
+});
