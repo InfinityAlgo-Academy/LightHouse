@@ -11,14 +11,11 @@ jobs:
   basics:
 
     runs-on: ubuntu-latest
-    continue-on-error: true
     strategy:
       # e.g. if lint fails, continue to the unit tests anyway
       fail-fast: false
 
     steps:
-    - name: exit failure
-      run: exit 1
     - name: git clone
       uses: actions/checkout@v2
 
@@ -54,8 +51,14 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-yarn-
 
+
+    - name: exit failure
+      run: exit 1
+    - run: echo "hi mom"
     - run: yarn --frozen-lockfile
       if: always()
     - run: yarn build-all
+      if: always()
+    - run: echo "hi mom done"
       if: always()
 
