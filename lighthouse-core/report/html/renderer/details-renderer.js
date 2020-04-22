@@ -338,29 +338,34 @@ class DetailsRenderer {
 
   /**
    * Renders a table cell for each column, defined by the provided heading and value pairs.
-   * @param {Array<{heading: LH.Audit.Details.OpportunityColumnHeading, value?: LH.Audit.Details.ItemValue}|null>} headingAndValuePairs
+   * @param {LH.Audit.Details.OpportunityItem | LH.Audit.Details.TableItem} row
+   * @param {LH.Audit.Details.OpportunityColumnHeading[] | null} headings
+   * @param {number | undefined} subRowIndex
    */
-  _renderRow(headingAndValuePairs) {
+  _renderRow(row, headings, subRowIndex) {
+    if (!headings) return;
+
     const rowElem = this._dom.createElement('tr');
+    if (subRowIndex !== undefined) rowElem.classList.add('lh-sub-row');
 
-    for (const pair of headingAndValuePairs) {
-      const heading = pair && pair.heading;
-      const value = pair && pair.value;
+    const addEmptyCell = _ => this._dom.createChildOf(rowElem, 'td', 'lh-table-column--empty');
 
-      let valueElement;
-      if (heading && heading.key !== null && value !== undefined && value !== null) {
-        valueElement = this._renderTableValue(value, heading);
+    for (const heading of headings) {
+      if (!heading || !heading.key || !row) {
+        addEmptyCell();
+        continue;
       }
+
+      const value = subRowIndex !== undefined && Array.isArray(row[heading.key]) ?
+        (row[heading.key] && row[heading.key][subRowIndex]) :
+        row[heading.key];
+      const valueElement = this._renderTableValue(value, heading);
 
       if (heading && valueElement) {
         const classes = `lh-table-column--${heading.valueType}`;
         this._dom.createChildOf(rowElem, 'td', classes).appendChild(valueElement);
       } else {
-        // Empty cell is rendered for a column if:
-        // - the pair is null
-        // - the heading key is null
-        // - the value is undefined/null
-        this._dom.createChildOf(rowElem, 'td', 'lh-table-column--empty');
+        addEmptyCell();
       }
     }
 
@@ -376,22 +381,10 @@ class DetailsRenderer {
     const fragment = this._dom.createFragment();
 
     // Render the main row.
-    const headingAndValuePairs = [];
-    for (const heading of headings) {
-      const value = heading.key && row[heading.key];
-      if (value === undefined || value === null || Array.isArray(value)) {
-        headingAndValuePairs.push(null);
-        continue;
-      }
-
-      headingAndValuePairs.push({heading, value});
-    }
-
-    fragment.append(this._renderRow(headingAndValuePairs));
+    fragment.append(this._renderRow(row, headings, undefined));
 
     // A single details item can expand into multiple table rows. These additional table rows
     // are called sub-rows.
-
     const subRowHeadings = headings.map(heading => {
       if (!heading.subRows) return null;
       return {
@@ -403,37 +396,16 @@ class DetailsRenderer {
       };
     });
 
+    // Early exit if there's no subRows
     if (!subRowHeadings.some(Boolean)) return fragment;
 
-    // All sub-row data arrays should be the same length, but just in case they are not,
-    // determine the longest data array and fill the missing values with an
-    // null pair (which creates an empty cell).
-    let numSubRows = 0;
-    for (const heading of subRowHeadings) {
-      if (!heading) continue;
-      const values = row[heading.key];
-      if (!Array.isArray(values)) continue;
-      numSubRows = Math.max(numSubRows, values.length);
+    const liveSubRowHeadings = subRowHeadings.filter(Boolean);
+    // What's the max number of subrows for this item row?
+    const max = Math.max(...liveSubRowHeadings.map(heading => heading && row && row[heading.key] && row[heading.key].length));
+
+    for (var i = 0; i < max; i++) {
+      fragment.append(this._renderRow(row, subRowHeadings, i));
     }
-
-    for (let i = 0; i < numSubRows; i++) {
-      const subRowData = [];
-      for (const heading of subRowHeadings) {
-        if (!heading) {
-          subRowData.push(null);
-          continue;
-        }
-
-        const values = row[heading.key];
-        if (!Array.isArray(values)) continue;
-        subRowData.push({heading, value: values[i]});
-      }
-
-      const rowEl = this._renderRow(subRowData);
-      rowEl.classList.add('lh-sub-row');
-      fragment.append(rowEl);
-    }
-
     return fragment;
   }
 
