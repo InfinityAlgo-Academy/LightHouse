@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const LegacyJavascript = require('../../audits/legacy-javascript.js');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 

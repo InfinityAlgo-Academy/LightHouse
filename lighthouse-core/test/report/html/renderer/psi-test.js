@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const fs = require('fs');
 
 const jsdom = require('jsdom');

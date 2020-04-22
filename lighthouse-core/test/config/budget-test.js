@@ -6,7 +6,7 @@
 'use strict';
 
 const Budget = require('../../config/budget.js');
-const assert = require('assert');
+const assert = require('assert').strict;
 /* eslint-env jest */
 
 describe('Budget', () => {
@@ -94,7 +94,7 @@ describe('Budget', () => {
     });
 
     // Does not set unsupplied result
-    assert.equal(result[1].timings, null);
+    assert.equal(result[1].timings, undefined);
   });
 
   it('accepts an empty array', () => {

@@ -6,7 +6,7 @@
 'use strict';
 
 const Config = require('../../config/config.js');
-const assert = require('assert');
+const assert = require('assert').strict;
 const path = require('path');
 const defaultConfig = require('../../config/default-config.js');
 const log = require('lighthouse-logger');

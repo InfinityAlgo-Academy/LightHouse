@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const parseCacheControl = require('parse-cache-control');
 const Audit = require('../audit.js');
 const NetworkRequest = require('../../lib/network-request.js');
