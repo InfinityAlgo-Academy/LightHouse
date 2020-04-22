@@ -6,6 +6,7 @@
 name: 💡🏠
 
 on: [push]
+continue-on-error: true
 
 jobs:
   basics:
@@ -16,6 +17,8 @@ jobs:
       fail-fast: false
 
     steps:
+    - name: exit failure
+      run: exit 1
     - name: git clone
       uses: actions/checkout@v2
 
