@@ -3116,7 +3116,7 @@
       "description": "Some third-party scripts may contain known security vulnerabilities that are easily identified and exploited by attackers. [Learn more](https://web.dev/no-vulnerable-libraries).",
       "score": 0,
       "scoreDisplayMode": "binary",
-      "displayValue": "2 vulnerabilities detected",
+      "displayValue": "3 vulnerabilities detected",
       "details": {
         "type": "table",
         "headings": [
@@ -3139,7 +3139,7 @@
         "items": [
           {
             "highestSeverity": "Medium",
-            "vulnCount": 2,
+            "vulnCount": 3,
             "detectedLib": {
               "text": "jQuery@2.1.1",
               "url": "https://snyk.io/vuln/npm:jquery?lh=2.1.1&utm_source=lighthouse&utm_medium=ref&utm_campaign=audit",
@@ -6685,7 +6685,7 @@
       "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": [
         {
           "values": {
-            "itemCount": 2
+            "itemCount": 3
           },
           "path": "audits[no-vulnerable-libraries].displayValue"
         }
