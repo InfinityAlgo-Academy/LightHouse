@@ -72,6 +72,12 @@ declare global {
         debugData?: DebugData;
       }
 
+      /** A table item for rows that are nested within a top-level TableItem (row). */
+      export interface TableSubRows {
+        type: 'subrows';
+        items: TableItem[];
+      }
+
       /**
        * A details type that is not rendered in the final report; usually used
        * for including debug information in the LHR. Can contain anything.
@@ -85,7 +91,7 @@ declare global {
       type ItemValueType = 'bytes' | 'code' | 'link' | 'ms' | 'multi' | 'node' | 'source-location' | 'numeric' | 'text' | 'thumbnail' | 'timespanMs' | 'url';
 
       /** Possible types of values found within table items. */
-      type ItemValue = string | number | boolean | DebugData | NodeValue | SourceLocationValue | LinkValue | UrlValue | CodeValue;
+      type ItemValue = string | number | boolean | DebugData | NodeValue | SourceLocationValue | LinkValue | UrlValue | CodeValue | TableSubRows;
 
       // TODO: drop TableColumnHeading, rename OpportunityColumnHeading to TableColumnHeading and
       // use that for all table-like audit details.
@@ -116,7 +122,8 @@ declare global {
 
       export interface TableItem {
         debugData?: DebugData;
-        [p: string]: undefined | ItemValue | ItemValue[];
+        subRows?: TableSubRows;
+        [p: string]: undefined | ItemValue;
       }
 
       export interface OpportunityColumnHeading {
@@ -151,7 +158,7 @@ declare global {
         totalBytes?: number;
         wastedMs?: number;
         debugData?: DebugData;
-        [p: string]: undefined | ItemValue | ItemValue[];
+        [p: string]: undefined | ItemValue;
       }
 
       /**

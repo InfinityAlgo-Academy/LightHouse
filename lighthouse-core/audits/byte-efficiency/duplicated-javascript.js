@@ -116,18 +116,11 @@ class DuplicatedJavascript extends ByteEfficiencyAudit {
     const duplication =
       await DuplicatedJavascript._getDuplicationGroupedByNodeModules(artifacts, context);
 
-    /**
-     * @typedef ItemSubrows
-     * @property {string[]} urls
-     * @property {number[]} sourceBytes
-     */
-
-    /**
-     * @typedef {LH.Audit.ByteEfficiencyItem & ItemSubrows} Item
-     */
-
-    /** @type {Item[]} */
+    /** @type {LH.Audit.ByteEfficiencyItem[]} */
     const items = [];
+
+    let overflowWastedBytes = 0;
+    const overflowUrls = new Set();
 
     /** @type {Map<string, number>} */
     const wastedBytesByUrl = new Map();
@@ -139,17 +132,27 @@ class DuplicatedJavascript extends ByteEfficiencyAudit {
       // is not present. Instead, size is used as a heuristic for latest version. This makes the
       // audit conserative in its estimation.
 
-      const urls = [];
-      const bytesValues = [];
+      const subRowItems = [];
+
       let wastedBytesTotal = 0;
       for (let i = 0; i < sourceDatas.length; i++) {
         const sourceData = sourceDatas[i];
         const url = sourceData.scriptUrl;
-        urls.push(url);
-        bytesValues.push(sourceData.size);
+        subRowItems.push({
+          url,
+          sourceBytes: sourceData.size,
+        });
         if (i === 0) continue;
         wastedBytesTotal += sourceData.size;
         wastedBytesByUrl.set(url, (wastedBytesByUrl.get(url) || 0) + sourceData.size);
+      }
+
+      if (wastedBytesTotal <= ignoreThresholdInBytes) {
+        overflowWastedBytes += wastedBytesTotal;
+        for (const subRowItem of subRowItems) {
+          overflowUrls.add(subRowItem.url);
+        }
+        continue;
       }
 
       items.push({
@@ -159,32 +162,24 @@ class DuplicatedJavascript extends ByteEfficiencyAudit {
         url: '',
         // Not needed, but keeps typescript happy.
         totalBytes: 0,
-        urls,
-        sourceBytes: bytesValues,
+        subRows: {
+          type: 'subrows',
+          items: subRowItems,
+        },
       });
     }
 
-    /** @type {Item} */
-    const otherItem = {
-      source: 'Other',
-      wastedBytes: 0,
-      url: '',
-      totalBytes: 0,
-      urls: [],
-      sourceBytes: [],
-    };
-    for (const item of items.filter(item => item.wastedBytes <= ignoreThresholdInBytes)) {
-      otherItem.wastedBytes += item.wastedBytes;
-      for (let i = 0; i < item.urls.length; i++) {
-        const url = item.urls[i];
-        if (!otherItem.urls.includes(url)) {
-          otherItem.urls.push(url);
-        }
-      }
-      items.splice(items.indexOf(item), 1);
-    }
-    if (otherItem.wastedBytes > ignoreThresholdInBytes) {
-      items.push(otherItem);
+    if (overflowWastedBytes > ignoreThresholdInBytes) {
+      items.push({
+        source: 'Other',
+        wastedBytes: overflowWastedBytes,
+        url: '',
+        totalBytes: 0,
+        subRows: {
+          type: 'subrows',
+          items: Array.from(overflowUrls).map(url => ({url})),
+        },
+      });
     }
 
     // Convert bytes to transfer size estimation.
