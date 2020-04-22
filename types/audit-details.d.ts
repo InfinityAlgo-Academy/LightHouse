@@ -93,7 +93,7 @@ declare global {
       export interface TableColumnHeading {
         /**
          * The name of the property within items being described.
-         * If null, subRows must be defined, and the first sub-row will be empty.
+         * If null, subRows must be defined, and the associated cell in the main row will be empty.
          */
         key: string|null;
         /** Readable text label of the field. */
@@ -122,7 +122,7 @@ declare global {
       export interface OpportunityColumnHeading {
         /**
          * The name of the property within items being described.
-         * If null, subRows must be defined, and the first sub-row will be empty.
+         * If null, subRows must be defined, and the associated cell in the main row will be empty.
          */
         key: string|null;
         /** Readable text label of the field. */

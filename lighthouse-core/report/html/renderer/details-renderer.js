@@ -338,34 +338,21 @@ class DetailsRenderer {
 
   /**
    * Renders a table cell for each column, defined by the provided heading and value pairs.
-   * @param {LH.Audit.Details.OpportunityItem | LH.Audit.Details.TableItem} row
-   * @param {LH.Audit.Details.OpportunityColumnHeading[] | null} headings
-   * @param {number | undefined} subRowIndex
+   * @param {LH.Audit.Details.OpportunityColumnHeading[]} headings
+   * @param {(heading: LH.Audit.Details.OpportunityColumnHeading) => LH.Audit.Details.ItemValue} cellValueFn
    */
-  _renderRow(row, headings, subRowIndex) {
-    if (!headings) return;
-
+  _renderRow(headings, cellValueFn) {
     const rowElem = this._dom.createElement('tr');
-    if (subRowIndex !== undefined) rowElem.classList.add('lh-sub-row');
-
-    const addEmptyCell = _ => this._dom.createChildOf(rowElem, 'td', 'lh-table-column--empty');
 
     for (const heading of headings) {
-      if (!heading || !heading.key || !row) {
-        addEmptyCell();
-        continue;
-      }
-
-      const value = subRowIndex !== undefined && Array.isArray(row[heading.key]) ?
-        (row[heading.key] && row[heading.key][subRowIndex]) :
-        row[heading.key];
+      const value = cellValueFn(heading);
       const valueElement = this._renderTableValue(value, heading);
 
       if (heading && valueElement) {
         const classes = `lh-table-column--${heading.valueType}`;
         this._dom.createChildOf(rowElem, 'td', classes).appendChild(valueElement);
       } else {
-        addEmptyCell();
+        this._dom.createChildOf(rowElem, 'td', 'lh-table-column--empty')
       }
     }
 
@@ -381,7 +368,7 @@ class DetailsRenderer {
     const fragment = this._dom.createFragment();
 
     // Render the main row.
-    fragment.append(this._renderRow(row, headings, undefined));
+    fragment.append(this._renderRow(headings, heading => heading.key && row[heading.key]));
 
     // A single details item can expand into multiple table rows. These additional table rows
     // are called sub-rows.
@@ -399,12 +386,17 @@ class DetailsRenderer {
     // Early exit if there's no subRows
     if (!subRowHeadings.some(Boolean)) return fragment;
 
-    const liveSubRowHeadings = subRowHeadings.filter(Boolean);
-    // What's the max number of subrows for this item row?
-    const max = Math.max(...liveSubRowHeadings.map(heading => heading && row && row[heading.key] && row[heading.key].length));
+    const liveSubRowHeadings = subRowHeadings.filter(/** @return {item is LH.Audit.Details.OpportunityColumnHeading} */ item => Boolean(item));
+
+    // What's the max number of subrows for this item row? Note: each of these lengths _should_ be identical
+    // @ts-ignore TODO: use the new subRows array.
+    const max = Math.max(...liveSubRowHeadings.map(heading => heading.key && row && Array.isArray(row[heading.key]) && row[heading.key].length));
 
     for (var i = 0; i < max; i++) {
-      fragment.append(this._renderRow(row, subRowHeadings, i));
+      // @ts-ignore we'll get the new thing and maybe this'll be fine then?
+      const subRowEl = this._renderRow(headings, heading => heading.subRows && row && Array.isArray(row[heading.subRows.key]) && row[heading.subRows.key][i]);
+      subRowEl.classList.add('lh-sub-row');
+      fragment.append(subRowEl);
     }
     return fragment;
   }

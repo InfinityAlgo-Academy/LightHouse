@@ -347,7 +347,7 @@ class LegacyJavascript extends Audit {
     const headings = [
       /* eslint-disable max-len */
       {key: 'url', itemType: 'url', subRows: {key: 'locations', itemType: 'source-location'}, text: str_(i18n.UIStrings.columnURL)},
-      {key: null, itemType: 'code', subRows: {key: 'signals'}, text: ''},
+      {key: null, itemType: 'code', subRows: {key: 'signals'}, text: 'Legacy JS or polyfill found'},
       /* eslint-enable max-len */
     ];
     const details = Audit.makeTableDetails(headings, tableRows);
