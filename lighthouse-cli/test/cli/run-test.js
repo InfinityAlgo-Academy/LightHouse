@@ -145,4 +145,39 @@ describe('Parsing --chrome-flags', () => {
       ['--spaces=1 2 3 4', '--debug=false', '--verbose', '--more-spaces=9 9 9']
     );
   });
+
+  it('handles muliple --chrome-flags', () => {
+    assert.deepStrictEqual(
+      parseChromeFlags(['--no-sandbox', '--log-level=0']),
+      ['--no-sandbox', '--log-level=0']
+    );
+  });
+
+  it('removes wrapping single quotes', () => {
+    assert.deepStrictEqual(
+      parseChromeFlags('\'--no-sandbox --log-level=0\''),
+      ['--no-sandbox', '--log-level=0']
+    );
+  });
+
+  it('removes wrapping double quotes', () => {
+    assert.deepStrictEqual(
+      parseChromeFlags('"--no-sandbox --log-level=0"'),
+      ['--no-sandbox', '--log-level=0']
+    );
+  });
+
+  it('removes wrapping single quotes from arrays', () => {
+    assert.deepStrictEqual(
+      parseChromeFlags(['\'--no-sandbox --log-level=0\'', '--headless']),
+      ['--no-sandbox', '--log-level=0', '--headless']
+    );
+  });
+
+  it('removes wrapping double quotes from arrays', () => {
+    assert.deepStrictEqual(
+      parseChromeFlags(['"--no-sandbox --log-level=0"', '--headless']),
+      ['--no-sandbox', '--log-level=0', '--headless']
+    );
+  });
 });
