@@ -123,6 +123,8 @@ describe('Performance: Timing budget audit', () => {
         artifacts.devtoolsLogs.defaultPass = lcpDevtoolsLog;
         artifacts.traces.defaultPass = lcpTrace;
 
+        // Use an observed throttlingMethod so we don't have to worry about the value changing in the future.
+        context.settings.throttlingMethod = 'provided';
         context.settings.budgets = [{
           path: '/',
           timings: [
@@ -134,7 +136,7 @@ describe('Performance: Timing budget audit', () => {
         }];
         const result = await TimingBudgetAudit.audit(artifacts, context);
         expect(result.details.items).toHaveLength(1);
-        expect(result.details.items[0].measurement).toEqual(3419.1035);
+        expect(result.details.items[0].measurement).toEqual(1121.711);
       });
     });
 
