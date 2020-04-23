@@ -842,9 +842,6 @@
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "تحدد \"سرعة عرض أكبر محتوى على الصفحة\" الوقت الذي يُعرَض فيه أكبر صورة أو نص. [مزيد من المعلومات](https://web.dev/largest-contentful-paint)"
   },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "سرعة عرض أكبر محتوى"
-  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "الحد الأقصى المحتمل من \"مهلة الاستجابة لأوّل إدخال\" الذي قد يواجهه المستخدمين، هو مدة أطول مهمّة. [مزيد من المعلومات](https://web.dev/lighthouse-max-potential-fid)"
   },

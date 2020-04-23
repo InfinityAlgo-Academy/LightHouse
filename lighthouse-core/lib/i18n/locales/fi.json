@@ -842,9 +842,6 @@
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "Suurimman sisällön renderöinti mittaa suurimman tekstikohteen tai kuvan renderöintiaikaa. [Lue lisää](https://web.dev/largest-contentful-paint)"
   },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Suurimman sisällön renderöinti"
-  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "Käyttäjien ensitoiminnon suurin mahdollinen viive on sama kuin pisimmän tehtävän kesto. [Lue lisää](https://web.dev/lighthouse-max-potential-fid)."
   },

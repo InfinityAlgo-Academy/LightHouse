@@ -842,9 +842,6 @@
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "Største udfyldning af indhold angiver det tidspunkt, hvor den største tekst eller det største billede blev anvendt. [Få flere oplysninger](https://web.dev/largest-contentful-paint)"
   },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Største udfyldning af indhold"
-  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "Den maksimale potentielle ventetid efter første input, som dine brugere kan opleve, er varigheden af den længste proces. [Få flere oplysninger](https://web.dev/lighthouse-max-potential-fid)."
   },

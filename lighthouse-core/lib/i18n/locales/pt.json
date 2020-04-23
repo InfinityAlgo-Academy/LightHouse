@@ -842,9 +842,6 @@
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "\"Maior exibição de conteúdo\" marca o momento em que o maior texto ou imagem é exibido. [Saiba mais](https://web.dev/largest-contentful-paint)"
   },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Maior exibição de conteúdo"
-  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "A possível latência máxima na primeira entrada que seus usuários notariam seria a duração da tarefa mais longa. [Saiba mais](https://web.dev/lighthouse-max-potential-fid)."
   },

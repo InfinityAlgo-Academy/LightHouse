@@ -842,9 +842,6 @@
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "Didžiausias turiningas žymėjimas nurodo laiką, kada pažymimas didžiausias tekstas ar vaizdas. [Sužinokite daugiau](https://web.dev/largest-contentful-paint)."
   },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Didžiausias turiningas žymėjimas"
-  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "Didžiausia potenciali naudotojų patiriama pirmosios įvesties delsa yra ilgiausios užduoties trukmė. [Sužinokite daugiau](https://web.dev/lighthouse-max-potential-fid)."
   },

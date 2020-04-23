@@ -842,9 +842,6 @@
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "Chỉ số Hiển thị nội dung có kích thước lớn nhất đánh dấu thời điểm hiển thị văn bản hoặc hình ảnh có kích thước lớn nhất. [Tìm hiểu thêm](https://web.dev/largest-contentful-paint)"
   },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Chỉ số Hiển thị nội dung có kích thước lớn nhất"
-  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "Thời gian phản hồi lần tương tác đầu tiên tối đa mà người dùng có thể gặp phải là thời gian thực hiện nhiệm vụ lâu nhất. [Tìm hiểu thêm](https://web.dev/lighthouse-max-potential-fid)."
   },

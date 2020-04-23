@@ -842,9 +842,6 @@
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "Största uppritningen av innehåll anger tidpunkten då den största texten eller bilden ritades upp. [Läs mer](https://web.dev/largest-contentful-paint)"
   },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Största uppritningen av innehåll"
-  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "Den högsta potentiella fördröjningen till första inmatningen som användarna kan få är längden på den längsta uppgiften. [Läs mer](https://web.dev/lighthouse-max-potential-fid)."
   },

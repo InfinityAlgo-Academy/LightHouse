@@ -842,9 +842,6 @@
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "Largest Contentful Paint ระบุเวลาที่แสดงผลข้อความหรือรูปภาพได้มากที่สุด [ดูข้อมูลเพิ่มเติม](https://web.dev/largest-contentful-paint)"
   },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Largest Contentful Paint"
-  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "First Input Delay สูงสุดที่อาจเกิดขึ้นซึ่งผู้ใช้อาจเจอคือระยะเวลาของงานที่ยาวที่สุด [ดูข้อมูลเพิ่มเติม](https://web.dev/lighthouse-max-potential-fid)"
   },

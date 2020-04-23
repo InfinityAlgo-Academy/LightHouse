@@ -842,9 +842,6 @@
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "「最大內容繪製」是指繪製最大的文字或圖片的時間。[瞭解詳情](https://web.dev/largest-contentful-paint)"
   },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "最大內容繪製"
-  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "使用者可以體驗到最長的「首次輸入延遲時間」就是最長的工作持續時間。[瞭解詳情](https://web.dev/lighthouse-max-potential-fid)。"
   },

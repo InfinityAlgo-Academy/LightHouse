@@ -842,9 +842,6 @@
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "最大コンテンツの描画は、最も大きなテキストまたは画像が描画されるまでにかかった時間です。[詳細](https://web.dev/largest-contentful-paint)"
   },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "最大コンテンツの描画"
-  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "初回入力遅延の最大推定時間は、ユーザーが最も長いタスクを行うのにかかると推定される時間です。[詳細](https://web.dev/lighthouse-max-potential-fid)"
   },

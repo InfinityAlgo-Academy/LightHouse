@@ -842,9 +842,6 @@
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "Највеће приказивање садржаја означава тренутак у којем се приказују највећи текст или слика. [Сазнајте више](https://web.dev/largest-contentful-paint)"
   },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Највеће приказивање садржаја"
-  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "Максимално потенцијално кашњење првог приказа које може да се деси корисницима је трајање најдужег задатка. [Сазнајте више](https://web.dev/lighthouse-max-potential-fid)."
   },

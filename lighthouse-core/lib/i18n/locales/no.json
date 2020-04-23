@@ -842,9 +842,6 @@
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "Største innholdsrike opptegning (LCP) markerer tidspunktet når den største teksten eller det største bildet vises. [Finn ut mer](https://web.dev/largest-contentful-paint)"
   },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Største innholdsrike opptegning (LCP)"
-  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "Den maksimale potensielle forsinkelsen for første inndata som brukerne dine kan oppleve, er varigheten av den lengste oppgaven. [Finn ut mer](https://web.dev/lighthouse-max-potential-fid)."
   },

@@ -842,9 +842,6 @@
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "Największe wyrenderowanie treści oznacza czas wyrenderowania największego tekstu lub obrazu. [Więcej informacji](https://web.dev/largest-contentful-paint)"
   },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Największe wyrenderowanie treści"
-  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "Maksymalne opóźnienie przy pierwszym działaniu, którego mogą doświadczyć użytkownicy, to czas wykonywania najdłuższego zadania. [Więcej informacji](https://web.dev/lighthouse-max-potential-fid)"
   },

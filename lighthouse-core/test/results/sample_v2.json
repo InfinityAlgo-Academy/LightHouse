@@ -5730,7 +5730,7 @@
           "path": "audits[bootup-time].displayValue"
         }
       ],
-      "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": [
+      "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": [
         "audits[largest-contentful-paint].title"
       ],
       "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": [
@@ -5806,7 +5806,7 @@
       "lighthouse-core/audits/metrics/max-potential-fid.js | description": [
         "audits[max-potential-fid].description"
       ],
-      "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": [
+      "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": [
         "audits[cumulative-layout-shift].title"
       ],
       "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": [

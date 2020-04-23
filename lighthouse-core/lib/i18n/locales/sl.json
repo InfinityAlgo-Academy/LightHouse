@@ -842,9 +842,6 @@
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "Največji vsebinski izris označuje čas, ko je izrisano največje besedilo oziroma je izrisana največja slika. [Več o tem](https://web.dev/largest-contentful-paint)."
   },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Največji vsebinski izris"
-  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "Največja potencialna zakasnitev od prvega vnosa, na katero lahko uporabniki naletijo, je trajanje najdaljšega opravila. [Več o tem](https://web.dev/lighthouse-max-potential-fid)."
   },

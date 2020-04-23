@@ -842,9 +842,6 @@
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "'Grootste tekenbewerking met content' (LCP) geeft het tijdstip aan waarop de grootste tekst of afbeelding is weergegeven. [Meer informatie](https://web.dev/largest-contentful-paint)"
   },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Grootste weergave met content (LCP)"
-  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "De maximale potentiële vertraging voor de eerste invoer die gebruikers kunnen ervaren, is de duur van de langste taak. [Meer informatie](https://web.dev/lighthouse-max-potential-fid)"
   },

@@ -842,9 +842,6 @@
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "Najveće renderiranje sadržaja označava vrijeme renderiranja najvećeg teksta ili slike. [Saznajte više](https://web.dev/largest-contentful-paint)"
   },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Najveće renderiranje sadržaja"
-  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "Maksimalno potencijalno kašnjenje odgovora na prvi unos koje bi korisnik mogao doživjeti trajanje je najduljeg zadatka. [Saznajte više](https://web.dev/lighthouse-max-potential-fid)."
   },

@@ -842,9 +842,6 @@
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "Η μέτρηση Μεγαλύτερη μορφή με περιεχόμενο, σηματοδοτεί τη χρονική στιγμή στην οποία σχεδιάζεται το μεγαλύτερο κείμενο ή εικόνα. [Μάθετε περισσότερα](https://web.dev/largest-contentful-paint)"
   },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Μεγαλύτερη μορφή με περιεχόμενο"
-  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "Η μέγιστη δυνητική καθυστέρηση πρώτης εισόδου που θα μπορούσαν να αντιμετωπίσουν οι χρήστες είναι η διάρκεια της πιο χρονοβόρας εργασίας. [Μάθετε περισσότερα](https://web.dev/lighthouse-max-potential-fid)."
   },
