@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -8,8 +8,9 @@ import parseManifest = require('../lighthouse-core/lib/manifest-parser.js');
 import _LanternSimulator = require('../lighthouse-core/lib/dependency-graph/simulator/simulator.js');
 import _NetworkRequest = require('../lighthouse-core/lib/network-request.js');
 import speedline = require('speedline-core');
+import TextSourceMap = require('../lighthouse-core/lib/cdt/generated/SourceMap.js');
 
-type _TaskNode = import('../lighthouse-core/computed/main-thread-tasks.js').TaskNode;
+type _TaskNode = import('../lighthouse-core/lib/tracehouse/main-thread-tasks.js').TaskNode;
 
 type LanternSimulator = InstanceType<typeof _LanternSimulator>;
 
@@ -29,6 +30,8 @@ declare global {
       LighthouseRunWarnings: string[];
       /** Whether the page was loaded on either a real or emulated mobile device. */
       TestedAsMobileDevice: boolean;
+      /** Device which Chrome is running on. */
+      HostFormFactor: 'desktop'|'mobile';
       /** The user agent string of the version of Chrome used. */
       HostUserAgent: string;
       /** The user agent string that Lighthouse used to load the page. */
@@ -37,6 +40,8 @@ declare global {
       BenchmarkIndex: number;
       /** Parsed version of the page's Web App Manifest, or null if none found. */
       WebAppManifest: Artifacts.Manifest | null;
+      /** Errors preventing page being installable as PWA. */
+      InstallabilityErrors: Artifacts.InstallabilityErrors;
       /** Information on detected tech stacks (e.g. JS libraries) used by the page. */
       Stacks: Artifacts.DetectedStack[];
       /** A set of page-load traces, keyed by passName. */
@@ -49,6 +54,8 @@ declare global {
       URL: {requestedUrl: string, finalUrl: string};
       /** The timing instrumentation of the gather portion of a run. */
       Timing: Artifacts.MeasureEntry[];
+      /** If loading the page failed, value is the error that caused it. Otherwise null. */
+      PageLoadError: LighthouseError | null;
     }
 
     /**
@@ -59,12 +66,16 @@ declare global {
     export interface PublicGathererArtifacts {
       /** Console deprecation and intervention warnings logged by Chrome during page load. */
       ConsoleMessages: Crdp.Log.EntryAddedEvent[];
+      /** All the iframe elements in the page.*/
+      IFrameElements: Artifacts.IFrameElement[];
+      /** The contents of the main HTML document network resource. */
+      MainDocumentContent: string;
       /** Information on size and loading for all the images in the page. Natural size information for `picture` and CSS images is only available if the image was one of the largest 50 images. */
       ImageElements: Artifacts.ImageElement[];
       /** All the link elements on the page or equivalently declared in `Link` headers. @see https://html.spec.whatwg.org/multipage/links.html */
       LinkElements: Artifacts.LinkElement[];
       /** The values of the <meta> elements in the head. */
-      MetaElements: Array<{name: string, content?: string}>;
+      MetaElements: Array<{name?: string, content?: string, property?: string, httpEquiv?: string, charset?: string}>;
       /** Set of exceptions thrown during page load. */
       RuntimeExceptions: Crdp.Runtime.ExceptionThrownEvent[];
       /** Information on all script elements in the page. Also contains the content of all requested scripts and the networkRecord requestId that contained their content. Note, HTML documents will have one entry per script tag, all with the same requestId. */
@@ -103,8 +114,8 @@ declare global {
       HTMLWithoutJavaScript: {bodyText: string, hasNoScript: boolean};
       /** Whether the page ended up on an HTTPS page after attempting to load the HTTP version. */
       HTTPRedirect: {value: boolean};
-      /** JS coverage information for code used during page load. */
-      JsUsage: Crdp.Profiler.ScriptCoverage[];
+      /** JS coverage information for code used during page load. Keyed by URL. */
+      JsUsage: Record<string, Crdp.Profiler.ScriptCoverage[]>;
       /** Parsed version of the page's Web App Manifest, or null if none found. */
       Manifest: Artifacts.Manifest | null;
       /** The URL loaded with interception */
@@ -121,8 +132,10 @@ declare global {
       RobotsTxt: {status: number|null, content: string|null};
       /** Version information for all ServiceWorkers active after the first page load. */
       ServiceWorker: {versions: Crdp.ServiceWorker.ServiceWorkerVersion[], registrations: Crdp.ServiceWorker.ServiceWorkerRegistration[]};
+      /** Source maps of scripts executed in the page. */
+      SourceMaps: Array<Artifacts.SourceMap>;
       /** The status of an offline fetch of the page's start_url. -1 and a explanation if missing or there was an error. */
-      StartUrl: {statusCode: number, explanation?: string};
+      StartUrl: {url?: string, statusCode: number, explanation?: string};
       /** Information on <script> and <link> tags blocking first paint. */
       TagsBlockingFirstPaint: Artifacts.TagBlockingFirstPaint[];
       /** Information about tap targets including their position and size. */
@@ -136,23 +149,30 @@ declare global {
       export type TaskNode = _TaskNode;
       export type MetaElement = LH.Artifacts['MetaElements'][0];
 
+      export interface RuleExecutionError {
+        name: string;
+        message: string;
+      }
+
+      export interface AxeResult {
+        id: string;
+        impact: string;
+        tags: Array<string>;
+        nodes: Array<{
+          path: string;
+          html: string;
+          snippet: string;
+          target: Array<string>;
+          failureSummary?: string;
+          nodeLabel?: string;
+        }>;
+        error?: RuleExecutionError;
+      }
+
       export interface Accessibility {
-        violations: {
-          id: string;
-          impact: string;
-          tags: string[];
-          nodes: {
-            path: string;
-            html: string;
-            snippet: string;
-            target: string[];
-            failureSummary?: string;
-            nodeLabel?: string;
-          }[];
-        }[];
-        notApplicable: {
-          id: string
-        }[];
+        violations: Array<AxeResult>;
+        notApplicable: Array<Pick<AxeResult, 'id'>>;
+        incomplete: Array<AxeResult>;
       }
 
       export interface CSSStyleSheetInfo {
@@ -182,6 +202,24 @@ declare global {
         params: {name: string; value: string}[];
       }
 
+      export interface IFrameElement {
+        /** The `id` attribute of the iframe. */
+        id: string,
+        /** The `src` attribute of the iframe. */
+        src: string,
+        /** The iframe's ClientRect. @see https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect */
+        clientRect: {
+          top: number;
+          bottom: number;
+          left: number;
+          right: number;
+          width: number;
+          height: number;
+        },
+        /** If the iframe or an ancestor of the iframe is fixed in position. */
+        isPositionFixed: boolean,
+      }
+
       /** @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#Attributes */
       export interface LinkElement {
         /** The `rel` attribute of the link, normalized to lower case. @see https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types */
@@ -195,7 +233,7 @@ declare global {
         /** The `as` attribute of the link */
         as: string
         /** The `crossOrigin` attribute of the link */
-        crossOrigin: 'anonymous'|'use-credentials'|null
+        crossOrigin: string | null
         /** Where the link was found, either in the DOM or in the headers of the main document */
         source: 'head'|'body'|'headers'
       }
@@ -203,6 +241,8 @@ declare global {
       export interface ScriptElement {
         type: string | null
         src: string | null
+        /** The `id` property of the script element; null if it had no `id` or if `source` is 'network'. */
+        id: string | null
         async: boolean
         defer: boolean
         /** Path that uniquely identifies the node in the DOM */
@@ -215,12 +255,73 @@ declare global {
         requestId: string | null
       }
 
+      /** @see https://sourcemaps.info/spec.html#h.qz3o9nc69um5 */
+      export type RawSourceMap = {
+        /** File version and must be a positive integer. */
+        version: number
+        /** A list of original source files used by the `mappings` entry. */
+        sources: string[]
+        /** A list of symbol names used by the `mappings` entry. */
+        names?: string[]
+        /** An optional source root, useful for relocating source files on a server or removing repeated values in the `sources` entry. This value is prepended to the individual entries in the `source` field. */
+        sourceRoot?: string
+        /** An optional list of source content, useful when the `source` can’t be hosted. The contents are listed in the same order as the sources. */
+        sourcesContent?: string[]
+        /** A string with the encoded mapping data. */
+        mappings: string
+        /** An optional name of the generated code (the bundled code that was the result of this build process) that this source map is associated with. */
+        file?: string
+        /**
+         * An optional array of maps that are associated with an offset into the generated code. 
+         * `map` is optional because the spec defines that either `url` or `map` must be defined.
+         * We explicitly only support `map` here.
+        */
+        sections?: Array<{offset: {line: number, column: number}, map?: RawSourceMap}>
+      }
+
+      /**
+       * Source map for a given script found at scriptUrl. If there is an error in fetching or
+       * parsing the map, errorMessage will be defined instead of map.
+       */
+      export type SourceMap = {
+        /** URL of code that source map applies to. */
+        scriptUrl: string
+        /** URL of the source map. undefined if from data URL. */
+        sourceMapUrl?: string
+        /** Source map data structure. */
+        map: RawSourceMap
+      } | {
+        /** URL of code that source map applies to. */
+        scriptUrl: string
+        /** URL of the source map. undefined if from data URL. */
+        sourceMapUrl?: string
+        /** Error that occurred during fetching or parsing of source map. */
+        errorMessage: string
+        /** No map on account of error. */
+        map?: undefined;
+      }
+
+      export interface Bundle {
+        rawMap: RawSourceMap;
+        script: ScriptElement;
+        map: TextSourceMap;
+        sizes: {
+          // TODO(cjamcl): Rename to `sources`.
+          files: Record<string, number>;
+          unmappedBytes: number;
+          totalBytes: number;
+        };
+      }
+
       /** @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#Attributes */
       export interface AnchorElement {
         rel: string
         href: string
         text: string
         target: string
+        devtoolsNodePath: string
+        selector: string
+        nodeLabel: string
         outerHTML: string
       }
 
@@ -239,8 +340,8 @@ declare global {
       export interface FontSize {
         totalTextLength: number;
         failingTextLength: number;
-        visitedTextLength: number;
         analyzedFailingTextLength: number;
+        /** Elements that contain a text node that failed size criteria. */
         analyzedFailingNodesData: Array<{
           fontSize: number;
           textLength: number;
@@ -269,6 +370,10 @@ declare global {
       // TODO(bckenny): real type for parsed manifest.
       export type Manifest = ReturnType<typeof parseManifest>;
 
+      export interface InstallabilityErrors {
+        errors: Crdp.Page.InstallabilityError[];
+      }
+
       export interface ImageElement {
         src: string;
         /** The displayed width of the image, uses img.width when available falling back to clientWidth. See https://codepen.io/patrickhulce/pen/PXvQbM for examples. */
@@ -292,10 +397,21 @@ declare global {
         isPicture: boolean;
         /** Flags whether this element was sized using a non-default `object-fit` CSS property. */
         usesObjectFit: boolean;
+        /** Flags whether this element was rendered using a pixel art scaling method.
+         *  See https://developer.mozilla.org/en-US/docs/Games/Techniques/Crisp_pixel_art_look for
+         *  details.
+         */
+        usesPixelArtScaling: boolean;
+        /** Flags whether the image has a srcset with density descriptors.
+         *  See https://html.spec.whatwg.org/multipage/images.html#pixel-density-descriptor
+         */
+        usesSrcSetDensityDescriptor: boolean;
         /** The size of the underlying image file in bytes. 0 if the file could not be identified. */
         resourceSize: number;
         /** The MIME type of the underlying image file. */
         mimeType?: string;
+        /** The loading attribute of the image. */
+        loading?: string;
       }
 
       export interface OptimizedImage {
@@ -365,7 +481,7 @@ declare global {
         }
       }
 
-      export type ManifestValueCheckID = 'hasStartUrl'|'hasIconsAtLeast192px'|'hasIconsAtLeast512px'|'hasPWADisplayValue'|'hasBackgroundColor'|'hasThemeColor'|'hasShortName'|'hasName'|'shortNameLength';
+      export type ManifestValueCheckID = 'hasStartUrl'|'hasIconsAtLeast144px'|'hasIconsAtLeast512px'|'fetchesIcon'|'hasPWADisplayValue'|'hasBackgroundColor'|'hasThemeColor'|'hasShortName'|'hasName'|'shortNameLength'|'hasMaskableIcon';
 
       export type ManifestValues = {
         isParseFailure: false;
@@ -397,7 +513,7 @@ declare global {
       export interface MetricComputationDataInput {
         devtoolsLog: DevtoolsLog;
         trace: Trace;
-        settings: Config.Settings;
+        settings: Immutable<Config.Settings>;
         simulator?: LanternSimulator;
       }
 
@@ -434,9 +550,11 @@ declare global {
         firstPaint?: number;
         firstContentfulPaint: number;
         firstMeaningfulPaint?: number;
+        largestContentfulPaint?: number;
         traceEnd: number;
         load?: number;
         domContentLoaded?: number;
+        cumulativeLayoutShift?: number;
       }
 
       export interface TraceOfTab {
@@ -450,6 +568,8 @@ declare global {
         mainThreadEvents: Array<TraceEvent>;
         /** IDs for the trace's main frame, process, and thread. */
         mainFrameIds: {pid: number, tid: number, frameId: string};
+        /** The list of frames committed in the trace. */
+        frames: Array<{frame: string, url: string}>;
         /** The trace event marking navigationStart. */
         navigationStartEvt: TraceEvent;
         /** The trace event marking firstPaint, if it was found. */
@@ -458,6 +578,8 @@ declare global {
         firstContentfulPaintEvt: TraceEvent;
         /** The trace event marking firstMeaningfulPaint, if it was found. */
         firstMeaningfulPaintEvt?: TraceEvent;
+        /** The trace event marking largestContentfulPaint, if it was found. */
+        largestContentfulPaintEvt?: TraceEvent;
         /** The trace event marking loadEventEnd, if it was found. */
         loadEvt?: TraceEvent;
         /** The trace event marking domContentLoadedEventEnd, if it was found. */
@@ -467,6 +589,8 @@ declare global {
          * firstMeaningfulPaintCandidate events had to be attempted.
          */
         fmpFellBack: boolean;
+        /** Whether LCP was invalidated without a new candidate. */
+        lcpInvalidated: boolean;
       }
 
       /** Information on a tech stack (e.g. a JS library) used by the page. */
@@ -488,6 +612,50 @@ declare global {
         data: string;
         width: number;
         height: number;
+      }
+
+      export interface TimingSummary {
+        firstContentfulPaint: number;
+        firstContentfulPaintTs: number | undefined;
+        firstMeaningfulPaint: number;
+        firstMeaningfulPaintTs: number | undefined;
+        largestContentfulPaint: number | undefined;
+        largestContentfulPaintTs: number | undefined;
+        firstCPUIdle: number | undefined;
+        firstCPUIdleTs: number | undefined;
+        interactive: number | undefined;
+        interactiveTs: number | undefined;
+        speedIndex: number | undefined;
+        speedIndexTs: number | undefined;
+        estimatedInputLatency: number;
+        estimatedInputLatencyTs: number | undefined;
+        maxPotentialFID: number | undefined;
+        cumulativeLayoutShift: number | undefined;
+        totalBlockingTime: number;
+        observedNavigationStart: number;
+        observedNavigationStartTs: number;
+        observedCumulativeLayoutShift: number | undefined;
+        observedCumulativeLayoutShiftTs: number | undefined;
+        observedFirstPaint: number | undefined;
+        observedFirstPaintTs: number | undefined;
+        observedFirstContentfulPaint: number;
+        observedFirstContentfulPaintTs: number;
+        observedFirstMeaningfulPaint: number | undefined;
+        observedFirstMeaningfulPaintTs: number | undefined;
+        observedLargestContentfulPaint: number | undefined;
+        observedLargestContentfulPaintTs: number | undefined;
+        observedTraceEnd: number | undefined;
+        observedTraceEndTs: number | undefined;
+        observedLoad: number | undefined;
+        observedLoadTs: number | undefined;
+        observedDomContentLoaded: number | undefined;
+        observedDomContentLoadedTs: number | undefined;
+        observedFirstVisualChange: number;
+        observedFirstVisualChangeTs: number;
+        observedLastVisualChange: number;
+        observedLastVisualChangeTs: number;
+        observedSpeedIndex: number;
+        observedSpeedIndexTs: number;
       }
     }
   }

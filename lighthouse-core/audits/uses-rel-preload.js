@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -18,9 +18,12 @@ const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to use <link rel=preload> to initiate important network requests earlier during page load. This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Preload key requests',
   /** Description of a Lighthouse audit that tells the user *why* they should preload important network requests. The associated network requests are started halfway through pageload (or later) but should be started at the beginning. This is displayed after a user expands the section to see more. No character length limits. '<link rel=preload>' is the html code the user would include in their page and shouldn't be translated. 'Learn More' becomes link text to additional documentation. */
-  description: 'Consider using <link rel=preload> to prioritize fetching resources that are ' +
-    'currently requested later in page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/preload).',
-  /** A warning message that is shown when the user tried to follow the advice of the audit, but it's not working as expected. Forgetting to set the `crossorigin` HTML attribute, or setting it to an incorrect value, on the link is a common mistake when adding preload links. */
+  description: 'Consider using `<link rel=preload>` to prioritize fetching resources that are ' +
+    'currently requested later in page load. [Learn more](https://web.dev/uses-rel-preload).',
+  /**
+   * @description A warning message that is shown when the user tried to follow the advice of the audit, but it's not working as expected. Forgetting to set the `crossorigin` HTML attribute, or setting it to an incorrect value, on the link is a common mistake when adding preload links.
+   * @example {https://example.com} preloadURL
+   * */
   crossoriginWarning: 'A preload <link> was found for "{preloadURL}" but was not used ' +
     'by the browser. Check that you are using the `crossorigin` attribute properly.',
 };
@@ -223,6 +226,7 @@ class UsesRelPreloadAudit extends Audit {
     return {
       score: UnusedBytes.scoreForWastedMs(wastedMs),
       numericValue: wastedMs,
+      numericUnit: 'millisecond',
       displayValue: wastedMs ?
         str_(i18n.UIStrings.displayValueMsSavings, {wastedMs}) :
         '',

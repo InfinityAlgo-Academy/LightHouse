@@ -2,6 +2,10 @@
 
 We'd love your help! This doc covers how to become a contributor and submit code to the project.
 
+## Where can I start?
+
+We tag issues that are good candidates for those new to the code with [`good first issue`](https://github.com/GoogleChrome/lighthouse/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22good+first+issue%22). We recommend you start there!
+
 ## Follow the coding style
 
 The `.eslintrc` file defines all. We use [JSDoc](http://usejsdoc.org/) with [TypeScript](https://github.com/Microsoft/TypeScript/wiki/JSDoc-support-in-JavaScript). Annotations are encouraged for all contributions.
@@ -36,7 +40,7 @@ accept your pull requests.
 
 ## Contributing a patch
 
-If you have a contribution for our [documentation](https://developers.google.com/web/tools/lighthouse/), please submit it in the [WebFundamentals repo](https://github.com/google/WebFundamentals/tree/master/src/content/en/tools/lighthouse).
+If you have a contribution for our [documentation](https://web.dev/learn/#lighthouse), please submit it in the [web.dev repo](https://github.com/GoogleChrome/web.dev).
 
 1. Submit an issue describing your proposed change to the repo in question.
 1. The repo owner will respond to your issue promptly.
@@ -44,6 +48,8 @@ If you have a contribution for our [documentation](https://developers.google.com
 1. Fork the repo, develop and test your code changes.
 1. Ensure that your code adheres to the existing style in the sample to which you are contributing.
 1. Submit a pull request.
+
+If you've submitted a number of significant patches, feel free to add yourself in a PR to the project's `AUTHORS` [file](https://github.com/GoogleChrome/lighthouse/blob/master/AUTHORS) in the root of the repo to be recognized for your contributions!
 
 ## Adding Images to a Readme
 

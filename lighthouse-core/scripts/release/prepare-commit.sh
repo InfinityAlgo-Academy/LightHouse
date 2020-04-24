@@ -40,11 +40,8 @@ git checkout -b "$BRANCH_NAME"
 # Install the dependencies.
 yarn install
 
-# Bump the version in package.json and clients/extension/manifest.json
-NEEDLE="^  \"version\": \"$SEMVER_PATTERN\""
-REPLACEMENT="  \"version\": \"$NEW_VERSION\""
-
-sed -i '' "s/$NEEDLE/$REPLACEMENT/g" package.json clients/extension/manifest.json
+# Bump the version in package.json and others.
+node lighthouse-core/scripts/release/bump-versions.js $NEW_VERSION
 
 # Update the fixtures with the new version
 yarn update:sample-json
@@ -64,13 +61,13 @@ if [[ $(echo "$NEW_CONTRIBUTORS" | wc -l) -gt 1 ]]; then
 fi
 
 git add changelog.md lighthouse-core/test/results/ proto/
-git commit -m "$NEW_VERSION"
+git commit -m "v$NEW_VERSION"
 
 echo "Version bump commit ready on the ${TXT_BOLD}$BRANCH_NAME${TXT_RESET} branch!"
 
 echo "${TXT_DIM}Press any key to see the git diff, CTRL+C to exit...${TXT_RESET}"
 read -n 1 -r unused_variable
-git --no-pager diff HEAD^
+git diff HEAD^
 echo "${TXT_DIM}Press any key to push to GitHub, CTRL+C to exit...${TXT_RESET}"
 read -n 1 -r unused_variable
 git push -u origin "$BRANCH_NAME"

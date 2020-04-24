@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
- * Copyright 2018 Google Inc. All Rights Reserved.
+ * Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 -->
@@ -155,6 +155,24 @@
           big enough target
         </a>
       </div>
+    </div>
+
+    <br/><br/>
+
+    <!-- even if a tap target's size is 0x0px it can still fail if overflowing content is visible -->
+    <div>
+      <a
+        data-gathered-target="zero-width-tap-target-with-overflowing-child-content"
+        style="display: block; width: 0; white-space: nowrap">
+        <!-- TODO: having the span should not be necessary to cause a failure here, but
+             right now we don't try to get the client rects of children that are text nodes -->
+        <span style="display: inline-block; width: 110px; height: 18px">zero width target</span>
+      </a>
+      <a
+        data-gathered-target="passing-tap-target-next-to-zero-width-target"
+        style="display: block; width: 110px; height: 100px;background: #aaa;">
+        passing target
+      </a>
     </div>
 
     <br/><br/>

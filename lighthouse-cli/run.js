@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -18,23 +18,36 @@ const log = require('lighthouse-logger');
 const getFilenamePrefix = require('../lighthouse-core/lib/file-namer.js').getFilenamePrefix;
 const assetSaver = require('../lighthouse-core/lib/asset-saver.js');
 
-const opn = require('opn');
+const open = require('open');
 
 /** @typedef {import('../lighthouse-core/lib/lh-error.js')} LighthouseError */
 
 const _RUNTIME_ERROR_CODE = 1;
 const _PROTOCOL_TIMEOUT_EXIT_CODE = 67;
-const _PAGE_HUNG_EXIT_CODE = 68;
-const _INSECURE_DOCUMENT_REQUEST_EXIT_CODE = 69;
 
 /**
  * exported for testing
- * @param {string} flags
+ * @param {string|Array<string>} flags
  * @return {Array<string>}
  */
 function parseChromeFlags(flags = '') {
-  const parsed = yargsParser(
-      flags.trim(), {configuration: {'camel-case-expansion': false, 'boolean-negation': false}});
+  // flags will be a string if there is only one chrome-flag parameter:
+  // i.e. `lighthouse --chrome-flags="--user-agent='My Agent' --headless"`
+  // flags will be an array if there are multiple chrome-flags parameters
+  // i.e. `lighthouse --chrome-flags="--user-agent='My Agent'" --chrome-flags="--headless"`
+  const trimmedFlags = (Array.isArray(flags) ? flags : [flags])
+      // `child_process.execFile` and other programmatic invocations will pass Lighthouse arguments atomically.
+      // Many developers aren't aware of this and attempt to pass arguments to LH as they would to a shell `--chromeFlags="--headless --no-sandbox"`.
+      // In this case, yargs will see `"--headless --no-sandbox"` and treat it as a single argument instead of the intended `--headless --no-sandbox`.
+      // We remove quotes that surround the entire expression to make this work.
+      // i.e. `child_process.execFile("lighthouse", ["http://google.com", "--chrome-flags='--headless --no-sandbox'")`
+      // the following regular expression removes those wrapping quotes:
+      .map((flagsGroup) => flagsGroup.replace(/^\s*('|")(.+)\1\s*$/, '$2').trim())
+      .join(' ');
+
+  const parsed = yargsParser(trimmedFlags, {
+    configuration: {'camel-case-expansion': false, 'boolean-negation': false},
+  });
 
   return Object
       .keys(parsed)
@@ -59,6 +72,7 @@ function parseChromeFlags(flags = '') {
 function getDebuggableChrome(flags) {
   return ChromeLauncher.launch({
     port: flags.port,
+    ignoreDefaultFlags: flags.chromeIgnoreDefaultFlags,
     chromeFlags: parseChromeFlags(flags.chromeFlags),
     logLevel: flags.logLevel,
   });
@@ -74,18 +88,6 @@ function printConnectionErrorAndExit() {
 function printProtocolTimeoutErrorAndExit() {
   console.error('Debugger protocol timed out while connecting to Chrome.');
   return process.exit(_PROTOCOL_TIMEOUT_EXIT_CODE);
-}
-
-/** @param {LighthouseError} err @return {never} */
-function printPageHungErrorAndExit(err) {
-  console.error('Page hung:', err.friendlyMessage);
-  return process.exit(_PAGE_HUNG_EXIT_CODE);
-}
-
-/** @param {LighthouseError} err @return {never} */
-function printInsecureDocumentRequestErrorAndExit(err) {
-  console.error('Insecure document request:', err.friendlyMessage);
-  return process.exit(_INSECURE_DOCUMENT_REQUEST_EXIT_CODE);
 }
 
 /**
@@ -109,10 +111,6 @@ function printErrorAndExit(err) {
     return printConnectionErrorAndExit();
   } else if (err.code === 'CRI_TIMEOUT') {
     return printProtocolTimeoutErrorAndExit();
-  } else if (err.code === 'PAGE_HUNG') {
-    return printPageHungErrorAndExit(err);
-  } else if (err.code === 'INSECURE_DOCUMENT_REQUEST') {
-    return printInsecureDocumentRequestErrorAndExit(err);
   } else {
     return printRuntimeErrorAndExit(err);
   }
@@ -156,7 +154,7 @@ async function saveResults(runnerResult, flags) {
 
     if (outputType === Printer.OutputMode[Printer.OutputMode.html]) {
       if (flags.view) {
-        opn(outputPath, {wait: false});
+        open(outputPath, {wait: false});
       } else {
         // eslint-disable-next-line max-len
         log.log('CLI', 'Protip: Run lighthouse with `--view` to immediately open the HTML report in your browser');

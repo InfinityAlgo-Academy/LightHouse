@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -263,6 +263,12 @@ class Audit {
       }
     }
 
+    // The Audit.Product type is bifurcated to enforce numericUnit accompanying numericValue;
+    // the existence of `numericUnit` is our discriminant.
+    // Make ts happy and enforce this contract programmatically by only pulling numericValue off of
+    // a `NumericProduct` type.
+    const numericProduct = 'numericUnit' in product ? product : undefined;
+
     return {
       id: audit.meta.id,
       title: auditTitle,
@@ -270,7 +276,8 @@ class Audit {
 
       score,
       scoreDisplayMode,
-      numericValue: product.numericValue,
+      numericValue: numericProduct && numericProduct.numericValue,
+      numericUnit: numericProduct && numericProduct.numericUnit,
 
       displayValue: product.displayValue,
       explanation: product.explanation,

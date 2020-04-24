@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -15,14 +15,12 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user they may want to use the User Timing API to help measure the performance of aspects of their page load and interaction. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Consider instrumenting your app with the User Timing API to measure your ' +
       'app\'s real-world performance during key user experiences. ' +
-      '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/user-timing).',
+      '[Learn more](https://web.dev/user-timings).',
   /** [ICU Syntax] Label for an audit identifying the number of User Timing timestamps present in the page. */
   displayValue: `{itemCount, plural,
     =1 {1 user timing}
     other {# user timings}
     }`,
-  /** Label for the Name column in the User Timing event data table. User Timing API entries are added by the developer of the web page. An example user timing event name: 'pageload_logoimage_done' */
-  columnName: 'Name',
   /** Label for the Type column in the User Timing event data table. User Timing API entries are added by the developer of the web page. The only possible types are 'Mark' and Measure'. */
   columnType: 'Type',
   /** Label for the Start Time column in the User Timing event data table. User Timing API entries are added by the developer of the web page. Start Times are the number of milliseconds since the page started loading, e.g. '380.26 ms' */
@@ -96,7 +94,7 @@ class UserTimings extends Audit {
 
       /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
-        {key: 'name', itemType: 'text', text: str_(UIStrings.columnName)},
+        {key: 'name', itemType: 'text', text: str_(i18n.UIStrings.columnName)},
         {key: 'timingType', itemType: 'text', text: str_(UIStrings.columnType)},
         {key: 'startTime', itemType: 'ms', granularity: 0.01,
           text: str_(UIStrings.columnStartTime)},

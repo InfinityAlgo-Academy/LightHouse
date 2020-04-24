@@ -1,11 +1,11 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const parseCacheControl = require('parse-cache-control');
 const Audit = require('../audit.js');
 const NetworkRequest = require('../../lib/network-request.js');
@@ -22,7 +22,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they need to adopt a long cache lifetime policy. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description:
     'A long cache lifetime can speed up repeat visits to your page. ' +
-    '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/cache-policy).',
+    '[Learn more](https://web.dev/uses-long-cache-ttl).',
   /** [ICU Syntax] Label for the audit identifying network resources with inefficient cache values. Clicking this will expand the audit to show the resources. */
   displayValue: `{itemCount, plural,
     =1 {1 resource found}
@@ -143,7 +143,7 @@ class CacheHeaders extends Audit {
   static isCacheableAsset(record) {
     const CACHEABLE_STATUS_CODES = new Set([200, 203, 206]);
 
-    /** @type {Set<LH.Crdp.Page.ResourceType>} */
+    /** @type {Set<LH.Crdp.Network.ResourceType>} */
     const STATIC_RESOURCE_TYPES = new Set([
       NetworkRequest.TYPES.Font,
       NetworkRequest.TYPES.Image,
@@ -276,7 +276,7 @@ class CacheHeaders extends Audit {
         // TODO(i18n): pre-compute localized duration
         {key: 'cacheLifetimeMs', itemType: 'ms', text: str_(i18n.UIStrings.columnCacheTTL),
           displayUnit: 'duration'},
-        {key: 'totalBytes', itemType: 'bytes', text: str_(i18n.UIStrings.columnSize),
+        {key: 'totalBytes', itemType: 'bytes', text: str_(i18n.UIStrings.columnTransferSize),
           displayUnit: 'kb', granularity: 1},
       ];
 
@@ -286,6 +286,7 @@ class CacheHeaders extends Audit {
       return {
         score,
         numericValue: totalWastedBytes,
+        numericUnit: 'byte',
         displayValue: str_(UIStrings.displayValue, {itemCount: results.length}),
         extendedInfo: {
           value: {

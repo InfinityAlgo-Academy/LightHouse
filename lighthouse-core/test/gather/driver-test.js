@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,93 +7,29 @@
 
 const Driver = require('../../gather/driver.js');
 const Connection = require('../../gather/connections/connection.js');
-const Element = require('../../lib/element.js');
-const EventEmitter = require('events').EventEmitter;
+const LHElement = require('../../lib/lh-element.js');
 const {protocolGetVersionResponse} = require('./fake-driver.js');
+const {createMockSendCommandFn, createMockOnceFn} = require('./mock-commands.js');
 
-const redirectDevtoolsLog = require('../fixtures/wikipedia-redirect.devtoolslog.json');
+const redirectDevtoolsLog = /** @type {LH.Protocol.RawEventMessage[]} */ (
+  require('../fixtures/wikipedia-redirect.devtoolslog.json'));
 
 /* eslint-env jest */
 
 jest.useFakeTimers();
 
 /**
- * Creates a jest mock function whose implementation consumes mocked protocol responses matching the
- * requested command in the order they were mocked.
- *
- * It is decorated with two methods:
- *    - `mockResponse` which pushes protocol message responses for consumption
- *    - `findInvocation` which asserts that `sendCommand` was invoked with the given command and
- *      returns the protocol message argument.
- */
-function createMockSendCommandFn() {
-  const mockResponses = [];
-  const mockFn = jest.fn().mockImplementation(command => {
-    const indexOfResponse = mockResponses.findIndex(entry => entry.command === command);
-    if (indexOfResponse === -1) throw new Error(`${command} unimplemented`);
-    const {response, delay} = mockResponses[indexOfResponse];
-    mockResponses.splice(indexOfResponse, 1);
-    if (delay) return new Promise(resolve => setTimeout(() => resolve(response), delay));
-    return Promise.resolve(response);
-  });
-
-  mockFn.mockResponse = (command, response, delay) => {
-    mockResponses.push({command, response, delay});
-    return mockFn;
-  };
-
-  mockFn.findInvocation = command => {
-    expect(mockFn).toHaveBeenCalledWith(command, expect.anything());
-    return mockFn.mock.calls.find(call => call[0] === command)[1];
-  };
-
-  return mockFn;
-}
-
-/**
- * Creates a jest mock function whose implementation invokes `.on`/`.once` listeners after a setTimeout tick.
- * Closely mirrors `createMockSendCommandFn`.
- *
- * It is decorated with two methods:
- *    - `mockEvent` which pushes protocol event payload for consumption
- *    - `findListener` which asserts that `on` was invoked with the given event name and
- *      returns the listener .
- */
-function createMockOnceFn() {
-  const mockEvents = [];
-  const mockFn = jest.fn().mockImplementation((eventName, listener) => {
-    const indexOfResponse = mockEvents.findIndex(entry => entry.event === eventName);
-    if (indexOfResponse === -1) return;
-    const {response} = mockEvents[indexOfResponse];
-    mockEvents.splice(indexOfResponse, 1);
-    // Wait a tick because real events never fire immediately
-    setTimeout(() => listener(response), 0);
-  });
-
-  mockFn.mockEvent = (event, response) => {
-    mockEvents.push({event, response});
-    return mockFn;
-  };
-
-  mockFn.findListener = event => {
-    expect(mockFn).toHaveBeenCalledWith(event, expect.anything());
-    return mockFn.mock.calls.find(call => call[0] === event)[1];
-  };
-
-  return mockFn;
-}
-
-/**
  * Transparently augments the promise with inspectable functions to query its state.
  *
  * @template T
  * @param {Promise<T>} promise
- * @return {Promise<T> & {isDone: () => boolean, isResolved: () => boolean, isRejected: () => boolean}}
  */
 function makePromiseInspectable(promise) {
   let isResolved = false;
   let isRejected = false;
+  /** @type {T=} */
   let resolvedValue = undefined;
+  /** @type {any=} */
   let rejectionError = undefined;
   const inspectablePromise = promise.then(value => {
     isResolved = true;
@@ -105,12 +41,51 @@ function makePromiseInspectable(promise) {
     throw err;
   });
 
-  inspectablePromise.isDone = () => isResolved || isRejected;
-  inspectablePromise.isResolved = () => isResolved;
-  inspectablePromise.isRejected = () => isRejected;
-  inspectablePromise.getDebugValues = () => ({resolvedValue, rejectionError});
+  return Object.assign(inspectablePromise, {
+    isDone() {
+      return isResolved || isRejected;
+    },
+    isResolved() {
+      return isResolved;
+    },
+    isRejected() {
+      return isRejected;
+    },
+    getDebugValues() {
+      return {resolvedValue, rejectionError};
+    },
+  });
+}
 
-  return inspectablePromise;
+function createDecomposedPromise() {
+  /** @type {Function} */
+  let resolve;
+  /** @type {Function} */
+  let reject;
+  const promise = new Promise((r1, r2) => {
+    resolve = r1;
+    reject = r2;
+  });
+  // @ts-ignore: Ignore 'unused' error.
+  return {promise, resolve, reject};
+}
+
+function createMockWaitForFn() {
+  const {promise, resolve, reject} = createDecomposedPromise();
+
+  const mockCancelFn = jest.fn();
+  const mockFn = jest.fn().mockReturnValue({promise, cancel: mockCancelFn});
+
+  return Object.assign(mockFn, {
+    mockResolve: resolve,
+    /** @param {Error=} err */
+    mockReject(err) {
+      reject(err || new Error('Rejected'));
+    },
+    getMockCancelFn() {
+      return mockCancelFn;
+    },
+  });
 }
 
 expect.extend({
@@ -118,7 +93,7 @@ expect.extend({
    * Asserts that an inspectable promise created by makePromiseInspectable is currently resolved or rejected.
    * This is useful for situations where we want to test that we are actually waiting for a particular event.
    *
-   * @param {ReturnType<makePromiseInspectable>} received
+   * @param {ReturnType<typeof makePromiseInspectable>} received
    * @param {string} failureMessage
    */
   toBeDone(received, failureMessage) {
@@ -139,21 +114,40 @@ expect.extend({
  * In some functions we have lots of promise follow ups that get queued by protocol messages.
  * This is a convenience method to easily advance all timers and flush all the queued microtasks.
  */
-async function flushAllTimersAndMicrotasks() {
-  for (let i = 0; i < 1000; i++) {
+async function flushAllTimersAndMicrotasks(ms = 1000) {
+  for (let i = 0; i < ms; i++) {
     jest.advanceTimersByTime(1);
     await Promise.resolve();
   }
 }
 
+/**
+ * @typedef DriverMockMethods
+ * @property {ReturnType<typeof createMockOnceFn>} on
+ * @property {ReturnType<typeof createMockOnceFn>} once
+ * @property {ReturnType<typeof createMockWaitForFn>} _waitForFcp
+ * @property {ReturnType<typeof createMockWaitForFn>} _waitForLoadEvent
+ * @property {ReturnType<typeof createMockWaitForFn>} _waitForNetworkIdle
+ * @property {ReturnType<typeof createMockWaitForFn>} _waitForCPUIdle
+ * @property {(...args: RecursivePartial<Parameters<Driver['gotoURL']>>) => ReturnType<Driver['gotoURL']>} gotoURL
+ * @property {(...args: RecursivePartial<Parameters<Driver['goOnline']>>) => ReturnType<Driver['goOnline']>} goOnline
+*/
+
+/** @typedef {Omit<Driver, keyof DriverMockMethods> & DriverMockMethods} TestDriver */
+
+/** @type {TestDriver} */
 let driver;
+/** @type {Connection & {sendCommand: ReturnType<typeof createMockSendCommandFn>}} */
 let connectionStub;
 
 beforeEach(() => {
+  // @ts-ignore - connectionStub has a mocked version of sendCommand implemented in each test
   connectionStub = new Connection();
+  // @ts-ignore
   connectionStub.sendCommand = cmd => {
     throw new Error(`${cmd} not implemented`);
   };
+  // @ts-ignore - driver has a mocked version of on/once implemented in each test
   driver = new Driver(connectionStub);
 });
 
@@ -169,30 +163,11 @@ describe('.querySelector(All)', () => {
 
   it('returns element instance when DOM.querySelector finds a node', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
-    .mockResponse('DOM.getDocument', {root: {nodeId: 249}})
+      .mockResponse('DOM.getDocument', {root: {nodeId: 249}})
       .mockResponse('DOM.querySelector', {nodeId: 231});
 
     const result = await driver.querySelector('meta head');
-    expect(result).toBeInstanceOf(Element);
-  });
-
-  it('returns [] when DOM.querySelectorAll finds no node', async () => {
-    connectionStub.sendCommand = createMockSendCommandFn()
-    .mockResponse('DOM.getDocument', {root: {nodeId: 249}})
-      .mockResponse('DOM.querySelectorAll', {nodeIds: []});
-
-    const result = await driver.querySelectorAll('#no.matches');
-    expect(result).toEqual([]);
-  });
-
-  it('returns element when DOM.querySelectorAll finds node', async () => {
-    connectionStub.sendCommand = createMockSendCommandFn()
-    .mockResponse('DOM.getDocument', {root: {nodeId: 249}})
-      .mockResponse('DOM.querySelectorAll', {nodeIds: [231]});
-
-    const result = await driver.querySelectorAll('#no.matches');
-    expect(result).toHaveLength(1);
-    expect(result[0]).toBeInstanceOf(Element);
+    expect(result).toBeInstanceOf(LHElement);
   });
 });
 
@@ -231,16 +206,18 @@ describe('.getObjectProperty', () => {
 
 describe('.getRequestContent', () => {
   it('throws if getRequestContent takes too long', async () => {
+    const mockTimeout = 5000;
+    const driverTimeout = 1000;
+    // @ts-ignore
     connectionStub.sendCommand = jest.fn()
-      .mockImplementationOnce(() => new Promise(r => setTimeout(r), 5000));
+      .mockImplementation(() => new Promise(r => setTimeout(r, mockTimeout)));
 
     // Fail if we don't reach our two assertions in the catch block
     expect.assertions(2);
 
     try {
-      const responsePromise = driver.getRequestContent('', 1000);
-      jest.advanceTimersByTime(1001);
-
+      const responsePromise = driver.getRequestContent('', driverTimeout);
+      await flushAllTimersAndMicrotasks(Math.max(driverTimeout, mockTimeout) + 1);
       await responsePromise;
     } catch (err) {
       expect(err.code).toEqual('PROTOCOL_TIMEOUT');
@@ -263,7 +240,7 @@ describe('.evaluateAsync', () => {
 
   it('uses a high default timeout', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
-    .mockResponse('Runtime.evaluate', {result: {value: 2}}, 65000);
+      .mockResponse('Runtime.evaluate', {result: {value: 2}}, 65000);
 
     const evaluatePromise = makePromiseInspectable(driver.evaluateAsync('1 + 1'));
     jest.advanceTimersByTime(30000);
@@ -278,7 +255,7 @@ describe('.evaluateAsync', () => {
 
   it('uses the specific timeout given', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
-    .mockResponse('Runtime.evaluate', {result: {value: 2}}, 10000);
+      .mockResponse('Runtime.evaluate', {result: {value: 2}}, 10000);
 
     driver.setNextProtocolTimeout(5000);
     const evaluatePromise = makePromiseInspectable(driver.evaluateAsync('1 + 1'));
@@ -291,7 +268,7 @@ describe('.evaluateAsync', () => {
 
   it('evaluates an expression in isolation', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: 1337}}})
+      .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: '1337'}}})
       .mockResponse('Page.createIsolatedWorld', {executionContextId: 1})
       .mockResponse('Runtime.evaluate', {result: {value: 2}});
 
@@ -300,15 +277,14 @@ describe('.evaluateAsync', () => {
 
     // Check that we used the correct frame when creating the isolated context
     const createWorldArgs = connectionStub.sendCommand.findInvocation('Page.createIsolatedWorld');
-    expect(createWorldArgs).toMatchObject({frameId: 1337});
+    expect(createWorldArgs).toMatchObject({frameId: '1337'});
 
     // Check that we used the isolated context when evaluating
     const evaluateArgs = connectionStub.sendCommand.findInvocation('Runtime.evaluate');
     expect(evaluateArgs).toMatchObject({contextId: 1});
 
     // Make sure we cached the isolated context from last time
-    connectionStub.sendCommand = createMockSendCommandFn().mockResponse(
-      'Runtime.evaluate',
+    connectionStub.sendCommand = createMockSendCommandFn().mockResponse('Runtime.evaluate',
       {result: {value: 2}}
     );
     await driver.evaluateAsync('1 + 1', {useIsolation: true});
@@ -317,22 +293,38 @@ describe('.evaluateAsync', () => {
       expect.anything()
     );
   });
+
+  it('recovers from isolation failures', async () => {
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: '1337'}}})
+      .mockResponse('Page.createIsolatedWorld', {executionContextId: 9001})
+      .mockResponse('Runtime.evaluate', Promise.reject(new Error('Cannot find context')))
+      .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: '1337'}}})
+      .mockResponse('Page.createIsolatedWorld', {executionContextId: 9002})
+      .mockResponse('Runtime.evaluate', {result: {value: 'mocked value'}});
+
+    const value = await driver.evaluateAsync('"magic"', {useIsolation: true});
+    expect(value).toEqual('mocked value');
+  });
 });
 
 describe('.sendCommand', () => {
   it('.sendCommand timesout when commands take too long', async () => {
+    const mockTimeout = 5000;
+    // @ts-ignore
     connectionStub.sendCommand = jest.fn()
-      .mockImplementationOnce(() => new Promise(r => setTimeout(r), 5000));
+      .mockImplementation(() => new Promise(r => setTimeout(r, mockTimeout)));
 
     driver.setNextProtocolTimeout(10000);
     const pageEnablePromise = driver.sendCommand('Page.enable');
-    jest.advanceTimersByTime(5001);
+    jest.advanceTimersByTime(mockTimeout + 1);
     await pageEnablePromise;
 
-    driver.setNextProtocolTimeout(5);
+    const driverTimeout = 5;
+    driver.setNextProtocolTimeout(driverTimeout);
     const pageDisablePromise = driver.sendCommand('Page.disable');
-    jest.advanceTimersByTime(10);
 
+    await flushAllTimersAndMicrotasks(driverTimeout + 1);
     await expect(pageDisablePromise).rejects.toMatchObject({
       code: 'PROTOCOL_TIMEOUT',
     });
@@ -343,8 +335,8 @@ describe('.beginTrace', () => {
   beforeEach(() => {
     connectionStub.sendCommand = createMockSendCommandFn()
       .mockResponse('Browser.getVersion', protocolGetVersionResponse)
-      .mockResponse('Page.enable', {})
-      .mockResponse('Tracing.start', {});
+      .mockResponse('Page.enable')
+      .mockResponse('Tracing.start');
   });
 
   it('will request default traceCategories', async () => {
@@ -369,8 +361,8 @@ describe('.beginTrace', () => {
   it('will adjust traceCategories based on chrome version', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
       .mockResponse('Browser.getVersion', {product: 'Chrome/70.0.3577.0'})
-      .mockResponse('Page.enable', {})
-      .mockResponse('Tracing.start', {});
+      .mockResponse('Page.enable')
+      .mockResponse('Tracing.start');
 
     await driver.beginTrace();
 
@@ -383,10 +375,8 @@ describe('.beginTrace', () => {
 
 describe('.setExtraHTTPHeaders', () => {
   it('should Network.setExtraHTTPHeaders when there are extra-headers', async () => {
-    connectionStub.sendCommand = createMockSendCommandFn().mockResponse(
-      'Network.setExtraHTTPHeaders',
-      {}
-    );
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('Network.setExtraHTTPHeaders');
 
     await driver.setExtraHTTPHeaders({
       'Cookie': 'monster',
@@ -395,14 +385,14 @@ describe('.setExtraHTTPHeaders', () => {
 
     expect(connectionStub.sendCommand).toHaveBeenCalledWith(
       'Network.setExtraHTTPHeaders',
+      undefined,
       expect.anything()
     );
   });
 
-  it('should Network.setExtraHTTPHeaders when there are extra-headers', async () => {
+  it('should not call Network.setExtraHTTPHeaders when there are not extra-headers', async () => {
     connectionStub.sendCommand = createMockSendCommandFn();
-    await driver.setExtraHTTPHeaders();
-
+    await driver.setExtraHTTPHeaders(null);
     expect(connectionStub.sendCommand).not.toHaveBeenCalled();
   });
 });
@@ -446,8 +436,8 @@ describe('.getAppManifest', () => {
 describe('.goOffline', () => {
   it('should send offline emulation', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Network.enable', {})
-      .mockResponse('Network.emulateNetworkConditions', {});
+      .mockResponse('Network.enable')
+      .mockResponse('Network.emulateNetworkConditions');
 
     await driver.goOffline();
     const emulateArgs = connectionStub.sendCommand
@@ -462,39 +452,21 @@ describe('.goOffline', () => {
 });
 
 describe('.gotoURL', () => {
-  function createMockWaitForFn() {
-    let resolve;
-    let reject;
-    const promise = new Promise((r1, r2) => {
-      resolve = r1;
-      reject = r2;
-    });
-
-    const mockCancelFn = jest.fn();
-    const mockFn = jest.fn().mockReturnValue({promise, cancel: mockCancelFn});
-
-    mockFn.mockResolve = () => resolve();
-    mockFn.mockReject = err => reject(err || new Error('Rejected'));
-    mockFn.getMockCancelFn = () => mockCancelFn;
-
-    return mockFn;
-  }
-
   beforeEach(() => {
     connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Network.enable', {})
-      .mockResponse('Page.enable', {})
-      .mockResponse('Page.setLifecycleEventsEnabled', {})
-      .mockResponse('Emulation.setScriptExecutionDisabled', {})
-      .mockResponse('Page.navigate', {})
-      .mockResponse('Target.setAutoAttach', {})
-      .mockResponse('Runtime.evaluate', {});
+      .mockResponse('Network.enable')
+      .mockResponse('Page.enable')
+      .mockResponse('Page.setLifecycleEventsEnabled')
+      .mockResponse('Emulation.setScriptExecutionDisabled')
+      .mockResponse('Page.navigate')
+      .mockResponse('Target.setAutoAttach')
+      .mockResponse('Runtime.evaluate');
   });
 
   it('will track redirects through gotoURL load', async () => {
-    const delay = _ => new Promise(resolve => setTimeout(resolve));
+    const delay = () => new Promise(resolve => setTimeout(resolve));
 
-    class ReplayConnection extends EventEmitter {
+    class ReplayConnection extends Connection {
       connect() {
         return Promise.resolve();
       }
@@ -502,9 +474,13 @@ describe('.gotoURL', () => {
         return Promise.resolve();
       }
       replayLog() {
-        redirectDevtoolsLog.forEach(msg => this.emit('protocolevent', msg));
+        redirectDevtoolsLog.forEach(msg => this.emitProtocolEvent(msg));
       }
-      sendCommand(method) {
+      /**
+       * @param {string} method
+       * @param {any} _
+       */
+      sendCommand(method, _) {
         const resolve = Promise.resolve();
 
         // If navigating, wait, then replay devtools log in parallel to resolve.
@@ -526,6 +502,8 @@ describe('.gotoURL', () => {
 
     const loadOptions = {
       waitForLoad: true,
+      /** @type {LH.Gatherer.PassContext} */
+      // @ts-ignore - we don't need the entire context for the test.
       passContext: {
         passConfig: {
           pauseAfterLoadMs: 0,
@@ -534,12 +512,10 @@ describe('.gotoURL', () => {
         },
       },
     };
-
     const loadPromise = driver.gotoURL(startUrl, loadOptions);
 
     await flushAllTimersAndMicrotasks();
-    const loadedUrl = await loadPromise;
-    expect(loadedUrl).toEqual(finalUrl);
+    expect(await loadPromise).toEqual({finalUrl, timedOut: false});
   });
 
   describe('when waitForNavigated', () => {
@@ -568,23 +544,24 @@ describe('.gotoURL', () => {
   describe('when waitForLoad', () => {
     const url = 'https://example.com';
 
-    ['FCP', 'LoadEvent', 'NetworkIdle', 'CPUIdle'].forEach(name => {
+    ['Fcp', 'LoadEvent', 'NetworkIdle', 'CPUIdle'].forEach(name => {
       it(`should wait for ${name}`, async () => {
-        driver._waitForFCP = createMockWaitForFn();
+        driver._waitForFcp = createMockWaitForFn();
         driver._waitForLoadEvent = createMockWaitForFn();
         driver._waitForNetworkIdle = createMockWaitForFn();
         driver._waitForCPUIdle = createMockWaitForFn();
 
+        // @ts-ignore - dynamic property access, tests will definitely fail if the property were to change
         const waitForResult = driver[`_waitFor${name}`];
         const otherWaitForResults = [
-          driver._waitForFCP,
+          driver._waitForFcp,
           driver._waitForLoadEvent,
           driver._waitForNetworkIdle,
           driver._waitForCPUIdle,
         ].filter(l => l !== waitForResult);
 
         const loadPromise = makePromiseInspectable(driver.gotoURL(url, {
-          waitForFCP: true,
+          waitForFcp: true,
           waitForLoad: true,
         }));
 
@@ -600,7 +577,7 @@ describe('.gotoURL', () => {
         waitForResult.mockResolve();
         await flushAllTimersAndMicrotasks();
         expect(loadPromise).toBeDone(`Did not resolve on ${name}`);
-        await loadPromise;
+        expect(await loadPromise).toMatchObject({timedOut: false});
       });
     });
 
@@ -630,7 +607,7 @@ describe('.gotoURL', () => {
       driver._waitForCPUIdle.mockResolve();
       await flushAllTimersAndMicrotasks();
       expect(loadPromise).toBeDone(`Did not resolve on CPU idle`);
-      await loadPromise;
+      expect(await loadPromise).toMatchObject({timedOut: false});
     });
 
     it('should timeout when not resolved fast enough', async () => {
@@ -661,6 +638,7 @@ describe('.gotoURL', () => {
       expect(driver._waitForLoadEvent.getMockCancelFn()).toHaveBeenCalled();
       expect(driver._waitForNetworkIdle.getMockCancelFn()).toHaveBeenCalled();
       expect(driver._waitForCPUIdle.getMockCancelFn()).toHaveBeenCalled();
+      expect(await loadPromise).toMatchObject({timedOut: true});
     });
 
     it('should cleanup listeners even when waits reject', async () => {
@@ -675,116 +653,14 @@ describe('.gotoURL', () => {
       // Make sure we still cleaned up our listeners
       expect(driver._waitForLoadEvent.getMockCancelFn()).toHaveBeenCalled();
     });
-
-    it('does not reject when page is secure', async () => {
-      const secureSecurityState = {
-        explanations: [],
-        securityState: 'secure',
-      };
-
-      driver.on = driver.once = createMockOnceFn()
-        .mockEvent('Security.securityStateChanged', secureSecurityState);
-
-      const startUrl = 'https://www.example.com';
-      const loadOptions = {
-        waitForLoad: true,
-        passContext: {
-          settings: {
-            maxWaitForLoad: 1,
-          },
-        },
-      };
-
-      const loadPromise = driver.gotoURL(startUrl, loadOptions);
-      await flushAllTimersAndMicrotasks();
-      await loadPromise;
-    });
-
-    it('does not reject when page is insecure but http', async () => {
-      const secureSecurityState = {
-        explanations: [],
-        securityState: 'insecure',
-        schemeIsCryptographic: false,
-      };
-
-      driver.on = driver.once = createMockOnceFn()
-        .mockEvent('Security.securityStateChanged', secureSecurityState);
-
-      const startUrl = 'https://www.example.com';
-      const loadOptions = {
-        waitForLoad: true,
-        passContext: {
-          settings: {
-            maxWaitForLoad: 1,
-          },
-        },
-      };
-
-      const loadPromise = driver.gotoURL(startUrl, loadOptions);
-      await flushAllTimersAndMicrotasks();
-      await loadPromise;
-    });
-
-    it('rejects when page is insecure', async () => {
-      const insecureSecurityState = {
-        explanations: [
-          {
-            description: 'reason 1.',
-            securityState: 'insecure',
-          },
-          {
-            description: 'blah.',
-            securityState: 'info',
-          },
-          {
-            description: 'reason 2.',
-            securityState: 'insecure',
-          },
-        ],
-        securityState: 'insecure',
-        schemeIsCryptographic: true,
-      };
-
-      driver.on = driver.once = createMockOnceFn();
-
-      const startUrl = 'https://www.example.com';
-      const loadOptions = {
-        waitForLoad: true,
-        passContext: {
-          passConfig: {
-            networkQuietThresholdMs: 1,
-          },
-        },
-      };
-
-      // 2 assertions in the catch block and the 1 implicit in `findListener`
-      expect.assertions(3);
-
-      try {
-        const loadPromise = driver.gotoURL(startUrl, loadOptions);
-        await flushAllTimersAndMicrotasks();
-
-        // Use `findListener` instead of `mockEvent` so we can control exactly when the promise resolves
-        const listener = driver.on.findListener('Security.securityStateChanged');
-        listener(insecureSecurityState);
-        await flushAllTimersAndMicrotasks();
-        await loadPromise;
-      } catch (err) {
-        expect(err).toHaveProperty('code', 'INSECURE_DOCUMENT_REQUEST');
-        expect(err.friendlyMessage).toBeDisplayString(
-          'The URL you have provided does not have a valid security certificate. ' +
-          'reason 1. reason 2.'
-        );
-      }
-    });
   });
 });
 
-describe('._waitForFCP', () => {
+describe('._waitForFcp', () => {
   it('should not resolve until FCP fires', async () => {
     driver.on = driver.once = createMockOnceFn();
 
-    const waitPromise = makePromiseInspectable(driver._waitForFCP(60 * 1000).promise);
+    const waitPromise = makePromiseInspectable(driver._waitForFcp(0, 60 * 1000).promise);
     const listener = driver.on.findListener('Page.lifecycleEvent');
 
     await flushAllTimersAndMicrotasks();
@@ -800,10 +676,30 @@ describe('._waitForFCP', () => {
     await waitPromise;
   });
 
+  it('should wait for pauseAfterFcpMs after FCP', async () => {
+    driver.on = driver.once = createMockOnceFn();
+
+    const waitPromise = makePromiseInspectable(driver._waitForFcp(5000, 60 * 1000).promise);
+    const listener = driver.on.findListener('Page.lifecycleEvent');
+
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Resolved without FCP');
+
+    listener({name: 'firstContentfulPaint'});
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Did not wait for pauseAfterFcpMs');
+
+    jest.advanceTimersByTime(5001);
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).toBeDone('Did not resolve after pauseAfterFcpMs');
+
+    await waitPromise;
+  });
+
   it('should timeout', async () => {
     driver.on = driver.once = createMockOnceFn();
 
-    const waitPromise = makePromiseInspectable(driver._waitForFCP(5000).promise);
+    const waitPromise = makePromiseInspectable(driver._waitForFcp(0, 5000).promise);
 
     await flushAllTimersAndMicrotasks();
     expect(waitPromise).not.toBeDone('Resolved before timeout');
@@ -818,7 +714,7 @@ describe('._waitForFCP', () => {
     driver.on = driver.once = createMockOnceFn();
     driver.off = jest.fn();
 
-    const {promise: rawPromise, cancel} = driver._waitForFCP(5000);
+    const {promise: rawPromise, cancel} = driver._waitForFcp(0, 5000);
     const waitPromise = makePromiseInspectable(rawPromise);
 
     await flushAllTimersAndMicrotasks();
@@ -835,23 +731,34 @@ describe('._waitForFCP', () => {
 describe('.assertNoSameOriginServiceWorkerClients', () => {
   beforeEach(() => {
     connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('ServiceWorker.enable', {})
-      .mockResponse('ServiceWorker.disable', {})
-      .mockResponse('ServiceWorker.enable', {})
-      .mockResponse('ServiceWorker.disable', {});
+      .mockResponse('ServiceWorker.enable')
+      .mockResponse('ServiceWorker.disable')
+      .mockResponse('ServiceWorker.enable')
+      .mockResponse('ServiceWorker.disable');
   });
 
+  /**
+   * @param {number} id
+   * @param {string} url
+   * @param {boolean=} isDeleted
+   */
   function createSWRegistration(id, url, isDeleted) {
     return {
       isDeleted: !!isDeleted,
-      registrationId: id,
+      registrationId: String(id),
       scopeURL: url,
     };
   }
 
+  /**
+   * @param {number} id
+   * @param {string} url
+   * @param {string[]} controlledClients
+   * @param {LH.Crdp.ServiceWorker.ServiceWorkerVersionStatus=} status
+   */
   function createActiveWorker(id, url, controlledClients, status = 'activated') {
     return {
-      registrationId: id,
+      registrationId: String(id),
       scriptURL: url,
       controlledClients,
       status,
@@ -954,9 +861,9 @@ describe('.assertNoSameOriginServiceWorkerClients', () => {
 describe('.goOnline', () => {
   beforeEach(() => {
     connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Network.enable', {})
-      .mockResponse('Emulation.setCPUThrottlingRate', {})
-      .mockResponse('Network.emulateNetworkConditions', {});
+      .mockResponse('Network.enable')
+      .mockResponse('Emulation.setCPUThrottlingRate')
+      .mockResponse('Network.emulateNetworkConditions');
   });
 
   it('re-establishes previous throttling settings', async () => {
@@ -1024,94 +931,95 @@ describe('.goOnline', () => {
   });
 });
 
+describe('Domain.enable/disable State', () => {
+  it('dedupes (simple)', async () => {
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('Network.enable')
+      .mockResponse('Network.disable')
+      .mockResponse('Fetch.enable')
+      .mockResponse('Fetch.disable');
+
+    await driver.sendCommand('Network.enable');
+    await driver.sendCommand('Network.enable');
+    expect(connectionStub.sendCommand).toHaveBeenCalledTimes(1);
+
+    await driver.sendCommand('Network.disable');
+    expect(connectionStub.sendCommand).toHaveBeenCalledTimes(1);
+    // Network still has one enable.
+
+    await driver.sendCommand('Fetch.enable');
+    expect(connectionStub.sendCommand).toHaveBeenCalledTimes(2);
+
+    await driver.sendCommand('Network.disable');
+    expect(connectionStub.sendCommand).toHaveBeenCalledTimes(3);
+    // Network is now disabled.
+
+    await driver.sendCommand('Fetch.disable');
+    expect(connectionStub.sendCommand).toHaveBeenCalledTimes(4);
+  });
+
+  it('dedupes (sessions)', async () => {
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('Network.enable')
+      .mockResponseToSession('Network.enable', '123')
+      .mockResponse('Network.disable')
+      .mockResponseToSession('Network.disable', '123');
+
+    await driver.sendCommand('Network.enable');
+    await driver.sendCommandToSession('Network.enable', '123');
+    expect(connectionStub.sendCommand).toHaveBeenCalledTimes(2);
+
+    await driver.sendCommand('Network.enable');
+    await driver.sendCommandToSession('Network.enable', '123');
+    expect(connectionStub.sendCommand).toHaveBeenCalledTimes(2);
+
+    await driver.sendCommandToSession('Network.disable', '123');
+    expect(connectionStub.sendCommand).toHaveBeenCalledTimes(2);
+
+    await driver.sendCommand('Network.disable');
+    expect(connectionStub.sendCommand).toHaveBeenCalledTimes(2);
+
+    await driver.sendCommandToSession('Network.disable', '123');
+    expect(connectionStub.sendCommand).toHaveBeenCalledTimes(3);
+
+    await driver.sendCommand('Network.disable');
+    expect(connectionStub.sendCommand).toHaveBeenCalledTimes(4);
+  });
+});
+
 describe('Multi-target management', () => {
   it('enables the Network domain for iframes', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Target.sendMessageToTarget', {})
-      .mockResponse('Target.sendMessageToTarget', {})
-      .mockResponse('Target.sendMessageToTarget', {});
+      .mockResponseToSession('Network.enable', '123')
+      .mockResponseToSession('Target.setAutoAttach', '123')
+      .mockResponseToSession('Runtime.runIfWaitingForDebugger', '123');
 
     driver._eventEmitter.emit('Target.attachedToTarget', {
-      sessionId: 123,
+      sessionId: '123',
+      // @ts-ignore: Ignore partial targetInfo.
       targetInfo: {type: 'iframe'},
     });
     await flushAllTimersAndMicrotasks();
 
-    const sendMessageArgs = connectionStub.sendCommand
-      .findInvocation('Target.sendMessageToTarget');
-    expect(sendMessageArgs).toEqual({
-      message: '{"id":1,"method":"Network.enable"}',
-      sessionId: 123,
-    });
-  });
-
-  it('enables the Network domain for iframes of iframes of iframes', async () => {
-    connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Target.sendMessageToTarget', {})
-      .mockResponse('Target.sendMessageToTarget', {})
-      .mockResponse('Target.sendMessageToTarget', {});
-
-    driver._eventEmitter.emit('Target.receivedMessageFromTarget', {
-      sessionId: 'Outer',
-      message: JSON.stringify({
-        method: 'Target.receivedMessageFromTarget',
-        params: {
-          sessionId: 'Middle',
-          message: JSON.stringify({
-            method: 'Target.attachedToTarget',
-            params: {
-              sessionId: 'Inner',
-              targetInfo: {type: 'iframe'},
-            },
-          }),
-        },
-      }),
-    });
-
-    await flushAllTimersAndMicrotasks();
-
-    const sendMessageArgs = connectionStub.sendCommand
-      .findInvocation('Target.sendMessageToTarget');
-    const stringified = `{
-      "id": 3,
-      "method": "Target.sendMessageToTarget",
-      "params": {
-        "sessionId": "Middle",
-        "message": "{
-          \\"id\\": 2,
-          \\"method\\": \\"Target.sendMessageToTarget\\",
-          \\"params\\": {
-            \\"sessionId\\": \\"Inner\\",
-            \\"message\\":\\ "{
-              \\\\\\"id\\\\\\":1,
-              \\\\\\"method\\\\\\":\\\\\\"Network.enable\\\\\\"
-            }\\"
-          }}"
-        }
-      }`.replace(/\s+/g, '');
-
-    expect(sendMessageArgs).toEqual({
-      message: stringified,
-      sessionId: 'Outer',
-    });
+    expect(connectionStub.sendCommand).toHaveBeenNthCalledWith(1, 'Network.enable', '123');
+    expect(connectionStub.sendCommand)
+      .toHaveBeenNthCalledWith(2, 'Target.setAutoAttach', '123', expect.anything());
+    expect(connectionStub.sendCommand)
+      .toHaveBeenNthCalledWith(3, 'Runtime.runIfWaitingForDebugger', '123');
   });
 
   it('ignores other target types, but still resumes them', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Target.sendMessageToTarget', {});
+      .mockResponse('Target.sendMessageToTarget');
 
     driver._eventEmitter.emit('Target.attachedToTarget', {
       sessionId: 'SW1',
+      // @ts-ignore: Ignore partial targetInfo.
       targetInfo: {type: 'service_worker'},
     });
     await flushAllTimersAndMicrotasks();
 
-
-    const sendMessageArgs = connectionStub.sendCommand
-      .findInvocation('Target.sendMessageToTarget');
-    expect(sendMessageArgs).toEqual({
-      message: JSON.stringify({id: 1, method: 'Runtime.runIfWaitingForDebugger'}),
-      sessionId: 'SW1',
-    });
+    expect(connectionStub.sendCommand)
+      .toHaveBeenNthCalledWith(1, 'Runtime.runIfWaitingForDebugger', 'SW1');
   });
 });

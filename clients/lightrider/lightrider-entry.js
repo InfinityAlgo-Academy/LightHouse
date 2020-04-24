@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -9,6 +9,7 @@ const lighthouse = require('../../lighthouse-core/index.js');
 
 const LHError = require('../../lighthouse-core/lib/lh-error.js');
 const preprocessor = require('../../lighthouse-core/lib/proto-preprocessor.js');
+const assetSaver = require('../../lighthouse-core/lib/asset-saver.js');
 
 /** @type {Record<'mobile'|'desktop', LH.Config.Json>} */
 const LR_PRESETS = {
@@ -24,9 +25,9 @@ const LR_PRESETS = {
  * If configOverride is provided, lrDevice and categoryIDs are ignored.
  * @param {Connection} connection
  * @param {string} url
- * @param {LH.Flags} flags Lighthouse flags, including `output`
+ * @param {LH.Flags} flags Lighthouse flags
  * @param {{lrDevice?: 'desktop'|'mobile', categoryIDs?: Array<string>, logAssets: boolean, configOverride?: LH.Config.Json}} lrOpts Options coming from Lightrider
- * @return {Promise<string|Array<string>|void>}
+ * @return {Promise<string>}
  */
 async function runLighthouseInLR(connection, url, flags, lrOpts) {
   const {lrDevice, categoryIDs, logAssets, configOverride} = lrOpts;
@@ -52,22 +53,24 @@ async function runLighthouseInLR(connection, url, flags, lrOpts) {
 
   try {
     const runnerResult = await lighthouse(url, flags, config, connection);
-    if (!runnerResult) return;
+    if (!runnerResult) throw new Error('Lighthouse finished without a runnerResult');
 
     // pre process the LHR for proto
-    if (flags.output === 'json' && typeof runnerResult.report === 'string') {
-      // When LR is called with |internal: {keep_raw_response: true, save_lighthouse_assets: true}|,
-      // this code will log artifacts to raw_response.artifacts.
-      if (logAssets) {
-        // @ts-ignore - Regenerate the report, but tack on the artifacts.
-        runnerResult.lhr.artifacts = runnerResult.artifacts;
-        runnerResult.report = JSON.stringify(runnerResult.lhr);
-      }
+    const preprocessedLhr = preprocessor.processForProto(runnerResult.lhr);
 
-      return preprocessor.processForProto(runnerResult.report);
+    // When LR is called with |internal: {keep_raw_response: true, save_lighthouse_assets: true}|,
+    // we log artifacts to raw_response.artifacts.
+    if (logAssets) {
+      // Properly serialize artifact errors.
+      const artifactsJson = JSON.stringify(runnerResult.artifacts, assetSaver.stringifyReplacer);
+
+      return JSON.stringify({
+        ...preprocessedLhr,
+        artifacts: JSON.parse(artifactsJson),
+      });
     }
 
-    return runnerResult.report;
+    return JSON.stringify(preprocessedLhr);
   } catch (err) {
     // If an error ruined the entire lighthouse run, attempt to return a meaningful error.
     let runtimeError;

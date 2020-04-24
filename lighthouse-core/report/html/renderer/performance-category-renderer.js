@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2018 Google Inc. All Rights Reserved.
+ * Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@
 class PerformanceCategoryRenderer extends CategoryRenderer {
   /**
    * @param {LH.ReportResult.AuditRef} audit
-   * @return {Element}
+   * @return {!Element}
    */
   _renderMetric(audit) {
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-metric', this.templateContext);
@@ -54,7 +54,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
   /**
    * @param {LH.ReportResult.AuditRef} audit
    * @param {number} scale
-   * @return {Element}
+   * @return {!Element}
    */
   _renderOpportunity(audit, scale) {
     const oppTmpl = this.dom.cloneTemplate('#tmpl-lh-opportunity', this.templateContext);
@@ -73,7 +73,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     const displayEl = this.dom.find('.lh-audit__display-text', element);
     const sparklineWidthPct = `${details.overallSavingsMs / scale * 100}%`;
     this.dom.find('.lh-sparkline__bar', element).style.width = sparklineWidthPct;
-    displayEl.textContent = Util.formatSeconds(details.overallSavingsMs, 0.01);
+    displayEl.textContent = Util.i18n.formatSeconds(details.overallSavingsMs, 0.01);
 
     // Set [title] tooltips
     if (audit.result.displayValue) {
@@ -112,6 +112,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
    * @override
    */
   render(category, groups, environment) {
+    const strings = Util.i18n.strings;
     const element = this.dom.createElement('div', 'lh-category');
     if (environment === 'PSI') {
       const gaugeEl = this.dom.createElement('div', 'lh-score__gauge');
@@ -123,16 +124,17 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     }
 
     // Metrics.
-    const metricAudits = category.auditRefs.filter(audit => audit.group === 'metrics');
     const metricAuditsEl = this.renderAuditGroup(groups.metrics);
 
     // Metric descriptions toggle.
     const toggleTmpl = this.dom.cloneTemplate('#tmpl-lh-metrics-toggle', this.templateContext);
-    const toggleEl = this.dom.find('.lh-metrics-toggle', toggleTmpl);
-    metricAuditsEl.prepend(...toggleEl.childNodes);
+    const _toggleEl = this.dom.find('.lh-metrics-toggle', toggleTmpl);
+    metricAuditsEl.append(..._toggleEl.childNodes);
 
-    const keyMetrics = metricAudits.filter(a => a.weight >= 3);
-    const otherMetrics = metricAudits.filter(a => a.weight < 3);
+    const metricAudits = category.auditRefs.filter(audit => audit.group === 'metrics');
+
+    const keyMetrics = metricAudits.slice(0, 3);
+    const otherMetrics = metricAudits.slice(3);
 
     const metricsBoxesEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-columns');
     const metricsColumn1El = this.dom.createChildOf(metricsBoxesEl, 'div', 'lh-column');
@@ -148,7 +150,8 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     // 'Values are estimated and may vary' is used as the category description for PSI
     if (environment !== 'PSI') {
       const estValuesEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-metrics__disclaimer');
-      estValuesEl.textContent = Util.UIStrings.varianceDisclaimer;
+      const disclaimerEl = this.dom.convertMarkdownLinkSnippets(strings.varianceDisclaimer);
+      estValuesEl.appendChild(disclaimerEl);
     }
 
     metricAuditsEl.classList.add('lh-audit-group--metrics');
@@ -165,17 +168,24 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     }
 
     // Budgets
-    const budgetAudit = category.auditRefs.find(audit => audit.id === 'performance-budget');
-    if (budgetAudit && budgetAudit.result.details) {
-      const table = this.detailsRenderer.render(budgetAudit.result.details);
-      if (table) {
-        table.id = budgetAudit.id;
-        table.classList.add('lh-audit');
-        const budgetsGroupEl = this.renderAuditGroup(groups.budgets);
-        budgetsGroupEl.appendChild(table);
-        budgetsGroupEl.classList.add('lh-audit-group--budgets');
-        element.appendChild(budgetsGroupEl);
+    /** @type {Array<Element>} */
+    const budgetTableEls = [];
+    ['performance-budget', 'timing-budget'].forEach((id) => {
+      const audit = category.auditRefs.find(audit => audit.id === id);
+      if (audit && audit.result.details) {
+        const table = this.detailsRenderer.render(audit.result.details);
+        if (table) {
+          table.id = id;
+          table.classList.add('lh-audit');
+          budgetTableEls.push(table);
+        }
       }
+    });
+    if (budgetTableEls.length > 0) {
+      const budgetsGroupEl = this.renderAuditGroup(groups.budgets);
+      budgetTableEls.forEach(table => budgetsGroupEl.appendChild(table));
+      budgetsGroupEl.classList.add('lh-audit-group--budgets');
+      element.appendChild(budgetsGroupEl);
     }
 
     // Opportunities
@@ -193,9 +203,9 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       const tmpl = this.dom.cloneTemplate('#tmpl-lh-opportunity-header', this.templateContext);
 
       this.dom.find('.lh-load-opportunity__col--one', tmpl).textContent =
-        Util.UIStrings.opportunityResourceColumnLabel;
+        strings.opportunityResourceColumnLabel;
       this.dom.find('.lh-load-opportunity__col--two', tmpl).textContent =
-        Util.UIStrings.opportunitySavingsColumnLabel;
+        strings.opportunitySavingsColumnLabel;
 
       const headerEl = this.dom.find('.lh-load-opportunity__header', tmpl);
       groupEl.appendChild(headerEl);

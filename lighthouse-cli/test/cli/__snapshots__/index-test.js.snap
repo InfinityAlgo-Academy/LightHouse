@@ -25,6 +25,9 @@ Object {
       "path": "metrics/first-contentful-paint",
     },
     Object {
+      "path": "metrics/largest-contentful-paint",
+    },
+    Object {
       "path": "metrics/first-meaningful-paint",
     },
     Object {
@@ -43,7 +46,13 @@ Object {
       "path": "metrics/estimated-input-latency",
     },
     Object {
+      "path": "metrics/total-blocking-time",
+    },
+    Object {
       "path": "metrics/max-potential-fid",
+    },
+    Object {
+      "path": "metrics/cumulative-layout-shift",
     },
     Object {
       "path": "errors-in-console",
@@ -79,10 +88,16 @@ Object {
       "path": "themed-omnibox",
     },
     Object {
+      "path": "maskable-icon",
+    },
+    Object {
       "path": "content-width",
     },
     Object {
       "path": "image-aspect-ratio",
+    },
+    Object {
+      "path": "image-size-responsive",
     },
     Object {
       "path": "deprecations",
@@ -127,7 +142,13 @@ Object {
       "path": "performance-budget",
     },
     Object {
+      "path": "timing-budget",
+    },
+    Object {
       "path": "resource-summary",
+    },
+    Object {
+      "path": "third-party-summary",
     },
     Object {
       "path": "manual/pwa-cross-browser",
@@ -145,6 +166,15 @@ Object {
       "path": "accessibility/aria-allowed-attr",
     },
     Object {
+      "path": "accessibility/aria-hidden-body",
+    },
+    Object {
+      "path": "accessibility/aria-hidden-focus",
+    },
+    Object {
+      "path": "accessibility/aria-input-field-name",
+    },
+    Object {
       "path": "accessibility/aria-required-attr",
     },
     Object {
@@ -157,13 +187,13 @@ Object {
       "path": "accessibility/aria-roles",
     },
     Object {
+      "path": "accessibility/aria-toggle-field-name",
+    },
+    Object {
       "path": "accessibility/aria-valid-attr-value",
     },
     Object {
       "path": "accessibility/aria-valid-attr",
-    },
-    Object {
-      "path": "accessibility/audio-caption",
     },
     Object {
       "path": "accessibility/button-name",
@@ -184,10 +214,19 @@ Object {
       "path": "accessibility/document-title",
     },
     Object {
-      "path": "accessibility/duplicate-id",
+      "path": "accessibility/duplicate-id-active",
+    },
+    Object {
+      "path": "accessibility/duplicate-id-aria",
+    },
+    Object {
+      "path": "accessibility/form-field-multiple-labels",
     },
     Object {
       "path": "accessibility/frame-title",
+    },
+    Object {
+      "path": "accessibility/heading-order",
     },
     Object {
       "path": "accessibility/html-has-lang",
@@ -256,9 +295,6 @@ Object {
       "path": "accessibility/manual/focusable-controls",
     },
     Object {
-      "path": "accessibility/manual/heading-levels",
-    },
-    Object {
       "path": "accessibility/manual/interactive-element-affordance",
     },
     Object {
@@ -298,6 +334,9 @@ Object {
       "path": "byte-efficiency/unused-css-rules",
     },
     Object {
+      "path": "byte-efficiency/unused-javascript",
+    },
+    Object {
       "path": "byte-efficiency/uses-webp-images",
     },
     Object {
@@ -317,6 +356,9 @@ Object {
     },
     Object {
       "path": "dobetterweb/doctype",
+    },
+    Object {
+      "path": "dobetterweb/charset",
     },
     Object {
       "path": "dobetterweb/dom-size",
@@ -397,6 +439,21 @@ Object {
         },
         Object {
           "group": "a11y-aria",
+          "id": "aria-hidden-body",
+          "weight": 10,
+        },
+        Object {
+          "group": "a11y-aria",
+          "id": "aria-hidden-focus",
+          "weight": 3,
+        },
+        Object {
+          "group": "a11y-aria",
+          "id": "aria-input-field-name",
+          "weight": 3,
+        },
+        Object {
+          "group": "a11y-aria",
           "id": "aria-required-attr",
           "weight": 10,
         },
@@ -417,17 +474,17 @@ Object {
         },
         Object {
           "group": "a11y-aria",
+          "id": "aria-toggle-field-name",
+          "weight": 3,
+        },
+        Object {
+          "group": "a11y-aria",
           "id": "aria-valid-attr-value",
           "weight": 10,
         },
         Object {
           "group": "a11y-aria",
           "id": "aria-valid-attr",
-          "weight": 10,
-        },
-        Object {
-          "group": "a11y-audio-video",
-          "id": "audio-caption",
           "weight": 10,
         },
         Object {
@@ -461,14 +518,29 @@ Object {
           "weight": 3,
         },
         Object {
-          "group": "a11y-best-practices",
-          "id": "duplicate-id",
-          "weight": 1,
+          "group": "a11y-navigation",
+          "id": "duplicate-id-active",
+          "weight": 3,
+        },
+        Object {
+          "group": "a11y-aria",
+          "id": "duplicate-id-aria",
+          "weight": 10,
+        },
+        Object {
+          "group": "a11y-names-labels",
+          "id": "form-field-multiple-labels",
+          "weight": 2,
         },
         Object {
           "group": "a11y-names-labels",
           "id": "frame-title",
           "weight": 3,
+        },
+        Object {
+          "group": "a11y-navigation",
+          "id": "heading-order",
+          "weight": 2,
         },
         Object {
           "group": "a11y-language",
@@ -597,10 +669,6 @@ Object {
           "weight": 0,
         },
         Object {
-          "id": "heading-levels",
-          "weight": 0,
-        },
-        Object {
           "id": "use-landmarks",
           "weight": 0,
         },
@@ -644,6 +712,10 @@ Object {
           "weight": 1,
         },
         Object {
+          "id": "charset",
+          "weight": 1,
+        },
+        Object {
           "id": "no-vulnerable-libraries",
           "weight": 1,
         },
@@ -671,6 +743,10 @@ Object {
           "id": "image-aspect-ratio",
           "weight": 1,
         },
+        Object {
+          "id": "image-size-responsive",
+          "weight": 1,
+        },
       ],
       "title": "Best Practices",
     },
@@ -679,31 +755,43 @@ Object {
         Object {
           "group": "metrics",
           "id": "first-contentful-paint",
-          "weight": 3,
-        },
-        Object {
-          "group": "metrics",
-          "id": "first-meaningful-paint",
-          "weight": 1,
+          "weight": 15,
         },
         Object {
           "group": "metrics",
           "id": "speed-index",
-          "weight": 4,
+          "weight": 15,
+        },
+        Object {
+          "group": "metrics",
+          "id": "largest-contentful-paint",
+          "weight": 25,
         },
         Object {
           "group": "metrics",
           "id": "interactive",
+          "weight": 15,
+        },
+        Object {
+          "group": "metrics",
+          "id": "total-blocking-time",
+          "weight": 25,
+        },
+        Object {
+          "group": "metrics",
+          "id": "cumulative-layout-shift",
           "weight": 5,
         },
         Object {
-          "group": "metrics",
           "id": "first-cpu-idle",
-          "weight": 2,
+          "weight": 0,
         },
         Object {
-          "group": "metrics",
           "id": "max-potential-fid",
+          "weight": 0,
+        },
+        Object {
+          "id": "first-meaningful-paint",
           "weight": 0,
         },
         Object {
@@ -738,6 +826,11 @@ Object {
         Object {
           "group": "load-opportunities",
           "id": "unused-css-rules",
+          "weight": 0,
+        },
+        Object {
+          "group": "load-opportunities",
+          "id": "unused-javascript",
           "weight": 0,
         },
         Object {
@@ -826,8 +919,18 @@ Object {
           "weight": 0,
         },
         Object {
+          "group": "budgets",
+          "id": "timing-budget",
+          "weight": 0,
+        },
+        Object {
           "group": "diagnostics",
           "id": "resource-summary",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "third-party-summary",
           "weight": 0,
         },
         Object {
@@ -930,6 +1033,11 @@ Object {
         Object {
           "group": "pwa-optimized",
           "id": "apple-touch-icon",
+          "weight": 1,
+        },
+        Object {
+          "group": "pwa-optimized",
+          "id": "maskable-icon",
           "weight": 1,
         },
         Object {
@@ -1064,11 +1172,11 @@ Object {
       "title": "Budgets",
     },
     "diagnostics": Object {
-      "description": "More information about the performance of your application.",
+      "description": "More information about the performance of your application. These numbers don't [directly affect](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) the Performance score.",
       "title": "Diagnostics",
     },
     "load-opportunities": Object {
-      "description": "These optimizations can speed up your page load.",
+      "description": "These suggestions can help your page load faster. They don't [directly affect](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) the Performance score.",
       "title": "Opportunities",
     },
     "metrics": Object {
@@ -1106,6 +1214,9 @@ Object {
           "path": "css-usage",
         },
         Object {
+          "path": "js-usage",
+        },
+        Object {
           "path": "viewport-dimensions",
         },
         Object {
@@ -1128,6 +1239,12 @@ Object {
         },
         Object {
           "path": "script-elements",
+        },
+        Object {
+          "path": "iframe-elements",
+        },
+        Object {
+          "path": "main-document-content",
         },
         Object {
           "path": "dobetterweb/appcache",
@@ -1169,8 +1286,10 @@ Object {
           "path": "full-page-screenshot",
         },
       ],
+      "loadFailureMode": "fatal",
       "networkQuietThresholdMs": 1000,
       "passName": "defaultPass",
+      "pauseAfterFcpMs": 1000,
       "pauseAfterLoadMs": 1000,
       "recordTrace": true,
       "useThrottling": true,
@@ -1190,8 +1309,10 @@ Object {
           "path": "start-url",
         },
       ],
+      "loadFailureMode": "ignore",
       "networkQuietThresholdMs": 0,
       "passName": "offlinePass",
+      "pauseAfterFcpMs": 0,
       "pauseAfterLoadMs": 0,
       "recordTrace": false,
       "useThrottling": false,
@@ -1218,8 +1339,10 @@ Object {
           "path": "html-without-javascript",
         },
       ],
+      "loadFailureMode": "warn",
       "networkQuietThresholdMs": 0,
       "passName": "redirectPass",
+      "pauseAfterFcpMs": 0,
       "pauseAfterLoadMs": 0,
       "recordTrace": false,
       "useThrottling": false,
@@ -1235,8 +1358,9 @@ Object {
     "emulatedFormFactor": "mobile",
     "extraHeaders": null,
     "gatherMode": false,
+    "internalDisableDeviceScreenEmulation": false,
     "locale": "en-US",
-    "maxWaitForFcp": 15000,
+    "maxWaitForFcp": 30000,
     "maxWaitForLoad": 45000,
     "onlyAudits": null,
     "onlyCategories": null,
@@ -1314,11 +1438,11 @@ Object {
       "title": "Budgets",
     },
     "diagnostics": Object {
-      "description": "More information about the performance of your application.",
+      "description": "More information about the performance of your application. These numbers don't [directly affect](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) the Performance score.",
       "title": "Diagnostics",
     },
     "load-opportunities": Object {
-      "description": "These optimizations can speed up your page load.",
+      "description": "These suggestions can help your page load faster. They don't [directly affect](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) the Performance score.",
       "title": "Opportunities",
     },
     "metrics": Object {
@@ -1352,8 +1476,10 @@ Object {
       "blockedUrlPatterns": Array [],
       "cpuQuietThresholdMs": 1000,
       "gatherers": Array [],
+      "loadFailureMode": "fatal",
       "networkQuietThresholdMs": 1000,
       "passName": "defaultPass",
+      "pauseAfterFcpMs": 1000,
       "pauseAfterLoadMs": 1000,
       "recordTrace": true,
       "useThrottling": true,
@@ -1369,8 +1495,9 @@ Object {
     "emulatedFormFactor": "mobile",
     "extraHeaders": null,
     "gatherMode": false,
+    "internalDisableDeviceScreenEmulation": false,
     "locale": "en-US",
-    "maxWaitForFcp": 15000,
+    "maxWaitForFcp": 30000,
     "maxWaitForLoad": 45000,
     "onlyAudits": Array [
       "metrics",

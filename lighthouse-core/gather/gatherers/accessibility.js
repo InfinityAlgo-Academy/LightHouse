@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -34,19 +34,21 @@ function runA11yChecks() {
     rules: {
       'tabindex': {enabled: true},
       'accesskeys': {enabled: true},
+      'heading-order': {enabled: true},
+      'meta-viewport': {enabled: true},
+      'duplicate-id': {enabled: false},
       'table-fake-caption': {enabled: false},
       'td-has-header': {enabled: false},
       'marquee': {enabled: false},
       'area-alt': {enabled: false},
       'aria-dpub-role-fallback': {enabled: false},
-      'aria-hidden-body': {enabled: false},
-      'duplicate-id-active': {enabled: false},
-      'duplicate-id-aria': {enabled: false},
       'html-xml-lang-mismatch': {enabled: false},
       'blink': {enabled: false},
       'server-side-image-map': {enabled: false},
-      'aria-hidden-focus': {enabled: false},
-      'form-field-multiple-labels': {enabled: false},
+      'identical-links-same-purpose': {enabled: false},
+      'no-autoplay-audio': {enabled: false},
+      'svg-img-alt': {enabled: false},
+      'audio-caption': {enabled: false},
     },
     // @ts-ignore
   }).then(axeResult => {
@@ -54,25 +56,35 @@ function runA11yChecks() {
     // are relative to the top of the page
     document.documentElement.scrollTop = 0;
 
-    // Augment the node objects with outerHTML snippet & custom path string
     // @ts-ignore
-    axeResult.violations.forEach(v => v.nodes.forEach(node => {
-      // @ts-ignore - getNodePath put into scope via stringification
-      node.path = getNodePath(node.element);
-      // @ts-ignore - getOuterHTMLSnippet put into scope via stringification
-      node.snippet = getOuterHTMLSnippet(node.element);
-      node.boundingRect = JSON.parse(JSON.stringify(node.element.getBoundingClientRect()));
-      if (node.boundingRect.height === 0 || node.boundingRect.width === 0) {
-        delete node.boundingRect;
-      }
-      // @ts-ignore - getNodeLabel put into scope via stringification
-      node.nodeLabel = getNodeLabel(node.element);
-      // avoid circular JSON concerns
-      node.element = node.any = node.all = node.none = undefined;
-    }));
+    const augmentAxeNodes = result => {
+      // @ts-ignore
+      result.nodes.forEach(node => {
+        // @ts-ignore - getNodePath put into scope via stringification
+        node.path = getNodePath(node.element);
+        // @ts-ignore - getOuterHTMLSnippet put into scope via stringification
+        node.snippet = getOuterHTMLSnippet(node.element);
+        node.boundingRect = JSON.parse(JSON.stringify(node.element.getBoundingClientRect()));
+        if (node.boundingRect.height === 0 || node.boundingRect.width === 0) {
+          delete node.boundingRect;
+        }
+        // @ts-ignore - getNodeLabel put into scope via stringification
+        node.nodeLabel = getNodeLabel(node.element);
+        // avoid circular JSON concerns
+        node.element = node.any = node.all = node.none = undefined;
+      });
+    };
+
+    // Augment the node objects with outerHTML snippet & custom path string
+    axeResult.violations.forEach(augmentAxeNodes);
+    axeResult.incomplete.forEach(augmentAxeNodes);
 
     // We only need violations, and circular references are possible outside of violations
-    axeResult = {violations: axeResult.violations, notApplicable: axeResult.inapplicable};
+    axeResult = {
+      violations: axeResult.violations,
+      notApplicable: axeResult.inapplicable,
+      incomplete: axeResult.incomplete,
+    };
     return axeResult;
   });
 }

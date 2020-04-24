@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,10 +7,11 @@
 
 /* eslint-env jest, browser */
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const fs = require('fs');
 const jsdom = require('jsdom');
 const Util = require('../../../../report/html/renderer/util.js');
+const I18n = require('../../../../report/html/renderer/i18n.js');
 const URL = require('../../../../lib/url-shim.js');
 const DOM = require('../../../../report/html/renderer/dom.js');
 const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
@@ -28,8 +29,8 @@ describe('PerfCategoryRenderer', () => {
   let sampleResults;
 
   beforeAll(() => {
-    global.URL = URL;
     global.Util = Util;
+    global.Util.i18n = new I18n('en', {...Util.UIStrings});
     global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
     global.CategoryRenderer = CategoryRenderer;
 
@@ -47,7 +48,7 @@ describe('PerfCategoryRenderer', () => {
   });
 
   afterAll(() => {
-    global.URL = undefined;
+    global.Util.i18n = undefined;
     global.Util = undefined;
     global.CriticalRequestChainRenderer = undefined;
     global.CategoryRenderer = undefined;
@@ -79,6 +80,18 @@ describe('PerfCategoryRenderer', () => {
     const timelineElements = metricsSection.querySelectorAll('.lh-metric');
     const nontimelineElements = metricsSection.querySelectorAll('.lh-audit');
     assert.equal(timelineElements.length + nontimelineElements.length, metricAudits.length);
+  });
+
+  it('renders the metrics variance disclaimer as markdown', () => {
+    const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
+    const disclaimerEl =
+        categoryDOM.querySelector('.lh-audit-group--metrics > .lh-metrics__disclaimer');
+
+    assert.ok(disclaimerEl.textContent.includes('Values are estimated'));
+    const disclamerLink = disclaimerEl.querySelector('a');
+    assert.ok(disclamerLink, 'disclaimer contains coverted markdown link');
+    const disclamerUrl = new URL(disclamerLink.href);
+    assert.strictEqual(disclamerUrl.hostname, 'github.com');
   });
 
   it('renders the failing performance opportunities', () => {
@@ -138,7 +151,7 @@ describe('PerfCategoryRenderer', () => {
 
   it('renders the failing diagnostics', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
-    const diagnosticSection = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group')[2];
+    const diagnosticSection = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group')[3];
 
     const diagnosticAudits = category.auditRefs.filter(audit => audit.group === 'diagnostics' &&
         !Util.showAsPassed(audit.result));
@@ -177,7 +190,7 @@ describe('PerfCategoryRenderer', () => {
   });
 
   describe('budgets', () => {
-    it('renders a performance budget', () => {
+    it('renders the group and header', () => {
       const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
 
       const budgetsGroup = categoryDOM.querySelector('.lh-audit-group.lh-audit-group--budgets');
@@ -185,8 +198,11 @@ describe('PerfCategoryRenderer', () => {
 
       const header = budgetsGroup.querySelector('.lh-audit-group__header');
       assert.ok(header);
+    });
 
-      const budgetTable = budgetsGroup.querySelector('#performance-budget.lh-table');
+    it('renders the performance budget table', () => {
+      const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
+      const budgetTable = categoryDOM.querySelector('#performance-budget.lh-table');
       assert.ok(budgetTable);
 
       const lhrBudgetEntries = sampleResults.audits['performance-budget'].details.items;
@@ -194,11 +210,23 @@ describe('PerfCategoryRenderer', () => {
       assert.strictEqual(tableRows.length, lhrBudgetEntries.length);
     });
 
-    it('does not render a budget table when performance-budget audit is notApplicable', () => {
+    it('renders the timing budget table', () => {
+      const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
+      const budgetTable = categoryDOM.querySelector('#timing-budget.lh-table');
+      assert.ok(budgetTable);
+
+      const lhrBudgetEntries = sampleResults.audits['timing-budget'].details.items;
+      const tableRows = budgetTable.querySelectorAll('tbody > tr');
+      assert.strictEqual(tableRows.length, lhrBudgetEntries.length);
+    });
+
+    it('does not render the budgets section when all budget audits are notApplicable', () => {
       const budgetlessCategory = JSON.parse(JSON.stringify(category));
-      const budgetRef = budgetlessCategory.auditRefs.find(a => a.id === 'performance-budget');
-      budgetRef.result.scoreDisplayMode = 'notApplicable';
-      delete budgetRef.result.details;
+      ['performance-budget', 'timing-budget'].forEach((id) => {
+        const budgetRef = budgetlessCategory.auditRefs.find(a => a.id === id);
+        budgetRef.result.scoreDisplayMode = 'notApplicable';
+        delete budgetRef.result.details;
+      });
 
       const categoryDOM = renderer.render(budgetlessCategory, sampleResults.categoryGroups);
       const budgetsGroup = categoryDOM.querySelector('.lh-audit-group.lh-audit-group--budgets');

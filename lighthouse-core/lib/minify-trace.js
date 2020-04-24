@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -10,13 +10,12 @@
 /**
  * @fileoverview Minifies a trace by removing unnecessary events, throttling screenshots, etc.
  *  See the following files for necessary events:
- *    - lighthouse-core/computed/trace-of-tab.js
  *    - lighthouse-core/computed/page-dependency-graph.js
  *    - lighthouse-core/lib/dependency-graph/cpu-node.js
- *    - lighthouse-core/lib/traces/tracing-processor.js
+ *    - lighthouse-core/lib/tracehouse/trace-processor.js
  */
 
-const TracingProcessor = require('./traces/tracing-processor.js');
+const TracingProcessor = require('./tracehouse/trace-processor.js');
 
 const toplevelTaskNames = new Set([
   'RunTask', // m71+
@@ -65,6 +64,8 @@ const traceEventsToKeepInProcess = new Set([
   'firstMeaningfulPaintCandidate',
   'loadEventEnd',
   'domContentLoadedEventEnd',
+  'largestContentfulPaint::Invalidate',
+  'largestContentfulPaint::Candidate',
 ]);
 
 /**
