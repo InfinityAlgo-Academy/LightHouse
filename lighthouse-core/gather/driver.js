@@ -39,6 +39,8 @@ const DEFAULT_PROTOCOL_TIMEOUT = 30000;
  * @typedef {LH.Protocol.StrictEventEmitter<LH.CrdpEvents>} CrdpEventEmitter
  */
 
+/** @typedef {import('../lib/emulation.js').EmulationParams} EmulationParams */
+
 class Driver {
   /**
    * @param {Connection} connection
@@ -1330,12 +1332,21 @@ class Driver {
 
   /**
    * @param {LH.Config.Settings} settings
-   * @param {{height?: number, screenHeight: number?, deviceScaleFactor?: number}} [deviceMetricOverrides]
+   * @param {Partial<EmulationParams['metrics']>} [deviceMetricsOverrides]
    * Override device size for taking screenshots.
    * @return {Promise<void>}
    */
-  async beginEmulation(settings, deviceMetricOverrides) {
-    await emulation.emulate(this, settings, deviceMetricOverrides);
+  async beginEmulation(settings, deviceMetricsOverrides = {}) {
+    if (settings.emulatedFormFactor && settings.emulatedFormFactor !== 'none') {
+      let emulationParams = emulation.EMULATION_PRESETS[settings.emulatedFormFactor];
+      if (deviceMetricsOverrides) {
+        emulationParams = {
+          ...emulationParams,
+          metrics: { ...emulationParams.metrics, ...deviceMetricsOverrides },
+        };
+      }
+      await emulation.emulate(this, emulationParams);
+    }
     await this.setThrottling(settings, {useThrottling: true});
   }
 

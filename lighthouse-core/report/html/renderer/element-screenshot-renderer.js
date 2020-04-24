@@ -21,7 +21,9 @@
  * highlighted.
  */
 
-/* globals self  */
+/* globals self */
+
+/** @typedef {import('./dom.js')} DOM */
 
 // todo: import from rect helpers
 /**

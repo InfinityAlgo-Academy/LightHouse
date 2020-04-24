@@ -28,9 +28,9 @@ class FullPageScreenshot extends Gatherer {
     const height = Math.min(metrics.contentSize.height, maxScreenshotHeight);
 
     await driver.beginEmulation(passContext.settings, {
+      deviceScaleFactor: 1,
       height,
       screenHeight: height,
-      deviceScaleFactor: 1,
     });
 
     const result = await driver.sendCommand('Page.captureScreenshot', {

@@ -8,6 +8,14 @@
 /** @typedef {import('../gather/driver.js')} Driver */
 
 /**
+ * @typedef EmulationParams
+ * @property {string} userAgent
+ * @property {LH.Crdp.Emulation.SetDeviceMetricsOverrideRequest} metrics
+ * @property {boolean} touchEnabled
+ * @property {boolean=} internalDisableDeviceScreenEmulation
+ */
+
+/**
  * @type {LH.Crdp.Emulation.SetDeviceMetricsOverrideRequest}
  */
 const MOTOG4_EMULATION_METRICS = {
@@ -61,7 +69,8 @@ const NO_CPU_THROTTLE_METRICS = {
   rate: 1,
 };
 
-const emulationParams = {
+/** @type {Record<string, EmulationParams>} */
+const EMULATION_PRESETS = {
   mobile: {
     userAgent: MOTOG4_USERAGENT,
     metrics: MOTOG4_EMULATION_METRICS,
@@ -75,15 +84,11 @@ const emulationParams = {
 };
 
 /**
- *
  * @param {Driver} driver
- * @param {LH.Config.Settings} settings
+ * @param {EmulationParams} params
  * @return {Promise<void>}
  */
-async function emulate(driver, settings) {
-  if (!settings.emulatedFormFactor || settings.emulatedFormFactor === 'none') return;
-  const params = emulationParams[settings.emulatedFormFactor];
-
+async function emulate(driver, params) {
   // In DevTools, emulation is applied before Lighthouse starts (to deal with viewport emulation bugs)
   // As a result, we don't double-apply viewport emulation (devtools sets `internalDisableDeviceScreenEmulation`).
   // UA emulation, however, is lost in the protocol handover from devtools frontend to the audits_worker. So it's always applied.
@@ -92,12 +97,11 @@ async function emulate(driver, settings) {
   await driver.sendCommand('Network.enable');
   await driver.sendCommand('Network.setUserAgentOverride', {userAgent: params.userAgent});
 
-  if (!settings.internalDisableDeviceScreenEmulation) {
+  if (!params.internalDisableDeviceScreenEmulation) {
     await driver.sendCommand('Emulation.setDeviceMetricsOverride', params.metrics);
     await driver.sendCommand('Emulation.setTouchEmulationEnabled', {enabled: params.touchEnabled});
   }
 }
-
 
 /**
  * @param {Driver} driver
@@ -160,6 +164,7 @@ module.exports = {
   enableCPUThrottling,
   disableCPUThrottling,
   goOffline,
+  EMULATION_PRESETS,
   MOBILE_USERAGENT: MOTOG4_USERAGENT,
   DESKTOP_USERAGENT,
 };
