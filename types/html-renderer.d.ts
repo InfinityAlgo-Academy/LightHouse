@@ -15,6 +15,7 @@ import _PerformanceCategoryRenderer = require('../lighthouse-core/report/html/re
 import _PwaCategoryRenderer = require('../lighthouse-core/report/html/renderer/pwa-category-renderer.js');
 import _ReportRenderer = require('../lighthouse-core/report/html/renderer/report-renderer.js');
 import _ReportUIFeatures = require('../lighthouse-core/report/html/renderer/report-ui-features.js');
+import _RectHelpers = require('../lighthouse-core/lib/rect-helpers.js');
 import _Util = require('../lighthouse-core/report/html/renderer/util.js');
 import _prepareLabData = require('../lighthouse-core/report/html/renderer/psi.js');
 import _FileNamer = require('../lighthouse-core/lib/file-namer.js');
@@ -32,6 +33,7 @@ declare global {
   var PwaCategoryRenderer: typeof _PwaCategoryRenderer;
   var ReportRenderer: typeof _ReportRenderer;
   var ReportUIFeatures: typeof _ReportUIFeatures;
+  var RectHelpers: typeof _RectHelpers;
   var Util: typeof _Util;
   var prepareLabData: typeof _prepareLabData;
 
@@ -47,6 +49,7 @@ declare global {
     PwaCategoryRenderer: typeof _PwaCategoryRenderer;
     ReportRenderer: typeof _ReportRenderer;
     ReportUIFeatures: typeof _ReportUIFeatures;
+    RectHelpers: typeof _RectHelpers;
     Util: typeof _Util;
     prepareLabData: typeof _prepareLabData;
   }

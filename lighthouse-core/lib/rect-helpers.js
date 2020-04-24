@@ -229,7 +229,7 @@ function allRectsContainedWithinEachOther(rectListA, rectListB) {
   return true;
 }
 
-module.exports = {
+const RectHelpers = {
   rectContainsPoint,
   rectContains,
   addRectWidthAndHeight,
@@ -246,3 +246,9 @@ module.exports = {
   filterOutRectsContainedByOthers,
   filterOutTinyRects,
 };
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = RectHelpers;
+} else {
+  self.RectHelpers = RectHelpers;
+}

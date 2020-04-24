@@ -1342,7 +1342,7 @@ class Driver {
       if (deviceMetricsOverrides) {
         emulationParams = {
           ...emulationParams,
-          metrics: { ...emulationParams.metrics, ...deviceMetricsOverrides },
+          metrics: {...emulationParams.metrics, ...deviceMetricsOverrides},
         };
       }
       await emulation.emulate(this, emulationParams);

@@ -1,18 +1,7 @@
 /**
- * @license
- * Copyright 2019 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS-IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
@@ -21,42 +10,39 @@
  * highlighted.
  */
 
-/* globals self */
+/* globals self RectHelpers */
 
 /** @typedef {import('./dom.js')} DOM */
+/** @typedef {LH.Artifacts.Rect} Rect */
+/** @typedef {{width: number, height: number}} Size */
 
-// todo: import from rect helpers
 /**
- * @param {LH.Artifacts.Rect} rect
+ * @param {number} value
+ * @param {number} min
+ * @param {number} max
  */
-function getRectCenterPoint(rect) {
-  return {
-    x: rect.left + rect.width / 2,
-    y: rect.top + rect.height / 2,
-  };
-}
-
-function containWithin(value, range) {
-  if (value < range[0]) {
-    value = range[0];
-  }
-  if (value > range[1]) {
-    value = range[1];
-  }
+function clamp(value, min, max) {
+  if (value < min) return min;
+  if (value > max) return max;
   return value;
 }
 
+/**
+ * @param {Rect} highlightRect
+ * @param {Size} displayedAreaSize
+ * @param {Size} screenshotSize
+ */
 function getScreenshotPositionDetails(highlightRect, displayedAreaSize, screenshotSize) {
-  const highlightCenter = getRectCenterPoint(highlightRect);
+  const highlightCenter = RectHelpers.getRectCenterPoint(highlightRect);
 
   // Try to center on highlighted area
-  const screenshotLeftVisibleEdge = containWithin(
+  const screenshotLeftVisibleEdge = clamp(
     highlightCenter.x - displayedAreaSize.width / 2,
-    [0, screenshotSize.width - displayedAreaSize.width]
+    0, screenshotSize.width - displayedAreaSize.width
   );
-  const screenshotTopVisisbleEdge = containWithin(
+  const screenshotTopVisisbleEdge = clamp(
     highlightCenter.y - displayedAreaSize.height / 2,
-    [0, screenshotSize.height - displayedAreaSize.height]
+    0, screenshotSize.height - displayedAreaSize.height
   );
 
   return {
@@ -91,10 +77,11 @@ class ElementScreenshotRenderer {
    * @param {DOM} dom
    * @param {ParentNode} templateContext
    * @param {LH.Audit.Details.NodeValue} item
+   * @param {LH.Audit.Result} fullPageScreenshotAuditResult
+   * @param {Size} elementSize
    * @return {Element}
    */
   static render(dom, templateContext, item, fullPageScreenshotAuditResult, elementSize) {
-    console.log(elementSize);
     const fullpageScreenshotUrl = fullPageScreenshotAuditResult.details.data;
 
     const tmpl = dom.cloneTemplate('#tmpl-lh-element-screenshot', templateContext);
