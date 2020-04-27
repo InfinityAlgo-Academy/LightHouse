@@ -209,7 +209,7 @@ declare global {
     export interface CliFlags extends Flags {
       _: string[];
       chromeIgnoreDefaultFlags: boolean;
-      chromeFlags: string;
+      chromeFlags: string | string[];
       /** Output path for the generated results. */
       outputPath: string;
       /** Flag to save the trace contents and screenshots to disk. */

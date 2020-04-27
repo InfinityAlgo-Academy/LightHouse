@@ -3116,7 +3116,7 @@
       "description": "Some third-party scripts may contain known security vulnerabilities that are easily identified and exploited by attackers. [Learn more](https://web.dev/no-vulnerable-libraries).",
       "score": 0,
       "scoreDisplayMode": "binary",
-      "displayValue": "2 vulnerabilities detected",
+      "displayValue": "3 vulnerabilities detected",
       "details": {
         "type": "table",
         "headings": [
@@ -3139,7 +3139,7 @@
         "items": [
           {
             "highestSeverity": "Medium",
-            "vulnCount": 2,
+            "vulnCount": 3,
             "detectedLib": {
               "text": "jQuery@2.1.1",
               "url": "https://snyk.io/vuln/npm:jquery?lh=2.1.1&utm_source=lighthouse&utm_medium=ref&utm_campaign=audit",
@@ -5730,7 +5730,7 @@
           "path": "audits[bootup-time].displayValue"
         }
       ],
-      "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": [
+      "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": [
         "audits[largest-contentful-paint].title"
       ],
       "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": [
@@ -5806,7 +5806,7 @@
       "lighthouse-core/audits/metrics/max-potential-fid.js | description": [
         "audits[max-potential-fid].description"
       ],
-      "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": [
+      "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": [
         "audits[cumulative-layout-shift].title"
       ],
       "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": [
@@ -6685,7 +6685,7 @@
       "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": [
         {
           "values": {
-            "itemCount": 2
+            "itemCount": 3
           },
           "path": "audits[no-vulnerable-libraries].displayValue"
         }

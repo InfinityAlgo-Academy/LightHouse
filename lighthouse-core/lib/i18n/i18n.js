@@ -116,6 +116,10 @@ const UIStrings = {
   maxPotentialFIDMetric: 'Max Potential First Input Delay',
   /** The name of the metric that summarizes how quickly the page looked visually complete. The name of this metric is largely abstract and can be loosely translated. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
   speedIndexMetric: 'Speed Index',
+  /** The name of the metric that marks the time at which the largest text or image is painted by the browser. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
+  largestContentfulPaintMetric: 'Largest Contentful Paint',
+  /** The name of the metric "Cumulative Layout Shift" that indicates how much the page changes its layout while it loads. If big segments of the page shift their location during load, the Cumulative Layout Shift will be higher. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
+  cumulativeLayoutShiftMetric: 'Cumulative Layout Shift',
 };
 
 const formats = {

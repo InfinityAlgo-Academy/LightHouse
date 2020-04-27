@@ -10,8 +10,6 @@ const ComputedCLS = require('../../computed/metrics/cumulative-layout-shift.js')
 const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
-  /** The name of the metric "Cumulative Layout Shift" that indicates how much the page changes its layout while it loads. If big segments of the page shift their location during load, the Cumulative Layout Shift will be higher. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
-  title: 'Cumulative Layout Shift',
   /** Description of the Cumulative Layout Shift metric that indicates how much the page changes its layout while it loads. If big segments of the page shift their location during load, the Cumulative Layout Shift will be higher. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Cumulative Layout Shift is the sum of all layout shifts that occurred during a ' +
       'page\'s load. A layout shift is any movement an element makes once it is visible to the ' +
@@ -32,7 +30,7 @@ class CumulativeLayoutShift extends Audit {
   static get meta() {
     return {
       id: 'cumulative-layout-shift',
-      title: str_(UIStrings.title),
+      title: str_(i18n.UIStrings.cumulativeLayoutShiftMetric),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['traces'],

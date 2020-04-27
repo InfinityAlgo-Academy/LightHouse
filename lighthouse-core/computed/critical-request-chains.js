@@ -7,7 +7,7 @@
 
 const makeComputedArtifact = require('./computed-artifact.js');
 const NetworkRequest = require('../lib/network-request.js');
-const assert = require('assert');
+const assert = require('assert').strict;
 const NetworkRecords = require('./network-records.js');
 const MainResource = require('./main-resource.js');
 

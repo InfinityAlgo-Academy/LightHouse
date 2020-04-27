@@ -114,8 +114,8 @@ declare global {
       HTMLWithoutJavaScript: {bodyText: string, hasNoScript: boolean};
       /** Whether the page ended up on an HTTPS page after attempting to load the HTTP version. */
       HTTPRedirect: {value: boolean};
-      /** JS coverage information for code used during page load. */
-      JsUsage: Crdp.Profiler.ScriptCoverage[];
+      /** JS coverage information for code used during page load. Keyed by URL. */
+      JsUsage: Record<string, Crdp.Profiler.ScriptCoverage[]>;
       /** Parsed version of the page's Web App Manifest, or null if none found. */
       Manifest: Artifacts.Manifest | null;
       /** The URL loaded with interception */
@@ -304,6 +304,7 @@ declare global {
         script: ScriptElement;
         map: TextSourceMap;
         sizes: {
+          // TODO(cjamcl): Rename to `sources`.
           files: Record<string, number>;
           unmappedBytes: number;
           totalBytes: number;
