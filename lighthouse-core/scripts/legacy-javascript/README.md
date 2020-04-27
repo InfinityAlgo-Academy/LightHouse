@@ -5,7 +5,7 @@ Creates many projects using specific babel transforms / polyfills (called varian
 Run:
 
 ```sh
-yarn install
+yarn
 node run.js
 # STAGE=build|audit|all to just build the audits or run LegacyJavascript on them. Defaults to both (`all`).
 ```
