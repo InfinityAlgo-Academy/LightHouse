@@ -141,10 +141,10 @@
     "message": "Jika daftar definisi tidak di-markup dengan tepat, pembaca layar dapat menghasilkan output yang membingungkan atau tidak akurat. [Pelajari lebih lanjut](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>` tidak hanya memuat grup `<dt>` dan `<dd>`, `<script>`, `<template>`, atau elemen `<div>` yang diurutkan dengan tepat."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>` hanya memuat grup `<dt>` dan `<dd>`, `<script>`, `<template>`, atau elemen `<div>` yang diurutkan dengan tepat."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "Item daftar definisi (`<dt>` dan `<dd>`) harus tergabung dalam elemen `<dl>` induk untuk memastikan bahwa pembaca layar dapat mengucapkannya dengan tepat. [Pelajari lebih lanjut](https://web.dev/dlitem/)."
@@ -771,22 +771,22 @@
     "message": "Informasi ukuran gambar {url} tidak valid"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
-    "message": "Actual size"
+    "message": "Ukuran sebenarnya"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
-    "message": "Displayed size"
+    "message": "Ukuran yang ditampilkan"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
-    "message": "Expected size"
+    "message": "Ukuran yang diharapkan"
   },
   "lighthouse-core/audits/image-size-responsive.js | description": {
-    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+    "message": "Dimensi alami gambar sebaiknya proporsional dengan ukuran tampilan dan rasio piksel untuk memaksimalkan kejelasan gambar. [Pelajari lebih lanjut](https://web.dev/image-size-responsive)."
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Displays images with inappropriate size"
+    "message": "Menampilkan gambar dengan ukuran yang tidak sesuai"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Displays images with appropriate size"
+    "message": "Menampilkan gambar dengan ukuran yang sesuai"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Browser dapat secara proaktif meminta pengguna untuk menambahkan aplikasi Anda ke layar utama mereka sehingga interaksi menjadi lebih tinggi. [Pelajari lebih lanjut](https://web.dev/installable-manifest)."
@@ -1419,7 +1419,7 @@
     "message": "Halaman tersebut mungkin tidak dimuat sesuai harapan karena URL uji Anda ({requested}) dialihkan ke {final}. Coba uji URL kedua secara langsung."
   },
   "lighthouse-core/gather/gather-runner.js | warningTimeout": {
-    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+    "message": "Pemuatan halaman terlalu lambat untuk bisa selesai tepat waktu. Hasil mungkin tidak lengkap."
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL Cache"
@@ -1437,7 +1437,7 @@
     "message": "Permintaan"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
-    "message": "Resource Size"
+    "message": "Ukuran Resource"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "Jenis Resource"

@@ -141,10 +141,10 @@
     "message": "عندما لا يتم ترميز قوائم التعريفات بشكل صحيح، قد تقدم برامج قراءة الشاشة نتائج غير واضحة أو غير دقيقة. [مزيد من المعلومات](https://web.dev/definition-list/)"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>` لا تحتوي على مجموعات `<dt>` و`<dd>` المرتبة بشكلٍ صحيح فقط، أو العناصر `<script>` أو`<template>` أو`<div>`."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>` تحتوي على مجموعات `<dt>` و`<dd>` المرتبة بشكلٍ صحيح فقط، أو العناصر `<script>` أو`<template>` أو `<div>`."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "يجب إدراج عناصر قائمة التعريفات (`<dt>` و`<dd>`) في عنصر رئيسي `<dl>` وذلك لضمان إعلان برامج قراءة الشاشة عنها بشكل صحيح. [مزيد من المعلومات](https://web.dev/dlitem/)"
@@ -771,22 +771,22 @@
     "message": "معلومات تغيير حجم الصورة غير صالحة {url}"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
-    "message": "Actual size"
+    "message": "الحجم الفعلي"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
-    "message": "Displayed size"
+    "message": "الحجم المعروض"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
-    "message": "Expected size"
+    "message": "الحجم المتوقع"
   },
   "lighthouse-core/audits/image-size-responsive.js | description": {
-    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+    "message": "يجب أن تكون الأبعاد الطبيعية للصورة متناسبة مع حجم العرض ونسبة وحدة البكسل لزيادة وضوح الصورة إلى أقصى حد. [مزيد من المعلومات](https://web.dev/image-size-responsive)"
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Displays images with inappropriate size"
+    "message": "عرض الصور بحجم غير ملائم"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Displays images with appropriate size"
+    "message": "عرض الصور بحجم ملائم"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "يمكن للمتصفحات أن تطلب من المستخدمين بشكل مسبق إضافة تطبيقك إلى الشاشة الرئيسية، ويمكن بذلك زيادة التفاعل. [مزيد من المعلومات](https://web.dev/installable-manifest)"
@@ -1419,7 +1419,7 @@
     "message": "قد لا يتم تحميل الصفحة كما هو متوقَع لأن عنوان URL للاختبار ({requested}) تمت إعادة توجيهه إلى {final}. يُرجى محاولة اختبار عنوان URL الثاني مباشرةً."
   },
   "lighthouse-core/gather/gather-runner.js | warningTimeout": {
-    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+    "message": "أدّى عدم تحميل الصفحة بسرعة كافية إلى تعذّر انتهاء تحميلها في الوقت المحدّد. وقد تكون النتائج غير مكتملة."
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "ذاكرة التخزين المؤقت TTL"
@@ -1437,7 +1437,7 @@
     "message": "الطلبات"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
-    "message": "Resource Size"
+    "message": "حجم المصدر"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "نوع المورد"

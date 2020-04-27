@@ -141,10 +141,10 @@
     "message": "כשרשימות של הגדרות לא מסומנות כראוי, קוראי מסך עשויים לספק פלט מבלבל או לא מדויק. [מידע נוסף](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "יש רכיבי `<dl>` שלא מכילים רק קבוצות `<dt>` ו-`<dd>` עם סדר תקין, `<script>`, `<template>` או רכיבי `<div>`."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "רכיבי `<dl>` מכילים רק קבוצות `<dt>` ו-`<dd>` עם סדר תקין, `<script>`, `<template>` או רכיבי `<div>`."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "פריטים ברשימות של הגדרות (`<dt>` ו-`<dd>`) צריכים להיות תחומים בתוך רכיב הורה מסוג `<dl>` כדי שקוראי מסך יוכלו להקריא אותם בצורה נכונה. [מידע נוסף](https://web.dev/dlitem/)."
@@ -771,22 +771,22 @@
     "message": "נתוני הגודל של תמונה לא חוקיים: {url}"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
-    "message": "Actual size"
+    "message": "גודל בפועל"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
-    "message": "Displayed size"
+    "message": "גודל מוצג"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
-    "message": "Expected size"
+    "message": "הגודל הצפוי"
   },
   "lighthouse-core/audits/image-size-responsive.js | description": {
-    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+    "message": "המימדים הטבעיים של התמונה צריכים להיות פרופורציונליים לגודל המסך וליחס הפיקסלים כדי שהתמונה תהיה ברורה ככל האפשר. [מידע נוסף](https://web.dev/image-size-responsive)."
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Displays images with inappropriate size"
+    "message": "מוצגות תמונות עם גודל לא מתאים"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Displays images with appropriate size"
+    "message": "מוצגות תמונות עם גודל מתאים"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "הדפדפנים יכולים לבקש ממשתמשים באופן יזום להוסיף את האפליקציה שלך אל מסך הבית שלהם, פעולה שמגדילה את הסיכוי להשגת מעורבות גבוהה יותר. [מידע נוסף](https://web.dev/installable-manifest)."
@@ -1419,7 +1419,7 @@
     "message": "ייתכן שהדף לא נטען כמו שציפית כי כתובת ה-URL הנבדקת ({requested}) הופנתה לכתובת {final}. כדאי לנסות לבדוק ישירות את כתובת ה-URL השנייה."
   },
   "lighthouse-core/gather/gather-runner.js | warningTimeout": {
-    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+    "message": "הדף נטען לאט מדי והפעולה לא הסתיימה במסגרת הזמן שהוקצבה. ייתכן שהתוצאות לא יהיו מלאות."
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "אורך חיים (TTL) של מטמון"
@@ -1437,7 +1437,7 @@
     "message": "בקשות"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
-    "message": "Resource Size"
+    "message": "גודל המשאב"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "סוג המשאב"

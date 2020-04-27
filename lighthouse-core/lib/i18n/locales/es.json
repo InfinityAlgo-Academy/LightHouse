@@ -141,10 +141,10 @@
     "message": "Si las listas de definiciones no están bien marcadas, es posible que los lectores de pantalla las interpreten de forma confusa o imprecisa. [Más información](https://web.dev/definition-list/)"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "Los elementos `<dl>` no contienen únicamente grupos de `<dt>` y `<dd>` o elementos `<script>`, `<template>` o `<div>` ordenados correctamente."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "Los elementos `<dl>` contienen únicamente grupos de `<dt>` y `<dd>` o elementos `<script>`, `<template>` o `<div>` ordenados correctamente."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "Los elementos de la lista de definiciones (`<dt>` y`<dd>`) deben estar incluidos en un elemento `<dl>` principal para asegurarte de que los lectores de pantalla puedan leerlos en voz alta correctamente. [Más información](https://web.dev/dlitem/)"
@@ -771,22 +771,22 @@
     "message": "La información del tamaño de la imagen no es válida ({url})"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
-    "message": "Actual size"
+    "message": "Tamaño real"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
-    "message": "Displayed size"
+    "message": "Tamaño mostrado"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
-    "message": "Expected size"
+    "message": "Tamaño esperado"
   },
   "lighthouse-core/audits/image-size-responsive.js | description": {
-    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+    "message": "Para mejorar la claridad de la imagen, las dimensiones normales de la imagen deberían ser proporcionales al tamaño de la pantalla y a la proporción de píxeles. [Más información](https://web.dev/image-size-responsive)"
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Displays images with inappropriate size"
+    "message": "Muestra las imágenes con un tamaño inadecuado"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Displays images with appropriate size"
+    "message": "Muestra las imágenes con un tamaño adecuado"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Los navegadores pueden preguntar a los usuarios si quieren añadir tu aplicación a la pantalla de inicio, con lo que se generan más interacciones. [Más información](https://web.dev/installable-manifest)"
@@ -1419,7 +1419,7 @@
     "message": "Es posible que la página no se esté cargando correctamente porque la URL de prueba ({requested}) se ha redirigido a {final}. Prueba directamente la segunda URL."
   },
   "lighthouse-core/gather/gather-runner.js | warningTimeout": {
-    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+    "message": "La página ha tardado demasiado en cargar como para terminar dentro del límite de tiempo. Es posible que el resultado esté incompleto."
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Tiempo de vida en caché"
@@ -1437,7 +1437,7 @@
     "message": "Solicitudes"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
-    "message": "Resource Size"
+    "message": "Tamaño del recurso"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "Tipo de recurso"

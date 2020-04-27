@@ -141,10 +141,10 @@
     "message": "जब परिभाषा सूचियां ठीक से मार्क अप नहीं की जातीं, तो स्क्रीन रीडर उलझन भरे या गलत आउटपुट दे सकते हैं. [ज़्यादा जानें](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>` में सिर्फ़ ठीक तरह से क्रम में लगे `<dt>` और `<dd>` ग्रुप, `<script>`, `<template>` या `<div>` एलिमेंट नहीं हैं."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>` में सिर्फ़ ठीक तरह से क्रम से लगे `<dt>` और `<dd>` ग्रुप, `<script>`, `<template>` या `<div>` एलिमेंट हैं."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "परिभाषा सूची आइटम (`<dt>` और `<dd>`) को पैरंट `<dl>` एलिमेंट में रैप किया जाना चाहिए, ताकि यह पक्का किया जा सके कि स्क्रीन रीडर उन्हें ठीक तरीके से बोल सकते हैं. [ज़्यादा जानें](https://web.dev/dlitem/)."
@@ -771,22 +771,22 @@
     "message": "इमेज के आकार की जानकारी गलत है {url}"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
-    "message": "Actual size"
+    "message": "इमेज का असल साइज़"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
-    "message": "Displayed size"
+    "message": "इमेज का दिखाया गया साइज़"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
-    "message": "Expected size"
+    "message": "इमेज का अनुमानित साइज़"
   },
   "lighthouse-core/audits/image-size-responsive.js | description": {
-    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+    "message": "इमेज का डाइमेंशन उसके डिसप्ले साइज़ और पिक्सल के अनुपात में होना चाहिए, ताकि वह ज़्यादा से ज़्यादा साफ़ दिख सके. [ज़्यादा जानें](https://web.dev/image-size-responsive)."
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Displays images with inappropriate size"
+    "message": "पेज पर दिख रही इमेज का साइज़ ठीक नहीं है"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Displays images with appropriate size"
+    "message": "पेज पर दिख रही इमेज का साइज़ ठीक है"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "ब्राउज़र अपनी ओर से उपयोगकर्ताओं को आपके ऐप्लिकेशन को उनकी होमस्क्रीन पर जोड़ने का सुझाव दे सकते हैं. इससे उपयोगकर्ताओं के साथ बेहतर तरीके से जुड़ने में मदद मिलती है. [ज़्यादा जानें](https://web.dev/installable-manifest)."
@@ -1419,7 +1419,7 @@
     "message": "शायद पेज उम्मीद के मुताबिक लोड नहीं हो रहा है, क्योंकि आपके टेस्ट यूआरएल ({requested}) को {final} की ओर रीडायरेक्ट किया गया था. टेस्टिंग के लिए दूसरा यूआरएल आज़माएं."
   },
   "lighthouse-core/gather/gather-runner.js | warningTimeout": {
-    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+    "message": "धीरे लोड होने की वजह से, पेज तय समयसीमा में पूरी तरह लोड नहीं हो पाया. नतीजे अधूरे हो सकते हैं."
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "कैश TTL"
@@ -1437,7 +1437,7 @@
     "message": "अनुरोध"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
-    "message": "Resource Size"
+    "message": "संसाधन का साइज़"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "संसाधन का प्रकार"

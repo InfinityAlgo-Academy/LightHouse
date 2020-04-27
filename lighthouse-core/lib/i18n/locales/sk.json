@@ -141,10 +141,10 @@
     "message": "Keď zoznamy definícií nie sú správne označené, čítačky obrazovky môžu generovať mätúci alebo nepresný výstup. [Ďalšie informácie](https://web.dev/definition-list/)"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>` neobsahuje iba správne usporiadané skupiny `<dt>` a `<dd>`, prvky `<script>`, `<template>` alebo `<div>`."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>` obsahuje iba správne usporiadané skupiny `<dt>` a `<dd>`, prvky `<script>`, `<template>` alebo `<div>`."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "Položky zoznamu definícií (`<dt>` a `<dd>`) musia byť zabalené v nadradenom prvku `<dl>`, aby ich čítačky obrazovky dokázali správne oznamovať. [Ďalšie informácie](https://web.dev/dlitem/)"
@@ -771,22 +771,22 @@
     "message": "Neplatné informácie o veľkosti obrázka {url}"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
-    "message": "Actual size"
+    "message": "Skutočná veľkosť"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
-    "message": "Displayed size"
+    "message": "Zobrazená veľkosť"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
-    "message": "Expected size"
+    "message": "Očakávaná veľkosť"
   },
   "lighthouse-core/audits/image-size-responsive.js | description": {
-    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+    "message": "Prirodzené rozmery obrázka by mali byť priamo úmerné veľkosti obrazovky a pomeru pixelov, aby sa dosiahla maximálna jasnosť. [Ďalšie informácie](https://web.dev/image-size-responsive)"
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Displays images with inappropriate size"
+    "message": "Zobrazuje obrázky s nevhodnou veľkosťou"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Displays images with appropriate size"
+    "message": "Zobrazuje obrázky s vhodnou veľkosťou"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Prehliadače môžu proaktívne vyzývať používateľov, aby si pridali vašu aplikáciu na plochu, čo môže viesť k ich lepšiemu zapojeniu. [Ďalšie informácie](https://web.dev/installable-manifest)"
@@ -1419,7 +1419,7 @@
     "message": "Táto stránka sa nemusí načítavať podľa očakávaní, pretože testovacia webová adresa ({requested}) bola presmerovaná na {final}. Skúste priamo otestovať druhú webovú adresu."
   },
   "lighthouse-core/gather/gather-runner.js | warningTimeout": {
-    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+    "message": "Načítanie stránky bolo príliš pomalé, aby sa dokončilo v časovom limite. Výsledky nemusia byť úplné."
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL vyrovnávacej pamäte"
@@ -1437,7 +1437,7 @@
     "message": "Žiadosti"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
-    "message": "Resource Size"
+    "message": "Veľkosť zdroja"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "Typ zdroja"

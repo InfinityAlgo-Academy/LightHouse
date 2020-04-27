@@ -141,10 +141,10 @@
     "message": "Khi danh sách định nghĩa không được đánh dấu đúng cách, thì trình đọc màn hình có thể tạo ra thông báo gây nhầm lẫn hoặc không chính xác. [Tìm hiểu thêm](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>` không chỉ chứa các nhóm `<dt>` và `<dd>` được sắp xếp đúng cách, các phần tử `<script>`, `<template>` hoặc `<div>`."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>` chỉ chứa các nhóm `<dt>` và `<dd>` được sắp xếp đúng cách, các phần tử `<script>`, `<template>` hoặc `<div>`."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "Các mục trong danh sách định nghĩa (`<dt>` và `<dd>`) phải được đưa vào một phần tử `<dl>` mẹ để đảm bảo rằng trình đọc màn hình có thể thông báo đúng cách các mục này. [Tìm hiểu thêm](https://web.dev/dlitem/)."
@@ -771,22 +771,22 @@
     "message": "Thông tin kích thước hình ảnh không hợp lệ {url}"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
-    "message": "Actual size"
+    "message": "Kích thước thực"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
-    "message": "Displayed size"
+    "message": "Kích thước hiển thị"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
-    "message": "Expected size"
+    "message": "Kích thước mong muốn"
   },
   "lighthouse-core/audits/image-size-responsive.js | description": {
-    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+    "message": "Kích thước tự nhiên của hình ảnh phải tỷ lệ với kích thước màn hình và tỷ lệ pixel để hình ảnh rõ nét nhất có thể. [Tìm hiểu thêm](https://web.dev/image-size-responsive)."
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Displays images with inappropriate size"
+    "message": "Hiển thị hình ảnh có kích thước không phù hợp"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Displays images with appropriate size"
+    "message": "Hiển thị hình ảnh có kích thước phù hợp"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Các trình duyệt có thể chủ động nhắc người dùng thêm ứng dụng của bạn vào màn hình chính để tăng mức độ tương tác. [Tìm hiểu thêm](https://web.dev/installable-manifest)"
@@ -1419,7 +1419,7 @@
     "message": "Trang có thể không tải như dự kiến do URL kiểm tra của bạn ({requested}) đã được chuyển hướng tới {final}. Hãy thử kiểm tra trực tiếp URL thứ hai."
   },
   "lighthouse-core/gather/gather-runner.js | warningTimeout": {
-    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+    "message": "Trang này tải quá chậm nên không hoàn tất được trong giới hạn thời gian. Các kết quả có thể chưa hoàn chỉnh."
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Thời gian tồn tại (TTL) của bộ nhớ đệm"
@@ -1437,7 +1437,7 @@
     "message": "Số yêu cầu"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
-    "message": "Resource Size"
+    "message": "Kích thước tài nguyên"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "Loại tài nguyên"

@@ -141,10 +141,10 @@
     "message": "定義リストが適切にマークアップされていないと、スクリーン リーダーで、誤解を招く内容や不正確な内容が読み上げられる可能性があります。[詳細](https://web.dev/definition-list/)"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>` には、正しく順序付けられた `<dt>` および `<dd>` グループ、`<script>`、`<template>`、または `<div>` 要素以外も含まれています。"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>` には、正しく順序付けられた `<dt>` および `<dd>` グループ、`<script>`、`<template>`、または `<div>` 要素のみが含まれています。"
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "スクリーン リーダーで正しく読み上げられるようにするには、定義リストの項目（`<dt>` と `<dd>`）を親の `<dl>` 要素でラップする必要があります。[詳細](https://web.dev/dlitem/)"
@@ -771,22 +771,22 @@
     "message": "画像サイズに関する情報（{url}）が正しくありません"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
-    "message": "Actual size"
+    "message": "実サイズ"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
-    "message": "Displayed size"
+    "message": "表示されるサイズ"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
-    "message": "Expected size"
+    "message": "適切なサイズ"
   },
   "lighthouse-core/audits/image-size-responsive.js | description": {
-    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+    "message": "画像をできるだけ鮮明に表示するには、画像の実サイズを、表示するサイズとピクセル比に比例させる必要があります。[詳細](https://web.dev/image-size-responsive)"
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Displays images with inappropriate size"
+    "message": "不適切なサイズの画像表示"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Displays images with appropriate size"
+    "message": "適切なサイズの画像表示"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "ブラウザではホーム画面へのアプリの追加を促すメッセージを事前にユーザーに表示できます。これによりエンゲージメントが向上します。[詳細](https://web.dev/installable-manifest)"
@@ -1419,7 +1419,7 @@
     "message": "テスト URL（{requested}）が「{final}」にリダイレクトされているため、このページは想定どおりに読み込まれない可能性があります。2 番目の URL を直接テストしてみてください。"
   },
   "lighthouse-core/gather/gather-runner.js | warningTimeout": {
-    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+    "message": "ページの読み込みに時間がかかり、制限時間内に完了できませんでした。結果は不完全な場合があります。"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "キャッシュの TTL"
@@ -1437,7 +1437,7 @@
     "message": "リクエスト"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
-    "message": "Resource Size"
+    "message": "リソースのサイズ"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "リソースの種類"

@@ -141,10 +141,10 @@
     "message": "నిర్వచన జాబితాలను సరిగ్గా గుర్తు పట్టే విధంగా సెట్ చేయనప్పుడు, స్క్రీన్ రీడర్‌లు అయోమయానికి గురి చేసే లేదా అనిర్దిష్టమైన అవుట్‌పుట్‌ను అందించవచ్చు. [మరింత తెలుసుకోండి](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>`'లలో కేవలం సక్రమంగా ఆర్డర్ చేసిన `<dt>`, `<dd>` గ్రూప్‌లు, `<script>`, `<template>` లేదా `<div>` మూలకాలు మాత్రమే ఉండకూడదు."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>`'లలో కేవలం సక్రమంగా ఆర్డర్ చేసిన `<dt>`, `<dd>` గ్రూప్‌లు, `<script>`, `<template>` లేదా `<div>` మూలకాలు ఉన్నాయి."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "స్క్రీన్ రీడర్‌లు నిర్వచన జాబితా అంశాలను ('`<dt>`', '`<dd>`') సక్రమంగా ప్రకటించడం కోసం వాటిని తప్పనిసరిగా మూలాధార '`<dl>`' మూలకంలో సర్దుబాటు చేయాలి. [మరింత తెలుసుకోండి](https://web.dev/dlitem/)."
@@ -771,22 +771,22 @@
     "message": "చెల్లుబాటు కాని చిత్ర పరిమాణ సమాచారం {url}"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
-    "message": "Actual size"
+    "message": "అసలు సైజ్"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
-    "message": "Displayed size"
+    "message": "ప్రదర్శించబడిన సైజ్"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
-    "message": "Expected size"
+    "message": "ఆశించిన సైజ్"
   },
   "lighthouse-core/audits/image-size-responsive.js | description": {
-    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+    "message": "ఇమేజ్ సహజ కొలతలు ప్రదర్శన సైజ్‌కు అనులోమానుపాతంలో ఉండాలి, పిక్సెల్ నిష్పత్తి ఇమేజ్ స్పష్టతను పెంచేదిగా ఉండాలి. [మరింత తెలుసుకోండి](https://web.dev/image-size-responsive)."
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Displays images with inappropriate size"
+    "message": "సరైన సైజ్ లేని ఇమేజ్‌లను ప్రదర్శిస్తుంది"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Displays images with appropriate size"
+    "message": "సరైన సైజ్ ఉన్న ఇమేజ్‌లను ప్రదర్శిస్తుంది"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "మీ యాప్‌ను హోమ్ స్క్రీన్‌కు జోడించుకోవాల్సిందిగా బ్రౌజర్‌లు క్రియాశీలంగా వినియోగదారులను ప్రాంప్ట్ చేయగలవు, దీని వలన అధిక మంది జనాభాకు చేరువయ్యే అవకాశం పెరగవచ్చు. [మరింత తెలుసుకోండి](https://web.dev/installable-manifest)."
@@ -1419,7 +1419,7 @@
     "message": "మీ పరీక్ష URL ({requested})ను {final}కు మళ్లించినందున, పేజీ అనుకున్న విధంగా లోడ్ కాలేకపోతుండవచ్చు. నేరుగా రెండవ URLను పరీక్షించడం ట్రై చేయండి."
   },
   "lighthouse-core/gather/gather-runner.js | warningTimeout": {
-    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+    "message": "సమయ పరిమితి లోపల పూర్తి కావడానికి పేజీ మరీ నిదానంగా లోడ్ అయ్యింది. ఫలితాలు సంపూర్ణంగా ఉండకపోవచ్చు."
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "కాష్ TTL"
@@ -1437,7 +1437,7 @@
     "message": "అభ్యర్థనలు"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
-    "message": "Resource Size"
+    "message": "రిసోర్స్ సైజ్"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "వనరు రకం"

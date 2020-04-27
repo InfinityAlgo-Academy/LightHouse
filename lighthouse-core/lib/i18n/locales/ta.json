@@ -141,10 +141,10 @@
     "message": "வரையறைப் பட்டியல்கள் சரியாகக் குறிக்கப்படவில்லை எனில் ஸ்க்ரீன் ரீடர்கள் குழப்பமான அல்லது துல்லியமற்ற வெளியீட்டைத் தரக்கூடும். [மேலும் அறிக](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "சரியாக வரிசைப்படுத்தப்பட்ட `<dt>`, `<dd>` ஆகிய குழுக்களும் `<script>`, `<template>`, `<div>` போன்ற உறுப்புகளும் மட்டுமல்லாது வேறு வகைகளையும் `<dl>` கொண்டுள்ளது."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "சரியாக வரிசைப்படுத்தப்பட்ட `<dt>`, `<dd>` ஆகிய குழுக்களையும் `<script>`, `<template>`, `<div>` போன்ற உறுப்புகளையும் மட்டுமே `<dl>` கொண்டுள்ளது."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "விளக்கப்பட்டியலில் உள்ளவற்றை (`<dt>`,`<dd>`) ஸ்க்ரீன் ரீடர்கள் சரியாகப் படிக்க அவை ஒரு முதல்நிலை `<dl>` உறுப்பில் சேர்க்கப்பட்டிருக்க வேண்டும். [மேலும் அறிக](https://web.dev/dlitem/)."
@@ -771,22 +771,22 @@
     "message": "பட அளவு குறித்த தகவல் செல்லாதது {url}"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
-    "message": "Actual size"
+    "message": "உண்மையான அளவு"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
-    "message": "Displayed size"
+    "message": "காட்டப்படும் அளவு"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
-    "message": "Expected size"
+    "message": "எதிர்பார்க்கப்படும் அளவு"
   },
   "lighthouse-core/audits/image-size-responsive.js | description": {
-    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+    "message": "படத்தின் தெளிவுத்தன்மையை அதிகரிக்க, படத்தின் இயல்புப் பரிமாணங்களானவை காட்சி அளவுக்கும் பிக்சல் விகிதத்திற்கும் நேர்விகிதத்தில் இருக்க வேண்டும். [மேலும் அறிக](https://web.dev/image-size-responsive)."
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Displays images with inappropriate size"
+    "message": "பொருத்தமற்ற அளவுள்ள படங்கள் காட்டப்படுன்றன"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Displays images with appropriate size"
+    "message": "சரியான அளவுள்ள படங்கள் காட்டப்படுன்றன"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "முக்கியத்துவத்தின் காரணமாக ஆப்ஸை முகப்புத் திரையில் சேர்க்குமாறு முன்னெச்சரிக்கையாக உலாவிகள் பயனர்களுக்கு அறிவிக்கும். [மேலும் அறிக](https://web.dev/installable-manifest)."
@@ -1419,7 +1419,7 @@
     "message": "உங்கள் சோதனை URL ({requested}) {final}என்பதற்குத் திசைதிருப்பப்பட்டதால் எதிர்பரர்த்த அளவிற்குப் பக்கம் ஏற்றப்படாமல் போகக்கூடும். நேரடியாக இரண்டாவது URLலை சோதித்துப் பாருங்கள்."
   },
   "lighthouse-core/gather/gather-runner.js | warningTimeout": {
-    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+    "message": "நேர வரம்பிற்குள் பக்கத்தை முழுமையாக ஏற்ற முடியவில்லை. இதனால் முடிவுகள் காட்டப்படாமல் போகலாம்."
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "தற்காலிக நினைவக TTL"
@@ -1437,7 +1437,7 @@
     "message": "கோரிக்கைகள்"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
-    "message": "Resource Size"
+    "message": "ஆதாரங்களின் அளவு"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "ஆதார வகை"

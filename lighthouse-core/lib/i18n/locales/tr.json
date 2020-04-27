@@ -141,10 +141,10 @@
     "message": "Tanım listeleri gerektiği gibi işaretlenmediğinde ekran okuyucular kafa karışıklığına yol açan veya yanlış çıkışlar sunabilir. [Daha fazla bilgi](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>` öğeleri yalnızca gerektiği gibi sıralanmış `<dt>` ve `<dd>` gruplarını, `<script>`, `<template>` veya `<div>` öğelerini içermiyor."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>` öğeleri yalnızca gerektiği gibi sıralanmış `<dt>` ve `<dd>` gruplarını, `<script>`, `<template>` veya `<div>` öğelerini içeriyor."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "Tanım listesi öğelerinin (`<dt>` ve `<dd>`) ekran okuyucular tarafından düzgün bir şekilde duyurulabilmesi için üst `<dl>` öğesinin içine yerleştirilmesi gerekir. [Daha fazla bilgi](https://web.dev/dlitem/)."
@@ -771,22 +771,22 @@
     "message": "Geçersiz resim boyutlandırma bilgileri {url}"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
-    "message": "Actual size"
+    "message": "Gerçek boyut"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
-    "message": "Displayed size"
+    "message": "Görüntülenen boyut"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
-    "message": "Expected size"
+    "message": "Beklenen boyut"
   },
   "lighthouse-core/audits/image-size-responsive.js | description": {
-    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+    "message": "Resmin doğal boyutları, resmin netliğini en üst düzeye çıkarmak için görüntü boyutu ve piksel oranı ile orantılı olmalıdır. [Daha fazla bilgi](https://web.dev/image-size-responsive)."
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Displays images with inappropriate size"
+    "message": "Boyutu uygun olmayan resimleri görüntüler"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Displays images with appropriate size"
+    "message": "Boyutu uygun olan resimleri görüntüler"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Tarayıcılar proaktif olarak kullanıcılardan uygulamanızı ana ekranlarına eklemelerini isteyebilirler ve bu da daha yüksek etkileşim sağlayabilir. [Daha fazla bilgi](https://web.dev/installable-manifest)."
@@ -1419,7 +1419,7 @@
     "message": "Sayfa, test URL'niz ({requested}) {final} adresine yönlendirildiğinden beklendiği gibi yüklenmiyor olabilir. İkinci URL'yi doğrudan test etmeyi deneyin."
   },
   "lighthouse-core/gather/gather-runner.js | warningTimeout": {
-    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+    "message": "Sayfa, zaman sınırı içinde bitmeyecek kadar yavaş yüklendi. Sonuçlar eksik olabilir."
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL'yi Önbelleğe Alma"
@@ -1437,7 +1437,7 @@
     "message": "İstek Sayısı"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
-    "message": "Resource Size"
+    "message": "Kaynak Boyutu"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "Kaynak Türü"

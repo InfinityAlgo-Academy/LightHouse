@@ -141,10 +141,10 @@
     "message": "Когато списъците с определения не са маркирани правилно, екранните четци може да предоставят объркваща или неточна информация. [Научете повече](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "Елементите `<dl>` не съдържат само правилно подредени групи `<dt>` и `<dd>` и елементи `<script>`, `<template>` или `<div>`."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "Елементите `<dl>` съдържат само правилно подредени групи `<dt>` и `<dd>` и елементи `<script>`, `<template>` или `<div>`."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "Списъчните елементи за определение (`<dt>` и `<dd>`) трябва да бъдат обвити в родителски елемент `<dl>`, за да бъдат прочетени правилно от екранните четци. [Научете повече](https://web.dev/dlitem/)."
@@ -771,22 +771,22 @@
     "message": "Информацията за размера на изображението е невалидна: {url}"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
-    "message": "Actual size"
+    "message": "Действителен размер"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
-    "message": "Displayed size"
+    "message": "Показван размер"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
-    "message": "Expected size"
+    "message": "Очакван размер"
   },
   "lighthouse-core/audits/image-size-responsive.js | description": {
-    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+    "message": "Естествените размери на изображенията трябва да са пропорционални на размера на екрана и пикселното съотношение, за да се постигне максимално ясно изобразяване. [Научете повече](https://web.dev/image-size-responsive)"
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Displays images with inappropriate size"
+    "message": "Изображенията се показват с неподходящ размер"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Displays images with appropriate size"
+    "message": "Изображенията се показват с подходящ размер"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Браузърите могат проактивно да подканват потребителите да добавят приложението ви към началния екран, което може да повиши ангажираността. [Научете повече](https://web.dev/installable-manifest)."
@@ -1419,7 +1419,7 @@
     "message": "Възможно е страницата да не се зарежда нормално, тъй като тестовият ви URL адрес ({requested}) бе пренасочен към {final}. Тествайте директно втория URL адрес."
   },
   "lighthouse-core/gather/gather-runner.js | warningTimeout": {
-    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+    "message": "Страницата се зареждаше твърде бавно и зареждането не завърши в определеното време. Резултатите може да са непълни."
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Време на валидност на кеша"
@@ -1437,7 +1437,7 @@
     "message": "Заявки"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
-    "message": "Resource Size"
+    "message": "Размер на ресурса"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "Тип ресурс"

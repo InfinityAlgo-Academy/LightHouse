@@ -141,10 +141,10 @@
     "message": "Kapag hindi naka-mark up nang maayos ang mga listahan ng kahulugan, puwedeng gumawa ng nakakalito o hindi tumpak na output ang mga screen reader. [Matuto pa](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "Hindi lang mga grupo ng `<dt>` at `<dd>`, at mga element na `<script>`, `<template>` o `<div>` na nakaayos nang tama ang nilalaman ng `<dl>`."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "Mga grupo lang ng `<dt>` at `<dd>`, at mga element na `<script>`, `<template>` o `<div>` na nakaayos nang tama ang nilalaman ng `<dl>`."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "Nakapaloob dapat ang mga item sa listahan ng kahulugan (`<dt>` at `<dd>`) sa isang parent element na `<dl>` para matiyak na maayos na maiaanunsyo ng mga screen reader ang mga ito. [Matuto pa](https://web.dev/dlitem/)."
@@ -771,22 +771,22 @@
     "message": "Invalid ang laki ng larawan ng impormasyon {url}"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
-    "message": "Actual size"
+    "message": "Aktwal na laki"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
-    "message": "Displayed size"
+    "message": "Ipinapakitang laki"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
-    "message": "Expected size"
+    "message": "Inaasahang laki"
   },
   "lighthouse-core/audits/image-size-responsive.js | description": {
-    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+    "message": "Dapat ay kasukat ng mga natural na dimensyon ng larawan ang laki ng display at ratio ng pixel para ma-maximize ang pagiging malinaw ng larawan. [Matuto pa](https://web.dev/image-size-responsive)."
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Displays images with inappropriate size"
+    "message": "Nagpapakita ng mga larawang mali ang laki"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Displays images with appropriate size"
+    "message": "Nagpapakita ng mga larawang may tamang laki"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Puwedeng proactive na i-prompt ng mga browser ang mga user na idagdag ang iyong app sa kanilang homescreen, na puwedeng magresulta sa mas maraming pakikipag-ugnayan. [Matuto pa](https://web.dev/installable-manifest)."
@@ -1419,7 +1419,7 @@
     "message": "Posibleng hindi naglo-load ang page gaya ng inaasahan dahil na-redirect ang iyong pansubok na URL ({requested}) sa {final}. Direktang subukan ang pangalawang URL."
   },
   "lighthouse-core/gather/gather-runner.js | warningTimeout": {
-    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+    "message": "Masyadong matagal ang pag-load ng page para matapos sa inilaang limitasyon sa oras. Posibleng hindi kumpleto ang mga resulta."
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL ng Cache"
@@ -1437,7 +1437,7 @@
     "message": "Mga Kahilingan"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
-    "message": "Resource Size"
+    "message": "Laki ng Resource"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "Uri ng Resource"

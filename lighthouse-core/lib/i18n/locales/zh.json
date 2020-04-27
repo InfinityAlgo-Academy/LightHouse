@@ -141,10 +141,10 @@
     "message": "如果未正确标记定义列表，屏幕阅读器可能会读出令人困惑或不准确的内容。[了解详情](https://web.dev/definition-list/)。"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>` 并非只包含经过适当排序的 `<dt>` 和 `<dd>` 组及 `<script>`、`<template>` 或 `<div>` 元素。"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>` 只包含经过适当排序的 `<dt>` 和 `<dd>` 组及 `<script>`、`<template>` 或 `<div>` 元素。"
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "定义列表项 (`<dt>` 和 `<dd>`) 必须封装在父 `<dl>` 元素中，以确保屏幕阅读器可以正确地读出它们。[了解详情](https://web.dev/dlitem/)。"
@@ -771,22 +771,22 @@
     "message": "无效的图片大小信息 {url}"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
-    "message": "Actual size"
+    "message": "实际大小"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
-    "message": "Displayed size"
+    "message": "显示时大小"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
-    "message": "Expected size"
+    "message": "预期大小"
   },
   "lighthouse-core/audits/image-size-responsive.js | description": {
-    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+    "message": "图片的自然尺寸应与显示屏大小及像素比成正比，这样才能令图片达到最清晰的显示效果。[了解详情](https://web.dev/image-size-responsive)。"
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Displays images with inappropriate size"
+    "message": "显示的图片并非都大小得当"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Displays images with appropriate size"
+    "message": "显示的图片都大小得当"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "浏览器可主动提示用户向其主屏幕中添加您的应用，这有助于提高互动度。[了解详情](https://web.dev/installable-manifest)。"
@@ -1419,7 +1419,7 @@
     "message": "相应网页可能无法按预期加载，因为您所测试的网址 ({requested}) 重定向到了 {final}。请尝试直接测试第二个网址。"
   },
   "lighthouse-core/gather/gather-runner.js | warningTimeout": {
-    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+    "message": "此页面的加载速度太慢，无法在时限内完成。结果可能会不完整。"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "缓存 TTL"
@@ -1437,7 +1437,7 @@
     "message": "请求"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
-    "message": "Resource Size"
+    "message": "资源大小"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "资源类型"

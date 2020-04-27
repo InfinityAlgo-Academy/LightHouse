@@ -141,10 +141,10 @@
     "message": "Kai aprašo sąrašai netinkamai pažymėti, ekrano skaitytuvai gali pateikti klaidinančią arba netikslią išvestį. [Sužinokite daugiau](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "Elementuose „`<dl>`“ nurodytos ne tik tinkamai surikiuotos grupės „`<dt>`“ ir „`<dd>`“ bei elementai „`<script>`“, „`<template>`“ arba „`<div>`“."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "Elementuose „`<dl>`“ nurodytos tik tinkamai surikiuotos grupės „`<dt>`“ ir „`<dd>`“ bei elementai „`<script>`“, „`<template>`“ arba „`<div>`“."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "Aprašo sąrašo elementai („`<dt>`“ ir „`<dd>`“) turi būti sujungti pirminiame elemente „`<dl>`“, kad ekrano skaitytuvai galėtų apie juos tinkamai pranešti. [Sužinokite daugiau](https://web.dev/dlitem/)."
@@ -771,22 +771,22 @@
     "message": "Netinkama vaizdo dydžio informacija: {url}"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
-    "message": "Actual size"
+    "message": "Tikrasis dydis"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
-    "message": "Displayed size"
+    "message": "Pateikto vaizdo dydis"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
-    "message": "Expected size"
+    "message": "Numatytas dydis"
   },
   "lighthouse-core/audits/image-size-responsive.js | description": {
-    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+    "message": "Kad vaizdas būtų kuo aiškesnis, natūralūs vaizdo aspektai turi būti proporcingi ekrano dydžiui ir taškų koeficientui. [Sužinokite daugiau](https://web.dev/image-size-responsive)."
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Displays images with inappropriate size"
+    "message": "Netinkamo dydžio vaizdų pateikimas"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Displays images with appropriate size"
+    "message": "Pateikiami tinkamo dydžio vaizdai"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Naršyklės gali aktyviai raginti naudotojus pridėti jūsų programą prie pagrindinio ekrano, tai paskatintų geresnį įtraukimą. [Sužinokite daugiau](https://web.dev/installable-manifest)"
@@ -1419,7 +1419,7 @@
     "message": "Puslapis gali būti neįkeliamas, kaip numatyta, nes bandomasis URL ({requested}) peradresavo į {final}. Išbandykite antrąjį URL tiesiogiai."
   },
   "lighthouse-core/gather/gather-runner.js | warningTimeout": {
-    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+    "message": "Puslapis įkeliamas per lėtai, kad įkėlimas būtų baigtas atitinkant laiko apribojimą. Rezultatai gali būti neišsamūs."
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Talpyklos TTL"
@@ -1437,7 +1437,7 @@
     "message": "Užklausos"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
-    "message": "Resource Size"
+    "message": "Šaltinio dydis"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "Ištekliaus tipas"

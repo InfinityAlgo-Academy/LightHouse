@@ -780,7 +780,7 @@
     "message": "Expected size"
   },
   "lighthouse-core/audits/image-size-responsive.js | description": {
-    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximise image clarity. [Learn more](https://web.dev/image-size-responsive)."
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
     "message": "Displays images with inappropriate size"
@@ -1437,7 +1437,7 @@
     "message": "Requests"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
-    "message": "Resource Size"
+    "message": "Resource size"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "Resource type"

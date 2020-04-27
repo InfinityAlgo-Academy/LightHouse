@@ -141,10 +141,10 @@
     "message": "เมื่อมีการทำเครื่องหมายรายการคำจำกัดความอย่างไม่ถูกต้อง โปรแกรมอ่านหน้าจออาจสร้างเอาต์พุตที่ทำให้สับสนหรือไม่แม่นยำ [ดูข้อมูลเพิ่มเติม](https://web.dev/definition-list/)"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>` ไม่ได้มีเพียงกลุ่ม `<dt>` และ `<dd>` หรือองค์ประกอบ `<script>` `<template>` หรือ `<div>` ที่เรียงลำดับอย่างถูกต้อง"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>` มีเพียงกลุ่ม `<dt>` และ `<dd>` หรือองค์ประกอบ `<script>` `<template>` หรือ `<div>` ที่เรียงลำดับอย่างถูกต้อง"
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "รายการย่อยของคำจำกัดความ (`<dt>` และ `<dd>`) ต้องรวมอยู่ในองค์ประกอบ `<dl>` ระดับบนสุดเพื่อดูแลให้โปรแกรมอ่านหน้าจออ่านได้อย่างถูกต้อง [ดูข้อมูลเพิ่มเติม](https://web.dev/dlitem/)"
@@ -771,22 +771,22 @@
     "message": "ข้อมูลขนาดรูปภาพไมู่กต้อง {url}"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
-    "message": "Actual size"
+    "message": "ขนาดจริง"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
-    "message": "Displayed size"
+    "message": "ขนาดที่แสดง"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
-    "message": "Expected size"
+    "message": "ขนาดที่คาดไว้"
   },
   "lighthouse-core/audits/image-size-responsive.js | description": {
-    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+    "message": "ขนาดตามธรรมชาติของรูปภาพควรได้สัดส่วนกับขนาดการแสดงผลและอัตราส่วนพิกเซลเพื่อเพิ่มความชัดเจนของรูปภาพให้ได้มากที่สุด [ดูข้อมูลเพิ่มเติม](https://web.dev/image-size-responsive)"
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Displays images with inappropriate size"
+    "message": "แสดงรูปภาพที่มีขนาดไม่เหมาะสม"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Displays images with appropriate size"
+    "message": "แสดงรูปภาพที่มีขนาดเหมาะสม"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "เบราว์เซอร์แจ้งผู้ใช้อย่างชัดแจ้งให้เพิ่มแอปของคุณในหน้าจอหลัก ซึ่งจะทำให้ผู้ใช้มีส่วนร่วมเพิ่มขึ้นได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/installable-manifest)"
@@ -1419,7 +1419,7 @@
     "message": "หน้านี้อาจไม่โหลดขึ้นตามที่คาดไว้เนื่องจาก URL ทดสอบของคุณ ({requested}) มีการเปลี่ยนเส้นทางไปยัง {final} ลองทดสอบ URL ที่ 2 โดยตรง"
   },
   "lighthouse-core/gather/gather-runner.js | warningTimeout": {
-    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+    "message": "หน้าโหลดช้าเกินกำหนดเวลา หน้าที่โหลดมาได้อาจไม่ครบถ้วน"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "แคช TTL"
@@ -1437,7 +1437,7 @@
     "message": "คำขอ"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
-    "message": "Resource Size"
+    "message": "ขนาดทรัพยากร"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "ประเภททรัพยากร"

@@ -141,10 +141,10 @@
     "message": "Če seznami opredelitev niso ustrezno označeni, lahko bralniki zaslona izgovorijo nejasno ali netočno vsebino. [Več o tem](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "Elementi `<dl>` ne vsebujejo samo ustrezno razvrščenih skupin `<dt>` in `<dd>` ter elementov `<script>`, `<template>` ali `<div>`."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "Elementi `<dl>` vsebujejo samo ustrezno razvrščene skupine `<dt>` in `<dd>` ter elemente `<script>`, `<template>` ali `<div>`."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "Elementi seznamov opredelitev (`<dt>` in `<dd>`) morajo biti zaradi zagotavljanja, da jih lahko bralniki zaslona ustrezno predstavijo, oviti z nadrejenim elementom `<dl>`. [Več o tem](https://web.dev/dlitem/)."
@@ -771,22 +771,22 @@
     "message": "Neveljavni podatki o velikosti slike {url}"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
-    "message": "Actual size"
+    "message": "Dejanska velikost"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
-    "message": "Displayed size"
+    "message": "Prikazana velikost"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
-    "message": "Expected size"
+    "message": "Pričakovana velikost"
   },
   "lighthouse-core/audits/image-size-responsive.js | description": {
-    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+    "message": "Naravne mere slike morajo biti sorazmerne velikosti zaslona in razmerju slikovnih pik zaradi zagotavljanja največje mogoče jasnosti slike. [Več o tem](https://web.dev/image-size-responsive)."
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Displays images with inappropriate size"
+    "message": "Prikaže slike neustrezne velikosti"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Displays images with appropriate size"
+    "message": "Prikaže slike ustrezne velikosti"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Brskalniki lahko proaktivno pozovejo uporabnike, da dodajo vašo aplikacijo na začetni zaslon, kar lahko privede do več dejavnosti. [Več o tem](https://web.dev/installable-manifest)."
@@ -1419,7 +1419,7 @@
     "message": "Stran se morda ne naloži po pričakovanjih, ker je bil preizkusni URL ({requested}) preusmerjen na {final}. Poskusite neposredno preizkusiti drugi URL."
   },
   "lighthouse-core/gather/gather-runner.js | warningTimeout": {
-    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+    "message": "Stran se je naložila prepočasi, da bi se nalaganje dokončalo znotraj časovne omejitve. Rezultati so morda nepopolni."
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL predpomnjenja"
@@ -1437,7 +1437,7 @@
     "message": "Zahteve"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
-    "message": "Resource Size"
+    "message": "Velikost sredstva"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "Vrsta sredstva"

@@ -141,10 +141,10 @@
     "message": "Wanneer definitielijsten niet juist zijn opgemaakt, kunnen schermlezers verwarrende of onjuiste uitvoer produceren. [Meer informatie](https://web.dev/definition-list/)"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>`-elementen bevatten niet alleen juist geordende `<dt>`- en `<dd>`-groepen, `<script>`-, `<template>`- of `<div>`-elementen."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>`-elementen bevatten alleen juist geordende `<dt>`- en `<dd>`-groepen, `<script>`-, `<template>`- of `<div>`-elementen."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "Definitielijstitems (`<dt>` en `<dd>`) moeten zijn verpakt in een bovenliggend `<dl>`-element om ervoor te zorgen dat schermlezers ze juist kunnen aankondigen. [Meer informatie](https://web.dev/dlitem/)"
@@ -771,22 +771,22 @@
     "message": "Ongeldige informatie over afbeeldingsformaat {url}"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
-    "message": "Actual size"
+    "message": "Werkelijk formaat"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
-    "message": "Displayed size"
+    "message": "Weergegeven formaat"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
-    "message": "Expected size"
+    "message": "Verwacht formaat"
   },
   "lighthouse-core/audits/image-size-responsive.js | description": {
-    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+    "message": "De natuurlijke afmetingen van de afbeelding moeten in verhouding zijn tot het weergaveformaat en de pixelratio om de helderheid van de afbeelding te maximaliseren. [Meer informatie](https://web.dev/image-size-responsive)"
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Displays images with inappropriate size"
+    "message": "Hiermee worden afbeeldingen met een onjuist formaat weergegeven"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Displays images with appropriate size"
+    "message": "Hiermee worden afbeeldingen met het juiste formaat weergegeven"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Browsers kunnen gebruikers proactief vragen je app aan hun startscherm toe te voegen. Dit kan leiden tot grotere betrokkenheid. [Meer informatie](https://web.dev/installable-manifest)"
@@ -1419,7 +1419,7 @@
     "message": "De pagina wordt mogelijk niet geladen zoals verwacht omdat je test-URL ({requested}) is omgeleid naar {final}. Probeer de tweede URL rechtstreeks te testen."
   },
   "lighthouse-core/gather/gather-runner.js | warningTimeout": {
-    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+    "message": "De pagina is te langzaam geladen om binnen de tijdslimiet te voltooien. De resultaten kunnen onvolledig zijn."
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Cache-TTL"
@@ -1437,7 +1437,7 @@
     "message": "Verzoeken"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
-    "message": "Resource Size"
+    "message": "Brongrootte"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "Brontype"

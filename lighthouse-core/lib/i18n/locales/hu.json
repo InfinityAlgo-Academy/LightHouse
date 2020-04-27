@@ -141,10 +141,10 @@
     "message": "Ha nem megfelelő a definíciós listák jelölése, a képernyőolvasók zavaros vagy pontatlan szöveget generálhatnak. [További információ](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "A `<dl>` elemek nem csak megfelelően rendezett `<dt>` és `<dd>` csoportokat, illetve `<script>`, `<template>` vagy `<div>` elemeket tartalmaznak."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "A `<dl>` elemek csak megfelelően rendezett `<dt>` és `<dd>` csoportokat, illetve `<script>`, `<template>` vagy `<div>` elemeket tartalmaznak."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "A definíciós listák elemeit (`<dt>` és `<dd>`) `<dl>` szülőelembe kell foglalni, hogy a képernyőolvasók megfelelően felolvashassák őket. [További információ](https://web.dev/dlitem/)."
@@ -771,22 +771,22 @@
     "message": "Érvénytelen képméretezési információ {url}"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
-    "message": "Actual size"
+    "message": "Valós méret"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
-    "message": "Displayed size"
+    "message": "Megjelenített méret"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
-    "message": "Expected size"
+    "message": "Várt méret"
   },
   "lighthouse-core/audits/image-size-responsive.js | description": {
-    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+    "message": "A kép természetes méreteinek arányosnak kell lennie a megjelenítési mérettel és a pixelaránnyal a lehető legnagyobb képtisztaság érdekében. [További információ](https://web.dev/image-size-responsive)."
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Displays images with inappropriate size"
+    "message": "A képeket nem megfelelő méretben jeleníti meg"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Displays images with appropriate size"
+    "message": "A képeket megfelelő méretben jeleníti meg"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "A böngészők proaktív módon kérhetik a felhasználókat, hogy adják hozzá az Ön alkalmazását a kezdőképernyőjükhöz, ami erősebb elköteleződéshez vezethet. [További információ](https://web.dev/installable-manifest)."
@@ -1419,7 +1419,7 @@
     "message": "Előfordulhat, hogy az oldal nem az elvártaknak megfelelően töltődik be, mert a teszt-URL ({requested}) átirányít ide: {final}. Próbálkozzon a második URL közvetlen tesztelésével."
   },
   "lighthouse-core/gather/gather-runner.js | warningTimeout": {
-    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+    "message": "Az oldal túl lassan töltődött be, és túllépte az időkeretet. Az eredmények hiányosak lehetnek."
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Gyorsítótár-TTL"
@@ -1437,7 +1437,7 @@
     "message": "Kérések"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
-    "message": "Resource Size"
+    "message": "Forrás mérete"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "Forrás típusa"

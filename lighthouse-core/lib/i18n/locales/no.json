@@ -141,10 +141,10 @@
     "message": "Når definisjonslister ikke er riktig kodet, kan resultatene fra skjermlesere bli forvirrende eller unøyaktige. [Finn ut mer](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>`-elementer inneholder ikke bare velordnede `<dt>`- og `<dd>`-grupper og `<script>`-, `<template>`- eller `<div>`-elementer."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>`-elementer inneholder bare velordnede `<dt>`- og `<dd>`-grupper og `<script>`-, `<template>`- eller `<div>`-elementer."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "Elementer i definisjonslister (`<dt>` og `<dd>`) må være omsluttet av et overordnet `<dl>`-element for å sørge for at skjermlesere kan lese dem opp riktig. [Finn ut mer](https://web.dev/dlitem/)."
@@ -771,22 +771,22 @@
     "message": "Ugyldig informasjon om bildestørrelse – {url}"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
-    "message": "Actual size"
+    "message": "Faktisk størrelse"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
-    "message": "Displayed size"
+    "message": "Vist størrelse"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
-    "message": "Expected size"
+    "message": "Forventet størrelse"
   },
   "lighthouse-core/audits/image-size-responsive.js | description": {
-    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+    "message": "Bildets naturlige dimensjoner bør være proporsjonale med skjermstørrelsen og pikslenes høyde/bredde-forhold for at bildet skal være så tydelig som mulig. [Finn ut mer](https://web.dev/image-size-responsive)."
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Displays images with inappropriate size"
+    "message": "Viser bilder med feil størrelse"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Displays images with appropriate size"
+    "message": "Viser bilder med riktig størrelse"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Nettlesere kan aktivt spørre brukere om de vil legge til appen på startskjermen sin. Det kan føre til økt interaksjon. [Finn ut mer](https://web.dev/installable-manifest)."
@@ -1419,7 +1419,7 @@
     "message": "Siden lastes kanskje ikke inn som forventet, fordi testnettadressen ({requested}) ble viderekoblet til {final}. Prøv å teste den andre nettadressen direkte."
   },
   "lighthouse-core/gather/gather-runner.js | warningTimeout": {
-    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+    "message": "Siden ble lastet inn for tregt til å bli ferdig innenfor tidsgrensen. Resultatene kan være ufullstendige."
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Buffer-TTL"
@@ -1437,7 +1437,7 @@
     "message": "Forespørsler"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
-    "message": "Resource Size"
+    "message": "Ressursstørrelse"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "Ressurstype"

@@ -141,10 +141,10 @@
     "message": "Când listele de definiții nu sunt marcate corect, cititoarele de ecran pot produce un rezultat derutant sau inexact. [Află mai multe](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>` nu conțin doar grupurile `<dt>` și `<dd>` ordonate corect, `<script>`, `<template>` sau elementele `<div>`."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "`<dl>` conțin doar grupurile `<dt>` și `<dd>` ordonate corect, `<script>`, `<template>` sau elemente `<div>`."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "Elementele din lista de definiții (`<dt>` și `<dd>`) trebuie grupate într-un element principal `<dl>` pentru a se asigura că cititoarele de ecran le pot anunța corect. [Află mai multe](https://web.dev/dlitem/)."
@@ -771,22 +771,22 @@
     "message": "Informații nevalide privind dimensiunea imaginilor {url}"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
-    "message": "Actual size"
+    "message": "Dimensiunea reală"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
-    "message": "Displayed size"
+    "message": "Dimensiunea afișată"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
-    "message": "Expected size"
+    "message": "Dimensiunea așteptată"
   },
   "lighthouse-core/audits/image-size-responsive.js | description": {
-    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+    "message": "Dimensiunile naturale ale imaginii trebuie să fie proporționale cu dimensiunea afișajului și cu raportul de pixeli, pentru a maximiza claritatea imaginii. [Află mai multe](https://web.dev/image-size-responsive)."
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Displays images with inappropriate size"
+    "message": "Afișează imaginile cu dimensiunea incorectă"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Displays images with appropriate size"
+    "message": "Afișează imaginile cu dimensiunea potrivită"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Browserele le pot solicita utilizatorilor să adauge aplicația pe ecranele de pornire, lucru care poate duce la o implicare mai mare. [Află mai multe](https://web.dev/installable-manifest)."
@@ -1419,7 +1419,7 @@
     "message": "Este posibil ca pagina să nu se încarce conform așteptărilor, deoarece adresa URL de testare ({requested}) a fost redirecționată spre {final}. Încearcă să testezi direct a doua adresă URL."
   },
   "lighthouse-core/gather/gather-runner.js | warningTimeout": {
-    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+    "message": "Pagina s-a încărcat prea lent pentru a respecta limita de timp. Rezultatele pot fi incomplete."
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL cache"
@@ -1437,7 +1437,7 @@
     "message": "Solicitări"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
-    "message": "Resource Size"
+    "message": "Dimensiunea resursei"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "Tip de resursă"

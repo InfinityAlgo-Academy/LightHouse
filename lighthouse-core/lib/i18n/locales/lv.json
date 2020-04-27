@@ -141,10 +141,10 @@
     "message": "Ja definīciju saraksti nav marķēti pareizi, ekrāna lasītāju atskaņotais saturs var būt mulsinošs vai neprecīzs. [Uzziniet vairāk](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "Atribūtā `<dl>` nav ietvertas tikai pareizā secībā sakārtotas elementu `<dt>` un `<dd>` grupas, elements `<script>`, `<template>` vai `<div>`."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
+    "message": "Atribūtā `<dl>` ir ietvertas tikai pareizā secībā sakārtotas elementu`<dt>` un `<dd>` grupas, elements `<script>`, `<template>` vai `<div>`."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "Definīciju saraksta vienumiem (`<dt>` un `<dd>`) ir jābūt ietvertiem vecākelementā `<dl>`, lai ekrāna lasītāji tos varētu pareizi atskaņot. [Uzziniet vairāk](https://web.dev/dlitem/)."
@@ -771,22 +771,22 @@
     "message": "Nederīga attēla lieluma informācija: {url}"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
-    "message": "Actual size"
+    "message": "Faktiskie izmēri"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
-    "message": "Displayed size"
+    "message": "Attēlojuma izmēri"
   },
   "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
-    "message": "Expected size"
+    "message": "Paredzamie izmēri"
   },
   "lighthouse-core/audits/image-size-responsive.js | description": {
-    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+    "message": "Lai attēls būtu pēc iespējas skaidrāks, tā sākotnējiem izmēriem ir jābūt proporcionāliem attēlojuma lielumam un pikseļu attiecībai. [Uzziniet vairāk](https://web.dev/image-size-responsive)."
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Displays images with inappropriate size"
+    "message": "Tiek rādīti neatbilstošu izmēru attēli"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Displays images with appropriate size"
+    "message": "Tiek rādīti attēli ar atbilstošiem izmēriem"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Pārlūkprogrammās var aktīvi rādīt lietotājiem uzvednes ar ierosinājumu pievienot jūsu lietotni sākuma ekrānam. Tādējādi var izdoties palielināt iesaisti. [Uzziniet vairāk](https://web.dev/installable-manifest)."
@@ -1419,7 +1419,7 @@
     "message": "Iespējams, lapa netiek ielādēta, kā paredzēts, jo jūsu testa URL ({requested}) tika novirzīts uz: {final}. Mēģiniet tieši testēt otro URL."
   },
   "lighthouse-core/gather/gather-runner.js | warningTimeout": {
-    "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
+    "message": "Lapa tika ielādēta pārāk lēni, lai ielāde tiktu pabeigta noteiktajā laika ierobežojumā. Rezultāti var būt nepilnīgi."
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Kešatmiņas TTL vērtība"
@@ -1437,7 +1437,7 @@
     "message": "Pieprasījumi"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
-    "message": "Resource Size"
+    "message": "Resursa izmēri"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "Resursu veids"
