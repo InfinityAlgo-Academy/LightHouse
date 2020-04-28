@@ -28,7 +28,7 @@ set +x
 
 echo "Collection has started."
 echo "Check-in on progress anytime by running..."
-echo "  $ gcloud --project="$CLOUDSDK_CORE_PROJECT" compute ssh url-collect-instance"
+echo "  $ gcloud --project="$CLOUDSDK_CORE_PROJECT" compute ssh lighthouse@url-collect-instance"
 echo "  $ sudo -u lighthouse tail -f /home/lighthouse/collect.log"
 
 echo "When complete run..."
