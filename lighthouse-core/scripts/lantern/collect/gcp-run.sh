@@ -16,8 +16,7 @@ fi
 cd ./lighthouse
 
 git fetch origin
-git checkout -f origin/lantern-collect
-# git checkout -f origin/master
+git checkout -f origin/gcp-collect
 yarn install
 
 # Setup xvfb for lighthouse
@@ -25,14 +24,15 @@ export DISPLAY=:99
 Xvfb $DISPLAY &
 sleep 5
 
-# Import WPT_KEY vars
-source /home/lighthouse/.env
+urls=(`node -e 'console.log(JSON.stringify(require("./lighthouse-core/scripts/lantern/collect/urls.js")))' | jq '.[]' -r`)
 
 # Run the collection
-DEBUG=1 node --max-old-space-size=4096 ./lighthouse-core/scripts/lantern/collect/collect.js
-
-# Create golden
-DEBUG=1 node --max-old-space-size=4096 ./lighthouse-core/scripts/lantern/collect/golden.js
+node --max-old-space-size=4096 node lighthouse-core/scripts/compare-runs.js \
+  --name urls-6.0 \
+  --collect \
+  -n 5 \
+  --lh-flags='--only-categories=performance' \
+  --urls "${urls[@]}"
 
 # Kill xvfb
 kill $!
