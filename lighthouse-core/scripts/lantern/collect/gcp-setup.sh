@@ -15,9 +15,8 @@ curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 
 # Install dependencies
 sudo apt-get update
-sudo apt-get install -y xvfb nodejs google-chrome-stable google-cloud-sdk git zip linuxbrew-wrapper
+sudo apt-get install -y xvfb nodejs google-chrome-stable google-cloud-sdk git zip
 sudo npm install -g yarn
-yes '' | brew install jq
 
 # Add a lighthouse user
 # sudo useradd -m -s $(which bash) -G sudo lighthouse
