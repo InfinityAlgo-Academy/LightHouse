@@ -149,7 +149,8 @@ class Runner {
       };
 
       // Replace ICU message references with localized strings; save replaced paths in lhr.
-      lhr.i18n.icuMessagePaths = i18n.replaceIcuMessageInstanceIds(lhr, settings.locale);
+      // This is broken ..........
+      // lhr.i18n.icuMessagePaths = i18n.replaceIcuMessageInstanceIds(lhr, settings.locale);
 
       // Create the HTML, JSON, and/or CSV string
       const report = generateReport(lhr, settings.output);
