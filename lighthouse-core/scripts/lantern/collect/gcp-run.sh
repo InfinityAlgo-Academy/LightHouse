@@ -24,7 +24,7 @@ export DISPLAY=:99
 Xvfb $DISPLAY &
 sleep 5
 
-urls=(`node -e 'console.log(JSON.stringify(require("./lighthouse-core/scripts/lantern/collect/urls.js")))' | jq '.[]' -r`)
+urls=(`node -e 'console.log(require("./lighthouse-core/scripts/lantern/collect/urls.js").join("\n"))'`)
 
 # Run the collection
 node --max-old-space-size=4096 node lighthouse-core/scripts/compare-runs.js \
