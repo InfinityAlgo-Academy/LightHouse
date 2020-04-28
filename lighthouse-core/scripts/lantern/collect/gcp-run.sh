@@ -16,7 +16,7 @@ fi
 cd ./lighthouse
 
 git fetch origin
-git checkout -f origin/gcp-collect
+git checkout -f origin/collect-gcp
 yarn install
 
 # Setup xvfb for lighthouse

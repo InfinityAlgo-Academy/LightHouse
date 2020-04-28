@@ -22,7 +22,7 @@ done
 gcloud --project="$CLOUDSDK_CORE_PROJECT" compute scp ./lighthouse-core/scripts/lantern/collect/gcp-setup.sh url-collect-instance:/tmp/gcp-setup.sh --zone=us-central1-a
 gcloud --project="$CLOUDSDK_CORE_PROJECT" compute scp ./lighthouse-core/scripts/lantern/collect/gcp-run.sh url-collect-instance:/tmp/gcp-run.sh --zone=us-central1-a
 gcloud --project="$CLOUDSDK_CORE_PROJECT" compute ssh url-collect-instance --command="bash /tmp/gcp-setup.sh" --zone=us-central1-a
-gcloud --project="$CLOUDSDK_CORE_PROJECT" compute ssh url-collect-instance --command="sudo -u lighthouse sh -c 'nohup /home/lighthouse/gcp-run.sh > /home/lighthouse/collect.log 2>&1 < /dev/null &'" --zone=us-central1-a
+gcloud --project="$CLOUDSDK_CORE_PROJECT" compute ssh lighthouse@url-collect-instance --command="sh -c 'nohup /home/lighthouse/gcp-run.sh > /home/lighthouse/collect.log 2>&1 < /dev/null &'" --zone=us-central1-a
 
 set +x
 
