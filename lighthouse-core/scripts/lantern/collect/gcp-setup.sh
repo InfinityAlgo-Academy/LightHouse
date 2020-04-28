@@ -21,4 +21,5 @@ sudo npm install -g yarn
 # Add a lighthouse user
 sudo useradd -m -s $(which bash) -G sudo lighthouse
 sudo mv /tmp/gcp-run.sh /home/lighthouse/gcp-run.sh
+sudo chown lighthouse.lighthouse /home/lighthouse/gcp-run.sh
 sudo chmod +x /home/lighthouse/gcp-run.sh

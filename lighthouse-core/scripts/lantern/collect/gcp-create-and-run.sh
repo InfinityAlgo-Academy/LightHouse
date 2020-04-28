@@ -12,6 +12,13 @@ gcloud --project="$CLOUDSDK_CORE_PROJECT" compute instances create url-collect-i
   --boot-disk-size=100GB \
   --machine-type=n1-standard-2
 
+# Instance needs time to start up.
+until gcloud --project="$CLOUDSDK_CORE_PROJECT" compute ssh ls
+do
+  echo "Waiting for start up ..."
+  sleep 10
+done
+
 gcloud --project="$CLOUDSDK_CORE_PROJECT" compute scp ./lighthouse-core/scripts/lantern/collect/gcp-setup.sh url-collect-instance:/tmp/gcp-setup.sh --zone=us-central1-a
 gcloud --project="$CLOUDSDK_CORE_PROJECT" compute scp ./lighthouse-core/scripts/lantern/collect/gcp-run.sh url-collect-instance:/tmp/gcp-run.sh --zone=us-central1-a
 gcloud --project="$CLOUDSDK_CORE_PROJECT" compute ssh url-collect-instance --command="bash /tmp/gcp-setup.sh" --zone=us-central1-a
