@@ -230,7 +230,7 @@
       "id": "cumulative-layout-shift",
       "title": "Cumulative Layout Shift",
       "description": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls).",
-      "score": 0.21,
+      "score": 0.23,
       "scoreDisplayMode": "numeric",
       "numericValue": 0.42,
       "numericUnit": "unitless",
