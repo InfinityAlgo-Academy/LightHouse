@@ -13,7 +13,7 @@ gcloud --project="$CLOUDSDK_CORE_PROJECT" compute instances create url-collect-i
   --machine-type=n1-standard-2
 
 # Instance needs time to start up.
-until gcloud --project="$CLOUDSDK_CORE_PROJECT" compute ssh ls
+until gcloud --project="$CLOUDSDK_CORE_PROJECT" compute ssh url-collect-instance --command=ls --zone=us-central1-a
 do
   echo "Waiting for start up ..."
   sleep 10
