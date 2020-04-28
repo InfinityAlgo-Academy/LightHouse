@@ -149,7 +149,8 @@ async function gather() {
       // Skip if already gathered. Allows for restarting collection.
       if (fs.existsSync(gatherDir)) continue;
 
-      await execFile('node', [
+      await execFile('xvfb-run', [
+        'node',
         `${LH_ROOT}/lighthouse-cli`,
         url,
         `--gather-mode=${gatherDir}`,

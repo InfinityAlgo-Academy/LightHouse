@@ -22,7 +22,7 @@ yarn install
 urls=(`node -e 'console.log(require("./lighthouse-core/scripts/lantern/collect/urls.js").join("\n"))'`)
 
 # Run the collection
-xvfb-run node --max-old-space-size=4096 lighthouse-core/scripts/compare-runs.js \
+node --max-old-space-size=4096 lighthouse-core/scripts/compare-runs.js \
   --name urls-6.0 \
   --collect \
   -n 5 \
