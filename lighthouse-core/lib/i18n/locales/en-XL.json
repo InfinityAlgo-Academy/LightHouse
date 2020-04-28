@@ -876,7 +876,7 @@
     "message": "M̂án̂íf̂éŝt́ ĥáŝ á m̂áŝḱâb́l̂é îćôń"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Ĉúm̂úl̂át̂ív̂é L̂áŷóût́ Ŝh́îf́t̂ íŝ t́ĥé ŝúm̂ óf̂ ál̂ĺ l̂áŷóût́ ŝh́îf́t̂ś t̂h́ât́ ôćĉúr̂ŕêd́ d̂úr̂ín̂ǵ â ṕâǵê'ś l̂óâd́. Â ĺâýôút̂ śĥíf̂t́ îś âńŷ ḿôv́êḿêńt̂ án̂ él̂ém̂én̂t́ m̂ák̂éŝ ón̂ćê ít̂ íŝ v́îśîb́l̂é t̂ó t̂h́ê úŝér̂. Ál̂ĺ l̂áŷóût́ ŝh́îf́t̂ íŝ ŕêćôŕd̂éd̂, śĉór̂éd̂, án̂d́ t̂h́êń âǵĝŕêǵât́êd́ îńt̂ó â ćûḿûĺât́îv́ê śĉór̂é b̂ét̂ẃêén̂ 0 án̂d́ 1; 0 b̂éîńĝ á p̂ér̂f́êćt̂ĺŷ śt̂áb̂ĺê ṕâǵê, án̂d́ >=0.5 b̂éîńĝ á ĥíĝh́l̂ý ŝh́îf́t̂ín̂ǵ p̂áĝé. [L̂éâŕn̂ ḿôŕê](https://web.dev/cls)."
+    "message": "Ĉúm̂úl̂át̂ív̂é L̂áŷóût́ Ŝh́îf́t̂ ḿêáŝúr̂éŝ t́ĥé m̂óv̂ém̂én̂t́ ôf́ v̂íŝíb̂ĺê él̂ém̂én̂t́ŝ ẃît́ĥín̂ t́ĥé v̂íêẃp̂ór̂t́. [L̂éâŕn̂ ḿôŕê](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Êśt̂ím̂át̂éd̂ Ín̂ṕût́ L̂át̂én̂ćŷ íŝ án̂ éŝt́îḿât́ê óf̂ h́ôẃ l̂ón̂ǵ ŷóûŕ âṕp̂ t́âḱêś t̂ó r̂éŝṕôńd̂ t́ô úŝér̂ ín̂ṕût́, îń m̂íl̂ĺîśêćôńd̂ś, d̂úr̂ín̂ǵ t̂h́ê b́ûśîéŝt́ 5ŝ ẃîńd̂óŵ óf̂ ṕâǵê ĺôád̂. Íf̂ ýôúr̂ ĺât́êńĉý îś ĥíĝh́êŕ t̂h́âń 50 m̂ś, ûśêŕŝ ḿâý p̂ér̂ćêív̂é ŷóûŕ âṕp̂ áŝ ĺâǵĝý. [L̂éâŕn̂ ḿôŕê](https://web.dev/estimated-input-latency)."
