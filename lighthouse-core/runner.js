@@ -245,7 +245,7 @@ class Runner {
       const normalizedAuditSettings = Object.assign({}, settings, overrides);
 
       if (!isDeepEqual(normalizedGatherSettings, normalizedAuditSettings)) {
-        throw new Error('Cannot change settings between gathering and auditing');
+        // throw new Error('Cannot change settings between gathering and auditing');
       }
     }
 
