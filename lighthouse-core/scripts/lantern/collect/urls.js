@@ -23,7 +23,6 @@ module.exports = [
   'https://www.reddit.com/',
 
   // Buncha popular sites.
-  'http://m.iciba.com',
   'http://www.zol.com.cn/',
   'https://depositfiles.com/',
   'https://en-maktoob.yahoo.com/?p=xa',
@@ -77,10 +76,8 @@ module.exports = [
   'https://www.shopping.com/',
   'https://www.skype.com/en/',
   'https://www.so-net.ne.jp/m/',
-  'https://www.symantec.com/',
   'https://www.thefreedictionary.com/',
   'https://www.tianya.cn/m/',
-  'https://www.torrentz.com/',
   'https://www.tumblr.com/',
   'https://www.twitpic.com/',
   'https://www.typepad.com/',
