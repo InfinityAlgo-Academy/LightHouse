@@ -4,7 +4,7 @@
 
 name: 💡🏠
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   ci:
@@ -24,9 +24,10 @@ jobs:
         node-version: 10.x
 
     - name: Setup protoc
-      uses: arduino/setup-protoc@master
+      uses: arduino/setup-protoc@7ad700d
       with:
         version: '3.7.1'
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Set up Python
       uses: actions/setup-python@v1
