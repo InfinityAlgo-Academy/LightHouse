@@ -191,6 +191,7 @@ class TreemapViewer {
     this.el = el;
     this.currentRootNode = null;
     this.getHue = stableHasher(COLOR_HUES);
+    this.currentViewId = null;
   }
 
   /**
@@ -228,12 +229,12 @@ class TreemapViewer {
         executionTime: children.reduce((acc, cur) => (cur.executionTime || 0) + acc, 0),
         children,
       };
-      createViewModes(rootNodes);
+      createViewModes(rootNodes, this.currentViewId);
       createDataGrid(rootNodes);
     } else {
       const rootNode = this.rootNodes.find(rootNode => rootNode.id === mode.rootNodeId);
       this.currentRootNode = rootNode.node;
-      createViewModes([rootNode]);
+      createViewModes([rootNode], this.mode.viewId);
       createDataGrid([rootNode]);
     }
 
@@ -320,7 +321,7 @@ class TreemapViewer {
       if (hue === null) return;
 
       const sat = 60;
-      let lum = 90;
+      const lum = 90;
 
       node.dom.style.backgroundColor = hsl(hue, sat, Math.round(lum));
       node.dom.style.color = lum > 50 ? 'black' : 'white';
@@ -383,16 +384,29 @@ function createHeader(options) {
 
 /**
  * @param {RootNode[]} rootNodes
+ * @param {string=} viewId
  */
-function createViewModes(rootNodes) {
+function createViewModes(rootNodes, currentViewId) {
   const javascriptRootNodes = rootNodes.filter(n => n.group === 'javascript');
 
   const viewModesPanel = find('.panel--modals');
-  function makeViewMode(name, modeOptions) {
+  function makeViewMode(viewId, name, modeOptions) {
+    const isCurrentView = viewId === currentViewId;
     const viewModeEl = document.createElement('div');
     viewModeEl.classList.add('view-mode');
+    if (isCurrentView) viewModeEl.classList.add('view-mode--active');
     viewModeEl.innerText = name;
     viewModeEl.addEventListener('click', () => {
+      if (isCurrentView) {
+        treemapViewer.currentViewId = null;
+        treemapViewer.show({
+          ...treemapViewer.mode,
+          partitionBy: 'bytes',
+        });
+        return;
+      }
+
+      treemapViewer.currentViewId = viewId;
       treemapViewer.show({
         ...treemapViewer.mode,
         ...modeOptions,
@@ -410,7 +424,7 @@ function createViewModes(rootNodes) {
   for (const rootNode of javascriptRootNodes) {
     wastedBytes += rootNode.node.wastedBytes;
   }
-  makeViewMode(`Unused JavaScript: ${format(wastedBytes, 'bytes')}`, {partitionBy: 'wastedBytes'});
+  makeViewMode('unused', `Unused JavaScript: ${format(wastedBytes, 'bytes')}`, {partitionBy: 'wastedBytes'});
 
   let largeBytes = 0;
   for (const rootNode of javascriptRootNodes) {
@@ -422,7 +436,7 @@ function createViewModes(rootNodes) {
       largeBytes += node.wastedBytes;
     });
   }
-  makeViewMode(`Large Modules: ${format(largeBytes, 'bytes')}`, {partitionBy: 'bytes'});
+  makeViewMode('large', `Large Modules: ${format(largeBytes, 'bytes')}`, {partitionBy: 'bytes'});
 
   let duplicateBytes = 0;
   for (const rootNode of javascriptRootNodes) {
@@ -434,7 +448,7 @@ function createViewModes(rootNodes) {
       duplicateBytes += node.bytes / 2;
     });
   }
-  makeViewMode(`Duplicate Modules: ${format(duplicateBytes, 'bytes')}`, {partitionBy: 'bytes'});
+  makeViewMode('duplicate', `Duplicate Modules: ${format(duplicateBytes, 'bytes')}`, {partitionBy: 'bytes'});
 }
 
 /**
@@ -449,7 +463,7 @@ function createDataGrid(rootNodes) {
   let maxSize = 0;
   let maxWastedBytes = 0;
   for (const rootNode of rootNodes) {
-    let node = rootNode.node;
+    const node = rootNode.node;
     // if (node.children) node = node.children[0];
 
     dfs(node, (node, fullId) => {
