@@ -497,9 +497,9 @@ function createDataGrid(rootNodes) {
     ],
     columns: [ // define the table columns
       {title: 'Name', field: 'name'},
-      {title: 'Size', field: 'bytes', align: 'left'},
+      {title: 'Size', field: 'bytes', align: 'left', formatter: cell => formatBytes(cell.getValue())},
       {title: 'Size', field: 'bytes', formatter: 'progress', formatterParams: {min: 0, max: maxSize, width: '25%'}},
-      {title: 'Unused Bytes', field: 'wastedBytes', align: 'left'},
+      {title: 'Unused Bytes', field: 'wastedBytes', align: 'left', formatter: cell => formatBytes(cell.getValue())},
       {title: 'Unused Bytes', field: 'wastedBytes', formatter: 'progress', formatterParams: {min: 0, max: maxWastedBytes, width: '25%'}},
     ],
   });
