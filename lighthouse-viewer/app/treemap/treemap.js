@@ -12,7 +12,6 @@
  * @typedef Mode
  * @property {string} rootNodeId
  * @property {string} partitionBy
- * @property {string} colorBy
  */
 
 /** @type {TreemapViewer} */
@@ -199,6 +198,8 @@ class TreemapViewer {
    */
   show(mode) {
     this.mode = mode;
+    const partitionBySelectorEl = find('.partition-selector');
+    partitionBySelectorEl.value = mode.partitionBy;
 
     if (mode.rootNodeId === 'javascript') {
       const rootNodes = this.rootNodes
@@ -275,17 +276,6 @@ class TreemapViewer {
       },
     ];
 
-    if (this.mode.colorBy !== 'default') {
-      sections.push({
-        label: this.mode.colorBy,
-        calculate: node => {
-          const unit = this.mode.colorBy === 'executionTime' ? 'time' : 'bytes';
-          const value = node[this.mode.colorBy];
-          return format(value, unit);
-        },
-      });
-    }
-
     dfs(node, node => {
       // const {bytes, wastedBytes, executionTime} = node;
       // TODO: this is from pauls code
@@ -305,10 +295,6 @@ class TreemapViewer {
       // const unit = this.mode.partitionBy === 'executionTime' ? 'time' : 'bytes';
       // // node.id = `${elide(node.originalId, 60)} • ${formatBytes(bytes)} • ${Math.round(bytes / total * 100)}%`;
       // node.id = `${title} • ${format(value, unit)} ${this.mode.partitionBy} (${Math.round(value / total * 100)}%)`;
-
-      // if (this.mode.colorBy !== 'default' && node[this.mode.colorBy] !== undefined) {
-      //   node.id += ` • ${format(node[this.mode.colorBy], this.mode.colorBy === 'executionTime' ? 'time' : 'bytes')} ${this.mode.colorBy}`;
-      // }
 
 
       // if (this.mode.partitionBy === 'bytes') {
@@ -335,11 +321,6 @@ class TreemapViewer {
 
       const sat = 60;
       let lum = 90;
-      if (this.mode.colorBy === 'wastedBytes') {
-        lum = 25 + (85 - 25) * (1 - (node.wastedBytes / node.bytes)); // 25 to 85.
-      } else if (this.mode.colorBy === 'executionTime') {
-        lum = 25 + (85 - 25) * (1 - ((node.executionTime || 0) / this.currentRootNode.executionTime)); // 25 to 85.
-      }
 
       node.dom.style.backgroundColor = hsl(hue, sat, Math.round(lum));
       node.dom.style.color = lum > 50 ? 'black' : 'white';
@@ -353,7 +334,6 @@ class TreemapViewer {
 function createHeader(options) {
   const bundleSelectorEl = find('.bundle-selector');
   const partitionBySelectorEl = find('.partition-selector');
-  const colorBySelectorEl = find('.color-selector');
 
   bundleSelectorEl.innerHTML = '';
 
@@ -368,7 +348,6 @@ function createHeader(options) {
     treemapViewer.show({
       rootNodeId: bundleSelectorEl.value,
       partitionBy: partitionBySelectorEl.value,
-      colorBy: colorBySelectorEl.value,
     });
   }
 
@@ -400,7 +379,6 @@ function createHeader(options) {
   bundleSelectorEl.value = options.id;
   bundleSelectorEl.addEventListener('change', onChange);
   partitionBySelectorEl.addEventListener('change', onChange);
-  colorBySelectorEl.addEventListener('change', onChange);
 }
 
 /**
@@ -432,7 +410,7 @@ function createViewModes(rootNodes) {
   for (const rootNode of javascriptRootNodes) {
     wastedBytes += rootNode.node.wastedBytes;
   }
-  makeViewMode(`Unused JavaScript: ${format(wastedBytes, 'bytes')}`, {partitionBy: 'bytes', colorBy: 'default'});
+  makeViewMode(`Unused JavaScript: ${format(wastedBytes, 'bytes')}`, {partitionBy: 'wastedBytes'});
 
   let largeBytes = 0;
   for (const rootNode of javascriptRootNodes) {
@@ -444,7 +422,7 @@ function createViewModes(rootNodes) {
       largeBytes += node.wastedBytes;
     });
   }
-  makeViewMode(`Large Modules: ${format(largeBytes, 'bytes')}`, {partitionBy: 'bytes', colorBy: 'default'});
+  makeViewMode(`Large Modules: ${format(largeBytes, 'bytes')}`, {partitionBy: 'bytes'});
 
   let duplicateBytes = 0;
   for (const rootNode of javascriptRootNodes) {
@@ -456,7 +434,7 @@ function createViewModes(rootNodes) {
       duplicateBytes += node.bytes / 2;
     });
   }
-  makeViewMode(`Duplicate Modules: ${format(duplicateBytes, 'bytes')}`, {partitionBy: 'bytes', colorBy: 'default'});
+  makeViewMode(`Duplicate Modules: ${format(duplicateBytes, 'bytes')}`, {partitionBy: 'bytes'});
 }
 
 /**
@@ -528,7 +506,6 @@ function init(options) {
   treemapViewer.show({
     rootNodeId: options.id,
     partitionBy: 'bytes',
-    colorBy: 'default',
   });
 
   // For debugging.
