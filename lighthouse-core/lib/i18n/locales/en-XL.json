@@ -648,7 +648,7 @@
     "message": "F̂ór̂ úŝér̂ś ôń ŝĺôẃ ĉón̂ńêćt̂íôńŝ, éx̂t́êŕn̂ál̂ śĉŕîṕt̂ś d̂ýn̂ám̂íĉál̂ĺŷ ín̂j́êćt̂éd̂ v́îá `document.write()` ĉán̂ d́êĺâý p̂áĝé l̂óâd́ b̂ý t̂én̂ś ôf́ ŝéĉón̂d́ŝ. [Ĺêár̂ń m̂ór̂é](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Ûśêś `document.write()`"
+    "message": "Âv́ôíd̂ `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Âv́ôíd̂ś `document.write()`"
@@ -1325,8 +1325,20 @@
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "T̂áb̂ĺêś âńd̂ ĺîśt̂ś"
   },
+  "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
+    "message": "B̂ŕôẃŝér̂ Ćôḿp̂át̂íb̂íl̂ít̂ý"
+  },
   "lighthouse-core/config/default-config.js | bestPracticesCategoryTitle": {
     "message": "B̂éŝt́ P̂ŕâćt̂íĉéŝ"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesGeneralGroupTitle": {
+    "message": "Ĝén̂ér̂ál̂"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesTrustSafetyGroupTitle": {
+    "message": "T̂ŕûśt̂ án̂d́ Ŝáf̂ét̂ý"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesUXGroupTitle": {
+    "message": "Ûśêŕ Êx́p̂ér̂íêńĉé"
   },
   "lighthouse-core/config/default-config.js | budgetsGroupDescription": {
     "message": "P̂ér̂f́ôŕm̂án̂ćê b́ûd́ĝét̂ś ŝét̂ śt̂án̂d́âŕd̂ś f̂ór̂ t́ĥé p̂ér̂f́ôŕm̂án̂ćê óf̂ ýôúr̂ śît́ê."
