@@ -199,6 +199,8 @@ class TreemapViewer {
    */
   show(mode) {
     this.mode = mode;
+
+    // Update options view.
     const partitionBySelectorEl = find('.partition-selector');
     partitionBySelectorEl.value = mode.partitionBy;
 
@@ -234,7 +236,7 @@ class TreemapViewer {
     } else {
       const rootNode = this.rootNodes.find(rootNode => rootNode.id === mode.rootNodeId);
       this.currentRootNode = rootNode.node;
-      createViewModes([rootNode], this.mode.viewId);
+      createViewModes([rootNode], this.currentViewId);
       createDataGrid([rootNode]);
     }
 
