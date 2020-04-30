@@ -9,7 +9,7 @@ const browserify = require('browserify');
 const fs = require('fs');
 const path = require('path');
 const rimraf = require('rimraf');
-const assert = require('assert');
+const assert = require('assert').strict;
 
 const distDir = path.join(__dirname, '..', 'dist', 'dt-report-resources');
 const bundleOutFile = `${distDir}/report-generator.js`;

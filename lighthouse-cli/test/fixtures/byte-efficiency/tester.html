@@ -85,15 +85,21 @@ setTimeout(() => {
 
   <!-- PASS(optimized): image is JPEG optimized -->
   <!-- FAIL(webp): image is not WebP optimized -->
-  <!-- FAIL(responsive): image is 25% used at DPR 2 -->
+  <!-- FAIL(responsive): image is 50% used at DPR 3 -->
   <!-- PASS(offscreen): image is onscreen -->
   <img style="width: 256px; height: 170px;" src="lighthouse-1024x680.jpg">
 
   <!-- PASS(optimized): image is JPEG optimized -->
+  <!-- PASS(webp): image is WebP optimized -->
+  <!-- FAIL(responsive): image is 25% used at DPR 3 -->
+  <!-- PASS(offscreen): image is offscreen but lazily loaded -->
+  <img style="width: 0px; height: 0px;" src="lighthouse-2048x1356.webp?size0" loading="lazy">
+
+  <!-- PASS(optimized): image is JPEG optimized -->
   <!-- FAIL(webp): image is not WebP optimized -->
-  <!-- PASS(responsive): image is fully used at DPR 2 -->
+  <!-- PASS(responsive): image is fully used at DPR 3 -->
   <!-- PASS(offscreen): image is onscreen -->
-  <img style="width: 240px; height: 160px;" src="lighthouse-480x320.jpg">
+  <img style="width: 160px; height: 110px;" src="lighthouse-480x320.jpg">
 
   <!-- PASS(optimized): image is JPEG optimized -->
   <!-- PASS(webp): image has insigificant WebP savings -->
@@ -103,7 +109,7 @@ setTimeout(() => {
 
   <!-- PASS(optimized): image is JPEG optimized -->
   <!-- PASS(webp): image is WebP optimized -->
-  <!-- FAIL(responsive): image is 25% used at DPR 2 (but small savings) -->
+  <!-- FAIL(responsive): image is 50% used at DPR 3 (but small savings) -->
   <!-- FAIL(offscreen): image is offscreen -->
   <img style="margin-top: 1000px; width: 120px; height: 80px;" src="lighthouse-480x320.webp">
 

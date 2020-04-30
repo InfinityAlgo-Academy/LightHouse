@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const statistics = require('../../lib/statistics.js');
 
 describe('statistics', () => {

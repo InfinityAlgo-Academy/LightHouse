@@ -1535,21 +1535,6 @@
         "nodes": []
       },
       {
-        "id": "audio-caption",
-        "impact": null,
-        "tags": [
-          "cat.time-and-media",
-          "wcag2a",
-          "wcag121",
-          "section508",
-          "section508.22.a"
-        ],
-        "description": "Ensures <audio> elements have captions",
-        "help": "<audio> elements must have a captions track",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/audio-caption?application=axeAPI",
-        "nodes": []
-      },
-      {
         "id": "definition-list",
         "impact": null,
         "tags": [

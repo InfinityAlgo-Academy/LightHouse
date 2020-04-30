@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Các thuộc tính `[aria-*]` là hợp lệ và không bị sai chính tả"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Phụ đề giúp người điếc hoặc người dùng khiếm thính có thể sử dụng các phần tử âm thanh, cung cấp cho họ những thông tin quan trọng như ai đang nói chuyện, những người đó đang nói gì và các thông tin khác không phải lời nói. [Tìm hiểu thêm](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "Các phần tử `<audio>` bị thiếu phần tử `<track>` có `[kind=\"captions\"]`."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "Các phần tử `<audio>` chứa phần tử `<track>` có `[kind=\"captions\"]`"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Các phần tử không đạt"
   },
@@ -850,9 +841,6 @@
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "Chỉ số Hiển thị nội dung có kích thước lớn nhất đánh dấu thời điểm hiển thị văn bản hoặc hình ảnh có kích thước lớn nhất. [Tìm hiểu thêm](https://web.dev/largest-contentful-paint)"
-  },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Chỉ số Hiển thị nội dung có kích thước lớn nhất"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "Thời gian phản hồi lần tương tác đầu tiên tối đa mà người dùng có thể gặp phải là thời gian thực hiện nhiệm vụ lâu nhất. [Tìm hiểu thêm](https://web.dev/lighthouse-max-potential-fid)."

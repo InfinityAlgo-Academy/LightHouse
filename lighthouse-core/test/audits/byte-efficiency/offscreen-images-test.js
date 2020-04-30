@@ -7,7 +7,7 @@
 
 const UnusedImages =
     require('../../../audits/byte-efficiency/offscreen-images.js');
-const assert = require('assert');
+const assert = require('assert').strict;
 const createTestTrace = require('../../create-test-trace.js');
 const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
 

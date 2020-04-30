@@ -18,7 +18,7 @@
     "build-extension": "yarn build-extension-chrome && yarn build-extension-firefox",
     "build-extension-chrome": "node ./build/build-extension.js chrome",
     "build-extension-firefox": "node ./build/build-extension.js firefox",
-    "build-devtools": "yarn link && yarn link lighthouse && node ./build/build-bundle.js clients/devtools-entry.js dist/lighthouse-dt-bundle.js && node ./build/build-dt-report-resources.js",
+    "build-devtools": "(yarn unlink || true) && yarn link && yarn link lighthouse && node ./build/build-bundle.js clients/devtools-entry.js dist/lighthouse-dt-bundle.js && node ./build/build-dt-report-resources.js",
     "build-smokehouse-bundle": "node ./build/build-smokehouse-bundle.js",
     "build-lr": "node ./build/build-lightrider-bundles.js",
     "build-pack": "bash build/build-pack.sh",
@@ -35,6 +35,7 @@
     "test-lantern": "bash lighthouse-core/scripts/test-lantern.sh",
     "test-legacy-javascript": "bash lighthouse-core/scripts/test-legacy-javascript.sh",
     "test-docs": "yarn --cwd docs/recipes/auth && jest docs/recipes/integration-test && yarn --cwd docs/recipes/custom-gatherer-puppeteer test",
+    "test-proto": "yarn compile-proto && yarn build-proto-roundtrip",
     "unit-core": "jest \"lighthouse-core/\"",
     "unit-cli": "jest \"lighthouse-cli/\"",
     "unit-viewer": "jest \"lighthouse-viewer/.*-test.js\"",
@@ -63,8 +64,9 @@
     "type-check": "tsc -p . && tsc -p lighthouse-viewer/",
     "i18n:checks": "./lighthouse-core/scripts/i18n/assert-strings-collected.sh",
     "i18n:collect-strings": "node lighthouse-core/scripts/i18n/collect-strings.js",
+    "update:lantern-master": "node lighthouse-core/scripts/lantern/update-master-lantern-values.js",
     "update:sample-artifacts": "node lighthouse-core/scripts/update-report-fixtures.js",
-    "update:sample-json": "yarn i18n:collect-strings && node ./lighthouse-cli -A=./lighthouse-core/test/results/artifacts --config-path=./lighthouse-core/test/results/sample-config.js --output=json --output-path=./lighthouse-core/test/results/sample_v2.json && node lighthouse-core/scripts/cleanup-LHR-for-diff.js ./lighthouse-core/test/results/sample_v2.json --only-remove-timing && yarn compile-proto && yarn build-proto-roundtrip",
+    "update:sample-json": "yarn i18n:collect-strings && node ./lighthouse-cli -A=./lighthouse-core/test/results/artifacts --config-path=./lighthouse-core/test/results/sample-config.js --output=json --output-path=./lighthouse-core/test/results/sample_v2.json && node lighthouse-core/scripts/cleanup-LHR-for-diff.js ./lighthouse-core/test/results/sample_v2.json --only-remove-timing",
     "diff:sample-json": "yarn i18n:checks && bash lighthouse-core/scripts/assert-golden-lhr-unchanged.sh",
     "ultradumbBenchmark": "./lighthouse-core/scripts/benchmark.js",
     "mixed-content": "./lighthouse-cli/index.js --chrome-flags='--headless' --preset=mixed-content",
@@ -75,6 +77,7 @@
     "viewer": "cd dist/viewer && python -m SimpleHTTPServer"
   },
   "devDependencies": {
+    "@build-tracker/cli": "^1.0.0-beta.15",
     "@firebase/app-types": "0.3.1",
     "@firebase/auth-types": "0.3.2",
     "@firebase/util": "0.2.1",
@@ -129,7 +132,7 @@
     "isomorphic-fetch": "^2.2.1",
     "jest": "^24.9.0",
     "jsdom": "^12.2.0",
-    "lighthouse-plugin-publisher-ads": "^0.4.1",
+    "lighthouse-plugin-publisher-ads": "^0.4.3",
     "lodash.clonedeep": "^4.5.0",
     "npm-run-posix-or-windows": "^2.0.2",
     "nyc": "^13.3.0",
@@ -138,12 +141,12 @@
     "pretty-json-stringify": "^0.0.2",
     "puppeteer": "^1.19.0",
     "terser": "^4.2.0",
-    "typescript": "3.5.3",
+    "typescript": "3.8.3",
     "webtreemap-cdt": "^3.0.0"
   },
   "dependencies": {
     "axe-core": "3.5.1",
-    "chrome-launcher": "^0.12.0",
+    "chrome-launcher": "^0.13.1",
     "configstore": "^3.1.1",
     "cssstyle": "1.2.1",
     "details-element-polyfill": "^2.4.0",
@@ -200,7 +203,7 @@
     },
     {
       "path": "./dist/lighthouse-dt-bundle.js",
-      "maxSize": "456 kB"
+      "maxSize": "460 kB"
     },
     {
       "path": "./dist/lightrider/report-generator-bundle.js",

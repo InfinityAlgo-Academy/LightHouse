@@ -9,7 +9,7 @@
 
 const path = require('path');
 const fs = require('fs');
-const assert = require('assert');
+const assert = require('assert').strict;
 const puppeteer = require('../../node_modules/puppeteer/index.js');
 
 const {server} = require('../../lighthouse-cli/test/fixtures/static-server.js');

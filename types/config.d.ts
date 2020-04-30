@@ -28,6 +28,7 @@ declare global {
         loadFailureMode?: 'fatal'|'warn'|'ignore';
         recordTrace?: boolean;
         useThrottling?: boolean;
+        pauseAfterFcpMs?: number;
         pauseAfterLoadMs?: number;
         networkQuietThresholdMs?: number;
         cpuQuietThresholdMs?: number;

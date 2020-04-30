@@ -24,7 +24,7 @@ class LanternFirstCPUIdle extends LanternInteractive {
 
   /**
    * @param {LH.Gatherer.Simulation.Result} simulation
-   * @param {Object} extras
+   * @param {{optimistic: boolean, fmpResult: LH.Artifacts.LanternMetric}} extras
    * @return {LH.Gatherer.Simulation.Result}
    */
   static getEstimateFromSimulation(simulation, extras) {

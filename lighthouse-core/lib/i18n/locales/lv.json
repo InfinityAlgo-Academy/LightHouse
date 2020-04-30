@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Atribūti `[aria-*]` ir derīgi un pareizi uzrakstīti"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Izmantojot subtitrus, nedzirdīgi lietotāji vai lietotāji ar dzirdes traucējumiem var piekļūt audio elementiem, kuri nodrošina būtisku informāciju, piemēram, runātājus, sarunu saturu, kā arī citu informāciju, kas nav sarunas. [Uzziniet vairāk](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "Elementos `<audio>` trūkst elementu `<track>` ar parametru `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "Elementi `<audio>` ietver elementu `<track>` ar parametru `[kind=\"captions\"]`"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Nederīgi elementi"
   },
@@ -850,9 +841,6 @@
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "Lielākais satura marķējums norāda laiku, kurā tiek atveidots apjomīgākais teksts vai attēls. [Uzziniet vairāk](https://web.dev/largest-contentful-paint)."
-  },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Lielākais satura marķējums"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "Iespējamā maksimālā pirmās ievades aizkave, ar ko jūsu lietotāji var saskarties, ir ilgākā uzdevuma ilgums. [Uzziniet vairāk](https://web.dev/lighthouse-max-potential-fid)."

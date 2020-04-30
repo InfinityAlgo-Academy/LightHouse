@@ -18,6 +18,8 @@
 
 /* globals self, URL */
 
+/** @typedef {import('./i18n')} I18n */
+
 const ELLIPSIS = '\u2026';
 const NBSP = '\xa0';
 const PASS_THRESHOLD = 0.9;

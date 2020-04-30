@@ -181,8 +181,9 @@ class BootupTime extends Audit {
 
 
     // TODO: consider moving this to core gathering so you don't need to run the audit for warning
+    let runWarnings;
     if (hadExcessiveChromeExtension) {
-      context.LighthouseRunWarnings.push(str_(UIStrings.chromeExtensionsWarning));
+      runWarnings = [str_(UIStrings.chromeExtensionsWarning)];
     }
 
     const summary = {wastedMs: totalBootupTime};
@@ -211,6 +212,7 @@ class BootupTime extends Audit {
       displayValue: totalBootupTime > 0 ?
         str_(i18n.UIStrings.seconds, {timeInMs: totalBootupTime}) : '',
       details,
+      runWarnings,
     };
   }
 }

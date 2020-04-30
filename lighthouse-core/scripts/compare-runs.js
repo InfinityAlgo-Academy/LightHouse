@@ -5,19 +5,21 @@
  */
 'use strict';
 
+/* eslint-disable no-console */
+
 // Example:
 //     node lighthouse-core/scripts/compare-runs.js --name my-collection --collect -n 3 --lh-flags='--only-audits=unminified-javascript' --urls https://www.example.com https://www.nyt.com
-//     node lighthouse-core/scripts/compare-runs.js --name my-collection --summarize --measure-filter 'loadPage|connect'
+//     node lighthouse-core/scripts/compare-runs.js --name my-collection --summarize --filter 'loadPage|connect'
 //     node lighthouse-core/scripts/compare-runs.js --name base --name pr --compare
 
-// The script will report both timings and perf metric results. View just one of them but using --filter:
+// The script will report both timings and perf metric results. View just one of them by using --filter:
 //     node lighthouse-core/scripts/compare-runs.js --summarize --name pr --filter=metric
 
 const fs = require('fs');
 const mkdir = fs.promises.mkdir;
 const glob = require('glob');
 const util = require('util');
-const exec = util.promisify(require('child_process').exec);
+const execFile = util.promisify(require('child_process').execFile);
 const yargs = require('yargs');
 
 const {ProgressLogger} = require('./lantern/collect/common.js');
@@ -41,6 +43,7 @@ const argv = yargs
     // --summarize
     'summarize': 'Prints statistics report',
     'filter': 'Regex inclusion filter applied to key. Optional',
+    'url-filter': 'Regex inclusion filter applied to url. Optional',
     'reportExclude': 'Regex of columns keys to exclude.',
     'output': 'table, json',
     // --compare
@@ -56,10 +59,11 @@ const argv = yargs
   .array('urls')
   .string('lh-flags')
   .default('desc', false)
+  .default('sort-by-absolute-value', false)
   .default('lh-flags', '')
   .strict() // fail on unknown commands
   .wrap(yargs.terminalWidth())
-.argv;
+  .argv;
 
 const reportExcludeRegex =
   argv.reportExclude !== 'none' ? new RegExp(argv.reportExclude, 'i') : null;
@@ -117,33 +121,40 @@ function round(value) {
  * @return {string}
  */
 function getProgressBar(i, total = argv.n * argv.urls.length) {
-  return new Array(Math.round(i * 40 / total)).fill('▄').join('').padEnd(40);
+  const bars = new Array(Math.round(i * 40 / total)).fill('▄').join('').padEnd(40);
+  return `${i + 1} / ${total} [${bars}]`;
 }
 
 async function gather() {
   const outputDir = dir(argv.name);
-  await mkdir(ROOT_OUTPUT_DIR, {recursive: true});
-  // Don't overwrite a previous collection
-  if (fs.existsSync(outputDir)) throw new Error(`folder already exists: ${outputDir}`);
-  await mkdir(outputDir);
+  if (fs.existsSync(outputDir)) {
+    console.log('Collection already started - resuming.');
+  }
+  await mkdir(outputDir, {recursive: true});
 
   const progress = new ProgressLogger();
   progress.log('Gathering…');
 
+  let progressCount = 0;
   for (const url of argv.urls) {
-    for (let i = 0; i < argv.n; i++) {
-      const gatherDir = `${outputDir}/${urlToFolder(url)}/${i}/`;
-      await mkdir(gatherDir, {recursive: true});
-      progress.progress(getProgressBar(i));
+    const urlFolder = `${outputDir}/${urlToFolder(url)}`;
+    await mkdir(urlFolder, {recursive: true});
 
-      const cmd = [
-        'node',
+    for (let i = 0; i < argv.n; i++) {
+      const gatherDir = `${urlFolder}/${i}`;
+
+      progress.progress(getProgressBar(progressCount));
+      progressCount++;
+
+      // Skip if already gathered. Allows for restarting collection.
+      if (fs.existsSync(gatherDir)) continue;
+
+      await execFile('node', [
         `${LH_ROOT}/lighthouse-cli`,
         url,
         `--gather-mode=${gatherDir}`,
         argv.lhFlags,
-      ].join(' ');
-      await exec(cmd);
+      ]);
     }
   }
   progress.closeProgress();
@@ -154,21 +165,31 @@ async function audit() {
   const progress = new ProgressLogger();
   progress.log('Auditing…');
 
+  let progressCount = 0;
   for (const url of argv.urls) {
+    const urlDir = `${outputDir}/${urlToFolder(url)}`;
     for (let i = 0; i < argv.n; i++) {
-      const gatherDir = `${outputDir}/${urlToFolder(url)}/${i}/`;
-      progress.progress(getProgressBar(i));
+      const gatherDir = `${urlDir}/${i}`;
+      const outputPath = `${urlDir}/lhr-${i}.json`;
 
-      const cmd = [
-        'node',
-        `${LH_ROOT}/lighthouse-cli`,
-        url,
-        `--audit-mode=${gatherDir}`,
-        `--output-path=${outputDir}/lhr-${urlToFolder(url)}-${i}.json`,
-        '--output=json',
-        argv.lhFlags,
-      ].join(' ');
-      await exec(cmd);
+      progress.progress(getProgressBar(progressCount));
+      progressCount++;
+
+      // Skip if already audited. Allows for restarting collection.
+      if (fs.existsSync(outputPath)) continue;
+
+      try {
+        await execFile('node', [
+          `${LH_ROOT}/lighthouse-cli`,
+          url,
+          `--audit-mode=${gatherDir}`,
+          `--output-path=${outputPath}`,
+          '--output=json',
+          argv.lhFlags,
+        ]);
+      } catch (e) {
+        console.error('audit error:', e);
+      }
     }
   }
   progress.closeProgress();
@@ -184,17 +205,27 @@ function aggregateResults(name) {
   /** @type {Map<string, number[]>} */
   const durationsMap = new Map();
 
-  for (const lhrPath of glob.sync(`${outputDir}/*.json`)) {
+  for (const lhrPath of glob.sync(`${outputDir}/**/lhr-*.json`)) {
     const lhrJson = fs.readFileSync(lhrPath, 'utf-8');
     /** @type {LH.Result} */
-    const lhr = JSON.parse(lhrJson);
+    const lhr = lhrJson && JSON.parse(lhrJson);
+    if (!lhr || !lhr.audits) {
+      console.warn(`lhr not found at ${lhrPath}`);
+      continue;
+    }
 
-    const metrics = lhr.audits.metrics ?
+    if (argv.urlFilter && !lhr.requestedUrl.includes(argv.urlFilter)) continue;
+
+    const metrics = lhr.audits.metrics && lhr.audits.metrics.details ?
     /** @type {!LH.Audit.Details.Table} */ (lhr.audits.metrics.details).items[0] :
       {};
     const allEntries = {
       metric: Object.entries(metrics).filter(([name]) => !name.endsWith('Ts')),
       timing: lhr.timing.entries.map(entry => ([entry.name, entry.duration])),
+      categories: Object.values(lhr.categories).reduce((acc, cur) => {
+        acc.push([cur.id, (cur.score || 0) * 100]);
+        return acc;
+      }, /** @type {Array<[string, number]>} */ ([])),
     };
 
     Object.entries(allEntries).forEach(([kind, entries]) => {
@@ -247,19 +278,24 @@ function aggregateResults(name) {
 }
 
 /**
- * @param {*[]} results
+ * @param {Array<{key: string, name: string}>} results
  */
 function filter(results) {
   const includeFilter = argv.filter ? new RegExp(argv.filter, 'i') : null;
 
-  results.forEach((result, i) => {
-    for (const propName of Object.keys(result)) {
-      if (reportExcludeRegex && reportExcludeRegex.test(propName)) delete result[propName];
+  return results.filter(result => {
+    if (includeFilter && !includeFilter.test(result.key)) {
+      return false;
     }
 
-    if (includeFilter && !includeFilter.test(result.key)) {
-      delete results[i];
+    for (const propName of Object.keys(result)) {
+      if (reportExcludeRegex && reportExcludeRegex.test(propName)) {
+        // @ts-ignore: propName is a key.
+        delete result[propName];
+      }
     }
+
+    return true;
   });
 }
 
@@ -273,8 +309,7 @@ function isNumber(value) {
 
 function summarize() {
   const results = aggregateResults(argv.name);
-  filter(results);
-  print(results);
+  print(filter(results));
 }
 
 /**
@@ -314,6 +349,7 @@ function compare() {
     const max = compareValues(baseResult && baseResult.max, otherResult && otherResult.max);
 
     return {
+      'key': someResult.key,
       'name': someResult.name,
       'url': someResult.url,
       'mean': mean.description,
@@ -332,18 +368,22 @@ function compare() {
   const sortByKey = `${argv.deltaPropertySort} Δ`;
   results.sort((a, b) => {
     // @ts-ignore - shhh tsc.
-    const aValue = a[sortByKey];
+    let aValue = a[sortByKey];
     // @ts-ignore - shhh tsc.
-    const bValue = b[sortByKey];
+    let bValue = b[sortByKey];
 
     // Always put the keys missing a result at the bottom of the table.
     if (!isNumber(aValue)) return 1;
     else if (!isNumber(bValue)) return -1;
 
-    return (argv.desc ? 1 : -1) * (Math.abs(aValue) - Math.abs(bValue));
+    if (argv.sortByAbsoluteValue) {
+      aValue = Math.abs(aValue);
+      bValue = Math.abs(bValue);
+    }
+
+    return (argv.desc ? 1 : -1) * (aValue - bValue);
   });
-  filter(results);
-  print(results);
+  print(filter(results));
 }
 
 /**
@@ -351,10 +391,8 @@ function compare() {
  */
 function print(results) {
   if (argv.output === 'table') {
-    // eslint-disable-next-line no-console
     console.table(results);
   } else if (argv.output === 'json') {
-    // eslint-disable-next-line no-console
     console.log(JSON.stringify(results, null, 2));
   }
 }

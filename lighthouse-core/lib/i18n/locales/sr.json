@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Атрибути `[aria-*]` су важећи и нису погрешно написани"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Титлови омогућавају да глуви корисници или корисници са оштећењем слуха користе аудио елементе, чиме се пружају важне информације, на пример, информације о томе која особа говори, шта говори, као и друге информације које нису везане за говор. [Сазнајте више](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "Елементима `<audio>` недостаје елемент `<track>` са атрибутом `[kind=\"captions\"]`."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "Елементи `<audio>` садрже елемент `<track>` са атрибутом `[kind=\"captions\"]`"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Елементи који нису прошли проверу"
   },
@@ -850,9 +841,6 @@
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "Највеће приказивање садржаја означава тренутак у којем се приказују највећи текст или слика. [Сазнајте више](https://web.dev/largest-contentful-paint)"
-  },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Највеће приказивање садржаја"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "Максимално потенцијално кашњење првог приказа које може да се деси корисницима је трајање најдужег задатка. [Сазнајте више](https://web.dev/lighthouse-max-potential-fid)."

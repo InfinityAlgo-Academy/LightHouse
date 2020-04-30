@@ -15,7 +15,7 @@ const UIStrings = {
   title: 'Remove unused JavaScript',
   /** Description of a Lighthouse audit that tells the user *why* they should remove JavaScript that is never needed/evaluated by the browser. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Remove unused JavaScript to reduce bytes consumed by network activity. ' +
-    '[Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting).',
+    '[Learn more](https://web.dev/remove-unused-code/).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -73,28 +73,6 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
   }
 
   /**
-   * @param {WasteData[]} wasteData
-   * @param {LH.Artifacts.NetworkRequest} networkRecord
-   */
-  static determineLengths(wasteData, networkRecord) {
-    let unused = 0;
-    let content = 0;
-    // TODO: this is right for multiple script tags in an HTML document,
-    // but may be wrong for multiple frames using the same script resource.
-    for (const usage of wasteData) {
-      unused += usage.unusedLength;
-      content += usage.contentLength;
-    }
-    const transfer = ByteEfficiencyAudit.estimateTransferSize(networkRecord, content, 'Script');
-
-    return {
-      content,
-      unused,
-      transfer,
-    };
-  }
-
-  /**
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @param {LH.Audit.Context} context
@@ -111,23 +89,33 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       if (!networkRecord) continue;
       const bundle = bundles.find(b => b.script.src === url);
       const unusedJsSummary =
-        await UnusedJavaScriptSummary.request({networkRecord, scriptCoverages, bundle}, context);
-      if (unusedJsSummary.wastedBytes <= IGNORE_THRESHOLD_IN_BYTES) continue;
+        await UnusedJavaScriptSummary.request({url, scriptCoverages, bundle}, context);
 
+      const transfer = ByteEfficiencyAudit
+        .estimateTransferSize(networkRecord, unusedJsSummary.totalBytes, 'Script');
+      const transferRatio = transfer / unusedJsSummary.totalBytes;
       const item = {
         url: unusedJsSummary.url,
-        totalBytes: unusedJsSummary.totalBytes,
-        wastedBytes: unusedJsSummary.wastedBytes,
+        totalBytes: Math.round(transferRatio * unusedJsSummary.totalBytes),
+        wastedBytes: Math.round(transferRatio * unusedJsSummary.wastedBytes),
         wastedPercent: unusedJsSummary.wastedPercent,
       };
+
+      if (item.wastedBytes <= IGNORE_THRESHOLD_IN_BYTES) continue;
 
       // Augment with bundle data.
       if (bundle && unusedJsSummary.sourcesWastedBytes) {
         const topUnusedSourceSizes = Object.entries(unusedJsSummary.sourcesWastedBytes)
+          .sort((a, b) => b[1] - a[1])
           .slice(0, 5)
           .map(([source, unused]) => {
-            const total = source === '(unmapped)' ? bundle.sizes.unmappedBytes : bundle.sizes.files[source];
-            return {source, unused, total};
+            const total =
+              source === '(unmapped)' ? bundle.sizes.unmappedBytes : bundle.sizes.files[source];
+            return {
+              source,
+              unused: Math.round(unused * transferRatio),
+              total: Math.round(total * transferRatio),
+            };
           })
           .filter(d => d.unused >= bundleSourceUnusedThreshold);
 
@@ -147,7 +135,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       headings: [
         /* eslint-disable max-len */
         {key: 'url', valueType: 'url', subRows: {key: 'sources', valueType: 'code'}, label: str_(i18n.UIStrings.columnURL)},
-        {key: 'totalBytes', valueType: 'bytes', subRows: {key: 'sourceBytes'}, label: str_(i18n.UIStrings.columnSize)},
+        {key: 'totalBytes', valueType: 'bytes', subRows: {key: 'sourceBytes'}, label: str_(i18n.UIStrings.columnTransferSize)},
         {key: 'wastedBytes', valueType: 'bytes', subRows: {key: 'sourceWastedBytes'}, label: str_(i18n.UIStrings.columnWastedBytes)},
         /* eslint-enable max-len */
       ],

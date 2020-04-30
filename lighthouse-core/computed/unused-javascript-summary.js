@@ -6,7 +6,6 @@
 'use strict';
 
 const makeComputedArtifact = require('./computed-artifact.js');
-const ByteEfficiencyAudit = require('../audits/byte-efficiency/byte-efficiency-audit.js');
 
 /**
  * @typedef WasteData
@@ -17,7 +16,7 @@ const ByteEfficiencyAudit = require('../audits/byte-efficiency/byte-efficiency-a
 
 /**
  * @typedef ComputeInput
- * @property {LH.Artifacts.NetworkRequest} networkRecord
+ * @property {string} url
  * @property {LH.Crdp.Profiler.ScriptCoverage[]} scriptCoverages
  * @property {LH.Artifacts.Bundle=} bundle
  */
@@ -75,11 +74,11 @@ class UnusedJavascriptSummary {
    */
   static createItem(url, lengths) {
     const wastedRatio = (lengths.unused / lengths.content) || 0;
-    const wastedBytes = Math.round(lengths.transfer * wastedRatio);
+    const wastedBytes = Math.round(lengths.content * wastedRatio);
 
     return {
       url: url,
-      totalBytes: lengths.transfer,
+      totalBytes: lengths.content,
       wastedBytes,
       wastedPercent: 100 * wastedRatio,
     };
@@ -87,9 +86,8 @@ class UnusedJavascriptSummary {
 
   /**
    * @param {WasteData[]} wasteData
-   * @param {LH.Artifacts.NetworkRequest} networkRecord
    */
-  static determineLengths(wasteData, networkRecord) {
+  static determineLengths(wasteData) {
     let unused = 0;
     let content = 0;
     // TODO: this is right for multiple script tags in an HTML document,
@@ -98,12 +96,10 @@ class UnusedJavascriptSummary {
       unused += usage.unusedLength;
       content += usage.contentLength;
     }
-    const transfer = ByteEfficiencyAudit.estimateTransferSize(networkRecord, content, 'Script');
 
     return {
       content,
       unused,
-      transfer,
     };
   }
 
@@ -159,11 +155,11 @@ class UnusedJavascriptSummary {
    * @return {Promise<Summary>}
    */
   static async compute_(data) {
-    const {networkRecord, scriptCoverages, bundle} = data;
+    const {url, scriptCoverages, bundle} = data;
 
     const wasteData = scriptCoverages.map(UnusedJavascriptSummary.computeWaste);
-    const lengths = UnusedJavascriptSummary.determineLengths(wasteData, networkRecord);
-    const item = UnusedJavascriptSummary.createItem(networkRecord.url, lengths);
+    const lengths = UnusedJavascriptSummary.determineLengths(wasteData);
+    const item = UnusedJavascriptSummary.createItem(url, lengths);
     if (!bundle) return item;
 
     return {

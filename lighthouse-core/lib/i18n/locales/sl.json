@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Atributi `[aria-*]` so veljavni in niso napačno črkovani"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Podnapisi poskrbijo, da so zvočni elementi uporabni za gluhe ali slušno prizadete tako, da zagotavljajo ključne informacije, na primer, kdo govori, kaj govori in druge neverbalne informacije. [Več o tem](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "Elementi `<audio>` nimajo elementa `<track>` s podnapisi `[kind=\"captions\"]`."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "Elementi `<audio>` vsebujejo element `<track>` s podnapisi `[kind=\"captions\"]`"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Neuspešni elementi"
   },
@@ -850,9 +841,6 @@
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "Največji vsebinski izris označuje čas, ko je izrisano največje besedilo oziroma je izrisana največja slika. [Več o tem](https://web.dev/largest-contentful-paint)."
-  },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Največji vsebinski izris"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "Največja potencialna zakasnitev od prvega vnosa, na katero lahko uporabniki naletijo, je trajanje najdaljšega opravila. [Več o tem](https://web.dev/lighthouse-max-potential-fid)."

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const parseCacheControl = require('parse-cache-control');
 const Audit = require('../audit.js');
 const NetworkRequest = require('../../lib/network-request.js');
@@ -276,7 +276,7 @@ class CacheHeaders extends Audit {
         // TODO(i18n): pre-compute localized duration
         {key: 'cacheLifetimeMs', itemType: 'ms', text: str_(i18n.UIStrings.columnCacheTTL),
           displayUnit: 'duration'},
-        {key: 'totalBytes', itemType: 'bytes', text: str_(i18n.UIStrings.columnSize),
+        {key: 'totalBytes', itemType: 'bytes', text: str_(i18n.UIStrings.columnTransferSize),
           displayUnit: 'kb', granularity: 1},
       ];
 

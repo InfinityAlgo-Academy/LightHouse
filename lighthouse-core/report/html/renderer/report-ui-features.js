@@ -25,6 +25,8 @@
 
 /* globals getFilenamePrefix Util */
 
+/** @typedef {import('./dom')} DOM */
+
 const VIEWER_ORIGIN = 'http://localhost:8000';
 const TREEMAP_URL = `${VIEWER_ORIGIN}/treemap/`;
 

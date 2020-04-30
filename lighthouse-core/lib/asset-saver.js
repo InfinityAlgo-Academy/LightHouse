@@ -273,7 +273,9 @@ async function saveAssets(artifacts, audits, pathWithBasename) {
  * @return {Promise<void>}
  */
 async function saveLanternNetworkData(devtoolsLog, outputPath) {
-  const context = /** @type {LH.Audit.Context} */ ({computedCache: new Map()});
+  /** @type {LH.Audit.Context} */
+  // @ts-ignore - the full audit context isn't needed for analysis.
+  const context = {computedCache: new Map()};
   const networkAnalysis = await NetworkAnalysisComputed.request(devtoolsLog, context);
   const lanternData = LoadSimulatorComputed.convertAnalysisToSaveableLanternData(networkAnalysis);
 

@@ -8,19 +8,17 @@ import ArbitraryEqualityMap = require('../lighthouse-core/lib/arbitrary-equality
 
 declare global {
   module LH.Audit {
-    export interface Context {
+    export type Context = Immutable<{
       /** audit options */
       options: Record<string, any>;
       settings: Config.Settings;
-      /** Push to this array to add top-level warnings to the LHR. */
-      LighthouseRunWarnings: Array<string>;
       /**
        * Nested cache for already-computed computed artifacts. Keyed first on
        * the computed artifact's `name` property, then on input artifact(s).
        * Values are Promises resolving to the computedArtifact result.
        */
       computedCache: Map<string, ArbitraryEqualityMap>;
-    }
+    }>;
 
     export interface ScoreOptions {
       scorePODR: number;
@@ -85,6 +83,8 @@ declare global {
       notApplicable?: boolean;
       /** Extra information about the page provided by some types of audits, in one of several possible forms that can be rendered in the HTML report. */
       details?: Audit.Details;
+      /** If an audit encounters unusual execution circumstances, strings can be put in this optional array to add top-level warnings to the LHR. */
+      runWarnings?: Array<string>;
     }
 
     /** The Audit.Product type for audits that do not return a `numericValue`. */

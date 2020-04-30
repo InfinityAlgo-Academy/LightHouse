@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "[ᐅ`[aria-*]`ᐊ åţţŕîбûţéš åŕé våļîð åñð ñöţ mîššþéļļéð one two three four five six seven eight nine]"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "[Çåþţîöñš måķé åûðîö éļéméñţš ûšåбļé ƒöŕ ðéåƒ öŕ ĥéåŕîñĝ-îmþåîŕéð ûšéŕš, þŕövîðîñĝ çŕîţîçåļ îñƒöŕmåţîöñ šûçĥ åš ŵĥö îš ţåļķîñĝ, ŵĥåţ ţĥéý'ŕé šåýîñĝ, åñð öţĥéŕ ñöñ-šþééçĥ îñƒöŕmåţîöñ. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/audio-caption/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven]"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "[ᐅ`<audio>`ᐊ éļéméñţš åŕé mîššîñĝ å ᐅ`<track>`ᐊ éļéméñţ ŵîţĥ ᐅ`[kind=\"captions\"]`ᐊ. one two three four five six seven eight nine ten]"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "[ᐅ`<audio>`ᐊ éļéméñţš çöñţåîñ å ᐅ`<track>`ᐊ éļéméñţ ŵîţĥ ᐅ`[kind=\"captions\"]`ᐊ one two three four five six seven eight nine]"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "[Fåîļîñĝ Éļéméñţš one two]"
   },
@@ -850,9 +841,6 @@
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "[Ļåŕĝéšţ Çöñţéñţƒûļ Þåîñţ måŕķš ţĥé ţîmé åţ ŵĥîçĥ ţĥé ļåŕĝéšţ ţéxţ öŕ îmåĝé îš þåîñţéð. ᐅ[ᐊĻéåŕñ Möŕéᐅ](https://web.dev/largest-contentful-paint)ᐊ one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen]"
-  },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "[Ļåŕĝéšţ Çöñţéñţƒûļ Þåîñţ one two three]"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "[Ţĥé måxîmûm þöţéñţîåļ Fîŕšţ Îñþûţ Ðéļåý ţĥåţ ýöûŕ ûšéŕš çöûļð éxþéŕîéñçé îš ţĥé ðûŕåţîöñ öƒ ţĥé ļöñĝéšţ ţåšķ. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/lighthouse-max-potential-fid)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty]"

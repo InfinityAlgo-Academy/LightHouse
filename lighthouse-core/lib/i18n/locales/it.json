@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Gli attributi `[aria-*]` sono validi e non contengono errori ortografici"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "I sottotitoli forniscono informazioni essenziali relative agli elementi audio, come chi sta parlando, il contenuto del dialogo e altre informazioni di contorno utilizzabili da non udenti e utenti con problemi di udito. [Ulteriori informazioni](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "Negli elementi `<audio>` manca un elemento `<track>` con `[kind=\"captions\"]`."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "Gli elementi `<audio>` contengono un elemento `<track>` con `[kind=\"captions\"]`"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Elementi respinti"
   },
@@ -850,9 +841,6 @@
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "La metrica Largest Contentful Paint (più grande visualizzazione con contenuti) indica il momento in cui vengono visualizzati il testo o l'immagine più grandi. [Ulteriori informazioni](https://web.dev/largest-contentful-paint)"
-  },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Largest Contentful Paint"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "Il potenziale ritardo prima interazione massimo che i tuoi utenti potrebbero riscontrare è la durata del task più lungo. [Ulteriori informazioni](https://web.dev/lighthouse-max-potential-fid)."

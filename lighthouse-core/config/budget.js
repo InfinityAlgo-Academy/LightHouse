@@ -136,9 +136,9 @@ class Budget {
    * Returns the budget that applies to a given URL.
    * If multiple budgets match based on thier 'path' property,
    * then the last-listed of those budgets is returned.
-   * @param {Array<LH.Budget>|null} budgets
+   * @param {Immutable<Array<LH.Budget>>|null} budgets
    * @param {string} url
-   * @return {LH.Budget | undefined} budget
+   * @return {Immutable<LH.Budget> | undefined} budget
    */
   static getMatchingBudget(budgets, url) {
     if (budgets === null) return;
@@ -225,6 +225,9 @@ class Budget {
       'max-potential-fid',
       'estimated-input-latency',
       'total-blocking-time',
+      'speed-index',
+      'largest-contentful-paint',
+      'cumulative-layout-shift',
     ];
     // Assume metric is an allowed string, throw if not.
     if (!validTimingMetrics.includes(/** @type {LH.Budget.TimingMetric} */ (metric))) {

@@ -156,7 +156,7 @@ class ThirdPartySummary extends Audit {
     const headings = [
       {key: 'entity', itemType: 'link', text: str_(UIStrings.columnThirdParty)},
       {key: 'transferSize', granularity: 1, itemType: 'bytes',
-        text: str_(i18n.UIStrings.columnSize)},
+        text: str_(i18n.UIStrings.columnTransferSize)},
       {key: 'blockingTime', granularity: 1, itemType: 'ms',
         text: str_(UIStrings.columnBlockingTime)},
     ];

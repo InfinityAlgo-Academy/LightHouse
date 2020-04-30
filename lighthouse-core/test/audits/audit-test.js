@@ -6,7 +6,7 @@
 'use strict';
 
 const Audit = require('../../audits/audit.js');
-const assert = require('assert');
+const assert = require('assert').strict;
 
 /* eslint-env jest */
 
@@ -80,6 +80,15 @@ describe('Audit', () => {
       it('switches to an ERROR and is not scored if an errorMessage is passed in', () => {
         const errorMessage = 'ERRRRR';
         const auditResult = Audit.generateAuditResult(NumericAudit, {score: 1, errorMessage});
+
+        assert.strictEqual(auditResult.scoreDisplayMode, Audit.SCORING_MODES.ERROR);
+        assert.strictEqual(auditResult.errorMessage, errorMessage);
+        assert.strictEqual(auditResult.score, null);
+      });
+
+      it('switches to an ERROR and is not scored if an errorMessage is passed in with null', () => {
+        const errorMessage = 'ERRRRR';
+        const auditResult = Audit.generateAuditResult(NumericAudit, {score: null, errorMessage});
 
         assert.strictEqual(auditResult.scoreDisplayMode, Audit.SCORING_MODES.ERROR);
         assert.strictEqual(auditResult.errorMessage, errorMessage);

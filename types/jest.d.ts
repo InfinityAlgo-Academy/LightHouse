@@ -7,13 +7,19 @@
 declare namespace jest {
   interface Matchers<R> {
     /**
-    * Asserts that an inspectable promise created by makePromiseInspectable is currently resolved or rejected.
-    * This is useful for situations where we want to test that we are actually waiting for a particular event.
-    */
-   toBeDone: (failureMessage?: string) => object;
-   /**
-    * Asserts that an i18n string (using en-US) matches an expected pattern.
-    */
-   toBeDisplayString: (pattern: RegExp) => object;
+     * Jest's `toBeCloseTo()` exposed as an asymmetric matcher. This allows
+     * approximate numeric testing within matchers like `toMatchObject()`.
+     * The default for `numDigits` is 2.
+     */
+    toBeApproximately(expected: number, numDigits?: number): R;
+    /**
+     * Asserts that an inspectable promise created by makePromiseInspectable is currently resolved or rejected.
+     * This is useful for situations where we want to test that we are actually waiting for a particular event.
+     */
+    toBeDone: (failureMessage?: string) => R;
+    /**
+     * Asserts that an i18n string (using en-US) matches an expected pattern.
+     */
+    toBeDisplayString: (pattern: RegExp) => R;
   }
 }

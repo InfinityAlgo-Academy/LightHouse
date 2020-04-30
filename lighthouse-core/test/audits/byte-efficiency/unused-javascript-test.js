@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const fs = require('fs');
 const UnusedJavaScript = require('../../../audits/byte-efficiency/unused-javascript.js');
 const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
@@ -43,7 +43,7 @@ function generateRecord(url, transferSize, resourceType) {
   return {url, transferSize, resourceType};
 }
 
-function generateUsage(url, ranges, transferSize = 1000) {
+function generateUsage(url, ranges) {
   const functions = ranges.map(range => {
     return {
       ranges: [
@@ -56,7 +56,7 @@ function generateUsage(url, ranges, transferSize = 1000) {
     };
   });
 
-  return {url, functions, networkRecord: {transferSize}};
+  return {url, functions};
 }
 
 function makeJsUsage(...usages) {
@@ -87,7 +87,10 @@ describe('UnusedJavaScript audit', () => {
       SourceMaps: [],
     };
     const result = await UnusedJavaScript.audit_(artifacts, networkRecords, context);
-    assert.equal(result.items.length, 2);
+    expect(result.items.map(item => item.url)).toEqual([
+      'https://www.google.com/scriptB.js',
+      'https://www.google.com/inline.html',
+    ]);
 
     const scriptBWaste = result.items[0];
     assert.equal(scriptBWaste.totalBytes, 50000);
@@ -104,12 +107,8 @@ describe('UnusedJavaScript audit', () => {
     const context = {
       computedCache: new Map(),
       options: {
-        // Default threshold is 1024, but is lowered here so that squoosh actually generates
+        // Default threshold is 512, but is lowered here so that squoosh generates more
         // results.
-        // TODO(cjamcl): the bundle visualization feature will require most of the logic currently
-        // done in unused-javascript to be moved to a computed artifact. When that happens, these
-        // tests will go there, and the artifact will not have any thresholds (filtering will happen
-        // within the audits), so this test will not need a threshold. Until then, it does.
         bundleSourceUnusedThreshold: 100,
       },
     };
@@ -128,7 +127,7 @@ describe('UnusedJavaScript audit', () => {
       Array [
         Object {
           "sourceBytes": Array [
-            10061,
+            10062,
             660,
             4043,
             2138,

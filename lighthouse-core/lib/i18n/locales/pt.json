@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Os atributos `[aria-*]` são válidos e não contêm erros de ortografia"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "As legendas tornam os elementos de áudio úteis para pessoas surdas ou deficientes auditivas, disponibilizando informações essenciais, como quem está falando, o que a pessoa está dizendo e outras informações não relacionadas à fala. [Saiba mais](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "Os elementos `<audio>` estão sem um elemento `<track>` com `[kind=\"captions\"]`."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "Os elementos `<audio>` contêm um elemento `<track>` com `[kind=\"captions\"]`"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Elementos com falha"
   },
@@ -850,9 +841,6 @@
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "\"Maior exibição de conteúdo\" marca o momento em que o maior texto ou imagem é exibido. [Saiba mais](https://web.dev/largest-contentful-paint)"
-  },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Maior exibição de conteúdo"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "A possível latência máxima na primeira entrada que seus usuários notariam seria a duração da tarefa mais longa. [Saiba mais](https://web.dev/lighthouse-max-potential-fid)."

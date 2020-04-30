@@ -56,8 +56,12 @@ const UIStrings = {
   displayValueMsSavings: 'Potential savings of {wastedMs, number, milliseconds}\xa0ms',
   /** Label for a column in a data table; entries will be the URL of a web resource */
   columnURL: 'URL',
-  /** Label for a column in a data table; entries will be the size of a web resource in kilobytes. */
+  /** Label for a column in a data table; entries will be the size or quantity of some resource, e.g. the width and height dimensions of an image or the number of images in a web page. */
   columnSize: 'Size',
+  /** Label for a column in a data table; entries will be the file size of a web resource in kilobytes. */
+  columnResourceSize: 'Resource Size',
+  /** Label for a column in a data table; entries will be the download size of a web resource in kilobytes. */
+  columnTransferSize: 'Transfer Size',
   /** Label for a column in a data table; entries will be the time to live value of the cache header on a web resource. */
   columnCacheTTL: 'Cache TTL',
   /** Label for a column in a data table; entries will be the number of kilobytes the user could reduce their page by if they implemented the suggestions. */
@@ -72,8 +76,6 @@ const UIStrings = {
   columnResourceType: 'Resource Type',
   /** Label for a column in a data table; entries will be the number of network requests done by a webpage. */
   columnRequests: 'Requests',
-  /** Label for a column in a data table; entries will be the number of kilobytes transferred to load a set of files. */
-  columnTransferSize: 'Transfer Size',
   /** Label for a column in a data table; entries will be the names of arbitrary objects, e.g. the name of a Javascript library, or the name of a user defined timing event. */
   columnName: 'Name',
   /** Label for a column in a data table; entries will be the names of JavaScript code, e.g. the name of a Javascript package or module. */
@@ -114,6 +116,10 @@ const UIStrings = {
   maxPotentialFIDMetric: 'Max Potential First Input Delay',
   /** The name of the metric that summarizes how quickly the page looked visually complete. The name of this metric is largely abstract and can be loosely translated. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
   speedIndexMetric: 'Speed Index',
+  /** The name of the metric that marks the time at which the largest text or image is painted by the browser. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
+  largestContentfulPaintMetric: 'Largest Contentful Paint',
+  /** The name of the metric "Cumulative Layout Shift" that indicates how much the page changes its layout while it loads. If big segments of the page shift their location during load, the Cumulative Layout Shift will be higher. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
+  cumulativeLayoutShiftMetric: 'Cumulative Layout Shift',
 };
 
 const formats = {

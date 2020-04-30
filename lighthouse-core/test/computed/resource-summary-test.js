@@ -6,7 +6,7 @@
 'use strict';
 
 const ComputedResourceSummary = require('../../computed/resource-summary.js');
-const assert = require('assert');
+const assert = require('assert').strict;
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
 /* eslint-env jest */

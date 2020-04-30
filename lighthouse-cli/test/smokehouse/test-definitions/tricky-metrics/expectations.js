@@ -7,7 +7,9 @@
 
 /**
  * @type {Array<Smokehouse.ExpectedRunnerResult>}
- * Expected Lighthouse audit values for tricky metrics tests
+ * Expected Lighthouse audit values for tricky metrics tests that previously failed to be computed.
+ * We only place lower bounds because we are checking that these metrics *can* be computed and that
+ * we wait long enough to compute them. Upper bounds aren't very helpful here and tend to cause flaky failures.
  */
 module.exports = [
   {
@@ -16,12 +18,28 @@ module.exports = [
       finalUrl: 'http://localhost:10200/tricky-tti.html',
       audits: {
         'first-cpu-idle': {
-          // stalls for 5 seconds, 5 seconds out, so should be around 10s
-          numericValue: '>9000',
+          // stalls for ~5 seconds, ~5 seconds out, so should be at least ~10s
+          numericValue: '>9900',
         },
         'interactive': {
-          // stalls for 5 seconds, 5 seconds out, so should be around 10s
-          numericValue: '>9000',
+          // stalls for ~5 seconds, ~5 seconds out, so should be at least ~10s
+          numericValue: '>9900',
+        },
+      },
+    },
+  },
+  {
+    lhr: {
+      requestedUrl: 'http://localhost:10200/tricky-tti-late-fcp.html',
+      finalUrl: 'http://localhost:10200/tricky-tti-late-fcp.html',
+      audits: {
+        'first-cpu-idle': {
+          // FCP at least ~5 seconds out
+          numericValue: '>4900',
+        },
+        'interactive': {
+          // FCP at least ~5 seconds out
+          numericValue: '>4900',
         },
       },
     },

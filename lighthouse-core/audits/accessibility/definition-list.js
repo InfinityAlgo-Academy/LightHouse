@@ -15,11 +15,11 @@ const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
   /** Title of an accesibility audit that evaluates if all the definition list elements have valid markup for screen readers. This title is descriptive of the successful state and is shown to users when no user action is required. */
-  title: '`<dl>`\'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>` ' +
-      'or `<template>` elements.',
+  title: '`<dl>`\'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, ' +
+      '`<template>` or `<div>` elements.',
   /** Title of an accesibility audit that evaluates if all the definition list elements have valid markup for screen readers. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. */
   failureTitle: '`<dl>`\'s do not contain only properly-ordered `<dt>` and `<dd>` ' +
-      'groups, `<script>` or `<template>` elements.',
+      'groups, `<script>`, `<template>` or `<div>` elements.',
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'When definition lists are not properly marked up, screen readers may produce ' +
       'confusing or inaccurate output. ' +

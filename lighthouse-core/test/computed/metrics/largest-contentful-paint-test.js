@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const assert = require('assert');
+const assert = require('assert').strict;
 
 const LargestContentfulPaint = require('../../../computed/metrics/largest-contentful-paint.js'); // eslint-disable-line max-len
 const trace = require('../../fixtures/traces/lcp-m78.json');
@@ -27,9 +27,9 @@ describe('Metrics: LCP', () => {
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
     }).toMatchInlineSnapshot(`
       Object {
-        "optimistic": 3192,
-        "pessimistic": 3647,
-        "timing": 3419,
+        "optimistic": 2289,
+        "pessimistic": 3228,
+        "timing": 2758,
       }
     `);
   });

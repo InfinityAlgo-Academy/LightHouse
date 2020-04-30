@@ -6,28 +6,50 @@
 'use strict';
 
 const NetworkRequests = require('../../audits/network-requests.js');
-const assert = require('assert');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
-const acceptableDevToolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
+const cutoffLoadDevtoolsLog = require('../fixtures/traces/cutoff-load-m83.devtoolslog.json');
 
 /* eslint-env jest */
 describe('Network requests audit', () => {
-  it('should return network requests', () => {
+  it('should report finished and unfinished network requests', async () => {
     const artifacts = {
       devtoolsLogs: {
-        [NetworkRequests.DEFAULT_PASS]: acceptableDevToolsLog,
+        [NetworkRequests.DEFAULT_PASS]: cutoffLoadDevtoolsLog,
       },
     };
 
-    return NetworkRequests.audit(artifacts, {computedCache: new Map()}).then(output => {
-      assert.equal(output.score, 1);
-      assert.equal(output.details.items.length, 66);
-      assert.equal(output.details.items[0].url, 'https://pwa.rocks/');
-      assert.equal(output.details.items[0].startTime, 0);
-      assert.equal(Math.round(output.details.items[0].endTime), 280);
-      assert.equal(output.details.items[0].statusCode, 200);
-      assert.equal(output.details.items[0].transferSize, 5368);
+    const output = await NetworkRequests.audit(artifacts, {computedCache: new Map()});
+
+    expect(output.details.items[0]).toMatchObject({
+      startTime: 0,
+      endTime: expect.toBeApproximately(701, 0),
+      finished: true,
+      transferSize: 11358,
+      resourceSize: 39471,
+      statusCode: 200,
+      mimeType: 'text/html',
+      resourceType: 'Document',
+    });
+    expect(output.details.items[2]).toMatchObject({
+      startTime: expect.toBeApproximately(711, 0),
+      endTime: expect.toBeApproximately(1289, 0),
+      finished: false,
+      transferSize: 26441,
+      resourceSize: 0,
+      statusCode: 200,
+      mimeType: 'image/png',
+      resourceType: 'Image',
+    });
+    expect(output.details.items[5]).toMatchObject({
+      startTime: expect.toBeApproximately(717, 0),
+      endTime: expect.toBeApproximately(1296, 0),
+      finished: false,
+      transferSize: 58571,
+      resourceSize: 0,
+      statusCode: 200,
+      mimeType: 'application/javascript',
+      resourceType: 'Script',
     });
   });
 
@@ -43,9 +65,15 @@ describe('Network requests audit', () => {
       },
     };
     const output = await NetworkRequests.audit(artifacts, {computedCache: new Map()});
-    assert.equal(output.details.items[0].startTime, 0);
-    assert.equal(output.details.items[0].endTime, 500);
-    assert.equal(output.details.items[1].startTime, 500);
-    assert.equal(output.details.items[1].endTime, undefined);
+
+    expect(output.details.items).toMatchObject([{
+      startTime: 0,
+      endTime: 500,
+      finished: true,
+    }, {
+      startTime: 500,
+      endTime: undefined,
+      finished: true,
+    }]);
   });
 });

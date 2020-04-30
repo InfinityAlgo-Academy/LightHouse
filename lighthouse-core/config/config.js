@@ -546,6 +546,8 @@ class Config {
     const defaultPass = passes.find(pass => pass.passName === 'defaultPass');
     if (!defaultPass) return;
     const overrides = constants.nonSimulatedPassConfigOverrides;
+    defaultPass.pauseAfterFcpMs =
+      Math.max(overrides.pauseAfterFcpMs, defaultPass.pauseAfterFcpMs);
     defaultPass.pauseAfterLoadMs =
       Math.max(overrides.pauseAfterLoadMs, defaultPass.pauseAfterLoadMs);
     defaultPass.cpuQuietThresholdMs =

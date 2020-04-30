@@ -44,7 +44,7 @@ class FirstContentfulPaint3G extends Audit {
   static async audit(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    /** @type {LH.Config.Settings} */
+    /** @type {Immutable<LH.Config.Settings>} */
     const settings = {...context.settings, throttlingMethod: 'simulate', throttling: regular3G};
     const metricComputationData = {trace, devtoolsLog, settings};
     const metricResult = await ComputedFcp.request(metricComputationData, context);
