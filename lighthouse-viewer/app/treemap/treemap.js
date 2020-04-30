@@ -12,6 +12,7 @@
  * @typedef Mode
  * @property {string} rootNodeId
  * @property {string} partitionBy
+ * @property {string[]=} highlightNodeIds
  */
 
 /** @type {TreemapViewer} */
@@ -318,6 +319,14 @@ class TreemapViewer {
     dfs(this.currentRootNode, node => {
       if (!node.dom) return;
 
+      // A view can set nodes to highlight. Don't color anything else.
+      if (this.mode.highlightNodeIds) {
+        if (this.mode.highlightNodeIds.includes(node.originalId)) {
+          node.dom.style.backgroundColor = 'yellow';
+        }
+        return;
+      }
+
       // Choose color based on id hash so colors are stable across runs.
       const hue = this.getHue(node.idHash);
       if (hue === null) return;
@@ -349,6 +358,7 @@ function createHeader(options) {
 
   function onChange() {
     treemapViewer.show({
+      ...treemapViewer.mode,
       rootNodeId: bundleSelectorEl.value,
       partitionBy: partitionBySelectorEl.value,
     });
@@ -392,6 +402,11 @@ function createViewModes(rootNodes, currentViewId) {
   const javascriptRootNodes = rootNodes.filter(n => n.group === 'javascript');
 
   const viewModesPanel = find('.panel--modals');
+  /**
+   * @param {string} viewId
+   * @param {string} name
+   * @param {Partial<Mode>} modeOptions
+   */
   function makeViewMode(viewId, name, modeOptions) {
     const isCurrentView = viewId === currentViewId;
     const viewModeEl = document.createElement('div');
@@ -400,10 +415,12 @@ function createViewModes(rootNodes, currentViewId) {
     viewModeEl.innerText = name;
     viewModeEl.addEventListener('click', () => {
       if (isCurrentView) {
+        // Unselect.
         treemapViewer.currentViewId = null;
         treemapViewer.show({
           ...treemapViewer.mode,
           partitionBy: 'bytes',
+          highlightNodeIds: undefined,
         });
         return;
       }
@@ -422,35 +439,60 @@ function createViewModes(rootNodes, currentViewId) {
 
   viewModesPanel.innerHTML = '';
 
-  let wastedBytes = 0;
-  for (const rootNode of javascriptRootNodes) {
-    wastedBytes += rootNode.node.wastedBytes;
-  }
-  makeViewMode('unused', `Unused JavaScript: ${format(wastedBytes, 'bytes')}`, {partitionBy: 'wastedBytes'});
-
-  let largeBytes = 0;
-  for (const rootNode of javascriptRootNodes) {
-    if (!rootNode.node.children) continue; // Only consider bundles.
-
-    dfs(rootNode.node, node => {
-      if (node.children) return; // Only consider leaf nodes.
-      if (node.bytes < 200 * 1024) return;
-      largeBytes += node.wastedBytes;
+  {
+    let bytes = 0;
+    const highlightNodeIds = [];
+    for (const rootNode of javascriptRootNodes) {
+      dfs(rootNode.node, node => {
+        if (node.children) return; // Only consider leaf nodes.
+        if (node.wastedBytes < 100 * 1024) return;
+        bytes += node.wastedBytes;
+        highlightNodeIds.push(node.id);
+      });
+    }
+    makeViewMode('unused', `Unused JavaScript: ${formatBytes(bytes)}`, {
+      partitionBy: 'wastedBytes',
+      highlightNodeIds,
     });
   }
-  makeViewMode('large', `Large Modules: ${format(largeBytes, 'bytes')}`, {partitionBy: 'bytes'});
 
-  let duplicateBytes = 0;
-  for (const rootNode of javascriptRootNodes) {
-    if (!rootNode.node.children) continue; // Only consider bundles.
-
-    dfs(rootNode.node, node => {
-      if (node.children) return; // Only consider leaf nodes.
-      if (!node.duplicate) return;
-      duplicateBytes += node.bytes / 2;
+  {
+    let bytes = 0;
+    const highlightNodeIds = [];
+    for (const rootNode of javascriptRootNodes) {
+      if (!rootNode.node.children) continue; // Only consider bundles.
+  
+      dfs(rootNode.node, node => {
+        if (node.children) return; // Only consider leaf nodes.
+        if (node.bytes < 200 * 1024) return;
+        bytes += node.bytes;
+        highlightNodeIds.push(node.id);
+      });
+    }
+    makeViewMode('large', `Large Modules: ${formatBytes(bytes)}`, {
+      partitionBy: 'bytes',
+      highlightNodeIds,
     });
   }
-  makeViewMode('duplicate', `Duplicate Modules: ${format(duplicateBytes, 'bytes')}`, {partitionBy: 'bytes'});
+
+  {
+    let bytes = 0;
+    const highlightNodeIds = [];
+    for (const rootNode of javascriptRootNodes) {
+      if (!rootNode.node.children) continue; // Only consider bundles.
+  
+      dfs(rootNode.node, node => {
+        if (node.children) return; // Only consider leaf nodes.
+        if (!node.duplicate) return;
+        bytes += node.bytes / 2;
+        highlightNodeIds.push(node.id);
+      });
+    }
+    makeViewMode('duplicate', `Duplicate Modules: ${formatBytes(bytes)}`, {
+      partitionBy: 'bytes',
+      highlightNodeIds,
+    });
+  }
 }
 
 /**
