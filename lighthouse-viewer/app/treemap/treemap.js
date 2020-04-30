@@ -322,6 +322,7 @@ class TreemapViewer {
       // A view can set nodes to highlight. Don't color anything else.
       if (this.mode.highlightNodeIds) {
         if (this.mode.highlightNodeIds.includes(node.originalId)) {
+          // TODO: 'ids' are just filenames, which aren't unique.
           node.dom.style.backgroundColor = 'yellow';
         }
         return;
