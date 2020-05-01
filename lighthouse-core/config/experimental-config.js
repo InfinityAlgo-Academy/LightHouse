@@ -29,15 +29,15 @@ const config = {
     // config is awkward - easier to omit the property here. Will defer to default config.
     'performance': {
       auditRefs: [
-        { id: 'duplicated-javascript', weight: 0, group: 'load-opportunities' },
-        { id: 'legacy-javascript', weight: 0, group: 'diagnostics' },
+        {id: 'duplicated-javascript', weight: 0, group: 'load-opportunities'},
+        {id: 'legacy-javascript', weight: 0, group: 'diagnostics'},
       ],
     },
     // @ts-ignore
     'best-practices': {
       auditRefs: [
-        { id: 'valid-source-maps', weight: 0 },
-      ]
+        {id: 'valid-source-maps', weight: 0},
+      ],
     },
   },
 };
