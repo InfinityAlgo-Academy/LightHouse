@@ -648,7 +648,7 @@
     "message": "Ako korisnici imaju spore veze, spoljne skripte koje se dinamički ubacuju pomoću atributa `document.write()` mogu da odlože učitavanje stranice za desetine sekundi. [Saznajte više](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Koristi `document.write()`"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Izbegava atribut `document.write()`"
@@ -876,10 +876,7 @@
     "message": "Manifest sadrži ikonu koja može da se maskira"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Zbirna promena rasporeda je skup svih promena rasporeda do kojih je došlo tokom učitavanja stranice. Promena rasporeda je svako kretanje elementa pošto se prikaže korisniku. Sve promene rasporeda se snimaju i ocenjuju, a zatim se objedinjuju u zbirni rezultat između 0 i 1; 0 označava potpuno stabilnu stranicu, a >=0,5 označava da je raspored na stranici veoma promenljiv. [Saznajte više](https://web.dev/cls)."
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "Zbirna promena rasporeda"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Procenjeno kašnjenje unosa je procena vremena koje je aplikaciji potrebno da odgovori na unos korisnika, u milisekundama, tokom najprometnijeg roka od 5 sekundi za učitavanje stranice. Ako je kašnjenje veće od 50 ms, korisnici će možda smatrati da aplikacija radi sporo. [Saznajte više](https://web.dev/estimated-input-latency)."
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Potencijalna ušteda"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Zbirna promena rasporeda"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Potencijalna ušteda od {wastedBytes, number, bytes} KB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Vreme početka interakcije"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Najveće prikazivanje sadržaja"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Maks. potencijalno kašnjenje prvog prikaza"

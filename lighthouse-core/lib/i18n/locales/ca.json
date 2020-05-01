@@ -141,10 +141,10 @@
     "message": "Si el marcatge de les llistes de definició no és correcte, és possible que els lectors de pantalla sonin de manera confusa o inexacta. [Obtén més informació](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "Els elements `<dl>` no contenen només grups de `<dt>` i `<dd>` ordenats correctament, o bé elements `<script>`, `<template>` o `<div>`."
+    "message": "Els `<dl>` no contenen només grups de `<dt>` i `<dd>` ordenats correctament, o bé elements `<script>`, `<template>` o `<div>`."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "Els elements `<dl>` contenen només grups de `<dt>` i `<dd>` ordenats correctament, o bé elements `<script>`, `<template>` o `<div>`."
+    "message": "Els `<dl>` contenen només grups de `<dt>` i `<dd>` ordenats correctament, o bé elements `<script>`, `<template>` o `<div>`."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "Els elements de la llista de definicions (`<dt>` i `<dd>`) han d'estar tancats dins d'un element `<dl>` superior per garantir que els lectors de pantalla els puguin pronunciar correctament. [Obtén més informació](https://web.dev/dlitem/)."
@@ -648,7 +648,7 @@
     "message": "Per als usuaris amb connexions lentes, els scripts externs inserits dinàmicament mitjançant `document.write()` poden retardar la càrrega de la pàgina unes dècimes de segon. [Obtén més informació](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Utilitza `document.write()`"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Evita `document.write()`"
@@ -876,10 +876,7 @@
     "message": "El manifest té una icona emmascarable"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "El canvi de disseny acumulatiu és la suma de tots els canvis de disseny que es produeixen mentre es carrega una pàgina. Un canvi de disseny és qualsevol moviment que fa un element un cop l'usuari el pot veure. Tots els canvis de disseny es graven, es puntuen i posteriorment s'afegeixen a una puntuació acumulativa d'entre 0 i 1, en què 1 és una pàgina perfectament estable i >= 0,5 és una pàgina amb una alta freqüència de canvi. [Obtén més informació](https://web.dev/cls)."
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "Canvi de disseny acumulatiu"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "La latència estimada d'una acció és un càlcul de quant tarda en mil·lisegons la teva aplicació a respondre a una acció de l'usuari durant el període de 5 segons amb més càrregues de pàgines. Si la latència és superior a 50 ms, és possible que els usuaris considerin que l'aplicació és lenta. [Obtén més informació](https://web.dev/estimated-input-latency)."
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Possible estalvi"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Canvi de disseny acumulatiu"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Possible estalvi de {wastedBytes, number, bytes} kB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Temps fins que és interactiva"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Renderització de contingut més gran"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Retard potencial màxim respecte a la primera interacció"

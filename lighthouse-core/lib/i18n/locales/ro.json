@@ -648,7 +648,7 @@
     "message": "Pentru utilizatorii cu conexiuni lente, scripturile externe injectate dinamic prin `document.write()` pot întârzia încărcarea paginilor cu zeci de secunde. [Află mai multe](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Utilizări `document.write()`"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Evită `document.write()`"
@@ -876,10 +876,7 @@
     "message": "Manifestul are o pictogramă care poate fi mascată"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Schimbarea cumulată a aspectului este suma tuturor schimbărilor aspectului care au avut loc în timpul încărcării unei pagini. Schimbarea aspectului este orice mișcare a unui element vizibil pentru utilizator. Toate schimbările aspectului sunt înregistrate, notate și adunate într-un scor cumulat cuprins între 0 și 1, unde 0 înseamnă o pagină perfect stabilă, iar >=0,5 o pagină cu multe schimbări. [Află mai multe](https://web.dev/cls)."
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "Schimbarea cumulată a aspectului"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Latența estimată a comenzilor reprezintă o estimare a duratei necesare pentru ca aplicația să răspundă la comanda utilizatorului, în milisecunde, în cea mai aglomerată fereastră de cinci secunde de încărcare a paginii. Dacă latența este mai mare de 50 ms, utilizatorii îți pot percepe aplicația ca fiind lentă. [Află mai multe](https://web.dev/estimated-input-latency)."
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Economii potențiale"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Schimbarea cumulată a aspectului"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Poți economisi {wastedBytes, number, bytes} KB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Timpul până la interactivitate"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Cea mai mare redare de conținut"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Timpul maxim potențial de la prima interacțiune"

@@ -648,7 +648,7 @@
     "message": "Externe scripts die dynamisch worden geïnjecteerd via `document.write()` kunnen bij gebruikers met een langzame verbinding het laden van de pagina met tientallen seconden vertragen. [Meer informatie](https://web.dev/no-document-write)"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Gebruikt `document.write()`"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Vermijdt `document.write()`"
@@ -876,10 +876,7 @@
     "message": "Manifest heeft een maskeerbaar icoon"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "De cumulatieve indelingsverschuiving is de som van alle verschuivingen in de indeling die zijn opgetreden bij het laden van de pagina. Onder een indelingsverschuiving verstaan we elke beweging die een element maakt nadat het zichtbaar wordt voor de gebruiker. Alle indelingsverschuiving wordt geregistreerd, van een score voorzien en vervolgens opgeteld tot een cumulatieve score tussen de 0 en de 1. Hierbij is 0 een volkomen stabiele pagina, en >=0,5 een pagina die veel verschuift. [Meer informatie](https://web.dev/cls)"
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "Cumulatieve indelingsverschuiving"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Geschatte wachttijd voor invoer is een schatting van de tijd die je app nodig heeft om te reageren op gebruikersinvoer (in milliseconden) gemeten voor de drukste periode van 5 seconden tijdens het laden van de pagina. Als de wachttijd langer dan 50 ms is, kunnen gebruikers je app als traag beschouwen. [Meer informatie](https://web.dev/estimated-input-latency)"
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Potentiële besparingen"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Cumulatieve indelingsverschuiving"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Potentiële besparing van {wastedBytes, number, bytes} KB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Tijd tot interactief"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Grootste weergave met content (LCP)"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Max. potentiële eerste invoervertraging"

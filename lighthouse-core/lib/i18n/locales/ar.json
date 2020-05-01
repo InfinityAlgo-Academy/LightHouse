@@ -648,7 +648,7 @@
     "message": "بالنسبة إلى المستخدمين الذين لديهم اتصالات بطيئة، يمكن للبرامج النصية الخارجية التي يتم إدخالها ديناميكيًا عبر `document.write()` تأخير تحميل الصفحة لمدة ثوانٍ متعددة. [مزيد من المعلومات](https://web.dev/no-document-write)"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "يتم استخدام `document.write()`"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "يتم تجنُب `document.write()`"
@@ -876,10 +876,7 @@
     "message": "البيان يحتوي على رمز قابل للإخفاء"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "إنّ متغيّرات التصميم التراكمية هي مجموع كل متغيّرات التصميم التي حدثت أثناء تحميل الصفحة. ومتغيّرات التصميم هي أي حركة يُجريها العنصر عندما يكون مرئيًا للمستخدم. ويتم تسجيل كل متغيّرات التصميم وحفظها، ثم جمعها كنتيجة تراكمية تتراوح ما بين 0 و1، حيث تعني القيمة 0 أن الصفحة ثابتة بشكلٍ مثالي، والقيمة >=0.5 تعني أن الصفحة مُتغيّرة بشكلٍ مستمر. [مزيد من المعلومات](https://web.dev/cls)"
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "متغيّرات التصميم التراكمية"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "إن \"وقت الاستجابة المقدر للإدخال\" هو تقدير لطول المدة التي يستغرقها تطبيقك للاستجابة لإدخال المستخدم بالمللي ثانية، وذلك أثناء الثواني الخمس الأكثر انشغالاً في فترة تحميل الصفحة. وفي حال كان وقت الاستجابة أكثر من 50 مللي ثانية، يمكن للمستخدمين اعتبار تطبيقك بأنه بطيء في التفاعل. [مزيد من المعلومات](https://web.dev/estimated-input-latency)"
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "التوفيرات المحتملة"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "متغيّرات التصميم التراكمية"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "التوفيرات المحتملة من {wastedBytes, number, bytes}  كيلوبايت"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "وقت التفاعل"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "سرعة عرض أكبر محتوى"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "الحد الأقصى المحتمل من مهلة الاستجابة لأوّل إدخال"

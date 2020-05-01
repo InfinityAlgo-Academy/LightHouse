@@ -648,7 +648,7 @@
     "message": "สำหรับผู้ใช้ที่การเชื่อมต่อช้า สคริปต์ภายนอกที่แทรกเข้ามาแบบไดนามิกผ่านทาง `document.write()` จะช่วยหน่วงการโหลดหน้าเว็บได้หลายสิบวินาที [ดูข้อมูลเพิ่มเติม](https://web.dev/no-document-write)"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "ใช้ `document.write()`"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "หลีกเลี่ยงการใช้ `document.write()`"
@@ -876,10 +876,7 @@
     "message": "ไฟล์ Manifest มีไอคอนที่มาสก์ได้"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "การเปลี่ยนเลย์เอาต์สะสมคือยอดรวมของการเปลี่ยนเลย์เอาต์ทั้งหมดที่เกิดขึ้นระหว่างการโหลดหน้าเว็บ การเปลี่ยนเลย์เอาต์คือการเคลื่อนที่ของเอลิเมนต์เมื่อแสดงต่อผู้ใช้แล้ว ระบบจะบันทึก ให้คะแนน และรวมการเปลี่ยนเลย์เอาต์ทั้งหมดเป็นคะแนนสะสมระหว่าง 0 กับ 1 โดย 0 คือหน้าที่มีความเสถียรและ >=0.5 คือหน้าที่มีการเปลี่ยนแปลงสูง [ดูข้อมูลเพิ่มเติม](https://web.dev/cls)"
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "การเปลี่ยนเลย์เอาต์สะสม"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "เวลาตอบสนองต่ออินพุตโดยประมาณเป็นระยะเวลาโดยประมาณที่แอปใช้เพื่อตอบสนองอินพุตของผู้ใช้ระหว่างการโหลดหน้าเว็บในกรอบเวลา 5 วินาทีที่ทำงานหนักที่สุด มีหน่วยเป็นมิลลิวินาที หากเวลาในการตอบสนองนานกว่า 50 มิลลิวินาที ผู้ใช้อาจรู้สึกว่าแอปช้า [ดูข้อมูลเพิ่มเติม](https://web.dev/estimated-input-latency)"
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "เวลาที่อาจประหยัดได้"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "การเปลี่ยนเลย์เอาต์สะสม"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "อาจประหยัดได้ {wastedBytes, number, bytes} KB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "เวลาในการโต้ตอบ"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Largest Contentful Paint"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "First Input Delay สูงสุดที่อาจเกิดขึ้น"

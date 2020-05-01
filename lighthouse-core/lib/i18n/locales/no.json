@@ -648,7 +648,7 @@
     "message": "For brukere som har trege tilkoblinger, kan eksterne skript som injiseres dynamisk via `document.write()`, forsinke sideinnlastingen med flere titalls sekunder. [Finn ut mer](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Bruker `document.write()`"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Unngår `document.write()`"
@@ -876,10 +876,7 @@
     "message": "Manifestet har et maskerbart ikon"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Akkumulert utseendeforskyvning er summen av alle utseendeforskyvninger som forekom mens en side ble lastet inn. Utseendeforskyvninger er alle bevegelser elementer gjør etter at de er blitt synlige for brukeren. Alle utseendeforskyvninger registreres, gis poengsum og sammenstilles til en akkumulert poengsum mellom 0 og 1. 0 tilsvarer fullstendig stabile sider, og verdier på 0,5 eller mer tilsvarer sider med høy grad av forskyvning. [Finn ut mer](https://web.dev/cls)."
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "Akkumulert utseendeforskyvning"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Beregnet inndataforsinkelse er et estimat av hvor lang tid (i millisekunder) det tar for appen å svare på brukerinndata i det travleste 5-sekunders tidsrommet mens siden lastes inn. Hvis tidsforsinkelsen er høyere enn 50 ms, kan brukere oppleve appen som treg. [Finn ut mer](https://web.dev/estimated-input-latency)."
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Potensielle besparelser"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Akkumulert utseendeforskyvning"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Potensielle besparelser på {wastedBytes, number, bytes} kB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Tid til interaktiv"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Største innholdsrike opptegning (LCP)"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Maks forsinkelse for første inndata"

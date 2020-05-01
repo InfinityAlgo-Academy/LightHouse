@@ -648,7 +648,7 @@
     "message": "U uživatelů s pomalým připojením mohou externí skripty vkládané metodou zpozdit `document.write()` načtení stránky o desítky sekund. [Další informace](https://web.dev/no-document-write)"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Používá metodu `document.write()`"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Nepoužívá metodu `document.write()`"
@@ -876,10 +876,7 @@
     "message": "Manifest má maskovatelnou ikonu"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Kumulativní změna rozvržení je součet všech změn rozvržení, k nimž došlo při načítání stránky. Změna rozvržení je libovolná změna pozice, k níž u prvku dojde poté, co je viditelný uživateli. Všechny změny rozvržení se zaznamenávají a přiděluje se jim skóre. Výsledné kumulativní skóre má hodnotu mezi 0 a 1. 0 znamená perfektně stabilní stránku, skóre >= 0,5 znamená vysoce proměnlivou stránku. [Další informace](https://web.dev/cls)"
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "Kumulativní změna rozvržení"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Odhadovaná latence vstupu udává, jak dlouho (v milisekundách) bude aplikaci během nejvytíženějších pěti sekund při načítání stránky odhadem trvat reakce na uživatelský vstup. Pokud je latence větší než 50 ms, mohou uživatelé chování aplikace vnímat jako přerušované. [Další informace](https://web.dev/estimated-input-latency)"
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Možná úspora"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Kumulativní změna rozvržení"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Lze uspořit {wastedBytes, number, bytes} kB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Doba do interaktivity"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Vykreslení největšího obsahu"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Maximální potenciální prodleva prvního vstupu"

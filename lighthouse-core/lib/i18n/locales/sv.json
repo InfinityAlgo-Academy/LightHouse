@@ -648,7 +648,7 @@
     "message": "För användare med långsam anslutning kan externa skript som infogas dynamiskt via `document.write()` fördröja sidinläsningen med tiotals sekunder. [Läs mer](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "`document.write()` används"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "`document.write()` undviks"
@@ -876,10 +876,7 @@
     "message": "Manifest har en maskerbar ikon"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Kumulativ layoutförskjutning är summan av alla layoutförskjutningar som förekommit under inläsningen av en sida. En layoutförskjutning är en rörelse som ett element gör när det är synligt för användaren. Alla layoutförskjutningar registreras, bedöms och sammanställs till ett kumulativt resultat mellan 0 och 1 där 0 innebär en helt stabil sida och värden på 0,5 är en sida med många förskjutningar. [Läs mer](https://web.dev/cls)."
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "Kumulativ layoutförskjutning"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Uppskattad inmatningslatens är en uppskattning av hur lång tid (i millisekunder) det tar innan appen svarar på användarens inmatning under den mest aktiva femsekundersperioden av sidinläsningen. Om latensen är högre än 50 ms kan användarna uppfatta appen som seg. [Läs mer](https://web.dev/estimated-input-latency)."
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Möjlig besparing"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Kumulativ layoutförskjutning"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Möjlig databesparing: {wastedBytes, number, bytes} kB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Tid till interaktivt tillstånd"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Största uppritningen av innehåll"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Högsta potentiella fördröjning till första inmatningen"

@@ -141,7 +141,7 @@
     "message": "Si las listas de definiciones no están bien marcadas, es posible que los lectores de pantalla las interpreten de forma confusa o imprecisa. [Más información](https://web.dev/definition-list/)"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "Los elementos `<dl>` no contienen únicamente grupos de `<dt>` y `<dd>` o elementos `<script>`, `<template>` o `<div>` ordenados correctamente."
+    "message": "Los `<dl>` no contienen únicamente grupos de `<dt>` y `<dd>` ordenados correctamente o elementos `<script>`, `<template>` o `<div>`."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
     "message": "Los elementos `<dl>` contienen únicamente grupos de `<dt>` y `<dd>` o elementos `<script>`, `<template>` o `<div>` ordenados correctamente."
@@ -648,7 +648,7 @@
     "message": "Las secuencias de comandos externas inyectadas dinámicamente mediante `document.write()` pueden retrasar la carga de la página varias decenas de segundos en conexiones lentas. [Más información](https://web.dev/no-document-write)"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Usa `document.write()`"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Evita `document.write()`"
@@ -876,10 +876,7 @@
     "message": "El archivo de manifiesto tiene un icono enmascarable"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "El cambio de diseño acumulativo es la suma de todos los cambios de diseño que tienen lugar mientras se carga una página. Un cambio de diseño es cualquier movimiento que realiza un elemento cuando el usuario puede verlo. Todos los cambios de diseño se registran y se puntúan. Las puntuaciones se añaden a una puntuación acumulativa entre 0 y 1, en la que 0 representa una página perfectamente estable y >=0,5 una página muy cambiante. [Más información](https://web.dev/cls)"
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "Cambio de diseño acumulativo"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "La latencia de entrada estimada es el tiempo, en milisegundos, que tarda tu aplicación en responder a las acciones de los usuarios durante el periodo de 5 s más activo de carga de la página. Si tu latencia es superior a 50 ms, es posible que los usuarios perciban cierto retardo en tu aplicación. [Más información](https://web.dev/estimated-input-latency)"
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Ahorro potencial"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Cambio de diseño acumulativo"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Ahorro potencial de {wastedBytes, number, bytes} kB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Tiempo hasta que está interactiva"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Largest Contentful Paint"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Latencia potencial máxima de la primera interacción"
