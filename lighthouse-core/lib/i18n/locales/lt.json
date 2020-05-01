@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Atributai „`[aria-*]`“ yra tinkami, rašybos klaidų nėra"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Nurodžius antraštes garso įrašų elementus gali naudoti kurtieji arba sutrikusios klausos naudotojai. Jiems teikiama svarbi informacija, pvz., kas kalba, kas sakoma ir kita nekalbinė informacija. [Sužinokite daugiau](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "Elementuose „`<audio>`“ trūksta elemento „`<track>`“ su atributu „`[kind=\"captions\"]`“."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "Elementuose „`<audio>`“ yra elementas „`<track>`“ su atributu „`[kind=\"captions\"]`“"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Netinkami elementai"
   },
@@ -850,9 +841,6 @@
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "Didžiausias turiningas žymėjimas nurodo laiką, kada pažymimas didžiausias tekstas ar vaizdas. [Sužinokite daugiau](https://web.dev/largest-contentful-paint)."
-  },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Didžiausias turiningas žymėjimas"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "Didžiausia potenciali naudotojų patiriama pirmosios įvesties delsa yra ilgiausios užduoties trukmė. [Sužinokite daugiau](https://web.dev/lighthouse-max-potential-fid)."

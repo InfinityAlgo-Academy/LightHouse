@@ -32,6 +32,8 @@ last-run-results.html
 !lighthouse-core/test/fixtures/traces/**/*.trace.json
 !lighthouse-core/test/fixtures/traces/**/*.devtoolslog.json
 
+lighthouse-core/scripts/legacy-javascript/variants
+
 latest-run
 lantern-data
 timings-data
@@ -51,3 +53,5 @@ proto/scripts/*_processed.json
 
 # require any lock file to be checked in explicitly
 yarn.lock
+
+proto/sample_v2_round_trip.json

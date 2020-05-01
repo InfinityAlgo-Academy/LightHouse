@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -75,7 +75,7 @@ declare global {
       /** All the link elements on the page or equivalently declared in `Link` headers. @see https://html.spec.whatwg.org/multipage/links.html */
       LinkElements: Artifacts.LinkElement[];
       /** The values of the <meta> elements in the head. */
-      MetaElements: Array<{name: string, content?: string, property?: string}>;
+      MetaElements: Array<{name?: string, content?: string, property?: string, httpEquiv?: string, charset?: string}>;
       /** Set of exceptions thrown during page load. */
       RuntimeExceptions: Crdp.Runtime.ExceptionThrownEvent[];
       /** Information on all script elements in the page. Also contains the content of all requested scripts and the networkRecord requestId that contained their content. Note, HTML documents will have one entry per script tag, all with the same requestId. */
@@ -114,8 +114,8 @@ declare global {
       HTMLWithoutJavaScript: {bodyText: string, hasNoScript: boolean};
       /** Whether the page ended up on an HTTPS page after attempting to load the HTTP version. */
       HTTPRedirect: {value: boolean};
-      /** JS coverage information for code used during page load. */
-      JsUsage: Crdp.Profiler.ScriptCoverage[];
+      /** JS coverage information for code used during page load. Keyed by URL. */
+      JsUsage: Record<string, Crdp.Profiler.ScriptCoverage[]>;
       /** Parsed version of the page's Web App Manifest, or null if none found. */
       Manifest: Artifacts.Manifest | null;
       /** The URL loaded with interception */
@@ -164,6 +164,8 @@ declare global {
           failureSummary?: string;
           nodeLabel?: string;
         }>;
+        // When rules error they set these properties
+        // https://github.com/dequelabs/axe-core/blob/eeff122c2de11dd690fbad0e50ba2fdb244b50e8/lib/core/base/audit.js#L684-L693
         error?: RuleExecutionError;
       }
 
@@ -270,7 +272,7 @@ declare global {
         /** An optional name of the generated code (the bundled code that was the result of this build process) that this source map is associated with. */
         file?: string
         /**
-         * An optional array of maps that are associated with an offset into the generated code. 
+         * An optional array of maps that are associated with an offset into the generated code.
          * `map` is optional because the spec defines that either `url` or `map` must be defined.
          * We explicitly only support `map` here.
         */
@@ -304,6 +306,7 @@ declare global {
         script: ScriptElement;
         map: TextSourceMap;
         sizes: {
+          // TODO(cjamcl): Rename to `sources`.
           files: Record<string, number>;
           unmappedBytes: number;
           totalBytes: number;
@@ -394,6 +397,15 @@ declare global {
         isPicture: boolean;
         /** Flags whether this element was sized using a non-default `object-fit` CSS property. */
         usesObjectFit: boolean;
+        /** Flags whether this element was rendered using a pixel art scaling method.
+         *  See https://developer.mozilla.org/en-US/docs/Games/Techniques/Crisp_pixel_art_look for
+         *  details.
+         */
+        usesPixelArtScaling: boolean;
+        /** Flags whether the image has a srcset with density descriptors.
+         *  See https://html.spec.whatwg.org/multipage/images.html#pixel-density-descriptor
+         */
+        usesSrcSetDensityDescriptor: boolean;
         /** The size of the underlying image file in bytes. 0 if the file could not be identified. */
         resourceSize: number;
         /** The MIME type of the underlying image file. */
@@ -468,7 +480,7 @@ declare global {
         }
       }
 
-      export type ManifestValueCheckID = 'hasStartUrl'|'hasIconsAtLeast144px'|'hasIconsAtLeast512px'|'fetchesIcon'|'hasPWADisplayValue'|'hasBackgroundColor'|'hasThemeColor'|'hasShortName'|'hasName'|'shortNameLength';
+      export type ManifestValueCheckID = 'hasStartUrl'|'hasIconsAtLeast144px'|'hasIconsAtLeast512px'|'fetchesIcon'|'hasPWADisplayValue'|'hasBackgroundColor'|'hasThemeColor'|'hasShortName'|'hasName'|'shortNameLength'|'hasMaskableIcon';
 
       export type ManifestValues = {
         isParseFailure: false;
@@ -500,7 +512,7 @@ declare global {
       export interface MetricComputationDataInput {
         devtoolsLog: DevtoolsLog;
         trace: Trace;
-        settings: Config.Settings;
+        settings: Immutable<Config.Settings>;
         simulator?: LanternSimulator;
       }
 
@@ -541,6 +553,7 @@ declare global {
         traceEnd: number;
         load?: number;
         domContentLoaded?: number;
+        cumulativeLayoutShift?: number;
       }
 
       export interface TraceOfTab {
@@ -609,9 +622,12 @@ declare global {
         estimatedInputLatency: number;
         estimatedInputLatencyTs: number | undefined;
         maxPotentialFID: number | undefined;
+        cumulativeLayoutShift: number | undefined;
         totalBlockingTime: number;
         observedNavigationStart: number;
         observedNavigationStartTs: number;
+        observedCumulativeLayoutShift: number | undefined;
+        observedCumulativeLayoutShiftTs: number | undefined;
         observedFirstPaint: number | undefined;
         observedFirstPaintTs: number | undefined;
         observedFirstContentfulPaint: number;

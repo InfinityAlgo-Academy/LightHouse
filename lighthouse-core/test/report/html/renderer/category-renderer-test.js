@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,7 +7,7 @@
 
 /* eslint-env jest, browser */
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const fs = require('fs');
 const jsdom = require('jsdom');
 const Util = require('../../../../report/html/renderer/util.js');
@@ -365,7 +365,7 @@ describe('CategoryRenderer', () => {
       const manualAudits = elem.querySelectorAll('.lh-clump--manual .lh-audit');
 
       assert.equal(passedAudits.length, 2);
-      assert.equal(failedAudits.length, 9);
+      assert.equal(failedAudits.length, 10);
       assert.equal(warningAudits.length, 2);
       assert.equal(manualAudits.length, 3);
     });
@@ -379,7 +379,7 @@ describe('CategoryRenderer', () => {
       const failedAudits = elem.querySelectorAll('.lh-clump--failed .lh-audit');
 
       assert.equal(passedAudits.length, 0);
-      assert.equal(failedAudits.length, 13);
+      assert.equal(failedAudits.length, 14);
     });
 
     it('expands warning audit group', () => {

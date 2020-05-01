@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2017 Google Inc. All Rights Reserved.
+ * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -209,7 +209,7 @@ class DetailsRenderer {
    * Render a details item value for embedding in a table. Renders the value
    * based on the heading's valueType, unless the value itself has a `type`
    * property to override it.
-   * @param {LH.Audit.Details.Value} value
+   * @param {LH.Audit.Details.ItemValue} value
    * @param {LH.Audit.Details.OpportunityColumnHeading} heading
    * @return {Element|null}
    */
@@ -319,6 +319,11 @@ class DetailsRenderer {
     if (heading.subRows) {
       // @ts-ignore: It's ok that there is no text.
       subRows = this._getCanonicalizedHeading(heading.subRows);
+      if (!subRows.key) {
+        // eslint-disable-next-line no-console
+        console.warn('key should not be null');
+      }
+      subRows = {...subRows, key: subRows.key || ''};
     }
 
     return {
@@ -332,7 +337,7 @@ class DetailsRenderer {
   }
 
   /**
-   * @param {LH.Audit.Details.Value[]} values
+   * @param {LH.Audit.Details.ItemValue[]} values
    * @param {LH.Audit.Details.OpportunityColumnHeading} heading
    * @return {Element}
    */
@@ -374,10 +379,21 @@ class DetailsRenderer {
       for (const heading of headings) {
         const valueFragment = this._dom.createFragment();
 
-        const value = row[heading.key];
-        const valueElement =
-          value !== undefined && !Array.isArray(value) && this._renderTableValue(value, heading);
-        if (valueElement) valueFragment.appendChild(valueElement);
+        if (heading.key === null && !heading.subRows) {
+          // eslint-disable-next-line no-console
+          console.warn('A header with a null `key` should define `subRows`.');
+        }
+
+        if (heading.key === null) {
+          const emptyElement = this._dom.createElement('div');
+          emptyElement.innerHTML = '&nbsp;';
+          valueFragment.appendChild(emptyElement);
+        } else {
+          const value = row[heading.key];
+          const valueElement =
+            value !== undefined && !Array.isArray(value) && this._renderTableValue(value, heading);
+          if (valueElement) valueFragment.appendChild(valueElement);
+        }
 
         if (heading.subRows) {
           const subRowsHeading = {
@@ -388,9 +404,10 @@ class DetailsRenderer {
             label: '',
           };
           const values = row[subRowsHeading.key];
-          if (!Array.isArray(values)) continue;
-          const subRowsElement = this._renderSubRows(values, subRowsHeading);
-          valueFragment.appendChild(subRowsElement);
+          if (Array.isArray(values)) {
+            const subRowsElement = this._renderSubRows(values, subRowsHeading);
+            valueFragment.appendChild(subRowsElement);
+          }
         }
 
         if (valueFragment.childElementCount) {
@@ -422,7 +439,6 @@ class DetailsRenderer {
   /**
    * @param {LH.Audit.Details.NodeValue} item
    * @return {Element}
-   * @protected
    */
   renderNode(item) {
     const element = this._dom.createElement('span', 'lh-node');

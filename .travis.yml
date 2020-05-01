@@ -13,6 +13,7 @@ cache:
   directories:
     - node_modules
     - lantern-data
+    - lighthouse-core/scripts/legacy-javascript/variants
     - /home/travis/.rvm/gems/
 install:
   # Ensure we have the latest Chrome stable.
@@ -29,11 +30,10 @@ before_script:
   - google-chrome-stable --version
   - yarn build-all
 script:
-  # Fail if any changes were written to source files (ex, from: build/build-cdt-lib.js).
-  - git diff --exit-code
   - yarn bundlesize
   - yarn diff:sample-json
   - yarn lint
+  - yarn test-legacy-javascript
   - yarn unit:cicoverage
   - yarn type-check
   - yarn smoke:cicoverage
@@ -44,6 +44,9 @@ script:
   - yarn i18n:checks
   - yarn dogfood-lhci
   - yarn test-docs
+
+  # Fail if any changes were written to source files (ex, from: build/build-cdt-lib.js).
+  - git diff --exit-code
 before_cache:
   # nyc, jest and other projects store files in here. They mess up the travis build cache.
   - rm -rf ./node_modules/.cache/

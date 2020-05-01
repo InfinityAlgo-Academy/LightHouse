@@ -1,15 +1,16 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const fs = require('fs');
 
 const jsdom = require('jsdom');
 
+const testUtils = require('../../../test-utils.js');
 const prepareLabData = require('../../../../report/html/renderer/psi.js');
 const Util = require('../../../../report/html/renderer/util.js');
 const I18n = require('../../../../report/html/renderer/i18n.js');
@@ -19,11 +20,8 @@ const DetailsRenderer = require('../../../../report/html/renderer/details-render
 const CriticalRequestChainRenderer =
     require('../../../../report/html/renderer/crc-details-renderer.js');
 
+const {itIfProtoExists, sampleResultsRoundtripStr} = testUtils.getProtoRoundTrip();
 const sampleResultsStr = fs.readFileSync(__dirname + '/../../../results/sample_v2.json', 'utf-8');
-const sampleResultsRoundtripStr = fs.readFileSync(
-  __dirname + '/../../../../../proto/sample_v2_round_trip.json',
-  'utf-8'
-);
 
 const TEMPLATE_FILE = fs.readFileSync(
   __dirname + '/../../../../report/html/templates.html',
@@ -64,7 +62,7 @@ describe('DOM', () => {
 
   describe('psi prepareLabData helpers', () => {
     describe('prepareLabData', () => {
-      it('succeeds with LHResult object (roundtrip) input', () => {
+      itIfProtoExists('succeeds with LHResult object (roundtrip) input', () => {
         const roundTripLHResult = /** @type {LH.Result} */ JSON.parse(sampleResultsRoundtripStr);
         const result = prepareLabData(roundTripLHResult, document);
 

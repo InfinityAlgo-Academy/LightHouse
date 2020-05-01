@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Atributele `[aria-*]` sunt valide și nu sunt scrise greșit"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Subtitrările fac ca elementele audio să poată fi folosite de utilizatorii surzi sau cu dizabilități de auz, furnizând informații esențiale, precum cine vorbește, ce spune și alte informații care nu sunt legate de vorbire. [Află mai multe](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "Elementele `<audio>` au un element `<track>` cu `[kind=\"captions\"]` lipsă."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "Elementele `<audio>` conțin un element `<track>` cu `[kind=\"captions\"]`"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Elemente cu probleme"
   },
@@ -850,9 +841,6 @@
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "Cea mai mare redare de conținut semnalează momentul în care este redat cel mai mare text sau cea mai mare imagine. [Află mai multe](https://web.dev/largest-contentful-paint)"
-  },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Cea mai mare redare de conținut"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "Timpul maxim potențial de la prima interacțiune cu care utilizatorii se pot confrunta este durata celei mai lungi activități. [Află mai multe](https://web.dev/lighthouse-max-potential-fid)."

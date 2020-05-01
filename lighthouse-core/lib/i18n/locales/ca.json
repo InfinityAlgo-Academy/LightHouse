@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Els atributs `[aria-*]` són vàlids i estan ben escrits"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Els subtítols permeten que els usuaris sords o amb discapacitat auditiva utilitzin els elements d'àudio. Així obtenen informació essencial, com ara qui parla, què diu i altres dades no verbals. [Obtén més informació](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "Als elements `<audio>` els falta un element `<track>` amb `[kind=\"captions\"]`."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "Els elements `<audio>` contenen un element `<track>` amb `[kind=\"captions\"]`"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Elements amb errors"
   },
@@ -850,9 +841,6 @@
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "La mètrica Renderització de contingut més gran marca el moment en què es renderitza el text o la imatge més gran. [Obtén més informació](https://web.dev/largest-contentful-paint)."
-  },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Renderització de contingut més gran"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "El retard potencial màxim respecte a la primera interacció que els usuaris es poden trobar és la durada de la tasca més llarga. [Obtén més informació](https://web.dev/lighthouse-max-potential-fid)."

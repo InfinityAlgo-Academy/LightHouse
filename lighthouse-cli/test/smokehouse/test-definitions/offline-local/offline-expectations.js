@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -20,9 +20,6 @@ module.exports = [
         'is-on-https': {
           score: 1,
         },
-        'uses-http2': {
-          score: 0,
-        },
         'external-anchors-use-rel-noopener': {
           score: 1,
         },
@@ -33,12 +30,6 @@ module.exports = [
           score: 1,
         },
         'render-blocking-resources': {
-          score: 1,
-        },
-        'no-document-write': {
-          score: 1,
-        },
-        'uses-passive-event-listeners': {
           score: 1,
         },
         'password-inputs-can-be-pasted-into': {

@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -11,7 +11,7 @@ const Simulator = require('../../../../lib/dependency-graph/simulator/simulator.
 const DNSCache = require('../../../../lib/dependency-graph/simulator/dns-cache.js');
 const PageDependencyGraph = require('../../../../computed/page-dependency-graph.js');
 
-const assert = require('assert');
+const assert = require('assert').strict;
 let nextRequestId = 1;
 let nextTid = 1;
 
@@ -235,6 +235,64 @@ describe('DependencyGraph/Simulator', () => {
       const result = simulator.simulate(nodeA);
       // should be 950ms for A and 1400ms for C (5 round trips of downloading)
       assert.equal(result.timeInMs, 950 + (150 + 750 + 500));
+    });
+
+    it('should start network requests in startTime order', () => {
+      const rootNode = new NetworkNode(request({startTime: 0, endTime: 0.05, connectionId: '1'}));
+      const imageNodes = [
+        new NetworkNode(request({startTime: 5})),
+        new NetworkNode(request({startTime: 4})),
+        new NetworkNode(request({startTime: 3})),
+        new NetworkNode(request({startTime: 2})),
+        new NetworkNode(request({startTime: 1})),
+      ];
+
+      for (const imageNode of imageNodes) {
+        imageNode.record.connectionReused = true;
+        imageNode.record.connectionId = '1';
+        rootNode.addDependent(imageNode);
+      }
+
+      const simulator = new Simulator({serverResponseTimeByOrigin, maximumConcurrentRequests: 1});
+      const result = simulator.simulate(rootNode);
+
+      // should be 3 RTs + SRT for rootNode (950ms)
+      // should be 2 RTs + SRT for image nodes in observed order (800ms)
+      assertNodeTiming(result, rootNode, {startTime: 0, endTime: 950});
+      assertNodeTiming(result, imageNodes[4], {startTime: 950, endTime: 1750});
+      assertNodeTiming(result, imageNodes[3], {startTime: 1750, endTime: 2550});
+      assertNodeTiming(result, imageNodes[2], {startTime: 2550, endTime: 3350});
+      assertNodeTiming(result, imageNodes[1], {startTime: 3350, endTime: 4150});
+      assertNodeTiming(result, imageNodes[0], {startTime: 4150, endTime: 4950});
+    });
+
+    it('should start network requests in priority order to break startTime ties', () => {
+      const rootNode = new NetworkNode(request({startTime: 0, endTime: 0.05, connectionId: '1'}));
+      const imageNodes = [
+        new NetworkNode(request({startTime: 0.1, priority: 'VeryLow'})),
+        new NetworkNode(request({startTime: 0.2, priority: 'Low'})),
+        new NetworkNode(request({startTime: 0.3, priority: 'Medium'})),
+        new NetworkNode(request({startTime: 0.4, priority: 'High'})),
+        new NetworkNode(request({startTime: 0.5, priority: 'VeryHigh'})),
+      ];
+
+      for (const imageNode of imageNodes) {
+        imageNode.record.connectionReused = true;
+        imageNode.record.connectionId = '1';
+        rootNode.addDependent(imageNode);
+      }
+
+      const simulator = new Simulator({serverResponseTimeByOrigin, maximumConcurrentRequests: 1});
+      const result = simulator.simulate(rootNode);
+
+      // should be 3 RTs + SRT for rootNode (950ms)
+      // should be 2 RTs + SRT for image nodes in priority order (800ms)
+      assertNodeTiming(result, rootNode, {startTime: 0, endTime: 950});
+      assertNodeTiming(result, imageNodes[4], {startTime: 950, endTime: 1750});
+      assertNodeTiming(result, imageNodes[3], {startTime: 1750, endTime: 2550});
+      assertNodeTiming(result, imageNodes[2], {startTime: 2550, endTime: 3350});
+      assertNodeTiming(result, imageNodes[1], {startTime: 3350, endTime: 4150});
+      assertNodeTiming(result, imageNodes[0], {startTime: 4150, endTime: 4950});
     });
 
     it('should simulate two graphs in a row', () => {

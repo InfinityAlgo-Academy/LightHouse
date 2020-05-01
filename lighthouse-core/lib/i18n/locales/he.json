@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "מאפייני ה-`[aria-*]` חוקיים ולא כוללים שגיאות איות"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "כתוביות מאפשרות לאנשים חרשים ולקויי שמיעה להשתמש ברכיבי אודיו, ומספקות מידע קריטי, כמו זהות הדובר, המילים שנאמרות ומידע אחר שאינו מועבר בדיבור. [מידע נוסף](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "יש רכיבי `<audio>` שחסר בהם רכיב `<track>` עם `[kind=\"captions\"]`."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "רכיבי `<audio>` מכילים רכיב `<track>` עם `[kind=\"captions\"]`"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "רכיבים שנכשלו בבדיקה"
   },
@@ -850,9 +841,6 @@
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "הצגת חלק התוכן הגדול ביותר (LCP) מציינת את הזמן שבו התמונה או הטקסט הגדולים ביותר מוצגים. [מידע נוסף](https://web.dev/largest-contentful-paint)"
-  },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "הצגת חלק התוכן הגדול ביותר (LCP)"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "ההשהיה הפוטנציאלית המרבית שהמשתמשים יכולים לחוות לאחר קלט ראשוני (FID) היא משך הזמן של המשימה הארוכה ביותר. [מידע נוסף](https://web.dev/lighthouse-max-potential-fid)"

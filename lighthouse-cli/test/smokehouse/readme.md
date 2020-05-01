@@ -91,8 +91,8 @@ Smokehouse Frontends                                        Lighthouse Runners
                   |                    ^                  +-->+   bundle.js  |
 +------------+    |                    |                      |              |
 |            |    |                    |                      +--------------+
-|bundle+entry+----+                    v
-|   (TODO)   |                +--------+--------+
+|   lib.js   +----+                    v
+|            |                +--------+--------+
 +------------+                |                 |
                               |  report/assert  |
                               |                 |
@@ -102,7 +102,7 @@ Smokehouse Frontends                                        Lighthouse Runners
 ### Smokehouse frontends
 
 - `frontends/smokehouse-bin.js` - runs smokehouse from the command line
-- TODO: bundle-entry - simple entrypoint to smokehouse for bundling and running in a browser.
+- `lib` - configurable entrypoint to smokehouse, can be bundled to run in a browser environment
 - `node.js` - run smokehouse from a node process
 
 ### Smokehouse

@@ -83,6 +83,7 @@ Configuration:
   --additional-trace-categories  Additional categories to capture with the trace (comma-delimited).
   --config-path                  The path to the config JSON.
                                  An example config file: lighthouse-core/config/lr-desktop-config.js
+  --budget-path                  The path to the budget.json file for LightWallet.
   --chrome-flags                 Custom flags to pass to Chrome (space-delimited). For a full list of flags, see
                                  http://peter.sh/experiments/chromium-command-line-switches/.
 
@@ -232,7 +233,9 @@ Useful documentation, examples, and recipes to get you started.
 - [Using Lighthouse programmatically](./docs/readme.md#using-programmatically)
 - [Testing a site with authentication](./docs/authenticated-pages.md)
 - [Developing Plugins](./docs/plugins.md)
+- [Making a New Audit](./docs/new-audits.md)
 - [Testing on a mobile device](./docs/readme.md#testing-on-a-mobile-device)
+- [Setting a performance budget](./docs/performance-budgets.md)
 - [Lighthouse Architecture](./docs/architecture.md)
 
 **Recipes**
@@ -272,9 +275,9 @@ yarn build-all
 ```
 
 #### installing protobuf
-If changing audit output, you'll need to have v3.7.1 of the protocol-buffer/protobuf compiler installed. (v3.7.1 is known to be compatible, and 3.11.x is known to be **not** compatible.). 
+If changing audit output, you'll need to have v3.7.1 of the protocol-buffer/protobuf compiler installed. (v3.7.1 is known to be compatible, and 3.11.x is known to be **not** compatible.).
 
-Homebrew should be able to install it correctly: `brew install protobuf@3.7.1`
+Homebrew should be able to install it correctly: `brew install protobuf@3.7`
 
 But if you want to do it manually, these steps that have worked well for us:
 
@@ -345,6 +348,8 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[Web Page Test](https://www.webpagetest.org)** — An [open source](https://github.com/WPO-Foundation/webpagetest) tool for measuring and analyzing the performance of web pages on real devices. Users can choose to produce a Lighthouse report alongside the analysis of WebPageTest results.
 
+* **[AwesomeTechStack](https://awesometechstack.com)** — AwesomeTechStack is a free to use website tech stack analyzer. AwesomeTechStack provides insights into the security, modernity, and performance of any website's technology stack and guidance to improve performance. Lighthouse insights are a crucial part of a website's tech stack rating.
+
 ### Paid / Tiered
 
 * **[Automated Lighthouse Check](https://www.automated-lighthouse-check.com/)** - Lighthouse-as-a-service offering free and premium plans. Provides monitoring and historical reporting of Lighthouse audits with CircleCI, GitHub, and other integrations. Features include Slack notifications, PR comment reporting and more.
@@ -355,7 +360,9 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[Fluxguard](https://fluxguard.com/)** - Fluxguard provides website DOM change monitoring orchestrated with Google Puppeteer, and audited by Lighthouse. Fluxguard is a freemium product, with monthly monitoring of up to 75 pages for free.
 
-* **[PageSpeed Green](https://pagespeed.green/)** - New web performance monitoring service for web pages. For now, you can track PageSpeed performance indicators for unlimited domains and web pages. Powered By Google Lighthouse and Puppeteer. PageSpeed Green is a paid product with a free 30-day trial.
+* **[PageSpeed Green](https://pagespeed.green/)** - Web performance monitoring service for web sites. Track PageSpeed performance indicators for unlimited web pages from multiple regions. Check all code changes for PageSpeed degradations by integrating to your CD/CI using CLI. Powered By Google Lighthouse and Puppeteer. PageSpeed Green is a paid product with a free 14-day trial.
+
+* **[SEO Guard](https://www.seo-guard.com)** — SEO Guard is a website monitoring solution. It provides metrics based on Lighthouse scores. The service is offered via free and paid premium plans.
 
 * **[SpeedCurve](https://speedcurve.com)** — SpeedCurve is a tool for continuously monitoring web performance across different browsers, devices, and regions. It can aggregate any metric including Lighthouse scores across multiple pages and sites, and allows you to set performance budgets with Slack or email alerts. SpeedCurve is a paid product with a free 30-day trial.
 
@@ -381,6 +388,7 @@ Other awesome open source projects that use Lighthouse.
 * **[lightcrawler](https://github.com/github/lightcrawler)** - Crawl a website and run each page found through Lighthouse.
 * **[lighthouse-badges](https://github.com/emazzotta/lighthouse-badges)** - Generate gh-badges (shields.io) based on Lighthouse performance.
 * **[lighthouse-batch](https://www.npmjs.com/package/lighthouse-batch)** - Run Lighthouse over a number of sites and generate a summary of their metrics/scores.
+* **[lighthouse-batch-parallel](https://www.npmjs.com/package/lighthouse-batch-parallel)** - Run multiple Lighthouse runs in parallel to accelerate the data collecting process, get the result stream (csv, json, js object) in your own process (warning: performance results may be volatile).
 * **[lighthouse-check-action](https://github.com/foo-software/lighthouse-check-action)** - A Github Action to run Lighthouse in a workflow, featuring Slack notifications and report upload to S3.
 * **[lighthouse-check-orb](https://circleci.com/orbs/registry/orb/foo-software/lighthouse-check)** - A CircleCI Orb to run Lighthouse in a workflow, featuring Slack notifications and report upload to S3.
 * **[andreasonny83/lighthouse-ci](https://github.com/andreasonny83/lighthouse-ci)** - Run Lighthouse and assert scores satisfy your custom thresholds.
@@ -407,6 +415,18 @@ Other awesome open source projects that use Lighthouse.
 ### How does Lighthouse work?
 
 See [Lighthouse Architecture](./docs/architecture.md).
+
+### Why is the performance score so low? It looks fine to me.
+
+Lighthouse reports the performance metrics as they would be experienced by a typical mobile user on a 4G connection and a mid-tier ~$200 phone. Even if it loads quickly on your device and network, users in other environments will experience the site very differently.
+
+Read more in our [guide to throttling](./docs/throttling.md).
+
+### Why does the performance score change so much?
+
+Lighthouse performance scores will change due to inherent variability in web and network technologies, even if there hasn't been a code change. Test in consistent environments, run Lighthouse multiple times, and beware of variability before drawing conclusions about a performance-impacting change.
+
+Read more in our [guide to reducing variability](./docs/variability.md).
 
 ### Can I configure the lighthouse run?
 

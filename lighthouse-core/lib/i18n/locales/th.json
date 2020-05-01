@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "แอตทริบิวต์ `[aria-*]` ถูกต้องและสะกดถูกต้อง"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "คำบรรยายวิดีโอช่วยให้คนหูหนวกหรือผู้ใช้ที่มีความบกพร่องทางการได้ยินเข้าใจองค์ประกอบเสียง โดยให้ข้อมูลสำคัญ เช่น ผู้ที่กำลังพูด สิ่งที่กำลังพูด และข้อมูลอื่นๆ ที่ไม่ใช่เสียงพูด [ดูข้อมูลเพิ่มเติม](https://web.dev/audio-caption/)"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "องค์ประกอบ `<audio>` ไม่มีองค์ประกอบ `<track>` ที่มี`[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "องค์ประกอบ `<audio>` มีองค์ประกอบ `<track>` ที่มี `[kind=\"captions\"]`"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "องค์ประกอบที่ไม่ผ่านการตรวจสอบ"
   },
@@ -850,9 +841,6 @@
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "Largest Contentful Paint ระบุเวลาที่แสดงผลข้อความหรือรูปภาพได้มากที่สุด [ดูข้อมูลเพิ่มเติม](https://web.dev/largest-contentful-paint)"
-  },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Largest Contentful Paint"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "First Input Delay สูงสุดที่อาจเกิดขึ้นซึ่งผู้ใช้อาจเจอคือระยะเวลาของงานที่ยาวที่สุด [ดูข้อมูลเพิ่มเติม](https://web.dev/lighthouse-max-potential-fid)"

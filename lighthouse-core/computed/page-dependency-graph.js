@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -139,21 +139,27 @@ class PageDependencyGraph {
   }
 
   /**
-   * @param {Node} rootNode
+   * @param {NetworkNode} rootNode
    * @param {NetworkNodeOutput} networkNodeOutput
    */
   static linkNetworkNodes(rootNode, networkNodeOutput) {
     networkNodeOutput.nodes.forEach(node => {
+      const directInitiatorRequest = node.record.initiatorRequest || rootNode.record;
+      const directInitiatorNode =
+        networkNodeOutput.idToNodeMap.get(directInitiatorRequest.requestId) || rootNode;
       const initiators = PageDependencyGraph.getNetworkInitiators(node.record);
       if (initiators.length) {
         initiators.forEach(initiator => {
-          const parentCandidates = networkNodeOutput.urlToNodeMap.get(initiator) || [rootNode];
-          // Only add the initiator relationship if the initiator is unambiguous
-          const parent = parentCandidates.length === 1 ? parentCandidates[0] : rootNode;
-          node.addDependency(parent);
+          const parentCandidates = networkNodeOutput.urlToNodeMap.get(initiator) || [];
+          // Only add the edge if the parent is unambiguous with valid timing.
+          if (parentCandidates.length === 1 && parentCandidates[0].startTime <= node.startTime) {
+            node.addDependency(parentCandidates[0]);
+          } else {
+            directInitiatorNode.addDependent(node);
+          }
         });
-      } else if (node !== rootNode) {
-        rootNode.addDependent(node);
+      } else if (node !== directInitiatorNode) {
+        directInitiatorNode.addDependent(node);
       }
 
       if (!node.record.redirects) return;

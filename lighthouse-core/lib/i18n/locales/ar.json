@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "سمات `[aria-*]` هي صالحة وليس بها أخطاء إملائية"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "تجعل مقاطع الشرح العناصر الصوتية قابلة للاستخدام للمستخدمين الصُم أو الذين يعانون من إعاقة سمعية، ما يوفّر معلومات مهمة، مثل الشخص المتحدث والحوار الذي يدور ومعلومات أخرى بخلاف الكلام. [مزيد من المعلومات](https://web.dev/audio-caption/)"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "عناصر `<audio>` لا تتضمّن عنصر `<track>` مع `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "العناصر `<audio>` تحتوي على عنصر `<track>` مع `[kind=\"captions\"]`"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "العناصر التي رسبت في عملية التدقيق"
   },
@@ -850,9 +841,6 @@
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "تحدد \"سرعة عرض أكبر محتوى على الصفحة\" الوقت الذي يُعرَض فيه أكبر صورة أو نص. [مزيد من المعلومات](https://web.dev/largest-contentful-paint)"
-  },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "سرعة عرض أكبر محتوى"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "الحد الأقصى المحتمل من \"مهلة الاستجابة لأوّل إدخال\" الذي قد يواجهه المستخدمين، هو مدة أطول مهمّة. [مزيد من المعلومات](https://web.dev/lighthouse-max-potential-fid)"

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2017 Google Inc. All Rights Reserved.
+ * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
 'use strict';
 
 /* globals self, URL */
+
+/** @typedef {import('./i18n')} I18n */
 
 const ELLIPSIS = '\u2026';
 const NBSP = '\xa0';
@@ -320,7 +322,7 @@ class Util {
 
   /**
    * @param {string|URL} value
-   * @return {URL}
+   * @return {!URL}
    */
   static createOrReturnURL(value) {
     if (value instanceof URL) {
@@ -365,7 +367,7 @@ class Util {
 
   /**
    * @param {LH.Config.Settings} settings
-   * @return {Array<{name: string, description: string}>}
+   * @return {!Array<{name: string, description: string}>}
    */
   static getEnvironmentDisplayValues(settings) {
     const emulationDesc = Util.getEmulationDescriptions(settings);

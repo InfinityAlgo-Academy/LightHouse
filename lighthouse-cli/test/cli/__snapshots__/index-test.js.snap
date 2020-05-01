@@ -25,10 +25,10 @@ Object {
       "path": "metrics/first-contentful-paint",
     },
     Object {
-      "path": "metrics/first-meaningful-paint",
+      "path": "metrics/largest-contentful-paint",
     },
     Object {
-      "path": "metrics/largest-contentful-paint",
+      "path": "metrics/first-meaningful-paint",
     },
     Object {
       "path": "load-fast-enough-for-pwa",
@@ -50,6 +50,9 @@ Object {
     },
     Object {
       "path": "metrics/max-potential-fid",
+    },
+    Object {
+      "path": "metrics/cumulative-layout-shift",
     },
     Object {
       "path": "errors-in-console",
@@ -85,10 +88,16 @@ Object {
       "path": "themed-omnibox",
     },
     Object {
+      "path": "maskable-icon",
+    },
+    Object {
       "path": "content-width",
     },
     Object {
       "path": "image-aspect-ratio",
+    },
+    Object {
+      "path": "image-size-responsive",
     },
     Object {
       "path": "deprecations",
@@ -185,9 +194,6 @@ Object {
     },
     Object {
       "path": "accessibility/aria-valid-attr",
-    },
-    Object {
-      "path": "accessibility/audio-caption",
     },
     Object {
       "path": "accessibility/button-name",
@@ -352,6 +358,9 @@ Object {
       "path": "dobetterweb/doctype",
     },
     Object {
+      "path": "dobetterweb/charset",
+    },
+    Object {
       "path": "dobetterweb/dom-size",
     },
     Object {
@@ -476,11 +485,6 @@ Object {
         Object {
           "group": "a11y-aria",
           "id": "aria-valid-attr",
-          "weight": 10,
-        },
-        Object {
-          "group": "a11y-audio-video",
-          "id": "audio-caption",
           "weight": 10,
         },
         Object {
@@ -676,63 +680,73 @@ Object {
     "best-practices": Object {
       "auditRefs": Array [
         Object {
-          "id": "appcache-manifest",
-          "weight": 1,
-        },
-        Object {
+          "group": "best-practices-trust-safety",
           "id": "is-on-https",
           "weight": 1,
         },
         Object {
-          "id": "uses-http2",
-          "weight": 1,
-        },
-        Object {
-          "id": "uses-passive-event-listeners",
-          "weight": 1,
-        },
-        Object {
-          "id": "no-document-write",
-          "weight": 1,
-        },
-        Object {
+          "group": "best-practices-trust-safety",
           "id": "external-anchors-use-rel-noopener",
           "weight": 1,
         },
         Object {
+          "group": "best-practices-trust-safety",
           "id": "geolocation-on-start",
           "weight": 1,
         },
         Object {
-          "id": "doctype",
-          "weight": 1,
-        },
-        Object {
-          "id": "no-vulnerable-libraries",
-          "weight": 1,
-        },
-        Object {
-          "id": "js-libraries",
-          "weight": 0,
-        },
-        Object {
+          "group": "best-practices-trust-safety",
           "id": "notification-on-start",
           "weight": 1,
         },
         Object {
-          "id": "deprecations",
+          "group": "best-practices-trust-safety",
+          "id": "no-vulnerable-libraries",
           "weight": 1,
         },
         Object {
+          "group": "best-practices-ux",
           "id": "password-inputs-can-be-pasted-into",
           "weight": 1,
         },
         Object {
-          "id": "errors-in-console",
+          "group": "best-practices-ux",
+          "id": "image-aspect-ratio",
           "weight": 1,
         },
         Object {
-          "id": "image-aspect-ratio",
+          "group": "best-practices-ux",
+          "id": "image-size-responsive",
+          "weight": 1,
+        },
+        Object {
+          "group": "best-practices-browser-compat",
+          "id": "doctype",
+          "weight": 1,
+        },
+        Object {
+          "group": "best-practices-browser-compat",
+          "id": "charset",
+          "weight": 1,
+        },
+        Object {
+          "group": "best-practices-general",
+          "id": "appcache-manifest",
+          "weight": 1,
+        },
+        Object {
+          "group": "best-practices-general",
+          "id": "js-libraries",
+          "weight": 0,
+        },
+        Object {
+          "group": "best-practices-general",
+          "id": "deprecations",
+          "weight": 1,
+        },
+        Object {
+          "group": "best-practices-general",
+          "id": "errors-in-console",
           "weight": 1,
         },
       ],
@@ -743,44 +757,47 @@ Object {
         Object {
           "group": "metrics",
           "id": "first-contentful-paint",
-          "weight": 3,
-        },
-        Object {
-          "group": "metrics",
-          "id": "first-meaningful-paint",
-          "weight": 1,
-        },
-        Object {
-          "group": "metrics",
-          "id": "largest-contentful-paint",
-          "weight": 0,
+          "weight": 15,
         },
         Object {
           "group": "metrics",
           "id": "speed-index",
-          "weight": 4,
+          "weight": 15,
+        },
+        Object {
+          "group": "metrics",
+          "id": "largest-contentful-paint",
+          "weight": 25,
         },
         Object {
           "group": "metrics",
           "id": "interactive",
+          "weight": 15,
+        },
+        Object {
+          "group": "metrics",
+          "id": "total-blocking-time",
+          "weight": 25,
+        },
+        Object {
+          "group": "metrics",
+          "id": "cumulative-layout-shift",
           "weight": 5,
         },
         Object {
-          "group": "metrics",
           "id": "first-cpu-idle",
-          "weight": 2,
+          "weight": 0,
         },
         Object {
-          "group": "metrics",
           "id": "max-potential-fid",
           "weight": 0,
         },
         Object {
-          "id": "estimated-input-latency",
+          "id": "first-meaningful-paint",
           "weight": 0,
         },
         Object {
-          "id": "total-blocking-time",
+          "id": "estimated-input-latency",
           "weight": 0,
         },
         Object {
@@ -919,6 +936,21 @@ Object {
           "weight": 0,
         },
         Object {
+          "group": "diagnostics",
+          "id": "uses-http2",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "uses-passive-event-listeners",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "no-document-write",
+          "weight": 0,
+        },
+        Object {
           "id": "network-requests",
           "weight": 0,
         },
@@ -1018,6 +1050,11 @@ Object {
         Object {
           "group": "pwa-optimized",
           "id": "apple-touch-icon",
+          "weight": 1,
+        },
+        Object {
+          "group": "pwa-optimized",
+          "id": "maskable-icon",
           "weight": 1,
         },
         Object {
@@ -1147,6 +1184,18 @@ Object {
       "description": "These are opportunities to to improve the experience of reading tabular or list data using assistive technology, like a screen reader.",
       "title": "Tables and lists",
     },
+    "best-practices-browser-compat": Object {
+      "title": "Browser Compatibility",
+    },
+    "best-practices-general": Object {
+      "title": "General",
+    },
+    "best-practices-trust-safety": Object {
+      "title": "Trust and Safety",
+    },
+    "best-practices-ux": Object {
+      "title": "User Experience",
+    },
     "budgets": Object {
       "description": "Performance budgets set standards for the performance of your site.",
       "title": "Budgets",
@@ -1266,6 +1315,7 @@ Object {
       "loadFailureMode": "fatal",
       "networkQuietThresholdMs": 1000,
       "passName": "defaultPass",
+      "pauseAfterFcpMs": 1000,
       "pauseAfterLoadMs": 1000,
       "recordTrace": true,
       "useThrottling": true,
@@ -1288,6 +1338,7 @@ Object {
       "loadFailureMode": "ignore",
       "networkQuietThresholdMs": 0,
       "passName": "offlinePass",
+      "pauseAfterFcpMs": 0,
       "pauseAfterLoadMs": 0,
       "recordTrace": false,
       "useThrottling": false,
@@ -1317,6 +1368,7 @@ Object {
       "loadFailureMode": "warn",
       "networkQuietThresholdMs": 0,
       "passName": "redirectPass",
+      "pauseAfterFcpMs": 0,
       "pauseAfterLoadMs": 0,
       "recordTrace": false,
       "useThrottling": false,
@@ -1407,6 +1459,18 @@ Object {
       "description": "These are opportunities to to improve the experience of reading tabular or list data using assistive technology, like a screen reader.",
       "title": "Tables and lists",
     },
+    "best-practices-browser-compat": Object {
+      "title": "Browser Compatibility",
+    },
+    "best-practices-general": Object {
+      "title": "General",
+    },
+    "best-practices-trust-safety": Object {
+      "title": "Trust and Safety",
+    },
+    "best-practices-ux": Object {
+      "title": "User Experience",
+    },
     "budgets": Object {
       "description": "Performance budgets set standards for the performance of your site.",
       "title": "Budgets",
@@ -1453,6 +1517,7 @@ Object {
       "loadFailureMode": "fatal",
       "networkQuietThresholdMs": 1000,
       "passName": "defaultPass",
+      "pauseAfterFcpMs": 1000,
       "pauseAfterLoadMs": 1000,
       "recordTrace": true,
       "useThrottling": true,

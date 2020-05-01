@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Атрибути `[aria-*]` дійсні та написані правильно"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Субтитри роблять звукові елементи ефективнішими для користувачів із вадами слуху, зокрема надають важливу інформацію про те, хто й що говорить, а також інші непов'язані з мовленням деталі. [Докладніше](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "Елементи `<audio>` не містять елемент `<track>` з атрибутом `[kind=\"captions\"]`."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "Елементи `<audio>` містять елемент `<track>` з атрибутом `[kind=\"captions\"]`"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Елементи, що не пройшли перевірку"
   },
@@ -850,9 +841,6 @@
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "Найбільша візуалізація контенту показує, коли з'являється найбільший текст чи зображення. [Докладніше](https://web.dev/largest-contentful-paint)"
-  },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Найбільша візуалізація контенту"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "Максимальна потенційна затримка відповіді на першу дію – це тривалість найдовшого завдання. [Докладніше](https://web.dev/lighthouse-max-potential-fid)."

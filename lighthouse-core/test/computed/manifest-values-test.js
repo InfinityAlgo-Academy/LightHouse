@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -8,7 +8,7 @@
 /* eslint-env jest */
 
 const ManifestValues = require('../../computed/manifest-values.js');
-const assert = require('assert');
+const assert = require('assert').strict;
 
 const manifestSrc = JSON.stringify(require('../fixtures/manifest.json'));
 const manifestParser = require('../../lib/manifest-parser.js');
@@ -250,6 +250,44 @@ describe('ManifestValues computed artifact', () => {
         const iconResults = results.allChecks.filter(i => i.id.includes('Icons'));
 
         assert.equal(iconResults.every(i => i.passing === false), true);
+      });
+    });
+
+    describe('manifest has at least one maskable icon', () => {
+      it('fails when no maskable icon exists', async () => {
+        const manifestSrc = JSON.stringify({
+          icons: [{
+            src: 'icon.png',
+            purpose: 'any',
+          }],
+        });
+        const WebAppManifest = noUrlManifestParser(manifestSrc);
+        const InstallabilityErrors = {errors: []};
+        const artifacts = {WebAppManifest, InstallabilityErrors};
+
+        const results = await ManifestValues.request(artifacts, getMockContext());
+        const iconResults = results.allChecks.filter(i => i.id.includes('Maskable'));
+
+        assert.equal(iconResults.every(i => i.passing === false), true);
+      });
+
+      it('passes when an icon has the maskable purpose property', async () => {
+        const manifestSrc = JSON.stringify({
+          icons: [{
+            src: 'icon.png',
+          }, {
+            src: 'icon2.png',
+            purpose: 'maskable',
+          }],
+        });
+        const WebAppManifest = noUrlManifestParser(manifestSrc);
+        const InstallabilityErrors = {errors: []};
+        const artifacts = {WebAppManifest, InstallabilityErrors};
+
+        const results = await ManifestValues.request(artifacts, getMockContext());
+        const iconResults = results.allChecks.filter(i => i.id.includes('Maskable'));
+
+        assert.equal(iconResults.every(i => i.passing === true), true);
       });
     });
   });

@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "``[aria-*]`` లక్షణాలు చెల్లుబాటు అయ్యేవి, అక్షరదోషాలేవీ లేవు"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "శీర్షికల సహాయంతో ఆడియో మూలకాలలో ఏమి ఉన్నది చెవిటి లేదా వినికిడి సమస్య ఉన్న వినియోగదారులు అర్థం చేసుకోగలరు, దీని ద్వారా ఎవరు మాట్లాడుతున్నారు, ఏమి చెబుతున్నారు లాంటి కీలకమైన సమాచారం, ఇతర సంభాషణేతర సమాచారం అందించబడుతుంది. [మరింత తెలుసుకోండి](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "'`<audio>`' మూలకాలలో '`[kind=\"captions\"]`'తో '`<track>`' మూలకం లేదు."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "'`<audio>`' మూలకాలు '`[kind=\"captions\"]`'తో '`<track>`' మూలకం కలిగి ఉన్నాయి"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "విఫలం అవుతున్న మూలకాలు"
   },
@@ -850,9 +841,6 @@
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "అత్యంత పొడవైన కంటెంట్ గల పెయింట్ అనేది పొడవాటి వచనం లేదా చిత్రానికి పెయింట్ వేసిన సమయాన్ని గుర్తిస్తుంది. [మరింత తెలుసుకోండి](https://web.dev/largest-contentful-paint)"
-  },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "కంటెంట్ కలిగి ఉండే అతిపెద్ద పెయింట్"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "మీ యూజర్‌లు ఎదుర్కోగల గరిష్ఠ మొదటి ఇన్‌పుట్ ఆలస్యం అన్నది సుదీర్ఘ టాస్క్ సమయ వ్యవధిని కలిగి ఉంటుంది. [మరింత తెలుసుకోండి](https://web.dev/lighthouse-max-potential-fid)."

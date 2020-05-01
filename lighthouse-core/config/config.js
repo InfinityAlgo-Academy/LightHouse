@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -54,7 +54,7 @@ function assertValidPasses(passes, audits) {
     return;
   }
 
-  const requiredGatherers = Config.getGatherersNeededByAudits(audits);
+  const requestedGatherers = Config.getGatherersRequestedByAudits(audits);
   // Base artifacts are provided by GatherRunner, so start foundGatherers with them.
   const foundGatherers = new Set(BASE_ARTIFACT_NAMES);
 
@@ -69,7 +69,7 @@ function assertValidPasses(passes, audits) {
     pass.gatherers.forEach(gathererDefn => {
       const gatherer = gathererDefn.instance;
       foundGatherers.add(gatherer.name);
-      const isGatherRequiredByAudits = requiredGatherers.has(gatherer.name);
+      const isGatherRequiredByAudits = requestedGatherers.has(gatherer.name);
       if (!isGatherRequiredByAudits) {
         const msg = `${gatherer.name} gatherer requested, however no audit requires it.`;
         log.warn('config', msg);
@@ -546,6 +546,8 @@ class Config {
     const defaultPass = passes.find(pass => pass.passName === 'defaultPass');
     if (!defaultPass) return;
     const overrides = constants.nonSimulatedPassConfigOverrides;
+    defaultPass.pauseAfterFcpMs =
+      Math.max(overrides.pauseAfterFcpMs, defaultPass.pauseAfterFcpMs);
     defaultPass.pauseAfterLoadMs =
       Math.max(overrides.pauseAfterLoadMs, defaultPass.pauseAfterLoadMs);
     defaultPass.cpuQuietThresholdMs =
@@ -573,10 +575,10 @@ class Config {
         requestedAuditNames.has(auditDefn.implementation.meta.id));
 
     // 3. Resolve which gatherers will need to run
-    const requiredGathererIds = Config.getGatherersNeededByAudits(audits);
+    const requestedGathererIds = Config.getGatherersRequestedByAudits(audits);
 
     // 4. Filter to only the neccessary passes
-    const passes = Config.generatePassesNeededByGatherers(config.passes, requiredGathererIds);
+    const passes = Config.generatePassesNeededByGatherers(config.passes, requestedGathererIds);
 
     config.categories = categories;
     config.audits = audits;
@@ -679,40 +681,45 @@ class Config {
   }
 
   /**
-   * From some requested audits, return names of all required artifacts
+   * From some requested audits, return names of all required and optional artifacts
    * @param {Config['audits']} audits
    * @return {Set<string>}
    */
-  static getGatherersNeededByAudits(audits) {
+  static getGatherersRequestedByAudits(audits) {
     // It's possible we weren't given any audits (but existing audit results), in which case
     // there is no need to do any work here.
     if (!audits) {
       return new Set();
     }
 
-    return audits.reduce((list, auditDefn) => {
-      auditDefn.implementation.meta.requiredArtifacts.forEach(artifact => list.add(artifact));
-      return list;
-    }, new Set());
+    const gatherers = new Set();
+    for (const auditDefn of audits) {
+      const {requiredArtifacts, __internalOptionalArtifacts} = auditDefn.implementation.meta;
+      requiredArtifacts.forEach(artifact => gatherers.add(artifact));
+      if (__internalOptionalArtifacts) {
+        __internalOptionalArtifacts.forEach(artifact => gatherers.add(artifact));
+      }
+    }
+    return gatherers;
   }
 
   /**
-   * Filters to only required passes and gatherers, returning a new passes array.
+   * Filters to only requested passes and gatherers, returning a new passes array.
    * @param {Config['passes']} passes
-   * @param {Set<string>} requiredGatherers
+   * @param {Set<string>} requestedGatherers
    * @return {Config['passes']}
    */
-  static generatePassesNeededByGatherers(passes, requiredGatherers) {
+  static generatePassesNeededByGatherers(passes, requestedGatherers) {
     if (!passes) {
       return null;
     }
 
-    const auditsNeedTrace = requiredGatherers.has('traces');
+    const auditsNeedTrace = requestedGatherers.has('traces');
     const filteredPasses = passes.map(pass => {
       // remove any unncessary gatherers from within the passes
       pass.gatherers = pass.gatherers.filter(gathererDefn => {
         const gatherer = gathererDefn.instance;
-        return requiredGatherers.has(gatherer.name);
+        return requestedGatherers.has(gatherer.name);
       });
 
       // disable the trace if no audit requires a trace

@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Alla attribut av typen `[aria-*]` är giltiga och rättstavade"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Textningen ger döva och hörselskadade viktig information om vem som talar, vad de säger och andra ljud som inte är tal. [Läs mer](https://web.dev/audio-caption/)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "Alla `<audio>`-element har inte ett underordnat `<track>`-element med `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "Alla `<audio>`-element innehåller ett `<track>`-element med `[kind=\"captions\"]`"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Element med fel"
   },
@@ -850,9 +841,6 @@
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "Största uppritningen av innehåll anger tidpunkten då den största texten eller bilden ritades upp. [Läs mer](https://web.dev/largest-contentful-paint)"
-  },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Största uppritningen av innehåll"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "Den högsta potentiella fördröjningen till första inmatningen som användarna kan få är längden på den längsta uppgiften. [Läs mer](https://web.dev/lighthouse-max-potential-fid)."

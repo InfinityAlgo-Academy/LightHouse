@@ -28,9 +28,6 @@ yarn install
 # Build everything
 yarn build-all
 
-# Package the extension
-node build/build-extension.js package
-
 # Verify the npm package won't include unncessary files
 npm pack --dry-run
 npx pkgfiles
