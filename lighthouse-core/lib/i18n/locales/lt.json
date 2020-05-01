@@ -648,7 +648,7 @@
     "message": "Esant lėtam ryšiui, išoriniai scenarijai, dinamiškai įterpiami naudojant „`document.write()`“, gali atidėti puslapio įkėlimą dešimtimis sekundžių. [Sužinokite daugiau](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Naudojamas „`document.write()`“"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Vengiama naudoti „`document.write()`“"
@@ -876,10 +876,7 @@
     "message": "Pateikta maskuojama aprašo piktograma"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Kaupiamasis išdėstymo poslinkis – tai visų išdėstymo poslinkių, įvykusių įkeliant puslapį, suma. Išdėstymo poslinkis – tai bet koks naudotojui jau matomo elemento judesys. Visas išdėstymo poslinkis įrašomas, įvertinamas ir kaupiamas nustatant kaupiamąjį balą nuo 0 iki 1; 0 nurodo, kad tai visiškai stabilus puslapis, o >= 0,5 – itin kintantis puslapis. [Sužinokite daugiau](https://web.dev/cls)."
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "Kaupiamasis išdėstymo poslinkis"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Įvertinta įvesties delsa yra įvertintas laikas milisekundėmis, per kurį programa atsako į naudotojo įvestį per labiausiai užimtas puslapio įkėlimo 5 sekundes. Jei delsa ilgesnė nei 50 ms, naudotojams gali atrodyti, kad programa veikia lėtai. [Sužinokite daugiau](https://web.dev/estimated-input-latency)."
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Galima sutaupyti"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Kaupiamasis išdėstymo poslinkis"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Galima sutaupyti {wastedBytes, number, bytes} KB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Laikas iki sąveikos"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Didžiausias turiningas žymėjimas"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Maksimali potenciali pirmosios įvesties delsa"

@@ -141,10 +141,10 @@
     "message": "如果定義清單的標記不正確，螢幕閱讀器可能會輸出令人混淆或不正確的內容。[瞭解詳情](https://web.dev/definition-list/)。"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>` 並非只包含排序正確的 `<dt>` 和 `<dd>` 群組、`<script>`、`<template>` 或 `<div>` 元素。"
+    "message": "`<dl>` 並非只包含排序正確的 `<dt>` 和 `<dd>` 群組，以及 `<script>`、`<template>` 或 `<div>` 元素。"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>` 只包含排序正確的 `<dt>` 和 `<dd>` 群組、`<script>`、`<template>` 或 `<div>` 元素。"
+    "message": "`<dl>` 只包含排序正確的 `<dt>` 和 `<dd>` 群組，以及 `<script>`、`<template>` 或 `<div>` 元素。"
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "定義清單項目 (`<dt>` 和 `<dd>`) 必須納入在父項 `<dl>` 元素中，才能確保螢幕閱讀器正確朗讀這些項目。[瞭解詳情](https://web.dev/dlitem/)。"
@@ -648,7 +648,7 @@
     "message": "對於連線速度較慢的使用者，透過 `document.write()` 動態置入的外部指令碼可能會導致網頁延遲數十秒載入。[瞭解詳情](https://web.dev/no-document-write)。"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "使用 `document.write()`"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "避免使用 `document.write()`"
@@ -876,10 +876,7 @@
     "message": "資訊清單包含可遮蓋的圖示"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "「累計版面配置轉移」是指頁面在載入過程中，發生的所有版面配置轉移總和。單次版面配置轉移是指元素在可向使用者顯示時所做的任何移動。系統會記錄所有版面配置轉移，並將其得分匯總為介於 0 與 1 之間的累計分數；0 代表完全穩定的頁面，>=0.5 代表高度轉移的頁面。[瞭解詳情](https://web.dev/cls)。"
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "累計版面配置轉移"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "預估輸入延遲時間是指在頁面載入作業最忙碌的 5 秒中，應用程式對於使用者輸入動作的預估回應時間 (以毫秒為單位)。如果延遲時間超過 50 毫秒，使用者可能會覺得應用程式的速度很慢。[瞭解詳情](https://web.dev/estimated-input-latency)。"
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "可節省的時間"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "累計版面配置轉移"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "可減少 {wastedBytes, number, bytes} KB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "可互動時間"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "最大內容繪製"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "首次輸入延遲時間最長預估值"

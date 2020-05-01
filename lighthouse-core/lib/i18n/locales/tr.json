@@ -648,7 +648,7 @@
     "message": "`document.write()` aracılığıyla dinamik olarak enjekte edilen harici komut dosyaları, yavaş bağlantıdaki kullanıcılar için sayfa yüklemeyi onlarca saniye geciktirebilir. [Daha fazla bilgi](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "`document.write()` öğesini kullanıyor"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "`document.write()` öğesinden kaçınıyor"
@@ -876,10 +876,7 @@
     "message": "Manifest dosyası maskelenebilir simge içeriyor"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Kümülatif Düzen Kayması (Cumulative Layout Shift), bir sayfanın yüklenmesi sırasında meydana gelen tüm düzen kaymalarının toplamıdır. Düzen hareketi, bir öğenin kullanıcı tarafından görünür hale gelmesinden sonra yaptığı herhangi bir harekettir. Tüm düzen hareketleri kaydedilir, puanlanır, ardından toplanarak 0 ila 1 arasında bir değere sahip kümülatif puan oluşturulur. 0 değeri sayfanın tamamen kararlı olduğu; 0,5 ve üstü değerler sayfanın son derece hareketli olduğunu belirtir. [Daha fazla bilgi](https://web.dev/cls)."
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "Kümülatif Düzen Kayması"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Tahmini Giriş Gecikmesi, sayfa yüklemesinin en yoğun olduğu 5 saniyelik zaman aralığında uygulamanızın kullanıcı girişine kaç milisaniye içinde yanıt vereceğine dair bir tahmindir. Gecikmeniz 50 ms.nin üzerinde olursa kullanıcılar uygulamanızın durakladığını düşünebilir. [Daha fazla bilgi](https://web.dev/estimated-input-latency)."
@@ -898,9 +895,6 @@
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
     "message": "Largest Contentful Paint, en büyük metnin veya resmin ekranda belirdiği zamanı işaret eder. [Daha Fazla Bilgi](https://web.dev/lighthouse-largest-contentful-paint)"
-  },
-  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
-    "message": "Largest Contentful Paint"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "Kullanıcılarınızın karşılaşabileceği olası maksimum İlk Giriş Gecikmesi, en uzun görevin süresidir. [Daha fazla bilgi](https://web.dev/lighthouse-max-potential-fid)."
@@ -1463,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Potansiyel Tasarruflar"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Kümülatif Düzen Kayması"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "{wastedBytes, number, bytes} KB potansiyel tasarruf"
   },
@@ -1492,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Etkileşim Süresi"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Largest Contentful Paint"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Maksimum Olası İlk Giriş Gecikmesi"

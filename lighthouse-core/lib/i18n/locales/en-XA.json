@@ -648,7 +648,7 @@
     "message": "[Föŕ ûšéŕš öñ šļöŵ çöññéçţîöñš, éxţéŕñåļ šçŕîþţš ðýñåmîçåļļý îñĵéçţéð vîå ᐅ`document.write()`ᐊ çåñ ðéļåý þåĝé ļöåð бý ţéñš öƒ šéçöñðš. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/no-document-write)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone]"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "[Ûšéš ᐅ`document.write()`ᐊ one two]"
+    "message": "[Åvöîð ᐅ`document.write()`ᐊ one two three]"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "[Åvöîðš ᐅ`document.write()`ᐊ one two three]"
@@ -876,10 +876,7 @@
     "message": "[Måñîƒéšţ ĥåš å måšķåбļé îçöñ one two three four five six]"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "[Çûmûļåţîvé Ļåýöûţ Šĥîƒţ îš ţĥé šûm öƒ åļļ ļåýöûţ šĥîƒţš ţĥåţ öççûŕŕéð ðûŕîñĝ å þåĝé'š ļöåð. Å ļåýöûţ šĥîƒţ îš åñý mövéméñţ åñ éļéméñţ måķéš öñçé îţ îš vîšîбļé ţö ţĥé ûšéŕ. Åļļ ļåýöûţ šĥîƒţ îš ŕéçöŕðéð, šçöŕéð, åñð ţĥéñ åĝĝŕéĝåţéð îñţö å çûmûļåţîvé šçöŕé бéţŵééñ 0 åñð 1; 0 бéîñĝ å þéŕƒéçţļý šţåбļé þåĝé, åñð >=0.5 бéîñĝ å ĥîĝĥļý šĥîƒţîñĝ þåĝé. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/cls)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven twentyeight twentynine thirty thirtyone thirtytwo thirtythree thirtyfour thirtyfive thirtysix thirtyseven thirtyeight thirtynine forty one two three four]"
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "[Çûmûļåţîvé Ļåýöûţ Šĥîƒţ one two three]"
+    "message": "[Çûmûļåţîvé Ļåýöûţ Šĥîƒţ méåšûŕéš ţĥé mövéméñţ öƒ vîšîбļé éļéméñţš ŵîţĥîñ ţĥé vîéŵþöŕţ. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/cls)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen]"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "[Éšţîmåţéð Îñþûţ Ļåţéñçý îš åñ éšţîmåţé öƒ ĥöŵ ļöñĝ ýöûŕ åþþ ţåķéš ţö ŕéšþöñð ţö ûšéŕ îñþûţ, îñ mîļļîšéçöñðš, ðûŕîñĝ ţĥé бûšîéšţ 5š ŵîñðöŵ öƒ þåĝé ļöåð. Îƒ ýöûŕ ļåţéñçý îš ĥîĝĥéŕ ţĥåñ 50 mš, ûšéŕš måý þéŕçéîvé ýöûŕ åþþ åš ļåĝĝý. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/estimated-input-latency)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven twentyeight twentynine thirty thirtyone]"
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "[Þöţéñţîåļ Šåvîñĝš one two three]"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "[Çûmûļåţîvé Ļåýöûţ Šĥîƒţ one two three]"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "[Þöţéñţîåļ šåvîñĝš öƒ ᐅ{wastedBytes, number, bytes}ᐊ ĶБ one two three four five six]"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "[Ţîmé ţö Îñţéŕåçţîvé one two three]"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "[Ļåŕĝéšţ Çöñţéñţƒûļ Þåîñţ one two three]"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "[Måx Þöţéñţîåļ Fîŕšţ Îñþûţ Ðéļåý one two three four five six seven]"

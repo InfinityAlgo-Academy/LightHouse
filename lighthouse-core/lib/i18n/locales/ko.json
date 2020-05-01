@@ -648,7 +648,7 @@
     "message": "연결이 느린 사용자의 경우 `document.write()`에서 동적으로 삽입된 외부 스크립트로 인해 페이지 로드가 몇십 초까지 지연될 수 있습니다. [자세히 알아보기](https://web.dev/no-document-write)"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "`document.write()`을(를) 사용함"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "`document.write()` 지양하기"
@@ -876,10 +876,7 @@
     "message": "매니페스트에 마스크 가능한 아이콘이 있음"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "누적 레이아웃 변경은 페이지 로드 중에 발생한 모든 레이아웃 변경의 합입니다. 레이아웃 변경은 사용자에게 표시된 요소의 모든 움직임을 의미합니다. 모든 레이아웃 변경은 기록되고 점수가 매겨진 후 0과 1 사이의 누적 점수로 집계됩니다. 이때 0은 전혀 변경되지 않는 페이지, 0.5 이상은 변경이 심한 페이지를 의미합니다. [자세히 알아보기](https://web.dev/cls)"
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "누적 레이아웃 변경"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "예상 입력 대기시간은 페이지 로드가 가장 많은 5초 동안 앱이 사용자 입력에 응답하는 데 걸리는 시간(밀리초)의 추정치입니다. 지연 시간이 50밀리초보다 길면 사용자가 앱이 느리다고 인식할 수 있습니다. [자세히 알아보기](https://web.dev/estimated-input-latency)"
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "가능한 절감 효과"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "누적 레이아웃 변경"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "절감 가능치: {wastedBytes, number, bytes} KB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "상호작용 시간"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "콘텐츠가 포함된 최대 페인트"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "최대 첫 입력 지연 예상 시간"

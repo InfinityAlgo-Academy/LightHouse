@@ -648,7 +648,7 @@
     "message": "Pri uporabnikih s počasnimi povezavami lahko zunanji skripti, dinamično vstavljeni prek `document.write()`, zakasnijo nalaganje strani za več deset sekund. [Več o tem](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Uporablja `document.write()`"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Se izogiba `document.write()`"
@@ -876,10 +876,7 @@
     "message": "Manifest ima ikono, ki omogoča maskiranje"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Skupni premiki postavitve so vsota vseh pomikov postavitve, do katerih je prišlo med nalaganjem strani. Pomik postavitve pomeni vsakršno gibanje, ki ga izvede element, ko je viden uporabniku. Celoten premik postavitve je zabeležen, ovrednoten in nato združen v skupni rezultat med 0 in 1; 0 predstavlja popolnoma stabilno stran, >= 0,5 pa predstavlja stran s številnimi premiki. [Več o tem](https://web.dev/cls)."
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "Skupni premiki postavitve"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Predvidena vhodna zakasnitev je ocena, koliko milisekund potrebuje vaša aplikacija za odziv na uporabnikovo dejavnost med najaktivnejšimi 5 sekundami pri nalaganju strani. Če je zakasnitev večja od 50 ms, se lahko uporabnikom zdi, da se aplikacija zatika. [Več o tem](https://web.dev/estimated-input-latency)."
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Morebitni prihranki"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Skupni premiki postavitve"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "{wastedBytes, number, bytes} KB morebitnega prihranka"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Čas do interaktivnosti"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Največji vsebinski izris"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Najv. potencial. zakasn. od prvega vnosa"

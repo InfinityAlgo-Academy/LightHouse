@@ -648,7 +648,7 @@
     "message": "Per gli utenti con connessioni lente, gli script esterni inseriti in modo dinamico tramite `document.write()` potrebbero ritardare il caricamento della pagina di decine di secondi. [Ulteriori informazioni](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Usa `document.write()`"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Evita `document.write()`"
@@ -876,10 +876,7 @@
     "message": "Il file manifest contiene un'icona mascherabile"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "La metrica Variazione layout cumulativa indica la somma di tutte le variazioni di layout che si sono verificate durante il caricamento di una pagina. Con \"variazione di layout\" si intende qualsiasi movimento di un elemento quando è visibile all'utente. Tutte le variazioni di layout vengono registrate, vi viene assegnato un punteggio e vengono poi aggregate in un punteggio cumulativo compreso tra 0 e 1; 0 indica una pagina perfettamente stabile, mentre valori >= 0,5 indicano una pagina con tante variazioni. [Ulteriori informazioni](https://web.dev/cls)."
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "Variazione layout cumulativa"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "La metrica Latenza input stimata fornisce una stima del tempo impiegato dall'app, espresso in millisecondi, per rispondere all'input dell'utente durante il periodo di 5 s più impegnativo del caricamento della pagina. Se la latenza è superiore a 50 ms, gli utenti potrebbero considerare lenta la tua app. [Ulteriori informazioni](https://web.dev/estimated-input-latency)."
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Potenziali riduzioni"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Variazione layout cumulativa"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Potenziali riduzioni di {wastedBytes, number, bytes} kB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Tempo per interattività"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Largest Contentful Paint"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Ritardo prima interazione potenziale max"

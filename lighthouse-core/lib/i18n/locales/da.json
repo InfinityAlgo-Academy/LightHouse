@@ -648,7 +648,7 @@
     "message": "Eksterne scripts, der indsættes dynamisk via `document.write()`, kan forsinke sideindlæsningen med flere sekunder for brugere med langsomme forbindelser. [Få flere oplysninger](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Bruger `document.write()`"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Undgår `document.write()`"
@@ -876,10 +876,7 @@
     "message": "Manifestet har et ikon, der kan maskeres"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Akkumuleret layoutskift er summen af alle layoutskift, der har fundet sted under indlæsningen af en side. Et layoutskift omfatter enhver bevægelse, som et element foretager, så snart det er synligt for brugeren. Alle layoutskift registreres, bedømmes og samles derefter i et akkumuleret resultat mellem 0 og 1, hvor 0 er helt stabil, mens alt over 0,5 er en side med mange skift. [Få flere oplysninger](https://web.dev/cls)."
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "Akkumuleret layoutskift"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Estimeret inputforsinkelse er en anslået værdi af, hvor længe din app er om at reagere på brugerinput i millisekunder i det travleste femsekundersvindue under en sideindlæsning. Hvis din forsinkelse er længere end 50 ms, kan brugerne opfatte din app som langsom. [Få flere oplysninger](https://web.dev/estimated-input-latency)."
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Potentiel besparelse"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Akkumuleret layoutskift"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Potentiel besparelse på {wastedBytes, number, bytes} kB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Tid inden interaktiv tilstand"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Største udfyldning af indhold"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Maks. potentiel ventetid efter første input"

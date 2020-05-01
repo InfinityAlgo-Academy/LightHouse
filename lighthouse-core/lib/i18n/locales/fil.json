@@ -648,7 +648,7 @@
     "message": "Para sa mga user na may mabagal na koneksyon, puwedeng maantala ang pag-load ng page dahil sa mga external na script na dynamic na inilagay sa pamamagitan ng `document.write()`. [Matuto pa](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Gumagamit ng `document.write()`"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Umiiwas sa `document.write()`"
@@ -876,10 +876,7 @@
     "message": "May nama-mask na icon ang manifest"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Ang Pinagsama-samang Pagbabago ng Layout ay ang kabuuan ng lahat ng pagbabago ng layout na naganap sa pag-load ng isang page. Ang pagbabago ng layout ay anumang paggalaw ng isang elemento kapag nakikita na ito ng user. Nire-record, binibigyan ng marka, at pagkatapos ay pinagsasama-sama sa isang kabuuang marka sa pagitan ng 0 at 1; kung saan ang 0 ay ganap na stable na page, at ang >=0.5 ay page na may maraming pagbabagu-bago. [Matuto pa](https://web.dev/cls)."
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "Pinagsama-samang Pagbabago ng Layout"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Ang Tinantyang Latency ng Input ay isang pagtatantya ng bilis ng pagtugon ng iyong app sa input ng user, na nasa millisecond, sa pinakaabalang 5 segundong palugit ng pag-load ng page. Kung mas mataas kaysa sa 50 ms ang iyong latency, puwedeng ituring ng mga user na mabagal ang app mo. [Matuto pa](https://web.dev/estimated-input-latency)."
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Puwedeng Matipid"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Pinagsama-samang Pagbabago ng Layout"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Puwedeng makatipid ng {wastedBytes, number, bytes} KB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Time to Interactive"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Largest Contentful Paint"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Max na Potensyal na First Input Delay"

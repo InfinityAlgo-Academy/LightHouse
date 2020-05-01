@@ -648,7 +648,7 @@
     "message": "אם החיבור איטי, סקריפטים חיצוניים המושתלים באופן דינמי דרך `document.write()` יכולים לעכב את טעינת הדף בעשרות שניות. [מידע נוסף](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "הדף כולל שימוש ב-`document.write()`"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "לא נעשה שימוש ב-`document.write()`"
@@ -876,10 +876,7 @@
     "message": "המניפסט מכיל לפחות סמל אחד שניתן למיסוך"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "המדד 'שינויים מצטברים בפריסה' מסכם את כל השינויים שחלו בפריסה של הדף בזמן שהוא נטען. שינוי בפריסה הוא כל שינוי במיקום של רכיב כלשהו בדף מהרגע שבו הרכיב גלוי למשתמש. כל שינוי בפריסה מתועד ומקבל ניקוד. אחר כך, המערכת מקבצת את כל השינויים שתיעדה ומשתמשת בהם כדי לחשב את הניקוד המצטבר של הדף. הניקוד נע בין 0 ל-1, כאשר ניקוד של 0 מתאר דף יציב לגמרי וניקוד של 0.5 ומעלה מתאר דף שחלים בו הרבה שינויים. [מידע נוסף](https://web.dev/cls)."
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "שינויים מצטברים בפריסה"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "זמן אחזור מוערך של קלט הוא אומדן של משך הזמן הנדרש לאפליקציה כדי להגיב לקלט של משתמש. הערך מצוין באלפיות שנייה ומתייחס ל-5 השניות העמוסות ביותר בטעינת הדף. אם זמן האחזור ארוך מ-50 אלפיות שנייה, ייתכן שהמשתמשים יבחינו בעיכוב בפעילות האפליקציה. [מידע נוסף](https://web.dev/estimated-input-latency)."
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "פוטנציאל חיסכון"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "שינויים מצטברים בפריסה"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "צמצום של ‎{wastedBytes, number, bytes} KB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "זמן עד לאינטראקטיביות"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "הצגת חלק התוכן הגדול ביותר (LCP)"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "השהיה פוטנציאלית מרבית לאחר קלט ראשוני"

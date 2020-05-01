@@ -648,7 +648,7 @@
     "message": "No caso de utilizadores com ligações lentas, os scripts externos inseridos dinamicamente através de `document.write()` podem atrasar o carregamento da página em dezenas de segundos. [Saiba mais](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Utiliza `document.write()`"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Evita `document.write()`"
@@ -876,10 +876,7 @@
     "message": "O manifesto tem um ícone mascarável"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "O Cumulative Layout Shift é a soma de todas as mudanças de esquema que ocorreram durante o carregamento de uma página. Uma mudança de esquema é qualquer movimento que um elemento efetua assim que estiver visível para o utilizador. Todas as mudanças de esquema são registadas, pontuadas e, posteriormente, agregadas numa pontuação cumulativa entre 0 e 1, em que 0 é uma página perfeitamente estável e >=0,5 uma página altamente instável em termos de mudanças. [Saber mais](https://web.dev/cls)"
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "Mudança de esquema cumulativo"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "A Latência de entrada estimada é uma estimativa do tempo que a sua aplicação demora a responder a ações do utilizador, em milissegundos, durante a janela dos 5 segundos mais ativos do carregamento da página. Se a latência for superior a 50 ms, os utilizadores podem considerar que a sua aplicação é lenta. [Saiba mais](https://web.dev/estimated-input-latency)."
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Poupança potencial"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Mudança de esquema cumulativo"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Poupança potencial de {wastedBytes, number, bytes} KB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Tempo até à interação"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Maior preenchimento com conteúdo"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Máximo potencial de primeiro atraso de entrada"
