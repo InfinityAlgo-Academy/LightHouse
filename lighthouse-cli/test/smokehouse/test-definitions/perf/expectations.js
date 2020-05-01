@@ -136,6 +136,21 @@ module.exports = [
             ],
           },
         },
+        'largest-contentful-paint-element': {
+          score: null,
+          displayValue: '1 element found',
+          details: {
+            items: [
+              {
+                node: {
+                  type: 'node',
+                  nodeLabel: 'img',
+                  path: '2,HTML,1,BODY,0,IMG',
+                },
+              },
+            ],
+          },
+        },
       },
     },
   },

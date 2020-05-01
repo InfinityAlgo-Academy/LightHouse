@@ -566,9 +566,6 @@
   "lighthouse-core/audits/dobetterweb/doctype.js | title": {
     "message": "페이지에 HTML Doctype 있음"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "요소"
-  },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
     "message": "통계"
   },

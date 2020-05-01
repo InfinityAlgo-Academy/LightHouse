@@ -566,9 +566,6 @@
   "lighthouse-core/audits/dobetterweb/doctype.js | title": {
     "message": "పేజీలో 'HTML doctype' ఉంది"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "మూలకం"
-  },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
     "message": "గణాంక రకం"
   },

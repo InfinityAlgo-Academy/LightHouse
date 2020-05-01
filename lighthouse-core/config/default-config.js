@@ -159,6 +159,7 @@ const defaultConfig = {
       'seo/robots-txt',
       'seo/tap-targets',
       'accessibility',
+      'trace-elements',
     ],
   },
   {
@@ -230,6 +231,7 @@ const defaultConfig = {
     'timing-budget',
     'resource-summary',
     'third-party-summary',
+    'largest-contentful-paint-element',
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',
     'manual/pwa-each-page-has-url',
@@ -448,6 +450,7 @@ const defaultConfig = {
         {id: 'timing-budget', weight: 0, group: 'budgets'},
         {id: 'resource-summary', weight: 0, group: 'diagnostics'},
         {id: 'third-party-summary', weight: 0, group: 'diagnostics'},
+        {id: 'largest-contentful-paint-element', weight: 0, group: 'diagnostics'},
         {id: 'uses-http2', weight: 0, group: 'diagnostics'},
         {id: 'uses-passive-event-listeners', weight: 0, group: 'diagnostics'},
         {id: 'no-document-write', weight: 0, group: 'diagnostics'},

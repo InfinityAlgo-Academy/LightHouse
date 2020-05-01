@@ -140,6 +140,8 @@ declare global {
       TagsBlockingFirstPaint: Artifacts.TagBlockingFirstPaint[];
       /** Information about tap targets including their position and size. */
       TapTargets: Artifacts.TapTarget[];
+      /**  */
+      TraceElements: Artifacts.TraceElement[];
     }
 
     module Artifacts {
@@ -462,6 +464,14 @@ declare global {
         path: string;
         href: string;
         clientRects: Rect[];
+      }
+
+      export interface TraceElement {
+        metricName: string;
+        selector: string;
+        nodeLabel?: string;
+        devtoolsNodePath: string;
+        snippet?: string;
       }
 
       export interface ViewportDimensions {
