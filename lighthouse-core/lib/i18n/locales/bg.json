@@ -141,10 +141,10 @@
     "message": "Когато списъците с определения не са маркирани правилно, екранните четци може да предоставят объркваща или неточна информация. [Научете повече](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "Елементите `<dl>` не съдържат само правилно подредени групи `<dt>` и `<dd>` и елементи `<script>` или `<template>`."
+    "message": "Елементите `<dl>` не съдържат само правилно подредени групи `<dt>` и `<dd>` и елементи `<script>`, `<template>` или `<div>`."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "Елементите `<dl>` съдържат само правилно подредени групи `<dt>` и `<dd>` и елементи `<script>` или `<template>`."
+    "message": "Елементите `<dl>` съдържат само правилно подредени групи `<dt>` и `<dd>` и елементи `<script>`, `<template>` или `<div>`."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "Списъчните елементи за определение (`<dt>` и `<dd>`) трябва да бъдат обвити в родителски елемент `<dl>`, за да бъдат прочетени правилно от екранните четци. [Научете повече](https://web.dev/dlitem/)."
@@ -404,6 +404,12 @@
   "lighthouse-core/audits/bootup-time.js | title": {
     "message": "Време за изпълнение на JavaScript"
   },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | description": {
+    "message": "Премахнете големите дублиращи се JavaScript модули от пакетите, за да намалите ненужния пренос на данни в мрежата. "
+  },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | title": {
+    "message": "Премахнете дублиращите се модули в JavaScript пакетите"
+  },
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | description": {
     "message": "Големите GIF файлове не са ефективни за показване на анимирано съдържание. Вместо това препоръчваме да използвате видеоклипове във формат MPEG4/WebM за анимации и PNG/WebP за статични изображения, за да намалите преноса на данни. [Научете повече](https://web.dev/efficient-animated-content)"
   },
@@ -453,7 +459,7 @@
     "message": "Премахнете неизползвания CSS код"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Премахнете неизползвания JavaScript, за да намалите преноса на данни при мрежова активност. [Научете повече](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)."
+    "message": "Премахнете неизползвания JavaScript, за да намалите преноса на данни при мрежова активност. [Научете повече](https://web.dev/remove-unused-code/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Премахнете неизползвания JavaScript"
@@ -545,6 +551,15 @@
   "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
     "message": "Избягва кеша на приложенията"
   },
+  "lighthouse-core/audits/dobetterweb/charset.js | description": {
+    "message": "Трябва да декларирате система за кодиране на знаците. За целта можете да използвате маркер <meta> в първите 1024 байта на HTML кода или в заглавката Content-Type за HTTP отговор. [Научете повече](https://www.w3.org/International/questions/qa-html-encoding-declarations)."
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
+    "message": "Декларацията на набор от знаци липсва или е дефинирана твърде късно в HTML кода"
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | title": {
+    "message": "Правилно дефиниран набор от знаци"
+  },
   "lighthouse-core/audits/dobetterweb/doctype.js | description": {
     "message": "Посочването на doctype не позволява на браузъра да премине в режим на обратна съвместимост. [Научете повече](https://web.dev/doctype)."
   },
@@ -595,6 +610,9 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Не се използва DOM с твърде голям размер"
+  },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
+    "message": "Anchor маркери с грешки"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Добавете `rel=\"noopener\"` или `rel=\"noreferrer\"` към връзките към външни сайтове, за да подобрите ефективността и да избегнете уязвимости в сигурността. [Научете повече](https://web.dev/external-anchors-use-rel-noopener)."
@@ -752,6 +770,24 @@
   "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
     "message": "Информацията за размера на изображението е невалидна: {url}"
   },
+  "lighthouse-core/audits/image-size-responsive.js | columnActual": {
+    "message": "Действителен размер"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
+    "message": "Показван размер"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
+    "message": "Очакван размер"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | description": {
+    "message": "Естествените размери на изображенията трябва да са пропорционални на размера на екрана и пикселното съотношение, за да се постигне максимално ясно изобразяване. [Научете повече](https://web.dev/image-size-responsive)"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
+    "message": "Изображенията се показват с неподходящ размер"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | title": {
+    "message": "Изображенията се показват с подходящ размер"
+  },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Браузърите могат проактивно да подканват потребителите да добавят приложението ви към началния екран, което може да повиши ангажираността. [Научете повече](https://web.dev/installable-manifest)."
   },
@@ -775,6 +811,12 @@
   },
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Използва HTTPS"
+  },
+  "lighthouse-core/audits/legacy-javascript.js | description": {
+    "message": "Полифиловете и трансформациите дават възможност на старите браузъри да използват нови функции на JavaScript, но в голяма степен не са необходими за съвременните браузъри. За JavaScript пакета си използвайте актуална стратегия за внедряване на скриптове посредством откриване на функции за модулни/немодулни скриптове, за да намалите количеството код, изпращан до новите браузъри, и същевременно да запазите поддръжката за старите такива. [Научете повече](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
+  },
+  "lighthouse-core/audits/legacy-javascript.js | title": {
+    "message": "Остарял JavaScript"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "Бързото зареждане на страниците през мобилни мрежи осигурява добра практическа работа за потребителите на мобилни устройства. [Научете повече](https://web.dev/load-fast-enough-for-pwa)."
@@ -824,6 +866,18 @@
   "lighthouse-core/audits/manual/pwa-page-transitions.js | title": {
     "message": "Преходите между страниците не създават усещане за забавяне на мрежата"
   },
+  "lighthouse-core/audits/maskable-icon.js | description": {
+    "message": "Използването на адаптивна икона гарантира, че изображението ще запълни цялата фигура, а не само част от нея, когато приложението бъде инсталирано на устройство. [Научете повече](https://web.dev/maskable-icon/)."
+  },
+  "lighthouse-core/audits/maskable-icon.js | failureTitle": {
+    "message": "Манифестът не съдържа адаптивна икона"
+  },
+  "lighthouse-core/audits/maskable-icon.js | title": {
+    "message": "Манифестът съдържа адаптивна икона"
+  },
+  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
+    "message": "Показателят „Кумулативни структурни промени“ представлява обобщен резултат за всички промени в оформлението, възникнали при зареждането на страницата. Структурна промяна е всяко изместване на елемент, след като е станал видим за потребителя. Всички структурни промени се записват, оценяват и след това се обобщават в кумулативен резултат между 0 и 1 – 0 означава, че страницата е стабилна, а стойност >= 0,5 указва, че в нея настъпват много промени. [Научете повече](https://web.dev/cls)."
+  },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Приблизителното забавяне при входящо действие показва приблизително колко време (в милисекунди) е необходимо на приложението ви, за да реагира на входящо потребителско действие по време на най-натоварения 5-секунден период от зареждането на страницата. Ако забавянето е над 50 милисекунди, приложението ви може да се стори бавно на потребителите. [Научете повече](https://web.dev/estimated-input-latency)."
   },
@@ -840,7 +894,7 @@
     "message": "Времето до интерактивност показва след колко време страницата става напълно интерактивна. [Научете повече](https://web.dev/interactive)."
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
-    "message": "„Изобразяване на най-голямото съдържание“ показва времето, когато се изобразяват най-големите текст или изображение. [Научете повече](https://web.dev/largest-contentful-paint)"
+    "message": "„Изобразяване на най-голямото съдържание“ показва времето, когато се изобразяват най-големите текст или изображение. [Научете повече](https://web.dev/lighthouse-largest-contentful-paint)"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "Максималното потенциално забавяне при първото взаимодействие на потребителите е продължителността на най-времеемката задача. [Научете повече](https://web.dev/lighthouse-max-potential-fid)."
@@ -1166,6 +1220,9 @@
   "lighthouse-core/audits/uses-rel-preconnect.js | title": {
     "message": "Осигурете предварително свързване с необходимите източници"
   },
+  "lighthouse-core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
+    "message": "Бяха намерени повече от 2 връзки за предварително свързване. Те трябва да се използват пестеливо и само за най-важните източници."
+  },
   "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
     "message": "Намерен бе елемент <link> за предварително зареждане за {preloadURL}, който обаче не бе използван от браузъра. Проверете дали използвате правилно атрибута `crossorigin`."
   },
@@ -1352,6 +1409,12 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Удобство за мобилни устройства"
   },
+  "lighthouse-core/gather/gather-runner.js | warningRedirected": {
+    "message": "Възможно е страницата да не се зарежда нормално, тъй като тестовият ви URL адрес ({requested}) бе пренасочен към {final}. Тествайте директно втория URL адрес."
+  },
+  "lighthouse-core/gather/gather-runner.js | warningTimeout": {
+    "message": "Страницата се зареждаше твърде бавно и зареждането не завърши в определеното време. Резултатите може да са непълни."
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Време на валидност на кеша"
   },
@@ -1367,11 +1430,17 @@
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Заявки"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
+    "message": "Размер на ресурса"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "Тип ресурс"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Размер"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnSource": {
+    "message": "Източник"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Прекарано време"
@@ -1511,11 +1580,38 @@
   "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
     "message": "Максимално забавяне в критичния път:"
   },
+  "lighthouse-core/report/html/renderer/util.js | dropdownCopyJSON": {
+    "message": "Копиране на JSON"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownDarkTheme": {
+    "message": "Превключване на тъмната тема"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownPrintExpanded": {
+    "message": "Отпечатване на пълен отчет"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownPrintSummary": {
+    "message": "Отпечатване на обобщен отчет"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveGist": {
+    "message": "Запазване като Gist"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveHTML": {
+    "message": "Запазване като HTML"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveJSON": {
+    "message": "Запазване като JSON"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownViewer": {
+    "message": "Отваряне във визуализатора"
+  },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Грешка!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Грешка в отчета: няма информация за проверката"
+  },
+  "lighthouse-core/report/html/renderer/util.js | footerIssue": {
+    "message": "Добавяне на проблем"
   },
   "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
     "message": "Данни от контролиран тест"
@@ -1538,6 +1634,48 @@
   "lighthouse-core/report/html/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Успешно преминати проверки"
   },
+  "lighthouse-core/report/html/renderer/util.js | runtimeDesktopEmulation": {
+    "message": "Емулиран компютър"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeMobileEmulation": {
+    "message": "Емулирано устройство Moto G4"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeNoEmulation": {
+    "message": "Без емулация"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsBenchmark": {
+    "message": "Мощност на процесора/паметта"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsCPUThrottling": {
+    "message": "Ограничаване на процесора"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsChannel": {
+    "message": "Канал"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsDevice": {
+    "message": "Устройство"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsFetchTime": {
+    "message": "Час на извличането"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsNetworkThrottling": {
+    "message": "Ограничаване на мрежата"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsTitle": {
+    "message": "Настройки за времето на изпълнение"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUA": {
+    "message": "Потребителски агент (хост)"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUANetwork": {
+    "message": "Потребителски агент (мрежа)"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUrl": {
+    "message": "URL адрес"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
+    "message": "Неизвестно"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "Свиване на фрагмента"
   },
@@ -1546,6 +1684,9 @@
   },
   "lighthouse-core/report/html/renderer/util.js | thirdPartyResourcesLabel": {
     "message": "Показване на ресурсите от трети страни"
+  },
+  "lighthouse-core/report/html/renderer/util.js | throttlingProvided": {
+    "message": "Предоставено от средата"
   },
   "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
     "message": "Възникнаха проблеми при изготвянето на този отчет от Lighthouse:"

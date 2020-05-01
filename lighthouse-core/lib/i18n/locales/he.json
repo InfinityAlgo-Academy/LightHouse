@@ -141,10 +141,10 @@
     "message": "כשרשימות של הגדרות לא מסומנות כראוי, קוראי מסך עשויים לספק פלט מבלבל או לא מדויק. [מידע נוסף](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "יש רכיבי `<dl>` שלא מכילים רק רכיבי `<script>` או `<template>`, או קבוצות `<dt>` ו-`<dd>` עם סדר תקין."
+    "message": "יש רכיבי `<dl>` שלא מכילים רק קבוצות `<dt>` ו-`<dd>` עם סדר תקין, `<script>`, `<template>` או רכיבי `<div>`."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "רכיבי `<dl>` מכילים רק רכיבי `<script>` או `<template>`, או קבוצות `<dt>` ו-`<dd>` עם סדר תקין."
+    "message": "רכיבי `<dl>` מכילים רק קבוצות `<dt>` ו-`<dd>` עם סדר תקין, `<script>`, `<template>` או רכיבי `<div>`."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "פריטים ברשימות של הגדרות (`<dt>` ו-`<dd>`) צריכים להיות תחומים בתוך רכיב הורה מסוג `<dl>` כדי שקוראי מסך יוכלו להקריא אותם בצורה נכונה. [מידע נוסף](https://web.dev/dlitem/)."
@@ -404,6 +404,12 @@
   "lighthouse-core/audits/bootup-time.js | title": {
     "message": "זמן ביצוע של JavaScript"
   },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | description": {
+    "message": "אם קיימים מודולים משוכפלים גדולים בחבילות JavaScript, יש להסיר אותם מהחבילות האלה כדי לצמצם צריכה של בייטים מיותרים על ידי פעילות הרשת. "
+  },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | title": {
+    "message": "יש להסיר עותקים משוכפלים של מודולים בחבילות JavaScript"
+  },
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | description": {
     "message": "קובצי GIF גדולים לא מעבירים אנימציות בצורה יעילה. כדי לצמצם את מספר הבייטים שמועברים ברשת, במקום קובצי GIF כדאי לשקול את האפשרות להשתמש בסרטוני MPEG4/WebM בשביל אנימציות ובקובצי PNG/WebP בשביל תמונות סטטיות. [מידע נוסף](https://web.dev/efficient-animated-content)"
   },
@@ -453,7 +459,7 @@
     "message": "יש להסיר CSS שאינו בשימוש"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "יש להסיר JavaScript שאינו בשימוש כדי לצמצם צריכת בייטים על-ידי פעילות ברשת. [מידע נוסף](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)"
+    "message": "יש להסיר JavaScript שאינו בשימוש כדי לצמצם צריכת בייטים על-ידי פעילות ברשת. [מידע נוסף](https://web.dev/remove-unused-code/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "יש להסיר JavaScript שאינו בשימוש"
@@ -545,6 +551,15 @@
   "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
     "message": "לא נעשה שימוש ב-Application Cache"
   },
+  "lighthouse-core/audits/dobetterweb/charset.js | description": {
+    "message": "נדרשת הצהרה (declaration) של קידוד תווים. ניתן להגדיר אותה באמצעות תג <meta> שממוקם ב-1,024 הבייטים הראשונים של ה-HTML או ברכיב ה-Content-Type בכותרת התגובה של ה-HTTP. [מידע נוסף](https://www.w3.org/International/questions/qa-html-encoding-declarations)."
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
+    "message": "חסרה הצהרה (declaration) של Charset ב-HTML, או שהיא ממוקמת בקטע מאוחר מדי בתוך ה-HTML"
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | title": {
+    "message": "ה-Charset מוגדר כמו שצריך"
+  },
   "lighthouse-core/audits/dobetterweb/doctype.js | description": {
     "message": "ציון של doctype מונע מהדפדפן לעבור למצב תאימות (quirks mode). [מידע נוסף](https://web.dev/doctype)."
   },
@@ -595,6 +610,9 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "נמנע מ-DOM גדול מדי"
+  },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
+    "message": "עוגנים שנכשלו"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "כדי לשפר את הביצועים ולמנוע פגיעויות המסכנות את האבטחה, יש להוסיף `rel=\"noopener\"` או `rel=\"noreferrer\"` לקישורים חיצוניים. [מידע נוסף](https://web.dev/external-anchors-use-rel-noopener)."
@@ -752,6 +770,24 @@
   "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
     "message": "נתוני הגודל של תמונה לא חוקיים: {url}"
   },
+  "lighthouse-core/audits/image-size-responsive.js | columnActual": {
+    "message": "גודל בפועל"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
+    "message": "גודל מוצג"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
+    "message": "הגודל הצפוי"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | description": {
+    "message": "המימדים הטבעיים של התמונה צריכים להיות פרופורציונליים לגודל המסך וליחס הפיקסלים כדי שהתמונה תהיה ברורה ככל האפשר. [מידע נוסף](https://web.dev/image-size-responsive)."
+  },
+  "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
+    "message": "מוצגות תמונות עם גודל לא מתאים"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | title": {
+    "message": "מוצגות תמונות עם גודל מתאים"
+  },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "הדפדפנים יכולים לבקש ממשתמשים באופן יזום להוסיף את האפליקציה שלך אל מסך הבית שלהם, פעולה שמגדילה את הסיכוי להשגת מעורבות גבוהה יותר. [מידע נוסף](https://web.dev/installable-manifest)."
   },
@@ -775,6 +811,12 @@
   },
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "שימוש ב-HTTPS"
+  },
+  "lighthouse-core/audits/legacy-javascript.js | description": {
+    "message": "רכיבי Polyfill וטרנספורמציות מאפשרים לדפדפנים מדור קודם להשתמש בתכונות JavaScript חדשות. עם זאת, רבים מהם לא נחוצים לדפדפנים מודרניים. כשפורסים סקריפטים בחבילת JavaScript, מומלץ לעשות זאת בשיטה מודרנית שכוללת זיהוי של תכונות עם או בלי מודולים. שיטה זו מאפשרת לצמצם את כמות הקוד שנשלחת לדפדפנים מודרניים, מבלי לוותר על התמיכה בדפדפנים מדור קודם. [מידע נוסף](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
+  },
+  "lighthouse-core/audits/legacy-javascript.js | title": {
+    "message": "JavaScript מדור קודם"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "כשהדף נטען במהירות ברשת סלולרית, חוויית המשתמש איכותית. [מידע נוסף](https://web.dev/load-fast-enough-for-pwa)."
@@ -824,6 +866,18 @@
   "lighthouse-core/audits/manual/pwa-page-transitions.js | title": {
     "message": "מעברי הדפים לא מרגישים חסומים ברשת"
   },
+  "lighthouse-core/audits/maskable-icon.js | description": {
+    "message": "סמל שניתן למיסוך מבטיח שכשהאפליקציה תותקן במכשיר התמונה תמלא את כל הצורה במקום שתוצג בפורמט letterbox. [מידע נוסף](https://web.dev/maskable-icon/)."
+  },
+  "lighthouse-core/audits/maskable-icon.js | failureTitle": {
+    "message": "המניפסט לא מכיל סמלים שניתנים למיסוך"
+  },
+  "lighthouse-core/audits/maskable-icon.js | title": {
+    "message": "המניפסט מכיל לפחות סמל אחד שניתן למיסוך"
+  },
+  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
+    "message": "המדד 'שינויים מצטברים בפריסה' מסכם את כל השינויים שחלו בפריסה של הדף בזמן שהוא נטען. שינוי בפריסה הוא כל שינוי במיקום של רכיב כלשהו בדף מהרגע שבו הרכיב גלוי למשתמש. כל שינוי בפריסה מתועד ומקבל ניקוד. אחר כך, המערכת מקבצת את כל השינויים שתיעדה ומשתמשת בהם כדי לחשב את הניקוד המצטבר של הדף. הניקוד נע בין 0 ל-1, כאשר ניקוד של 0 מתאר דף יציב לגמרי וניקוד של 0.5 ומעלה מתאר דף שחלים בו הרבה שינויים. [מידע נוסף](https://web.dev/cls)."
+  },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "זמן אחזור מוערך של קלט הוא אומדן של משך הזמן הנדרש לאפליקציה כדי להגיב לקלט של משתמש. הערך מצוין באלפיות שנייה ומתייחס ל-5 השניות העמוסות ביותר בטעינת הדף. אם זמן האחזור ארוך מ-50 אלפיות שנייה, ייתכן שהמשתמשים יבחינו בעיכוב בפעילות האפליקציה. [מידע נוסף](https://web.dev/estimated-input-latency)."
   },
@@ -840,7 +894,7 @@
     "message": "הזמן עד לפעילות מלאה הוא משך הזמן שחולף עד שהדף מאפשר פעילות מלאה. [מידע נוסף](https://web.dev/interactive)."
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
-    "message": "הצגת חלק התוכן הגדול ביותר (LCP) מציינת את הזמן שבו התמונה או הטקסט הגדולים ביותר מוצגים. [מידע נוסף](https://web.dev/largest-contentful-paint)"
+    "message": "הצגת חלק התוכן הגדול ביותר (LCP) מציינת את הזמן שבו התמונה או הטקסט הגדולים ביותר מוצגים. [מידע נוסף](https://web.dev/lighthouse-largest-contentful-paint)"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "ההשהיה הפוטנציאלית המרבית שהמשתמשים יכולים לחוות לאחר קלט ראשוני (FID) היא משך הזמן של המשימה הארוכה ביותר. [מידע נוסף](https://web.dev/lighthouse-max-potential-fid)"
@@ -1166,6 +1220,9 @@
   "lighthouse-core/audits/uses-rel-preconnect.js | title": {
     "message": "יש להתחבר מראש למקורות נדרשים"
   },
+  "lighthouse-core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
+    "message": "נמצאו יותר משני קישורים מקדימים. השימוש בקישורים מקדימים צריך להיות מצומצם מאוד ומוגבל למקורות החשובים ביותר."
+  },
   "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
     "message": "נמצא ערך <link> של טעינה מראש בשביל \"{preloadURL}\", אבל הדפדפן לא השתמש בו. יש לוודא שנעשה שימוש תקין במאפיין `crossorigin`."
   },
@@ -1352,6 +1409,12 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "התאמה לניידים"
   },
+  "lighthouse-core/gather/gather-runner.js | warningRedirected": {
+    "message": "ייתכן שהדף לא נטען כמו שציפית כי כתובת ה-URL הנבדקת ({requested}) הופנתה לכתובת {final}. כדאי לנסות לבדוק ישירות את כתובת ה-URL השנייה."
+  },
+  "lighthouse-core/gather/gather-runner.js | warningTimeout": {
+    "message": "הדף נטען לאט מדי והפעולה לא הסתיימה במסגרת הזמן שהוקצבה. ייתכן שהתוצאות לא יהיו מלאות."
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "אורך חיים (TTL) של מטמון"
   },
@@ -1367,11 +1430,17 @@
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "בקשות"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
+    "message": "גודל המשאב"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "סוג המשאב"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "גודל"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnSource": {
+    "message": "מקור"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "משך הזמן שנדרש"
@@ -1380,7 +1449,7 @@
     "message": "גודל ההעברה"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnURL": {
-    "message": "כתובת אתר"
+    "message": "כתובת ה-URL"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "פוטנציאל חיסכון"
@@ -1511,11 +1580,38 @@
   "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
     "message": "זמן אחזור מקסימלי של נתיב קריטי:"
   },
+  "lighthouse-core/report/html/renderer/util.js | dropdownCopyJSON": {
+    "message": "העתקת ה-JSON"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownDarkTheme": {
+    "message": "מעבר לעיצוב כהה"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownPrintExpanded": {
+    "message": "פרטי הדפסה מורחבים"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownPrintSummary": {
+    "message": "סיכום הדפסות"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveGist": {
+    "message": "שמירה כ-Gist"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveHTML": {
+    "message": "שמירה כ-HTML"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveJSON": {
+    "message": "שמירה כ-JSON"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownViewer": {
+    "message": "פתיחה ב-Viewer"
+  },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "שגיאה!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "שגיאה בדוח: אין מידע על הבדיקה"
+  },
+  "lighthouse-core/report/html/renderer/util.js | footerIssue": {
+    "message": "דיווח על בעיה"
   },
   "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
     "message": "נתוני בדיקה"
@@ -1538,6 +1634,48 @@
   "lighthouse-core/report/html/renderer/util.js | passedAuditsGroupTitle": {
     "message": "בדיקות עם ציון 'עובר'"
   },
+  "lighthouse-core/report/html/renderer/util.js | runtimeDesktopEmulation": {
+    "message": "אמולציה של מחשב שולחני"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeMobileEmulation": {
+    "message": "אמולציה של Moto G4"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeNoEmulation": {
+    "message": "ללא אמולציה"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsBenchmark": {
+    "message": "יכולת זיכרון/יחידת עיבוד מרכזית (CPU)"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsCPUThrottling": {
+    "message": "ויסות נתונים (throttle) של יחידת עיבוד מרכזית (CPU)"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsChannel": {
+    "message": "ערוץ"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsDevice": {
+    "message": "מכשיר"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsFetchTime": {
+    "message": "מועד האחזור"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsNetworkThrottling": {
+    "message": "הגבלת רוחב פס"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsTitle": {
+    "message": "הגדרות זמן ריצה"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUA": {
+    "message": "סוכן משתמש (מארח)"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUANetwork": {
+    "message": "סוכן משתמש (רשת)"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUrl": {
+    "message": "כתובת ה-URL"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
+    "message": "ערך לא ידוע"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "כיווץ קטע הטקסט"
   },
@@ -1546,6 +1684,9 @@
   },
   "lighthouse-core/report/html/renderer/util.js | thirdPartyResourcesLabel": {
     "message": "הצגה של משאבי צד שלישי"
+  },
+  "lighthouse-core/report/html/renderer/util.js | throttlingProvided": {
+    "message": "שסיפקה הסביבה"
   },
   "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
     "message": "היו בעיות שהשפיעו על ההרצה הזו של Lighthouse:"
