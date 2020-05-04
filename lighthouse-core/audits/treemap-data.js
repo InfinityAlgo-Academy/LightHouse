@@ -19,6 +19,7 @@ const {taskGroups} = require('../lib/tracehouse/task-groups.js');
  * @typedef SourceData
  * @property {number} bytes
  * @property {number=} wastedBytes
+ * @property {number=} executionTime
  * @property {boolean=} duplicate
  */
 
@@ -33,6 +34,7 @@ const {taskGroups} = require('../lib/tracehouse/task-groups.js');
  * @typedef Node
  * @property {string} id
  * @property {number=} bytes
+ * @property {number=} wastedBytes
  * @property {number=} executionTime
  * @property {boolean=} duplicate
  * @property {Node[]=} children
@@ -53,6 +55,7 @@ function prepareTreemapNodes(map, sourcesData) {
       id,
       bytes: 0,
       wastedBytes: 0,
+      executionTime: 0,
     };
   }
 
@@ -317,6 +320,7 @@ class TreemapData extends Audit {
           id,
           bytes: unusedJavascriptSummary.totalBytes,
           wastedBytes: unusedJavascriptSummary.wastedBytes,
+          executionTime: 0,
         };
       } else {
         // ...?
@@ -324,6 +328,7 @@ class TreemapData extends Audit {
           id,
           bytes: ScriptElement.content ? ScriptElement.content.length : 0,
           wastedBytes: 0,
+          executionTime: 0,
         };
       }
 
