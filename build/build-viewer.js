@@ -73,6 +73,7 @@ function copyAssets() {
     'sw.js',
     'manifest.json',
     'treemap/index.html',
+    'treemap/treemap.css',
     'treemap/treemap.js',
   ], distDir, {
     cwd: `${sourceDir}/app/`,
