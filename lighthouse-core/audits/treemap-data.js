@@ -165,24 +165,37 @@ class TreemapData extends Audit {
   }
 
   /**
-   * @param {Record<string, {count: number, size: number}>} resourceSummary
+   * @param {LH.Artifacts.NetworkRequest[]} networkRecords
+   * @param {string} origin
    */
-  static makeResourceSummaryRootNode(resourceSummary) {
-    let totalCount = 0;
+  static makeResourceSummaryRootNode(networkRecords, origin) {
+    const totalCount = networkRecords.length;
     let totalSize = 0;
 
     const children = [];
-    for (const [resourceType, {count, size}] of Object.entries(resourceSummary)) {
-      if (resourceType === 'third-party') continue;
-      if (resourceType === 'total') {
-        totalCount = count;
-        totalSize = size;
-        continue;
+    for (const networkRecord of networkRecords) {
+      // TODO: can we expand ResourceSummary to include transferSize, resourceSize, and networkRecords?
+      const resourceType = ResourceSummary.determineResourceType(networkRecord);
+
+      // @ts-ignore
+      let child = children.find(child => child.id === resourceType);
+      if (!child) {
+        child = {
+          id: resourceType,
+          bytes: 0,
+          children: [],
+        };
+        children.push(child);
       }
 
-      children.push({
-        id: `${resourceType} (${count})`,
-        bytes: size,
+      totalSize += networkRecord.resourceSize;
+      child.bytes += networkRecord.resourceSize;
+
+      let id = networkRecord.url;
+      if (id.startsWith(origin)) id = id.replace(origin, '/');
+      child.children.push({
+        id,
+        bytes: networkRecord.resourceSize,
       });
     }
 
@@ -270,6 +283,7 @@ class TreemapData extends Audit {
       let id;
       if (ScriptElement.src) {
         id = ScriptElement.src;
+        // TODO: just use the full URL and defer shortening to the viewer.
         if (id.startsWith(origin)) id = id.replace(origin, '/');
       } else {
         id = `inline (${ScriptElement.devtoolsNodePath})`;
@@ -324,9 +338,7 @@ class TreemapData extends Audit {
       });
     }
 
-    const resourceSummary =
-      await ResourceSummary.compute_({URL: artifacts.URL, devtoolsLog}, context);
-    rootNodes.push(TreemapData.makeResourceSummaryRootNode(resourceSummary));
+    rootNodes.push(TreemapData.makeResourceSummaryRootNode(networkRecords, origin));
 
     /** @type {LH.Audit.Details.DebugData} */
     const details = {

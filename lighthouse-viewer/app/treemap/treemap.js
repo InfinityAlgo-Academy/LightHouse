@@ -462,7 +462,7 @@ function createViewModes(rootNodes, currentViewId) {
     const highlightNodeIds = [];
     for (const rootNode of javascriptRootNodes) {
       if (!rootNode.node.children) continue; // Only consider bundles.
-  
+
       dfs(rootNode.node, node => {
         if (node.children) return; // Only consider leaf nodes.
         if (node.bytes < 200 * 1024) return;
@@ -481,7 +481,7 @@ function createViewModes(rootNodes, currentViewId) {
     const highlightNodeIds = [];
     for (const rootNode of javascriptRootNodes) {
       if (!rootNode.node.children) continue; // Only consider bundles.
-  
+
       dfs(rootNode.node, node => {
         if (node.children) return; // Only consider leaf nodes.
         if (!node.duplicate) return;

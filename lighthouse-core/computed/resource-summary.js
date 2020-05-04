@@ -13,6 +13,7 @@ const Budget = require('../config/budget.js');
 const Util = require('../report/html/renderer/util.js');
 
 /** @typedef {{count: number, size: number}} ResourceEntry */
+
 class ResourceSummary {
   /**
    * @param {LH.Artifacts.NetworkRequest} record
@@ -39,6 +40,7 @@ class ResourceSummary {
    * @return {Record<LH.Budget.ResourceType, ResourceEntry>}
    */
   static summarize(networkRecords, mainResourceURL, context) {
+    /** @type {Record<LH.Budget.ResourceType, ResourceEntry>} */
     const resourceSummary = {
       'stylesheet': {count: 0, size: 0},
       'image': {count: 0, size: 0},
