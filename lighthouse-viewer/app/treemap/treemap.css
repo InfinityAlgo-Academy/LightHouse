@@ -1,0 +1,73 @@
+body {
+  margin: 0;
+  overflow-y: hidden;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 0.1fr 1fr 1fr 1fr 0.5fr;
+  grid-template-areas:
+    "view    settings settings settings settings"
+    "view    treemap  treemap  treemap  treemap "
+    "view    treemap  treemap  treemap  treemap "
+    "view    treemap  treemap  treemap  treemap "
+    "grid    grid     grid     grid     grid    ";
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.panel--modals {
+  grid-area: view;
+}
+
+.panel--settings {
+  grid-area: settings;
+}
+
+.panel--treemap {
+  grid-area: treemap;
+}
+
+.panel--datagrid {
+  grid-area: grid;
+  overflow-y: hidden;
+}
+
+.view-mode {
+  cursor: pointer;
+  border: solid 1px blue;
+  padding: 5px;
+  margin: 10px;
+}
+.view-mode--active {
+  background-color: lightblue;
+}
+
+header {
+  margin: 5px;
+}
+
+.webtreemap-node {
+  cursor: pointer;
+  position: absolute;
+  border: solid 1px #666;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: white;
+  transition: left .15s, top .15s, width .15s, height .15s;
+}
+
+.webtreemap-node--hover {
+  box-shadow: inset -1px -1px 0 3px black;
+}
+
+.webtreemap-caption {
+  font-size: 14px;
+  text-align: center;
+  word-break: break-word;
+}
