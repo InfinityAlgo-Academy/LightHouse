@@ -151,6 +151,9 @@ Object {
       "path": "third-party-summary",
     },
     Object {
+      "path": "largest-contentful-paint-element",
+    },
+    Object {
       "path": "manual/pwa-cross-browser",
     },
     Object {
@@ -937,6 +940,11 @@ Object {
         },
         Object {
           "group": "diagnostics",
+          "id": "largest-contentful-paint-element",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
           "id": "uses-http2",
           "weight": 0,
         },
@@ -1310,6 +1318,9 @@ Object {
         },
         Object {
           "path": "accessibility",
+        },
+        Object {
+          "path": "trace-elements",
         },
       ],
       "loadFailureMode": "fatal",

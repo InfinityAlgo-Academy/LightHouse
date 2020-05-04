@@ -52,7 +52,7 @@ describe('CLI run', function() {
 
       assert.ok(fs.existsSync(filename));
       fileResults = JSON.parse(fs.readFileSync(filename, 'utf-8'));
-    }, 20 * 1000);
+    }, 60 * 1000);
 
     afterAll(() => {
       fs.unlinkSync(filename);

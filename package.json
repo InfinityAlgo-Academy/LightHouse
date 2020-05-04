@@ -12,7 +12,7 @@
   },
   "scripts": {
     "build-all": "npm-run-posix-or-windows build-all:task",
-    "build-all:task": "(yarn build-cdt-lib & yarn build-extension & yarn build-devtools & yarn build-lr & yarn build-viewer & yarn build-smokehouse-bundle & wait) && yarn build-pack",
+    "build-all:task": "yarn build-cdt-lib && yarn build-devtools && (yarn build-extension & yarn build-lr & yarn build-viewer & yarn build-smokehouse-bundle & wait) && yarn build-pack",
     "build-all:task:windows": "yarn build-cdt-lib && yarn build-extension && yarn build-devtools && yarn build-lr && yarn build-viewer && yarn build-smokehouse-bundle",
     "build-cdt-lib": "node ./build/build-cdt-lib.js",
     "build-extension": "yarn build-extension-chrome && yarn build-extension-firefox",
@@ -143,7 +143,7 @@
     "typescript": "3.8.3"
   },
   "dependencies": {
-    "axe-core": "3.5.1",
+    "axe-core": "3.5.3",
     "chrome-launcher": "^0.13.1",
     "configstore": "^3.1.1",
     "cssstyle": "1.2.1",
