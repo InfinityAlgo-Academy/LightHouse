@@ -1439,7 +1439,7 @@
             "text": "Requests"
           },
           {
-            "key": "size",
+            "key": "transferSize",
             "itemType": "bytes",
             "text": "Transfer Size"
           },
@@ -1459,7 +1459,7 @@
             "resourceType": "script",
             "label": "Script",
             "requestCount": 4,
-            "size": 103675,
+            "transferSize": 103675,
             "countOverBudget": "2 requests",
             "sizeOverBudget": 72955
           },
@@ -1467,7 +1467,7 @@
             "resourceType": "total",
             "label": "Total",
             "requestCount": 16,
-            "size": 160517,
+            "transferSize": 160517,
             "countOverBudget": "6 requests",
             "sizeOverBudget": 58117
           },
@@ -1475,21 +1475,21 @@
             "resourceType": "other",
             "label": "Other",
             "requestCount": 1,
-            "size": 12640,
+            "transferSize": 12640,
             "sizeOverBudget": 7520
           },
           {
             "resourceType": "third-party",
             "label": "Third-party",
             "requestCount": 1,
-            "size": 30174,
+            "transferSize": 30174,
             "sizeOverBudget": 4574
           },
           {
             "resourceType": "stylesheet",
             "label": "Stylesheet",
             "requestCount": 7,
-            "size": 5352,
+            "transferSize": 5352,
             "countOverBudget": "5 requests",
             "sizeOverBudget": 232
           },
@@ -1497,25 +1497,25 @@
             "resourceType": "image",
             "label": "Image",
             "requestCount": 1,
-            "size": 24741
+            "transferSize": 24741
           },
           {
             "resourceType": "media",
             "label": "Media",
             "requestCount": 0,
-            "size": 0
+            "transferSize": 0
           },
           {
             "resourceType": "font",
             "label": "Font",
             "requestCount": 0,
-            "size": 0
+            "transferSize": 0
           },
           {
             "resourceType": "document",
             "label": "Document",
             "requestCount": 3,
-            "size": 14109,
+            "transferSize": 14109,
             "countOverBudget": "2 requests"
           }
         ]
@@ -1611,55 +1611,55 @@
             "resourceType": "total",
             "label": "Total",
             "requestCount": 16,
-            "size": 160517
+            "transferSize": 160517
           },
           {
             "resourceType": "script",
             "label": "Script",
             "requestCount": 4,
-            "size": 103675
+            "transferSize": 103675
           },
           {
             "resourceType": "image",
             "label": "Image",
             "requestCount": 1,
-            "size": 24741
+            "transferSize": 24741
           },
           {
             "resourceType": "document",
             "label": "Document",
             "requestCount": 3,
-            "size": 14109
+            "transferSize": 14109
           },
           {
             "resourceType": "other",
             "label": "Other",
             "requestCount": 1,
-            "size": 12640
+            "transferSize": 12640
           },
           {
             "resourceType": "stylesheet",
             "label": "Stylesheet",
             "requestCount": 7,
-            "size": 5352
+            "transferSize": 5352
           },
           {
             "resourceType": "media",
             "label": "Media",
             "requestCount": 0,
-            "size": 0
+            "transferSize": 0
           },
           {
             "resourceType": "font",
             "label": "Font",
             "requestCount": 0,
-            "size": 0
+            "transferSize": 0
           },
           {
             "resourceType": "third-party",
             "label": "Third-party",
             "requestCount": 1,
-            "size": 30174
+            "transferSize": 30174
           }
         ]
       }
