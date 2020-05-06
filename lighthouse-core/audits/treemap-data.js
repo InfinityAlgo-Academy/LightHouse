@@ -275,19 +275,35 @@ class TreemapData extends Audit {
 
     /** @type {RootNode[]} */
     const rootNodes = [];
-    for (const ScriptElement of artifacts.ScriptElements) {
-      const bundle = bundles.find(bundle => bundle.script.src === ScriptElement.src);
-      const unusedJavascriptSummary = await TreemapData.getUnusedJavascriptSummary(
-        ScriptElement, bundles, networkRecords, artifacts.JsUsage, context);
 
-      let id;
-      if (ScriptElement.src) {
-        id = ScriptElement.src;
-        // TODO: just use the full URL and defer shortening to the viewer.
-        if (id.startsWith(origin)) id = id.replace(origin, '/');
-      } else {
-        id = `inline (${ScriptElement.devtoolsNodePath})`;
+    // Normalize ScriptElements so that inline scripts show up as a single entity.
+    /** @type {Array<{src: string, length: number, unusedJavascriptSummary?: import('../computed/unused-javascript-summary.js').Summary}>} */
+    const scriptData = [
+      {
+        src: artifacts.URL.finalUrl,
+        length: 0,
+      },
+    ];
+    for (const ScriptElement of artifacts.ScriptElements) {
+      if (!ScriptElement.src) {
+        scriptData[0].length += (ScriptElement.content || '').length;
+        continue;
       }
+
+      scriptData.push({
+        src: ScriptElement.src,
+        length: (ScriptElement.content || '').length,
+        unusedJavascriptSummary: await TreemapData.getUnusedJavascriptSummary(
+          ScriptElement, bundles, networkRecords, artifacts.JsUsage, context),
+      });
+    }
+
+    for (const {src, length, unusedJavascriptSummary} of scriptData) {
+      const bundle = bundles.find(bundle => bundle.script.src === src);
+
+      let id = src;
+      // TODO: just use the full URL and defer shortening to the viewer.
+      if (id.startsWith(origin)) id = id.replace(origin, '/');
 
       let node;
       if (bundle && unusedJavascriptSummary && unusedJavascriptSummary.sourcesWastedBytes) {
@@ -323,14 +339,13 @@ class TreemapData extends Audit {
         // ...?
         node = {
           id,
-          bytes: ScriptElement.content ? ScriptElement.content.length : 0,
+          bytes: length,
           wastedBytes: 0,
           executionTime: 0,
         };
       }
 
-      // this probably doesn't work for inline?
-      const executionTiming = executionTimings.find(timing => timing.url === ScriptElement.src);
+      const executionTiming = executionTimings.find(timing => timing.url === src);
       node.executionTime = executionTiming ? Math.round(executionTiming.total) : 0;
 
       rootNodes.push({
