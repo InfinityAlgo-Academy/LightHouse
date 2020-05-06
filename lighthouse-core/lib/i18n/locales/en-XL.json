@@ -873,7 +873,7 @@
     "message": "P̂áĝé t̂ŕâńŝít̂íôńŝ d́ôń't̂ f́êél̂ ĺîḱê t́ĥéŷ b́l̂óĉḱ ôń t̂h́ê ńêt́ŵór̂ḱ"
   },
   "lighthouse-core/audits/maskable-icon.js | description": {
-    "message": "Â ḿâśk̂áb̂ĺê íĉón̂ én̂śûŕêś t̂h́ât́ t̂h́ê ím̂áĝé f̂íl̂ĺŝ t́ĥé êńt̂ír̂é ŝh́âṕê ẃît́ĥóût́ b̂éîńĝ ĺêt́t̂ér̂b́ôx́êd́ ŵh́êń îńŝt́âĺl̂ín̂ǵ t̂h́ê áp̂ṕ ôń â d́êv́îćê. [Ĺêár̂ń m̂ór̂é](https://web.dev/maskable-icon/)."
+    "message": "Â ḿâśk̂áb̂ĺê íĉón̂ én̂śûŕêś t̂h́ât́ t̂h́ê ím̂áĝé f̂íl̂ĺŝ t́ĥé êńt̂ír̂é ŝh́âṕê ẃît́ĥóût́ b̂éîńĝ ĺêt́t̂ér̂b́ôx́êd́ ŵh́êń îńŝt́âĺl̂ín̂ǵ t̂h́ê áp̂ṕ ôń â d́êv́îćê. [Ĺêár̂ń m̂ór̂é](https://web.dev/maskable-icon-audit/)."
   },
   "lighthouse-core/audits/maskable-icon.js | failureTitle": {
     "message": "M̂án̂íf̂éŝt́ d̂óêśn̂'t́ ĥáv̂é â ḿâśk̂áb̂ĺê íĉón̂"

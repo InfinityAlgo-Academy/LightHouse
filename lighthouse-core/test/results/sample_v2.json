@@ -576,7 +576,7 @@
     "maskable-icon": {
       "id": "maskable-icon",
       "title": "Manifest doesn't have a maskable icon",
-      "description": "A maskable icon ensures that the image fills the entire shape without being letterboxed when installing the app on a device. [Learn more](https://web.dev/maskable-icon/).",
+      "description": "A maskable icon ensures that the image fills the entire shape without being letterboxed when installing the app on a device. [Learn more](https://web.dev/maskable-icon-audit/).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "explanation": "No manifest was fetched"
