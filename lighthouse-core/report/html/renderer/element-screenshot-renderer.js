@@ -132,13 +132,12 @@ class ElementScreenshotRenderer {
 
 
     // todo: figure out how to do this properly, probably just render it once regardless of whether we use the eleme screenshot
-    if (!document.querySelector('#full-page-screenshot-style')) {
+    if (!dom.document().querySelector('#full-page-screenshot-style')) {
       const fullPageScreenshotStyleTag = dom.createElement('style');
       fullPageScreenshotStyleTag.id = 'full-page-screenshot-style';
       fullPageScreenshotStyleTag.innerText = `.lh-element-screenshot__image { background-image: url(${fullpageScreenshotUrl}) }`;
-      document.body.appendChild(fullPageScreenshotStyleTag);
+      dom.document().body.appendChild(fullPageScreenshotStyleTag);
     }
-
 
     image.style.backgroundPositionY = -(positionDetails.screenshotPositionInDisplayArea.top * zoomFactor) + 'px';
     image.style.backgroundPositionX = -(positionDetails.screenshotPositionInDisplayArea.left * zoomFactor) + 'px';
