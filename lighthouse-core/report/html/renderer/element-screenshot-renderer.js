@@ -58,6 +58,11 @@ function getScreenshotPositionDetails(highlightRect, displayedAreaSize, screensh
 }
 
 class ElementScreenshotRenderer {
+  /**
+   * @param {DOM} dom
+   * @param {string} clipId
+   * @param {{top: number, bottom: number, left: number, right: number}} _
+   */
   static renderClipPath(dom, clipId, {top, bottom, left, right}) {
     const clipPathSvg = dom.createElement('div');
     clipPathSvg.innerHTML = `<svg height="0" width="0">

@@ -27,7 +27,6 @@ class DetailsRenderer {
    * @param {DOM} dom
    */
   constructor(dom) {
-    /** @type {DOM} */
     this._dom = dom;
     /** @type {ParentNode} */
     this._templateContext; // eslint-disable-line no-unused-expressions
@@ -486,6 +485,7 @@ class DetailsRenderer {
 
     elementScreenshot.addEventListener('click', () => {
       const overlay = this._dom.createElement('div');
+      // @ts-ignore: style is not read-only.
       overlay.style = `
         position: fixed;
         top: 0;
