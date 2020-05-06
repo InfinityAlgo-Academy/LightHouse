@@ -148,8 +148,6 @@ class Plugins extends Audit {
         const source = {
           type: 'node',
           snippet: `<${tagName}${attributes}>${params}</${tagName}>`,
-          // @ts-ignore
-          boundingRect: {},
         };
         return {
           source,
