@@ -1,7 +1,45 @@
 {
-  "totalSignals": 243,
+  "totalSignals": 205,
   "variantsMissingSignals": [
+    "core-js-2-only-polyfill/es6-array-filter",
+    "core-js-2-only-polyfill/es6-array-map",
+    "core-js-2-only-polyfill/es6-array-reduce",
+    "core-js-2-only-polyfill/es6-array-reduce-right",
+    "core-js-2-only-polyfill/es6-array-some",
+    "core-js-2-only-polyfill/es6-date-to-string",
+    "core-js-2-only-polyfill/es6-function-name",
+    "core-js-2-only-polyfill/es6-object-freeze",
+    "core-js-2-only-polyfill/es6-object-get-own-property-descriptor",
+    "core-js-2-only-polyfill/es6-object-get-own-property-names",
+    "core-js-2-only-polyfill/es6-object-get-prototype-of",
+    "core-js-2-only-polyfill/es6-object-is-extensible",
+    "core-js-2-only-polyfill/es6-object-is-frozen",
+    "core-js-2-only-polyfill/es6-object-is-sealed",
+    "core-js-2-only-polyfill/es6-object-keys",
+    "core-js-2-only-polyfill/es6-object-prevent-extensions",
+    "core-js-2-only-polyfill/es6-object-seal",
+    "core-js-2-only-polyfill/es6-reflect-define-property",
+    "core-js-2-only-polyfill/es6-string-trim",
     "core-js-2-preset-env-esmodules/true",
+    "core-js-3-only-polyfill/es6-array-filter",
+    "core-js-3-only-polyfill/es6-array-map",
+    "core-js-3-only-polyfill/es6-array-reduce",
+    "core-js-3-only-polyfill/es6-array-reduce-right",
+    "core-js-3-only-polyfill/es6-array-some",
+    "core-js-3-only-polyfill/es6-date-to-string",
+    "core-js-3-only-polyfill/es6-function-name",
+    "core-js-3-only-polyfill/es6-object-freeze",
+    "core-js-3-only-polyfill/es6-object-get-own-property-descriptor",
+    "core-js-3-only-polyfill/es6-object-get-own-property-names",
+    "core-js-3-only-polyfill/es6-object-get-prototype-of",
+    "core-js-3-only-polyfill/es6-object-is-extensible",
+    "core-js-3-only-polyfill/es6-object-is-frozen",
+    "core-js-3-only-polyfill/es6-object-is-sealed",
+    "core-js-3-only-polyfill/es6-object-keys",
+    "core-js-3-only-polyfill/es6-object-prevent-extensions",
+    "core-js-3-only-polyfill/es6-object-seal",
+    "core-js-3-only-polyfill/es6-reflect-define-property",
+    "core-js-3-only-polyfill/es6-string-trim",
     "core-js-3-preset-env-esmodules/true"
   ],
   "variants": [
@@ -11,7 +49,7 @@
     },
     {
       "name": "core-js-2-only-polyfill/es6-array-filter",
-      "signals": "Array.prototype.filter"
+      "signals": ""
     },
     {
       "name": "core-js-2-only-polyfill/es6-array-find",
@@ -39,7 +77,7 @@
     },
     {
       "name": "core-js-2-only-polyfill/es6-array-map",
-      "signals": "Array.prototype.map"
+      "signals": ""
     },
     {
       "name": "core-js-2-only-polyfill/es6-array-of",
@@ -47,15 +85,15 @@
     },
     {
       "name": "core-js-2-only-polyfill/es6-array-reduce",
-      "signals": "Array.prototype.reduce"
+      "signals": ""
     },
     {
       "name": "core-js-2-only-polyfill/es6-array-reduce-right",
-      "signals": "Array.prototype.reduceRight"
+      "signals": ""
     },
     {
       "name": "core-js-2-only-polyfill/es6-array-some",
-      "signals": "Array.prototype.some"
+      "signals": ""
     },
     {
       "name": "core-js-2-only-polyfill/es6-date-now",
@@ -71,11 +109,11 @@
     },
     {
       "name": "core-js-2-only-polyfill/es6-date-to-string",
-      "signals": "Date.prototype.toString"
+      "signals": ""
     },
     {
       "name": "core-js-2-only-polyfill/es6-function-name",
-      "signals": "Function.prototype.name"
+      "signals": ""
     },
     {
       "name": "core-js-2-only-polyfill/es6-map",
@@ -115,43 +153,43 @@
     },
     {
       "name": "core-js-2-only-polyfill/es6-object-freeze",
-      "signals": "Object.freeze"
+      "signals": ""
     },
     {
       "name": "core-js-2-only-polyfill/es6-object-get-own-property-descriptor",
-      "signals": "Object.getOwnPropertyDescriptor"
+      "signals": ""
     },
     {
       "name": "core-js-2-only-polyfill/es6-object-get-own-property-names",
-      "signals": "Object.getOwnPropertyNames"
+      "signals": ""
     },
     {
       "name": "core-js-2-only-polyfill/es6-object-get-prototype-of",
-      "signals": "Object.getPrototypeOf"
+      "signals": ""
     },
     {
       "name": "core-js-2-only-polyfill/es6-object-is-extensible",
-      "signals": "Object.isExtensible"
+      "signals": ""
     },
     {
       "name": "core-js-2-only-polyfill/es6-object-is-frozen",
-      "signals": "Object.isFrozen"
+      "signals": ""
     },
     {
       "name": "core-js-2-only-polyfill/es6-object-is-sealed",
-      "signals": "Object.isSealed"
+      "signals": ""
     },
     {
       "name": "core-js-2-only-polyfill/es6-object-keys",
-      "signals": "Object.keys"
+      "signals": ""
     },
     {
       "name": "core-js-2-only-polyfill/es6-object-prevent-extensions",
-      "signals": "Object.preventExtensions"
+      "signals": ""
     },
     {
       "name": "core-js-2-only-polyfill/es6-object-seal",
-      "signals": "Object.seal"
+      "signals": ""
     },
     {
       "name": "core-js-2-only-polyfill/es6-object-set-prototype-of",
@@ -171,7 +209,7 @@
     },
     {
       "name": "core-js-2-only-polyfill/es6-reflect-define-property",
-      "signals": "Reflect.defineProperty"
+      "signals": ""
     },
     {
       "name": "core-js-2-only-polyfill/es6-reflect-delete-property",
@@ -247,7 +285,7 @@
     },
     {
       "name": "core-js-2-only-polyfill/es6-string-trim",
-      "signals": "String.prototype.trim"
+      "signals": ""
     },
     {
       "name": "core-js-2-only-polyfill/es6-typed-array-buffer",
@@ -339,7 +377,7 @@
     },
     {
       "name": "core-js-3-only-polyfill/es6-array-filter",
-      "signals": "Array.prototype.filter"
+      "signals": ""
     },
     {
       "name": "core-js-3-only-polyfill/es6-array-find",
@@ -367,7 +405,7 @@
     },
     {
       "name": "core-js-3-only-polyfill/es6-array-map",
-      "signals": "Array.prototype.map"
+      "signals": ""
     },
     {
       "name": "core-js-3-only-polyfill/es6-array-of",
@@ -375,15 +413,15 @@
     },
     {
       "name": "core-js-3-only-polyfill/es6-array-reduce",
-      "signals": "Array.prototype.reduce"
+      "signals": ""
     },
     {
       "name": "core-js-3-only-polyfill/es6-array-reduce-right",
-      "signals": "Array.prototype.reduceRight"
+      "signals": ""
     },
     {
       "name": "core-js-3-only-polyfill/es6-array-some",
-      "signals": "Array.prototype.some"
+      "signals": ""
     },
     {
       "name": "core-js-3-only-polyfill/es6-date-now",
@@ -399,11 +437,11 @@
     },
     {
       "name": "core-js-3-only-polyfill/es6-date-to-string",
-      "signals": "Date.prototype.toString"
+      "signals": ""
     },
     {
       "name": "core-js-3-only-polyfill/es6-function-name",
-      "signals": "Function.prototype.name"
+      "signals": ""
     },
     {
       "name": "core-js-3-only-polyfill/es6-map",
@@ -443,43 +481,43 @@
     },
     {
       "name": "core-js-3-only-polyfill/es6-object-freeze",
-      "signals": "Object.freeze"
+      "signals": ""
     },
     {
       "name": "core-js-3-only-polyfill/es6-object-get-own-property-descriptor",
-      "signals": "Object.getOwnPropertyDescriptor"
+      "signals": ""
     },
     {
       "name": "core-js-3-only-polyfill/es6-object-get-own-property-names",
-      "signals": "Object.getOwnPropertyNames"
+      "signals": ""
     },
     {
       "name": "core-js-3-only-polyfill/es6-object-get-prototype-of",
-      "signals": "Object.getPrototypeOf"
+      "signals": ""
     },
     {
       "name": "core-js-3-only-polyfill/es6-object-is-extensible",
-      "signals": "Object.isExtensible"
+      "signals": ""
     },
     {
       "name": "core-js-3-only-polyfill/es6-object-is-frozen",
-      "signals": "Object.isFrozen"
+      "signals": ""
     },
     {
       "name": "core-js-3-only-polyfill/es6-object-is-sealed",
-      "signals": "Object.isSealed"
+      "signals": ""
     },
     {
       "name": "core-js-3-only-polyfill/es6-object-keys",
-      "signals": "Object.keys"
+      "signals": ""
     },
     {
       "name": "core-js-3-only-polyfill/es6-object-prevent-extensions",
-      "signals": "Object.preventExtensions"
+      "signals": ""
     },
     {
       "name": "core-js-3-only-polyfill/es6-object-seal",
-      "signals": "Object.seal"
+      "signals": ""
     },
     {
       "name": "core-js-3-only-polyfill/es6-object-set-prototype-of",
@@ -499,7 +537,7 @@
     },
     {
       "name": "core-js-3-only-polyfill/es6-reflect-define-property",
-      "signals": "Reflect.defineProperty"
+      "signals": ""
     },
     {
       "name": "core-js-3-only-polyfill/es6-reflect-delete-property",
@@ -575,7 +613,7 @@
     },
     {
       "name": "core-js-3-only-polyfill/es6-string-trim",
-      "signals": "String.prototype.trim"
+      "signals": ""
     },
     {
       "name": "core-js-3-only-polyfill/es6-typed-array-buffer",

@@ -71,15 +71,15 @@ module.exports = [
           displayValue: '10 requests • 164 KB',
           details: {
             items: [
-              {resourceType: 'total', requestCount: 10, size: '168000±1000'},
-              {resourceType: 'font', requestCount: 2, size: '80000±1000'},
-              {resourceType: 'script', requestCount: 3, size: '55000±1000'},
-              {resourceType: 'image', requestCount: 2, size: '28000±1000'},
-              {resourceType: 'document', requestCount: 1, size: '2200±100'},
-              {resourceType: 'other', requestCount: 1, size: '1000±50'},
-              {resourceType: 'stylesheet', requestCount: 1, size: '450±100'},
-              {resourceType: 'media', requestCount: 0, size: 0},
-              {resourceType: 'third-party', requestCount: 0, size: 0},
+              {resourceType: 'total', requestCount: 10, transferSize: '168000±1000'},
+              {resourceType: 'font', requestCount: 2, transferSize: '80000±1000'},
+              {resourceType: 'script', requestCount: 3, transferSize: '55000±1000'},
+              {resourceType: 'image', requestCount: 2, transferSize: '28000±1000'},
+              {resourceType: 'document', requestCount: 1, transferSize: '2200±100'},
+              {resourceType: 'other', requestCount: 1, transferSize: '1000±50'},
+              {resourceType: 'stylesheet', requestCount: 1, transferSize: '450±100'},
+              {resourceType: 'media', requestCount: 0, transferSize: 0},
+              {resourceType: 'third-party', requestCount: 0, transferSize: 0},
             ],
           },
         },
@@ -132,6 +132,21 @@ module.exports = [
                 resourceType: 'third-party',
                 countOverBudget: undefined,
                 sizeOverBudget: undefined,
+              },
+            ],
+          },
+        },
+        'largest-contentful-paint-element': {
+          score: null,
+          displayValue: '1 element found',
+          details: {
+            items: [
+              {
+                node: {
+                  type: 'node',
+                  nodeLabel: 'img',
+                  path: '2,HTML,1,BODY,0,IMG',
+                },
               },
             ],
           },

@@ -142,6 +142,8 @@ declare global {
       TapTargets: Artifacts.TapTarget[];
       /** Screenshot of the entire page (rather than just the above the fold content). */
       FullPageScreenshot: Artifacts.FullPageScreenshot;
+      /**  */
+      TraceElements: Artifacts.TraceElement[];
     }
 
     module Artifacts {
@@ -166,6 +168,8 @@ declare global {
           failureSummary?: string;
           nodeLabel?: string;
         }>;
+        // When rules error they set these properties
+        // https://github.com/dequelabs/axe-core/blob/eeff122c2de11dd690fbad0e50ba2fdb244b50e8/lib/core/base/audit.js#L684-L693
         error?: RuleExecutionError;
       }
 
@@ -272,7 +276,7 @@ declare global {
         /** An optional name of the generated code (the bundled code that was the result of this build process) that this source map is associated with. */
         file?: string
         /**
-         * An optional array of maps that are associated with an offset into the generated code. 
+         * An optional array of maps that are associated with an offset into the generated code.
          * `map` is optional because the spec defines that either `url` or `map` must be defined.
          * We explicitly only support `map` here.
         */
@@ -463,6 +467,14 @@ declare global {
         href: string;
         clientRects: Rect[];
         boundingRect: Rect;
+      }
+
+      export interface TraceElement {
+        metricName: string;
+        selector: string;
+        nodeLabel?: string;
+        devtoolsNodePath: string;
+        snippet?: string;
       }
 
       export interface ViewportDimensions {

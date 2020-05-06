@@ -240,8 +240,8 @@
     "cumulative-layout-shift": {
       "id": "cumulative-layout-shift",
       "title": "Cumulative Layout Shift",
-      "description": "Cumulative Layout Shift is the sum of all layout shifts that occurred during a page's load. A layout shift is any movement an element makes once it is visible to the user. All layout shift is recorded, scored, and then aggregated into a cumulative score between 0 and 1; 0 being a perfectly stable page, and >=0.5 being a highly shifting page. [Learn more](https://web.dev/cls).",
-      "score": 0.21,
+      "description": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls).",
+      "score": 0.23,
       "scoreDisplayMode": "numeric",
       "numericValue": 0.42,
       "numericUnit": "unitless",
@@ -1450,7 +1450,7 @@
             "text": "Requests"
           },
           {
-            "key": "size",
+            "key": "transferSize",
             "itemType": "bytes",
             "text": "Transfer Size"
           },
@@ -1470,7 +1470,7 @@
             "resourceType": "script",
             "label": "Script",
             "requestCount": 4,
-            "size": 103675,
+            "transferSize": 103675,
             "countOverBudget": "2 requests",
             "sizeOverBudget": 72955
           },
@@ -1478,7 +1478,7 @@
             "resourceType": "total",
             "label": "Total",
             "requestCount": 16,
-            "size": 160517,
+            "transferSize": 160517,
             "countOverBudget": "6 requests",
             "sizeOverBudget": 58117
           },
@@ -1486,21 +1486,21 @@
             "resourceType": "other",
             "label": "Other",
             "requestCount": 1,
-            "size": 12640,
+            "transferSize": 12640,
             "sizeOverBudget": 7520
           },
           {
             "resourceType": "third-party",
             "label": "Third-party",
             "requestCount": 1,
-            "size": 30174,
+            "transferSize": 30174,
             "sizeOverBudget": 4574
           },
           {
             "resourceType": "stylesheet",
             "label": "Stylesheet",
             "requestCount": 7,
-            "size": 5352,
+            "transferSize": 5352,
             "countOverBudget": "5 requests",
             "sizeOverBudget": 232
           },
@@ -1508,25 +1508,25 @@
             "resourceType": "image",
             "label": "Image",
             "requestCount": 1,
-            "size": 24741
+            "transferSize": 24741
           },
           {
             "resourceType": "media",
             "label": "Media",
             "requestCount": 0,
-            "size": 0
+            "transferSize": 0
           },
           {
             "resourceType": "font",
             "label": "Font",
             "requestCount": 0,
-            "size": 0
+            "transferSize": 0
           },
           {
             "resourceType": "document",
             "label": "Document",
             "requestCount": 3,
-            "size": 14109,
+            "transferSize": 14109,
             "countOverBudget": "2 requests"
           }
         ]
@@ -1622,55 +1622,55 @@
             "resourceType": "total",
             "label": "Total",
             "requestCount": 16,
-            "size": 160517
+            "transferSize": 160517
           },
           {
             "resourceType": "script",
             "label": "Script",
             "requestCount": 4,
-            "size": 103675
+            "transferSize": 103675
           },
           {
             "resourceType": "image",
             "label": "Image",
             "requestCount": 1,
-            "size": 24741
+            "transferSize": 24741
           },
           {
             "resourceType": "document",
             "label": "Document",
             "requestCount": 3,
-            "size": 14109
+            "transferSize": 14109
           },
           {
             "resourceType": "other",
             "label": "Other",
             "requestCount": 1,
-            "size": 12640
+            "transferSize": 12640
           },
           {
             "resourceType": "stylesheet",
             "label": "Stylesheet",
             "requestCount": 7,
-            "size": 5352
+            "transferSize": 5352
           },
           {
             "resourceType": "media",
             "label": "Media",
             "requestCount": 0,
-            "size": 0
+            "transferSize": 0
           },
           {
             "resourceType": "font",
             "label": "Font",
             "requestCount": 0,
-            "size": 0
+            "transferSize": 0
           },
           {
             "resourceType": "third-party",
             "label": "Third-party",
             "requestCount": 1,
-            "size": 30174
+            "transferSize": 30174
           }
         ]
       }
@@ -1719,6 +1719,35 @@
           "wastedBytes": 30174,
           "wastedMs": 22.918000000000006
         }
+      }
+    },
+    "largest-contentful-paint-element": {
+      "id": "largest-contentful-paint-element",
+      "title": "Largest Contentful Paint element",
+      "description": "This is the element that was identified as the Largest Contentful Paint. [Learn More](https://web.dev/lighthouse-largest-contentful-paint)",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "displayValue": "1 element found",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "node",
+            "itemType": "node",
+            "text": "Element"
+          }
+        ],
+        "items": [
+          {
+            "node": {
+              "type": "node",
+              "path": "1,HTML,1,BODY,0,DIV,1,P",
+              "selector": "body > div > p",
+              "nodeLabel": "This domain is for use in illustrative examples in documents. You may use this …",
+              "snippet": "<p class=\"paragraph\">"
+            }
+          }
+        ]
       }
     },
     "pwa-cross-browser": {
@@ -3055,7 +3084,7 @@
     "charset": {
       "id": "charset",
       "title": "Charset declaration is missing or occurs too late in the HTML",
-      "description": "A character encoding declaration is required. It can be done with a <meta> tag in the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more](https://www.w3.org/International/questions/qa-html-encoding-declarations).",
+      "description": "A character encoding declaration is required. It can be done with a <meta> tag in the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more](https://web.dev/charset).",
       "score": 0,
       "scoreDisplayMode": "binary"
     },
@@ -3207,7 +3236,7 @@
     },
     "no-document-write": {
       "id": "no-document-write",
-      "title": "Uses `document.write()`",
+      "title": "Avoid `document.write()`",
       "description": "For users on slow connections, external scripts dynamically injected via `document.write()` can delay page load by tens of seconds. [Learn more](https://web.dev/no-document-write).",
       "score": 0,
       "scoreDisplayMode": "binary",
@@ -3247,7 +3276,7 @@
       "description": "Some third-party scripts may contain known security vulnerabilities that are easily identified and exploited by attackers. [Learn more](https://web.dev/no-vulnerable-libraries).",
       "score": 0,
       "scoreDisplayMode": "binary",
-      "displayValue": "3 vulnerabilities detected",
+      "displayValue": "2 vulnerabilities detected",
       "details": {
         "type": "table",
         "headings": [
@@ -3270,7 +3299,7 @@
         "items": [
           {
             "highestSeverity": "Medium",
-            "vulnCount": 3,
+            "vulnCount": 2,
             "detectedLib": {
               "text": "jQuery@2.1.1",
               "url": "https://snyk.io/vuln/npm:jquery?lh=2.1.1&utm_source=lighthouse&utm_medium=ref&utm_campaign=audit",
@@ -4025,6 +4054,26 @@
           "group": "diagnostics"
         },
         {
+          "id": "largest-contentful-paint-element",
+          "weight": 0,
+          "group": "diagnostics"
+        },
+        {
+          "id": "uses-http2",
+          "weight": 0,
+          "group": "diagnostics"
+        },
+        {
+          "id": "uses-passive-event-listeners",
+          "weight": 0,
+          "group": "diagnostics"
+        },
+        {
+          "id": "no-document-write",
+          "weight": 0,
+          "group": "diagnostics"
+        },
+        {
           "id": "network-requests",
           "weight": 0
         },
@@ -4318,76 +4367,78 @@
       "title": "Best Practices",
       "auditRefs": [
         {
-          "id": "appcache-manifest",
-          "weight": 1
-        },
-        {
           "id": "is-on-https",
-          "weight": 1
-        },
-        {
-          "id": "uses-http2",
-          "weight": 1
-        },
-        {
-          "id": "uses-passive-event-listeners",
-          "weight": 1
-        },
-        {
-          "id": "no-document-write",
-          "weight": 1
+          "weight": 1,
+          "group": "best-practices-trust-safety"
         },
         {
           "id": "external-anchors-use-rel-noopener",
-          "weight": 1
+          "weight": 1,
+          "group": "best-practices-trust-safety"
         },
         {
           "id": "geolocation-on-start",
-          "weight": 1
-        },
-        {
-          "id": "doctype",
-          "weight": 1
-        },
-        {
-          "id": "charset",
-          "weight": 1
-        },
-        {
-          "id": "no-vulnerable-libraries",
-          "weight": 1
-        },
-        {
-          "id": "js-libraries",
-          "weight": 0
+          "weight": 1,
+          "group": "best-practices-trust-safety"
         },
         {
           "id": "notification-on-start",
-          "weight": 1
+          "weight": 1,
+          "group": "best-practices-trust-safety"
         },
         {
-          "id": "deprecations",
-          "weight": 1
+          "id": "no-vulnerable-libraries",
+          "weight": 1,
+          "group": "best-practices-trust-safety"
         },
         {
           "id": "password-inputs-can-be-pasted-into",
-          "weight": 1
-        },
-        {
-          "id": "errors-in-console",
-          "weight": 1
+          "weight": 1,
+          "group": "best-practices-ux"
         },
         {
           "id": "image-aspect-ratio",
-          "weight": 1
+          "weight": 1,
+          "group": "best-practices-ux"
         },
         {
           "id": "image-size-responsive",
-          "weight": 1
+          "weight": 1,
+          "group": "best-practices-ux"
+        },
+        {
+          "id": "doctype",
+          "weight": 1,
+          "group": "best-practices-browser-compat"
+        },
+        {
+          "id": "charset",
+          "weight": 1,
+          "group": "best-practices-browser-compat"
+        },
+        {
+          "id": "appcache-manifest",
+          "weight": 1,
+          "group": "best-practices-general"
+        },
+        {
+          "id": "js-libraries",
+          "weight": 0,
+          "group": "best-practices-general"
+        },
+        {
+          "id": "deprecations",
+          "weight": 1,
+          "group": "best-practices-general"
+        },
+        {
+          "id": "errors-in-console",
+          "weight": 1,
+          "group": "best-practices-general"
         }
       ],
       "id": "best-practices",
-      "score": 0.06
+      "score": 0.08
     },
     "seo": {
       "title": "SEO",
@@ -4627,6 +4678,18 @@
     "seo-crawl": {
       "title": "Crawling and Indexing",
       "description": "To appear in search results, crawlers need access to your app."
+    },
+    "best-practices-trust-safety": {
+      "title": "Trust and Safety"
+    },
+    "best-practices-ux": {
+      "title": "User Experience"
+    },
+    "best-practices-browser-compat": {
+      "title": "Browser Compatibility"
+    },
+    "best-practices-general": {
+      "title": "General"
     }
   },
   "timing": {
@@ -5150,6 +5213,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:third-party-summary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:largest-contentful-paint-element",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6330,6 +6399,24 @@
       "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": [
         "audits[third-party-summary].details.headings[2].text"
       ],
+      "lighthouse-core/audits/largest-contentful-paint-element.js | title": [
+        "audits[largest-contentful-paint-element].title"
+      ],
+      "lighthouse-core/audits/largest-contentful-paint-element.js | description": [
+        "audits[largest-contentful-paint-element].description"
+      ],
+      "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": [
+        {
+          "values": {
+            "itemCount": 1
+          },
+          "path": "audits[largest-contentful-paint-element].displayValue"
+        }
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnElement": [
+        "audits[largest-contentful-paint-element].details.headings[0].text",
+        "audits[dom-size].details.headings[1].text"
+      ],
       "lighthouse-core/audits/manual/pwa-cross-browser.js | title": [
         "audits[pwa-cross-browser].title"
       ],
@@ -6779,9 +6866,6 @@
       "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": [
         "audits[dom-size].details.headings[0].text"
       ],
-      "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": [
-        "audits[dom-size].details.headings[1].text"
-      ],
       "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": [
         "audits[dom-size].details.headings[2].text"
       ],
@@ -6838,7 +6922,7 @@
       "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": [
         {
           "values": {
-            "itemCount": 3
+            "itemCount": 2
           },
           "path": "audits[no-vulnerable-libraries].displayValue"
         }
@@ -7124,6 +7208,18 @@
       ],
       "lighthouse-core/config/default-config.js | seoCrawlingGroupDescription": [
         "categoryGroups[seo-crawl].description"
+      ],
+      "lighthouse-core/config/default-config.js | bestPracticesTrustSafetyGroupTitle": [
+        "categoryGroups[best-practices-trust-safety].title"
+      ],
+      "lighthouse-core/config/default-config.js | bestPracticesUXGroupTitle": [
+        "categoryGroups[best-practices-ux].title"
+      ],
+      "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": [
+        "categoryGroups[best-practices-browser-compat].title"
+      ],
+      "lighthouse-core/config/default-config.js | bestPracticesGeneralGroupTitle": [
+        "categoryGroups[best-practices-general].title"
       ],
       "stack-packs/packs/wordpress.js | unused_css_rules": [
         "stackPacks[0].descriptions[unused-css-rules]"

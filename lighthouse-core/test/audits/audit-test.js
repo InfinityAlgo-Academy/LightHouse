@@ -86,6 +86,15 @@ describe('Audit', () => {
         assert.strictEqual(auditResult.score, null);
       });
 
+      it('switches to an ERROR and is not scored if an errorMessage is passed in with null', () => {
+        const errorMessage = 'ERRRRR';
+        const auditResult = Audit.generateAuditResult(NumericAudit, {score: null, errorMessage});
+
+        assert.strictEqual(auditResult.scoreDisplayMode, Audit.SCORING_MODES.ERROR);
+        assert.strictEqual(auditResult.errorMessage, errorMessage);
+        assert.strictEqual(auditResult.score, null);
+      });
+
       it('switches to NOT_APPLICABLE and is not scored if product was marked notApplicable', () => {
         const auditResult = Audit.generateAuditResult(PassOrFailAudit,
             {score: 1, notApplicable: true});
