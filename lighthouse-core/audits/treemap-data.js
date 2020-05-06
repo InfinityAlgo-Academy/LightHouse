@@ -223,14 +223,12 @@ class TreemapData extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[BootupTime.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const tasks = await MainThreadTasks.request(trace, context);
-    // const multiplier = settings.throttlingMethod === 'simulate' ?
-    //   settings.throttling.cpuSlowdownMultiplier : 1;
-    const multiplier = 1;
+    const multiplier = context.settings.throttlingMethod === 'simulate' ?
+      context.settings.throttling.cpuSlowdownMultiplier : 1;
 
     const jsURLs = BootupTime.getJavaScriptURLs(networkRecords);
     const executionTimings = BootupTime.getExecutionTimingsByURL(tasks, jsURLs);
 
-    let totalBootupTime = 0;
     return Array.from(executionTimings)
       .map(([url, timingByGroupId]) => {
         // Add up the totalExecutionTime for all the taskGroups
@@ -245,7 +243,6 @@ class TreemapData extends Audit {
 
         // Add up all the JavaScript time of shown URLs
         // if (totalExecutionTimeForURL >= context.options.thresholdInMs) {
-        totalBootupTime += scriptingTotal + parseCompileTotal;
         // }
 
         // hadExcessiveChromeExtension = hadExcessiveChromeExtension ||
