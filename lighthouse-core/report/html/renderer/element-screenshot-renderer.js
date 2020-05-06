@@ -172,7 +172,6 @@ class ElementScreenshotRenderer {
 
 ElementScreenshotRenderer.getScreenshotPositionDetails = getScreenshotPositionDetails;
 
-// Allow Node require()'ing.
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = ElementScreenshotRenderer;
 } else {

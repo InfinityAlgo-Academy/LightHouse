@@ -504,6 +504,7 @@ class DetailsRenderer {
         item,
         fullPageScreenshot,
         {
+          // TODO: should this be documentElement width?
           width: window.innerWidth * 0.75,
           height: window.innerHeight * 0.75,
         }

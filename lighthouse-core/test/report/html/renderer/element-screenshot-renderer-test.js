@@ -7,7 +7,8 @@
 
 /* eslint-env jest */
 
-const ElementScreenshotRenderer = require('../../../../report/html/renderer/element-screenshot-renderer.js');
+const ElementScreenshotRenderer =
+  require('../../../../report/html/renderer/element-screenshot-renderer.js');
 const RectHelpers = require('../../../../../lighthouse-core/lib/rect-helpers.js');
 
 // todo: move these tests maybe?

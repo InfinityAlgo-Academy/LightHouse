@@ -16,7 +16,8 @@ const DOM = require('../../../../report/html/renderer/dom.js');
 const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
 const ReportUIFeatures = require('../../../../report/html/renderer/report-ui-features.js');
 const CategoryRenderer = require('../../../../report/html/renderer/category-renderer.js');
-const ElementScreenshotRenderer = require('../../../../report/html/renderer/element-screenshot-renderer.js');
+const ElementScreenshotRenderer =
+  require('../../../../report/html/renderer/element-screenshot-renderer.js');
 const RectHelpers = require('../../../../../lighthouse-core/lib/rect-helpers.js');
 const CriticalRequestChainRenderer = require(
     '../../../../report/html/renderer/crc-details-renderer.js');

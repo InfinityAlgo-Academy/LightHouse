@@ -5,6 +5,8 @@
  */
 'use strict';
 
+/* globals self */
+
 /**
  * @param {LH.Artifacts.Rect} rect
  * @param {{x:number, y:number}} point
