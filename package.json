@@ -169,7 +169,7 @@
     "robots-parser": "^2.0.1",
     "semver": "^5.3.0",
     "speedline-core": "1.4.2",
-    "third-party-web": "^0.11.0",
+    "third-party-web": "^0.11.1",
     "update-notifier": "^2.5.0",
     "ws": "3.3.2",
     "yargs": "3.32.0",
@@ -201,7 +201,7 @@
     },
     {
       "path": "./dist/lighthouse-dt-bundle.js",
-      "maxSize": "460 kB"
+      "maxSize": "470 kB"
     },
     {
       "path": "./dist/lightrider/report-generator-bundle.js",
