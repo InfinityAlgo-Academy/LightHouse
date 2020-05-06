@@ -27,37 +27,37 @@ function clamp(value, min, max) {
   return value;
 }
 
-/**
- * @param {Rect} highlightRect
- * @param {Size} displayedAreaSize
- * @param {Size} screenshotSize
- */
-function getScreenshotPositionDetails(highlightRect, displayedAreaSize, screenshotSize) {
-  const highlightCenter = RectHelpers.getRectCenterPoint(highlightRect);
-
-  // Try to center on highlighted area
-  const screenshotLeftVisibleEdge = clamp(
-    highlightCenter.x - displayedAreaSize.width / 2,
-    0, screenshotSize.width - displayedAreaSize.width
-  );
-  const screenshotTopVisisbleEdge = clamp(
-    highlightCenter.y - displayedAreaSize.height / 2,
-    0, screenshotSize.height - displayedAreaSize.height
-  );
-
-  return {
-    screenshotPositionInDisplayArea: {
-      left: screenshotLeftVisibleEdge,
-      top: screenshotTopVisisbleEdge,
-    },
-    highlightPositionInDisplayArea: {
-      left: highlightRect.left - screenshotLeftVisibleEdge,
-      top: highlightRect.top - screenshotTopVisisbleEdge,
-    },
-  };
-}
-
 class ElementScreenshotRenderer {
+  /**
+   * @param {Rect} highlightRect
+   * @param {Size} viewport
+   * @param {Size} screenshotSize
+   */
+  static getScreenshotPositionDetails(highlightRect, viewport, screenshotSize) {
+    const highlightCenter = RectHelpers.getRectCenterPoint(highlightRect);
+
+    // Try to center on highlighted area
+    const screenshotLeftVisibleEdge = clamp(
+      highlightCenter.x - viewport.width / 2,
+      0, screenshotSize.width - viewport.width
+    );
+    const screenshotTopVisisbleEdge = clamp(
+      highlightCenter.y - viewport.height / 2,
+      0, screenshotSize.height - viewport.height
+    );
+
+    return {
+      screenshotPositionInDisplayArea: {
+        left: screenshotLeftVisibleEdge,
+        top: screenshotTopVisisbleEdge,
+      },
+      highlightPositionInDisplayArea: {
+        left: highlightRect.left - screenshotLeftVisibleEdge,
+        top: highlightRect.top - screenshotTopVisisbleEdge,
+      },
+    };
+  }
+
   /**
    * @param {DOM} dom
    * @param {string} clipId
@@ -83,10 +83,10 @@ class ElementScreenshotRenderer {
    * @param {ParentNode} templateContext
    * @param {LH.Audit.Details.NodeValue} item
    * @param {LH.Artifacts.FullPageScreenshot} fullPageScreenshot
-   * @param {Size} elementSize
+   * @param {Size} viewportSize
    * @return {Element}
    */
-  static render(dom, templateContext, item, fullPageScreenshot, elementSize) {
+  static render(dom, templateContext, item, fullPageScreenshot, viewportSize) {
     const fullpageScreenshotUrl = fullPageScreenshot.data;
 
     const tmpl = dom.cloneTemplate('#tmpl-lh-element-screenshot', templateContext);
@@ -94,32 +94,34 @@ class ElementScreenshotRenderer {
 
     const boundingRect = /** @type {LH.Artifacts.Rect} */ (item.boundingRect);
 
+    // TODO(cjamcl): Understand this :)
+
     let zoomFactor = 1;
-    const displayedAreaSize = {
-      // width: 420,
-      // height: 300,
-      width: elementSize.width,
-      height: elementSize.height,
+    const viewport = {
+      width: viewportSize.width,
+      height: viewportSize.height,
     };
+
     // For large elements zoom out to better show where on the page they are
-    if (boundingRect.height > elementSize.height / 2 || /* todo: maybe only apply the width criterium in the preview screenshot */ boundingRect.width > elementSize.width / 2 ) {
+    /* todo: maybe only apply the width criterium in the preview screenshot */
+    if (boundingRect.height > viewportSize.height / 2 || boundingRect.width > viewportSize.width / 2 ) {
       zoomFactor = 0.5;
-      displayedAreaSize.width *= 2;
-      displayedAreaSize.height *= 2;
+      viewport.width *= 2;
+      viewport.height *= 2;
     }
 
-    displayedAreaSize.width = Math.min(fullPageScreenshot.width, displayedAreaSize.width);
+    viewport.width = Math.min(fullPageScreenshot.width, viewport.width);
 
-    const positionDetails = getScreenshotPositionDetails(
+    const positionDetails = ElementScreenshotRenderer.getScreenshotPositionDetails(
       boundingRect,
-       displayedAreaSize,
+       viewport,
        fullPageScreenshot
     );
 
     const contentEl = /** @type {HTMLElement} */
       (previewContainer.querySelector('.lh-element-screenshot__content'));
     // contentEl.style.transform = `scale(${zoomFactor})`;
-    contentEl.style.top = `-${displayedAreaSize.height * zoomFactor}px`;
+    contentEl.style.top = `-${viewport.height * zoomFactor}px`;
 
     // move to top right
     // contentEl.style.setProperty('top', '0px', 'important');
@@ -127,11 +129,10 @@ class ElementScreenshotRenderer {
 
     const image = /** @type {HTMLElement} */
       (previewContainer.querySelector('.lh-element-screenshot__image'));
-    image.style.width = displayedAreaSize.width * zoomFactor + 'px';
-    image.style.height = displayedAreaSize.height * zoomFactor + 'px';
+    image.style.width = viewport.width * zoomFactor + 'px';
+    image.style.height = viewport.height * zoomFactor + 'px';
 
-
-    // todo: figure out how to do this properly, probably just render it once regardless of whether we use the eleme screenshot
+    // todo: figure out how to do this properly, probably just render it once regardless of whether we use the element screenshot
     if (!dom.document().querySelector('#full-page-screenshot-style')) {
       const fullPageScreenshotStyleTag = dom.createElement('style');
       fullPageScreenshotStyleTag.id = 'full-page-screenshot-style';
@@ -154,14 +155,14 @@ class ElementScreenshotRenderer {
     const mask = /** @type {HTMLElement} */
       (previewContainer.querySelector('.lh-element-screenshot__mask'));
     const clipId = 'clip-' + Math.floor(Math.random() * 100000000);
-    mask.style.width = displayedAreaSize.width * zoomFactor + 'px';
-    mask.style.height = displayedAreaSize.height * zoomFactor + 'px';
+    mask.style.width = viewport.width * zoomFactor + 'px';
+    mask.style.height = viewport.height * zoomFactor + 'px';
     mask.style.clipPath = 'url(#' + clipId + ')';
 
-    const top = positionDetails.highlightPositionInDisplayArea.top / displayedAreaSize.height;
-    const bottom = top + boundingRect.height / displayedAreaSize.height;
-    const left = positionDetails.highlightPositionInDisplayArea.left / displayedAreaSize.width;
-    const right = left + boundingRect.width / displayedAreaSize.width;
+    const top = positionDetails.highlightPositionInDisplayArea.top / viewport.height;
+    const bottom = top + boundingRect.height / viewport.height;
+    const left = positionDetails.highlightPositionInDisplayArea.left / viewport.width;
+    const right = left + boundingRect.width / viewport.width;
     mask.appendChild(
       ElementScreenshotRenderer.renderClipPath(dom, clipId, {top, bottom, left, right})
     );
@@ -169,8 +170,6 @@ class ElementScreenshotRenderer {
     return previewContainer;
   }
 }
-
-ElementScreenshotRenderer.getScreenshotPositionDetails = getScreenshotPositionDetails;
 
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = ElementScreenshotRenderer;

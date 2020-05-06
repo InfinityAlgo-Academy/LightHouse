@@ -483,6 +483,7 @@ class DetailsRenderer {
 
     element.prepend(elementScreenshot);
 
+    // TODO: should this go in report ui features?
     elementScreenshot.addEventListener('click', () => {
       const overlay = this._dom.createElement('div');
       // @ts-ignore: style is not read-only.
