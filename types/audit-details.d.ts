@@ -180,7 +180,8 @@ declare global {
         type: 'node';
         path?: string;
         selector?: string;
-        boundingRect: Artifacts.Rect;
+        // TODO: can this be required? font-size and seo audits need to be updated.
+        boundingRect?: Artifacts.Rect;
         /** An HTML snippet used to identify the node. */
         snippet?: string;
         /** A human-friendly text descriptor that's used to identify the node more quickly. */

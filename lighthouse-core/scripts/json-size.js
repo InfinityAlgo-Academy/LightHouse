@@ -27,7 +27,7 @@ const longestKeyLength = Math.max(...Object.keys(object).map(key => key.length))
 
 printRow('total', totalSize);
 Object.entries(object)
-  .map(([key, value]) => [key, size(value)])
+  .map(([key, value]) => /** @type {[string, number]} */([key, size(value)]))
   .sort((a, b) => b[1] - a[1])
   .forEach(([key, keySize]) => {
     printRow(key, keySize);

@@ -96,7 +96,7 @@ function getSelector(node) {
 
 /**
  * @param {FailingNodeData['node']} node
- * @return {{type: 'node', selector: string, snippet: string}}
+ * @return {LH.Audit.Details.NodeValue}
  */
 function nodeToTableNode(node) {
   const attributes = node.attributes || [];
