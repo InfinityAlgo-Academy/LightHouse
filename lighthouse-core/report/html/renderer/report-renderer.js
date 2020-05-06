@@ -192,7 +192,11 @@ class ReportRenderer {
     });
     Util.i18n = i18n;
 
-    const detailsRenderer = new DetailsRenderer(this._dom, report.audits['full-page-screenshot']);
+    const detailsRenderer = new DetailsRenderer(this._dom);
+    const fullPageScreenshot = /** @type {LH.Artifacts.FullPageScreenshot | undefined} */ (
+      report.audits['full-page-screenshot'] && report.audits['full-page-screenshot'].details);
+    if (fullPageScreenshot) detailsRenderer.setFullPageScreenshot(fullPageScreenshot);
+
     const categoryRenderer = new CategoryRenderer(this._dom, detailsRenderer);
     categoryRenderer.setTemplateContext(this._templateContext);
 

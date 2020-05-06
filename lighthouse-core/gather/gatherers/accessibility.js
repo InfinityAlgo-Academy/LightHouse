@@ -64,10 +64,12 @@ function runA11yChecks() {
         node.path = getNodePath(node.element);
         // @ts-ignore - getOuterHTMLSnippet put into scope via stringification
         node.snippet = getOuterHTMLSnippet(node.element);
-        node.boundingRect = JSON.parse(JSON.stringify(node.element.getBoundingClientRect()));
-        if (node.boundingRect.height === 0 || node.boundingRect.width === 0) {
-          delete node.boundingRect;
+
+        const rect = node.element.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0) {
+          node.boundingRect = JSON.parse(JSON.stringify(rect));
         }
+
         // @ts-ignore - getNodeLabel put into scope via stringification
         node.nodeLabel = getNodeLabel(node.element);
         // avoid circular JSON concerns

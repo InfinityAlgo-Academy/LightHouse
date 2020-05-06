@@ -1334,8 +1334,7 @@ class Driver {
 
   /**
    * @param {LH.Config.Settings} settings
-   * @param {Partial<EmulationParams['metrics']>} [deviceMetricsOverrides]
-   * Override device size for taking screenshots.
+   * @param {Partial<EmulationParams['metrics']>} [deviceMetricsOverrides] Override device size for taking screenshots.
    * @return {Promise<void>}
    */
   async beginEmulation(settings, deviceMetricsOverrides = {}) {

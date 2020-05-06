@@ -26,13 +26,11 @@ class DetailsRenderer {
   /**
    * @param {DOM} dom
    */
-  constructor(dom, fullPageScreenshotAuditResult) {
+  constructor(dom) {
     /** @type {DOM} */
     this._dom = dom;
     /** @type {ParentNode} */
     this._templateContext; // eslint-disable-line no-unused-expressions
-
-    this._fullPageScreenshotAuditResult = fullPageScreenshotAuditResult;
   }
 
   /**
@@ -40,6 +38,13 @@ class DetailsRenderer {
    */
   setTemplateContext(context) {
     this._templateContext = context;
+  }
+
+  /**
+   * @param {LH.Artifacts.FullPageScreenshot} fullPageScreenshot
+   */
+  setFullPageScreenshot(fullPageScreenshot) {
+    this._fullPageScreenshot = fullPageScreenshot;
   }
 
   /**
@@ -463,94 +468,98 @@ class DetailsRenderer {
     if (item.selector) element.setAttribute('data-selector', item.selector);
     if (item.snippet) element.setAttribute('data-snippet', item.snippet);
 
-    if (item.boundingRect && this._fullPageScreenshotAuditResult) {
-      const elementScreenshot = ElementScreenshotRenderer.render(
+    if (!item.boundingRect || !this._fullPageScreenshot) {
+      return element;
+    }
+
+    const fullPageScreenshot = this._fullPageScreenshot;
+
+    const elementScreenshot = ElementScreenshotRenderer.render(
+      this._dom,
+      this._templateContext,
+      item,
+      fullPageScreenshot,
+      {width: 147, height: 100}
+    );
+
+    element.prepend(elementScreenshot);
+
+    elementScreenshot.addEventListener('click', () => {
+      const overlay = this._dom.createElement('div');
+      overlay.style = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 1;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      `;
+      overlay.appendChild(ElementScreenshotRenderer.render(
         this._dom,
         this._templateContext,
         item,
-        this._fullPageScreenshotAuditResult,
-        {width: 147, height: 100}
-      );
-
-      element.prepend(elementScreenshot);
-
-      elementScreenshot.addEventListener('click', () => {
-        const overlay = this._dom.createElement('div');
-        overlay.style = `
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100vw;
-          height: 100vh;
-          z-index: 1;
-          background: rgba(0, 0, 0, 0.7);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        `;
-        overlay.appendChild(ElementScreenshotRenderer.render(
-          this._dom,
-          this._templateContext,
-          item,
-          this._fullPageScreenshotAuditResult,
-          {
-            width: window.innerWidth * 0.75,
-            height: window.innerHeight * 0.75,
-          }
-        ));
-        document.body.appendChild(overlay);
-        overlay.addEventListener('click', () => {
-          overlay.remove();
-        });
+        fullPageScreenshot,
+        {
+          width: window.innerWidth * 0.75,
+          height: window.innerHeight * 0.75,
+        }
+      ));
+      document.body.appendChild(overlay);
+      overlay.addEventListener('click', () => {
+        overlay.remove();
       });
+    });
 
-      // element.addEventListener('click', () => {
-      //   console.log('click', elementScreenshot);
-      //   // for mobile
-      //   // todo: figure out if needs any other handlers like click to show, maybe disable hover?
-      //   if (elementScreenshot) {
-      //     console.log('removing');
-      //     elementScreenshot.remove();
-      //     elementScreenshot = null;
-      //   } else {
-      //     elementScreenshot = ElementScreenshotRenderer.render(
-      //       this._dom,
-      //       this._templateContext,
-      //       item,
-      //       this._fullPageScreenshotAuditResult
-      //     );
-      //     element.prepend(elementScreenshot);
-      //   }
-      // });
+    // element.addEventListener('click', () => {
+    //   console.log('click', elementScreenshot);
+    //   // for mobile
+    //   // todo: figure out if needs any other handlers like click to show, maybe disable hover?
+    //   if (elementScreenshot) {
+    //     console.log('removing');
+    //     elementScreenshot.remove();
+    //     elementScreenshot = null;
+    //   } else {
+    //     elementScreenshot = ElementScreenshotRenderer.render(
+    //       this._dom,
+    //       this._templateContext,
+    //       item,
+    //       this._fullPageScreenshotAuditResult
+    //     );
+    //     element.prepend(elementScreenshot);
+    //   }
+    // });
 
-      // /** @type {Element} */
-      // let elementScreenshot;
-      // element.addEventListener('mouseenter', () => {
-      //   // temporary hack so that click happens before mouseenter on mobile
-      //   setTimeout(() => {
-      //     console.log('mouseenter', elementScreenshot);
-      //     if (!elementScreenshot) {
-      //       elementScreenshot = ElementScreenshotRenderer.render(
-      //         this._dom,
-      //         this._templateContext,
-      //         item,
-      //         this._fullPageScreenshotAuditResult
-      //       );
-      //       element.prepend(elementScreenshot);
-      //     }
-      //   }, 0);
-      // });
+    // /** @type {Element} */
+    // let elementScreenshot;
+    // element.addEventListener('mouseenter', () => {
+    //   // temporary hack so that click happens before mouseenter on mobile
+    //   setTimeout(() => {
+    //     console.log('mouseenter', elementScreenshot);
+    //     if (!elementScreenshot) {
+    //       elementScreenshot = ElementScreenshotRenderer.render(
+    //         this._dom,
+    //         this._templateContext,
+    //         item,
+    //         this._fullPageScreenshotAuditResult
+    //       );
+    //       element.prepend(elementScreenshot);
+    //     }
+    //   }, 0);
+    // });
 
-      // element.addEventListener('mouseleave', () => {
-      //   if (!window.keepForDebug) {
-      //     if (elementScreenshot) {
-      //       console.log('mouseleave', elementScreenshot);
-      //       elementScreenshot.remove();
-      //       elementScreenshot = null;
-      //     }
-      //   }
-      // });
-    }
+    // element.addEventListener('mouseleave', () => {
+    //   if (!window.keepForDebug) {
+    //     if (elementScreenshot) {
+    //       console.log('mouseleave', elementScreenshot);
+    //       elementScreenshot.remove();
+    //       elementScreenshot = null;
+    //     }
+    //   }
+    // });
 
     return element;
   }

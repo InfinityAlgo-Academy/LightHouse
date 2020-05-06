@@ -77,12 +77,12 @@ class ElementScreenshotRenderer {
    * @param {DOM} dom
    * @param {ParentNode} templateContext
    * @param {LH.Audit.Details.NodeValue} item
-   * @param {LH.Audit.Result} fullPageScreenshotAuditResult
+   * @param {LH.Artifacts.FullPageScreenshot} fullPageScreenshot
    * @param {Size} elementSize
    * @return {Element}
    */
-  static render(dom, templateContext, item, fullPageScreenshotAuditResult, elementSize) {
-    const fullpageScreenshotUrl = fullPageScreenshotAuditResult.details.data;
+  static render(dom, templateContext, item, fullPageScreenshot, elementSize) {
+    const fullpageScreenshotUrl = fullPageScreenshot.data;
 
     const tmpl = dom.cloneTemplate('#tmpl-lh-element-screenshot', templateContext);
     const previewContainer = dom.find('.lh-element-screenshot', tmpl);
@@ -103,12 +103,12 @@ class ElementScreenshotRenderer {
       displayedAreaSize.height *= 2;
     }
 
-    displayedAreaSize.width = Math.min(fullPageScreenshotAuditResult.details.width, displayedAreaSize.width);
+    displayedAreaSize.width = Math.min(fullPageScreenshot.width, displayedAreaSize.width);
 
     const positionDetails = getScreenshotPositionDetails(
       boundingRect,
        displayedAreaSize,
-       fullPageScreenshotAuditResult.details
+       fullPageScreenshot
     );
 
     const contentEl = /** @type {HTMLElement} */
@@ -138,7 +138,7 @@ class ElementScreenshotRenderer {
     image.style.backgroundPositionY = -(positionDetails.screenshotPositionInDisplayArea.top * zoomFactor) + 'px';
     image.style.backgroundPositionX = -(positionDetails.screenshotPositionInDisplayArea.left * zoomFactor) + 'px';
     // image.style.backgroundSize = (zoomFactor * 100) + '%';
-    image.style.backgroundSize = `${fullPageScreenshotAuditResult.details.width * zoomFactor}px ${fullPageScreenshotAuditResult.details.height * zoomFactor}px`;
+    image.style.backgroundSize = `${fullPageScreenshot.width * zoomFactor}px ${fullPageScreenshot.height * zoomFactor}px`;
 
     const elMarker = /** @type {HTMLElement} */
       (previewContainer.querySelector('.lh-element-screenshot__element-marker'));
