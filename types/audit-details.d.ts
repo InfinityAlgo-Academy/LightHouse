@@ -180,9 +180,9 @@ declare global {
         type: 'node';
         path?: string;
         selector?: string;
+        boundingRect: Artifacts.Rect;
         /** An HTML snippet used to identify the node. */
         snippet?: string;
-        boundingRect?: Artifacts.Rect;
         /** A human-friendly text descriptor that's used to identify the node more quickly. */
         nodeLabel?: string;
       }

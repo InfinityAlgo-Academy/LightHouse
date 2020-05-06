@@ -163,6 +163,7 @@ declare global {
         nodes: Array<{
           path: string;
           html: string;
+          boundingRect: Rect;
           snippet: string;
           target: Array<string>;
           failureSummary?: string;
@@ -475,6 +476,7 @@ declare global {
         nodeLabel?: string;
         devtoolsNodePath: string;
         snippet?: string;
+        boundingRect: Rect;
       }
 
       export interface ViewportDimensions {

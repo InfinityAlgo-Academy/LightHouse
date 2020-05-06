@@ -42,6 +42,7 @@ function collectTraceElements(attributeMarker) {
       nodeLabel: getNodeLabel(element), // eslint-disable-line no-undef
       // @ts-ignore - put into scope via stringification
       snippet: getOuterHTMLSnippet(element), // eslint-disable-line no-undef
+      boundingRect: JSON.parse(JSON.stringify(element.getBoundingClientRect())),
     });
   }
   return TraceElements;
