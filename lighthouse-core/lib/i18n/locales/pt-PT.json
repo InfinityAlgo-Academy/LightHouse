@@ -648,7 +648,7 @@
     "message": "No caso de utilizadores com ligações lentas, os scripts externos inseridos dinamicamente através de `document.write()` podem atrasar o carregamento da página em dezenas de segundos. [Saiba mais](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Utiliza `document.write()`"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Evita `document.write()`"
@@ -792,10 +792,10 @@
     "message": "Os navegadores podem solicitar proativamente aos utilizadores que adicionem a sua aplicação ao respetivo ecrã principal, o que pode levar a uma maior interação. [Saiba mais](https://web.dev/installable-manifest)."
   },
   "lighthouse-core/audits/installable-manifest.js | failureTitle": {
-    "message": "O manifesto da aplicação para a Web não cumpre os requisitos de capacidade de instalação"
+    "message": "O manifesto da app para a Web não cumpre os requisitos de capacidade de instalação"
   },
   "lighthouse-core/audits/installable-manifest.js | title": {
-    "message": "O manifesto da aplicação para a Web cumpre os requisitos de capacidade de instalação"
+    "message": "O manifesto da app para a Web cumpre os requisitos de capacidade de instalação"
   },
   "lighthouse-core/audits/is-on-https.js | columnInsecureURL": {
     "message": "URL inseguro"
@@ -876,10 +876,7 @@
     "message": "O manifesto tem um ícone mascarável"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "O Cumulative Layout Shift é a soma de todas as mudanças de esquema que ocorreram durante o carregamento de uma página. Uma mudança de esquema é qualquer movimento que um elemento efetua assim que estiver visível para o utilizador. Todas as mudanças de esquema são registadas, pontuadas e, posteriormente, agregadas numa pontuação cumulativa entre 0 e 1, em que 0 é uma página perfeitamente estável e >=0,5 uma página altamente instável em termos de mudanças. [Saber mais](https://web.dev/cls)"
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "Mudança de esquema cumulativo"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "A Latência de entrada estimada é uma estimativa do tempo que a sua aplicação demora a responder a ações do utilizador, em milissegundos, durante a janela dos 5 segundos mais ativos do carregamento da página. Se a latência for superior a 50 ms, os utilizadores podem considerar que a sua aplicação é lenta. [Saiba mais](https://web.dev/estimated-input-latency)."
@@ -921,7 +918,7 @@
     "message": "Latências de back-end do servidor"
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Um service worker permite que a sua aplicação para a Web seja fiável em condições de rede imprevisíveis. [Saiba mais](https://web.dev/offline-start-url)."
+    "message": "Um service worker permite que a sua app para a Web seja fiável em condições de rede imprevisíveis. [Saiba mais](https://web.dev/offline-start-url)."
   },
   "lighthouse-core/audits/offline-start-url.js | errorLoading": {
     "message": "Erro ao carregar {url} no Service Worker. Foi obtido o código de estado {statusCode}."
@@ -1290,7 +1287,7 @@
     "message": "Práticas recomendadas"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
-    "message": "Estas verificações realçam as oportunidades de [melhorar a acessibilidade da sua aplicação Web](https://developers.google.com/web/fundamentals/accessibility). Apenas um subconjunto de problemas de acessibilidade pode ser detetado automaticamente, pelo que é recomendado efetuar também testes manuais."
+    "message": "Estas verificações realçam as oportunidades de [melhorar a acessibilidade da sua app Web](https://developers.google.com/web/fundamentals/accessibility). Apenas um subconjunto de problemas de acessibilidade pode ser detetado automaticamente, pelo que é recomendado efetuar também testes manuais."
   },
   "lighthouse-core/config/default-config.js | a11yCategoryManualDescription": {
     "message": "Estes itens destinam-se a áreas não abrangidas por uma ferramenta de teste automatizada. Saiba mais no nosso guia sobre como [efetuar uma revisão de acessibilidade](https://developers.google.com/web/fundamentals/accessibility/how-to-review)."
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Poupança potencial"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Mudança de esquema cumulativo"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Poupança potencial de {wastedBytes, number, bytes} KB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Tempo até à interação"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Maior preenchimento com conteúdo"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Máximo potencial de primeiro atraso de entrada"

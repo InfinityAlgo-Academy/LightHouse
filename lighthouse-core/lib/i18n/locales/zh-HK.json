@@ -648,7 +648,7 @@
     "message": "對於連線速度較慢的使用者，透過 `document.write()` 動態插入的外部指令碼可能會導致網頁延遲載入數十秒。[瞭解詳情](https://web.dev/no-document-write)。"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "使用 `document.write()`"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "避免使用 `document.write()`"
@@ -876,10 +876,7 @@
     "message": "資訊清單中有可遮蓋的圖示"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "累計版面配置轉移是在頁面載入時發生的所有版面配置轉移總和。版面配置轉移是元素在可向使用者顯示時作出的移動。系統會記錄所有版面配置轉移，並且在計算其分數後匯總成介乎 0 至 1 之間的累計分數；0 代表完完全穩定的頁面，>=0.5 代表高度轉移的頁面。[瞭解詳情](https://web.dev/cls)。"
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "累計版面配置轉移"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "預計輸入延遲時間是在頁面載入視窗最忙碌的 5 秒期間，您的應用程式對使用者輸入動作的預計回應時間 (以毫秒為單位)。如果延遲超過 50 毫秒，使用者可能會認為應用程式的速度緩慢。[瞭解詳情](https://web.dev/estimated-input-latency)。"
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "可節省的數據用量"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "累計版面配置轉移"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "可節省 {wastedBytes, number, bytes} KB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "可互動所需時間"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "最大內容繪製"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "首次輸入延遲時間最長預計值"

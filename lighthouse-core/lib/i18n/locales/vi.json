@@ -648,7 +648,7 @@
     "message": "Đối với những người dùng có kết nối chậm, các tập lệnh bên ngoài tự động được đưa vào qua `document.write()` có thể làm trang tải chậm hàng chục giây. [Tìm hiểu thêm](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Sử dụng `document.write()`"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Tránh `document.write()`"
@@ -876,10 +876,7 @@
     "message": "Tệp kê khai có một biểu tượng che mờ được"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Điểm số thay đổi bố cục ở dạng tích lũy là tổng tất cả các lần thay đổi bố cục trong khi tải trang. Một lần thay đổi bố cục là bất kỳ sự dịch chuyển nào mà một thành phần tạo ra sau khi hiển thị với người dùng. Tất cả các lần thay đổi bố cục đều được ghi lại, chấm điểm rồi tổng hợp thành một điểm số ở dạng tích lũy từ 0 đến 1; 0 tức là trang hoàn toàn ổn định và >=0,5 tức là trang thay đổi nhiều. [Tìm hiểu thêm](https://web.dev/cls)."
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "Điểm số thay đổi bố cục ở dạng tích lũy"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Thời gian chờ nhập thông tin theo ước tính là thời gian ước tính mà ứng dụng cần để phản hồi thông tin do người dùng nhập (tính bằng mili giây) trong khoảng thời gian 5 giây tải nhiều trang nhất. Nếu người dùng phải chờ quá 50 mili giây, thì ứng dụng của bạn bị coi là chạy chậm. [Tìm hiểu thêm](https://web.dev/estimated-input-latency)."
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Thời gian có thể tiết kiệm được"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Điểm số thay đổi bố cục ở dạng tích lũy"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Lượng dữ liệu có thể tiết kiệm được là {wastedBytes, number, bytes} KB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Thời điểm tương tác"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Chỉ số Hiển thị nội dung có kích thước lớn nhất"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Thời gian phản hồi lần tương tác đầu tiên tối đa có thể"

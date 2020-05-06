@@ -648,7 +648,7 @@
     "message": "Lietotājiem, kuriem ir lēns savienojums, ārējie skripti, kas ir dinamiski ievadīti, izmantojot elementu “`document.write()`”, var ievērojami aizkavēt lapas ielādi. [Uzziniet vairāk](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Tiek izmantots elements “`document.write()`”"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Netiek izmantots elements “`document.write()`”"
@@ -876,10 +876,7 @@
     "message": "Manifestā ir maskējama ikona"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Kopējā izkārtojuma nobīde ir visu to izkārtojuma nobīžu summa, kuras radās lapas ielādes laikā. Izkārtojuma nobīde ir jebkura kustība, ko elements veic, tiklīdz tas ir redzams lietotājam. Visa izkārtojuma nobīde tiek reģistrēta, novērtēta un pēc tam apkopota kopējā rezultātā no 0 līdz 1 (0 — pavisam stabila lapa; >=0,5 — lapa ar lielu nobīžu skaitu). [Uzziniet vairāk](https://web.dev/cls)."
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "Kopējā izkārtojuma nobīde"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Paredzētais ievades latentums aptuveni norāda, pēc cik ilga laika (milisekundēs) uz lietotāja ievadi reaģēs jūsu lietotne aizņemtākajā lapas ielādes 5 s periodā. Ja latentums pārsniedz 50 ms, iespējams, lietotājiem liksies, ka jūsu lietotne strādā ar traucējumiem. [Uzziniet vairāk](https://web.dev/estimated-input-latency)."
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Potenciālie ietaupījumi"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Kopējā izkārtojuma nobīde"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Potenciālais ietaupījums: {wastedBytes, number, bytes} KB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Laiks līdz interaktivitātei"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Lielākais satura marķējums"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Maks. potenciālā pirmā ievades aizkave"

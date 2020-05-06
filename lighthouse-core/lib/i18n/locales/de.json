@@ -141,10 +141,10 @@
     "message": "Wenn Definitionslisten nicht korrekt mit Markup versehen sind, geben Screenreader unter Umständen verwirrende oder falsche Inhalte aus. [Weitere Informationen.](https://web.dev/definition-list/)"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`-Elemente enthalten nicht nur richtig angeordnete Gruppen aus `<dt>`- und `<dd>`-Elementen sowie `<script>`-, `<template>`- oder `<div>`-Elemente."
+    "message": "`<dl>`-Elemente enthalten nicht ausschließlich Gruppen aus `<dt>`- und `<dd>`-Elementen sowie `<script>`-, `<template>`- oder `<div>`-Elemente, die richtig angeordnet sind."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`-Elemente enthalten nur richtig angeordnete Gruppen aus `<dt>`- und `<dd>`-Elementen sowie `<script>`-, `<template>`- oder `<div>`-Elemente."
+    "message": "`<dl>`-Elemente enthalten ausschließlich Gruppen aus `<dt>`- und `<dd>`-Elementen sowie `<script>`-, `<template>`- oder `<div>`-Elemente, die richtig angeordnet sind."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "Definitionslistenelemente (`<dt>` und `<dd>`) müssen in ein übergeordnetes `<dl>`-Element eingefasst sein, damit sie von Screenreadern richtig angesagt werden können. [Weitere Informationen.](https://web.dev/dlitem/)"
@@ -648,7 +648,7 @@
     "message": "Für Nutzer mit langsamen Verbindungen können externe Skripts, die dynamisch über `document.write()` eingefügt werden, den Seitenaufbau um einige Sekunden verzögern. [Weitere Informationen.](https://web.dev/no-document-write)"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Verwendet `document.write()`"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Verwendet kein `document.write()`"
@@ -876,10 +876,7 @@
     "message": "Das Manifest hat ein maskierbares Symbol"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Die kumulative Layoutverschiebung (Cumulative Layout Shift, CLS) gibt die Summe aller Layoutverschiebungen an, die beim Laden einer Seite stattgefunden haben. Eine Layoutverschiebung ist jede Bewegung eines Elements, nachdem es für den Nutzer sichtbar geworden ist. Alle Layoutverschiebungen werden aufgezeichnet und bewertet und fließen dann in einen kumulativen Wert ein, der zwischen 0 und 1 liegt. Dabei kennzeichnet ein Wert von 0 eine vollkommen stabile Seite, während bei Werten über oder gleich 0,5 erhebliche Verschiebungen stattfinden. [Weitere Informationen](https://web.dev/cls)."
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "Kumulative Layoutverschiebung"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Die geschätzte Eingabelatenz ist eine Schätzung dessen, wie viele Millisekunden Ihre App benötigt, um während des 5-s-Fensters mit der stärksten Auslastung beim Seitenaufbau auf Nutzereingaben zu reagieren. Wenn die Latenz bei Ihnen über 50 ms beträgt, empfinden Nutzer Ihre App möglicherweise als langsam. [Weitere Informationen.](https://web.dev/estimated-input-latency)"
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Mögliche Einsparungen"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Kumulative Layoutverschiebung"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Mögliche Einsparung von {wastedBytes, number, bytes} KB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Zeit bis Interaktivität"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Largest Contentful Paint"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Maximaler potenzieller First Input Delay"

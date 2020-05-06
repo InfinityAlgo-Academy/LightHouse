@@ -648,7 +648,7 @@
     "message": "对于连接速度较慢的用户，通过 `document.write()` 动态注入的外部脚本可将网页加载延迟数十秒。[了解详情](https://web.dev/no-document-write)。"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "使用了 `document.write()`"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "请勿使用 `document.write()`"
@@ -876,10 +876,7 @@
     "message": "清单含有可遮罩的图标"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "“累积布局偏移”是在网页加载过程中发生的所有布局偏移的总和。单次布局偏移是指元素在可被用户看到后进行的任何移动。系统会记录每次布局偏移并为其计分，然后将所有分数汇总成一个介于 0 到 1 之间的累积分数；0 表示极为稳定的网页，>=0.5 表示偏移幅度很大的网页。[了解详情](https://web.dev/cls)。"
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "累积布局偏移"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "预计输入延迟是估算值，表示您的应用在网页加载最繁忙的 5 秒期间大概需要花费多长时间（以毫秒为单位）才能对用户输入做出响应。如果您的延迟时间超过了 50 毫秒，用户可能会感觉您的应用运行迟缓。[了解详情](https://web.dev/estimated-input-latency)。"
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "可能达到的节省程度"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "累积布局偏移"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "有望节省 {wastedBytes, number, bytes} KB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "可交互前的耗时"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "最大内容渲染"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "首次输入延迟最长预估值"

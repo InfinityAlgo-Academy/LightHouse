@@ -648,7 +648,7 @@
     "message": "V prípade používateľov s pomalým pripojením môžu externé skripty, ktoré sú dynamicky vložené prostredníctvom funkcie `document.write()`, oneskoriť načítavanie stránky o desiatky sekúnd. [Ďalšie informácie](https://web.dev/no-document-write)"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Používa `document.write()`"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Nepoužíva `document.write()`"
@@ -876,10 +876,7 @@
     "message": "Manifest má maskovateľnú ikonu"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Celkový posun rozloženia je súčet všetkých posunov rozloženia, ku ktorým došlo počas načítania stránky. Posun rozloženia je akýkoľvek pohyb prvku po jeho zobrazení používateľovi. Všetky posuny rozloženia sú zaznamenané, je im udelené skóre a potom sú zhrnuté do celkového skóre medzi 0 a 1. Hodnota 0 predstavuje dokonale stabilnú stránku a hodnota >=0,5 stránku s výraznými posunmi. [Ďalšie informácie](https://web.dev/cls)"
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "Celkový posun rozloženia"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Odhadovaná latencia vstupu je odhadovaný čas odozvy na vstup používateľa v milisekundách počas najrušnejších 5 sekúnd načítania stránky. Ak latencia prevyšuje 50 ms, používateľom sa môžu zdať odozvy aplikácie oneskorené. [Ďalšie informácie](https://web.dev/estimated-input-latency)"
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Potenciálna úspora"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Celkový posun rozloženia"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Potenciálna úspora: {wastedBytes, number, bytes} kB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Čas do interaktívneho vykreslenia"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Najväčšie vykreslenie obsahu"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Max. potenc. oneskorenie prvého vstupu"

@@ -648,7 +648,7 @@
     "message": "Untuk pengguna dengan koneksi lambat, skrip eksternal secara dinamis dimasukkan melalui `document.write()` dapat menunda pemuatan halaman selama puluhan detik. [Pelajari lebih lanjut](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Menggunakan `document.write()`"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Menghindari `document.write()`"
@@ -876,10 +876,7 @@
     "message": "Manifes memiliki ikon maskable"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Pergeseran Tata Letak Kumulatif adalah jumlah dari semua pergeseran tata letak yang terjadi selama pemuatan halaman. Pergeseran tata letak adalah pergerakan yang dilakukan suatu elemen setelah terlihat oleh pengguna. Semua pergeseran tata letak dicatat, dinilai, lalu digabungkan ke dalam skor kumulatif antara 0 dan 1; 0 artinya halaman yang stabil sempurna, dan >=0,5 adalah halaman yang banyak mengalami pergeseran. [Pelajari lebih lanjut](https://web.dev/cls)."
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "Pergeseran Tata Letak Kumulatif"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Perkiraan Latensi Masukan adalah perkiraan durasi yang diperlukan aplikasi untuk merespons masukan pengguna, dalam milidetik, selama durasi 5 detik tersibuk saat pemuatan halaman. Jika latensi di atas 50 md, pengguna dapat menganggap aplikasi Anda lambat. [Pelajari lebih lanjut](https://web.dev/estimated-input-latency)."
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Potensi Penghematan"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Pergeseran Tata Letak Kumulatif"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Potensi penghematan sebesar {wastedBytes, number, bytes} KB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Waktu untuk Interaktif"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Largest Contentful Paint"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Potensi Maksimal Penundaan Input Pertama"

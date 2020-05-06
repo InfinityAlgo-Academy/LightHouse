@@ -648,7 +648,7 @@
     "message": "Ако корисници имају споре везе, спољне скрипте које се динамички убацују помоћу атрибута `document.write()` могу да одложе учитавање странице за десетине секунди. [Сазнајте више](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Користи `document.write()`"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Избегава атрибут `document.write()`"
@@ -876,10 +876,7 @@
     "message": "Манифест садржи икону која може да се маскира"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Збирна промена распореда је скуп свих промена распореда до којих је дошло током учитавања странице. Промена распореда је свако кретање елемента пошто се прикаже кориснику. Све промене распореда се снимају и оцењују, а затим се обједињују у збирни резултат између 0 и 1; 0 означава потпуно стабилну страницу, а >=0,5 означава да је распоред на страници веома променљив. [Сазнајте више](https://web.dev/cls)."
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "Збирна промена распореда"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Процењено кашњење уноса је процена времена које је апликацији потребно да одговори на унос корисника, у милисекундама, током најпрометнијег рока од 5 секунди за учитавање странице. Ако је кашњење веће од 50 ms, корисници ће можда сматрати да апликација ради споро. [Сазнајте више](https://web.dev/estimated-input-latency)."
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Потенцијална уштеда"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Збирна промена распореда"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Потенцијална уштеда од {wastedBytes, number, bytes} KB"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Време почетка интеракције"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Највеће приказивање садржаја"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Макс. потенцијално кашњење првог приказа"

@@ -648,7 +648,7 @@
     "message": "A külső szkriptek `document.write()` segítségével történő dinamikus beillesztése több tíz másodperccel lassíthatja az oldalbetöltést a lassú kapcsolaton csatlakozó felhasználók esetében. [További információ](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "A(z) `document.write()` metódust használja"
+    "message": "Avoid `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Kerüli a(z) `document.write()` használatát"
@@ -876,10 +876,7 @@
     "message": "A manifest tartalmaz maszkolható ikont"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Az elrendezés összmozgása az oldal betöltése során történt összes elrendezésmozgás száma. Elrendezésmozgásnak minősül az elemek minden olyan elmozdulása, amely akkor történik, amikor az elem már látható a felhasználó számára. Minden elrendezésmozgást rögzítünk, pontozunk, majd 0-tól 1-ig terjedő összpontszámként összesítünk; a 0 pontszám teljesen stabil oldalt jelent, 0,5 vagy magasabb érték esetén pedig nagy mértékben mozgó oldalról beszélünk. [További információ](https://web.dev/cls)."
-  },
-  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | title": {
-    "message": "Elrendezés összmozgása"
+    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "A becsült bemeneti késés annak a becsült értéke, hogy az alkalmazás mennyi idő alatt reagál – ezredmásodpercben (ms) megadva – a felhasználói interakciókra az oldalbetöltés legforgalmasabb 5 másodperces időkeretében. Ha a várakozási idő meghaladja az 50 ms-ot, a felhasználók lassúnak érezhetik az alkalmazást. [További információ](https://web.dev/estimated-input-latency)."
@@ -1460,6 +1457,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Potenciális megtakarítás"
   },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Elrendezés összmozgása"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Potenciálisan {wastedBytes, number, bytes} KB megtakarítás"
   },
@@ -1489,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Interaktivitásig eltelt idő"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Legnagyobb vizuális tartalomválasz"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Első interakciótól számított max. potenciális késés"
