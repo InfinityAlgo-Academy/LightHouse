@@ -55,11 +55,11 @@ class CacheHeaders extends Audit {
    */
   static get defaultOptions() {
     return {
-      // 50th and 75th percentiles HTTPArchive -> 50 and 75
+      // 50th and 25th percentiles HTTPArchive -> 50 and 75, with p10 derived from them.
       // https://bigquery.cloud.google.com/table/httparchive:lighthouse.2018_04_01_mobile?pli=1
-      // see https://www.desmos.com/calculator/8meohdnjbl
-      scorePODR: 4 * 1024,
-      scoreMedian: 128 * 1024,
+      // see https://www.desmos.com/calculator/uzsyl2hbcb
+      p10: 28 * 1024,
+      median: 128 * 1024,
     };
   }
 
@@ -265,9 +265,8 @@ class CacheHeaders extends Audit {
       });
 
       const score = Audit.computeLogNormalScore(
-        totalWastedBytes,
-        context.options.scorePODR,
-        context.options.scoreMedian
+        {p10: context.options.p10, median: context.options.median},
+        totalWastedBytes
       );
 
       /** @type {LH.Audit.Details.Table['headings']} */

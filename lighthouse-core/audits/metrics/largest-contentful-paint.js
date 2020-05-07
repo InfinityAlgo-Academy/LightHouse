@@ -36,12 +36,12 @@ class LargestContentfulPaint extends Audit {
    */
   static get defaultOptions() {
     return {
-      // 75th and 95th percentiles HTTPArchive -> median and PODR.
+      // 25th and 13th percentiles HTTPArchive -> median and p10 points.
       // https://bigquery.cloud.google.com/table/httparchive:lighthouse.2020_02_01_mobile?pli=1
-      // Gives 2.5s roughly a score of 0.9. https://web.dev/lcp/#what-is-a-good-lcp-score
-      // see https://www.desmos.com/calculator/brcfwyox6x
-      scorePODR: 2000,
-      scoreMedian: 4000,
+      // https://web.dev/lcp/#what-is-a-good-lcp-score
+      // see https://www.desmos.com/calculator/1etesp32kt
+      p10: 2500,
+      median: 4000,
     };
   }
 
@@ -58,9 +58,8 @@ class LargestContentfulPaint extends Audit {
 
     return {
       score: Audit.computeLogNormalScore(
-        metricResult.timing,
-        context.options.scorePODR,
-        context.options.scoreMedian
+        {p10: context.options.p10, median: context.options.median},
+        metricResult.timing
       ),
       numericValue: metricResult.timing,
       numericUnit: 'millisecond',
