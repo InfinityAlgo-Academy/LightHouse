@@ -5,6 +5,8 @@
  */
 'use strict';
 
+/* eslint-disable no-console */
+
 // cat lhr.json | node lighthouse-core/scripts/json-size.js | less
 // cat lhr.json | jq .audits | node lighthouse-core/scripts/json-size.js | less
 
