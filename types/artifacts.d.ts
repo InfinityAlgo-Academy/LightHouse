@@ -140,7 +140,7 @@ declare global {
       TagsBlockingFirstPaint: Artifacts.TagBlockingFirstPaint[];
       /** Information about tap targets including their position and size. */
       TapTargets: Artifacts.TapTarget[];
-      /**  */
+      /** Elements associated with metrics (ie: Largest Contentful Paint element). */
       TraceElements: Artifacts.TraceElement[];
     }
 
