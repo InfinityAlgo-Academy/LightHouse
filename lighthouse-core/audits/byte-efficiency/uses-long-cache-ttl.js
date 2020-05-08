@@ -5,7 +5,6 @@
  */
 'use strict';
 
-const assert = require('assert').strict;
 const parseCacheControl = require('parse-cache-control');
 const Audit = require('../audit.js');
 const NetworkRequest = require('../../lib/network-request.js');
@@ -76,7 +75,9 @@ class CacheHeaders extends Audit {
     // Based on UMA stats for HttpCache.StaleEntry.Validated.Age, see https://www.desmos.com/calculator/7v0qh1nzvh
     // Example: a max-age of 12 hours already covers ~50% of cases, doubling to 24 hours covers ~10% more.
     const RESOURCE_AGE_IN_HOURS_DECILES = [0, 0.2, 1, 3, 8, 12, 24, 48, 72, 168, 8760, Infinity];
-    assert.ok(RESOURCE_AGE_IN_HOURS_DECILES.length === 12, 'deciles 0-10 and 1 for overflow');
+    if (RESOURCE_AGE_IN_HOURS_DECILES.length !== 12) {
+      throw new Error('deciles 0-10 and 1 for overflow');
+    }
 
     const maxAgeInHours = maxAgeInSeconds / 3600;
     const upperDecileIndex = RESOURCE_AGE_IN_HOURS_DECILES.findIndex(
