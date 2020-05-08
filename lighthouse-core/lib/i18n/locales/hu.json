@@ -648,7 +648,7 @@
     "message": "A külső szkriptek `document.write()` segítségével történő dinamikus beillesztése több tíz másodperccel lassíthatja az oldalbetöltést a lassú kapcsolaton csatlakozó felhasználók esetében. [További információ](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Avoid `document.write()`"
+    "message": "Ne használja a következőt: `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Kerüli a(z) `document.write()` használatát"
@@ -876,7 +876,7 @@
     "message": "A manifest tartalmaz maszkolható ikont"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
+    "message": "Az Elrendezés összmozgása mutató az oldal megjelenítési területén látható elemek mozgását méri. [További információ](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "A becsült bemeneti késés annak a becsült értéke, hogy az alkalmazás mennyi idő alatt reagál – ezredmásodpercben (ms) megadva – a felhasználói interakciókra az oldalbetöltés legforgalmasabb 5 másodperces időkeretében. Ha a várakozási idő meghaladja az 50 ms-ot, a felhasználók lassúnak érezhetik az alkalmazást. [További információ](https://web.dev/estimated-input-latency)."

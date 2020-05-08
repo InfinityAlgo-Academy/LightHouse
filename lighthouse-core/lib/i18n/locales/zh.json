@@ -648,7 +648,7 @@
     "message": "对于连接速度较慢的用户，通过 `document.write()` 动态注入的外部脚本可将网页加载延迟数十秒。[了解详情](https://web.dev/no-document-write)。"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Avoid `document.write()`"
+    "message": "避免使用 `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "请勿使用 `document.write()`"
@@ -876,7 +876,7 @@
     "message": "清单含有可遮罩的图标"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
+    "message": "“累积布局偏移”旨在衡量可见元素在视口内的移动情况。[了解详情](https://web.dev/cls)。"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "预计输入延迟是估算值，表示您的应用在网页加载最繁忙的 5 秒期间大概需要花费多长时间（以毫秒为单位）才能对用户输入做出响应。如果您的延迟时间超过了 50 毫秒，用户可能会感觉您的应用运行迟缓。[了解详情](https://web.dev/estimated-input-latency)。"

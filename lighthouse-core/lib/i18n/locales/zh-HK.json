@@ -648,7 +648,7 @@
     "message": "對於連線速度較慢的使用者，透過 `document.write()` 動態插入的外部指令碼可能會導致網頁延遲載入數十秒。[瞭解詳情](https://web.dev/no-document-write)。"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Avoid `document.write()`"
+    "message": "避免使用 `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "避免使用 `document.write()`"
@@ -876,7 +876,7 @@
     "message": "資訊清單中有可遮蓋的圖示"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
+    "message": "累計版面配置轉移會測量檢視區內可見元素的移動。[瞭解詳情](https://web.dev/cls)。"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "預計輸入延遲時間是在頁面載入視窗最忙碌的 5 秒期間，您的應用程式對使用者輸入動作的預計回應時間 (以毫秒為單位)。如果延遲超過 50 毫秒，使用者可能會認為應用程式的速度緩慢。[瞭解詳情](https://web.dev/estimated-input-latency)。"

@@ -648,7 +648,7 @@
     "message": "สำหรับผู้ใช้ที่การเชื่อมต่อช้า สคริปต์ภายนอกที่แทรกเข้ามาแบบไดนามิกผ่านทาง `document.write()` จะช่วยหน่วงการโหลดหน้าเว็บได้หลายสิบวินาที [ดูข้อมูลเพิ่มเติม](https://web.dev/no-document-write)"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Avoid `document.write()`"
+    "message": "หลีกเลี่ยง `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "หลีกเลี่ยงการใช้ `document.write()`"
@@ -876,7 +876,7 @@
     "message": "ไฟล์ Manifest มีไอคอนที่มาสก์ได้"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
+    "message": "การเปลี่ยนเลย์เอาต์สะสมจะวัดการเคลื่อนไหวขององค์ประกอบที่มองเห็นได้ภายในวิวพอร์ต [ดูข้อมูลเพิ่มเติม](https://web.dev/cls)"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "เวลาตอบสนองต่ออินพุตโดยประมาณเป็นระยะเวลาโดยประมาณที่แอปใช้เพื่อตอบสนองอินพุตของผู้ใช้ระหว่างการโหลดหน้าเว็บในกรอบเวลา 5 วินาทีที่ทำงานหนักที่สุด มีหน่วยเป็นมิลลิวินาที หากเวลาในการตอบสนองนานกว่า 50 มิลลิวินาที ผู้ใช้อาจรู้สึกว่าแอปช้า [ดูข้อมูลเพิ่มเติม](https://web.dev/estimated-input-latency)"

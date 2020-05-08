@@ -372,7 +372,7 @@
     "message": "Gli elementi `<video>` contengono un elemento `<track>` con `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "Per una visualizzazione ottimale su iOS quando gli utenti aggiungono un'applicazione web progressiva alla schermata Home, definisci un elemento `apple-touch-icon`, che deve rimandare a un'immagine PNG quadrata di 192 px (o 180 px) non trasparente. [Ulteriori informazioni](https://web.dev/apple-touch-icon/)."
+    "message": "Per una visualizzazione ottimale su iOS quando gli utenti aggiungono un'app web progressiva alla schermata Home, definisci un elemento `apple-touch-icon`, che deve rimandare a un'immagine PNG quadrata di 192 px (o 180 px) non trasparente. [Ulteriori informazioni](https://web.dev/apple-touch-icon/)."
   },
   "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
     "message": "Non fornisce un valore `apple-touch-icon` valido"
@@ -648,7 +648,7 @@
     "message": "Per gli utenti con connessioni lente, gli script esterni inseriti in modo dinamico tramite `document.write()` potrebbero ritardare il caricamento della pagina di decine di secondi. [Ulteriori informazioni](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Avoid `document.write()`"
+    "message": "Evita `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Evita `document.write()`"
@@ -876,7 +876,7 @@
     "message": "Il file manifest contiene un'icona mascherabile"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
+    "message": "La metrica Variazione layout cumulativa misura lo spostamento degli elementi visibili all'interno dell'area visibile. [Ulteriori informazioni](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "La metrica Latenza input stimata fornisce una stima del tempo impiegato dall'app, espresso in millisecondi, per rispondere all'input dell'utente durante il periodo di 5 s più impegnativo del caricamento della pagina. Se la latenza è superiore a 50 ms, gli utenti potrebbero considerare lenta la tua app. [Ulteriori informazioni](https://web.dev/estimated-input-latency)."
@@ -1113,7 +1113,7 @@
     "message": "I target dei tocchi sono dimensionati in modo appropriato"
   },
   "lighthouse-core/audits/service-worker.js | description": {
-    "message": "Il service worker è la tecnologia che consente alla tua app di usare tante funzionalità delle applicazioni web progressive, ad esempio il funzionamento offline, l'aggiunta alla schermata Home e le notifiche push. [Ulteriori informazioni](https://web.dev/service-worker)."
+    "message": "Il service worker è la tecnologia che consente alla tua app di usare tante funzionalità delle app web progressive, ad esempio il funzionamento offline, l'aggiunta alla schermata Home e le notifiche push. [Ulteriori informazioni](https://web.dev/service-worker)."
   },
   "lighthouse-core/audits/service-worker.js | explanationBadManifest": {
     "message": "Questa pagina è controllata tramite un service worker, ma non è stato trovato alcun elemento `start_url` perché non è stato possibile analizzare il file manifest come JSON valido"
@@ -1257,7 +1257,7 @@
     "message": "Ha alcuni contenuti quando JavaScript non è disponibile"
   },
   "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Se devi creare un'applicazione web progressiva, potresti usare un service worker per far funzionare la tua app offline. [Ulteriori informazioni](https://web.dev/works-offline)."
+    "message": "Se devi creare un'app web progressiva, potresti usare un service worker per far funzionare la tua app offline. [Ulteriori informazioni](https://web.dev/works-offline)."
   },
   "lighthouse-core/audits/works-offline.js | failureTitle": {
     "message": "La pagina attuale non risponde con un codice 200 quando è offline"
@@ -1365,13 +1365,13 @@
     "message": "Prestazioni"
   },
   "lighthouse-core/config/default-config.js | pwaCategoryDescription": {
-    "message": "Questi controlli consentono di convalidare gli aspetti di un'applicazione web progressiva. [Ulteriori informazioni](https://developers.google.com/web/progressive-web-apps/checklist)."
+    "message": "Questi controlli consentono di convalidare gli aspetti di un'app web progressiva. [Ulteriori informazioni](https://developers.google.com/web/progressive-web-apps/checklist)."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryManualDescription": {
     "message": "Questi controlli sono richiesti in base all'[Elenco di controllo PWA](https://developers.google.com/web/progressive-web-apps/checklist) di riferimento, ma non vengono eseguiti automaticamente da Lighthouse. Non incidono sul tuo punteggio, ma è importante verificarli manualmente."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Applicazione web progressiva"
+    "message": "App web progressiva"
   },
   "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
     "message": "Veloce e affidabile"

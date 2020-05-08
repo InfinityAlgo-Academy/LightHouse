@@ -552,7 +552,7 @@
     "message": "Vermeidet Application Cache"
   },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
-    "message": "Eine Zeichencodierungsdeklaration ist erforderlich. Sie kann mit einem <meta>-Tag in den ersten 1024 Byte des HTML-Codes oder in der HTTP-Antwortüberschrift \"Content-Type\" angegeben werden. [Weitere Informationen](https://www.w3.org/International/questions/qa-html-encoding-declarations)."
+    "message": "Eine Zeichencodierungsdeklaration ist erforderlich. Sie kann mit einem <meta>-Tag in den ersten 1024 Byte des HTML-Codes oder im HTTP-Antwortheader \"Content-Type\" angegeben werden. [Weitere Informationen](https://www.w3.org/International/questions/qa-html-encoding-declarations)."
   },
   "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
     "message": "Die Charset-Deklaration fehlt oder erscheint zu spät im HTML-Code"
@@ -648,7 +648,7 @@
     "message": "Für Nutzer mit langsamen Verbindungen können externe Skripts, die dynamisch über `document.write()` eingefügt werden, den Seitenaufbau um einige Sekunden verzögern. [Weitere Informationen.](https://web.dev/no-document-write)"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Avoid `document.write()`"
+    "message": "`document.write()` vermeiden"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Verwendet kein `document.write()`"
@@ -876,7 +876,7 @@
     "message": "Das Manifest hat ein maskierbares Symbol"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
+    "message": "Cumulative Layout Shift misst die Bewegung sichtbarer Elemente innerhalb des Darstellungsbereichs. [Weitere Informationen](https://web.dev/cls)"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Die geschätzte Eingabelatenz ist eine Schätzung dessen, wie viele Millisekunden Ihre App benötigt, um während des 5-s-Fensters mit der stärksten Auslastung beim Seitenaufbau auf Nutzereingaben zu reagieren. Wenn die Latenz bei Ihnen über 50 ms beträgt, empfinden Nutzer Ihre App möglicherweise als langsam. [Weitere Informationen.](https://web.dev/estimated-input-latency)"

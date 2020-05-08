@@ -648,7 +648,7 @@
     "message": "V prípade používateľov s pomalým pripojením môžu externé skripty, ktoré sú dynamicky vložené prostredníctvom funkcie `document.write()`, oneskoriť načítavanie stránky o desiatky sekúnd. [Ďalšie informácie](https://web.dev/no-document-write)"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Avoid `document.write()`"
+    "message": "Nepoužívajte `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Nepoužíva `document.write()`"
@@ -876,7 +876,7 @@
     "message": "Manifest má maskovateľnú ikonu"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
+    "message": "Kumulatívna zmena rozloženia meria pohyb viditeľných prvkov v rámci oblasti zobrazenia. [Ďalšie informácie](https://web.dev/cls)"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Odhadovaná latencia vstupu je odhadovaný čas odozvy na vstup používateľa v milisekundách počas najrušnejších 5 sekúnd načítania stránky. Ak latencia prevyšuje 50 ms, používateľom sa môžu zdať odozvy aplikácie oneskorené. [Ďalšie informácie](https://web.dev/estimated-input-latency)"

@@ -648,7 +648,7 @@
     "message": "Para usuários em conexões lentas, os scripts externos injetados dinamicamente via `document.write()` podem atrasar o carregamento de página em dezenas de segundos. [Saiba mais](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Avoid `document.write()`"
+    "message": "Evitar `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Evita `document.write()`"
@@ -876,7 +876,7 @@
     "message": "O manifesto tem um ícone mascarável"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
+    "message": "A \"Mudança de layout cumulativa\" mede o movimento de elementos visíveis na janela de visualização. [Saiba mais](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "\"Latência de entrada estimada\" é uma estimativa de quanto tempo o app leva para responder à entrada do usuário, em milésimos de segundo, durante a janela de carregamento de página mais movimentada de cinco segundos. Se a latência for maior que 50 ms, o usuário poderá notar lentidão no app. [Saiba mais](https://web.dev/estimated-input-latency)."

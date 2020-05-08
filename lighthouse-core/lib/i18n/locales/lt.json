@@ -648,7 +648,7 @@
     "message": "Esant lėtam ryšiui, išoriniai scenarijai, dinamiškai įterpiami naudojant „`document.write()`“, gali atidėti puslapio įkėlimą dešimtimis sekundžių. [Sužinokite daugiau](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Avoid `document.write()`"
+    "message": "„`document.write()`“ vengimas"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Vengiama naudoti „`document.write()`“"
@@ -876,7 +876,7 @@
     "message": "Pateikta maskuojama aprašo piktograma"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
+    "message": "Nustatant kaupiamąjį išdėstymo poslinkį įvertinamas peržiūros srityje matomų elementų judėjimas. [Sužinokite daugiau](https://web.dev/cls)"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Įvertinta įvesties delsa yra įvertintas laikas milisekundėmis, per kurį programa atsako į naudotojo įvestį per labiausiai užimtas puslapio įkėlimo 5 sekundes. Jei delsa ilgesnė nei 50 ms, naudotojams gali atrodyti, kad programa veikia lėtai. [Sužinokite daugiau](https://web.dev/estimated-input-latency)."

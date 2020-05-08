@@ -648,7 +648,7 @@
     "message": "W przypadku wolnego połączenia sieciowego skrypty zewnętrzne dodawane dynamicznie przy użyciu instrukcji `document.write()` mogą opóźnić wczytanie strony o dziesiątki sekund. [Więcej informacji](https://web.dev/no-document-write)"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Avoid `document.write()`"
+    "message": "Unikaj `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Nie używa instrukcji `document.write()`"
@@ -876,7 +876,7 @@
     "message": "Plik manifestu ma ikonę z możliwością maskowania"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
+    "message": "Zbiorcze przesunięcie układu to miara ruchu elementów w widocznym obszarze. [Więcej informacji](https://web.dev/cls)"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Szacowane opóźnienie reakcji jest szacunkowym czasem (w milisekundach), po którym aplikacja reaguje na działanie użytkownika w trakcie najbardziej intensywnego, pięciosekundowego okresu ładowania strony. Jeśli opóźnienie jest większe niż 50 ms, użytkownicy mogą uznać aplikację za powolną. [Więcej informacji](https://web.dev/estimated-input-latency)"

@@ -648,7 +648,7 @@
     "message": "Las secuencias de comandos externas inyectadas dinámicamente mediante `document.write()` pueden retrasar la carga de la página varias decenas de segundos en conexiones lentas. [Más información](https://web.dev/no-document-write)"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Avoid `document.write()`"
+    "message": "Evitar `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Evita `document.write()`"
@@ -876,7 +876,7 @@
     "message": "El archivo de manifiesto tiene un icono enmascarable"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
+    "message": "Los cambios de diseño acumulados miden el movimiento de los elementos visibles dentro de la ventana gráfica. [Más información](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "La latencia de entrada estimada es el tiempo, en milisegundos, que tarda tu aplicación en responder a las acciones de los usuarios durante el periodo de 5 s más activo de carga de la página. Si tu latencia es superior a 50 ms, es posible que los usuarios perciban cierto retardo en tu aplicación. [Más información](https://web.dev/estimated-input-latency)"

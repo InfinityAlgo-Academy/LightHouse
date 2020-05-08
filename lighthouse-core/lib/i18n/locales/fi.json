@@ -648,7 +648,7 @@
     "message": "Hitaiden yhteyksien käyttäjien kohdalla `document.write()`-komennolla dynaamisesti lisätyt ulkoiset skriptit voivat hidastaa sivun latausta kymmenillä sekunneilla. [Lue lisää](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Avoid `document.write()`"
+    "message": "Vältä: `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Vältetty: `document.write()`"
@@ -876,7 +876,7 @@
     "message": "Teknisissä tiedoissa on peitettävä kuvake"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
+    "message": "Kumulatiivinen asettelumuutos mittaa näkymässä olevien elementtien liikettä. [Lue lisää](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Arvioitu syöttöviive on millisekunteina annettu arvio siitä, kuinka kauan sovelluksellasi kestää vastata käyttäjän syötteeseen sivun lataamisen kiireisimmän, viiden sekunnin mittaisen jakson aikana. Jos viive on yli 50 ms, sovelluksesi voi toimia käyttäjien mielestä hitaasti. [Lue lisää](https://web.dev/estimated-input-latency)."

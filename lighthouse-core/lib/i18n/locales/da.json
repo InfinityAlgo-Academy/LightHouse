@@ -648,7 +648,7 @@
     "message": "Eksterne scripts, der indsættes dynamisk via `document.write()`, kan forsinke sideindlæsningen med flere sekunder for brugere med langsomme forbindelser. [Få flere oplysninger](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Avoid `document.write()`"
+    "message": "Undgå `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Undgår `document.write()`"
@@ -876,7 +876,7 @@
     "message": "Manifestet har et ikon, der kan maskeres"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
+    "message": "Akkumuleret layoutskift måler synlige elementers bevægelse i det synlige område. [Få flere oplysninger](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Estimeret inputforsinkelse er en anslået værdi af, hvor længe din app er om at reagere på brugerinput i millisekunder i det travleste femsekundersvindue under en sideindlæsning. Hvis din forsinkelse er længere end 50 ms, kan brugerne opfatte din app som langsom. [Få flere oplysninger](https://web.dev/estimated-input-latency)."

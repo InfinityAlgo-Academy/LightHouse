@@ -648,7 +648,7 @@
     "message": "Pentru utilizatorii cu conexiuni lente, scripturile externe injectate dinamic prin `document.write()` pot întârzia încărcarea paginilor cu zeci de secunde. [Află mai multe](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Avoid `document.write()`"
+    "message": "Evită `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Evită `document.write()`"
@@ -876,7 +876,7 @@
     "message": "Manifestul are o pictogramă care poate fi mascată"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
+    "message": "Schimbarea cumulată a aspectului măsoară deplasarea elementelor vizibile în aria vizibilă. [Află mai multe](https://web.dev/cls)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Latența estimată a comenzilor reprezintă o estimare a duratei necesare pentru ca aplicația să răspundă la comanda utilizatorului, în milisecunde, în cea mai aglomerată fereastră de cinci secunde de încărcare a paginii. Dacă latența este mai mare de 50 ms, utilizatorii îți pot percepe aplicația ca fiind lentă. [Află mai multe](https://web.dev/estimated-input-latency)."

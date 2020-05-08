@@ -648,7 +648,7 @@
     "message": "Использование метода `document.write()` для динамической подгрузки внешних скриптов может значительно замедлять загрузку страницы для пользователей с низкой скоростью подключения. [Подробнее…](https://web.dev/no-document-write)"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "Avoid `document.write()`"
+    "message": "Избегайте API `document.write()`"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Метод `document.write()` не используется"
@@ -876,7 +876,7 @@
     "message": "Манифест содержит маскируемый значок"
   },
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
-    "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls)."
+    "message": "Совокупное смещение макета – это процентная величина, на которую смещаются видимые элементы области просмотра при загрузке. [Подробнее…](https://web.dev/cls)"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Примерное время задержки при вводе показывает время в миллисекундах, через которое приложение реагирует на действия пользователя в течение самых активных 5 секунд загрузки страницы. Если это время превышает 50 мс, пользователям может показаться, что ваше приложение работает слишком медленно. [Подробнее…](https://web.dev/estimated-input-latency)"
