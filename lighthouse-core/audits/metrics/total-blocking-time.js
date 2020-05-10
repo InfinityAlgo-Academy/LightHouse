@@ -41,9 +41,9 @@ class TotalBlockingTime extends Audit {
       // thresholds according to our 25/75-th rule will be quite harsh scoring (a single 350ms task)
       // after FCP will yield a score of .5. The following coefficients are semi-arbitrarily picked
       // to give 600ms jank a score of .5 and 100ms jank a score of .999. We can tweak these numbers
-      // in the future. See https://www.desmos.com/calculator/a7ib75kq3g
-      scoreMedian: 600,
-      scorePODR: 200,
+      // in the future. See https://www.desmos.com/calculator/bbsv8fedg5
+      median: 600,
+      p10: 287,
     };
   }
 
@@ -67,9 +67,8 @@ class TotalBlockingTime extends Audit {
 
     return {
       score: Audit.computeLogNormalScore(
-        metricResult.timing,
-        context.options.scorePODR,
-        context.options.scoreMedian
+        {p10: context.options.p10, median: context.options.median},
+        metricResult.timing
       ),
       numericValue: metricResult.timing,
       numericUnit: 'millisecond',

@@ -566,9 +566,6 @@
   "lighthouse-core/audits/dobetterweb/doctype.js | title": {
     "message": "La page n'a pas d'attribut doctype HTML"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Élément"
-  },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
     "message": "Statistique"
   },

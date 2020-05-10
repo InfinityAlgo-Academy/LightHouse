@@ -12,7 +12,7 @@ const MainResource = require('./main-resource.js');
 const Budget = require('../config/budget.js');
 const Util = require('../report/html/renderer/util.js');
 
-/** @typedef {{count: number, size: number}} ResourceEntry */
+/** @typedef {{count: number, resourceSize: number, transferSize: number}} ResourceEntry */
 
 class ResourceSummary {
   /**
@@ -42,15 +42,15 @@ class ResourceSummary {
   static summarize(networkRecords, mainResourceURL, context) {
     /** @type {Record<LH.Budget.ResourceType, ResourceEntry>} */
     const resourceSummary = {
-      'stylesheet': {count: 0, size: 0},
-      'image': {count: 0, size: 0},
-      'media': {count: 0, size: 0},
-      'font': {count: 0, size: 0},
-      'script': {count: 0, size: 0},
-      'document': {count: 0, size: 0},
-      'other': {count: 0, size: 0},
-      'total': {count: 0, size: 0},
-      'third-party': {count: 0, size: 0},
+      'stylesheet': {count: 0, resourceSize: 0, transferSize: 0},
+      'image': {count: 0, resourceSize: 0, transferSize: 0},
+      'media': {count: 0, resourceSize: 0, transferSize: 0},
+      'font': {count: 0, resourceSize: 0, transferSize: 0},
+      'script': {count: 0, resourceSize: 0, transferSize: 0},
+      'document': {count: 0, resourceSize: 0, transferSize: 0},
+      'other': {count: 0, resourceSize: 0, transferSize: 0},
+      'total': {count: 0, resourceSize: 0, transferSize: 0},
+      'third-party': {count: 0, resourceSize: 0, transferSize: 0},
     };
     const budget = Budget.getMatchingBudget(context.settings.budgets, mainResourceURL);
     /** @type {ReadonlyArray<string>} */
@@ -80,10 +80,12 @@ class ResourceSummary {
     }).forEach((record) => {
       const type = this.determineResourceType(record);
       resourceSummary[type].count++;
-      resourceSummary[type].size += record.transferSize;
+      resourceSummary[type].resourceSize += record.resourceSize;
+      resourceSummary[type].transferSize += record.transferSize;
 
       resourceSummary.total.count++;
-      resourceSummary.total.size += record.transferSize;
+      resourceSummary.total.resourceSize += record.resourceSize;
+      resourceSummary.total.transferSize += record.transferSize;
 
       const isFirstParty = firstPartyHosts.some((hostExp) => {
         const url = new URL(record.url);
@@ -95,7 +97,8 @@ class ResourceSummary {
 
       if (!isFirstParty) {
         resourceSummary['third-party'].count++;
-        resourceSummary['third-party'].size += record.transferSize;
+        resourceSummary['third-party'].resourceSize += record.resourceSize;
+        resourceSummary['third-party'].transferSize += record.transferSize;
       }
     });
     return resourceSummary;

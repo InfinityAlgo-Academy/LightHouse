@@ -101,7 +101,7 @@ describe('ReportGenerator', () => {
       fs.writeFileSync(path, csvOutput);
 
       const lines = csvOutput.split('\n');
-      expect(lines).toHaveLength(145);
+      expect(lines.length).toBeGreaterThan(100);
       expect(lines.slice(0, 2).join('\n')).toMatchInlineSnapshot(`
         "requestedUrl,finalUrl,category,name,title,type,score
         \\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"Performance\\",\\"first-contentful-paint\\",\\"First Contentful Paint\\",\\"numeric\\",\\"0.51\\"

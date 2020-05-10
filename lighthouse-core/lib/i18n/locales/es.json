@@ -566,9 +566,6 @@
   "lighthouse-core/audits/dobetterweb/doctype.js | title": {
     "message": "La página tiene el DOCTYPE de HTML"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Elemento"
-  },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
     "message": "Estadística"
   },

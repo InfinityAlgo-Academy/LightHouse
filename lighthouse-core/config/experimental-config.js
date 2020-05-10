@@ -31,6 +31,7 @@ const config = {
       auditRefs: [
         {id: 'duplicated-javascript', weight: 0, group: 'load-opportunities'},
         {id: 'legacy-javascript', weight: 0, group: 'diagnostics'},
+        {id: 'treemap-data', weight: 0},
       ],
     },
   },

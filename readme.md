@@ -443,7 +443,7 @@ Read more in our [guide to network throttling](./docs/throttling.md).
 
 ### Are results sent to a remote server?
 
-Nope. Lighthouse runs locally, auditing a page using a local version of the Chrome browser installed the
+Nope. Lighthouse runs locally, auditing a page using a local version of the Chrome browser installed on the
 machine. Report results are never processed or beaconed to a remote server.
 
 ### How do I author custom audits to extend Lighthouse?
