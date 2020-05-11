@@ -581,26 +581,27 @@ describe('DetailsRenderer', () => {
         };
 
         const el = renderer.render(details);
-        const columnElement = el.querySelector('td.lh-table-column--url');
 
-        // First element is the url.
-        const codeEl = columnElement.firstChild;
+        const rowEls = el.querySelectorAll('tbody tr');
+        let rowEl;
+        let columnEl;
+
+        // First row contains a 'url' item type.
+        rowEl = rowEls[0];
+        columnEl = rowEl.querySelector('td.lh-table-column--url');
+        const codeEl = columnEl.firstChild;
         assert.equal(codeEl.localName, 'div');
         assert.ok(codeEl.classList.contains('lh-text__url'));
         assert.equal(codeEl.textContent, 'https://www.example.com');
 
-        // Second element lists the multiple values.
-        const subRowsEl = columnElement.children[1];
-        assert.equal(subRowsEl.localName, 'div');
-        assert.ok(subRowsEl.classList.contains('lh-sub-rows'));
-
-        const multiValueEls = subRowsEl.querySelectorAll('.lh-sub-row');
-        assert.equal(multiValueEls[0].textContent, 'a');
-        assert.ok(multiValueEls[0].classList.contains('lh-code'));
-        assert.equal(multiValueEls[1].textContent, 'b');
-        assert.ok(multiValueEls[1].classList.contains('lh-code'));
-        assert.equal(multiValueEls[2].textContent, 'c');
-        assert.ok(multiValueEls[2].classList.contains('lh-code'));
+        // The sub-rows contain a 'code' item type.
+        for (let i = 0; i < details.items[0].sources.length; i++) {
+          rowEl = rowEls[i + 1];
+          columnEl = rowEl.querySelector('td.lh-table-column--code');
+          assert.ok(rowEl.classList.contains('lh-sub-row'));
+          assert.ok(columnEl.firstChild.classList.contains('lh-code'));
+          assert.equal(rowEl.textContent, details.items[0].sources[i]);
+        }
       });
 
       it('renders, uses heading properties as fallback', () => {
@@ -620,26 +621,31 @@ describe('DetailsRenderer', () => {
         };
 
         const el = renderer.render(details);
-        const columnElement = el.querySelector('td.lh-table-column--url');
+        const rowEls = el.querySelectorAll('tbody tr');
+        let rowEl;
+        let columnEl;
 
-        // First element is the url.
-        const codeEl = columnElement.firstChild;
+        // First row contains a 'url' item type.
+        rowEl = rowEls[0];
+        columnEl = rowEl.querySelector('td.lh-table-column--url');
+        const codeEl = columnEl.firstChild;
         assert.equal(codeEl.localName, 'div');
         assert.ok(codeEl.classList.contains('lh-text__url'));
         assert.equal(codeEl.textContent, 'https://www.example.com');
 
-        // Second element lists the multiple values.
-        const subRowsEl = columnElement.children[1];
-        assert.equal(subRowsEl.localName, 'div');
-        assert.ok(subRowsEl.classList.contains('lh-sub-rows'));
-
-        const multiValueEls = subRowsEl.querySelectorAll('.lh-sub-row');
-        assert.equal(multiValueEls[0].textContent, 'https://www.a.com');
-        assert.ok(multiValueEls[0].classList.contains('lh-text__url'));
-        assert.equal(multiValueEls[1].textContent, 'https://www.b.com');
-        assert.ok(multiValueEls[1].classList.contains('lh-code'));
-        assert.equal(multiValueEls[2].textContent, 'https://www.c.com');
-        assert.ok(multiValueEls[2].classList.contains('lh-text__url'));
+        // The sub-rows contain a 'url' item type, except for the second one, which is 'code'.
+        for (let i = 0; i < details.items[0].sources.length; i++) {
+          rowEl = rowEls[i + 1];
+          columnEl = rowEl.querySelector('td.lh-table-column--url');
+          assert.ok(rowEl.classList.contains('lh-sub-row'));
+          if (i === 1) {
+            assert.ok(columnEl.firstChild.classList.contains('lh-code'));
+            assert.equal(rowEl.textContent, details.items[0].sources[i].value);
+          } else {
+            assert.ok(columnEl.firstChild.classList.contains('lh-text__url'));
+            assert.equal(rowEl.textContent, details.items[0].sources[i]);
+          }
+        }
       });
     });
   });
