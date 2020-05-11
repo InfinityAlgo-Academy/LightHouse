@@ -193,7 +193,7 @@
     },
     {
       "path": "./dist/lightrider/lighthouse-lr-bundle.js",
-      "maxSize": "1.50 MB"
+      "maxSize": "1.60 MB"
     },
     {
       "path": "./dist/viewer/src/viewer.js",

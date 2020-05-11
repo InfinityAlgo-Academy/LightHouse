@@ -141,10 +141,10 @@
     "message": "정의 목록이 올바르게 표시되지 않으면 스크린 리더에서 혼란스럽거나 정확하지 않은 내용을 말할 수 있습니다. [자세히 알아보기](https://web.dev/definition-list/)"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>`에 순서가 올바른 `<dt>` 및 `<dd>` 그룹, `<script>` 또는 `<template>` 요소만 포함되지 않음"
+    "message": "`<dl>`에 순서가 올바른 `<dt>` 및 `<dd>` 그룹, `<script>`, `<template>` 또는 `<div>` 요소만 포함되어 있지 않음"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>`에 순서가 올바른 `<dt>` 및 `<dd>` 그룹, `<script>` 또는 `<template>` 요소만 포함됨"
+    "message": "`<dl>`에 순서가 올바른 `<dt>` 및 `<dd>` 그룹, `<script>`, `<template>` 또는 `<div>` 요소만 포함되어 있음"
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
     "message": "스크린 리더에서 정의 목록 항목(`<dt>` 및 `<dd>`)을 올바르게 읽으려면 정의 목록 항목이 상위 `<dl>` 요소에 래핑되어 있어야 합니다. [자세히 알아보기](https://web.dev/dlitem/)"
@@ -404,6 +404,12 @@
   "lighthouse-core/audits/bootup-time.js | title": {
     "message": "자바스크립트 실행 시간"
   },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | description": {
+    "message": "번들에서 큰 중복 자바스크립트 모듈을 삭제하여 네트워크 활동이 소비하는 불필요한 바이트 수를 줄입니다. "
+  },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | title": {
+    "message": "자바스크립트 번들에서 중복 모듈 삭제"
+  },
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | description": {
     "message": "대용량의 GIF는 애니메이션 콘텐츠를 전달하는 데 비효율적입니다. 애니메이션에는 MPEG4/WebM 동영상을, 정적인 이미지에는 GIF 대신 PNG/WebP를 사용하여 네트워크 바이트를 절약하세요. [자세히 알아보기](https://web.dev/efficient-animated-content)"
   },
@@ -453,7 +459,7 @@
     "message": "사용하지 않는 CSS 제거"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "사용하지 않는 자바스크립트를 삭제하여 네트워크 활동에 소비되는 바이트를 줄입니다. [자세히 알아보기](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)"
+    "message": "사용하지 않는 자바스크립트를 삭제하여 네트워크 활동에 소비되는 바이트를 줄입니다. [자세히 알아보기](https://web.dev/remove-unused-code/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "사용하지 않는 자바스크립트 삭제하기"
@@ -545,6 +551,15 @@
   "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
     "message": "애플리케이션 캐시 사용하지 않기"
   },
+  "lighthouse-core/audits/dobetterweb/charset.js | description": {
+    "message": "문자 인코딩 선언이 필요합니다. HTML의 첫 1,024바이트 또는 Content-Type HTTP 응답 헤더에서 <meta> 태그를 사용하여 선언할 수 있습니다. [자세히 알아보기](https://www.w3.org/International/questions/qa-html-encoding-declarations)"
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
+    "message": "문자 집합 선언이 없거나 HTML에서 너무 뒤에 있음"
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | title": {
+    "message": "문자 집합을 제대로 정의함"
+  },
   "lighthouse-core/audits/dobetterweb/doctype.js | description": {
     "message": "Doctype을 지정하면 브라우저가 쿼크 모드로 전환할 수 없습니다. [자세히 알아보기](https://web.dev/doctype)"
   },
@@ -593,6 +608,9 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "과도한 DOM 크기 지양하기"
   },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
+    "message": "통과하지 못한 앵커"
+  },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "성능을 개선하고 보안 취약점을 예방하려면 `rel=\"noopener\"` 또는 `rel=\"noreferrer\"`을(를) 외부 링크에 추가합니다. [자세히 알아보기](https://web.dev/external-anchors-use-rel-noopener)"
   },
@@ -627,7 +645,7 @@
     "message": "연결이 느린 사용자의 경우 `document.write()`에서 동적으로 삽입된 외부 스크립트로 인해 페이지 로드가 몇십 초까지 지연될 수 있습니다. [자세히 알아보기](https://web.dev/no-document-write)"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
-    "message": "`document.write()`을(를) 사용함"
+    "message": "`document.write()` 피하기"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
     "message": "`document.write()` 지양하기"
@@ -749,6 +767,24 @@
   "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
     "message": "잘못된 이미지 크기 정보 {url}"
   },
+  "lighthouse-core/audits/image-size-responsive.js | columnActual": {
+    "message": "실제 크기"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
+    "message": "표시된 크기"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
+    "message": "예상 크기"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | description": {
+    "message": "이미지의 본래 크기가 표시 크기와 픽셀 비율에 비례해야 이미지가 가장 선명하게 보입니다. [자세히 알아보기](https://web.dev/image-size-responsive)"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
+    "message": "잘못된 크기의 이미지 표시"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | title": {
+    "message": "올바른 크기의 이미지 표시"
+  },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "브라우저는 사용자에게 홈 화면에 앱을 추가하라는 메시지를 사전에 표시할 수 있으며 이렇게 하면 참여도가 높아질 수 있습니다. [자세히 알아보기](https://web.dev/installable-manifest)"
   },
@@ -772,6 +808,12 @@
   },
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "HTTPS 사용"
+  },
+  "lighthouse-core/audits/legacy-javascript.js | description": {
+    "message": "Polyfill 및 변환을 통해 레거시 브라우저에서 새로운 자바스크립트 기능을 사용할 수 있습니다. 하지만 최신 브라우저에서는 대부분 필요하지 않습니다. 번들로 포함된 자바스크립트의 경우, module/nomodule 기능 감지를 사용하는 최신 스크립트 배포 전략을 채택하여 최신 브라우저에 적용되는 코드를 줄이고 레거시 브라우저 지원을 유지할 수 있습니다. [자세히 알아보기](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
+  },
+  "lighthouse-core/audits/legacy-javascript.js | title": {
+    "message": "레거시 자바스크립트"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "셀룰러 네트워크에서 페이지 로드가 빠르면 우수한 모바일 사용자 환경을 제공할 수 있습니다. [자세히 알아보기](https://web.dev/load-fast-enough-for-pwa)"
@@ -821,6 +863,18 @@
   "lighthouse-core/audits/manual/pwa-page-transitions.js | title": {
     "message": "페이지 전환 시 네트워크에서 막히는 느낌이 들지 않음"
   },
+  "lighthouse-core/audits/maskable-icon.js | description": {
+    "message": "마스크 가능한 아이콘은 앱을 기기에 설치할 때 레터박스 없이 이미지가 도형 전체를 채울 수 있게 합니다. [자세히 알아보기](https://web.dev/maskable-icon/)"
+  },
+  "lighthouse-core/audits/maskable-icon.js | failureTitle": {
+    "message": "매니페스트에 마스크 가능한 아이콘이 없음"
+  },
+  "lighthouse-core/audits/maskable-icon.js | title": {
+    "message": "매니페스트에 마스크 가능한 아이콘이 있음"
+  },
+  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
+    "message": "누적 레이아웃 변경은 표시 영역 안에 보이는 요소의 이동을 측정합니다. [자세히 알아보기](https://web.dev/cls)"
+  },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "예상 입력 대기시간은 페이지 로드가 가장 많은 5초 동안 앱이 사용자 입력에 응답하는 데 걸리는 시간(밀리초)의 추정치입니다. 지연 시간이 50밀리초보다 길면 사용자가 앱이 느리다고 인식할 수 있습니다. [자세히 알아보기](https://web.dev/estimated-input-latency)"
   },
@@ -837,7 +891,7 @@
     "message": "사용할 수 있을 때까지 걸리는 시간은 완전히 페이지와 상호작용할 수 있게 될 때까지 걸리는 시간입니다. [자세히 알아보기](https://web.dev/interactive)"
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
-    "message": "콘텐츠가 포함된 최대 페인트는 최대 텍스트 또는 이미지가 표시되는 시간을 나타냅니다. [자세히 알아보기](https://web.dev/largest-contentful-paint)"
+    "message": "콘텐츠가 포함된 최대 페인트는 최대 텍스트 또는 이미지가 표시되는 시간을 나타냅니다. [자세히 알아보기](https://web.dev/lighthouse-largest-contentful-paint)"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "사용자가 경험할 수 있는 최대 첫 입력 지연 예상 시간은 가장 긴 작업의 길이입니다. [자세히 알아보기](https://web.dev/lighthouse-max-potential-fid)"
@@ -1163,6 +1217,9 @@
   "lighthouse-core/audits/uses-rel-preconnect.js | title": {
     "message": "필수 원본 미리 연결하기"
   },
+  "lighthouse-core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
+    "message": "사전 연결 링크가 3개 이상 발견되었습니다. 사전 연결 링크는 가장 중요한 원본에 한해 조금만 사용해야 합니다."
+  },
   "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
     "message": "'{preloadURL}'에 사전 로드 <link>가 있으나 브라우저에서 사용되지 않습니다. `crossorigin` 속성을 올바르게 사용하고 있는지 확인하세요."
   },
@@ -1349,6 +1406,12 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "모바일 친화적"
   },
+  "lighthouse-core/gather/gather-runner.js | warningRedirected": {
+    "message": "테스트 URL({requested})이 {final}(으)로 리디렉션되었기 때문에 페이지가 예상대로 로드되지 않을 수 있습니다. 두 번째 URL을 직접 테스트해 보세요."
+  },
+  "lighthouse-core/gather/gather-runner.js | warningTimeout": {
+    "message": "페이지 로드가 너무 느려 시간 제한 내에 완료되지 않았습니다. 결과가 불완전할 수 있습니다."
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "캐시 TTL"
   },
@@ -1364,11 +1427,17 @@
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "요청"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
+    "message": "리소스 크기"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
     "message": "리소스 유형"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "크기"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnSource": {
+    "message": "소스"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "소요 시간"
@@ -1384,6 +1453,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "가능한 절감 효과"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "누적 레이아웃 변경"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "절감 가능치: {wastedBytes, number, bytes} KB"
@@ -1414,6 +1486,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "상호작용 시간"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "콘텐츠가 포함된 최대 페인트"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "최대 첫 입력 지연 예상 시간"
@@ -1508,11 +1583,38 @@
   "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
     "message": "최상 경로 최대 지연 시간:"
   },
+  "lighthouse-core/report/html/renderer/util.js | dropdownCopyJSON": {
+    "message": "JSON 복사"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownDarkTheme": {
+    "message": "어두운 테마 전환"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownPrintExpanded": {
+    "message": "인쇄 확장됨"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownPrintSummary": {
+    "message": "인쇄 요약"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveGist": {
+    "message": "Gist로 저장"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveHTML": {
+    "message": "HTML로 저장"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveJSON": {
+    "message": "JSON으로 저장"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownViewer": {
+    "message": "뷰어에서 열기"
+  },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "오류!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "보고 오류: 감사 정보 없음"
+  },
+  "lighthouse-core/report/html/renderer/util.js | footerIssue": {
+    "message": "문제 신고"
   },
   "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
     "message": "실험실 데이터"
@@ -1535,6 +1637,48 @@
   "lighthouse-core/report/html/renderer/util.js | passedAuditsGroupTitle": {
     "message": "통과한 감사"
   },
+  "lighthouse-core/report/html/renderer/util.js | runtimeDesktopEmulation": {
+    "message": "에뮬레이션된 데스크톱"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeMobileEmulation": {
+    "message": "에뮬레이션된 Moto G4"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeNoEmulation": {
+    "message": "에뮬레이션 없음"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsBenchmark": {
+    "message": "CPU/메모리 성능"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsCPUThrottling": {
+    "message": "CPU 제한"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsChannel": {
+    "message": "채널"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsDevice": {
+    "message": "기기"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsFetchTime": {
+    "message": "가져온 시간"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsNetworkThrottling": {
+    "message": "네트워크 제한"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsTitle": {
+    "message": "런타임 설정"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUA": {
+    "message": "사용자 에이전트(호스트)"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUANetwork": {
+    "message": "사용자 에이전트(네트워크)"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUrl": {
+    "message": "URL"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
+    "message": "알 수 없음"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "스니펫 접기"
   },
@@ -1543,6 +1687,9 @@
   },
   "lighthouse-core/report/html/renderer/util.js | thirdPartyResourcesLabel": {
     "message": "타사 리소스 표시"
+  },
+  "lighthouse-core/report/html/renderer/util.js | throttlingProvided": {
+    "message": "런타임 환경을 통해 제공"
   },
   "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
     "message": "Lighthouse 실행에 영향을 미치는 문제가 발생했습니다."
