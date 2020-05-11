@@ -1431,6 +1431,9 @@
 }
 .lh-sub-row {
   margin-bottom: 0;
+  font-size: var(--table-sub-row-font-size);
+  padding-top: 3px;
+  padding-bottom: 3px;
 }
 
 /* Chevron
