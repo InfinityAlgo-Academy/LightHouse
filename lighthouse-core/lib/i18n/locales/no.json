@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Minimer bruken av tredjepartskode"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "Tid til første byte identifiserer tidspunktet da tjeneren sendte et svar. [Finn ut mer](https://web.dev/time-to-first-byte)."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "Root-dokumentet brukte {timeInMs, number, milliseconds} ms"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Reduser responstiden for tjener (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Svartiden til tjeneren er lav (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "Måling"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Vurder å endre produkt- og katalogmalene for å nyttiggjøre deg av funksjonaliteten for [utsatt innlasting](https://web.dev/native-lazy-loading) på nettplattformen."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Bruk Magentos [Varnish-integrasjon](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Slå på alternativet «Forminsk CSS-filer» i Utvikler-innstillingene for butikken. [Finn ut mer](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Hvis du bruker React Router, kan du minimere bruken av `<Redirect>`-komponenten for [rutenavigasjoner](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "Hvis du gjengir React-komponenter på tjenersiden, bør du vurdere å bruke `renderToNodeStream()` eller `renderToStaticNodeStream()` for å gi klienten mulighet til å motta og hydrere ulike deler av oppmerkingen i stedet for å gjøre alt på en gang. [Finn ut mer](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Hvis delversjonsystemet forminsker CSS-filer automatisk, må du passe på at du implementerer produksjonsdelversjonen av appen. Dette kan du sjekke med React Developer Tools-utvidelsen. [Finn ut mer](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Det finnes en rekke WordPress-programtillegg som kan hjelpe deg med å [bygge inn kritiske elementer direkte på siden](https://wordpress.org/plugins/search/critical+css/) eller [utsette innlasting av mindre viktige ressurser](https://wordpress.org/plugins/search/defer+css+javascript/). Vær obs på at optimalisering som gjøres av disse programtilleggene, kan ødelegge funksjonalitet i temaet ditt eller programtilleggene dine, så du må sannsynligvis gjøre kodeendringer."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Både temaer, programtillegg og tjenerspesifikasjoner virker inn på tjenerens responstid. Vurder å finne et mer optimalisert tema, velge et programtillegg for optimalisering nøye og/eller oppgradere tjeneren."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Vurder å vise utdrag på innleggslistene (f.eks. via Mer-taggen), redusere antall innlegg som vises på en gitt side, fordele lange innlegg på flere sider eller bruke et programtillegg for utsatt innlasting av kommentarer."

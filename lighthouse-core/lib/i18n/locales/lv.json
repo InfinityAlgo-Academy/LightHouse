@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Samaziniet trešās puses koda lietojumu"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "Metrika “Laiks līdz pirmajam baitam” norāda laiku, kad jūsu serveris nosūta atbildi. [Uzziniet vairāk](https://web.dev/time-to-first-byte)."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "Saknes dokumentam nepieciešamais laiks: {timeInMs, number, milliseconds} ms"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Servera atbildes laika samazināšana (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Servera atbildes laiks ir mazs (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "Mērījums"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Apsveriet iespēju modificēt produktu un katalogu veidnes, lai izmantotu tīmekļa platformas [lēnas ielādes](https://web.dev/native-lazy-loading) funkciju."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Izmantojiet platformas Magento [Varnish integrāciju](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Veikala izstrādātāja iestatījumos iespējojiet opciju Minify CSS Files (Samazināt CSS failus). [Uzziniet vairāk](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Ja izmantojat bibliotēku React Router, samaziniet komponenta `<Redirect>` lietojumu [maršrutu navigācijai](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "Ja renderējat React komponentus servera pusē, apsveriet iespēju izmantot metodi `renderToNodeStream()` vai `renderToStaticNodeStream()`, lai klients varētu saņemt un aizpildīt dažādas marķējuma daļas, nevis visu marķējumu reizē. [Uzziniet vairāk](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Ja būvējuma sistēmā CSS faili tiek automātiski samazināti, pārbaudiet, vai ir izvietots jūsu lietojumprogrammas produkcijas būvējums. To var pārbaudīt, izmantojot paplašinājumu React Developer Tools. [Uzziniet vairāk](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Ir vairāki WordPress spraudņi, kas var palīdzēt [iekļaut būtiskus līdzekļus](https://wordpress.org/plugins/search/critical+css/) vai [atlikt mazāk svarīgus resursus](https://wordpress.org/plugins/search/defer+css+javascript/). Ņemiet vērā, ka šo spraudņu nodrošinātā optimizācija var traucēt funkciju darbībai jūsu motīvā vai spraudņos, tādēļ, visticamāk, jums būs jāveic koda izmaiņas."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Motīvi, spraudņi un servera specifikācijas ietekmē servera atbildes laiku. Apsveriet iespēju atrast optimizētāku motīvu, rūpīgi izvēlēties optimizācijas spraudni un/vai jaunināt serveri."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Apsveriet iespēju rādīt fragmentus ziņu sarakstos (piemēram, izmantojot tagu “more”), samazināt attiecīgajā lapā rādāmo ziņu skaitu, sadalīt garas ziņas vairākās lapās vai izmantot spraudni, lai atliktu komentāru ielādi."

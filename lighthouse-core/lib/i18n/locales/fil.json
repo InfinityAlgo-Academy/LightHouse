@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Bawasan ang paggamit ng third-party"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "Tinutukoy ng Time To First Byte ang tagal bago makapagpadala ng tugon ang iyong server. [Matuto pa](https://web.dev/time-to-first-byte)."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "Inabot nang {timeInMs, number, milliseconds} ms ang root na dokumento"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Pabilisin ang pagtugon ng server (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Masyadong matagal ang pagtugon ng server (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "Pagsukat"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Pag-isipang baguhin ang iyong mga template ng produkto at catalog para magamit ang feature na [pag-lazy load](https://web.dev/native-lazy-loading) ng web platform."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Gamitin ang [pagsasama ng Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) ng Magento."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "I-enable ang opsyong \"Paliitin ang Mga CSS File\" sa mga setting ng Developer ng iyong store. [Matuto pa](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Kung gumagamit ka ng Router ng React, bawasan ang paggamit ng bahaging `<Redirect>` para sa [mga pag-navigate sa ruta](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "Kung may nire-render ka sa server-side na anumang bahagi ng React, pag-isipang gamitin ang `renderToNodeStream()` o `renderToStaticNodeStream()` para payagan ang client na makatanggap at mag-hydrate ng iba't ibang bahagi ng markup sa halip na sabay-sabay. [Matuto pa](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Kung awtomatikong pinapaliit ng system ng build ang iyong mga CSS file, tiyaking ide-deploy mo ang build ng produksyon ng iyong application. Puwede mo itong suriin sa pamamagitan ng extension na Mga Tool ng Developer ng React. [Matuto pa](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "May ilang plugin sa WordPress na makakatulong sa iyong [i-inline ang mahahalagang asset](https://wordpress.org/plugins/search/critical+css/) o [ipagpaliban ang hindi masyadong mahahalagang resource](https://wordpress.org/plugins/search/defer+css+javascript/). Tandaang puwedeng makasira sa mga feature ng iyong tema o mga plugin ang mga pag-optimize na mula sa mga plugin na ito, kaya malamang na kakailanganin mong gumawa ng mga pagbabago sa code."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Nakakaapekto ang mga tema, plugin, at detalye ng server sa oras ng pagtugon ng server. Pag-isipang maghanap ng mas naka-optimize na tema, maingat na pumili ng plugin sa pag-optimize, at/o i-upgrade ang iyong server."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Pag-isipang magpakita ng mga sipi sa iyong mga listahan ng post (hal. sa pamamagitan ng tag na higit pa), bawasan ang bilang ng post na ipinapakita sa isang page, hatiin ang mahahaba mong post sa maraming page, o gumamit ng plugin sa mga lazy-load na komento."

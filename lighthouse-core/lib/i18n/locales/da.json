@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Minimer brugen af tredjeparter"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "TTFB (Time To First Byte) identificerer tidspunktet for, hvornår din server sender et svar. [Få flere oplysninger](https://web.dev/time-to-first-byte)."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "Roddokumentet tog {timeInMs, number, milliseconds} ms"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Reducer serversvartider (TTFB, Time To First Byte)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Serversvartiderne er korte (TTFB, Time To First Byte)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "Måling"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Du kan også vælge at ændre skabelonerne til dine produkter og kataloger for at udnytte funktionen [udskudt indlæsning](https://web.dev/native-lazy-loading) på webplatformen."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Brug Magentos [Varnish-integration](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Aktivér indstillingen \"Minify CSS Files\" (Formindsk CSS-filer) i udviklingsindstillingerne for din butik. [Få flere oplysninger](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Hvis du bruger React Router, bør du minimere brugen af komponenten `<Redirect>` til [rutenavigationer](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "Hvis du gengiver React-komponenter på serveren, bør du overveje at bruge `renderToNodeStream()` eller `renderToStaticNodeStream()` for at give klienten mulighed for at modtage og hydrere forskellige dele af opmærkningen i stedet for det hele på én gang. [Få flere oplysninger](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Hvis dit buildsystem formindsker dine CSS-filer automatisk, skal du sørge for, at du implementerer produktionsbuildet af din app. Du kan tjekke dette med udvidelsen React Developer Tools. [Få flere oplysninger](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Der er en række WordPress-plugins, som kan hjælpe dig med at [indlejre vigtige aktiver](https://wordpress.org/plugins/search/critical+css/) eller [udskyde mindre vigtige ressourcer](https://wordpress.org/plugins/search/defer+css+javascript/). Vær opmærksom på, at optimeringer via disse plugins kan ødelægge funktioner i dine temaer og plugins. Du bliver derfor sandsynligvis nødt til at foretage kodeændringer."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Temaer, plugins og serverspecifikationer påvirker alle serverens svartid. Overvej at finde et mere optimeret tema, vælge et plugin til optimering og/eller opgradere din server."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Overvej at vise uddrag på dine opslagslister (f.eks. via tagget Mere), reducere antallet af viste opslag på en given side, opdele dine lange opslag i flere sider eller bruge et plugin til at indlæse kommentarer langsomt."

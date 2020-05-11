@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Minimiza el uso del código de terceros"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "El tiempo hasta el primer byte indica el momento en el que el servidor envía una respuesta. [Obtén más información](https://web.dev/time-to-first-byte)."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "El documento raíz tardó {timeInMs, number, milliseconds} ms"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Reduce los tiempos de respuesta del servidor (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "La respuesta del servidor es lenta (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "Medición"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Se recomienda modificar las plantillas de productos y catálogos para utilizar la función de [carga diferida](https://web.dev/native-lazy-loading) de la plataforma web."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Utiliza la [integración de Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) de Magento."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Habilita la opción \"Minify CSS Files\" en las opciones de configuración para desarrolladores de la tienda. [Obtén más información](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Si utilizas React Router, minimiza el uso del componente de `<Redirect>` para las [navegaciones de ruta](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "Si procesas en el servidor cualquier componente de React, se recomienda usar `renderToNodeStream()` o `renderToStaticNodeStream()` para permitir que el cliente reciba diferentes partes del lenguaje de marcado y las complete en lugar de recibir todas al mismo tiempo. [Obtén más información](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Si el sistema de compilación reduce los archivos CSS de forma automática, asegúrate de implementar la compilación de producción de tu aplicación. Puedes comprobarlo con la extensión de las Herramientas para desarrolladores de React. [Obtén más información](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Existen varios complementos de WordPress que pueden ayudarte a [insertar elementos fundamentales](https://wordpress.org/plugins/search/critical+css/) o a [postergar recursos menos importantes](https://wordpress.org/plugins/search/defer+css+javascript/). Ten en cuenta que las optimizaciones que ofrecen estos complementos pueden interferir con funciones de tu tema o complementos, por lo que seguramente tengas que hacer cambios en el código."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Los temas, los complementos y las especificaciones del servidor afectan al tiempo de respuesta. Puedes buscar un tema más optimizado, seleccionar un complemento de optimización o actualizar tu servidor."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Puedes mostrar fragmentos en tus listas de entradas (por ejemplo, mediante la etiqueta \"<more>\"), reducir la cantidad de entradas que se muestran en cada página, dividir tus entradas más largas en múltiples páginas o usar un complemento para postergar la carga de los comentarios."

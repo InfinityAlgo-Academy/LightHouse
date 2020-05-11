@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "‏‮Minimize‬‏ ‏‮third‬‏-‏‮party‬‏ ‏‮usage‬‏"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "‏‮Time‬‏ ‏‮To‬‏ ‏‮First‬‏ ‏‮Byte‬‏ ‏‮identifies‬‏ ‏‮the‬‏ ‏‮time‬‏ ‏‮at‬‏ ‏‮which‬‏ ‏‮your‬‏ ‏‮server‬‏ ‏‮sends‬‏ ‏‮a‬‏ ‏‮response‬‏. [‏‮Learn‬‏ ‏‮more‬‏](https://web.dev/time-to-first-byte)."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "‏‮Root‬‏ ‏‮document‬‏ ‏‮took‬‏ {timeInMs, number, milliseconds} ‏‮ms‬‏"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "‏‮Reduce‬‏ ‏‮server‬‏ ‏‮response‬‏ ‏‮times‬‏ (‏‮TTFB‬‏)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "‏‮Server‬‏ ‏‮response‬‏ ‏‮times‬‏ ‏‮are‬‏ ‏‮low‬‏ (‏‮TTFB‬‏)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "‏‮Measurement‬‏"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "‏‮Consider‬‏ ‏‮modifying‬‏ ‏‮your‬‏ ‏‮product‬‏ ‏‮and‬‏ ‏‮catalog‬‏ ‏‮templates‬‏ ‏‮to‬‏ ‏‮make‬‏ ‏‮use‬‏ ‏‮of‬‏ ‏‮the‬‏ ‏‮web‬‏ ‏‮platform‬‏'‏‮s‬‏ [‏‮lazy‬‏ ‏‮loading‬‏](https://web.dev/native-lazy-loading) ‏‮feature‬‏."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "‏‮Use‬‏ ‏‮Magento‬‏'‏‮s‬‏ [‏‮Varnish‬‏ ‏‮integration‬‏](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "‏‮Enable‬‏ ‏‮the‬‏ \"‏‮Minify‬‏ ‏‮CSS‬‏ ‏‮Files‬‏\" ‏‮option‬‏ ‏‮in‬‏ ‏‮your‬‏ ‏‮store‬‏'‏‮s‬‏ ‏‮Developer‬‏ ‏‮settings‬‏. [‏‮Learn‬‏ ‏‮more‬‏](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "‏‮If‬‏ ‏‮you‬‏ ‏‮are‬‏ ‏‮using‬‏ ‏‮React‬‏ ‏‮Router‬‏, ‏‮minimize‬‏ ‏‮usage‬‏ ‏‮of‬‏ ‏‮the‬‏ `<Redirect>` ‏‮component‬‏ ‏‮for‬‏ [‏‮route‬‏ ‏‮navigations‬‏](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "‏‮If‬‏ ‏‮you‬‏ ‏‮are‬‏ ‏‮server‬‏-‏‮side‬‏ ‏‮rendering‬‏ ‏‮any‬‏ ‏‮React‬‏ ‏‮components‬‏, ‏‮consider‬‏ ‏‮using‬‏ `renderToNodeStream()` ‏‮or‬‏ `renderToStaticNodeStream()` ‏‮to‬‏ ‏‮allow‬‏ ‏‮the‬‏ ‏‮client‬‏ ‏‮to‬‏ ‏‮receive‬‏ ‏‮and‬‏ ‏‮hydrate‬‏ ‏‮different‬‏ ‏‮parts‬‏ ‏‮of‬‏ ‏‮the‬‏ ‏‮markup‬‏ ‏‮instead‬‏ ‏‮of‬‏ ‏‮all‬‏ ‏‮at‬‏ ‏‮once‬‏. [‏‮Learn‬‏ ‏‮more‬‏](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "‏‮If‬‏ ‏‮your‬‏ ‏‮build‬‏ ‏‮system‬‏ ‏‮minifies‬‏ ‏‮your‬‏ ‏‮CSS‬‏ ‏‮files‬‏ ‏‮automatically‬‏, ‏‮ensure‬‏ ‏‮that‬‏ ‏‮you‬‏ ‏‮are‬‏ ‏‮deploying‬‏ ‏‮the‬‏ ‏‮production‬‏ ‏‮build‬‏ ‏‮of‬‏ ‏‮your‬‏ ‏‮application‬‏. ‏‮You‬‏ ‏‮can‬‏ ‏‮check‬‏ ‏‮this‬‏ ‏‮with‬‏ ‏‮the‬‏ ‏‮React‬‏ ‏‮Developer‬‏ ‏‮Tools‬‏ ‏‮extension‬‏. [‏‮Learn‬‏ ‏‮more‬‏](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "‏‮There‬‏ ‏‮are‬‏ ‏‮a‬‏ ‏‮number‬‏ ‏‮of‬‏ ‏‮WordPress‬‏ ‏‮plugins‬‏ ‏‮that‬‏ ‏‮can‬‏ ‏‮help‬‏ ‏‮you‬‏ [‏‮inline‬‏ ‏‮critical‬‏ ‏‮assets‬‏](https://wordpress.org/plugins/search/critical+css/) ‏‮or‬‏ [‏‮defer‬‏ ‏‮less‬‏ ‏‮important‬‏ ‏‮resources‬‏](https://wordpress.org/plugins/search/defer+css+javascript/). ‏‮Beware‬‏ ‏‮that‬‏ ‏‮optimizations‬‏ ‏‮provided‬‏ ‏‮by‬‏ ‏‮these‬‏ ‏‮plugins‬‏ ‏‮may‬‏ ‏‮break‬‏ ‏‮features‬‏ ‏‮of‬‏ ‏‮your‬‏ ‏‮theme‬‏ ‏‮or‬‏ ‏‮plugins‬‏, ‏‮so‬‏ ‏‮you‬‏ ‏‮will‬‏ ‏‮likely‬‏ ‏‮need‬‏ ‏‮to‬‏ ‏‮make‬‏ ‏‮code‬‏ ‏‮changes‬‏."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "‏‮Themes‬‏, ‏‮plugins‬‏, ‏‮and‬‏ ‏‮server‬‏ ‏‮specifications‬‏ ‏‮all‬‏ ‏‮contribute‬‏ ‏‮to‬‏ ‏‮server‬‏ ‏‮response‬‏ ‏‮time‬‏. ‏‮Consider‬‏ ‏‮finding‬‏ ‏‮a‬‏ ‏‮more‬‏ ‏‮optimized‬‏ ‏‮theme‬‏, ‏‮carefully‬‏ ‏‮selecting‬‏ ‏‮an‬‏ ‏‮optimization‬‏ ‏‮plugin‬‏, ‏‮and‬‏/‏‮or‬‏ ‏‮upgrading‬‏ ‏‮your‬‏ ‏‮server‬‏."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "‏‮Consider‬‏ ‏‮showing‬‏ ‏‮excerpts‬‏ ‏‮in‬‏ ‏‮your‬‏ ‏‮post‬‏ ‏‮lists‬‏ (‏‮e‬‏.‏‮g‬‏. ‏‮via‬‏ ‏‮the‬‏ ‏‮more‬‏ ‏‮tag‬‏), ‏‮reducing‬‏ ‏‮the‬‏ ‏‮number‬‏ ‏‮of‬‏ ‏‮posts‬‏ ‏‮shown‬‏ ‏‮on‬‏ ‏‮a‬‏ ‏‮given‬‏ ‏‮page‬‏, ‏‮breaking‬‏ ‏‮your‬‏ ‏‮long‬‏ ‏‮posts‬‏ ‏‮into‬‏ ‏‮multiple‬‏ ‏‮pages‬‏, ‏‮or‬‏ ‏‮using‬‏ ‏‮a‬‏ ‏‮plugin‬‏ ‏‮to‬‏ ‏‮lazy‬‏-‏‮load‬‏ ‏‮comments‬‏."

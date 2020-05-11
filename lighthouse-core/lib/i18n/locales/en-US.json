@@ -1118,6 +1118,18 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Tap targets are sized appropriately"
   },
+  "lighthouse-core/audits/server-response-time.js | description": {
+    "message": "Keep the server response time for the main document short because all other requests depend on it. [Learn more](https://web.dev/time-to-first-byte)."
+  },
+  "lighthouse-core/audits/server-response-time.js | displayValue": {
+    "message": "Root document took {timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/audits/server-response-time.js | failureTitle": {
+    "message": "Reduce initial server response time"
+  },
+  "lighthouse-core/audits/server-response-time.js | title": {
+    "message": "Initial server response time was short"
+  },
   "lighthouse-core/audits/service-worker.js | description": {
     "message": "The service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. [Learn more](https://web.dev/service-worker)."
   },
@@ -1174,18 +1186,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Minimize third-party usage"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "Time To First Byte identifies the time at which your server sends a response. [Learn more](https://web.dev/time-to-first-byte)."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "Root document took {timeInMs, number, milliseconds} ms"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Reduce server response times (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Server response times are low (TTFB)"
   },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "Measurement"
@@ -1775,7 +1775,7 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Consider modifying your product and catalog templates to make use of the web platform's [lazy loading](https://web.dev/native-lazy-loading) feature."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
+  "stack-packs/packs/magento.js | server_response_time": {
     "message": "Use Magento's [Varnish integration](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
   },
   "stack-packs/packs/magento.js | unminified_css": {
@@ -1805,7 +1805,7 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "If you are using React Router, minimize usage of the `<Redirect>` component for [route navigations](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
+  "stack-packs/packs/react.js | server_response_time": {
     "message": "If you are server-side rendering any React components, consider using `renderToNodeStream()` or `renderToStaticNodeStream()` to allow the client to receive and hydrate different parts of the markup instead of all at once. [Learn more](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
   },
   "stack-packs/packs/react.js | unminified_css": {
@@ -1829,7 +1829,7 @@
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "There are a number of WordPress plugins that can help you [inline critical assets](https://wordpress.org/plugins/search/critical+css/) or [defer less important resources](https://wordpress.org/plugins/search/defer+css+javascript/). Beware that optimizations provided by these plugins may break features of your theme or plugins, so you will likely need to make code changes."
   },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
+  "stack-packs/packs/wordpress.js | server_response_time": {
     "message": "Themes, plugins, and server specifications all contribute to server response time. Consider finding a more optimized theme, carefully selecting an optimization plugin, and/or upgrading your server."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {

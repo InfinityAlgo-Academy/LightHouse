@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Giảm thiểu mức sử dụng của bên thứ ba"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "Chỉ số Thời gian cho byte đầu tiên xác định thời gian máy chủ của bạn gửi phản hồi. [Tìm hiểu thêm](https://web.dev/time-to-first-byte)."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "Tài liệu gốc mất {timeInMs, number, milliseconds} mili giây"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Giảm thời gian phản hồi của máy chủ (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Thời gian phản hồi của máy chủ chậm (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "Đo lường"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Cân nhắc sửa đổi mẫu danh mục và sản phẩm để tận dụng tính năng [tải từng phần](https://web.dev/native-lazy-loading) của nền tảng web."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Sử dụng tính năng [tích hợp Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) của Magento."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Bật tùy chọn \"Giảm kích thước tệp CSS\" trong phần cài đặt dành cho Nhà phát triển của cửa hàng. [Tìm hiểu thêm](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Nếu bạn đang dùng React Router, hãy giảm thiểu mức sử dụng thành phần `<Redirect>` để [định tuyến](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "Nếu bạn đang hiển thị bất kỳ thành phần React nào ở phía máy chủ, hãy cân nhắc dùng `renderToNodeStream()` hoặc `renderToStaticNodeStream()` để cho phép ứng dụng nhận và nhập những phần khác nhau của mục đánh dấu thay vì tất cả cùng lúc. [Tìm hiểu thêm](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Nếu hệ thống bản dựng của bạn tự động giảm kích thước tệp CSS, hãy đảm bảo rằng bạn đang triển khai bản dựng ứng dụng ở chế độ sản xuất. Bạn có thể kiểm tra điều này bằng tiện ích React Developer Tools. [Tìm hiểu thêm](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Có một số plugin của WordPress có thể giúp bạn [đưa phần tử quan trọng vào nội tuyến](https://wordpress.org/plugins/search/critical+css/) hoặc [trì hoãn tài nguyên ít quan trọng hơn](https://wordpress.org/plugins/search/defer+css+javascript/). Xin lưu ý rằng những phương thức tối ưu hóa mà các plugin này cung cấp có thể làm gián đoạn tính năng của giao diện hoặc plugin, do đó, có thể bạn cần thay đổi mã."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Giao diện, plugin và thông số máy chủ đều tác động đến thời gian phản hồi của máy chủ. Hãy cân nhắc tìm một giao diện được tối ưu hóa, lựa chọn cẩn thận một plugin tối ưu hóa và/hoặc nâng cấp máy chủ."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Hãy cân nhắc hiển thị phần trích dẫn trong danh sách bài đăng (ví dụ như qua thẻ thêm), giảm số lượng bài đăng hiển thị trên một trang cụ thể, chia các bài đăng dài thành nhiều trang hoặc sử dụng một plugin để tải nhận xét theo từng phần."

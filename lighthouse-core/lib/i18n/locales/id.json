@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Meminimalkan penggunaan pihak ketiga"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "Time To First Byte mengidentifikasi waktu saat server mengirim respons. [Pelajari lebih lanjut](https://web.dev/time-to-first-byte)."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "Dokumen root memerlukan waktu {timeInMs, number, milliseconds} md"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Mengurangi waktu respons server (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Waktu respons server sedikit (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "Pengukuran"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Pertimbangkan untuk mengubah template produk dan katalog Anda untuk memanfaatkan fitur [pemuatan lambat](https://web.dev/native-lazy-loading) platform web."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Gunakan [Varnish integration](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) dari Magento."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Aktifkan opsi \"Minifikasi File CSS\" di setelan Developer toko Anda. [Pelajari lebih lanjut](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Jika Anda menggunakan React Router, minimalkan penggunaan komponen `<Redirect>` untuk [navigasi rute](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "Jika Anda merender komponen React pada sistem server, pertimbangkan untuk menggunakan `renderToNodeStream()` atau `renderToStaticNodeStream()` agar klien dapat menerima dan mengisi beberapa bagian markup yang berbeda, bukan sekaligus. [Pelajari lebih lanjut](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Jika sistem build meminifikasi file CSS secara otomatis, pastikan bahwa Anda menerapkan build produksi aplikasi Anda. Anda dapat memeriksanya dengan ekstensi React Developer Tools. [Pelajari lebih lanjut](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Terdapat sejumlah plugin di WordPress yang dapat membantu Anda [menyejajarkan aset penting](https://wordpress.org/plugins/search/critical+css/) atau [menunda resource yang tidak penting](https://wordpress.org/plugins/search/defer+css+javascript/). Harap berhati-hati karena pengoptimalan yang disediakan oleh plugin ini dapat merusak fitur tema atau plugin, sehingga Anda cenderung perlu mengubah kode."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Semua spesifikasi tema, plugin, dan server berkontribusi pada waktu respons server. Sebaiknya cari tema yang lebih optimal, pilih plugin pengoptimalan dengan hati-hati, dan/atau upgrade server Anda."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Sebaiknya tampilkan kutipan dalam daftar postingan (misalnya melalui tag lainnya), kurangi jumlah postingan yang ditampilkan pada halaman yang ada, bagi postingan panjang menjadi beberapa halaman, atau gunakan plugin untuk menunda pemuatan (lazy-load) komentar."

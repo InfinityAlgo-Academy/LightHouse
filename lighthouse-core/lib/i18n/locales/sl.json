@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Zmanjšajte uporabo komponent drugih ponudnikov"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "»Čas do prvega bajta« navaja čas, v katerem vaš strežnik pošlje odziv. [Več o tem](https://web.dev/time-to-first-byte)."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "Korenski dokument je terjal {timeInMs, number, milliseconds} ms"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Skrajšajte odzivne čase strežnika (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Odzivni časi strežnika so nizki (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "Izmerjena vrednost"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Razmislite o tem, da bi svoje predloge izdelkov in kataloga spremenili tako, da uporabljajo funkcijo spletne platforme za [»leno« nalaganje](https://web.dev/native-lazy-loading)."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Uporabite Magentovo [integracijo za Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "V nastavitvah za razvijalce v svoji trgovini omogočite možnost »Pomanjšaj datoteke CSS«. [Preberite več o tem](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Če uporabljate React Router, karseda omejite uporabo komponente `<Redirect>` za[krmarjenje po poteh](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "Če na strežniški strani upodabljate morebitne komponente React, razmislite o uporabi elementa `renderToNodeStream()` ali `renderToStaticNodeStream()`, da bi odjemalcu dovolili prejemanje in hidriranje različnih delov oznak, namesto vseh hkrati. [Preberite več o tem](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Če vaš sistem gradnje samodejno pomanjša datoteke CSS, se prepričajte, da uvajate gradnjo aplikacije za splošno razpoložljivost. To lahko preverite z razširitvijo React Developer Tools. [Preberite več o tem](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Na voljo je več vtičnikov za WordPress, ki vam lahko pomagajo [uvrstiti nujna sredstva](https://wordpress.org/plugins/search/critical+css/) ali [odložiti manj pomembna sredstva](https://wordpress.org/plugins/search/defer+css+javascript/). Upoštevajte, da lahko optimizacije, ki jih ponujajo ti vtičniki, pokvarijo delovanje funkcij vaših tem ali vtičnikov, zato boste verjetno morali spremeniti kodo."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Teme, vtičniki in strežniške specifikacije prispevajo k odzivnemu času strežnika. Razmislite o tem, da bi poiskali bolj optimizirano temo, skrbno izbrali optimizacijski vtičnik in/ali nadgradili strežnik."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Razmislite o tem, da bi na seznamih objav prikazali izvlečke (npr. z oznako »more«), zmanjšali število objav, prikazanih na posamezni strani, daljše objave razdelili na več strani ali uporabili vtičnik za odloženo nalaganje komentarjev."

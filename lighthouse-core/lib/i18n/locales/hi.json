@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "तीसरे पक्ष के इस्तेमाल को कम करें"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "पहली बाइट का समय, उस समय की पहचान करता है जब आपका सर्वर कोई जवाब भेजता है. [ज़्यादा जानें](https://web.dev/time-to-first-byte)."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "रुट दस्तावेज़ बनने में {timeInMs, number, milliseconds} मि.से. का समय लगा"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "सर्वर प्रतिक्रिया समय घटाएं (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "सर्वर के जवाब देने के समय धीमे हैं (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "माप"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "वेब प्लैटफ़ॉर्म की [धीमे लोड होने](https://web.dev/native-lazy-loading) की सुविधा का इस्तेमाल करने के लिए, अपने उत्पाद और कैटलॉग टेम्प्लेट में बदलाव करें."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Magento का [Varnish इंटीग्रेशन](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) इस्तेमाल करें."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "अपने स्टोर की डेवलपर सेटिंग में, \"सीएसएस फ़ाइलें छोटी करें\" विकल्प चालू करें. [ज़्यादा जानें](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "अगर आप React Router इस्तेमाल कर रहे हैं, तो [रूट नेविगेशन](https://reacttraining.com/react-router/web/api/Redirect) के लिए `<Redirect>` कॉम्पोनेंट का इस्तेमाल कम करें."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "अगर आप सर्वर-साइड पर किसी React कॉम्पोनेंट को रेंडर कर रहे हैं, तो `renderToNodeStream()` या `renderToStaticNodeStream()` का इस्तेमाल करें. इससे क्लाइंट को एक साथ पूरे मार्कअप के बजाय, उसके अलग-अलग हिस्से मिलेंगे और वह उन्हें अलग-अलग हाइड्रेट कर पाएगा. [ज़्यादा जानें](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "अगर आपका बिल्ड सिस्टम आपकी सीएसएस फ़ाइलों को अपने-आप छोटा कर रहा है, तो पक्का करें कि आप अपने ऐप्लिकेशन के प्रोडक्शन बिल्ड को डिप्लॉय कर रहे हैं. आप React डेवलपर टूल एक्सटेंशन की मदद से इसकी पुष्टि कर सकते हैं. [ज़्यादा जानें](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "ऐसे कई WordPress प्लग इन हैं जो [क्रिटिकल एसेट इनलाइन करने ](https://wordpress.org/plugins/search/critical+css/) या [कम ज़रूरी संसाधनों को डेफ़र करने](https://wordpress.org/plugins/search/defer+css+javascript/) में आपकी मदद कर सकते हैं. ध्यान रखें कि ऐसी प्लग इन से मिलने वाले ऑप्टिमाइज़ेशन आपकी थीम या प्लग इन की सुविधाएं बिगाड़ सकते हैं. इसलिए, आपको कोड में बदलावों को करने की ज़रुरत हो सकती है."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "थीम, प्लगइन, और सर्वर की खास बातें सर्वर से जवाब मिलने के समय में योगदान करती हैं. ज़्यादा ऑप्टिमाइज़ की हुई थीम ढूंढने, एक ऑप्टिमाइज़ेशन प्लगइन को सावधानी से चुनने, और/या अपना सर्वर अपग्रेड करने पर विचार करें."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "अपनी पोस्ट सूचियों में खास हिस्से दिखाने पर विचार करें (जैसे 'ज़्यादा' टैग से), किसी पेज पर दिखाई गई पोस्ट की संख्या घटाने, अपनी लंबी पोस्ट को कई पेज में बाँटने या फिर टिप्पणियों को धीरे-धीरे लोड करने वाले प्लगइन का इस्तेमाल करने पर विचार करें."

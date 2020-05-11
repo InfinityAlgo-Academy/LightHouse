@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "צמצום השימוש בצדדים שלישיים"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "'זמן עד בייט ראשון' (Time To First Byte) הוא פרק הזמן שחולף עד שהשרת שולח תגובה. [מידע נוסף](https://web.dev/time-to-first-byte)."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "טעינת מסמך השורש ארכה {timeInMs, number, milliseconds} אלפיות שנייה"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "יש לקצר את זמני התגובה של השרת (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "זמני התגובה של השרת ארוכים (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "הערך שנמדד"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "כדאי לשקול את שינוי המוצר ותבניות הקטלוג כך שישתמשו בתכונת ה[טעינה המדורגת](https://web.dev/native-lazy-loading) של פלטפורמת האינטרנט."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "אפשר להשתמש ב[שילוב Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) של Magento."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "ניתן להפעיל את האפשרות \"הקטנת קובצי CSS\" בהגדרות המפתח של החנות. [מידע נוסף](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "אם בחרת להשתמש ב-React Router, יש לצמצם את השימוש ברכיב `<Redirect>` בשביל [ניווט במסלול](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "אם מתבצע רינדור בצד השרת של רכיבי React כלשהם, כדאי לשקול להשתמש ב-`renderToNodeStream()` או `renderToStaticNodeStream()` כדי לאפשר ללקוח לקבל ולמלא חלקים שונים של הסימון, במקום את הכול בבת אחת. [מידע נוסף](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "אם מערכת ה-build שלך מקטינה את קובצי ה-CSS באופן אוטומטי, יש להקפיד לפרוס את גרסת ה-build של סביבת הייצור של האפליקציה. אפשר לבדוק את זה עם התוסף React Developer Tools. [מידע נוסף](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "יש כמה יישומי פלאגין של WordPress שיכולים לעזור לך [להטביע נכסים קריטיים](https://wordpress.org/plugins/search/critical+css/) או [לדחות טעינה של משאבים פחות חשובים](https://wordpress.org/plugins/search/defer+css+javascript/). חשוב: ייתכן שהאופטימיזציות המבוצעות על ידי יישומי הפלאגין האלה יגרמו לתקלות בתכונות של העיצוב או יישומי הפלאגין האחרים, ולכן כנראה שיהיה צורך לבצע שינויים בקוד."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "עיצובים, יישומי פלאגין ומפרטי שרתים משפיעים על זמן התגובה של השרת. אפשר להשתמש בעיצוב שעבר אופטימיזציה, לבחור בקפידה פלאגין לאופטימיזציה ו/או לשדרג את השרת."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "אפשר להציג קטעים ברשימות הפוסטים (למשל, עם תג 'עוד'), לצמצם את מספר הפוסטים המוצגים בדף נתון, לחלק פוסטים ארוכים למספר דפים או להשתמש בפלאגין כדי לטעון תגובות בצורה מדורגת."

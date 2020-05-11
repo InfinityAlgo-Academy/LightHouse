@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Minimalizálja a harmadik felektől származó kódok használatát"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "Az első bájtig eltelt idő azt mutatja, hogy a szerver mikor küldött választ. [További információ](https://web.dev/time-to-first-byte)."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "{timeInMs, number, milliseconds} ms a gyökérdokumentumhoz"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Csökkentse a szerver válaszidejét (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Alacsony a szerver válaszideje (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "Mérés"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "A webes platformok [késleltetett betöltés](https://web.dev/native-lazy-loading) funkciójának használata érdekében vegye fontolóra a termék- és katalógussablonok módosítását."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Használja a Magento [Varnish-integrációját](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Engedélyezze a „Minify CSS Files” (CSS-fájlok kicsinyítése) beállítást az üzlet fejlesztői beállításaiban. [További információ](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Ha a React Routert használja, csökkentse minimálisra a `<Redirect>` komponens használatát az [útválasztási navigációban](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "Ha szerveroldali renderelést alkalmaz bármilyen React-összetevőnél, fontolja meg a következők valamelyikének használatát: `renderToNodeStream()` vagy `renderToStaticNodeStream()`. Ezekkel engedélyezheti az ügyfél számára, hogy a markupot ne egyben, hanem részletekben kapja meg és hidratálja. [További információ](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Ha a fejlesztéshez használt rendszere automatikusan kicsinyíti a CSS-fájlokat, akkor ügyeljen arra, hogy az alkalmazás éles buildjét telepítse. Ezt a React Developer Tools bővítménnyel ellenőrizheti. [További információ](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Számos WordPress-bővítmény segíthet a [kritikus elemek beágyazásában](https://wordpress.org/plugins/search/critical+css/) és a [kevésbé fontos források](https://wordpress.org/plugins/search/defer+css+javascript/) késleltetésében. Fontos, hogy az ilyen jellegű bővítmények által nyújtott optimalizációk működésképtelenné tehetik a témák vagy más bővítmények funkcióit, ezért valószínűleg módosítania kell majd a meglévő kódot."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "A témák, a bővítmények és a szerver specifikációi mind befolyásolják a szerver válaszidejét. Érdemes lehet jobban optimalizált témát keresnie, megfelelő optimalizáló bővítményt választania és/vagy nagyobb teljesítményű szerverre váltania."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Fontolja meg kivonatok megjelenítését a bejegyzéslistákban (pl. a more címkével), az oldalanként megjelenített bejegyzések számának csökkentését, a hosszabb bejegyzések több oldalra tördelését, valamint a hozzászólások lusta betöltését bővítmény segítségével."

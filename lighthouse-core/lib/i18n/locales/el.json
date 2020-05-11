@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Ελαχιστοποίηση χρήσης τρίτων μερών"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "Ο χρόνος μέχρι το πρώτο byte προσδιορίζει τον χρόνο που χρειάζεται για την αποστολή μιας απόκρισης από τον διακομιστή σας. [Μάθετε περισσότερα](https://web.dev/time-to-first-byte)."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "Το ριζικό έγγραφο χρειάστηκε {timeInMs, number, milliseconds} χλστ.δ."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Μείωση χρόνων απόκρισης διακομιστή (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Οι χρόνοι απόκρισης διακομιστή είναι χαμηλοί (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "Μέτρηση"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Μπορείτε να τροποποιήσετε το προϊόν σας και τα πρότυπα καταλόγου για να αξιοποιήσετε τη λειτουργία [αργής φόρτωσης](https://web.dev/native-lazy-loading) της πλατφόρμας ιστού."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Χρησιμοποιήστε την[ενσωμάτωση Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) του Magento."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Ενεργοποιήστε την επιλογή Ελαχιστοποίηση αρχείων CSS στις ρυθμίσεις Προγραμματιστή του καταστήματός σας. [Μάθετε περισσότερα](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Εάν χρησιμοποιείτε το React Router, ελαχιστοποιήστε τη χρήση του στοιχείου `<Redirect>` για [πλοηγήσεις διαδρομής](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "Εάν πραγματοποιείτε απόδοση στοιχείων React στον διακομιστή, μπορείτε να χρησιμοποιήσετε το `renderToNodeStream()` ή το `renderToStaticNodeStream()` για να επιτρέψετε στον υπολογιστή-πελάτη να λαμβάνει και να ενισχύει διαφορετικά μέρη της σήμανσης, αντί για όλα μαζί. [Μάθετε περισσότερα](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Εάν το σύστημα έκδοσής σας ελαχιστοποιεί τα αρχεία CSS σας αυτόματα, βεβαιωθείτε ότι αναπτύσσετε την έκδοση παραγωγής της εφαρμογής σας. Μπορείτε να το ελέγξετε αυτό από την επέκταση React Developer Tools. [Μάθετε περισσότερα](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Υπάρχουν διάφορες προσθήκες WordPress που μπορούν να σας βοηθήσουν στην [ενσωμάτωση των σημαντικών στοιχείων](https://wordpress.org/plugins/search/critical+css/) ή στην [καθυστέρηση των λιγότερο σημαντικών πόρων](https://wordpress.org/plugins/search/defer+css+javascript/). Λάβετε υπόψη ότι οι βελτιστοποιήσεις που παρέχονται από αυτές τις προσθήκες ενδέχεται να προκαλέσουν προβλήματα στις λειτουργίες των θεμάτων ή των προσθηκών σας. Ως εκ τούτου, είναι πιθανό να χρειαστεί να κάνετε αλλαγές στον κώδικα."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Τα θέματα, οι προσθήκες και οι προδιαγραφές διακομιστή συμβάλλουν στον χρόνο απόκρισης του διακομιστή. Αν θέλετε, μπορείτε να ψάξετε για ένα περισσότερο βελτιστοποιημένο θέμα, να επιλέξετε προσεκτικά μια προσθήκη βελτιστοποίησης ή/και να αναβαθμίσετε τον διακομιστή σας."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Εξετάστε το ενδεχόμενο εμφάνισης αποσπασμάτων στις λίστες αναρτήσεών σας (π.χ. μέσω της ετικέτας \"περισσότερες\"), μειώνοντας τον αριθμό των αναρτήσεων που εμφανίζονται σε μια συγκεκριμένη σελίδα, χωρίζοντας τις μεγάλες αναρτήσεις σε πολλές σελίδες ή χρησιμοποιώντας μια προσθήκη για φόρτωση με καθυστέρηση των σχολίων."

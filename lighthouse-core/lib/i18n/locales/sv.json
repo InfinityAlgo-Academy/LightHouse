@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Minimera användning av tredjepartskod"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "Mätvärdet Tid till första byte anger när servern svarade. [Läs mer](https://web.dev/time-to-first-byte)."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "Rotdokumentet tog {timeInMs, number, milliseconds} ms"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Minska svarstiderna från servern (tid till första byte)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Servern svarar snabbt (tid till första byte)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "Mått"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Vi rekommenderar att du ändrar dina produkt- och katalogmallar för att dra nytta av webbplattformens funktion för [uppskjuten inläsning](https://web.dev/native-lazy-loading)."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Använd Magentos [Varnish-integrering](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Aktivera alternativet Minify CSS Files (minifiera CSS-filer) i butikens utvecklarinställningar. [Läs mer](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Om du använder React Router minimerar du användningen av komponenten `<Redirect>` för [navigering av dirigeringar](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "Om du renderar React-komponenter på serversidan rekommenderar vi att du använder `renderToNodeStream()` eller `renderToStaticNodeStream()` till att tillåta att klienten tar emot och hydrerar olika delar av uppmärkningen i stället för alla på en gång. [Läs mer](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Om versionssystemet minifierar CSS-filerna automatiskt kontrollerar du att du implementerar appens produktionsversion. Du kan kontrollera detta med tillägget React Developer Tools. [Läs mer](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Det finns ett antal pluginmoduler för WordPress som kan hjälpa dig att [lägga till kritiska tillgångar direkt på sidan](https://wordpress.org/plugins/search/critical+css/) eller [skjuta upp inläsningen av mindre viktiga resurser](https://wordpress.org/plugins/search/defer+css+javascript/). Tänk på att optimeringarna som dessa pluginmoduler gör kan leda till att funktioner i teman eller andra pluginmoduler slutar fungera, så du kan behöva ändra i koden."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Serverns svarstider påverkas av teman, pluginmoduler och serverns prestanda. Du kan använda ett mer optimerat tema, välja en optimeringsplugin och/eller uppgradera servern."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Du kan visa utdrag i inläggslistan (t.ex. via en more-tagg), minska antalet inlägg på sidan, dela upp långa inlägg på flera sidor eller använda en plugin som läser in kommentarer med lat inläsning."

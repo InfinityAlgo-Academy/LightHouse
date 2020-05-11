@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "第三者の使用の最小化"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "最初の 1 バイトまでの時間は、サーバーが応答を返すまでにかかった時間を表しています。[詳細](https://web.dev/time-to-first-byte)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "ルート ドキュメントの読み込みに {timeInMs, number, milliseconds} ミリ秒かかりました"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "サーバー応答時間の短縮（TTFB）"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "サーバーの応答時間が遅い（TTFB）"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "測定値"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "ウェブ プラットフォームの[遅延読み込み](https://web.dev/native-lazy-loading)機能を活用できるように、ご使用のサービスとカタログのテンプレートを編集することを検討してください。"
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Magento の [Varnish 統合](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)を使用します。"
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "ストアのデベロッパー設定で [CSS ファイルを圧縮] オプションを有効にします。[詳細](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "React Router を使用している場合、`<Redirect>` コンポーネントを使った[ナビゲーションのルーティング](https://reacttraining.com/react-router/web/api/Redirect)は最小限にします。"
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "React コンポーネントをサーバーサイドでレンダリングする場合は、クライアントでマークアップの全体を一度に受信するのではなく一部ずつ受信してデータを挿入できるように、`renderToNodeStream()` または `renderToStaticNodeStream()` を使用することを検討してください。[詳細](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "ご使用のビルドシステムで CSS ファイルが自動的に圧縮される場合は、アプリケーションの本番環境用ビルドをデプロイしていることを確認します。確認には React Developer Tools 拡張機能を使用できます。[詳細](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "[重要なアセットをインラインで読み込む](https://wordpress.org/plugins/search/critical+css/)または[重要度が低いリソースの読み込みを遅らせる](https://wordpress.org/plugins/search/defer+css+javascript/)ために役立つ、さまざまな WordPress プラグインがあります。ただし、これらのプラグインの最適化処理によって、テーマやプラグインの機能が阻害されることがあります。その場合は、コードを変更する必要があります。"
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "テーマ、プラグイン、サーバー仕様はすべてサーバーの応答時間に影響します。より最適化されたテーマを探す、最適化プラグインを慎重に選ぶ、サーバーをアップグレードすることをおすすめします。"
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "「詳しく読む」タグなどを使用して投稿リストに抜粋を表示する、ページに表示する投稿の数を減らす、長い投稿を複数のページに分けて表示する、またはコメントを遅延読み込みするプラグインを使用することをご検討ください。"

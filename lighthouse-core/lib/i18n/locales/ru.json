@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Уменьшение использования стороннего кода"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "Время до первого байта – показатель, который определяет интервал времени между отправкой запроса и ответом вашего сервера. [Подробнее…](https://web.dev/time-to-first-byte)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "Загрузка корневого документа заняла {timeInMs, number, milliseconds} мс"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Сократите время ответа сервера (время до получения первого байта)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Короткое время ответа сервера (время до получения первого байта)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "Единица измерения"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Рекомендуем изменить шаблоны продукции и каталогов для использования функции [отложенной загрузки](https://web.dev/native-lazy-loading) на веб-платформе."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Используйте [модуль интеграции с Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) в Magento."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "В настройках для разработчиков своего магазина включите параметр Minify CSS Files (Уменьшать размер файлов CSS). [Подробнее…](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Если вы используете React Router, максимально ограничьте применение компонента `<Redirect>` для [перехода по маршрутам](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "Если вы применяете серверный рендеринг компонентов React, мы рекомендуем использовать методы `renderToNodeStream()` или `renderToStaticNodeStream()`. Это позволит отправлять разметку частями, а не целиком и воссоздавать ее на устройстве клиента. [Подробнее…](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Если ваша система сборки автоматически уменьшает размер файлов CSS, перед развертыванием приложения убедитесь, что вы используете рабочую версию сборки. Для этого установите расширение \"Инструменты разработчика React\". [Подробнее…](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Используйте плагины WordPress, которые позволяют [встроить критическую часть данных](https://wordpress.org/plugins/search/critical+css/) или [отложить загрузку менее важных ресурсов](https://wordpress.org/plugins/search/defer+css+javascript/). Обратите внимание, что такие плагины могут привести к сбоям в работе других используемых вами тем или плагинов. Не исключено, что вам потребуется внести изменения в код."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Темы, плагины и спецификации сервера – все это влияет на время ответа сервера. Советуем найти более подходящую тему, тщательно подобрать плагин для оптимизации и/или обновить сервер."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Мы рекомендуем включить показ только начального фрагмента записей (например, с помощью тега More). Вы также можете сократить количество записей на одной странице, разбить длинные записи на несколько страниц или использовать отложенную загрузку комментариев."

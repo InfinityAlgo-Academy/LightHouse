@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Smanjite korišćenje sadržaja treće strane"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "Vreme prvog odgovora određuje vreme u koje server šalje odgovor. [Saznajte više](https://web.dev/time-to-first-byte)."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "Osnovnom dokumentu je trebalo {timeInMs, number, milliseconds} ms"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Smanjite vremena odgovora servera (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Vremena odgovora servera su kratka (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "Merenje"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Razmislite o tome da izmenite šablone proizvoda i kataloga da biste iskoristili funkciju [odloženog učitavanja](https://web.dev/native-lazy-loading) na veb-platformi."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Koristite [Varnish integraciju](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) platforme Magento."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Omogućite opciju „Umanji CSS datoteke“ u podešavanjima za programere u prodavnici. [Saznajte više](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Ako koristite React ruter, smanjite korišćenje komponente `<Redirect>` za [navigacije pomoću rute](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "Ako prikazujete bilo kakve React komponente na serveru, razmislite o tome da koristite `renderToNodeStream()` ili `renderToStaticNodeStream()` kako biste omogućili klijentu da prima i popunjava različite delove oznake umesto svih delova odjednom. [Saznajte više](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Ako sistem verzije automatski umanjuje CSS datoteke, uverite se da primenjujete proizvodnu verziju aplikacije. To možete da proverite pomoću dodatka React Developer Tools. [Saznajte više](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Neke WordPress dodatne komponente mogu da vam pomognu da [umetnete kritične elemente](https://wordpress.org/plugins/search/critical+css/) ili [odložite manje važne resurse](https://wordpress.org/plugins/search/defer+css+javascript/). Imajte na umu da optimizacije koje pružaju ove dodatne komponente mogu da oštete funkcije ili teme dodatnih komponenti, pa ćete verovatno morati da unosite promene u kôd."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Teme, dodatne komponente i specifikacije servera doprinose vremenu odgovora servera. Preporučujemo da pronađete optimizovaniju temu, pažljivo izaberete dodatnu komponentu za optimizaciju i/ili nadogradite server."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Preporučujemo da prikažete odlomke u listama postova (na primer, preko još oznaka), smanjite broj postova koji se prikazuju na određenoj stranici, razdvojite dugačke postove na više strancia ili koristite dodatnu komponentu za lako učitavanje komentara."

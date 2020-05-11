@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Minimalizează folosirea terțelor părți"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "Timpul până la primul byte identifică timpul în care serverul trimite un răspuns. [Află mai multe](https://web.dev/time-to-first-byte)."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "Documentul rădăcină a avut nevoie de {timeInMs, number, milliseconds} ms"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Redu timpii de răspuns ai serverului (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Serverul răspunde repede (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "Cuantificare"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Modifică șabloanele de produse și de cataloage ca să folosești funcția de [încărcare lentă](https://web.dev/native-lazy-loading) a platformei web."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Folosește [integrarea Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) din Magento."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Activează opțiunea „Minimalizează fișierele CSS” din setările pentru dezvoltatori ale magazinului. [Află mai multe](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Dacă folosești React Router, minimalizează folosirea componentei `<Redirect>` pentru [navigările pe traseu](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "Dacă redai componente React pe server, poți folosi `renderToNodeStream()` sau `renderToStaticNodeStream()` ca să-i permiți clientului să primească și să completeze diferite părți ale codului de markup, nu pe tot deodată. [Află mai multe](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Dacă sistemul de versiuni minimalizează automat fișierele CSS, verifică dacă implementezi versiunea de producție a aplicației. Poți face verificarea cu extensia React Developer Tools. [Află mai multe](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Există o serie de pluginuri Wordpress care te pot ajuta să [activezi inline elementele critice](https://wordpress.org/plugins/search/critical+css/) sau să [amâni resurse mai puțin importante](https://wordpress.org/plugins/search/defer+css+javascript/). Atenție, optimizările oferite de aceste pluginuri pot să întrerupă funcțiile temei sau pluginurilor tale, astfel încât este posibil să trebuiască să modifici codul."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Temele, pluginurile și specificațiile serverului contribuie toate la timpul de răspuns al serverului. Îți recomandăm să găsești o temă mai optimizată, selectând cu atenție un plugin de optimizare și/sau făcând upgrade la server."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Îți recomandăm să afișezi extrase în listele postărilor tale (de exemplu, prin intermediul filei Mai multe), reducând numărul de postări afișate pe o anumită pagină, împărțind postările lungi pe mai multe pagini sau folosind un plugin pentru a încărca lent comentariile."

@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Сведете до минимум използването на код на трети страни"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "Показателят „Време до първия байт“ указва след колко време сървърът изпраща отговор. [Научете повече](https://web.dev/time-to-first-byte)."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "За основния документ бяха необходими {timeInMs, number, milliseconds} мсек"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Намалете времето за отговор от сървъра (време до първия байт)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Сървърът отговаря бързо (време до първия байт)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "Измерване"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Бихте могли да промените шаблоните си за продукти и каталози, за да използват функцията за [отложено зареждане](https://web.dev/native-lazy-loading) в уеб платформата."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Използвайте [интегрирането на Magento с Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Активирайте опцията „Minify CSS Files“ в настройките за програмисти в магазина. [Научете повече](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Ако използвате React Router, сведете до минимум употребата на компонента `<Redirect>` за [навигация по маршрути](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "Ако компоненти в React се рендерират върху сървъра, бихте могли да използвате `renderToNodeStream()` или `renderToStaticNodeStream()`, за да дадете възможност на клиентската програма да получава и хидратира различни части от кода за маркиране, вместо целия наведнъж. [Научете повече](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Ако системата ви за компилация автоматично минимизира CSS файловете, уверете се, че внедрявате стандартната версия на приложението си. Можете да проверите това с разширението React Developer Tools. [Научете повече](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Има различни приставки за WordPress, с чиято помощ можете [да вградите важни активи](https://wordpress.org/plugins/search/critical+css/) или [да отложите зареждането на не толкова важни ресурси](https://wordpress.org/plugins/search/defer+css+javascript/). Имайте предвид, че оптимизациите, извършвани чрез тези приставки, може да възпрепятстват работата на функциите на темата ви или други приставки, така че вероятно ще се наложи да промените кода."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Времето за реакция на сървъра зависи от спецификациите му, темите и приставките. Добре е да намерите по-оптимизирана тема, внимателно да изберете приставка за оптимизиране и/или да надстроите сървъра си."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Обмислете възможността да показвате извадки в списъците си с публикации (напр. чрез маркера more), да намалите броя на публикациите, извеждани на дадена страница, да разделите дългите публикации на няколко страници или да използвате приставка, която да забави зареждането на коментарите."

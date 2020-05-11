@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Üçüncü taraf kullanımını en aza indirme"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "İlk Bayt Zamanı, sunucunuzun yanıt gönderme zamanını tanımlar. [Daha fazla bilgi](https://web.dev/time-to-first-byte)."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "Root doküman {timeInMs, number, milliseconds} ms. sürdü"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Sunucu yanıt sürelerini kısaltın (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Sunucu yanıt süreleri düşük (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "Ölçüm"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Ürün ve katalog şablonlarınızı, web platformunun [geç yükleme](https://web.dev/native-lazy-loading) özelliğinden yararlanacak şekilde değiştirme seçeneğini değerlendirin."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Magento'nun [Cila entegrasyonunu](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) kullanın."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Mağazanızın Geliştirici ayarlarında \"CSS Dosyalarını Küçült\" seçeneğini etkinleştirin. [Daha fazla bilgi](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "React Router kullanıyorsanız [rota gezinmeleri](https://reacttraining.com/react-router/web/api/Redirect) için `<Redirect>` bileşeninin kullanımını en aza indirin."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "Sunucu tarafında React bileşenleri oluşturuyorsanız istemcinin tüm işaretleme parçalarını bir defada alması yerine farklı parçaları alıp birleştirmesine izin vermek için `renderToNodeStream()` veya `renderToStaticNodeStream()` kullanmayı düşünün. [Daha fazla bilgi](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Derleme sisteminiz CSS dosyalarını otomatik olarak küçültüyorsa uygulamanızın üretim derlemesini dağıttığınızdan emin olun. Bunu React Geliştirici Araçları uzantısıyla kontrol edebilirsiniz. [Daha fazla bilgi](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "[Kritik öğeleri satır içi yapmanıza](https://wordpress.org/plugins/search/critical+css/) veya [daha az önemli kaynakları ertelemenize](https://wordpress.org/plugins/search/defer+css+javascript/) yardımcı olabilecek çeşitli WordPress eklentileri vardır. Bu eklentilerin sağlayacağı optimizasyonların tema veya eklentilerinizin özelliklerini bozabileceğine dikkat edin. Bunu engellemek için muhtemelen kodda değişiklik yapmanız gerekecektir."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Temalar, eklentiler ve sunucu özellikleri öğelerinin tümü sunucunun yanıt süresini etkiler. Bir optimizayon eklentisini dikkatle seçerek ve/veya sunucunuzu yeni sürüme geçirerek, daha ileri düzeyde optimize edilmiş bir tema bulmayı düşünün."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Yayın listelerinizde alıntılar göstermeyi (ör. daha fazla etiket kullanarak), belirli bir sayfada gösterilen yayınların sayısını azaltmayı, uzun yayınlarınızı birden fazla sayfaya bölmeyi veya yorumların geç yüklenmesi için bir eklenti kullanmayı düşünün."

@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Trečiųjų šalių kodo naudojimo sumažinimas"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "Laikas iki pirmojo baito nurodo laiką, per kurį serveris atsako. [Sužinokite daugiau](https://web.dev/time-to-first-byte)."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "Šakninio dokumento įkėlimas užtruko {timeInMs, number, milliseconds} ms"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Serverio atsako laiko sutrumpinimas (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Serverio atsako laikas yra trumpas (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "Matavimas"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Apsvarstykite galimybę keisti produkto ir katalogo šablonus, kad galėtumėte išnaudoti žiniatinklio platformos [atidėtojo įkėlimo](https://web.dev/native-lazy-loading) funkciją."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Naudokite platformos „Magento“ [„Varnish“ integravimą](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Parduotuvės skiltyje „Kūrėjų nustatymai“ įgalinkite parinktį „Pašalinti nereikalingus CSS failų duomenis“. [Sužinokite daugiau](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Jei naudojate „React“ maršruto parinktuvą, sumažinkite komponento „`<Redirect>`“ naudojimą [parenkant maršrutą](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "Jei serveryje pateikiate „React“ komponentų, apsvarstykite galimybę naudoti „`renderToNodeStream()`“ arba „`renderToStaticNodeStream()`“, kad klientas galėtų gauti ir užpildyti skirtingas žymėjimo dalis, o ne viską iš karto. [Sužinokite daugiau](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Jei versijų sistemoje iš CSS failų nereikalingi duomenys pašalinami automatiškai, įsitikinkite, kad pritaikote gamybinę programos versiją. Galite tai patikrinti naudodami „React“ kūrėjo įrankių plėtinį. [Sužinokite daugiau](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Yra įvairių „WordPress“ papildinių, kuriuos naudodami galite [įterpti svarbių išteklių](https://wordpress.org/plugins/search/critical+css/) arba [atidėti mažiau svarbius šaltinius](https://wordpress.org/plugins/search/defer+css+javascript/). Atminkite, kad dėl šių papildinių teikiamo optimizavimo gali būti pažeistos jūsų temos ar papildinių funkcijos, todėl tikriausiai turėsite atlikti kodo pakeitimų."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Temos, papildiniai ir serverio specifikacijos – visa tai turi įtakos serverio atsako laikui. Galbūt vertėtų surasti geriau optimizuotą temą, atidžiai pasirinkti optimizavimo papildinį ir (arba) naujovinti serverį."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Apsvarstykite galimybę rodyti ištraukas įrašų sąrašuose (pvz., naudodami daugiau elementų žymą), sumažinti nurodytame puslapyje rodomų įrašų skaičių, suskaidyti ilgus įrašus į kelis puslapius arba naudoti komentarų atidėtojo įkėlimo papildinį."

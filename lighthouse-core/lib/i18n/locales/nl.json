@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Gebruik door derden minimaliseren"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "'Tijd tot eerste byte' identificeert het tijdstip waarop je server een reactie stuurt. [Meer informatie](https://web.dev/time-to-first-byte)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "Hoofddocument duurde {timeInMs, number, milliseconds} ms"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Beperk serverreactietijden (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Serverreactietijden zijn laag (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "Meting"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Overweeg om je product- en catalogustemplates te wijzigen voor gebruik van de functie van het webplatform voor [lazy loading](https://web.dev/native-lazy-loading)."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Gebruik de [Varnish-integratie](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) van Magento."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Schakel de optie 'Css-bestanden verkleinen' in de ontwikkelaarsinstellingen van je winkel in. [Meer informatie](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Als je React Router gebruikt, moet je het gebruik van de `<Redirect>`-component voor [routenavigatie](https://reacttraining.com/react-router/web/api/Redirect) minimaliseren."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "Als je React-componenten aan de serverzijde rendert, kun je `renderToNodeStream()` of `renderToStaticNodeStream()` gebruiken om de client toestemming te geven verschillende onderdelen van de opmaak te ontvangen en verwerken, in plaats van alles tegelijk. [Meer informatie](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Als je buildsysteem je css-bestanden automatisch verkleint, moet je ervoor zorgen dat je de productiebuild van je app implementeert. Je kunt dit controleren via de React Developer Tools-extensie. [Meer informatie](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Er zijn een aantal WordPress-plug-ins om [kritieke items inline te plaatsen](https://wordpress.org/plugins/search/critical+css/) of [minder belangrijke bronnen uit te stellen](https://wordpress.org/plugins/search/defer+css+javascript/). Bedenk wel dat de optimalisatie die deze plug-ins bieden, bepaalde functies van je thema of plug-ins kunnen verstoren. Het is daarom goed mogelijk dat je de code moet wijzigen."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Thema's, plug-ins en serverspecificaties zijn allemaal van invloed op de reactietijd van de server. Overweeg een thema te gebruiken dat beter is geoptimaliseerd, kies met zorg een optimalisatieplug-in en/of upgrade je server."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Overweeg fragmenten te tonen in je postlijsten (bijvoorbeeld via de tag 'more'), zodat er per pagina minder posts worden weergegeven. Ook kun je lange posts verdelen over meerdere pagina's of een plug-in voor lazy loading van reacties gebruiken."

@@ -293,10 +293,10 @@
         ]
       }
     },
-    "time-to-first-byte": {
-      "id": "time-to-first-byte",
-      "title": "Server response times are low (TTFB)",
-      "description": "Time To First Byte identifies the time at which your server sends a response. [Learn more](https://web.dev/time-to-first-byte).",
+    "server-response-time": {
+      "id": "server-response-time",
+      "title": "Initial server response time was short",
+      "description": "Keep the server response time for the main document short because all other requests depend on it. [Learn more](https://web.dev/time-to-first-byte).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "numericValue": 570.5630000000001,
@@ -3828,7 +3828,7 @@
           "group": "load-opportunities"
         },
         {
-          "id": "time-to-first-byte",
+          "id": "server-response-time",
           "weight": 0,
           "group": "load-opportunities"
         },
@@ -4778,7 +4778,7 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:time-to-first-byte",
+        "name": "lh:audit:server-response-time",
         "duration": 100,
         "entryType": "measure"
       },
@@ -5911,18 +5911,18 @@
       "lighthouse-core/audits/errors-in-console.js | columnDesc": [
         "audits[errors-in-console].details.headings[1].text"
       ],
-      "lighthouse-core/audits/time-to-first-byte.js | title": [
-        "audits[time-to-first-byte].title"
+      "lighthouse-core/audits/server-response-time.js | title": [
+        "audits[server-response-time].title"
       ],
-      "lighthouse-core/audits/time-to-first-byte.js | description": [
-        "audits[time-to-first-byte].description"
+      "lighthouse-core/audits/server-response-time.js | description": [
+        "audits[server-response-time].description"
       ],
-      "lighthouse-core/audits/time-to-first-byte.js | displayValue": [
+      "lighthouse-core/audits/server-response-time.js | displayValue": [
         {
           "values": {
             "timeInMs": 570.5630000000001
           },
-          "path": "audits[time-to-first-byte].displayValue"
+          "path": "audits[server-response-time].displayValue"
         }
       ],
       "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": [
@@ -7108,8 +7108,8 @@
       "stack-packs/packs/wordpress.js | uses_responsive_images": [
         "stackPacks[0].descriptions[uses-responsive-images]"
       ],
-      "stack-packs/packs/wordpress.js | time_to_first_byte": [
-        "stackPacks[0].descriptions[time-to-first-byte]"
+      "stack-packs/packs/wordpress.js | server_response_time": [
+        "stackPacks[0].descriptions[server-response-time]"
       ]
     }
   },
@@ -7132,7 +7132,7 @@
         "uses-optimized-images": "Consider using an [image optimization WordPress plugin](https://wordpress.org/plugins/search/optimize+images/) that compresses your images while retaining quality.",
         "uses-text-compression": "You can enable text compression in your web server configuration.",
         "uses-responsive-images": "Upload images directly through the [media library](https://wordpress.org/support/article/media-library-screen/) to ensure that the required image sizes are available, and then insert them from the media library or use the image widget to ensure the optimal image sizes are used (including those for the responsive breakpoints). Avoid using `Full Size` images unless the dimensions are adequate for their usage. [Learn More](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/).",
-        "time-to-first-byte": "Themes, plugins, and server specifications all contribute to server response time. Consider finding a more optimized theme, carefully selecting an optimization plugin, and/or upgrading your server."
+        "server-response-time": "Themes, plugins, and server specifications all contribute to server response time. Consider finding a more optimized theme, carefully selecting an optimization plugin, and/or upgrading your server."
       }
     }
   ]

@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Зменште використання стороннього коду"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "Час до першого байта визначає швидкість реакції сервера. [Докладніше](https://web.dev/time-to-first-byte)."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "Кореневий документ відповів через {timeInMs, number, milliseconds} мс"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Зменште час відповіді сервера (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Сервер довго відповідає (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "Значення"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Можете змінити шаблони свого продукту й каталогу, щоб скористатися функцією веб-платформи для [відкладеного завантаження](https://web.dev/native-lazy-loading)."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Скористайтесь [інтеграцією Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) від Magento."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Увімкніть опцію \"Зменшувати файли CSS\" у налаштуваннях розробника в магазині. [Докладніше](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Якщо ви користуєтеся React Router, зменште використання компонента `<Redirect>` для [навігації за маршрутом](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "Якщо ви обробляєте компоненти React на сервері, можете застосувати `renderToNodeStream()` або `renderToStaticNodeStream()`, щоб дозволити клієнту отримувати та вмикати не всю розмітку відразу, а її різні частини. [Докладніше](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Якщо ваша система складання автоматично зменшує файли CSS, переконайтеся, що ви вводите в дію робочу версію додатка. Це можна перевірити за допомогою розширення Інструменти розробника React. [Докладніше](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Існує багато плагінів WordPress, які можуть допомогти [вбудувати важливі об'єкти](https://wordpress.org/plugins/search/critical+css/) або [відкласти менш важливі ресурси](https://wordpress.org/plugins/search/defer+css+javascript/). Зауважте, що така оптимізація може порушити функції теми або плагінів, тож доведеться змінити код."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Теми, плагіни й характеристики сервера впливають на час відповіді. Спробуйте знайти більш оптимізовану тему, підібрати плагін для оптимізації та/або оновити сервер."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Спробуйте показувати витяги в списках дописів (через тег \"більше\"), зменшити кількість показаних публікацій на сторінці, розділити довгі дописи на кілька сторінок або скористатися плагіном, щоб відкласти завантаження коментарів."

@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "[Mîñîmîžé ţĥîŕð-þåŕţý ûšåĝé one two three]"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "[Ţîmé Ţö Fîŕšţ Бýţé îðéñţîƒîéš ţĥé ţîmé åţ ŵĥîçĥ ýöûŕ šéŕvéŕ šéñðš å ŕéšþöñšé. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/time-to-first-byte)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen]"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "[Ŕööţ ðöçûméñţ ţööķ ᐅ{timeInMs, number, milliseconds}ᐊ mš one two three four five six]"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "[Ŕéðûçé šéŕvéŕ ŕéšþöñšé ţîméš (ŢŢFБ) one two three four five six seven eight]"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "[Šéŕvéŕ ŕéšþöñšé ţîméš åŕé ļöŵ (ŢŢFБ) one two three four five six seven eight]"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "[Méåšûŕéméñţ one two]"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "[Çöñšîðéŕ möðîƒýîñĝ ýöûŕ þŕöðûçţ åñð çåţåļöĝ ţémþļåţéš ţö måķé ûšé öƒ ţĥé ŵéб þļåţƒöŕm'š ᐅ[ᐊļåžý ļöåðîñĝᐅ](https://web.dev/native-lazy-loading)ᐊ ƒéåţûŕé. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen]"
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "[Ûšé Måĝéñţö'š ᐅ[ᐊVåŕñîšĥ îñţéĝŕåţîöñᐅ](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)ᐊ. one two three four five six seven eight]"
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "[Éñåбļé ţĥé \"Mîñîƒý ÇŠŠ Fîļéš\" öþţîöñ îñ ýöûŕ šţöŕé'š Ðévéļöþéŕ šéţţîñĝš. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen]"
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "[Îƒ ýöû åŕé ûšîñĝ Ŕéåçţ Ŕöûţéŕ, mîñîmîžé ûšåĝé öƒ ţĥé ᐅ`<Redirect>`ᐊ çömþöñéñţ ƒöŕ ᐅ[ᐊŕöûţé ñåvîĝåţîöñšᐅ](https://reacttraining.com/react-router/web/api/Redirect)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen]"
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "[Îƒ ýöû åŕé šéŕvéŕ-šîðé ŕéñðéŕîñĝ åñý Ŕéåçţ çömþöñéñţš, çöñšîðéŕ ûšîñĝ ᐅ`renderToNodeStream()`ᐊ öŕ ᐅ`renderToStaticNodeStream()`ᐊ ţö åļļöŵ ţĥé çļîéñţ ţö ŕéçéîvé åñð ĥýðŕåţé ðîƒƒéŕéñţ þåŕţš öƒ ţĥé måŕķûþ îñšţéåð öƒ åļļ åţ öñçé. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix]"
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "[Îƒ ýöûŕ бûîļð šýšţém mîñîƒîéš ýöûŕ ÇŠŠ ƒîļéš åûţömåţîçåļļý, éñšûŕé ţĥåţ ýöû åŕé ðéþļöýîñĝ ţĥé þŕöðûçţîöñ бûîļð öƒ ýöûŕ åþþļîçåţîöñ. Ýöû çåñ çĥéçķ ţĥîš ŵîţĥ ţĥé Ŕéåçţ Ðévéļöþéŕ Ţööļš éxţéñšîöñ. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven twentyeight]"
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "[Ţĥéŕé åŕé å ñûmбéŕ öƒ ŴöŕðÞŕéšš þļûĝîñš ţĥåţ çåñ ĥéļþ ýöû ᐅ[ᐊîñļîñé çŕîţîçåļ åššéţšᐅ](https://wordpress.org/plugins/search/critical+css/)ᐊ öŕ ᐅ[ᐊðéƒéŕ ļéšš îmþöŕţåñţ ŕéšöûŕçéšᐅ](https://wordpress.org/plugins/search/defer+css+javascript/)ᐊ. Бéŵåŕé ţĥåţ öþţîmîžåţîöñš þŕövîðéð бý ţĥéšé þļûĝîñš måý бŕéåķ ƒéåţûŕéš öƒ ýöûŕ ţĥémé öŕ þļûĝîñš, šö ýöû ŵîļļ ļîķéļý ñééð ţö måķé çöðé çĥåñĝéš. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven twentyeight twentynine thirty thirtyone thirtytwo thirtythree]"
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "[Ţĥéméš, þļûĝîñš, åñð šéŕvéŕ šþéçîƒîçåţîöñš åļļ çöñţŕîбûţé ţö šéŕvéŕ ŕéšþöñšé ţîmé. Çöñšîðéŕ ƒîñðîñĝ å möŕé öþţîmîžéð ţĥémé, çåŕéƒûļļý šéļéçţîñĝ åñ öþţîmîžåţîöñ þļûĝîñ, åñð/öŕ ûþĝŕåðîñĝ ýöûŕ šéŕvéŕ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven]"
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "[Çöñšîðéŕ šĥöŵîñĝ éxçéŕþţš îñ ýöûŕ þöšţ ļîšţš (é.ĝ. vîå ţĥé möŕé ţåĝ), ŕéðûçîñĝ ţĥé ñûmбéŕ öƒ þöšţš šĥöŵñ öñ å ĝîvéñ þåĝé, бŕéåķîñĝ ýöûŕ ļöñĝ þöšţš îñţö mûļţîþļé þåĝéš, öŕ ûšîñĝ å þļûĝîñ ţö ļåžý-ļöåð çömméñţš. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven]"

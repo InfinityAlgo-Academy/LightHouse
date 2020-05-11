@@ -58,7 +58,7 @@ Object {
       "path": "errors-in-console",
     },
     Object {
-      "path": "time-to-first-byte",
+      "path": "server-response-time",
     },
     Object {
       "path": "metrics/first-cpu-idle",
@@ -860,7 +860,7 @@ Object {
         },
         Object {
           "group": "load-opportunities",
-          "id": "time-to-first-byte",
+          "id": "server-response-time",
           "weight": 0,
         },
         Object {

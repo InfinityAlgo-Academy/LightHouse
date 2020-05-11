@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "மூன்றாம் தரப்பு உபயோகத்தைக் குறைத்தல்"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "'முதல் பைட்டின் நேரம்' என்பது உங்கள் சேவையகம் ஒரு பதிலை அனுப்பும் நேரத்தை சுட்டிக்காட்டுகிறது. [மேலும் அறிக](https://web.dev/time-to-first-byte)."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "மூல ஆவணம் எடுத்துக் கொண்ட நேரம்: {timeInMs, number, milliseconds} மி.வி."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "சேவையக எதிர்வினை நேரங்களைக் குறைக்கவும் (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "சேவையகம் எதிர்வினையாற்றும் நேரங்கள் குறைவாக உள்ளன (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "அளவீடு"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "இணைய பிளாட்ஃபார்மின் [படங்களை மெதுவாக ஏற்றும்](https://web.dev/native-lazy-loading) அம்சத்தைப் பயன்படுத்த உங்கள் தயாரிப்பையும் கேட்டலாக் டெம்ப்ளேட்டுகளையும் மாற்றுவதைப் பரிசீலிக்கவும்."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Magentoவின் [வார்னிஷ் ஒருங்கிணைப்பு](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) அம்சத்தைப் பயன்படுத்தவும்."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "\"CSS கோப்புகளைச் சிறிதாக்குதல்\" என்ற விருப்பத்தேர்வை உங்கள் ஸ்டோரின் டெவெலப்பர் அமைப்புகளில் இயக்கவும். [மேலும் அறிக](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "நீங்கள் ரியாக்ட் ரூட்டரைப் பயன்படுத்தினால் [ரூட் வழிசெலுத்தல்களுக்கு](https://reacttraining.com/react-router/web/api/Redirect) `<Redirect>` உறுப்பைப் பயன்படுத்துவதைக் குறைத்துக்கொள்ளவும்."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "நீங்கள் சேவையகம் தரப்பாக இருந்து ரியாக்ட் கூறுகளை ரெண்டரிங் செய்பவராக இருந்தால் அனைத்தையும் ஒரே நேரத்தில் அல்லாமல் மார்க் அப்பின் வெவ்வேறு பகுதிகளைப் பெறவும் ஹைட்ரேட் செய்யவும் கிளையண்ட்டை அனுமதிப்பதற்கு `renderToNodeStream()` அல்லது `renderToStaticNodeStream()`ஐப் பயன்படுத்துவதைப் பரிசீலிக்கவும். [மேலும் அறிக](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "உங்கள் பதிப்பு சிஸ்டம் CSS கோப்புகளை தானாகச் சிறிதாக்கினால் உங்கள் ஆப்ஸுக்கு தயாரிப்புப் பதிப்பை பயன்படுத்துவதை உறுதிப்படுத்திக்கொள்ளவும். ரியாக்ட் டெவெலப்பர் கருவிகள் நீட்டிப்பில் இதைப் பார்க்கலாம். [மேலும் அறிக](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "[முக்கியமான உடைமைகளை முன்னிலைப்படுத்தவோ](https://wordpress.org/plugins/search/critical+css/) [முக்கியத்துவம் குறைவான ஆதாரங்களைத் தவிர்க்கவோ](https://wordpress.org/plugins/search/defer+css+javascript/) உங்களுக்கு உதவக்கூடிய பல WordPress செருகுநிரல்கள் உள்ளன. இந்த செருகுநிரல்கள் வழங்கும் மேம்படுத்துதல்கள் உங்கள் தீமிலோ செருகுநிரலிலோ உள்ள அம்சத்தைப் பாதிக்கலாம். அதனால் நீங்கள் குறியீட்டில் சில மாற்றங்களை செய்ய வேண்டியிருக்கும்."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "தீம்கள், செருகுநிரல்கள், சேவையக விவரக்குறிப்புகள் அனைத்தும் சேவையகத்தின் வேகத்தை நிர்ணயிக்கும். மேலும் மேம்படுத்தப்பட்ட தீமைக் கண்டறிந்து, மேம்படுத்தும் செருகுநிரலைக் கவனமாகத் தேர்ந்தெடுத்து மற்றும்/அல்லது சேவையகத்தை மேம்படுத்தவும்."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "இடுகைப் பட்டியல்களில் முக்கியமான பகுதியை மட்டும் காட்டலாம் (உதாரணமாக மேலும் என்ற குறிச்சொல்லுடன்), பக்கத்தில் இடுகைகளின் எண்ணிக்கையைக் குறைக்கலாம், ஒரு பெரிய இடுகையைப் பல சின்ன பக்கங்களாகப் பிரிக்கலாம் அல்லது தேவையுள்ள போது மட்டும் கருத்துகளைச் செருகுநிரல்கள் மூலம் ஏற்றலாம்."

@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Minimize a utilização de terceiros"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "A auditoria Tempo até ao primeiro byte indica o tempo de envio de uma resposta pelo seu servidor. [Saiba mais](https://web.dev/time-to-first-byte)."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "O documento de raiz demorou {timeInMs, number, milliseconds} ms"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Reduza os tempos de resposta do servidor (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Os tempos de resposta do servidor são curtos (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "Medição"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Considere modificar os seus modelos de produto e catálogo para tirar partido da funcionalidade de [carregamento em diferido](https://web.dev/native-lazy-loading) da plataforma Web."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Utilize a [integração com o Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) do Magento."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Ative a opção \"Reduzir ficheiros CSS\" nas Definições do programador da sua loja. [Saiba mais](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Se estiver a utilizar o React Router, minimize a utilização do componente `<Redirect>` para as [navegações de encaminhamentos](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "Se estiver a renderizar componentes React do lado do servidor, considere utilizar `renderToNodeStream()` ou `renderToStaticNodeStream()` para permitir que o cliente receba e hidrate várias partes da marcação em vez de todas em simultâneo. [Saiba mais](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Se o sistema da compilação reduzir os seus ficheiros CSS automaticamente, assegure-se de que está a implementar a compilação de produção da aplicação. Pode verificar esta situação com a extensão React Developer Tools. [Saiba mais](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Há vários plug-ins do WordPress que o podem ajudar a [colocar recursos críticos inline](https://wordpress.org/plugins/search/critical+css/) ou [adiar recursos menos importantes](https://wordpress.org/plugins/search/defer+css+javascript/). Tenha em atenção que as otimizações oferecidas por estes plug-ins podem quebrar funcionalidades do seu tema ou plug-ins, pelo que poderá ser necessário efetuar alterações ao código."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "As especificações dos temas, plug-ins e servidor, no seu conjunto, contribuem para o tempo de resposta do servidor. Considere procurar um tema mais otimizado, selecionar cuidadosamente um plug-in de otimização e/ou atualizar o servidor."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Considere mostrar excertos nas suas listas de publicações (por exemplo, através da etiqueta de mais), reduzir o número de publicações apresentadas numa determinada página, dividir as publicações longas em várias páginas ou utilizar um plug-in para tornar o carregamento de comentários lento."

@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Drittanbieternutzung minimieren"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "TTFB (Time To First Byte) erkennt den Zeitpunkt, zu dem Ihr Server eine Antwort sendet. [Weitere Informationen.](https://web.dev/time-to-first-byte)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "Stammdokument brauchte {timeInMs, number, milliseconds} ms"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Serverantwortzeiten reduzieren (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Serverantwortzeiten sind niedrig (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "Messung"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Sie können Ihre Produkt- und Katalogvorlagen anpassen, um die [Lazy Loading](https://web.dev/native-lazy-loading)-Funktion der Webplattform nutzen können."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Verwenden Sie die [Varnish-Integration](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) von Magento."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Sie können die Option zum Komprimieren von CSS-Dateien in den Entwicklereinstellungen des Stores aktivieren. [Weitere Informationen.](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Wenn Sie React Router nutzen, empfehlen wir, die Komponente \"`<Redirect>`\" für das [Bedienungs-Routing](https://reacttraining.com/react-router/web/api/Redirect) so wenig wie möglich zu verwenden."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "Wenn Sie serverseitig React-Komponenten rendern, empfehlen wir den Einsatz von \"`renderToNodeStream()`\" oder \"`renderToStaticNodeStream()`\", um dem Client zu ermöglichen, einzelne Teile des Markups abzurufen und auszufüllen. So müssen nicht alle auf einmal abgerufen werden. [Weitere Informationen.](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Wenn Ihr Build-System CSS-Dateien automatisch komprimiert, achten Sie darauf, dass Sie den Produktions-Build Ihrer App verfügbar machen. Das können Sie mit der Erweiterung \"React Developer Tools\" überprüfen. [Weitere Informationen.](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Es gibt eine Reihe von WordPress-Plug-ins, mit denen Sie [wichtige Assets einbetten](https://wordpress.org/plugins/search/critical+css/) oder [weniger wichtige Ressourcen aufschieben](https://wordpress.org/plugins/search/defer+css+javascript/) können. Beachten Sie, dass über diese Plug-ins bereitgestellte Optimierungen dazu führen können, dass Ihre Designs oder Plug-ins nicht funktionieren. Daher müssen Sie wahrscheinlich Änderungen am Code vornehmen."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Sowohl Designs, Plug-ins als auch Serverspezifikationen tragen zur Serverantwortzeit bei. Versuchen Sie, ein noch weiter optimiertes Design zu finden, wählen Sie ein geeignetes Optimierungs-Plug-in aus und/oder upgraden Sie Ihren Server."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Sie haben die Möglichkeit, Auszüge in Ihrer Beitragsliste einzublenden (z. B. über das Tag \"Mehr\"), die Anzahl der Beiträge auf einer Seite zu verringern, lange Beiträge auf mehrere Seiten aufzuteilen oder ein Plug-in für das Lazy Loading von Kommentaren zu verwenden."

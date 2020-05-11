@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "타사 사용량 최소화"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "Time To First Byte는 서버가 응답을 보내는 시간을 식별합니다. [자세히 알아보기](https://web.dev/time-to-first-byte)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "루트 문서에 {timeInMs, number, milliseconds} ms 소요됨"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "서버 응답 시간(TTFB) 단축"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "서버 응답 시간 낮음(TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "측정값"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "제품과 카탈로그 템플릿을 수정하여 웹 플랫폼의 [지연 로드](https://web.dev/native-lazy-loading) 기능을 활용해 보세요."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Magento의 [Varnish 통합](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)을 사용합니다."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "스토어의 개발자 설정에서 'CSS 파일 축소' 옵션을 사용 설정하세요. [자세히 알아보기](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "React Router를 사용하는 경우 [경로 탐색](https://reacttraining.com/react-router/web/api/Redirect)의 `<Redirect>` 구성요소 사용량을 축소합니다."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "서버 측에서 React 구성요소를 렌더링하는 경우 `renderToNodeStream()` 또는 `renderToStaticNodeStream()`을(를) 사용하여 클라이언트가 모든 마크업이 아닌 마크업의 서로 다른 부분을 받아서 하이드레이션할 수 있도록 허용해 보세요. [자세히 알아보기](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "빌드가 CSS 파일을 자동으로 축소하는 경우 애플리케이션의 프로덕션 빌드를 배포하고 있는지 확인하세요. 이는 React 개발자 도구 확장 프로그램으로 확인할 수 있습니다. [자세히 알아보기](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "[중요한 애셋을 인라인](https://wordpress.org/plugins/search/critical+css/)하거나 [덜 중요한 리소스를 지연](https://wordpress.org/plugins/search/defer+css+javascript/)할 수 있게 도와주는 다양한 WordPress 플러그인이 있습니다. 이러한 플러그인에서 제공하는 최적화로 인해 내가 사용하는 테마 또는 플러그인의 기능이 깨질 수 있으므로 코드를 변경해야 할 가능성이 큽니다."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "테마, 플러그인, 서버 사양은 모두 서버 응답 시간을 길어지게 만듭니다. 보다 최적화된 테마를 찾고, 최적화 플러그인을 신중하게 선택하고, 서버 업그레이드를 고려해 보세요."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "게시물 목록에 발췌문을 표시하거나(예: 더 많은 태그 사용), 특정 페이지에 표시되는 게시물의 개수를 줄이거나, 길이가 긴 게시물을 여러 페이지로 나누거나, 플러그인을 사용하여 댓글을 지연 로드하는 것이 좋습니다."

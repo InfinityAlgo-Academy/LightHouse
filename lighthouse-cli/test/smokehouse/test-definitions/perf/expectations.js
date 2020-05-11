@@ -27,7 +27,7 @@ module.exports = [
         'interactive': {
           score: '>=0.90', // primarily just making sure it didn't fail/go crazy, specific value isn't that important
         },
-        'time-to-first-byte': {
+        'server-response-time': {
           // Can be flaky, so test float numericValue instead of binary score
           numericValue: '<1000',
         },

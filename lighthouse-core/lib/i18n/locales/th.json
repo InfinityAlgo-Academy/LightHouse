@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "ลดการใช้ของบุคคลที่สาม"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "Time To First Byte ระบุเวลาที่เซิร์ฟเวอร์ส่งการตอบกลับ [ดูข้อมูลเพิ่มเติม](https://web.dev/time-to-first-byte)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "เอกสารรากใช้เวลา {timeInMs, number, milliseconds} มิลลิวินาที"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "ลดเวลาในการตอบกลับของเซิร์ฟเวอร์ (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "เวลาตอบสนองของเซิร์ฟเวอร์ต่ำ (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "การวัด"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "ลองแก้ไขเทมเพลตผลิตภัณฑ์และแคตตาล็อกเพื่อใช้ประโยชน์จากฟีเจอร์[การโหลดแบบ Lazy Loading](https://web.dev/native-lazy-loading) ของแพลตฟอร์มเว็บ"
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "ใช้[การผสานรวม Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) ของ Magento"
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "เปิดใช้ตัวเลือก \"Minify CSS Files\" ในการตั้งค่านักพัฒนาซอฟต์แวร์ของร้านค้า [ดูข้อมูลเพิ่มเติม](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "หากคุณกำลังใช้ React Router ให้ลดการใช้ของคอมโพเนนต์ `<Redirect>` ในการ[ไปยังเส้นทางต่างๆ](https://reacttraining.com/react-router/web/api/Redirect)"
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "หากคุณกำลังแสดงคอมโพเนนต์ของ React ใดๆ บนฝั่งเซิร์ฟเวอร์ ให้ลองใช้ `renderToNodeStream()` หรือ `renderToStaticNodeStream()` เพื่อให้ลูกค้าได้รับและรวมส่วนต่างๆ ของมาร์กอัปแทนที่จะรวมทั้งหมดในคราวเดียว [ดูข้อมูลเพิ่มเติม](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "หากระบบในรุ่นของคุณลดขนาดไฟล์ CSS โดยอัตโนมัติ โปรดตรวจสอบให้แน่ใจว่าคุณทำให้รุ่นที่ใช้งานจริงของแอปพลิเคชันใช้งานได้ ตรวจสอบเรื่องนี้ได้ด้วยส่วนขยายของ React Developer Tools [ดูข้อมูลเพิ่มเติม](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "มีปลั๊กอิน WordPress หลายรายการที่ช่วยคุณ[แทรกเนื้อหาที่สำคัญ](https://wordpress.org/plugins/search/critical+css/) หรือ[เลื่อนเวลาโหลดทรัพยากรที่สำคัญน้อยกว่า](https://wordpress.org/plugins/search/defer+css+javascript/) โปรดระวังว่าการเพิ่มประสิทธิภาพโดยปลั๊กอินเหล่านี้อาจทำให้ฟีเจอร์ของธีมหรือปลั๊กอินของคุณเสียหาย ซึ่งน่าจะทำให้คุณต้องแก้ไขโค้ด"
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "การกำหนดธีม ปลั๊กอิน และเซิร์ฟเวอร์ล้วนส่งผลต่อเวลาการตอบสนองของเซิร์ฟเวอร์ ลองหาธีมที่เพิ่มประสิทธิภาพมากขึ้น พยายามเลือกปลั๊กอินการเพิ่มประสิทธิภาพด้วยความระมัดระวัง และ/หรืออัปเกรดเซิร์ฟเวอร์"
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "ลองแสดงข้อความที่ตัดตอนมาในรายการโพสต์ (เช่น ผ่านแท็ก \"เพิ่มเติม\") ลดจำนวนโพสต์ที่แสดงในหน้าหนึ่งๆ แบ่งโพสต์ยาวๆ เป็นหลายหน้า หรือใช้ปลั๊กอินเพื่อโหลดความคิดเห็นแบบ Lazy Loading"

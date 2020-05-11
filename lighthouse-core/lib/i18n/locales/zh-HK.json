@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "減少第三方程式碼使用量"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "「首個字節時間」會指出您的伺服器傳送回應的時間。[瞭解詳情](https://web.dev/time-to-first-byte)。"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "根文件回應時間為 {timeInMs, number, milliseconds} 毫秒"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "縮短伺服器回應時間 (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "伺服器回應時間短 (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "測量"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "建議修改產品和目錄範本，以使用網絡平台的[延遲載入](https://web.dev/native-lazy-loading)功能。"
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "使用 Magento 的 [Varnish 整合](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)。"
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "在商店的開發人員設定中啟用「壓縮 CSS 檔案」選項。[瞭解詳情](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)。"
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "如果使用 React Router，請盡量避免在[路線導航](https://reacttraining.com/react-router/web/api/Redirect)使用 `<Redirect>` 組件。"
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "如果您在伺服器端輸出任何 React 組件，建議使用 `renderToNodeStream()` 或 `renderToStaticNodeStream()`，允許用戶端接收並混合標記的不同部分，而非同時完成。[瞭解詳情](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)。"
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "如果您建立自動壓縮 CSS 檔案的系統，請確定部署的應用程式為正式版本。您可以使用 React Developer Tools 擴充程式執行這項檢查。[瞭解詳情](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)。"
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "部分 WordPress 外掛程式可助您[內嵌重要資產](https://wordpress.org/plugins/search/critical+css/)或[延後載入較不重要的資源](https://wordpress.org/plugins/search/defer+css+javascript/)。請注意，這些外掛程式的優化設定可能影響主題或外掛程式的功能，因此您可能需要變更程式碼。"
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "主題、外掛程式和伺服器規格均會影響伺服器回應時間。建議尋找更優化的主題、謹慎選擇優化外掛程式和/或升級伺服器。"
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "建議在文章清單中顯示摘錄 (例如加入更多標籤)、減少特定頁面顯示的文章數量、將較長的文章分為多個頁面，或使用可延遲載入留言的外掛程式。"

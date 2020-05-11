@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Redueix l'ús de tercers"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "La mètrica Temps fins al primer byte identifica el moment en què el teu servidor envia una resposta. [Obtén més informació](https://web.dev/time-to-first-byte)."
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "El document arrel ha tardat {timeInMs, number, milliseconds} ms"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Redueix els temps de resposta del servidor (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Els temps de resposta del servidor són baixos (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "Mesurament"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Pots optar per modificar les plantilles de producte i de catàleg perquè utilitzin la funció de [càrrega diferida](https://web.dev/native-lazy-loading) de la plataforma web."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Fes servir la [integració amb Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) de Magento."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Activa l'opció \"Redueix els fitxers CSS\" a la configuració del desenvolupador de la botiga. [Obtén més informació](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Si estàs utilitzant un encaminador de React, redueix l'ús del component `<Redirect>` a les [navegacions per rutes](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "Si estàs renderitzant qualsevol component de React des del servidor, pots optar per utilitzar `renderToNodeStream()` o `renderToStaticNodeStream()` per permetre que el client rebi i hidrati diferents parts de l'etiquetatge en lloc de fer-ho amb tots a la vegada. [Obtén més informació](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Si el sistema de compilació redueix automàticament els fitxers CSS, comprova que estiguis implementant la compilació de producció de l'aplicació. Pots comprovar-ho amb l'extensió React Developer Tools. [Obtén més informació](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Hi ha diversos connectors de WordPress que et poden ajudar a [inserir recursos essencials](https://wordpress.org/plugins/search/critical+css/) o a [ajornar els recursos menys importants](https://wordpress.org/plugins/search/defer+css+javascript/). Tingues en compte que les optimitzacions que proporcionen aquests connectors poden afectar les funcions del tema o dels connectors, de manera que és possible que hagis de fer canvis al codi."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Els temes, els connectors i les especificacions del servidor contribueixen al temps de resposta del servidor. Pots buscar un tema més optimitzat, seleccionar amb cura un connector d'optimització o actualitzar el servidor."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Pots mostrar extractes a les llistes de publicacions (per exemple, amb l'etiqueta més), reduir el nombre de publicacions que es mostren en una pàgina concreta, tallar les publicacions llargues en diverses pàgines o fer servir un connector per als comentaris de càrrega diferida."

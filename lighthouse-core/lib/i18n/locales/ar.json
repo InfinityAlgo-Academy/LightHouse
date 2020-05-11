@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "تقليل استخدام الرموز التابعة لجهات خارجية"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "يحدّد \"وقت وصول أول بايت\" الوقت الذي يُرسل فيه الخادم استجابة. [مزيد من المعلومات](https://web.dev/time-to-first-byte)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "استغرق مستند الجذر {timeInMs, number, milliseconds} مللي ثانية"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "تقليل أوقات استجابة الخادم (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "أوقات استجابة الخادم منخفضة (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "القياسات"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "عليك تعديل نماذج الكتالوج والمنتج للاستفادة من ميزة [التحميل الخامل](https://web.dev/native-lazy-loading) للنظام الأساسي للويب."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "استخدِم [دمج Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) للنظام الأساسي Magento."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "فعِّل الخيار \"تصغير ملفات CSS\" في إعدادات مطوّر البرامج في المتجر. [مزيد من المعلومات](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "في حال استخدام React Router، عليك تقليل استخدام المكوّن `<Redirect>` في [عمليات تنقل المسار](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "في حال كنت تعرض من جانب الخادم أي مكوّنات React، عليك استخدام `renderToNodeStream()` أو `renderToStaticNodeStream()` للسماح للعميل بتلقي أجزاء مختلفة من الترميز ودمجها بدلاً من جميع الأجزاء دفعة واحدة. [مزيد من المعلومات](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "في حال تصغير نظام الإصدار لملفات CSS تلقائيًا، يُرجى التأكد من أنك تنشر إصدار الإنتاج لتطبيقك. يمكنك التحقّق من ذلك باستخدام إضافة React Developer Tools. [مزيد من المعلومات](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "هناك عدد من مكونات WordPress الإضافية التي يمكنها مساعدتك على [تضمين مواد العرض المهمة](https://wordpress.org/plugins/search/critical+css/) أو [تأجيل موارد أقل أهمية](https://wordpress.org/plugins/search/defer+css+javascript/). عليك توخي الحذر من أن التحسينات التي توفرها هذه الإضافات قد توقف ميزات التصميم أو المكونات الإضافية، لذلك ستحتاج على الأرجح إلى إجراء تغييرات في الرمز البرمجي."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "تساهم التصاميم والمكونات الإضافية ومواصفات الخادم في تحسين وقت استجابة الخادم. يمكنك البحث عن تصميم مُحسّن أكثر و/أو اختيار مكون إضافي للتحسين و/أو ترقية الخادم."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "يمكنك عرض مقتطفات في قوائم مشاركاتك (مثلاً عبر العلامة \"المزيد\")، أو تقليل عدد المشاركات المعروضة في صفحة معينة، أو تقسيم مشاركاتك الطويلة إلى صفحات متعددة، أو استخدام مكون إضافي لتحميل التعليقات ذات التحميل الكسول."

@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Réduire au maximum l'utilisation de code tiers"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "La valeur \"Time To First Byte\" identifie l'heure à laquelle votre serveur envoie une réponse. [En savoir plus](https://web.dev/time-to-first-byte)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "Le document racine a pris {timeInMs, number, milliseconds} ms"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Réduisez les délais de réponse du serveur (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Les délais de réponse du serveur sont faibles (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "Mesure"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Envisagez de modifier vos modèles de produit et de catalogue pour utiliser la fonctionnalité de [chargement différé](https://web.dev/native-lazy-loading) de la plate-forme Web."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Utilisez l'[intégration de Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) de Magento."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Activez l'option \"Minifier les fichiers CSS\" dans les paramètres développeur. [En savoir plus](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Si vous utilisez React Router, réduisez au maximum l'utilisation du composant `<Redirect>` pour la [navigation vers des itinéraires](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "Si vous êtes en train d'effectuer un rendu de composants React côté serveur, envisagez d'utiliser `renderToNodeStream()` ou `renderToStaticNodeStream()` pour permettre au client de recevoir et d'hydrater différentes parties du balisage au lieu de tout faire simultanément. [En savoir plus](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Si votre système build réduit automatiquement la taille de vos fichiers CSS, assurez-vous de déployer la build de production de votre application. Vous pouvez le vérifier avec l'extension React Developer Tools. [En savoir plus](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Divers plug-ins WordPress peuvent vous aider à [aligner des éléments critiques](https://wordpress.org/plugins/search/critical+css/) ou à [différer le chargement des ressources moins importantes](https://wordpress.org/plugins/search/defer+css+javascript/). Gardez en tête qu'à cause des optimisations fournies par ces plug-ins, certaines fonctionnalités de votre thème ou de vos plug-ins peuvent cesser de fonctionner. Vous devrez donc probablement modifier le code."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Les thèmes, les plug-ins et les spécifications du serveur sont autant d'éléments qui influent sur le temps de réponse du serveur. Vous pouvez envisager d'utiliser un thème plus optimisé ou un plug-in d'optimisation plus performant, ou bien de mettre à niveau votre serveur."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Vous pouvez envisager d'afficher des extraits dans vos listes d'articles (par exemple en utilisant la balise \"more\"), de réduire le nombre d'articles affichés dans une page donnée, de répartir vos articles longs sur plusieurs pages ou d'utiliser un plug-in qui charge de façon différée les commentaires."

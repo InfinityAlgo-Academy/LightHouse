@@ -1166,18 +1166,6 @@
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Minimalizujte používání kódu od třetích stran"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "Doba do načtení prvního bajtu udává, jak dlouho vašemu serveru trvá, než odešle odpověď. [Další informace](https://web.dev/time-to-first-byte)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "Hlavní dokument trval {timeInMs, number, milliseconds} ms"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Zkraťte doby odezvy serverů (TTFB)"
-  },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Doby odezvy serveru jsou krátké (TTFB)"
-  },
   "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
     "message": "Míra"
   },
@@ -1751,9 +1739,6 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Zvažte úpravu šablon produktů a katalogu s cílem využít funkci webové platformy pro [líné načítání](https://web.dev/native-lazy-loading)."
   },
-  "stack-packs/packs/magento.js | time_to_first_byte": {
-    "message": "Použijte [integraci platformy Magento s nástrojem Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
-  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Ve vývojářských nastaveních obchodu zapněte možnost minifikace souborů CSS. [Další informace](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
   },
@@ -1781,9 +1766,6 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Pokud používáte React Router, minimalizujte použití komponenty `<Redirect>` k [navigaci po trase](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | time_to_first_byte": {
-    "message": "Pokud některé komponenty React vykreslujete na straně serveru, zvažte použití metody `renderToNodeStream()` nebo `renderToStaticNodeStream()`, která klientovi umožní přijímat různé části označení a dosazovat do nich data samostatně namísto všech najednou. [Další informace](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
-  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Pokud váš sestavovací systém minifikuje soubory CSS automaticky, dejte pozor, abyste implementovali produkční sestavení aplikace. Můžete to zkontrolovat pomocí rozšíření React Developer Tools. [Další informace](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
   },
@@ -1804,9 +1786,6 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "K dispozici je celá řada pluginů služby WordPress, které vám pomohou [vložit kritické podklady přímo do kódu](https://wordpress.org/plugins/search/critical+css/) nebo [odložit načítání méně důležitých zdrojů](https://wordpress.org/plugins/search/defer+css+javascript/). Upozorňujeme, že optimalizace pomocí těchto pluginů může narušit funkčnost vašeho motivu nebo pluginů. V kódu proto pravděpodobně budete muset provést změny."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Na reakční dobu serveru mají vliv motivy, pluginy a specifikace serverů. Zvažte vyhledání optimalizovaného motivu, pečlivý výběr optimalizačního pluginu či upgradování serveru."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Zvažte zobrazování ukázek v seznamech příspěvků (např. prostřednictvím značky k načtení dalšího obsahu), snížení počtu příspěvků zobrazených na jedné stránce, rozdělení dlouhých příspěvků na několik stránek nebo použití pluginu k línému načítání komentářů."
