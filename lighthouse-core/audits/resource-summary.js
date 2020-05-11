@@ -51,9 +51,8 @@ class ResourceSummary extends Audit {
     const headings = [
       {key: 'label', itemType: 'text', text: str_(i18n.UIStrings.columnResourceType)},
       {key: 'requestCount', itemType: 'numeric', text: str_(i18n.UIStrings.columnRequests)},
-      {key: 'size', itemType: 'bytes', text: str_(i18n.UIStrings.columnTransferSize)},
+      {key: 'transferSize', itemType: 'bytes', text: str_(i18n.UIStrings.columnTransferSize)},
     ];
-
 
     /** @type {Record<LH.Budget.ResourceType,string>} */
     const strMappings = {
