@@ -153,7 +153,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       const disclaimerEl = this.dom.convertMarkdownLinkSnippets(strings.varianceDisclaimer);
       estValuesEl.appendChild(disclaimerEl);
 
-      // Add link to score calculator
+      // Add link to score calculator.
       const calculatorLink = this.dom.createChildOf(estValuesEl, 'a');
       calculatorLink.textContent = strings.calculatorLink;
       const v5andv6metrics = /** @type {LH.ReportResult.AuditRef[]} */ ([
@@ -168,7 +168,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       const params = new URLSearchParams(metricPairs);
       const url = new URL('https://googlechrome.github.io/lighthouse/scorecalc/');
       url.hash = params.toString();
-      calculatorLink.href = url.toString();
+      calculatorLink.href = url.href;
     }
 
     metricAuditsEl.classList.add('lh-audit-group--metrics');
