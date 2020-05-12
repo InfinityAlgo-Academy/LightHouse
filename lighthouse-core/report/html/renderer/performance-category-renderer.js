@@ -110,19 +110,20 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
    * @return {string}
    */
   _getScoringCalculatorHref(auditRefs) {
-    const v5andv6metrics = /** @type {LH.ReportResult.AuditRef[]} */ ([
-      ...auditRefs.filter(audit => audit.group === 'metrics'),
-      auditRefs.find(audit => audit.id === 'first-cpu-idle'),
-      auditRefs.find(audit => audit.id === 'first-meaningful-paint'),
-    ]);
+    const v5andv6metrics = auditRefs.filter(audit => audit.group === 'metrics');
+    const fci = auditRefs.find(audit => audit.id === 'first-cpu-idle');
+    const fmp = auditRefs.find(audit => audit.id === 'first-meaningful-paint');
+    if (fci) v5andv6metrics.push(fci);
+    if (fmp) v5andv6metrics.push(fmp);
+
     const metricPairs = v5andv6metrics.map(audit => {
-      const value = (audit.result.numericValue || null).toString();
+      const value = audit.result.numericValue ? audit.result.numericValue.toString() : 'null';
       return [audit.id, value];
     });
     const params = new URLSearchParams(metricPairs);
     const url = new URL('https://googlechrome.github.io/lighthouse/scorecalc/');
     url.hash = params.toString();
-    return url.toString();
+    return url.href;
   }
 
   /**
@@ -175,7 +176,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       estValuesEl.appendChild(disclaimerEl);
 
       // Add link to score calculator.
-      const calculatorLink = this.dom.createChildOf(estValuesEl, 'a');
+      const calculatorLink = this.dom.createChildOf(estValuesEl, 'a', 'lh-calclink');
       calculatorLink.textContent = strings.calculatorLink;
       calculatorLink.href = this._getScoringCalculatorHref(category.auditRefs);
     }

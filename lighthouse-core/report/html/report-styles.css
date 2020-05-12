@@ -614,6 +614,10 @@
   color: var(--color-gray-700);
 }
 
+.lh-calclink::before {
+  content: ' ';
+}
+
 .lh-metric__description {
   display: none;
   grid-column-start: 2;
