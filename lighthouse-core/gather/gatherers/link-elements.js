@@ -9,7 +9,7 @@ const Gatherer = require('./gatherer.js');
 const URL = require('../../lib/url-shim.js').URL;
 const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
 const LinkHeader = require('http-link-header');
-const {getElementsInDocumentString} = require('../../lib/page-functions.js');
+const {createEvalCode, getElementsInDocumentString} = require('../../lib/page-functions.js');
 
 /* globals HTMLLinkElement */
 
@@ -81,12 +81,20 @@ class LinkElements extends Gatherer {
   static getLinkElementsInDOM(passContext) {
     // We'll use evaluateAsync because the `node.getAttribute` method doesn't actually normalize
     // the values like access from JavaScript does.
-    return passContext.driver.evaluateAsync(`(() => {
-      ${getElementsInDocumentString};
-      ${getLinkElementsInDOM};
 
-      return getLinkElementsInDOM();
-    })()`, {useIsolation: true});
+    const code = createEvalCode(getLinkElementsInDOM, {
+      deps: [
+        getElementsInDocumentString,
+      ],
+    });
+    return passContext.driver.evaluateAsync(code, {useIsolation: true});
+    
+    // return passContext.driver.evaluateAsync(`(() => {
+    //   ${getElementsInDocumentString};
+    //   ${getLinkElementsInDOM};
+
+    //   return getLinkElementsInDOM();
+    // })()`, {useIsolation: true});
   }
 
   /**

@@ -12,6 +12,21 @@
  * Helper functions that are passed by `toString()` by Driver to be evaluated in target page.
  */
 
+ /**
+  * @template T
+  * @param {(...args: T) => any} mainFn
+  * @param  {{args?: T, deps?: (Function|string)[]}=}
+  */
+function createEvalCode(mainFn, {args, deps}) {
+  const argsSerialized = args ? args.map(arg => JSON.stringify(arg)).join(',') : '';
+  const depsSerialized = deps ? deps.join('\n') : '';
+  return `(() => {
+    ${depsSerialized}
+    ${mainFn}
+    return ${mainFn.name}(${argsSerialized});
+  })()`;
+}
+
 /**
  * The `exceptionDetails` provided by the debugger protocol does not contain the useful
  * information such as name, message, and stack trace of the error when it's wrapped in a
@@ -304,9 +319,10 @@ function getNodeLabel(node) {
 }
 
 module.exports = {
+  createEvalCode,
   wrapRuntimeEvalErrorInBrowserString: wrapRuntimeEvalErrorInBrowser.toString(),
   registerPerformanceObserverInPageString: registerPerformanceObserverInPage.toString(),
-  checkTimeSinceLastLongTaskString: checkTimeSinceLastLongTask.toString(),
+  checkTimeSinceLastLongTask,
   getElementsInDocumentString: getElementsInDocument.toString(),
   getOuterHTMLSnippetString: getOuterHTMLSnippet.toString(),
   getOuterHTMLSnippet: getOuterHTMLSnippet,

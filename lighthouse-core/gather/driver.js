@@ -812,7 +812,8 @@ class Driver {
     let lastTimeout;
     let canceled = false;
 
-    const checkForQuietExpression = `(${pageFunctions.checkTimeSinceLastLongTaskString})()`;
+    const checkForQuietExpression =
+      pageFunctions.createEvalCode(pageFunctions.checkTimeSinceLastLongTask);
     /**
      * @param {Driver} driver
      * @param {() => void} resolve
