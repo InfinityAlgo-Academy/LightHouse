@@ -152,6 +152,23 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       const estValuesEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-metrics__disclaimer');
       const disclaimerEl = this.dom.convertMarkdownLinkSnippets(strings.varianceDisclaimer);
       estValuesEl.appendChild(disclaimerEl);
+
+      // Add link to score calculator
+      const calculatorLink = this.dom.createChildOf(estValuesEl, 'a');
+      calculatorLink.textContent = strings.calculatorLink;
+      const v5andv6metrics = /** @type {LH.ReportResult.AuditRef[]} */ ([
+        ...metricAudits,
+        category.auditRefs.find(m => m.id === 'first-cpu-idle'),
+        category.auditRefs.find(m => m.id === 'first-meaningful-paint'),
+      ]);
+      const metricPairs = v5andv6metrics.map(audit => {
+        const value = (audit.result.numericValue || 0).toString();
+        return [audit.id, value]
+      });
+      const params = new URLSearchParams(metricPairs);
+      const url = new URL('https://paulirish.github.io/lh-scorecalc/');
+      url.hash = params.toString();
+      calculatorLink.href = url.toString();
     }
 
     metricAuditsEl.classList.add('lh-audit-group--metrics');
