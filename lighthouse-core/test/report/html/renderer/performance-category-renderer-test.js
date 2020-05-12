@@ -234,6 +234,34 @@ describe('PerfCategoryRenderer', () => {
     });
   });
 
+  describe('_getScoringCalculatorHref', () => {
+    it('creates a working link given some auditRefs', () => {
+      const href = renderer._getScoringCalculatorHref(category.auditRefs);
+      const url = new URL(href);
+      expect(url.hash.split('&')).toMatchInlineSnapshot(`
+        Array [
+          "#first-contentful-paint=3969.135",
+          "speed-index=4417",
+          "largest-contentful-paint=4927.278",
+          "interactive=4927.278",
+          "total-blocking-time=116.79800000000023",
+          "cumulative-layout-shift=0.42",
+          "first-cpu-idle=4927.278",
+          "first-meaningful-paint=3969.136",
+        ]
+      `);
+    });
+
+    it('uses null if the metric is missing its value', () => {
+      const categoryClone = JSON.parse(JSON.stringify(category));
+      const lcp = categoryClone.auditRefs.find(audit => audit.id === 'largest-contentful-paint');
+      lcp.result.numericValue = undefined;
+      lcp.result.score = null;
+      const href = renderer._getScoringCalculatorHref(categoryClone.auditRefs);
+      expect(href).toContain('largest-contentful-paint=null');
+    });
+  });
+
   // This is done all in CSS, but tested here.
   describe('metric description toggles', () => {
     let container;
