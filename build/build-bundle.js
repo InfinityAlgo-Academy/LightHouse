@@ -36,7 +36,7 @@ const locales = fs.readdirSync(__dirname + '/../lighthouse-core/lib/i18n/locales
 // HACK: manually include the lighthouse-plugin-publisher-ads audits.
 /** @type {Array<string>} */
 // @ts-ignore
-const pubAdsAudits = require('lighthouse-plugin-publisher-ads/plugin.js').audits.map(a => a.path);
+const pubAdsAudits = require('lighthouse-plugin-publisher-ads-alphaignore/plugin.js').audits.map(a => a.path);
 
 /** @param {string} file */
 const isDevtools = file => path.basename(file).includes('devtools');
@@ -102,7 +102,7 @@ async function browserifyFile(entryPath, distPath) {
   // HACK: manually include the lighthouse-plugin-publisher-ads audits.
   // TODO: there should be a test for this.
   if (isDevtools(entryPath)) {
-    bundle.require('lighthouse-plugin-publisher-ads');
+    bundle.require('lighthouse-plugin-publisher-ads-alphaignore');
     pubAdsAudits.forEach(pubAdAudit => {
       bundle = bundle.require(pubAdAudit);
     });

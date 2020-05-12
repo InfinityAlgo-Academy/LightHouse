@@ -35,7 +35,7 @@ function createConfig(categoryIDs, device) {
 
   return {
     extends: 'lighthouse:default',
-    plugins: ['lighthouse-plugin-publisher-ads'],
+    plugins: ['lighthouse-plugin-publisher-ads-alphaignore'],
     settings,
   };
 }

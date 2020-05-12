@@ -358,9 +358,9 @@
   integrity sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
 
 "@tusbar/cache-control@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@tusbar/cache-control/-/cache-control-0.3.1.tgz#2ee673c6a7166041b5d419f7e15cd9f16e21c8e1"
-  integrity sha512-qeQhWoHQqDdW+SS1TgybdOeaSo+8tZx4ZesMY0+HSLeWWa2bGDetB9wxAT/umlXuutC6QdbADd48RJ6hrYr4BQ==
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@tusbar/cache-control/-/cache-control-0.3.2.tgz#6b59cd0ba8fe376fc472012cecde556f667ae4a1"
+  integrity sha512-69QNun7QkjTAXwvO4J/dvBW19M5q/mcqAnMawPseAEv7DNEAr7flhlW3I9Cp3N4MO0RY/StZYXBq+xkik6Z+VA==
 
 "@types/archiver@^2.1.2":
   version "2.1.2"
@@ -5314,10 +5314,10 @@ lighthouse-logger@^1.0.0, lighthouse-logger@^1.2.0:
     debug "^2.6.8"
     marky "^1.2.0"
 
-lighthouse-plugin-publisher-ads@^0.4.3:
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/lighthouse-plugin-publisher-ads/-/lighthouse-plugin-publisher-ads-0.4.3.tgz#3b03e966fa18a940e9bd35380374f8b612fa0c3a"
-  integrity sha512-Ra5Xqd3EqK8mzs0YzHnk9evj9WQc2z+WbyyjK1LXcuaQIn2p8jmE7C/5NH1fqMsGiSBN2LBvbvGCgcopn1wjdg==
+lighthouse-plugin-publisher-ads-alphaignore@1.0.1-beta.4:
+  version "1.0.1-beta.4"
+  resolved "https://registry.yarnpkg.com/lighthouse-plugin-publisher-ads-alphaignore/-/lighthouse-plugin-publisher-ads-alphaignore-1.0.1-beta.4.tgz#f307510a4023065c17f9de1ea82410cdc36230c8"
+  integrity sha512-DQb8dlPk5KlwfCfWBcwbnqXetq509ykvGBmPBLefNQzyDwhE7A8ZK37PZC2IohM3kQhHC2fgyDj8iEdCjnzc2w==
   dependencies:
     "@tusbar/cache-control" "^0.3.1"
     esprima "^4.0.1"
