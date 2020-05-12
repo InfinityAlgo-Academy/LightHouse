@@ -90,6 +90,9 @@ var $$ = document.querySelectorAll.bind(document);
 Element.prototype.$ = Element.prototype.querySelector;
 Element.prototype.$$ = Element.prototype.querySelectorAll;
 
+var NBSP = '\xa0';
+var numberFormatter = new Intl.NumberFormat();
+
 // thx Lighthouse's util.js
 function arithmeticMean(items) {
   items = items.filter(function (item) { return item.weight > 0; });
@@ -483,16 +486,21 @@ var Metric = /*@__PURE__*/(function (Component) {
     var min = ref$1.min;
     var max = ref$1.max;
     var step = ref$1.step;
-    var name = scoring[id].name;
+    var metricScoring = scoring[id];
+    var valueFormatted = metricScoring.units === 'unitless' ?
+      value.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) :
+      // TODO: Use https://github.com/tc39/proposal-unified-intl-numberformat#i-units when Safari/FF support it
+      ("" + (numberFormatter.format(value)) + NBSP + "ms");
+    var weightFormatted = (weight * 100).toLocaleString(undefined, {maximumFractionDigits: 1});
 
     return h( 'tr', { class: ("lh-metric--" + (calculateRating(score / 100))) },
       h( 'td', null,
         h( 'span', { class: "lh-metric__score-icon" })
       ),
-      h( 'td', null, (id + " (" + name + ")") ),
+      h( 'td', null, (id + " (" + (metricScoring.name) + ")") ),
       h( 'td', null,
         h( 'input', { type: "range", min: min, value: value, max: max, step: step, class: (id + " metric-value"), onInput: function (e) { return this$1.onValueChange(e, id); } }),
-        h( 'output', { class: "${id} value-output" }, value)
+        h( 'output', { class: "${id} value-output" }, valueFormatted)
       ),
       h( 'td', null ),
 
@@ -502,7 +510,7 @@ var Metric = /*@__PURE__*/(function (Component) {
       ),
 
       h( 'td', null,
-        h( 'span', { class: (id + " weight-text") }, Math.round(weight * 10000) / 100, "%")
+        h( 'span', { class: (id + " weight-text") }, weightFormatted, "%")
       )
     )
   };
