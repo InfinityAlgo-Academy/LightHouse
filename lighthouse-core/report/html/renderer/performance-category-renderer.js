@@ -166,7 +166,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
         return [audit.id, value]
       });
       const params = new URLSearchParams(metricPairs);
-      const url = new URL('https://paulirish.github.io/lh-scorecalc/');
+      const url = new URL('https://googlechrome.github.io/lighthouse/scorecalc/');
       url.hash = params.toString();
       calculatorLink.href = url.toString();
     }
