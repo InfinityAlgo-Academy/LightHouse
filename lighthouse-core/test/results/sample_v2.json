@@ -1740,6 +1740,62 @@
         ]
       }
     },
+    "layout-shift-elements": {
+      "id": "layout-shift-elements",
+      "title": "Avoid large layout shifts",
+      "description": "These DOM elements contribute most to the CLS of the page.",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "displayValue": "4 elements found",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "node",
+            "itemType": "node",
+            "text": "Element"
+          }
+        ],
+        "items": [
+          {
+            "node": {
+              "type": "node",
+              "path": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,3,H5",
+              "selector": "div.blog-index > article > div.entry-content > h5",
+              "nodeLabel": "Debugging Node.js with Chrome DevTools",
+              "snippet": "<h5>"
+            }
+          },
+          {
+            "node": {
+              "type": "node",
+              "path": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,4,P",
+              "selector": "div.blog-index > article > div.entry-content > p",
+              "nodeLabel": "The canonical guide to using the Chrome DevTools UI for debugging Node.js. It d…",
+              "snippet": "<p>"
+            }
+          },
+          {
+            "node": {
+              "type": "node",
+              "path": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,5,HR",
+              "selector": "div.blog-index > article > div.entry-content > hr",
+              "nodeLabel": "hr",
+              "snippet": "<hr>"
+            }
+          },
+          {
+            "node": {
+              "type": "node",
+              "path": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,6,P",
+              "selector": "div.blog-index > article > div.entry-content > p",
+              "nodeLabel": "Aside from that, I’ve been busy working on Lighthouse, performance metrics, too…",
+              "snippet": "<p>"
+            }
+          }
+        ]
+      }
+    },
     "pwa-cross-browser": {
       "id": "pwa-cross-browser",
       "title": "Site works cross-browser",
@@ -3913,6 +3969,11 @@
           "group": "diagnostics"
         },
         {
+          "id": "layout-shift-elements",
+          "weight": 0,
+          "group": "diagnostics"
+        },
+        {
           "id": "uses-http2",
           "weight": 0,
           "group": "diagnostics"
@@ -5067,6 +5128,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:largest-contentful-paint-element",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:layout-shift-elements",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6263,7 +6330,22 @@
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnElement": [
         "audits[largest-contentful-paint-element].details.headings[0].text",
+        "audits[layout-shift-elements].details.headings[0].text",
         "audits[dom-size].details.headings[1].text"
+      ],
+      "lighthouse-core/audits/layout-shift-elements.js | title": [
+        "audits[layout-shift-elements].title"
+      ],
+      "lighthouse-core/audits/layout-shift-elements.js | description": [
+        "audits[layout-shift-elements].description"
+      ],
+      "lighthouse-core/audits/layout-shift-elements.js | displayValue": [
+        {
+          "values": {
+            "nodeCount": 4
+          },
+          "path": "audits[layout-shift-elements].displayValue"
+        }
       ],
       "lighthouse-core/audits/manual/pwa-cross-browser.js | title": [
         "audits[pwa-cross-browser].title"

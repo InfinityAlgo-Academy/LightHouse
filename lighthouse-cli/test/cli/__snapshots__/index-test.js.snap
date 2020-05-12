@@ -154,6 +154,9 @@ Object {
       "path": "largest-contentful-paint-element",
     },
     Object {
+      "path": "layout-shift-elements",
+    },
+    Object {
       "path": "manual/pwa-cross-browser",
     },
     Object {
@@ -941,6 +944,11 @@ Object {
         Object {
           "group": "diagnostics",
           "id": "largest-contentful-paint-element",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "layout-shift-elements",
           "weight": 0,
         },
         Object {

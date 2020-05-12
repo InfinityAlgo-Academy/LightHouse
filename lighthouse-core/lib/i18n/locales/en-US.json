@@ -818,6 +818,15 @@
   "lighthouse-core/audits/largest-contentful-paint-element.js | title": {
     "message": "Largest Contentful Paint element"
   },
+  "lighthouse-core/audits/layout-shift-elements.js | description": {
+    "message": "These DOM elements contribute most to the CLS of the page."
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
+    "message": "{nodeCount, plural,\n    =0 {No elements found}\n    =1 {1 element found}\n    other {# elements found}\n    }"
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | title": {
+    "message": "Avoid large layout shifts"
+  },
   "lighthouse-core/audits/legacy-javascript.js | description": {
     "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
   },
