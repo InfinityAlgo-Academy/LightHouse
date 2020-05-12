@@ -5652,6 +5652,7 @@
   "i18n": {
     "rendererFormattedStrings": {
       "auditGroupExpandTooltip": "Show audits",
+      "calculatorLink": "See calculator",
       "crcInitialNavigation": "Initial Navigation",
       "crcLongestDurationLabel": "Maximum critical path latency:",
       "dropdownCopyJSON": "Copy JSON",
