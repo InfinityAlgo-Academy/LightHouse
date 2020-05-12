@@ -163,7 +163,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       ]);
       const metricPairs = v5andv6metrics.map(audit => {
         const value = (audit.result.numericValue || 0).toString();
-        return [audit.id, value]
+        return [audit.id, value];
       });
       const params = new URLSearchParams(metricPairs);
       const url = new URL('https://googlechrome.github.io/lighthouse/scorecalc/');
