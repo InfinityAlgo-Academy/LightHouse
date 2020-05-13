@@ -34,9 +34,10 @@ const locales = fs.readdirSync(__dirname + '/../lighthouse-core/lib/i18n/locales
     .map(f => require.resolve(`../lighthouse-core/lib/i18n/locales/${f}`));
 
 // HACK: manually include the lighthouse-plugin-publisher-ads audits.
+const pubAdsPath = 'lighthouse-plugin-publisher-ads-alphaignore'
 /** @type {Array<string>} */
 // @ts-ignore
-const pubAdsAudits = require('lighthouse-plugin-publisher-ads-alphaignore/plugin.js').audits.map(a => a.path);
+const pubAdsAudits = require(`${pubAdsPath}/plugin.js`).audits.map(a => a.path);
 
 /** @param {string} file */
 const isDevtools = file => path.basename(file).includes('devtools');
