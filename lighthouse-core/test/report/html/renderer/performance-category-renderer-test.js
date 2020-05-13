@@ -239,7 +239,13 @@ describe('PerfCategoryRenderer', () => {
 
   describe('_getScoringCalculatorHref', () => {
     it('creates a working link given some auditRefs', () => {
-      const href = renderer._getScoringCalculatorHref(category.auditRefs);
+      const categoryClone = JSON.parse(JSON.stringify(category));
+
+      // CLS of 0 is both valid and falsy. Make sure it doesn't become 'null'
+      const cls = categoryClone.auditRefs.find(audit => audit.id === 'cumulative-layout-shift');
+      cls.result.numericValue = 0;
+
+      const href = renderer._getScoringCalculatorHref(categoryClone.auditRefs);
       const url = new URL(href);
       expect(url.hash.split('&')).toMatchInlineSnapshot(`
         Array [
@@ -248,7 +254,7 @@ describe('PerfCategoryRenderer', () => {
           "largest-contentful-paint=4927.278",
           "interactive=4927.278",
           "total-blocking-time=116.79800000000023",
-          "cumulative-layout-shift=0.42",
+          "cumulative-layout-shift=0",
           "first-cpu-idle=4927.278",
           "first-meaningful-paint=3969.136",
         ]
