@@ -120,7 +120,14 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       const value = audit.result.numericValue ? audit.result.numericValue.toString() : 'null';
       return [audit.id, value];
     });
-    const params = new URLSearchParams(metricPairs);
+    const paramPairs = [...metricPairs];
+
+    if (Util.reportJson) {
+      paramPairs.push(['device', Util.reportJson.configSettings.emulatedFormFactor]);
+      paramPairs.push(['version', Util.reportJson.lighthouseVersion]);
+    }
+
+    const params = new URLSearchParams(paramPairs);
     const url = new URL('https://googlechrome.github.io/lighthouse/scorecalc/');
     url.hash = params.toString();
     return url.href;

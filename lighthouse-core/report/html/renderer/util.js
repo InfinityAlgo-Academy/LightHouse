@@ -487,6 +487,13 @@ class Util {
   }
 }
 
+/**
+ * Some parts of the report renderer require data found on the LHR. Instead of wiring it
+ * through, we have this global.
+ * @type {LH.ReportResult | null}
+ */
+Util.reportJson = null;
+
 /** @type {I18n} */
 // @ts-ignore: Is set in report renderer.
 Util.i18n = null;

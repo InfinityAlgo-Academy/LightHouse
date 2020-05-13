@@ -255,6 +255,33 @@ describe('PerfCategoryRenderer', () => {
       `);
     });
 
+    it('also appends device and version number', () => {
+      Util.reportJson = {
+        configSettings: {emulatedFormFactor: 'mobile'},
+        lighthouseVersion: '6.0.0',
+      };
+      const href = renderer._getScoringCalculatorHref(category.auditRefs);
+      const url = new URL(href);
+      try {
+        expect(url.hash.split('&')).toMatchInlineSnapshot(`
+          Array [
+            "#first-contentful-paint=3969.135",
+            "speed-index=4417",
+            "largest-contentful-paint=4927.278",
+            "interactive=4927.278",
+            "total-blocking-time=116.79800000000023",
+            "cumulative-layout-shift=0.42",
+            "first-cpu-idle=4927.278",
+            "first-meaningful-paint=3969.136",
+            "device=mobile",
+            "version=6.0.0",
+          ]
+        `);
+      } finally {
+        Util.reportJson = null;
+      }
+    });
+
     it('uses null if the metric is missing its value', () => {
       const categoryClone = JSON.parse(JSON.stringify(category));
       const lcp = categoryClone.auditRefs.find(audit => audit.id === 'largest-contentful-paint');
