@@ -566,7 +566,7 @@
 }
 
 @media screen and (min-width: 640px) {
-  .lh-metric:nth-last-child(-n+2) {
+  .lh-metric:nth-child(3n+3) {
     border-bottom: 1px solid var(--report-border-color-secondary);
   }
 }
