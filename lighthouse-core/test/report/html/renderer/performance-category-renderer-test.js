@@ -92,6 +92,9 @@ describe('PerfCategoryRenderer', () => {
     assert.ok(disclamerLink, 'disclaimer contains coverted markdown link');
     const disclamerUrl = new URL(disclamerLink.href);
     assert.strictEqual(disclamerUrl.hostname, 'web.dev');
+    const calcLink = disclaimerEl.querySelector('a.lh-calclink');
+    assert.ok(calcLink, 'disclaimer contains scorecalc link');
+    assert.strictEqual(new URL(calcLink.href).hostname, 'googlechrome.github.io');
   });
 
   it('renders the failing performance opportunities', () => {
