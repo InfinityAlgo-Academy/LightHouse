@@ -614,8 +614,8 @@
   color: var(--color-gray-700);
 }
 
-.lh-calclink::before {
-  content: ' ';
+.lh-calclink {
+  padding-left: calc(1ex / 3);
 }
 
 .lh-metric__description {
