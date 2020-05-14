@@ -423,9 +423,11 @@ class Driver {
    * will be evaluated in a content script that has access to the page's DOM but whose JavaScript state
    * is completely separate.
    * Returns a promise that resolves on the expression's value.
-   * @param {string} expression
+   * @template T
+   * @param {string | (string & {__taggedType: T})} expression Code as a string. Optionally include a
+   *                                                           tagged type to mark the return type.
    * @param {{useIsolation?: boolean}=} options
-   * @return {Promise<*>}
+   * @return {Promise<T>}
    */
   async evaluateAsync(expression, options = {}) {
     const contextId = options.useIsolation ? await this._getOrCreateIsolatedContextId() : undefined;

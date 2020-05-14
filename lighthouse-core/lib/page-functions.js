@@ -12,19 +12,38 @@
  * Helper functions that are passed by `toString()` by Driver to be evaluated in target page.
  */
 
- /**
-  * @template T
-  * @param {(...args: T) => any} mainFn
-  * @param  {{args?: T, deps?: (Function|string)[]}=}
-  */
-function createEvalCode(mainFn, {args, deps}) {
+/**
+ * @template T
+ * @param {(...args: T) => any} mainFn
+ * @param {{mode?: 'iffe'|'function', args?: T, deps?: (Function|string)[]}}
+ */
+function createEvalCode(mainFn, {mode, args, deps} = {}) {
   const argsSerialized = args ? args.map(arg => JSON.stringify(arg)).join(',') : '';
   const depsSerialized = deps ? deps.join('\n') : '';
-  return `(() => {
-    ${depsSerialized}
-    ${mainFn}
-    return ${mainFn.name}(${argsSerialized});
-  })()`;
+
+  if (!mode || mode === 'iffe') {
+    return `(() => {
+      ${depsSerialized}
+      ${mainFn}
+      return ${mainFn.name}(${argsSerialized});
+    })()`;
+  } else {
+    return `function () {
+      ${depsSerialized}
+      ${mainFn}
+      return ${mainFn.name}.call(this, ${argsSerialized});
+    }`;
+  }
+}
+
+/**
+ * @template T, R
+ * @param {(...args: T) => R} mainFn
+ * @param {{mode?: 'iffe'|'function', args?: T, deps?: (Function|string)[]}} opts
+ * @return {string & {__taggedType: R}}
+ */
+function createEvalCode2(mainFn, opts) {
+  return createEvalCode(mainFn, opts);
 }
 
 /**
@@ -320,6 +339,7 @@ function getNodeLabel(node) {
 
 module.exports = {
   createEvalCode,
+  createEvalCode2,
   wrapRuntimeEvalErrorInBrowserString: wrapRuntimeEvalErrorInBrowser.toString(),
   registerPerformanceObserverInPageString: registerPerformanceObserverInPage.toString(),
   checkTimeSinceLastLongTask,

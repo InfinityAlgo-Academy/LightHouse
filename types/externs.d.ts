@@ -104,6 +104,10 @@ declare global {
   /** Obtain the type of the first parameter of a function. */
   type FirstParamType<T extends (arg1: any, ...args: any[]) => any> =
     T extends (arg1: infer P, ...args: any[]) => any ? P : never;
+  
+  // ignore. thought this might be needed but seems not.
+  /** Removes a type from an intersection. */
+  // type ExtractTaggedTyped<AT> = AT extends {__taggedType: infer T} ? T : never;
 
   module LH {
     // re-export useful type modules under global LH module.

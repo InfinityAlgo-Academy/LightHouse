@@ -138,16 +138,21 @@ class TraceElements extends Gatherer {
       const resolveNodeResponse =
         await driver.sendCommand('DOM.resolveNode', {backendNodeId: backendNodeIds[i]});
       const objectId = resolveNodeResponse.object.objectId;
+
+      // TODO: driver.callFunctionOn, like for .evaluateAsync, so type is returned
+      // and the "response.result.value".... stuff + returnByValue/awaitPromise is encapsulated.
       const response = await driver.sendCommand('Runtime.callFunctionOn', {
         objectId,
-        functionDeclaration: `function () {
-          ${setAttributeMarker.toString()};
-          ${pageFunctions.getNodePathString};
-          ${pageFunctions.getNodeSelectorString};
-          ${pageFunctions.getNodeLabelString};
-          ${pageFunctions.getOuterHTMLSnippetString};
-          return setAttributeMarker.call(this, '${metricName}');
-        }`,
+        functionDeclaration: pageFunctions.createEvalCode(setAttributeMarker, {
+          mode: 'function',
+          deps: [
+            pageFunctions.getNodePathString,
+            pageFunctions.getNodeSelectorString,
+            pageFunctions.getNodeLabelString,
+            pageFunctions.getOuterHTMLSnippetString,
+          ],
+          args: [metricName],
+        }),
         returnByValue: true,
         awaitPromise: true,
       });

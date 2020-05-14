@@ -9,7 +9,7 @@ const Gatherer = require('./gatherer.js');
 const URL = require('../../lib/url-shim.js').URL;
 const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
 const LinkHeader = require('http-link-header');
-const {createEvalCode, getElementsInDocumentString} = require('../../lib/page-functions.js');
+const pageFunctions = require('../../lib/page-functions.js');
 
 /* globals HTMLLinkElement */
 
@@ -82,19 +82,41 @@ class LinkElements extends Gatherer {
     // We'll use evaluateAsync because the `node.getAttribute` method doesn't actually normalize
     // the values like access from JavaScript does.
 
-    const code = createEvalCode(getLinkElementsInDOM, {
-      deps: [
-        getElementsInDocumentString,
-      ],
-    });
-    return passContext.driver.evaluateAsync(code, {useIsolation: true});
-    
+    // 1) Current way.
     // return passContext.driver.evaluateAsync(`(() => {
     //   ${getElementsInDocumentString};
     //   ${getLinkElementsInDOM};
 
     //   return getLinkElementsInDOM();
     // })()`, {useIsolation: true});
+
+    // 2) Creating code with `createEvalCode` helper.
+    // const code = pageFunctions.createEvalCode(getLinkElementsInDOM, {
+    //   deps: [
+    //     pageFunctions.getElementsInDocumentString,
+    //   ],
+    // });
+    // return passContext.driver.evaluateAsync(code, {useIsolation: true});
+
+    // 3) Creating code with `createEvalCode` helper ... with types!
+    const code2 = pageFunctions.createEvalCode2(getLinkElementsInDOM, {
+      deps: [
+        pageFunctions.getElementsInDocumentString,
+      ],
+    });
+    const result = passContext.driver.evaluateAsync(code2, {useIsolation: true});
+    // result is of type `Promise<LH.Artifacts.LinkElement[]>`.
+    return result;
+
+    /**
+     * @param {string} p
+     */
+    function test(p) {
+      return p;
+    }
+    // `code2` is still string because it is an intersection type:
+    // string & {__taggedType: LH.Artifacts.LinkElement[]}
+    test(code2);
   }
 
   /**
