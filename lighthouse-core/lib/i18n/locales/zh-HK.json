@@ -552,7 +552,7 @@
     "message": "避免使用應用程式快取"
   },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
-    "message": "需要字元編碼宣告。可以在 HTML 的前 1024 個字節或 Content-Type HTTP 回應標題中使用 <meta> 標記宣告。[瞭解詳情](https://www.w3.org/International/questions/qa-html-encoding-declarations)。"
+    "message": "需要字元編碼宣告。可以在 HTML 的前 1024 個字節或 Content-Type HTTP 回應標題中使用 <meta> 標記宣告。[瞭解詳情](https://web.dev/charset)。"
   },
   "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
     "message": "字元集宣告遺失或在 HTML 中太遲出現"
@@ -798,7 +798,7 @@
     "message": "不安全的網址"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
-    "message": "所有網站都應該使用 HTTPS 確保安全，即使網站不處理敏感資料亦然。HTTPS 能防範入侵者竄改或被動監聽應用程式與使用者之間的通訊，且 HTTP/2 和很多新的網絡平台 API 都要求使用 HTTPS。[瞭解詳情](https://web.dev/is-on-https)。"
+    "message": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. This includes avoiding [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), where some resources are loaded over HTTP despite the initial request being servedover HTTPS. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more](https://web.dev/is-on-https)."
   },
   "lighthouse-core/audits/is-on-https.js | displayValue": {
     "message": "{itemCount,plural, =1{發現 1 個不安全的要求}other{發現 # 個不安全的要求}}"
@@ -808,6 +808,24 @@
   },
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "使用 HTTPS"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
+    "message": "This is the element that was identified as the Largest Contentful Paint. [Learn More](https://web.dev/lighthouse-largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
+    "message": "{itemCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | title": {
+    "message": "Largest Contentful Paint element"
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | description": {
+    "message": "These DOM elements contribute most to the CLS of the page."
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
+    "message": "{nodeCount, plural,\n    =0 {No elements found}\n    =1 {1 element found}\n    other {# elements found}\n    }"
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | title": {
+    "message": "Avoid large layout shifts"
   },
   "lighthouse-core/audits/legacy-javascript.js | description": {
     "message": "Polyfill 和轉換可讓舊版瀏覽器使用新版 JavaScript 的功能。不過，有很多 Polyfill 和轉換都不是新型瀏覽器的必要項目。請使用模組/非模組的功能偵測，為 JavaScript 套件採用新型的指令碼部署策略，以減少送往新版瀏覽器的程式碼數量，同時保留對舊版瀏覽器的支援。[瞭解詳情](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
@@ -864,7 +882,7 @@
     "message": "使用者在切換頁面時不會覺得網絡速度緩慢"
   },
   "lighthouse-core/audits/maskable-icon.js | description": {
-    "message": "在裝置上安裝應用程式時，可遮蓋的圖示可確保圖片會填滿整個形狀，不會產生上下黑邊。[瞭解詳情](https://web.dev/maskable-icon/)。"
+    "message": "在裝置上安裝應用程式時，可遮蓋的圖示可確保圖片會填滿整個形狀，不會產生上下黑邊。[瞭解詳情](https://web.dev/maskable-icon-audit/)。"
   },
   "lighthouse-core/audits/maskable-icon.js | failureTitle": {
     "message": "資訊清單沒有可遮蓋的圖示"
@@ -1109,6 +1127,18 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "輕按目標已設定成適當大小"
   },
+  "lighthouse-core/audits/server-response-time.js | description": {
+    "message": "Keep the server response time for the main document short because all other requests depend on it. [Learn more](https://web.dev/time-to-first-byte)."
+  },
+  "lighthouse-core/audits/server-response-time.js | displayValue": {
+    "message": "根文件回應時間為 {timeInMs, number, milliseconds} 毫秒"
+  },
+  "lighthouse-core/audits/server-response-time.js | failureTitle": {
+    "message": "Reduce initial server response time"
+  },
+  "lighthouse-core/audits/server-response-time.js | title": {
+    "message": "Initial server response time was short"
+  },
   "lighthouse-core/audits/service-worker.js | description": {
     "message": "Service Worker 技術可讓您的應用程式使用多項漸進式網絡應用程式的功能，例如離線存取、新增到主畫面和推送通知。[瞭解詳情](https://web.dev/service-worker)。"
   },
@@ -1310,8 +1340,20 @@
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "表格和清單"
   },
+  "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
+    "message": "瀏覽器兼容性"
+  },
   "lighthouse-core/config/default-config.js | bestPracticesCategoryTitle": {
     "message": "最佳做法"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesGeneralGroupTitle": {
+    "message": "一般"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesTrustSafetyGroupTitle": {
+    "message": "信任與安全性"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesUXGroupTitle": {
+    "message": "使用者體驗"
   },
   "lighthouse-core/config/default-config.js | budgetsGroupDescription": {
     "message": "您可根據效能預算設定網站效能的標準。"
@@ -1320,7 +1362,7 @@
     "message": "預算"
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": {
-    "message": "進一步瞭解應用程式效能。這些數字不會[直接影響](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted)「效能」分數。"
+    "message": "進一步瞭解應用程式效能。這些數字不會[直接影響](https://web.dev/performance-scoring/)「效能」分數。"
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupTitle": {
     "message": "診斷"
@@ -1332,7 +1374,7 @@
     "message": "首次繪製改進"
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupDescription": {
-    "message": "這些建議可加快網頁載入速度，但不會[直接影響](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted)「效能」分數。"
+    "message": "這些建議可加快網頁載入速度，但不會[直接影響](https://web.dev/performance-scoring/)「效能」分數。"
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupTitle": {
     "message": "優化建議"
@@ -1402,6 +1444,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "快取 TTL"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnElement": {
+    "message": "元素"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "位置"
@@ -1565,6 +1610,9 @@
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "顯示審核結果"
   },
+  "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
+    "message": "See calculator."
+  },
   "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
     "message": "初始導覽"
   },
@@ -1683,7 +1731,7 @@
     "message": "導致這次 Lighthouse 無法順利執行的問題："
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
-    "message": "此為預計值，可能與實際值有所不同。系統[只會根據這些數據](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted)計算效能分數。"
+    "message": "Values are estimated and may vary. The [performance score is calculated](https://web.dev/performance-scoring/) directly from these metrics."
   },
   "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
     "message": "經過審核，但附有警告訊息"
@@ -1739,6 +1787,9 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "建議修改產品和目錄範本，以使用網絡平台的[延遲載入](https://web.dev/native-lazy-loading)功能。"
   },
+  "stack-packs/packs/magento.js | server_response_time": {
+    "message": "使用 Magento 的 [Varnish 整合](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)。"
+  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "在商店的開發人員設定中啟用「壓縮 CSS 檔案」選項。[瞭解詳情](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)。"
   },
@@ -1766,6 +1817,9 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "如果使用 React Router，請盡量避免在[路線導航](https://reacttraining.com/react-router/web/api/Redirect)使用 `<Redirect>` 組件。"
   },
+  "stack-packs/packs/react.js | server_response_time": {
+    "message": "如果您在伺服器端輸出任何 React 組件，建議使用 `renderToNodeStream()` 或 `renderToStaticNodeStream()`，允許用戶端接收並混合標記的不同部分，而非同時完成。[瞭解詳情](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)。"
+  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "如果您建立自動壓縮 CSS 檔案的系統，請確定部署的應用程式為正式版本。您可以使用 React Developer Tools 擴充程式執行這項檢查。[瞭解詳情](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)。"
   },
@@ -1786,6 +1840,9 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "部分 WordPress 外掛程式可助您[內嵌重要資產](https://wordpress.org/plugins/search/critical+css/)或[延後載入較不重要的資源](https://wordpress.org/plugins/search/defer+css+javascript/)。請注意，這些外掛程式的優化設定可能影響主題或外掛程式的功能，因此您可能需要變更程式碼。"
+  },
+  "stack-packs/packs/wordpress.js | server_response_time": {
+    "message": "主題、外掛程式和伺服器規格均會影響伺服器回應時間。建議尋找更優化的主題、謹慎選擇優化外掛程式和/或升級伺服器。"
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "建議在文章清單中顯示摘錄 (例如加入更多標籤)、減少特定頁面顯示的文章數量、將較長的文章分為多個頁面，或使用可延遲載入留言的外掛程式。"

@@ -552,7 +552,7 @@
     "message": "Избегава кеш апликације"
   },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
-    "message": "Утврђивање кодирања знакова је обавезно. То може да се уради помоћу ознаке <meta> у прва 1024 бајта HTML-а или у HTTP заглављу одговора Content-Type. [Сазнајте више](https://www.w3.org/International/questions/qa-html-encoding-declarations)."
+    "message": "Утврђивање кодирања знакова је обавезно. То може да се уради помоћу ознаке <meta> у прва 1024 бајта HTML-а или у HTTP заглављу одговора Content-Type. [Сазнајте више](https://web.dev/charset)."
   },
   "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
     "message": "Charset није утврђен или се утврђује прекасно у HTML-у"
@@ -798,7 +798,7 @@
     "message": "Небезбедан URL"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
-    "message": "Сви сајтови треба да буду заштићени HTTPS-ом, чак и они који не обрађују осетљиве податке. HTTPS спречава уљезе да неовлашћено приступају комуникацији између апликације и корисника или да је пасивно слушају. Он је предуслов за HTTP/2 i API-је бројних нових веб-платформи. [Сазнајте више](https://web.dev/is-on-https)."
+    "message": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. This includes avoiding [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), where some resources are loaded over HTTP despite the initial request being servedover HTTPS. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more](https://web.dev/is-on-https)."
   },
   "lighthouse-core/audits/is-on-https.js | displayValue": {
     "message": "{itemCount,plural, =1{Пронађен је 1 небезбедан захтев}one{Пронађен је # небезбедан захтев}few{Пронађена су # небезбедна захтева}other{Пронађено је # небезбедних захтева}}"
@@ -808,6 +808,24 @@
   },
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Користи HTTPS"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
+    "message": "This is the element that was identified as the Largest Contentful Paint. [Learn More](https://web.dev/lighthouse-largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
+    "message": "{itemCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | title": {
+    "message": "Largest Contentful Paint element"
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | description": {
+    "message": "These DOM elements contribute most to the CLS of the page."
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
+    "message": "{nodeCount, plural,\n    =0 {No elements found}\n    =1 {1 element found}\n    other {# elements found}\n    }"
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | title": {
+    "message": "Avoid large layout shifts"
   },
   "lighthouse-core/audits/legacy-javascript.js | description": {
     "message": "Полифили и трансформације омогућавају да старе верзије прегледача користе нове функције JavaScript-а. Међутим, многи нису неопходни за модерне прегледаче. За JavaScript пакете користите модерну стратегију примене скрипте помоћу откривања функција модулом/без модула да бисте смањили количину кода који се шаље модерним прегледачима, притом задржавајући подршку за старе верзије прегледача. [Сазнајте више](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
@@ -864,7 +882,7 @@
     "message": "Преласци са странице на страницу не делују као да се блокирају због мреже"
   },
   "lighthouse-core/audits/maskable-icon.js | description": {
-    "message": "Икона која може да се маскира омогућава да слика прекрије цео облик без водоравног оивичења када се апликација инсталира на уређају. [Сазнајте више](https://web.dev/maskable-icon/)."
+    "message": "Икона која може да се маскира омогућава да слика прекрије цео облик без водоравног оивичења када се апликација инсталира на уређају. [Сазнајте више](https://web.dev/maskable-icon-audit/)."
   },
   "lighthouse-core/audits/maskable-icon.js | failureTitle": {
     "message": "Манифест не садржи икону која може да се маскира"
@@ -1109,6 +1127,18 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Циљеви додиривања имају одговарајућу величину"
   },
+  "lighthouse-core/audits/server-response-time.js | description": {
+    "message": "Keep the server response time for the main document short because all other requests depend on it. [Learn more](https://web.dev/time-to-first-byte)."
+  },
+  "lighthouse-core/audits/server-response-time.js | displayValue": {
+    "message": "Основном документу је требало {timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/audits/server-response-time.js | failureTitle": {
+    "message": "Reduce initial server response time"
+  },
+  "lighthouse-core/audits/server-response-time.js | title": {
+    "message": "Initial server response time was short"
+  },
   "lighthouse-core/audits/service-worker.js | description": {
     "message": "Сервисер је технологија која омогућава апликацији да користи многе функције прогресивних веб-апликација, попут офлајн рада, додавања на почетни екран и искачућих обавештења. [Сазнајте више](https://web.dev/service-worker)."
   },
@@ -1310,8 +1340,20 @@
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Табеле и листе"
   },
+  "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
+    "message": "Компатибилност прегледача"
+  },
   "lighthouse-core/config/default-config.js | bestPracticesCategoryTitle": {
     "message": "Најбоље праксе"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesGeneralGroupTitle": {
+    "message": "Опште"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesTrustSafetyGroupTitle": {
+    "message": "Поверење и безбедност"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesUXGroupTitle": {
+    "message": "Кориснички доживљај"
   },
   "lighthouse-core/config/default-config.js | budgetsGroupDescription": {
     "message": "Циљевима за учинак одређују се стандарди за учинак сајта."
@@ -1320,7 +1362,7 @@
     "message": "Циљеви"
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": {
-    "message": "Више информација о учинку апликације. Ови бројеви не [утичу директно](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) на оцену учинка."
+    "message": "Више информација о учинку апликације. Ови бројеви не [утичу директно](https://web.dev/performance-scoring/) на оцену учинка."
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupTitle": {
     "message": "Дијагностика"
@@ -1332,7 +1374,7 @@
     "message": "Побољшања првог приказивања"
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupDescription": {
-    "message": "Ови предлози могу да вам помогну да се страница учитава брже. Не [утичу директно](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) на оцену учинка."
+    "message": "Ови предлози могу да вам помогну да се страница учитава брже. Не [утичу директно](https://web.dev/performance-scoring/) на оцену учинка."
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupTitle": {
     "message": "Могућности"
@@ -1402,6 +1444,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Време преживљавања кеша"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnElement": {
+    "message": "Елемент"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "Локација"
@@ -1565,6 +1610,9 @@
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Прикажи провере"
   },
+  "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
+    "message": "See calculator."
+  },
   "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
     "message": "Почетна навигација"
   },
@@ -1683,7 +1731,7 @@
     "message": "Било је извесних проблема који су утицали на ово покретање Lighthouse-а:"
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
-    "message": "Вредности представљају процене и могу да варирају. Оцена учинка се [заснива само на овим показатељима](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted)."
+    "message": "Values are estimated and may vary. The [performance score is calculated](https://web.dev/performance-scoring/) directly from these metrics."
   },
   "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
     "message": "Провере са задовољавајућом оценом које садрже упозорења"
@@ -1739,6 +1787,9 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Размислите о томе да измените шаблоне производа и каталога да бисте искористили функцију [одложеног учитавања](https://web.dev/native-lazy-loading) на веб-платформи."
   },
+  "stack-packs/packs/magento.js | server_response_time": {
+    "message": "Користите [Varnish интеграцију](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) платформе Magento."
+  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Омогућите опцију „Умањи CSS датотеке“ у подешавањима за програмере у продавници. [Сазнајте више](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1766,6 +1817,9 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Ако користите React рутер, смањите коришћење компоненте `<Redirect>` за [навигације помоћу руте](https://reacttraining.com/react-router/web/api/Redirect)."
   },
+  "stack-packs/packs/react.js | server_response_time": {
+    "message": "Ако приказујете било какве React компоненте на серверу, размислите о томе да користите `renderToNodeStream()` или `renderToStaticNodeStream()` како бисте омогућили клијенту да прима и попуњава различите делове ознаке уместо свих делова одједном. [Сазнајте више](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Ако систем верзије аутоматски умањује CSS датотеке, уверите се да примењујете производну верзију апликације. То можете да проверите помоћу додатка React Developer Tools. [Сазнајте више](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1786,6 +1840,9 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Неке WordPress додатне компоненте могу да вам помогну да [уметнете критичне елементе](https://wordpress.org/plugins/search/critical+css/) или [одложите мање важне ресурсе](https://wordpress.org/plugins/search/defer+css+javascript/). Имајте на уму да оптимизације које пружају ове додатне компоненте могу да оштете функције или теме додатних компоненти, па ћете вероватно морати да уносите промене у кôд."
+  },
+  "stack-packs/packs/wordpress.js | server_response_time": {
+    "message": "Теме, додатне компоненте и спецификације сервера доприносе времену одговора сервера. Препоручујемо да пронађете оптимизованију тему, пажљиво изаберете додатну компоненту за оптимизацију и/или надоградите сервер."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Препоручујемо да прикажете одломке у листама постова (на пример, преко још ознака), смањите број постова који се приказују на одређеној страници, раздвојите дугачке постове на више странциа или користите додатну компоненту за лако учитавање коментара."

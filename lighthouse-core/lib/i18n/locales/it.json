@@ -552,7 +552,7 @@
     "message": "Evita l'API Cache applicazione"
   },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
-    "message": "Dichiarazione della codifica dei caratteri obbligatoria. Può essere inserita con un tag <meta> nei primi 1024 byte del codice HTML oppure nell'intestazione della risposta HTTP Content-Type. [Ulteriori informazioni](https://www.w3.org/International/questions/qa-html-encoding-declarations)."
+    "message": "Dichiarazione della codifica dei caratteri obbligatoria. Può essere inserita con un tag <meta> nei primi 1024 byte del codice HTML oppure nell'intestazione della risposta HTTP Content-Type. [Ulteriori informazioni](https://web.dev/charset)."
   },
   "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
     "message": "La dichiarazione del set di caratteri non è presente o è definita troppo tardi nel codice HTML"
@@ -798,7 +798,7 @@
     "message": "URL non sicuro"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
-    "message": "Tutti i siti dovrebbero essere protetti con HTTPS, anche quelli che non trattano dati sensibili. HTTPS impedisce agli intrusi di manomettere o ascoltare passivamente le comunicazioni tra la tua app e i tuoi utenti ed è un prerequisito per HTTP/2 e tante nuove API delle piattaforme web. [Ulteriori informazioni](https://web.dev/is-on-https)."
+    "message": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. This includes avoiding [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), where some resources are loaded over HTTP despite the initial request being servedover HTTPS. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more](https://web.dev/is-on-https)."
   },
   "lighthouse-core/audits/is-on-https.js | displayValue": {
     "message": "{itemCount,plural, =1{1 richiesta non sicura trovata}other{# richieste non sicure trovate}}"
@@ -808,6 +808,24 @@
   },
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Usa HTTPS"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
+    "message": "This is the element that was identified as the Largest Contentful Paint. [Learn More](https://web.dev/lighthouse-largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
+    "message": "{itemCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | title": {
+    "message": "Largest Contentful Paint element"
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | description": {
+    "message": "These DOM elements contribute most to the CLS of the page."
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
+    "message": "{nodeCount, plural,\n    =0 {No elements found}\n    =1 {1 element found}\n    other {# elements found}\n    }"
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | title": {
+    "message": "Avoid large layout shifts"
   },
   "lighthouse-core/audits/legacy-javascript.js | description": {
     "message": "Polyfill e trasformazioni consentono ai browser precedenti di usare nuove funzionalità JavaScript. Tanti non sono però necessari per i browser moderni. Per il tuo codice JavaScript in bundle, adotta una moderna strategia di deployment degli script usando il rilevamento di funzionalità module/nomodule per ridurre la quantità di codice inviata ai browser moderni e mantenere il supporto dei browser precedenti. [Ulteriori informazioni](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
@@ -864,7 +882,7 @@
     "message": "Non sembra che le transizioni di pagina si blocchino sulla rete"
   },
   "lighthouse-core/audits/maskable-icon.js | description": {
-    "message": "Un'icona mascherabile assicura che l'immagine riempia l'intera forma senza effetto letterbox durante l'installazione dell'app su un dispositivo. [Ulteriori informazioni](https://web.dev/maskable-icon/)."
+    "message": "Un'icona mascherabile assicura che l'immagine riempia l'intera forma senza effetto letterbox durante l'installazione dell'app su un dispositivo. [Ulteriori informazioni](https://web.dev/maskable-icon-audit/)."
   },
   "lighthouse-core/audits/maskable-icon.js | failureTitle": {
     "message": "Il file manifest non contiene un'icona mascherabile"
@@ -1109,6 +1127,18 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "I target dei tocchi sono dimensionati in modo appropriato"
   },
+  "lighthouse-core/audits/server-response-time.js | description": {
+    "message": "Keep the server response time for the main document short because all other requests depend on it. [Learn more](https://web.dev/time-to-first-byte)."
+  },
+  "lighthouse-core/audits/server-response-time.js | displayValue": {
+    "message": "Il documento radice ha richiesto {timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/audits/server-response-time.js | failureTitle": {
+    "message": "Reduce initial server response time"
+  },
+  "lighthouse-core/audits/server-response-time.js | title": {
+    "message": "Initial server response time was short"
+  },
   "lighthouse-core/audits/service-worker.js | description": {
     "message": "Il service worker è la tecnologia che consente alla tua app di usare tante funzionalità delle app web progressive, ad esempio il funzionamento offline, l'aggiunta alla schermata Home e le notifiche push. [Ulteriori informazioni](https://web.dev/service-worker)."
   },
@@ -1310,8 +1340,20 @@
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Tabelle ed elenchi"
   },
+  "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
+    "message": "Compatibilità dei browser"
+  },
   "lighthouse-core/config/default-config.js | bestPracticesCategoryTitle": {
     "message": "Best practice"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesGeneralGroupTitle": {
+    "message": "Generali"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesTrustSafetyGroupTitle": {
+    "message": "Affidabilità e sicurezza"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesUXGroupTitle": {
+    "message": "Esperienza utente"
   },
   "lighthouse-core/config/default-config.js | budgetsGroupDescription": {
     "message": "I budget per le prestazioni consentono di stabilire gli standard per le prestazioni del tuo sito."
@@ -1320,7 +1362,7 @@
     "message": "Budget"
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": {
-    "message": "Ulteriori informazioni sulle prestazioni della tua applicazione. Questi valori non [incidono direttamente](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) sul punteggio Prestazioni."
+    "message": "Ulteriori informazioni sulle prestazioni della tua applicazione. Questi valori non [incidono direttamente](https://web.dev/performance-scoring/) sul punteggio Prestazioni."
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupTitle": {
     "message": "Diagnostica"
@@ -1332,7 +1374,7 @@
     "message": "Miglioramenti della prima visualizzazione"
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupDescription": {
-    "message": "Questi suggerimenti possono aiutarti a velocizzare il caricamento della pagina. Non [incidono direttamente](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) sul punteggio Prestazioni."
+    "message": "Questi suggerimenti possono aiutarti a velocizzare il caricamento della pagina. Non [incidono direttamente](https://web.dev/performance-scoring/) sul punteggio Prestazioni."
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupTitle": {
     "message": "Opportunità"
@@ -1402,6 +1444,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL cache"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnElement": {
+    "message": "Elemento"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "Posizione"
@@ -1565,6 +1610,9 @@
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Mostra controlli"
   },
+  "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
+    "message": "See calculator."
+  },
   "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
     "message": "Navigazione iniziale"
   },
@@ -1683,7 +1731,7 @@
     "message": "Si sono verificati dei problemi che incidono su questa esecuzione di Lighthouse:"
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
-    "message": "I valori sono delle stime e potrebbero variare. Il punteggio relativo alle prestazioni è [basato soltanto su queste metriche](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted)."
+    "message": "Values are estimated and may vary. The [performance score is calculated](https://web.dev/performance-scoring/) directly from these metrics."
   },
   "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
     "message": "Controlli superati ma con avvisi"
@@ -1739,6 +1787,9 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Potresti modificare i modelli del prodotto e del catalogo in modo da usare la funzionalità di [caricamento lento](https://web.dev/native-lazy-loading) della piattaforma web."
   },
+  "stack-packs/packs/magento.js | server_response_time": {
+    "message": "Usa l'[integrazione Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) di Magento."
+  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Attiva l'opzione per minimizzare i file CSS nelle impostazioni sviluppatore del tuo store. [Ulteriori informazioni](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1766,6 +1817,9 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Se usi React Router, riduci al minimo l'utilizzo del componente `<Redirect>` per la [navigazione tra route](https://reacttraining.com/react-router/web/api/Redirect)."
   },
+  "stack-packs/packs/react.js | server_response_time": {
+    "message": "Se usi il rendering lato server per i componenti React, potresti usare `renderToNodeStream()` o `renderToStaticNodeStream()` per consentire al client di ricevere e compilare parti diverse del markup anziché tutto il markup contemporaneamente. [Ulteriori informazioni](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Se il tuo sistema di compilazione minimizza automaticamente i file CSS, assicurati di implementare la build di produzione della tua applicazione. Puoi verificare usando l'estensione React Developer Tools. [Ulteriori informazioni](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1786,6 +1840,9 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Esistono diversi plug-in di WordPress che possono esserti utili per [incorporare le risorse di importanza critica](https://wordpress.org/plugins/search/critical+css/) o [rimandare le risorse meno importanti](https://wordpress.org/plugins/search/defer+css+javascript/). Fai attenzione perché le ottimizzazioni offerte da questi plug-in potrebbero interrompere le funzionalità del tuo tema o dei tuoi plug-in, pertanto potresti dover modificare il codice."
+  },
+  "stack-packs/packs/wordpress.js | server_response_time": {
+    "message": "Le specifiche del server, i plug-in e i temi contribuiscono al tempo di risposta del server. Prendi in considerazione l'idea di utilizzare un tema più ottimizzato, selezionando con cura un plug-in per l'ottimizzazione e/o eseguendo l'upgrade del server."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Prendi in considerazione la possibilità di mostrare degli estratti nell'elenco dei tuoi post (ad esempio utilizzando il tag more), riducendo il numero di post che vengono mostrati su una determinata pagina, spezzando i post più lunghi su più pagine o utilizzando un plug-in per il caricamento differito dei commenti."

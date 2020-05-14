@@ -552,7 +552,7 @@
     "message": "Tránh sử dụng bộ nhớ đệm của ứng dụng"
   },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
-    "message": "Cần khai báo hệ thống mã hóa ký tự. Bạn có thể thực hiện việc này bằng thẻ <meta> trong 1024 byte đầu tiên của HTML hoặc trong tiêu đề phản hồi Nội dung–Loại HTTP. [Tìm hiểu thêm](https://www.w3.org/International/questions/qa-html-encoding-declarations)."
+    "message": "Cần khai báo hệ thống mã hóa ký tự. Bạn có thể thực hiện việc này bằng thẻ <meta> trong 1024 byte đầu tiên của HTML hoặc trong tiêu đề phản hồi Nội dung–Loại HTTP. [Tìm hiểu thêm](https://web.dev/charset)."
   },
   "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
     "message": "Thiếu thông tin khai báo về bộ ký tự hoặc khai báo quá muộn trong HTML"
@@ -798,7 +798,7 @@
     "message": "URL không an toàn"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
-    "message": "Bạn phải bảo vệ tất cả các trang web bằng HTTPS, kể cả những trang web không xử lý dữ liệu nhạy cảm. HTTPS ngăn kẻ xâm nhập can thiệp hoặc vô tình biết được nội dung trao đổi giữa ứng dụng và người dùng của bạn, đồng thời là điều kiện tiên quyết nếu bạn muốn dùng HTTP/2 và nhiều API nền tảng web mới. [Tìm hiểu thêm](https://web.dev/is-on-https)."
+    "message": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. This includes avoiding [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), where some resources are loaded over HTTP despite the initial request being servedover HTTPS. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more](https://web.dev/is-on-https)."
   },
   "lighthouse-core/audits/is-on-https.js | displayValue": {
     "message": "{itemCount,plural, =1{Tìm thấy 1 yêu cầu không an toàn}other{Tìm thấy # yêu cầu không an toàn}}"
@@ -808,6 +808,24 @@
   },
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Sử dụng HTTPS"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
+    "message": "This is the element that was identified as the Largest Contentful Paint. [Learn More](https://web.dev/lighthouse-largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
+    "message": "{itemCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | title": {
+    "message": "Largest Contentful Paint element"
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | description": {
+    "message": "These DOM elements contribute most to the CLS of the page."
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
+    "message": "{nodeCount, plural,\n    =0 {No elements found}\n    =1 {1 element found}\n    other {# elements found}\n    }"
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | title": {
+    "message": "Avoid large layout shifts"
   },
   "lighthouse-core/audits/legacy-javascript.js | description": {
     "message": "Mã Polyfill và Transform cho phép trình duyệt cũ dùng các tính năng mới của JavaScript. Tuy nhiên, nhiều tính năng không cần thiết cho trình duyệt mới nữa. Đối với JavaScript trong gói của bạn, hãy áp dụng chiến lược triển khai tập lệnh mới bằng cách dùng cơ chế phát hiện tính năng theo mô-đun/không theo mô-đun để giảm số lượng mã gửi đến trình duyệt mới trong khi vẫn tiếp tục hỗ trợ cho trình duyệt cũ. [Tìm hiểu thêm](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
@@ -864,7 +882,7 @@
     "message": "Người dùng không cảm thấy mạng chậm khi chuyển trang"
   },
   "lighthouse-core/audits/maskable-icon.js | description": {
-    "message": "Một biểu tượng che mờ được sẽ đảm bảo rằng hình ảnh lấp đầy toàn bộ hình dạng mà không bị hiệu ứng hòm thư khi cài đặt ứng dụng trên một thiết bị. [Tìm hiểu thêm](https://web.dev/maskable-icon/)."
+    "message": "Một biểu tượng che mờ được sẽ đảm bảo rằng hình ảnh lấp đầy toàn bộ hình dạng mà không bị hiệu ứng hòm thư khi cài đặt ứng dụng trên một thiết bị. [Tìm hiểu thêm](https://web.dev/maskable-icon-audit/)."
   },
   "lighthouse-core/audits/maskable-icon.js | failureTitle": {
     "message": "Tệp kê khai không có biểu tượng che mờ được"
@@ -1109,6 +1127,18 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Mục tiêu nhấn có kích thước phù hợp"
   },
+  "lighthouse-core/audits/server-response-time.js | description": {
+    "message": "Keep the server response time for the main document short because all other requests depend on it. [Learn more](https://web.dev/time-to-first-byte)."
+  },
+  "lighthouse-core/audits/server-response-time.js | displayValue": {
+    "message": "Tài liệu gốc mất {timeInMs, number, milliseconds} mili giây"
+  },
+  "lighthouse-core/audits/server-response-time.js | failureTitle": {
+    "message": "Reduce initial server response time"
+  },
+  "lighthouse-core/audits/server-response-time.js | title": {
+    "message": "Initial server response time was short"
+  },
   "lighthouse-core/audits/service-worker.js | description": {
     "message": "Trình chạy dịch vụ là công nghệ cho phép ứng dụng của bạn dùng nhiều tính năng của Ứng dụng web tiến bộ, chẳng hạn như hoạt động khi không có mạng, thêm vào màn hình chính, và thông báo đẩy. [Tìm hiểu thêm](https://web.dev/service-worker)"
   },
@@ -1310,8 +1340,20 @@
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Bảng và danh sách"
   },
+  "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
+    "message": "Khả năng tương thích của trình duyệt"
+  },
   "lighthouse-core/config/default-config.js | bestPracticesCategoryTitle": {
     "message": "Phương pháp hay nhất"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesGeneralGroupTitle": {
+    "message": "Chung"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesTrustSafetyGroupTitle": {
+    "message": "Tin cậy và an toàn"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesUXGroupTitle": {
+    "message": "Trải nghiệm người dùng"
   },
   "lighthouse-core/config/default-config.js | budgetsGroupDescription": {
     "message": "Phần Ngân sách hiệu suất đặt ra tiêu chuẩn về hiệu suất của trang web."
@@ -1320,7 +1362,7 @@
     "message": "Ngân sách"
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": {
-    "message": "Thông tin bổ sung về hiệu suất của ứng dụng. Những số liệu này không [trực tiếp ảnh hưởng](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) đến Điểm hiệu suất."
+    "message": "Thông tin bổ sung về hiệu suất của ứng dụng. Những số liệu này không [trực tiếp ảnh hưởng](https://web.dev/performance-scoring/) đến Điểm hiệu suất."
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupTitle": {
     "message": "Chẩn đoán"
@@ -1332,7 +1374,7 @@
     "message": "Các thao tác để cải thiện thời gian hiển thị hình ảnh đầu tiên"
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupDescription": {
-    "message": "Những đề xuất này có thể giúp trang của bạn tải nhanh hơn, chứ không [trực tiếp ảnh hưởng](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) đến Điểm hiệu suất."
+    "message": "Những đề xuất này có thể giúp trang của bạn tải nhanh hơn, chứ không [trực tiếp ảnh hưởng](https://web.dev/performance-scoring/) đến Điểm hiệu suất."
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupTitle": {
     "message": "Cơ hội"
@@ -1402,6 +1444,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Thời gian tồn tại (TTL) của bộ nhớ đệm"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnElement": {
+    "message": "Phần tử"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "Vị trí"
@@ -1565,6 +1610,9 @@
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Hiển thị kết quả kiểm tra"
   },
+  "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
+    "message": "See calculator."
+  },
   "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
     "message": "Điều hướng ban đầu"
   },
@@ -1683,7 +1731,7 @@
     "message": "Đã xảy ra sự cố ảnh hưởng đến lần chạy Lighthouse này:"
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
-    "message": "Các giá trị chỉ là ước tính và có thể thay đổi. Điểm hiệu suất [chỉ căn cứ vào các chỉ số này](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted)."
+    "message": "Values are estimated and may vary. The [performance score is calculated](https://web.dev/performance-scoring/) directly from these metrics."
   },
   "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
     "message": "Đã vượt qua bài kiểm tra nhưng có cảnh báo"
@@ -1739,6 +1787,9 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Cân nhắc sửa đổi mẫu danh mục và sản phẩm để tận dụng tính năng [tải từng phần](https://web.dev/native-lazy-loading) của nền tảng web."
   },
+  "stack-packs/packs/magento.js | server_response_time": {
+    "message": "Sử dụng tính năng [tích hợp Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) của Magento."
+  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Bật tùy chọn \"Giảm kích thước tệp CSS\" trong phần cài đặt dành cho Nhà phát triển của cửa hàng. [Tìm hiểu thêm](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1766,6 +1817,9 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Nếu bạn đang dùng React Router, hãy giảm thiểu mức sử dụng thành phần `<Redirect>` để [định tuyến](https://reacttraining.com/react-router/web/api/Redirect)."
   },
+  "stack-packs/packs/react.js | server_response_time": {
+    "message": "Nếu bạn đang hiển thị bất kỳ thành phần React nào ở phía máy chủ, hãy cân nhắc dùng `renderToNodeStream()` hoặc `renderToStaticNodeStream()` để cho phép ứng dụng nhận và nhập những phần khác nhau của mục đánh dấu thay vì tất cả cùng lúc. [Tìm hiểu thêm](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Nếu hệ thống bản dựng của bạn tự động giảm kích thước tệp CSS, hãy đảm bảo rằng bạn đang triển khai bản dựng ứng dụng ở chế độ sản xuất. Bạn có thể kiểm tra điều này bằng tiện ích React Developer Tools. [Tìm hiểu thêm](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1786,6 +1840,9 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Có một số plugin của WordPress có thể giúp bạn [đưa phần tử quan trọng vào nội tuyến](https://wordpress.org/plugins/search/critical+css/) hoặc [trì hoãn tài nguyên ít quan trọng hơn](https://wordpress.org/plugins/search/defer+css+javascript/). Xin lưu ý rằng những phương thức tối ưu hóa mà các plugin này cung cấp có thể làm gián đoạn tính năng của giao diện hoặc plugin, do đó, có thể bạn cần thay đổi mã."
+  },
+  "stack-packs/packs/wordpress.js | server_response_time": {
+    "message": "Giao diện, plugin và thông số máy chủ đều tác động đến thời gian phản hồi của máy chủ. Hãy cân nhắc tìm một giao diện được tối ưu hóa, lựa chọn cẩn thận một plugin tối ưu hóa và/hoặc nâng cấp máy chủ."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Hãy cân nhắc hiển thị phần trích dẫn trong danh sách bài đăng (ví dụ như qua thẻ thêm), giảm số lượng bài đăng hiển thị trên một trang cụ thể, chia các bài đăng dài thành nhiều trang hoặc sử dụng một plugin để tải nhận xét theo từng phần."

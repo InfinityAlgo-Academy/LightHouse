@@ -552,7 +552,7 @@
     "message": "Уникає кешу додатка"
   },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
-    "message": "Декларація кодування символів обов'язкова. Це можна зробити за допомогою тегу <meta> в перших 1024 байтах HTML або в заголовку відповіді HTTP-контенту. [Докладніше](https://www.w3.org/International/questions/qa-html-encoding-declarations)."
+    "message": "Декларація кодування символів обов'язкова. Це можна зробити за допомогою тегу <meta> в перших 1024 байтах HTML або в заголовку відповіді HTTP-контенту. [Докладніше](https://web.dev/charset)."
   },
   "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
     "message": "Декларація набору символів відсутня або виникає запізно в HTML"
@@ -798,7 +798,7 @@
     "message": "Ненадійна URL-адреса"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
-    "message": "Усі сайти мають бути захищені протоколом HTTPS, навіть якщо вони не обробляють конфіденційні дані. HTTPS не дозволяє зловмисникам втручатись в обмін даними між додатком і користувачами або пасивно прослуховувати супутні події. Це обов'язкова умова для протоколу HTTP/2 та багатьох нових API веб-платформ. [Докладніше](https://web.dev/is-on-https)."
+    "message": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. This includes avoiding [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), where some resources are loaded over HTTP despite the initial request being servedover HTTPS. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more](https://web.dev/is-on-https)."
   },
   "lighthouse-core/audits/is-on-https.js | displayValue": {
     "message": "{itemCount,plural, =1{Знайдено 1 ненадійний запит}one{Знайдено # ненадійний запит}few{Знайдено # ненадійні запити}many{Знайдено # ненадійних запитів}other{Знайдено # ненадійного запиту}}"
@@ -808,6 +808,24 @@
   },
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Використовує протокол HTTPS"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
+    "message": "This is the element that was identified as the Largest Contentful Paint. [Learn More](https://web.dev/lighthouse-largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
+    "message": "{itemCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | title": {
+    "message": "Largest Contentful Paint element"
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | description": {
+    "message": "These DOM elements contribute most to the CLS of the page."
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
+    "message": "{nodeCount, plural,\n    =0 {No elements found}\n    =1 {1 element found}\n    other {# elements found}\n    }"
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | title": {
+    "message": "Avoid large layout shifts"
   },
   "lighthouse-core/audits/legacy-javascript.js | description": {
     "message": "Поліфіли та перетворення дають змогу застарілим веб-переглядачам використовувати нові функції JavaScript. Однак багато з них не потрібні для сучасних веб-переглядачів. Для пакетів JavaScript прийміть сучасну стратегію введення скрипту в дію за допомогою виявлення модульних/немодульних функцій, щоб зменшити обсяг коду, що надсилається сучасним веб-переглядачам зі збереженням підтримки застарілих. [Докладніше](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
@@ -864,7 +882,7 @@
     "message": "Схоже, перехід між сторінками не блокує мережу"
   },
   "lighthouse-core/audits/maskable-icon.js | description": {
-    "message": "Маскувальний значок гарантує, що зображення заповнює всю форму, не перетворюючись на леттербокс під час встановлення додатка на пристрої. [Докладніше](https://web.dev/maskable-icon/)."
+    "message": "Маскувальний значок гарантує, що зображення заповнює всю форму, не перетворюючись на леттербокс під час встановлення додатка на пристрої. [Докладніше](https://web.dev/maskable-icon-audit/)."
   },
   "lighthouse-core/audits/maskable-icon.js | failureTitle": {
     "message": "Маніфест не має маскувального значка"
@@ -1109,6 +1127,18 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Елементи для натискання мають правильний розмір"
   },
+  "lighthouse-core/audits/server-response-time.js | description": {
+    "message": "Keep the server response time for the main document short because all other requests depend on it. [Learn more](https://web.dev/time-to-first-byte)."
+  },
+  "lighthouse-core/audits/server-response-time.js | displayValue": {
+    "message": "Кореневий документ відповів через {timeInMs, number, milliseconds} мс"
+  },
+  "lighthouse-core/audits/server-response-time.js | failureTitle": {
+    "message": "Reduce initial server response time"
+  },
+  "lighthouse-core/audits/server-response-time.js | title": {
+    "message": "Initial server response time was short"
+  },
   "lighthouse-core/audits/service-worker.js | description": {
     "message": "Синтаксис Service Worker – це технологія, яка дає змогу додатку використовувати багато функцій прогресивного веб-додатка, як-от режим офлайн, додавання на головний екран і push-сповіщення. [Докладніше](https://web.dev/service-worker)."
   },
@@ -1310,8 +1340,20 @@
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Таблиці та списки"
   },
+  "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
+    "message": "Сумісність веб-переглядача"
+  },
   "lighthouse-core/config/default-config.js | bestPracticesCategoryTitle": {
     "message": "Практичні поради"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesGeneralGroupTitle": {
+    "message": "Загальні"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesTrustSafetyGroupTitle": {
+    "message": "Довіра й безпека"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesUXGroupTitle": {
+    "message": "Взаємодія з користувачами"
   },
   "lighthouse-core/config/default-config.js | budgetsGroupDescription": {
     "message": "Бюджети визначають стандарти ефективності вашого сайту."
@@ -1320,7 +1362,7 @@
     "message": "Бюджети"
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": {
-    "message": "Докладніше про ефективність додатка. Ці числа не [впливають безпосередньо](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) на значення ефективності."
+    "message": "Докладніше про ефективність додатка. Ці числа не [впливають безпосередньо](https://web.dev/performance-scoring/) на значення ефективності."
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupTitle": {
     "message": "Діагностика"
@@ -1332,7 +1374,7 @@
     "message": "Покращення першого відображення"
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupDescription": {
-    "message": "Ці пропозиції допоможуть завантажувати сторінку швидше. Вони не [впливають безпосередньо](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) на значення ефективності."
+    "message": "Ці пропозиції допоможуть завантажувати сторінку швидше. Вони не [впливають безпосередньо](https://web.dev/performance-scoring/) на значення ефективності."
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupTitle": {
     "message": "Можливості"
@@ -1402,6 +1444,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL кешу"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnElement": {
+    "message": "Елемент"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "Місцезнаходження"
@@ -1565,6 +1610,9 @@
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Показати перевірки"
   },
+  "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
+    "message": "See calculator."
+  },
   "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
     "message": "Початкова навігація"
   },
@@ -1683,7 +1731,7 @@
     "message": "Під час запуску Lighthouse виникли перелічені нижче проблеми."
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
-    "message": "Значення приблизні й можуть відрізнятися. Значення ефективності визначається [на основі цих показників](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted)."
+    "message": "Values are estimated and may vary. The [performance score is calculated](https://web.dev/performance-scoring/) directly from these metrics."
   },
   "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
     "message": "Перевірки зі статусом \"Пройдено\", що містять застереження"
@@ -1739,6 +1787,9 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Можете змінити шаблони свого продукту й каталогу, щоб скористатися функцією веб-платформи для [відкладеного завантаження](https://web.dev/native-lazy-loading)."
   },
+  "stack-packs/packs/magento.js | server_response_time": {
+    "message": "Скористайтесь [інтеграцією Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) від Magento."
+  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Увімкніть опцію \"Зменшувати файли CSS\" у налаштуваннях розробника в магазині. [Докладніше](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1766,6 +1817,9 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Якщо ви користуєтеся React Router, зменште використання компонента `<Redirect>` для [навігації за маршрутом](https://reacttraining.com/react-router/web/api/Redirect)."
   },
+  "stack-packs/packs/react.js | server_response_time": {
+    "message": "Якщо ви обробляєте компоненти React на сервері, можете застосувати `renderToNodeStream()` або `renderToStaticNodeStream()`, щоб дозволити клієнту отримувати та вмикати не всю розмітку відразу, а її різні частини. [Докладніше](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Якщо ваша система складання автоматично зменшує файли CSS, переконайтеся, що ви вводите в дію робочу версію додатка. Це можна перевірити за допомогою розширення Інструменти розробника React. [Докладніше](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1786,6 +1840,9 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Існує багато плагінів WordPress, які можуть допомогти [вбудувати важливі об'єкти](https://wordpress.org/plugins/search/critical+css/) або [відкласти менш важливі ресурси](https://wordpress.org/plugins/search/defer+css+javascript/). Зауважте, що така оптимізація може порушити функції теми або плагінів, тож доведеться змінити код."
+  },
+  "stack-packs/packs/wordpress.js | server_response_time": {
+    "message": "Теми, плагіни й характеристики сервера впливають на час відповіді. Спробуйте знайти більш оптимізовану тему, підібрати плагін для оптимізації та/або оновити сервер."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Спробуйте показувати витяги в списках дописів (через тег \"більше\"), зменшити кількість показаних публікацій на сторінці, розділити довгі дописи на кілька сторінок або скористатися плагіном, щоб відкласти завантаження коментарів."

@@ -552,7 +552,7 @@
     "message": "Välttää sovellusvälimuistia"
   },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
-    "message": "Merkistökoodausilmoitus vaaditaan. Sen voi tehdä <meta>-tagilla HTML:n ensimmäisen 1 024 tavun sisällä tai HTTP:n vastauksen otsikon sisältötyyppi-kohdassa. [Lue lisää](https://www.w3.org/International/questions/qa-html-encoding-declarations)."
+    "message": "Merkistökoodausilmoitus vaaditaan. Sen voi tehdä <meta>-tagilla HTML:n ensimmäisen 1 024 tavun sisällä tai HTTP:n vastauksen otsikon sisältötyyppi-kohdassa. [Lue lisää](https://web.dev/charset)."
   },
   "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
     "message": "Merkistöilmoitus puuttuu tai näkyy liian myöhään HTML:ssä"
@@ -798,7 +798,7 @@
     "message": "Suojaamaton URL-osoite"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
-    "message": "Kaikki sivustot tulee suojata HTTPS:llä, myös ne, jotka eivät käsittele arkaluontoista dataa. HTTPS estää tunkeutujia peukaloimasta sovelluksesi ja sen käyttäjien välistä toimintaa tai seuraamasta sitä passiivisesti. HTTPS:ää edellytetään HTTP/2:ssa ja monien uusien verkkoalustojen käyttöliittymissä. [Lue lisää](https://web.dev/is-on-https)."
+    "message": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. This includes avoiding [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), where some resources are loaded over HTTP despite the initial request being servedover HTTPS. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more](https://web.dev/is-on-https)."
   },
   "lighthouse-core/audits/is-on-https.js | displayValue": {
     "message": "{itemCount,plural, =1{1 suojaamaton pyyntö löytyi}other{# suojaamatonta pyyntöä löytyi}}"
@@ -808,6 +808,24 @@
   },
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Käyttää HTTPS:ää"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
+    "message": "This is the element that was identified as the Largest Contentful Paint. [Learn More](https://web.dev/lighthouse-largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
+    "message": "{itemCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | title": {
+    "message": "Largest Contentful Paint element"
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | description": {
+    "message": "These DOM elements contribute most to the CLS of the page."
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
+    "message": "{nodeCount, plural,\n    =0 {No elements found}\n    =1 {1 element found}\n    other {# elements found}\n    }"
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | title": {
+    "message": "Avoid large layout shifts"
   },
   "lighthouse-core/audits/legacy-javascript.js | description": {
     "message": "Polyfill- ja transform-merkintöjen avulla vanhat selaimet voivat käyttää uusia JavaScript-ominaisuuksia. Monia ei kuitenkaan tarvita nykyaikaisissa selaimissa. Käytä JavaScript-paketissasi nykyaikaista käyttöönottostrategiaa, jossa havaitaan moduuli/ei-moduuli-ominaisuus, minkä avulla vähennetään nykyaikaisiin selaimiin lähetetyn koodin määrää mutta säilytetään silti vanhojen selaimien tuki. [Lue lisää](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)."
@@ -864,7 +882,7 @@
     "message": "Verkko ei estä sivujen välisiä siirtymiä"
   },
   "lighthouse-core/audits/maskable-icon.js | description": {
-    "message": "Peitettävällä kuvakkeella varmistetaan, että kuva täyttää koko muodon ilman vaakapalkkien käyttöä, kun sovellusta asennetaan laitteelle. [Lue lisää](https://web.dev/maskable-icon/)."
+    "message": "Peitettävällä kuvakkeella varmistetaan, että kuva täyttää koko muodon ilman vaakapalkkien käyttöä, kun sovellusta asennetaan laitteelle. [Lue lisää](https://web.dev/maskable-icon-audit/)."
   },
   "lighthouse-core/audits/maskable-icon.js | failureTitle": {
     "message": "Teknisissä tiedoissa ei ole peitettävää kuvaketta"
@@ -1109,6 +1127,18 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Napautuskohteet ovat sopivan kokoisia"
   },
+  "lighthouse-core/audits/server-response-time.js | description": {
+    "message": "Keep the server response time for the main document short because all other requests depend on it. [Learn more](https://web.dev/time-to-first-byte)."
+  },
+  "lighthouse-core/audits/server-response-time.js | displayValue": {
+    "message": "Päädokumentti käytti {timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/audits/server-response-time.js | failureTitle": {
+    "message": "Reduce initial server response time"
+  },
+  "lighthouse-core/audits/server-response-time.js | title": {
+    "message": "Initial server response time was short"
+  },
   "lighthouse-core/audits/service-worker.js | description": {
     "message": "Service worker ‑teknologia tuo sovelluksen käyttöön monia progressiivisen web-sovelluksen ominaisuuksia, kuten offline-käytön, aloitusnäytölle lisäämisen ja ilmoitukset. [Lue lisää](https://web.dev/service-worker)."
   },
@@ -1310,8 +1340,20 @@
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Taulukot ja luettelot"
   },
+  "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
+    "message": "Selainten yhteensopivuus"
+  },
   "lighthouse-core/config/default-config.js | bestPracticesCategoryTitle": {
     "message": "Parhaat käytännöt"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesGeneralGroupTitle": {
+    "message": "Yleiset"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesTrustSafetyGroupTitle": {
+    "message": "Luottamus ja turvallisuus"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesUXGroupTitle": {
+    "message": "Käyttökokemus"
   },
   "lighthouse-core/config/default-config.js | budgetsGroupDescription": {
     "message": "Tehokkuusbudjetit määrittävät sivuston tehokkuuden standardit."
@@ -1320,7 +1362,7 @@
     "message": "Budjetit"
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": {
-    "message": "Lisätietoja sovelluksen toiminnasta. Luvut eivät [suoraan vaikuta](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) tehokkuusprosenttiin."
+    "message": "Lisätietoja sovelluksen toiminnasta. Luvut eivät [suoraan vaikuta](https://web.dev/performance-scoring/) tehokkuusprosenttiin."
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupTitle": {
     "message": "Diagnostiikka"
@@ -1332,7 +1374,7 @@
     "message": "Ensimmäistä renderöintiä koskevat parannusehdotukset"
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupDescription": {
-    "message": "Nämä ehdotukset voivat auttaa sivua latautumaan nopeammin. Ne eivät [suoraan vaikuta](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) tehokkuusprosenttiin."
+    "message": "Nämä ehdotukset voivat auttaa sivua latautumaan nopeammin. Ne eivät [suoraan vaikuta](https://web.dev/performance-scoring/) tehokkuusprosenttiin."
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupTitle": {
     "message": "Suositukset"
@@ -1402,6 +1444,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Välimuistin käyttöikä"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnElement": {
+    "message": "Elementti"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "Sijainti"
@@ -1565,6 +1610,9 @@
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Näytä tarkastukset"
   },
+  "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
+    "message": "See calculator."
+  },
   "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
     "message": "Ensimmäinen navigointi"
   },
@@ -1683,7 +1731,7 @@
     "message": "Lighthousen suorituksessa havaittiin ongelmia:"
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
-    "message": "Arvot ovat arvioita ja voivat vaihdella. Tehokkuusprosentti [perustuu vain näihin mittareihin](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted)."
+    "message": "Values are estimated and may vary. The [performance score is calculated](https://web.dev/performance-scoring/) directly from these metrics."
   },
   "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
     "message": "Läpäisi tarkastukset, mutta sai varoituksia"
@@ -1739,6 +1787,9 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Muokkaa tuote- ja kuvastomalleja niin, että ne hyödyntävät verkkoalustan [lykätty lataus](https://web.dev/native-lazy-loading) ‑ominaisuutta."
   },
+  "stack-packs/packs/magento.js | server_response_time": {
+    "message": "Käytä Magenton [Varnish-integraatiota](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
+  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Ota kaupan kehittäjäasetuksista käyttöön vaihtoehto Pienennä CSS-tiedostot. [Lue lisää](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1766,6 +1817,9 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Jos käytät React Routeria, minimoi `<Redirect>`-komponentin käyttö [reittinavigoinnissa](https://reacttraining.com/react-router/web/api/Redirect)."
   },
+  "stack-packs/packs/react.js | server_response_time": {
+    "message": "Jos renderöit React-komponentteja palvelinpuolella, `renderToNodeStream()` tai `renderToStaticNodeStream()` voi auttaa niin, että asiakas saa vastaanottaa ja aktivoida merkintöjen eri kohtia kerralla käsittelyn sijaan. [Lue lisää](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Jos versiojärjestelmäsi kutistaa CSS-tiedostoja automaattisesti, varmista että käyttöönotto koskee sovelluksen tuotantoversiota. Voit tarkistaa tämän Reactin kehittäjätyökalut ‑laajennuksella. [Lue lisää](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1786,6 +1840,9 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Monet WordPress-laajennukset voivat [tuoda tärkeää materiaalia sivun sisälle](https://wordpress.org/plugins/search/critical+css/) tai [lykätä vähemmän tärkeiden resurssien lataamista](https://wordpress.org/plugins/search/defer+css+javascript/). Huomaa, että näiden laajennusten tuomat optimoinnit voivat rikkoa teeman tai laajennusten toimintoja, joten sinun on todennäköisesti muutettava koodia."
+  },
+  "stack-packs/packs/wordpress.js | server_response_time": {
+    "message": "Teemat, laajennukset ja palvelinasetukset vaikuttavat kaikki palvelimen vastausaikaan. Sinun kannattaa ehkä etsiä optimoidumpi teema, valita optimointilaajennus tai päivittää palvelimesi."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Sinun kannattaa ehkä näyttää postausluettelossa katkelmia (esim. more-tagin avulla), näyttää yhdellä sivulla vähemmän postauksia, jakaa pitkät postaukset usealle sivulle tai käyttää kommenttien lazy load ‑laajennusta."

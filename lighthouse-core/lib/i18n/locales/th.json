@@ -552,7 +552,7 @@
     "message": "หลีกเลี่ยงการใช้แคชของแอปพลิเคชัน"
   },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
-    "message": "จำเป็นต้องประกาศการเข้ารหัสอักขระ ซึ่งทำได้โดยใช้แท็ก <meta> ใน 1024 ไบต์แรกของ HTML หรือในส่วนหัวการตอบกลับ HTTP ประเภทเนื้อหา [ดูข้อมูลเพิ่มเติม](https://www.w3.org/International/questions/qa-html-encoding-declarations)"
+    "message": "จำเป็นต้องประกาศการเข้ารหัสอักขระ ซึ่งทำได้โดยใช้แท็ก <meta> ใน 1024 ไบต์แรกของ HTML หรือในส่วนหัวการตอบกลับ HTTP ประเภทเนื้อหา [ดูข้อมูลเพิ่มเติม](https://web.dev/charset)"
   },
   "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
     "message": "ไม่มีการประกาศชุดอักขระหรือประกาศช้าเกินไปใน HTML"
@@ -798,7 +798,7 @@
     "message": "URL ไม่ปลอดภัย"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
-    "message": "ทุกเว็บไซต์ควรป้องกันด้วยการใช้ HTTPS แม้ว่าจะเป็นเว็บไซต์ที่ไม่มีข้อมูลที่ละเอียดอ่อนก็ตาม HTTPS ป้องกันผู้บุกรุกไม่ให้แทรกแซงหรือแอบฟังการสื่อสารระหว่างแอปกับผู้ใช้ของคุณ และเป็นข้อกำหนดที่ต้องทำก่อนสำหรับ HTTP/2 รวมถึง API ของแพลตฟอร์มเว็บใหม่ๆ อีกมาก [ดูข้อมูลเพิ่มเติม](https://web.dev/is-on-https)"
+    "message": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. This includes avoiding [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), where some resources are loaded over HTTP despite the initial request being servedover HTTPS. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more](https://web.dev/is-on-https)."
   },
   "lighthouse-core/audits/is-on-https.js | displayValue": {
     "message": "{itemCount,plural, =1{พบคำขอที่ไม่ปลอดภัย 1 รายการ}other{พบคำขอที่ไม่ปลอดภัย # รายการ}}"
@@ -808,6 +808,24 @@
   },
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "ใช้ HTTPS"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
+    "message": "This is the element that was identified as the Largest Contentful Paint. [Learn More](https://web.dev/lighthouse-largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
+    "message": "{itemCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | title": {
+    "message": "Largest Contentful Paint element"
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | description": {
+    "message": "These DOM elements contribute most to the CLS of the page."
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
+    "message": "{nodeCount, plural,\n    =0 {No elements found}\n    =1 {1 element found}\n    other {# elements found}\n    }"
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | title": {
+    "message": "Avoid large layout shifts"
   },
   "lighthouse-core/audits/legacy-javascript.js | description": {
     "message": "โพลีฟิลล์และการเปลี่ยนรูปแบบช่วยให้เบราว์เซอร์เดิมใช้ฟีเจอร์ JavaScript ใหม่ได้ แต่ส่วนมากจะไม่จำเป็นสำหรับเบราว์เซอร์สมัยใหม่ สำหรับ JavaScript แบบแพ็กเกจ ให้ใช้กลยุทธ์การทำให้สคริปต์สมัยใหม่ใช้งานได้โดยใช้การตรวจหาฟีเจอร์โมดูล/ไม่มีโมดูลเพื่อลดจำนวนโค้ดที่ส่งไปยังเบราว์เซอร์สมัยใหม่ ขณะที่ยังรองรับเบราว์เซอร์เดิมอยู่ [ดูข้อมูลเพิ่มเติม](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
@@ -864,7 +882,7 @@
     "message": "เปลี่ยนหน้าได้รวดเร็วแม้ว่าเครือข่ายจะช้า"
   },
   "lighthouse-core/audits/maskable-icon.js | description": {
-    "message": "ไอคอนที่มาสก์ได้ช่วยให้รูปภาพแสดงขึ้นเต็มกรอบโดยไม่มีแถบปรากฏอยู่ตามขอบเมื่อติดตั้งแอปในอุปกรณ์ [ดูข้อมูลเพิ่มเติม](https://web.dev/maskable-icon/)"
+    "message": "ไอคอนที่มาสก์ได้ช่วยให้รูปภาพแสดงขึ้นเต็มกรอบโดยไม่มีแถบปรากฏอยู่ตามขอบเมื่อติดตั้งแอปในอุปกรณ์ [ดูข้อมูลเพิ่มเติม](https://web.dev/maskable-icon-audit/)"
   },
   "lighthouse-core/audits/maskable-icon.js | failureTitle": {
     "message": "ไฟล์ Manifest ไม่มีไอคอนที่มาสก์ได้"
@@ -1109,6 +1127,18 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "เป้าหมายการแตะมีขนาดที่เหมาะสม"
   },
+  "lighthouse-core/audits/server-response-time.js | description": {
+    "message": "Keep the server response time for the main document short because all other requests depend on it. [Learn more](https://web.dev/time-to-first-byte)."
+  },
+  "lighthouse-core/audits/server-response-time.js | displayValue": {
+    "message": "เอกสารรากใช้เวลา {timeInMs, number, milliseconds} มิลลิวินาที"
+  },
+  "lighthouse-core/audits/server-response-time.js | failureTitle": {
+    "message": "Reduce initial server response time"
+  },
+  "lighthouse-core/audits/server-response-time.js | title": {
+    "message": "Initial server response time was short"
+  },
   "lighthouse-core/audits/service-worker.js | description": {
     "message": "Service Worker เป็นเทคโนโลยีที่ช่วยให้แอปของคุณใช้ฟีเจอร์ของ Progressive Web App ได้หลายฟีเจอร์ เช่น ออฟไลน์ เพิ่มไปยังหน้าจอหลัก และข้อความ Push [ดูข้อมูลเพิ่มเติม](https://web.dev/service-worker)"
   },
@@ -1310,8 +1340,20 @@
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "ตารางและรายการ"
   },
+  "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
+    "message": "ความเข้ากันได้กับเบราว์เซอร์"
+  },
   "lighthouse-core/config/default-config.js | bestPracticesCategoryTitle": {
     "message": "แนวทางปฏิบัติที่ดีที่สุด"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesGeneralGroupTitle": {
+    "message": "ทั่วไป"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesTrustSafetyGroupTitle": {
+    "message": "ความน่าเชื่อถือและความปลอดภัย"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesUXGroupTitle": {
+    "message": "ประสบการณ์ของผู้ใช้"
   },
   "lighthouse-core/config/default-config.js | budgetsGroupDescription": {
     "message": "งบประมาณประสิทธิภาพจะใช้เป็นมาตรฐานสำหรับประสิทธิภาพของเว็บไซต์คุณ"
@@ -1320,7 +1362,7 @@
     "message": "งบประมาณ"
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": {
-    "message": "ข้อมูลเพิ่มเติมเกี่ยวกับประสิทธิภาพของแอปพลิเคชัน ตัวเลขเหล่านี้ไม่[ส่งผลกระทบโดยตรง](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted)ต่อคะแนนประสิทธิภาพ"
+    "message": "ข้อมูลเพิ่มเติมเกี่ยวกับประสิทธิภาพของแอปพลิเคชัน ตัวเลขเหล่านี้ไม่[ส่งผลกระทบโดยตรง](https://web.dev/performance-scoring/)ต่อคะแนนประสิทธิภาพ"
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupTitle": {
     "message": "การวินิจฉัย"
@@ -1332,7 +1374,7 @@
     "message": "การปรับปรุงการแสดงผลครั้งแรก"
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupDescription": {
-    "message": "คำแนะนำเหล่านี้จะช่วยให้หน้าโหลดได้เร็วขึ้น โดยจะไม่[ส่งผลกระทบโดยตรง](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted)ต่อคะแนนประสิทธิภาพ"
+    "message": "คำแนะนำเหล่านี้จะช่วยให้หน้าโหลดได้เร็วขึ้น โดยจะไม่[ส่งผลกระทบโดยตรง](https://web.dev/performance-scoring/)ต่อคะแนนประสิทธิภาพ"
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupTitle": {
     "message": "โอกาส"
@@ -1402,6 +1444,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "แคช TTL"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnElement": {
+    "message": "องค์ประกอบ"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "ตำแหน่ง"
@@ -1565,6 +1610,9 @@
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "แสดงการตรวจสอบ"
   },
+  "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
+    "message": "See calculator."
+  },
   "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
     "message": "การนำทางเริ่มต้น"
   },
@@ -1683,7 +1731,7 @@
     "message": "เกิดปัญหาที่มีผลต่อการทำงานนี้ของ Lighthouse"
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
-    "message": "ค่ามาจากการประมาณและอาจแตกต่างกันไป คะแนนประสิทธิภาพ[อิงจากเมตริกเหล่านี้เท่านั้น](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted)"
+    "message": "Values are estimated and may vary. The [performance score is calculated](https://web.dev/performance-scoring/) directly from these metrics."
   },
   "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
     "message": "ผ่านการตรวจสอบแต่มีคำเตือน"
@@ -1739,6 +1787,9 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "ลองแก้ไขเทมเพลตผลิตภัณฑ์และแคตตาล็อกเพื่อใช้ประโยชน์จากฟีเจอร์[การโหลดแบบ Lazy Loading](https://web.dev/native-lazy-loading) ของแพลตฟอร์มเว็บ"
   },
+  "stack-packs/packs/magento.js | server_response_time": {
+    "message": "ใช้[การผสานรวม Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) ของ Magento"
+  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "เปิดใช้ตัวเลือก \"Minify CSS Files\" ในการตั้งค่านักพัฒนาซอฟต์แวร์ของร้านค้า [ดูข้อมูลเพิ่มเติม](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
   },
@@ -1766,6 +1817,9 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "หากคุณกำลังใช้ React Router ให้ลดการใช้ของคอมโพเนนต์ `<Redirect>` ในการ[ไปยังเส้นทางต่างๆ](https://reacttraining.com/react-router/web/api/Redirect)"
   },
+  "stack-packs/packs/react.js | server_response_time": {
+    "message": "หากคุณกำลังแสดงคอมโพเนนต์ของ React ใดๆ บนฝั่งเซิร์ฟเวอร์ ให้ลองใช้ `renderToNodeStream()` หรือ `renderToStaticNodeStream()` เพื่อให้ลูกค้าได้รับและรวมส่วนต่างๆ ของมาร์กอัปแทนที่จะรวมทั้งหมดในคราวเดียว [ดูข้อมูลเพิ่มเติม](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
+  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "หากระบบในรุ่นของคุณลดขนาดไฟล์ CSS โดยอัตโนมัติ โปรดตรวจสอบให้แน่ใจว่าคุณทำให้รุ่นที่ใช้งานจริงของแอปพลิเคชันใช้งานได้ ตรวจสอบเรื่องนี้ได้ด้วยส่วนขยายของ React Developer Tools [ดูข้อมูลเพิ่มเติม](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
   },
@@ -1786,6 +1840,9 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "มีปลั๊กอิน WordPress หลายรายการที่ช่วยคุณ[แทรกเนื้อหาที่สำคัญ](https://wordpress.org/plugins/search/critical+css/) หรือ[เลื่อนเวลาโหลดทรัพยากรที่สำคัญน้อยกว่า](https://wordpress.org/plugins/search/defer+css+javascript/) โปรดระวังว่าการเพิ่มประสิทธิภาพโดยปลั๊กอินเหล่านี้อาจทำให้ฟีเจอร์ของธีมหรือปลั๊กอินของคุณเสียหาย ซึ่งน่าจะทำให้คุณต้องแก้ไขโค้ด"
+  },
+  "stack-packs/packs/wordpress.js | server_response_time": {
+    "message": "การกำหนดธีม ปลั๊กอิน และเซิร์ฟเวอร์ล้วนส่งผลต่อเวลาการตอบสนองของเซิร์ฟเวอร์ ลองหาธีมที่เพิ่มประสิทธิภาพมากขึ้น พยายามเลือกปลั๊กอินการเพิ่มประสิทธิภาพด้วยความระมัดระวัง และ/หรืออัปเกรดเซิร์ฟเวอร์"
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "ลองแสดงข้อความที่ตัดตอนมาในรายการโพสต์ (เช่น ผ่านแท็ก \"เพิ่มเติม\") ลดจำนวนโพสต์ที่แสดงในหน้าหนึ่งๆ แบ่งโพสต์ยาวๆ เป็นหลายหน้า หรือใช้ปลั๊กอินเพื่อโหลดความคิดเห็นแบบ Lazy Loading"

@@ -552,7 +552,7 @@
     "message": "يتم تجنُب ذاكرة التخزين المؤقت للتطبيق"
   },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
-    "message": "تعريف ترميز الأحرف مطلوب. ويمكن إجراء ذلك باستخدام علامة <meta> في أول 1024 وحدة بايت من عنوان HTML أو في عنوان الاستجابة Content-Type في HTTP. [مزيد من المعلومات](https://www.w3.org/International/questions/qa-html-encoding-declarations)"
+    "message": "تعريف ترميز الأحرف مطلوب. ويمكن إجراء ذلك باستخدام علامة <meta> في أول 1024 وحدة بايت من عنوان HTML أو في عنوان الاستجابة Content-Type في HTTP. [مزيد من المعلومات](https://web.dev/charset)"
   },
   "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
     "message": "تعريف ترميز الأحرف غير متوفر أو تأخر ظهوره جدًا في HTML"
@@ -798,7 +798,7 @@
     "message": "عنوان URL غير آمن"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
-    "message": "يجب حماية جميع المواقع الإلكترونية باستخدام HTTPS، حتى تلك المواقع التي لا تتعامل مع البيانات الحساسة. يمنع HTTPS الدخلاء من العبث بالاتصالات بين تطبيقك والمستخدمين أو الاستماع إليها بشكل سلبي، وهو شرط مسبق لـ HTTP/2 والعديد من واجهات برمجة تطبيقات الأنظمة الأساسية للويب الجديدة. [مزيد من المعلومات](https://web.dev/is-on-https)"
+    "message": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. This includes avoiding [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), where some resources are loaded over HTTP despite the initial request being servedover HTTPS. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more](https://web.dev/is-on-https)."
   },
   "lighthouse-core/audits/is-on-https.js | displayValue": {
     "message": "{itemCount,plural, =1{تم العثور على طلب غير آمن واحد}zero{تم العثور على # طلب غير آمن}two{تم العثور على طلبين غير آمنين (#)}few{تم العثور على # طلبات غير آمنة}many{تم العثور على # طلبًا غير آمن}other{تم العثور على # طلب غير آمن}}"
@@ -808,6 +808,24 @@
   },
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "يتم استخدام HTTPS"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
+    "message": "This is the element that was identified as the Largest Contentful Paint. [Learn More](https://web.dev/lighthouse-largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
+    "message": "{itemCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | title": {
+    "message": "Largest Contentful Paint element"
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | description": {
+    "message": "These DOM elements contribute most to the CLS of the page."
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
+    "message": "{nodeCount, plural,\n    =0 {No elements found}\n    =1 {1 element found}\n    other {# elements found}\n    }"
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | title": {
+    "message": "Avoid large layout shifts"
   },
   "lighthouse-core/audits/legacy-javascript.js | description": {
     "message": "يساعد الملء التلقائي وعمليات التحويل المتصفّحات القديمة في استخدام ميزات JavaScript الجديدة. ولكن العديد منها غير ضروري للمتصفّحات الحديثة. وبالنسبة إلى حِزم JavaScript، يمكنك استخدام استراتيجية حديثة لنشر النص البرمجي باستخدام ميزة الكشف عن الميزات \"module/nomodule\" لتقليل عدد الرموز البرمجية التي يتم نقلها للمتصفّحات الحديثة مع استمرار اعتماد المتصفّحات القديمة. [مزيد من المعلومات](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
@@ -864,7 +882,7 @@
     "message": "عمليات نقل الصفحة لا تبدو أنها محظورة على الشبكة"
   },
   "lighthouse-core/audits/maskable-icon.js | description": {
-    "message": "يضمن الرمز القابل للإخفاء تعبئة الصورة للشكل بالكامل بدون أن تصبح مُعدَّة للعرض على شاشة عريضة أفقيًا أثناء تثبيت التطبيق على الجهاز. [مزيد من المعلومات](https://web.dev/maskable-icon/)"
+    "message": "يضمن الرمز القابل للإخفاء تعبئة الصورة للشكل بالكامل بدون أن تصبح مُعدَّة للعرض على شاشة عريضة أفقيًا أثناء تثبيت التطبيق على الجهاز. [مزيد من المعلومات](https://web.dev/maskable-icon-audit/)"
   },
   "lighthouse-core/audits/maskable-icon.js | failureTitle": {
     "message": "البيان لا يحتوي على رمز قابل للإخفاء"
@@ -1109,6 +1127,18 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "يتم تحديد حجم أهداف النقر بشكل مناسب"
   },
+  "lighthouse-core/audits/server-response-time.js | description": {
+    "message": "Keep the server response time for the main document short because all other requests depend on it. [Learn more](https://web.dev/time-to-first-byte)."
+  },
+  "lighthouse-core/audits/server-response-time.js | displayValue": {
+    "message": "استغرق مستند الجذر {timeInMs, number, milliseconds} مللي ثانية"
+  },
+  "lighthouse-core/audits/server-response-time.js | failureTitle": {
+    "message": "Reduce initial server response time"
+  },
+  "lighthouse-core/audits/server-response-time.js | title": {
+    "message": "Initial server response time was short"
+  },
   "lighthouse-core/audits/service-worker.js | description": {
     "message": "مشغّل الخدمات هو التكنولوجيا التي تمكّن تطبيقك من استخدام ميزات عديدة من \"تطبيق الويب التقدّمي\"، مثل الاستجابة عند عدم الاتصال بالإنترنت والإضافة إلى الشاشة الرئيسية والإشعارات الفورية. [مزيد من المعلومات](https://web.dev/service-worker)"
   },
@@ -1310,8 +1340,20 @@
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "الجداول والقوائم"
   },
+  "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
+    "message": "توافق المتصفّح"
+  },
   "lighthouse-core/config/default-config.js | bestPracticesCategoryTitle": {
     "message": "أفضل الممارسات"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesGeneralGroupTitle": {
+    "message": "عام"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesTrustSafetyGroupTitle": {
+    "message": "الثقة والأمان"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesUXGroupTitle": {
+    "message": "انطباع المستخدم"
   },
   "lighthouse-core/config/default-config.js | budgetsGroupDescription": {
     "message": "تضبط ميزانيات الأداء معايير لأداء موقعك الإلكتروني."
@@ -1320,7 +1362,7 @@
     "message": "الميزانيات"
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": {
-    "message": "مزيد من المعلومات حول أداء تطبيقك لا تؤثر هذه الأرقام [ بشكل مباشر في ](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) نتيجة الأداء."
+    "message": "مزيد من المعلومات حول أداء تطبيقك لا تؤثر هذه الأرقام [ بشكل مباشر في ](https://web.dev/performance-scoring/) نتيجة الأداء."
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupTitle": {
     "message": "بيانات التشخيص"
@@ -1332,7 +1374,7 @@
     "message": "تحسينات العرض الأول"
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupDescription": {
-    "message": "يمكن أن تساعد هذه الاقتراحات على تحميل صفحتك بشكل أسرع. لا تؤثر هذه الاقتراحات [بشكل مباشر](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) في نتيجة الأداء."
+    "message": "يمكن أن تساعد هذه الاقتراحات على تحميل صفحتك بشكل أسرع. لا تؤثر هذه الاقتراحات [بشكل مباشر](https://web.dev/performance-scoring/) في نتيجة الأداء."
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupTitle": {
     "message": "فرص تحسين الأداء"
@@ -1402,6 +1444,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "ذاكرة التخزين المؤقت TTL"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnElement": {
+    "message": "العنصر"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "الموقع الجغرافي"
@@ -1565,6 +1610,9 @@
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "عرض عمليات التدقيق"
   },
+  "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
+    "message": "See calculator."
+  },
   "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
     "message": "التنقل الأوّلي"
   },
@@ -1683,7 +1731,7 @@
     "message": "حدثت مشاكل تؤثر في تشغيل Lighthouse:"
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
-    "message": "القيم تقديرية وقابلة للتغيير. نتيجة الأداء [مستندة إلى هذه المقاييس فقط](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted)."
+    "message": "Values are estimated and may vary. The [performance score is calculated](https://web.dev/performance-scoring/) directly from these metrics."
   },
   "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
     "message": "عمليات التدقيق التي تم اجتيازها، ولكن تتضمّن التحذيرات"
@@ -1739,6 +1787,9 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "عليك تعديل نماذج الكتالوج والمنتج للاستفادة من ميزة [التحميل الخامل](https://web.dev/native-lazy-loading) للنظام الأساسي للويب."
   },
+  "stack-packs/packs/magento.js | server_response_time": {
+    "message": "استخدِم [دمج Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) للنظام الأساسي Magento."
+  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "فعِّل الخيار \"تصغير ملفات CSS\" في إعدادات مطوّر البرامج في المتجر. [مزيد من المعلومات](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
   },
@@ -1766,6 +1817,9 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "في حال استخدام React Router، عليك تقليل استخدام المكوّن `<Redirect>` في [عمليات تنقل المسار](https://reacttraining.com/react-router/web/api/Redirect)."
   },
+  "stack-packs/packs/react.js | server_response_time": {
+    "message": "في حال كنت تعرض من جانب الخادم أي مكوّنات React، عليك استخدام `renderToNodeStream()` أو `renderToStaticNodeStream()` للسماح للعميل بتلقي أجزاء مختلفة من الترميز ودمجها بدلاً من جميع الأجزاء دفعة واحدة. [مزيد من المعلومات](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
+  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "في حال تصغير نظام الإصدار لملفات CSS تلقائيًا، يُرجى التأكد من أنك تنشر إصدار الإنتاج لتطبيقك. يمكنك التحقّق من ذلك باستخدام إضافة React Developer Tools. [مزيد من المعلومات](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
   },
@@ -1786,6 +1840,9 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "هناك عدد من مكونات WordPress الإضافية التي يمكنها مساعدتك على [تضمين مواد العرض المهمة](https://wordpress.org/plugins/search/critical+css/) أو [تأجيل موارد أقل أهمية](https://wordpress.org/plugins/search/defer+css+javascript/). عليك توخي الحذر من أن التحسينات التي توفرها هذه الإضافات قد توقف ميزات التصميم أو المكونات الإضافية، لذلك ستحتاج على الأرجح إلى إجراء تغييرات في الرمز البرمجي."
+  },
+  "stack-packs/packs/wordpress.js | server_response_time": {
+    "message": "تساهم التصاميم والمكونات الإضافية ومواصفات الخادم في تحسين وقت استجابة الخادم. يمكنك البحث عن تصميم مُحسّن أكثر و/أو اختيار مكون إضافي للتحسين و/أو ترقية الخادم."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "يمكنك عرض مقتطفات في قوائم مشاركاتك (مثلاً عبر العلامة \"المزيد\")، أو تقليل عدد المشاركات المعروضة في صفحة معينة، أو تقسيم مشاركاتك الطويلة إلى صفحات متعددة، أو استخدام مكون إضافي لتحميل التعليقات ذات التحميل الكسول."

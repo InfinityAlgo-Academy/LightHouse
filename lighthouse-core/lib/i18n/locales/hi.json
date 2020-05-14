@@ -552,7 +552,7 @@
     "message": "ऐप्लिकेशन की कैश मेमोरी का इस्तेमाल नहीं किया जाता"
   },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
-    "message": "कैरेक्टर एन्कोडिंग सेट करने की ज़रूरत है. एचटीएमएल की पहली 1024 बाइट या सामग्री-प्रकार एचटीटीपी रिस्पॉन्स हेडर में <meta> टैग की मदद से ऐसा किया जा सकता है. [ज़्यादा जानें](https://www.w3.org/International/questions/qa-html-encoding-declarations)."
+    "message": "कैरेक्टर एन्कोडिंग सेट करने की ज़रूरत है. एचटीएमएल की पहली 1024 बाइट या सामग्री-प्रकार एचटीटीपी रिस्पॉन्स हेडर में <meta> टैग की मदद से ऐसा किया जा सकता है. [ज़्यादा जानें](https://web.dev/charset)."
   },
   "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
     "message": "एचटीएमएल में charset को सेट नहीं है या बहुत देरी से सेट किया गया है."
@@ -798,7 +798,7 @@
     "message": "असुरक्षित यूआरएल"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
-    "message": "सभी साइटों को HTTPS से सुरक्षित किया जाना चाहिए, चाहे उनमें संवेदनशील डेटा हो या नहीं. HTTPS की वजह से अनचाहे लोग (घुसपैठिये), आपके ऐप्लिकेशन और उसके उपयोगकर्ताओं के बीच होने वाली बातों को न तो सुन पाएंगे और न ही उसके साथ किसी तरह की छेड़खानी कर पाएंगे. HTTP/2 और कई नए वेब प्लेटफ़ॉर्म एपीआई पर इस सुविधा के बिना साइटें नहीं बनाई जा सकतीं. [ज़्यादा जानें](https://web.dev/is-on-https)."
+    "message": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. This includes avoiding [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), where some resources are loaded over HTTP despite the initial request being servedover HTTPS. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more](https://web.dev/is-on-https)."
   },
   "lighthouse-core/audits/is-on-https.js | displayValue": {
     "message": "{itemCount,plural, =1{1 असुरक्षित अनुरोध मिला}one{# असुरक्षित अनुरोध मिले}other{# असुरक्षित अनुरोध मिले}}"
@@ -808,6 +808,24 @@
   },
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "HTTPS का इस्तेमाल करता है"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
+    "message": "This is the element that was identified as the Largest Contentful Paint. [Learn More](https://web.dev/lighthouse-largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
+    "message": "{itemCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | title": {
+    "message": "Largest Contentful Paint element"
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | description": {
+    "message": "These DOM elements contribute most to the CLS of the page."
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
+    "message": "{nodeCount, plural,\n    =0 {No elements found}\n    =1 {1 element found}\n    other {# elements found}\n    }"
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | title": {
+    "message": "Avoid large layout shifts"
   },
   "lighthouse-core/audits/legacy-javascript.js | description": {
     "message": "पॉलिफ़िल और ट्रांसफ़ॉर्म की मदद से पुराने ब्राउज़र पर नई JavaScript सुविधाओं का इस्तेमाल किया जा सकता है. हालांकि, नए ब्राउज़र के लिए इनमें से कई की ज़रूरत नहीं है. बंडल किए गए JavaScript के लिए, मॉड्यूल/नोमॉड्यूल सुविधा पहचान टूल का इस्तेमाल करके नई स्क्रिप्ट डिप्लॉयमेंट रणनीति अपनाएं. इससे नए ब्राउज़र पर कोड भेजने की संख्या कम करने और पुराने ब्राउज़र को चालू रखने में मदद मिलती है. [ज़्यादा जानें](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
@@ -864,7 +882,7 @@
     "message": "पेज ट्रांज़िशन को देखकर ऐसा नहीं लगना चाहिए जैसे कि वे नेटवर्क लोड होने का इंतज़ार कर रहे हैं"
   },
   "lighthouse-core/audits/maskable-icon.js | description": {
-    "message": "मास्क का इस्तेमाल किए जा सकने वाले आइकॉन से यह पक्का किया जाता है कि डिवाइस पर ऐप्लिकेशन इंस्टॉल करते समय, लेटरबॉक्स किए बिना इमेज पूरी जगह पर दिखती है. [ज़्यादा जानें](https://web.dev/maskable-icon/)."
+    "message": "मास्क का इस्तेमाल किए जा सकने वाले आइकॉन से यह पक्का किया जाता है कि डिवाइस पर ऐप्लिकेशन इंस्टॉल करते समय, लेटरबॉक्स किए बिना इमेज पूरी जगह पर दिखती है. [ज़्यादा जानें](https://web.dev/maskable-icon-audit/)."
   },
   "lighthouse-core/audits/maskable-icon.js | failureTitle": {
     "message": "मेनिफ़ेस्ट में ऐसा कोई भी आइकॉन नहीं मिला जिसके लिए मास्क का इस्तेमाल किया जा सके"
@@ -1109,6 +1127,18 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "टैप की जाने वाली जगहें सही आकार में हैं"
   },
+  "lighthouse-core/audits/server-response-time.js | description": {
+    "message": "Keep the server response time for the main document short because all other requests depend on it. [Learn more](https://web.dev/time-to-first-byte)."
+  },
+  "lighthouse-core/audits/server-response-time.js | displayValue": {
+    "message": "रुट दस्तावेज़ बनने में {timeInMs, number, milliseconds} मि.से. का समय लगा"
+  },
+  "lighthouse-core/audits/server-response-time.js | failureTitle": {
+    "message": "Reduce initial server response time"
+  },
+  "lighthouse-core/audits/server-response-time.js | title": {
+    "message": "Initial server response time was short"
+  },
   "lighthouse-core/audits/service-worker.js | description": {
     "message": "सर्विस वर्कर एक ऐसी तकनीक है जो आपके ऐप्लिकेशन के लिए कई प्रगतिशील वेब ऐप्लिकेशन फ़ीचर जैसे कि ऑफ़लाइन, होमस्क्रीन पर जोड़ें, और पुश नोटिफ़िकेशन को चालू करती है. [ज़्यादा जानें](https://web.dev/service-worker)."
   },
@@ -1310,8 +1340,20 @@
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "टेबल और सूचियां"
   },
+  "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
+    "message": "ब्राउज़र किस-किस के साथ काम करता है"
+  },
   "lighthouse-core/config/default-config.js | bestPracticesCategoryTitle": {
     "message": "सबसे अच्छे तरीके"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesGeneralGroupTitle": {
+    "message": "सामान्य"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesTrustSafetyGroupTitle": {
+    "message": "भरोसा और सुरक्षा"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesUXGroupTitle": {
+    "message": "उपयोगकर्ता का अनुभव"
   },
   "lighthouse-core/config/default-config.js | budgetsGroupDescription": {
     "message": "परफ़ॉर्मेंस बजट बनाकर आप अपनी साइट की परफ़ॉर्मेंस के मानक तय करते हैं."
@@ -1320,7 +1362,7 @@
     "message": "बजट"
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": {
-    "message": "आपके ऐप्लिकेशन के परफ़ॉर्मेंस के बारे में ज़्यादा जानकारी. इन आंकड़ों का परफ़ॉर्मेंस स्कोर पर [सीधा असर](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) नहीं पड़ता."
+    "message": "आपके ऐप्लिकेशन के परफ़ॉर्मेंस के बारे में ज़्यादा जानकारी. इन आंकड़ों का परफ़ॉर्मेंस स्कोर पर [सीधा असर](https://web.dev/performance-scoring/) नहीं पड़ता."
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupTitle": {
     "message": "निदान"
@@ -1332,7 +1374,7 @@
     "message": "पहले पेंट के सुधार"
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupDescription": {
-    "message": "इन सुझावों से आप अपने पेज को तेज़ी से लोड करा सकते हैं. इनसे आपके परफ़ॉर्मेंस स्कोर पर [सीधा असर](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) नहीं होगा."
+    "message": "इन सुझावों से आप अपने पेज को तेज़ी से लोड करा सकते हैं. इनसे आपके परफ़ॉर्मेंस स्कोर पर [सीधा असर](https://web.dev/performance-scoring/) नहीं होगा."
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupTitle": {
     "message": "अवसर"
@@ -1402,6 +1444,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "कैश TTL"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnElement": {
+    "message": "तत्व"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "जगह की जानकारी"
@@ -1565,6 +1610,9 @@
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "ऑडिट दिखाएं"
   },
+  "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
+    "message": "See calculator."
+  },
   "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
     "message": "शुरुआती नेविगेशन"
   },
@@ -1683,7 +1731,7 @@
     "message": "कुछ समस्याएं आने के कारण Lighthouse के इस रन पर असर पड़ा है:"
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
-    "message": "मान अनुमान के हिसाब से लिखे गए हैं और इनमें अंतर हो सकता है. परफ़ॉर्मेंस स्कोर सिर्फ़ [इन मेट्रिक पर आधारित ](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) होता है."
+    "message": "Values are estimated and may vary. The [performance score is calculated](https://web.dev/performance-scoring/) directly from these metrics."
   },
   "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
     "message": "चेतावनियों के साथ पास हुए ऑडिट"
@@ -1739,6 +1787,9 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "वेब प्लैटफ़ॉर्म की [धीमे लोड होने](https://web.dev/native-lazy-loading) की सुविधा का इस्तेमाल करने के लिए, अपने उत्पाद और कैटलॉग टेम्प्लेट में बदलाव करें."
   },
+  "stack-packs/packs/magento.js | server_response_time": {
+    "message": "Magento का [Varnish इंटीग्रेशन](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) इस्तेमाल करें."
+  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "अपने स्टोर की डेवलपर सेटिंग में, \"सीएसएस फ़ाइलें छोटी करें\" विकल्प चालू करें. [ज़्यादा जानें](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1766,6 +1817,9 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "अगर आप React Router इस्तेमाल कर रहे हैं, तो [रूट नेविगेशन](https://reacttraining.com/react-router/web/api/Redirect) के लिए `<Redirect>` कॉम्पोनेंट का इस्तेमाल कम करें."
   },
+  "stack-packs/packs/react.js | server_response_time": {
+    "message": "अगर आप सर्वर-साइड पर किसी React कॉम्पोनेंट को रेंडर कर रहे हैं, तो `renderToNodeStream()` या `renderToStaticNodeStream()` का इस्तेमाल करें. इससे क्लाइंट को एक साथ पूरे मार्कअप के बजाय, उसके अलग-अलग हिस्से मिलेंगे और वह उन्हें अलग-अलग हाइड्रेट कर पाएगा. [ज़्यादा जानें](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "अगर आपका बिल्ड सिस्टम आपकी सीएसएस फ़ाइलों को अपने-आप छोटा कर रहा है, तो पक्का करें कि आप अपने ऐप्लिकेशन के प्रोडक्शन बिल्ड को डिप्लॉय कर रहे हैं. आप React डेवलपर टूल एक्सटेंशन की मदद से इसकी पुष्टि कर सकते हैं. [ज़्यादा जानें](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1786,6 +1840,9 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "ऐसे कई WordPress प्लग इन हैं जो [क्रिटिकल एसेट इनलाइन करने ](https://wordpress.org/plugins/search/critical+css/) या [कम ज़रूरी संसाधनों को डेफ़र करने](https://wordpress.org/plugins/search/defer+css+javascript/) में आपकी मदद कर सकते हैं. ध्यान रखें कि ऐसी प्लग इन से मिलने वाले ऑप्टिमाइज़ेशन आपकी थीम या प्लग इन की सुविधाएं बिगाड़ सकते हैं. इसलिए, आपको कोड में बदलावों को करने की ज़रुरत हो सकती है."
+  },
+  "stack-packs/packs/wordpress.js | server_response_time": {
+    "message": "थीम, प्लगइन, और सर्वर की खास बातें सर्वर से जवाब मिलने के समय में योगदान करती हैं. ज़्यादा ऑप्टिमाइज़ की हुई थीम ढूंढने, एक ऑप्टिमाइज़ेशन प्लगइन को सावधानी से चुनने, और/या अपना सर्वर अपग्रेड करने पर विचार करें."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "अपनी पोस्ट सूचियों में खास हिस्से दिखाने पर विचार करें (जैसे 'ज़्यादा' टैग से), किसी पेज पर दिखाई गई पोस्ट की संख्या घटाने, अपनी लंबी पोस्ट को कई पेज में बाँटने या फिर टिप्पणियों को धीरे-धीरे लोड करने वाले प्लगइन का इस्तेमाल करने पर विचार करें."

@@ -552,7 +552,7 @@
     "message": "Αποφυγή προσωρινής μνήμης εφαρμογής"
   },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
-    "message": "Απαιτείται δήλωση κωδικοποίησης χαρακτήρων. Μπορεί να πραγματοποιηθεί με μια ετικέτα <meta> στα πρώτα 1024 byte του κώδικα HTML ή στην κεφαλίδα απόκρισης HTTP Content-Type. [Μάθετε περισσότερα](https://www.w3.org/International/questions/qa-html-encoding-declarations)."
+    "message": "Απαιτείται δήλωση κωδικοποίησης χαρακτήρων. Μπορεί να πραγματοποιηθεί με μια ετικέτα <meta> στα πρώτα 1024 byte του κώδικα HTML ή στην κεφαλίδα απόκρισης HTTP Content-Type. [Μάθετε περισσότερα](https://web.dev/charset)."
   },
   "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
     "message": "Η δήλωση συνόλου χαρακτήρων λείπει ή εμφανίζεται πολύ αργά στον κώδικα HTML"
@@ -798,7 +798,7 @@
     "message": "Μη ασφαλές URL"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
-    "message": "Όλοι οι ιστότοποι πρέπει να προστατεύονται με HTTPS, ακόμα και αν δεν χειρίζονται ευαίσθητα δεδομένα. Το HTTPS εμποδίζει τους εισβολείς από την αλλοίωση ή την παθητική ακρόαση των επικοινωνιών μεταξύ της εφαρμογής και των χρηστών σας. Επιπλέον, αποτελεί προαπαιτούμενο για το HTTP/2 και πολλά νέα API πλατφορών ιστού. [Μάθετε περισσότερα](https://web.dev/is-on-https)."
+    "message": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. This includes avoiding [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), where some resources are loaded over HTTP despite the initial request being servedover HTTPS. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more](https://web.dev/is-on-https)."
   },
   "lighthouse-core/audits/is-on-https.js | displayValue": {
     "message": "{itemCount,plural, =1{Βρέθηκε 1 μη ασφαλές αίτημα}other{Βρέθηκαν # μη ασφαλή αιτήματα}}"
@@ -808,6 +808,24 @@
   },
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Χρησιμοποιεί HTTPS"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
+    "message": "This is the element that was identified as the Largest Contentful Paint. [Learn More](https://web.dev/lighthouse-largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
+    "message": "{itemCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | title": {
+    "message": "Largest Contentful Paint element"
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | description": {
+    "message": "These DOM elements contribute most to the CLS of the page."
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
+    "message": "{nodeCount, plural,\n    =0 {No elements found}\n    =1 {1 element found}\n    other {# elements found}\n    }"
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | title": {
+    "message": "Avoid large layout shifts"
   },
   "lighthouse-core/audits/legacy-javascript.js | description": {
     "message": "Τα Polyfill και οι μετασχηματισμοί επιτρέπουν στα προγράμματα περιήγησης παλαιού τύπου να χρησιμοποιούν νέες λειτουργίες JavaScript. Ωστόσο, πολλές από αυτές δεν είναι απαραίτητες για σύγχρονα προγράμματα περιήγησης. Για JavaScript σε πακέτο, υιοθετήστε μια σύγχρονη στρατηγική ανάπτυξης σεναρίων χρησιμοποιώντας εντοπισμό λειτουργίας module/nomodule για μείωση του όγκου κώδικα που αποστέλλεται σε σύγχρονα προγράμματα περιήγησης, διατηρώντας την υποστήριξη για προγράμματα περιήγησης παλαιού τύπου. [Μάθετε περισσότερα](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
@@ -864,7 +882,7 @@
     "message": "Οι μεταβάσεις σελίδας δεν δίνουν την αίσθηση ότι καθυστερούν στο δίκτυο"
   },
   "lighthouse-core/audits/maskable-icon.js | description": {
-    "message": "Ένα εικονίδιο με δυνατότητα μάσκας διασφαλίζει ότι η εικόνα θα γεμίζει ολόκληρο το σχήμα χωρίς να εμφανίζονται οριζόντιες μαύρες γραμμές κατά την εγκατάσταση της εφαρμογής σε μια συσκευή. [Μάθετε περισσότερα](https://web.dev/maskable-icon/)."
+    "message": "Ένα εικονίδιο με δυνατότητα μάσκας διασφαλίζει ότι η εικόνα θα γεμίζει ολόκληρο το σχήμα χωρίς να εμφανίζονται οριζόντιες μαύρες γραμμές κατά την εγκατάσταση της εφαρμογής σε μια συσκευή. [Μάθετε περισσότερα](https://web.dev/maskable-icon-audit/)."
   },
   "lighthouse-core/audits/maskable-icon.js | failureTitle": {
     "message": "Το μανιφέστο δεν διαθέτει εικονίδιο με δυνατότητα μάσκας"
@@ -1109,6 +1127,18 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Τα στοιχεία που επιλέγονται με πάτημα έχουν το κατάλληλο μέγεθος"
   },
+  "lighthouse-core/audits/server-response-time.js | description": {
+    "message": "Keep the server response time for the main document short because all other requests depend on it. [Learn more](https://web.dev/time-to-first-byte)."
+  },
+  "lighthouse-core/audits/server-response-time.js | displayValue": {
+    "message": "Το ριζικό έγγραφο χρειάστηκε {timeInMs, number, milliseconds} χλστ.δ."
+  },
+  "lighthouse-core/audits/server-response-time.js | failureTitle": {
+    "message": "Reduce initial server response time"
+  },
+  "lighthouse-core/audits/server-response-time.js | title": {
+    "message": "Initial server response time was short"
+  },
   "lighthouse-core/audits/service-worker.js | description": {
     "message": "Το service worker είναι η τεχνολογία που επιτρέπει στην εφαρμογή σας να χρησιμοποιεί πολλές λειτουργίες προηγμένων εφαρμογών ιστού, όπως η λειτουργία εκτός σύνδεσης, η προσθήκη στην αρχική οθόνη και οι ειδοποιήσεις push. [Μάθετε περισσότερα](https://web.dev/service-worker)."
   },
@@ -1310,8 +1340,20 @@
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Πίνακες και λίστες"
   },
+  "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
+    "message": "Συμβατότητα προγράμματος περιήγησης"
+  },
   "lighthouse-core/config/default-config.js | bestPracticesCategoryTitle": {
     "message": "Βέλτιστες πρακτικές"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesGeneralGroupTitle": {
+    "message": "Γενικά"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesTrustSafetyGroupTitle": {
+    "message": "Εμπιστοσύνη και ασφάλεια"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesUXGroupTitle": {
+    "message": "Εμπειρία χρήστη"
   },
   "lighthouse-core/config/default-config.js | budgetsGroupDescription": {
     "message": "Οι προϋπολογισμοί απόδοσης θέτουν τα πρότυπα για την απόδοση του ιστοτόπου σας."
@@ -1320,7 +1362,7 @@
     "message": "Προϋπολογισμοί"
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": {
-    "message": "Περισσότερες πληροφορίες σχετικά με την απόδοση της εφαρμογής σας. Αυτά τα δεδομένα δεν [επηρεάζουν άμεσα](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) τη βαθμολογία απόδοσης."
+    "message": "Περισσότερες πληροφορίες σχετικά με την απόδοση της εφαρμογής σας. Αυτά τα δεδομένα δεν [επηρεάζουν άμεσα](https://web.dev/performance-scoring/) τη βαθμολογία απόδοσης."
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupTitle": {
     "message": "Διαγνωστικά στοιχεία"
@@ -1332,7 +1374,7 @@
     "message": "Βελτιώσεις πρώτης μορφής"
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupDescription": {
-    "message": "Αυτές οι προτάσεις μπορούν να βοηθήσουν στην ταχύτερη φόρτωση της σελίδας σας. Δεν [επηρεάζουν άμεσα](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) τη βαθμολογία απόδοσης."
+    "message": "Αυτές οι προτάσεις μπορούν να βοηθήσουν στην ταχύτερη φόρτωση της σελίδας σας. Δεν [επηρεάζουν άμεσα](https://web.dev/performance-scoring/) τη βαθμολογία απόδοσης."
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupTitle": {
     "message": "Ευκαιρίες"
@@ -1402,6 +1444,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL κρυφής μνήμης"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnElement": {
+    "message": "Στοιχείο"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "Τοποθεσία"
@@ -1565,6 +1610,9 @@
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Εμφάνιση ελέγχων"
   },
+  "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
+    "message": "See calculator."
+  },
   "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
     "message": "Αρχική πλοήγηση"
   },
@@ -1683,7 +1731,7 @@
     "message": "Παρουσιάστηκαν ορισμένα ζητήματα τα οποία επηρεάζουν αυτήν την εκτέλεση του Lighthouse:"
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
-    "message": "Οι τιμές είναι κατ' εκτίμηση και μπορεί να διαφέρουν. Η βαθμολογία απόδοσης [βασίζεται σε αυτές τις μετρήσεις](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted)."
+    "message": "Values are estimated and may vary. The [performance score is calculated](https://web.dev/performance-scoring/) directly from these metrics."
   },
   "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
     "message": "Έλεγχοι που ολοκληρώθηκαν αλλά με προειδοποιήσεις"
@@ -1739,6 +1787,9 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Μπορείτε να τροποποιήσετε το προϊόν σας και τα πρότυπα καταλόγου για να αξιοποιήσετε τη λειτουργία [αργής φόρτωσης](https://web.dev/native-lazy-loading) της πλατφόρμας ιστού."
   },
+  "stack-packs/packs/magento.js | server_response_time": {
+    "message": "Χρησιμοποιήστε την[ενσωμάτωση Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) του Magento."
+  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "Ενεργοποιήστε την επιλογή Ελαχιστοποίηση αρχείων CSS στις ρυθμίσεις Προγραμματιστή του καταστήματός σας. [Μάθετε περισσότερα](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1766,6 +1817,9 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Εάν χρησιμοποιείτε το React Router, ελαχιστοποιήστε τη χρήση του στοιχείου `<Redirect>` για [πλοηγήσεις διαδρομής](https://reacttraining.com/react-router/web/api/Redirect)."
   },
+  "stack-packs/packs/react.js | server_response_time": {
+    "message": "Εάν πραγματοποιείτε απόδοση στοιχείων React στον διακομιστή, μπορείτε να χρησιμοποιήσετε το `renderToNodeStream()` ή το `renderToStaticNodeStream()` για να επιτρέψετε στον υπολογιστή-πελάτη να λαμβάνει και να ενισχύει διαφορετικά μέρη της σήμανσης, αντί για όλα μαζί. [Μάθετε περισσότερα](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Εάν το σύστημα έκδοσής σας ελαχιστοποιεί τα αρχεία CSS σας αυτόματα, βεβαιωθείτε ότι αναπτύσσετε την έκδοση παραγωγής της εφαρμογής σας. Μπορείτε να το ελέγξετε αυτό από την επέκταση React Developer Tools. [Μάθετε περισσότερα](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1786,6 +1840,9 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Υπάρχουν διάφορες προσθήκες WordPress που μπορούν να σας βοηθήσουν στην [ενσωμάτωση των σημαντικών στοιχείων](https://wordpress.org/plugins/search/critical+css/) ή στην [καθυστέρηση των λιγότερο σημαντικών πόρων](https://wordpress.org/plugins/search/defer+css+javascript/). Λάβετε υπόψη ότι οι βελτιστοποιήσεις που παρέχονται από αυτές τις προσθήκες ενδέχεται να προκαλέσουν προβλήματα στις λειτουργίες των θεμάτων ή των προσθηκών σας. Ως εκ τούτου, είναι πιθανό να χρειαστεί να κάνετε αλλαγές στον κώδικα."
+  },
+  "stack-packs/packs/wordpress.js | server_response_time": {
+    "message": "Τα θέματα, οι προσθήκες και οι προδιαγραφές διακομιστή συμβάλλουν στον χρόνο απόκρισης του διακομιστή. Αν θέλετε, μπορείτε να ψάξετε για ένα περισσότερο βελτιστοποιημένο θέμα, να επιλέξετε προσεκτικά μια προσθήκη βελτιστοποίησης ή/και να αναβαθμίσετε τον διακομιστή σας."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Εξετάστε το ενδεχόμενο εμφάνισης αποσπασμάτων στις λίστες αναρτήσεών σας (π.χ. μέσω της ετικέτας \"περισσότερες\"), μειώνοντας τον αριθμό των αναρτήσεων που εμφανίζονται σε μια συγκεκριμένη σελίδα, χωρίζοντας τις μεγάλες αναρτήσεις σε πολλές σελίδες ή χρησιμοποιώντας μια προσθήκη για φόρτωση με καθυστέρηση των σχολίων."

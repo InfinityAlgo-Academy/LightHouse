@@ -552,7 +552,7 @@
     "message": "Iniiwasan ang Application Cache"
   },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
-    "message": "Kailangang mag-declare ng pag-encode ng character. Magagawa ito gamit ang isang <meta> tag sa unang 1024 na byte ng HTML o sa header ng sagot ng HTTP na Uri ng Content. [Matuto pa](https://www.w3.org/International/questions/qa-html-encoding-declarations)."
+    "message": "Kailangang mag-declare ng pag-encode ng character. Magagawa ito gamit ang isang <meta> tag sa unang 1024 na byte ng HTML o sa header ng sagot ng HTTP na Uri ng Content. [Matuto pa](https://web.dev/charset)."
   },
   "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
     "message": "Walang na-declare na charset o sa bandang dulo na ng HTML lumilitaw"
@@ -798,7 +798,7 @@
     "message": "Hindi secure na URL"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
-    "message": "Dapat protektahan gamit ang HTTPS ang lahat ng site, kahit ang mga hindi nangangasiwa ng sensitibong data. Pinipigilan ng HTTPS ang mga nanghihimasok na makialam o tahimik na makinig sa mga pakikipag-ugnayan sa pagitan ng iyong app at mga user, at isa itong prerequisite para sa HTTP/2 at maraming bagong API ng web platform. [Matuto pa](https://web.dev/is-on-https)."
+    "message": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. This includes avoiding [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), where some resources are loaded over HTTP despite the initial request being servedover HTTPS. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more](https://web.dev/is-on-https)."
   },
   "lighthouse-core/audits/is-on-https.js | displayValue": {
     "message": "{itemCount,plural, =1{1 hindi secure na kahilingan ang nakita}one{# hindi secure na kahilingan ang nakita}other{# na hindi secure na kahilingan ang nakita}}"
@@ -808,6 +808,24 @@
   },
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Gumagamit ng HTTPS"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
+    "message": "This is the element that was identified as the Largest Contentful Paint. [Learn More](https://web.dev/lighthouse-largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
+    "message": "{itemCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
+  },
+  "lighthouse-core/audits/largest-contentful-paint-element.js | title": {
+    "message": "Largest Contentful Paint element"
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | description": {
+    "message": "These DOM elements contribute most to the CLS of the page."
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
+    "message": "{nodeCount, plural,\n    =0 {No elements found}\n    =1 {1 element found}\n    other {# elements found}\n    }"
+  },
+  "lighthouse-core/audits/layout-shift-elements.js | title": {
+    "message": "Avoid large layout shifts"
   },
   "lighthouse-core/audits/legacy-javascript.js | description": {
     "message": "Nagbibigay-daan ang mga polyfill at transform na magamit ng mga legacy na browser ang mga bagong feature ng JavaScript. Gayunpaman, marami ang hindi kinakailangan para sa mga modernong browser. Para sa iyong naka-bundle na JavaScript, gumamit ng modernong diskarte sa deployment ng script gamit ang pag-detect ng feature na module/nomodule para mabawasan ang dami ng code na ipinapadala sa mga modernong browser, habang pinapanatili ang suporta para sa mga legacy na browser. [Matuto Pa](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
@@ -864,7 +882,7 @@
     "message": "Mukhang hindi nagba-block sa network ang mga transition ng page"
   },
   "lighthouse-core/audits/maskable-icon.js | description": {
-    "message": "Tinitiyak ng nama-mask na icon na nasasakop ng larawan ang buong hugis nang hindi nagiging naka-letterbox habang ini-install ang app sa isang device. [Matuto pa](https://web.dev/maskable-icon/)."
+    "message": "Tinitiyak ng nama-mask na icon na nasasakop ng larawan ang buong hugis nang hindi nagiging naka-letterbox habang ini-install ang app sa isang device. [Matuto pa](https://web.dev/maskable-icon-audit/)."
   },
   "lighthouse-core/audits/maskable-icon.js | failureTitle": {
     "message": "Walang nama-mask na icon ang manifest"
@@ -1109,6 +1127,18 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Angkop ang laki ng mga target ng pag-tap"
   },
+  "lighthouse-core/audits/server-response-time.js | description": {
+    "message": "Keep the server response time for the main document short because all other requests depend on it. [Learn more](https://web.dev/time-to-first-byte)."
+  },
+  "lighthouse-core/audits/server-response-time.js | displayValue": {
+    "message": "Inabot nang {timeInMs, number, milliseconds} ms ang root na dokumento"
+  },
+  "lighthouse-core/audits/server-response-time.js | failureTitle": {
+    "message": "Reduce initial server response time"
+  },
+  "lighthouse-core/audits/server-response-time.js | title": {
+    "message": "Initial server response time was short"
+  },
   "lighthouse-core/audits/service-worker.js | description": {
     "message": "Ang service worker ay ang teknolohiyang nagbibigay-daan sa iyong app na gumamit ng maraming feature ng Progressive Web App, gaya ng offline, pagdaragdag sa homescreen, at mga push notification. [Matuto pa](https://web.dev/service-worker)."
   },
@@ -1310,8 +1340,20 @@
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Mga talahanayan at listahan"
   },
+  "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
+    "message": "Compatibility ng Browser"
+  },
   "lighthouse-core/config/default-config.js | bestPracticesCategoryTitle": {
     "message": "Pinakamahuhusay na Kagawian"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesGeneralGroupTitle": {
+    "message": "Pangkalahatan"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesTrustSafetyGroupTitle": {
+    "message": "Tiwala at Kaligtasan"
+  },
+  "lighthouse-core/config/default-config.js | bestPracticesUXGroupTitle": {
+    "message": "Karanasan ng User"
   },
   "lighthouse-core/config/default-config.js | budgetsGroupDescription": {
     "message": "Nagtatakda ng mga pamantayan para sa performance ng iyong site ang mga badyet ng performance."
@@ -1320,7 +1362,7 @@
     "message": "Mga Badyet"
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": {
-    "message": "Higit pang impormasyon tungkol sa performance ng iyong application. Ang mga numerong ito ay hindi [direktang makakaapekto ](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) sa score sa Performance."
+    "message": "Higit pang impormasyon tungkol sa performance ng iyong application. Ang mga numerong ito ay hindi [direktang makakaapekto ](https://web.dev/performance-scoring/) sa score sa Performance."
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupTitle": {
     "message": "Mga Diagnostic"
@@ -1332,7 +1374,7 @@
     "message": "Mga Pagpapahusay sa First Paint"
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupDescription": {
-    "message": "Puwedeng makatulong ang mga suhestyon na ito na mapabilis ang pag-load ng iyong page. Hindi [direktang nakakaapekto](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) ang mga ito sa score sa Performance."
+    "message": "Puwedeng makatulong ang mga suhestyon na ito na mapabilis ang pag-load ng iyong page. Hindi [direktang nakakaapekto](https://web.dev/performance-scoring/) ang mga ito sa score sa Performance."
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupTitle": {
     "message": "Mga Pagkakataon"
@@ -1402,6 +1444,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL ng Cache"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnElement": {
+    "message": "Elemento"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "Lokasyon"
@@ -1565,6 +1610,9 @@
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Ipakita ang mga pag-audit"
   },
+  "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
+    "message": "See calculator."
+  },
   "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
     "message": "Unang Navigation"
   },
@@ -1683,7 +1731,7 @@
     "message": "May mga isyung nakakaapekto sa pagpapatakbong ito ng Lighthouse:"
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
-    "message": "Tinantya at puwedeng mag-iba ang mga value. [Batay lang sa mga sukatang ito ](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) ang score sa performance."
+    "message": "Values are estimated and may vary. The [performance score is calculated](https://web.dev/performance-scoring/) directly from these metrics."
   },
   "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
     "message": "Pumasa sa mga pag-audit ngunit may mga babala"
@@ -1739,6 +1787,9 @@
   "stack-packs/packs/magento.js | offscreen_images": {
     "message": "Pag-isipang baguhin ang iyong mga template ng produkto at catalog para magamit ang feature na [pag-lazy load](https://web.dev/native-lazy-loading) ng web platform."
   },
+  "stack-packs/packs/magento.js | server_response_time": {
+    "message": "Gamitin ang [pagsasama ng Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) ng Magento."
+  },
   "stack-packs/packs/magento.js | unminified_css": {
     "message": "I-enable ang opsyong \"Paliitin ang Mga CSS File\" sa mga setting ng Developer ng iyong store. [Matuto pa](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
@@ -1766,6 +1817,9 @@
   "stack-packs/packs/react.js | redirects": {
     "message": "Kung gumagamit ka ng Router ng React, bawasan ang paggamit ng bahaging `<Redirect>` para sa [mga pag-navigate sa ruta](https://reacttraining.com/react-router/web/api/Redirect)."
   },
+  "stack-packs/packs/react.js | server_response_time": {
+    "message": "Kung may nire-render ka sa server-side na anumang bahagi ng React, pag-isipang gamitin ang `renderToNodeStream()` o `renderToStaticNodeStream()` para payagan ang client na makatanggap at mag-hydrate ng iba't ibang bahagi ng markup sa halip na sabay-sabay. [Matuto pa](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
   "stack-packs/packs/react.js | unminified_css": {
     "message": "Kung awtomatikong pinapaliit ng system ng build ang iyong mga CSS file, tiyaking ide-deploy mo ang build ng produksyon ng iyong application. Puwede mo itong suriin sa pamamagitan ng extension na Mga Tool ng Developer ng React. [Matuto pa](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -1786,6 +1840,9 @@
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "May ilang plugin sa WordPress na makakatulong sa iyong [i-inline ang mahahalagang asset](https://wordpress.org/plugins/search/critical+css/) o [ipagpaliban ang hindi masyadong mahahalagang resource](https://wordpress.org/plugins/search/defer+css+javascript/). Tandaang puwedeng makasira sa mga feature ng iyong tema o mga plugin ang mga pag-optimize na mula sa mga plugin na ito, kaya malamang na kakailanganin mong gumawa ng mga pagbabago sa code."
+  },
+  "stack-packs/packs/wordpress.js | server_response_time": {
+    "message": "Nakakaapekto ang mga tema, plugin, at detalye ng server sa oras ng pagtugon ng server. Pag-isipang maghanap ng mas naka-optimize na tema, maingat na pumili ng plugin sa pag-optimize, at/o i-upgrade ang iyong server."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Pag-isipang magpakita ng mga sipi sa iyong mga listahan ng post (hal. sa pamamagitan ng tag na higit pa), bawasan ang bilang ng post na ipinapakita sa isang page, hatiin ang mahahaba mong post sa maraming page, o gumamit ng plugin sa mga lazy-load na komento."
