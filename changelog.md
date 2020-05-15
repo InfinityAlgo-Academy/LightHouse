@@ -1,3 +1,174 @@
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+AndreasKubasa <55059012+AndreasKubasa@users.noreply.github.com>
+Catalin Rosu <redmaniack@gmail.com>
+François Beaufort <beaufort.francois@gmail.com>
+Jan Nicklas <j.nicklas@me.com>
+Kiko Beats <josefrancisco.verdu@gmail.com>
+Roland Burrows <rolandnburrows@gmail.com>
+Sebastian Kreft <sk-@users.noreply.github.com>
+Warren Maresca <warrengm@google.com>
+baseeee <13604740+baseeee@users.noreply.github.com>
+kmanuel <kruisz88@gmail.com>
+nxqamar <nabilqamar@gmail.com>
+ <a name="6.0.0"></a>
+# 6.0.0 (2020-05-14)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v6.0.0-beta.0...v6.0.0)
+
+~~ TODO: https://chromiumdash.appspot.com/schedule ~~
+We expect this release to ship in the DevTools of Chrome XX.
+
+## Notable Changes
+~~ TODO: Move notable changes here ~~
+
+
+## New Audits
+
+* check images are big enough ([c8b7163](https://github.com/GoogleChrome/lighthouse/commit/c8b7163))
+
+## Core
+
+* add desktop score curves for TBT and LCP ([#10756](https://github.com/GoogleChrome/lighthouse/pull/10756))
+* a11y: ensure errors can be serialized properly ([#10646](https://github.com/GoogleChrome/lighthouse/pull/10646))
+* audits: mention <div> is allowed to group content in <dl> ([#10479](https://github.com/GoogleChrome/lighthouse/pull/10479))
+* audits: remove audio-caption accessibility audit ([#10453](https://github.com/GoogleChrome/lighthouse/pull/10453))
+* budgets: support CLS and LCP budgets ([#10579](https://github.com/GoogleChrome/lighthouse/pull/10579))
+* charset: add description link to web.dev guide ([#10689](https://github.com/GoogleChrome/lighthouse/pull/10689))
+* emulation: keep DPR at 2.625 for mobile emulation ([#10749](https://github.com/GoogleChrome/lighthouse/pull/10749))
+* surface top CLS elements in a diagnostic audit ([#10702](https://github.com/GoogleChrome/lighthouse/pull/10702))
+* cls: shorten description ([#10570](https://github.com/GoogleChrome/lighthouse/pull/10570))
+* driver: use last frameNavigated event to determine finalUrl ([#10339](https://github.com/GoogleChrome/lighthouse/pull/10339))
+* driver: add run warning on page load timeout ([#10538](https://github.com/GoogleChrome/lighthouse/pull/10538))
+* driver: pause after FCP event before resolving load ([#10505](https://github.com/GoogleChrome/lighthouse/pull/10505))
+* ImageElements: add usesPixelArtScaling and usesSrcSetDensityDescriptor properties ([#10481](https://github.com/GoogleChrome/lighthouse/pull/10481))
+* is-on-https: add Mixed Content verbiage to description ([#10712](https://github.com/GoogleChrome/lighthouse/pull/10712))
+* lantern: improve LCP tail error ([#10529](https://github.com/GoogleChrome/lighthouse/pull/10529))
+* lantern: add edges from initiatorRequest when there are duplicate records ([#10097](https://github.com/GoogleChrome/lighthouse/pull/10097))
+* lcp: remove todo, mark score curve points as official ([#10452](https://github.com/GoogleChrome/lighthouse/pull/10452))
+* legacy-javascript: use source maps ([#10564](https://github.com/GoogleChrome/lighthouse/pull/10564))
+* maskable-icon: update description link to new web.dev guide ([#10714](https://github.com/GoogleChrome/lighthouse/pull/10714))
+* mixed-content: delete preset and audit ([#10750](https://github.com/GoogleChrome/lighthouse/pull/10750))
+* report-generator: add url to CSV output ([#10656](https://github.com/GoogleChrome/lighthouse/pull/10656))
+* scoring: update CLS score curve - 0.25 is now failing ([2040079](https://github.com/GoogleChrome/lighthouse/commit/2040079))
+* ttfb: change name to server-response-time ([#10735](https://github.com/GoogleChrome/lighthouse/pull/10735))
+* assert.strict doesn't work in bundles ([#10733](https://github.com/GoogleChrome/lighthouse/pull/10733))
+* metrics: do not round CLS in output ([#10728](https://github.com/GoogleChrome/lighthouse/pull/10728))
+* offscreen-images: loosen to 3 viewports ([#10643](https://github.com/GoogleChrome/lighthouse/pull/10643))
+* resource-summary: rename size to transferSize ([#10700](https://github.com/GoogleChrome/lighthouse/pull/10700))
+* responsive-images: find offscreen images larger than viewport ([#10506](https://github.com/GoogleChrome/lighthouse/pull/10506))
+* runner: make LH.Audit.Context immutable ([#10555](https://github.com/GoogleChrome/lighthouse/pull/10555))
+* scoring: redefine log-normal curves with median and p10 points ([#10715](https://github.com/GoogleChrome/lighthouse/pull/10715))
+* unused-javascript: check for SourceMaps before trying to use ([#10634](https://github.com/GoogleChrome/lighthouse/pull/10634))
+* surface LCP element in a diagnostic audit ([#10517](https://github.com/GoogleChrome/lighthouse/pull/10517))
+* remove length check from csv report test ([#10675](https://github.com/GoogleChrome/lighthouse/pull/10675))
+* unused-javascript-summary computed artifact ([#10387](https://github.com/GoogleChrome/lighthouse/pull/10387))
+* delete unused driver.queryPermissionState() ([#10571](https://github.com/GoogleChrome/lighthouse/pull/10571))
+* include finished state on hidden network-requests audit ([#10530](https://github.com/GoogleChrome/lighthouse/pull/10530))
+* source-maps: workaround CORS for fetching maps ([#9459](https://github.com/GoogleChrome/lighthouse/pull/9459))
+* unused-javascript: update doc link to web.dev ([8821839](https://github.com/GoogleChrome/lighthouse/commit/8821839))
+* remove some dead code in driver.js ([#10491](https://github.com/GoogleChrome/lighthouse/pull/10491))
+
+## CLI
+
+* add support for multiple --chrome-flags ([6be44f0](https://github.com/GoogleChrome/lighthouse/commit/6be44f0))
+* experimental preset ([#10585](https://github.com/GoogleChrome/lighthouse/pull/10585))
+
+## Deps
+
+* lighthouse-plugin-publisher-ads@^1.1.0-beta.0 ([#10776](https://github.com/GoogleChrome/lighthouse/pull/10776))
+* snyk: update snyk snapshot ([#10771](https://github.com/GoogleChrome/lighthouse/pull/10771))
+* upgrade chrome-launcher@0.13.2 ([#10724](https://github.com/GoogleChrome/lighthouse/pull/10724))
+* upgrade yargs-parser to latest ([#10723](https://github.com/GoogleChrome/lighthouse/pull/10723))
+* bump third-party-web to 0.11.1 ([#10711](https://github.com/GoogleChrome/lighthouse/pull/10711))
+* axe-core: upgrade to 3.5.3 ([#10637](https://github.com/GoogleChrome/lighthouse/pull/10637))
+* upgrade chrome-launcher to 0.13.1 ([#10535](https://github.com/GoogleChrome/lighthouse/pull/10535))
+* snyk: update snyk snapshot ([#10670](https://github.com/GoogleChrome/lighthouse/pull/10670))
+* snyk: update snyk snapshot ([ec50812](https://github.com/GoogleChrome/lighthouse/commit/ec50812))
+* snyk: update snyk snapshot ([3641e19](https://github.com/GoogleChrome/lighthouse/commit/3641e19))
+* typescript: update to 3.8.3 ([#10461](https://github.com/GoogleChrome/lighthouse/pull/10461))
+* upgrade publisher ads ([2f3da7d](https://github.com/GoogleChrome/lighthouse/commit/2f3da7d))
+* snyk: update snyk snapshot ([#10531](https://github.com/GoogleChrome/lighthouse/pull/10531))
+* snyk: update snyk snapshot ([#10478](https://github.com/GoogleChrome/lighthouse/pull/10478))
+
+## Report
+
+* metrics: [revert] use css grid so metrics are aligned (#10695) ([#10778](https://github.com/GoogleChrome/lighthouse/pull/10778))
+* fix regression in report renderer for devtools ([#10773](https://github.com/GoogleChrome/lighthouse/pull/10773))
+* correctly handle CLS values of 0 for calc link ([#10767](https://github.com/GoogleChrome/lighthouse/pull/10767))
+* add device type and version to scorecalc link ([#10763](https://github.com/GoogleChrome/lighthouse/pull/10763))
+* link to calculator w/ values ([#10754](https://github.com/GoogleChrome/lighthouse/pull/10754))
+* metrics: use css grid so metrics are aligned ([#10695](https://github.com/GoogleChrome/lighthouse/pull/10695))
+* define monospace fontsize relative to report-font-size ([#10761](https://github.com/GoogleChrome/lighthouse/pull/10761))
+* improve color contrast of top-level errors ([#10636](https://github.com/GoogleChrome/lighthouse/pull/10636))
+* resource-summary: fix size heading key ([#10743](https://github.com/GoogleChrome/lighthouse/pull/10743))
+* link to updated scoring documentation ([#10725](https://github.com/GoogleChrome/lighthouse/pull/10725))
+* add Trust & Safety group under Best Practices ([#10623](https://github.com/GoogleChrome/lighthouse/pull/10623))
+* viewer: add option for loading from JSON ([#10608](https://github.com/GoogleChrome/lighthouse/pull/10608))
+* specify transfer or resource size for columns ([ae0f076](https://github.com/GoogleChrome/lighthouse/commit/ae0f076))
+* update table and inline code formatting ([#10437](https://github.com/GoogleChrome/lighthouse/pull/10437))
+
+## Clients
+
+* devtools: fix Runtime.cachedResources reference ([#10762](https://github.com/GoogleChrome/lighthouse/pull/10762))
+
+## I18n
+
+* import: new audits, dropdowns, and columns ([#10645](https://github.com/GoogleChrome/lighthouse/pull/10645))
+
+## Docs
+
+* lantern: add deep dive video ([#10546](https://github.com/GoogleChrome/lighthouse/pull/10546))
+* readme: fix small typo ([#10694](https://github.com/GoogleChrome/lighthouse/pull/10694))
+* readme: add variability and throttling to FAQ ([#10631](https://github.com/GoogleChrome/lighthouse/pull/10631))
+* readme: add seo guard entry to integrations ([#10609](https://github.com/GoogleChrome/lighthouse/pull/10609))
+* readme: add AwesomeTechStack to lighthouse integrations ([#10475](https://github.com/GoogleChrome/lighthouse/pull/10475))
+* readme: update PageSpeed Green in related projects ([42da38b](https://github.com/GoogleChrome/lighthouse/commit/42da38b))
+* scoring: update for v6; defer to web.dev for performance ([#10676](https://github.com/GoogleChrome/lighthouse/pull/10676))
+* scoring: update and refine scoring.md ([#10633](https://github.com/GoogleChrome/lighthouse/pull/10633))
+* add explainer on performance budgets ([#10542](https://github.com/GoogleChrome/lighthouse/pull/10542))
+* emphasize some points on what makes a good audit ([61207be](https://github.com/GoogleChrome/lighthouse/commit/61207be))
+* add link to gist for using lighthouse audits directly ([6330d77](https://github.com/GoogleChrome/lighthouse/commit/6330d77))
+* variability: expand on hardware recommendations ([69ef99d](https://github.com/GoogleChrome/lighthouse/commit/69ef99d))
+
+## Tests
+
+* use brfs when bundling smokehouse ([#10727](https://github.com/GoogleChrome/lighthouse/pull/10727))
+* ci: authenticate protoc download ([5ce1805](https://github.com/GoogleChrome/lighthouse/commit/5ce1805))
+* gh: increase cli test timeout to reduce flakes ([#10627](https://github.com/GoogleChrome/lighthouse/pull/10627))
+* smoke: fork pwa.rocks ([#10648](https://github.com/GoogleChrome/lighthouse/pull/10648))
+* use an observed throttlingMethod in budget tests ([#10625](https://github.com/GoogleChrome/lighthouse/pull/10625))
+* legacy-javascript: cache variants, check in lockfile, … ([#10568](https://github.com/GoogleChrome/lighthouse/pull/10568))
+* add all tests to GitHub workflow ([#10620](https://github.com/GoogleChrome/lighthouse/pull/10620))
+* use assert in strict assertion mode ([#10606](https://github.com/GoogleChrome/lighthouse/pull/10606))
+* remove protoc roundtrip check from update:sample-json ([#10557](https://github.com/GoogleChrome/lighthouse/pull/10557))
+* fix i18n-test bugs in Node 13 ([#10595](https://github.com/GoogleChrome/lighthouse/pull/10595))
+* smoke: use range for unused bytes expectations ([#10473](https://github.com/GoogleChrome/lighthouse/pull/10473))
+* smokehouse: loosen wastedMs for unused-javascript ([#10561](https://github.com/GoogleChrome/lighthouse/pull/10561))
+
+## Misc
+
+* .mailmap ([#10766](https://github.com/GoogleChrome/lighthouse/pull/10766))
+* drop trailing whitespace in css ([#10765](https://github.com/GoogleChrome/lighthouse/pull/10765))
+* scripts: fix devtools filename doublecheck ([#10758](https://github.com/GoogleChrome/lighthouse/pull/10758))
+* docs(readme) add wattspeed to the integrations ([#10745](https://github.com/GoogleChrome/lighthouse/pull/10745))
+* add comment to TraceElements artifact ([#10713](https://github.com/GoogleChrome/lighthouse/pull/10713))
+* build: don't let buildtracker fail the build ([#10718](https://github.com/GoogleChrome/lighthouse/pull/10718))
+* build: fix npm link issue ([#10682](https://github.com/GoogleChrome/lighthouse/pull/10682))
+* build: yarn unlink before linking ([#10583](https://github.com/GoogleChrome/lighthouse/pull/10583))
+* build: disable fail-fast on gh basics workflow ([#10551](https://github.com/GoogleChrome/lighthouse/pull/10551))
+* CI: also run GH workflow on pull_request ([#10622](https://github.com/GoogleChrome/lighthouse/pull/10622))
+* compare-runs: use execFile ([#10652](https://github.com/GoogleChrome/lighthouse/pull/10652))
+* lantern-collect: update gcp scripts ([#10663](https://github.com/GoogleChrome/lighthouse/pull/10663))
+* close variability issues to master issue ([#10658](https://github.com/GoogleChrome/lighthouse/pull/10658))
+* cleanup of audit-details type names ([#10603](https://github.com/GoogleChrome/lighthouse/pull/10603))
+* npmignore += timings-data/ ([#10584](https://github.com/GoogleChrome/lighthouse/pull/10584))
+* build: report to buildtracker on commit via ghactions ([6c9cee4](https://github.com/GoogleChrome/lighthouse/commit/6c9cee4))
+* compare-runs: category scores, url filter, sort abs.val ([#10526](https://github.com/GoogleChrome/lighthouse/pull/10526))
+* compare-runs: fix filter, allow for resume, reorganize output ([20e4bc7](https://github.com/GoogleChrome/lighthouse/commit/20e4bc7))
+* driver: rename ForFCP to ForFcp ([#10516](https://github.com/GoogleChrome/lighthouse/pull/10516))
+* ignore duplicate builds in lhci dogfood ([#10482](https://github.com/GoogleChrome/lighthouse/pull/10482))
+* rename license header to use Lighthouse Authors ([#10469](https://github.com/GoogleChrome/lighthouse/pull/10469))
+* add non-null annotations to keep internal lint happy ([#10454](https://github.com/GoogleChrome/lighthouse/pull/10454))
+
 
  <a name="6.0.0-beta.0"></a>
 # 6.0.0-beta.0 (2020-03-11)
