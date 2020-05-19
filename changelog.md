@@ -1,65 +1,62 @@
+<a name="6.0.0"></a>
 # 6.0.0 (2020-05-19)
 [Raw commit changelog](https://github.com/GoogleChrome/lighthouse/compare/v5.6.0...v6.0.0)
 
 We expect this release to ship in the DevTools of Chrome 84.
 
+## Notable changes
 
-## Notable Changes
+So many! See the [**Lighthouse 6.0: What's New** blog post](https://web.dev/lighthouse-whats-new-6.0/) for an in-depth look.
 
-Too many to count! **📖See the [Lighthouse 6.0 What's New blog post](https://web.dev/lighthouse-whats-new-6.0/)**
+## 🆕 New audits
 
+* [Largest Contentful Paint](https://web.dev/lighthouse-largest-contentful-paint/) (LCP) is a new metric that measures the time from navigation until the largest content element in the viewport is rendered ([#9905](https://github.com/GoogleChrome/lighthouse/pull/9905), [#10213](https://github.com/GoogleChrome/lighthouse/pull/10213), [#10452](https://github.com/GoogleChrome/lighthouse/pull/10452), [#10529](https://github.com/GoogleChrome/lighthouse/pull/10529)).
+   - `largest-contentful-paint-element` is a companion audit that gives information about which element triggered the LCP ([#10517](https://github.com/GoogleChrome/lighthouse/pull/10517), [#10713](https://github.com/GoogleChrome/lighthouse/pull/10713)).
+* [Cumulative Layout Shift](https://web.dev/cls/) (CLS) is a new metric that measures the amount of unexpected movement of content as a page loads ([#9037](https://github.com/GoogleChrome/lighthouse/pull/9037), [#10427](https://github.com/GoogleChrome/lighthouse/pull/10427), [#10495](https://github.com/GoogleChrome/lighthouse/pull/10495), [#10570](https://github.com/GoogleChrome/lighthouse/pull/10570), [#10728](https://github.com/GoogleChrome/lighthouse/pull/10728)).
+   - `layout-shift-elements` is another companion diagnostic that gives information about the elements that shifted as the page loaded ([#10702](https://github.com/GoogleChrome/lighthouse/pull/10702)).
+* `unused-javascript` is an audit that has been kicking around for some time but is only now turned on by default. It accounts for what JavaScript was loaded but never executed during page load and estimates the load time that could be saved via code splitting, dead code elimination, or judicious use of the delete key ([#9854](https://github.com/GoogleChrome/lighthouse/pull/9854)).
+* A PWA [`maskable-icon`](https://web.dev/maskable-icon-audit/) just looks better on your homescreen, so this new audit encourages you to have at least one available in your manifest ([#10370](https://github.com/GoogleChrome/lighthouse/pull/10370)).
+* `timing-budget` expands [budget assertions](https://github.com/GoogleChrome/lighthouse/blob/7e4fa55/docs/performance-budgets.md) to now be settable on all the performance metrics ([#9901](https://github.com/GoogleChrome/lighthouse/pull/9901), [#9925](https://github.com/GoogleChrome/lighthouse/pull/9925)).
+* The new [`charset`](https://web.dev/charset) audit ensures a proper character encoding for page content ([#10284](https://github.com/GoogleChrome/lighthouse/pull/10284), [#10389](https://github.com/GoogleChrome/lighthouse/pull/10389), [#10689](https://github.com/GoogleChrome/lighthouse/pull/10689)).
+* `image-size-responsive` checks that images have an aspect ratio and resolution that match well with how they are displayed on a page ([#10460](https://github.com/GoogleChrome/lighthouse/pull/10460)).
+* Updating to the latest version of `axe-core` has unlocked a number of new accessibility audits: [`aria-hidden-body`](https://web.dev/aria-hidden-body/), [`aria-hidden-focus`](https://web.dev/aria-hidden-focus/), [`aria-input-field-name`](https://web.dev/aria-input-field-name/), [`aria-toggle-field-name`](https://web.dev/aria-toggle-field-name/), [`duplicate-id-active`](https://web.dev/duplicate-id-active/), [`duplicate-id-aria`](https://web.dev/duplicate-id-aria/), [`form-field-multiple-labels`](https://web.dev/form-field-multiple-labels/), [`heading-order`](https://web.dev/heading-order/) ([#9798](https://github.com/GoogleChrome/lighthouse/pull/9798)).
 
-## 🆕New Audits
+## ⚗️ Experimental audits
 
-* pwa: maskable icon audit ([#10370](https://github.com/GoogleChrome/lighthouse/pull/10370))
-* add charset declaration audit ([#10284](https://github.com/GoogleChrome/lighthouse/pull/10284), [#10389](https://github.com/GoogleChrome/lighthouse/pull/10389), [#10689](https://github.com/GoogleChrome/lighthouse/pull/10689))
-* add cumulative layout shift metric ([#9037](https://github.com/GoogleChrome/lighthouse/pull/9037), [#10427](https://github.com/GoogleChrome/lighthouse/pull/10427), [#10495](https://github.com/GoogleChrome/lighthouse/pull/10495), [#10570](https://github.com/GoogleChrome/lighthouse/pull/10570), [#10728](https://github.com/GoogleChrome/lighthouse/pull/10728))
-   - surface top CLS elements in a diagnostic audit ([#10702](https://github.com/GoogleChrome/lighthouse/pull/10702))
-* check images are big enough ([#10460](https://github.com/GoogleChrome/lighthouse/pull/10460))
-* add new accessibility audits ([#9798](https://github.com/GoogleChrome/lighthouse/pull/9798))
-* add timing-budget audit ([#9901](https://github.com/GoogleChrome/lighthouse/pull/9901), [#9925](https://github.com/GoogleChrome/lighthouse/pull/9925))
-* add largest contentful paint to lantern and default config ([#9905](https://github.com/GoogleChrome/lighthouse/pull/9905), [#10213](https://github.com/GoogleChrome/lighthouse/pull/10213), [#10452](https://github.com/GoogleChrome/lighthouse/pull/10452), [#10529](https://github.com/GoogleChrome/lighthouse/pull/10529))
-   - surface LCP element in a diagnostic audit ([#10517](https://github.com/GoogleChrome/lighthouse/pull/10517), [#10713](https://github.com/GoogleChrome/lighthouse/pull/10713))
-* config: enable unused-javascript by default ([#9854](https://github.com/GoogleChrome/lighthouse/pull/9854))
+These audits are not yet part of the default Lighthouse experience, but they will provide performance advice based on analysis of a page's JavaScript bundles. They can be tested today on the command line with the `--preset=experimental` flag.
 
-
-## New Experimental Audits
-
-These audits are not yet part of the default Lighthouse experience, but they will be providing performance advice based on analysis of a page's JavaScript bundles. They can be tested today on the command line with the `--preset=experimental` flag.
-
-* duplicated-javascript: new audit ([#10314](https://github.com/GoogleChrome/lighthouse/pull/10314))
-* legacy-javascript: new audit ([#10303](https://github.com/GoogleChrome/lighthouse/pull/10303), [#10568](https://github.com/GoogleChrome/lighthouse/pull/10568))
-* legacy-javascript: use source maps ([#10564](https://github.com/GoogleChrome/lighthouse/pull/10564))
-* `unused-javascript`: augment audit insights with source maps when available ([#10090](https://github.com/GoogleChrome/lighthouse/pull/10090))
+* `legacy-javascript` rummages through your bundles looking for polyfills and bundler transforms that aren't necessary or are outdated ([#10303](https://github.com/GoogleChrome/lighthouse/pull/10303), [#10568](https://github.com/GoogleChrome/lighthouse/pull/10568), [#10564](https://github.com/GoogleChrome/lighthouse/pull/10564)).
+* `duplicated-javascript` also takes a dive through a page's JavaScript looking for code that has ended up duplicated within bundles or across multiple bundles ([#10314](https://github.com/GoogleChrome/lighthouse/pull/10314)).
+* `unused-javascript` now runs by default (as mentioned above), but when run under `experimental`, the audit can use source maps to show what _original_ source code was never run and could be postponed or eliminated ([#10090](https://github.com/GoogleChrome/lighthouse/pull/10090)).
 
 ## New contributors!
 
 Thanks to @TGiles, @roelfjan, @warrengm, @alexgreencode, @mikedijkstra, @egsweeny, @johnsampson, @jazyan, @b3none, @mattjared, @Malvoz, @Beytoven, @Munter, @msomji, @piotrzarycki, @awdltd, @mathiasbynens, @Carr1005, @staabm, @SphinxKnight, @sk-, @AndreasKubasa, @jantimon, @kmanuel, @Kikobeats, @RolandBurrows, @nxqamar, @catalinred, and @baseeee for their first contributions! So many!
 
-## TODO Breaking Changes
+## 💥 Breaking changes
 
-* Performance metric scores [have been reweighted](https://web.dev/performance-scoring/) to better reflect a user's loading experience ([#9949](https://github.com/GoogleChrome/lighthouse/pull/9949))
-* Metric score curves have been updated when running a desktop Lighthouse test to account for the faster connection and CPU ([#9911](https://github.com/GoogleChrome/lighthouse/pull/9911), [#10756](https://github.com/GoogleChrome/lighthouse/pull/10756))
-* `frameNavigated` events are now used to track redirects, which means JS redirects are now accounted for when determining the run's `finalUrl` ([#10339](https://github.com/GoogleChrome/lighthouse/pull/10339))
-* The emulated mobile device has moved from the Nexus 5x to the Moto G4 (but the existing DPR has been left unchanged) ([#10191](https://github.com/GoogleChrome/lighthouse/pull/10191), [#10749](https://github.com/GoogleChrome/lighthouse/pull/10749))
-* The `mixed-content` preset has been removed as it was not widely used and takes too long to be added to the default Lighthouse experience ([#10159](https://github.com/GoogleChrome/lighthouse/pull/10159), [#10750](https://github.com/GoogleChrome/lighthouse/pull/10750))
-* The `full` preset has been renamed `experimental` to signify that the code there may not be ready for running by default ([#9930](https://github.com/GoogleChrome/lighthouse/pull/9930), [#10311](https://github.com/GoogleChrome/lighthouse/pull/10311), [#10333](https://github.com/GoogleChrome/lighthouse/pull/10333), [#10585](https://github.com/GoogleChrome/lighthouse/pull/10585))
-* The emulated Chrome UA string has been updated to Chrome 80 ([#9967](https://github.com/GoogleChrome/lighthouse/pull/9967))
-* `installable-manifest`: icons in the Web app Manifest must be fetchable to be considered installable ([#10168](https://github.com/GoogleChrome/lighthouse/pull/10168), [#10320](https://github.com/GoogleChrome/lighthouse/pull/10320))
+* Performance metric scores [have been reweighted](https://web.dev/performance-scoring/) to better reflect a user's loading experience ([#9949](https://github.com/GoogleChrome/lighthouse/pull/9949)).
+* Metric score curves have been updated when running a desktop Lighthouse test to account for the faster connection and CPU ([#9911](https://github.com/GoogleChrome/lighthouse/pull/9911), [#10756](https://github.com/GoogleChrome/lighthouse/pull/10756)).
+* `frameNavigated` events are now used to track redirects, which means JS redirects are now accounted for when determining the run's `finalUrl` ([#10339](https://github.com/GoogleChrome/lighthouse/pull/10339)).
+* The emulated mobile device has moved from the Nexus 5x to the Moto G4 (but the existing DPR has been left unchanged) ([#10191](https://github.com/GoogleChrome/lighthouse/pull/10191), [#10749](https://github.com/GoogleChrome/lighthouse/pull/10749)).
+* The `mixed-content` preset has been removed as it was not widely used and takes too long to be added to the default Lighthouse experience ([#10159](https://github.com/GoogleChrome/lighthouse/pull/10159), [#10750](https://github.com/GoogleChrome/lighthouse/pull/10750)).
+* The `full` preset has been renamed `experimental` to signify that the code there may not be ready for running by default ([#9930](https://github.com/GoogleChrome/lighthouse/pull/9930), [#10311](https://github.com/GoogleChrome/lighthouse/pull/10311), [#10333](https://github.com/GoogleChrome/lighthouse/pull/10333), [#10585](https://github.com/GoogleChrome/lighthouse/pull/10585)).
+* The emulated Chrome UA string has been updated to Chrome 80 ([#9967](https://github.com/GoogleChrome/lighthouse/pull/9967)).
+* `installable-manifest`: icons in the Web app manifest must be fetchable to be considered installable ([#10168](https://github.com/GoogleChrome/lighthouse/pull/10168), [#10320](https://github.com/GoogleChrome/lighthouse/pull/10320))
 
-## TODO Breaking Changes for Programmatic users
+## 🤖💥 Breaking Changes for programmatic users
 
 These changes are unlikely to affect end users, but may be important if you are writing custom configs, plugins, or processing the Lighthouse JSON output.
 
-* `LH.Audit.Context` passed into audits is now treated as immutable. If code previously pushed to `context.LighthouseRunWarnings` to get a top-level warning, it should now pass that back in a `runWarnings` on the audit's product ([#10555](https://github.com/GoogleChrome/lighthouse/pull/10555))
-* `Audit.computeLogNormalScore` has been redefined to specify log-normal curves with median and p10 points (dropping the "point of diminishing returns"). Existing audits have been moved to this new definition so that no score curve changes should occur ([#10715](https://github.com/GoogleChrome/lighthouse/pull/10715))
-* config: `loadFailureMode` setting has been added to each pass to control behavior in case of page load failure. Previously this was implicitly controlled (e.g. no offline page available did not cause an error) ([#9987](https://github.com/GoogleChrome/lighthouse/pull/9987))
-* `resource-summary`: `details.items.size` has been renamed to `transferSize` for clarity ([#10700](https://github.com/GoogleChrome/lighthouse/pull/10700), [#10743](https://github.com/GoogleChrome/lighthouse/pull/10743))
-* `time-to-first-byte` has been renamed `server-response-time` to better reflect what is being measured ([#10735](https://github.com/GoogleChrome/lighthouse/pull/10735))
+* `LH.Audit.Context` passed into audits is now treated as immutable. If code previously pushed to `context.LighthouseRunWarnings` to get a top-level warning, it should now pass that back in `runWarnings` on the audit's product ([#10555](https://github.com/GoogleChrome/lighthouse/pull/10555)).
+* `Audit.computeLogNormalScore` has been redefined to specify log-normal curves with median and p10 points (dropping the "point of diminishing returns"). Existing audits have been moved to this new definition so that no score changes should occur ([#10715](https://github.com/GoogleChrome/lighthouse/pull/10715)).
+* A `loadFailureMode` setting has been added to `Config` passes to control behavior in case of page load failure. Previously this was implicitly controlled (e.g. no offline page available did not cause an error) ([#9987](https://github.com/GoogleChrome/lighthouse/pull/9987))
+* `time-to-first-byte` has been renamed `server-response-time` to better reflect what is being measured by the audit ([#10735](https://github.com/GoogleChrome/lighthouse/pull/10735)).
+* `resource-summary`: `details.items.size` has been renamed to `transferSize` for clarity ([#10700](https://github.com/GoogleChrome/lighthouse/pull/10700), [#10743](https://github.com/GoogleChrome/lighthouse/pull/10743)).
 
-## Core
+## 🧱 Core
 
-### Audit improvements, bug fixes, clarifications
+### Improvements, bug fixes, clarifications
 
 The following changes are considered to be bug fixes or updates to better match what was intended to be audited, but the changes may cause adjustments in audit scores or behavior.
 
@@ -91,7 +88,7 @@ The following changes are considered to be bug fixes or updates to better match 
 * `offline-start-url`: improve failure messages ([#9982](https://github.com/GoogleChrome/lighthouse/pull/9982))
 * update and fix links to docs in audit and stack-pack descriptions ([#9850](https://github.com/GoogleChrome/lighthouse/pull/9850), [#9863](https://github.com/GoogleChrome/lighthouse/pull/9863), [#10019](https://github.com/GoogleChrome/lighthouse/pull/10019), [#10069](https://github.com/GoogleChrome/lighthouse/pull/10069), [#10246](https://github.com/GoogleChrome/lighthouse/pull/10246), [#10496](https://github.com/GoogleChrome/lighthouse/pull/10496), [#10714](https://github.com/GoogleChrome/lighthouse/pull/10714))
 
-### New things for Programmatic users
+### New things for programmatic users
 
 * audit results now have a `numericUnit` property to specify the units for their `numericResult` ([#9979](https://github.com/GoogleChrome/lighthouse/pull/9979))
 * `ImageElements`: add `usesPixelArtScaling` and `usesSrcSetDensityDescriptor` properties ([#10481](https://github.com/GoogleChrome/lighthouse/pull/10481))
@@ -105,7 +102,7 @@ The following changes are considered to be bug fixes or updates to better match 
 * budgets: add `firstPartyHostnames` to the API ([#10105](https://github.com/GoogleChrome/lighthouse/pull/10105), [#10324](https://github.com/GoogleChrome/lighthouse/pull/10324))
 * budgets: remove unused `tolerance` property from API ([#9770](https://github.com/GoogleChrome/lighthouse/pull/9770))
 
-### Internal Refactors and improvements
+### Internal refactors and improvements
 
 * ensure `axe-core` errors are properly serialized ([#10646](https://github.com/GoogleChrome/lighthouse/pull/10646))
 * cleanup of `audit-details` type names ([#10603](https://github.com/GoogleChrome/lighthouse/pull/10603))
@@ -121,14 +118,14 @@ The following changes are considered to be bug fixes or updates to better match 
 * rename `GatherRunner.isPerfPass` for clarity ([#9896](https://github.com/GoogleChrome/lighthouse/pull/9896))
 * migrate to flattened Chrome DevTools Protocol ([#9783](https://github.com/GoogleChrome/lighthouse/pull/9783))
 
-## CLI
+## 💻 CLI
 
 * add support for multiple `--chrome-flags` ([#10607](https://github.com/GoogleChrome/lighthouse/pull/10607))
 * allow comma-separated values for `--output` ([#10188](https://github.com/GoogleChrome/lighthouse/pull/10188))
 * add `--chrome-ignore-default-flags` ([#10184](https://github.com/GoogleChrome/lighthouse/pull/10184))
 * allow `--extra-headers` as object ([#9962](https://github.com/GoogleChrome/lighthouse/pull/9962))
 
-## Report
+## 📔 Report
 
 * add "Trust and Safety" group in the Best Practices category ([#10623](https://github.com/GoogleChrome/lighthouse/pull/10623))
 * add link to score calculator populated with current metric scores ([#10754](https://github.com/GoogleChrome/lighthouse/pull/10754), [#10763](https://github.com/GoogleChrome/lighthouse/pull/10763), [#10773](https://github.com/GoogleChrome/lighthouse/pull/10773), [#10767](https://github.com/GoogleChrome/lighthouse/pull/10767))
@@ -157,7 +154,7 @@ The following changes are considered to be bug fixes or updates to better match 
 * viewer: add page and cursor styling to signal loading ([#10305](https://github.com/GoogleChrome/lighthouse/pull/10305), [#10348](https://github.com/GoogleChrome/lighthouse/pull/10348))
 * viewer: use new logo ([#9991](https://github.com/GoogleChrome/lighthouse/pull/9991), [#9999](https://github.com/GoogleChrome/lighthouse/pull/9999), [#10002](https://github.com/GoogleChrome/lighthouse/pull/10002))
 
-## Clients
+## 👥 Clients
 
 * retire extension; replace with PSI launcher ([#9193](https://github.com/GoogleChrome/lighthouse/pull/9193), [#9988](https://github.com/GoogleChrome/lighthouse/pull/9988), [#9989](https://github.com/GoogleChrome/lighthouse/pull/9989))
 * extension: add firefox support ([#10332](https://github.com/GoogleChrome/lighthouse/pull/10332))
@@ -168,7 +165,7 @@ The following changes are considered to be bug fixes or updates to better match 
 * devtools: include `lighthouse-plugin-publisher-ads` in bundle ([#9924](https://github.com/GoogleChrome/lighthouse/pull/9924), [#10583](https://github.com/GoogleChrome/lighthouse/pull/10583), [#10682](https://github.com/GoogleChrome/lighthouse/pull/10682))
 * devtools: update `roll-to-devtools` and track upstream changes ([#9942](https://github.com/GoogleChrome/lighthouse/pull/9942), [#10310](https://github.com/GoogleChrome/lighthouse/pull/10310), [#10036](https://github.com/GoogleChrome/lighthouse/pull/10036), [#10758](https://github.com/GoogleChrome/lighthouse/pull/10758), [#10762](https://github.com/GoogleChrome/lighthouse/pull/10762))
 
-## I18n
+## 🌍 i18n
 
 * new strings: audits, stack packs, headings, and corrections ([#9940](https://github.com/GoogleChrome/lighthouse/pull/9940), [#10244](https://github.com/GoogleChrome/lighthouse/pull/10244), [#10245](https://github.com/GoogleChrome/lighthouse/pull/10245), [#10645](https://github.com/GoogleChrome/lighthouse/pull/10645))
 * localize runtime settings and tools in report ([#9166](https://github.com/GoogleChrome/lighthouse/pull/9166))
@@ -202,7 +199,7 @@ The following changes are considered to be bug fixes or updates to better match 
 
 ## Tests
 
-* remove protoc roundtrip check from `yarn update:sample-json` ([#10557](https://github.com/GoogleChrome/lighthouse/pull/10557), [#10661](https://github.com/GoogleChrome/lighthouse/pull/10661))
+* remove protobuf roundtrip check (and local protobuf dev requirement) from `yarn update:sample-json` ([#10557](https://github.com/GoogleChrome/lighthouse/pull/10557), [#10661](https://github.com/GoogleChrome/lighthouse/pull/10661))
 * run CI tests on new github action ([#10418](https://github.com/GoogleChrome/lighthouse/pull/10418), [#10551](https://github.com/GoogleChrome/lighthouse/pull/10551), [#10620](https://github.com/GoogleChrome/lighthouse/pull/10620), [#10622](https://github.com/GoogleChrome/lighthouse/pull/10622), [#10627](https://github.com/GoogleChrome/lighthouse/pull/10627))
 * report to buildtracker on commit via CI github action ([#10550](https://github.com/GoogleChrome/lighthouse/pull/10550), [#10718](https://github.com/GoogleChrome/lighthouse/pull/10718))
 * lantern: update golden trace collection script and recollect them ([#9662](https://github.com/GoogleChrome/lighthouse/pull/9662), [#10129](https://github.com/GoogleChrome/lighthouse/pull/10129), [#10209](https://github.com/GoogleChrome/lighthouse/pull/10209), [#10279](https://github.com/GoogleChrome/lighthouse/pull/10279), [#10663](https://github.com/GoogleChrome/lighthouse/pull/10663))
@@ -258,13 +255,17 @@ The following changes are considered to be bug fixes or updates to better match 
 * remove `mkdirp` and `make-dir` for `fs.mkdir` ([#9858](https://github.com/GoogleChrome/lighthouse/pull/9858))
 * update snyk snapshot ([#10771](https://github.com/GoogleChrome/lighthouse/pull/10771), [#10670](https://github.com/GoogleChrome/lighthouse/pull/10670), [#10621](https://github.com/GoogleChrome/lighthouse/pull/10621), [#10559](https://github.com/GoogleChrome/lighthouse/pull/10559), [#10066](https://github.com/GoogleChrome/lighthouse/pull/10066), [#9929](https://github.com/GoogleChrome/lighthouse/pull/9929), [#10531](https://github.com/GoogleChrome/lighthouse/pull/10531), [#10478](https://github.com/GoogleChrome/lighthouse/pull/10478), [#10423](https://github.com/GoogleChrome/lighthouse/pull/10423), [#10163](https://github.com/GoogleChrome/lighthouse/pull/10163), [#9965](https://github.com/GoogleChrome/lighthouse/pull/9965))
 
-
  <a name="6.0.0-beta.0"></a>
 # 6.0.0-beta.0 (2020-03-11)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v5.6.0...v6.0.0-beta.0)
 
+This beta release will not ship in Chrome DevTools, but we'll ship the final 6.0 release.
 
-This was a preliminary release. Please see the final 6.0 changelog above.
+## Notable Changes
+* Brand new metrics and performance score calculation (seeking feedback)
+* Lots more, complete release notes brewing..
+
+See the [6.0.0 release notes](https://github.com/GoogleChrome/lighthouse/releases/tag/v6.0.0) for full changelog.
 
 <a name="5.6.0"></a>
 # 5.6.0 (2019-10-17)
