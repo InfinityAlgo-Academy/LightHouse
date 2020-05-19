@@ -777,13 +777,13 @@
     "message": "Expected size"
   },
   "lighthouse-core/audits/image-size-responsive.js | description": {
-    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive)."
+    "message": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/serve-responsive-images/)."
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Displays images with inappropriate size"
+    "message": "Serves images with low resolution"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Displays images with appropriate size"
+    "message": "Serves images with appropriate resolution"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://web.dev/installable-manifest)."

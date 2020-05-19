@@ -632,8 +632,8 @@
     },
     "image-size-responsive": {
       "id": "image-size-responsive",
-      "title": "Displays images with inappropriate size",
-      "description": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/image-size-responsive).",
+      "title": "Serves images with low resolution",
+      "description": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/serve-responsive-images/).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "details": {

@@ -777,13 +777,13 @@
     "message": "Êx́p̂éĉt́êd́ ŝíẑé"
   },
   "lighthouse-core/audits/image-size-responsive.js | description": {
-    "message": "Îḿâǵê ńât́ûŕâĺ d̂ím̂én̂śîón̂ś ŝh́ôúl̂d́ b̂é p̂ŕôṕôŕt̂íôńâĺ t̂ó t̂h́ê d́îśp̂ĺâý ŝíẑé âńd̂ t́ĥé p̂íx̂él̂ ŕât́îó t̂ó m̂áx̂ím̂íẑé îḿâǵê ćl̂ár̂ít̂ý. [L̂éâŕn̂ ḿôŕê](https://web.dev/image-size-responsive)."
+    "message": "Îḿâǵê ńât́ûŕâĺ d̂ím̂én̂śîón̂ś ŝh́ôúl̂d́ b̂é p̂ŕôṕôŕt̂íôńâĺ t̂ó t̂h́ê d́îśp̂ĺâý ŝíẑé âńd̂ t́ĥé p̂íx̂él̂ ŕât́îó t̂ó m̂áx̂ím̂íẑé îḿâǵê ćl̂ár̂ít̂ý. [L̂éâŕn̂ ḿôŕê](https://web.dev/serve-responsive-images/)."
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "D̂íŝṕl̂áŷś îḿâǵêś ŵít̂h́ îńâṕp̂ŕôṕr̂íât́ê śîźê"
+    "message": "Ŝér̂v́êś îḿâǵêś ŵít̂h́ l̂óŵ ŕêśôĺût́îón̂"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "D̂íŝṕl̂áŷś îḿâǵêś ŵít̂h́ âṕp̂ŕôṕr̂íât́ê śîźê"
+    "message": "Ŝér̂v́êś îḿâǵêś ŵít̂h́ âṕp̂ŕôṕr̂íât́ê ŕêśôĺût́îón̂"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "B̂ŕôẃŝér̂ś ĉán̂ ṕr̂óâćt̂ív̂él̂ý p̂ŕôḿp̂t́ ûśêŕŝ t́ô ád̂d́ ŷóûŕ âṕp̂ t́ô t́ĥéîŕ ĥóm̂éŝćr̂éêń, ŵh́îćĥ ćâń l̂éâd́ t̂ó ĥíĝh́êŕ êńĝáĝém̂én̂t́. [L̂éâŕn̂ ḿôŕê](https://web.dev/installable-manifest)."
