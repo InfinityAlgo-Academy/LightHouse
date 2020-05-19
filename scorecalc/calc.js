@@ -411,6 +411,8 @@ function _setPerfGaugeExplodey(wrapper, category) {
   });
 }
 
+var params = new URLSearchParams(location.hash.substr(1));
+
 function determineMinMax(metricId) {
   var metricScoring = scoring[metricId];
 
@@ -441,6 +443,13 @@ function determineMinMax(metricId) {
     max: max,
     step: step,
   };
+}
+
+/**
+ * @param {string} version
+ */
+function getMajorVersion(version) {
+  return version.split('.')[0];
 }
 
 var Metric = /*@__PURE__*/(function (Component) {
@@ -615,7 +624,7 @@ var ScoringGuide = /*@__PURE__*/(function (Component) {
 
     var title = h( 'h2', null, name );
     if (name === 'v6') {
-      title = h( 'h2', null, "v6", h( 'i', null, " ", h( 'a', { href: "https://github.com/GoogleChrome/lighthouse/releases/tag/v6.0.0-beta.0" }, "beta.0") ) );
+      title = h( 'h2', null, h( 'a', { href: "https://github.com/GoogleChrome/lighthouse/releases/tag/v6.0.0", target: "_blank" }, "v6") );
     }
 
     return h( 'form', { class: "wrapper" },
@@ -672,7 +681,6 @@ var App = /*@__PURE__*/(function (Component) {
   App.prototype.componentDidUpdate = function componentDidUpdate () {
     var this$1 = this;
 
-
     // debounce just a tad, as its noisy
     debounce(function (_) {
       var url = new URL(location.href);
@@ -689,9 +697,17 @@ var App = /*@__PURE__*/(function (Component) {
   };
 
   App.prototype.render = function render () {
+    var this$1 = this;
+
+    // URL can specify which versions we'll show. Default to 6 and 5.
+    var versions = params.has('version') ?
+      params.getAll('version').map(getMajorVersion) :
+      ['6', '5'];
+    var scoringGuides = versions.map(function (version) {
+      return h( ScoringGuide, { app: this$1, name: ("v" + version), values: this$1.state, weights: weights[("v" + version)] });
+    });
     return h( 'div', null,
-      h( ScoringGuide, { app: this, name: "v6", values: this.state, weights: weights.v6 }),
-      h( ScoringGuide, { app: this, name: "v5", values: this.state, weights: weights.v5 })
+      scoringGuides
     )
   };
 
@@ -707,7 +723,6 @@ function getInitialState() {
   }
 
   // Load from query string.
-  var params = new URLSearchParams(location.hash.substr(1));
   for (var [id$1, metric] of Object.entries(scoring)) {
     if (!params.has(metric.auditId)) { continue; }
     var value = Number(params.get(metric.auditId));
