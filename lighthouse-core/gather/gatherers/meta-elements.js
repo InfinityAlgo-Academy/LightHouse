@@ -6,7 +6,27 @@
 'use strict';
 
 const Gatherer = require('./gatherer.js');
-const getElementsInDocumentString = require('../../lib/page-functions.js').getElementsInDocumentString; // eslint-disable-line max-len
+const {getElementsInDocument} = require('../../lib/page-functions.js');
+
+/* istanbul ignore next */
+function collectMetaElements() {
+  const metas = /** @type {HTMLMetaElement[]} */ (getElementsInDocument('head meta'));
+  return metas.map(meta => {
+    /** @param {string} name */
+    const getAttribute = name => {
+      const attr = meta.attributes.getNamedItem(name);
+      if (!attr) return;
+      return attr.value;
+    };
+    return {
+      name: meta.name.toLowerCase(),
+      content: meta.content,
+      property: getAttribute('property'),
+      httpEquiv: meta.httpEquiv ? meta.httpEquiv.toLowerCase() : undefined,
+      charset: getAttribute('charset'),
+    };
+  });
+}
 
 class MetaElements extends Gatherer {
   /**
@@ -18,19 +38,10 @@ class MetaElements extends Gatherer {
 
     // We'll use evaluateAsync because the `node.getAttribute` method doesn't actually normalize
     // the values like access from JavaScript does.
-    return driver.evaluateAsync(`(() => {
-      ${getElementsInDocumentString};
-
-      return getElementsInDocument('head meta').map(meta => {
-        return {
-          name: meta.name.toLowerCase(),
-          content: meta.content,
-          property: meta.attributes.property ? meta.attributes.property.value : undefined,
-          httpEquiv: meta.httpEquiv ? meta.httpEquiv.toLowerCase() : undefined,
-          charset: meta.attributes.charset ? meta.attributes.charset.value : undefined,
-        };
-      });
-    })()`, {useIsolation: true});
+    return driver.evaluateAsync(collectMetaElements, {
+      useIsolation: true,
+      deps: [getElementsInDocument],
+    });
   }
 }
 

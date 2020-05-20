@@ -6,7 +6,33 @@
 // @ts-nocheck
 'use strict';
 
+/** @typedef {HTMLElementTagNameMap & {[id: string]: HTMLElement}} HTMLElementTagNameMapWithDefault */
+
 /* global window document Node ShadowRoot */
+
+/**
+ * @template T, R
+ * @param {(...args: T[]) => R} mainFn
+ * @param {{mode?: 'iffe'|'function', args?: T[], deps?: (Function|string)[]}} _
+ */
+function createEvalCode(mainFn, {mode, args, deps} = {}) {
+  const argsSerialized = args ? args.map(arg => JSON.stringify(arg)).join(',') : '';
+  const depsSerialized = deps ? deps.join('\n') : '';
+
+  if (!mode || mode === 'iffe') {
+    return `(() => {
+      ${depsSerialized}
+      ${mainFn}
+      return ${mainFn.name}(${argsSerialized});
+    })()`;
+  } else {
+    return `function () {
+      ${depsSerialized}
+      ${mainFn}
+      return ${mainFn.name}.call(this, ${argsSerialized});
+    }`;
+  }
+}
 
 /**
  * Helper functions that are passed by `toString()` by Driver to be evaluated in target page.
@@ -78,9 +104,10 @@ function checkTimeSinceLastLongTask() {
 }
 
 /**
- * @param {string=} selector Optional simple CSS selector to filter nodes on.
+ * @template {string} T
+ * @param {T} selector Optional simple CSS selector to filter nodes on.
  *     Combinators are not supported.
- * @return {Array<HTMLElement>}
+ * @return {Array<HTMLElementTagNameMapWithDefault[T]>}
  */
 /* istanbul ignore next */
 function getElementsInDocument(selector) {
@@ -304,14 +331,17 @@ function getNodeLabel(node) {
 }
 
 module.exports = {
+  createEvalCode,
   wrapRuntimeEvalErrorInBrowserString: wrapRuntimeEvalErrorInBrowser.toString(),
   registerPerformanceObserverInPageString: registerPerformanceObserverInPage.toString(),
   checkTimeSinceLastLongTaskString: checkTimeSinceLastLongTask.toString(),
+  getElementsInDocument,
   getElementsInDocumentString: getElementsInDocument.toString(),
   getOuterHTMLSnippetString: getOuterHTMLSnippet.toString(),
   getOuterHTMLSnippet: getOuterHTMLSnippet,
   ultradumbBenchmark: ultradumbBenchmark,
   ultradumbBenchmarkString: ultradumbBenchmark.toString(),
+  getNodePath,
   getNodePathString: getNodePath.toString(),
   getNodeSelectorString: getNodeSelector.toString(),
   getNodeSelector: getNodeSelector,

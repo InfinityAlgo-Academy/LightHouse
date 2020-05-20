@@ -423,11 +423,15 @@ class Driver {
    * will be evaluated in a content script that has access to the page's DOM but whose JavaScript state
    * is completely separate.
    * Returns a promise that resolves on the expression's value.
-   * @param {string} expression
-   * @param {{useIsolation?: boolean}=} options
-   * @return {Promise<*>}
+   * @template T, R
+   * @param {string | ((...args: T[]) => R)} expression
+   * @param {{useIsolation?: boolean, mode?: 'iffe'|'function', args?: T[], deps?: (Function|string)[]}=} options
+   * @return {Promise<R>}
    */
   async evaluateAsync(expression, options = {}) {
+    if (typeof expression !== 'string') {
+      expression = pageFunctions.createEvalCode(expression, options);
+    }
     const contextId = options.useIsolation ? await this._getOrCreateIsolatedContextId() : undefined;
 
     try {

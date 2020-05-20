@@ -11,10 +11,13 @@
  * We take the backend nodeId from the trace and use it to find the corresponding element in the DOM.
  */
 
+/* global document */
+
 const Gatherer = require('./gatherer.js');
-const pageFunctions = require('../../lib/page-functions.js');
 const TraceProcessor = require('../../lib/tracehouse/trace-processor.js');
 const RectHelpers = require('../../lib/rect-helpers.js');
+const {createEvalCode, getNodePath, getNodeSelector, getNodeLabel, getOuterHTMLSnippet} =
+  require('../../lib/page-functions.js');
 
 /**
  * @this {HTMLElement}
@@ -23,19 +26,16 @@ const RectHelpers = require('../../lib/rect-helpers.js');
  */
 /* istanbul ignore next */
 function setAttributeMarker(metricName) {
-  const elem = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement; // eslint-disable-line no-undef
+  const elem = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement;
   let traceElement;
   if (elem) {
+    const nodeLabel = getNodeLabel(elem);
     traceElement = {
       metricName,
-      // @ts-ignore - put into scope via stringification
-      devtoolsNodePath: getNodePath(elem), // eslint-disable-line no-undef
-      // @ts-ignore - put into scope via stringification
-      selector: getNodeSelector(elem), // eslint-disable-line no-undef
-      // @ts-ignore - put into scope via stringification
-      nodeLabel: getNodeLabel(elem), // eslint-disable-line no-undef
-      // @ts-ignore - put into scope via stringification
-      snippet: getOuterHTMLSnippet(elem), // eslint-disable-line no-undef
+      devtoolsNodePath: getNodePath(elem),
+      selector: getNodeSelector(elem),
+      nodeLabel: nodeLabel ? nodeLabel : undefined,
+      snippet: getOuterHTMLSnippet(elem),
     };
   }
   return traceElement;
@@ -138,16 +138,19 @@ class TraceElements extends Gatherer {
       const resolveNodeResponse =
         await driver.sendCommand('DOM.resolveNode', {backendNodeId: backendNodeIds[i]});
       const objectId = resolveNodeResponse.object.objectId;
+      // TODO(cjamcl): create driver.evaluateFunctionOn..
       const response = await driver.sendCommand('Runtime.callFunctionOn', {
         objectId,
-        functionDeclaration: `function () {
-          ${setAttributeMarker.toString()};
-          ${pageFunctions.getNodePathString};
-          ${pageFunctions.getNodeSelectorString};
-          ${pageFunctions.getNodeLabelString};
-          ${pageFunctions.getOuterHTMLSnippetString};
-          return setAttributeMarker.call(this, '${metricName}');
-        }`,
+        functionDeclaration: createEvalCode(setAttributeMarker, {
+          mode: 'function',
+          deps: [
+            getNodePath,
+            getNodeSelector,
+            getNodeLabel,
+            getOuterHTMLSnippet,
+          ],
+          args: [metricName],
+        }),
         returnByValue: true,
         awaitPromise: true,
       });

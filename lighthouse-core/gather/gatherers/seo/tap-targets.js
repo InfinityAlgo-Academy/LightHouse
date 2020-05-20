@@ -38,7 +38,7 @@ const tapTargetsSelector = TARGET_SELECTORS.join(',');
 
 /**
  * @param {HTMLElement} element
- * @returns {boolean}
+ * @return {boolean}
  */
 /* istanbul ignore next */
 function elementIsVisible(element) {
@@ -47,7 +47,7 @@ function elementIsVisible(element) {
 
 /**
  * @param {Element} element
- * @returns {LH.Artifacts.Rect[]}
+ * @return {LH.Artifacts.Rect[]}
  */
 /* istanbul ignore next */
 function getClientRects(element) {
@@ -69,17 +69,18 @@ function getClientRects(element) {
 
 /**
  * @param {Element} element
- * @returns {boolean}
+ * @param {string} tapTargetsSelector
+ * @return {boolean}
  */
 /* istanbul ignore next */
-function elementHasAncestorTapTarget(element) {
+function elementHasAncestorTapTarget(element, tapTargetsSelector) {
   if (!element.parentElement) {
     return false;
   }
   if (element.parentElement.matches(tapTargetsSelector)) {
     return true;
   }
-  return elementHasAncestorTapTarget(element.parentElement);
+  return elementHasAncestorTapTarget(element.parentElement, tapTargetsSelector);
 }
 
 /**
@@ -123,7 +124,7 @@ function hasTextNodeSiblingsFormingTextBlock(element) {
  * Makes a reasonable guess, but for example gets it wrong if the element is surrounded by other
  * HTML elements instead of direct text nodes.
  * @param {Element} element
- * @returns {boolean}
+ * @return {boolean}
  */
 /* istanbul ignore next */
 function elementIsInTextBlock(element) {
@@ -177,7 +178,7 @@ function elementCenterIsAtZAxisTop(el, elCenterPoint) {
 /**
  * Finds all position sticky/absolute elements on the page and adds a class
  * that disables pointer events on them.
- * @returns {() => void} - undo function to re-enable pointer events
+ * @return {() => void} - undo function to re-enable pointer events
  */
 /* istanbul ignore next */
 function disableFixedAndStickyElementPointerEvents() {
@@ -202,10 +203,11 @@ function disableFixedAndStickyElementPointerEvents() {
 }
 
 /**
- * @returns {LH.Artifacts.TapTarget[]}
+ * @param {string} tapTargetsSelector
+ * @return {LH.Artifacts.TapTarget[]}
  */
 /* istanbul ignore next */
-function gatherTapTargets() {
+function gatherTapTargets(tapTargetsSelector) {
   /** @type {LH.Artifacts.TapTarget[]} */
   const targets = [];
 
@@ -223,7 +225,7 @@ function gatherTapTargets() {
   const tapTargetsWithClientRects = [];
   tapTargetElements.forEach(tapTargetElement => {
     // Filter out tap targets that are likely to cause false failures:
-    if (elementHasAncestorTapTarget(tapTargetElement)) {
+    if (elementHasAncestorTapTarget(tapTargetElement, tapTargetsSelector)) {
       // This is usually intentional, either the tap targets trigger the same action
       // or there's a child with a related action (like a delete button for an item)
       return;
@@ -305,30 +307,28 @@ class TapTargets extends Gatherer {
    * @return {Promise<LH.Artifacts.TapTarget[]>} All visible tap targets with their positions and sizes
    */
   afterPass(passContext) {
-    const expression = `(function() {
-      const tapTargetsSelector = "${tapTargetsSelector}";
-      ${pageFunctions.getElementsInDocumentString};
-      ${disableFixedAndStickyElementPointerEvents.toString()};
-      ${elementIsVisible.toString()};
-      ${elementHasAncestorTapTarget.toString()};
-      ${elementCenterIsAtZAxisTop.toString()}
-      ${truncate.toString()};
-      ${getClientRects.toString()};
-      ${hasTextNodeSiblingsFormingTextBlock.toString()};
-      ${elementIsInTextBlock.toString()};
-      ${getRectArea.toString()};
-      ${getLargestRect.toString()};
-      ${getRectCenterPoint.toString()};
-      ${rectContains.toString()};
-      ${pageFunctions.getNodePathString};
-      ${pageFunctions.getNodeSelectorString};
-      ${pageFunctions.getNodeLabelString};
-      ${gatherTapTargets.toString()};
-
-      return gatherTapTargets();
-    })()`;
-
-    return passContext.driver.evaluateAsync(expression, {useIsolation: true});
+    return passContext.driver.evaluateAsync(gatherTapTargets, {
+      args: [tapTargetsSelector],
+      useIsolation: true,
+      deps: [
+        pageFunctions.getElementsInDocument,
+        disableFixedAndStickyElementPointerEvents,
+        elementIsVisible,
+        elementHasAncestorTapTarget,
+        elementCenterIsAtZAxisTop,
+        truncate,
+        getClientRects,
+        hasTextNodeSiblingsFormingTextBlock,
+        elementIsInTextBlock,
+        getRectArea,
+        getLargestRect,
+        getRectCenterPoint,
+        rectContains,
+        pageFunctions.getNodePath,
+        pageFunctions.getNodeSelectorString,
+        pageFunctions.getNodeLabelString,
+      ],
+    });
   }
 }
 

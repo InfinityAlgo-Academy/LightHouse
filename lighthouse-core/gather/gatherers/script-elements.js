@@ -8,19 +8,15 @@
 const Gatherer = require('./gatherer.js');
 const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
 const NetworkRequest = require('../../lib/network-request.js');
-const getElementsInDocumentString = require('../../lib/page-functions.js').getElementsInDocumentString; // eslint-disable-line max-len
+const {getElementsInDocument, getNodePath} = require('../../lib/page-functions.js');
 const pageFunctions = require('../../lib/page-functions.js');
-
-/* global getNodePath */
 
 /**
  * @return {LH.Artifacts['ScriptElements']}
  */
 /* istanbul ignore next */
-function collectAllScriptElements() {
-  /** @type {HTMLScriptElement[]} */
-  // @ts-ignore - getElementsInDocument put into scope via stringification
-  const scripts = getElementsInDocument('script'); // eslint-disable-line no-undef
+function collectScriptElements() {
+  const scripts = getElementsInDocument('script');
 
   return scripts.map(script => {
     return {
@@ -30,7 +26,6 @@ function collectAllScriptElements() {
       async: script.async,
       defer: script.defer,
       source: /** @type {'head'|'body'} */ (script.closest('head') ? 'head' : 'body'),
-      // @ts-ignore - getNodePath put into scope via stringification
       devtoolsNodePath: getNodePath(script),
       content: script.src ? null : script.text,
       requestId: null,
@@ -72,12 +67,13 @@ class ScriptElements extends Gatherer {
     const driver = passContext.driver;
     const mainResource = NetworkAnalyzer.findMainDocument(loadData.networkRecords, passContext.url);
 
-    /** @type {LH.Artifacts['ScriptElements']} */
-    const scripts = await driver.evaluateAsync(`(() => {
-      ${getElementsInDocumentString}
-      ${pageFunctions.getNodePathString};
-      return (${collectAllScriptElements.toString()})();
-    })()`, {useIsolation: true});
+    const scripts = await driver.evaluateAsync(collectScriptElements, {
+      useIsolation: true,
+      deps: [
+        getElementsInDocument,
+        pageFunctions.getNodePathString,
+      ],
+    });
 
     for (const script of scripts) {
       if (script.content) script.requestId = mainResource.requestId;

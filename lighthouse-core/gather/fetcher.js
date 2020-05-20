@@ -156,7 +156,8 @@ class Fetcher {
       document.body.appendChild(iframe);
     }
 
-    await this.driver.evaluateAsync(`${injectIframe}(${JSON.stringify(url)})`, {
+    await this.driver.evaluateAsync(injectIframe, {
+      args: [url],
       useIsolation: true,
     });
 

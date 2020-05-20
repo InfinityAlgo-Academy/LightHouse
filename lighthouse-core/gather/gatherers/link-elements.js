@@ -9,7 +9,7 @@ const Gatherer = require('./gatherer.js');
 const URL = require('../../lib/url-shim.js').URL;
 const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
 const LinkHeader = require('http-link-header');
-const {getElementsInDocumentString} = require('../../lib/page-functions.js');
+const {getElementsInDocument} = require('../../lib/page-functions.js');
 
 /* globals HTMLLinkElement */
 
@@ -48,9 +48,7 @@ function getCrossoriginFromHeader(value) {
  */
 /* istanbul ignore next */
 function getLinkElementsInDOM() {
-  /** @type {Array<HTMLOrSVGElement>} */
-  // @ts-ignore - getElementsInDocument put into scope via stringification
-  const browserElements = getElementsInDocument('link'); // eslint-disable-line no-undef
+  const browserElements = getElementsInDocument('link');
   /** @type {LH.Artifacts['LinkElements']} */
   const linkElements = [];
 
@@ -81,12 +79,10 @@ class LinkElements extends Gatherer {
   static getLinkElementsInDOM(passContext) {
     // We'll use evaluateAsync because the `node.getAttribute` method doesn't actually normalize
     // the values like access from JavaScript does.
-    return passContext.driver.evaluateAsync(`(() => {
-      ${getElementsInDocumentString};
-      ${getLinkElementsInDOM};
-
-      return getLinkElementsInDOM();
-    })()`, {useIsolation: true});
+    return passContext.driver.evaluateAsync(getLinkElementsInDOM, {
+      useIsolation: true,
+      deps: [getElementsInDocument],
+    });
   }
 
   /**
