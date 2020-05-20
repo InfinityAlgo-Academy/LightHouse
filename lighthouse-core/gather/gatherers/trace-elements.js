@@ -16,7 +16,7 @@
 const Gatherer = require('./gatherer.js');
 const TraceProcessor = require('../../lib/tracehouse/trace-processor.js');
 const RectHelpers = require('../../lib/rect-helpers.js');
-const {createEvalCode, getNodePath, getNodeSelector, getNodeLabel, getOuterHTMLSnippet} =
+const {getNodePath, getNodeSelector, getNodeLabel, getOuterHTMLSnippet} =
   require('../../lib/page-functions.js');
 
 /**
@@ -138,11 +138,11 @@ class TraceElements extends Gatherer {
       const resolveNodeResponse =
         await driver.sendCommand('DOM.resolveNode', {backendNodeId: backendNodeIds[i]});
       const objectId = resolveNodeResponse.object.objectId;
-      // TODO(cjamcl): create driver.evaluateFunctionOn..
-      const response = await driver.sendCommand('Runtime.callFunctionOn', {
-        objectId,
-        functionDeclaration: createEvalCode(setAttributeMarker, {
-          mode: 'function',
+      if (!objectId) continue;
+
+      try {
+        const element = await driver.evaluateFunctionOnObject(setAttributeMarker, {
+          objectId,
           deps: [
             getNodePath,
             getNodeSelector,
@@ -150,14 +150,9 @@ class TraceElements extends Gatherer {
             getOuterHTMLSnippet,
           ],
           args: [metricName],
-        }),
-        returnByValue: true,
-        awaitPromise: true,
-      });
-
-      if (response && response.result && response.result.value) {
-        traceElements.push(response.result.value);
-      }
+        });
+        if (element) traceElements.push(element);
+      } catch (_) {}
     }
 
     return traceElements;

@@ -419,20 +419,85 @@ class Driver {
   }
 
   /**
+   * Deprecated: renamed to `evaluate`.
+   * @param {string} expression
+   * @param {{useIsolation?: boolean}=} options
+   * @return {Promise<*>}
+   */
+  async evaluateAsync(expression, options = {}) {
+    return this.evaluate(expression, options);
+  }
+
+  /**
    * Evaluate an expression in the context of the current page. If useIsolation is true, the expression
    * will be evaluated in a content script that has access to the page's DOM but whose JavaScript state
    * is completely separate.
    * Returns a promise that resolves on the expression's value.
+   * See the documentation for `createEvalCode` in `page-functions.js`.
    * @template T, R
-   * @param {string | ((...args: T[]) => R)} expression
-   * @param {{useIsolation?: boolean, mode?: 'iffe'|'function', args?: T[], deps?: (Function|string)[]}=} options
+   * @param {string | ((...args: T[]) => R)} expressionOrMainFn
+   * @param {{useIsolation?: boolean, args?: T[], deps?: (Function|string)[]}=} options
    * @return {Promise<R>}
    */
-  async evaluateAsync(expression, options = {}) {
-    if (typeof expression !== 'string') {
-      expression = pageFunctions.createEvalCode(expression, options);
+  async evaluate(expressionOrMainFn, options = {}) {
+    if (typeof expressionOrMainFn !== 'string') {
+      expressionOrMainFn = pageFunctions.createEvalCode(expressionOrMainFn, {mode: 'iffe', ...options});
     }
-    const contextId = options.useIsolation ? await this._getOrCreateIsolatedContextId() : undefined;
+    return this._evaluate(expressionOrMainFn, options);
+  }
+
+  /**
+   * Evaluate a statement in the context of a JavaScript object on the current page.
+   * Returns a promise that resolves on the expression's value.
+   * See the documentation for `createEvalCode` in `page-functions.js`.
+   * @template T, R
+   * @param {string | ((...args: T[]) => R)} statementOrMainFn
+   * @param {{objectId: string, args?: T[], deps?: (Function|string)[]}} options
+   * @return {Promise<R>}
+   */
+  async evaluateFunctionOnObject(statementOrMainFn, options) {
+    if (typeof statementOrMainFn !== 'string') {
+      statementOrMainFn = pageFunctions.createEvalCode(statementOrMainFn, {
+        mode: 'function',
+        ...options,
+      });
+    }
+
+    const response = await this.sendCommand('Runtime.callFunctionOn', {
+      objectId: options.objectId,
+      functionDeclaration: statementOrMainFn,
+      returnByValue: true,
+      awaitPromise: true,
+    });
+
+    if (response.exceptionDetails) {
+      // An error occurred before we could even create a Promise, should be *very* rare.
+      // Also occurs when the expression is not valid JavaScript.
+      const errorMessage = response.exceptionDetails.exception ?
+        response.exceptionDetails.exception.description :
+        response.exceptionDetails.text;
+      return Promise.reject(new Error(`Evaluation exception: ${errorMessage}`));
+    }
+
+    // TODO: check if __failedInBrowser happens here too.
+    if (response && response.result && response.result.value) {
+      return response.result.value;
+    }
+    return Promise.reject();
+  }
+
+  /**
+   * Evaluate an expression in the context of the current page. If useIsolation is true, the expression
+   * will be evaluated in a content script that has access to the page's DOM but whose JavaScript state
+   * is completely separate.
+   * Returns a promise that resolves on the expression's value.
+   * @param {string} expression
+   * @param {{useIsolation?: boolean}} options
+   * @return {Promise<*>}
+   */
+  async _evaluate(expression, options) {
+    const contextId =
+      options.useIsolation ? await this._getOrCreateIsolatedContextId() : undefined;
 
     try {
       // `await` is not redundant here because we want to `catch` the async errors

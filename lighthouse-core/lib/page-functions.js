@@ -11,9 +11,14 @@
 /* global window document Node ShadowRoot */
 
 /**
+ * Creates valid JavaScript code given functions, strings of valid code, and arguments.
  * @template T, R
- * @param {(...args: T[]) => R} mainFn
- * @param {{mode?: 'iffe'|'function', args?: T[], deps?: (Function|string)[]}} _
+ * @param {(...args: T[]) => R} mainFn The main function to call. It's return value will be the return value
+ * of `createEvalCode`, wrapped in a Promise.
+ * @param {{mode?: 'iffe'|'function', args?: T[], deps?: (Function|string)[]}} _ Set mode to `iffe` to create a self-
+ * executing function expression, set to `function` to create just a function declaration statement. Args should match
+ * the args of `mainFn`, and can be any serializable value. `deps` are functions or string of valid code that must be
+ * defined for `mainFn` to work.
  */
 function createEvalCode(mainFn, {mode, args, deps} = {}) {
   const argsSerialized = args ? args.map(arg => JSON.stringify(arg)).join(',') : '';
