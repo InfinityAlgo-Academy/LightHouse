@@ -6,7 +6,7 @@
 // @ts-nocheck
 'use strict';
 
-/** @typedef {HTMLElementTagNameMap & {[id: string]: HTMLElement}} HTMLElementTagNameMapWithDefault */
+/** @typedef {HTMLElementTagNameMap & {[id: string]: HTMLElement}} HTMLElementByTagName */
 
 /* global window document Node ShadowRoot */
 
@@ -107,7 +107,7 @@ function checkTimeSinceLastLongTask() {
  * @template {string} T
  * @param {T} selector Optional simple CSS selector to filter nodes on.
  *     Combinators are not supported.
- * @return {Array<HTMLElementTagNameMapWithDefault[T]>}
+ * @return {Array<HTMLElementByTagName[T]>}
  */
 /* istanbul ignore next */
 function getElementsInDocument(selector) {
