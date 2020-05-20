@@ -436,7 +436,7 @@ class Driver {
    * See the documentation for `createEvalCode` in `page-functions.js`.
    * @template T, R
    * @param {string | ((...args: T[]) => R)} expressionOrMainFn
-   * @param {{useIsolation?: boolean, args?: T[], deps?: (Function|string)[]}=} options
+   * @param {{useIsolation?: boolean, args?: T[], deps?: Function[]}=} options
    * @return {Promise<R>}
    */
   async evaluate(expressionOrMainFn, options = {}) {
@@ -452,7 +452,7 @@ class Driver {
    * See the documentation for `createEvalCode` in `page-functions.js`.
    * @template T, R
    * @param {string | ((...args: T[]) => R)} statementOrMainFn
-   * @param {{objectId: string, args?: T[], deps?: (Function|string)[]}} options
+   * @param {{objectId: string, args?: T[], deps?: Function[]}} options
    * @return {Promise<R>}
    */
   async evaluateFunctionOnObject(statementOrMainFn, options) {

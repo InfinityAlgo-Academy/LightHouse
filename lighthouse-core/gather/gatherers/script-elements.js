@@ -71,7 +71,7 @@ class ScriptElements extends Gatherer {
       useIsolation: true,
       deps: [
         getElementsInDocument,
-        pageFunctions.getNodePathString,
+        pageFunctions.getNodePath,
       ],
     });
 

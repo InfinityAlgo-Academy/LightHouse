@@ -325,8 +325,8 @@ class TapTargets extends Gatherer {
         getRectCenterPoint,
         rectContains,
         pageFunctions.getNodePath,
-        pageFunctions.getNodeSelectorString,
-        pageFunctions.getNodeLabelString,
+        pageFunctions.getNodeSelector,
+        pageFunctions.getNodeLabel,
       ],
     });
   }
