@@ -441,7 +441,10 @@ class Driver {
    */
   async evaluate(expressionOrMainFn, options = {}) {
     if (typeof expressionOrMainFn !== 'string') {
-      expressionOrMainFn = pageFunctions.createEvalCode(expressionOrMainFn, {mode: 'iffe', ...options});
+      expressionOrMainFn = pageFunctions.createEvalCode(expressionOrMainFn, {
+        mode: 'iffe',
+        ...options,
+      });
     }
     return this._evaluate(expressionOrMainFn, options);
   }
