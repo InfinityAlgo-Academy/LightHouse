@@ -31,7 +31,7 @@ These audits are not yet part of the default Lighthouse experience, but they wil
 
 ## New contributors!
 
-Thanks to @TGiles, @roelfjan, @warrengm, @alexgreencode, @mikedijkstra, @egsweeny, @johnsampson, @jazyan, @b3none, @mattjared, @Malvoz, @Beytoven, @Munter, @msomji, @piotrzarycki, @awdltd, @mathiasbynens, @Carr1005, @staabm, @SphinxKnight, @sk-, @AndreasKubasa, @jantimon, @kmanuel, @Kikobeats, @RolandBurrows, @nxqamar, @catalinred, and @baseeee for their first contributions! So many!
+Thanks to @TGiles, @roelfjan, @chruxin, @warrengm, @alexgreencode, @mikedijkstra, @egsweeny, @johnsampson, @jazyan, @b3none, @mattjared, @Malvoz, @Beytoven, @Munter, @jayaddison, @msomji, @piotrzarycki, @awdltd, @mathiasbynens, @Carr1005, @staabm, @SphinxKnight, @sk-, @AndreasKubasa, @jantimon, @kmanuel, @Kikobeats, @RolandBurrows, @nxqamar, @catalinred, and @baseeee for their first contributions! So many!
 
 ## 💥 Breaking changes
 
