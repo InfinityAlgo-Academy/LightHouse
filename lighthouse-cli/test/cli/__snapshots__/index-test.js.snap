@@ -409,6 +409,9 @@ Object {
       "path": "seo/link-text",
     },
     Object {
+      "path": "seo/crawlable-anchors",
+    },
+    Object {
       "path": "seo/is-crawlable",
     },
     Object {
@@ -1115,6 +1118,11 @@ Object {
         Object {
           "group": "seo-content",
           "id": "link-text",
+          "weight": 1,
+        },
+        Object {
+          "group": "seo-crawl",
+          "id": "crawlable-anchors",
           "weight": 1,
         },
         Object {

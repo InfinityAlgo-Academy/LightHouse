@@ -1007,6 +1007,18 @@
   "lighthouse-core/audits/seo/canonical.js | title": {
     "message": "D̂óĉúm̂én̂t́ ĥáŝ á v̂ál̂íd̂ `rel=canonical`"
   },
+  "lighthouse-core/audits/seo/crawlable-anchors.js | columnFailingLink": {
+    "message": "Ûńĉŕâẃl̂áb̂ĺê Ĺîńk̂"
+  },
+  "lighthouse-core/audits/seo/crawlable-anchors.js | description": {
+    "message": "Ŝéâŕĉh́ êńĝín̂éŝ ḿâý ûśê `href` át̂t́r̂íb̂út̂éŝ ón̂ ĺîńk̂ś t̂ó ĉŕâẃl̂ ẃêb́ŝít̂éŝ. Én̂śûŕê t́ĥát̂ t́ĥé `href` ât́t̂ŕîb́ût́ê óf̂ án̂ćĥór̂ él̂ém̂én̂t́ŝ ĺîńk̂ś t̂ó âń âṕp̂ŕôṕr̂íât́ê d́êśt̂ín̂át̂íôń, ŝó m̂ór̂é p̂áĝéŝ óf̂ t́ĥé ŝít̂é ĉán̂ b́ê d́îśĉóv̂ér̂éd̂. [Ĺêár̂ń M̂ór̂é](https://support.google.com/webmasters/answer/9112205)"
+  },
+  "lighthouse-core/audits/seo/crawlable-anchors.js | failureTitle": {
+    "message": "L̂ín̂ḱŝ ár̂é n̂ót̂ ćr̂áŵĺâb́l̂é"
+  },
+  "lighthouse-core/audits/seo/crawlable-anchors.js | title": {
+    "message": "L̂ín̂ḱŝ ár̂é ĉŕâẃl̂áb̂ĺê"
+  },
   "lighthouse-core/audits/seo/font-size.js | description": {
     "message": "F̂ón̂t́ ŝíẑéŝ ĺêśŝ t́ĥán̂ 12ṕx̂ ár̂é t̂óô śm̂ál̂ĺ t̂ó b̂é l̂éĝíb̂ĺê án̂d́ r̂éq̂úîŕê ḿôb́îĺê v́îśît́ôŕŝ t́ô “ṕîńĉh́ t̂ó ẑóôḿ” îń ôŕd̂ér̂ t́ô ŕêád̂. Śt̂ŕîv́ê t́ô h́âv́ê >60% óf̂ ṕâǵê t́êx́t̂ ≥12ṕx̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/font-size)."
   },
