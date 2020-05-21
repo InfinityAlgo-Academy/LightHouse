@@ -159,8 +159,8 @@ const defaultConfig = {
       'seo/robots-txt',
       'seo/tap-targets',
       'accessibility',
-      'full-page-screenshot',
       'trace-elements',
+      'full-page-screenshot',
     ],
   },
   {

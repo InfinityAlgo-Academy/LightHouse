@@ -53,6 +53,7 @@ class LayoutShiftElements extends Audit {
           selector: element.selector,
           nodeLabel: element.nodeLabel,
           snippet: element.snippet,
+          boundingRect: element.boundingRect,
         }),
       };
     });
