@@ -27,7 +27,7 @@ module.exports = [
         'interactive': {
           score: '>=0.90', // primarily just making sure it didn't fail/go crazy, specific value isn't that important
         },
-        'time-to-first-byte': {
+        'server-response-time': {
           // Can be flaky, so test float numericValue instead of binary score
           numericValue: '<1000',
         },
@@ -170,4 +170,37 @@ module.exports = [
       },
     },
   },
+  // TODO: uncomment when Chrome m83 lands
+  // {
+  //   lhr: {
+  //     requestedUrl: 'http://localhost:10200/perf/trace-elements.html',
+  //     finalUrl: 'http://localhost:10200/perf/trace-elements.html',
+  //     audits: {
+  //       'largest-contentful-paint-element': {
+  //         score: null,
+  //         displayValue: '1 element found',
+  //         details: {
+  //           items: [
+  //             {
+  //               node: {
+  //                 type: 'node',
+  //                 nodeLabel: 'img',
+  //                 path: '0,HTML,1,BODY,0,DIV,0,IMG',
+  //               },
+  //             },
+  //           ],
+  //         },
+  //       },
+  //       'layout-shift-elements': {
+  //         score: null,
+  //         displayValue: '2 elements found',
+  //         details: {
+  //           items: {
+  //             length: 2,
+  //           },
+  //         },
+  //       },
+  //     },
+  //   },
+  // },
 ];
