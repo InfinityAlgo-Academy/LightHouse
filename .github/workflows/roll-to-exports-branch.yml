@@ -63,10 +63,10 @@ jobs:
 
     - run: git config --local user.email "action@github.com"
     - run: git config --local user.name "Github Action"
-    - run: git switch exports
-    - run: yarn gh-pages --branch exports --dist exports_output --no-push
-    - name: Push changes
-      uses: ad-m/github-push-action@f18534
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: exports
+    - run: yarn gh-pages --branch exports --dist exports_output # --no-push
+    # - run: git switch exports
+    # - name: Push changes
+    #   uses: ad-m/github-push-action@f18534
+    #   with:
+    #     github_token: ${{ secrets.GITHUB_TOKEN }}
+    #     branch: exports
