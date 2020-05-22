@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2017 Google Inc. All Rights Reserved.
+ * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
 'use strict';
 
 /* globals self, URL */
+
+/** @typedef {import('./i18n')} I18n */
 
 const ELLIPSIS = '\u2026';
 const NBSP = '\xa0';
@@ -320,7 +322,7 @@ class Util {
 
   /**
    * @param {string|URL} value
-   * @return {URL}
+   * @return {!URL}
    */
   static createOrReturnURL(value) {
     if (value instanceof URL) {
@@ -365,7 +367,7 @@ class Util {
 
   /**
    * @param {LH.Config.Settings} settings
-   * @return {Array<{name: string, description: string}>}
+   * @return {!Array<{name: string, description: string}>}
    */
   static getEnvironmentDisplayValues(settings) {
     const emulationDesc = Util.getEmulationDescriptions(settings);
@@ -485,6 +487,13 @@ class Util {
   }
 }
 
+/**
+ * Some parts of the report renderer require data found on the LHR. Instead of wiring it
+ * through, we have this global.
+ * @type {LH.ReportResult | null}
+ */
+Util.reportJson = null;
+
 /** @type {I18n} */
 // @ts-ignore: Is set in report renderer.
 Util.i18n = null;
@@ -494,7 +503,9 @@ Util.i18n = null;
  */
 Util.UIStrings = {
   /** Disclaimer shown to users below the metric values (First Contentful Paint, Time to Interactive, etc) to warn them that the numbers they see will likely change slightly the next time they run Lighthouse. */
-  varianceDisclaimer: 'Values are estimated and may vary. The performance score is [based only on these metrics](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted).',
+  varianceDisclaimer: 'Values are estimated and may vary. The [performance score is calculated](https://web.dev/performance-scoring/) directly from these metrics.',
+  /** Text link pointing to an interactive calculator that explains Lighthouse scoring. The link text should be fairly short. */
+  calculatorLink: 'See calculator.',
   /** Column heading label for the listing of opportunity audits. Each audit title represents an opportunity. There are only 2 columns, so no strict character limit.  */
   opportunityResourceColumnLabel: 'Opportunity',
   /** Column heading label for the estimated page load savings of opportunity audits. Estimated Savings is the total amount of time (in seconds) that Lighthouse computed could be reduced from the total page load time, if the suggested action is taken. There are only 2 columns, so no strict character limit. */
@@ -600,7 +611,7 @@ if (typeof module !== 'undefined' && module.exports) {
 ;
 /**
  * @license
- * Copyright 2017 Google Inc. All Rights Reserved.
+ * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -655,7 +666,7 @@ class DOM {
   }
 
   /**
-   * @return {DocumentFragment}
+   * @return {!DocumentFragment}
    */
   createFragment() {
     return this._document.createDocumentFragment();
@@ -680,7 +691,7 @@ class DOM {
   /**
    * @param {string} selector
    * @param {ParentNode} context
-   * @return {DocumentFragment} A clone of the template content.
+   * @return {!DocumentFragment} A clone of the template content.
    * @throws {Error}
    */
   cloneTemplate(selector, context) {
@@ -792,7 +803,7 @@ class DOM {
    * nothing matches query.
    * @param {string} query
    * @param {ParentNode} context
-   * @return {HTMLElement}
+   * @return {!HTMLElement}
    */
   find(query, context) {
     /** @type {?HTMLElement} */
@@ -807,7 +818,7 @@ class DOM {
    * Helper for context.querySelectorAll. Returns an Array instead of a NodeList.
    * @param {string} query
    * @param {ParentNode} context
-   * @return {Array<HTMLElement>}
+   * @return {!Array<HTMLElement>}
    */
   findAll(query, context) {
     return Array.from(context.querySelectorAll(query));
@@ -1017,7 +1028,7 @@ Copyright © 2019 Javan Makhmali
 ;
 /**
  * @license
- * Copyright 2017 Google Inc. All Rights Reserved.
+ * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1226,7 +1237,7 @@ class DetailsRenderer {
    * Render a details item value for embedding in a table. Renders the value
    * based on the heading's valueType, unless the value itself has a `type`
    * property to override it.
-   * @param {LH.Audit.Details.Value} value
+   * @param {LH.Audit.Details.ItemValue} value
    * @param {LH.Audit.Details.OpportunityColumnHeading} heading
    * @return {Element|null}
    */
@@ -1354,7 +1365,7 @@ class DetailsRenderer {
   }
 
   /**
-   * @param {LH.Audit.Details.Value[]} values
+   * @param {LH.Audit.Details.ItemValue[]} values
    * @param {LH.Audit.Details.OpportunityColumnHeading} heading
    * @return {Element}
    */
@@ -1456,7 +1467,6 @@ class DetailsRenderer {
   /**
    * @param {LH.Audit.Details.NodeValue} item
    * @return {Element}
-   * @protected
    */
   renderNode(item) {
     const element = this._dom.createElement('span', 'lh-node');
@@ -1547,7 +1557,7 @@ if (typeof module !== 'undefined' && module.exports) {
 ;
 /**
  * @license
- * Copyright 2017 Google Inc. All Rights Reserved.
+ * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1571,6 +1581,7 @@ if (typeof module !== 'undefined' && module.exports) {
 /* globals self Util */
 
 /** @typedef {import('./dom.js')} DOM */
+/** @typedef {import('./details-renderer.js')} DetailsRenderer */
 
 class CriticalRequestChainRenderer {
   /**
@@ -1757,7 +1768,7 @@ if (typeof module !== 'undefined' && module.exports) {
  */
 ;
 /**
- * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -1766,6 +1777,7 @@ if (typeof module !== 'undefined' && module.exports) {
 /* globals self, Util */
 
 /** @typedef {import('./details-renderer')} DetailsRenderer */
+/** @typedef {import('./dom')} DOM */
 
 /** @enum {number} */
 const LineVisibility = {
@@ -2094,7 +2106,7 @@ class SnippetRenderer {
    * @param {ParentNode} templateContext
    * @param {LH.Audit.Details.SnippetValue} details
    * @param {DetailsRenderer} detailsRenderer
-   * @return {Element}
+   * @return {!Element}
    */
   static render(dom, templateContext, details, detailsRenderer) {
     const tmpl = dom.cloneTemplate('#tmpl-lh-snippet', templateContext);
@@ -2122,7 +2134,7 @@ if (typeof module !== 'undefined' && module.exports) {
 }
 ;
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -2166,7 +2178,7 @@ if (typeof module !== 'undefined' && module.exports) {
 ;
 /**
  * @license
- * Copyright 2017 Google Inc. All Rights Reserved.
+ * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -2248,7 +2260,7 @@ if (typeof module !== 'undefined' && module.exports) {
 ;
 /**
  * @license
- * Copyright 2017 Google Inc. All Rights Reserved.
+ * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -2272,6 +2284,8 @@ if (typeof module !== 'undefined' && module.exports) {
  */
 
 /* globals getFilenamePrefix Util */
+
+/** @typedef {import('./dom')} DOM */
 
 /**
  * @param {HTMLTableElement} tableEl
@@ -3091,7 +3105,7 @@ if (typeof module !== 'undefined' && module.exports) {
 ;
 /**
  * @license
- * Copyright 2017 Google Inc. All Rights Reserved.
+ * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -3156,7 +3170,7 @@ class CategoryRenderer {
    * Populate an DOM tree with audit details. Used by renderAudit and renderOpportunity
    * @param {LH.ReportResult.AuditRef} audit
    * @param {DocumentFragment} tmpl
-   * @return {Element}
+   * @return {!Element}
    */
   populateAuditValues(audit, tmpl) {
     const strings = Util.i18n.strings;
@@ -3247,7 +3261,7 @@ class CategoryRenderer {
    * @param {Element} element DOM node to populate with values.
    * @param {number|null} score
    * @param {string} scoreDisplayMode
-   * @return {Element}
+   * @return {!Element}
    */
   _setRatingClass(element, score, scoreDisplayMode) {
     const rating = Util.calculateRating(score, scoreDisplayMode);
@@ -3368,7 +3382,7 @@ class CategoryRenderer {
    * in a collapsed state.
    * @param {Exclude<TopLevelClumpId, 'failed'>} clumpId
    * @param {{auditRefs: Array<LH.ReportResult.AuditRef>, description?: string}} clumpOpts
-   * @return {Element}
+   * @return {!Element}
    */
   renderClump(clumpId, {auditRefs, description}) {
     const clumpTmpl = this.dom.cloneTemplate('#tmpl-lh-clump', this.templateContext);
@@ -3580,7 +3594,7 @@ if (typeof module !== 'undefined' && module.exports) {
 ;
 /**
  * @license
- * Copyright 2018 Google Inc. All Rights Reserved.
+ * Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -3603,7 +3617,7 @@ if (typeof module !== 'undefined' && module.exports) {
 class PerformanceCategoryRenderer extends CategoryRenderer {
   /**
    * @param {LH.ReportResult.AuditRef} audit
-   * @return {Element}
+   * @return {!Element}
    */
   _renderMetric(audit) {
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-metric', this.templateContext);
@@ -3634,7 +3648,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
   /**
    * @param {LH.ReportResult.AuditRef} audit
    * @param {number} scale
-   * @return {Element}
+   * @return {!Element}
    */
   _renderOpportunity(audit, scale) {
     const oppTmpl = this.dom.cloneTemplate('#tmpl-lh-opportunity', this.templateContext);
@@ -3685,6 +3699,36 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
   }
 
   /**
+   * Get a link to the interactive scoring calculator with the metric values.
+   * @param {LH.ReportResult.AuditRef[]} auditRefs
+   * @return {string}
+   */
+  _getScoringCalculatorHref(auditRefs) {
+    const v5andv6metrics = auditRefs.filter(audit => audit.group === 'metrics');
+    const fci = auditRefs.find(audit => audit.id === 'first-cpu-idle');
+    const fmp = auditRefs.find(audit => audit.id === 'first-meaningful-paint');
+    if (fci) v5andv6metrics.push(fci);
+    if (fmp) v5andv6metrics.push(fmp);
+
+    const metricPairs = v5andv6metrics.map(audit => {
+      const value = typeof audit.result.numericValue !== 'undefined' ?
+        audit.result.numericValue.toString() : 'null';
+      return [audit.id, value];
+    });
+    const paramPairs = [...metricPairs];
+
+    if (Util.reportJson) {
+      paramPairs.push(['device', Util.reportJson.configSettings.emulatedFormFactor]);
+      paramPairs.push(['version', Util.reportJson.lighthouseVersion]);
+    }
+
+    const params = new URLSearchParams(paramPairs);
+    const url = new URL('https://googlechrome.github.io/lighthouse/scorecalc/');
+    url.hash = params.toString();
+    return url.href;
+  }
+
+  /**
    * @param {LH.ReportResult.Category} category
    * @param {Object<string, LH.Result.ReportGroup>} groups
    * @param {'PSI'=} environment 'PSI' and undefined are the only valid values
@@ -3712,8 +3756,9 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     metricAuditsEl.append(..._toggleEl.childNodes);
 
     const metricAudits = category.auditRefs.filter(audit => audit.group === 'metrics');
-    const keyMetrics = metricAudits.filter(a => a.weight >= 3);
-    const otherMetrics = metricAudits.filter(a => a.weight < 3);
+
+    const keyMetrics = metricAudits.slice(0, 3);
+    const otherMetrics = metricAudits.slice(3);
 
     const metricsBoxesEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-columns');
     const metricsColumn1El = this.dom.createChildOf(metricsBoxesEl, 'div', 'lh-column');
@@ -3731,6 +3776,12 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       const estValuesEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-metrics__disclaimer');
       const disclaimerEl = this.dom.convertMarkdownLinkSnippets(strings.varianceDisclaimer);
       estValuesEl.appendChild(disclaimerEl);
+
+      // Add link to score calculator.
+      const calculatorLink = this.dom.createChildOf(estValuesEl, 'a', 'lh-calclink');
+      calculatorLink.target = '_blank';
+      calculatorLink.textContent = strings.calculatorLink;
+      calculatorLink.href = this._getScoringCalculatorHref(category.auditRefs);
     }
 
     metricAuditsEl.classList.add('lh-audit-group--metrics');
@@ -3834,7 +3885,7 @@ if (typeof module !== 'undefined' && module.exports) {
 ;
 /**
  * @license
- * Copyright 2018 Google Inc. All Rights Reserved.
+ * Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -3930,7 +3981,7 @@ class PwaCategoryRenderer extends CategoryRenderer {
   /**
    * Returns the group IDs found in auditRefs.
    * @param {Array<LH.ReportResult.AuditRef>} auditRefs
-   * @return {Set<string>}
+   * @return {!Set<string>}
    */
   _getGroupIds(auditRefs) {
     const groupIds = auditRefs.map(ref => ref.group).filter(/** @return {g is string} */ g => !!g);
@@ -4038,7 +4089,7 @@ if (typeof module !== 'undefined' && module.exports) {
 ;
 /**
  * @license
- * Copyright 2017 Google Inc. All Rights Reserved.
+ * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -4061,6 +4112,7 @@ if (typeof module !== 'undefined' && module.exports) {
  * Dummy text for ensuring report robustness: </script> pre$`post %%LIGHTHOUSE_JSON%%
  */
 
+/** @typedef {import('./category-renderer')} CategoryRenderer */
 /** @typedef {import('./dom.js')} DOM */
 
 /* globals self, Util, DetailsRenderer, CategoryRenderer, I18n, PerformanceCategoryRenderer, PwaCategoryRenderer */
@@ -4079,7 +4131,7 @@ class ReportRenderer {
   /**
    * @param {LH.Result} result
    * @param {Element} container Parent element to render the report into.
-   * @return {Element}
+   * @return {!Element}
    */
   renderReport(result, container) {
     this._dom.setLighthouseChannel(result.configSettings.channel || 'unknown');
@@ -4188,7 +4240,7 @@ class ReportRenderer {
    * @param {LH.ReportResult} report
    * @param {CategoryRenderer} categoryRenderer
    * @param {Record<string, CategoryRenderer>} specificCategoryRenderers
-   * @return {DocumentFragment[]}
+   * @return {!DocumentFragment[]}
    */
   _renderScoreGauges(report, categoryRenderer, specificCategoryRenderers) {
     // Group gauges in this order: default, pwa, plugins.
@@ -4219,7 +4271,7 @@ class ReportRenderer {
 
   /**
    * @param {LH.ReportResult} report
-   * @return {DocumentFragment}
+   * @return {!DocumentFragment}
    */
   _renderReport(report) {
     const i18n = new I18n(report.configSettings.locale, {
@@ -4228,6 +4280,7 @@ class ReportRenderer {
       ...report.i18n.rendererFormattedStrings,
     });
     Util.i18n = i18n;
+    Util.reportJson = report;
 
     const detailsRenderer = new DetailsRenderer(this._dom);
     const categoryRenderer = new CategoryRenderer(this._dom, detailsRenderer);
@@ -4300,7 +4353,7 @@ if (typeof module !== 'undefined' && module.exports) {
 }
 ;
 /**
- * @license Copyright 2020 Google Inc. All Rights Reserved.
+ * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */

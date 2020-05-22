@@ -1,6 +1,6 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}(g.Lighthouse || (g.Lighthouse = {})).Smokehouse = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 /**
- * @license Copyright 2020 Google Inc. All Rights Reserved.
+ * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -55,7 +55,7 @@ module.exports = smokehouse;
 
 },{"../smokehouse.js":5,"../test-definitions/core-tests.js":10,"lodash.clonedeep":43}],2:[function(require,module,exports){
 /**
- * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -168,7 +168,7 @@ module.exports = ConcurrentMapper;
 
 },{}],3:[function(require,module,exports){
 /**
- * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -221,7 +221,7 @@ module.exports = LocalConsole;
 
 },{}],4:[function(require,module,exports){
 /**
- * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -545,9 +545,9 @@ function report(actual, expected, reportOptions = {}) {
 
 module.exports = report;
 
-},{"./lib/local-console.js":3,"lighthouse-logger":42}],5:[function(require,module,exports){
+},{"./lib/local-console.js":3,"lighthouse-logger":40}],5:[function(require,module,exports){
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -796,9 +796,9 @@ module.exports = {
   runSmokehouse,
 };
 
-},{"./lib/concurrent-mapper.js":2,"./lib/local-console.js":3,"./lighthouse-runners/cli.js":38,"./report-assert.js":4,"lighthouse-logger":42}],6:[function(require,module,exports){
+},{"./lib/concurrent-mapper.js":2,"./lib/local-console.js":3,"./lighthouse-runners/cli.js":38,"./report-assert.js":4,"lighthouse-logger":40}],6:[function(require,module,exports){
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -818,7 +818,7 @@ module.exports = {
 
 },{}],7:[function(require,module,exports){
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -1105,7 +1105,7 @@ const expectations = [
                 node: {
                   'type': 'node',
                   'selector': 'textarea[aria-label="text1"]',
-                  'path': '2,HTML,1,BODY,31,SECTION,0,TEXTAREA',
+                  'path': '2,HTML,1,BODY,29,SECTION,0,TEXTAREA',
                   'snippet': '<textarea id="duplicate-id-active" aria-label="text1"></textarea>',
                   'explanation': 'Fix any of the following:\n  Document has active elements with the same id attribute: duplicate-id-active',
                   'nodeLabel': 'text1',
@@ -1122,7 +1122,7 @@ const expectations = [
                 node: {
                   'type': 'node',
                   'selector': '.duplicate-id-aria',
-                  'path': '2,HTML,1,BODY,33,SECTION,0,DIV',
+                  'path': '2,HTML,1,BODY,31,SECTION,0,DIV',
                   'snippet': '<div id="duplicate-id-aria" class="duplicate-id-aria">\n      <div id="duplicate-id-aria"></div>\n      <div aria-labelledby="duplicate-id-aria"></div>\n    </div>',
                   'explanation': 'Fix any of the following:\n  Document has multiple elements referenced with ARIA with the same id attribute: duplicate-id-aria',
                   'nodeLabel': 'div',
@@ -1140,7 +1140,7 @@ const expectations = [
                 node: {
                   'type': 'node',
                   'selector': '#form-field-multiple-labels',
-                  'path': '2,HTML,1,BODY,35,SECTION,2,INPUT',
+                  'path': '2,HTML,1,BODY,33,SECTION,2,INPUT',
                   'snippet': '<input type="checkbox" id="form-field-multiple-labels">',
                   'explanation': 'Fix all of the following:\n  Multiple label elements is not widely supported in assistive technologies. Ensure the first label contains all necessary information.',
                   'nodeLabel': 'input',
@@ -1173,7 +1173,7 @@ const expectations = [
                 node: {
                   'type': 'node',
                   'selector': 'h3',
-                  'path': '2,HTML,1,BODY,39,SECTION,1,H3',
+                  'path': '2,HTML,1,BODY,37,SECTION,1,H3',
                   'snippet': '<h3>sub-sub-header</h3>',
                   'explanation': 'Fix any of the following:\n  Heading order invalid',
                   'nodeLabel': 'sub-sub-header',
@@ -1407,7 +1407,7 @@ module.exports = expectations;
 
 },{}],8:[function(require,module,exports){
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -1448,7 +1448,7 @@ module.exports = config;
 
 },{}],9:[function(require,module,exports){
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -1545,8 +1545,10 @@ const expectations = [
         'unminified-javascript': {
           score: '<1',
           details: {
-            overallSavingsBytes: '>45000',
+            // the specific ms value is not meaningful for this smoketest
+            // *some largish amount* of savings should be reported
             overallSavingsMs: '>500',
+            overallSavingsBytes: '>45000',
             items: [
               {
                 url: 'http://localhost:10200/byte-efficiency/script.js',
@@ -1583,8 +1585,10 @@ const expectations = [
         'unused-javascript': {
           score: '<1',
           details: {
+            // the specific ms value here is not meaningful for this smoketest
+            // *some* savings should be reported
+            overallSavingsMs: '>0',
             overallSavingsBytes: '>=25000',
-            overallSavingsMs: '>300',
             items: [
               {
                 url: 'http://localhost:10200/byte-efficiency/script.js',
@@ -1598,22 +1602,22 @@ const expectations = [
               },
               {
                 url: 'http://localhost:10200/byte-efficiency/bundle.js',
-                totalBytes: 12913,
-                wastedBytes: 5827,
+                totalBytes: '12913 +/- 1000',
+                wastedBytes: '5827 +/- 200',
                 sources: [
                   '…./b.js',
                   '…./c.js',
                   '…webpack/bootstrap',
                 ],
                 sourceBytes: [
-                  4417,
-                  2200,
-                  2809,
+                  '4417 +/- 50',
+                  '2200 +/- 50',
+                  '2809 +/- 50',
                 ],
                 sourceWastedBytes: [
-                  2191,
-                  2182,
-                  1259,
+                  '2191 +/- 50',
+                  '2182 +/- 50',
+                  '1259 +/- 50',
                 ],
               },
             ],
@@ -1645,6 +1649,8 @@ const expectations = [
         'uses-text-compression': {
           score: '<1',
           details: {
+            // the specific ms value is not meaningful for this smoketest
+            // *some largish amount* of savings should be reported
             overallSavingsMs: '>700',
             overallSavingsBytes: '>50000',
             items: {
@@ -1661,13 +1667,14 @@ const expectations = [
           },
         },
         'uses-responsive-images': {
-          displayValue: 'Potential savings of 53\xa0KB',
           details: {
-            overallSavingsBytes: '>50000',
+            overallSavingsBytes: '108000 +/- 5000',
             items: {
-              0: {wastedPercent: '<46'},
-              1: {wastedPercent: '<46'},
-              length: 2,
+              0: {wastedPercent: '56 +/- 5', url: /lighthouse-1024x680.jpg/},
+              1: {wastedPercent: '78 +/- 5', url: /lighthouse-2048x1356.webp\?size0/},
+              2: {wastedPercent: '56 +/- 5', url: /lighthouse-480x320.webp/},
+              3: {wastedPercent: '20 +/- 5', url: /lighthouse-480x320.jpg/},
+              length: 4,
             },
           },
         },
@@ -1684,19 +1691,23 @@ const expectations = [
             items: [
               {
                 url: 'http://localhost:10200/byte-efficiency/gzip.html',
+                finished: true,
               },
               {
                 url: 'http://localhost:10200/byte-efficiency/script.js?gzip=1',
                 transferSize: '1100 +/- 100',
                 resourceSize: '53000 +/- 1000',
+                finished: true,
               },
               {
                 url: 'http://localhost:10200/byte-efficiency/script.js',
                 transferSize: '53200 +/- 1000',
                 resourceSize: '53000 +/- 1000',
+                finished: true,
               },
               {
                 url: 'http://localhost:10200/favicon.ico',
+                finished: true,
               },
             ],
           },
@@ -1710,7 +1721,7 @@ module.exports = expectations;
 
 },{}],10:[function(require,module,exports){
 /**
- * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -1776,23 +1787,22 @@ const smokeTests = [{
 }, {
   id: 'metrics',
   expectations: require('./tricky-metrics/expectations.js'),
-  config: require('../../../../lighthouse-core/config/perf-config.js'),
+  config: require('./tricky-metrics/no-throttling-config.js'),
 }, {
-  id: 'mixed-content',
-  expectations: require('./mixed-content/mixed-content-expectations.js'),
-  config: require('../../../../lighthouse-core/config/mixed-content-config.js'),
-},
-{
   id: 'legacy-javascript',
   expectations: require('./legacy-javascript/expectations.js'),
   config: require('./legacy-javascript/legacy-javascript-config.js'),
+}, {
+  id: 'source-maps',
+  expectations: require('./source-maps/expectations.js'),
+  config: require('./source-maps/source-maps-config.js'),
 }];
 
 module.exports = smokeTests;
 
-},{"../../../../lighthouse-core/config/mixed-content-config.js":36,"../../../../lighthouse-core/config/perf-config.js":37,"./a11y/a11y-config.js":6,"./a11y/expectations.js":7,"./byte-efficiency/byte-config.js":8,"./byte-efficiency/expectations.js":9,"./dobetterweb/dbw-config.js":11,"./dobetterweb/dbw-expectations.js":12,"./errors/error-config.js":13,"./errors/error-expectations.js":14,"./lantern/lantern-config.js":15,"./lantern/lantern-expectations.js":16,"./legacy-javascript/expectations.js":17,"./legacy-javascript/legacy-javascript-config.js":18,"./mixed-content/mixed-content-expectations.js":19,"./offline-local/offline-config.js":20,"./offline-local/offline-expectations.js":21,"./oopif/oopif-config.js":22,"./oopif/oopif-expectations.js":23,"./perf/expectations.js":24,"./perf/perf-config.js":25,"./pwa/pwa-config.js":26,"./pwa/pwa-expectations.js":28,"./pwa/pwa2-expectations.js":29,"./pwa/pwa3-expectations.js":30,"./redirects/expectations.js":31,"./redirects/redirects-config.js":32,"./seo/expectations.js":33,"./seo/seo-config.js":34,"./tricky-metrics/expectations.js":35}],11:[function(require,module,exports){
+},{"./a11y/a11y-config.js":6,"./a11y/expectations.js":7,"./byte-efficiency/byte-config.js":8,"./byte-efficiency/expectations.js":9,"./dobetterweb/dbw-config.js":11,"./dobetterweb/dbw-expectations.js":12,"./errors/error-config.js":13,"./errors/error-expectations.js":14,"./lantern/lantern-config.js":15,"./lantern/lantern-expectations.js":16,"./legacy-javascript/expectations.js":17,"./legacy-javascript/legacy-javascript-config.js":18,"./offline-local/offline-config.js":19,"./offline-local/offline-expectations.js":20,"./oopif/oopif-config.js":21,"./oopif/oopif-expectations.js":22,"./perf/expectations.js":23,"./perf/perf-config.js":24,"./pwa/pwa-config.js":25,"./pwa/pwa-expectations.js":27,"./pwa/pwa2-expectations.js":28,"./pwa/pwa3-expectations.js":29,"./redirects/expectations.js":30,"./redirects/redirects-config.js":31,"./seo/expectations.js":32,"./seo/seo-config.js":33,"./source-maps/expectations.js":34,"./source-maps/source-maps-config.js":35,"./tricky-metrics/expectations.js":36,"./tricky-metrics/no-throttling-config.js":37}],11:[function(require,module,exports){
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -1811,7 +1821,7 @@ module.exports = {
 
 },{}],12:[function(require,module,exports){
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -2165,7 +2175,19 @@ const expectations = [
           details: {
             items: {
               0: {
-                displayedAspectRatio: /^480 x 57/,
+                displayedAspectRatio: /^120 x 15/,
+                url: 'http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?iar1',
+              },
+              length: 1,
+            },
+          },
+        },
+        'image-size-responsive': {
+          score: 0,
+          details: {
+            items: {
+              0: {
+                url: 'http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr1',
               },
               length: 1,
             },
@@ -2197,10 +2219,10 @@ const expectations = [
         },
         'dom-size': {
           score: 1,
-          numericValue: 143,
+          numericValue: 147,
           details: {
             items: [
-              {statistic: 'Total DOM Elements', value: '143'},
+              {statistic: 'Total DOM Elements', value: '147'},
               {statistic: 'Maximum DOM Depth', value: '4'},
               {
                 statistic: 'Maximum Child Elements',
@@ -2219,7 +2241,7 @@ module.exports = expectations;
 
 },{}],13:[function(require,module,exports){
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -2240,7 +2262,7 @@ module.exports = {
 
 },{}],14:[function(require,module,exports){
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -2331,7 +2353,7 @@ module.exports = expectations;
 
 },{}],15:[function(require,module,exports){
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -2358,7 +2380,7 @@ module.exports = {
 },{}],16:[function(require,module,exports){
 (function (process){
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -2462,7 +2484,7 @@ module.exports = [
 }).call(this,require('_process'))
 },{"_process":46}],17:[function(require,module,exports){
 /**
- * @license Copyright 2020 Google Inc. All Rights Reserved.
+ * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -2504,7 +2526,7 @@ module.exports = [
 
 },{}],18:[function(require,module,exports){
 /**
- * @license Copyright 2020 Google Inc. All Rights Reserved.
+ * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -2515,6 +2537,12 @@ module.exports = [
  */
 module.exports = {
   extends: 'lighthouse:default',
+  passes: [{
+    passName: 'defaultPass',
+    gatherers: [
+      'source-maps',
+    ],
+  }],
   settings: {
     onlyCategories: [
       'performance',
@@ -2529,38 +2557,7 @@ module.exports = {
 
 },{}],19:[function(require,module,exports){
 /**
- * @license Copyright 2019 Google Inc. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
- */
-'use strict';
-
-/**
- * @type {Array<Smokehouse.ExpectedRunnerResult>}
- */
-module.exports = [
-  {
-    lhr: {
-      requestedUrl: 'https://googlesamples.github.io/web-fundamentals/fundamentals/security/prevent-mixed-content/active-mixed-content.html',
-      finalUrl: 'https://googlesamples.github.io/web-fundamentals/fundamentals/security/prevent-mixed-content/active-mixed-content.html',
-      audits: {
-        'mixed-content': {
-          score: '<1',
-          details: {
-            items: {length: 4},
-          },
-        },
-        'is-on-https': {
-          score: 0,
-        },
-      },
-    },
-  },
-];
-
-},{}],20:[function(require,module,exports){
-/**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -2599,9 +2596,9 @@ module.exports = {
   },
 };
 
-},{}],21:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -2622,9 +2619,6 @@ module.exports = [
         'is-on-https': {
           score: 1,
         },
-        'uses-http2': {
-          score: 0,
-        },
         'external-anchors-use-rel-noopener': {
           score: 1,
         },
@@ -2635,12 +2629,6 @@ module.exports = [
           score: 1,
         },
         'render-blocking-resources': {
-          score: 1,
-        },
-        'no-document-write': {
-          score: 1,
-        },
-        'uses-passive-event-listeners': {
           score: 1,
         },
         'password-inputs-can-be-pasted-into': {
@@ -2802,9 +2790,9 @@ module.exports = [
   },
 ];
 
-},{}],22:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 /**
- * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -2817,9 +2805,9 @@ module.exports = {
   extends: 'lighthouse:default',
 };
 
-},{}],23:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 /**
- * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -2873,9 +2861,9 @@ module.exports = [
   },
 ];
 
-},{}],24:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -2903,7 +2891,7 @@ module.exports = [
         'interactive': {
           score: '>=0.90', // primarily just making sure it didn't fail/go crazy, specific value isn't that important
         },
-        'time-to-first-byte': {
+        'server-response-time': {
           // Can be flaky, so test float numericValue instead of binary score
           numericValue: '<1000',
         },
@@ -2947,15 +2935,15 @@ module.exports = [
           displayValue: '10 requests • 164 KB',
           details: {
             items: [
-              {resourceType: 'total', requestCount: 10, size: '168000±1000'},
-              {resourceType: 'font', requestCount: 2, size: '80000±1000'},
-              {resourceType: 'script', requestCount: 3, size: '55000±1000'},
-              {resourceType: 'image', requestCount: 2, size: '28000±1000'},
-              {resourceType: 'document', requestCount: 1, size: '2200±100'},
-              {resourceType: 'other', requestCount: 1, size: '1000±50'},
-              {resourceType: 'stylesheet', requestCount: 1, size: '450±100'},
-              {resourceType: 'media', requestCount: 0, size: 0},
-              {resourceType: 'third-party', requestCount: 0, size: 0},
+              {resourceType: 'total', requestCount: 10, transferSize: '168000±1000'},
+              {resourceType: 'font', requestCount: 2, transferSize: '80000±1000'},
+              {resourceType: 'script', requestCount: 3, transferSize: '55000±1000'},
+              {resourceType: 'image', requestCount: 2, transferSize: '28000±1000'},
+              {resourceType: 'document', requestCount: 1, transferSize: '2200±100'},
+              {resourceType: 'other', requestCount: 1, transferSize: '1000±50'},
+              {resourceType: 'stylesheet', requestCount: 1, transferSize: '450±100'},
+              {resourceType: 'media', requestCount: 0, transferSize: 0},
+              {resourceType: 'third-party', requestCount: 0, transferSize: 0},
             ],
           },
         },
@@ -2982,7 +2970,7 @@ module.exports = [
               {
                 resourceType: 'document',
                 countOverBudget: '1 request',
-                sizeOverBudget: '1150±50',
+                sizeOverBudget: '1200±50',
               },
               {
                 resourceType: 'stylesheet',
@@ -3012,6 +3000,21 @@ module.exports = [
             ],
           },
         },
+        'largest-contentful-paint-element': {
+          score: null,
+          displayValue: '1 element found',
+          details: {
+            items: [
+              {
+                node: {
+                  type: 'node',
+                  nodeLabel: 'img',
+                  path: '2,HTML,1,BODY,0,IMG',
+                },
+              },
+            ],
+          },
+        },
       },
     },
   },
@@ -3031,11 +3034,44 @@ module.exports = [
       },
     },
   },
+  // TODO: uncomment when Chrome m83 lands
+  // {
+  //   lhr: {
+  //     requestedUrl: 'http://localhost:10200/perf/trace-elements.html',
+  //     finalUrl: 'http://localhost:10200/perf/trace-elements.html',
+  //     audits: {
+  //       'largest-contentful-paint-element': {
+  //         score: null,
+  //         displayValue: '1 element found',
+  //         details: {
+  //           items: [
+  //             {
+  //               node: {
+  //                 type: 'node',
+  //                 nodeLabel: 'img',
+  //                 path: '0,HTML,1,BODY,0,DIV,0,IMG',
+  //               },
+  //             },
+  //           ],
+  //         },
+  //       },
+  //       'layout-shift-elements': {
+  //         score: null,
+  //         displayValue: '2 elements found',
+  //         details: {
+  //           items: {
+  //             length: 2,
+  //           },
+  //         },
+  //       },
+  //     },
+  //   },
+  // },
 ];
 
-},{}],25:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 /**
- * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -3086,9 +3122,9 @@ const perfConfig = {
 
 module.exports = perfConfig;
 
-},{}],26:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -3104,9 +3140,9 @@ module.exports = {
   },
 };
 
-},{}],27:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 /**
- * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -3124,9 +3160,9 @@ module.exports = {
   hasName: true,
 };
 
-},{}],28:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -3273,9 +3309,9 @@ const expectations = [
 
 module.exports = expectations;
 
-},{"./pwa-expectations-details.js":27}],29:[function(require,module,exports){
+},{"./pwa-expectations-details.js":26}],28:[function(require,module,exports){
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -3427,9 +3463,9 @@ module.exports = [
   },
 ];
 
-},{"./pwa-expectations-details.js":27}],30:[function(require,module,exports){
+},{"./pwa-expectations-details.js":26}],29:[function(require,module,exports){
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -3446,8 +3482,10 @@ const pwaRocksExpectations = {...pwaDetailsExpectations, hasIconsAtLeast512px: f
 module.exports = [
   {
     lhr: {
-      requestedUrl: 'https://pwa.rocks',
-      finalUrl: 'https://pwa.rocks/',
+      // Archived version of https://github.com/pwarocks/pwa.rocks
+      // Fork is here: https://github.com/connorjclark/pwa.rocks
+      requestedUrl: 'https://connorjclark.github.io/pwa.rocks/',
+      finalUrl: 'https://connorjclark.github.io/pwa.rocks/',
       audits: {
         'is-on-https': {
           score: 1,
@@ -3510,15 +3548,13 @@ module.exports = [
   },
 ];
 
-},{"./pwa-expectations-details.js":27}],31:[function(require,module,exports){
+},{"./pwa-expectations-details.js":26}],30:[function(require,module,exports){
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
-
-const cacheBuster = Number(new Date());
 
 /**
  * @type {Array<Smokehouse.ExpectedRunnerResult>}
@@ -3526,33 +3562,13 @@ const cacheBuster = Number(new Date());
  */
 const expectations = [
   {
+    // Single server-side redirect (2s)
     lhr: {
-      requestedUrl: `http://localhost:10200/online-only.html?delay=500&redirect=%2Foffline-only.html%3Fcb=${cacheBuster}%26delay=500%26redirect%3D%2Fredirects-final.html`,
-      finalUrl: 'http://localhost:10200/redirects-final.html',
-      audits: {
-        'redirects': {
-          score: '<1',
-          numericValue: '>=500',
-          details: {
-            items: {
-              length: 3,
-            },
-          },
-        },
-      },
-      runWarnings: [
-        /The page may not be loading as expected because your test URL \(.*online-only.html.*\) was redirected to .*redirects-final.html. Try testing the second URL directly./,
-      ],
-    },
-  },
-  {
-    lhr: {
-      requestedUrl: `http://localhost:10200/online-only.html?delay=300&redirect=%2Fredirects-final.html`,
+      requestedUrl: `http://localhost:10200/online-only.html?delay=2000&redirect=%2Fredirects-final.html`,
       finalUrl: 'http://localhost:10200/redirects-final.html',
       audits: {
         'redirects': {
           score: 1,
-          numericValue: '>=250',
           details: {
             items: {
               length: 2,
@@ -3565,13 +3581,61 @@ const expectations = [
       ],
     },
   },
+  {
+    // Multiple server-side redirects (3 x 1s)
+    lhr: {
+      requestedUrl: `http://localhost:10200/online-only.html?delay=1000&redirect_count=3&redirect=%2Fredirects-final.html`,
+      finalUrl: 'http://localhost:10200/redirects-final.html',
+      audits: {
+        'redirects': {
+          score: '<1',
+          details: {
+            items: {
+              length: 4,
+            },
+          },
+        },
+      },
+      runWarnings: [
+        /The page may not be loading as expected because your test URL \(.*online-only.html.*\) was redirected to .*redirects-final.html. Try testing the second URL directly./,
+      ],
+    },
+  },
+  {
+    // Client-side redirect (2s + 5s), no paint
+    // TODO: Assert performance metrics on client-side redirects, see https://github.com/GoogleChrome/lighthouse/pull/10325
+    lhr: {
+      requestedUrl: `http://localhost:10200/js-redirect.html?delay=2000&jsDelay=5000&jsRedirect=%2Fredirects-final.html`,
+      finalUrl: 'http://localhost:10200/redirects-final.html',
+      audits: {
+      },
+      runWarnings: [
+        /The page may not be loading as expected because your test URL \(.*js-redirect.html.*\) was redirected to .*redirects-final.html. Try testing the second URL directly./,
+      ],
+    },
+  },
+  {
+    // Client-side redirect (2s + 5s), paints at 2s, server-side redirect (1s)
+    // TODO: Assert performance metrics on client-side redirects, see https://github.com/GoogleChrome/lighthouse/pull/10325
+    lhr: {
+      requestedUrl: `http://localhost:10200/js-redirect.html?delay=2000&jsDelay=5000&jsRedirect=%2Fonline-only.html%3Fdelay%3D1000%26redirect%3D%2Fredirects-final.html%253FpushState`,
+      // Note that the final URL is the URL of the network requested resource and not that page we end up on.
+      // http://localhost:10200/push-state
+      finalUrl: 'http://localhost:10200/redirects-final.html?pushState',
+      audits: {
+      },
+      runWarnings: [
+        /The page may not be loading as expected because your test URL \(.*js-redirect.html.*\) was redirected to .*redirects-final.html\?pushState. Try testing the second URL directly./,
+      ],
+    },
+  },
 ];
 
 module.exports = expectations;
 
-},{}],32:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -3589,9 +3653,9 @@ module.exports = {
   },
 };
 
-},{}],33:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -3791,6 +3855,9 @@ const expectations = [
             ],
           },
         },
+        'crawlable-anchors': {
+          score: 1,
+        },
         'link-text': {
           score: 1,
         },
@@ -3833,6 +3900,14 @@ const expectations = [
           score: 0,
           explanation:
           'Text is illegible because there\'s no viewport meta tag optimized for mobile screens.',
+        },
+        'crawlable-anchors': {
+          score: 0,
+          details: {
+            items: {
+              length: 4,
+            },
+          },
         },
         'link-text': {
           score: 0,
@@ -3898,6 +3973,9 @@ const expectations = [
           score: null,
         },
         'font-size': {
+          score: null,
+        },
+        'crawlable-anchors': {
           score: null,
         },
         'link-text': {
@@ -4008,9 +4086,9 @@ const expectations = [
 
 module.exports = expectations;
 
-},{}],34:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -4026,9 +4104,81 @@ module.exports = {
   },
 };
 
+},{}],34:[function(require,module,exports){
+/**
+ * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ */
+'use strict';
+
+
+
+const mapJson =
+  "{\n  \"version\": 3,\n  \"file\": \"out.js\",\n  \"sourceRoot\": \"\",\n  \"sources\": [\"foo.js\", \"bar.js\"],\n  \"names\": [\"src\", \"maps\", \"are\", \"fun\"],\n  \"mappings\": \"AAgBC,SAAQ,CAAEA\"\n}\n";
+const map = JSON.parse(mapJson);
+
+/**
+ * @type {Array<Smokehouse.ExpectedRunnerResult>}
+ * Expected Lighthouse audit values for seo tests
+ */
+const expectations = [
+  {
+    artifacts: {
+      SourceMaps: [
+        {
+          scriptUrl: 'http://localhost:10200/source-map/source-map-tester.html',
+          sourceMapUrl: 'http://localhost:10200/source-map/script.js.map',
+          map,
+        },
+        {
+          scriptUrl: 'http://localhost:10200/source-map/source-map-tester.html',
+          sourceMapUrl: 'http://localhost:10503/source-map/script.js.map',
+          map,
+        },
+      ],
+    },
+    lhr: {
+      requestedUrl: 'http://localhost:10200/source-map/source-map-tester.html',
+      finalUrl: 'http://localhost:10200/source-map/source-map-tester.html',
+      audits: {},
+    },
+  },
+];
+
+module.exports = expectations;
+
 },{}],35:[function(require,module,exports){
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ */
+'use strict';
+
+/**
+ * Config file for running source map smokehouse.
+ */
+
+// source-maps currently isn't in the default config yet, so we make a new one with it.
+// Also, no audits use source-maps yet, and at least one is required for a successful run,
+// so `viewport` and its required gatherer `meta-elements` is used.
+
+/** @type {LH.Config.Json} */
+module.exports = {
+  passes: [{
+    passName: 'defaultPass',
+    gatherers: [
+      'source-maps',
+      'meta-elements',
+    ],
+  }],
+  audits: ['viewport'],
+};
+
+},{}],36:[function(require,module,exports){
+/**
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -4036,7 +4186,9 @@ module.exports = {
 
 /**
  * @type {Array<Smokehouse.ExpectedRunnerResult>}
- * Expected Lighthouse audit values for tricky metrics tests
+ * Expected Lighthouse audit values for tricky metrics tests that previously failed to be computed.
+ * We only place lower bounds because we are checking that these metrics *can* be computed and that
+ * we wait long enough to compute them. Upper bounds aren't very helpful here and tend to cause flaky failures.
  */
 module.exports = [
   {
@@ -4045,12 +4197,28 @@ module.exports = [
       finalUrl: 'http://localhost:10200/tricky-tti.html',
       audits: {
         'first-cpu-idle': {
-          // stalls for 5 seconds, 5 seconds out, so should be around 10s
-          numericValue: '>9000',
+          // stalls for ~5 seconds, ~5 seconds out, so should be at least ~10s
+          numericValue: '>9900',
         },
         'interactive': {
-          // stalls for 5 seconds, 5 seconds out, so should be around 10s
-          numericValue: '>9000',
+          // stalls for ~5 seconds, ~5 seconds out, so should be at least ~10s
+          numericValue: '>9900',
+        },
+      },
+    },
+  },
+  {
+    lhr: {
+      requestedUrl: 'http://localhost:10200/tricky-tti-late-fcp.html',
+      finalUrl: 'http://localhost:10200/tricky-tti-late-fcp.html',
+      audits: {
+        'first-cpu-idle': {
+          // FCP at least ~5 seconds out
+          numericValue: '>4900',
+        },
+        'interactive': {
+          // FCP at least ~5 seconds out
+          numericValue: '>4900',
         },
       },
     },
@@ -4068,463 +4236,34 @@ module.exports = [
   },
 ];
 
-},{}],36:[function(require,module,exports){
-/**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
- */
-'use strict';
-
-/** @type {LH.Config.Json} */
-const mixedContentConfig = {
-  // This performs two passes:
-  // (1) Gather the default resources requested by the page, and
-  // (2) Re-load page but attempt to upgrade each request to HTTPS.
-  passes: [{
-    passName: 'defaultPass',
-    gatherers: [],
-  }, {
-    passName: 'mixedContentPass',
-    gatherers: ['mixed-content'],
-  }],
-
-  audits: [
-    'mixed-content',
-    'is-on-https',
-  ],
-
-  categories: {
-    mixedContent: {
-      title: 'Mixed Content',
-      description: 'These audits check which resources support HTTPS and ' +
-        'which are potentially blocking the page from switching to HTTPS due ' +
-        'to mixed-content warnings.',
-      auditRefs: [
-        {id: 'is-on-https', weight: 1},
-        {id: 'mixed-content', weight: 1},
-      ],
-    },
-  },
-};
-
-module.exports = mixedContentConfig;
-
 },{}],37:[function(require,module,exports){
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
+/**
+ * A config with no throttling used for tricky-metrics tests.
+ * Those class of tricky metrics need to use observed metrics and DevTools throttling has too many bugs
+ * to capture the nuances we're testing.
+ */
+
 /** @type {LH.Config.Json} */
-const perfConfig = {
+const noThrottlingConfig = {
   extends: 'lighthouse:default',
   settings: {
-    throttlingMethod: 'devtools',
+    throttlingMethod: 'provided',
     onlyCategories: ['performance'],
   },
 };
 
-module.exports = perfConfig;
+module.exports = noThrottlingConfig;
 
 },{}],38:[function(require,module,exports){
 
 },{}],39:[function(require,module,exports){
-(function (process){
-/**
- * This is the web browser implementation of `debug()`.
- *
- * Expose `debug()` as the module.
- */
-
-exports = module.exports = require('./debug');
-exports.log = log;
-exports.formatArgs = formatArgs;
-exports.save = save;
-exports.load = load;
-exports.useColors = useColors;
-exports.storage = 'undefined' != typeof chrome
-               && 'undefined' != typeof chrome.storage
-                  ? chrome.storage.local
-                  : localstorage();
-
-/**
- * Colors.
- */
-
-exports.colors = [
-  'lightseagreen',
-  'forestgreen',
-  'goldenrod',
-  'dodgerblue',
-  'darkorchid',
-  'crimson'
-];
-
-/**
- * Currently only WebKit-based Web Inspectors, Firefox >= v31,
- * and the Firebug extension (any Firefox version) are known
- * to support "%c" CSS customizations.
- *
- * TODO: add a `localStorage` variable to explicitly enable/disable colors
- */
-
-function useColors() {
-  // NB: In an Electron preload script, document will be defined but not fully
-  // initialized. Since we know we're in Chrome, we'll just detect this case
-  // explicitly
-  if (typeof window !== 'undefined' && window.process && window.process.type === 'renderer') {
-    return true;
-  }
-
-  // is webkit? http://stackoverflow.com/a/16459606/376773
-  // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
-  return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
-    // is firebug? http://stackoverflow.com/a/398120/376773
-    (typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
-    // is firefox >= v31?
-    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
-    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31) ||
-    // double check webkit in userAgent just in case we are in a worker
-    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/));
-}
-
-/**
- * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
- */
-
-exports.formatters.j = function(v) {
-  try {
-    return JSON.stringify(v);
-  } catch (err) {
-    return '[UnexpectedJSONParseError]: ' + err.message;
-  }
-};
-
-
-/**
- * Colorize log arguments if enabled.
- *
- * @api public
- */
-
-function formatArgs(args) {
-  var useColors = this.useColors;
-
-  args[0] = (useColors ? '%c' : '')
-    + this.namespace
-    + (useColors ? ' %c' : ' ')
-    + args[0]
-    + (useColors ? '%c ' : ' ')
-    + '+' + exports.humanize(this.diff);
-
-  if (!useColors) return;
-
-  var c = 'color: ' + this.color;
-  args.splice(1, 0, c, 'color: inherit')
-
-  // the final "%c" is somewhat tricky, because there could be other
-  // arguments passed either before or after the %c, so we need to
-  // figure out the correct index to insert the CSS into
-  var index = 0;
-  var lastC = 0;
-  args[0].replace(/%[a-zA-Z%]/g, function(match) {
-    if ('%%' === match) return;
-    index++;
-    if ('%c' === match) {
-      // we only are interested in the *last* %c
-      // (the user may have provided their own)
-      lastC = index;
-    }
-  });
-
-  args.splice(lastC, 0, c);
-}
-
-/**
- * Invokes `console.log()` when available.
- * No-op when `console.log` is not a "function".
- *
- * @api public
- */
-
-function log() {
-  // this hackery is required for IE8/9, where
-  // the `console.log` function doesn't have 'apply'
-  return 'object' === typeof console
-    && console.log
-    && Function.prototype.apply.call(console.log, console, arguments);
-}
-
-/**
- * Save `namespaces`.
- *
- * @param {String} namespaces
- * @api private
- */
-
-function save(namespaces) {
-  try {
-    if (null == namespaces) {
-      exports.storage.removeItem('debug');
-    } else {
-      exports.storage.debug = namespaces;
-    }
-  } catch(e) {}
-}
-
-/**
- * Load `namespaces`.
- *
- * @return {String} returns the previously persisted debug modes
- * @api private
- */
-
-function load() {
-  var r;
-  try {
-    r = exports.storage.debug;
-  } catch(e) {}
-
-  // If debug isn't set in LS, and we're in Electron, try to load $DEBUG
-  if (!r && typeof process !== 'undefined' && 'env' in process) {
-    r = process.env.DEBUG;
-  }
-
-  return r;
-}
-
-/**
- * Enable namespaces listed in `localStorage.debug` initially.
- */
-
-exports.enable(load());
-
-/**
- * Localstorage attempts to return the localstorage.
- *
- * This is necessary because safari throws
- * when a user disables cookies/localstorage
- * and you attempt to access it.
- *
- * @return {LocalStorage}
- * @api private
- */
-
-function localstorage() {
-  try {
-    return window.localStorage;
-  } catch (e) {}
-}
-
-}).call(this,require('_process'))
-},{"./debug":40,"_process":46}],40:[function(require,module,exports){
-
-/**
- * This is the common logic for both the Node.js and web browser
- * implementations of `debug()`.
- *
- * Expose `debug()` as the module.
- */
-
-exports = module.exports = createDebug.debug = createDebug['default'] = createDebug;
-exports.coerce = coerce;
-exports.disable = disable;
-exports.enable = enable;
-exports.enabled = enabled;
-exports.humanize = require('ms');
-
-/**
- * The currently active debug mode names, and names to skip.
- */
-
-exports.names = [];
-exports.skips = [];
-
-/**
- * Map of special "%n" handling functions, for the debug "format" argument.
- *
- * Valid key names are a single, lower or upper-case letter, i.e. "n" and "N".
- */
-
-exports.formatters = {};
-
-/**
- * Previous log timestamp.
- */
-
-var prevTime;
-
-/**
- * Select a color.
- * @param {String} namespace
- * @return {Number}
- * @api private
- */
-
-function selectColor(namespace) {
-  var hash = 0, i;
-
-  for (i in namespace) {
-    hash  = ((hash << 5) - hash) + namespace.charCodeAt(i);
-    hash |= 0; // Convert to 32bit integer
-  }
-
-  return exports.colors[Math.abs(hash) % exports.colors.length];
-}
-
-/**
- * Create a debugger with the given `namespace`.
- *
- * @param {String} namespace
- * @return {Function}
- * @api public
- */
-
-function createDebug(namespace) {
-
-  function debug() {
-    // disabled?
-    if (!debug.enabled) return;
-
-    var self = debug;
-
-    // set `diff` timestamp
-    var curr = +new Date();
-    var ms = curr - (prevTime || curr);
-    self.diff = ms;
-    self.prev = prevTime;
-    self.curr = curr;
-    prevTime = curr;
-
-    // turn the `arguments` into a proper Array
-    var args = new Array(arguments.length);
-    for (var i = 0; i < args.length; i++) {
-      args[i] = arguments[i];
-    }
-
-    args[0] = exports.coerce(args[0]);
-
-    if ('string' !== typeof args[0]) {
-      // anything else let's inspect with %O
-      args.unshift('%O');
-    }
-
-    // apply any `formatters` transformations
-    var index = 0;
-    args[0] = args[0].replace(/%([a-zA-Z%])/g, function(match, format) {
-      // if we encounter an escaped % then don't increase the array index
-      if (match === '%%') return match;
-      index++;
-      var formatter = exports.formatters[format];
-      if ('function' === typeof formatter) {
-        var val = args[index];
-        match = formatter.call(self, val);
-
-        // now we need to remove `args[index]` since it's inlined in the `format`
-        args.splice(index, 1);
-        index--;
-      }
-      return match;
-    });
-
-    // apply env-specific formatting (colors, etc.)
-    exports.formatArgs.call(self, args);
-
-    var logFn = debug.log || exports.log || console.log.bind(console);
-    logFn.apply(self, args);
-  }
-
-  debug.namespace = namespace;
-  debug.enabled = exports.enabled(namespace);
-  debug.useColors = exports.useColors();
-  debug.color = selectColor(namespace);
-
-  // env-specific initialization logic for debug instances
-  if ('function' === typeof exports.init) {
-    exports.init(debug);
-  }
-
-  return debug;
-}
-
-/**
- * Enables a debug mode by namespaces. This can include modes
- * separated by a colon and wildcards.
- *
- * @param {String} namespaces
- * @api public
- */
-
-function enable(namespaces) {
-  exports.save(namespaces);
-
-  exports.names = [];
-  exports.skips = [];
-
-  var split = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
-  var len = split.length;
-
-  for (var i = 0; i < len; i++) {
-    if (!split[i]) continue; // ignore empty strings
-    namespaces = split[i].replace(/\*/g, '.*?');
-    if (namespaces[0] === '-') {
-      exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
-    } else {
-      exports.names.push(new RegExp('^' + namespaces + '$'));
-    }
-  }
-}
-
-/**
- * Disable debug output.
- *
- * @api public
- */
-
-function disable() {
-  exports.enable('');
-}
-
-/**
- * Returns true if the given mode name is enabled, false otherwise.
- *
- * @param {String} name
- * @return {Boolean}
- * @api public
- */
-
-function enabled(name) {
-  var i, len;
-  for (i = 0, len = exports.skips.length; i < len; i++) {
-    if (exports.skips[i].test(name)) {
-      return false;
-    }
-  }
-  for (i = 0, len = exports.names.length; i < len; i++) {
-    if (exports.names[i].test(name)) {
-      return true;
-    }
-  }
-  return false;
-}
-
-/**
- * Coerce `val`.
- *
- * @param {Mixed} val
- * @return {Mixed}
- * @api private
- */
-
-function coerce(val) {
-  if (val instanceof Error) return val.stack || val.message;
-  return val;
-}
-
-},{"ms":45}],41:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -5049,7 +4788,7 @@ function functionBindPolyfill(context) {
   };
 }
 
-},{}],42:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 (function (process){
 /**
  * @license Copyright 2016 Google Inc. All Rights Reserved.
@@ -5294,7 +5033,400 @@ Log.getTimeEntries = () => marky.getEntries();
 module.exports = Log;
 
 }).call(this,require('_process'))
-},{"_process":46,"debug":39,"events":41,"marky":44}],43:[function(require,module,exports){
+},{"_process":46,"debug":41,"events":39,"marky":44}],41:[function(require,module,exports){
+(function (process){
+/**
+ * This is the web browser implementation of `debug()`.
+ *
+ * Expose `debug()` as the module.
+ */
+
+exports = module.exports = require('./debug');
+exports.log = log;
+exports.formatArgs = formatArgs;
+exports.save = save;
+exports.load = load;
+exports.useColors = useColors;
+exports.storage = 'undefined' != typeof chrome
+               && 'undefined' != typeof chrome.storage
+                  ? chrome.storage.local
+                  : localstorage();
+
+/**
+ * Colors.
+ */
+
+exports.colors = [
+  'lightseagreen',
+  'forestgreen',
+  'goldenrod',
+  'dodgerblue',
+  'darkorchid',
+  'crimson'
+];
+
+/**
+ * Currently only WebKit-based Web Inspectors, Firefox >= v31,
+ * and the Firebug extension (any Firefox version) are known
+ * to support "%c" CSS customizations.
+ *
+ * TODO: add a `localStorage` variable to explicitly enable/disable colors
+ */
+
+function useColors() {
+  // NB: In an Electron preload script, document will be defined but not fully
+  // initialized. Since we know we're in Chrome, we'll just detect this case
+  // explicitly
+  if (typeof window !== 'undefined' && window.process && window.process.type === 'renderer') {
+    return true;
+  }
+
+  // is webkit? http://stackoverflow.com/a/16459606/376773
+  // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
+  return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
+    // is firebug? http://stackoverflow.com/a/398120/376773
+    (typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
+    // is firefox >= v31?
+    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
+    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31) ||
+    // double check webkit in userAgent just in case we are in a worker
+    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/));
+}
+
+/**
+ * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
+ */
+
+exports.formatters.j = function(v) {
+  try {
+    return JSON.stringify(v);
+  } catch (err) {
+    return '[UnexpectedJSONParseError]: ' + err.message;
+  }
+};
+
+
+/**
+ * Colorize log arguments if enabled.
+ *
+ * @api public
+ */
+
+function formatArgs(args) {
+  var useColors = this.useColors;
+
+  args[0] = (useColors ? '%c' : '')
+    + this.namespace
+    + (useColors ? ' %c' : ' ')
+    + args[0]
+    + (useColors ? '%c ' : ' ')
+    + '+' + exports.humanize(this.diff);
+
+  if (!useColors) return;
+
+  var c = 'color: ' + this.color;
+  args.splice(1, 0, c, 'color: inherit')
+
+  // the final "%c" is somewhat tricky, because there could be other
+  // arguments passed either before or after the %c, so we need to
+  // figure out the correct index to insert the CSS into
+  var index = 0;
+  var lastC = 0;
+  args[0].replace(/%[a-zA-Z%]/g, function(match) {
+    if ('%%' === match) return;
+    index++;
+    if ('%c' === match) {
+      // we only are interested in the *last* %c
+      // (the user may have provided their own)
+      lastC = index;
+    }
+  });
+
+  args.splice(lastC, 0, c);
+}
+
+/**
+ * Invokes `console.log()` when available.
+ * No-op when `console.log` is not a "function".
+ *
+ * @api public
+ */
+
+function log() {
+  // this hackery is required for IE8/9, where
+  // the `console.log` function doesn't have 'apply'
+  return 'object' === typeof console
+    && console.log
+    && Function.prototype.apply.call(console.log, console, arguments);
+}
+
+/**
+ * Save `namespaces`.
+ *
+ * @param {String} namespaces
+ * @api private
+ */
+
+function save(namespaces) {
+  try {
+    if (null == namespaces) {
+      exports.storage.removeItem('debug');
+    } else {
+      exports.storage.debug = namespaces;
+    }
+  } catch(e) {}
+}
+
+/**
+ * Load `namespaces`.
+ *
+ * @return {String} returns the previously persisted debug modes
+ * @api private
+ */
+
+function load() {
+  var r;
+  try {
+    r = exports.storage.debug;
+  } catch(e) {}
+
+  // If debug isn't set in LS, and we're in Electron, try to load $DEBUG
+  if (!r && typeof process !== 'undefined' && 'env' in process) {
+    r = process.env.DEBUG;
+  }
+
+  return r;
+}
+
+/**
+ * Enable namespaces listed in `localStorage.debug` initially.
+ */
+
+exports.enable(load());
+
+/**
+ * Localstorage attempts to return the localstorage.
+ *
+ * This is necessary because safari throws
+ * when a user disables cookies/localstorage
+ * and you attempt to access it.
+ *
+ * @return {LocalStorage}
+ * @api private
+ */
+
+function localstorage() {
+  try {
+    return window.localStorage;
+  } catch (e) {}
+}
+
+}).call(this,require('_process'))
+},{"./debug":42,"_process":46}],42:[function(require,module,exports){
+
+/**
+ * This is the common logic for both the Node.js and web browser
+ * implementations of `debug()`.
+ *
+ * Expose `debug()` as the module.
+ */
+
+exports = module.exports = createDebug.debug = createDebug['default'] = createDebug;
+exports.coerce = coerce;
+exports.disable = disable;
+exports.enable = enable;
+exports.enabled = enabled;
+exports.humanize = require('ms');
+
+/**
+ * The currently active debug mode names, and names to skip.
+ */
+
+exports.names = [];
+exports.skips = [];
+
+/**
+ * Map of special "%n" handling functions, for the debug "format" argument.
+ *
+ * Valid key names are a single, lower or upper-case letter, i.e. "n" and "N".
+ */
+
+exports.formatters = {};
+
+/**
+ * Previous log timestamp.
+ */
+
+var prevTime;
+
+/**
+ * Select a color.
+ * @param {String} namespace
+ * @return {Number}
+ * @api private
+ */
+
+function selectColor(namespace) {
+  var hash = 0, i;
+
+  for (i in namespace) {
+    hash  = ((hash << 5) - hash) + namespace.charCodeAt(i);
+    hash |= 0; // Convert to 32bit integer
+  }
+
+  return exports.colors[Math.abs(hash) % exports.colors.length];
+}
+
+/**
+ * Create a debugger with the given `namespace`.
+ *
+ * @param {String} namespace
+ * @return {Function}
+ * @api public
+ */
+
+function createDebug(namespace) {
+
+  function debug() {
+    // disabled?
+    if (!debug.enabled) return;
+
+    var self = debug;
+
+    // set `diff` timestamp
+    var curr = +new Date();
+    var ms = curr - (prevTime || curr);
+    self.diff = ms;
+    self.prev = prevTime;
+    self.curr = curr;
+    prevTime = curr;
+
+    // turn the `arguments` into a proper Array
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
+    }
+
+    args[0] = exports.coerce(args[0]);
+
+    if ('string' !== typeof args[0]) {
+      // anything else let's inspect with %O
+      args.unshift('%O');
+    }
+
+    // apply any `formatters` transformations
+    var index = 0;
+    args[0] = args[0].replace(/%([a-zA-Z%])/g, function(match, format) {
+      // if we encounter an escaped % then don't increase the array index
+      if (match === '%%') return match;
+      index++;
+      var formatter = exports.formatters[format];
+      if ('function' === typeof formatter) {
+        var val = args[index];
+        match = formatter.call(self, val);
+
+        // now we need to remove `args[index]` since it's inlined in the `format`
+        args.splice(index, 1);
+        index--;
+      }
+      return match;
+    });
+
+    // apply env-specific formatting (colors, etc.)
+    exports.formatArgs.call(self, args);
+
+    var logFn = debug.log || exports.log || console.log.bind(console);
+    logFn.apply(self, args);
+  }
+
+  debug.namespace = namespace;
+  debug.enabled = exports.enabled(namespace);
+  debug.useColors = exports.useColors();
+  debug.color = selectColor(namespace);
+
+  // env-specific initialization logic for debug instances
+  if ('function' === typeof exports.init) {
+    exports.init(debug);
+  }
+
+  return debug;
+}
+
+/**
+ * Enables a debug mode by namespaces. This can include modes
+ * separated by a colon and wildcards.
+ *
+ * @param {String} namespaces
+ * @api public
+ */
+
+function enable(namespaces) {
+  exports.save(namespaces);
+
+  exports.names = [];
+  exports.skips = [];
+
+  var split = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
+  var len = split.length;
+
+  for (var i = 0; i < len; i++) {
+    if (!split[i]) continue; // ignore empty strings
+    namespaces = split[i].replace(/\*/g, '.*?');
+    if (namespaces[0] === '-') {
+      exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
+    } else {
+      exports.names.push(new RegExp('^' + namespaces + '$'));
+    }
+  }
+}
+
+/**
+ * Disable debug output.
+ *
+ * @api public
+ */
+
+function disable() {
+  exports.enable('');
+}
+
+/**
+ * Returns true if the given mode name is enabled, false otherwise.
+ *
+ * @param {String} name
+ * @return {Boolean}
+ * @api public
+ */
+
+function enabled(name) {
+  var i, len;
+  for (i = 0, len = exports.skips.length; i < len; i++) {
+    if (exports.skips[i].test(name)) {
+      return false;
+    }
+  }
+  for (i = 0, len = exports.names.length; i < len; i++) {
+    if (exports.names[i].test(name)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * Coerce `val`.
+ *
+ * @param {Mixed} val
+ * @return {Mixed}
+ * @api private
+ */
+
+function coerce(val) {
+  if (val instanceof Error) return val.stack || val.message;
+  return val;
+}
+
+},{"ms":45}],43:[function(require,module,exports){
 (function (global){
 /**
  * lodash (Custom Build) <https://lodash.com/>
