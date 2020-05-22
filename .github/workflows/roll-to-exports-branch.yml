@@ -59,4 +59,7 @@ jobs:
     - run: mv dist exports_output/dist
     - run: echo "${GITHUB_SHA::8}" > exports_output/commit_sha
     - run: ls exports_output
+
+    - run: git config --global user.email "action@github.com"
+    - run: git config --global user.name "Github Action"
     - run: yarn gh-pages --branch exports --dist exports_output
