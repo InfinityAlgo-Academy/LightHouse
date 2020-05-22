@@ -73,7 +73,7 @@ jobs:
     # Must use this action to authorize correctly w/ GitHub.
     - name: Push changes
       uses: ad-m/github-push-action@f18534
-      working-directory: cd node_modules/gh-pages/.cache/github.com!GoogleChrome!lighthouse
+      working-directory: node_modules/gh-pages/.cache/github.com!GoogleChrome!lighthouse
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: exports
