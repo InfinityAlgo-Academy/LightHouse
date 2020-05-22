@@ -59,14 +59,16 @@ jobs:
     - run: mkdir exports_output
     - run: mv dist exports_output/dist
     - run: echo "${GITHUB_SHA::8}" > exports_output/commit_sha
-    - run: ls exports_output
 
+    # gh-pages make a shallow copy of the repo and adds an unpublished commit.
+    - run: yarn gh-pages --branch exports --dist exports_output --no-push
+    - run: cd node_modules/gh-pages/.cache/git@github.com\!GoogleChrome\!lighthouse.git
+
+    # Must use this action to authorize correctly w/ GitHub.
     - run: git config --local user.email "action@github.com"
     - run: git config --local user.name "Github Action"
-    - run: yarn gh-pages --branch exports --dist exports_output # --no-push
-    # - run: git switch exports
-    # - name: Push changes
-    #   uses: ad-m/github-push-action@f18534
-    #   with:
-    #     github_token: ${{ secrets.GITHUB_TOKEN }}
-    #     branch: exports
+    - name: Push changes
+      uses: ad-m/github-push-action@f18534
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: exports
