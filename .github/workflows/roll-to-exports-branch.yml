@@ -59,4 +59,4 @@ jobs:
     - run: mv dist exports_output/dist
     - run: echo "${GITHUB_SHA::8}" > exports_output/commit_sha
     - run: ls exports_output
-    - run: yarn gh-pages --branch exports --src exports_output
+    - run: yarn gh-pages --branch exports --dist exports_output
