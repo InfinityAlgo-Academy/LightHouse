@@ -65,7 +65,7 @@ jobs:
     - run: git config --local user.name "Github Action"
     - run: yarn gh-pages --branch exports --dist exports_output --no-push
     - run: ls node_modules/gh-pages/.cache
-    - run: cd node_modules/gh-pages/.cache/github.com!GoogleChrome!lighthouse
+    - run: cd node_modules/gh-pages/.cache/file!Users!tschaub!test-gh-pages-remote
     - run: ls
     - run: git log
     - run: git status
