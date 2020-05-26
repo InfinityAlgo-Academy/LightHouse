@@ -52,7 +52,7 @@ function runA11yChecks() {
     },
     // @ts-ignore
   }).then(axeResult => {
-    // Scroll back to the top of the page so that element positions
+    // axe just scrolled the page, scroll back to the top of the page so that element positions
     // are relative to the top of the page
     document.documentElement.scrollTop = 0;
 
