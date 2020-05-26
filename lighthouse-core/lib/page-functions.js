@@ -303,6 +303,25 @@ function getNodeLabel(node) {
   return tagName;
 }
 
+/**
+ * @param {HTMLElement} element
+ * @param {LH.Artifacts.Rect}
+ */
+function getBoundingClientRect(element) {
+  const rect = element.getBoundingClientRect();
+  // if (rect.width > 0 && rect.height > 0) {
+  // The protocol does not serialize getters, so extract the values explicitly.
+  return {
+    top: rect.top,
+    bottom: rect.bottom,
+    left: rect.left,
+    right: rect.right,
+    width: rect.width,
+    height: rect.height,
+  };
+  // }
+}
+
 module.exports = {
   wrapRuntimeEvalErrorInBrowserString: wrapRuntimeEvalErrorInBrowser.toString(),
   registerPerformanceObserverInPageString: registerPerformanceObserverInPage.toString(),
@@ -318,4 +337,5 @@ module.exports = {
   getNodeLabel: getNodeLabel,
   getNodeLabelString: getNodeLabel.toString(),
   isPositionFixedString: isPositionFixed.toString(),
+  getBoundingClientRectString: getBoundingClientRect.toString(),
 };
