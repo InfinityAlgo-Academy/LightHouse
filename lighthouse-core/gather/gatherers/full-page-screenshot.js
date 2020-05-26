@@ -27,10 +27,13 @@ class FullPageScreenshot extends Gatherer {
     const width = await driver.evaluateAsync(`window.innerWidth`);
     const height = Math.min(metrics.contentSize.height, maxScreenshotHeight);
 
-    await driver.beginEmulation(passContext.settings, {
-      deviceScaleFactor: 1,
+    await driver.sendCommand('Emulation.setDeviceMetricsOverride', {
+      mobile: passContext.baseArtifacts.TestedAsMobileDevice,
       height,
       screenHeight: height,
+      width,
+      screenWidth: width,
+      deviceScaleFactor: 1,
     });
 
     const result = await driver.sendCommand('Page.captureScreenshot', {
@@ -73,28 +76,35 @@ class FullPageScreenshot extends Gatherer {
     // In case some other program is controlling emulation, try to remember what the device looks
     // like now and reset after gatherer is done.
     // TODO: use screen orientation?
-    // TODO: seems like this would be brittle. Better to introduce a "setEmulation" callback
-    // in the LH runner api, which for ex. puppeteer consumers would setup puppeteer emulation,
-    // and then just call that to reset?
-    const observedDeviceMetrics = (await driver.evaluateAsync(`(function() {
-      return {
-        // ??? mobile ???
-        mobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
-        width: document.documentElement.clientWidth,
-        height: document.documentElement.clientHeight,
-        screenWidth: window.screen.width,
-        screenHeight: window.screen.height,
-        deviceScaleFactor: window.devicePixelRatio,
-      };
-    })()`, {useIsolation: true}));
+    const lighthouseControlsEmulation = passContext.settings.emulatedFormFactor !== 'none' &&
+      !passContext.settings.internalDisableDeviceScreenEmulation;
+    const observedDeviceMetrics =
+      lighthouseControlsEmulation && await driver.evaluateAsync(`(function() {
+        return {
+          mobile: ${passContext.baseArtifacts.TestedAsMobileDevice}, // could easily be wrong
+          width: document.documentElement.clientWidth,
+          height: document.documentElement.clientHeight,
+          screenWidth: window.screen.width,
+          screenHeight: window.screen.height,
+          deviceScaleFactor: window.devicePixelRatio,
+        };
+      })()`, {useIsolation: true});
 
     try {
       return this.afterPass_(passContext);
     } finally {
       // Revert resized page.
-      console.log(observedDeviceMetrics);
-      await driver.sendCommand('Emulation.setDeviceMetricsOverride', observedDeviceMetrics);
-      // await driver.beginEmulation(passContext.settings);
+      if (lighthouseControlsEmulation) {
+        await driver.beginEmulation(passContext.settings);
+      } else {
+        // Best effort to reset emulation to what it was.
+        // https://github.com/GoogleChrome/lighthouse/pull/10716#discussion_r428970681
+        // TODO: seems like this would be brittle. Should at least work for devtools, but what
+        // about scripted puppeteer usages? Better to introduce a "setEmulation" callback
+        // in the LH runner api, which for ex. puppeteer consumers would setup puppeteer emulation,
+        // and then just call that to reset?
+        await driver.sendCommand('Emulation.setDeviceMetricsOverride', observedDeviceMetrics);
+      }
     }
   }
 }
