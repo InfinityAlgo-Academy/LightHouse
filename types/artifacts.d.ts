@@ -631,7 +631,7 @@ declare global {
 
       export interface FullPageScreenshot {
         /** base64 image URL  */
-        data: string;
+        url: string;
         width: number;
         height: number;
       }

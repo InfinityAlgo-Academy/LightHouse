@@ -13,7 +13,7 @@ const FULL_PAGE_SCREENSHOT_QUALITY = 30;
 // Maximum screenshot height in Chrome https://bugs.chromium.org/p/chromium/issues/detail?id=770769
 const MAX_SCREENSHOT_HEIGHT = 16384;
 // Maximum data URL size in Chrome https://bugs.chromium.org/p/chromium/issues/detail?id=69227
-const MAX_DATA_URL_SIZE = 2 * 1024 * 1024;
+const MAX_DATA_URL_SIZE = 2 * 1024 * 1024 - 1;
 
 class FullPageScreenshot extends Gatherer {
   /**
@@ -37,13 +37,10 @@ class FullPageScreenshot extends Gatherer {
       format: 'jpeg',
       quality: FULL_PAGE_SCREENSHOT_QUALITY,
     });
-    const data = 'data:image/jpeg;base64,' + result.data;
-
-    // Revert resized page
-    await driver.beginEmulation(passContext.settings);
+    const url = 'data:image/jpeg;base64,' + result.data;
 
     return {
-      data,
+      url,
       width,
       height,
     };
@@ -53,10 +50,10 @@ class FullPageScreenshot extends Gatherer {
    * @param {LH.Gatherer.PassContext} passContext
    * @return {Promise<LH.Artifacts.FullPageScreenshot>}
    */
-  async afterPass(passContext) {
+  async afterPass_(passContext) {
     let screenshot = await this._takeScreenshot(passContext, MAX_SCREENSHOT_HEIGHT);
 
-    if (screenshot.data.length > MAX_DATA_URL_SIZE) {
+    if (screenshot.url.length > MAX_DATA_URL_SIZE) {
       // Hitting the data URL size limit is rare, it only happens for pages on tall
       // desktop sites with lots of images.
       // So just cutting down the height a bit fixes the issue.
@@ -64,6 +61,41 @@ class FullPageScreenshot extends Gatherer {
     }
 
     return screenshot;
+  }
+
+  /**
+   * @param {LH.Gatherer.PassContext} passContext
+   * @return {Promise<LH.Artifacts.FullPageScreenshot>}
+   */
+  async afterPass(passContext) {
+    const {driver} = passContext;
+
+    // In case some other program is controlling emulation, try to remember what the device looks
+    // like now and reset after gatherer is done.
+    // TODO: use screen orientation?
+    // TODO: seems like this would be brittle. Better to introduce a "setEmulation" callback
+    // in the LH runner api, which for ex. puppeteer consumers would setup puppeteer emulation,
+    // and then just call that to reset?
+    const observedDeviceMetrics = (await driver.evaluateAsync(`(function() {
+      return {
+        // ??? mobile ???
+        mobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
+        width: document.documentElement.clientWidth,
+        height: document.documentElement.clientHeight,
+        screenWidth: window.screen.width,
+        screenHeight: window.screen.height,
+        deviceScaleFactor: window.devicePixelRatio,
+      };
+    })()`, {useIsolation: true}));
+
+    try {
+      return this.afterPass_(passContext);
+    } finally {
+      // Revert resized page.
+      console.log(observedDeviceMetrics);
+      await driver.sendCommand('Emulation.setDeviceMetricsOverride', observedDeviceMetrics);
+      // await driver.beginEmulation(passContext.settings);
+    }
   }
 }
 
