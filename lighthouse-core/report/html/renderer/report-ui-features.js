@@ -23,7 +23,7 @@
  * the report.
  */
 
-/* globals getFilenamePrefix Util */
+/* globals getFilenamePrefix Util ElementScreenshotRenderer */
 
 /** @typedef {import('./dom')} DOM */
 
@@ -82,6 +82,7 @@ class ReportUIFeatures {
     this._setupMediaQueryListeners();
     this._dropDown.setup(this.onDropDownMenuClick);
     this._setupThirdPartyFilter();
+    this._setupElementScreenshotOverlay();
     this._setUpCollapseDetailsAfterPrinting();
     this._resetUIState();
     this._document.addEventListener('keyup', this.onKeyUp);
@@ -289,6 +290,103 @@ class ReportUIFeatures {
         filterInput.click();
       }
     });
+  }
+
+  _setupElementScreenshotOverlay() {
+    const json = this.json;
+    const fullPageScreenshot = /** @type {LH.Artifacts.FullPageScreenshot | undefined} */ (
+      json.audits['full-page-screenshot'] && json.audits['full-page-screenshot'].details);
+    if (!fullPageScreenshot) return;
+
+    // TODO: should this just be in ElementScreenshotRenderer ?
+    for (const el of this._document.querySelectorAll('.lh-element-screenshot')) {
+      el.addEventListener('click', () => {
+        const overlay = this._dom.createElement('div');
+        // @ts-ignore: style is not read-only.
+        overlay.style = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          z-index: 1;
+          background: rgba(0, 0, 0, 0.7);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        `;
+        const boundingRect = {
+          width: Number(el.getAttribute('rectWidth')),
+          height: Number(el.getAttribute('rectHeight')),
+          left: Number(el.getAttribute('rectLeft')),
+          right: Number(el.getAttribute('rectRight')),
+          top: Number(el.getAttribute('rectTop')),
+          bottom: Number(el.getAttribute('rectBottom')),
+        };
+        overlay.appendChild(ElementScreenshotRenderer.render(
+          this._dom,
+          this._templateContext,
+          boundingRect,
+          fullPageScreenshot,
+          {
+            // TODO: should this be documentElement width?
+            width: window.innerWidth * 0.75,
+            height: window.innerHeight * 0.75,
+          }
+        ));
+        document.body.appendChild(overlay);
+        overlay.addEventListener('click', () => {
+          overlay.remove();
+        });
+      });
+    }
+
+    // element.addEventListener('click', () => {
+    //   console.log('click', elementScreenshot);
+    //   // for mobile
+    //   // todo: figure out if needs any other handlers like click to show, maybe disable hover?
+    //   if (elementScreenshot) {
+    //     console.log('removing');
+    //     elementScreenshot.remove();
+    //     elementScreenshot = null;
+    //   } else {
+    //     elementScreenshot = ElementScreenshotRenderer.render(
+    //       this._dom,
+    //       this._templateContext,
+    //       item,
+    //       this._fullPageScreenshotAuditResult
+    //     );
+    //     element.prepend(elementScreenshot);
+    //   }
+    // });
+
+    // /** @type {Element} */
+    // let elementScreenshot;
+    // element.addEventListener('mouseenter', () => {
+    //   // temporary hack so that click happens before mouseenter on mobile
+    //   setTimeout(() => {
+    //     console.log('mouseenter', elementScreenshot);
+    //     if (!elementScreenshot) {
+    //       elementScreenshot = ElementScreenshotRenderer.render(
+    //         this._dom,
+    //         this._templateContext,
+    //         item,
+    //         this._fullPageScreenshotAuditResult
+    //       );
+    //       element.prepend(elementScreenshot);
+    //     }
+    //   }, 0);
+    // });
+
+    // element.addEventListener('mouseleave', () => {
+    //   if (!window.keepForDebug) {
+    //     if (elementScreenshot) {
+    //       console.log('mouseleave', elementScreenshot);
+    //       elementScreenshot.remove();
+    //       elementScreenshot = null;
+    //     }
+    //   }
+    // });
   }
 
   /**

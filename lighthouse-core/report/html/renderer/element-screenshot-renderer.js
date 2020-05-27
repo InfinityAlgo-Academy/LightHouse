@@ -81,18 +81,16 @@ class ElementScreenshotRenderer {
   /**
    * @param {DOM} dom
    * @param {ParentNode} templateContext
-   * @param {LH.Audit.Details.NodeValue} item
+   * @param {LH.Artifacts.Rect} boundingRect
    * @param {LH.Artifacts.FullPageScreenshot} fullPageScreenshot
    * @param {Size} viewportSize
    * @return {Element}
    */
-  static render(dom, templateContext, item, fullPageScreenshot, viewportSize) {
+  static render(dom, templateContext, boundingRect, fullPageScreenshot, viewportSize) {
     const fullpageScreenshotUrl = fullPageScreenshot.url;
 
     const tmpl = dom.cloneTemplate('#tmpl-lh-element-screenshot', templateContext);
     const previewContainer = dom.find('.lh-element-screenshot', tmpl);
-
-    const boundingRect = /** @type {LH.Artifacts.Rect} */ (item.boundingRect);
 
     // TODO(cjamcl): Understand this :)
 
@@ -101,6 +99,13 @@ class ElementScreenshotRenderer {
       width: viewportSize.width,
       height: viewportSize.height,
     };
+
+    previewContainer.setAttribute('rectWidth', String(boundingRect.width));
+    previewContainer.setAttribute('rectHeight', String(boundingRect.height));
+    previewContainer.setAttribute('rectLeft', String(boundingRect.left));
+    previewContainer.setAttribute('rectRight', String(boundingRect.right));
+    previewContainer.setAttribute('rectTop', String(boundingRect.top));
+    previewContainer.setAttribute('rectBottom', String(boundingRect.bottom));
 
     // For large elements zoom out to better show where on the page they are
     /* todo: maybe only apply the width criterium in the preview screenshot */
@@ -114,8 +119,8 @@ class ElementScreenshotRenderer {
 
     const positionDetails = ElementScreenshotRenderer.getScreenshotPositionDetails(
       boundingRect,
-       viewport,
-       fullPageScreenshot
+      viewport,
+      fullPageScreenshot
     );
 
     const contentEl = /** @type {HTMLElement} */

@@ -476,92 +476,11 @@ class DetailsRenderer {
     const elementScreenshot = ElementScreenshotRenderer.render(
       this._dom,
       this._templateContext,
-      item,
+      item.boundingRect,
       fullPageScreenshot,
       {width: 147, height: 100}
     );
-
     element.prepend(elementScreenshot);
-
-    // TODO: should this go in report ui features?
-    elementScreenshot.addEventListener('click', () => {
-      const overlay = this._dom.createElement('div');
-      // @ts-ignore: style is not read-only.
-      overlay.style = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: 1;
-        background: rgba(0, 0, 0, 0.7);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      `;
-      overlay.appendChild(ElementScreenshotRenderer.render(
-        this._dom,
-        this._templateContext,
-        item,
-        fullPageScreenshot,
-        {
-          // TODO: should this be documentElement width?
-          width: window.innerWidth * 0.75,
-          height: window.innerHeight * 0.75,
-        }
-      ));
-      document.body.appendChild(overlay);
-      overlay.addEventListener('click', () => {
-        overlay.remove();
-      });
-    });
-
-    // element.addEventListener('click', () => {
-    //   console.log('click', elementScreenshot);
-    //   // for mobile
-    //   // todo: figure out if needs any other handlers like click to show, maybe disable hover?
-    //   if (elementScreenshot) {
-    //     console.log('removing');
-    //     elementScreenshot.remove();
-    //     elementScreenshot = null;
-    //   } else {
-    //     elementScreenshot = ElementScreenshotRenderer.render(
-    //       this._dom,
-    //       this._templateContext,
-    //       item,
-    //       this._fullPageScreenshotAuditResult
-    //     );
-    //     element.prepend(elementScreenshot);
-    //   }
-    // });
-
-    // /** @type {Element} */
-    // let elementScreenshot;
-    // element.addEventListener('mouseenter', () => {
-    //   // temporary hack so that click happens before mouseenter on mobile
-    //   setTimeout(() => {
-    //     console.log('mouseenter', elementScreenshot);
-    //     if (!elementScreenshot) {
-    //       elementScreenshot = ElementScreenshotRenderer.render(
-    //         this._dom,
-    //         this._templateContext,
-    //         item,
-    //         this._fullPageScreenshotAuditResult
-    //       );
-    //       element.prepend(elementScreenshot);
-    //     }
-    //   }, 0);
-    // });
-
-    // element.addEventListener('mouseleave', () => {
-    //   if (!window.keepForDebug) {
-    //     if (elementScreenshot) {
-    //       console.log('mouseleave', elementScreenshot);
-    //       elementScreenshot.remove();
-    //       elementScreenshot = null;
-    //     }
-    //   }
-    // });
 
     return element;
   }
