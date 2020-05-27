@@ -17,10 +17,9 @@
 
 const Audit = require('./audit.js');
 const NetworkRecords = require('../computed/network-records.js');
-const MainResource = require('../computed/main-resource.js');
 const JSBundles = require('../computed/js-bundles.js');
-const URL = require('../lib/url-shim.js');
 const i18n = require('../lib/i18n/i18n.js');
+const thirdPartyWeb = require('../lib/third-party-web.js');
 
 const UIStrings = {
   /** Title of a Lighthouse audit that tells the user about legacy polyfills and transforms used on the page. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -338,10 +337,6 @@ class LegacyJavascript extends Audit {
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[LegacyJavascript.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
-    const mainResource = await MainResource.request({
-      URL: artifacts.URL,
-      devtoolsLog,
-    }, context);
     const bundles = await JSBundles.request(artifacts, context);
 
     /** @type {Array<{url: string, signals: string[], locations: LH.Audit.Details.SourceLocationValue[]}>} */
@@ -384,9 +379,9 @@ class LegacyJavascript extends Audit {
     const details = Audit.makeTableDetails(headings, tableRows);
 
     // Only fail if first party code has legacy code.
-    // TODO(cjamcl): Use third-party-web.
+    const mainDocumentEntity = thirdPartyWeb.getEntity(artifacts.URL.finalUrl);
     const foundSignalInFirstPartyCode = tableRows.some(row => {
-      return URL.rootDomainsMatch(row.url, mainResource.url);
+      return thirdPartyWeb.isFirstParty(row.url, mainDocumentEntity);
     });
     return {
       score: foundSignalInFirstPartyCode ? 0 : 1,
