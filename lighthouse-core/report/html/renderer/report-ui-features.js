@@ -302,19 +302,7 @@ class ReportUIFeatures {
     for (const el of this._document.querySelectorAll('.lh-element-screenshot')) {
       el.addEventListener('click', () => {
         const overlay = this._dom.createElement('div');
-        // @ts-ignore: style is not read-only.
-        overlay.style = `
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100vw;
-          height: 100vh;
-          z-index: 1;
-          background: rgba(0, 0, 0, 0.7);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        `;
+        overlay.classList.add('lh-element-screenshot__overlay');
         const boundingRect = {
           width: Number(el.getAttribute('rectWidth')),
           height: Number(el.getAttribute('rectHeight')),

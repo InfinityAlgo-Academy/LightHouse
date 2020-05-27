@@ -1594,5 +1594,17 @@
   position: absolute;
   outline: 2px solid rgba(237, 150, 150, 1);
 }
+.lh-element-screenshot__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 /*# sourceURL=report-styles.css */
