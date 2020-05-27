@@ -91,9 +91,10 @@ class FullPageScreenshot extends Gatherer {
       })()`, {useIsolation: true});
 
     try {
-      return this.afterPass_(passContext);
+      return await this.afterPass_(passContext);
     } finally {
       // Revert resized page.
+
       if (lighthouseControlsEmulation) {
         await driver.beginEmulation(passContext.settings);
       } else {

@@ -8,14 +8,6 @@
 /** @typedef {import('../gather/driver.js')} Driver */
 
 /**
- * @typedef EmulationParams
- * @property {string} userAgent
- * @property {LH.Crdp.Emulation.SetDeviceMetricsOverrideRequest} metrics
- * @property {boolean} touchEnabled
- * @property {boolean=} internalDisableDeviceScreenEmulation
- */
-
-/**
  * @type {LH.Crdp.Emulation.SetDeviceMetricsOverrideRequest}
  */
 const MOTOG4_EMULATION_METRICS = {
@@ -72,8 +64,7 @@ const NO_CPU_THROTTLE_METRICS = {
   rate: 1,
 };
 
-/** @type {Record<string, EmulationParams>} */
-const EMULATION_PRESETS = {
+const emulationParams = {
   mobile: {
     userAgent: MOTOG4_USERAGENT,
     metrics: MOTOG4_EMULATION_METRICS,
@@ -87,11 +78,15 @@ const EMULATION_PRESETS = {
 };
 
 /**
+ *
  * @param {Driver} driver
- * @param {EmulationParams} params
+ * @param {LH.Config.Settings} settings
  * @return {Promise<void>}
  */
-async function emulate(driver, params) {
+async function emulate(driver, settings) {
+  if (!settings.emulatedFormFactor || settings.emulatedFormFactor === 'none') return;
+  const params = emulationParams[settings.emulatedFormFactor];
+
   // In DevTools, emulation is applied before Lighthouse starts (to deal with viewport emulation bugs)
   // As a result, we don't double-apply viewport emulation (devtools sets `internalDisableDeviceScreenEmulation`).
   // UA emulation, however, is lost in the protocol handover from devtools frontend to the audits_worker. So it's always applied.
@@ -100,11 +95,12 @@ async function emulate(driver, params) {
   await driver.sendCommand('Network.enable');
   await driver.sendCommand('Network.setUserAgentOverride', {userAgent: params.userAgent});
 
-  if (!params.internalDisableDeviceScreenEmulation) {
+  if (!settings.internalDisableDeviceScreenEmulation) {
     await driver.sendCommand('Emulation.setDeviceMetricsOverride', params.metrics);
     await driver.sendCommand('Emulation.setTouchEmulationEnabled', {enabled: params.touchEnabled});
   }
 }
+
 
 /**
  * @param {Driver} driver
@@ -167,7 +163,6 @@ module.exports = {
   enableCPUThrottling,
   disableCPUThrottling,
   goOffline,
-  EMULATION_PRESETS,
   MOBILE_USERAGENT: MOTOG4_USERAGENT,
   DESKTOP_USERAGENT,
 };
