@@ -822,7 +822,7 @@
     "message": "T̂h́êśê D́ÔḾ êĺêḿêńt̂ś ĉón̂t́r̂íb̂út̂é m̂óŝt́ t̂ó t̂h́ê ĆL̂Ś ôf́ t̂h́ê ṕâǵê."
   },
   "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount, plural,\n    =0 {N̂ó êĺêḿêńt̂ś f̂óûńd̂}\n    =1 {1 él̂ém̂én̂t́ f̂óûńd̂}\n    other {# él̂ém̂én̂t́ŝ f́ôún̂d́}\n    }"
+    "message": "{nodeCount, plural,\n    =1 {1 êĺêḿêńt̂ f́ôún̂d́}\n    other {# êĺêḿêńt̂ś f̂óûńd̂}\n    }"
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Âv́ôíd̂ ĺâŕĝé l̂áŷóût́ ŝh́îf́t̂ś"
@@ -850,6 +850,15 @@
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
     "message": "P̂áĝé l̂óâd́ îś f̂áŝt́ êńôúĝh́ ôń m̂ób̂íl̂é n̂ét̂ẃôŕk̂ś"
+  },
+  "lighthouse-core/audits/long-tasks.js | description": {
+    "message": "L̂íŝt́ŝ t́ĥé l̂ón̂ǵêśt̂ t́âśk̂ś ôń t̂h́ê ḿâín̂ t́ĥŕêád̂, úŝéf̂úl̂ f́ôŕ îd́êńt̂íf̂ýîńĝ ẃôŕŝt́ ĉón̂t́r̂íb̂út̂ór̂ś t̂ó îńp̂út̂ d́êĺâý. [L̂éâŕn̂ ḿôŕê](https://web.dev/long-tasks-devtools)"
+  },
+  "lighthouse-core/audits/long-tasks.js | displayValue": {
+    "message": "{itemCount, plural,\n  =1 {# l̂ón̂ǵ t̂áŝḱ f̂óûńd̂}\n  other {# ĺôńĝ t́âśk̂ś f̂óûńd̂}\n  }"
+  },
+  "lighthouse-core/audits/long-tasks.js | title": {
+    "message": "Âv́ôíd̂ ĺôńĝ ḿâín̂-t́ĥŕêád̂ t́âśk̂ś"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | columnCategory": {
     "message": "Ĉát̂éĝór̂ý"
@@ -1220,12 +1229,6 @@
   "lighthouse-core/audits/timing-budget.js | title": {
     "message": "T̂ím̂ín̂ǵ b̂úd̂ǵêt́"
   },
-  "lighthouse-core/audits/user-timings.js | columnDuration": {
-    "message": "D̂úr̂át̂íôń"
-  },
-  "lighthouse-core/audits/user-timings.js | columnStartTime": {
-    "message": "Ŝt́âŕt̂ T́îḿê"
-  },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "T̂ýp̂é"
   },
@@ -1457,6 +1460,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Ĉáĉh́ê T́T̂Ĺ"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnDuration": {
+    "message": "D̂úr̂át̂íôń"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnElement": {
     "message": "Êĺêḿêńt̂"
   },
@@ -1483,6 +1489,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | columnSource": {
     "message": "Ŝóûŕĉé"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnStartTime": {
+    "message": "Ŝt́âŕt̂ T́îḿê"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "T̂ím̂é Ŝṕêńt̂"

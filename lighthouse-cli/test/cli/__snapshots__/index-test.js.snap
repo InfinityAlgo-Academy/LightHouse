@@ -157,6 +157,9 @@ Object {
       "path": "layout-shift-elements",
     },
     Object {
+      "path": "long-tasks",
+    },
+    Object {
       "path": "manual/pwa-cross-browser",
     },
     Object {
@@ -967,6 +970,11 @@ Object {
         Object {
           "group": "diagnostics",
           "id": "no-document-write",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "long-tasks",
           "weight": 0,
         },
         Object {
