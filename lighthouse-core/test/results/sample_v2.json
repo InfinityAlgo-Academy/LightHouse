@@ -1716,29 +1716,8 @@
       "title": "Largest Contentful Paint element",
       "description": "This is the element that was identified as the Largest Contentful Paint. [Learn More](https://web.dev/lighthouse-largest-contentful-paint)",
       "score": null,
-      "scoreDisplayMode": "informative",
-      "displayValue": "1 element found",
-      "details": {
-        "type": "table",
-        "headings": [
-          {
-            "key": "node",
-            "itemType": "node",
-            "text": "Element"
-          }
-        ],
-        "items": [
-          {
-            "node": {
-              "type": "node",
-              "path": "1,HTML,1,BODY,0,DIV,1,P",
-              "selector": "body > div > p",
-              "nodeLabel": "This domain is for use in illustrative examples in documents. You may use this …",
-              "snippet": "<p class=\"paragraph\">"
-            }
-          }
-        ]
-      }
+      "scoreDisplayMode": "error",
+      "errorMessage": "Could not locate: undefined"
     },
     "layout-shift-elements": {
       "id": "layout-shift-elements",
@@ -6436,19 +6415,6 @@
       "lighthouse-core/audits/largest-contentful-paint-element.js | description": [
         "audits[largest-contentful-paint-element].description"
       ],
-      "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": [
-        {
-          "values": {
-            "itemCount": 1
-          },
-          "path": "audits[largest-contentful-paint-element].displayValue"
-        }
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | columnElement": [
-        "audits[largest-contentful-paint-element].details.headings[0].text",
-        "audits[layout-shift-elements].details.headings[0].text",
-        "audits[dom-size].details.headings[1].text"
-      ],
       "lighthouse-core/audits/layout-shift-elements.js | title": [
         "audits[layout-shift-elements].title"
       ],
@@ -6462,6 +6428,10 @@
           },
           "path": "audits[layout-shift-elements].displayValue"
         }
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnElement": [
+        "audits[layout-shift-elements].details.headings[0].text",
+        "audits[dom-size].details.headings[1].text"
       ],
       "lighthouse-core/audits/long-tasks.js | title": [
         "audits[long-tasks].title"
