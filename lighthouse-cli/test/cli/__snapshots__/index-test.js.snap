@@ -1346,6 +1346,9 @@ Object {
         Object {
           "path": "trace-elements",
         },
+        Object {
+          "path": "inspector-issues",
+        },
       ],
       "loadFailureMode": "fatal",
       "networkQuietThresholdMs": 1000,

@@ -110,6 +110,8 @@ declare global {
       Fonts: Artifacts.Font[];
       /** Information on poorly sized font usage and the text affected by it. */
       FontSize: Artifacts.FontSize;
+      /** The issues surfaced in the devtools Issues panel */
+      InspectorIssues: Artifacts.InspectorIssues;
       /** The page's document body innerText if loaded with JavaScript disabled. */
       HTMLWithoutJavaScript: {bodyText: string, hasNoScript: boolean};
       /** Whether the page ended up on an HTTPS page after attempting to load the HTTP version. */
@@ -489,6 +491,10 @@ declare global {
         outerWidth: number;
         outerHeight: number;
         devicePixelRatio: number;
+      }
+
+      export interface InspectorIssues {
+        mixedContent: Crdp.Audits.MixedContentIssueDetails[];
       }
 
       // Computed artifact types below.

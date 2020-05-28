@@ -160,6 +160,7 @@ const defaultConfig = {
       'seo/tap-targets',
       'accessibility',
       'trace-elements',
+      'inspector-issues',
     ],
   },
   {
