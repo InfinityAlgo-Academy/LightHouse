@@ -28,19 +28,27 @@ function internalErf_(x) {
  * quantile (1-percentile) of that distribution at value. All
  * arguments should be in the same units (e.g. milliseconds).
  *
- * @param {number} median
- * @param {number} falloff
+ * @param {{median: number, podr?: number, p10?: number}} curve
  * @param {number} value
  * @return The complement of the quantile at value.
  * @customfunction
  */
-function QUANTILE_AT_VALUE(median, falloff, value) {
+function QUANTILE_AT_VALUE(ref, value) {
+  var median = ref.median;
+  var podr = ref.podr;
+  var p10 = ref.p10;
+
+  if (!podr) {
+    podr = derivePodrFromP10(median, p10);
+  }
+
   var location = Math.log(median);
 
-  // The "falloff" value specified the location of the smaller of the positive
+  // The "podr" value specified the location of the smaller of the positive
   // roots of the third derivative of the log-normal CDF. Calculate the shape
   // parameter in terms of that value and the median.
-  var logRatio = Math.log(falloff / median);
+  // See https://www.desmos.com/calculator/2t1ugwykrl
+  var logRatio = Math.log(podr / median);
   var shape = Math.sqrt(1 - 3 * logRatio - Math.sqrt((logRatio - 3) * (logRatio - 3) - 8)) / 2;
 
   var standardizedX = (Math.log(value) - location) / (Math.SQRT2 * shape);
@@ -65,22 +73,37 @@ function internalErfInv_(x) {
 }
 
 /**
- * Calculates the value at the given quantile. Median, falloff, and
+ * Calculates the value at the given quantile. Median, podr, and
  * expected value should all be in the same units (e.g. milliseconds).
  * quantile should be within [0,1].
  *
- * @param {number} median
- * @param {number} falloff
- * @param {number} quantile
+ * @param {{median: number, podr?: number, p10?: number}} curve
  * @return The value at this quantile.
  * @customfunction
  */
-function VALUE_AT_QUANTILE(median, falloff, quantile) {
+function VALUE_AT_QUANTILE(ref, quantile) {
+  var median = ref.median;
+  var podr = ref.podr;
+  var p10 = ref.p10;
+
+  if (!podr) {
+    podr = derivePodrFromP10(median, p10);
+  }
+
   var location = Math.log(median);
-  var logRatio = Math.log(falloff / median);
+  var logRatio = Math.log(podr / median);
   var shape = Math.sqrt(1 - 3 * logRatio - Math.sqrt((logRatio - 3) * (logRatio - 3) - 8)) / 2;
 
   return Math.exp(location + shape * Math.SQRT2 * internalErfInv_(1 - 2 * quantile));
+}
+
+// https://www.desmos.com/calculator/oqlvmezbze
+function derivePodrFromP10(median, p10) {
+  var u = Math.log(median);
+  var shape = Math.abs(Math.log(p10) - u) / (Math.SQRT2 * 0.9061938024368232);
+  var inner1 = -3 * shape - Math.sqrt(4 + shape * shape);
+  var podr = Math.exp(u + shape/2 * inner1);
+  return podr;
 }
 
 // blingjs
@@ -126,40 +149,65 @@ function calculateRating(score) {
   return rating;
 }
 
-/**
- * V6 weights
- */
+var metrics = {
+  FCP: {auditId: 'first-contentful-paint', name: 'First Contentful Paint'},
+  SI: {auditId: 'speed-index', name: 'Speed Index'},
+  LCP: {auditId: 'largest-contentful-paint', name: 'Largest Contentful Paint'},
+  TTI: {auditId: 'interactive', name: 'Time to Interactive'},
+  TBT: {auditId: 'total-blocking-time', name: 'Total Blocking Time'},
+  CLS: {auditId: 'cumulative-layout-shift', name: 'Cumulative Layout Shift', units: 'unitless'},
+  FMP: {auditId: 'first-meaningful-paint', name: 'First Meaningful Paint'},
+  FCI: {auditId: 'first-cpu-idle', name: 'First CPU Idle'},
+};
 
-var weights = {
-  v5: {
-    FCP: 0.2,
-    SI: 0.26666,
-    FMP: 0.066666,
-    TTI: 0.33333,
-    FCI: 0.133333,
-  },
+var curves = {
   v6: {
-    FCP: 0.15,
-    SI:  0.15,
-    LCP: 0.25,
-    TTI: 0.15,
-    TBT: 0.25,
-    CLS: 0.05
+    mobile: {
+      FCP: {weight: 0.15, median: 4000, p10: 2336},
+      SI: {weight: 0.15, median: 5800, p10: 3387},
+      LCP: {weight: 0.25, median: 4000, p10: 2500},
+      TTI: {weight: 0.15, median: 7300, p10: 3785},
+      TBT: {weight: 0.25, median: 600, p10: 287},
+      CLS: {weight: 0.05, median: 0.25, p10: 0.1},
+    },
+    desktop: {
+      FCP: {weight: 0.15, median: 1600, p10: 934},
+      SI: {weight: 0.15, median: 2300, p10: 1311},
+      LCP: {weight: 0.25, median: 2400, p10: 1200},
+      TTI: {weight: 0.15, median: 4500, p10: 2468},
+      TBT: {weight: 0.25, median: 350, p10: 150},
+      CLS: {weight: 0.05, median: 0, p10: 0.1},
+    },
+  },
+  v5: {
+    FCP: {weight: 0.2, median: 4000, podr: 2000},
+    SI: {weight: 0.26666, median: 5800, podr: 2900},
+    FMP: {weight: 0.066666, median: 4000, podr: 2000},
+    TTI: {weight: 0.33333, median: 7300, podr: 2900},
+    FCI: {weight: 0.133333, median: 6500, podr: 2900},
   },
 };
 
 /**
- * V5/v6 scoring curves
+ * @param {Record<string, {weight: number, median: number, podr: number}>} curves
  */
-var scoring = {
-  FCP: {median: 4000, falloff: 2000, auditId: 'first-contentful-paint', name: 'First Contentful Paint'},
-  FMP: {median: 4000, falloff: 2000, auditId: 'first-meaningful-paint', name: 'First Meaningful Paint'},
-  SI: {median: 5800, falloff: 2900, auditId: 'speed-index', name: 'Speed Index'},
-  TTI: {median: 7300, falloff: 2900, auditId: 'interactive', name: 'Time to Interactive'},
-  FCI: {median: 6500, falloff: 2900, auditId: 'first-cpu-idle', name: 'First CPU Idle'},
-  TBT: {median: 600, falloff: 200, auditId: 'total-blocking-time', name: 'Total Blocking Time'},
-  LCP: {median: 4000, falloff: 2000, auditId: 'largest-contentful-paint', name: 'Largest Contentful Paint'},
-  CLS: {median: 0.25, falloff: 0.054, auditId: 'cumulative-layout-shift', name: 'Cumulative Layout Shift', units: 'unitless'},
+function makeScoringGuide(curves) {
+  var scoringGuide = {};
+  for (var [key, curve] of Object.entries(curves)) {
+    scoringGuide[key] = Object.assign({}, metrics[key], curve);
+  }
+  return scoringGuide;
+}
+
+var scoringGuides = {
+  v6: {
+    mobile: makeScoringGuide(curves.v6.mobile),
+    desktop: makeScoringGuide(curves.v6.desktop),
+  },
+  v5: {
+    mobile: makeScoringGuide(curves.v5),
+    desktop: makeScoringGuide(curves.v5),
+  },
 };
 
 function updateGauge(wrapper, category) {
@@ -413,19 +461,9 @@ function _setPerfGaugeExplodey(wrapper, category) {
 
 var params = new URLSearchParams(location.hash.substr(1));
 
-function determineMinMax(metricId) {
-  var metricScoring = scoring[metricId];
-
-  var valueAtScore100 = VALUE_AT_QUANTILE(
-    metricScoring.median,
-    metricScoring.falloff,
-    0.995
-  );
-  var valueAtScore5 = VALUE_AT_QUANTILE(
-    metricScoring.median,
-    metricScoring.falloff,
-    0.05
-  );
+function determineMinMax(metricScoring) {
+  var valueAtScore100 = VALUE_AT_QUANTILE(metricScoring, 0.995);
+  var valueAtScore5 = VALUE_AT_QUANTILE(metricScoring, 0.05);
 
   var min = Math.floor(valueAtScore100 / 1000) * 1000;
   var max = Math.ceil(valueAtScore5 / 1000) * 1000;
@@ -461,41 +499,51 @@ var Metric = /*@__PURE__*/(function (Component) {
   Metric.prototype = Object.create( Component && Component.prototype );
   Metric.prototype.constructor = Metric;
 
-  Metric.prototype.onValueChange = function onValueChange (e, id) {
+  Metric.prototype.onValueChange = function onValueChange (e) {
     var obj;
+
+    var ref = this.props;
+    var id = ref.id;
 
     this.props.app.setState(( obj = {}, obj[id] = e.target.valueAsNumber, obj ));
   };
 
-  Metric.prototype.onScoreChange = function onScoreChange (e, id) {
+  Metric.prototype.onScoreChange = function onScoreChange (e) {
     var obj;
 
+    var ref = this.props;
+    var id = ref.id;
+    var metricScoring = ref.metricScoring;
+
     var score = e.target.valueAsNumber;
-    var metricScoring = scoring[id];
-    var computedValue = VALUE_AT_QUANTILE(metricScoring.median, metricScoring.falloff, score / 100);
+    var computedValue = VALUE_AT_QUANTILE(metricScoring, score / 100);
 
     // Clamp because we can end up with Infinity
-    var ref = determineMinMax(id);
-    var min = ref.min;
-    var max = ref.max;
+    var ref$1 = determineMinMax(metricScoring);
+    var min = ref$1.min;
+    var max = ref$1.max;
     computedValue = Math.max(Math.min(computedValue, max), min);
 
-    this.props.app.setState(( obj = {}, obj[id] = Math.round(computedValue), obj ));
+    if (metricScoring.units !== 'unitless') {
+      computedValue = Math.round(computedValue);
+    }
+
+    this.props.app.setState(( obj = {}, obj[id] = computedValue, obj ));
   };
 
   Metric.prototype.render = function render (ref) {
     var this$1 = this;
     var id = ref.id;
     var value = ref.value;
-    var weight = ref.weight;
-    var maxWeight = ref.maxWeight;
     var score = ref.score;
+    var weightMax = ref.weightMax;
+    var metricScoring = ref.metricScoring;
 
-    var ref$1 = determineMinMax(id);
+    var ref$1 = determineMinMax(metricScoring);
     var min = ref$1.min;
     var max = ref$1.max;
     var step = ref$1.step;
-    var metricScoring = scoring[id];
+    var weight = metricScoring.weight;
     var valueFormatted = metricScoring.units === 'unitless' ?
       value.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) :
       // TODO: Use https://github.com/tc39/proposal-unified-intl-numberformat#i-units when Safari/FF support it
@@ -508,13 +556,13 @@ var Metric = /*@__PURE__*/(function (Component) {
       ),
       h( 'td', null, (id + " (" + (metricScoring.name) + ")") ),
       h( 'td', null,
-        h( 'input', { type: "range", min: min, value: value, max: max, step: step, class: (id + " metric-value"), onInput: function (e) { return this$1.onValueChange(e, id); } }),
+        h( 'input', { type: "range", min: min, value: value, max: max, step: step, class: (id + " metric-value"), onInput: function (e) { return this$1.onValueChange(e); } }),
         h( 'output', { class: "${id} value-output" }, valueFormatted)
       ),
       h( 'td', null ),
 
       h( 'td', null,
-        h( 'input', { type: "range", class: (id + " metric-score"), style: ("width: " + (weight / maxWeight * 100) + "%"), value: score, onInput: function (e) { return this$1.onScoreChange(e, id); } }),
+        h( 'input', { type: "range", class: (id + " metric-score"), style: ("width: " + (weight / weightMax * 100) + "%"), value: score, onInput: function (e) { return this$1.onScoreChange(e); } }),
         h( 'output', { class: (id + " score-output") }, score)
       ),
 
@@ -592,26 +640,28 @@ var ScoringGuide = /*@__PURE__*/(function (Component) {
     var app = ref.app;
     var name = ref.name;
     var values = ref.values;
-    var weights = ref.weights;
+    var scoring = ref.scoring;
 
     // Make sure weights total to 1
-    var weightSum = Object.values(weights).reduce(function (agg, val) { return (agg += val); });
+    var weights = Object.values(scoring).map(function (metricScoring) { return metricScoring.weight; });
+    var weightSum = weights.reduce(function (agg, val) { return (agg += val); });
+    var weightMax = Math.max.apply(Math, Object.values(weights));
     console.assert(weightSum > 0.999 && weightSum < 1.0001); // lol rounding is hard.
 
-    var metrics = Object.keys(weights).map(function (id) {
+    var metricsData = Object.keys(scoring).map(function (id) {
       var metricScoring = scoring[id];
       return {
         id: id,
-        weight: weights[id],
+        metricScoring: metricScoring,
         value: values[id],
-        score: Math.round(QUANTILE_AT_VALUE(metricScoring.median, metricScoring.falloff, values[id]) * 100),
+        score: Math.round(QUANTILE_AT_VALUE(metricScoring, values[id]) * 100),
       };
     });
 
-    var auditRefs = metrics.map(function (metric) {
+    var auditRefs = metricsData.map(function (metric) {
       return {
         id: metric.id,
-        weight: metric.weight,
+        weight: metric.metricScoring.weight,
         group: 'metrics',
         result: {
           score: metric.score / 100,
@@ -620,7 +670,6 @@ var ScoringGuide = /*@__PURE__*/(function (Component) {
     });
 
     var score = arithmeticMean(auditRefs);
-    var maxWeight = Math.max.apply(Math, Object.values(weights));
 
     var title = h( 'h2', null, name );
     if (name === 'v6') {
@@ -641,8 +690,8 @@ var ScoringGuide = /*@__PURE__*/(function (Component) {
           )
         ),
         h( 'tbody', null,
-          metrics.map(function (metric) {
-            return h( Metric, Object.assign({}, { app: app, maxWeight: maxWeight }, metric))
+          metricsData.map(function (metric) {
+            return h( Metric, Object.assign({}, { app: app, weightMax: weightMax, metricScoring: metric.metricScoring }, metric))
           })
         )
       ),
@@ -688,7 +737,7 @@ var App = /*@__PURE__*/(function (Component) {
         var id = ref[0];
         var value = ref[1];
 
-        return [scoring[id].auditId,value];
+        return [metrics[id].auditId, value];
       });
       var params = new URLSearchParams(auditIdValuePairs);
       url.hash = params.toString();
@@ -703,11 +752,13 @@ var App = /*@__PURE__*/(function (Component) {
     var versions = params.has('version') ?
       params.getAll('version').map(getMajorVersion) :
       ['6', '5'];
-    var scoringGuides = versions.map(function (version) {
-      return h( ScoringGuide, { app: this$1, name: ("v" + version), values: this$1.state, weights: weights[("v" + version)] });
+    var device = params.get('device') || 'mobile';
+    var scoringGuideEls = versions.map(function (version) {
+      var key = "v" + version;
+      return h( ScoringGuide, { app: this$1, name: key, values: this$1.state, scoring: scoringGuides[key][device] });
     });
     return h( 'div', null,
-      scoringGuides
+      scoringGuideEls
     )
   };
 
@@ -718,12 +769,13 @@ function getInitialState() {
   var state = {};
 
   // Set defaults as median.
-  for (var id in scoring) {
-    state[id] = scoring[id].median;
+  var metricScorings = Object.assign({}, scoringGuides.v6.desktop, scoringGuides.v5.desktop);
+  for (var id in metricScorings) {
+    state[id] = metricScorings[id].median;
   }
 
   // Load from query string.
-  for (var [id$1, metric] of Object.entries(scoring)) {
+  for (var [id$1, metric] of Object.entries(metrics)) {
     if (!params.has(metric.auditId)) { continue; }
     var value = Number(params.get(metric.auditId));
     state[id$1] = value;
