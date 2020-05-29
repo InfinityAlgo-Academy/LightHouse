@@ -85,11 +85,9 @@
       "id": "largest-contentful-paint",
       "title": "Largest Contentful Paint",
       "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn More](https://web.dev/lighthouse-largest-contentful-paint)",
-      "score": 0.28,
-      "scoreDisplayMode": "numeric",
-      "numericValue": 4927.278,
-      "numericUnit": "millisecond",
-      "displayValue": "4.9 s"
+      "score": null,
+      "scoreDisplayMode": "error",
+      "errorMessage": "Something went wrong with recording the trace over your page load. Please run Lighthouse again. (NO_LCP)"
     },
     "first-meaningful-paint": {
       "id": "first-meaningful-paint",
@@ -1369,8 +1367,6 @@
             "firstContentfulPaintTs": 185607289047,
             "firstMeaningfulPaint": 3969,
             "firstMeaningfulPaintTs": 185607289048,
-            "largestContentfulPaint": 4927,
-            "largestContentfulPaintTs": 185608247190,
             "firstCPUIdle": 4927,
             "firstCPUIdleTs": 185608247190,
             "interactive": 4927,
@@ -4119,7 +4115,7 @@
         }
       ],
       "id": "performance",
-      "score": 0.64
+      "score": null
     },
     "accessibility": {
       "title": "Accessibility",
@@ -5941,12 +5937,6 @@
         },
         {
           "values": {
-            "timeInMs": 4927.278
-          },
-          "path": "audits[largest-contentful-paint].displayValue"
-        },
-        {
-          "values": {
             "timeInMs": 3969.136
           },
           "path": "audits[first-meaningful-paint].displayValue"
@@ -5987,6 +5977,14 @@
       ],
       "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": [
         "audits[largest-contentful-paint].description"
+      ],
+      "lighthouse-core/lib/lh-error.js | badTraceRecording": [
+        {
+          "values": {
+            "errorCode": "NO_LCP"
+          },
+          "path": "audits[largest-contentful-paint].errorMessage"
+        }
       ],
       "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": [
         "audits[first-meaningful-paint].title",

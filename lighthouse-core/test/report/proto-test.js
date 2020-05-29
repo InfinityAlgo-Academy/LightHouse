@@ -71,6 +71,7 @@ describeIfProtoExists('round trip JSON comparison to everything', () => {
   });
 
   it('has the same JSON overall', () => {
+    console.log(roundTripJson.audits);
     expect(processedLHR).toMatchObject(roundTripJson);
   });
 });
