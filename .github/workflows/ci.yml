@@ -60,7 +60,7 @@ jobs:
 
     # Run tests that require headfull Chrome.
     - run: sudo apt-get install xvfb
-    - run: xvfb-run --auto-servernum yarn unit
+    - run: xvfb-run --auto-servernum yarn jest report/proto-test.js
     # - run: xvfb-run --auto-servernum yarn test-clients
     # - run: xvfb-run --auto-servernum yarn smoke -j=1 --retries=2
     # - run: xvfb-run --auto-servernum yarn test-bundle
