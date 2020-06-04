@@ -83,6 +83,9 @@ message LighthouseResult {
 
     // The benchmark index that indicates rough device class
     google.protobuf.DoubleValue benchmark_index = 3;
+
+    // Post-emulation, did Lighthouse consider this environment to be "mobile"?
+    bool tested_as_mobile_device = 4;
   }
 
   // The environment that the audit was run in

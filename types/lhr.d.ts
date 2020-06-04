@@ -27,6 +27,8 @@ declare global {
       networkUserAgent: string;
       /** The benchmark index number that indicates rough device class. */
       benchmarkIndex: number;
+      /** Post-emulation, did Lighthouse consider this environment to be "mobile"? */
+      testedAsMobileDevice: boolean;
     }
 
     /**

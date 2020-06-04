@@ -21,7 +21,7 @@ class Diagnostics extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: 'Diagnostics',
       description: 'Collection of useful page vitals.',
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'TestedAsMobileDevice'],
+      requiredArtifacts: ['traces', 'devtoolsLogs'],
     };
   }
 
@@ -33,7 +33,6 @@ class Diagnostics extends Audit {
   static async audit(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const testedAsMobileDevice = artifacts.TestedAsMobileDevice;
     const tasks = await MainThreadTasksComputed.request(trace, context);
     const records = await NetworkRecordsComputed.request(devtoolsLog, context);
     const analysis = await NetworkAnalysisComputed.request(devtoolsLog, context);
@@ -63,7 +62,6 @@ class Diagnostics extends Audit {
       totalByteWeight,
       totalTaskTime,
       mainDocumentTransferSize,
-      testedAsMobileDevice,
     };
 
     return {

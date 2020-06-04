@@ -3,7 +3,8 @@
   "environment": {
     "networkUserAgent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/66.0.3359.30 Mobile Safari/537.36",
     "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3358.0 Safari/537.36",
-    "benchmarkIndex": 1000
+    "benchmarkIndex": 1000,
+    "testedAsMobileDevice": true
   },
   "lighthouseVersion": "6.0.0",
   "fetchTime": "2018-03-13T00:55:45.840Z",
@@ -928,8 +929,7 @@
             "maxServerLatency": 572.829,
             "totalByteWeight": 160738,
             "totalTaskTime": 1548.5690000000002,
-            "mainDocumentTransferSize": 12640,
-            "testedAsMobileDevice": true
+            "mainDocumentTransferSize": 12640
           }
         ]
       }

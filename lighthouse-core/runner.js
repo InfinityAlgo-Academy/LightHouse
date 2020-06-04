@@ -129,6 +129,7 @@ class Runner {
           networkUserAgent: artifacts.NetworkUserAgent,
           hostUserAgent: artifacts.HostUserAgent,
           benchmarkIndex: artifacts.BenchmarkIndex,
+          testedAsMobileDevice: artifacts.TestedAsMobileDevice,
         },
         lighthouseVersion,
         fetchTime: artifacts.fetchTime,
