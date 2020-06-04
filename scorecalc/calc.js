@@ -755,7 +755,7 @@ var App = /*@__PURE__*/(function (Component) {
     var device = params.get('device');
     // Default to mobile if it's not matching our known emulatedFormFactors. https://github.com/GoogleChrome/lighthouse/blob/master/types/externs.d.ts#:~:text=emulatedFormFactor
     if (device && device !== 'mobile' && device !== 'desktop') {
-      console.warning(("Invalid emulatedFormFactors value: " + device + ". Fallback to mobile scoring."));
+      console.warn(("Invalid emulatedFormFactors value: " + device + ". Fallback to mobile scoring."));
       device = 'mobile';
     } else if (!device) {
       // Device not expressed in the params
