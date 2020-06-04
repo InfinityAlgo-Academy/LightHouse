@@ -176,7 +176,7 @@ var curves = {
       LCP: {weight: 0.25, median: 2400, p10: 1200},
       TTI: {weight: 0.15, median: 4500, p10: 2468},
       TBT: {weight: 0.25, median: 350, p10: 150},
-      CLS: {weight: 0.05, median: 0, p10: 0.1},
+      CLS: {weight: 0.05, median: 0.25, p10: 0.1},
     },
   },
   v5: {
@@ -755,7 +755,7 @@ var App = /*@__PURE__*/(function (Component) {
     var device = params.get('device');
     // Default to mobile if it's not matching our known emulatedFormFactors. https://github.com/GoogleChrome/lighthouse/blob/master/types/externs.d.ts#:~:text=emulatedFormFactor
     if (device && device !== 'mobile' && device !== 'desktop') {
-      console.log('Invalid emulatedFormFactors value:', device, '. Fallback to mobile scoring.');
+      console.warning(("Invalid emulatedFormFactors value: " + device + ". Fallback to mobile scoring."));
       device = 'mobile';
     } else if (!device) {
       // Device not expressed in the params
