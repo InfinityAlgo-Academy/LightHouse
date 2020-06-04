@@ -928,7 +928,8 @@
             "maxServerLatency": 572.829,
             "totalByteWeight": 160738,
             "totalTaskTime": 1548.5690000000002,
-            "mainDocumentTransferSize": 12640
+            "mainDocumentTransferSize": 12640,
+            "testedAsMobileDevice": true
           }
         ]
       }
