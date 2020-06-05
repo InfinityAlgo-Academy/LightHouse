@@ -419,21 +419,38 @@ class Driver {
   }
 
   /**
-   * Deprecated: renamed to `evaluate`.
-   * @param {string} expression
-   * @param {{useIsolation?: boolean}=} options
-   * @return {Promise<*>}
-   */
-  async evaluateAsync(expression, options = {}) {
-    return this.evaluate(expression, options);
-  }
-
-  /**
    * Evaluate an expression in the context of the current page. If useIsolation is true, the expression
    * will be evaluated in a content script that has access to the page's DOM but whose JavaScript state
    * is completely separate.
    * Returns a promise that resolves on the expression's value.
-   * See the documentation for `createEvalCode` in `page-functions.js`.
+   * @template T
+   * @param {string} expression
+   * @param {{useIsolation?: boolean, args?: T[], deps?: Function[]}=} options
+   * @return {Promise<*>}
+   */
+  async evaluateAsync(expression, options = {}) {
+    const contextId =
+      options.useIsolation ? await this._getOrCreateIsolatedContextId() : undefined;
+
+    try {
+      // `await` is not redundant here because we want to `catch` the async errors
+      return await this._evaluateInContext(expression, contextId);
+    } catch (err) {
+      // If we were using isolation and the context disappeared on us, retry one more time.
+      if (contextId && err.message.includes('Cannot find context')) {
+        this._clearIsolatedContextId();
+        const freshContextId = await this._getOrCreateIsolatedContextId();
+        return this._evaluateInContext(expression, freshContextId);
+      }
+
+      throw err;
+    }
+  }
+
+  /**
+   * Evaluate an expression (optionally defined in a structured manner, see `createEvalCode`
+   * in `page-functions.js`).
+   * See `evaluateAsync`.
    * @template T, R
    * @param {string | ((...args: T[]) => R)} expressionOrMainFn
    * @param {{useIsolation?: boolean, args?: T[], deps?: Function[]}=} options
@@ -446,7 +463,7 @@ class Driver {
         ...options,
       });
     }
-    return this._evaluate(expressionOrMainFn, options);
+    return this.evaluateAsync(expressionOrMainFn, options);
   }
 
   /**
