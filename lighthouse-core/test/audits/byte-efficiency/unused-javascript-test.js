@@ -79,7 +79,13 @@ describe('UnusedJavaScript audit', () => {
   const recordInline = generateRecord(`${domain}/inline.html`, 1000000, 'Document');
 
   it('should merge duplicates', async () => {
-    const context = {computedCache: new Map()};
+    const context = {
+      computedCache: new Map(),
+      options: {
+        // Lower the threshold so we don't need huge resources to make a test.
+        unusedThreshold: 2000,
+      },
+    };
     const networkRecords = [recordA, recordB, recordInline];
     const artifacts = {
       JsUsage: makeJsUsage(scriptA, scriptB, scriptUnknown, inlineA, inlineB),
@@ -107,6 +113,8 @@ describe('UnusedJavaScript audit', () => {
     const context = {
       computedCache: new Map(),
       options: {
+        // Lower the threshold so we don't need huge resources to make a test.
+        unusedThreshold: 2000,
         // Default threshold is 512, but is lowered here so that squoosh generates more
         // results.
         bundleSourceUnusedThreshold: 100,
