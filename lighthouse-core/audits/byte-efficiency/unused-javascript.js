@@ -41,13 +41,13 @@ function commonPrefix(strings) {
 }
 
 /**
- * @param {string[]} strings
+ * @param {string} string
  * @param {string} commonPrefix
- * @return {string[]}
+ * @return {string}
  */
-function trimCommonPrefix(strings, commonPrefix) {
-  if (!commonPrefix) return strings;
-  return strings.map(s => s.startsWith(commonPrefix) ? '…' + s.slice(commonPrefix.length) : s);
+function trimCommonPrefix(string, commonPrefix) {
+  if (!commonPrefix) return string;
+  return string.startsWith(commonPrefix) ? '…' + string.slice(commonPrefix.length) : string;
 }
 
 /**
@@ -96,6 +96,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       const transfer = ByteEfficiencyAudit
         .estimateTransferSize(networkRecord, unusedJsSummary.totalBytes, 'Script');
       const transferRatio = transfer / unusedJsSummary.totalBytes;
+      /** @type {LH.Audit.ByteEfficiencyItem} */
       const item = {
         url: unusedJsSummary.url,
         totalBytes: Math.round(transferRatio * unusedJsSummary.totalBytes),
@@ -122,11 +123,16 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
           .filter(d => d.unused >= bundleSourceUnusedThreshold);
 
         const commonSourcePrefix = commonPrefix([...bundle.map._sourceInfos.keys()]);
-        Object.assign(item, {
-          sources: trimCommonPrefix(topUnusedSourceSizes.map(d => d.source), commonSourcePrefix),
-          sourceBytes: topUnusedSourceSizes.map(d => d.total),
-          sourceWastedBytes: topUnusedSourceSizes.map(d => d.unused),
-        });
+        item.subItems = {
+          type: 'subitems',
+          items: topUnusedSourceSizes.map(({source, unused, total}) => {
+            return {
+              source: trimCommonPrefix(source, commonSourcePrefix),
+              sourceBytes: total,
+              sourceWastedBytes: unused,
+            };
+          }),
+        };
       }
 
       items.push(item);
@@ -136,9 +142,9 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       items,
       headings: [
         /* eslint-disable max-len */
-        {key: 'url', valueType: 'url', subRows: {key: 'sources', valueType: 'code'}, label: str_(i18n.UIStrings.columnURL)},
-        {key: 'totalBytes', valueType: 'bytes', subRows: {key: 'sourceBytes'}, label: str_(i18n.UIStrings.columnTransferSize)},
-        {key: 'wastedBytes', valueType: 'bytes', subRows: {key: 'sourceWastedBytes'}, label: str_(i18n.UIStrings.columnWastedBytes)},
+        {key: 'url', valueType: 'url', subHeading: {key: 'source', valueType: 'code'}, label: str_(i18n.UIStrings.columnURL)},
+        {key: 'totalBytes', valueType: 'bytes', subHeading: {key: 'sourceBytes'}, label: str_(i18n.UIStrings.columnTransferSize)},
+        {key: 'wastedBytes', valueType: 'bytes', subHeading: {key: 'sourceWastedBytes'}, label: str_(i18n.UIStrings.columnWastedBytes)},
         /* eslint-enable max-len */
       ],
     };
