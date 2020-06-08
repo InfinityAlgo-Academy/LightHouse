@@ -67,7 +67,7 @@ function runA11yChecks() {
         // @ts-ignore - getOuterHTMLSnippet put into scope via stringification
         const rect = getBoundingClientRect(node.element);
         if (rect.width > 0 && rect.height > 0) {
-          node.getBoundingClientRect = rect;
+          node.boundingRect = rect;
         }
 
         // @ts-ignore - getNodeLabel put into scope via stringification
