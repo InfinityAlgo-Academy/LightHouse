@@ -34,6 +34,12 @@ const config = {
       'source-maps',
     ],
   }],
+  audits: [
+    {path: 'byte-efficiency/unused-javascript', options: {
+      // Lower the threshold so we don't need huge resources to make a test.
+      unusedThreshold: 2000,
+    }},
+  ],
 };
 
 module.exports = config;

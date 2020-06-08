@@ -1598,7 +1598,7 @@
       "description": "To set budgets for the quantity and size of page resources, add a budget.json file. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).",
       "score": null,
       "scoreDisplayMode": "informative",
-      "displayValue": "16 requests • 157 KB",
+      "displayValue": "16 requests • 157 KiB",
       "details": {
         "type": "table",
         "headings": [
@@ -1803,6 +1803,48 @@
               "nodeLabel": "Aside from that, I’ve been busy working on Lighthouse, performance metrics, too…",
               "snippet": "<p>"
             }
+          }
+        ]
+      }
+    },
+    "long-tasks": {
+      "id": "long-tasks",
+      "title": "Avoid long main-thread tasks",
+      "description": "Lists the longest tasks on the main thread, useful for identifying worst contributors to input delay. [Learn more](https://web.dev/long-tasks-devtools)",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "displayValue": "4 long tasks found",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "url",
+            "itemType": "url",
+            "text": "URL"
+          },
+          {
+            "key": "duration",
+            "itemType": "ms",
+            "granularity": 1,
+            "text": "Duration"
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+            "duration": 983.081
+          },
+          {
+            "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
+            "duration": 127.282
+          },
+          {
+            "url": "Unattributable",
+            "duration": 123.752
+          },
+          {
+            "url": "http://localhost:10200/zone.js",
+            "duration": 96.198
           }
         ]
       }
@@ -2752,7 +2794,7 @@
       "scoreDisplayMode": "numeric",
       "numericValue": 160738,
       "numericUnit": "byte",
-      "displayValue": "Total size was 157 KB",
+      "displayValue": "Total size was 157 KiB",
       "details": {
         "type": "table",
         "headings": [
@@ -2912,7 +2954,7 @@
       "scoreDisplayMode": "numeric",
       "numericValue": 150,
       "numericUnit": "millisecond",
-      "displayValue": "Potential savings of 30 KB",
+      "displayValue": "Potential savings of 30 KiB",
       "warnings": [],
       "details": {
         "type": "opportunity",
@@ -2987,7 +3029,7 @@
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
       "numericUnit": "millisecond",
-      "displayValue": "Potential savings of 9 KB",
+      "displayValue": "Potential savings of 9 KiB",
       "warnings": [],
       "details": {
         "type": "opportunity",
@@ -3052,7 +3094,7 @@
       "scoreDisplayMode": "numeric",
       "numericValue": 300,
       "numericUnit": "millisecond",
-      "displayValue": "Potential savings of 63 KB",
+      "displayValue": "Potential savings of 63 KiB",
       "details": {
         "type": "opportunity",
         "headings": [
@@ -4182,6 +4224,11 @@
         },
         {
           "id": "no-document-write",
+          "weight": 0,
+          "group": "diagnostics"
+        },
+        {
+          "id": "long-tasks",
           "weight": 0,
           "group": "diagnostics"
         },
@@ -5347,6 +5394,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:long-tasks",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:pwa-cross-browser",
         "duration": 100,
         "entryType": "measure"
@@ -6178,6 +6231,7 @@
         "audits[bootup-time].details.headings[0].text",
         "audits[network-rtt].details.headings[0].text",
         "audits[network-server-latency].details.headings[0].text",
+        "audits[long-tasks].details.headings[0].text",
         "audits[uses-long-cache-ttl].details.headings[0].text",
         "audits[total-byte-weight].details.headings[0].text",
         "audits[render-blocking-resources].details.headings[0].label",
@@ -6561,6 +6615,23 @@
           },
           "path": "audits[layout-shift-elements].displayValue"
         }
+      ],
+      "lighthouse-core/audits/long-tasks.js | title": [
+        "audits[long-tasks].title"
+      ],
+      "lighthouse-core/audits/long-tasks.js | description": [
+        "audits[long-tasks].description"
+      ],
+      "lighthouse-core/audits/long-tasks.js | displayValue": [
+        {
+          "values": {
+            "itemCount": 4
+          },
+          "path": "audits[long-tasks].displayValue"
+        }
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnDuration": [
+        "audits[long-tasks].details.headings[1].text"
       ],
       "lighthouse-core/audits/manual/pwa-cross-browser.js | title": [
         "audits[pwa-cross-browser].title"

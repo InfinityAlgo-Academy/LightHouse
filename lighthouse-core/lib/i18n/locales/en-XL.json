@@ -432,7 +432,7 @@
     "message": "L̂ár̂ǵê ńêt́ŵór̂ḱ p̂áŷĺôád̂ś ĉóŝt́ ûśêŕŝ ŕêál̂ ḿôńêý âńd̂ ár̂é ĥíĝh́l̂ý ĉór̂ŕêĺât́êd́ ŵít̂h́ l̂ón̂ǵ l̂óâd́ t̂ím̂éŝ. [Ĺêár̂ń m̂ór̂é](https://web.dev/total-byte-weight)."
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | displayValue": {
-    "message": "T̂ót̂ál̂ śîźê ẃâś {totalBytes, number, bytes} K̂B́"
+    "message": "T̂ót̂ál̂ śîźê ẃâś {totalBytes, number, bytes} K̂íB̂"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | failureTitle": {
     "message": "Âv́ôíd̂ én̂ór̂ḿôúŝ ńêt́ŵór̂ḱ p̂áŷĺôád̂ś"
@@ -822,7 +822,7 @@
     "message": "T̂h́êśê D́ÔḾ êĺêḿêńt̂ś ĉón̂t́r̂íb̂út̂é m̂óŝt́ t̂ó t̂h́ê ĆL̂Ś ôf́ t̂h́ê ṕâǵê."
   },
   "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount, plural,\n    =0 {N̂ó êĺêḿêńt̂ś f̂óûńd̂}\n    =1 {1 él̂ém̂én̂t́ f̂óûńd̂}\n    other {# él̂ém̂én̂t́ŝ f́ôún̂d́}\n    }"
+    "message": "{nodeCount, plural,\n    =1 {1 êĺêḿêńt̂ f́ôún̂d́}\n    other {# êĺêḿêńt̂ś f̂óûńd̂}\n    }"
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Âv́ôíd̂ ĺâŕĝé l̂áŷóût́ ŝh́îf́t̂ś"
@@ -831,7 +831,7 @@
     "message": "P̂ól̂ýf̂íl̂ĺŝ án̂d́ t̂ŕâńŝf́ôŕm̂ś êńâb́l̂é l̂éĝáĉý b̂ŕôẃŝér̂ś t̂ó ûśê ńêẃ Ĵáv̂áŜćr̂íp̂t́ f̂éât́ûŕêś. Ĥóŵév̂ér̂, ḿâńŷ ár̂én̂'t́ n̂éĉéŝśâŕŷ f́ôŕ m̂ód̂ér̂ń b̂ŕôẃŝér̂ś. F̂ór̂ ýôúr̂ b́ûńd̂ĺêd́ Ĵáv̂áŜćr̂íp̂t́, âd́ôṕt̂ á m̂ód̂ér̂ń ŝćr̂íp̂t́ d̂ép̂ĺôým̂én̂t́ ŝt́r̂át̂éĝý ûśîńĝ ḿôd́ûĺê/ńôḿôd́ûĺê f́êát̂úr̂é d̂ét̂éĉt́îón̂ t́ô ŕêd́ûćê t́ĥé âḿôún̂t́ ôf́ ĉód̂é ŝh́îṕp̂éd̂ t́ô ḿôd́êŕn̂ b́r̂óŵśêŕŝ, ẃĥíl̂é r̂ét̂áîńîńĝ śûṕp̂ór̂t́ f̂ór̂ ĺêǵâćŷ b́r̂óŵśêŕŝ. [Ĺêár̂ń M̂ór̂é](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
   },
   "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "L̂éĝáĉý Ĵáv̂áŜćr̂íp̂t́"
+    "message": "Âv́ôíd̂ śêŕv̂ín̂ǵ l̂éĝáĉý Ĵáv̂áŜćr̂íp̂t́ t̂ó m̂ód̂ér̂ń b̂ŕôẃŝér̂ś"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "Â f́âśt̂ ṕâǵê ĺôád̂ óv̂ér̂ á ĉél̂ĺûĺâŕ n̂ét̂ẃôŕk̂ én̂śûŕêś â ǵôód̂ ḿôb́îĺê úŝér̂ éx̂ṕêŕîén̂ćê. [Ĺêár̂ń m̂ór̂é](https://web.dev/load-fast-enough-for-pwa)."
@@ -850,6 +850,15 @@
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
     "message": "P̂áĝé l̂óâd́ îś f̂áŝt́ êńôúĝh́ ôń m̂ób̂íl̂é n̂ét̂ẃôŕk̂ś"
+  },
+  "lighthouse-core/audits/long-tasks.js | description": {
+    "message": "L̂íŝt́ŝ t́ĥé l̂ón̂ǵêśt̂ t́âśk̂ś ôń t̂h́ê ḿâín̂ t́ĥŕêád̂, úŝéf̂úl̂ f́ôŕ îd́êńt̂íf̂ýîńĝ ẃôŕŝt́ ĉón̂t́r̂íb̂út̂ór̂ś t̂ó îńp̂út̂ d́êĺâý. [L̂éâŕn̂ ḿôŕê](https://web.dev/long-tasks-devtools)"
+  },
+  "lighthouse-core/audits/long-tasks.js | displayValue": {
+    "message": "{itemCount, plural,\n  =1 {# l̂ón̂ǵ t̂áŝḱ f̂óûńd̂}\n  other {# ĺôńĝ t́âśk̂ś f̂óûńd̂}\n  }"
+  },
+  "lighthouse-core/audits/long-tasks.js | title": {
+    "message": "Âv́ôíd̂ ĺôńĝ ḿâín̂-t́ĥŕêád̂ t́âśk̂ś"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | columnCategory": {
     "message": "Ĉát̂éĝór̂ý"
@@ -975,7 +984,7 @@
     "message": "T̂ó ŝét̂ b́ûd́ĝét̂ś f̂ór̂ t́ĥé q̂úâńt̂ít̂ý âńd̂ śîźê óf̂ ṕâǵê ŕêśôúr̂ćêś, âd́d̂ á b̂úd̂ǵêt́.ĵśôń f̂íl̂é. [L̂éâŕn̂ ḿôŕê](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
   "lighthouse-core/audits/resource-summary.js | displayValue": {
-    "message": "{requestCount, plural, =1 {1 r̂éq̂úêśt̂ • {byteCount, number, bytes} ḰB̂} other {# ŕêq́ûéŝt́ŝ • {byteCount, number, bytes} ḰB̂}}"
+    "message": "{requestCount, plural, =1 {1 r̂éq̂úêśt̂ • {byteCount, number, bytes} ḰîB́} other {# r̂éq̂úêśt̂ś • {byteCount, number, bytes} K̂íB̂}}"
   },
   "lighthouse-core/audits/resource-summary.js | title": {
     "message": "K̂éêṕ r̂éq̂úêśt̂ ćôún̂t́ŝ ĺôẃ âńd̂ t́r̂án̂śf̂ér̂ śîźêś ŝḿâĺl̂"
@@ -1220,12 +1229,6 @@
   "lighthouse-core/audits/timing-budget.js | title": {
     "message": "T̂ím̂ín̂ǵ b̂úd̂ǵêt́"
   },
-  "lighthouse-core/audits/user-timings.js | columnDuration": {
-    "message": "D̂úr̂át̂íôń"
-  },
-  "lighthouse-core/audits/user-timings.js | columnStartTime": {
-    "message": "Ŝt́âŕt̂ T́îḿê"
-  },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "T̂ýp̂é"
   },
@@ -1457,6 +1460,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Ĉáĉh́ê T́T̂Ĺ"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnDuration": {
+    "message": "D̂úr̂át̂íôń"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnElement": {
     "message": "Êĺêḿêńt̂"
   },
@@ -1484,6 +1490,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnSource": {
     "message": "Ŝóûŕĉé"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnStartTime": {
+    "message": "Ŝt́âŕt̂ T́îḿê"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "T̂ím̂é Ŝṕêńt̂"
   },
@@ -1503,7 +1512,7 @@
     "message": "Ĉúm̂úl̂át̂ív̂é L̂áŷóût́ Ŝh́îf́t̂"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "P̂ót̂én̂t́îál̂ śâv́îńĝś ôf́ {wastedBytes, number, bytes} K̂B́"
+    "message": "P̂ót̂én̂t́îál̂ śâv́îńĝś ôf́ {wastedBytes, number, bytes} K̂íB̂"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "P̂ót̂én̂t́îál̂ śâv́îńĝś ôf́ {wastedMs, number, milliseconds} m̂ś"

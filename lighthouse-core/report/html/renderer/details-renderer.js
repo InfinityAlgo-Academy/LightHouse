@@ -82,8 +82,11 @@ class DetailsRenderer {
    */
   _renderBytes(details) {
     // TODO: handle displayUnit once we have something other than 'kb'
-    const value = Util.i18n.formatBytesToKB(details.value, details.granularity);
-    return this._renderText(value);
+    // Note that 'kb' is historical and actually represents KiB.
+    const value = Util.i18n.formatBytesToKiB(details.value, details.granularity);
+    const textEl = this._renderText(value);
+    textEl.title = Util.i18n.formatBytes(details.value);
+    return textEl;
   }
 
   /**
@@ -162,7 +165,7 @@ class DetailsRenderer {
 
   /**
    * @param {string} text
-   * @return {Element}
+   * @return {HTMLDivElement}
    */
   _renderText(text) {
     const element = this._dom.createElement('div', 'lh-text');

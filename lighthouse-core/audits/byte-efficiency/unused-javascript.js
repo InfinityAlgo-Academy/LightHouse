@@ -20,7 +20,7 @@ const UIStrings = {
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
-const IGNORE_THRESHOLD_IN_BYTES = 2048;
+const IGNORE_THRESHOLD_IN_BYTES = 20 * 1024;
 const IGNORE_BUNDLE_SOURCE_THRESHOLD_IN_BYTES = 512;
 
 /**
@@ -80,8 +80,10 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
    */
   static async audit_(artifacts, networkRecords, context) {
     const bundles = artifacts.SourceMaps ? await JsBundles.request(artifacts, context) : [];
-    const {bundleSourceUnusedThreshold = IGNORE_BUNDLE_SOURCE_THRESHOLD_IN_BYTES} =
-      context.options || {};
+    const {
+      unusedThreshold = IGNORE_THRESHOLD_IN_BYTES,
+      bundleSourceUnusedThreshold = IGNORE_BUNDLE_SOURCE_THRESHOLD_IN_BYTES,
+    } = context.options || {};
 
     const items = [];
     for (const [url, scriptCoverages] of Object.entries(artifacts.JsUsage)) {
@@ -101,7 +103,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
         wastedPercent: unusedJsSummary.wastedPercent,
       };
 
-      if (item.wastedBytes <= IGNORE_THRESHOLD_IN_BYTES) continue;
+      if (item.wastedBytes <= unusedThreshold) continue;
 
       // Augment with bundle data.
       if (bundle && unusedJsSummary.sourcesWastedBytes) {

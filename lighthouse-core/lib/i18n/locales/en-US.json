@@ -432,7 +432,7 @@
     "message": "Large network payloads cost users real money and are highly correlated with long load times. [Learn more](https://web.dev/total-byte-weight)."
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | displayValue": {
-    "message": "Total size was {totalBytes, number, bytes} KB"
+    "message": "Total size was {totalBytes, number, bytes} KiB"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | failureTitle": {
     "message": "Avoid enormous network payloads"
@@ -822,7 +822,7 @@
     "message": "These DOM elements contribute most to the CLS of the page."
   },
   "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount, plural,\n    =0 {No elements found}\n    =1 {1 element found}\n    other {# elements found}\n    }"
+    "message": "{nodeCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Avoid large layout shifts"
@@ -831,7 +831,7 @@
     "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
   },
   "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "Legacy JavaScript"
+    "message": "Avoid serving legacy JavaScript to modern browsers"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "A fast page load over a cellular network ensures a good mobile user experience. [Learn more](https://web.dev/load-fast-enough-for-pwa)."
@@ -850,6 +850,15 @@
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
     "message": "Page load is fast enough on mobile networks"
+  },
+  "lighthouse-core/audits/long-tasks.js | description": {
+    "message": "Lists the longest tasks on the main thread, useful for identifying worst contributors to input delay. [Learn more](https://web.dev/long-tasks-devtools)"
+  },
+  "lighthouse-core/audits/long-tasks.js | displayValue": {
+    "message": "{itemCount, plural,\n  =1 {# long task found}\n  other {# long tasks found}\n  }"
+  },
+  "lighthouse-core/audits/long-tasks.js | title": {
+    "message": "Avoid long main-thread tasks"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | columnCategory": {
     "message": "Category"
@@ -975,7 +984,7 @@
     "message": "To set budgets for the quantity and size of page resources, add a budget.json file. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
   "lighthouse-core/audits/resource-summary.js | displayValue": {
-    "message": "{requestCount, plural, =1 {1 request • {byteCount, number, bytes} KB} other {# requests • {byteCount, number, bytes} KB}}"
+    "message": "{requestCount, plural, =1 {1 request • {byteCount, number, bytes} KiB} other {# requests • {byteCount, number, bytes} KiB}}"
   },
   "lighthouse-core/audits/resource-summary.js | title": {
     "message": "Keep request counts low and transfer sizes small"
@@ -1220,12 +1229,6 @@
   "lighthouse-core/audits/timing-budget.js | title": {
     "message": "Timing budget"
   },
-  "lighthouse-core/audits/user-timings.js | columnDuration": {
-    "message": "Duration"
-  },
-  "lighthouse-core/audits/user-timings.js | columnStartTime": {
-    "message": "Start Time"
-  },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "Type"
   },
@@ -1457,6 +1460,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Cache TTL"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnDuration": {
+    "message": "Duration"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnElement": {
     "message": "Element"
   },
@@ -1484,6 +1490,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnSource": {
     "message": "Source"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnStartTime": {
+    "message": "Start Time"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Time Spent"
   },
@@ -1503,7 +1512,7 @@
     "message": "Cumulative Layout Shift"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Potential savings of {wastedBytes, number, bytes} KB"
+    "message": "Potential savings of {wastedBytes, number, bytes} KiB"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Potential savings of {wastedMs, number, milliseconds} ms"
