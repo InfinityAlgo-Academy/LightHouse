@@ -14,6 +14,8 @@
 
 /** @typedef {{name: string, expression: string}} Pattern */
 /** @typedef {{name: string, line: number, column: number}} PatternMatchResult */
+/** @typedef {{url: string, subItems: {type: 'subitems', items: SubItem[]}}} Item */
+/** @typedef {{signal: string, location: LH.Audit.Details.SourceLocationValue}} SubItem */
 
 const Audit = require('./audit.js');
 const NetworkRecords = require('../computed/network-records.js');
@@ -166,7 +168,6 @@ class LegacyJavascript extends Audit {
 
   static getPolyfillData() {
     return [
-      /* eslint-disable max-len */
       ['Array.prototype.fill', 'es6.array.fill'],
       ['Array.prototype.filter', 'es6.array.filter'],
       ['Array.prototype.find', 'es6.array.find'],
@@ -174,7 +175,6 @@ class LegacyJavascript extends Audit {
       ['Array.prototype.forEach', 'es6.array.for-each'],
       ['Array.from', 'es6.array.from'],
       ['Array.isArray', 'es6.array.is-array'],
-      ['Array.prototype.lastIndexOf', 'es6.array.last-index-of'],
       ['Array.prototype.map', 'es6.array.map'],
       ['Array.of', 'es6.array.of'],
       ['Array.prototype.reduce', 'es6.array.reduce'],
@@ -185,17 +185,12 @@ class LegacyJavascript extends Audit {
       ['Date.prototype.toJSON', 'es6.date.to-json'],
       ['Date.prototype.toString', 'es6.date.to-string'],
       ['Function.prototype.name', 'es6.function.name'],
-      ['Map', 'es6.map'],
       ['Number.isInteger', 'es6.number.is-integer'],
       ['Number.isSafeInteger', 'es6.number.is-safe-integer'],
-      ['Number.parseFloat', 'es6.number.parse-float'],
       ['Number.parseInt', 'es6.number.parse-int'],
-      ['Object.assign', 'es6.object.assign'],
-      ['Object.create', 'es6.object.create'],
       ['Object.defineProperties', 'es6.object.define-properties'],
       ['Object.defineProperty', 'es6.object.define-property'],
       ['Object.freeze', 'es6.object.freeze'],
-      ['Object.getOwnPropertyDescriptor', 'es6.object.get-own-property-descriptor'],
       ['Object.getOwnPropertyNames', 'es6.object.get-own-property-names'],
       ['Object.getPrototypeOf', 'es6.object.get-prototype-of'],
       ['Object.isExtensible', 'es6.object.is-extensible'],
@@ -205,7 +200,6 @@ class LegacyJavascript extends Audit {
       ['Object.preventExtensions', 'es6.object.prevent-extensions'],
       ['Object.seal', 'es6.object.seal'],
       ['Object.setPrototypeOf', 'es6.object.set-prototype-of'],
-      ['Promise', 'es6.promise'],
       ['Reflect.apply', 'es6.reflect.apply'],
       ['Reflect.construct', 'es6.reflect.construct'],
       ['Reflect.defineProperty', 'es6.reflect.define-property'],
@@ -217,41 +211,16 @@ class LegacyJavascript extends Audit {
       ['Reflect.isExtensible', 'es6.reflect.is-extensible'],
       ['Reflect.ownKeys', 'es6.reflect.own-keys'],
       ['Reflect.preventExtensions', 'es6.reflect.prevent-extensions'],
-      ['Reflect.set', 'es6.reflect.set'],
       ['Reflect.setPrototypeOf', 'es6.reflect.set-prototype-of'],
-      ['Set', 'es6.set'],
       ['String.prototype.codePointAt', 'es6.string.code-point-at'],
-      ['String.prototype.endsWith', 'es6.string.ends-with'],
       ['String.fromCodePoint', 'es6.string.from-code-point'],
-      ['String.prototype.includes', 'es6.string.includes'],
       ['String.raw', 'es6.string.raw'],
       ['String.prototype.repeat', 'es6.string.repeat'],
-      ['String.prototype.startsWith', 'es6.string.starts-with'],
-      ['String.prototype.trim', 'es6.string.trim'],
-      // These break the coreJs2/coreJs3 naming pattern so are set explicitly.
-      {name: 'ArrayBuffer', coreJs2Module: 'es6.typed.array-buffer', coreJs3Module: 'es.array-buffer.constructor'},
-      {name: 'DataView', coreJs2Module: 'es6.typed.data-view', coreJs3Module: 'es.data-view'},
-      ['Float32Array', 'es6.typed.float32-array'],
-      ['Float64Array', 'es6.typed.float64-array'],
-      ['Int16Array', 'es6.typed.int16-array'],
-      ['Int32Array', 'es6.typed.int32-array'],
-      ['Int8Array', 'es6.typed.int8-array'],
-      ['Uint16Array', 'es6.typed.uint16-array'],
-      ['Uint32Array', 'es6.typed.uint32-array'],
-      ['Uint8Array', 'es6.typed.uint8-array'],
-      ['Uint8ClampedArray', 'es6.typed.uint8-clamped-array'],
-      ['WeakMap', 'es6.weak-map'],
-      ['WeakSet', 'es6.weak-set'],
       ['Array.prototype.includes', 'es7.array.includes'],
       ['Object.entries', 'es7.object.entries'],
       ['Object.getOwnPropertyDescriptors', 'es7.object.get-own-property-descriptors'],
       ['Object.values', 'es7.object.values'],
-      ['String.prototype.padEnd', 'es7.string.pad-end'],
-      ['String.prototype.padStart', 'es7.string.pad-start'],
-      /* eslint-enable max-len */
     ].map(data => {
-      if (!Array.isArray(data)) return data;
-
       const [name, coreJs2Module] = data;
       return {
         name,
@@ -358,9 +327,8 @@ class LegacyJavascript extends Audit {
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const bundles = await JSBundles.request(artifacts, context);
 
-    /** @typedef {{signal: string, location: LH.Audit.Details.SourceLocationValue}} SubItem */
-    /** @type {Array<{url: string, subItems: LH.Audit.Details.TableSubItems}>} */
-    const tableRows = [];
+    /** @type {Item[]} */
+    const items = [];
     let signalCount = 0;
 
     // TODO(cjamcl): Use SourceMaps, and only pattern match if maps are not available.
@@ -372,8 +340,8 @@ class LegacyJavascript extends Audit {
     const urlToMatchResults =
       this.detectAcrossScripts(matcher, artifacts.ScriptElements, networkRecords, bundles);
     urlToMatchResults.forEach((matches, url) => {
-      /** @type {typeof tableRows[number]} */
-      const row = {
+      /** @type {typeof items[number]} */
+      const item = {
         url,
         subItems: {
           type: 'subitems',
@@ -393,10 +361,10 @@ class LegacyJavascript extends Audit {
             urlProvider: 'network',
           },
         };
-        row.subItems.items.push(subItem);
+        item.subItems.items.push(subItem);
       }
-      tableRows.push(row);
-      signalCount += row.subItems.items.length;
+      items.push(item);
+      signalCount += item.subItems.items.length;
     });
 
     /** @type {LH.Audit.Details.Table['headings']} */
@@ -406,11 +374,11 @@ class LegacyJavascript extends Audit {
       {key: null, itemType: 'code', subHeading: {key: 'signal'}, text: ''},
       /* eslint-enable max-len */
     ];
-    const details = Audit.makeTableDetails(headings, tableRows);
+    const details = Audit.makeTableDetails(headings, items);
 
     // Only fail if first party code has legacy code.
     const mainDocumentEntity = thirdPartyWeb.getEntity(artifacts.URL.finalUrl);
-    const foundSignalInFirstPartyCode = tableRows.some(row => {
+    const foundSignalInFirstPartyCode = items.some(row => {
       return thirdPartyWeb.isFirstParty(row.url, mainDocumentEntity);
     });
     return {
