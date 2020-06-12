@@ -79,7 +79,13 @@ describe('UnusedJavaScript audit', () => {
   const recordInline = generateRecord(`${domain}/inline.html`, 1000000, 'Document');
 
   it('should merge duplicates', async () => {
-    const context = {computedCache: new Map()};
+    const context = {
+      computedCache: new Map(),
+      options: {
+        // Lower the threshold so we don't need huge resources to make a test.
+        unusedThreshold: 2000,
+      },
+    };
     const networkRecords = [recordA, recordB, recordInline];
     const artifacts = {
       JsUsage: makeJsUsage(scriptA, scriptB, scriptUnknown, inlineA, inlineB),
@@ -107,6 +113,8 @@ describe('UnusedJavaScript audit', () => {
     const context = {
       computedCache: new Map(),
       options: {
+        // Lower the threshold so we don't need huge resources to make a test.
+        unusedThreshold: 2000,
         // Default threshold is 512, but is lowered here so that squoosh generates more
         // results.
         bundleSourceUnusedThreshold: 100,
@@ -126,27 +134,36 @@ describe('UnusedJavaScript audit', () => {
     expect(result.items).toMatchInlineSnapshot(`
       Array [
         Object {
-          "sourceBytes": Array [
-            10062,
-            660,
-            4043,
-            2138,
-            4117,
-          ],
-          "sourceWastedBytes": Array [
-            3760,
-            660,
-            500,
-            293,
-            256,
-          ],
-          "sources": Array [
-            "(unmapped)",
-            "…src/codecs/webp/encoder-meta.ts",
-            "…src/lib/util.ts",
-            "…src/custom-els/RangeInput/index.ts",
-            "…node_modules/comlink/comlink.js",
-          ],
+          "subItems": Object {
+            "items": Array [
+              Object {
+                "source": "(unmapped)",
+                "sourceBytes": 10062,
+                "sourceWastedBytes": 3760,
+              },
+              Object {
+                "source": "…src/codecs/webp/encoder-meta.ts",
+                "sourceBytes": 660,
+                "sourceWastedBytes": 660,
+              },
+              Object {
+                "source": "…src/lib/util.ts",
+                "sourceBytes": 4043,
+                "sourceWastedBytes": 500,
+              },
+              Object {
+                "source": "…src/custom-els/RangeInput/index.ts",
+                "sourceBytes": 2138,
+                "sourceWastedBytes": 293,
+              },
+              Object {
+                "source": "…node_modules/comlink/comlink.js",
+                "sourceBytes": 4117,
+                "sourceWastedBytes": 256,
+              },
+            ],
+            "type": "subitems",
+          },
           "totalBytes": 83748,
           "url": "https://squoosh.app/main-app.js",
           "wastedBytes": 6961,

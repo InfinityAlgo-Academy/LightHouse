@@ -47,7 +47,7 @@ class UserTimings extends Audit {
   /**
    * @return {Array<string>}
    */
-  static get blacklistedPrefixes() {
+  static get excludedPrefixes() {
     return ['goog_'];
   }
 
@@ -56,8 +56,8 @@ class UserTimings extends Audit {
    * @param {MarkEvent|MeasureEvent} evt
    * @return {boolean}
    */
-  static excludeBlacklisted(evt) {
-    return UserTimings.blacklistedPrefixes.every(prefix => !evt.name.startsWith(prefix));
+  static excludeEvent(evt) {
+    return UserTimings.excludedPrefixes.every(prefix => !evt.name.startsWith(prefix));
   }
 
   /**
@@ -68,7 +68,7 @@ class UserTimings extends Audit {
   static audit(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     return ComputedUserTimings.request(trace, context).then(computedUserTimings => {
-      const userTimings = computedUserTimings.filter(UserTimings.excludeBlacklisted);
+      const userTimings = computedUserTimings.filter(UserTimings.excludeEvent);
       const tableRows = userTimings.map(item => {
         return {
           name: item.name,

@@ -23,7 +23,7 @@ const thirdPartyWeb = require('../lib/third-party-web.js');
 
 const UIStrings = {
   /** Title of a Lighthouse audit that tells the user about legacy polyfills and transforms used on the page. This is displayed in a list of audit titles that Lighthouse generates. */
-  title: 'Legacy JavaScript',
+  title: 'Avoid serving legacy JavaScript to modern browsers',
   // eslint-disable-next-line max-len
   // TODO: web.dev article. this codelab is good starting place: https://web.dev/codelab-serve-modern-code/
   /** Description of a Lighthouse audit that tells the user about old JavaScript that is no longer needed. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
@@ -358,7 +358,8 @@ class LegacyJavascript extends Audit {
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const bundles = await JSBundles.request(artifacts, context);
 
-    /** @type {Array<{url: string, signals: string[], locations: LH.Audit.Details.SourceLocationValue[]}>} */
+    /** @typedef {{signal: string, location: LH.Audit.Details.SourceLocationValue}} SubItem */
+    /** @type {Array<{url: string, subItems: LH.Audit.Details.TableSubItems}>} */
     const tableRows = [];
     let signalCount = 0;
 
@@ -372,27 +373,37 @@ class LegacyJavascript extends Audit {
       this.detectAcrossScripts(matcher, artifacts.ScriptElements, networkRecords, bundles);
     urlToMatchResults.forEach((matches, url) => {
       /** @type {typeof tableRows[number]} */
-      const row = {url, signals: [], locations: []};
+      const row = {
+        url,
+        subItems: {
+          type: 'subitems',
+          items: [],
+        },
+      };
       for (const match of matches) {
         const {name, line, column} = match;
-        row.signals.push(name);
-        row.locations.push({
-          type: 'source-location',
-          url,
-          line,
-          column,
-          urlProvider: 'network',
-        });
+        /** @type {SubItem} */
+        const subItem = {
+          signal: name,
+          location: {
+            type: 'source-location',
+            url,
+            line,
+            column,
+            urlProvider: 'network',
+          },
+        };
+        row.subItems.items.push(subItem);
       }
       tableRows.push(row);
-      signalCount += row.signals.length;
+      signalCount += row.subItems.items.length;
     });
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'url', itemType: 'url', subRows: {key: 'locations', itemType: 'source-location'}, text: str_(i18n.UIStrings.columnURL)},
-      {key: null, itemType: 'code', subRows: {key: 'signals'}, text: ''},
+      {key: 'url', itemType: 'url', subHeading: {key: 'location', itemType: 'source-location'}, text: str_(i18n.UIStrings.columnURL)},
+      {key: null, itemType: 'code', subHeading: {key: 'signal'}, text: ''},
       /* eslint-enable max-len */
     ];
     const details = Audit.makeTableDetails(headings, tableRows);
