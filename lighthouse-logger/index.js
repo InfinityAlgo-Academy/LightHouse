@@ -23,7 +23,7 @@ const colors = {
   magenta: isBrowser ? 'palevioletred' : 5,
 };
 
-// whitelist non-red/yellow colors for debug()
+// allow non-red/yellow colors for debug()
 debug.colors = [colors.cyan, colors.green, colors.blue, colors.magenta];
 
 class Emitter extends EventEmitter {
@@ -105,7 +105,7 @@ class Log {
     const columns = (!process || process.browser) ? Infinity : process.stdout.columns;
     const method = data.method || '?????';
     const maxLength = columns - method.length - prefix.length - loggingBufferColumns;
-    // IO.read blacklisted here to avoid logging megabytes of trace data
+    // IO.read ignored here to avoid logging megabytes of trace data
     const snippet = (data.params && method !== 'IO.read') ?
       JSON.stringify(data.params).substr(0, maxLength) : '';
     Log._logToStdErr(`${prefix}:${level || ''}`, [method, snippet]);
