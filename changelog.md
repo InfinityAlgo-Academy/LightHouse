@@ -2654,7 +2654,7 @@ Since 2.1.0 we've had a number of other features, fixes, and improvements. Prese
 
 
 #### Configurability
-* feat(config): add audit blacklist support (#2499)
+* feat(config): add audit skipping support (#2499)
 * feat(config): add extends lighthouse:full (#2557)
 * docs(config): add config documentation (#2592)
 
@@ -2836,7 +2836,7 @@ Huge thanks to who contributed 27 epic PRs.
 
 ## Misc
 * 07e0aab1 Remove recordNetwork from config (#2102)
-* 16b0b048 feat: support Config category and audit whitelisting (#1988)
+* 16b0b048 feat: support Config running only specified categories or audits (#1988)
 * b2ccdfcb Allow opn & update-notifier CLI deps to be optional. (#2150)
 * 283af871 dismiss any Javascript Dialogs automatically (#1939) (#2106)
 * e475bdb5 refactor(aggregations): switch usage of aggregations to categories (#1935)
