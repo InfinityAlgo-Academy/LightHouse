@@ -62,7 +62,7 @@ jobs:
     - run: sudo apt-get install xvfb
     - run: xvfb-run --auto-servernum yarn unit
     - run: xvfb-run --auto-servernum yarn test-clients
-    - run: xvfb-run --auto-servernum yarn smoke -j=1 --retries=2
+    - run: xvfb-run --auto-servernum yarn smoke --debug -j=1 --retries=2
     - run: xvfb-run --auto-servernum yarn test-bundle
     - run: xvfb-run --auto-servernum yarn test-docs
 
