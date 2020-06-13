@@ -316,6 +316,13 @@ function _setPerfGaugeExplodey(wrapper, category) {
   var offsetAdder = 0.25 * circumferenceOuter - endDiffOuter - 0.5 * strokeGap;
   var angleAdder = -0.5 * Math.PI;
 
+  // Extra hack on top of the HACK for element reuse below. Delete any metric elems that aren't needed anymore (happens when the same gauge goes from v5 to v6)
+  groupOuter.querySelectorAll('.metric').forEach(function (metricElem) {
+    var classNamesToRetain = metrics.map(function (metric) { return ("metric--" + (metric.id)); });
+    var match = classNamesToRetain.find(function (selector) { return metricElem.classList.contains(selector); });
+    if (!match) { metricElem.remove(); }
+  });
+
   metrics.forEach(function (metric, i) {
     // TODO(porting to real LHR..): in scorecalc we dont use the real audit ID just the acronym.
     var alias = metric.id;
@@ -323,7 +330,7 @@ function _setPerfGaugeExplodey(wrapper, category) {
     // Hack
     var needsDomPopulation = !groupOuter.querySelector((".metric--" + alias));
 
-    // HACK:This isn't ideal but it was quick. Handles both initialization and updates
+    // HACK:This isn't ideal but it was quick. Create element during initialization or reuse existing during updates
     var metricGroup = groupOuter.querySelector((".metric--" + alias)) || document.createElementNS(NS_URI, 'g');
     var metricArcMax = groupOuter.querySelector((".metric--" + alias + " .lh-gauge--faded")) || document.createElementNS(NS_URI, 'circle');
     var metricArc = groupOuter.querySelector((".metric--" + alias + " .lh-gauge--miniarc")) || document.createElementNS(NS_URI, 'circle');
@@ -505,7 +512,10 @@ var Metric = /*@__PURE__*/(function (Component) {
     var ref = this.props;
     var id = ref.id;
 
-    this.props.app.setState(( obj = {}, obj[id] = e.target.valueAsNumber, obj ));
+    this.props.app.setState({
+      metricValues: Object.assign({}, this.props.app.state.metricValues,
+        ( obj = {}, obj[id] = e.target.valueAsNumber, obj )),
+    });
   };
 
   Metric.prototype.onScoreChange = function onScoreChange (e) {
@@ -528,7 +538,10 @@ var Metric = /*@__PURE__*/(function (Component) {
       computedValue = Math.round(computedValue);
     }
 
-    this.props.app.setState(( obj = {}, obj[id] = computedValue, obj ));
+    this.props.app.setState({
+      metricValues: Object.assign({}, this.props.app.state.metricValues,
+        ( obj = {}, obj[id] = computedValue, obj )),
+    });
   };
 
   Metric.prototype.render = function render (ref) {
@@ -721,6 +734,8 @@ var App = /*@__PURE__*/(function (Component) {
   function App(props) {
     Component.call(this, props);
     this.state = getInitialState();
+    this.onDeviceChange = this.onDeviceChange.bind(this);
+    this.onVersionsChange = this.onVersionsChange.bind(this);
   }
 
   if ( Component ) App.__proto__ = Component;
@@ -730,42 +745,62 @@ var App = /*@__PURE__*/(function (Component) {
   App.prototype.componentDidUpdate = function componentDidUpdate () {
     var this$1 = this;
 
+    var ref = this.state;
+    var versions = ref.versions;
+    var device = ref.device;
+    var metricValues = ref.metricValues;
+
     // debounce just a tad, as its noisy
     debounce(function (_) {
       var url = new URL(location.href);
-      var auditIdValuePairs = Object.entries(this$1.state).map(function (ref) {
+      var auditIdValuePairs = Object.entries(metricValues).map(function (ref) {
         var id = ref[0];
         var value = ref[1];
 
-        return [metrics[id].auditId, value];
+        return [id, value];
       });
       var params = new URLSearchParams(auditIdValuePairs);
+      params.set('device', device);
+      for (var version of versions) params.append('version', version);
       url.hash = params.toString();
       history.replaceState(this$1.state, '', url.toString());
     })();
   };
 
+  App.prototype.onDeviceChange = function onDeviceChange (e) {
+    this.setState({device: e.target.value});
+  };
+
+  App.prototype.onVersionsChange = function onVersionsChange (e) {
+    this.setState({versions: e.target.value.split(',')});
+  };
+
   App.prototype.render = function render () {
     var this$1 = this;
 
-    // URL can specify which versions we'll show. Default to 6 and 5.
-    var versions = params.has('version') ?
-      params.getAll('version').map(getMajorVersion) :
-      ['6', '5'];
-    var device = params.get('device');
-    // Default to mobile if it's not matching our known emulatedFormFactors. https://github.com/GoogleChrome/lighthouse/blob/master/types/externs.d.ts#:~:text=emulatedFormFactor
-    if (device && device !== 'mobile' && device !== 'desktop') {
-      console.warn(("Invalid emulatedFormFactors value: " + device + ". Fallback to mobile scoring."));
-      device = 'mobile';
-    } else if (!device) {
-      // Device not expressed in the params
-      device = 'mobile';
-    }
+    var ref = this.state;
+    var versions = ref.versions;
+    var device = ref.device;
+    var metricValues = ref.metricValues;
+
     var scoringGuideEls = versions.map(function (version) {
       var key = "v" + version;
-      return h( ScoringGuide, { app: this$1, name: key, values: this$1.state, scoring: scoringGuides[key][device] });
+      return h( ScoringGuide, { app: this$1, name: key, values: metricValues, scoring: scoringGuides[key][device] });
     });
-    return h( 'div', null,
+    return h( 'div', { class: "app" },
+      h( 'div', { class: "controls wrapper" },
+        h( 'label', null, "Device type: ", h( 'select', { name: "device", value: device, onChange: this.onDeviceChange },
+            h( 'option', { value: "mobile" }, "Mobile"),
+            h( 'option', { value: "desktop" }, "Desktop")
+          )
+        ),
+        h( 'label', null, "Versions: ", h( 'select', { name: "versions", value: versions.sort().reverse().join(','), onChange: this.onVersionsChange },
+            h( 'option', { value: "6,5" }, "show all"),
+            h( 'option', { value: "6" }, "v6"),
+            h( 'option', { value: "5" }, "v5")
+          )
+        )
+      ),
       scoringGuideEls
     )
   };
@@ -774,23 +809,40 @@ var App = /*@__PURE__*/(function (Component) {
 }(m));
 
 function getInitialState() {
-  var state = {};
+  // Default to 6 and 5.
+  var versions = params.has('version') ?
+    params.getAll('version').map(getMajorVersion) :
+    ['6', '5'];
+
+  // Default to mobile if it's not matching our known emulatedFormFactors. https://github.com/GoogleChrome/lighthouse/blob/master/types/externs.d.ts#:~:text=emulatedFormFactor
+  var device = params.get('device');
+  if (device && device !== 'mobile' && device !== 'desktop') {
+    console.warn(("Invalid emulatedFormFactors value: " + device + ". Fallback to mobile scoring."));
+    device = 'mobile';
+  } else if (!device) {
+    // Device not expressed in the params
+    device = 'mobile';
+  }
 
   // Set defaults as median.
+  var metricValues = {};
   var metricScorings = Object.assign({}, scoringGuides.v6.desktop, scoringGuides.v5.desktop);
   for (var id in metricScorings) {
-    state[id] = metricScorings[id].median;
+    metricValues[id] = metricScorings[id].median;
   }
 
   // Load from query string.
   for (var [id$1, metric] of Object.entries(metrics)) {
-    if (!params.has(metric.auditId)) { continue; }
-    var value = Number(params.get(metric.auditId));
-    state[id$1] = value;
+    var value = params.get(id$1) || params.get(metric.auditId);
+    if (value === undefined) { continue; }
+    metricValues[id$1] = Number(value);
   }
 
-  return state;
-}
+  return {
+    versions: versions,
+    device: device,
+    metricValues: metricValues,
+  };}
 
 function main() {
   H(h( App, null ), $$1('#container'));
