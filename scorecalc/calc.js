@@ -736,35 +736,34 @@ var App = /*@__PURE__*/(function (Component) {
     this.state = getInitialState();
     this.onDeviceChange = this.onDeviceChange.bind(this);
     this.onVersionsChange = this.onVersionsChange.bind(this);
+    // debounce to avoid flooding with new URLs
+    this.debouncedUpdatePermalink = debounce(this.updatePermalink);
   }
 
   if ( Component ) App.__proto__ = Component;
   App.prototype = Object.create( Component && Component.prototype );
   App.prototype.constructor = App;
 
+  App.prototype.updatePermalink = function updatePermalink (state) {
+    var versions = state.versions;
+    var device = state.device;
+    var metricValues = state.metricValues;
+    var url = new URL(location.href);
+    var auditIdValuePairs = Object.entries(metricValues).map(function (ref) {
+      var id = ref[0];
+      var value = ref[1];
+
+      return [id, value];
+    });
+    var params = new URLSearchParams(auditIdValuePairs);
+    params.set('device', device);
+    for (var version of versions) params.append('version', version);
+    url.hash = params.toString();
+    history.replaceState(state, '', url.toString());
+  };
+
   App.prototype.componentDidUpdate = function componentDidUpdate () {
-    var this$1 = this;
-
-    var ref = this.state;
-    var versions = ref.versions;
-    var device = ref.device;
-    var metricValues = ref.metricValues;
-
-    // debounce just a tad, as its noisy
-    debounce(function (_) {
-      var url = new URL(location.href);
-      var auditIdValuePairs = Object.entries(metricValues).map(function (ref) {
-        var id = ref[0];
-        var value = ref[1];
-
-        return [id, value];
-      });
-      var params = new URLSearchParams(auditIdValuePairs);
-      params.set('device', device);
-      for (var version of versions) params.append('version', version);
-      url.hash = params.toString();
-      history.replaceState(this$1.state, '', url.toString());
-    })();
+    this.debouncedUpdatePermalink(this.state);
   };
 
   App.prototype.onDeviceChange = function onDeviceChange (e) {
