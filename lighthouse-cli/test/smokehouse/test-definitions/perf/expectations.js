@@ -175,16 +175,15 @@ module.exports = [
             ],
           },
         },
-        // TODO: uncomment when Chrome m84 lands
-        // 'layout-shift-elements': {
-        //   score: null,
-        //   displayValue: '2 elements found',
-        //   details: {
-        //     items: {
-        //       length: 2,
-        //     },
-        //   },
-        // },
+        'layout-shift-elements': {
+          score: null,
+          displayValue: '2 elements found',
+          details: {
+            items: {
+              length: 2,
+            },
+          },
+        },
         'long-tasks': {
           score: null,
           details: {
