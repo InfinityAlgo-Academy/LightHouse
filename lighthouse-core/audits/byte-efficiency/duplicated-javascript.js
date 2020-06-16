@@ -17,7 +17,7 @@ const UIStrings = {
   description: 'Remove large, duplicate JavaScript modules from bundles ' +
     'to reduce unnecessary bytes consumed by network activity. ', // +
   // TODO: we need docs.
-  // '[Learn more](https://web.dev/duplicated-javascript).',
+  // '[Learn more](https://web.dev/duplicated-javascript/).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);

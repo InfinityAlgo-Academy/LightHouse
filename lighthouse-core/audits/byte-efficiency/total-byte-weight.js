@@ -18,7 +18,7 @@ const UIStrings = {
   description:
   'Large network payloads cost users real money and are highly correlated with ' +
   'long load times. [Learn ' +
-  'more](https://web.dev/total-byte-weight).',
+  'more](https://web.dev/total-byte-weight/).',
   /** Used to summarize the total byte size of the page and all its network requests. The `{totalBytes}` placeholder will be replaced with the total byte sizes, shown in kibibytes (e.g. 142 KiB) */
   displayValue: 'Total size was {totalBytes, number, bytes}\xa0KiB',
 };
