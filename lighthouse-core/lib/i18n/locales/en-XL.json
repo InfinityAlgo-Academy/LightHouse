@@ -981,7 +981,7 @@
     "message": "Âv́ôíd̂ ḿûĺt̂íp̂ĺê ṕâǵê ŕêd́îŕêćt̂ś"
   },
   "lighthouse-core/audits/resource-summary.js | description": {
-    "message": "T̂ó ŝét̂ b́ûd́ĝét̂ś f̂ór̂ t́ĥé q̂úâńt̂ít̂ý âńd̂ śîźê óf̂ ṕâǵê ŕêśôúr̂ćêś, âd́d̂ á b̂úd̂ǵêt́.ĵśôń f̂íl̂é. [L̂éâŕn̂ ḿôŕê](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+    "message": "T̂ó ŝét̂ b́ûd́ĝét̂ś f̂ór̂ t́ĥé q̂úâńt̂ít̂ý âńd̂ śîźê óf̂ ṕâǵê ŕêśôúr̂ćêś, âd́d̂ á b̂úd̂ǵêt́.ĵśôń f̂íl̂é. [L̂éâŕn̂ ḿôŕê](https://web.dev/use-lighthouse-for-performance-budgets/)."
   },
   "lighthouse-core/audits/resource-summary.js | displayValue": {
     "message": "{requestCount, plural, =1 {1 r̂éq̂úêśt̂ • {byteCount, number, bytes} ḰîB́} other {# r̂éq̂úêśt̂ś • {byteCount, number, bytes} K̂íB̂}}"
