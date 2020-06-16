@@ -440,6 +440,33 @@ const expectations = [
   //     },
   //   },
   // },
+  {
+    artifacts: {
+      InspectorIssues: {
+        blockedByResponse: {
+          0: {
+            reason: 'CorpNotSameOriginAfterDefaultedToSameOriginByCoep',
+          },
+          1: {
+            reason: 'CorpNotSameOriginAfterDefaultedToSameOriginByCoep',
+          },
+          2: {
+            reason: 'CorpNotSameOriginAfterDefaultedToSameOriginByCoep',
+          },
+          // Sometimes there is a 4th item too.
+        },
+      },
+    },
+    lhr: {
+      requestedUrl: 'https://first-party-test.glitch.me/coep?coep=require-corp',
+      finalUrl: 'https://first-party-test.glitch.me/coep?coep=require-corp',
+      audits: {
+        'blocked-requests': {
+          score: 0,
+        },
+      },
+    },
+  },
 ];
 
 module.exports = expectations;

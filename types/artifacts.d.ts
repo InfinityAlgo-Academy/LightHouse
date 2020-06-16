@@ -494,6 +494,7 @@ declare global {
       }
 
       export interface InspectorIssues {
+        blockedByResponse: Crdp.Audits.BlockedByResponseIssueDetails[];
         mixedContent: Crdp.Audits.MixedContentIssueDetails[];
       }
 

@@ -12,6 +12,16 @@
 
 const Gatherer = require('./gatherer.js');
 
+/**
+ * @param {LH.Crdp.Audits.InspectorIssue} issue
+ */
+function getDetails(issue) {
+  const keys = Object.keys(issue.details);
+  if (keys.length !== 1) return;
+  const key = /** @type {keyof typeof issue.details} */ (keys[0]);
+  return issue.details[key];
+}
+
 class InspectorIssues extends Gatherer {
   constructor() {
     super();
@@ -48,18 +58,25 @@ class InspectorIssues extends Gatherer {
     driver.off('Audits.issueAdded', this._onIssueAdded);
     await driver.sendCommand('Audits.disable');
     const artifact = {
-      /** @type {Array<LH.Crdp.Audits.MixedContentIssueDetails>} */
+      blockedByResponse: [],
       mixedContent: [],
     };
 
     for (const issue of this._issues) {
-      if (issue.details.mixedContentIssueDetails) {
-        const issueDetails = issue.details.mixedContentIssueDetails;
-        const issueReqId = issueDetails.request && issueDetails.request.requestId;
-        if (issueReqId &&
-          networkRecords.find(req => req.requestId === issueReqId)) {
-          artifact.mixedContent.push(issue.details.mixedContentIssueDetails);
-        }
+      const details = getDetails(issue);
+      if (!details) continue;
+
+      const issueRequestId = details.request && details.request.requestId;
+      const issueRequest = networkRecords.find(req => req.requestId === issueRequestId);
+
+      // Expected a request, but didn't find it.
+      if (issueRequestId && !issueRequest) continue;
+
+      const artifactKey = /** @type {keyof typeof artifact} */ (
+        issue.code.charAt(0).toLowerCase() + issue.code.substr(1).replace('Issue', ''));
+      if (artifactKey in artifact) {
+        // @ts-ignore: Coerce to specific details subtype.
+        artifact[artifactKey].push(details);
       }
     }
 
