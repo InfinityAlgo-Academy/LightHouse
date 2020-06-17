@@ -457,7 +457,7 @@ class DetailsRenderer {
     for (const item of details.items) {
       const rowsFragment = this._renderTableRowsFromItem(item, headings);
       for (const rowEl of this._dom.findAll('tr', rowsFragment)) {
-        // For zebra striping.
+        // For zebra styling.
         rowEl.classList.add(even ? 'lh-row--even' : 'lh-row--odd');
       }
       even = !even;
