@@ -192,9 +192,9 @@ describe('ReportUIFeatures', () => {
         expect(lhr.audits['unused-javascript'].details.headings).toHaveLength(0);
         lhr.audits['unused-javascript'].details.headings = [
           /* t-disable max-len */
-          {key: 'url', valueType: 'url', subHeading: {key: 'source', valueType: 'code'}},
-          {key: 'totalBytes', valueType: 'bytes', subHeading: {key: 'sourceBytes'}},
-          {key: 'wastedBytes', valueType: 'bytes', subHeading: {key: 'sourceWastedBytes'}},
+          {key: 'url', valueType: 'url', subItemsHeading: {key: 'source', valueType: 'code'}},
+          {key: 'totalBytes', valueType: 'bytes', subItemsHeading: {key: 'sourceBytes'}},
+          {key: 'wastedBytes', valueType: 'bytes', subItemsHeading: {key: 'sourceWastedBytes'}},
           /* eslint-enable max-len */
         ];
 
