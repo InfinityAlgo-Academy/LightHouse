@@ -17,7 +17,7 @@ const UIStrings = {
   description: 'Remove large, duplicate JavaScript modules from bundles ' +
     'to reduce unnecessary bytes consumed by network activity. ', // +
   // TODO: we need docs.
-  // '[Learn more](https://web.dev/duplicated-javascript).',
+  // '[Learn more](https://web.dev/duplicated-javascript/).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -101,7 +101,7 @@ class DuplicatedJavascript extends ByteEfficiencyAudit {
   /**
    * This audit highlights JavaScript modules that appear to be duplicated across all resources,
    * either within the same bundle or between different bundles. Each details item returned is
-   * a module with subrows for each resource that includes it. The wastedBytes for the details
+   * a module with subItems for each resource that includes it. The wastedBytes for the details
    * item is the number of bytes occupied by the sum of all but the largest copy of the module.
    * wastedBytesByUrl attributes the cost of the bytes to a specific resource, for use by lantern.
    * @param {LH.Artifacts} artifacts
@@ -116,18 +116,11 @@ class DuplicatedJavascript extends ByteEfficiencyAudit {
     const duplication =
       await DuplicatedJavascript._getDuplicationGroupedByNodeModules(artifacts, context);
 
-    /**
-     * @typedef ItemSubrows
-     * @property {string[]} urls
-     * @property {number[]} sourceBytes
-     */
-
-    /**
-     * @typedef {LH.Audit.ByteEfficiencyItem & ItemSubrows} Item
-     */
-
-    /** @type {Item[]} */
+    /** @type {LH.Audit.ByteEfficiencyItem[]} */
     const items = [];
+
+    let overflowWastedBytes = 0;
+    const overflowUrls = new Set();
 
     /** @type {Map<string, number>} */
     const wastedBytesByUrl = new Map();
@@ -139,17 +132,27 @@ class DuplicatedJavascript extends ByteEfficiencyAudit {
       // is not present. Instead, size is used as a heuristic for latest version. This makes the
       // audit conserative in its estimation.
 
-      const urls = [];
-      const bytesValues = [];
+      const subItems = [];
+
       let wastedBytesTotal = 0;
       for (let i = 0; i < sourceDatas.length; i++) {
         const sourceData = sourceDatas[i];
         const url = sourceData.scriptUrl;
-        urls.push(url);
-        bytesValues.push(sourceData.size);
+        subItems.push({
+          url,
+          sourceBytes: sourceData.size,
+        });
         if (i === 0) continue;
         wastedBytesTotal += sourceData.size;
         wastedBytesByUrl.set(url, (wastedBytesByUrl.get(url) || 0) + sourceData.size);
+      }
+
+      if (wastedBytesTotal <= ignoreThresholdInBytes) {
+        overflowWastedBytes += wastedBytesTotal;
+        for (const subItem of subItems) {
+          overflowUrls.add(subItem.url);
+        }
+        continue;
       }
 
       items.push({
@@ -159,32 +162,24 @@ class DuplicatedJavascript extends ByteEfficiencyAudit {
         url: '',
         // Not needed, but keeps typescript happy.
         totalBytes: 0,
-        urls,
-        sourceBytes: bytesValues,
+        subItems: {
+          type: 'subitems',
+          items: subItems,
+        },
       });
     }
 
-    /** @type {Item} */
-    const otherItem = {
-      source: 'Other',
-      wastedBytes: 0,
-      url: '',
-      totalBytes: 0,
-      urls: [],
-      sourceBytes: [],
-    };
-    for (const item of items.filter(item => item.wastedBytes <= ignoreThresholdInBytes)) {
-      otherItem.wastedBytes += item.wastedBytes;
-      for (let i = 0; i < item.urls.length; i++) {
-        const url = item.urls[i];
-        if (!otherItem.urls.includes(url)) {
-          otherItem.urls.push(url);
-        }
-      }
-      items.splice(items.indexOf(item), 1);
-    }
-    if (otherItem.wastedBytes > ignoreThresholdInBytes) {
-      items.push(otherItem);
+    if (overflowWastedBytes > ignoreThresholdInBytes) {
+      items.push({
+        source: 'Other',
+        wastedBytes: overflowWastedBytes,
+        url: '',
+        totalBytes: 0,
+        subItems: {
+          type: 'subitems',
+          items: Array.from(overflowUrls).map(url => ({url})),
+        },
+      });
     }
 
     // Convert bytes to transfer size estimation.
@@ -214,8 +209,8 @@ class DuplicatedJavascript extends ByteEfficiencyAudit {
     /** @type {LH.Audit.Details.OpportunityColumnHeading[]} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'source', valueType: 'code', subRows: {key: 'urls', valueType: 'url'}, label: str_(i18n.UIStrings.columnSource)},
-      {key: '_', valueType: 'bytes', subRows: {key: 'sourceBytes'}, granularity: 0.05, label: str_(i18n.UIStrings.columnSize)},
+      {key: 'source', valueType: 'code', subHeading: {key: 'url', valueType: 'url'}, label: str_(i18n.UIStrings.columnSource)},
+      {key: '_', valueType: 'bytes', subHeading: {key: 'sourceBytes'}, granularity: 0.05, label: str_(i18n.UIStrings.columnSize)},
       {key: 'wastedBytes', valueType: 'bytes', granularity: 0.05, label: str_(i18n.UIStrings.columnWastedBytes)},
       /* eslint-enable max-len */
     ];

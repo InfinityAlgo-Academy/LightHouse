@@ -199,4 +199,32 @@ module.exports = [
       },
     },
   },
+  {
+    lhr: {
+      requestedUrl: 'http://localhost:10200/perf/trace-elements.html?missing',
+      finalUrl: 'http://localhost:10200/perf/trace-elements.html?missing',
+      audits: {
+        'largest-contentful-paint-element': {
+          score: null,
+          details: {
+            items: [
+              {
+                node: {
+                  type: 'node',
+                  selector: 'body',
+                },
+              },
+            ],
+          },
+        },
+        'layout-shift-elements': {
+          score: null,
+          scoreDisplayMode: 'notApplicable',
+          details: {
+            items: [],
+          },
+        },
+      },
+    },
+  },
 ];

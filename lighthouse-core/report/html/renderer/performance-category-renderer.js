@@ -168,18 +168,16 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       metricsBoxesEl.appendChild(this._renderMetric(item));
     });
 
-    // 'Values are estimated and may vary' is used as the category description for PSI
-    if (environment !== 'PSI') {
-      const estValuesEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-metrics__disclaimer');
-      const disclaimerEl = this.dom.convertMarkdownLinkSnippets(strings.varianceDisclaimer);
-      estValuesEl.appendChild(disclaimerEl);
+    const estValuesEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-metrics__disclaimer');
+    const disclaimerEl = this.dom.convertMarkdownLinkSnippets(strings.varianceDisclaimer);
+    estValuesEl.appendChild(disclaimerEl);
 
-      // Add link to score calculator.
-      const calculatorLink = this.dom.createChildOf(estValuesEl, 'a', 'lh-calclink');
-      calculatorLink.target = '_blank';
-      calculatorLink.textContent = strings.calculatorLink;
-      calculatorLink.href = this._getScoringCalculatorHref(category.auditRefs);
-    }
+    // Add link to score calculator.
+    const calculatorLink = this.dom.createChildOf(estValuesEl, 'a', 'lh-calclink');
+    calculatorLink.target = '_blank';
+    calculatorLink.textContent = strings.calculatorLink;
+    calculatorLink.href = this._getScoringCalculatorHref(category.auditRefs);
+
 
     metricAuditsEl.classList.add('lh-audit-group--metrics');
     element.appendChild(metricAuditsEl);

@@ -70,6 +70,7 @@ class LayoutShiftElements extends Audit {
 
     return {
       score: 1,
+      notApplicable: details.items.length === 0,
       displayValue,
       details,
     };
