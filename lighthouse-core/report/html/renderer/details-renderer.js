@@ -318,15 +318,15 @@ class DetailsRenderer {
    * @return {LH.Audit.Details.OpportunityColumnHeading}
    */
   _getCanonicalizedHeading(heading) {
-    let subHeading;
-    if (heading.subHeading) {
-      subHeading = this._getCanonicalizedSubHeading(heading.subHeading, heading);
+    let subItemsHeading;
+    if (heading.subItemsHeading) {
+      subItemsHeading = this._getCanonicalizedsubItemsHeading(heading.subItemsHeading, heading);
     }
 
     return {
       key: heading.key,
       valueType: heading.itemType,
-      subHeading,
+      subItemsHeading,
       label: heading.text,
       displayUnit: heading.displayUnit,
       granularity: heading.granularity,
@@ -334,40 +334,40 @@ class DetailsRenderer {
   }
 
   /**
-   * @param {Exclude<LH.Audit.Details.TableColumnHeading['subHeading'], undefined>} subHeading
+   * @param {Exclude<LH.Audit.Details.TableColumnHeading['subItemsHeading'], undefined>} subItemsHeading
    * @param {LH.Audit.Details.TableColumnHeading} parentHeading
-   * @return {LH.Audit.Details.OpportunityColumnHeading['subHeading']}
+   * @return {LH.Audit.Details.OpportunityColumnHeading['subItemsHeading']}
    */
-  _getCanonicalizedSubHeading(subHeading, parentHeading) {
+  _getCanonicalizedsubItemsHeading(subItemsHeading, parentHeading) {
     // Low-friction way to prevent commiting a falsy key (which is never allowed for
-    // a subHeading) from passing in CI.
-    if (!subHeading.key) {
+    // a subItemsHeading) from passing in CI.
+    if (!subItemsHeading.key) {
       // eslint-disable-next-line no-console
       console.warn('key should not be null');
     }
 
     return {
-      key: subHeading.key || '',
-      valueType: subHeading.itemType || parentHeading.itemType,
-      granularity: subHeading.granularity || parentHeading.granularity,
-      displayUnit: subHeading.displayUnit || parentHeading.displayUnit,
+      key: subItemsHeading.key || '',
+      valueType: subItemsHeading.itemType || parentHeading.itemType,
+      granularity: subItemsHeading.granularity || parentHeading.granularity,
+      displayUnit: subItemsHeading.displayUnit || parentHeading.displayUnit,
     };
   }
 
   /**
-   * Returns a new heading where the values are defined first by `heading.subHeading`,
-   * and secondly by `heading`. If there is no subHeading, returns null, which will
+   * Returns a new heading where the values are defined first by `heading.subItemsHeading`,
+   * and secondly by `heading`. If there is no subItemsHeading, returns null, which will
    * be rendered as an empty column.
    * @param {LH.Audit.Details.OpportunityColumnHeading} heading
    * @return {LH.Audit.Details.OpportunityColumnHeading | null}
    */
-  _getDerivedSubHeading(heading) {
-    if (!heading.subHeading) return null;
+  _getDerivedsubItemsHeading(heading) {
+    if (!heading.subItemsHeading) return null;
     return {
-      key: heading.subHeading.key || '',
-      valueType: heading.subHeading.valueType || heading.valueType,
-      granularity: heading.subHeading.granularity || heading.granularity,
-      displayUnit: heading.subHeading.displayUnit || heading.displayUnit,
+      key: heading.subItemsHeading.key || '',
+      valueType: heading.subItemsHeading.valueType || heading.valueType,
+      granularity: heading.subItemsHeading.granularity || heading.granularity,
+      displayUnit: heading.subItemsHeading.displayUnit || heading.displayUnit,
       label: '',
     };
   }
@@ -409,7 +409,7 @@ class DetailsRenderer {
 
   /**
    * Renders one or more rows from a details table item. A single table item can
-   * expand into multiple rows, if there is a subHeading.
+   * expand into multiple rows, if there is a subItemsHeading.
    * @param {LH.Audit.Details.OpportunityItem | LH.Audit.Details.TableItem} item
    * @param {LH.Audit.Details.OpportunityColumnHeading[]} headings
    */
@@ -419,11 +419,11 @@ class DetailsRenderer {
 
     if (!item.subItems) return fragment;
 
-    const subHeadings = headings.map(this._getDerivedSubHeading);
-    if (!subHeadings.some(Boolean)) return fragment;
+    const subItemsHeadings = headings.map(this._getDerivedsubItemsHeading);
+    if (!subItemsHeadings.some(Boolean)) return fragment;
 
     for (const subItem of item.subItems.items) {
-      const rowEl = this._renderTableRow(subItem, subHeadings);
+      const rowEl = this._renderTableRow(subItem, subItemsHeadings);
       rowEl.classList.add('lh-sub-item-row');
       fragment.append(rowEl);
     }
