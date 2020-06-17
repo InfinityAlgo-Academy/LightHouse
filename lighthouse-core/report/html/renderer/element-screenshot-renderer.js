@@ -80,6 +80,60 @@ class ElementScreenshotRenderer {
 
   /**
    * @param {DOM} dom
+   * @param {LH.Artifacts.FullPageScreenshot} fullPageScreenshot
+   */
+  static _installBackgroundImageStyle(dom, fullPageScreenshot) {
+    const containerEl = dom.find('.lh-container', dom._document);
+    if (containerEl.querySelector('#full-page-screenshot-style')) return;
+
+    const fullpageScreenshotUrl = fullPageScreenshot.data;
+    const fullPageScreenshotStyleTag = dom.createElement('style');
+    fullPageScreenshotStyleTag.id = 'full-page-screenshot-style';
+    fullPageScreenshotStyleTag.innerText = `.lh-element-screenshot__image { background-image: url(${fullpageScreenshotUrl}) }`;
+    containerEl.appendChild(fullPageScreenshotStyleTag);
+  }
+
+  /**
+   * @param {DOM} dom
+   * @param {ParentNode} templateContext
+   * @param {LH.Artifacts.FullPageScreenshot} fullPageScreenshot
+   */
+  static installOverlayFeature(dom, templateContext, fullPageScreenshot) {
+    ElementScreenshotRenderer._installBackgroundImageStyle(dom, fullPageScreenshot);
+
+    for (const el of dom.document().querySelectorAll('.lh-element-screenshot')) {
+      el.addEventListener('click', () => {
+        const overlay = dom.createElement('div');
+        overlay.classList.add('lh-element-screenshot__overlay');
+        const boundingRect = {
+          width: Number(el.getAttribute('rectWidth')),
+          height: Number(el.getAttribute('rectHeight')),
+          left: Number(el.getAttribute('rectLeft')),
+          right: Number(el.getAttribute('rectRight')),
+          top: Number(el.getAttribute('rectTop')),
+          bottom: Number(el.getAttribute('rectBottom')),
+        };
+        overlay.appendChild(ElementScreenshotRenderer.render(
+          dom,
+          templateContext,
+          boundingRect,
+          fullPageScreenshot,
+          {
+            // TODO: should this be documentElement width?
+            width: window.innerWidth * 0.75,
+            height: window.innerHeight * 0.75,
+          }
+        ));
+        document.body.appendChild(overlay);
+        overlay.addEventListener('click', () => {
+          overlay.remove();
+        });
+      });
+    }
+  }
+
+  /**
+   * @param {DOM} dom
    * @param {ParentNode} templateContext
    * @param {LH.Artifacts.Rect} boundingRect
    * @param {LH.Artifacts.FullPageScreenshot} fullPageScreenshot
@@ -87,8 +141,6 @@ class ElementScreenshotRenderer {
    * @return {Element}
    */
   static render(dom, templateContext, boundingRect, fullPageScreenshot, viewportSize) {
-    const fullpageScreenshotUrl = fullPageScreenshot.data;
-
     const tmpl = dom.cloneTemplate('#tmpl-lh-element-screenshot', templateContext);
     const previewContainer = dom.find('.lh-element-screenshot', tmpl);
 
@@ -100,12 +152,12 @@ class ElementScreenshotRenderer {
       height: viewportSize.height,
     };
 
-    previewContainer.setAttribute('rectWidth', String(boundingRect.width));
-    previewContainer.setAttribute('rectHeight', String(boundingRect.height));
-    previewContainer.setAttribute('rectLeft', String(boundingRect.left));
-    previewContainer.setAttribute('rectRight', String(boundingRect.right));
-    previewContainer.setAttribute('rectTop', String(boundingRect.top));
-    previewContainer.setAttribute('rectBottom', String(boundingRect.bottom));
+    previewContainer.setAttribute('rectWidth', boundingRect.width.toString());
+    previewContainer.setAttribute('rectHeight', boundingRect.height.toString());
+    previewContainer.setAttribute('rectLeft', boundingRect.left.toString());
+    previewContainer.setAttribute('rectRight', boundingRect.right.toString());
+    previewContainer.setAttribute('rectTop', boundingRect.top.toString());
+    previewContainer.setAttribute('rectBottom', boundingRect.bottom.toString());
 
     // For large elements zoom out to better show where on the page they are
     /* todo: maybe only apply the width criterium in the preview screenshot */
@@ -128,22 +180,10 @@ class ElementScreenshotRenderer {
     // contentEl.style.transform = `scale(${zoomFactor})`;
     contentEl.style.top = `-${viewport.height * zoomFactor}px`;
 
-    // move to top right
-    // contentEl.style.setProperty('top', '0px', 'important');
-    // contentEl.style.setProperty('bottom', 'unset', 'important');
-
     const image = /** @type {HTMLElement} */
       (previewContainer.querySelector('.lh-element-screenshot__image'));
     image.style.width = viewport.width * zoomFactor + 'px';
     image.style.height = viewport.height * zoomFactor + 'px';
-
-    // todo: figure out how to do this properly, probably just render it once regardless of whether we use the element screenshot
-    if (!dom.document().querySelector('#full-page-screenshot-style')) {
-      const fullPageScreenshotStyleTag = dom.createElement('style');
-      fullPageScreenshotStyleTag.id = 'full-page-screenshot-style';
-      fullPageScreenshotStyleTag.innerText = `.lh-element-screenshot__image { background-image: url(${fullpageScreenshotUrl}) }`;
-      dom.document().body.appendChild(fullPageScreenshotStyleTag);
-    }
 
     image.style.backgroundPositionY = -(positionDetails.screenshotPositionInDisplayArea.top * zoomFactor) + 'px';
     image.style.backgroundPositionX = -(positionDetails.screenshotPositionInDisplayArea.left * zoomFactor) + 'px';

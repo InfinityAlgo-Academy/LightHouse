@@ -298,36 +298,8 @@ class ReportUIFeatures {
       json.audits['full-page-screenshot'] && json.audits['full-page-screenshot'].details);
     if (!fullPageScreenshot) return;
 
-    // TODO: should this just be in ElementScreenshotRenderer ?
-    for (const el of this._document.querySelectorAll('.lh-element-screenshot')) {
-      el.addEventListener('click', () => {
-        const overlay = this._dom.createElement('div');
-        overlay.classList.add('lh-element-screenshot__overlay');
-        const boundingRect = {
-          width: Number(el.getAttribute('rectWidth')),
-          height: Number(el.getAttribute('rectHeight')),
-          left: Number(el.getAttribute('rectLeft')),
-          right: Number(el.getAttribute('rectRight')),
-          top: Number(el.getAttribute('rectTop')),
-          bottom: Number(el.getAttribute('rectBottom')),
-        };
-        overlay.appendChild(ElementScreenshotRenderer.render(
-          this._dom,
-          this._templateContext,
-          boundingRect,
-          fullPageScreenshot,
-          {
-            // TODO: should this be documentElement width?
-            width: window.innerWidth * 0.75,
-            height: window.innerHeight * 0.75,
-          }
-        ));
-        document.body.appendChild(overlay);
-        overlay.addEventListener('click', () => {
-          overlay.remove();
-        });
-      });
-    }
+    ElementScreenshotRenderer.installOverlayFeature(
+      this._dom, this._templateContext, fullPageScreenshot);
   }
 
   /**
