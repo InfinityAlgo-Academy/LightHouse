@@ -99,7 +99,7 @@ declare global {
       export interface TableColumnHeading {
         /**
          * The name of the property within items being described.
-         * If null, subHeading must be defined, and the first table row in this column for
+         * If null, subItemsHeading must be defined, and the first table row in this column for
          * every item will be empty.
          * See legacy-javascript for an example.
          */
@@ -116,7 +116,7 @@ declare global {
          * Optional - defines an inner table of values that correspond to this column.
          * Key is required - if other properties are not provided, the value for the heading is used.
          */
-        subHeading?: {key: string, itemType?: ItemValueType, displayUnit?: string, granularity?: number};
+        subItemsHeading?: {key: string, itemType?: ItemValueType, displayUnit?: string, granularity?: number};
 
         displayUnit?: string;
         granularity?: number;
@@ -131,7 +131,7 @@ declare global {
       export interface OpportunityColumnHeading {
         /**
         * The name of the property within items being described.
-         * If null, subHeading must be defined, and the first table row in this column for
+         * If null, subItemsHeading must be defined, and the first table row in this column for
          * every item will be empty.
          * See legacy-javascript for an example.
          */
@@ -148,7 +148,7 @@ declare global {
          * Optional - defines an inner table of values that correspond to this column.
          * Key is required - if other properties are not provided, the value for the heading is used.
          */
-        subHeading?: {key: string, valueType?: ItemValueType, displayUnit?: string, granularity?: number};
+        subItemsHeading?: {key: string, valueType?: ItemValueType, displayUnit?: string, granularity?: number};
 
         // NOTE: not used by opportunity details, but used in the renderer until table/opportunity unification.
         displayUnit?: string;
