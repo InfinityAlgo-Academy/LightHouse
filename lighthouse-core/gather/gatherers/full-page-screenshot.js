@@ -40,10 +40,10 @@ class FullPageScreenshot extends Gatherer {
       format: 'jpeg',
       quality: FULL_PAGE_SCREENSHOT_QUALITY,
     });
-    const url = 'data:image/jpeg;base64,' + result.data;
+    const data = 'data:image/jpeg;base64,' + result.data;
 
     return {
-      url,
+      data,
       width,
       height,
     };
@@ -56,7 +56,7 @@ class FullPageScreenshot extends Gatherer {
   async afterPass_(passContext) {
     let screenshot = await this._takeScreenshot(passContext, MAX_SCREENSHOT_HEIGHT);
 
-    if (screenshot.url.length > MAX_DATA_URL_SIZE) {
+    if (screenshot.data.length > MAX_DATA_URL_SIZE) {
       // Hitting the data URL size limit is rare, it only happens for pages on tall
       // desktop sites with lots of images.
       // So just cutting down the height a bit fixes the issue.

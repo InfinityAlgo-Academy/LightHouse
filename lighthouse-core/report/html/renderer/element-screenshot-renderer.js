@@ -87,7 +87,7 @@ class ElementScreenshotRenderer {
    * @return {Element}
    */
   static render(dom, templateContext, boundingRect, fullPageScreenshot, viewportSize) {
-    const fullpageScreenshotUrl = fullPageScreenshot.url;
+    const fullpageScreenshotUrl = fullPageScreenshot.data;
 
     const tmpl = dom.cloneTemplate('#tmpl-lh-element-screenshot', templateContext);
     const previewContainer = dom.find('.lh-element-screenshot', tmpl);

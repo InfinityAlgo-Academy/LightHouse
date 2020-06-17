@@ -283,6 +283,7 @@ function gatherTapTargets() {
   for (const {tapTargetElement, visibleClientRects} of tapTargetsWithVisibleClientRects) {
     targets.push({
       clientRects: visibleClientRects,
+      // @ts-ignore - getNodePath put into scope via stringification
       boundingRect: getBoundingClientRect(tapTargetElement),
       snippet: truncate(tapTargetElement.outerHTML, 300),
       // @ts-ignore - getNodePath put into scope via stringification
