@@ -29,20 +29,20 @@ function clamp(value, min, max) {
 
 class ElementScreenshotRenderer {
   /**
-   * @param {Rect} highlightRect
+   * @param {Rect} clipRect
    * @param {Size} viewport
    * @param {Size} screenshotSize
    */
-  static getScreenshotPositionDetails(highlightRect, viewport, screenshotSize) {
-    const highlightCenter = RectHelpers.getRectCenterPoint(highlightRect);
+  static getScreenshotPositions(clipRect, viewport, screenshotSize) {
+    const clipCenter = RectHelpers.getRectCenterPoint(clipRect);
 
-    // Try to center on highlighted area
+    // Try to center clipped region.
     const screenshotLeftVisibleEdge = clamp(
-      highlightCenter.x - viewport.width / 2,
+      clipCenter.x - viewport.width / 2,
       0, screenshotSize.width - viewport.width
     );
     const screenshotTopVisisbleEdge = clamp(
-      highlightCenter.y - viewport.height / 2,
+      clipCenter.y - viewport.height / 2,
       0, screenshotSize.height - viewport.height
     );
 
@@ -51,9 +51,9 @@ class ElementScreenshotRenderer {
         left: screenshotLeftVisibleEdge,
         top: screenshotTopVisisbleEdge,
       },
-      highlight: {
-        left: highlightRect.left - screenshotLeftVisibleEdge,
-        top: highlightRect.top - screenshotTopVisisbleEdge,
+      clip: {
+        left: clipRect.left - screenshotLeftVisibleEdge,
+        top: clipRect.top - screenshotTopVisisbleEdge,
       },
     };
   }
@@ -108,7 +108,7 @@ class ElementScreenshotRenderer {
       el.addEventListener('click', () => {
         const overlay = dom.createElement('div');
         overlay.classList.add('lh-element-screenshot__overlay');
-        const boundingRect = {
+        const clipRect = {
           width: Number(el.getAttribute('rectWidth')),
           height: Number(el.getAttribute('rectHeight')),
           left: Number(el.getAttribute('rectLeft')),
@@ -119,7 +119,7 @@ class ElementScreenshotRenderer {
         overlay.appendChild(ElementScreenshotRenderer.render(
           dom,
           templateContext,
-          boundingRect,
+          clipRect,
           fullPageScreenshot,
           {
             // TODO: should this be documentElement width?
@@ -138,14 +138,14 @@ class ElementScreenshotRenderer {
   /**
    * @param {DOM} dom
    * @param {ParentNode} templateContext
-   * @param {LH.Artifacts.Rect} boundingRect
+   * @param {LH.Artifacts.Rect} clipRect Region of screenshot to highlight.
    * @param {LH.Artifacts.FullPageScreenshot} fullPageScreenshot
-   * @param {Size} viewportSize
+   * @param {Size} viewportSize Size of region to render screenshot in.
    * @return {Element}
    */
-  static render(dom, templateContext, boundingRect, fullPageScreenshot, viewportSize) {
+  static render(dom, templateContext, clipRect, fullPageScreenshot, viewportSize) {
     const tmpl = dom.cloneTemplate('#tmpl-lh-element-screenshot', templateContext);
-    const previewContainer = dom.find('.lh-element-screenshot', tmpl);
+    const containerEl = dom.find('.lh-element-screenshot', tmpl);
 
     // TODO(cjamcl): Understand this :)
 
@@ -155,16 +155,17 @@ class ElementScreenshotRenderer {
       height: viewportSize.height,
     };
 
-    previewContainer.setAttribute('rectWidth', boundingRect.width.toString());
-    previewContainer.setAttribute('rectHeight', boundingRect.height.toString());
-    previewContainer.setAttribute('rectLeft', boundingRect.left.toString());
-    previewContainer.setAttribute('rectRight', boundingRect.right.toString());
-    previewContainer.setAttribute('rectTop', boundingRect.top.toString());
-    previewContainer.setAttribute('rectBottom', boundingRect.bottom.toString());
+    containerEl.setAttribute('rectWidth', clipRect.width.toString());
+    containerEl.setAttribute('rectHeight', clipRect.height.toString());
+    containerEl.setAttribute('rectLeft', clipRect.left.toString());
+    containerEl.setAttribute('rectRight', clipRect.right.toString());
+    containerEl.setAttribute('rectTop', clipRect.top.toString());
+    containerEl.setAttribute('rectBottom', clipRect.bottom.toString());
 
-    // For large elements zoom out to better show where on the page they are
-    /* todo: maybe only apply the width criterium in the preview screenshot */
-    if (boundingRect.height > viewportSize.height / 2 || boundingRect.width > viewportSize.width / 2) {
+    // Zoom out (by double viewport but using 0.5 zoom factor) when highlighted region takes
+    // up most of the viewport. This provides more context for where on the page this element is.
+    /* todo: maybe only apply the width criterium in the preview screenshot (what's in the table, not the overlay) */
+    if (clipRect.height > viewportSize.height / 2 || clipRect.width > viewportSize.width / 2) {
       zoomFactor = 0.5;
       viewport.width *= 2;
       viewport.height *= 2;
@@ -172,51 +173,51 @@ class ElementScreenshotRenderer {
 
     viewport.width = Math.min(fullPageScreenshot.width, viewport.width);
 
-    const positionDetails = ElementScreenshotRenderer.getScreenshotPositionDetails(
-      boundingRect,
+    const positions = ElementScreenshotRenderer.getScreenshotPositions(
+      clipRect,
       viewport,
-      fullPageScreenshot
+      {width: fullPageScreenshot.width, height: fullPageScreenshot.height}
     );
 
     const contentEl = /** @type {HTMLElement} */
-      (previewContainer.querySelector('.lh-element-screenshot__content'));
+      (containerEl.querySelector('.lh-element-screenshot__content'));
     // contentEl.style.transform = `scale(${zoomFactor})`;
     contentEl.style.top = `-${viewport.height * zoomFactor}px`;
 
     const image = /** @type {HTMLElement} */
-      (previewContainer.querySelector('.lh-element-screenshot__image'));
+      (containerEl.querySelector('.lh-element-screenshot__image'));
     image.style.width = viewport.width * zoomFactor + 'px';
     image.style.height = viewport.height * zoomFactor + 'px';
 
-    image.style.backgroundPositionY = -(positionDetails.screenshot.top * zoomFactor) + 'px';
-    image.style.backgroundPositionX = -(positionDetails.screenshot.left * zoomFactor) + 'px';
+    image.style.backgroundPositionY = -(positions.screenshot.top * zoomFactor) + 'px';
+    image.style.backgroundPositionX = -(positions.screenshot.left * zoomFactor) + 'px';
     // image.style.backgroundSize = (zoomFactor * 100) + '%';
     image.style.backgroundSize =
       `${fullPageScreenshot.width * zoomFactor}px ${fullPageScreenshot.height * zoomFactor}px`;
 
     const elMarker = /** @type {HTMLElement} */
-      (previewContainer.querySelector('.lh-element-screenshot__element-marker'));
-    elMarker.style.width = boundingRect.width * zoomFactor + 'px';
-    elMarker.style.height = boundingRect.height * zoomFactor + 'px';
-    elMarker.style.left = positionDetails.highlight.left * zoomFactor + 'px';
-    elMarker.style.top = positionDetails.highlight.top * zoomFactor + 'px';
+      (containerEl.querySelector('.lh-element-screenshot__element-marker'));
+    elMarker.style.width = clipRect.width * zoomFactor + 'px';
+    elMarker.style.height = clipRect.height * zoomFactor + 'px';
+    elMarker.style.left = positions.clip.left * zoomFactor + 'px';
+    elMarker.style.top = positions.clip.top * zoomFactor + 'px';
 
     const mask = /** @type {HTMLElement} */
-      (previewContainer.querySelector('.lh-element-screenshot__mask'));
+      (containerEl.querySelector('.lh-element-screenshot__mask'));
     const clipId = 'clip-' + Math.floor(Math.random() * 100000000);
     mask.style.width = viewport.width * zoomFactor + 'px';
     mask.style.height = viewport.height * zoomFactor + 'px';
     mask.style.clipPath = 'url(#' + clipId + ')';
 
-    const top = positionDetails.highlight.top / viewport.height;
-    const bottom = top + boundingRect.height / viewport.height;
-    const left = positionDetails.highlight.left / viewport.width;
-    const right = left + boundingRect.width / viewport.width;
+    const top = positions.clip.top / viewport.height;
+    const bottom = top + clipRect.height / viewport.height;
+    const left = positions.clip.left / viewport.width;
+    const right = left + clipRect.width / viewport.width;
     mask.appendChild(
       ElementScreenshotRenderer.renderClipPath(dom, clipId, {top, bottom, left, right})
     );
 
-    return previewContainer;
+    return containerEl;
   }
 }
 

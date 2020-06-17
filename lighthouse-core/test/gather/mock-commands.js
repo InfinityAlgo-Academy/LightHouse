@@ -47,7 +47,6 @@ function createMockSendCommandFn() {
      * @param {LH.CrdpCommands[C]['paramsType']} args
      */
     (command, sessionId, ...args) => {
-      console.log(command);
       const indexOfResponse = mockResponses
         .findIndex(entry => entry.command === command && entry.sessionId === sessionId);
       if (indexOfResponse === -1) throw new Error(`${command} unimplemented`);

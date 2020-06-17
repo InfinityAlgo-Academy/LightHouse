@@ -33,14 +33,14 @@ describe('getScreenshotPositionDetails', () => {
         left: 244,
         top: 370,
       },
-      highlight: {
+      clip: {
         left: 156,
         top: 130,
       },
     });
   });
 
-  it('contains the screenshot within the display area if the highlight is in the top left', () => {
+  it('contains the screenshot within the display area if the clip is in the top left', () => {
     expect(
       ElementScreenshotRenderer.getScreenshotPositionDetails(
         {left: 0, top: 0, width: 100, height: 40},
@@ -52,14 +52,14 @@ describe('getScreenshotPositionDetails', () => {
         left: 0,
         top: 0,
       },
-      highlight: {
+      clip: {
         left: 0,
         top: 0,
       },
     });
   });
 
-  it('contains the screenshot within the display area if the highlight is in the bottom right', () => {
+  it('contains the screenshot within the display area if the clip is in the bottom right', () => {
     expect(
       ElementScreenshotRenderer.getScreenshotPositionDetails(
         {left: 300, top: 4950, width: 100, height: 40},
@@ -71,7 +71,7 @@ describe('getScreenshotPositionDetails', () => {
         left: 0,
         top: 4700,
       },
-      highlight: {
+      clip: {
         left: 300,
         top: 250,
       },
