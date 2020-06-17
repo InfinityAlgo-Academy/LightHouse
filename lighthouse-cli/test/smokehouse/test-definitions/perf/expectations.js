@@ -192,6 +192,7 @@ module.exports = [
               0: {
                 url: 'http://localhost:10200/perf/delayed-element.js',
                 duration: '>500',
+                startTime: '5000 +/- 5000', // make sure it's on the right time scale, but nothing more
               },
             },
           },
