@@ -25,7 +25,7 @@ const {getNodePath, getNodeSelector, getNodeLabel, getOuterHTMLSnippet} =
  * @return {LH.Artifacts.TraceElement | undefined}
  */
 /* istanbul ignore next */
-function setAttributeMarker(metricName) {
+function getTraceElementDetails(metricName) {
   const elem = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement;
   let traceElement;
   if (elem) {
@@ -135,13 +135,11 @@ class TraceElements extends Gatherer {
     for (let i = 0; i < backendNodeIds.length; i++) {
       const metricName =
         lcpNodeId === backendNodeIds[i] ? 'largest-contentful-paint' : 'cumulative-layout-shift';
-      const resolveNodeResponse =
-        await driver.sendCommand('DOM.resolveNode', {backendNodeId: backendNodeIds[i]});
-      const objectId = resolveNodeResponse.object.objectId;
+      const objectId = await driver.resolveNodeIdToObjectId(backendNodeIds[i]);
       if (!objectId) continue;
 
       try {
-        const element = await driver.evaluateFunctionOnObject(setAttributeMarker, {
+        const element = await driver.evaluateFunctionOnObject(getTraceElementDetails, {
           objectId,
           deps: [
             getNodePath,
