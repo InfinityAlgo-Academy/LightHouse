@@ -187,6 +187,7 @@ function getNodePath(node) {
     const index = getNodeIndex(node);
     path.push([index, node.nodeName]);
     if (node.parentNode.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+      path.push([0, node.parentNode]);
       node = node.parentNode.host;
     } else {
       node = node.parentNode;
