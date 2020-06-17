@@ -11,13 +11,10 @@
  * We take the backend nodeId from the trace and use it to find the corresponding element in the DOM.
  */
 
-/* global document */
-
 const Gatherer = require('./gatherer.js');
+const pageFunctions = require('../../lib/page-functions.js');
 const TraceProcessor = require('../../lib/tracehouse/trace-processor.js');
 const RectHelpers = require('../../lib/rect-helpers.js');
-const {getNodePath, getNodeSelector, getNodeLabel, getOuterHTMLSnippet} =
-  require('../../lib/page-functions.js');
 
 /**
  * @this {HTMLElement}
@@ -26,16 +23,19 @@ const {getNodePath, getNodeSelector, getNodeLabel, getOuterHTMLSnippet} =
  */
 /* istanbul ignore next */
 function setAttributeMarker(metricName) {
-  const elem = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement;
+  const elem = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement; // eslint-disable-line no-undef
   let traceElement;
   if (elem) {
-    const nodeLabel = getNodeLabel(elem);
     traceElement = {
       metricName,
-      devtoolsNodePath: getNodePath(elem),
-      selector: getNodeSelector(elem),
-      nodeLabel: nodeLabel ? nodeLabel : undefined,
-      snippet: getOuterHTMLSnippet(elem),
+      // @ts-ignore - put into scope via stringification
+      devtoolsNodePath: getNodePath(elem), // eslint-disable-line no-undef
+      // @ts-ignore - put into scope via stringification
+      selector: getNodeSelector(elem), // eslint-disable-line no-undef
+      // @ts-ignore - put into scope via stringification
+      nodeLabel: getNodeLabel(elem), // eslint-disable-line no-undef
+      // @ts-ignore - put into scope via stringification
+      snippet: getOuterHTMLSnippet(elem), // eslint-disable-line no-undef
     };
   }
   return traceElement;
@@ -135,24 +135,25 @@ class TraceElements extends Gatherer {
     for (let i = 0; i < backendNodeIds.length; i++) {
       const metricName =
         lcpNodeId === backendNodeIds[i] ? 'largest-contentful-paint' : 'cumulative-layout-shift';
-      const resolveNodeResponse =
-        await driver.sendCommand('DOM.resolveNode', {backendNodeId: backendNodeIds[i]});
-      const objectId = resolveNodeResponse.object.objectId;
+      const objectId = await driver.resolveNodeIdToObjectId(backendNodeIds[i]);
       if (!objectId) continue;
+      const response = await driver.sendCommand('Runtime.callFunctionOn', {
+        objectId,
+        functionDeclaration: `function () {
+          ${setAttributeMarker.toString()};
+          ${pageFunctions.getNodePathString};
+          ${pageFunctions.getNodeSelectorString};
+          ${pageFunctions.getNodeLabelString};
+          ${pageFunctions.getOuterHTMLSnippetString};
+          return setAttributeMarker.call(this, '${metricName}');
+        }`,
+        returnByValue: true,
+        awaitPromise: true,
+      });
 
-      try {
-        const element = await driver.evaluateFunctionOnObject(setAttributeMarker, {
-          objectId,
-          deps: [
-            getNodePath,
-            getNodeSelector,
-            getNodeLabel,
-            getOuterHTMLSnippet,
-          ],
-          args: [metricName],
-        });
-        if (element) traceElements.push(element);
-      } catch (_) {}
+      if (response && response.result && response.result.value) {
+        traceElements.push(response.result.value);
+      }
     }
 
     return traceElements;
