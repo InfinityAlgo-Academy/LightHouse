@@ -21,7 +21,7 @@ describe('getScreenshotPositionDetails', () => {
     global.RectHelpers = undefined;
   });
 
-  it('Centers the screenshot on the highlighted area', () => {
+  it('centers the screenshot on the highlighted area', () => {
     expect(
       ElementScreenshotRenderer.getScreenshotPositionDetails(
         {left: 400, top: 500, width: 100, height: 40},
@@ -29,18 +29,18 @@ describe('getScreenshotPositionDetails', () => {
         {width: 1300, height: 5000}
       )
     ).toMatchObject({
-      screenshotPositionInDisplayArea: {
+      screenshot: {
         left: 244,
         top: 370,
       },
-      highlightPositionInDisplayArea: {
+      highlight: {
         left: 156,
         top: 130,
       },
     });
   });
 
-  it('Contains the screenshot within the display area if the highlight is in the top left', () => {
+  it('contains the screenshot within the display area if the highlight is in the top left', () => {
     expect(
       ElementScreenshotRenderer.getScreenshotPositionDetails(
         {left: 0, top: 0, width: 100, height: 40},
@@ -48,18 +48,18 @@ describe('getScreenshotPositionDetails', () => {
         {width: 412, height: 5000}
       )
     ).toMatchObject({
-      screenshotPositionInDisplayArea: {
+      screenshot: {
         left: 0,
         top: 0,
       },
-      highlightPositionInDisplayArea: {
+      highlight: {
         left: 0,
         top: 0,
       },
     });
   });
 
-  it('Contains the screenshot within the display area if the highlight is in the bottom right', () => {
+  it('contains the screenshot within the display area if the highlight is in the bottom right', () => {
     expect(
       ElementScreenshotRenderer.getScreenshotPositionDetails(
         {left: 300, top: 4950, width: 100, height: 40},
@@ -67,11 +67,11 @@ describe('getScreenshotPositionDetails', () => {
         {width: 412, height: 5000}
       )
     ).toMatchObject({
-      screenshotPositionInDisplayArea: {
+      screenshot: {
         left: 0,
         top: 4700,
       },
-      highlightPositionInDisplayArea: {
+      highlight: {
         left: 300,
         top: 250,
       },
