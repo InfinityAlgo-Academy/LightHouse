@@ -111,7 +111,7 @@ describe('LegacyJavaScript audit', () => {
   it('fails code with multiple legacy polyfills', async () => {
     const artifacts = createArtifacts([
       {
-        code: 'String.prototype.repeat = function() {}; String.prototype.includes = function() {}',
+        code: 'String.prototype.repeat = function() {}; Array.prototype.includes = function() {}',
         url: 'https://www.example.com/a.js',
       },
     ]);
@@ -144,12 +144,13 @@ describe('LegacyJavaScript audit', () => {
       'String.prototype[\'repeat\'] = function() {}',
       'Object.defineProperty(String.prototype, "repeat", function() {})',
       'Object.defineProperty(String.prototype, \'repeat\', function() {})',
-      'Object.defineProperty(window, \'WeakMap\', function() {})',
       '$export($export.S,"Object",{values:function values(t){return i(t)}})',
-      'WeakMap = function() {}',
-      'window.WeakMap = function() {}',
-      'function WeakMap() {}',
       'String.raw = function() {}',
+      // Currently are no polyfills that declare a class. Maybe in the future.
+      // 'Object.defineProperty(window, \'WeakMap\', function() {})',
+      // 'WeakMap = function() {}',
+      // 'window.WeakMap = function() {}',
+      // 'function WeakMap() {}',
     ];
     const variants = createVariants(codeSnippets);
     const scripts = variants.map((code, i) => {
@@ -235,6 +236,8 @@ describe('LegacyJavaScript signals', () => {
       const expectedMissingSignals = [
         'core-js-2-preset-env-esmodules/true',
         'core-js-3-preset-env-esmodules/true',
+        'core-js-2-preset-env-esmodules/true-and-bugfixes',
+        'core-js-3-preset-env-esmodules/true-and-bugfixes',
       ];
       for (const expectedVariant of expectedMissingSignals) {
         expect(signalSummary.variantsMissingSignals).toContain(expectedVariant);

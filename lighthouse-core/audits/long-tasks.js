@@ -17,7 +17,7 @@ const UIStrings = {
   /** Description of a diagnostic LH audit that shows the user the longest running tasks that occur when the page loads. */
   description: 'Lists the longest tasks on the main thread, ' +
     'useful for identifying worst contributors to input delay. ' +
-    '[Learn more](https://web.dev/long-tasks-devtools)',
+    '[Learn more](https://web.dev/long-tasks-devtools/)',
   /** [ICU Syntax] Label identifying the number of long-running CPU tasks that occurred while loading a web page. */
   displayValue: `{itemCount, plural,
   =1 {# long task found}
