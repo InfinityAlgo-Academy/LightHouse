@@ -1543,28 +1543,16 @@
 /* Element screenshot */
 .lh-element-screenshot {
   position: relative;
-  /* pointer-events: none; */
-  display: inline-block;
   overflow: hidden;
-
   float: left;
   margin-right: 20px;
+  cursor: zoom-out;
+}
+.lh-node .lh-element-screenshot {
+  cursor: zoom-in;
 }
 .lh-element-screenshot__content {
-  cursor: pointer;
-  /* position: absolute;
-  right: 0px;
-  box-shadow: 2px 2px 6px #999;
-  */
   overflow: hidden;
-  /*
-  z-index: 1; */
-
-  /* Try always showing in bottom right **/
-  /* position: fixed;
-  right: 0 !important;
-  bottom: 0;
-  top: auto !important; */
 }
 .lh-element-screenshot__image {
   outline: 2px solid #777;
@@ -1591,6 +1579,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: zoom-out;
 }
 
 /*# sourceURL=report-styles.css */
