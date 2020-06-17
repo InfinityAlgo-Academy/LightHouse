@@ -165,10 +165,23 @@ class ElementScreenshotRenderer {
     // Zoom out (by double viewport but using 0.5 zoom factor) when highlighted region takes
     // up most of the viewport. This provides more context for where on the page this element is.
     /* todo: maybe only apply the width criterium in the preview screenshot (what's in the table, not the overlay) */
-    if (clipRect.height > viewportSize.height / 2 || clipRect.width > viewportSize.width / 2) {
-      zoomFactor = 0.5;
-      viewport.width *= 2;
-      viewport.height *= 2;
+    // if (clipRect.height > viewportSize.height / 2 || clipRect.width > viewportSize.width / 2) {
+    //   zoomFactor = 0.5;
+    //   viewport.width *= 2;
+    //   viewport.height *= 2;
+    // }
+
+    const intendedClipToViewportRatio = 0.75;
+    const zoomRatioXY = {
+      x: viewportSize.width / clipRect.width,
+      // x: 1, // ignore x?
+      y: viewportSize.height / clipRect.height,
+    }
+    const zoomRatio = intendedClipToViewportRatio * Math.min(zoomRatioXY.x, zoomRatioXY.y);
+    if (zoomRatio < 1) {
+      zoomFactor = zoomRatio;
+      viewport.width /= zoomRatio;
+      viewport.height /= zoomRatio;
     }
 
     viewport.width = Math.min(fullPageScreenshot.width, viewport.width);
