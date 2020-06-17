@@ -47,11 +47,11 @@ class ElementScreenshotRenderer {
     );
 
     return {
-      screenshotPositionInDisplayArea: {
+      screenshot: {
         left: screenshotLeftVisibleEdge,
         top: screenshotTopVisisbleEdge,
       },
-      highlightPositionInDisplayArea: {
+      highlight: {
         left: highlightRect.left - screenshotLeftVisibleEdge,
         top: highlightRect.top - screenshotTopVisisbleEdge,
       },
@@ -89,7 +89,10 @@ class ElementScreenshotRenderer {
     const fullpageScreenshotUrl = fullPageScreenshot.data;
     const fullPageScreenshotStyleTag = dom.createElement('style');
     fullPageScreenshotStyleTag.id = 'full-page-screenshot-style';
-    fullPageScreenshotStyleTag.innerText = `.lh-element-screenshot__image { background-image: url(${fullpageScreenshotUrl}) }`;
+    fullPageScreenshotStyleTag.innerText = `
+      .lh-element-screenshot__image {
+        background-image: url(${fullpageScreenshotUrl})
+      }`;
     containerEl.appendChild(fullPageScreenshotStyleTag);
   }
 
@@ -161,7 +164,7 @@ class ElementScreenshotRenderer {
 
     // For large elements zoom out to better show where on the page they are
     /* todo: maybe only apply the width criterium in the preview screenshot */
-    if (boundingRect.height > viewportSize.height / 2 || boundingRect.width > viewportSize.width / 2 ) {
+    if (boundingRect.height > viewportSize.height / 2 || boundingRect.width > viewportSize.width / 2) {
       zoomFactor = 0.5;
       viewport.width *= 2;
       viewport.height *= 2;
@@ -185,17 +188,18 @@ class ElementScreenshotRenderer {
     image.style.width = viewport.width * zoomFactor + 'px';
     image.style.height = viewport.height * zoomFactor + 'px';
 
-    image.style.backgroundPositionY = -(positionDetails.screenshotPositionInDisplayArea.top * zoomFactor) + 'px';
-    image.style.backgroundPositionX = -(positionDetails.screenshotPositionInDisplayArea.left * zoomFactor) + 'px';
+    image.style.backgroundPositionY = -(positionDetails.screenshot.top * zoomFactor) + 'px';
+    image.style.backgroundPositionX = -(positionDetails.screenshot.left * zoomFactor) + 'px';
     // image.style.backgroundSize = (zoomFactor * 100) + '%';
-    image.style.backgroundSize = `${fullPageScreenshot.width * zoomFactor}px ${fullPageScreenshot.height * zoomFactor}px`;
+    image.style.backgroundSize =
+      `${fullPageScreenshot.width * zoomFactor}px ${fullPageScreenshot.height * zoomFactor}px`;
 
     const elMarker = /** @type {HTMLElement} */
       (previewContainer.querySelector('.lh-element-screenshot__element-marker'));
     elMarker.style.width = boundingRect.width * zoomFactor + 'px';
     elMarker.style.height = boundingRect.height * zoomFactor + 'px';
-    elMarker.style.left = positionDetails.highlightPositionInDisplayArea.left * zoomFactor + 'px';
-    elMarker.style.top = positionDetails.highlightPositionInDisplayArea.top * zoomFactor + 'px';
+    elMarker.style.left = positionDetails.highlight.left * zoomFactor + 'px';
+    elMarker.style.top = positionDetails.highlight.top * zoomFactor + 'px';
 
     const mask = /** @type {HTMLElement} */
       (previewContainer.querySelector('.lh-element-screenshot__mask'));
@@ -204,9 +208,9 @@ class ElementScreenshotRenderer {
     mask.style.height = viewport.height * zoomFactor + 'px';
     mask.style.clipPath = 'url(#' + clipId + ')';
 
-    const top = positionDetails.highlightPositionInDisplayArea.top / viewport.height;
+    const top = positionDetails.highlight.top / viewport.height;
     const bottom = top + boundingRect.height / viewport.height;
-    const left = positionDetails.highlightPositionInDisplayArea.left / viewport.width;
+    const left = positionDetails.highlight.left / viewport.width;
     const right = left + boundingRect.width / viewport.width;
     mask.appendChild(
       ElementScreenshotRenderer.renderClipPath(dom, clipId, {top, bottom, left, right})
