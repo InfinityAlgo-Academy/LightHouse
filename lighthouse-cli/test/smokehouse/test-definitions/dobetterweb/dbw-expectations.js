@@ -413,6 +413,27 @@ const expectations = [
       },
     },
   },
+  {
+    lhr: {
+      requestedUrl: 'https://www.chromestatus.com/features',
+      finalUrl: 'https://www.chromestatus.com/features',
+      audits: {
+        'largest-contentful-paint-element': {
+          details: {
+            items: [
+              {
+                node: {
+                  type: 'node',
+                  selector: 'section.desc > summary > p',
+                  path: /2,HTML,1,BODY,0,APP-DRAWER-LAYOUT.*,#document-fragment,.*,#document-fragment,2,SECTION,0,SUMMARY,1,P/,
+                },
+              },
+            ],
+          },
+        },
+      },
+    },
+  },
   // TODO: Uncomment when Chrome m84 lands
   // {
   //   artifacts: {
