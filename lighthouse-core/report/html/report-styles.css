@@ -1566,7 +1566,7 @@
 }
 .lh-element-screenshot__element-marker {
   position: absolute;
-  outline: 2px solid rgba(237, 150, 150, 1);
+  outline: 2px solid rgb(211, 232, 75);
 }
 .lh-element-screenshot__overlay {
   position: fixed;
