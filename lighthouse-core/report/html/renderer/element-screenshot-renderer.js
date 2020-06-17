@@ -147,8 +147,6 @@ class ElementScreenshotRenderer {
     const tmpl = dom.cloneTemplate('#tmpl-lh-element-screenshot', templateContext);
     const containerEl = dom.find('.lh-element-screenshot', tmpl);
 
-    // TODO(cjamcl): Understand this :)
-
     let zoomFactor = 1;
     const viewport = {
       width: viewportSize.width,
@@ -176,7 +174,7 @@ class ElementScreenshotRenderer {
       x: viewportSize.width / clipRect.width,
       // x: 1, // ignore x?
       y: viewportSize.height / clipRect.height,
-    }
+    };
     const zoomRatio = intendedClipToViewportRatio * Math.min(zoomRatioXY.x, zoomRatioXY.y);
     if (zoomRatio < 1) {
       zoomFactor = zoomRatio;
@@ -192,13 +190,13 @@ class ElementScreenshotRenderer {
       {width: fullPageScreenshot.width, height: fullPageScreenshot.height}
     );
 
-    const contentEl = /** @type {HTMLElement} */
-      (containerEl.querySelector('.lh-element-screenshot__content'));
-    // contentEl.style.transform = `scale(${zoomFactor})`;
+    const contentEl = dom.find('.lh-element-screenshot__content', containerEl);
+    // TODO: can all the `* zoomFactor` be replaces with setting some CSS on the container?
+    // just `scale` doesn't work b/c won't change size of the element.
+    // containerEl.style.transform = `scale(${zoomFactor})`;
     contentEl.style.top = `-${viewport.height * zoomFactor}px`;
 
-    const image = /** @type {HTMLElement} */
-      (containerEl.querySelector('.lh-element-screenshot__image'));
+    const image = dom.find('.lh-element-screenshot__image', containerEl);
     image.style.width = viewport.width * zoomFactor + 'px';
     image.style.height = viewport.height * zoomFactor + 'px';
 
@@ -208,15 +206,13 @@ class ElementScreenshotRenderer {
     image.style.backgroundSize =
       `${fullPageScreenshot.width * zoomFactor}px ${fullPageScreenshot.height * zoomFactor}px`;
 
-    const elMarker = /** @type {HTMLElement} */
-      (containerEl.querySelector('.lh-element-screenshot__element-marker'));
+    const elMarker = dom.find('.lh-element-screenshot__element-marker', containerEl);
     elMarker.style.width = clipRect.width * zoomFactor + 'px';
     elMarker.style.height = clipRect.height * zoomFactor + 'px';
     elMarker.style.left = positions.clip.left * zoomFactor + 'px';
     elMarker.style.top = positions.clip.top * zoomFactor + 'px';
 
-    const mask = /** @type {HTMLElement} */
-      (containerEl.querySelector('.lh-element-screenshot__mask'));
+    const mask = dom.find('.lh-element-screenshot__mask', containerEl);
     const clipId = 'clip-' + Math.floor(Math.random() * 100000000);
     mask.style.width = viewport.width * zoomFactor + 'px';
     mask.style.height = viewport.height * zoomFactor + 'px';
