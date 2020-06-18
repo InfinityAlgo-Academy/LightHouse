@@ -133,8 +133,20 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 10.x
+    
+    # Chrome Stable is already installed by default.
+    - name: Install Chrome ToT
+      working-directory: /home/runner
+      run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
+      env:
+        CHROME_PATH: /home/runner/chrome-linux-tot
 
     - run: yarn --frozen-lockfile
 
     - run: sudo apt-get install xvfb
-    - run: xvfb-run --auto-servernum yarn smoke --debug -j=1 --retries=2
+    - name: Smoke (ToT)
+      run: xvfb-run --auto-servernum yarn smoke --debug -j=1 --retries=2
+      env:
+        CHROME_PATH: /home/runner/chrome-linux-tot/chrome
+    - name: Smoke (stable)
+      run: xvfb-run --auto-servernum yarn smoke --debug -j=1 --retries=2
