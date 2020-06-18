@@ -303,8 +303,9 @@ class ReportUIFeatures {
       json.audits['full-page-screenshot'] && json.audits['full-page-screenshot'].details);
     if (!fullPageScreenshot) return;
 
-    ElementScreenshotRenderer.installOverlayFeature(
-      this._dom, this._templateContext, fullPageScreenshot);
+    this.elementScreenshotRenderer =
+      new ElementScreenshotRenderer(this._dom, this._templateContext, fullPageScreenshot);
+    this.elementScreenshotRenderer.installOverlayFeature();
   }
 
   /**

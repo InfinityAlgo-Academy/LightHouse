@@ -29,11 +29,22 @@ function clamp(value, min, max) {
 
 class ElementScreenshotRenderer {
   /**
+   * @param {DOM} dom
+   * @param {ParentNode} templateContext
+   * @param {LH.Artifacts.FullPageScreenshot} fullPageScreenshot
+   */
+  constructor(dom, templateContext, fullPageScreenshot) {
+    this.dom = dom;
+    this.templateContext = templateContext;
+    this.fullPageScreenshot = fullPageScreenshot;
+  }
+
+  /**
    * @param {Rect} clipRect
    * @param {Size} viewport
    * @param {Size} screenshotSize
    */
-  static getScreenshotPositions(clipRect, viewport, screenshotSize) {
+  getScreenshotPositions(clipRect, viewport, screenshotSize) {
     const clipCenter = RectHelpers.getRectCenterPoint(clipRect);
 
     // Try to center clipped region.
@@ -59,12 +70,11 @@ class ElementScreenshotRenderer {
   }
 
   /**
-   * @param {DOM} dom
    * @param {string} clipId
    * @param {{top: number, bottom: number, left: number, right: number}} _
    */
-  static renderClipPath(dom, clipId, {top, bottom, left, right}) {
-    const clipPathSvg = dom.createElement('div');
+  renderClipPath(clipId, {top, bottom, left, right}) {
+    const clipPathSvg = this.dom.createElement('div');
     clipPathSvg.innerHTML = `<svg height="0" width="0">
         <defs>
           <clipPath id='${clipId}' clipPathUnits='objectBoundingBox'>
@@ -78,16 +88,12 @@ class ElementScreenshotRenderer {
     return clipPathSvg;
   }
 
-  /**
-   * @param {DOM} dom
-   * @param {LH.Artifacts.FullPageScreenshot} fullPageScreenshot
-   */
-  static _installBackgroundImageStyle(dom, fullPageScreenshot) {
-    const containerEl = dom.find('.lh-container', dom.document());
+  _installBackgroundImageStyle() {
+    const containerEl = this.dom.find('.lh-container', this.dom.document());
     if (containerEl.querySelector('#full-page-screenshot-style')) return;
 
-    const fullpageScreenshotUrl = fullPageScreenshot.data;
-    const fullPageScreenshotStyleTag = dom.createElement('style');
+    const fullpageScreenshotUrl = this.fullPageScreenshot.data;
+    const fullPageScreenshotStyleTag = this.dom.createElement('style');
     fullPageScreenshotStyleTag.id = 'full-page-screenshot-style';
     fullPageScreenshotStyleTag.innerText = `
       .lh-element-screenshot__image {
@@ -96,17 +102,12 @@ class ElementScreenshotRenderer {
     containerEl.appendChild(fullPageScreenshotStyleTag);
   }
 
-  /**
-   * @param {DOM} dom
-   * @param {ParentNode} templateContext
-   * @param {LH.Artifacts.FullPageScreenshot} fullPageScreenshot
-   */
-  static installOverlayFeature(dom, templateContext, fullPageScreenshot) {
-    ElementScreenshotRenderer._installBackgroundImageStyle(dom, fullPageScreenshot);
+  installOverlayFeature() {
+    this._installBackgroundImageStyle();
 
-    for (const el of dom.document().querySelectorAll('.lh-element-screenshot')) {
+    for (const el of this.dom.document().querySelectorAll('.lh-element-screenshot')) {
       el.addEventListener('click', () => {
-        const overlay = dom.createElement('div');
+        const overlay = this.dom.createElement('div');
         overlay.classList.add('lh-element-screenshot__overlay');
         const clipRect = {
           width: Number(el.getAttribute('rectWidth')),
@@ -116,11 +117,8 @@ class ElementScreenshotRenderer {
           top: Number(el.getAttribute('rectTop')),
           bottom: Number(el.getAttribute('rectBottom')),
         };
-        overlay.appendChild(ElementScreenshotRenderer.render(
-          dom,
-          templateContext,
+        overlay.appendChild(this.render(
           clipRect,
-          fullPageScreenshot,
           {
             // TODO: should this be documentElement width?
             width: window.innerWidth * 0.75,
@@ -131,23 +129,20 @@ class ElementScreenshotRenderer {
           overlay.remove();
         });
 
-        const containerEl = dom.find('.lh-container', dom.document());
+        const containerEl = this.dom.find('.lh-container', this.dom.document());
         containerEl.appendChild(overlay);
       });
     }
   }
 
   /**
-   * @param {DOM} dom
-   * @param {ParentNode} templateContext
    * @param {LH.Artifacts.Rect} clipRect Region of screenshot to highlight.
-   * @param {LH.Artifacts.FullPageScreenshot} fullPageScreenshot
    * @param {Size} viewportSize Size of region to render screenshot in.
    * @return {Element}
    */
-  static render(dom, templateContext, clipRect, fullPageScreenshot, viewportSize) {
-    const tmpl = dom.cloneTemplate('#tmpl-lh-element-screenshot', templateContext);
-    const containerEl = dom.find('.lh-element-screenshot', tmpl);
+  render(clipRect, viewportSize) {
+    const tmpl = this.dom.cloneTemplate('#tmpl-lh-element-screenshot', this.dom.document());
+    const containerEl = this.dom.find('.lh-element-screenshot', tmpl);
 
     let zoomFactor = 1;
     const viewport = {
@@ -184,37 +179,38 @@ class ElementScreenshotRenderer {
       viewport.height /= zoomRatio;
     }
 
-    viewport.width = Math.min(fullPageScreenshot.width, viewport.width);
+    viewport.width = Math.min(this.fullPageScreenshot.width, viewport.width);
 
-    const positions = ElementScreenshotRenderer.getScreenshotPositions(
+    const positions = this.getScreenshotPositions(
       clipRect,
       viewport,
-      {width: fullPageScreenshot.width, height: fullPageScreenshot.height}
+      {width: this.fullPageScreenshot.width, height: this.fullPageScreenshot.height}
     );
 
-    const contentEl = dom.find('.lh-element-screenshot__content', containerEl);
+    const contentEl = this.dom.find('.lh-element-screenshot__content', containerEl);
     // TODO: can all the `* zoomFactor` be replaces with setting some CSS on the container?
     // just `scale` doesn't work b/c won't change size of the element.
     // containerEl.style.transform = `scale(${zoomFactor})`;
     contentEl.style.top = `-${viewport.height * zoomFactor}px`;
 
-    const image = dom.find('.lh-element-screenshot__image', containerEl);
+    const image = this.dom.find('.lh-element-screenshot__image', containerEl);
     image.style.width = viewport.width * zoomFactor + 'px';
     image.style.height = viewport.height * zoomFactor + 'px';
 
     image.style.backgroundPositionY = -(positions.screenshot.top * zoomFactor) + 'px';
     image.style.backgroundPositionX = -(positions.screenshot.left * zoomFactor) + 'px';
     // image.style.backgroundSize = (zoomFactor * 100) + '%';
-    image.style.backgroundSize =
-      `${fullPageScreenshot.width * zoomFactor}px ${fullPageScreenshot.height * zoomFactor}px`;
+    const backgroundSizeX = this.fullPageScreenshot.width * zoomFactor;
+    const backgroundSizeY = this.fullPageScreenshot.height * zoomFactor;
+    image.style.backgroundSize = `${backgroundSizeX}px ${backgroundSizeY}px`;
 
-    const elMarker = dom.find('.lh-element-screenshot__element-marker', containerEl);
+    const elMarker = this.dom.find('.lh-element-screenshot__element-marker', containerEl);
     elMarker.style.width = clipRect.width * zoomFactor + 'px';
     elMarker.style.height = clipRect.height * zoomFactor + 'px';
     elMarker.style.left = positions.clip.left * zoomFactor + 'px';
     elMarker.style.top = positions.clip.top * zoomFactor + 'px';
 
-    const mask = dom.find('.lh-element-screenshot__mask', containerEl);
+    const mask = this.dom.find('.lh-element-screenshot__mask', containerEl);
     const top = positions.clip.top / viewport.height;
     const bottom = top + clipRect.height / viewport.height;
     const left = positions.clip.left / viewport.width;
@@ -226,7 +222,7 @@ class ElementScreenshotRenderer {
     mask.style.height = viewport.height * zoomFactor + 'px';
 
     mask.appendChild(
-      ElementScreenshotRenderer.renderClipPath(dom, clipId, {top, bottom, left, right})
+      this.renderClipPath(clipId, {top, bottom, left, right})
     );
 
     return containerEl;
