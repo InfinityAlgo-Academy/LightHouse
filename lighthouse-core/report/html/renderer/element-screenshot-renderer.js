@@ -127,10 +127,12 @@ class ElementScreenshotRenderer {
             height: window.innerHeight * 0.75,
           }
         ));
-        document.body.appendChild(overlay);
         overlay.addEventListener('click', () => {
           overlay.remove();
         });
+
+        const containerEl = dom.find('.lh-container', dom.document());
+        containerEl.appendChild(overlay);
       });
     }
   }
