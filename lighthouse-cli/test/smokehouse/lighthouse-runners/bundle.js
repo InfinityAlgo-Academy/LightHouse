@@ -15,9 +15,8 @@ const ChromeLauncher = require('chrome-launcher');
 const ChromeProtocol = require('../../../../lighthouse-core/gather/connections/cri.js');
 
 // Load bundle, which creates a `global.runBundledLighthouse`.
-// Add empty string to circumvent TS, otherwise a clean `dist/` folder
-// would result in `yarn type-check` failing.
-require('../../../../dist/lighthouse-dt-bundle.js' + '');
+// @ts-ignore - file won't exist until `yarn build-all`, but not used for types anyways.
+require('../../../../dist/lighthouse-dt-bundle.js');
 
 /** @type {import('../../../../lighthouse-core/index.js')} */
 // @ts-ignore - not worth giving test global an actual type.

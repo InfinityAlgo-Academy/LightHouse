@@ -7,6 +7,7 @@ name: 💡🏠
 on: [pull_request, push]
 
 jobs:
+<<<<<<< HEAD
   basics:
     runs-on: ubuntu-latest
 
@@ -62,6 +63,9 @@ jobs:
     - run: git diff --exit-code
 
   unit:
+=======
+  ci:
+>>>>>>> 6c8bf7e83... tests: run smoke tests in parallel jobs
     runs-on: ubuntu-latest
 
     steps:
@@ -73,7 +77,7 @@ jobs:
       with:
         node-version: 10.x
 
-    - name: Setup protoc
+    - name: Set up protoc
       uses: arduino/setup-protoc@7ad700d
       with:
         version: '3.7.1'
@@ -95,6 +99,15 @@ jobs:
     - run: sudo apt-get install xvfb
     - name: yarn unit
       run: xvfb-run --auto-servernum yarn unit
+<<<<<<< HEAD
+=======
+    - name: yarn test-clients
+      run: xvfb-run --auto-servernum yarn test-clients
+    - name: yarn test-bundle
+      run: xvfb-run --auto-servernum yarn test-bundle
+    - name: yarn test-docs
+      run: xvfb-run --auto-servernum yarn test-docs
+>>>>>>> 6c8bf7e83... tests: run smoke tests in parallel jobs
 
   smoke:
     runs-on: ubuntu-latest
@@ -109,6 +122,7 @@ jobs:
       SMOKE_GROUP_1: a11y oopif pwa pwa2 pwa3 dbw redirects errors offline
     name: smoke_${{ strategy.job-index }}
 
+<<<<<<< HEAD
     steps:
     - name: git clone
       uses: actions/checkout@v2
@@ -123,9 +137,24 @@ jobs:
       if: matrix.chrome-channel == 'ToT'
       working-directory: /home/runner
       run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
+=======
+    - name: Upload dist/
+      uses: actions/upload-artifact@v2
+      with:
+        name: dist
+        path: dist/
+
+    # buildtracker runs `git merge-base HEAD origin/master` which needs more history than depth=1. https://github.com/paularmstrong/build-tracker/issues/106
+    - name: Deepen git fetch (for buildtracker)
+      run: git fetch --deepen=100
+    - name: Store in buildtracker
+      # TODO(paulirish): Don't allow this to fail the build. https://github.com/paularmstrong/build-tracker/issues/200
+      run: yarn bt-cli upload-build || true
+>>>>>>> 6c8bf7e83... tests: run smoke tests in parallel jobs
       env:
         CHROME_PATH: /home/runner/chrome-linux-tot
 
+<<<<<<< HEAD
     - run: yarn --frozen-lockfile
 
     - run: sudo apt-get install xvfb
@@ -133,3 +162,32 @@ jobs:
       run: bash .github/workflows/set-chrome-path.sh ${{matrix.chrome-channel}}
     - name: Run smoke tests
       run: xvfb-run --auto-servernum yarn smoke --debug -j=1 --retries=2 --invert-match ${{ matrix.smoke-test-invert }} $SMOKE_GROUP_1
+=======
+    # Fail if any changes were written to source files (ex, from: build/build-cdt-lib.js).
+    - run: git diff --exit-code
+
+  smoke:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        invert: [false, true]
+      # e.g. if smoke 0 fails, continue with smoke 1 anyway
+      fail-fast: false
+    env:
+      # The smokehouse tests run by job smoke 0. smoke-1 will run the rest.
+      SMOKE_GROUP_1: a11y oopif pwa pwa2 pwa3 dbw redirects errors offline
+    name: smoke ${{ strategy.job-index }}
+
+    steps:
+    - name: git clone
+      uses: actions/checkout@v2
+  
+    - name: Use Node.js 10.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.x
+
+    - run: yarn --frozen-lockfile
+    - name: Run smoke tests
+      run: xvfb-run --auto-servernum yarn smoke --debug -j=1 --retries=2 --invert ${{ matrix.invert }} $SMOKE_GROUP_1
+>>>>>>> 6c8bf7e83... tests: run smoke tests in parallel jobs
