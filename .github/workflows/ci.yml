@@ -153,14 +153,14 @@ jobs:
     # - run: xvfb-run --auto-servernum yarn test-docs
 
   smoke:
-    needs: build
+    # needs: build
     runs-on: ubuntu-latest
     
     steps:
-    - name: Download dist
-      uses: actions/download-artifact@v1
-      with:
-        name: dist
+    # - name: Download dist
+    #   uses: actions/download-artifact@v1
+    #   with:
+    #     name: dist
 
     - name: git clone
       uses: actions/checkout@v2
