@@ -100,6 +100,11 @@ jobs:
 
     # Run tests that require headfull Chrome.
     - run: sudo apt-get install xvfb
+    - run: ls dist
+    - run: ls dist/extension-chrome
+    - run: ls dist/extension-chrome/popup.html
+    # TODO: errors file not found `file:///home/runner/work/lighthouse/lighthouse/dist/extension-chrome/popup.html`
+    # why? artifact dist is downloaded ...
     - run: xvfb-run --auto-servernum yarn test-clients
     - run: xvfb-run --auto-servernum yarn test-bundle
     - run: xvfb-run --auto-servernum yarn test-docs
