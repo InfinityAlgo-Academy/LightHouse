@@ -16,7 +16,7 @@ const ChromeProtocol = require('../../../../lighthouse-core/gather/connections/c
 
 // Load bundle, which creates a `global.runBundledLighthouse`.
 // @ts-ignore - file won't exist until `yarn build-all`, but not used for types anyways.
-require('../../../../dist/lighthouse-dt-bundle.js');
+require('../../../../dist/lighthouse-dt-bundle.js'); // eslint-disable-line
 
 /** @type {import('../../../../lighthouse-core/index.js')} */
 // @ts-ignore - not worth giving test global an actual type.

@@ -8,12 +8,19 @@ on: [pull_request, push]
 
 jobs:
 <<<<<<< HEAD
+<<<<<<< HEAD
   basics:
     runs-on: ubuntu-latest
 
     # A lot of steps in common between all jobs. Can be done better when this feature lands:
     # https://github.community/t/reusing-sharing-inheriting-steps-between-jobs-declarations/16851
     # https://github.com/actions/runner/issues/438
+=======
+  basics:
+    # basic checks that depend only on the cloned and yarned repo.
+    runs-on: ubuntu-latest
+
+>>>>>>> c69e23544... feedback and split out basics
     steps:
     - name: git clone
       uses: actions/checkout@v2
@@ -24,6 +31,7 @@ jobs:
         node-version: 10.x
 
     - run: yarn --frozen-lockfile
+<<<<<<< HEAD
     - run: yarn build-all
 
     # Run tests that require headfull Chrome.
@@ -64,6 +72,12 @@ jobs:
 
   unit:
 =======
+=======
+    - run: yarn type-check
+    - run: yarn lint
+    - run: yarn i18n:checks
+
+>>>>>>> c69e23544... feedback and split out basics
   ci:
 >>>>>>> 6c8bf7e83... tests: run smoke tests in parallel jobs
     runs-on: ubuntu-latest
@@ -93,7 +107,12 @@ jobs:
         pip install protobuf==3.7.1
 
     - run: yarn --frozen-lockfile
+<<<<<<< HEAD
 
+=======
+    - run: yarn build-all
+    - run: yarn diff:sample-json
+>>>>>>> c69e23544... feedback and split out basics
     - run: yarn test-proto # Run before unit-core because the roundtrip json is needed for proto tests.
 
     - run: sudo apt-get install xvfb
@@ -109,6 +128,7 @@ jobs:
       run: xvfb-run --auto-servernum yarn test-docs
 >>>>>>> 6c8bf7e83... tests: run smoke tests in parallel jobs
 
+<<<<<<< HEAD
   smoke:
     runs-on: ubuntu-latest
     strategy:
@@ -138,6 +158,15 @@ jobs:
       working-directory: /home/runner
       run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
 =======
+=======
+    - run: yarn test-lantern
+    - run: yarn test-legacy-javascript
+    - run: yarn dogfood-lhci
+
+    # Fail if any changes were written to source files (ex, from: build/build-cdt-lib.js).
+    - run: git diff --exit-code
+
+>>>>>>> c69e23544... feedback and split out basics
     - name: Upload dist/
       uses: actions/upload-artifact@v2
       with:
@@ -157,6 +186,7 @@ jobs:
 <<<<<<< HEAD
     - run: yarn --frozen-lockfile
 
+<<<<<<< HEAD
     - run: sudo apt-get install xvfb
     - name: Set $CHROME_PATH
       run: bash .github/workflows/set-chrome-path.sh ${{matrix.chrome-channel}}
@@ -166,11 +196,13 @@ jobs:
     # Fail if any changes were written to source files (ex, from: build/build-cdt-lib.js).
     - run: git diff --exit-code
 
+=======
+>>>>>>> c69e23544... feedback and split out basics
   smoke:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        invert: [false, true]
+        smokeTestInvert: [false, true]
       # e.g. if smoke 0 fails, continue with smoke 1 anyway
       fail-fast: false
     env:
@@ -189,5 +221,9 @@ jobs:
 
     - run: yarn --frozen-lockfile
     - name: Run smoke tests
+<<<<<<< HEAD
       run: xvfb-run --auto-servernum yarn smoke --debug -j=1 --retries=2 --invert ${{ matrix.invert }} $SMOKE_GROUP_1
 >>>>>>> 6c8bf7e83... tests: run smoke tests in parallel jobs
+=======
+      run: xvfb-run --auto-servernum yarn smoke --debug -j=1 --retries=2 --invert-match ${{ matrix.smokeTestInvert }} $SMOKE_GROUP_1
+>>>>>>> c69e23544... feedback and split out basics
