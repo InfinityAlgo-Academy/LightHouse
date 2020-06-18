@@ -26,6 +26,10 @@ class FullPageScreenshot extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts) {
+    if (!artifacts.FullPageScreenshot) {
+      return {score: 0};
+    }
+
     return {
       score: 1,
       details: {

@@ -308,9 +308,8 @@ function getNodeLabel(node) {
  * @param {LH.Artifacts.Rect}
  */
 function getBoundingClientRect(element) {
-  const rect = element.getBoundingClientRect();
-  // if (rect.width > 0 && rect.height > 0) {
   // The protocol does not serialize getters, so extract the values explicitly.
+  const rect = element.getBoundingClientRect();
   return {
     top: rect.top,
     bottom: rect.bottom,
@@ -319,7 +318,6 @@ function getBoundingClientRect(element) {
     width: rect.width,
     height: rect.height,
   };
-  // }
 }
 
 module.exports = {

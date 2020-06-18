@@ -143,7 +143,7 @@ declare global {
       /** Information about tap targets including their position and size. */
       TapTargets: Artifacts.TapTarget[];
       /** Screenshot of the entire page (rather than just the above the fold content). */
-      FullPageScreenshot: Artifacts.FullPageScreenshot;
+      FullPageScreenshot: Artifacts.FullPageScreenshot | null;
       /** Elements associated with metrics (ie: Largest Contentful Paint element). */
       TraceElements: Artifacts.TraceElement[];
     }

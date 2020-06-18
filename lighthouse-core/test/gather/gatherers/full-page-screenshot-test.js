@@ -9,6 +9,9 @@
 
 const FullPageScreenshotGatherer = require('../../../gather/gatherers/full-page-screenshot.js');
 
+/**
+ * @param {{contentSize: any, screenshotData: string[]}}
+ */
 function createMockDriver({contentSize, screenshotData}) {
   return {
     evaluateAsync: async function(code) {
@@ -25,7 +28,7 @@ function createMockDriver({contentSize, screenshotData}) {
       }
       if (method === 'Page.captureScreenshot') {
         return {
-          data: screenshotData || 'abc',
+          data: screenshotData && screenshotData.length ? screenshotData.shift() : 'abc',
         };
       }
     }),
@@ -144,7 +147,10 @@ describe('Full-page screenshot gatherer', () => {
         width: 412,
         height: 15000,
       },
-      screenshotData: new Array(3 * 1024 * 1024).join('a'),
+      screenshotData: [
+        new Array(3 * 1024 * 1024).join('a'),
+        new Array(1 * 1024 * 1024).join('a'),
+      ],
     });
     const passContext = {
       settings: {
@@ -154,7 +160,7 @@ describe('Full-page screenshot gatherer', () => {
       baseArtifacts: {},
     };
 
-    await fpsGatherer.afterPass(passContext);
+    const result = await fpsGatherer.afterPass(passContext);
 
     expect(driver.sendCommand).toHaveBeenCalledWith(
       'Emulation.setDeviceMetricsOverride',
@@ -172,5 +178,50 @@ describe('Full-page screenshot gatherer', () => {
         screenHeight: 5000,
       })
     );
+
+    expect(result).not.toBeNull();
+  });
+
+  it('returns null if the captured data URL is way too large', async () => {
+    const fpsGatherer = new FullPageScreenshotGatherer();
+    const driver = createMockDriver({
+      contentSize: {
+        width: 412,
+        height: 15000,
+      },
+      screenshotData: [
+        new Array(3 * 1024 * 1024).join('a'),
+        new Array(2 * 1024 * 1024).join('a'),
+      ],
+    });
+    const passContext = {
+      settings: {
+        emulatedFormFactor: 'mobile',
+      },
+      driver,
+      baseArtifacts: {},
+      LighthouseRunWarnings: [],
+    };
+
+    const result = await fpsGatherer.afterPass(passContext);
+
+    expect(driver.sendCommand).toHaveBeenCalledWith(
+      'Emulation.setDeviceMetricsOverride',
+      expect.objectContaining({
+        deviceScaleFactor: 1,
+        height: 15000,
+        screenHeight: 15000,
+      })
+    );
+    expect(driver.sendCommand).toHaveBeenCalledWith(
+      'Emulation.setDeviceMetricsOverride',
+      expect.objectContaining({
+        deviceScaleFactor: 1,
+        height: 5000,
+        screenHeight: 5000,
+      })
+    );
+
+    expect(result).toBeNull();
   });
 });

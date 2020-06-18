@@ -11,7 +11,6 @@ const ElementScreenshotRenderer =
   require('../../../../report/html/renderer/element-screenshot-renderer.js');
 const RectHelpers = require('../../../../../lighthouse-core/lib/rect-helpers.js');
 
-// todo: move these tests maybe?
 describe('getScreenshotPositionDetails', () => {
   beforeAll(() => {
     global.RectHelpers = RectHelpers;

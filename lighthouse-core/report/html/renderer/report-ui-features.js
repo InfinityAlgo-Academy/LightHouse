@@ -299,7 +299,7 @@ class ReportUIFeatures {
 
   _setupElementScreenshotOverlay() {
     const json = this.json;
-    const fullPageScreenshot = /** @type {LH.Artifacts.FullPageScreenshot | undefined} */ (
+    const fullPageScreenshot = /** @type {LH.Artifacts['FullPageScreenshot'] | undefined} */ (
       json.audits['full-page-screenshot'] && json.audits['full-page-screenshot'].details);
     if (!fullPageScreenshot) return;
 

@@ -51,7 +51,7 @@ class FullPageScreenshot extends Gatherer {
 
   /**
    * @param {LH.Gatherer.PassContext} passContext
-   * @return {Promise<LH.Artifacts.FullPageScreenshot>}
+   * @return {Promise<LH.Artifacts.FullPageScreenshot | null>}
    */
   async afterPass_(passContext) {
     let screenshot = await this._takeScreenshot(passContext, MAX_SCREENSHOT_HEIGHT);
@@ -61,11 +61,10 @@ class FullPageScreenshot extends Gatherer {
       // desktop sites with lots of images.
       // So just cutting down the height a bit fixes the issue.
       screenshot = await this._takeScreenshot(passContext, 5000);
-      // ?
-      // if (screenshot.data.length > MAX_DATA_URL_SIZE) {
-      //   passContext.LighthouseRunWarnings.push('Full page screenshot is too big.');
-      //   return {data: 'data:null', width: 0, height: 0};
-      // }
+      if (screenshot.data.length > MAX_DATA_URL_SIZE) {
+        passContext.LighthouseRunWarnings.push('Full page screenshot is too big.');
+        return null;
+      }
     }
 
     return screenshot;
@@ -73,7 +72,7 @@ class FullPageScreenshot extends Gatherer {
 
   /**
    * @param {LH.Gatherer.PassContext} passContext
-   * @return {Promise<LH.Artifacts.FullPageScreenshot>}
+   * @return {Promise<LH.Artifacts['FullPageScreenshot']>}
    */
   async afterPass(passContext) {
     const {driver} = passContext;
