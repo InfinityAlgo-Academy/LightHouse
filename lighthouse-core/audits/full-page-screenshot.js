@@ -27,7 +27,7 @@ class FullPageScreenshot extends Audit {
    */
   static async audit(artifacts) {
     if (!artifacts.FullPageScreenshot) {
-      return {score: 0};
+      return {score: 0, notApplicable: true};
     }
 
     return {

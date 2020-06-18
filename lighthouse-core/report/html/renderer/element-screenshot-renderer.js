@@ -215,15 +215,16 @@ class ElementScreenshotRenderer {
     elMarker.style.top = positions.clip.top * zoomFactor + 'px';
 
     const mask = dom.find('.lh-element-screenshot__mask', containerEl);
-    const clipId = 'clip-' + Math.floor(Math.random() * 100000000);
-    mask.style.width = viewport.width * zoomFactor + 'px';
-    mask.style.height = viewport.height * zoomFactor + 'px';
-    mask.style.clipPath = 'url(#' + clipId + ')';
-
     const top = positions.clip.top / viewport.height;
     const bottom = top + clipRect.height / viewport.height;
     const left = positions.clip.left / viewport.width;
     const right = left + clipRect.width / viewport.width;
+
+    const clipId = `clip-${top}-${bottom}-${left}-${right}`;
+    mask.style.clipPath = 'url(#' + clipId + ')';
+    mask.style.width = viewport.width * zoomFactor + 'px';
+    mask.style.height = viewport.height * zoomFactor + 'px';
+
     mask.appendChild(
       ElementScreenshotRenderer.renderClipPath(dom, clipId, {top, bottom, left, right})
     );
