@@ -83,7 +83,7 @@ class ElementScreenshotRenderer {
    * @param {LH.Artifacts.FullPageScreenshot} fullPageScreenshot
    */
   static _installBackgroundImageStyle(dom, fullPageScreenshot) {
-    const containerEl = dom.find('.lh-container', dom._document);
+    const containerEl = dom.find('.lh-container', dom.document());
     if (containerEl.querySelector('#full-page-screenshot-style')) return;
 
     const fullpageScreenshotUrl = fullPageScreenshot.data;
