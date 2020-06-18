@@ -124,6 +124,10 @@ jobs:
 
   smoke:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        chrome-channel: ['stable', 'ToT']
+      fail-fast: false
     
     steps:
     - name: git clone
@@ -136,6 +140,7 @@ jobs:
     
     # Chrome Stable is already installed by default.
     - name: Install Chrome ToT
+      if: matrix.chrome-channel == 'ToT'
       working-directory: /home/runner
       run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
       env:
@@ -144,9 +149,13 @@ jobs:
     - run: yarn --frozen-lockfile
 
     - run: sudo apt-get install xvfb
+
+    - name: Smoke (stable)
+    if: matrix.chrome-channel == 'stable'
+      run: xvfb-run --auto-servernum yarn smoke --debug -j=1 --retries=2
+
     - name: Smoke (ToT)
+      if: matrix.chrome-channel == 'ToT'
       run: xvfb-run --auto-servernum yarn smoke --debug -j=1 --retries=2
       env:
         CHROME_PATH: /home/runner/chrome-linux-tot/chrome
-    - name: Smoke (stable)
-      run: xvfb-run --auto-servernum yarn smoke --debug -j=1 --retries=2
