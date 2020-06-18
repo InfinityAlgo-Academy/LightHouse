@@ -4,7 +4,7 @@
 
 name: 💡🏠
 
-on: [pull_request]
+on: [pull_request, push]
 
 jobs:
   build:
@@ -38,6 +38,12 @@ jobs:
     - run: yarn --frozen-lockfile
     - run: yarn build-all
 
+    # Run tests that require headfull Chrome.
+    - run: sudo apt-get install xvfb
+    - run: xvfb-run --auto-servernum yarn test-clients
+    - run: xvfb-run --auto-servernum yarn test-bundle
+    - run: xvfb-run --auto-servernum yarn test-docs
+
     # Fail if any changes were written to source files (ex, from: build/build-cdt-lib.js).
     - run: git diff --exit-code
 
@@ -58,7 +64,6 @@ jobs:
         path: dist/
 
   misc:
-    needs: build
     runs-on: ubuntu-latest
     strategy:
       # e.g. if lint fails, continue to the unit tests anyway
@@ -68,27 +73,16 @@ jobs:
     - name: git clone
       uses: actions/checkout@v2
 
-    - name: Download dist
-      uses: actions/download-artifact@v1
-      with:
-        name: dist
-
     - name: Use Node.js 10.x
       uses: actions/setup-node@v1
       with:
         node-version: 10.x
 
     - run: yarn --frozen-lockfile
+
     - run: yarn diff:sample-json
     - run: yarn type-check
     - run: yarn lint
-
-    # Run tests that require headfull Chrome.
-    - run: sudo apt-get install xvfb
-    - run: xvfb-run --auto-servernum yarn test-clients
-    - run: xvfb-run --auto-servernum yarn test-bundle
-    - run: xvfb-run --auto-servernum yarn test-docs
-
     - run: yarn test-lantern
     - run: yarn test-legacy-javascript
     - run: yarn i18n:checks
