@@ -151,7 +151,7 @@ jobs:
     - run: sudo apt-get install xvfb
 
     - name: Smoke (stable)
-    if: matrix.chrome-channel == 'stable'
+      if: matrix.chrome-channel == 'stable'
       run: xvfb-run --auto-servernum yarn smoke --debug -j=1 --retries=2
 
     - name: Smoke (ToT)
