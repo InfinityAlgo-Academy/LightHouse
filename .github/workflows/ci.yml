@@ -150,7 +150,7 @@ jobs:
 
     - run: sudo apt-get install xvfb
     - name: Set $CHROME_PATH
-      run: sh .github/workflows/set-chrome-path.sh ${{matrix.chrome-channel}}
+      run: bash .github/workflows/set-chrome-path.sh ${{matrix.chrome-channel}}
     - name: Smoke
       if: matrix.chrome-channel == 'ToT'
       run: xvfb-run --auto-servernum yarn smoke --debug -j=1 --retries=2
