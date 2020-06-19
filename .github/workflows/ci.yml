@@ -149,10 +149,8 @@ jobs:
     - run: yarn --frozen-lockfile
 
     - run: sudo apt-get install xvfb
-    - name: Set CHROME_PATH
-      run: echo "::set-env name=CHROME_PATH::$(node -e 'console.log(`${{matrix.chrome-channel}}` === `canary` ? `/home/runner/chrome-linux-tot` :: '')')"
+    - name: Set $CHROME_PATH
+      run: sh .github/workflows/set-chrome-path.sh ${{matrix.chrome-channel}}
     - name: Smoke
       if: matrix.chrome-channel == 'ToT'
       run: xvfb-run --auto-servernum yarn smoke --debug -j=1 --retries=2
-      env:
-        CHROME_PATH: /home/runner/chrome-linux-tot/chrome
