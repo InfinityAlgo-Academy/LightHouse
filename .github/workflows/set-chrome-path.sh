@@ -8,6 +8,6 @@
 
 if [[ "$1" == "stable" ]] ; then
   echo '::set-env name=CHROME_PATH::'
-elif [[ "$1" == "ToT" ]]
+elif [[ "$1" == "ToT" ]] ; then
   echo '::set-env name=CHROME_PATH::/home/runner/chrome-linux-tot/chrome'
 fi
