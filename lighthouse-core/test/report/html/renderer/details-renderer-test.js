@@ -581,7 +581,9 @@ describe('DetailsRenderer', () => {
       it('renders', () => {
         const details = {
           type: 'table',
-          headings: [{key: 'url', itemType: 'url', subHeading: {key: 'source', itemType: 'code'}}],
+          headings: [
+            {key: 'url', itemType: 'url', subItemsHeading: {key: 'source', itemType: 'code'}},
+          ],
           items: [
             {
               url: 'https://www.example.com',
@@ -622,7 +624,7 @@ describe('DetailsRenderer', () => {
       it('renders, uses heading properties as fallback', () => {
         const details = {
           type: 'table',
-          headings: [{key: 'url', itemType: 'url', subHeading: {key: 'source'}}],
+          headings: [{key: 'url', itemType: 'url', subItemsHeading: {key: 'source'}}],
           items: [
             {
               url: 'https://www.example.com',

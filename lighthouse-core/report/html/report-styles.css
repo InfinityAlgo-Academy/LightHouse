@@ -1333,6 +1333,9 @@
 .lh-row--odd {
   background-color: var(--table-higlight-background-color);
 }
+.lh-row--hidden {
+  display: none;
+}
 
 .lh-table th,
 .lh-table td {
