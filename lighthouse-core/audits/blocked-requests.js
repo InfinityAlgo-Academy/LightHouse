@@ -23,6 +23,22 @@ const UIStrings = {
     }`,
   /** Table column header for reason requests was blocked. */
   columnReason: 'Reason',
+  /** Value for `reason` table column explaining why a request was blocked. */
+  reasonCoepFrameResourceNeedsCoepHeader: 'Frame Needs COEP Header',
+  /** Value for `reason` table column explaining why a request was blocked. */
+  reasonCoopSandboxedIFrameCannotNavigateToCoopPage: 'Sandboxed Iframe Cannot Navigate To COOP Page',
+  /** Value for `reason` table column explaining why a request was blocked. */
+  reasonCorpNotSameOrigin: 'Not Same Origin (CORP)',
+  /** Value for `reason` table column explaining why a request was blocked. */
+  reasonCorpNotSameSite: 'Not Same Site (CORP)',
+};
+
+const reasonToString = {
+  CoepFrameResourceNeedsCoepHeader: UIStrings.reasonCoepFrameResourceNeedsCoepHeader,
+  CoopSandboxedIFrameCannotNavigateToCoopPage: UIStrings.reasonCoopSandboxedIFrameCannotNavigateToCoopPage,
+  CorpNotSameOrigin: UIStrings.reasonCorpNotSameOrigin,
+  CorpNotSameOriginAfterDefaultedToSameOriginByCoep: UIStrings.reasonCorpNotSameOrigin,
+  CorpNotSameSite: UIStrings.reasonCorpNotSameSite,
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -49,7 +65,7 @@ class BlockedRequests extends Audit {
     const items = artifacts.InspectorIssues.blockedByResponse.map(details => {
       return {
         url: details.request.url,
-        reason: details.reason,
+        reason: reasonToString[details.reason] || details.reason,
       };
     });
 

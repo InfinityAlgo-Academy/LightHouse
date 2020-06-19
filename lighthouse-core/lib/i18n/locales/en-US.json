@@ -383,6 +383,33 @@
   "lighthouse-core/audits/apple-touch-icon.js | title": {
     "message": "Provides a valid `apple-touch-icon`"
   },
+  "lighthouse-core/audits/blocked-requests.js | columnReason": {
+    "message": "Reason"
+  },
+  "lighthouse-core/audits/blocked-requests.js | description": {
+    "message": "Browsers will block requests from different origins if the page's security context doesn't allow for it. [Learn more](https://web.dev/why-coop-coep/)."
+  },
+  "lighthouse-core/audits/blocked-requests.js | displayValue": {
+    "message": "{itemCount, plural,\n    =1 {1 request blocked}\n    other {# requests blocked}\n    }"
+  },
+  "lighthouse-core/audits/blocked-requests.js | failureTitle": {
+    "message": "Requests were blocked"
+  },
+  "lighthouse-core/audits/blocked-requests.js | reasonCoepFrameResourceNeedsCoepHeader": {
+    "message": "Frame Needs COEP Header"
+  },
+  "lighthouse-core/audits/blocked-requests.js | reasonCoopSandboxedIFrameCannotNavigateToCoopPage": {
+    "message": "Sandboxed Iframe Cannot Navigate To COOP Page"
+  },
+  "lighthouse-core/audits/blocked-requests.js | reasonCorpNotSameOrigin": {
+    "message": "Not Same Origin (CORP)"
+  },
+  "lighthouse-core/audits/blocked-requests.js | reasonCorpNotSameSite": {
+    "message": "Not Same Site (CORP)"
+  },
+  "lighthouse-core/audits/blocked-requests.js | title": {
+    "message": "No requests are blocked"
+  },
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
     "message": "Chrome extensions negatively affected this page's load performance. Try auditing the page in incognito mode or from a Chrome profile without extensions."
   },

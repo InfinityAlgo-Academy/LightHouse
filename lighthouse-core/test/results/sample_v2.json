@@ -1838,6 +1838,14 @@
         ]
       }
     },
+    "blocked-requests": {
+      "id": "blocked-requests",
+      "title": "No requests are blocked",
+      "description": "Browsers will block requests from different origins if the page's security context doesn't allow for it. [Learn more](https://web.dev/why-coop-coep/).",
+      "score": null,
+      "scoreDisplayMode": "error",
+      "errorMessage": "Required InspectorIssues gatherer did not run."
+    },
     "pwa-cross-browser": {
       "id": "pwa-cross-browser",
       "title": "Site works cross-browser",
@@ -4404,6 +4412,11 @@
           "group": "best-practices-trust-safety"
         },
         {
+          "id": "blocked-requests",
+          "weight": 1,
+          "group": "best-practices-trust-safety"
+        },
+        {
           "id": "password-inputs-can-be-pasted-into",
           "weight": 1,
           "group": "best-practices-ux"
@@ -4450,7 +4463,7 @@
         }
       ],
       "id": "best-practices",
-      "score": 0.08
+      "score": null
     },
     "seo": {
       "title": "SEO",
@@ -5242,6 +5255,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:long-tasks",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:blocked-requests",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6479,6 +6498,21 @@
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnDuration": [
         "audits[long-tasks].details.headings[1].text"
+      ],
+      "lighthouse-core/audits/blocked-requests.js | title": [
+        "audits[blocked-requests].title"
+      ],
+      "lighthouse-core/audits/blocked-requests.js | description": [
+        "audits[blocked-requests].description"
+      ],
+      "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": [
+        {
+          "values": {
+            "errorCode": "MISSING_REQUIRED_ARTIFACT",
+            "artifactName": "InspectorIssues"
+          },
+          "path": "audits[blocked-requests].errorMessage"
+        }
       ],
       "lighthouse-core/audits/manual/pwa-cross-browser.js | title": [
         "audits[pwa-cross-browser].title"
