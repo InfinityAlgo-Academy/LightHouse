@@ -26,7 +26,8 @@ const UIStrings = {
   /** Value for `reason` table column explaining why a request was blocked. */
   reasonCoepFrameResourceNeedsCoepHeader: 'Frame Needs COEP Header',
   /** Value for `reason` table column explaining why a request was blocked. */
-  reasonCoopSandboxedIFrameCannotNavigateToCoopPage: 'Sandboxed Iframe Cannot Navigate To COOP Page',
+  reasonCoopSandboxedIFrameCannotNavigateToCoopPage:
+    'Sandboxed Iframe Cannot Navigate To COOP Page',
   /** Value for `reason` table column explaining why a request was blocked. */
   reasonCorpNotSameOrigin: 'Not Same Origin (CORP)',
   /** Value for `reason` table column explaining why a request was blocked. */
@@ -35,7 +36,8 @@ const UIStrings = {
 
 const reasonToString = {
   CoepFrameResourceNeedsCoepHeader: UIStrings.reasonCoepFrameResourceNeedsCoepHeader,
-  CoopSandboxedIFrameCannotNavigateToCoopPage: UIStrings.reasonCoopSandboxedIFrameCannotNavigateToCoopPage,
+  CoopSandboxedIFrameCannotNavigateToCoopPage:
+    UIStrings.reasonCoopSandboxedIFrameCannotNavigateToCoopPage,
   CorpNotSameOrigin: UIStrings.reasonCorpNotSameOrigin,
   CorpNotSameOriginAfterDefaultedToSameOriginByCoep: UIStrings.reasonCorpNotSameOrigin,
   CorpNotSameSite: UIStrings.reasonCorpNotSameSite,
