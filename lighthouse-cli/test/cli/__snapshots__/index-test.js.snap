@@ -160,6 +160,9 @@ Object {
       "path": "long-tasks",
     },
     Object {
+      "path": "blocked-requests",
+    },
+    Object {
       "path": "manual/pwa-cross-browser",
     },
     Object {
@@ -714,6 +717,11 @@ Object {
         Object {
           "group": "best-practices-trust-safety",
           "id": "no-vulnerable-libraries",
+          "weight": 1,
+        },
+        Object {
+          "group": "best-practices-trust-safety",
+          "id": "blocked-requests",
           "weight": 1,
         },
         Object {
