@@ -4,12 +4,12 @@
 
 name: 💡🏠
 
-on: [pull_request]
+on: [pull_request, push]
 
 jobs:
-  build:
+  basics:
     runs-on: ubuntu-latest
-    
+
     # A lot of steps in common between all jobs. Can be done better when this feature lands:
     # https://github.community/t/reusing-sharing-inheriting-steps-between-jobs-declarations/16851
     # https://github.com/actions/runner/issues/438
@@ -22,27 +22,25 @@ jobs:
       with:
         node-version: 10.x
 
-    # Cache yarn deps. thx https://github.com/actions/cache/blob/master/examples.md#node---yarn
-    - name: Get yarn cache directory path
-      id: yarn-cache-dir-path
-      run: echo "::set-output name=dir::$(yarn cache dir)"
-    - name: Set up node_modules cache
-      uses: actions/cache@v1
-      id: yarn-cache
-      with:
-        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-yarn-
-
     - run: yarn --frozen-lockfile
     - run: yarn build-all
 
     # Run tests that require headfull Chrome.
     - run: sudo apt-get install xvfb
-    - run: xvfb-run --auto-servernum yarn test-clients
-    - run: xvfb-run --auto-servernum yarn test-bundle
-    - run: xvfb-run --auto-servernum yarn test-docs
+    - name: yarn test-clients
+      run: xvfb-run --auto-servernum yarn test-clients
+    - name: yarn test-bundle
+      run: xvfb-run --auto-servernum yarn test-bundle
+    - name: yarn test-docs
+      run: xvfb-run --auto-servernum yarn test-docs
+
+    - run: yarn diff:sample-json
+    - run: yarn type-check
+    - run: yarn lint
+    - run: yarn test-lantern
+    - run: yarn test-legacy-javascript
+    - run: yarn i18n:checks
+    - run: yarn dogfood-lhci
 
     # Fail if any changes were written to source files (ex, from: build/build-cdt-lib.js).
     - run: git diff --exit-code
@@ -63,34 +61,9 @@ jobs:
         name: dist
         path: dist/
 
-  misc:
-    runs-on: ubuntu-latest
-    strategy:
-      # e.g. if lint fails, continue to the unit tests anyway
-      fail-fast: false
-    
-    steps:
-    - name: git clone
-      uses: actions/checkout@v2
-
-    - name: Use Node.js 10.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 10.x
-
-    - run: yarn --frozen-lockfile
-
-    - run: yarn diff:sample-json
-    - run: yarn type-check
-    - run: yarn lint
-    - run: yarn test-lantern
-    - run: yarn test-legacy-javascript
-    - run: yarn i18n:checks
-    - run: yarn dogfood-lhci
-  
   unit:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: git clone
       uses: actions/checkout@v2
@@ -99,7 +72,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 10.x
-    
+
     - name: Setup protoc
       uses: arduino/setup-protoc@7ad700d
       with:
@@ -120,7 +93,8 @@ jobs:
     - run: yarn test-proto # Run before unit-core because the roundtrip json is needed for proto tests.
 
     - run: sudo apt-get install xvfb
-    - run: xvfb-run --auto-servernum yarn unit
+    - name: yarn unit
+      run: xvfb-run --auto-servernum yarn unit
 
   smoke:
     runs-on: ubuntu-latest
@@ -128,7 +102,7 @@ jobs:
       matrix:
         chrome-channel: ['stable', 'ToT']
       fail-fast: false
-    
+
     steps:
     - name: git clone
       uses: actions/checkout@v2
@@ -137,7 +111,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 10.x
-    
+
     # Chrome Stable is already installed by default.
     - name: Install Chrome ToT
       if: matrix.chrome-channel == 'ToT'
