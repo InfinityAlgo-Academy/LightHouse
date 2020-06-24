@@ -42,9 +42,6 @@ jobs:
     - run: yarn i18n:checks
     - run: yarn dogfood-lhci
 
-    # Fail if any changes were written to source files (ex, from: build/build-cdt-lib.js).
-    - run: git diff --exit-code
-
     # buildtracker runs `git merge-base HEAD origin/master` which needs more history than depth=1. https://github.com/paularmstrong/build-tracker/issues/106
     - name: Deepen git fetch (for buildtracker)
       run: git fetch --deepen=100
@@ -60,6 +57,9 @@ jobs:
       with:
         name: dist
         path: dist/
+
+    # Fail if any changes were written to source files (ex, from: build/build-cdt-lib.js).
+    - run: git diff --exit-code
 
   unit:
     runs-on: ubuntu-latest
@@ -101,7 +101,13 @@ jobs:
     strategy:
       matrix:
         chrome-channel: ['stable', 'ToT']
+        smoke-test-invert: [false, true]
+      # e.g. if smoke 0 fails, continue with smoke 1 anyway
       fail-fast: false
+    env:
+      # The smokehouse tests run by job `smoke_0`. `smoke_1` will run the rest.
+      SMOKE_GROUP_1: a11y oopif pwa pwa2 pwa3 dbw redirects errors offline
+    name: smoke_${{ strategy.job-index }}
 
     steps:
     - name: git clone
@@ -125,5 +131,5 @@ jobs:
     - run: sudo apt-get install xvfb
     - name: Set $CHROME_PATH
       run: bash .github/workflows/set-chrome-path.sh ${{matrix.chrome-channel}}
-    - name: Smoke
-      run: xvfb-run --auto-servernum yarn smoke --debug -j=1 --retries=2
+    - name: Run smoke tests
+      run: xvfb-run --auto-servernum yarn smoke --debug -j=1 --retries=2 --invert-match ${{ matrix.smoke-test-invert }} $SMOKE_GROUP_1
