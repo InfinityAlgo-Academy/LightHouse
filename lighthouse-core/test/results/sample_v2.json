@@ -1754,6 +1754,12 @@
             "key": "node",
             "itemType": "node",
             "text": "Element"
+          },
+          {
+            "key": "score",
+            "itemType": "numeric",
+            "granularity": 0.001,
+            "text": "CLS Contribution"
           }
         ],
         "items": [
@@ -6472,6 +6478,9 @@
           },
           "path": "audits[layout-shift-elements].displayValue"
         }
+      ],
+      "lighthouse-core/audits/layout-shift-elements.js | columnContribution": [
+        "audits[layout-shift-elements].details.headings[1].text"
       ],
       "lighthouse-core/audits/long-tasks.js | title": [
         "audits[long-tasks].title"
