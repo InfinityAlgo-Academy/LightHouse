@@ -123,6 +123,10 @@ jobs:
       with:
         node-version: 10.x
 
+    - name: Define ToT chrome path
+      if: matrix.chrome-channel == 'ToT'
+      run: echo "::set-env name=CHROME_PATH::/home/runner/chrome-linux-tot/chrome"
+
     # - name: Define chrome path
     #   run: ([[ ${{matrix.chrome-channel}} = "ToT" ]] && cpath="/home/runner/chrome-linux-tot/chrome" || cpath=""; echo "::set-env name=CHROME_PATH::$cpath")
 
@@ -130,9 +134,7 @@ jobs:
     - name: Install Chrome ToT
       if: matrix.chrome-channel == 'ToT'
       working-directory: /home/runner
-      run: |
-        echo "::set-env name=CHROME_PATH::/home/runner/chrome-linux-tot/chrome"
-        bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
+      run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
 
     - run: echo "chromepath is $CHROME_PATH . invert is ${{ matrix.smoke-test-invert }}"
     - run: yarn --frozen-lockfile
