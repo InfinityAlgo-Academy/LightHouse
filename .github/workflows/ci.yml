@@ -4,7 +4,7 @@
 
 name: 💡🏠
 
-on: [pull_request]
+on: [pull_request, push]
 
 jobs:
   # `basics` includes all non-smoke CI, except for unit and proto
@@ -26,32 +26,33 @@ jobs:
     - run: yarn --frozen-lockfile
     - run: yarn build-all
 
-    # Run tests that require headfull Chrome.
-    - run: sudo apt-get install xvfb
-    - name: yarn test-clients
-      run: xvfb-run --auto-servernum yarn test-clients
-    - name: yarn test-bundle
-      run: xvfb-run --auto-servernum yarn test-bundle
-    - name: yarn test-docs
-      run: xvfb-run --auto-servernum yarn test-docs
 
-    - run: yarn diff:sample-json
-    - run: yarn type-check
-    - run: yarn lint
-    - run: yarn test-lantern
-    - run: yarn test-legacy-javascript
-    - run: yarn i18n:checks
-    - run: yarn dogfood-lhci
+    # # Run tests that require headfull Chrome.
+    # - run: sudo apt-get install xvfb
+    # - name: yarn test-clients
+    #   run: xvfb-run --auto-servernum yarn test-clients
+    # - name: yarn test-bundle
+    #   run: xvfb-run --auto-servernum yarn test-bundle
+    # - name: yarn test-docs
+    #   run: xvfb-run --auto-servernum yarn test-docs
 
-    # buildtracker runs `git merge-base HEAD origin/master` which needs more history than depth=1. https://github.com/paularmstrong/build-tracker/issues/106
-    - name: Deepen git fetch (for buildtracker)
-      run: git fetch --deepen=100
-    - name: Store in buildtracker
-      # TODO(paulirish): Don't allow this to fail the build. https://github.com/paularmstrong/build-tracker/issues/200
-      run: yarn bt-cli upload-build || true
-      env:
-        # https://buildtracker.dev/docs/guides/github-actions#configuration
-        BT_API_AUTH_TOKEN: ${{ secrets.BT_API_AUTH_TOKEN }}
+    # - run: yarn diff:sample-json
+    # - run: yarn type-check
+    # - run: yarn lint
+    # - run: yarn test-lantern
+    # - run: yarn test-legacy-javascript
+    # - run: yarn i18n:checks
+    # - run: yarn dogfood-lhci
+
+    # # buildtracker runs `git merge-base HEAD origin/master` which needs more history than depth=1. https://github.com/paularmstrong/build-tracker/issues/106
+    # - name: Deepen git fetch (for buildtracker)
+    #   run: git fetch --deepen=100
+    # - name: Store in buildtracker
+    #   # TODO(paulirish): Don't allow this to fail the build. https://github.com/paularmstrong/build-tracker/issues/200
+    #   run: yarn bt-cli upload-build || true
+    #   env:
+    #     # https://buildtracker.dev/docs/guides/github-actions#configuration
+    #     BT_API_AUTH_TOKEN: ${{ secrets.BT_API_AUTH_TOKEN }}
 
     - name: Upload dist
       uses: actions/upload-artifact@v1
@@ -62,79 +63,79 @@ jobs:
     # Fail if any changes were written to source files (ex, from: build/build-cdt-lib.js).
     - run: git diff --exit-code
 
-  # `unit` includes just unit and proto tests.
-  unit:
-    runs-on: ubuntu-latest
+  # # `unit` includes just unit and proto tests.
+  # unit:
+  #   runs-on: ubuntu-latest
 
-    steps:
-    - name: git clone
-      uses: actions/checkout@v2
+  #   steps:
+  #   - name: git clone
+  #     uses: actions/checkout@v2
 
-    - name: Use Node.js 10.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 10.x
+  #   - name: Use Node.js 10.x
+  #     uses: actions/setup-node@v1
+  #     with:
+  #       node-version: 10.x
 
-    - name: Set up protoc
-      uses: arduino/setup-protoc@7ad700d
-      with:
-        version: '3.7.1'
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
+  #   - name: Set up protoc
+  #     uses: arduino/setup-protoc@7ad700d
+  #     with:
+  #       version: '3.7.1'
+  #       repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Set up Python
-      uses: actions/setup-python@v1
-      with:
-        python-version: 2.7
-    - name: Install Python dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install protobuf==3.7.1
+  #   - name: Set up Python
+  #     uses: actions/setup-python@v1
+  #     with:
+  #       python-version: 2.7
+  #   - name: Install Python dependencies
+  #     run: |
+  #       python -m pip install --upgrade pip
+  #       pip install protobuf==3.7.1
 
-    - run: yarn --frozen-lockfile
+  #   - run: yarn --frozen-lockfile
 
-    - run: yarn test-proto # Run before unit-core because the roundtrip json is needed for proto tests.
+  #   - run: yarn test-proto # Run before unit-core because the roundtrip json is needed for proto tests.
 
-    - run: sudo apt-get install xvfb
-    - name: yarn unit
-      run: xvfb-run --auto-servernum yarn unit
+  #   - run: sudo apt-get install xvfb
+  #   - name: yarn unit
+  #     run: xvfb-run --auto-servernum yarn unit
 
-  # `smoke` runs as a matrix across 4 jobs:
-  #  * The smoketest groups are split across two runners, to parallelize.
-  #  * Then, those are run with both Chrome stable and ToT Chromium, in parallel
-  smoke:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        chrome-channel: ['stable', 'ToT']
-        smoke-test-invert: [false, true]
-      # e.g. if smoke 0 fails, continue with smoke 1 anyway
-      fail-fast: false
-    env:
-      # The smokehouse tests run by job `smoke_0`. `smoke_1` will run the rest.
-      SMOKE_GROUP_1: a11y oopif pwa pwa2 pwa3 dbw redirects errors offline
-    name: smoke_${{ strategy.job-index }}_${{ matrix.chrome-channel }}
+  # # `smoke` runs as a matrix across 4 jobs:
+  # #  * The smoketest groups are split across two runners, to parallelize.
+  # #  * Then, those are run with both Chrome stable and ToT Chromium, in parallel
+  # smoke:
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       chrome-channel: ['stable', 'ToT']
+  #       smoke-test-invert: [false, true]
+  #     # e.g. if smoke 0 fails, continue with smoke 1 anyway
+  #     fail-fast: false
+  #   env:
+  #     # The smokehouse tests run by job `smoke_0`. `smoke_1` will run the rest.
+  #     SMOKE_GROUP_1: a11y oopif pwa pwa2 pwa3 dbw redirects errors offline
+  #   name: smoke_${{ strategy.job-index }}_${{ matrix.chrome-channel }}
 
-    steps:
-    - name: git clone
-      uses: actions/checkout@v2
+  #   steps:
+  #   - name: git clone
+  #     uses: actions/checkout@v2
 
-    - name: Use Node.js 10.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 10.x
+  #   - name: Use Node.js 10.x
+  #     uses: actions/setup-node@v1
+  #     with:
+  #       node-version: 10.x
 
-    # Chrome Stable is already installed by default.
-    - name: Install Chrome ToT
-      if: matrix.chrome-channel == 'ToT'
-      working-directory: /home/runner
-      run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
-      env:
-        CHROME_PATH: /home/runner/chrome-linux-tot
+  #   # Chrome Stable is already installed by default.
+  #   - name: Install Chrome ToT
+  #     if: matrix.chrome-channel == 'ToT'
+  #     working-directory: /home/runner
+  #     run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
+  #     env:
+  #       CHROME_PATH: /home/runner/chrome-linux-tot
 
-    - run: yarn --frozen-lockfile
+  #   - run: yarn --frozen-lockfile
 
-    - run: sudo apt-get install xvfb
-    - name: Set $CHROME_PATH
-      run: bash .github/workflows/set-chrome-path.sh ${{matrix.chrome-channel}}
-    - name: Run smoke tests
-      run: xvfb-run --auto-servernum yarn smoke --debug -j=1 --retries=2 --invert-match ${{ matrix.smoke-test-invert }} $SMOKE_GROUP_1
+  #   - run: sudo apt-get install xvfb
+  #   - name: Set $CHROME_PATH
+  #     run: bash .github/workflows/set-chrome-path.sh ${{matrix.chrome-channel}}
+  #   - name: Run smoke tests
+  #     run: xvfb-run --auto-servernum yarn smoke --debug -j=1 --retries=2 --invert-match ${{ matrix.smoke-test-invert }} $SMOKE_GROUP_1
