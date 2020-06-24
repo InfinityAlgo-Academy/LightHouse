@@ -35,7 +35,7 @@ jobs:
 
 
     - name: read chrome path
-      run: echo "chrome path is $CHROME_PATH. lol path is LOL_PATH"
+      run: echo "chrome path is $CHROME_PATH. lol path is $LOL_PATH"
 
 
     # - run: yarn --frozen-lockfile
