@@ -131,7 +131,7 @@ jobs:
       if: matrix.chrome-channel == 'ToT'
       working-directory: /home/runner
       run: |
-        echo "::set-env name=CHROME_PATH::/home/runner/chrome-linux-tot/chrome")
+        echo "::set-env name=CHROME_PATH::/home/runner/chrome-linux-tot/chrome"
         bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
 
     - run: echo "chromepath is $CHROME_PATH . invert is ${{ matrix.smoke-test-invert }}"
