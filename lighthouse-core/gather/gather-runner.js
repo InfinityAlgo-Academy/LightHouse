@@ -63,14 +63,7 @@ class GatherRunner {
     
     // The real about:blank doesn't fire onload and is full of mysteries (https://goo.gl/mdQkYr)
     // To improve speed and avoid anomalies (https://goo.gl/Aho2R9), we use a basic data uri page
-    const blankPageUrl = `data:text/html,${blankPageSource}`;
-
-    // Only navigating to a single data-uri doesn't reliably trigger onload. (Why? Beats me.)
-    // Two data uris work, however the two need to be sufficiently different (Why? Beats me.)
-    // If they are too similar, Chrome considers the latter to be as superficial as a pushState
-    // Lastly, it's possible for two navigations to be racy, so we await onload inbetween.
-    await driver.gotoURL(blankPageUrl);
-
+    await driver.gotoURL(url);
     log.timeEnd(status);
   }
 
