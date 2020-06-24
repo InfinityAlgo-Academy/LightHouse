@@ -818,6 +818,9 @@
   "lighthouse-core/audits/largest-contentful-paint-element.js | title": {
     "message": "L̂ár̂ǵêśt̂ Ćôńt̂én̂t́f̂úl̂ Ṕâín̂t́ êĺêḿêńt̂"
   },
+  "lighthouse-core/audits/layout-shift-elements.js | columnContribution": {
+    "message": "ĈĹŜ Ćôńt̂ŕîb́ût́îón̂"
+  },
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "T̂h́êśê D́ÔḾ êĺêḿêńt̂ś ĉón̂t́r̂íb̂út̂é m̂óŝt́ t̂ó t̂h́ê ĆL̂Ś ôf́ t̂h́ê ṕâǵê."
   },

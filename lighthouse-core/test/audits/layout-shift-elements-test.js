@@ -19,6 +19,7 @@ describe('Performance: layout-shift-elements audit', () => {
         selector: 'div.l-header > div.chorus-emc__content',
         nodeLabel: 'My Test Label',
         snippet: '<h1 class="test-class">',
+        score: 0.3,
       }],
     };
 
@@ -28,6 +29,7 @@ describe('Performance: layout-shift-elements audit', () => {
     expect(auditResult.details.items).toHaveLength(1);
     expect(auditResult.details.items[0]).toHaveProperty('node');
     expect(auditResult.details.items[0].node).toHaveProperty('type', 'node');
+    expect(auditResult.details.items[0].score).toEqual(0.3);
   });
 
   it('correctly surfaces multiple CLS elements', async () => {

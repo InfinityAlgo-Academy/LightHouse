@@ -818,6 +818,9 @@
   "lighthouse-core/audits/largest-contentful-paint-element.js | title": {
     "message": "Largest Contentful Paint element"
   },
+  "lighthouse-core/audits/layout-shift-elements.js | columnContribution": {
+    "message": "CLS Contribution"
+  },
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "These DOM elements contribute most to the CLS of the page."
   },
