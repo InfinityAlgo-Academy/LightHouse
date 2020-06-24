@@ -107,9 +107,11 @@ jobs:
     env:
       # The smokehouse tests run by job `smoke_0`. `smoke_1` will run the rest.
       SMOKE_GROUP_1: a11y oopif pwa pwa2 pwa3 dbw redirects errors offline
-    name: smoke_${{ strategy.job-index }}
+    name: smoke_${{ strategy.job-index }}_${{ matrix.chrome-channel }}
 
     steps:
+    - name: max paralell
+      run: echo "maxxxx ${{ strategy.max-parallel }} total ${{ strategy.job-total }}"
     - name: git clone
       uses: actions/checkout@v2
 
