@@ -30,8 +30,12 @@ jobs:
       run: ([[ ${{matrix.chrome-channel}} = "ToT" ]] && cpath="/home/runner/chrome-linux-tot" || cpath=""); echo "::set-env name=CHROME_PATH::$cpath"
 
 
+    - name: export chrome path
+      run: export LOL_PATH="hello"
+
+
     - name: read chrome path
-      run: echo "chrome path is $CHROME_PATH"
+      run: echo "chrome path is $CHROME_PATH. lol path is LOL_PATH"
 
 
     # - run: yarn --frozen-lockfile
