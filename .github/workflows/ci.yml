@@ -9,6 +9,9 @@ on: [pull_request, push]
 jobs:
   # `basics` includes all non-smoke CI, except for unit and proto
   basics:
+    strategy:
+     matrix:
+       chrome-channel: ['stable', 'ToT']
     runs-on: ubuntu-latest
 
     # A few steps are duplicated across all jobs. Can be done better when this feature lands:
@@ -25,6 +28,12 @@ jobs:
 
     - run: yarn --frozen-lockfile
     - run: yarn build-all
+
+    - name: Set CHROME_PATH
+      run: echo "::set-env name=CHROME_PATH::$(node -e 'console.log(`${{matrix.chrome-channel}}` === `canary` ? `/home/runner/chrome-linux-tot` :: '')')"
+
+   - name: read CHROME_PATH
+      run: echo "chrome path is $CHROME_PATH"
 
 
     # # Run tests that require headfull Chrome.
@@ -54,11 +63,11 @@ jobs:
     #     # https://buildtracker.dev/docs/guides/github-actions#configuration
     #     BT_API_AUTH_TOKEN: ${{ secrets.BT_API_AUTH_TOKEN }}
 
-    - name: Upload dist
-      uses: actions/upload-artifact@v1
-      with:
-        name: dist
-        path: dist/
+    # - name: Upload dist
+    #   uses: actions/upload-artifact@v1
+    #   with:
+    #     name: dist
+    #     path: dist/
 
     # Fail if any changes were written to source files (ex, from: build/build-cdt-lib.js).
     - run: git diff --exit-code
