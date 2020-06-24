@@ -4,15 +4,16 @@
 
 name: 💡🏠
 
-on: [pull_request, push]
+on: [pull_request]
 
 jobs:
+  # `basics` includes all non-smoke CI, except for unit and proto
   basics:
     runs-on: ubuntu-latest
 
-    # A lot of steps in common between all jobs. Can be done better when this feature lands:
-    # https://github.community/t/reusing-sharing-inheriting-steps-between-jobs-declarations/16851
-    # https://github.com/actions/runner/issues/438
+    # A few steps are duplicated across all jobs. Can be done better when this feature lands:
+    #   https://github.community/t/reusing-sharing-inheriting-steps-between-jobs-declarations/16851
+    #   https://github.com/actions/runner/issues/438
     steps:
     - name: git clone
       uses: actions/checkout@v2
@@ -61,6 +62,7 @@ jobs:
     # Fail if any changes were written to source files (ex, from: build/build-cdt-lib.js).
     - run: git diff --exit-code
 
+  # `unit` includes just unit and proto tests.
   unit:
     runs-on: ubuntu-latest
 
@@ -96,6 +98,9 @@ jobs:
     - name: yarn unit
       run: xvfb-run --auto-servernum yarn unit
 
+  # `smoke` runs as a matrix across 4 jobs:
+  #  * The smoketest groups are split across two runners, to parallelize.
+  #  * Then, those are run with both Chrome stable and ToT Chromium, in parallel
   smoke:
     runs-on: ubuntu-latest
     strategy:
@@ -110,8 +115,6 @@ jobs:
     name: smoke_${{ strategy.job-index }}_${{ matrix.chrome-channel }}
 
     steps:
-    - name: max paralell
-      run: echo "maxxxx ${{ strategy.max-parallel }} total ${{ strategy.job-total }}"
     - name: git clone
       uses: actions/checkout@v2
 
