@@ -30,7 +30,18 @@ jobs:
     - run: yarn build-all
 
     - name: Set CHROME_PATH
-      run: echo "::set-env name=CHROME_PATH::$(node -e 'console.log(`${{matrix.chrome-channel}}` === `canary` ? `/home/runner/chrome-linux-tot` :: '')')"
+      run: [[ ${{matrix.chrome-channel}} = "canary" ]] && cpath="/home/runner/chrome-linux-tot" || cpath=""; echo "::set-env name=CHROME_PATH::$cpath"
+
+      # echo "::set-env name=CHROME_PATH::$(node -e 'console.log(`${{matrix.chrome-channel}}` === `canary` ? `/home/runner/chrome-linux-tot` :: '')')"
+
+
+ # [[ $b = 5 ]] && a="$c" || a="$d"
+
+
+# [[ ${{matrix.chrome-channel}} = "canary" ]] && cpath="/home/runner/chrome-linux-tot" || cpath=""; echo "::set-env name=CHROME_PATH::$cpath"
+
+# echo "::set-env name=CHROME_PATH::
+
 
    - name: read CHROME_PATH
       run: echo "chrome path is $CHROME_PATH"
