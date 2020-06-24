@@ -26,16 +26,16 @@ jobs:
       with:
         node-version: 10.x
 
-    - run: yarn --frozen-lockfile
-    - run: yarn build-all
-
     - name: Define chrome path
-      run: ([[ ${{matrix.chrome-channel}} = "canary" ]] && cpath="/home/runner/chrome-linux-tot" || cpath=""); echo "::set-env name=CHROME_PATH::$cpath"
+      run: ([[ ${{matrix.chrome-channel}} = "ToT" ]] && cpath="/home/runner/chrome-linux-tot" || cpath=""); echo "::set-env name=CHROME_PATH::$cpath"
 
 
     - name: read chrome path
       run: echo "chrome path is $CHROME_PATH"
 
+
+    # - run: yarn --frozen-lockfile
+    # - run: yarn build-all
 
     # # Run tests that require headfull Chrome.
     # - run: sudo apt-get install xvfb
