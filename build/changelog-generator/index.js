@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -9,6 +9,8 @@ const resolve = require('path').resolve;
 const mainTemplate = readFileSync(resolve(__dirname, 'templates/template.hbs')).toString();
 const headerPartial = readFileSync(resolve(__dirname, 'templates/header.hbs')).toString();
 const commitPartial = readFileSync(resolve(__dirname, 'templates/commit.hbs')).toString();
+
+/** @typedef {{type: string, header: string, hash?: string, message?: string, PR?: string}} Commit */
 
 const pullRequestRegex = /\(#(\d+)\)$/;
 const parserOpts = {
@@ -26,10 +28,24 @@ process.stderr.write(`
 
 `);
 
+const titlePrecedence = [
+  'New Audits',
+  'Core',
+  'CLI',
+  'Deps',
+  'Report',
+  'Clients',
+  'I18n',
+  'Docs',
+  'Tests',
+  'Misc',
+];
+
 const writerOpts = {
   mainTemplate,
   headerPartial,
   commitPartial,
+  /** @param {Commit} commit */
   transform: commit => {
     if (typeof commit.hash === 'string') {
       commit.hash = commit.hash.substring(0, 7);
@@ -68,24 +84,26 @@ const writerOpts = {
     return commit;
   },
   groupBy: 'type',
+  /** @param {{title: string}} a @param {{title: string}} b */
   commitGroupsSort: (a, b) => {
-    // put new audit on the top
-    if (a.title === 'New Audits') {
-      return -1;
-    }
-    if (b.title === 'New Audits') {
-      return 1;
+    const aIndex = titlePrecedence.indexOf(a.title);
+    const bIndex = titlePrecedence.indexOf(b.title);
+
+    // If neither value has a title with a predefined order, use an alphabetical comparison.
+    if (aIndex === -1 && bIndex === -1) {
+      return a.title.localeCompare(b.title);
     }
 
-    // put misc on the bottom
-    if (a.title === 'Misc') {
+    // If just one value has a title with a predefined order, it is greater.
+    if (aIndex === -1 && bIndex >= 0) {
       return 1;
     }
-    if (b.title === 'Misc') {
+    if (bIndex === -1 && aIndex >= 0) {
       return -1;
     }
 
-    return a.title.localeCompare(b.title);
+    // Both values have a title with a predefined order, so do a simple comparison.
+    return aIndex - bIndex;
   },
   commitsSort: ['type', 'scope'],
 };

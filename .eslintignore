@@ -4,11 +4,15 @@
 
 **/node_modules/**
 **/third_party/**
+**/generated/**
+**/source-maps/**
 
-**/dist/**
-lighthouse-extension/app/scripts
+lighthouse-cli/test/fixtures/byte-efficiency/bundle.js
 
-**/closure/*/*
+/dist/**
+
 coverage/**
 
 !.eslintrc.js
+
+lighthouse-core/scripts/legacy-javascript/variants

@@ -1,15 +1,16 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const fs = require('fs');
 const jsdom = require('jsdom');
-const URL = require('../../../../lib/url-shim');
 const DOM = require('../../../../report/html/renderer/dom.js');
+const Util = require('../../../../report/html/renderer/util.js');
+const I18n = require('../../../../report/html/renderer/i18n.js');
 
 const TEMPLATE_FILE = fs.readFileSync(__dirname +
     '/../../../../report/html/templates.html', 'utf8');
@@ -20,13 +21,16 @@ describe('DOM', () => {
   let dom;
 
   beforeAll(() => {
-    global.URL = URL;
-    const document = jsdom.jsdom(TEMPLATE_FILE);
+    global.Util = Util;
+    global.Util.i18n = new I18n('en', {...Util.UIStrings});
+    const {document} = new jsdom.JSDOM(TEMPLATE_FILE).window;
     dom = new DOM(document);
+    dom.setLighthouseChannel('someChannel');
   });
 
   afterAll(() => {
-    global.URL = undefined;
+    global.Util.i18n = undefined;
+    global.Util = undefined;
   });
 
   describe('createElement', () => {
@@ -34,7 +38,7 @@ describe('DOM', () => {
       const el = dom.createElement('div');
       assert.equal(el.localName, 'div');
       assert.equal(el.className, '');
-      assert.equal(el.className, el.attributes.length);
+      assert.equal(el.hasAttributes(), false);
     });
 
     it('creates an element from parameters', () => {
@@ -68,8 +72,8 @@ describe('DOM', () => {
     });
 
     it('does not inject duplicate styles', () => {
-      const clone = dom.cloneTemplate('#tmpl-lh-gauge', dom.document());
-      const clone2 = dom.cloneTemplate('#tmpl-lh-gauge', dom.document());
+      const clone = dom.cloneTemplate('#tmpl-lh-snippet', dom.document());
+      const clone2 = dom.cloneTemplate('#tmpl-lh-snippet', dom.document());
       assert.ok(clone.querySelector('style'));
       assert.ok(!clone2.querySelector('style'));
     });
@@ -110,10 +114,31 @@ describe('DOM', () => {
 
     it('handles the case of [text]... [text](url)', () => {
       const text = 'Ensuring `<td>` cells using the `[headers]` are good. ' +
-          '[Learn more](https://dequeuniversity.com/rules/axe/2.2/td-headers-attr).';
+          '[Learn more](https://dequeuniversity.com/rules/axe/3.1/td-headers-attr).';
       const result = dom.convertMarkdownLinkSnippets(text);
       assert.equal(result.innerHTML, 'Ensuring `&lt;td&gt;` cells using the `[headers]` are ' +
-          'good. <a rel="noopener" target="_blank" href="https://dequeuniversity.com/rules/axe/2.2/td-headers-attr">Learn more</a>.');
+          'good. <a rel="noopener" target="_blank" href="https://dequeuniversity.com/rules/axe/3.1/td-headers-attr">Learn more</a>.');
+    });
+
+    it('appends utm params to the URLs with https://developers.google.com origin', () => {
+      const text = '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/description).';
+
+      const result = dom.convertMarkdownLinkSnippets(text);
+      assert.equal(result.innerHTML, '<a rel="noopener" target="_blank" href="https://developers.google.com/web/tools/lighthouse/audits/description?utm_source=lighthouse&amp;utm_medium=someChannel">Learn more</a>.');
+    });
+
+    it('appends utm params to the URLs with https://web.dev origin', () => {
+      const text = '[Learn more](https://web.dev/tap-targets/).';
+
+      const result = dom.convertMarkdownLinkSnippets(text);
+      assert.equal(result.innerHTML, '<a rel="noopener" target="_blank" href="https://web.dev/tap-targets/?utm_source=lighthouse&amp;utm_medium=someChannel">Learn more</a>.');
+    });
+
+    it('doesn\'t append utm params to other (non-docs) origins', () => {
+      const text = '[Learn more](https://example.com/info).';
+
+      const result = dom.convertMarkdownLinkSnippets(text);
+      assert.equal(result.innerHTML, '<a rel="noopener" target="_blank" href="https://example.com/info">Learn more</a>.');
     });
   });
 

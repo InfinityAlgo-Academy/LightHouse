@@ -6,12 +6,14 @@
 assets/
 build/
 coverage/
+dist/
+proto/
 
 lighthouse-core/scripts/*
 lighthouse-core/test/
 lighthouse-core/third_party/src/
 lighthouse-viewer/
-lighthouse-extension/
+clients/
 lighthouse-cli/results/
 lighthouse-logger/
 
@@ -22,10 +24,13 @@ lighthouse-logger/
 # keep smokehouse tests, etc
 !lighthouse-cli/test
 
-node_modules/
 results/
 lantern-data/
-latest-run/
+timings-data/
+
+# ignore all folders named as such
+node_modules
+latest-run
 
 # generated files
 **/pages/scripts/lighthouse-report.js
@@ -39,6 +44,7 @@ latest.artifacts.log
 npm-debug.log
 yarn-error.log
 results.html
+*.lcov
 
 # dev files
 .appveyor.yml
@@ -47,3 +53,4 @@ results.html
 .eslintignore
 .eslintrc.js
 .travis.yml
+*.tgz

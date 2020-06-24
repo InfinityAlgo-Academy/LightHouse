@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -23,7 +23,7 @@ const colors = {
   magenta: isBrowser ? 'palevioletred' : 5,
 };
 
-// whitelist non-red/yellow colors for debug()
+// allow non-red/yellow colors for debug()
 debug.colors = [colors.cyan, colors.green, colors.blue, colors.magenta];
 
 class Emitter extends EventEmitter {
@@ -52,6 +52,7 @@ class Emitter extends EventEmitter {
 
 const loggersByTitle = {};
 const loggingBufferColumns = 25;
+let level_;
 
 class Log {
   static _logToStdErr(title, argsArray) {
@@ -74,7 +75,11 @@ class Log {
     return log;
   }
 
+  /**
+   * @param {string} level
+   */
   static setLevel(level) {
+    level_ = level;
     switch (level) {
       case 'silent':
         debug.enable('-*');
@@ -100,18 +105,25 @@ class Log {
     const columns = (!process || process.browser) ? Infinity : process.stdout.columns;
     const method = data.method || '?????';
     const maxLength = columns - method.length - prefix.length - loggingBufferColumns;
-    // IO.read blacklisted here to avoid logging megabytes of trace data
+    // IO.read ignored here to avoid logging megabytes of trace data
     const snippet = (data.params && method !== 'IO.read') ?
       JSON.stringify(data.params).substr(0, maxLength) : '';
     Log._logToStdErr(`${prefix}:${level || ''}`, [method, snippet]);
   }
 
-  static time({msg, id, args=[]}, level='log') {
+  /**
+   * @return {boolean}
+   */
+  static isVerbose() {
+    return level_ === 'verbose';
+  }
+
+  static time({msg, id, args = []}, level = 'log') {
     marky.mark(id);
     Log[level]('status', msg, ...args);
   }
 
-  static timeEnd({msg, id, args=[]}, level='verbose') {
+  static timeEnd({msg, id, args = []}, level = 'verbose') {
     Log[level]('statusEnd', msg, ...args);
     marky.stop(id);
   }
@@ -219,10 +231,11 @@ class Log {
 }
 
 Log.events = new Emitter();
-Log.takeTimeEntries = _ => {
+Log.takeTimeEntries = () => {
   const entries = marky.getEntries();
   marky.clear();
   return entries;
 };
+Log.getTimeEntries = () => marky.getEntries();
 
 module.exports = Log;

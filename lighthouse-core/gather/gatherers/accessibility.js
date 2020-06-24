@@ -1,16 +1,16 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-/* global window, document, Node, getOuterHTMLSnippet */
+/* global window, document, getOuterHTMLSnippet, getNodePath, getNodeLabel */
 
-const Gatherer = require('./gatherer');
+const Gatherer = require('./gatherer.js');
 const fs = require('fs');
 const axeLibSource = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
-const pageFunctions = require('../../lib/page-functions');
+const pageFunctions = require('../../lib/page-functions.js');
 
 /**
  * This is run in the page, not Lighthouse itself.
@@ -33,60 +33,62 @@ function runA11yChecks() {
     resultTypes: ['violations', 'inapplicable'],
     rules: {
       'tabindex': {enabled: true},
+      'accesskeys': {enabled: true},
+      'heading-order': {enabled: true},
+      'meta-viewport': {enabled: true},
+      'duplicate-id': {enabled: false},
       'table-fake-caption': {enabled: false},
       'td-has-header': {enabled: false},
       'marquee': {enabled: false},
       'area-alt': {enabled: false},
+      'aria-dpub-role-fallback': {enabled: false},
+      'html-xml-lang-mismatch': {enabled: false},
       'blink': {enabled: false},
       'server-side-image-map': {enabled: false},
+      'identical-links-same-purpose': {enabled: false},
+      'no-autoplay-audio': {enabled: false},
+      'svg-img-alt': {enabled: false},
+      'audio-caption': {enabled: false},
     },
     // @ts-ignore
   }).then(axeResult => {
-    // Augment the node objects with outerHTML snippet & custom path string
     // @ts-ignore
-    axeResult.violations.forEach(v => v.nodes.forEach(node => {
-      node.path = getNodePath(node.element);
-      // @ts-ignore - getOuterHTMLSnippet put into scope via stringification
-      node.snippet = getOuterHTMLSnippet(node.element);
-      // avoid circular JSON concerns
-      node.element = node.any = node.all = node.none = undefined;
-    }));
+    const augmentAxeNodes = result => {
+      // @ts-ignore
+      result.nodes.forEach(node => {
+        // @ts-ignore - getNodePath put into scope via stringification
+        node.path = getNodePath(node.element);
+        // @ts-ignore - getOuterHTMLSnippet put into scope via stringification
+        node.snippet = getOuterHTMLSnippet(node.element);
+        // @ts-ignore - getNodeLabel put into scope via stringification
+        node.nodeLabel = getNodeLabel(node.element);
+        // avoid circular JSON concerns
+        node.element = node.any = node.all = node.none = undefined;
+      });
+
+      // Ensure errors can be serialized over the protocol
+      if (result.error instanceof Error) {
+        result.error = {
+          name: result.error.name,
+          message: result.error.message,
+          stack: result.error.stack,
+          errorNode: result.error.errorNode,
+        };
+      }
+    };
+
+    // Augment the node objects with outerHTML snippet & custom path string
+    axeResult.violations.forEach(augmentAxeNodes);
+    axeResult.incomplete.forEach(augmentAxeNodes);
 
     // We only need violations, and circular references are possible outside of violations
-    axeResult = {violations: axeResult.violations, notApplicable: axeResult.inapplicable};
+    axeResult = {
+      violations: axeResult.violations,
+      notApplicable: axeResult.inapplicable,
+      incomplete: axeResult.incomplete,
+    };
     return axeResult;
   });
-
-  /**
-   * Adapted from DevTools' SDK.DOMNode.prototype.path
-   *   https://github.com/ChromeDevTools/devtools-frontend/blob/7a2e162ddefd/front_end/sdk/DOMModel.js#L530-L552
-   * TODO: Doesn't handle frames or shadow roots...
-   * @param {Node} node
-   */
-  function getNodePath(node) {
-    /** @param {Node} node */
-    function getNodeIndex(node) {
-      let index = 0;
-      let prevNode;
-      while (prevNode = node.previousSibling) {
-        node = prevNode;
-        // skip empty text nodes
-        if (node.nodeType === Node.TEXT_NODE && node.textContent &&
-          node.textContent.trim().length === 0) continue;
-        index++;
-      }
-      return index;
-    }
-
-    const path = [];
-    while (node && node.parentNode) {
-      const index = getNodeIndex(node);
-      path.push([index, node.nodeName]);
-      node = node.parentNode;
-    }
-    path.reverse();
-    return path.join(',');
-  }
 }
 
 class Accessibility extends Gatherer {
@@ -98,6 +100,8 @@ class Accessibility extends Gatherer {
     const driver = passContext.driver;
     const expression = `(function () {
       ${pageFunctions.getOuterHTMLSnippetString};
+      ${pageFunctions.getNodePathString};
+      ${pageFunctions.getNodeLabelString};
       ${axeLibSource};
       return (${runA11yChecks.toString()}());
     })()`;

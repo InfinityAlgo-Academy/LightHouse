@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -9,23 +9,12 @@
  * URL shim so we keep our code DRY
  */
 
-/* global self */
+/* global URL */
 
 const Util = require('../report/html/renderer/util.js');
 
-// Type cast so tsc sees window.URL and require('url').URL as sufficiently equivalent.
-const URL = /** @type {!Window["URL"]} */ (typeof self !== 'undefined' && self.URL) ||
-    require('url').URL;
-
-// 25 most used tld plus one domains from http archive.
-// @see https://github.com/GoogleChrome/lighthouse/pull/5065#discussion_r191926212
-const listOfTlds = [
-  'com', 'co', 'gov', 'edu', 'ac', 'org', 'go', 'gob', 'or', 'net', 'in', 'ne', 'nic', 'gouv',
-  'web', 'spb', 'blog', 'jus', 'kiev', 'mil', 'wi', 'qc', 'ca', 'bel', 'on',
-];
-
 const allowedProtocols = [
-  'https:', 'http:', 'chrome:',
+  'https:', 'http:', 'chrome:', 'chrome-extension:',
 ];
 
 /**
@@ -43,6 +32,7 @@ function rewriteChromeInternalUrl(url) {
   return url.replace(/^chrome:\/\/chrome\//, 'chrome://');
 }
 
+// URL is global as of node 10. https://nodejs.org/api/globals.html#globals_url
 class URLShim extends URL {
   /**
    * @param {string} url
@@ -99,33 +89,17 @@ class URLShim extends URL {
   }
 
   /**
-   * Gets the tld of a domain
-   *
-   * @param {string} hostname
-   * @return {string} tld
-   */
-  static getTld(hostname) {
-    const tlds = hostname.split('.').slice(-2);
-
-    if (!listOfTlds.includes(tlds[0])) {
-      return `.${tlds[tlds.length - 1]}`;
-    }
-
-    return `.${tlds.join('.')}`;
-  }
-
-  /**
    * Check if rootDomains matches
    *
-   * @param {string} urlA
-   * @param {string} urlB
+   * @param {string|URL} urlA
+   * @param {string|URL} urlB
    */
   static rootDomainsMatch(urlA, urlB) {
     let urlAInfo;
     let urlBInfo;
     try {
-      urlAInfo = new URL(urlA);
-      urlBInfo = new URL(urlB);
+      urlAInfo = Util.createOrReturnURL(urlA);
+      urlBInfo = Util.createOrReturnURL(urlB);
     } catch (err) {
       return false;
     }
@@ -134,14 +108,9 @@ class URLShim extends URL {
       return false;
     }
 
-    const tldA = URLShim.getTld(urlAInfo.hostname);
-    const tldB = URLShim.getTld(urlBInfo.hostname);
-
     // get the string before the tld
-    const urlARootDomain = urlAInfo.hostname.replace(new RegExp(`${tldA}$`), '')
-      .split('.').splice(-1)[0];
-    const urlBRootDomain = urlBInfo.hostname.replace(new RegExp(`${tldB}$`), '')
-      .split('.').splice(-1)[0];
+    const urlARootDomain = Util.getRootDomain(urlAInfo);
+    const urlBRootDomain = Util.getRootDomain(urlBInfo);
 
     return urlARootDomain === urlBRootDomain;
   }
@@ -206,10 +175,8 @@ class URLShim extends URL {
 }
 
 URLShim.URL = URL;
-URLShim.URLSearchParams = (typeof self !== 'undefined' && self.URLSearchParams) ||
-    require('url').URLSearchParams;
 
-URLShim.NON_NETWORK_PROTOCOLS = ['blob', 'data'];
+URLShim.NON_NETWORK_PROTOCOLS = ['blob', 'data', 'intent'];
 
 URLShim.INVALID_URL_DEBUG_STRING =
     'Lighthouse was unable to determine the URL of some script executions. ' +

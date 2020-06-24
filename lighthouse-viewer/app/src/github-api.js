@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,7 +7,7 @@
 
 /* global logger, FirebaseAuth, idbKeyval, getFilenamePrefix */
 
-/** @typedef {{etag: ?string, content: LH.ReportResult}} CachableGist */
+/** @typedef {{etag: ?string, content: LH.Result}} CachableGist */
 
 /**
  * Wrapper around the GitHub API for reading/writing gists.
@@ -22,9 +22,13 @@ class GithubApi {
     return '.lighthouse.report.json';
   }
 
+  getFirebaseAuth() {
+    return this._auth;
+  }
+
   /**
    * Creates a gist under the users account.
-   * @param {LH.ReportResult} jsonFile The gist file body.
+   * @param {LH.Result} jsonFile The gist file body.
    * @return {Promise<string>} id of the created gist.
    */
   createGist(jsonFile) {
@@ -73,7 +77,7 @@ class GithubApi {
   /**
    * Fetches a Lighthouse report from a gist.
    * @param {string} id The id of a gist.
-   * @return {Promise<LH.ReportResult>}
+   * @return {Promise<LH.Result>}
    */
   getGistFileContentAsJson(id) {
     logger.log('Fetching report from GitHub...', false);
@@ -132,7 +136,7 @@ class GithubApi {
                 .then(resp => resp.json())
                 .then(content => ({etag, content}));
             }
-            const lhr = /** @type {LH.ReportResult} */ (JSON.parse(f.content));
+            const lhr = /** @type {LH.Result} */ (JSON.parse(f.content));
             return {etag, content: lhr};
           });
         });

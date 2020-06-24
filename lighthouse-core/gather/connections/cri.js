@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -9,6 +9,7 @@ const Connection = require('./connection.js');
 const WebSocket = require('ws');
 const http = require('http');
 const log = require('lighthouse-logger');
+const LighthouseError = require('../../lib/lh-error.js');
 
 const DEFAULT_HOSTNAME = 'localhost';
 const CONNECT_TIMEOUT = 10000;
@@ -80,7 +81,6 @@ class CriConnection extends Connection {
    * @private
    */
   _runJsonCommand(command) {
-    // TODO(bckenny): can base type on command once conditional types land in TS
     return new Promise((resolve, reject) => {
       const request = http.get({
         hostname: this.hostname,
@@ -108,22 +108,17 @@ class CriConnection extends Connection {
         });
       });
 
+      // This error handler is critical to ensuring Lighthouse exits cleanly even when Chrome crashes.
+      // See https://github.com/GoogleChrome/lighthouse/pull/8583.
+      request.on('error', reject);
+
       request.setTimeout(CONNECT_TIMEOUT, () => {
-        request.abort();
-
-        // After aborting, we expect an ECONNRESET error. Ignore.
-        request.on('error', err => {
-          if (err.code !== 'ECONNRESET') {
-            throw err;
-          }
-        });
-
-        // TODO: Replace this with an LHError on next major version bump
         // Reject on error with code specifically indicating timeout in connection setup.
-        const err = new Error('Timeout waiting for initial Debugger Protocol connection.');
-        err.code = 'CRI_TIMEOUT';
-        log.error('CriConnection', err.message);
+        const err = new LighthouseError(LighthouseError.errors.CRI_TIMEOUT);
+        log.error('CriConnection', err.friendlyMessage);
         reject(err);
+
+        request.abort();
       });
     });
   }

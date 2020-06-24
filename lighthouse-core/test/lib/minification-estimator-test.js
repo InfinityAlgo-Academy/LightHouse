@@ -1,13 +1,13 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
 const fs = require('fs');
-const assert = require('assert');
-const {computeCSSTokenLength, computeJSTokenLength} = require('../../lib/minification-estimator');
+const assert = require('assert').strict;
+const {computeCSSTokenLength, computeJSTokenLength} = require('../../lib/minification-estimator.js'); // eslint-disable-line max-len
 
 const angularFullScript = fs.readFileSync(require.resolve('angular/angular.js'), 'utf8');
 
@@ -180,6 +180,31 @@ describe('minification estimator', () => {
       assert.equal(computeJSTokenLength(js), 9);
     });
 
+    it('should handle regular expression character classes', () => {
+      // test a slash inside of a character class to make sure it doesn't end the regex
+      // The below is the string-equivalent of
+      const _ = /regex [^/]\//.test('this should be in string not comment 123456789');
+
+      const js = `
+        /regex [^/]\\//.test('this should be in string not comment 123456789')
+      `;
+
+      assert.equal(computeJSTokenLength(js), 69);
+      assert.equal(computeJSTokenLength(js), js.trim().length);
+    });
+
+    it('should handle escaped regular expression characters', () => {
+      // test an escaped [ to make sure we can still close regexes
+      // This is the string-equivalent of
+      const _ = /regex \[/; // this should be in comment not string 123456789
+
+      const js = `
+        /regex \\[/ // this should be in comment not string 123456789
+      `;
+
+      assert.equal(computeJSTokenLength(js), 10);
+    });
+
     it('should distinguish regex from divide', () => {
       const js = `
         return 1 / 2 // hello
@@ -189,9 +214,9 @@ describe('minification estimator', () => {
     });
 
     it('should handle large, real javscript files', () => {
-      assert.equal(angularFullScript.length, 1364217);
-      // 1 - 405199 / 1364217 = estimated 70% smaller minified
-      assert.equal(computeJSTokenLength(angularFullScript), 405199);
+      assert.equal(angularFullScript.length, 1371888);
+      // 1 - 334968 / 1364217 = estimated 75% smaller minified
+      assert.equal(computeJSTokenLength(angularFullScript), 337959);
     });
   });
 });

@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -9,15 +9,15 @@
  */
 'use strict';
 
-const Audit = require('../audit');
+const Audit = require('../audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
-const BaseNode = require('../../lib/dependency-graph/base-node');
-const ByteEfficiencyAudit = require('./byte-efficiency-audit');
-const UnusedCSS = require('./unused-css-rules');
-const NetworkRequest = require('../../lib/network-request');
-const TraceOfTab = require('../../gather/computed/trace-of-tab.js');
-const LoadSimulator = require('../../gather/computed/load-simulator.js');
-const FirstContentfulPaint = require('../../gather/computed/metrics/first-contentful-paint.js');
+const BaseNode = require('../../lib/dependency-graph/base-node.js');
+const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
+const UnusedCSS = require('../../computed/unused-css.js');
+const NetworkRequest = require('../../lib/network-request.js');
+const TraceOfTab = require('../../computed/trace-of-tab.js');
+const LoadSimulator = require('../../computed/load-simulator.js');
+const FirstContentfulPaint = require('../../computed/metrics/first-contentful-paint.js');
 
 /** @typedef {import('../../lib/dependency-graph/simulator/simulator')} Simulator */
 /** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
@@ -35,7 +35,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should reduce or remove network resources that block the initial render of the page. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Resources are blocking the first paint of your page. Consider ' +
     'delivering critical JS/CSS inline and deferring all non-critical ' +
-    'JS/styles. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources).',
+    'JS/styles. [Learn more](https://web.dev/render-blocking-resources/).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -70,10 +70,9 @@ class RenderBlockingResources extends Audit {
       title: str_(UIStrings.title),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       description: str_(UIStrings.description),
-      // This audit also looks at CSSUsage but has a graceful fallback if it failed, so do not mark
-      // it as a "requiredArtifact".
-      // TODO: look into adding an `optionalArtifacts` property that captures this
-      requiredArtifacts: ['URL', 'TagsBlockingFirstPaint', 'traces'],
+      // TODO: look into adding an `optionalArtifacts` property that captures the non-required nature
+      // of CSSUsage
+      requiredArtifacts: ['URL', 'TagsBlockingFirstPaint', 'traces', 'devtoolsLogs', 'CSSUsage'],
     };
   }
 
@@ -103,14 +102,12 @@ class RenderBlockingResources extends Audit {
     for (const resource of artifacts.TagsBlockingFirstPaint) {
       // Ignore any resources that finished after observed FCP (they're clearly not render-blocking)
       if (resource.endTime * 1000 > fcpTsInMs) continue;
-      // TODO(phulce): beacon these occurences to Sentry to improve FCP graph
+      // TODO: beacon to Sentry, https://github.com/GoogleChrome/lighthouse/issues/7041
       if (!nodesByUrl[resource.tag.url]) continue;
 
       const {node, nodeTiming} = nodesByUrl[resource.tag.url];
 
       // Mark this node and all its dependents as deferrable
-      // TODO(phulce): make this slightly more surgical
-      // i.e. the referenced font asset won't become inlined just because you inline the CSS
       node.traverse(node => deferredNodeIds.add(node.id));
 
       // "wastedMs" is the download time of the network request, responseReceived - requestSent
@@ -190,10 +187,12 @@ class RenderBlockingResources extends Audit {
   static async computeWastedCSSBytes(artifacts, context) {
     const wastedBytesByUrl = new Map();
     try {
-      // TODO(phulce): pull this out into computed artifact
-      const results = await UnusedCSS.audit(artifacts, context);
-      // @ts-ignore - TODO(bckenny): details types.
-      for (const item of results.details.items) {
+      const unusedCssItems = await UnusedCSS.request({
+        CSSUsage: artifacts.CSSUsage,
+        URL: artifacts.URL,
+        devtoolsLog: artifacts.devtoolsLogs[Audit.DEFAULT_PASS],
+      }, context);
+      for (const item of unusedCssItems) {
         wastedBytesByUrl.set(item.url, item.wastedBytes);
       }
     } catch (_) {}
@@ -214,10 +213,10 @@ class RenderBlockingResources extends Audit {
       displayValue = str_(i18n.UIStrings.displayValueMsSavings, {wastedMs});
     }
 
-    /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
+    /** @type {LH.Audit.Details.Opportunity['headings']} */
     const headings = [
       {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
-      {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnSize)},
+      {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnTransferSize)},
       {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnWastedMs)},
     ];
 
@@ -226,7 +225,8 @@ class RenderBlockingResources extends Audit {
     return {
       displayValue,
       score: ByteEfficiencyAudit.scoreForWastedMs(wastedMs),
-      rawValue: wastedMs,
+      numericValue: wastedMs,
+      numericUnit: 'millisecond',
       details,
     };
   }

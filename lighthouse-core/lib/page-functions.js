@@ -1,12 +1,12 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 // @ts-nocheck
 'use strict';
 
-/* global window document */
+/* global window document Node ShadowRoot */
 
 /**
  * Helper functions that are passed by `toString()` by Driver to be evaluated in target page.
@@ -37,7 +37,7 @@ function wrapRuntimeEvalErrorInBrowser(err) {
  */
 /* istanbul ignore next */
 function registerPerformanceObserverInPage() {
-  window.____lastLongTask = window.performance.now();
+  window.____lastLongTask = window.__perfNow();
   const observer = new window.PerformanceObserver(entryList => {
     const entries = entryList.getEntries();
     for (const entry of entries) {
@@ -64,12 +64,12 @@ function registerPerformanceObserverInPage() {
 function checkTimeSinceLastLongTask() {
   // Wait for a delta before returning so that we're sure the PerformanceObserver
   // has had time to register the last longtask
-  return new Promise(resolve => {
-    const timeoutRequested = window.performance.now() + 50;
+  return new window.__nativePromise(resolve => {
+    const timeoutRequested = window.__perfNow() + 50;
 
     setTimeout(() => {
       // Double check that a long task hasn't happened since setTimeout
-      const timeoutFired = window.performance.now();
+      const timeoutFired = window.__perfNow();
       const timeSinceLongTask = timeoutFired - timeoutRequested < 50 ?
           timeoutFired - window.____lastLongTask : 0;
       resolve(timeSinceLongTask);
@@ -80,17 +80,18 @@ function checkTimeSinceLastLongTask() {
 /**
  * @param {string=} selector Optional simple CSS selector to filter nodes on.
  *     Combinators are not supported.
- * @return {Array<Element>}
+ * @return {Array<HTMLElement>}
  */
 /* istanbul ignore next */
 function getElementsInDocument(selector) {
-  /** @type {Array<Element>} */
+  const realMatchesFn = window.__ElementMatches || window.Element.prototype.matches;
+  /** @type {Array<HTMLElement>} */
   const results = [];
 
-  /** @param {NodeListOf<Element>} nodes */
+  /** @param {NodeListOf<HTMLElement>} nodes */
   const _findAllElements = nodes => {
     for (let i = 0, el; el = nodes[i]; ++i) {
-      if (!selector || window.__ElementMatches.call(el, selector)) {
+      if (!selector || realMatchesFn.call(el, selector)) {
         results.push(el);
       }
       // If the element has a shadow root, dig deeper.
@@ -106,23 +107,31 @@ function getElementsInDocument(selector) {
 
 /**
  * Gets the opening tag text of the given node.
- * @param {Element} element
+ * @param {Element|ShadowRoot} element
  * @param {Array<string>=} ignoreAttrs An optional array of attribute tags to not include in the HTML snippet.
  * @return {string}
  */
 /* istanbul ignore next */
-function getOuterHTMLSnippet(element, ignoreAttrs=[]) {
-  const clone = element.cloneNode();
+function getOuterHTMLSnippet(element, ignoreAttrs = []) {
+  try {
+    // ShadowRoots are sometimes passed in; use their hosts' outerHTML.
+    if (element instanceof ShadowRoot) {
+      element = element.host;
+    }
 
-  ignoreAttrs.forEach(attribute =>{
-    clone.removeAttribute(attribute);
-  });
-
-  const reOpeningTag = /^.*?>/;
-  const match = clone.outerHTML.match(reOpeningTag);
-
-  return (match && match[0]) || '';
+    const clone = element.cloneNode();
+    ignoreAttrs.forEach(attribute =>{
+      clone.removeAttribute(attribute);
+    });
+    const reOpeningTag = /^[\s\S]*?>/;
+    const match = clone.outerHTML.match(reOpeningTag);
+    return (match && match[0]) || '';
+  } catch (_) {
+    // As a last resort, fall back to localName.
+    return `<${element.localName}>`;
+  }
 }
+
 
 /**
  * Computes a memory/CPU performance benchmark index to determine rough device class.
@@ -152,6 +161,148 @@ function ultradumbBenchmark() {
   return Math.round(iterations / durationInSeconds);
 }
 
+/**
+ * Adapted from DevTools' SDK.DOMNode.prototype.path
+ *   https://github.com/ChromeDevTools/devtools-frontend/blob/7a2e162ddefd/front_end/sdk/DOMModel.js#L530-L552
+ * TODO: Doesn't handle frames or shadow roots...
+ * @param {Node} node
+ */
+/* istanbul ignore next */
+function getNodePath(node) {
+  /** @param {Node} node */
+  function getNodeIndex(node) {
+    let index = 0;
+    let prevNode;
+    while (prevNode = node.previousSibling) {
+      node = prevNode;
+      // skip empty text nodes
+      if (node.nodeType === Node.TEXT_NODE && node.nodeValue.trim().length === 0) continue;
+      index++;
+    }
+    return index;
+  }
+
+  const path = [];
+  while (node && node.parentNode) {
+    const index = getNodeIndex(node);
+    path.push([index, node.nodeName]);
+    node = node.parentNode;
+  }
+  path.reverse();
+  return path.join(',');
+}
+
+/**
+ * @param {Element} node
+ * @return {string}
+ */
+/* istanbul ignore next */
+function getNodeSelector(node) {
+  /**
+   * @param {Element} node
+   */
+  function getSelectorPart(node) {
+    let part = node.tagName.toLowerCase();
+    if (node.id) {
+      part += '#' + node.id;
+    } else if (node.classList.length > 0) {
+      part += '.' + node.classList[0];
+    }
+    return part;
+  }
+
+  const parts = [];
+  while (parts.length < 4) {
+    parts.unshift(getSelectorPart(node));
+    if (!node.parentElement) {
+      break;
+    }
+    node = node.parentElement;
+    if (node.tagName === 'HTML') {
+      break;
+    }
+  }
+  return parts.join(' > ');
+}
+
+/**
+ * This function checks if an element or an ancestor of an element is `position:fixed`.
+ * In addition we ensure that the element is capable of behaving as a `position:fixed`
+ * element, checking that it lives within a scrollable ancestor.
+ * @param {HTMLElement} element
+ * @return {boolean}
+ */
+/* istanbul ignore next */
+function isPositionFixed(element) {
+  /**
+   * @param {HTMLElement} element
+   * @param {string} attr
+   * @return {string}
+   */
+  function getStyleAttrValue(element, attr) {
+    // Check style before computedStyle as computedStyle is expensive.
+    return element.style[attr] || window.getComputedStyle(element)[attr];
+  }
+
+  // Position fixed/sticky has no effect in case when document does not scroll.
+  const htmlEl = document.querySelector('html');
+  if (htmlEl.scrollHeight <= htmlEl.clientHeight ||
+      !['scroll', 'auto', 'visible'].includes(getStyleAttrValue(htmlEl, 'overflowY'))) {
+    return false;
+  }
+
+  let currentEl = element;
+  while (currentEl) {
+    const position = getStyleAttrValue(currentEl, 'position');
+    if ((position === 'fixed' || position === 'sticky')) {
+      return true;
+    }
+    currentEl = currentEl.parentElement;
+  }
+  return false;
+}
+
+/**
+ * Generate a human-readable label for the given element, based on end-user facing
+ * strings like the innerText or alt attribute.
+ * Falls back to the tagName if no useful label is found.
+ * @param {HTMLElement} node
+ * @return {string|null}
+ */
+/* istanbul ignore next */
+function getNodeLabel(node) {
+  // Inline so that audits that import getNodeLabel don't
+  // also need to import truncate
+  /**
+   * @param {string} str
+   * @param {number} maxLength
+   * @return {string}
+   */
+  function truncate(str, maxLength) {
+    if (str.length <= maxLength) {
+      return str;
+    }
+    return str.slice(0, maxLength - 1) + '…';
+  }
+
+  const tagName = node.tagName.toLowerCase();
+  // html and body content is too broad to be useful, since they contain all page content
+  if (tagName !== 'html' && tagName !== 'body') {
+    const nodeLabel = node.innerText || node.getAttribute('alt') || node.getAttribute('aria-label');
+    if (nodeLabel) {
+      return truncate(nodeLabel, 80);
+    } else {
+      // If no useful label was found then try to get one from a child.
+      // E.g. if an a tag contains an image but no text we want the image alt/aria-label attribute.
+      const nodeToUseForLabel = node.querySelector('[alt], [aria-label]');
+      if (nodeToUseForLabel) {
+        return getNodeLabel(/** @type {HTMLElement} */ (nodeToUseForLabel));
+      }
+    }
+  }
+  return tagName;
+}
+
 module.exports = {
   wrapRuntimeEvalErrorInBrowserString: wrapRuntimeEvalErrorInBrowser.toString(),
   registerPerformanceObserverInPageString: registerPerformanceObserverInPage.toString(),
@@ -161,4 +312,10 @@ module.exports = {
   getOuterHTMLSnippet: getOuterHTMLSnippet,
   ultradumbBenchmark: ultradumbBenchmark,
   ultradumbBenchmarkString: ultradumbBenchmark.toString(),
+  getNodePathString: getNodePath.toString(),
+  getNodeSelectorString: getNodeSelector.toString(),
+  getNodeSelector: getNodeSelector,
+  getNodeLabel: getNodeLabel,
+  getNodeLabelString: getNodeLabel.toString(),
+  isPositionFixedString: isPositionFixed.toString(),
 };

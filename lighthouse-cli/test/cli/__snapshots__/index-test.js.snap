@@ -25,6 +25,9 @@ Object {
       "path": "metrics/first-contentful-paint",
     },
     Object {
+      "path": "metrics/largest-contentful-paint",
+    },
+    Object {
       "path": "metrics/first-meaningful-paint",
     },
     Object {
@@ -43,10 +46,19 @@ Object {
       "path": "metrics/estimated-input-latency",
     },
     Object {
+      "path": "metrics/total-blocking-time",
+    },
+    Object {
+      "path": "metrics/max-potential-fid",
+    },
+    Object {
+      "path": "metrics/cumulative-layout-shift",
+    },
+    Object {
       "path": "errors-in-console",
     },
     Object {
-      "path": "time-to-first-byte",
+      "path": "server-response-time",
     },
     Object {
       "path": "metrics/first-cpu-idle",
@@ -64,7 +76,10 @@ Object {
       "path": "redirects",
     },
     Object {
-      "path": "webapp-install-banner",
+      "path": "installable-manifest",
+    },
+    Object {
+      "path": "apple-touch-icon",
     },
     Object {
       "path": "splash-screen",
@@ -73,13 +88,16 @@ Object {
       "path": "themed-omnibox",
     },
     Object {
-      "path": "manifest-short-name-length",
+      "path": "maskable-icon",
     },
     Object {
       "path": "content-width",
     },
     Object {
       "path": "image-aspect-ratio",
+    },
+    Object {
+      "path": "image-size-responsive",
     },
     Object {
       "path": "deprecations",
@@ -100,10 +118,46 @@ Object {
       "path": "font-display",
     },
     Object {
+      "path": "diagnostics",
+    },
+    Object {
       "path": "network-requests",
     },
     Object {
+      "path": "network-rtt",
+    },
+    Object {
+      "path": "network-server-latency",
+    },
+    Object {
+      "path": "main-thread-tasks",
+    },
+    Object {
       "path": "metrics",
+    },
+    Object {
+      "path": "offline-start-url",
+    },
+    Object {
+      "path": "performance-budget",
+    },
+    Object {
+      "path": "timing-budget",
+    },
+    Object {
+      "path": "resource-summary",
+    },
+    Object {
+      "path": "third-party-summary",
+    },
+    Object {
+      "path": "largest-contentful-paint-element",
+    },
+    Object {
+      "path": "layout-shift-elements",
+    },
+    Object {
+      "path": "long-tasks",
     },
     Object {
       "path": "manual/pwa-cross-browser",
@@ -121,6 +175,15 @@ Object {
       "path": "accessibility/aria-allowed-attr",
     },
     Object {
+      "path": "accessibility/aria-hidden-body",
+    },
+    Object {
+      "path": "accessibility/aria-hidden-focus",
+    },
+    Object {
+      "path": "accessibility/aria-input-field-name",
+    },
+    Object {
       "path": "accessibility/aria-required-attr",
     },
     Object {
@@ -133,13 +196,13 @@ Object {
       "path": "accessibility/aria-roles",
     },
     Object {
+      "path": "accessibility/aria-toggle-field-name",
+    },
+    Object {
       "path": "accessibility/aria-valid-attr-value",
     },
     Object {
       "path": "accessibility/aria-valid-attr",
-    },
-    Object {
-      "path": "accessibility/audio-caption",
     },
     Object {
       "path": "accessibility/button-name",
@@ -160,10 +223,19 @@ Object {
       "path": "accessibility/document-title",
     },
     Object {
-      "path": "accessibility/duplicate-id",
+      "path": "accessibility/duplicate-id-active",
+    },
+    Object {
+      "path": "accessibility/duplicate-id-aria",
+    },
+    Object {
+      "path": "accessibility/form-field-multiple-labels",
     },
     Object {
       "path": "accessibility/frame-title",
+    },
+    Object {
+      "path": "accessibility/heading-order",
     },
     Object {
       "path": "accessibility/html-has-lang",
@@ -232,9 +304,6 @@ Object {
       "path": "accessibility/manual/focusable-controls",
     },
     Object {
-      "path": "accessibility/manual/heading-levels",
-    },
-    Object {
       "path": "accessibility/manual/interactive-element-affordance",
     },
     Object {
@@ -274,6 +343,9 @@ Object {
       "path": "byte-efficiency/unused-css-rules",
     },
     Object {
+      "path": "byte-efficiency/unused-javascript",
+    },
+    Object {
       "path": "byte-efficiency/uses-webp-images",
     },
     Object {
@@ -293,6 +365,9 @@ Object {
     },
     Object {
       "path": "dobetterweb/doctype",
+    },
+    Object {
+      "path": "dobetterweb/charset",
     },
     Object {
       "path": "dobetterweb/dom-size",
@@ -337,10 +412,16 @@ Object {
       "path": "seo/link-text",
     },
     Object {
+      "path": "seo/crawlable-anchors",
+    },
+    Object {
       "path": "seo/is-crawlable",
     },
     Object {
       "path": "seo/robots-txt",
+    },
+    Object {
+      "path": "seo/tap-targets",
     },
     Object {
       "path": "seo/hreflang",
@@ -352,9 +433,6 @@ Object {
       "path": "seo/canonical",
     },
     Object {
-      "path": "seo/manual/mobile-friendly",
-    },
-    Object {
       "path": "seo/manual/structured-data",
     },
   ],
@@ -362,179 +440,209 @@ Object {
     "accessibility": Object {
       "auditRefs": Array [
         Object {
-          "group": "a11y-correct-attributes",
+          "group": "a11y-navigation",
           "id": "accesskeys",
-          "weight": 1,
+          "weight": 3,
         },
         Object {
           "group": "a11y-aria",
           "id": "aria-allowed-attr",
+          "weight": 10,
+        },
+        Object {
+          "group": "a11y-aria",
+          "id": "aria-hidden-body",
+          "weight": 10,
+        },
+        Object {
+          "group": "a11y-aria",
+          "id": "aria-hidden-focus",
+          "weight": 3,
+        },
+        Object {
+          "group": "a11y-aria",
+          "id": "aria-input-field-name",
           "weight": 3,
         },
         Object {
           "group": "a11y-aria",
           "id": "aria-required-attr",
-          "weight": 2,
+          "weight": 10,
         },
         Object {
           "group": "a11y-aria",
           "id": "aria-required-children",
-          "weight": 5,
+          "weight": 10,
         },
         Object {
           "group": "a11y-aria",
           "id": "aria-required-parent",
-          "weight": 2,
+          "weight": 10,
         },
         Object {
           "group": "a11y-aria",
           "id": "aria-roles",
+          "weight": 10,
+        },
+        Object {
+          "group": "a11y-aria",
+          "id": "aria-toggle-field-name",
           "weight": 3,
         },
         Object {
           "group": "a11y-aria",
           "id": "aria-valid-attr-value",
-          "weight": 2,
+          "weight": 10,
         },
         Object {
           "group": "a11y-aria",
           "id": "aria-valid-attr",
-          "weight": 5,
+          "weight": 10,
         },
         Object {
-          "group": "a11y-correct-attributes",
-          "id": "audio-caption",
-          "weight": 4,
-        },
-        Object {
-          "group": "a11y-element-names",
+          "group": "a11y-names-labels",
           "id": "button-name",
           "weight": 10,
         },
         Object {
-          "group": "a11y-describe-contents",
+          "group": "a11y-navigation",
           "id": "bypass",
-          "weight": 10,
+          "weight": 3,
         },
         Object {
           "group": "a11y-color-contrast",
           "id": "color-contrast",
-          "weight": 6,
+          "weight": 3,
         },
         Object {
-          "group": "a11y-well-structured",
+          "group": "a11y-tables-lists",
           "id": "definition-list",
-          "weight": 1,
+          "weight": 3,
         },
         Object {
-          "group": "a11y-well-structured",
+          "group": "a11y-tables-lists",
           "id": "dlitem",
-          "weight": 1,
+          "weight": 3,
         },
         Object {
-          "group": "a11y-describe-contents",
+          "group": "a11y-names-labels",
           "id": "document-title",
+          "weight": 3,
+        },
+        Object {
+          "group": "a11y-navigation",
+          "id": "duplicate-id-active",
+          "weight": 3,
+        },
+        Object {
+          "group": "a11y-aria",
+          "id": "duplicate-id-aria",
+          "weight": 10,
+        },
+        Object {
+          "group": "a11y-names-labels",
+          "id": "form-field-multiple-labels",
           "weight": 2,
         },
         Object {
-          "group": "a11y-well-structured",
-          "id": "duplicate-id",
-          "weight": 5,
+          "group": "a11y-names-labels",
+          "id": "frame-title",
+          "weight": 3,
         },
         Object {
-          "group": "a11y-describe-contents",
-          "id": "frame-title",
-          "weight": 5,
+          "group": "a11y-navigation",
+          "id": "heading-order",
+          "weight": 2,
         },
         Object {
           "group": "a11y-language",
           "id": "html-has-lang",
-          "weight": 4,
+          "weight": 3,
         },
         Object {
           "group": "a11y-language",
           "id": "html-lang-valid",
-          "weight": 1,
+          "weight": 3,
         },
         Object {
-          "group": "a11y-correct-attributes",
+          "group": "a11y-names-labels",
           "id": "image-alt",
-          "weight": 8,
+          "weight": 10,
         },
         Object {
-          "group": "a11y-correct-attributes",
+          "group": "a11y-names-labels",
           "id": "input-image-alt",
-          "weight": 1,
+          "weight": 10,
         },
         Object {
-          "group": "a11y-describe-contents",
+          "group": "a11y-names-labels",
           "id": "label",
           "weight": 10,
         },
         Object {
-          "group": "a11y-describe-contents",
+          "group": "a11y-tables-lists",
           "id": "layout-table",
-          "weight": 1,
-        },
-        Object {
-          "group": "a11y-element-names",
-          "id": "link-name",
-          "weight": 9,
-        },
-        Object {
-          "group": "a11y-well-structured",
-          "id": "list",
-          "weight": 5,
-        },
-        Object {
-          "group": "a11y-well-structured",
-          "id": "listitem",
-          "weight": 4,
-        },
-        Object {
-          "group": "a11y-meta",
-          "id": "meta-refresh",
-          "weight": 1,
-        },
-        Object {
-          "group": "a11y-meta",
-          "id": "meta-viewport",
           "weight": 3,
         },
         Object {
-          "group": "a11y-describe-contents",
+          "group": "a11y-names-labels",
+          "id": "link-name",
+          "weight": 3,
+        },
+        Object {
+          "group": "a11y-tables-lists",
+          "id": "list",
+          "weight": 3,
+        },
+        Object {
+          "group": "a11y-tables-lists",
+          "id": "listitem",
+          "weight": 3,
+        },
+        Object {
+          "group": "a11y-best-practices",
+          "id": "meta-refresh",
+          "weight": 10,
+        },
+        Object {
+          "group": "a11y-best-practices",
+          "id": "meta-viewport",
+          "weight": 10,
+        },
+        Object {
+          "group": "a11y-names-labels",
           "id": "object-alt",
-          "weight": 4,
+          "weight": 3,
         },
         Object {
-          "group": "a11y-correct-attributes",
+          "group": "a11y-navigation",
           "id": "tabindex",
-          "weight": 4,
+          "weight": 3,
         },
         Object {
-          "group": "a11y-correct-attributes",
+          "group": "a11y-tables-lists",
           "id": "td-headers-attr",
-          "weight": 1,
+          "weight": 3,
         },
         Object {
-          "group": "a11y-correct-attributes",
+          "group": "a11y-tables-lists",
           "id": "th-has-data-cells",
-          "weight": 1,
+          "weight": 3,
         },
         Object {
           "group": "a11y-language",
           "id": "valid-lang",
-          "weight": 1,
-        },
-        Object {
-          "group": "a11y-describe-contents",
-          "id": "video-caption",
-          "weight": 4,
-        },
-        Object {
-          "group": "a11y-describe-contents",
-          "id": "video-description",
           "weight": 3,
+        },
+        Object {
+          "group": "a11y-audio-video",
+          "id": "video-caption",
+          "weight": 10,
+        },
+        Object {
+          "group": "a11y-audio-video",
+          "id": "video-description",
+          "weight": 10,
         },
         Object {
           "id": "logical-tab-order",
@@ -573,10 +681,6 @@ Object {
           "weight": 0,
         },
         Object {
-          "id": "heading-levels",
-          "weight": 0,
-        },
-        Object {
           "id": "use-landmarks",
           "weight": 0,
         },
@@ -588,63 +692,73 @@ Object {
     "best-practices": Object {
       "auditRefs": Array [
         Object {
-          "id": "appcache-manifest",
-          "weight": 1,
-        },
-        Object {
+          "group": "best-practices-trust-safety",
           "id": "is-on-https",
           "weight": 1,
         },
         Object {
-          "id": "uses-http2",
-          "weight": 1,
-        },
-        Object {
-          "id": "uses-passive-event-listeners",
-          "weight": 1,
-        },
-        Object {
-          "id": "no-document-write",
-          "weight": 1,
-        },
-        Object {
+          "group": "best-practices-trust-safety",
           "id": "external-anchors-use-rel-noopener",
           "weight": 1,
         },
         Object {
+          "group": "best-practices-trust-safety",
           "id": "geolocation-on-start",
           "weight": 1,
         },
         Object {
-          "id": "doctype",
-          "weight": 1,
-        },
-        Object {
-          "id": "no-vulnerable-libraries",
-          "weight": 1,
-        },
-        Object {
-          "id": "js-libraries",
-          "weight": 0,
-        },
-        Object {
+          "group": "best-practices-trust-safety",
           "id": "notification-on-start",
           "weight": 1,
         },
         Object {
-          "id": "deprecations",
+          "group": "best-practices-trust-safety",
+          "id": "no-vulnerable-libraries",
           "weight": 1,
         },
         Object {
+          "group": "best-practices-ux",
           "id": "password-inputs-can-be-pasted-into",
           "weight": 1,
         },
         Object {
-          "id": "errors-in-console",
+          "group": "best-practices-ux",
+          "id": "image-aspect-ratio",
           "weight": 1,
         },
         Object {
-          "id": "image-aspect-ratio",
+          "group": "best-practices-ux",
+          "id": "image-size-responsive",
+          "weight": 1,
+        },
+        Object {
+          "group": "best-practices-browser-compat",
+          "id": "doctype",
+          "weight": 1,
+        },
+        Object {
+          "group": "best-practices-browser-compat",
+          "id": "charset",
+          "weight": 1,
+        },
+        Object {
+          "group": "best-practices-general",
+          "id": "appcache-manifest",
+          "weight": 1,
+        },
+        Object {
+          "group": "best-practices-general",
+          "id": "js-libraries",
+          "weight": 0,
+        },
+        Object {
+          "group": "best-practices-general",
+          "id": "deprecations",
+          "weight": 1,
+        },
+        Object {
+          "group": "best-practices-general",
+          "id": "errors-in-console",
           "weight": 1,
         },
       ],
@@ -655,30 +769,46 @@ Object {
         Object {
           "group": "metrics",
           "id": "first-contentful-paint",
-          "weight": 3,
-        },
-        Object {
-          "group": "metrics",
-          "id": "first-meaningful-paint",
-          "weight": 1,
+          "weight": 15,
         },
         Object {
           "group": "metrics",
           "id": "speed-index",
-          "weight": 4,
+          "weight": 15,
+        },
+        Object {
+          "group": "metrics",
+          "id": "largest-contentful-paint",
+          "weight": 25,
         },
         Object {
           "group": "metrics",
           "id": "interactive",
+          "weight": 15,
+        },
+        Object {
+          "group": "metrics",
+          "id": "total-blocking-time",
+          "weight": 25,
+        },
+        Object {
+          "group": "metrics",
+          "id": "cumulative-layout-shift",
           "weight": 5,
         },
         Object {
-          "group": "metrics",
           "id": "first-cpu-idle",
-          "weight": 2,
+          "weight": 0,
         },
         Object {
-          "group": "metrics",
+          "id": "max-potential-fid",
+          "weight": 0,
+        },
+        Object {
+          "id": "first-meaningful-paint",
+          "weight": 0,
+        },
+        Object {
           "id": "estimated-input-latency",
           "weight": 0,
         },
@@ -714,6 +844,11 @@ Object {
         },
         Object {
           "group": "load-opportunities",
+          "id": "unused-javascript",
+          "weight": 0,
+        },
+        Object {
+          "group": "load-opportunities",
           "id": "uses-optimized-images",
           "weight": 0,
         },
@@ -734,7 +869,7 @@ Object {
         },
         Object {
           "group": "load-opportunities",
-          "id": "time-to-first-byte",
+          "id": "server-response-time",
           "weight": 0,
         },
         Object {
@@ -773,14 +908,6 @@ Object {
           "weight": 0,
         },
         Object {
-          "id": "network-requests",
-          "weight": 0,
-        },
-        Object {
-          "id": "metrics",
-          "weight": 0,
-        },
-        Object {
           "group": "diagnostics",
           "id": "user-timings",
           "weight": 0,
@@ -788,14 +915,6 @@ Object {
         Object {
           "group": "diagnostics",
           "id": "bootup-time",
-          "weight": 0,
-        },
-        Object {
-          "id": "screenshot-thumbnails",
-          "weight": 0,
-        },
-        Object {
-          "id": "final-screenshot",
           "weight": 0,
         },
         Object {
@@ -808,58 +927,162 @@ Object {
           "id": "font-display",
           "weight": 0,
         },
+        Object {
+          "group": "budgets",
+          "id": "performance-budget",
+          "weight": 0,
+        },
+        Object {
+          "group": "budgets",
+          "id": "timing-budget",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "resource-summary",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "third-party-summary",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "largest-contentful-paint-element",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "layout-shift-elements",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "uses-http2",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "uses-passive-event-listeners",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "no-document-write",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "long-tasks",
+          "weight": 0,
+        },
+        Object {
+          "id": "network-requests",
+          "weight": 0,
+        },
+        Object {
+          "id": "network-rtt",
+          "weight": 0,
+        },
+        Object {
+          "id": "network-server-latency",
+          "weight": 0,
+        },
+        Object {
+          "id": "main-thread-tasks",
+          "weight": 0,
+        },
+        Object {
+          "id": "diagnostics",
+          "weight": 0,
+        },
+        Object {
+          "id": "metrics",
+          "weight": 0,
+        },
+        Object {
+          "id": "screenshot-thumbnails",
+          "weight": 0,
+        },
+        Object {
+          "id": "final-screenshot",
+          "weight": 0,
+        },
       ],
       "title": "Performance",
     },
     "pwa": Object {
       "auditRefs": Array [
         Object {
+          "group": "pwa-fast-reliable",
           "id": "load-fast-enough-for-pwa",
           "weight": 7,
         },
         Object {
+          "group": "pwa-fast-reliable",
           "id": "works-offline",
           "weight": 5,
         },
         Object {
-          "id": "webapp-install-banner",
-          "weight": 3,
+          "group": "pwa-fast-reliable",
+          "id": "offline-start-url",
+          "weight": 1,
         },
         Object {
+          "group": "pwa-installable",
           "id": "is-on-https",
           "weight": 2,
         },
         Object {
-          "id": "redirects-http",
-          "weight": 2,
-        },
-        Object {
-          "id": "viewport",
-          "weight": 2,
-        },
-        Object {
+          "group": "pwa-installable",
           "id": "service-worker",
           "weight": 1,
         },
         Object {
-          "id": "without-javascript",
-          "weight": 1,
+          "group": "pwa-installable",
+          "id": "installable-manifest",
+          "weight": 2,
         },
         Object {
+          "group": "pwa-optimized",
+          "id": "redirects-http",
+          "weight": 2,
+        },
+        Object {
+          "group": "pwa-optimized",
           "id": "splash-screen",
           "weight": 1,
         },
         Object {
+          "group": "pwa-optimized",
           "id": "themed-omnibox",
           "weight": 1,
         },
         Object {
+          "group": "pwa-optimized",
           "id": "content-width",
           "weight": 1,
         },
         Object {
-          "id": "manifest-short-name-length",
-          "weight": 0,
+          "group": "pwa-optimized",
+          "id": "viewport",
+          "weight": 2,
+        },
+        Object {
+          "group": "pwa-optimized",
+          "id": "without-javascript",
+          "weight": 1,
+        },
+        Object {
+          "group": "pwa-optimized",
+          "id": "apple-touch-icon",
+          "weight": 1,
+        },
+        Object {
+          "group": "pwa-optimized",
+          "id": "maskable-icon",
+          "weight": 1,
         },
         Object {
           "id": "pwa-cross-browser",
@@ -874,7 +1097,7 @@ Object {
           "weight": 0,
         },
       ],
-      "description": "These checks validate the aspects of a Progressive Web App, as specified by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist).",
+      "description": "These checks validate the aspects of a Progressive Web App. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist).",
       "manualDescription": "These checks are required by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually.",
       "title": "Progressive Web App",
     },
@@ -907,12 +1130,22 @@ Object {
         },
         Object {
           "group": "seo-crawl",
+          "id": "crawlable-anchors",
+          "weight": 1,
+        },
+        Object {
+          "group": "seo-crawl",
           "id": "is-crawlable",
           "weight": 1,
         },
         Object {
           "group": "seo-crawl",
           "id": "robots-txt",
+          "weight": 1,
+        },
+        Object {
+          "group": "seo-content",
+          "id": "image-alt",
           "weight": 1,
         },
         Object {
@@ -936,8 +1169,9 @@ Object {
           "weight": 1,
         },
         Object {
-          "id": "mobile-friendly",
-          "weight": 0,
+          "group": "seo-mobile",
+          "id": "tap-targets",
+          "weight": 1,
         },
         Object {
           "id": "structured-data",
@@ -952,46 +1186,71 @@ Object {
   "groups": Object {
     "a11y-aria": Object {
       "description": "These are opportunities to improve the usage of ARIA in your application which may enhance the experience for users of assistive technology, like a screen reader.",
-      "title": "ARIA Attributes Follow Best Practices",
+      "title": "ARIA",
+    },
+    "a11y-audio-video": Object {
+      "description": "These are opportunities to provide alternative content for audio and video. This may improve the experience for users with hearing or vision impairments.",
+      "title": "Audio and video",
+    },
+    "a11y-best-practices": Object {
+      "description": "These items highlight common accessibility best practices.",
+      "title": "Best practices",
     },
     "a11y-color-contrast": Object {
       "description": "These are opportunities to improve the legibility of your content.",
-      "title": "Color Contrast Is Satisfactory",
-    },
-    "a11y-correct-attributes": Object {
-      "description": "These are opportunities to improve the configuration of your HTML elements.",
-      "title": "Elements Use Attributes Correctly",
-    },
-    "a11y-describe-contents": Object {
-      "description": "These are opportunities to make your content easier to understand for a user of assistive technology, like a screen reader.",
-      "title": "Elements Describe Contents Well",
-    },
-    "a11y-element-names": Object {
-      "description": "These are opportunities to improve the semantics of the controls in your application. This may enhance the experience for users of assistive technology, like a screen reader.",
-      "title": "Elements Have Discernible Names",
+      "title": "Contrast",
     },
     "a11y-language": Object {
       "description": "These are opportunities to improve the interpretation of your content by users in different locales.",
-      "title": "Page Specifies Valid Language",
+      "title": "Internationalization and localization",
     },
-    "a11y-meta": Object {
-      "description": "These are opportunities to improve the user experience of your site.",
-      "title": "Meta Tags Used Properly",
+    "a11y-names-labels": Object {
+      "description": "These are opportunities to improve the semantics of the controls in your application. This may enhance the experience for users of assistive technology, like a screen reader.",
+      "title": "Names and labels",
     },
-    "a11y-well-structured": Object {
-      "description": "These are opportunities to make sure your HTML is appropriately structured.",
-      "title": "Elements Are Well Structured",
+    "a11y-navigation": Object {
+      "description": "These are opportunities to improve keyboard navigation in your application.",
+      "title": "Navigation",
+    },
+    "a11y-tables-lists": Object {
+      "description": "These are opportunities to to improve the experience of reading tabular or list data using assistive technology, like a screen reader.",
+      "title": "Tables and lists",
+    },
+    "best-practices-browser-compat": Object {
+      "title": "Browser Compatibility",
+    },
+    "best-practices-general": Object {
+      "title": "General",
+    },
+    "best-practices-trust-safety": Object {
+      "title": "Trust and Safety",
+    },
+    "best-practices-ux": Object {
+      "title": "User Experience",
+    },
+    "budgets": Object {
+      "description": "Performance budgets set standards for the performance of your site.",
+      "title": "Budgets",
     },
     "diagnostics": Object {
-      "description": "More information about the performance of your application.",
+      "description": "More information about the performance of your application. These numbers don't [directly affect](https://web.dev/performance-scoring/) the Performance score.",
       "title": "Diagnostics",
     },
     "load-opportunities": Object {
-      "description": "These optimizations can speed up your page load.",
+      "description": "These suggestions can help your page load faster. They don't [directly affect](https://web.dev/performance-scoring/) the Performance score.",
       "title": "Opportunities",
     },
     "metrics": Object {
       "title": "Metrics",
+    },
+    "pwa-fast-reliable": Object {
+      "title": "Fast and reliable",
+    },
+    "pwa-installable": Object {
+      "title": "Installable",
+    },
+    "pwa-optimized": Object {
+      "title": "PWA Optimized",
     },
     "seo-content": Object {
       "description": "Format your HTML in a way that enables crawlers to better understand your app’s content.",
@@ -1008,7 +1267,6 @@ Object {
   },
   "passes": Array [
     Object {
-      "blankDuration": 10,
       "blankPage": "data:text/html,<!doctype html>
 <html>
 <meta name=\\"viewport\\" content=\\"width=device-width\\">
@@ -1038,37 +1296,40 @@ Object {
       "cpuQuietThresholdMs": 1000,
       "gatherers": Array [
         Object {
-          "path": "scripts",
-        },
-        Object {
           "path": "css-usage",
         },
         Object {
-          "path": "viewport",
+          "path": "js-usage",
         },
         Object {
           "path": "viewport-dimensions",
         },
         Object {
-          "path": "theme-color",
-        },
-        Object {
-          "path": "manifest",
-        },
-        Object {
           "path": "runtime-exceptions",
         },
         Object {
-          "path": "chrome-console-messages",
+          "path": "console-messages",
         },
         Object {
-          "path": "image-usage",
+          "path": "anchor-elements",
         },
         Object {
-          "path": "accessibility",
+          "path": "image-elements",
         },
         Object {
-          "path": "dobetterweb/anchors-with-no-rel-noopener",
+          "path": "link-elements",
+        },
+        Object {
+          "path": "meta-elements",
+        },
+        Object {
+          "path": "script-elements",
+        },
+        Object {
+          "path": "iframe-elements",
+        },
+        Object {
+          "path": "main-document-content",
         },
         Object {
           "path": "dobetterweb/appcache",
@@ -1078,9 +1339,6 @@ Object {
         },
         Object {
           "path": "dobetterweb/domstats",
-        },
-        Object {
-          "path": "dobetterweb/js-libraries",
         },
         Object {
           "path": "dobetterweb/optimized-images",
@@ -1095,38 +1353,39 @@ Object {
           "path": "dobetterweb/tags-blocking-first-paint",
         },
         Object {
-          "path": "seo/meta-description",
-        },
-        Object {
           "path": "seo/font-size",
-        },
-        Object {
-          "path": "seo/crawlable-links",
-        },
-        Object {
-          "path": "seo/meta-robots",
-        },
-        Object {
-          "path": "seo/hreflang",
         },
         Object {
           "path": "seo/embedded-content",
         },
         Object {
-          "path": "seo/canonical",
-        },
-        Object {
           "path": "seo/robots-txt",
         },
+        Object {
+          "path": "seo/tap-targets",
+        },
+        Object {
+          "path": "accessibility",
+        },
+        Object {
+          "path": "trace-elements",
+        },
+        Object {
+          "path": "inspector-issues",
+        },
+        Object {
+          "path": "source-maps",
+        },
       ],
+      "loadFailureMode": "fatal",
       "networkQuietThresholdMs": 1000,
       "passName": "defaultPass",
+      "pauseAfterFcpMs": 1000,
       "pauseAfterLoadMs": 1000,
       "recordTrace": true,
       "useThrottling": true,
     },
     Object {
-      "blankDuration": 10,
       "blankPage": "data:text/html,<!doctype html>
 <html>
 <meta name=\\"viewport\\" content=\\"width=device-width\\">
@@ -1165,14 +1424,15 @@ Object {
           "path": "start-url",
         },
       ],
+      "loadFailureMode": "ignore",
       "networkQuietThresholdMs": 0,
       "passName": "offlinePass",
+      "pauseAfterFcpMs": 0,
       "pauseAfterLoadMs": 0,
       "recordTrace": false,
       "useThrottling": false,
     },
     Object {
-      "blankDuration": 10,
       "blankPage": "data:text/html,<!doctype html>
 <html>
 <meta name=\\"viewport\\" content=\\"width=device-width\\">
@@ -1218,8 +1478,10 @@ Object {
           "path": "html-without-javascript",
         },
       ],
+      "loadFailureMode": "warn",
       "networkQuietThresholdMs": 0,
       "passName": "redirectPass",
+      "pauseAfterFcpMs": 0,
       "pauseAfterLoadMs": 0,
       "recordTrace": false,
       "useThrottling": false,
@@ -1229,18 +1491,22 @@ Object {
     "additionalTraceCategories": null,
     "auditMode": false,
     "blockedUrlPatterns": null,
-    "disableDeviceEmulation": false,
+    "budgets": null,
+    "channel": "cli",
     "disableStorageReset": false,
     "emulatedFormFactor": "mobile",
     "extraHeaders": null,
     "gatherMode": false,
+    "internalDisableDeviceScreenEmulation": false,
     "locale": "en-US",
+    "maxWaitForFcp": 30000,
     "maxWaitForLoad": 45000,
     "onlyAudits": null,
     "onlyCategories": null,
     "output": Array [
       "html",
     ],
+    "precomputedLanternData": null,
     "skipAudits": null,
     "throttling": Object {
       "cpuSlowdownMultiplier": 4,
@@ -1276,46 +1542,71 @@ Object {
   "groups": Object {
     "a11y-aria": Object {
       "description": "These are opportunities to improve the usage of ARIA in your application which may enhance the experience for users of assistive technology, like a screen reader.",
-      "title": "ARIA Attributes Follow Best Practices",
+      "title": "ARIA",
+    },
+    "a11y-audio-video": Object {
+      "description": "These are opportunities to provide alternative content for audio and video. This may improve the experience for users with hearing or vision impairments.",
+      "title": "Audio and video",
+    },
+    "a11y-best-practices": Object {
+      "description": "These items highlight common accessibility best practices.",
+      "title": "Best practices",
     },
     "a11y-color-contrast": Object {
       "description": "These are opportunities to improve the legibility of your content.",
-      "title": "Color Contrast Is Satisfactory",
-    },
-    "a11y-correct-attributes": Object {
-      "description": "These are opportunities to improve the configuration of your HTML elements.",
-      "title": "Elements Use Attributes Correctly",
-    },
-    "a11y-describe-contents": Object {
-      "description": "These are opportunities to make your content easier to understand for a user of assistive technology, like a screen reader.",
-      "title": "Elements Describe Contents Well",
-    },
-    "a11y-element-names": Object {
-      "description": "These are opportunities to improve the semantics of the controls in your application. This may enhance the experience for users of assistive technology, like a screen reader.",
-      "title": "Elements Have Discernible Names",
+      "title": "Contrast",
     },
     "a11y-language": Object {
       "description": "These are opportunities to improve the interpretation of your content by users in different locales.",
-      "title": "Page Specifies Valid Language",
+      "title": "Internationalization and localization",
     },
-    "a11y-meta": Object {
-      "description": "These are opportunities to improve the user experience of your site.",
-      "title": "Meta Tags Used Properly",
+    "a11y-names-labels": Object {
+      "description": "These are opportunities to improve the semantics of the controls in your application. This may enhance the experience for users of assistive technology, like a screen reader.",
+      "title": "Names and labels",
     },
-    "a11y-well-structured": Object {
-      "description": "These are opportunities to make sure your HTML is appropriately structured.",
-      "title": "Elements Are Well Structured",
+    "a11y-navigation": Object {
+      "description": "These are opportunities to improve keyboard navigation in your application.",
+      "title": "Navigation",
+    },
+    "a11y-tables-lists": Object {
+      "description": "These are opportunities to to improve the experience of reading tabular or list data using assistive technology, like a screen reader.",
+      "title": "Tables and lists",
+    },
+    "best-practices-browser-compat": Object {
+      "title": "Browser Compatibility",
+    },
+    "best-practices-general": Object {
+      "title": "General",
+    },
+    "best-practices-trust-safety": Object {
+      "title": "Trust and Safety",
+    },
+    "best-practices-ux": Object {
+      "title": "User Experience",
+    },
+    "budgets": Object {
+      "description": "Performance budgets set standards for the performance of your site.",
+      "title": "Budgets",
     },
     "diagnostics": Object {
-      "description": "More information about the performance of your application.",
+      "description": "More information about the performance of your application. These numbers don't [directly affect](https://web.dev/performance-scoring/) the Performance score.",
       "title": "Diagnostics",
     },
     "load-opportunities": Object {
-      "description": "These optimizations can speed up your page load.",
+      "description": "These suggestions can help your page load faster. They don't [directly affect](https://web.dev/performance-scoring/) the Performance score.",
       "title": "Opportunities",
     },
     "metrics": Object {
       "title": "Metrics",
+    },
+    "pwa-fast-reliable": Object {
+      "title": "Fast and reliable",
+    },
+    "pwa-installable": Object {
+      "title": "Installable",
+    },
+    "pwa-optimized": Object {
+      "title": "PWA Optimized",
     },
     "seo-content": Object {
       "description": "Format your HTML in a way that enables crawlers to better understand your app’s content.",
@@ -1332,7 +1623,6 @@ Object {
   },
   "passes": Array [
     Object {
-      "blankDuration": 10,
       "blankPage": "data:text/html,<!doctype html>
 <html>
 <meta name=\\"viewport\\" content=\\"width=device-width\\">
@@ -1361,8 +1651,10 @@ Object {
       "blockedUrlPatterns": Array [],
       "cpuQuietThresholdMs": 1000,
       "gatherers": Array [],
+      "loadFailureMode": "fatal",
       "networkQuietThresholdMs": 1000,
       "passName": "defaultPass",
+      "pauseAfterFcpMs": 1000,
       "pauseAfterLoadMs": 1000,
       "recordTrace": true,
       "useThrottling": true,
@@ -1372,12 +1664,15 @@ Object {
     "additionalTraceCategories": null,
     "auditMode": true,
     "blockedUrlPatterns": null,
-    "disableDeviceEmulation": false,
+    "budgets": null,
+    "channel": "cli",
     "disableStorageReset": false,
     "emulatedFormFactor": "mobile",
     "extraHeaders": null,
     "gatherMode": false,
+    "internalDisableDeviceScreenEmulation": false,
     "locale": "en-US",
+    "maxWaitForFcp": 30000,
     "maxWaitForLoad": 45000,
     "onlyAudits": Array [
       "metrics",
@@ -1386,6 +1681,7 @@ Object {
     "output": Array [
       "json",
     ],
+    "precomputedLanternData": null,
     "skipAudits": null,
     "throttling": Object {
       "cpuSlowdownMultiplier": 4,

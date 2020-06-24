@@ -1,15 +1,15 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const Audit = require('./audit');
-const LHError = require('../lib/lh-error');
+const Audit = require('./audit.js');
+const LHError = require('../lib/lh-error.js');
 const jpeg = require('jpeg-js');
-const Speedline = require('../gather/computed/speedline.js');
-const Interactive = require('../gather/computed/metrics/interactive.js');
+const Speedline = require('../computed/speedline.js');
+const Interactive = require('../computed/metrics/interactive.js');
 
 const NUMBER_OF_THUMBNAILS = 10;
 const THUMBNAIL_WIDTH = 120;
@@ -116,9 +116,11 @@ class ScreenshotThumbnails extends Audit {
           }
         });
       }
+
       let base64Data;
-      if (cachedThumbnails.has(frameForTimestamp)) {
-        base64Data = cachedThumbnails.get(frameForTimestamp);
+      const cachedThumbnail = cachedThumbnails.get(frameForTimestamp);
+      if (cachedThumbnail) {
+        base64Data = cachedThumbnail;
       } else {
         const imageData = frameForTimestamp.getParsedImage();
         const thumbnailImageData = ScreenshotThumbnails.scaleImageToThumbnail(imageData);
@@ -128,13 +130,12 @@ class ScreenshotThumbnails extends Audit {
       thumbnails.push({
         timing: Math.round(targetTimestamp - speedline.beginning),
         timestamp: targetTimestamp * 1000,
-        data: base64Data,
+        data: `data:image/jpeg;base64,${base64Data}`,
       });
     }
 
     return {
       score: 1,
-      rawValue: thumbnails.length > 0,
       details: {
         type: 'filmstrip',
         scale: timelineEnd,

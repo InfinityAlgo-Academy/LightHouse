@@ -4,22 +4,46 @@ Online at https://googlechrome.github.io/lighthouse/viewer/
 
 ## Development
 
-* `npm i`
-* Build: `gulp`, Watch: `gulp watch`
+Run the following in the root folder of a Lighthouse checkout:
 
-For development, `gulp watch` will browserify `dist/src/main.js` and create a
-runnable script in all modern browsers. Use this for quick iterations when developing.
+* `yarn`
+* `yarn build-viewer`
 
-For production, run `gulp`. This compiles and minifies `dist/src/main.js` using Closure.
+This compiles and minifies `app/src/main.js`. Results are written to `dist/viewer/`.
 
 ## Deploy
 
-Deploys should be done as part of the Lighthouse release process. To update GitHub pages,
-run the following in the root folder of a Lighthouse checkout:
+Deploys should be done as part of the Lighthouse release process. To push the viewer to the `gh-pages` branch under `viewer/`, run the following in the root folder of a Lighthouse checkout:
 
 ```sh
-npm run deploy-viewer
+yarn deploy-viewer
 ```
 
-This builds `lighthouse-viewer/dist/src/main.js` and pushes the contents of `dist` folder
-to the `gh-pages` branch.
+For more information on deployment, see `releasing.md`.
+
+## Usage
+
+### Load JSON from Gist
+
+Pass the GitHub Gist identifier as `gist` query parameter.
+
+e.g., `http://localhost:8000/?gist=bd1779783a5bbcb348564a58f80f7099`
+
+### Load JSON from URL
+
+Pass the absolute URL as `jsonurl` query parameter.
+
+e.g., `http://localhost:8000/?josnurl=https://gist.githubusercontent.com/Kikobeats/d570a1aa285c5d1d97bbda10b92fb97f/raw/4b0f14a5914edd25c95b4bd9d09728ab42181c3e/lighthouse.json`
+
+### Run and load from PageSpeed Insights
+
+Pass target URL `psiurl` query parameter.
+
+e.g., `http://localhost:8000/?psiurl=https://www.example.com&category=pwa&category=seo`
+
+The following query parameters are also supported as options:
+
+`category` - Category to enable. One per category.
+`strategy` - mobile, desktop
+`locale` - locale to render report with
+`utm_source` - id that identifies the tool using the viewer

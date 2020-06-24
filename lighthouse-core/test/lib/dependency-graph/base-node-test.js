@@ -1,14 +1,14 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const BaseNode = require('../../../lib/dependency-graph/base-node');
-const NetworkNode = require('../../../lib/dependency-graph/network-node');
+const BaseNode = require('../../../lib/dependency-graph/base-node.js');
+const NetworkNode = require('../../../lib/dependency-graph/network-node.js');
 
-const assert = require('assert');
+const assert = require('assert').strict;
 
 function sortedById(nodeArray) {
   return nodeArray.sort((node1, node2) => node1.id.localeCompare(node2.id));
@@ -79,6 +79,11 @@ describe('DependencyGraph/Node', () => {
 
       assert.deepEqual(nodeA.getDependencies(), [nodeB]);
       assert.deepEqual(nodeB.getDependents(), [nodeA]);
+    });
+
+    it('throw when trying to add a dependency on itself', () => {
+      const nodeA = new BaseNode(1);
+      expect(() => nodeA.addDependency(nodeA)).toThrow();
     });
   });
 
@@ -207,6 +212,15 @@ describe('DependencyGraph/Node', () => {
       assert.equal(clonedIdMap.get('G'), undefined);
       assert.equal(clonedIdMap.get('H'), undefined);
     });
+
+    it('should throw if original node is not in cloned graph', () => {
+      const graph = createComplexGraph();
+      assert.throws(
+        // clone from root to nodeB, but called on nodeD
+        _ => graph.nodeD.cloneWithRelationships(node => node.id === 'B'),
+        /^Error: Cloned graph missing node$/
+      );
+    });
   });
 
   describe('.traverse', () => {
@@ -216,6 +230,26 @@ describe('DependencyGraph/Node', () => {
       graph.nodeA.traverse(node => ids.push(node.id));
 
       assert.deepEqual(ids, ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']);
+    });
+
+    it('should include a shortest traversal path to every dependent node', () => {
+      const graph = createComplexGraph();
+      const paths = [];
+      graph.nodeA.traverse((node, traversalPath) => {
+        assert.strictEqual(node.id, traversalPath[0].id);
+        paths.push(traversalPath.map(node => node.id));
+      });
+
+      assert.deepStrictEqual(paths, [
+        ['A'],
+        ['B', 'A'],
+        ['C', 'A'],
+        ['D', 'B', 'A'],
+        ['E', 'D', 'B', 'A'],
+        ['F', 'E', 'D', 'B', 'A'],
+        ['G', 'E', 'D', 'B', 'A'],
+        ['H', 'G', 'E', 'D', 'B', 'A'],
+      ]);
     });
 
     it('should respect getNext', () => {

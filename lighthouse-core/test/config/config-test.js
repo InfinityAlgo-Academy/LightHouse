@@ -1,17 +1,17 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const Config = require('../../config/config');
-const assert = require('assert');
+const Config = require('../../config/config.js');
+const assert = require('assert').strict;
 const path = require('path');
 const defaultConfig = require('../../config/default-config.js');
 const log = require('lighthouse-logger');
-const Gatherer = require('../../gather/gatherers/gatherer');
-const Audit = require('../../audits/audit');
+const Gatherer = require('../../gather/gatherers/gatherer.js');
+const Audit = require('../../audits/audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 /* eslint-env jest */
@@ -30,7 +30,7 @@ describe('Config', () => {
     assert.notEqual(config, newConfig);
   });
 
-  it('doesn\'t change directly injected plugins', () => {
+  it('doesn\'t change directly injected gatherer implementations', () => {
     class MyGatherer extends Gatherer {}
     class MyAudit extends Audit {
       static get meta() {
@@ -45,7 +45,7 @@ describe('Config', () => {
       static audit() {}
     }
     const config = {
-      // Extend to default to double test our ability to handle plugins
+      // Extend default to double test our ability to handle injection.
       extends: 'lighthouse:default',
       settings: {onlyAudits: ['my-audit']},
       passes: [{
@@ -58,7 +58,7 @@ describe('Config', () => {
     assert.equal(MyAudit, newConfig.audits[0].implementation);
   });
 
-  it('doesn\'t change directly injected plugin instances', () => {
+  it('doesn\'t change directly injected gatherer instances', () => {
     class MyGatherer extends Gatherer {
       constructor(secretVal) {
         super();
@@ -86,7 +86,7 @@ describe('Config', () => {
   it('uses the default config when no config is provided', () => {
     const config = new Config();
     assert.deepStrictEqual(config.categories, origConfig.categories);
-    assert.equal(config.audits.length, origConfig.audits.length);
+    assert.deepStrictEqual(config.audits.map(a => a.path), origConfig.audits);
   });
 
   it('throws when a passName is used twice', () => {
@@ -94,7 +94,7 @@ describe('Config', () => {
     const configJson = {
       passes: [{
         passName: unlikelyPassName,
-        gatherers: ['viewport'],
+        gatherers: ['meta-elements'],
       }, {
         passName: unlikelyPassName,
         gatherers: ['viewport-dimensions'],
@@ -120,6 +120,181 @@ describe('Config', () => {
     );
   });
 
+  it('throws when an audit requires an artifact with no gatherer supplying it', async () => {
+    class NeedsWhatYouCantGive extends Audit {
+      static get meta() {
+        return {
+          id: 'missing-artifact-audit',
+          title: 'none',
+          description: 'none',
+          requiredArtifacts: [
+            // Require fake artifact amidst base artifact and default artifacts.
+            'URL',
+            'ConsoleMessages',
+            'VRMLElements', // not a real gatherer
+            'ViewportDimensions',
+          ],
+        };
+      }
+
+      static audit() {}
+    }
+
+    expect(() => new Config({
+      extends: 'lighthouse:default',
+      audits: [NeedsWhatYouCantGive],
+    // eslint-disable-next-line max-len
+    })).toThrow('VRMLElements gatherer, required by audit missing-artifact-audit, was not found in config');
+  });
+
+  // eslint-disable-next-line max-len
+  it('does not throw when an audit requests an optional artifact with no gatherer supplying it', async () => {
+    class DoesntNeedYourCrap extends Audit {
+      static get meta() {
+        return {
+          id: 'optional-artifact-audit',
+          title: 'none',
+          description: 'none',
+          requiredArtifacts: [
+            'URL', // base artifact
+            'ViewportDimensions', // from gatherer
+          ],
+          __internalOptionalArtifacts: [
+            'NotInTheConfig',
+          ],
+        };
+      }
+
+      static audit() {}
+    }
+
+    // Shouldn't throw.
+    const config = new Config({
+      extends: 'lighthouse:default',
+      audits: [DoesntNeedYourCrap],
+    }, {
+      // Trigger filtering logic.
+      onlyAudits: ['optional-artifact-audit'],
+    });
+    expect(config.passes[0].gatherers.map(g => g.path)).toEqual(['viewport-dimensions']);
+  });
+
+  it('should keep optional artifacts in gatherers after filter', async () => {
+    class ButWillStillTakeYourCrap extends Audit {
+      static get meta() {
+        return {
+          id: 'optional-artifact-audit',
+          title: 'none',
+          description: 'none',
+          requiredArtifacts: [
+            'URL', // base artifact
+            'ViewportDimensions', // from gatherer
+          ],
+          __internalOptionalArtifacts: [
+            'SourceMaps', // Is in the config.
+          ],
+        };
+      }
+
+      static audit() {}
+    }
+
+    const config = new Config({
+      extends: 'lighthouse:default',
+      audits: [ButWillStillTakeYourCrap],
+    }, {
+      // Trigger filtering logic.
+      onlyAudits: ['optional-artifact-audit'],
+    });
+    expect(config.passes[0].gatherers.map(g => g.path))
+      .toEqual(['viewport-dimensions', 'source-maps']);
+  });
+
+  it('should keep optional artifacts in gatherers after filter', async () => {
+    class ButWillStillTakeYourCrap extends Audit {
+      static get meta() {
+        return {
+          id: 'optional-artifact-audit',
+          title: 'none',
+          description: 'none',
+          requiredArtifacts: [
+            'URL', // base artifact
+            'ViewportDimensions', // from gatherer
+          ],
+          __internalOptionalArtifacts: [
+            'SourceMaps', // Is in the config.
+          ],
+        };
+      }
+
+      static audit() {}
+    }
+
+    const config = new Config({
+      extends: 'lighthouse:default',
+      audits: [ButWillStillTakeYourCrap],
+    }, {
+      // Trigger filtering logic.
+      onlyAudits: ['optional-artifact-audit'],
+    });
+    expect(config.passes[0].gatherers.map(g => g.path))
+      .toEqual(['viewport-dimensions', 'source-maps']);
+  });
+
+  it('should keep optional artifacts in gatherers after filter', async () => {
+    class ButWillStillTakeYourCrap extends Audit {
+      static get meta() {
+        return {
+          id: 'optional-artifact-audit',
+          title: 'none',
+          description: 'none',
+          requiredArtifacts: [
+            'URL', // base artifact
+            'ViewportDimensions', // from gatherer
+          ],
+          __internalOptionalArtifacts: [
+            'SourceMaps', // Is in the config.
+          ],
+        };
+      }
+
+      static audit() {}
+    }
+
+    const config = new Config({
+      extends: 'lighthouse:default',
+      audits: [ButWillStillTakeYourCrap],
+    }, {
+      // Trigger filtering logic.
+      onlyAudits: ['optional-artifact-audit'],
+    });
+    expect(config.passes[0].gatherers.map(g => g.path))
+      .toEqual(['viewport-dimensions', 'source-maps']);
+  });
+
+  it('does not throw when an audit requires only base artifacts', () => {
+    class BaseArtifactsAudit extends Audit {
+      static get meta() {
+        return {
+          id: 'base-artifacts-audit',
+          title: 'base',
+          description: 'base',
+          requiredArtifacts: ['HostUserAgent', 'URL', 'Stacks', 'WebAppManifest'],
+        };
+      }
+
+      static audit() {}
+    }
+
+    const config = new Config({
+      extends: 'lighthouse:default',
+      audits: [BaseArtifactsAudit],
+    }, {onlyAudits: ['base-artifacts-audit']});
+
+    assert.strictEqual(config.audits.length, 1);
+    assert.strictEqual(config.audits[0].implementation.meta.id, 'base-artifacts-audit');
+  });
+
   it('throws for unknown gatherers', () => {
     const config = {
       passes: [{
@@ -139,7 +314,7 @@ describe('Config', () => {
       passes: [{
         gatherers: [
           'viewport-dimensions',
-          'viewport',
+          'meta-elements',
         ],
       }],
       audits: ['is-on-https'],
@@ -186,7 +361,7 @@ describe('Config', () => {
   it('loads an audit from node_modules/', () => {
     return assert.throws(_ => new Config({
       // Use a lighthouse dep as a stand in for a module.
-      audits: ['mocha'],
+      audits: ['lighthouse-logger'],
     }), function(err) {
       // Should throw an audit validation error, but *not* an audit not found error.
       return !/locate audit/.test(err) && /audit\(\) method/.test(err);
@@ -452,6 +627,26 @@ describe('Config', () => {
     assert.equal(config.passes[0].recordTrace, false, 'turns off tracing if not needed');
   });
 
+  it('forces the first pass to have a fatal loadFailureMode', () => {
+    const warnings = [];
+    const saveWarning = evt => warnings.push(evt);
+    log.events.addListener('warning', saveWarning);
+    const config = new Config({
+      extends: true,
+      settings: {
+        onlyCategories: ['performance', 'pwa'],
+      },
+      passes: [
+        {passName: 'defaultPass', loadFailureMode: 'warn'},
+      ],
+    });
+
+    log.events.removeListener('warning', saveWarning);
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0][0]).toMatch(/loadFailureMode.*fatal/);
+    expect(config.passes[0]).toHaveProperty('loadFailureMode', 'fatal');
+  });
+
   it('filters works with extension', () => {
     const config = new Config({
       extends: true,
@@ -506,7 +701,13 @@ describe('Config', () => {
     assert.deepStrictEqual(config.settings.output, ['html']);
   });
 
-  it('extends the full config', () => {
+  it('does not throw on "lighthouse:full"', () => {
+    const config = new Config({extends: 'lighthouse:full'}, {output: ['html', 'json']});
+    assert.deepStrictEqual(config.settings.throttlingMethod, 'simulate');
+    assert.deepStrictEqual(config.settings.output, ['html', 'json']);
+  });
+
+  it('extends the config', () => {
     class CustomAudit extends Audit {
       static get meta() {
         return {
@@ -524,7 +725,7 @@ describe('Config', () => {
     }
 
     const config = new Config({
-      extends: 'lighthouse:full',
+      extends: 'lighthouse:default',
       audits: [
         CustomAudit,
       ],
@@ -547,6 +748,7 @@ describe('Config', () => {
 
     assert.equal(config.settings.throttlingMethod, 'devtools');
     assert.equal(config.passes[0].passName, 'defaultPass');
+    assert.ok(config.passes[0].pauseAfterFcpMs >= 5000, 'did not adjust fcp quiet ms');
     assert.ok(config.passes[0].pauseAfterLoadMs >= 5000, 'did not adjust load quiet ms');
     assert.ok(config.passes[0].cpuQuietThresholdMs >= 5000, 'did not adjust cpu quiet ms');
     assert.ok(config.passes[0].networkQuietThresholdMs >= 5000, 'did not adjust network quiet ms');
@@ -578,19 +780,19 @@ describe('Config', () => {
   it('merges settings with correct priority', () => {
     const config = new Config(
       {
-        extends: 'lighthouse:full',
+        extends: 'lighthouse:default',
         settings: {
           disableStorageReset: true,
-          disableDeviceEmulation: false,
+          emulatedFormFactor: 'mobile',
         },
       },
-      {disableDeviceEmulation: true}
+      {emulatedFormFactor: 'desktop'}
     );
 
     assert.ok(config, 'failed to generate config');
     assert.ok(typeof config.settings.maxWaitForLoad === 'number', 'missing setting from default');
     assert.ok(config.settings.disableStorageReset, 'missing setting from extension config');
-    assert.ok(config.settings.disableDeviceEmulation, 'missing setting from flags');
+    assert.ok(config.settings.emulatedFormFactor === 'desktop', 'missing setting from flags');
   });
 
   it('inherits default settings when undefined', () => {
@@ -696,6 +898,150 @@ describe('Config', () => {
     });
   });
 
+  describe('mergePlugins', () => {
+    // Include a configPath flag so that config.js looks for the plugins in the fixtures dir.
+    const configFixturePath = __dirname + '/../fixtures/config-plugins/';
+
+    it('should append audits', () => {
+      const configJson = {
+        audits: ['installable-manifest', 'metrics'],
+        plugins: ['lighthouse-plugin-simple'],
+      };
+      const config = new Config(configJson, {configPath: configFixturePath});
+      assert.deepStrictEqual(config.audits.map(a => a.path),
+        ['installable-manifest', 'metrics', 'redirects', 'user-timings']);
+    });
+
+    it('should append and use plugin-prefixed groups', () => {
+      const configJson = {
+        audits: ['installable-manifest', 'metrics'],
+        plugins: ['lighthouse-plugin-simple'],
+        groups: {
+          configGroup: {title: 'This is a group in the base config'},
+        },
+      };
+      const config = new Config(configJson, {configPath: configFixturePath});
+
+      const groupIds = Object.keys(config.groups);
+      assert.ok(groupIds.length === 2);
+      assert.strictEqual(groupIds[0], 'configGroup');
+      assert.strictEqual(groupIds[1], 'lighthouse-plugin-simple-new-group');
+      assert.strictEqual(config.groups['lighthouse-plugin-simple-new-group'].title, 'New Group');
+      assert.strictEqual(config.categories['lighthouse-plugin-simple'].auditRefs[0].group,
+        'lighthouse-plugin-simple-new-group');
+    });
+
+    it('should append a category', () => {
+      const configJson = {
+        extends: 'lighthouse:default',
+        plugins: ['lighthouse-plugin-simple'],
+      };
+      const config = new Config(configJson, {configPath: configFixturePath});
+      const categoryNames = Object.keys(config.categories);
+      assert.ok(categoryNames.length > 1);
+      assert.strictEqual(categoryNames[categoryNames.length - 1], 'lighthouse-plugin-simple');
+      assert.strictEqual(config.categories['lighthouse-plugin-simple'].title, 'Simple');
+    });
+
+    describe('budget setting', () => {
+      it('should be initialized', () => {
+        const configJson = {
+          settings: {
+            budgets: [{
+              path: '/',
+              resourceCounts: [{
+                resourceType: 'image',
+                budget: 500,
+              }],
+            }],
+          },
+        };
+        const config = new Config(configJson);
+        assert.equal(config.settings.budgets[0].resourceCounts.length, 1);
+        assert.equal(config.settings.budgets[0].resourceCounts[0].resourceType, 'image');
+        assert.equal(config.settings.budgets[0].resourceCounts[0].budget, 500);
+      });
+
+      it('should throw when provided an invalid budget', () => {
+        assert.throws(() => new Config({settings: {budgets: ['invalid123']}}),
+          /Budget file is not defined as an array of budgets/);
+      });
+    });
+
+    it('should load plugins from the config and from passed-in flags', () => {
+      const baseConfigJson = {
+        audits: ['installable-manifest'],
+        categories: {
+          myManifest: {
+            auditRefs: [{id: 'installable-manifest', weight: 9000}],
+          },
+        },
+      };
+      const baseFlags = {configPath: configFixturePath};
+      const simplePluginName = 'lighthouse-plugin-simple';
+      const noGroupsPluginName = 'lighthouse-plugin-no-groups';
+
+      const allConfigConfigJson = {...baseConfigJson, plugins: [simplePluginName,
+        noGroupsPluginName]};
+      const allPluginsInConfigConfig = new Config(allConfigConfigJson, baseFlags);
+
+      const allFlagsFlags = {...baseFlags, plugins: [simplePluginName, noGroupsPluginName]};
+      const allPluginsInFlagsConfig = new Config(baseConfigJson, allFlagsFlags);
+
+      const mixedConfigJson = {...baseConfigJson, plugins: [simplePluginName]};
+      const mixedFlags = {...baseFlags, plugins: [noGroupsPluginName]};
+      const pluginsInConfigAndFlagsConfig = new Config(mixedConfigJson, mixedFlags);
+
+      // Double check that we're not comparing empty objects.
+      const categoryNames = Object.keys(allPluginsInConfigConfig.categories);
+      assert.deepStrictEqual(categoryNames,
+        ['myManifest', 'lighthouse-plugin-simple', 'lighthouse-plugin-no-groups']);
+
+      assert.deepStrictEqual(allPluginsInConfigConfig, allPluginsInFlagsConfig);
+      assert.deepStrictEqual(allPluginsInConfigConfig, pluginsInConfigAndFlagsConfig);
+    });
+
+    it('should throw if the plugin is invalid', () => {
+      const configJson = {
+        extends: 'lighthouse:default',
+        plugins: ['lighthouse-plugin-no-category'],
+      };
+      // Required to have a `category`, so plugin is invalid.
+      assert.throws(() => new Config(configJson, {configPath: configFixturePath}),
+        /^Error: lighthouse-plugin-no-category has no valid category/);
+    });
+
+    it('should throw if the plugin is not found', () => {
+      const configJson = {
+        extends: 'lighthouse:default',
+        plugins: ['lighthouse-plugin-not-a-plugin'],
+      };
+      assert.throws(() => new Config(configJson, {configPath: configFixturePath}),
+        /^Error: Unable to locate plugin: `lighthouse-plugin-not-a-plugin/);
+    });
+
+    it('should throw if the plugin name does not begin with "lighthouse-plugin-"', () => {
+      const configJson = {
+        extends: 'lighthouse:default',
+        plugins: ['just-let-me-be-a-plugin'],
+      };
+      assert.throws(() => new Config(configJson, {configPath: configFixturePath}),
+        /^Error: plugin name 'just-let-me-be-a-plugin' does not start with 'lighthouse-plugin-'/);
+    });
+
+    it('should throw if the plugin name would shadow a category id', () => {
+      const configJson = {
+        extends: 'lighthouse:default',
+        plugins: ['lighthouse-plugin-simple'],
+        categories: {
+          'lighthouse-plugin-simple': {auditRefs: [{id: 'missing-audit'}]},
+        },
+      };
+      assert.throws(() => new Config(configJson, {configPath: configFixturePath}),
+        /^Error: plugin name 'lighthouse-plugin-simple' not allowed because it is the id of a category/); // eslint-disable-line max-len
+    });
+  });
+
   describe('getCategories', () => {
     it('returns the IDs & names of the categories', () => {
       const categories = Config.getCategories(origConfig);
@@ -730,8 +1076,21 @@ describe('Config', () => {
       };
       const extendedConfig = new Config(extended);
 
+      // When gatherers have instance properties that are bind()'d, they'll not match.
+      // Gatherers in each config will still be compared via the constructor on .implementation.
+      // https://github.com/GoogleChrome/lighthouse/pull/10090#discussion_r382864319
+      function deleteInstancesForTest(config) {
+        for (const pass of config.passes) {
+          for (const gatherer of pass.gatherers) {
+            delete gatherer.instance;
+          }
+        }
+      }
+      deleteInstancesForTest(extendedConfig);
+      deleteInstancesForTest(config);
+
       assert.equal(config.passes.length, 1, 'did not filter config');
-      assert.deepStrictEqual(config, extendedConfig, 'had mutations');
+      expect(config).toEqual(extendedConfig); // ensure we didn't have mutations
     });
 
     it('should filter out other passes if passed Performance', () => {
@@ -927,7 +1286,7 @@ describe('Config', () => {
 
     it('loads a gatherer from node_modules/', () => {
       // Use a lighthouse dep as a stand in for a module.
-      assert.throws(_ => loadGatherer('mocha'), function(err) {
+      assert.throws(_ => loadGatherer('lighthouse-logger'), function(err) {
         // Should throw a gatherer validation error, but *not* a gatherer not found error.
         return !/locate gatherer/.test(err) && /beforePass\(\) method/.test(err);
       });
@@ -975,7 +1334,7 @@ describe('Config', () => {
     });
   });
 
-  describe('#getDisplayString', () => {
+  describe('#getPrintString', () => {
     it('doesn\'t include empty gatherer/audit options in output', () => {
       const gOpt = 'gathererOption';
       const aOpt = 'auditOption';
@@ -984,8 +1343,8 @@ describe('Config', () => {
         passes: [{
           passName: 'defaultPass',
           gatherers: [
-            // `options` merged into default `viewport` gatherer.
-            {path: 'viewport', options: {gOpt}},
+            // `options` merged into default `script-elements` gatherer.
+            {path: 'script-elements', options: {gOpt}},
           ],
         }],
         audits: [
@@ -998,8 +1357,9 @@ describe('Config', () => {
       const printedConfig = JSON.parse(printed);
 
       // Check that options weren't completely eliminated.
-      const viewportGatherer = printedConfig.passes[0].gatherers.find(g => g.path === 'viewport');
-      assert.strictEqual(viewportGatherer.options.gOpt, gOpt);
+      const scriptsGatherer = printedConfig.passes[0].gatherers
+        .find(g => g.path === 'script-elements');
+      assert.strictEqual(scriptsGatherer.options.gOpt, gOpt);
       const metricsAudit = printedConfig.audits.find(a => a.path === 'metrics');
       assert.strictEqual(metricsAudit.options.aOpt, aOpt);
 

@@ -1,11 +1,11 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const BaseNode = require('./base-node');
+const BaseNode = require('./base-node.js');
 
 class CPUNode extends BaseNode {
   /**
@@ -61,16 +61,18 @@ class CPUNode extends BaseNode {
   }
 
   /**
-   * Returns true if this node contains the EvaluateScript task for a URL in the given set.
-   * @param {Set<string>} urls
-   * @return {boolean}
+   * Returns the script URLs that had their EvaluateScript events occur in this task.
    */
-  isEvaluateScriptFor(urls) {
-    return this._childEvents.some(evt => {
-      return evt.name === 'EvaluateScript' &&
-        !!evt.args.data && !!evt.args.data.url &&
-        urls.has(evt.args.data.url);
-    });
+  getEvaluateScriptURLs() {
+    /** @type {Set<string>} */
+    const urls = new Set();
+    for (const event of this._childEvents) {
+      if (event.name !== 'EvaluateScript') continue;
+      if (!event.args.data || !event.args.data.url) continue;
+      urls.add(event.args.data.url);
+    }
+
+    return urls;
   }
 
   /**

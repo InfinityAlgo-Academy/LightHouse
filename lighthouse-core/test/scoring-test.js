@@ -1,12 +1,12 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const assert = require('assert');
-const ReportScoring = require('../scoring');
+const assert = require('assert').strict;
+const ReportScoring = require('../scoring.js');
 
 /* eslint-env jest */
 describe('ReportScoring', () => {
@@ -35,7 +35,7 @@ describe('ReportScoring', () => {
   describe('#scoreAllCategories', () => {
     it('should score the categories', () => {
       const resultsByAuditId = {
-        'my-audit': {rawValue: 'you passed', score: 0},
+        'my-audit': {score: 0},
         'my-boolean-audit': {score: 1, extendedInfo: {}},
         'my-scored-audit': {score: 1},
         'my-failed-audit': {score: 0.2},
@@ -64,9 +64,9 @@ describe('ReportScoring', () => {
 
     it('should weight notApplicable audits as 0', () => {
       const resultsByAuditId = {
-        'my-boolean-audit': {score: 1, extendedInfo: {}, scoreDisplayMode: 'not-applicable'},
+        'my-boolean-audit': {score: 1, extendedInfo: {}, scoreDisplayMode: 'notApplicable'},
         'my-scored-audit': {score: 1},
-        'my-failed-audit': {score: 0.2, scoreDisplayMode: 'not-applicable'},
+        'my-failed-audit': {score: 0.2, scoreDisplayMode: 'notApplicable'},
         'my-boolean-failed-audit': {score: 0},
       };
 

@@ -1,5 +1,20 @@
 A few assorted scripts and tips to make hacking on Lighthouse a bit easier
 
+## Evaluate Lighthouse's runtime performance
+
+Lighthouse has instrumentation to collect timing data for its operations. The data is exposed at `LHR.timing.entries`.  You can generate a trace from this data for closer analysis.
+
+![image](https://user-images.githubusercontent.com/39191/47525915-3c477000-d853-11e8-90a2-27036f93e682.png)
+[View example trace](https://ahead-daughter.surge.sh/paulirish.json.timing.trace.html)
+
+To generate, run `yarn timing-trace` with the LHR json:
+```sh
+lighthouse http://example.com --output=json --output-path=lhr.json
+yarn timing-trace lhr.json
+```
+
+That will generate `lhr.json.timing.trace.json`. Then, drag 'n drop that file into `chrome://tracing`.
+
 ## Unhandled promise rejections
 
 Getting errors like these?
@@ -12,17 +27,6 @@ Use [`--trace-warnings`](https://medium.com/@jasnell/introducing-process-warning
 ```sh
 node --trace-warnings lighthouse-cli http://example.com
 ```
-
-## Updating fixture dumps
-
-`lighthouse-core/test/results/samples_v2.json` is generated from running LH against
-dbw_tester.html. To update this file, start a local server on port `8080` and serve the directory `lighthouse-cli/test/fixtures`. Then run:
-
-```sh
-npm run start -- --output=json --output-path=lighthouse-core/test/results/sample_v2.json http://localhost:8080/dobetterweb/dbw_tester.html
-```
-
-After updating, consider deleting any irrelevant changes from the diff (exact timings, timestamps, etc). Be sure to run the tests.
 
 ## Iterating on the report
 
@@ -74,3 +78,6 @@ You can then run the travis commands (e.g. `travis compile`) to install an envir
 
 [travis-ci/travis-build: .travis.yml =&gt; build.sh converter](https://github.com/travis-ci/travis-build#invocation)
 
+## Using Audit Classes Directly, Providing Your Own Artifacts
+
+See [gist](https://gist.github.com/connorjclark/d4555ad90ae5b5ecf793ad2d46ca52db).

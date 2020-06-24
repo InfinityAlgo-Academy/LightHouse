@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -24,7 +24,11 @@ const RUNTIME = 'runtime';
 
 // The install handler takes care of precaching the resources we always need.
 self.addEventListener('install', event => {
-  self.skipWaiting();
+  if (self.location.search.includes('slow')) {
+    event.waitUntil(new Promise(resolve => setTimeout(resolve, 5000)));
+  } else {
+    self.skipWaiting();
+  }
 
   const populateCaches = caches.open(PRECACHE)
       .then(cache => cache.addAll(PRECACHE_URLS));

@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -8,8 +8,8 @@
 /* eslint-env jest */
 
 const pkg = require('../../package.json');
-const assert = require('assert');
-const lighthouse = require('..');
+const assert = require('assert').strict;
+const lighthouse = require('../index.js');
 
 describe('Module Tests', function() {
   it('should have a main attribute defined in the package.json', function() {
@@ -73,7 +73,7 @@ describe('Module Tests', function() {
     return lighthouse('chrome://version', {}, {
       passes: [{
         gatherers: [
-          'viewport',
+          'script-elements',
         ],
       }],
       audits: [
@@ -87,22 +87,26 @@ describe('Module Tests', function() {
       });
   });
 
-  it('should throw an error when the url is invalid', function() {
-    return lighthouse('https:/i-am-not-valid', {}, {})
-      .then(() => {
-        throw new Error('Should not have resolved when url is invalid');
-      }, err => {
-        assert.ok(err);
-      });
+  it('should throw an error when the url is invalid', async () => {
+    expect.hasAssertions();
+    try {
+      await lighthouse('i-am-not-valid', {}, {});
+    } catch (err) {
+      expect(err.friendlyMessage)
+          .toBeDisplayString('The URL you have provided appears to be invalid.');
+      expect(err.code).toEqual('INVALID_URL');
+    }
   });
 
-  it('should throw an error when the url is invalid protocol (file:///)', function() {
-    return lighthouse('file:///a/fake/index.html', {}, {})
-      .then(() => {
-        throw new Error('Should not have resolved when url is file:///');
-      }, err => {
-        assert.ok(err);
-      });
+  it('should throw an error when the url is invalid protocol (file:///)', async () => {
+    expect.hasAssertions();
+    try {
+      await lighthouse('file:///a/fake/index.html', {}, {});
+    } catch (err) {
+      expect(err.friendlyMessage)
+          .toBeDisplayString('The URL you have provided appears to be invalid.');
+      expect(err.code).toEqual('INVALID_URL');
+    }
   });
 
   it('should return formatted LHR when given no categories', function() {
@@ -128,8 +132,31 @@ describe('Module Tests', function() {
       assert.strictEqual(results.lhr.audits.viewport.score, 0);
       assert.ok(results.lhr.audits.viewport.explanation);
       assert.ok(results.lhr.timing);
-      assert.equal(typeof results.lhr.timing.total, 'number');
+      assert.ok(results.lhr.timing.entries.length > 3, 'timing entries not populated');
     });
+  });
+
+  it('should specify the channel as node by default', async function() {
+    const exampleUrl = 'https://www.reddit.com/r/nba';
+    const results = await lighthouse(exampleUrl, {}, {
+      settings: {
+        auditMode: __dirname + '/fixtures/artifacts/perflog/',
+      },
+      audits: [],
+    });
+    assert.equal(results.lhr.configSettings.channel, 'node');
+  });
+
+  it('lets consumers pass in a custom channel', async function() {
+    const exampleUrl = 'https://www.reddit.com/r/nba';
+    const results = await lighthouse(exampleUrl, {}, {
+      settings: {
+        auditMode: __dirname + '/fixtures/artifacts/perflog/',
+        channel: 'custom',
+      },
+      audits: [],
+    });
+    assert.equal(results.lhr.configSettings.channel, 'custom');
   });
 
   it('should return a list of audits', function() {

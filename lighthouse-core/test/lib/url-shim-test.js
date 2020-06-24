@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,8 +7,8 @@
 
 /* eslint-env jest */
 
-const URL = require('../../lib/url-shim');
-const assert = require('assert');
+const URL = require('../../lib/url-shim.js');
+const assert = require('assert').strict;
 const superLongName =
     'https://example.com/thisIsASuperLongURLThatWillTriggerFilenameTruncationWhichWeWantToTest.js';
 
@@ -40,6 +40,7 @@ describe('URL Shim', () => {
     assert.ok(URL.isProtocolAllowed('http://google.com/'));
     assert.ok(URL.isProtocolAllowed('https://google.com/'));
     assert.ok(URL.isProtocolAllowed('chrome://version'));
+    assert.ok(URL.isProtocolAllowed('chrome-extension://blipmdconlkpinefehnmjammfjpmpbjk/popup.html'));
   });
 
   it('safely identifies disallowed URL protocols', () => {
@@ -102,15 +103,6 @@ describe('URL Shim', () => {
     assert.equal(URL.getOrigin(urlB), null);
     assert.equal(URL.getOrigin(urlC), null);
     assert.equal(URL.getOrigin(urlD), null);
-  });
-
-  describe('getTld', () => {
-    it('returns the correct tld', () => {
-      assert.equal(URL.getTld('example.com'), '.com');
-      assert.equal(URL.getTld('example.co.uk'), '.co.uk');
-      assert.equal(URL.getTld('example.com.br'), '.com.br');
-      assert.equal(URL.getTld('example.tokyo.jp'), '.jp');
-    });
   });
 
   describe('rootDomainsMatch', () => {
