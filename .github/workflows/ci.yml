@@ -29,21 +29,11 @@ jobs:
     - run: yarn --frozen-lockfile
     - run: yarn build-all
 
-    - name: Set CHROME_PATH
+    - name: Define chrome path
       run: [[ ${{matrix.chrome-channel}} = "canary" ]] && cpath="/home/runner/chrome-linux-tot" || cpath=""; echo "::set-env name=CHROME_PATH::$cpath"
 
-      # echo "::set-env name=CHROME_PATH::$(node -e 'console.log(`${{matrix.chrome-channel}}` === `canary` ? `/home/runner/chrome-linux-tot` :: '')')"
 
-
- # [[ $b = 5 ]] && a="$c" || a="$d"
-
-
-# [[ ${{matrix.chrome-channel}} = "canary" ]] && cpath="/home/runner/chrome-linux-tot" || cpath=""; echo "::set-env name=CHROME_PATH::$cpath"
-
-# echo "::set-env name=CHROME_PATH::
-
-
-   - name: read CHROME_PATH
+    - name: read chrome path
       run: echo "chrome path is $CHROME_PATH"
 
 
