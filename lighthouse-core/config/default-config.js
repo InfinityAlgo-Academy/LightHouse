@@ -161,6 +161,7 @@ const defaultConfig = {
       'accessibility',
       'trace-elements',
       'inspector-issues',
+      'source-maps',
     ],
   },
   {
