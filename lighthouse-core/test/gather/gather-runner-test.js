@@ -104,58 +104,6 @@ class EmulationDriver extends Driver {
   }
 }
 
-<<<<<<< HEAD
-function getMockedEmulationDriver(emulationFn, netThrottleFn, cpuThrottleFn,
-  blockUrlFn, extraHeadersFn) {
-  const Driver = require('../../gather/driver');
-  const Connection = require('../../gather/connections/connection');
-  const EmulationDriver = class extends Driver {
-    enableRuntimeEvents() {
-      return Promise.resolve();
-    }
-    assertNoSameOriginServiceWorkerClients() {
-      return Promise.resolve();
-    }
-    cacheNatives() {
-      return Promise.resolve();
-    }
-    registerPerformanceObserver() {
-      return Promise.resolve();
-    }
-    cleanBrowserCaches() {}
-    clearDataForOrigin() {}
-    waitForLoadEvent() {
-      return Promise.resolve();
-    }
-  };
-  const EmulationMock = class extends Connection {
-    sendCommand(command, params) {
-      let fn = null;
-      switch (command) {
-        case 'Network.emulateNetworkConditions':
-          fn = netThrottleFn;
-          break;
-        case 'Emulation.setCPUThrottlingRate':
-          fn = cpuThrottleFn;
-          break;
-        case 'Emulation.setDeviceMetricsOverride':
-          fn = emulationFn;
-          break;
-        case 'Network.setBlockedURLs':
-          fn = blockUrlFn;
-          break;
-        case 'Network.setExtraHTTPHeaders':
-          fn = extraHeadersFn;
-          break;
-        default:
-          fn = null;
-          break;
-      }
-      return Promise.resolve(fn && fn(params));
-    }
-  };
-  return new EmulationDriver(new EmulationMock());
-=======
 const fakeDriver = require('./fake-driver.js');
 const fakeDriverUsingRealMobileDevice = fakeDriver.fakeDriverUsingRealMobileDevice;
 
@@ -176,7 +124,6 @@ function resetDefaultMockResponses() {
     .mockResponse('Network.setUserAgentOverride')
     .mockResponse('Page.enable')
     .mockResponse('ServiceWorker.enable');
->>>>>>> origin/master
 }
 
 beforeEach(() => {
@@ -453,10 +400,6 @@ describe('GatherRunner', function() {
       enableAsyncStacks: asyncFunc,
       cacheNatives: asyncFunc,
       gotoURL: asyncFunc,
-<<<<<<< HEAD
-      waitForLoadEvent: asyncFunc,
-=======
->>>>>>> origin/master
       registerPerformanceObserver: asyncFunc,
       cleanBrowserCaches: createCheck('calledCleanBrowserCaches'),
       clearDataForOrigin: createCheck('calledClearStorage'),
@@ -647,10 +590,6 @@ describe('GatherRunner', function() {
       enableAsyncStacks: asyncFunc,
       cacheNatives: asyncFunc,
       gotoURL: asyncFunc,
-<<<<<<< HEAD
-      waitForLoadEvent: asyncFunc,
-=======
->>>>>>> origin/master
       registerPerformanceObserver: asyncFunc,
       cleanBrowserCaches: createCheck('calledCleanBrowserCaches'),
       clearDataForOrigin: createCheck('calledClearStorage'),
