@@ -27,7 +27,7 @@ jobs:
         node-version: 10.x
 
     - name: Define chrome path
-      run: ([[ ${{matrix.chrome-channel}} = "ToT" ]] && cpath="/home/runner/chrome-linux-tot" || cpath=""); echo "::set-env name=CHROME_PATH::$cpath"
+      run: ([[ ${{matrix.chrome-channel}} = "ToT" ]] && cpath="/home/runner/chrome-linux-tot" || cpath=""; echo "::set-env name=CHROME_PATH::$cpath")
 
 
     - name: export chrome path
