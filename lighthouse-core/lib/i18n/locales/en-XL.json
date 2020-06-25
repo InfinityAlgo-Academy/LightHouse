@@ -810,7 +810,7 @@
     "message": "Ûśêś ĤT́T̂ṔŜ"
   },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
-    "message": "T̂h́îś îś t̂h́ê él̂ém̂én̂t́ t̂h́ât́ ŵáŝ íd̂én̂t́îf́îéd̂ áŝ t́ĥé L̂ár̂ǵêśt̂ Ćôńt̂én̂t́f̂úl̂ Ṕâín̂t́. [L̂éâŕn̂ Ḿôŕê](https://web.dev/lighthouse-largest-contentful-paint/)"
+    "message": "T̂h́îś îś t̂h́ê ĺâŕĝéŝt́ ĉón̂t́êńt̂f́ûĺ êĺêḿêńt̂ ṕâín̂t́êd́ ŵít̂h́îń t̂h́ê v́îéŵṕôŕt̂. [Ĺêár̂ń M̂ór̂é](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
   "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
     "message": "{itemCount, plural,\n    =1 {1 êĺêḿêńt̂ f́ôún̂d́}\n    other {# êĺêḿêńt̂ś f̂óûńd̂}\n    }"

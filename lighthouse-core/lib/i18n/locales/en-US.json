@@ -810,7 +810,7 @@
     "message": "Uses HTTPS"
   },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
-    "message": "This is the element that was identified as the Largest Contentful Paint. [Learn More](https://web.dev/lighthouse-largest-contentful-paint/)"
+    "message": "This is the largest contentful element painted within the viewport. [Learn More](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
   "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
     "message": "{itemCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"

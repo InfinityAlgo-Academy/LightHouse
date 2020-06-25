@@ -10,7 +10,7 @@ path_dir = os.path.dirname(path)
 
 path_sample_preprocessed = path_dir + '/sample_v2_processed.json'
 path_sample = path_dir + '/../../lighthouse-core/test/results/sample_v2.json'
-path_round_trip = path_dir + '/../sample_v2_round_trip.json'
+path_round_trip = path_dir + '/../../.tmp/sample_v2_round_trip.json'
 
 def clean():
     try:
