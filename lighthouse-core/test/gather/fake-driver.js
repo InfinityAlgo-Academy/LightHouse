@@ -99,6 +99,9 @@ function makeFakeDriver({protocolGetVersionResponse}) {
     setExtraHTTPHeaders() {
       return Promise.resolve();
     },
+    registerRequestIdleCallbackWrap() {
+      return Promise.resolve();
+    },
   };
 }
 
