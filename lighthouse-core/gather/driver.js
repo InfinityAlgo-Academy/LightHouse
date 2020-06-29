@@ -1514,6 +1514,20 @@ class Driver {
   }
 
   /**
+   * Use a RequestIdleCallback shim for tests run with simulated throttling, so that the deadline can be used without
+   * a penalty
+   * @param {LH.Config.Settings} settings
+   * @return {Promise<void>}
+   */
+  async registerRequestIdleCallbackWrap(settings) {
+    if (settings.throttlingMethod === 'simulate') {
+      const scriptStr = `(${pageFunctions.wrapRequestIdleCallbackString})
+        (${settings.throttling.cpuSlowdownMultiplier})`;
+      await this.evaluateScriptOnNewDocument(scriptStr);
+    }
+  }
+
+  /**
    * @param {Array<string>} urls URL patterns to block. Wildcards ('*') are allowed.
    * @return {Promise<void>}
    */
