@@ -80,7 +80,7 @@ describe('LegacyJavaScript audit', () => {
     ]);
     const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 1);
-    assert.equal(result.extendedInfo.signalCount, 0);
+    assert.equal(result.details.debugData.signalCount, 0);
   });
 
   it('passes code with a legacy polyfill in third party resource', async () => {
@@ -92,7 +92,7 @@ describe('LegacyJavaScript audit', () => {
     ]);
     const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 1);
-    assert.equal(result.extendedInfo.signalCount, 1);
+    assert.equal(result.details.debugData.signalCount, 1);
   });
 
   it('fails code with a legacy polyfill', async () => {
@@ -104,7 +104,7 @@ describe('LegacyJavaScript audit', () => {
     ]);
     const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 0);
-    assert.equal(result.extendedInfo.signalCount, 1);
+    assert.equal(result.details.debugData.signalCount, 1);
     expect(result.details.items[0].subItems.items[0].signal).toEqual('String.prototype.repeat');
   });
 
@@ -117,7 +117,7 @@ describe('LegacyJavaScript audit', () => {
     ]);
     const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 0);
-    assert.equal(result.extendedInfo.signalCount, 2);
+    assert.equal(result.details.debugData.signalCount, 2);
   });
 
   it('counts multiple of the same polyfill from the same script only once', async () => {
@@ -134,7 +134,7 @@ describe('LegacyJavaScript audit', () => {
     ]);
     const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 0);
-    assert.equal(result.extendedInfo.signalCount, 1);
+    assert.equal(result.details.debugData.signalCount, 1);
   });
 
   it('should identify polyfills in multiple patterns', async () => {
