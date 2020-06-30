@@ -118,9 +118,10 @@ module.exports = [
       audits: {
         'total-blocking-time': {
           // With a 4x throttling multiplier in place each 50ms task takes 200ms, which results in 150ms blocking time
-          // each. As there are 40 iterations this adds up to a total blocking time of 6s, with the consideration of
-          // a slight variance there should be at least a tbt of 5.5s
-          numericValue: '>5500',
+          // each. We iterate ~40 times, so the true amount of blocking time we expect is ~6s, but
+          // sometimes Chrome's requestIdleCallback won't fire the full 40 if the machine is under load,
+          // so be generous with how much slack to give in the expectations.
+          numericValue: '>2500',
         },
       },
     },
