@@ -29,6 +29,28 @@ function collectFormElements() {
   });
 }
 
+/**
+ *  @param {HTMLElement}
+ *  @return {String}
+ */
+/* istanbul ignore next */
+function getParentForm(node) {
+  if (node.nodeName == 'BODY'){
+    return null
+  };
+  if (node.nodeName == 'FORM'){
+    if (node.id && node.id != ""){
+      return node.id
+    }
+    if (node.name && node.name != ""){
+      return node.name
+    }
+    return "unidentifiable form"
+  };
+
+  return getParentForm(node.parentElement)
+}
+
 class FormElements extends Gatherer {
   /**
    * @param {LH.Gatherer.PassContext} passContext
