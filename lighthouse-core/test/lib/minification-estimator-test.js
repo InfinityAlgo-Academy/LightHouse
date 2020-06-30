@@ -221,9 +221,9 @@ describe('minification estimator', () => {
     });
 
     it('should handle real already-minified javscript files', () => {
-      assert.equal(zoneFullScript.length, 25073);
+      assert.equal(zoneMinifiedScript.length, 25073);
       // 1 - 24119 / 25073 = estimated 3.8% smaller minified
-      assert.equal(computeJSTokenLength(zoneFullScript), 24119);
+      assert.equal(computeJSTokenLength(zoneMinifiedScript), 24119);
     });
   });
 });
