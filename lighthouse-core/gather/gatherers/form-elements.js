@@ -32,7 +32,7 @@ function collectFormElements() {
 class FormElements extends Gatherer {
   /**
    * @param {LH.Gatherer.PassContext} passContext
-   * @return {Promise<LH.Artifacts['IFrameElements']>}
+   * @return {Promise<LH.Artifacts['FormElements']>}
    * @override
    */
   async afterPass(passContext) {
@@ -45,9 +45,9 @@ class FormElements extends Gatherer {
       return (${collectFormElements})();
     })()`;
 
-    /** @type {LH.Artifacts['IFrameElements']} */
-    const iframeElements = await driver.evaluateAsync(expression, {useIsolation: true});
-    return iframeElements;
+    /** @type {LH.Artifacts['FormElements']} */
+    const formElements = await driver.evaluateAsync(expression, {useIsolation: true});
+    return formElements;
   }
 }
 
