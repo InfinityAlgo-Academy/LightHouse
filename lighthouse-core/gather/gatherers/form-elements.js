@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
+=======
+ * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
+>>>>>>> 6af59f0dc... created form gatherer file based on iframe gatherer. refactored function to return input attributes
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -15,6 +19,7 @@ const pageFunctions = require('../../lib/page-functions.js');
  */
 /* istanbul ignore next */
 function collectFormElements() {
+<<<<<<< HEAD
   // @ts-expect-error - put into scope via stringification
   const formChildren = getElementsInDocument('textarea, input, label, select'); // eslint-disable-line no-undef
   /** @type {Map<HTMLFormElement|string, LH.Artifacts.Form>} */
@@ -80,17 +85,37 @@ function collectFormElements() {
     });
   }
   return [...forms.values()];
+=======
+  // @ts-ignore - put into scope via stringification
+  const inputElements = getElementsInDocument('input'); // eslint-disable-line no-undef
+  return inputElements.map(/** @param {HTMLInputElement} node */ (node) => {
+    return {
+      id: node.id,
+      elementType: node.nodeName,
+      name: node.name,
+      parentForm: null,
+      placeHolder: node.placeholder,
+      autocomplete: node.autocomplete,
+    };
+  });
+>>>>>>> 6af59f0dc... created form gatherer file based on iframe gatherer. refactored function to return input attributes
 }
 
 class FormElements extends Gatherer {
   /**
    * @param {LH.Gatherer.PassContext} passContext
+<<<<<<< HEAD
    * @return {Promise<LH.Artifacts['FormElements']>}
+=======
+   * @return {Promise<LH.Artifacts['IFrameElements']>}
+   * @override
+>>>>>>> 6af59f0dc... created form gatherer file based on iframe gatherer. refactored function to return input attributes
    */
   async afterPass(passContext) {
     const driver = passContext.driver;
 
     const expression = `(() => {
+<<<<<<< HEAD
       ${pageFunctions.getElementsInDocumentString};
       ${pageFunctions.getOuterHTMLSnippetString};
       ${pageFunctions.getNodeLabelString};
@@ -100,6 +125,17 @@ class FormElements extends Gatherer {
     /** @type {LH.Artifacts['FormElements']} */
     const formElements = await driver.evaluateAsync(expression, {useIsolation: true});
     return formElements;
+=======
+      ${pageFunctions.getOuterHTMLSnippetString};
+      ${pageFunctions.getElementsInDocumentString};
+      ${pageFunctions.isPositionFixedString};
+      return (${collectFormElements})();
+    })()`;
+
+    /** @type {LH.Artifacts['IFrameElements']} */
+    const iframeElements = await driver.evaluateAsync(expression, {useIsolation: true});
+    return iframeElements;
+>>>>>>> 6af59f0dc... created form gatherer file based on iframe gatherer. refactored function to return input attributes
   }
 }
 
