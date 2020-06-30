@@ -162,6 +162,7 @@ const defaultConfig = {
       'trace-elements',
       'inspector-issues',
       'source-maps',
+      'obscured-elements',
     ],
   },
   {
