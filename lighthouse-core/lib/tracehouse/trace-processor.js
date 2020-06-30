@@ -26,7 +26,7 @@ const ACCEPTABLE_NAVIGATION_URL_REGEX = /^(chrome|https?):/;
 // The ideal input response latency, the time between the input task and the
 // first frame of the response.
 const BASE_RESPONSE_LATENCY = 16;
-// m71+ We added RunTask to `disabled-by-default-lighthouse`
+// COMPAT: m71+ We added RunTask to `disabled-by-default-lighthouse`
 const SCHEDULABLE_TASK_TITLE_LH = 'RunTask';
 // m69-70 DoWork is different and we now need RunTask, see https://bugs.chromium.org/p/chromium/issues/detail?id=871204#c11
 const SCHEDULABLE_TASK_TITLE_ALT1 = 'ThreadControllerImpl::RunTask';

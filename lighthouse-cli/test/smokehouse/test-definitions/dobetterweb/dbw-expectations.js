@@ -413,7 +413,7 @@ const expectations = [
       },
     },
   },
-  // TODO: Uncomment when Chrome m84 lands
+  // TODO(COMPAT): Uncomment when Chrome m84 lands
   // {
   //   artifacts: {
   //     InspectorIssues: {
