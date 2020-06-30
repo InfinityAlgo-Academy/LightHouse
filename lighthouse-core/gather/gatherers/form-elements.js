@@ -11,32 +11,13 @@ const pageFunctions = require('../../lib/page-functions.js');
 /* eslint-env browser, node */
 
 /**
- * @return {LH.Artifacts['FormElements']}
- */
-/* istanbul ignore next */
-function collectFormElements() {
-  // @ts-ignore - put into scope via stringification
-  const inputElements = getElementsInDocument('input'); // eslint-disable-line no-undef
-  return inputElements.map(/** @param {HTMLInputElement} node */ (node) => {
-    return {
-      id: node.id,
-      elementType: node.nodeName,
-      name: node.name,
-      parentForm: null,
-      placeHolder: node.placeholder,
-      autocomplete: node.autocomplete,
-    };
-  });
-}
-
-/**
  *  @param {HTMLElement}
  *  @return {String}
  */
 /* istanbul ignore next */
-function getParentForm(node) {
+const getParentForm = (node) => {
   if (node.nodeName == 'BODY'){
-    return null
+    return ""
   };
   if (node.nodeName == 'FORM'){
     if (node.id && node.id != ""){
@@ -49,6 +30,25 @@ function getParentForm(node) {
   };
 
   return getParentForm(node.parentElement)
+}
+
+/**
+ * @return {LH.Artifacts['FormElements']}
+ */
+/* istanbul ignore next */
+function collectFormElements() {
+  // @ts-ignore - put into scope via stringification
+  const inputElements = getElementsInDocument('input'); // eslint-disable-line no-undef
+  return inputElements.map(/** @param {HTMLInputElement} node */ (node) => {
+    return {
+      id: node.id,
+      elementType: node.nodeName,
+      name: node.name,
+      parentForm: getParentForm(node),
+      placeHolder: node.placeholder,
+      autocomplete: node.autocomplete,
+    };
+  });
 }
 
 class FormElements extends Gatherer {
@@ -64,7 +64,9 @@ class FormElements extends Gatherer {
       ${pageFunctions.getOuterHTMLSnippetString};
       ${pageFunctions.getElementsInDocumentString};
       ${pageFunctions.isPositionFixedString};
+      ${getParentForm};
       return (${collectFormElements})();
+
     })()`;
 
     /** @type {LH.Artifacts['FormElements']} */
