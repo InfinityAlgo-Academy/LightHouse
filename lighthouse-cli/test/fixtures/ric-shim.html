@@ -17,7 +17,7 @@ Request Idle Callback Shim Smoke Test
     ricTaskDuration = 1;
   }
   if (window.location.search.includes('long')) {
-    ricTaskDuration = 50;
+    ricTaskDuration = 55; // ensure every task gets counted as a long task by PerformanceObserver
   }
 
   function sleep(milliseconds = 0) {
