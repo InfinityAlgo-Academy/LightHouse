@@ -15,7 +15,10 @@ const pageFunctions = require('../../lib/page-functions.js');
  *  @return {String}
  */
 /* istanbul ignore next */
-const getParentForm = (node) => {
+function getParentForm(node) {
+  if (node == undefined){
+    return "undefined"
+  }
   if (node.nodeName == 'BODY'){
     return ""
   };
@@ -61,10 +64,10 @@ class FormElements extends Gatherer {
     const driver = passContext.driver;
 
     const expression = `(() => {
+      ${getParentForm.toString()};
       ${pageFunctions.getOuterHTMLSnippetString};
       ${pageFunctions.getElementsInDocumentString};
       ${pageFunctions.isPositionFixedString};
-      ${getParentForm};
       return (${collectFormElements})();
 
     })()`;
