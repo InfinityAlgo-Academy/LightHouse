@@ -1601,6 +1601,9 @@
   "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": {
     "message": "Required {artifactName} gatherer did not run."
   },
+  "lighthouse-core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "This version of Chrome is too old to support '{featureName}'. Use a newer version to see full results."
+  },
   "lighthouse-core/lib/lh-error.js | pageLoadFailed": {
     "message": "Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests."
   },
