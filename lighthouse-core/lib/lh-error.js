@@ -71,6 +71,12 @@ const UIStrings = {
    * @example {Manifest invalid} errorMessage
    * */
   erroredRequiredArtifact: 'Required {artifactName} gatherer encountered an error: {errorMessage}',
+
+  /**
+   * @description Error message explaining that a feature is unavailable due to an old version of Chrome. "featureName" will be replaced by the name of the feature which is not supported.
+   * @example {Largest Contentful Paint} featureName
+   * */
+  oldChromeDoesNotSupportFeature: 'This version of Chrome is too old to support \'{featureName}\'. Use a newer version to see full results.',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -253,6 +259,10 @@ const ERRORS = {
   NO_LCP: {
     code: 'NO_LCP',
     message: UIStrings.badTraceRecording,
+  },
+  UNSUPPORTED_OLD_CHROME: {
+    code: 'UNSUPPORTED_OLD_CHROME',
+    message: UIStrings.oldChromeDoesNotSupportFeature,
   },
   /** Layout Shift trace events are found but without data */
   LAYOUT_SHIFT_MISSING_DATA: {
