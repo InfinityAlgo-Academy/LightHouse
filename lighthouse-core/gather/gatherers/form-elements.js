@@ -42,7 +42,11 @@ function getParentForm(node) {
 function collectFormElements() {
   // @ts-ignore - put into scope via stringification
   const inputElements = getElementsInDocument('input'); // eslint-disable-line no-undef
-  return inputElements.map(/** @param {HTMLInputElement} node */ (node) => {
+  const selectElements = getElementsInDocument('select'); // eslint-disable-line no-undef
+  const textareaElements = getElementsInDocument('textarea'); // eslint-disable-line no-undef
+  const labelElements = getElementsInDocument('label'); // eslint-disable-line no-undef
+  const formElements = inputElements.concat(selectElements, textareaElements, labelElements)
+  return formElements.map(/** @param {HTMLElement} node */ (node) => {
     return {
       id: node.id,
       elementType: node.nodeName,
@@ -50,6 +54,7 @@ function collectFormElements() {
       parentForm: getParentForm(node),
       placeHolder: node.placeholder,
       autocomplete: node.autocomplete,
+      for: node.for,
     };
   });
 }
