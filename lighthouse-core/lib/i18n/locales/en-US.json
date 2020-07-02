@@ -1052,8 +1052,14 @@
   "lighthouse-core/audits/seo/hreflang.js | failureTitle": {
     "message": "Document doesn't have a valid `hreflang`"
   },
+  "lighthouse-core/audits/seo/hreflang.js | notFullyQualified": {
+    "message": "Relative href value"
+  },
   "lighthouse-core/audits/seo/hreflang.js | title": {
     "message": "Document has a valid `hreflang`"
+  },
+  "lighthouse-core/audits/seo/hreflang.js | unexpectedLanguage": {
+    "message": "Unexpected language code"
   },
   "lighthouse-core/audits/seo/http-status-code.js | description": {
     "message": "Pages with unsuccessful HTTP status codes may not be indexed properly. [Learn more](https://web.dev/http-status-code/)."

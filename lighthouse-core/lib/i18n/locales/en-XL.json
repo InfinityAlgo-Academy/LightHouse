@@ -1052,8 +1052,14 @@
   "lighthouse-core/audits/seo/hreflang.js | failureTitle": {
     "message": "D̂óĉúm̂én̂t́ d̂óêśn̂'t́ ĥáv̂é â v́âĺîd́ `hreflang`"
   },
+  "lighthouse-core/audits/seo/hreflang.js | notFullyQualified": {
+    "message": "R̂él̂át̂ív̂é ĥŕêf́ v̂ál̂úê"
+  },
   "lighthouse-core/audits/seo/hreflang.js | title": {
     "message": "D̂óĉúm̂én̂t́ ĥáŝ á v̂ál̂íd̂ `hreflang`"
+  },
+  "lighthouse-core/audits/seo/hreflang.js | unexpectedLanguage": {
+    "message": "Ûńêx́p̂éĉt́êd́ l̂án̂ǵûáĝé ĉód̂é"
   },
   "lighthouse-core/audits/seo/http-status-code.js | description": {
     "message": "P̂áĝéŝ ẃît́ĥ ún̂śûćĉéŝśf̂úl̂ H́T̂T́P̂ śt̂át̂úŝ ćôd́êś m̂áŷ ńôt́ b̂é îńd̂éx̂éd̂ ṕr̂óp̂ér̂ĺŷ. [Ĺêár̂ń m̂ór̂é](https://web.dev/http-status-code/)."
