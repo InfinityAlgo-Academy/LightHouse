@@ -62,7 +62,7 @@ function getLinkElementsInDOM() {
     linkElements.push({
       rel: link.rel,
       href: link.href,
-      hrefRaw: link.href,
+      hrefRaw: link.getAttribute('href') || '',
       hreflang: link.hreflang,
       as: link.as,
       crossOrigin: link.crossOrigin,

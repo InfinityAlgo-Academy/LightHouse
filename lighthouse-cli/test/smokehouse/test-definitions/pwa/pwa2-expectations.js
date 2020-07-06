@@ -87,8 +87,8 @@ module.exports = [
 
   {
     lhr: {
-      requestedUrl: 'https://shop.polymer-project.org/',
-      finalUrl: 'https://shop.polymer-project.org/',
+      requestedUrl: 'https://caltrainschedule.io/',
+      finalUrl: 'https://caltrainschedule.io/',
       audits: {
         'is-on-https': {
           score: 1,
@@ -123,14 +123,13 @@ module.exports = [
           details: {items: [pwaDetailsExpectations]},
         },
         'themed-omnibox': {
-          score: 1,
-          details: {items: [pwaDetailsExpectations]},
+          score: 0,
         },
         'content-width': {
           score: 1,
         },
         'apple-touch-icon': {
-          score: 0,
+          score: 1,
         },
 
         // "manual" audits. Just verify in the results.

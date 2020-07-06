@@ -11,11 +11,15 @@ const defaultOptions = LCPAudit.defaultOptions;
 const trace = require('../../fixtures/traces/lcp-m78.json');
 const devtoolsLog = require('../../fixtures/traces/lcp-m78.devtools.log.json');
 
-function generateArtifacts({trace, devtoolsLog, TestedAsMobileDevice}) {
+const preLcpTrace = require('../../fixtures/traces/progressive-app-m60.json');
+const preLcpDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+
+function generateArtifacts({trace, devtoolsLog, TestedAsMobileDevice, HostUserAgent}) {
   return {
     traces: {[LCPAudit.DEFAULT_PASS]: trace},
     devtoolsLogs: {[LCPAudit.DEFAULT_PASS]: devtoolsLog},
     TestedAsMobileDevice,
+    HostUserAgent,
   };
 }
 
@@ -27,7 +31,14 @@ function generateContext({throttlingMethod}) {
 
 describe('Performance: largest-contentful-paint audit', () => {
   it('adjusts scoring based on form factor', async () => {
-    const artifactsMobile = generateArtifacts({trace, devtoolsLog, TestedAsMobileDevice: true});
+    const artifactsMobile = generateArtifacts({
+      trace,
+      devtoolsLog,
+      TestedAsMobileDevice: true,
+      HostUserAgent: 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) ' +
+        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 ' +
+        'Mobile Safari/537.36 Chrome-Lighthouse',
+    });
     const contextMobile = generateContext({throttlingMethod: 'provided'});
 
     const outputMobile = await LCPAudit.audit(artifactsMobile, contextMobile);
@@ -35,12 +46,46 @@ describe('Performance: largest-contentful-paint audit', () => {
     expect(outputMobile.score).toBe(1);
     expect(outputMobile.displayValue).toBeDisplayString('1.1\xa0s');
 
-    const artifactsDesktop = generateArtifacts({trace, devtoolsLog, TestedAsMobileDevice: false});
+    const artifactsDesktop = generateArtifacts({
+      trace,
+      devtoolsLog,
+      TestedAsMobileDevice: false,
+      HostUserAgent: 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) ' +
+        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 ' +
+        'Mobile Safari/537.36 Chrome-Lighthouse',
+    });
     const contextDesktop = generateContext({throttlingMethod: 'provided'});
 
     const outputDesktop = await LCPAudit.audit(artifactsDesktop, contextDesktop);
     expect(outputDesktop.numericValue).toBeCloseTo(1121.711, 1);
     expect(outputDesktop.score).toBe(0.92);
     expect(outputDesktop.displayValue).toBeDisplayString('1.1\xa0s');
+  });
+
+  it('throws error when old Chrome does not support LCP', async () => {
+    const artifactsOldChrome = generateArtifacts({
+      trace: preLcpTrace,
+      devtoolsLog: preLcpDevtoolsLog,
+      TestedAsMobileDevice: true,
+      HostUserAgent: 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) ' +
+        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 ' +
+        'Mobile Safari/537.36 Chrome-Lighthouse',
+    });
+    const contextOldChrome = generateContext({throttlingMethod: 'provided'});
+
+    await expect(LCPAudit.audit(artifactsOldChrome, contextOldChrome))
+      .rejects.toThrow(/UNSUPPORTED_OLD_CHROME/);
+
+    const artifactsNewChrome = generateArtifacts({
+      trace: preLcpTrace,
+      devtoolsLog: preLcpDevtoolsLog,
+      TestedAsMobileDevice: true,
+      HostUserAgent: 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) ' +
+        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 ' +
+        'Mobile Safari/537.36 Chrome-Lighthouse',
+    });
+    const contextNewChrome = generateContext({throttlingMethod: 'provided'});
+
+    await expect(LCPAudit.audit(artifactsNewChrome, contextNewChrome)).rejects.toThrow(/NO_LCP/);
   });
 });

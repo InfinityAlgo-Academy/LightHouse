@@ -27,7 +27,7 @@ const expectations = [
         {
           rel: 'stylesheet',
           href: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=100',
-          hrefRaw: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=100',
+          hrefRaw: './dbw_tester.css?delay=100',
           hreflang: '',
           as: '',
           crossOrigin: null,
@@ -36,7 +36,7 @@ const expectations = [
         {
           rel: 'stylesheet',
           href: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200',
-          hrefRaw: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200',
+          hrefRaw: './unknown404.css?delay=200',
           hreflang: '',
           as: '',
           crossOrigin: null,
@@ -45,7 +45,7 @@ const expectations = [
         {
           rel: 'stylesheet',
           href: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200',
-          hrefRaw: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200',
+          hrefRaw: './dbw_tester.css?delay=2200',
           hreflang: '',
           as: '',
           crossOrigin: null,
@@ -54,7 +54,7 @@ const expectations = [
         {
           rel: 'stylesheet',
           href: 'http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled',
-          hrefRaw: 'http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled',
+          hrefRaw: './dbw_disabled.css?delay=200&isdisabled',
           hreflang: '',
           as: '',
           crossOrigin: null,
@@ -63,7 +63,7 @@ const expectations = [
         {
           rel: 'import',
           href: 'http://localhost:10200/dobetterweb/dbw_partial_a.html?delay=200',
-          hrefRaw: 'http://localhost:10200/dobetterweb/dbw_partial_a.html?delay=200',
+          hrefRaw: './dbw_partial_a.html?delay=200',
           hreflang: '',
           as: '',
           crossOrigin: null,
@@ -72,7 +72,7 @@ const expectations = [
         {
           rel: 'import',
           href: 'http://localhost:10200/dobetterweb/dbw_partial_b.html?delay=200&isasync',
-          hrefRaw: 'http://localhost:10200/dobetterweb/dbw_partial_b.html?delay=200&isasync',
+          hrefRaw: './dbw_partial_b.html?delay=200&isasync',
           hreflang: '',
           as: '',
           crossOrigin: null,
@@ -81,7 +81,7 @@ const expectations = [
         {
           rel: 'stylesheet',
           href: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped',
-          hrefRaw: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped',
+          hrefRaw: './dbw_tester.css?delay=3000&capped',
           hreflang: '',
           as: '',
           crossOrigin: null,
@@ -90,7 +90,7 @@ const expectations = [
         {
           rel: 'stylesheet',
           href: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true',
-          hrefRaw: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true',
+          hrefRaw: './dbw_tester.css?delay=2000&async=true',
           hreflang: '',
           as: 'style',
           crossOrigin: null,
@@ -99,7 +99,7 @@ const expectations = [
         {
           rel: 'stylesheet',
           href: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true',
-          hrefRaw: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true',
+          hrefRaw: './dbw_tester.css?delay=3000&async=true',
           hreflang: '',
           as: '',
           crossOrigin: null,
@@ -108,7 +108,7 @@ const expectations = [
         {
           rel: 'alternate stylesheet',
           href: 'http://localhost:10200/dobetterweb/empty.css',
-          hrefRaw: 'http://localhost:10200/dobetterweb/empty.css',
+          hrefRaw: './empty.css',
           hreflang: '',
           as: '',
           crossOrigin: null,
@@ -117,7 +117,7 @@ const expectations = [
         {
           rel: 'stylesheet',
           href: 'http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200',
-          hrefRaw: 'http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200',
+          hrefRaw: './dbw_tester.css?scriptActivated&delay=200',
           hreflang: '',
           as: '',
           crossOrigin: null,
@@ -413,7 +413,7 @@ const expectations = [
       },
     },
   },
-  // TODO: Uncomment when Chrome m84 lands
+  // TODO(COMPAT): Uncomment when Chrome m84 lands
   // {
   //   artifacts: {
   //     InspectorIssues: {

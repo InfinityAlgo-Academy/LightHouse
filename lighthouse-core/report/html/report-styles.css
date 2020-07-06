@@ -601,9 +601,6 @@
   color: var(--color-gray-600);
   margin: var(--section-padding-vertical) 0;
 }
-.lh-metrics__disclaimer a {
-  color: var(--color-gray-700);
-}
 
 .lh-calclink {
   padding-left: calc(1ex / 3);
@@ -1332,6 +1329,9 @@
 
 .lh-row--odd {
   background-color: var(--table-higlight-background-color);
+}
+.lh-row--hidden {
+  display: none;
 }
 
 .lh-table th,

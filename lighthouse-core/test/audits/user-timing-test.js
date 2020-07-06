@@ -22,10 +22,10 @@ describe('Performance: user-timings audit', () => {
   it('evaluates valid input correctly', () => {
     const artifacts = generateArtifactsWithTrace(traceEvents);
     return UserTimingsAudit.audit(artifacts, {computedCache: new Map()}).then(auditResult => {
-      const blackListedUTs = auditResult.extendedInfo.value.filter(timing => {
-        return UserTimingsAudit.blacklistedPrefixes.some(prefix => timing.name.startsWith(prefix));
+      const excludedUTs = auditResult.details.items.filter(timing => {
+        return UserTimingsAudit.excludedPrefixes.some(prefix => timing.name.startsWith(prefix));
       });
-      assert.equal(blackListedUTs.length, 0, 'Blacklisted usertimings included in results');
+      assert.equal(excludedUTs.length, 0, 'excluded usertimings included in results');
 
       assert.equal(auditResult.score, 0);
       expect(auditResult.displayValue).toBeDisplayString('2 user timings');
@@ -61,7 +61,7 @@ describe('Performance: user-timings audit', () => {
 
     const artifacts = generateArtifactsWithTrace(extraTraceEvents);
     return UserTimingsAudit.audit(artifacts, {computedCache: new Map()}).then(result => {
-      const fakeEvt = result.extendedInfo.value.find(item => item.name === 'Zone:ZonePromise');
+      const fakeEvt = result.details.items.find(item => item.name === 'Zone:ZonePromise');
       assert.ok(fakeEvt, 'failed to find user timing item with colon');
     });
   });

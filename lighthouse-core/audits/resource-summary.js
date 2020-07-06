@@ -14,7 +14,7 @@ const UIStrings = {
   title: 'Keep request counts low and transfer sizes small',
   /** Description of a Lighthouse audit that tells the user that they can setup a budgets for the quantity and size of page resources. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'To set budgets for the quantity and size of page resources,' +
-    ' add a budget.json file. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).',
+    ' add a budget.json file. [Learn more](https://web.dev/use-lighthouse-for-performance-budgets/).',
   /** [ICU Syntax] Label for an audit identifying the number of requests and kibibytes used to load the page. */
   displayValue: `{requestCount, plural, ` +
     `=1 {1 request • {byteCount, number, bytes} KiB} ` +

@@ -1349,6 +1349,9 @@ Object {
         Object {
           "path": "inspector-issues",
         },
+        Object {
+          "path": "source-maps",
+        },
       ],
       "loadFailureMode": "fatal",
       "networkQuietThresholdMs": 1000,

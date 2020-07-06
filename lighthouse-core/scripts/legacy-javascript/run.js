@@ -174,13 +174,17 @@ function makeSummary(legacyJavascriptFilename) {
   let totalSignals = 0;
   const variants = [];
   for (const dir of glob.sync('*/*', {cwd: VARIANT_DIR})) {
-    /** @type {Array<{signals: string[]}>} */
+    /** @type {import('../../audits/legacy-javascript.js').Item[]} */
     const legacyJavascriptItems = require(`${VARIANT_DIR}/${dir}/${legacyJavascriptFilename}`);
-    const signals = legacyJavascriptItems.reduce((acc, cur) => {
-      totalSignals += cur.signals.length;
-      return acc.concat(cur.signals);
-    }, /** @type {string[]} */ ([])).join(', ');
-    variants.push({name: dir, signals});
+
+    const signals = [];
+    for (const item of legacyJavascriptItems) {
+      for (const subItem of item.subItems.items) {
+        signals.push(subItem.signal);
+      }
+    }
+    totalSignals += signals.length;
+    variants.push({name: dir, signals: signals.join(', ')});
   }
   return {
     totalSignals,
@@ -227,13 +231,17 @@ function makeRequireCodeForPolyfill(module) {
 }
 
 async function main() {
-  for (const plugin of plugins) {
+  const pluginGroups = [
+    ...plugins.map(plugin => [plugin]),
+    ['@babel/plugin-transform-regenerator', '@babel/transform-async-to-generator'],
+  ];
+  for (const pluginGroup of pluginGroups) {
     await createVariant({
       group: 'only-plugin',
-      name: plugin,
+      name: pluginGroup.join('_'),
       code: mainCode,
       babelrc: {
-        plugins: [plugin],
+        plugins: pluginGroup,
       },
     });
   }
@@ -242,11 +250,17 @@ async function main() {
     removeCoreJs();
     installCoreJs(coreJsVersion);
 
-    for (const esmodules of [true, false]) {
+    const moduleOptions = [
+      {esmodules: false},
+      // Output: https://gist.github.com/connorjclark/515d05094ffd1fc038894a77156bf226
+      {esmodules: true},
+      {esmodules: true, bugfixes: true},
+    ];
+    for (const {esmodules, bugfixes} of moduleOptions) {
       await createVariant({
         group: `core-js-${coreJsVersion}-preset-env-esmodules`,
-        name: String(esmodules),
-        code: mainCode,
+        name: String(esmodules) + (bugfixes ? '_and_bugfixes' : ''),
+        code: `require('core-js');\n${mainCode}`,
         babelrc: {
           presets: [
             [
@@ -255,6 +269,7 @@ async function main() {
                 targets: {esmodules},
                 useBuiltIns: 'entry',
                 corejs: coreJsVersion,
+                bugfixes,
               },
             ],
           ],
@@ -306,4 +321,7 @@ async function main() {
   createSummarySizes();
 }
 
-main();
+main().catch(err => {
+  console.error(err);
+  process.exit(1);
+});

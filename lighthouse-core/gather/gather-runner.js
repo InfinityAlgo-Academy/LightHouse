@@ -118,6 +118,7 @@ class GatherRunner {
     await driver.cacheNatives();
     await driver.registerPerformanceObserver();
     await driver.dismissJavaScriptDialogs();
+    await driver.registerRequestIdleCallbackWrap(options.settings);
     if (resetStorage) await driver.clearDataForOrigin(options.requestedUrl);
     log.timeEnd(status);
   }
@@ -516,7 +517,7 @@ class GatherRunner {
       await passContext.driver.sendCommand('Page.getInstallabilityErrors');
 
     let errors = response.installabilityErrors;
-    // Before M82, `getInstallabilityErrors` was not localized and just english
+    // COMPAT: Before M82, `getInstallabilityErrors` was not localized and just english
     // error strings were returned. Convert the values we care about to the new error id format.
     if (!errors) {
       /** @type {string[]} */

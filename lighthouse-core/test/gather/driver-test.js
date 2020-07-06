@@ -364,7 +364,7 @@ describe('.beginTrace', () => {
     await driver.beginTrace();
 
     const tracingStartArgs = connectionStub.sendCommand.findInvocation('Tracing.start');
-    // m70 doesn't have disabled-by-default-lighthouse, so 'toplevel' is used instead.
+    // COMPAT: m70 doesn't have disabled-by-default-lighthouse, so 'toplevel' is used instead.
     expect(tracingStartArgs.categories).toContain('toplevel');
     expect(tracingStartArgs.categories).not.toContain('disabled-by-default-lighthouse');
   });

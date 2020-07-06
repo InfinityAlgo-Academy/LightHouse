@@ -249,14 +249,14 @@ describe('PerfCategoryRenderer', () => {
       const url = new URL(href);
       expect(url.hash.split('&')).toMatchInlineSnapshot(`
         Array [
-          "#first-contentful-paint=3969.135",
-          "speed-index=4417",
-          "largest-contentful-paint=4927.278",
-          "interactive=4927.278",
-          "total-blocking-time=116.79800000000023",
-          "cumulative-layout-shift=0",
-          "first-cpu-idle=4927.278",
-          "first-meaningful-paint=3969.136",
+          "#FCP=3969",
+          "SI=4417",
+          "LCP=4927",
+          "TTI=4927",
+          "TBT=117",
+          "CLS=0",
+          "FCI=4927",
+          "FMP=3969",
         ]
       `);
     });
@@ -271,14 +271,14 @@ describe('PerfCategoryRenderer', () => {
       try {
         expect(url.hash.split('&')).toMatchInlineSnapshot(`
           Array [
-            "#first-contentful-paint=3969.135",
-            "speed-index=4417",
-            "largest-contentful-paint=4927.278",
-            "interactive=4927.278",
-            "total-blocking-time=116.79800000000023",
-            "cumulative-layout-shift=0.42",
-            "first-cpu-idle=4927.278",
-            "first-meaningful-paint=3969.136",
+            "#FCP=3969",
+            "SI=4417",
+            "LCP=4927",
+            "TTI=4927",
+            "TBT=117",
+            "CLS=0.42",
+            "FCI=4927",
+            "FMP=3969",
             "device=mobile",
             "version=6.0.0",
           ]
@@ -294,7 +294,7 @@ describe('PerfCategoryRenderer', () => {
       lcp.result.numericValue = undefined;
       lcp.result.score = null;
       const href = renderer._getScoringCalculatorHref(categoryClone.auditRefs);
-      expect(href).toContain('largest-contentful-paint=null');
+      expect(href).toContain('LCP=null');
     });
   });
 

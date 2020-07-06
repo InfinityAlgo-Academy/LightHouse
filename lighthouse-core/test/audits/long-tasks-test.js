@@ -7,9 +7,10 @@
 
 const LongTasks = require('../../audits/long-tasks.js');
 const createTestTrace = require('../create-test-trace.js');
-const devtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
+const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
-const TASK_URL = 'https://pwa.rocks/';
+const BASE_TS = 12345e3;
+const TASK_URL = 'https://pwa.rocks';
 
 /* eslint-env jest */
 
@@ -19,8 +20,7 @@ const TASK_URL = 'https://pwa.rocks/';
  * @param {Boolean} withChildTasks
  */
 function generateTraceWithLongTasks({count, duration = 200, withChildTasks = false}) {
-  const baseTs = 1000;
-  const traceTasks = [];
+  const traceTasks = [{ts: BASE_TS, duration: 0}];
   for (let i = 1; i <= count; i++) {
     /* Generates a top-level task w/ the following breakdown:
     task -> {
@@ -31,7 +31,7 @@ function generateTraceWithLongTasks({count, duration = 200, withChildTasks = fal
     Child tasks should start after the parent task and end before it.
     Top-level tasks will take on the attributable URL from it's children.
     */
-    const ts = baseTs * i;
+    const ts = BASE_TS + i * 1000;
     const task = {ts, duration};
     task.children = [];
     if (withChildTasks) {
@@ -50,18 +50,21 @@ function generateTraceWithLongTasks({count, duration = 200, withChildTasks = fal
   }
   return createTestTrace({
     topLevelTasks: traceTasks,
+    navigationStart: BASE_TS,
   });
 }
 
 describe('Long tasks audit', () => {
+  const devtoolsLog = networkRecordsToDevtoolsLog([{url: TASK_URL}]);
+
   it('should pass and be non-applicable if there are no long tasks', async () => {
     const artifacts = {
       traces: {defaultPass: generateTraceWithLongTasks({count: 0})},
       devtoolsLogs: {defaultPass: devtoolsLog},
     };
     const result = await LongTasks.audit(artifacts, {computedCache: new Map()});
-    expect(result.score).toBe(1);
     expect(result.details.items).toHaveLength(0);
+    expect(result.score).toBe(1);
     expect(result.displayValue).toBeUndefined();
     expect(result.notApplicable).toBeTruthy();
   });
@@ -72,67 +75,74 @@ describe('Long tasks audit', () => {
       devtoolsLogs: {defaultPass: devtoolsLog},
     };
     const result = await LongTasks.audit(artifacts, {computedCache: new Map()});
+    expect(result.details.items).toMatchObject([
+      {url: 'Unattributable', duration: 200, startTime: 1000},
+      {url: 'Unattributable', duration: 200, startTime: 2000},
+      {url: 'Unattributable', duration: 200, startTime: 3000},
+      {url: 'Unattributable', duration: 200, startTime: 4000},
+    ]);
     expect(result.score).toBe(0);
-    expect(result.details.items).toHaveLength(4);
     expect(result.displayValue).toBeDisplayString('4 long tasks found');
     expect(result.notApplicable).toBeFalsy();
-
-    for (const item of result.details.items) {
-      expect(Number.isFinite(item.duration)).toBeTruthy();
-      expect(item.duration).toEqual(200);
-      expect(item.url).toEqual('Unattributable');
-    }
   });
 
   it('should filter out tasks with duration less than 50 ms', async () => {
     const trace = createTestTrace({
+      navigationStart: BASE_TS,
       topLevelTasks: [
-        {ts: 1000, duration: 30},
-        {ts: 2000, duration: 100},
-        {ts: 3000, duration: 25},
-        {ts: 4000, duration: 50},
+        {ts: BASE_TS, duration: 1},
+        {ts: BASE_TS + 1000, duration: 30},
+        {ts: BASE_TS + 2000, duration: 100},
+        {ts: BASE_TS + 3000, duration: 25},
+        {ts: BASE_TS + 4000, duration: 50},
       ],
     });
     const artifacts = {
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
     };
-    const result = await LongTasks.audit(artifacts, {computedCache: new Map()});
-    expect(result.score).toBe(0);
-    expect(result.details.items).toHaveLength(2);
-    expect(result.displayValue).toBeDisplayString('2 long tasks found');
 
-    for (const item of result.details.items) {
-      expect(Number.isFinite(item.duration)).toBeTruthy();
-      expect(item.duration).toBeGreaterThanOrEqual(50);
-      expect(item.url).toEqual('Unattributable');
-    }
+    const result = await LongTasks.audit(artifacts, {computedCache: new Map()});
+    expect(result.details.items).toMatchObject([
+      {url: 'Unattributable', duration: 100, startTime: 2000},
+      {url: 'Unattributable', duration: 50, startTime: 4000},
+    ]);
+    expect(result.score).toBe(0);
+    expect(result.displayValue).toBeDisplayString('2 long tasks found');
   });
 
   it('should not filter out tasks with duration >= 50 ms only after throttling', async () => {
     const artifacts = {
-      traces: {defaultPass: generateTraceWithLongTasks({count: 4, duration: 45})},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      traces: {defaultPass: generateTraceWithLongTasks({count: 4, duration: 25})},
+      devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog([
+        {url: TASK_URL, timing: {connectEnd: 50, connectStart: 0.01, sslStart: 25, sslEnd: 40}},
+      ])},
     };
     const context = {
       computedCache: new Map(),
       settings: {
+        precomputedLanternData: {
+          additionalRttByOrigin: {[TASK_URL]: 0},
+          serverResponseTimeByOrigin: {[TASK_URL]: 100},
+        },
         throttlingMethod: 'simulate',
         throttling: {
-          cpuSlowdownMultiplier: 2,
+          rttMs: 100,
+          throughputKbps: 10000,
+          cpuSlowdownMultiplier: 4,
         },
       },
     };
     const result = await LongTasks.audit(artifacts, context);
+    expect(result.details.items).toMatchObject([
+      {duration: 100, startTime: 600},
+      {duration: 100, startTime: 700},
+      {duration: 100, startTime: 800},
+      {duration: 100, startTime: 900},
+    ]);
     expect(result.score).toBe(0);
     expect(result.details.items).toHaveLength(4);
     expect(result.displayValue).toBeDisplayString('4 long tasks found');
-
-    for (const item of result.details.items) {
-      expect(Number.isFinite(item.duration)).toBeTruthy();
-      expect(item.duration).toEqual(90);
-      expect(item.url).toEqual('Unattributable');
-    }
   });
 
   it('should populate url when tasks have an attributable url', async () => {
@@ -142,14 +152,10 @@ describe('Long tasks audit', () => {
       devtoolsLogs: {defaultPass: devtoolsLog},
     };
     const result = await LongTasks.audit(artifacts, {computedCache: new Map()});
+    expect(result.details.items).toMatchObject([
+      {url: TASK_URL, duration: 300, startTime: 1000},
+    ]);
     expect(result.score).toBe(0);
-    expect(result.details.items).toHaveLength(1);
     expect(result.displayValue).toBeDisplayString('1 long task found');
-
-    for (const item of result.details.items) {
-      expect(Number.isFinite(item.duration)).toBeTruthy();
-      expect(item.duration).toBeGreaterThanOrEqual(50);
-      expect(item.url).toEqual(TASK_URL);
-    }
   });
 });

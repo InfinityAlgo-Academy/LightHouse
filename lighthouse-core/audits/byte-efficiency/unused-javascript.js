@@ -67,8 +67,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['JsUsage', 'ScriptElements', 'devtoolsLogs', 'traces'],
-      __internalOptionalArtifacts: ['SourceMaps'],
+      requiredArtifacts: ['JsUsage', 'ScriptElements', 'SourceMaps', 'devtoolsLogs', 'traces'],
     };
   }
 
@@ -79,7 +78,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
    * @return {Promise<ByteEfficiencyAudit.ByteEfficiencyProduct>}
    */
   static async audit_(artifacts, networkRecords, context) {
-    const bundles = artifacts.SourceMaps ? await JsBundles.request(artifacts, context) : [];
+    const bundles = await JsBundles.request(artifacts, context);
     const {
       unusedThreshold = IGNORE_THRESHOLD_IN_BYTES,
       bundleSourceUnusedThreshold = IGNORE_BUNDLE_SOURCE_THRESHOLD_IN_BYTES,
@@ -142,9 +141,9 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       items,
       headings: [
         /* eslint-disable max-len */
-        {key: 'url', valueType: 'url', subHeading: {key: 'source', valueType: 'code'}, label: str_(i18n.UIStrings.columnURL)},
-        {key: 'totalBytes', valueType: 'bytes', subHeading: {key: 'sourceBytes'}, label: str_(i18n.UIStrings.columnTransferSize)},
-        {key: 'wastedBytes', valueType: 'bytes', subHeading: {key: 'sourceWastedBytes'}, label: str_(i18n.UIStrings.columnWastedBytes)},
+        {key: 'url', valueType: 'url', subItemsHeading: {key: 'source', valueType: 'code'}, label: str_(i18n.UIStrings.columnURL)},
+        {key: 'totalBytes', valueType: 'bytes', subItemsHeading: {key: 'sourceBytes'}, label: str_(i18n.UIStrings.columnTransferSize)},
+        {key: 'wastedBytes', valueType: 'bytes', subItemsHeading: {key: 'sourceWastedBytes'}, label: str_(i18n.UIStrings.columnWastedBytes)},
         /* eslint-enable max-len */
       ],
     };
