@@ -17,20 +17,20 @@ const pageFunctions = require('../../lib/page-functions.js');
 /* istanbul ignore next */
 function getParentForm(node) {
   if (node == undefined){
-    return "undefined";
+    return [undefined, false];
   }
   if (node.nodeName == 'BODY'){
-    return getNodePath(node);
+    return [getNodePath(node), false];
   };
   if (node.nodeName == 'FORM'){
     if (node.id && node.id != ""){
-      return node.id;
+      return [node.id, true];
     }
     if (node.name && node.name != ""){
-      return node.name;
+      return [node.name, true];
     }
     // @ts-ignore - getNodePath put into scope via stringification
-    return getNodePath(node); // eslint-disable-line no-undef
+    return [getNodePath(node), false]; // eslint-disable-line no-undef
   };
 
   return getParentForm(node.parentElement);
@@ -52,7 +52,8 @@ function collectFormElements() {
       id: node.id,
       elementType: node.nodeName,
       name: node.name,
-      parentForm: getParentForm(node),
+      parentForm: getParentForm(node)[0],
+      parentFormIdentified: getParentForm(node)[1],
       placeHolder: node.placeholder,
       autocomplete: node.autocomplete,
       for: node.for,
