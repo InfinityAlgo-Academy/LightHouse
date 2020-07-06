@@ -17,22 +17,23 @@ const pageFunctions = require('../../lib/page-functions.js');
 /* istanbul ignore next */
 function getParentForm(node) {
   if (node == undefined){
-    return "undefined"
+    return "undefined";
   }
   if (node.nodeName == 'BODY'){
-    return ""
+    return getNodePath(node);
   };
   if (node.nodeName == 'FORM'){
     if (node.id && node.id != ""){
-      return node.id
+      return node.id;
     }
     if (node.name && node.name != ""){
-      return node.name
+      return node.name;
     }
-    return "unidentifiable form"
+    // @ts-ignore - getNodePath put into scope via stringification
+    return getNodePath(node); // eslint-disable-line no-undef
   };
 
-  return getParentForm(node.parentElement)
+  return getParentForm(node.parentElement);
 }
 
 /**
@@ -73,6 +74,7 @@ class FormElements extends Gatherer {
       ${pageFunctions.getOuterHTMLSnippetString};
       ${pageFunctions.getElementsInDocumentString};
       ${pageFunctions.isPositionFixedString};
+      ${pageFunctions.getNodePathString};
       return (${collectFormElements})();
 
     })()`;
