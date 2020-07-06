@@ -2,7 +2,7 @@
 
 _Some incomplete notes_
 
-![Lighthouse Architecture](https://raw.githubusercontent.com/GoogleChrome/lighthouse/master/assets/architecture.jpg)
+![Lighthouse Architecture](https://raw.githubusercontent.com/GoogleChrome/lighthouse/master/assets/architecture.png)
 
 ## Components & Terminology
 
@@ -90,9 +90,9 @@ The `details` object is parsed in report-renderer.js. View other audits for guid
 
 ## Lighthouse-core internal module dependencies
 
-![image](https://user-images.githubusercontent.com/39191/42241426-609d15f6-7ebf-11e8-9e40-411d9ede43e6.png)
+![image](https://user-images.githubusercontent.com/39191/86166329-786fb100-bac9-11ea-919a-d6c3b156d3a4.png)
 
-(Generated July 3, 2018 via `madge lighthouse-core/index.js --image arch.png --layout dot --backgroundColor "#fafafa" --nodeColor "#4d4afc" --noDependencyColor "#48ad00"`)
+(Generated June 30, 2020 via `madge lighthouse-core/index.js --image arch.png --layout dot --exclude="(locales\/)|(stack-packs\/packs)"`)
 
 ## Lantern
 
