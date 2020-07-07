@@ -12,7 +12,7 @@ const pageFunctions = require('../../lib/page-functions.js');
 
 /**
  *  @param {HTMLElement}
- *  @return {String|[nodePathString, bool]}
+ *  @return {[String, bool]|[nodePathString, bool]|[[undefined, bool]]}
  */
 /* istanbul ignore next */
 function getParentForm(node) {
