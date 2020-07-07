@@ -48,11 +48,11 @@ function collectFormElements() {
     const parentForm = getParentForm(node)
     return {
       id: node.id,
-      elementType: node.nodeName,
+      nodeName: node.nodeName,
       name: node.name,
       parentForm: parentForm.identifier,
       parentFormIdentified: parentForm.found,
-      placeHolder: node.placeholder,
+      placeholder: node.placeholder,
       autocomplete: node.autocomplete,
       for: node.for,
     };
