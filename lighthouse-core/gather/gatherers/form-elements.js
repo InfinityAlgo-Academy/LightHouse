@@ -16,24 +16,21 @@ const pageFunctions = require('../../lib/page-functions.js');
  */
 /* istanbul ignore next */
 function getParentForm(node) {
-  if (node == undefined){
-    return [undefined, false];
+  if (node == undefined || node.form == undefined){
+    return {identifier: undefined, found: false};
   }
-  if (node.nodeName == 'BODY'){
-    return [getNodePath(node), false];
-  };
-  if (node.nodeName == 'FORM'){
-    if (node.id && node.id != ""){
-      return [node.id, true];
+  if (node.form){
+    if (node.form.id && node.for.id != ""){
+      return {identifier: node.form.id, found: true};
     }
-    if (node.name && node.name != ""){
-      return [node.name, true];
+    if (node.form.name && node.form.name != ""){
+      return {identifier: node.form.name, found: true};
     }
-    // @ts-ignore - getNodePath put into scope via stringification
-    return [getNodePath(node), false]; // eslint-disable-line no-undef
-  };
+  }
+  // @ts-ignore - getNodePath put into scope via stringification
+  return {identifier: getNodePath(node), found: false}; // eslint-disable-line no-undef
 
-  return getParentForm(node.parentElement);
+
 }
 
 /**
@@ -48,12 +45,13 @@ function collectFormElements() {
   const labelElements = getElementsInDocument('label'); // eslint-disable-line no-undef
   const formElements = inputElements.concat(selectElements, textareaElements, labelElements)
   return formElements.map(/** @param {HTMLElement} node */ (node) => {
+    const parentForm = getParentForm(node)
     return {
       id: node.id,
       elementType: node.nodeName,
       name: node.name,
-      parentForm: getParentForm(node)[0],
-      parentFormIdentified: getParentForm(node)[1],
+      parentForm: parentForm.identifier,
+      parentFormIdentified: parentForm.found,
       placeHolder: node.placeholder,
       autocomplete: node.autocomplete,
       for: node.for,
