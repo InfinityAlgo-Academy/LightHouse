@@ -10,28 +10,62 @@ const pageFunctions = require('../../lib/page-functions.js');
 
 /* eslint-env browser, node */
 
+
 /**
- *  @param {HTMLElement}
- *  @return {[String, bool]|[nodePathString, bool]|[[undefined, bool]]}
+ *  @param {HTMLFormElement}
+ *  @return {any[]}
  */
 /* istanbul ignore next */
-function getParentForm(node) {
-  if (node == undefined || node.form == undefined){
-    return {identifier: undefined, found: false};
+function getChildrenAInputs(formElement) {
+  if (formElement.formless == true){
+    return formElement.inputs
   }
-  if (node.form){
-    if (node.form.id && node.for.id != ""){
-      return {identifier: node.form.id, found: true};
-    }
-    if (node.form.name && node.form.name != ""){
-      return {identifier: node.form.name, found: true};
-    }
-  }
-  // @ts-ignore - getNodePath put into scope via stringification
-  return {identifier: getNodePath(node), found: false}; // eslint-disable-line no-undef
 
+  const inputsArray = [];
+  const childrenArray = Array.prototype.slice.call(formElement.childNodes);
+  
+  childrenArray.map(  /** @param {HTMLElement} node */ (element) => {
+    if (element.nodeName == 'INPUT' || element.nodeName == 'SELECT' || element.nodeName == 'TEXTAREA'){
+      inputAttributes = {
+        id: element.id,
+        nodeName: element.nodeName,
+        name: element.name,
+        placeholder: element.placeholder,
+        autocomplete: element.autocomplete,
+      }
+      inputsArray.push(inputAttributes);
+    }
+  });
 
+  return inputsArray;
 }
+
+/**
+ *  @param {HTMLFormElement}
+ *  @return {any[]}
+ */
+/* istanbul ignore next */
+function getChildrenLabels(formElement) {
+  if (formElement.formless == true){
+    return formElement.labels
+  }
+  const childrenArray = Array.prototype.slice.call(formElement.childNodes);
+  const labelsArray = [];
+  childrenArray.map(/** @param {HTMLElement} node */ (element) => {
+    if (element.nodeName == 'LABEL'){
+      labelAttributes = {
+        id: element.id,
+        nodeName: element.nodeName,
+        name: element.name,
+        for: element.for,
+      }
+      labelsArray.push(labelAttributes);
+    }
+  });
+
+  return labelsArray;
+}
+
 
 /**
  * @return {LH.Artifacts['FormElements']}
@@ -43,19 +77,55 @@ function collectFormElements() {
   const selectElements = getElementsInDocument('select'); // eslint-disable-line no-undef
   const textareaElements = getElementsInDocument('textarea'); // eslint-disable-line no-undef
   const labelElements = getElementsInDocument('label'); // eslint-disable-line no-undef
-  const formElements = inputElements.concat(selectElements, textareaElements, labelElements)
-  return formElements.map(/** @param {HTMLElement} node */ (node) => {
-    const parentForm = getParentForm(node)
-    return {
-      id: node.id,
-      nodeName: node.nodeName,
-      name: node.name,
-      parentForm: parentForm.identifier,
-      parentFormIdentified: parentForm.found,
-      placeholder: node.placeholder,
-      autocomplete: node.autocomplete,
-      for: node.for,
-    };
+  const formElements = getElementsInDocument('form'); // eslint-disable-line no-undef
+  const formChildren = inputElements.concat(selectElements, textareaElements, labelElements);
+
+  const formless = {
+    formless: true,
+    inputs: [],
+    labels: [],
+  }
+  formChildren.map(/** @param {HTMLElement} node */ (childElement) => {
+    if (childElement.form == "" || !childElement.form){
+      if (childElement.nodeName == 'INPUT' || childElement.nodeName == 'SELECT' || childElement.nodeName == 'TEXTAREA'){
+        inputAttributes = {
+          id: childElement.id,
+          nodeName: childElement.nodeName,
+          name: childElement.name,
+          placeholder: childElement.placeholder,
+          autocomplete: childElement.autocomplete,
+        }
+        formless.inputs.push(inputAttributes);
+      }
+
+      else if (childElement.nodeName == 'LABEL'){
+        labelAttributes = {
+          id: childElement.id,
+          nodeName: childElement.nodeName,
+          name: childElement.name,
+          for: childElement.for,
+        }
+        formless.labels.push(labelAttributes);
+      }
+    }
+  });
+
+  if (formless.inputs.length > 0 || formless.labels.length > 0){
+    formElements.push(formless);
+  }
+
+  return formElements.map(/** @param {HTMLFormElement} node */ (formElement) => {
+    const form = {
+      id: formElement.id,
+      name:formElement.name,
+      autocomplete:formElement.autocomplete,
+    }
+
+    return{
+      form: form,
+      inputs: getChildrenAInputs(formElement),
+      labels: getChildrenLabels(formElement),
+    }
   });
 }
 
@@ -69,7 +139,8 @@ class FormElements extends Gatherer {
     const driver = passContext.driver;
 
     const expression = `(() => {
-      ${getParentForm.toString()};
+      ${getChildrenAInputs.toString()};
+      ${getChildrenLabels.toString()};
       ${pageFunctions.getOuterHTMLSnippetString};
       ${pageFunctions.getElementsInDocumentString};
       ${pageFunctions.isPositionFixedString};
