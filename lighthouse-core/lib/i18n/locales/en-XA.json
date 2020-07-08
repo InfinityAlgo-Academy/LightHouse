@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "[Åļļ ţéxţ ŕémåîñš vîšîбļé ðûŕîñĝ ŵéбƒöñţ ļöåðš one two three four five six seven eight nine]"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "[Ļîĝĥţĥöûšé ŵåš ûñåбļé ţö åûţömåţîçåļļý çĥéçķ ţĥé ƒöñţ-ðîšþļåý våļûé ƒöŕ ţĥé ƒöļļöŵîñĝ ÛŔĻ: ᐅ{fontURL}ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen]"
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "[Åšþéçţ Ŕåţîö (Åçţûåļ) one two three]"
   },

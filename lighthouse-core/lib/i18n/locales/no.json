@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "All tekst forblir synlig under innlasting av skrifttype for nettet"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Lighthouse kunne ikke automatisk kontrollere verdien av font-display for denne nettadressen: {fontURL}."
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Høyde/bredde-forhold (faktisk)"
   },

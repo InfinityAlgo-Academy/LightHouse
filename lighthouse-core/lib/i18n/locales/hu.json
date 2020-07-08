@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Az összes szöveg látható marad a webes betűtípusok betöltésekor"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "A Lighthouse nem tudta automatikusan ellenőrizni a következő URL font-display értékét: {fontURL}"
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Képarány (tényleges)"
   },

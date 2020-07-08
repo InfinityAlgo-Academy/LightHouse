@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Cały tekst pozostaje widoczny podczas ładowania czcionek internetowych"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Narzędziu Lighthouse nie udało się automatycznie sprawdzić wartości font-display dla tego adresu URL: {fontURL}."
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Współczynnik proporcji (rzeczywisty)"
   },

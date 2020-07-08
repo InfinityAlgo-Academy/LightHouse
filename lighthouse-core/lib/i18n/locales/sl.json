@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Vse besedilo ostaja vidno med nalaganjem spletne pisave"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Orodje Lighthouse ni utegnilo samodejno preveriti vrednosti font-display za naslednji URL: {fontURL}."
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Razmerje stranic (dejansko)"
   },

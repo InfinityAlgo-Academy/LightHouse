@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Tīmekļa fonta ielādes laikā viss teksts paliek redzams"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Lighthouse nevarēja automātiski pārbaudīt šī URL fonta attēlojuma vērtību: {fontURL}."
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Malu attiecība (faktiskā)"
   },

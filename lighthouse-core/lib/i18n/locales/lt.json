@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Įkeliant žiniatinklio šriftą matomas visas tekstas"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "„Lighthouse“ nepavyko automatiškai patikrinti toliau nurodyto URL šriftų pateikimo vertės: {fontURL}."
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Formato koeficientas (faktinis)"
   },

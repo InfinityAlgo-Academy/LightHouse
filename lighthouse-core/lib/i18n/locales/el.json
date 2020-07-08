@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Όλο το κείμενο παραμένει ορατό κατά τη διάρκεια φορτώσεων γραμματοσειράς ιστοτόπου"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Το Lighthouse δεν μπόρεσε να ελέγξει αυτόματα την τιμή προβολής γραμματοσειράς (font-display) για το ακόλουθο URL: {fontURL}."
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Λόγος διαστάσεων (Πραγματικός)"
   },

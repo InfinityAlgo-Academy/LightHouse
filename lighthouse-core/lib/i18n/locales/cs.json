@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Při načítání webfontů zůstává veškerý text viditelný"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Nástroj Lighthouse nemohl automaticky zkontrolovat hodnotu font-display pro následující adresu URL: {fontURL}."
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Poměr stran (skutečný)"
   },

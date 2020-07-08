@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Tot textul rămâne vizibil în timpul încărcării fonturilor web"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Lighthouse nu a putut verifica automat valoarea de afișare a fonturilor pentru următoarea adresă URL: {fontURL}."
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Raport de dimensiuni (real)"
   },

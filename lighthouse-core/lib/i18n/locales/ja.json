@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "ウェブフォント読み込み中の全テキストの表示"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "次の URL の font-display の値を Lighthouse で確認できませんでした: {fontURL}"
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "アスペクト比（実際）"
   },

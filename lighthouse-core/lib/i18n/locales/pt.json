@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Todo o texto continua visível durante o carregamento da webfont"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "O Lighthouse não conseguiu verificar automaticamente o valor de exibição da fonte para o seguinte URL: {fontURL}."
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Proporção (real)"
   },

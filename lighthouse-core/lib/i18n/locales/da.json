@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Al tekst forbliver synlig under indlæsning af webfont"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Lighthouse kunne ikke automatisk tjekke visningsværdien for skrifttyper for den følgende webadresse: {fontURL}."
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Billedformat (faktisk)"
   },

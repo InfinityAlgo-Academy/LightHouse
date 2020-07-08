@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Web yazı tipi yüklenirken tüm metin görünür halde kalır"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Lighthouse, şu URL için yazı tipi görüntüleme değerini otomatik olarak kontrol edemedi: {fontURL}."
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "En Boy Oranı (Gerçek)"
   },

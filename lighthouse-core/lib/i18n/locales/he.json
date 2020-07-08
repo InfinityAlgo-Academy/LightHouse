@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "כל הטקסט ממשיך להופיע במהלך טעינות של webfont"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "מערכת Lighthouse לא הצליחה לבדוק באופן אוטומטי את ערך תצוגת הגופן של כתובת ה-URL הבאה: {fontURL}."
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "יחס גובה-רוחב (בפועל)"
   },

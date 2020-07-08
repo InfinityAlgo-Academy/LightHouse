@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Patuloy na nakikita ang lahat ng text sa pag-load ng webfont"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Hindi awtomatikong nasuri ng Lighthouse ang value na font-display para sa sumusunod na URL: {fontURL}."
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Aspect Ratio (Aktwal)"
   },

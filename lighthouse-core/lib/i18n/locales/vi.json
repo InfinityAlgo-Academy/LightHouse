@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Tất cả văn bản vẫn hiển thị trong khi tải phông chữ web"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Lighthouse không thể tự động kiểm tra giá trị hiển thị phông chữ cho URL sau: {fontURL}."
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Tỷ lệ khung hình (Thực tế)"
   },

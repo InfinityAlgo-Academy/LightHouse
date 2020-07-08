@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Sav tekst ostaje vidljiv tijekom učitavanja web-fontova"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Lighthouse nije mogao automatski provjeriti vrijednost prikazanog fonta za sljedeći URL: {fontURL}."
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Omjer slike (stvarni)"
   },

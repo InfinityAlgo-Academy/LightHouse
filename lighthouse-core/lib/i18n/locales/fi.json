@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Kaikki teksti pysyy näkyvissä verkkofontin lataamisen aikana"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Lighthouse ei pystynyt tarkistamaan seuraavan URL-osoitteen fontinnäyttöarvoa automaattisesti: {fontURL}."
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Kuvasuhde (todellinen)"
   },

@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Показ всего текста во время загрузки веб-шрифтов"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Сервису Lighthouse не удалось автоматически проверить значение font-display для следующего URL: {fontURL}."
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Соотношение сторон (фактическое)"
   },

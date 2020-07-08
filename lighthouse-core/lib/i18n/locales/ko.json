@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "웹폰트가 로드되는 동안 모든 텍스트가 계속 표시됩니다"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Lighthouse에서 다음 URL의 글꼴 표시 값을 자동으로 확인하지 못했습니다. {fontURL}"
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "가로세로 비율(실제)"
   },

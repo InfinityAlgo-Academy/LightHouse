@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Semua teks tetap terlihat selama pemuatan font web"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Lighthouse tidak dapat secara otomatis memeriksa nilai tampilan font untuk URL berikut: {fontURL}."
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Rasio Tinggi Lebar (Aktual)"
   },

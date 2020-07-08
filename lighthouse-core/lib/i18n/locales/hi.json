@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "वेबफ़ॉन्ट लोड होने के दौरान सभी लेख दिखाई देते रहते हैं"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Lighthouse इस यूआरएल के लिए, फ़ॉन्ट-डिसप्ले की अपने आप जांच नहीं कर सका: {fontURL}"
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "चौड़ाई-ऊंचाई का अनुपात (असल)"
   },

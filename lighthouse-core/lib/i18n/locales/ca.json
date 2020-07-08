@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Tot el text continua visible durant les càrregues dels tipus de lletra per a llocs web"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Lighthouse no ha pogut comprovar automàticament el valor que permet mostrar els tipus de lletra de l'URL següent: {fontURL}."
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Relació d'aspecte (real)"
   },

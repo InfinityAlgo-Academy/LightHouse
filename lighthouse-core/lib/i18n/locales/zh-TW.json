@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "載入網站字型時沒有任何文字消失"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Lighthouse 無法自動檢查以下網址顯示字型的值：{fontURL}"
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "實際顯示比例"
   },

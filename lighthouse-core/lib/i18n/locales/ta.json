@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "இணைய எழுத்துருக்கள் ஏற்றப்படும்போது உரை எழுத்துகள் அனைத்தும் தெரிகின்றன"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "பின்வரும் URLளுக்கான எழுத்துருக் காட்சியின் மதிப்பை Lighthouseஸால் தானாக சரிபார்க்க முடியவில்லை: {fontURL}."
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "தோற்ற விகிதம் (அசல்)"
   },

@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "在網頁字型載入時，所有文字仍然顯示"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Lighthouse 無法自動檢查以下網址顯示字型的值：{fontURL}。"
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "實際的圖片長寬比"
   },

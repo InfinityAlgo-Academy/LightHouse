@@ -746,8 +746,8 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "All text remains visible during webfont loads"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Lighthouse was unable to automatically check the font-display value for the following URL: {fontURL}."
+  "lighthouse-core/audits/font-display.js | undeclaredFontOriginWarning": {
+    "message": "{fontCountForOrigin, plural, =1 {Lighthouse was unable to automatically check the `font-display` value for the origin {fontOrigin}.} other {Lighthouse was unable to automatically check the `font-display` values for the origin {fontOrigin}.}}"
   },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Aspect Ratio (Actual)"

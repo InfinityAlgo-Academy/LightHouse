@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Tutto il testo rimane visibile durante il caricamento dei caratteri web"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Impossibile controllare automaticamente in Lighthouse il valore font-display del seguente URL: {fontURL}."
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Proporzioni (effettive)"
   },

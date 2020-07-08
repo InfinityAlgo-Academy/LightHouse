@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "在网页字体加载期间，所有文本都保持可见状态"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Lighthouse 无法自动检查以下网址的字体显示值：{fontURL}。"
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "宽高比（实际）"
   },

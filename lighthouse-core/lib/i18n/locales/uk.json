@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Увесь текст залишається видимим під час завантаження веб-шрифтів"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Інструменту Lighthouse не вдалось автоматично перевірити значення відображення шрифтів для цієї URL-адреси: {fontURL}."
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Формат (фактичний)"
   },

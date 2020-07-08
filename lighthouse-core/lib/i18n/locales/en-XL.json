@@ -746,8 +746,8 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Âĺl̂ t́êx́t̂ ŕêḿâín̂ś v̂íŝíb̂ĺê d́ûŕîńĝ ẃêb́f̂ón̂t́ l̂óâd́ŝ"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "L̂íĝh́t̂h́ôúŝé ŵáŝ ún̂áb̂ĺê t́ô áût́ôḿât́îćâĺl̂ý ĉh́êćk̂ t́ĥé f̂ón̂t́-d̂íŝṕl̂áŷ v́âĺûé f̂ór̂ t́ĥé f̂ól̂ĺôẃîńĝ ÚR̂Ĺ: {fontURL}."
+  "lighthouse-core/audits/font-display.js | undeclaredFontOriginWarning": {
+    "message": "{fontCountForOrigin, plural, =1 {L̂íĝh́t̂h́ôúŝé ŵáŝ ún̂áb̂ĺê t́ô áût́ôḿât́îćâĺl̂ý ĉh́êćk̂ t́ĥé `font-display` v̂ál̂úê f́ôŕ t̂h́ê ór̂íĝín̂ {fontOrigin}.} other {Ĺîǵĥt́ĥóûśê ẃâś ûńâb́l̂é t̂ó âút̂óm̂át̂íĉál̂ĺŷ ćĥéĉḱ t̂h́ê `font-display` v́âĺûéŝ f́ôŕ t̂h́ê ór̂íĝín̂ {fontOrigin}.}}"
   },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Âśp̂éĉt́ R̂át̂íô (Áĉt́ûál̂)"

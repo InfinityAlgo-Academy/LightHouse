@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "ข้อความทั้งหมดจะยังมองเห็นได้ในระหว่างการโหลดเว็บฟอนต์"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Lighthouse ตรวจสอบค่าการแสดงแบบอักษรสำหรับ URL ต่อไปนี้โดยอัตโนมัติไม่ได้: {fontURL}"
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "สัดส่วนภาพ (ขนาดจริง)"
   },

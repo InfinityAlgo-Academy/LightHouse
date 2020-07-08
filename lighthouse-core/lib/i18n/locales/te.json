@@ -746,9 +746,6 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "వెబ్ ఫాంట్ లోడ్‌ల సమయంలో వచనం మొత్తం కనిపిస్తూ ఉంటుంది"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "కింది URL కోసం ఫాంట్ ప్రదర్శన విలువను Lighthouse ఆటోమేటిక్‌గా తనిఖీ చేయలేకపోయింది: {fontURL}."
-  },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "ఆకార నిష్పత్తి (ఉండాల్సినది)"
   },
