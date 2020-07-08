@@ -1607,6 +1607,9 @@
   "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": {
     "message": "Required {artifactName} gatherer did not run."
   },
+  "lighthouse-core/lib/lh-error.js | notHtml": {
+    "message": "The page provided is not HTML (served as MIME type {mimeType})."
+  },
   "lighthouse-core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
     "message": "This version of Chrome is too old to support '{featureName}'. Use a newer version to see full results."
   },

@@ -1607,6 +1607,9 @@
   "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": {
     "message": "R̂éq̂úîŕêd́ {artifactName} ĝát̂h́êŕêŕ d̂íd̂ ńôt́ r̂ún̂."
   },
+  "lighthouse-core/lib/lh-error.js | notHtml": {
+    "message": "T̂h́ê ṕâǵê ṕr̂óv̂íd̂éd̂ íŝ ńôt́ ĤT́M̂Ĺ (ŝér̂v́êd́ âś M̂ÍM̂É t̂ýp̂é {mimeType})."
+  },
   "lighthouse-core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
     "message": "T̂h́îś v̂ér̂śîón̂ óf̂ Ćĥŕôḿê íŝ t́ôó ôĺd̂ t́ô śûṕp̂ór̂t́ '{featureName}'. Ûśê á n̂éŵér̂ v́êŕŝíôń t̂ó ŝéê f́ûĺl̂ ŕêśûĺt̂ś."
   },
