@@ -16,7 +16,7 @@ const pageFunctions = require('../../lib/page-functions.js');
  *  @return {any[]}
  */
 /* istanbul ignore next */
-function getChildrenAInputs(formElement) {
+function getChildrenInputs(formElement) {
   if (formElement.formless == true){
     return formElement.inputs
   }
@@ -123,7 +123,7 @@ function collectFormElements() {
 
     return{
       form: form,
-      inputs: getChildrenAInputs(formElement),
+      inputs: getChildrenInputs(formElement),
       labels: getChildrenLabels(formElement),
     }
   });
@@ -139,7 +139,7 @@ class FormElements extends Gatherer {
     const driver = passContext.driver;
 
     const expression = `(() => {
-      ${getChildrenAInputs.toString()};
+      ${getChildrenInputs.toString()};
       ${getChildrenLabels.toString()};
       ${pageFunctions.getOuterHTMLSnippetString};
       ${pageFunctions.getElementsInDocumentString};
