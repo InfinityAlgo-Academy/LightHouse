@@ -14,6 +14,7 @@
 const config = {
   extends: 'lighthouse:default',
   audits: [
+    'valid-source-maps',
     'byte-efficiency/duplicated-javascript',
     'legacy-javascript',
     'valid-source-maps',
@@ -26,6 +27,12 @@ const config = {
         {id: 'duplicated-javascript', weight: 0, group: 'load-opportunities'},
         {id: 'legacy-javascript', weight: 0, group: 'diagnostics'},
         {id: 'valid-source-maps', weight: 0},
+      ],
+    },
+    // @ts-ignore
+    'best-practices': {
+      auditRefs: [
+        {id: 'valid-source-maps', weight: 0, group: 'best-practices-general'},
       ],
     },
   },
