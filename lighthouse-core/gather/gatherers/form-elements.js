@@ -13,7 +13,7 @@ const pageFunctions = require('../../lib/page-functions.js');
 
 /**
  *  @param {HTMLFormElement} formElement
- *  @return {Array<HTMLElement>}
+ *  @return {HTMLElement[] | { id: any; nodeName: any; name: any; placeholder: any; autocomplete: any; }[]}
  */
 /* istanbul ignore next */
 function getChildrenInputs(formElement) {
@@ -21,7 +21,8 @@ function getChildrenInputs(formElement) {
     return formElement.inputs
   }
 
-  const inputsArray = [];
+  /** @type {HTMLElement[] | { id: any; nodeName: any; name: any; placeholder: any; autocomplete: any; }[]} */
+  const inputsArray = []; 
   const childrenArray = Array.prototype.slice.call(formElement.childNodes);
   
   childrenArray.map(  /** @param {HTMLElement} node */ (element) => {
@@ -33,16 +34,17 @@ function getChildrenInputs(formElement) {
         placeholder: element.placeholder,
         autocomplete: element.autocomplete,
       }
+      // @ts-ignore
       inputsArray.push(inputAttributes);
     }
   });
-
+  
   return inputsArray;
 }
 
 /**
  *  @param {HTMLFormElement} formElement
- *  @return {Array<HTMLElement>}
+ *  @return {HTMLElement[] | { id: any; nodeName: any; name: any; for: any; }[]}
  */
 /* istanbul ignore next */
 function getChildrenLabels(formElement) {
@@ -50,6 +52,7 @@ function getChildrenLabels(formElement) {
     return formElement.labels
   }
   const childrenArray = Array.prototype.slice.call(formElement.childNodes);
+  /** @type {HTMLElement[] | { id: any; nodeName: any; name: any; for: any; }[]} */
   const labelsArray = [];
   childrenArray.map(/** @param {HTMLElement} node */ (element) => {
     if (element.nodeName == 'LABEL'){
@@ -59,6 +62,7 @@ function getChildrenLabels(formElement) {
         name: element.name,
         for: element.for,
       }
+      // @ts-ignore
       labelsArray.push(labelAttributes);
     }
   });
@@ -73,7 +77,9 @@ function getChildrenLabels(formElement) {
 /* istanbul ignore next */
 function collectFormElements() {
 
+  // @ts-ignore
   const formElements = getElementsInDocument('form'); // eslint-disable-line no-undef
+  // @ts-ignore
   const formChildren = getElementsInDocument('textarea', 'input', 'label', 'select'); // eslint-disable-line no-undef
 
   const formless = {
@@ -81,7 +87,8 @@ function collectFormElements() {
     inputs: [],
     labels: [],
   }
-  formChildren.map(/** @param {HTMLElement} node */ (childElement) => {
+  formChildren.map(/** @param {HTMLElement} childElement */ (childElement) => {
+    
     if (childElement.form == "" || !childElement.form){
       if (childElement.nodeName == 'INPUT' || childElement.nodeName == 'SELECT' || childElement.nodeName == 'TEXTAREA'){
         const inputAttributes = {
@@ -91,6 +98,7 @@ function collectFormElements() {
           placeholder: childElement.placeholder,
           autocomplete: childElement.autocomplete,
         }
+        // @ts-ignore
         formless.inputs.push(inputAttributes);
       }
 
@@ -101,6 +109,7 @@ function collectFormElements() {
           name: childElement.name,
           for: childElement.for,
         }
+        // @ts-ignore
         formless.labels.push(labelAttributes);
       }
     }
