@@ -42,7 +42,7 @@ function getChildrenInputs(formElement) {
 
 /**
  *  @param {HTMLFormElement}
- *  @return {any[]}
+ *  @return {Array<HTMLElement>}
  */
 /* istanbul ignore next */
 function getChildrenLabels(formElement) {
@@ -72,13 +72,9 @@ function getChildrenLabels(formElement) {
  */
 /* istanbul ignore next */
 function collectFormElements() {
-  // @ts-ignore - put into scope via stringification
-  const inputElements = getElementsInDocument('input'); // eslint-disable-line no-undef
-  const selectElements = getElementsInDocument('select'); // eslint-disable-line no-undef
-  const textareaElements = getElementsInDocument('textarea'); // eslint-disable-line no-undef
-  const labelElements = getElementsInDocument('label'); // eslint-disable-line no-undef
+  
   const formElements = getElementsInDocument('form'); // eslint-disable-line no-undef
-  const formChildren = inputElements.concat(selectElements, textareaElements, labelElements);
+  const formChildren = getElementsInDocument('textarea', 'input', 'label', 'select'); // eslint-disable-line no-undef
 
   const formless = {
     formless: true,
