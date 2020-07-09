@@ -12,7 +12,7 @@ const pageFunctions = require('../../lib/page-functions.js');
 
 
 /**
- *  @param {HTMLFormElement}
+ *  @param {HTMLFormElement} formElement
  *  @return {Array<HTMLElement>}
  */
 /* istanbul ignore next */
@@ -26,7 +26,7 @@ function getChildrenInputs(formElement) {
   
   childrenArray.map(  /** @param {HTMLElement} node */ (element) => {
     if (element.nodeName == 'INPUT' || element.nodeName == 'SELECT' || element.nodeName == 'TEXTAREA'){
-      inputAttributes = {
+      const inputAttributes = {
         id: element.id,
         nodeName: element.nodeName,
         name: element.name,
@@ -41,7 +41,7 @@ function getChildrenInputs(formElement) {
 }
 
 /**
- *  @param {HTMLFormElement}
+ *  @param {HTMLFormElement} formElement
  *  @return {Array<HTMLElement>}
  */
 /* istanbul ignore next */
@@ -53,7 +53,7 @@ function getChildrenLabels(formElement) {
   const labelsArray = [];
   childrenArray.map(/** @param {HTMLElement} node */ (element) => {
     if (element.nodeName == 'LABEL'){
-      labelAttributes = {
+      const labelAttributes = {
         id: element.id,
         nodeName: element.nodeName,
         name: element.name,
@@ -72,7 +72,7 @@ function getChildrenLabels(formElement) {
  */
 /* istanbul ignore next */
 function collectFormElements() {
-  
+
   const formElements = getElementsInDocument('form'); // eslint-disable-line no-undef
   const formChildren = getElementsInDocument('textarea', 'input', 'label', 'select'); // eslint-disable-line no-undef
 
@@ -84,7 +84,7 @@ function collectFormElements() {
   formChildren.map(/** @param {HTMLElement} node */ (childElement) => {
     if (childElement.form == "" || !childElement.form){
       if (childElement.nodeName == 'INPUT' || childElement.nodeName == 'SELECT' || childElement.nodeName == 'TEXTAREA'){
-        inputAttributes = {
+        const inputAttributes = {
           id: childElement.id,
           nodeName: childElement.nodeName,
           name: childElement.name,
@@ -95,7 +95,7 @@ function collectFormElements() {
       }
 
       else if (childElement.nodeName == 'LABEL'){
-        labelAttributes = {
+        const labelAttributes = {
           id: childElement.id,
           nodeName: childElement.nodeName,
           name: childElement.name,
@@ -110,7 +110,7 @@ function collectFormElements() {
     formElements.push(formless);
   }
 
-  return formElements.map(/** @param {HTMLFormElement} node */ (formElement) => {
+  return formElements.map(/** @param {HTMLFormElement} formElement */ (formElement) => {
     const form = {
       id: formElement.id,
       name:formElement.name,
