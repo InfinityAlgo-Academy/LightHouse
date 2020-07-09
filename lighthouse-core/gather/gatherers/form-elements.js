@@ -13,7 +13,7 @@ const pageFunctions = require('../../lib/page-functions.js');
 
 /**
  *  @param {HTMLFormElement}
- *  @return {any[]}
+ *  @return {Array<HTMLElement>}
  */
 /* istanbul ignore next */
 function getChildrenInputs(formElement) {
