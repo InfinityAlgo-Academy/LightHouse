@@ -678,8 +678,8 @@ declare global {
 
       export interface FormElement {
         form?: {id: string, name: string, autocomplete: string}
-        inputs: HTMLElement[] | { id: any; nodeName: any; name: any; placeholder: any; autocomplete: any; }[];
-        labels: HTMLElement[] | { id: any; nodeName: any; name: any; for: any; }[];
+        inputs: { id: any; nodeName: any; name: any; placeholder: any; autocomplete: any; }[];
+        labels: { id: any; nodeName: any; name: any; for: any; }[];
       }
     }
   }
