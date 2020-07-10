@@ -413,33 +413,35 @@ const expectations = [
       },
     },
   },
-  // TODO(COMPAT): Uncomment when Chrome m84 lands
-  // {
-  //   artifacts: {
-  //     InspectorIssues: {
-  //       mixedContent: [
-  //         {
-  //           resourceType: 'Image',
-  //           resolutionStatus: 'MixedContentWarning',
-  //           insecureURL: 'http://www.mixedcontentexamples.com/Content/Test/steveholt.jpg',
-  //           mainResourceURL: 'https://www.mixedcontentexamples.com/Test/NonSecureImage',
-  //           request: {
-  //             url: 'http://www.mixedcontentexamples.com/Content/Test/steveholt.jpg',
-  //           },
-  //         },
-  //       ],
-  //     },
-  //   },
-  //   lhr: {
-  //     requestedUrl: 'https://www.mixedcontentexamples.com/Test/NonSecureImage',
-  //     finalUrl: 'https://www.mixedcontentexamples.com/Test/NonSecureImage',
-  //     audits: {
-  //       'is-on-https': {
-  //         score: 0,
-  //       },
-  //     },
-  //   },
-  // },
+  {
+    artifacts: {
+      InspectorIssues: {
+        // Mixed Content issues weren't added to the protocol until M84.
+        // https://chromiumdash.appspot.com/commit/52ed57138d0b83e8afd9de25e60655c6ace7527c
+        _minChromiumMilestone: 84,
+        mixedContent: [
+          {
+            resourceType: 'Image',
+            resolutionStatus: 'MixedContentWarning',
+            insecureURL: 'http://www.mixedcontentexamples.com/Content/Test/steveholt.jpg',
+            mainResourceURL: 'https://www.mixedcontentexamples.com/Test/NonSecureImage',
+            request: {
+              url: 'http://www.mixedcontentexamples.com/Content/Test/steveholt.jpg',
+            },
+          },
+        ],
+      },
+    },
+    lhr: {
+      requestedUrl: 'https://www.mixedcontentexamples.com/Test/NonSecureImage',
+      finalUrl: 'https://www.mixedcontentexamples.com/Test/NonSecureImage',
+      audits: {
+        'is-on-https': {
+          score: 0,
+        },
+      },
+    },
+  },
 ];
 
 module.exports = expectations;
