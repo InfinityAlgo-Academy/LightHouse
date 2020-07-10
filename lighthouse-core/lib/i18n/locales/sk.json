@@ -806,12 +806,6 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Používa HTTPS"
   },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "Viacnásobné vyplnenia a transformácie umožňujú starým prehliadačom používať nové funkcie JavaScriptu. Mnohé z nich však nie sú pre moderné prehliadače potrebné. Zaveďte pre svoj zabalený JavaScript modernejšiu stratégiu nasadzovania skriptov využívajúcu detekciu modulových a nemodulových funkcií a zredukujte tak množstvo kódu dodávaného do moderných prehliadačov, pričom zachováte podporu starých prehliadačov. [Ďalšie informácie](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "Starý JavaScript"
-  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "Rýchle načítanie stránky cez mobilnú sieť zaisťuje dobrý dojem používateľov mobilných zariadení. [Ďalšie informácie](https://web.dev/load-fast-enough-for-pwa)"
   },

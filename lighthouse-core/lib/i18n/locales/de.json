@@ -806,12 +806,6 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Verwendet HTTPS"
   },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "Dank Polyfills und \"transform\" können veraltete Browser die neuen JavaScript-Funktionen nutzen. Bei modernen Browsern hingegen sind viele davon nicht erforderlich. Für Ihr JavaScript-Bundle sollten Sie eine moderne Skriptimplementierungsstrategie unter Verwendung der module/nomodule-Funktionserkennung einsetzen. So können Sie einerseits den an moderne Browser übermittelten Code auf das Nötige reduzieren und gleichzeitig veraltete Browser bestmöglich unterstützen. [Weitere Informationen](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "Veraltetes JavaScript"
-  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "Ein schneller Seitenaufbau über ein Mobilfunknetz sorgt dafür, dass die Seite für Nutzer auf Mobilgeräten angenehm zu bedienen ist. [Weitere Informationen.](https://web.dev/load-fast-enough-for-pwa)"
   },

@@ -806,12 +806,6 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "HTTPS を使用しています"
   },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "ポリフィルと変換を使用すると、従来のブラウザで新しい JavaScript 機能を使用できるようになります。ただし、その機能の多くは最新ブラウザでは必要ありません。バンドルされた JavaScript の場合、モジュールあり / モジュールなしの機能検出を使用する最新スクリプトの導入戦略を採用することにより、従来のブラウザに対するサポートを維持しながら、最新ブラウザに送るコード量を減らすことができます。[詳細](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "従来の JavaScript"
-  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "モバイル ネットワークでのページ読み込みを速くすることで、優れたモバイル ユーザー エクスペリエンスが実現されます。[詳細](https://web.dev/load-fast-enough-for-pwa)"
   },

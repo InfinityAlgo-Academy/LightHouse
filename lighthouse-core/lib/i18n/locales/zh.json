@@ -806,12 +806,6 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "使用 HTTPS"
   },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "Polyfill 和 transform 让旧版浏览器能够使用新的 JavaScript 功能。不过，其中的很多函数对新型浏览器而言并非必需。对于捆绑的 JavaScript，请采用现代脚本部署策略，以便利用 module/nomodule 功能检测机制来减少传送到新型浏览器的代码量，同时保留对旧版浏览器的支持。[了解详情](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "旧版 JavaScript"
-  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "如果网页在移动网络中的加载速度较快，则可确保良好的移动用户体验。[了解详情](https://web.dev/load-fast-enough-for-pwa)。"
   },

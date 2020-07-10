@@ -806,12 +806,6 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "HTTPS का इस्तेमाल करता है"
   },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "पॉलिफ़िल और ट्रांसफ़ॉर्म की मदद से पुराने ब्राउज़र पर नई JavaScript सुविधाओं का इस्तेमाल किया जा सकता है. हालांकि, नए ब्राउज़र के लिए इनमें से कई की ज़रूरत नहीं है. बंडल किए गए JavaScript के लिए, मॉड्यूल/नोमॉड्यूल सुविधा पहचान टूल का इस्तेमाल करके नई स्क्रिप्ट डिप्लॉयमेंट रणनीति अपनाएं. इससे नए ब्राउज़र पर कोड भेजने की संख्या कम करने और पुराने ब्राउज़र को चालू रखने में मदद मिलती है. [ज़्यादा जानें](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "पुराना JavaScript"
-  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "सेल्युलर नेटवर्क पर तेज़ी से पेज लोड होने की सुविधा से मोबाइल इस्तेमाल करने वालों को अच्छा अनुभव मिलता है. [ज़्यादा जानें](https://web.dev/load-fast-enough-for-pwa)."
   },

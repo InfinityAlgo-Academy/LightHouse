@@ -806,12 +806,6 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Sử dụng HTTPS"
   },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "Mã Polyfill và Transform cho phép trình duyệt cũ dùng các tính năng mới của JavaScript. Tuy nhiên, nhiều tính năng không cần thiết cho trình duyệt mới nữa. Đối với JavaScript trong gói của bạn, hãy áp dụng chiến lược triển khai tập lệnh mới bằng cách dùng cơ chế phát hiện tính năng theo mô-đun/không theo mô-đun để giảm số lượng mã gửi đến trình duyệt mới trong khi vẫn tiếp tục hỗ trợ cho trình duyệt cũ. [Tìm hiểu thêm](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "JavaScript cũ"
-  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "Tốc độ tải trang nhanh trên mạng di động giúp mang đến trải nghiệm tích cực cho người dùng thiết bị di động. [Tìm hiểu thêm](https://web.dev/load-fast-enough-for-pwa)."
   },

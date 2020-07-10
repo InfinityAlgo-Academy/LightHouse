@@ -806,12 +806,6 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Käyttää HTTPS:ää"
   },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "Polyfill- ja transform-merkintöjen avulla vanhat selaimet voivat käyttää uusia JavaScript-ominaisuuksia. Monia ei kuitenkaan tarvita nykyaikaisissa selaimissa. Käytä JavaScript-paketissasi nykyaikaista käyttöönottostrategiaa, jossa havaitaan moduuli/ei-moduuli-ominaisuus, minkä avulla vähennetään nykyaikaisiin selaimiin lähetetyn koodin määrää mutta säilytetään silti vanhojen selaimien tuki. [Lue lisää](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)."
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "Vanha JavaScript"
-  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "Nopea sivun lataus mobiiliverkon kautta varmistaa hyvän mobiilikäyttökokemuksen. [Lue lisää](https://web.dev/load-fast-enough-for-pwa)."
   },

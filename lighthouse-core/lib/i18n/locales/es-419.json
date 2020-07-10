@@ -806,12 +806,6 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Usa HTTPS"
   },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "El complemento Polyfill y las transformaciones permiten que los navegadores heredados utilicen nuevas funciones de JavaScript. Sin embargo, la mayoría no es necesaria en los navegadores modernos. Para tus paquetes de JavaScript, adopta una estrategia moderna de implementación de scripts mediante la detección de funciones de módulo/no módulo a fin de reducir la cantidad de código que se envía a los navegadores modernos, al tiempo que se mantiene la compatibilidad con navegadores heredados. [Más información](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "JavaScript heredado"
-  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "Si las páginas se cargan rápidamente en las redes móviles, el usuario disfrutará de una buena experiencia. [Obtén más información](https://web.dev/load-fast-enough-for-pwa)."
   },

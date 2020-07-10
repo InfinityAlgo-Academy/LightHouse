@@ -806,12 +806,6 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Používá protokol HTTPS"
   },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "Kódy polyfill a transform umožňují starším prohlížečům používat nové funkce JavaScriptu. Moderní prohlížeče ale řadu z nich nepotřebují. U svých balíčků JavaScriptu použijte moderní strategii nasazení skriptu pomocí detekce module/nomodule, abyste omezili množství kódu přenášeného do moderních prohlížečů, a přitom zachovali podporu pro starší prohlížeče. [Další informace](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "Starší JavaScript"
-  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "Rychlé načítání stránky přes mobilní síť zajišťuje dobrý dojem pro uživatele mobilních zařízení. [Další informace](https://web.dev/load-fast-enough-for-pwa)"
   },

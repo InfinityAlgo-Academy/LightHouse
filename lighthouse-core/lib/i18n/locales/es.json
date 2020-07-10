@@ -806,12 +806,6 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Usa HTTPS"
   },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "Los polyfills y los transforms permiten que los navegadores antiguos utilicen las nuevas funciones de JavaScript. Sin embargo, muchos de estos polyfills y transforms no son necesarios para los navegadores nuevos. Para tu JavaScript empaquetado, adopta una estrategia moderna de implementación de secuencias de comandos usando la detección de funciones module/nomodule para reducir la cantidad de código que se envía a los navegadores modernos sin perder la compatibilidad con los navegadores antiguos. [Más información](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "JavaScript antiguo"
-  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "Si las páginas se cargan rápidamente en las redes móviles, se asegurará una buena experiencia de usuario. [Más información](https://web.dev/load-fast-enough-for-pwa)"
   },

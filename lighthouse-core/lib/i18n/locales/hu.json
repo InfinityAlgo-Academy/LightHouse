@@ -806,12 +806,6 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "HTTPS-t használ"
   },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "A polifill és az átalakítás lehetővé teszi, hogy a régi böngészők is használhassák az újabb JavaScript-funkciókat. Az új böngészők esetében azonban sok polifill és átalakítás szükségtelen. Használjon modern szkripttelepítő módszert csomagolt JavaScript-kódjaihoz, amely észleli a module/nomodule utasításokat. Így kevesebb kódot küld a modern böngészőknek, mégis megtarthatja a régi böngészők támogatását. [További információ.](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "Régi JavaScript"
-  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "A mobilhálózatokon is gyors oldalbetöltés jobb mobilos felhasználói élményt jelent. [További információ](https://web.dev/load-fast-enough-for-pwa)."
   },

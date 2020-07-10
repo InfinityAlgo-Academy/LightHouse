@@ -806,12 +806,6 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Folosește HTTPS"
   },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "Polyfillurile și transformările fac posibilă folosirea noilor funcții JavaScript în browserele vechi. Însă pentru browserele moderne, majoritatea nu sunt necesare. Pentru grupul tău JavaScript, adoptă o strategie modernă de implementare a scriptului, care folosește detectarea funcțiilor module/nomodule, pentru a reduce volumul de cod transferat în browserele moderne și a menține totodată compatibilitatea cu browserele vechi. [Află mai multe](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "JavaScript vechi"
-  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "O încărcare rapidă a paginii într-o rețea celulară asigură o experiență bună a utilizatorului pe mobil. [Află mai multe](https://web.dev/load-fast-enough-for-pwa)."
   },

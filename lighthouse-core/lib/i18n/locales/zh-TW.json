@@ -806,12 +806,6 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "使用 HTTPS"
   },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "Polyfill 和轉換作業可讓舊版瀏覽器使用新版 JavaScript 的功能。不過這些功能對於新型瀏覽器而言，有很多都是不必要的。如果是 JavaScript 套件，請採用具備模組/非模組功能偵測機制的新型指令碼部署策略，以減少新型瀏覽器所需要的程式碼，同時保留對舊版瀏覽器的支援。[瞭解詳情](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "舊版 JavaScript"
-  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "如果網頁能透過行動網路快速載入，就可確保行動裝置使用者獲得良好的使用體驗。[瞭解詳情](https://web.dev/load-fast-enough-for-pwa)。"
   },

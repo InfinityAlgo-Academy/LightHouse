@@ -806,12 +806,6 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Используется протокол HTTPS"
   },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "Полизаполнения и преобразования позволяют работать с новыми функциями JavaScript в устаревших браузерах. Однако для большинства современных браузеров они не нужны. Используйте новую стратегию развертывания скриптов в пакетах JavaScript. Средство обнаружения модульных и немодульных функций сократит объем кода в современных браузерах и обеспечит поддержку устаревших браузеров. [Подробнее…](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "JavaScript и устаревшие браузеры"
-  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "Если страницы будут быстро загружаться по мобильной сети, сайтом станет удобно пользоваться на телефоне или планшете. [Подробнее…](https://web.dev/load-fast-enough-for-pwa)"
   },

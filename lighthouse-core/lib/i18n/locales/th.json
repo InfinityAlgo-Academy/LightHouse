@@ -806,12 +806,6 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "ใช้ HTTPS"
   },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "โพลีฟิลล์และการเปลี่ยนรูปแบบช่วยให้เบราว์เซอร์เดิมใช้ฟีเจอร์ JavaScript ใหม่ได้ แต่ส่วนมากจะไม่จำเป็นสำหรับเบราว์เซอร์สมัยใหม่ สำหรับ JavaScript แบบแพ็กเกจ ให้ใช้กลยุทธ์การทำให้สคริปต์สมัยใหม่ใช้งานได้โดยใช้การตรวจหาฟีเจอร์โมดูล/ไม่มีโมดูลเพื่อลดจำนวนโค้ดที่ส่งไปยังเบราว์เซอร์สมัยใหม่ ขณะที่ยังรองรับเบราว์เซอร์เดิมอยู่ [ดูข้อมูลเพิ่มเติม](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "JavaScript เดิม"
-  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "การโหลดหน้าเว็บที่รวดเร็วผ่านเครือข่ายมือถือช่วยให้มั่นใจว่าผู้ใช้ได้รับประสบการณ์การใช้งานที่ดีในอุปกรณ์เคลื่อนที่ [ดูข้อมูลเพิ่มเติม](https://web.dev/load-fast-enough-for-pwa)"
   },

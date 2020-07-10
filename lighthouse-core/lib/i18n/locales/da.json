@@ -806,12 +806,6 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Bruger HTTPS"
   },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "Polyfill-koder og transformeringer gør det muligt for browsere at anvende nye JavaScript-funktioner. Mange af dem er dog ikke nødvendige til moderne browsere. Hvis du har JavaScript-pakker, skal du bruge en strategi til implementering af moderne scripts, der anvender registrering af funktioner med eller uden moduler til at reducere mængden af kode, som sendes til moderne browsere, men som samtidig bevarer understøttelsen af forældede browsere. [Få flere oplysninger](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "Forældet JavaScript"
-  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "Hurtig sideindlæsning via mobilnetværk sikrer en god oplevelse for mobilbrugere. [Få flere oplysninger](https://web.dev/load-fast-enough-for-pwa)."
   },

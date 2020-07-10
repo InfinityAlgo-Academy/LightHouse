@@ -806,12 +806,6 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "HTTPSஸைப் பயன்படுத்துகிறது"
   },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "புதிய JavaScript அம்சங்களை லெகஸி உலாவிகள் பயன்படுத்துவதற்குப் பாலிஃபில்களும் ட்ரான்ஸ்ஃபாரம்களும் உதவுகின்றன. எனினும் நவீன உலாவிகளுக்கு இவற்றுள் பல தேவைப்படுவதில்லை. தொகுக்கப்பட்ட JavaScriptடிற்கு, லெகஸி உலாவிகளுக்கான ஆதரவைத் தக்க வைக்கும் அதே நேரத்தில் நவீன உலாவிகளுக்கு மாற்றப்படும் குறியீடுகளைக் குறைப்பதற்காக மாடியூல்/நோமாடியூல் அம்சக் கண்டறிதலைப் பயன்படுத்தி நவீன ஸ்கிரிப்ட் பயன்படுத்துதல் உத்தியைப் பயன்படுத்துங்கள். [மேலும் அறிக](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "லெகஸி JavaScript"
-  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "மொபைல் நெட்வொர்க்கில் பக்கம் வேகமாக ஏற்றப்பட்டால் அது மொபைல் பயனர்களுக்கு சிறந்த அனுபவத்தை வழங்கும். [மேலும் அறிக](https://web.dev/load-fast-enough-for-pwa)."
   },

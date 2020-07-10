@@ -806,12 +806,6 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "HTTPSను ఉపయోగిస్తుంది"
   },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "బహుళ పూరణలు, రూపం మార్పులు అనేవి కొత్త JavaScript ఫీచర్‌లు ఉపయోగించగలిగేలా లెగసీ బ్రౌజర్‌లను ఎనేబుల్ చేస్తాయి. అయితే, ఆధునిక బ్రౌజర్‌లకు అనేకం అవసరం లేదు. మీ బండిల్ JavaScript కోసం, లెగసీ బ్రౌజర్‌లకు సపోర్ట్ అలాగే ఉంచుతూ, ఆధునిక బ్రౌజర్‌లకు షిప్పింగ్ అయ్యే కోడ్ పరిమాణం తగ్గించడానికి 'module/nomodule' ఫీచర్ గుర్తింపును ఉపయోగించి ఆధునిక స్క్రిప్ట్ అమలు వ్యూహం అనుసరించండి. [మరింత తెలుసుకోండి](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "లెగసీ JavaScript"
-  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "పేజీ కనుక సెల్యులార్ నెట్‌వర్క్‌లో వేగంగా లోడ్ అయితే తప్పకుండా మంచి మొబైల్ వినియోగదారు అనుభవాన్ని అందిస్తుంది. [మరింత తెలుసుకోండి](https://web.dev/load-fast-enough-for-pwa)."
   },

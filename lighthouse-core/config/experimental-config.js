@@ -15,7 +15,7 @@ const config = {
   extends: 'lighthouse:default',
   audits: [
     'byte-efficiency/duplicated-javascript',
-    'legacy-javascript',
+    'byte-efficiency/legacy-javascript',
   ],
   categories: {
     // @ts-ignore: `title` is required in CategoryJson. setting to the same value as the default
@@ -23,7 +23,7 @@ const config = {
     'performance': {
       auditRefs: [
         {id: 'duplicated-javascript', weight: 0, group: 'load-opportunities'},
-        {id: 'legacy-javascript', weight: 0, group: 'diagnostics'},
+        {id: 'legacy-javascript', weight: 0, group: 'load-opportunities'},
       ],
     },
   },

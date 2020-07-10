@@ -806,12 +806,6 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "HTTPS kullanıyor"
   },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "Çoklu dolgular ve dönüşümler, eski tarayıcıların yeni JavaScript özelliklerini kullanmasını sağlar. Ancak, çoğu modern tarayıcılar için gerekli değildir. Eski tarayıcılara verilen desteği tutarken, modern tarayıcılara gönderilen kod miktarını azaltmak üzere modüllü/modülsüz özellik algılamayı kullanarak JavaScript paketiniz için modern bir komut dosyası dağıtım stratejisi kullanın. [Daha Fazla Bilgi](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "Eski JavaScript"
-  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "Sayfaların hücresel ağ üzerinden hızlı bir şekilde yüklenmesi, mobil cihaz kullanıcılarının iyi bir deneyim yaşamalarını sağlar. [Daha fazla bilgi](https://web.dev/load-fast-enough-for-pwa)."
   },

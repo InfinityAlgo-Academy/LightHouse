@@ -806,12 +806,6 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Upotrebljava HTTPS"
   },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "Polyfill i transforms omogućuju starim preglednicima da upotrebljavaju nove značajke za JavaScript. Međutim, mnogi nisu potrebni za suvremene preglednike. Za svoj skupni JavaScript usvojite modernu strategiju implementacije skripte upotrebom otkrivanja značajke modula/nemodula kako bi se smanjila količina koda koji se šalje modernim preglednicima, uz istodobno zadržavanje podrške za stare preglednike. [Saznajte više](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "Stari JavaScript"
-  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "Brzo učitavanje stranice putem mobilne mreže omogućuje dobar doživljaj korisnicima na mobilnim uređajima. [Saznajte više](https://web.dev/load-fast-enough-for-pwa)."
   },

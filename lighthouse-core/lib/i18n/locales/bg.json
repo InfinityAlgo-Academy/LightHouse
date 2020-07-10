@@ -806,12 +806,6 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Използва HTTPS"
   },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "Полифиловете и трансформациите дават възможност на старите браузъри да използват нови функции на JavaScript, но в голяма степен не са необходими за съвременните браузъри. За JavaScript пакета си използвайте актуална стратегия за внедряване на скриптове посредством откриване на функции за модулни/немодулни скриптове, за да намалите количеството код, изпращан до новите браузъри, и същевременно да запазите поддръжката за старите такива. [Научете повече](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "Остарял JavaScript"
-  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "Бързото зареждане на страниците през мобилни мрежи осигурява добра практическа работа за потребителите на мобилни устройства. [Научете повече](https://web.dev/load-fast-enough-for-pwa)."
   },

@@ -806,12 +806,6 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "[Ûšéš ĤŢŢÞŠ one two]"
   },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "[Þöļýƒîļļš åñð ţŕåñšƒöŕmš éñåбļé ļéĝåçý бŕöŵšéŕš ţö ûšé ñéŵ ĴåvåŠçŕîþţ ƒéåţûŕéš. Ĥöŵévéŕ, måñý åŕéñ'ţ ñéçéššåŕý ƒöŕ möðéŕñ бŕöŵšéŕš. Föŕ ýöûŕ бûñðļéð ĴåvåŠçŕîþţ, åðöþţ å möðéŕñ šçŕîþţ ðéþļöýméñţ šţŕåţéĝý ûšîñĝ möðûļé/ñömöðûļé ƒéåţûŕé ðéţéçţîöñ ţö ŕéðûçé ţĥé åmöûñţ öƒ çöðé šĥîþþéð ţö möðéŕñ бŕöŵšéŕš, ŵĥîļé ŕéţåîñîñĝ šûþþöŕţ ƒöŕ ļéĝåçý бŕöŵšéŕš. ᐅ[ᐊĻéåŕñ Möŕéᐅ](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)ᐊ one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven twentyeight twentynine thirty thirtyone thirtytwo thirtythree thirtyfour thirtyfive thirtysix thirtyseven thirtyeight thirtynine forty one two three four]"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "[Ļéĝåçý ĴåvåŠçŕîþţ one two three]"
-  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "[Å ƒåšţ þåĝé ļöåð övéŕ å çéļļûļåŕ ñéţŵöŕķ éñšûŕéš å ĝööð möбîļé ûšéŕ éxþéŕîéñçé. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/load-fast-enough-for-pwa)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen]"
   },

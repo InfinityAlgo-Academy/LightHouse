@@ -806,12 +806,6 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Menggunakan HTTPS"
   },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "Polyfill dan transformasi memungkinkan browser lama menggunakan fitur JavaScript yang baru. Namun, banyak di antara fitur tersebut yang tidak diperlukan browser modern. Untuk paket JavaScript Anda, terapkan strategi deployment skrip modern menggunakan deteksi fitur modul/nomodule untuk mengurangi jumlah kode yang dikirimkan ke browser modern, sambil terus menyediakan dukungan untuk browser lama. [Pelajari Lebih Lanjut](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "JavaScript Versi Lama"
-  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "Pemuatan halaman yang cepat melalui jaringan seluler menjamin pengalaman pengguna seluler yang baik. [Pelajari lebih lanjut](https://web.dev/load-fast-enough-for-pwa)."
   },

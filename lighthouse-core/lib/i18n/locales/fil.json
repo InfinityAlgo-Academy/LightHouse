@@ -806,12 +806,6 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Gumagamit ng HTTPS"
   },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "Nagbibigay-daan ang mga polyfill at transform na magamit ng mga legacy na browser ang mga bagong feature ng JavaScript. Gayunpaman, marami ang hindi kinakailangan para sa mga modernong browser. Para sa iyong naka-bundle na JavaScript, gumamit ng modernong diskarte sa deployment ng script gamit ang pag-detect ng feature na module/nomodule para mabawasan ang dami ng code na ipinapadala sa mga modernong browser, habang pinapanatili ang suporta para sa mga legacy na browser. [Matuto Pa](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "Legacy na JavaScript"
-  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "Kapag mabilis ang pag-load ng page sa cellular network, nagkakaroon ng magandang karanasan ng user sa mobile. [Matuto pa](https://web.dev/load-fast-enough-for-pwa)."
   },

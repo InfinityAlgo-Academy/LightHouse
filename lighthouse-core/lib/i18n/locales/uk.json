@@ -806,12 +806,6 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Використовує протокол HTTPS"
   },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "Поліфіли та перетворення дають змогу застарілим веб-переглядачам використовувати нові функції JavaScript. Однак багато з них не потрібні для сучасних веб-переглядачів. Для пакетів JavaScript прийміть сучасну стратегію введення скрипту в дію за допомогою виявлення модульних/немодульних функцій, щоб зменшити обсяг коду, що надсилається сучасним веб-переглядачам зі збереженням підтримки застарілих. [Докладніше](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "Застарілий JavaScript"
-  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "Якщо сторінка швидко завантажується в мобільній мережі, це покращує враження користувачів мобільних пристроїв. [Докладніше](https://web.dev/load-fast-enough-for-pwa)."
   },
