@@ -133,10 +133,9 @@ function collectFormElements() {
     }
   });
 
-  // if (formless.inputs.length > 0 || formless.labels.length > 0){
-  //   forms.push(formless);
-  // }
-  forms.push(formless);
+  if (formless.inputs.length > 0 || formless.labels.length > 0){
+    forms.push(formless);
+  }
   return forms;
 }
 
