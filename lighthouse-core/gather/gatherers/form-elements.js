@@ -21,7 +21,7 @@ function getChildrenInputs(formElement) {
   const inputsArray = []; 
   const childrenArray = Array.prototype.slice.call(formElement.childNodes);
   
-  childrenArray.map(  /** @param {HTMLElement} node */ (element) => {
+  for (const element of childrenArray){
     if (element.nodeName == 'INPUT' || element.nodeName == 'SELECT' || element.nodeName == 'TEXTAREA'){
       /** @type { { id: any; nodeName: any; name: any; placeholder: any; autocomplete: any;} } */
       const inputAttributes = {
@@ -33,7 +33,7 @@ function getChildrenInputs(formElement) {
       }
       inputsArray.push(inputAttributes);
     }
-  });
+  };
   
   return inputsArray;
 }
@@ -48,8 +48,7 @@ function getChildrenLabels(formElement) {
   const labelsArray = [];
 
   const childrenArray = Array.prototype.slice.call(formElement.childNodes);
-  childrenArray.map(/** @param {HTMLElement} node */ (element) => {
-
+  for (const element of childrenArray){
     if (element.nodeName == 'LABEL'){
        /** @type { {id: any; nodeName: any; name: any; for: any;} } */
       const labelAttributes = {
@@ -58,10 +57,9 @@ function getChildrenLabels(formElement) {
         name: element.name,
         for: element.for,
       }
-
       labelsArray.push(labelAttributes);
     }
-  });
+  };
 
   return labelsArray;
 }
@@ -77,7 +75,7 @@ function getFormlessElements(formChildren) {
   const formless = {
     inputs: [],
     labels: [],
-  }
+  };
 
   for (const childElement of formChildren){
     if (childElement.form) continue;
