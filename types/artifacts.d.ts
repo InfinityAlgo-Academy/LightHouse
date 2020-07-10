@@ -83,7 +83,7 @@ declare global {
       /** The dimensions and devicePixelRatio of the loaded viewport. */
       ViewportDimensions: Artifacts.ViewportDimensions;
       /** All the form elements in the page and formless inputs. */
-      FormElements: Artifacts.FormElement[];
+      Forms: Artifacts.Form[];
     }
 
     /**
@@ -676,8 +676,8 @@ declare global {
         observedSpeedIndexTs: number;
       }
 
-      export interface FormElement {
-        form?: {id: string, name: string, autocomplete: string}
+      export interface Form {
+        attributes?: {id: string, name: string, autocomplete: string}
         inputs: { id: any; nodeName: any; name: any; placeholder: any; autocomplete: any; }[];
         labels: { id: any; nodeName: any; name: any; for: any; }[];
       }

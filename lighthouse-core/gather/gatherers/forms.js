@@ -107,7 +107,7 @@ function getFormlessElements(formChildren) {
 
 
 /**
- * @return {LH.Artifacts['FormElements']}
+ * @return {LH.Artifacts['Forms']}
  */
 /* istanbul ignore next */
 function collectFormElements() {
@@ -120,14 +120,14 @@ function collectFormElements() {
   const formless = getFormlessElements(formChildren);
   
   const forms = formElements.map(/** @param {HTMLFormElement} formElement */ (formElement) => {
-    const form = {
+    const attributes = {
       id: formElement.id,
       name:formElement.name,
       autocomplete:formElement.autocomplete,
     }
 
     return{
-      form: form,
+      attributes: attributes,
       inputs: getChildrenInputs(formElement),
       labels: getChildrenLabels(formElement),
     }
@@ -139,10 +139,10 @@ function collectFormElements() {
   return forms;
 }
 
-class FormElements extends Gatherer {
+class Forms extends Gatherer {
   /**
    * @param {LH.Gatherer.PassContext} passContext
-   * @return {Promise<LH.Artifacts['FormElements']>}
+   * @return {Promise<LH.Artifacts['Forms']>}
    * @override
    */
   async afterPass(passContext) {
@@ -160,10 +160,10 @@ class FormElements extends Gatherer {
 
     })()`;
 
-    /** @type {LH.Artifacts['FormElements']} */
+    /** @type {LH.Artifacts['Forms']} */
     const formElements = await driver.evaluateAsync(expression, {useIsolation: true});
     return formElements;
   }
 }
 
-module.exports = FormElements;
+module.exports = Forms;
