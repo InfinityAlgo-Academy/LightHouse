@@ -80,30 +80,28 @@ function collectFormElements() {
     labels: [],
   }
   formChildren.map( /** @param {HTMLElement} childElement */ (childElement) => {
-    
-    if (!childElement.form){
-      if (childElement.nodeName == 'INPUT' || childElement.nodeName == 'SELECT' || childElement.nodeName == 'TEXTAREA'){
-        const inputAttributes = {
-          id: childElement.id,
-          nodeName: childElement.nodeName,
-          name: childElement.name,
-          placeholder: childElement.placeholder,
-          autocomplete: childElement.autocomplete,
-        }
-        // @ts-ignore
-        formless.inputs.push(inputAttributes);
+    if (childElement.form) return;
+    if (childElement.nodeName == 'INPUT' || childElement.nodeName == 'SELECT' || childElement.nodeName == 'TEXTAREA'){
+      const inputAttributes = {
+        id: childElement.id,
+        nodeName: childElement.nodeName,
+        name: childElement.name,
+        placeholder: childElement.placeholder,
+        autocomplete: childElement.autocomplete,
       }
+      // @ts-ignore
+      formless.inputs.push(inputAttributes);
+    }
 
-      else if (childElement.nodeName == 'LABEL'){
-        const labelAttributes = {
-          id: childElement.id,
-          nodeName: childElement.nodeName,
-          name: childElement.name,
-          for: childElement.for,
-        }
-        // @ts-ignore
-        formless.labels.push(labelAttributes);
+    else if (childElement.nodeName == 'LABEL'){
+      const labelAttributes = {
+        id: childElement.id,
+        nodeName: childElement.nodeName,
+        name: childElement.name,
+        for: childElement.for,
       }
+      // @ts-ignore
+      formless.labels.push(labelAttributes);
     }
   });
 
