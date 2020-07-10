@@ -17,10 +17,6 @@ const pageFunctions = require('../../lib/page-functions.js');
  */
 /* istanbul ignore next */
 function getChildrenInputs(formElement) {
-  if (formElement.formless == true){
-    return formElement.inputs
-  }
-
   /** @type {HTMLElement[] | { id: any; nodeName: any; name: any; placeholder: any; autocomplete: any; }[]} */
   const inputsArray = []; 
   const childrenArray = Array.prototype.slice.call(formElement.childNodes);
@@ -48,9 +44,6 @@ function getChildrenInputs(formElement) {
  */
 /* istanbul ignore next */
 function getChildrenLabels(formElement) {
-  if (formElement.formless == true){
-    return formElement.labels
-  }
   const childrenArray = Array.prototype.slice.call(formElement.childNodes);
   /** @type {HTMLElement[] | { id: any; nodeName: any; name: any; for: any; }[]} */
   const labelsArray = [];
@@ -83,13 +76,12 @@ function collectFormElements() {
   const formChildren = getElementsInDocument('textarea', 'input', 'label', 'select'); // eslint-disable-line no-undef
 
   const formless = {
-    formless: true,
     inputs: [],
     labels: [],
   }
-  formChildren.map(/** @param {HTMLElement} childElement */ (childElement) => {
+  formChildren.map( /** @param {HTMLElement} childElement */ (childElement) => {
     
-    if (childElement.form == "" || !childElement.form){
+    if (!childElement.form){
       if (childElement.nodeName == 'INPUT' || childElement.nodeName == 'SELECT' || childElement.nodeName == 'TEXTAREA'){
         const inputAttributes = {
           id: childElement.id,
@@ -115,11 +107,7 @@ function collectFormElements() {
     }
   });
 
-  if (formless.inputs.length > 0 || formless.labels.length > 0){
-    formElements.push(formless);
-  }
-
-  return formElements.map(/** @param {HTMLFormElement} formElement */ (formElement) => {
+  const forms = formElements.map(/** @param {HTMLFormElement} formElement */ (formElement) => {
     const form = {
       id: formElement.id,
       name:formElement.name,
@@ -132,6 +120,11 @@ function collectFormElements() {
       labels: getChildrenLabels(formElement),
     }
   });
+
+  if (formless.inputs.length > 0 || formless.labels.length > 0){
+    forms.push(formless);
+  }
+  return forms;
 }
 
 class FormElements extends Gatherer {
