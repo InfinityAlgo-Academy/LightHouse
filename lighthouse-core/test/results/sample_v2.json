@@ -29,7 +29,8 @@
         ],
         "items": [
           {
-            "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"
+            "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
+            "resolution": "Allowed"
           }
         ]
       }
@@ -5910,6 +5911,9 @@
       ],
       "lighthouse-core/audits/is-on-https.js | columnInsecureURL": [
         "audits[is-on-https].details.headings[0].text"
+      ],
+      "lighthouse-core/audits/is-on-https.js | allowed": [
+        "audits[is-on-https].details.items[0].resolution"
       ],
       "lighthouse-core/audits/redirects-http.js | failureTitle": [
         "audits[redirects-http].title"

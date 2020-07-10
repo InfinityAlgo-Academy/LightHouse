@@ -800,8 +800,17 @@
   "lighthouse-core/audits/installable-manifest.js | title": {
     "message": "Ŵéb̂ áp̂ṕ m̂án̂íf̂éŝt́ m̂éêt́ŝ t́ĥé îńŝt́âĺl̂áb̂íl̂ít̂ý r̂éq̂úîŕêḿêńt̂ś"
   },
+  "lighthouse-core/audits/is-on-https.js | allowed": {
+    "message": "Âĺl̂óŵéd̂"
+  },
+  "lighthouse-core/audits/is-on-https.js | blocked": {
+    "message": "B̂ĺôćk̂éd̂"
+  },
   "lighthouse-core/audits/is-on-https.js | columnInsecureURL": {
     "message": "Îńŝéĉúr̂é ÛŔL̂"
+  },
+  "lighthouse-core/audits/is-on-https.js | columnResolution": {
+    "message": "R̂éq̂úêśt̂ Ŕêśôĺût́îón̂"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
     "message": "Âĺl̂ śît́êś ŝh́ôúl̂d́ b̂é p̂ŕôt́êćt̂éd̂ ẃît́ĥ H́T̂T́P̂Ś, êv́êń ôńêś t̂h́ât́ d̂ón̂'t́ ĥán̂d́l̂é ŝén̂śît́îv́ê d́ât́â. T́ĥíŝ ín̂ćl̂úd̂éŝ áv̂óîd́îńĝ [ḿîx́êd́ ĉón̂t́êńt̂](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), ẃĥér̂é ŝóm̂é r̂éŝóûŕĉéŝ ár̂é l̂óâd́êd́ ôv́êŕ ĤT́T̂Ṕ d̂éŝṕît́ê t́ĥé îńît́îál̂ ŕêq́ûéŝt́ b̂éîńĝ śêŕv̂éd̂óv̂ér̂ H́T̂T́P̂Ś. ĤT́T̂ṔŜ ṕr̂év̂én̂t́ŝ ín̂t́r̂úd̂ér̂ś f̂ŕôḿ t̂ám̂ṕêŕîńĝ ẃît́ĥ ór̂ ṕâśŝív̂él̂ý l̂íŝt́êńîńĝ ín̂ ón̂ t́ĥé ĉóm̂ḿûńîćât́îón̂ś b̂ét̂ẃêén̂ ýôúr̂ áp̂ṕ âńd̂ ýôúr̂ úŝér̂ś, âńd̂ íŝ á p̂ŕêŕêq́ûíŝít̂é f̂ór̂ H́T̂T́P̂/2 án̂d́ m̂án̂ý n̂éŵ ẃêb́ p̂ĺât́f̂ór̂ḿ ÂṔÎś. [L̂éâŕn̂ ḿôŕê](https://web.dev/is-on-https/)."
@@ -814,6 +823,12 @@
   },
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Ûśêś ĤT́T̂ṔŜ"
+  },
+  "lighthouse-core/audits/is-on-https.js | upgraded": {
+    "message": "Âút̂óm̂át̂íĉál̂ĺŷ úp̂ǵr̂ád̂éd̂ t́ô H́T̂T́P̂Ś"
+  },
+  "lighthouse-core/audits/is-on-https.js | warning": {
+    "message": "Âĺl̂óŵéd̂ ẃît́ĥ ẃâŕn̂ín̂ǵ"
   },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "T̂h́îś îś t̂h́ê ĺâŕĝéŝt́ ĉón̂t́êńt̂f́ûĺ êĺêḿêńt̂ ṕâín̂t́êd́ ŵít̂h́îń t̂h́ê v́îéŵṕôŕt̂. [Ĺêár̂ń M̂ór̂é](https://web.dev/lighthouse-largest-contentful-paint/)"

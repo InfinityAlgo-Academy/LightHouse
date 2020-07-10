@@ -315,13 +315,14 @@ describe('Config', () => {
         gatherers: [
           'viewport-dimensions',
           'meta-elements',
+          'inspector-issues',
         ],
       }],
       audits: ['is-on-https'],
     };
 
     const _ = new Config(configJSON);
-    assert.equal(configJSON.passes[0].gatherers.length, 2);
+    assert.equal(configJSON.passes[0].gatherers.length, 3);
   });
 
   it('expands audits', () => {
