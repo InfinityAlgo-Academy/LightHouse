@@ -36,7 +36,7 @@ Lighthouse is integrated directly into the Chrome DevTools, under the "Lighthous
 
 **Run it**: open Chrome DevTools, select the Lighthouse panel, and hit "Generate report".
 
-<img src="https://raw.githubusercontent.com/GoogleChrome/lighthouse/e7997b3db01de3553d8cb208a40f3d4fd350195c/assets/example_dev_tools.png" alt="Lighthouse integration in Chrome DevTools" width="500px">
+<img src="https://raw.githubusercontent.com/GoogleChrome/lighthouse/4dbab6bf5466e7220980bccd2f5883f4ad661725/assets/example_dev_tools.png" alt="Lighthouse integration in Chrome DevTools" width="500px">
 
 ## Using the Chrome extension
 
