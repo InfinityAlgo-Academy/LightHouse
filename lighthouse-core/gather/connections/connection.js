@@ -121,6 +121,7 @@ class Connection {
       callback.resolve(Promise.resolve().then(_ => {
         if (object.error) {
           log.formatProtocol('method <= browser ERR', {method: callback.method}, 'error');
+          console.log(object.error);
           throw LHError.fromProtocolMessage(callback.method, object.error);
         }
 

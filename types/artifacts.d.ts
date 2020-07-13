@@ -122,6 +122,8 @@ declare global {
       Manifest: Artifacts.Manifest | null;
       /** The URL loaded with interception */
       MixedContent: {url: string};
+      /** Elements that obscure the Largest Contentful Paint element. */
+      ObscuringElements: Array<any>;
       /** The status code of the attempted load of the page while network access is disabled. */
       Offline: number;
       /** Size and compression opportunity information for all the images in the page. */
@@ -144,8 +146,6 @@ declare global {
       TapTargets: Artifacts.TapTarget[];
       /** Elements associated with metrics (ie: Largest Contentful Paint element). */
       TraceElements: Artifacts.TraceElement[];
-      /** Stuff */
-      ObscuredElements: Array<IntersectionObserverEntry>;
     }
 
     module Artifacts {
