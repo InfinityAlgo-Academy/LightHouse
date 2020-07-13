@@ -73,13 +73,159 @@ const expectations = [
           
         ],
       },  
-  
     lhr: {
       requestedUrl: 'https://autofill-audit-tests.herokuapp.com/autocomplete-audit-passed',
       finalUrl: 'https://autofill-audit-tests.herokuapp.com/autocomplete-audit-passed',
       audits: {
       },
-    },
+    },  
+  },
+  {
+    artifacts: {
+        Forms: [
+            {
+                inputs: [
+                  {
+                    id: "fill",
+                    nodeName: "INPUT",
+                    name: "",
+                    placeholder: "",
+                    autocomplete: ""
+                  },
+                  {
+                    id: "",
+                    nodeName: "INPUT",
+                    name: "name_shipping",
+                    placeholder: "",
+                    autocomplete: ""
+                  },
+                  {
+                    id: "",
+                    nodeName: "INPUT",
+                    name: "address_shipping",
+                    placeholder: "",
+                    autocomplete: ""
+                  },
+                  {
+                    id: "",
+                    nodeName: "INPUT",
+                    name: "city_shipping",
+                    placeholder: "",
+                    autocomplete: ""
+                  },
+                  {
+                    id: "",
+                    nodeName: "INPUT",
+                    name: "zip_shipping",
+                    placeholder: "",
+                    autocomplete: ""
+                  },
+                  {
+                    id: "submit1",
+                    nodeName: "INPUT",
+                    name: "",
+                    placeholder: "",
+                    autocomplete: ""
+                  },
+                  {
+                    id: "",
+                    nodeName: "INPUT",
+                    name: "name_billing",
+                    placeholder: "",
+                    autocomplete: ""
+                  },
+                  {
+                    id: "",
+                    nodeName: "INPUT",
+                    name: "address_billing",
+                    placeholder: "",
+                    autocomplete: ""
+                  },
+                  {
+                    id: "",
+                    nodeName: "INPUT",
+                    name: "city_billing",
+                    placeholder: "",
+                    autocomplete: ""
+                  },
+                  {
+                    id: "",
+                    nodeName: "INPUT",
+                    name: "zip_billing",
+                    placeholder: "",
+                    autocomplete: ""
+                  },
+                  {
+                    id: "submit2",
+                    nodeName: "INPUT",
+                    name: "",
+                    placeholder: "",
+                    autocomplete: ""
+                  },
+                  {
+                    id: "",
+                    nodeName: "INPUT",
+                    name: "CCname",
+                    placeholder: "",
+                    autocomplete: ""
+                  },
+                  {
+                    id: "",
+                    nodeName: "INPUT",
+                    name: "CCNo",
+                    placeholder: "",
+                    autocomplete: ""
+                  },
+                  {
+                    id: "",
+                    nodeName: "INPUT",
+                    name: "cvc",
+                    placeholder: "",
+                    autocomplete: ""
+                  },
+                  {
+                    id: "submit3",
+                    nodeName: "INPUT",
+                    name: "",
+                    placeholder: "",
+                    autocomplete: ""
+                  },
+                  {
+                    id: "",
+                    nodeName: "SELECT",
+                    name: "state_shipping",
+                    autocomplete: ""
+                  },
+                  {
+                    id: "",
+                    nodeName: "SELECT",
+                    name: "state_billing",
+                    autocomplete: ""
+                  },
+                  {
+                    id: "",
+                    nodeName: "SELECT",
+                    name: "CCExpiresMonth",
+                    autocomplete: ""
+                  },
+                  {
+                    id: "",
+                    nodeName: "SELECT",
+                    name: "CCExpiresYear",
+                    autocomplete: ""
+                  }
+                ],
+                labels: []
+              }
+          
+        ],
+      },  
+    lhr: {
+      requestedUrl: 'https://autofill-audit-tests.herokuapp.com/formless-inputs',
+      finalUrl: 'https://autofill-audit-tests.herokuapp.com/formless-inputs',
+      audits: {
+      },
+    },  
   },
 ];
 

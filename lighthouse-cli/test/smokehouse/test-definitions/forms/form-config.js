@@ -7,19 +7,10 @@
 
 /**
  * @type {LH.Config.Json}
- * Config file for running form gatherer smokehouse tests.
+ * Config file for running form gatherer  tests.
  */
 const config = {
   extends: 'lighthouse:default',
-  settings: {
-    onlyAudits: [
-      
-    ],
-    throttlingMethod: 'devtools',
-  },
-  audits: [
-    
-  ],
 };
 
 module.exports = config;
