@@ -69,21 +69,8 @@ const expectations = [
                   }
                 ],
                 labels: []
-              }
-          
-        ],
-      },  
-    lhr: {
-      requestedUrl: 'https://autofill-audit-tests.herokuapp.com/autocomplete-audit-passed',
-      finalUrl: 'https://autofill-audit-tests.herokuapp.com/autocomplete-audit-passed',
-      audits: {
-      },
-    },  
-  },
-  {
-    artifacts: {
-        Forms: [
-            {
+              },
+              {
                 inputs: [
                   {
                     id: "fill",
@@ -221,8 +208,8 @@ const expectations = [
         ],
       },  
     lhr: {
-      requestedUrl: 'https://autofill-audit-tests.herokuapp.com/formless-inputs',
-      finalUrl: 'https://autofill-audit-tests.herokuapp.com/formless-inputs',
+      requestedUrl: 'http://localhost:10200/form.html',
+      finalUrl: 'http://localhost:10200/form.html',
       audits: {
       },
     },  
