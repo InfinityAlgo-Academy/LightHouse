@@ -71,6 +71,7 @@ const expectations = [
                 labels: []
               },
               {
+                attributes: undefined,
                 inputs: [
                   {
                     id: "fill",
