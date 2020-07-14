@@ -54,13 +54,6 @@ const expectations = [
                     autocomplete: "cc-csc"
                   },
                   {
-                    id: "fill",
-                    nodeName: "INPUT",
-                    name: "",
-                    placeholder: "",
-                    autocomplete: ""
-                  },
-                  {
                     id: "",
                     nodeName: "INPUT",
                     name: "",
