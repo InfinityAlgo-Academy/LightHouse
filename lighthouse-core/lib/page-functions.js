@@ -124,8 +124,8 @@ function getOuterHTMLSnippet(element, ignoreAttrs = []) {
       clone.removeAttribute(attribute);
     });
     const reOpeningTag = /^[\s\S]*?>/;
-    const match = clone.outerHTML.match(reOpeningTag);
-    return (match && match[0]) || '';
+    const [match] = clone.outerHTML.match(reOpeningTag) || [];
+    return match || '';
   } catch (_) {
     // As a last resort, fall back to localName.
     return `<${element.localName}>`;
