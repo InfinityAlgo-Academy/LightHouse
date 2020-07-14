@@ -1374,7 +1374,7 @@
     "message": "Navigation"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
-    "message": "These are opportunities to to improve the experience of reading tabular or list data using assistive technology, like a screen reader."
+    "message": "These are opportunities to improve the experience of reading tabular or list data using assistive technology, like a screen reader."
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Tables and lists"
