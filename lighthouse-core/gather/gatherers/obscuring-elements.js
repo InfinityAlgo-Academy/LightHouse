@@ -15,7 +15,7 @@ const { getOuterHTMLSnippet } = require('../../lib/page-functions.js');
 
 /**
  * @this {HTMLElement}
- * @return {LH.Artifacts['ObscuringElements']}
+ * @return {MyData}
  */
 /* istanbul ignore next */
 function checkIntersection() {
@@ -52,7 +52,8 @@ function checkIntersection() {
     for (const element of document.elementsFromPoint(xCoord, yCoord)) {
       // @ts-ignore - put into scope via stringification
       const snippet = getOuterHTMLSnippet(element); // eslint-disable-line no-undef
-      if (snippet === lcpHTMLSnippet) break;
+      // if (snippet === lcpHTMLSnippet) break;
+      if (element === lcpElement) break;
       if (seen.has(snippet))
         continue;
       seen.add(snippet);
@@ -61,7 +62,12 @@ function checkIntersection() {
     }
   }
 
-  return obscuringElements;
+  return {
+    element: lcpHTMLSnippet || '',
+    x,
+    y,
+    retList: obscuringElements,
+  };
 }
 
 class ObscuringElements extends Gatherer {  
@@ -99,7 +105,7 @@ class ObscuringElements extends Gatherer {
     let obscuringElements = [];
     if (response && response.result && response.result.value) {
       console.dir(response.result.value);
-      obscuringElements.push(...response.result.value);
+      obscuringElements.push(...response.result.value.retList);
     }
 
     return obscuringElements;
