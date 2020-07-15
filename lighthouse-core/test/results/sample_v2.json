@@ -2893,7 +2893,7 @@
     "unused-javascript": {
       "id": "unused-javascript",
       "title": "Remove unused JavaScript",
-      "description": "Remove unused JavaScript to reduce bytes consumed by network activity. [Learn more](https://web.dev/remove-unused-code/).",
+      "description": "Remove unused JavaScript to reduce bytes consumed by network activity. [Learn more](https://web.dev/unused-javascript/).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
