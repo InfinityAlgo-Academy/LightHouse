@@ -78,9 +78,11 @@ function getFormlessElements(formChildren) {
   };
 
   for (const childElement of formChildren){
-    if (childElement.form) continue;
+    if (childElement instanceof HTMLInputElement || childElement instanceof HTMLTextAreaElement || childElement instanceof HTMLLabelElement || childElement instanceof HTMLSelectElement){
+      if (childElement.form ) continue;
+    }
 
-    if (childElement.nodeName == 'INPUT' || childElement.nodeName == 'SELECT' || childElement.nodeName == 'TEXTAREA'){
+    if (childElement instanceof HTMLInputElement || childElement instanceof HTMLTextAreaElement ){
       const inputAttributes = {
         id: childElement.id,
         nodeName: childElement.nodeName,
@@ -91,12 +93,23 @@ function getFormlessElements(formChildren) {
       formless.inputs.push(inputAttributes);
     }
 
-    else if (childElement.nodeName == 'LABEL'){
-      const labelAttributes = {
+    else if (childElement instanceof HTMLSelectElement ){
+      const selectAttributes = {
         id: childElement.id,
         nodeName: childElement.nodeName,
         name: childElement.name,
-        for: childElement.for,
+        placeholder: childElement.getAttribute('placeholder'),
+        autocomplete: childElement.autocomplete,
+      }
+      formless.inputs.push(selectAttributes);
+    }
+
+    else if (childElement instanceof HTMLLabelElement){
+      const labelAttributes = {
+        id: childElement.id,
+        nodeName: childElement.nodeName,
+        name: childElement.getAttribute('name'),
+        for: childElement.htmlFor,
       }
       formless.labels.push(labelAttributes);
     }
