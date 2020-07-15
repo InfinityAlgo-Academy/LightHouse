@@ -112,7 +112,8 @@ function getElementsInDocument(selector) {
  * @return {string}
  */
 /* istanbul ignore next */
-function getOuterHTMLSnippet(element, ignoreAttrs = []) {
+function getOuterHTMLSnippet(element, ignoreAttrs = [], snippetCharacterLimit = 500) {
+  const ATTRIBUTE_CHAR_LIMIT = 75;
   try {
     // ShadowRoots are sometimes passed in; use their hosts' outerHTML.
     if (element instanceof ShadowRoot) {
@@ -123,9 +124,26 @@ function getOuterHTMLSnippet(element, ignoreAttrs = []) {
     ignoreAttrs.forEach(attribute =>{
       clone.removeAttribute(attribute);
     });
+    let charCount = 0;
+    for (const attributeName of clone.getAttributeNames()) {
+      if (charCount > snippetCharacterLimit) {
+        clone.removeAttribute(attributeName);
+      } else {
+        let attributeValue = clone.getAttribute(attributeName);
+        if (attributeValue.length > ATTRIBUTE_CHAR_LIMIT) {
+          attributeValue = attributeValue.slice(0, ATTRIBUTE_CHAR_LIMIT - 1) + '…';
+          clone.setAttribute(attributeName, attributeValue);
+        }
+        charCount += attributeName.length + attributeValue.length;
+      }
+    }
+
     const reOpeningTag = /^[\s\S]*?>/;
-    const match = clone.outerHTML.match(reOpeningTag);
-    return (match && match[0]) || '';
+    const [match] = clone.outerHTML.match(reOpeningTag) || [];
+    if (match && charCount > snippetCharacterLimit) {
+      return match.slice(0, match.length - 1) + ' …>';
+    }
+    return match || '';
   } catch (_) {
     // As a last resort, fall back to localName.
     return `<${element.localName}>`;
