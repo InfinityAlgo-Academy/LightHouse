@@ -389,6 +389,8 @@ declare global {
 
       export interface ImageElement {
         src: string;
+        /** The srcset attribute value. @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/srcset */
+        srcset: string;
         /** The displayed width of the image, uses img.width when available falling back to clientWidth. See https://codepen.io/patrickhulce/pen/PXvQbM for examples. */
         displayedWidth: number;
         /** The displayed height of the image, uses img.height when available falling back to clientHeight. See https://codepen.io/patrickhulce/pen/PXvQbM for examples. */
@@ -483,6 +485,7 @@ declare global {
         nodeLabel?: string;
         devtoolsNodePath: string;
         snippet?: string;
+        score?: number;
       }
 
       export interface ViewportDimensions {

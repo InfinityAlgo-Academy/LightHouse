@@ -1213,7 +1213,7 @@ Object {
       "title": "Navigation",
     },
     "a11y-tables-lists": Object {
-      "description": "These are opportunities to to improve the experience of reading tabular or list data using assistive technology, like a screen reader.",
+      "description": "These are opportunities to improve the experience of reading tabular or list data using assistive technology, like a screen reader.",
       "title": "Tables and lists",
     },
     "best-practices-browser-compat": Object {
@@ -1348,6 +1348,9 @@ Object {
         },
         Object {
           "path": "inspector-issues",
+        },
+        Object {
+          "path": "source-maps",
         },
       ],
       "loadFailureMode": "fatal",
@@ -1494,7 +1497,7 @@ Object {
       "title": "Navigation",
     },
     "a11y-tables-lists": Object {
-      "description": "These are opportunities to to improve the experience of reading tabular or list data using assistive technology, like a screen reader.",
+      "description": "These are opportunities to improve the experience of reading tabular or list data using assistive technology, like a screen reader.",
       "title": "Tables and lists",
     },
     "best-practices-browser-compat": Object {

@@ -116,10 +116,36 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     if (fci) v5andv6metrics.push(fci);
     if (fmp) v5andv6metrics.push(fmp);
 
+    /** @type {Record<string, string>} */
+    const acronymMapping = {
+      'cumulative-layout-shift': 'CLS',
+      'first-contentful-paint': 'FCP',
+      'first-cpu-idle': 'FCI',
+      'first-meaningful-paint': 'FMP',
+      'interactive': 'TTI',
+      'largest-contentful-paint': 'LCP',
+      'speed-index': 'SI',
+      'total-blocking-time': 'TBT',
+    };
+
+    /**
+     * Clamp figure to 2 decimal places
+     * @param {number} val
+     * @return {number}
+     */
+    const clampTo2Decimals = val => Math.round(val * 100) / 100;
+
     const metricPairs = v5andv6metrics.map(audit => {
-      const value = typeof audit.result.numericValue !== 'undefined' ?
-        audit.result.numericValue.toString() : 'null';
-      return [audit.id, value];
+      let value;
+      if (typeof audit.result.numericValue === 'number') {
+        value = audit.id === 'cumulative-layout-shift' ?
+          clampTo2Decimals(audit.result.numericValue) :
+          Math.round(audit.result.numericValue);
+        value = value.toString();
+      } else {
+        value = 'null';
+      }
+      return [acronymMapping[audit.id] || audit.id, value];
     });
     const paramPairs = [...metricPairs];
 

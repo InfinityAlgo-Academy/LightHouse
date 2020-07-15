@@ -24,16 +24,12 @@ const config = {
       'unminified-javascript',
       'unused-css-rules',
       'unused-javascript',
+      // image-size-responsive is not a byte-efficiency audit but a counterbalance to the byte-efficiency audits
+      // that makes sense to test together.
+      'image-size-responsive',
     ],
     throttlingMethod: 'devtools',
   },
-  // source-maps is not yet in the default config.
-  passes: [{
-    passName: 'defaultPass',
-    gatherers: [
-      'source-maps',
-    ],
-  }],
   audits: [
     {path: 'byte-efficiency/unused-javascript', options: {
       // Lower the threshold so we don't need huge resources to make a test.

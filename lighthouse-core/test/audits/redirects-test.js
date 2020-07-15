@@ -20,19 +20,19 @@ const FAILING_THREE_REDIRECTS = [{
   timing: {receiveHeadersEnd: 11},
 }, {
   requestId: '1:redirect',
-  startTime: 11,
+  startTime: 1,
   priority: 'VeryHigh',
   url: 'https://example.com/',
   timing: {receiveHeadersEnd: 12},
 }, {
   requestId: '1:redirect:redirect',
-  startTime: 12,
+  startTime: 2,
   priority: 'VeryHigh',
   url: 'https://m.example.com/',
   timing: {receiveHeadersEnd: 17},
 }, {
   requestId: '1:redirect:redirect:redirect',
-  startTime: 17,
+  startTime: 3,
   priority: 'VeryHigh',
   url: 'https://m.example.com/final',
   timing: {receiveHeadersEnd: 19},
@@ -80,6 +80,30 @@ const SUCCESS_NOREDIRECT = [{
   timing: {receiveHeadersEnd: 140},
 }];
 
+const FAILING_CLIENTSIDE = [
+  {
+    requestId: '1',
+    startTime: 445,
+    priority: 'VeryHigh',
+    url: 'http://lisairish.com/',
+    timing: {receiveHeadersEnd: 446},
+  },
+  {
+    requestId: '1:redirect',
+    startTime: 446,
+    priority: 'VeryHigh',
+    url: 'https://lisairish.com/',
+    timing: {receiveHeadersEnd: 447},
+  },
+  {
+    requestId: '2',
+    startTime: 447,
+    priority: 'VeryHigh',
+    url: 'https://www.lisairish.com/',
+    timing: {receiveHeadersEnd: 448},
+  },
+];
+
 describe('Performance: Redirects audit', () => {
   const mockArtifacts = (networkRecords, finalUrl) => {
     const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
@@ -91,13 +115,61 @@ describe('Performance: Redirects audit', () => {
     };
   };
 
+  it('fails when client-side redirects detected', async () => {
+    const context = {settings: {}, computedCache: new Map()};
+    const artifacts = mockArtifacts(FAILING_CLIENTSIDE, 'https://www.lisairish.com/');
+
+    const traceEvents = artifacts.traces.defaultPass.traceEvents;
+    const navStart = traceEvents.find(e => e.name === 'navigationStart');
+    const secondNavStart = JSON.parse(JSON.stringify(navStart));
+    traceEvents.push(secondNavStart);
+    navStart.args.data.isLoadingMainFrame = true;
+    navStart.args.data.documentLoaderURL = 'http://lisairish.com/';
+    secondNavStart.ts++;
+    secondNavStart.args.data.isLoadingMainFrame = true;
+    secondNavStart.args.data.documentLoaderURL = 'https://www.lisairish.com/';
+
+    const output = await RedirectsAudit.audit(artifacts, context);
+    expect(output.details.items).toHaveLength(3);
+    expect(Math.round(output.score * 100) / 100).toMatchInlineSnapshot(`0.35`);
+    expect(output.numericValue).toMatchInlineSnapshot(`2000`);
+  });
+
+  it('uses lantern timings when throttlingMethod is simulate', async () => {
+    const artifacts = mockArtifacts(FAILING_THREE_REDIRECTS, 'https://m.example.com/final');
+    const context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
+    const output = await RedirectsAudit.audit(artifacts, context);
+    expect(output.details.items).toHaveLength(4);
+    expect(output.details.items.map(item => [item.url, item.wastedMs])).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          "http://example.com/",
+          630,
+        ],
+        Array [
+          "https://example.com/",
+          480,
+        ],
+        Array [
+          "https://m.example.com/",
+          780,
+        ],
+        Array [
+          "https://m.example.com/final",
+          0,
+        ],
+      ]
+    `);
+    expect(output.numericValue).toMatchInlineSnapshot(`1890`);
+  });
+
   it('fails when 3 redirects detected', () => {
     const artifacts = mockArtifacts(FAILING_THREE_REDIRECTS, 'https://m.example.com/final');
     const context = {settings: {}, computedCache: new Map()};
     return RedirectsAudit.audit(artifacts, context).then(output => {
-      assert.equal(Math.round(output.score * 100) / 100, 0.37);
-      assert.equal(output.details.items.length, 4);
-      assert.equal(output.numericValue, 1890);
+      expect(output.details.items).toHaveLength(4);
+      expect(Math.round(output.score * 100) / 100).toMatchInlineSnapshot(`0.24`);
+      expect(output.numericValue).toMatchInlineSnapshot(`3000`);
     });
   });
 
@@ -105,9 +177,9 @@ describe('Performance: Redirects audit', () => {
     const artifacts = mockArtifacts(FAILING_TWO_REDIRECTS, 'https://www.lisairish.com/');
     const context = {settings: {}, computedCache: new Map()};
     return RedirectsAudit.audit(artifacts, context).then(output => {
-      assert.equal(Math.round(output.score * 100) / 100, 0.46);
-      assert.equal(output.details.items.length, 3);
-      assert.equal(Math.round(output.numericValue), 1110);
+      expect(output.details.items).toHaveLength(3);
+      expect(Math.round(output.score * 100) / 100).toMatchInlineSnapshot(`0.35`);
+      expect(output.numericValue).toMatchInlineSnapshot(`2000`);
     });
   });
 
@@ -116,10 +188,10 @@ describe('Performance: Redirects audit', () => {
     const context = {settings: {}, computedCache: new Map()};
     return RedirectsAudit.audit(artifacts, context).then(output => {
       // If === 1 redirect, perfect score is expected, regardless of latency
-      assert.equal(output.score, 1);
       // We will still generate a table and show wasted time
-      assert.equal(output.details.items.length, 2);
-      assert.equal(Math.round(output.numericValue), 780);
+      expect(output.details.items).toHaveLength(2);
+      expect(output.score).toEqual(1);
+      expect(output.numericValue).toMatchInlineSnapshot(`1000`);
     });
   });
 

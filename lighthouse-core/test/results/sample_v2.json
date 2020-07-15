@@ -5,7 +5,7 @@
     "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3358.0 Safari/537.36",
     "benchmarkIndex": 1000
   },
-  "lighthouseVersion": "6.0.0",
+  "lighthouseVersion": "6.1.0",
   "fetchTime": "2018-03-13T00:55:45.840Z",
   "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "finalUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
@@ -29,7 +29,8 @@
         ],
         "items": [
           {
-            "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"
+            "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
+            "resolution": "Allowed"
           }
         ]
       }
@@ -1714,7 +1715,7 @@
     "largest-contentful-paint-element": {
       "id": "largest-contentful-paint-element",
       "title": "Largest Contentful Paint element",
-      "description": "This is the element that was identified as the Largest Contentful Paint. [Learn More](https://web.dev/lighthouse-largest-contentful-paint/)",
+      "description": "This is the largest contentful element painted within the viewport. [Learn More](https://web.dev/lighthouse-largest-contentful-paint/)",
       "score": null,
       "scoreDisplayMode": "informative",
       "displayValue": "1 element found",
@@ -1754,6 +1755,12 @@
             "key": "node",
             "itemType": "node",
             "text": "Element"
+          },
+          {
+            "key": "score",
+            "itemType": "numeric",
+            "granularity": 0.001,
+            "text": "CLS Contribution"
           }
         ],
         "items": [
@@ -1812,6 +1819,12 @@
             "text": "URL"
           },
           {
+            "key": "startTime",
+            "itemType": "ms",
+            "granularity": 1,
+            "text": "Start Time"
+          },
+          {
             "key": "duration",
             "itemType": "ms",
             "granularity": 1,
@@ -1821,19 +1834,23 @@
         "items": [
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-            "duration": 983.081
+            "duration": 983.081,
+            "startTime": 2854.095
           },
           {
             "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
-            "duration": 127.282
+            "duration": 127.282,
+            "startTime": 4808.602
           },
           {
             "url": "Unattributable",
-            "duration": 123.752
+            "duration": 123.752,
+            "startTime": 3839.839
           },
           {
             "url": "http://localhost:10200/zone.js",
-            "duration": 96.198
+            "duration": 96.198,
+            "startTime": 3996.134
           }
         ]
       }
@@ -4682,7 +4699,7 @@
     },
     "a11y-tables-lists": {
       "title": "Tables and lists",
-      "description": "These are opportunities to to improve the experience of reading tabular or list data using assistive technology, like a screen reader."
+      "description": "These are opportunities to improve the experience of reading tabular or list data using assistive technology, like a screen reader."
     },
     "seo-mobile": {
       "title": "Mobile Friendly",
@@ -5895,6 +5912,9 @@
       "lighthouse-core/audits/is-on-https.js | columnInsecureURL": [
         "audits[is-on-https].details.headings[0].text"
       ],
+      "lighthouse-core/audits/is-on-https.js | allowed": [
+        "audits[is-on-https].details.items[0].resolution"
+      ],
       "lighthouse-core/audits/redirects-http.js | failureTitle": [
         "audits[redirects-http].title"
       ],
@@ -6463,6 +6483,9 @@
           "path": "audits[layout-shift-elements].displayValue"
         }
       ],
+      "lighthouse-core/audits/layout-shift-elements.js | columnContribution": [
+        "audits[layout-shift-elements].details.headings[1].text"
+      ],
       "lighthouse-core/audits/long-tasks.js | title": [
         "audits[long-tasks].title"
       ],
@@ -6477,8 +6500,11 @@
           "path": "audits[long-tasks].displayValue"
         }
       ],
-      "lighthouse-core/lib/i18n/i18n.js | columnDuration": [
+      "lighthouse-core/lib/i18n/i18n.js | columnStartTime": [
         "audits[long-tasks].details.headings[1].text"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnDuration": [
+        "audits[long-tasks].details.headings[2].text"
       ],
       "lighthouse-core/audits/manual/pwa-cross-browser.js | title": [
         "audits[pwa-cross-browser].title"

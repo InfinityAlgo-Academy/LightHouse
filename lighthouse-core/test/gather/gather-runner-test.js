@@ -38,6 +38,7 @@ const GatherRunner = {
   getInstallabilityErrors: makeParamsOptional(GatherRunner_.getInstallabilityErrors),
   getInterstitialError: makeParamsOptional(GatherRunner_.getInterstitialError),
   getNetworkError: makeParamsOptional(GatherRunner_.getNetworkError),
+  getNonHtmlError: makeParamsOptional(GatherRunner_.getNonHtmlError),
   getPageLoadError: makeParamsOptional(GatherRunner_.getPageLoadError),
   getWebAppManifest: makeParamsOptional(GatherRunner_.getWebAppManifest),
   initializeBaseArtifacts: makeParamsOptional(GatherRunner_.initializeBaseArtifacts),
@@ -100,6 +101,9 @@ class EmulationDriver extends Driver {
     return Promise.resolve();
   }
   clearDataForOrigin() {
+    return Promise.resolve();
+  }
+  registerRequestIdleCallbackWrap() {
     return Promise.resolve();
   }
 }
@@ -401,6 +405,7 @@ describe('GatherRunner', function() {
       cacheNatives: asyncFunc,
       gotoURL: asyncFunc,
       registerPerformanceObserver: asyncFunc,
+      registerRequestIdleCallbackWrap: asyncFunc,
       cleanBrowserCaches: createCheck('calledCleanBrowserCaches'),
       clearDataForOrigin: createCheck('calledClearStorage'),
       blockUrlPatterns: asyncFunc,
@@ -591,6 +596,7 @@ describe('GatherRunner', function() {
       cacheNatives: asyncFunc,
       gotoURL: asyncFunc,
       registerPerformanceObserver: asyncFunc,
+      registerRequestIdleCallbackWrap: asyncFunc,
       cleanBrowserCaches: createCheck('calledCleanBrowserCaches'),
       clearDataForOrigin: createCheck('calledClearStorage'),
       blockUrlPatterns: asyncFunc,
@@ -1095,6 +1101,43 @@ describe('GatherRunner', function() {
     });
   });
 
+  describe('#getNonHtmlError', () => {
+    /**
+     * @param {NetworkRequest} mainRecord
+     */
+    function getAndExpectError(mainRecord) {
+      const error = GatherRunner.getNonHtmlError(mainRecord);
+      if (!error) throw new Error('expected a non-HTML error');
+      return error;
+    }
+
+    it('passes when the page was not requested', () => {
+      expect(GatherRunner.getNonHtmlError(undefined)).toBeUndefined();
+    });
+
+    it('passes when the page is of MIME type text/html', () => {
+      const url = 'http://the-page.com';
+      const mainRecord = new NetworkRequest();
+      const mimeType = 'text/html';
+      mainRecord.url = url;
+      mainRecord.mimeType = mimeType;
+      expect(GatherRunner.getNonHtmlError(mainRecord)).toBeUndefined();
+    });
+
+    it('fails when the page is not of MIME type text/html', () => {
+      const url = 'http://the-page.com';
+      const mimeType = 'application/xml';
+      const mainRecord = new NetworkRequest();
+      mainRecord.url = url;
+      mainRecord.mimeType = mimeType;
+      const error = getAndExpectError(mainRecord);
+      expect(error.message).toEqual('NOT_HTML');
+      expect(error.code).toEqual('NOT_HTML');
+      expect(error.friendlyMessage).toBeDisplayString(/is not HTML \(served as/);
+    });
+  });
+
+
   describe('#getPageLoadError', () => {
     /**
      * @param {RecursivePartial<LH.Gatherer.PassContext>} passContext
@@ -1122,6 +1165,7 @@ describe('GatherRunner', function() {
       const mainRecord = new NetworkRequest();
       const loadData = {networkRecords: [mainRecord]};
       mainRecord.url = passContext.url;
+      mainRecord.mimeType = 'text/html';
       const error = GatherRunner.getPageLoadError(passContext, loadData, undefined);
       expect(error).toBeUndefined();
     });
@@ -1134,6 +1178,7 @@ describe('GatherRunner', function() {
       const mainRecord = new NetworkRequest();
       const loadData = {networkRecords: [mainRecord]};
       mainRecord.url = 'http://example.com';
+      mainRecord.mimeType = 'text/html';
       const error = GatherRunner.getPageLoadError(passContext, loadData, undefined);
       expect(error).toBeUndefined();
     });
@@ -1170,7 +1215,7 @@ describe('GatherRunner', function() {
       expect(error.message).toEqual('CHROME_INTERSTITIAL_ERROR');
     });
 
-    it('fails with network error next', () => {
+    it('fails with network error second', () => {
       const passContext = {
         url: 'http://the-page.com',
         passConfig: {loadFailureMode: LoadFailureMode.fatal},
@@ -1185,6 +1230,21 @@ describe('GatherRunner', function() {
       expect(error.message).toEqual('FAILED_DOCUMENT_REQUEST');
     });
 
+    it('fails with non-HTML error third', () => {
+      const passContext = {
+        url: 'http://the-page.com',
+        passConfig: {loadFailureMode: LoadFailureMode.fatal},
+      };
+      const mainRecord = new NetworkRequest();
+      const loadData = {networkRecords: [mainRecord]};
+
+      mainRecord.url = passContext.url;
+      mainRecord.mimeType = 'application/xml';
+
+      const error = getAndExpectError(passContext, loadData, navigationError);
+      expect(error.message).toEqual('NOT_HTML');
+    });
+
     it('fails with nav error last', () => {
       const passContext = {
         url: 'http://the-page.com',
@@ -1194,6 +1254,7 @@ describe('GatherRunner', function() {
       const loadData = {networkRecords: [mainRecord]};
 
       mainRecord.url = passContext.url;
+      mainRecord.mimeType = 'text/html';
 
       const error = getAndExpectError(passContext, loadData, navigationError);
       expect(error.message).toEqual('NAVIGATION_ERROR');
@@ -1208,6 +1269,7 @@ describe('GatherRunner', function() {
       const loadData = {networkRecords: [mainRecord]};
 
       mainRecord.url = passContext.url;
+      mainRecord.mimeType = 'text/html';
 
       const error = getAndExpectError(passContext, loadData, navigationError);
       expect(error.message).toEqual('NAVIGATION_ERROR');

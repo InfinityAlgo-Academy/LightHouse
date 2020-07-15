@@ -6,6 +6,7 @@ branches:
   only:
   - master
 
+image: Visual Studio 2019
 environment:
   fast_finish: true
   matrix:
@@ -21,8 +22,6 @@ install:
 
 before_test:
   - set "PATH=C:\MinGW\msys\1.0\bin;%PATH%"
-  - set "CHROME_PATH=%CD%\chrome-win32\chrome.exe"
-  - bash ./lighthouse-core/scripts/download-chrome.sh
   - yarn build-all
 
 test_script:
@@ -48,6 +47,5 @@ on_success:
   - yarn unlink
 
 cache:
-  #- chrome-win32 -> appveyor.yml,package.json
   - node_modules -> appveyor.yml,package.json,yarn.lock
   - '%LOCALAPPDATA%\Yarn -> appveyor.yml,package.json,yarn.lock'
