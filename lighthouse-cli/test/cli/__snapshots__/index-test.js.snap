@@ -361,6 +361,12 @@ Object {
       "path": "byte-efficiency/efficient-animated-content",
     },
     Object {
+      "path": "byte-efficiency/duplicated-javascript",
+    },
+    Object {
+      "path": "byte-efficiency/legacy-javascript",
+    },
+    Object {
       "path": "dobetterweb/appcache-manifest",
     },
     Object {
@@ -885,6 +891,16 @@ Object {
         Object {
           "group": "load-opportunities",
           "id": "efficient-animated-content",
+          "weight": 0,
+        },
+        Object {
+          "group": "load-opportunities",
+          "id": "duplicated-javascript",
+          "weight": 0,
+        },
+        Object {
+          "group": "load-opportunities",
+          "id": "legacy-javascript",
           "weight": 0,
         },
         Object {

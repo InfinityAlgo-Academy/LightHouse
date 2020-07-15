@@ -18,6 +18,4 @@ module.exports = {
       'legacy-javascript',
     ],
   },
-  // Not in default yet.
-  audits: ['byte-efficiency/legacy-javascript'],
 };
