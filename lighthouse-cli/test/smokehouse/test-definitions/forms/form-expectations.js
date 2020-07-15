@@ -7,206 +7,205 @@
 
 /**
  * @type {Array<Smokehouse.ExpectedRunnerResult>}
- * Expected Lighthouse artifacts from Form gatherer 
+ * Expected Lighthouse artifacts from Form gatherer
  */
 const expectations = [
   {
     artifacts: {
-        Forms: [
+      Forms: [
+        {
+          attributes: {
+            id: 'checkout',
+            name: 'checkout',
+            autocomplete: 'on',
+          },
+          inputs: [
             {
-                attributes: {
-                  id: "checkout",
-                  name: "checkout",
-                  autocomplete: "on"
-                },
-                inputs: [
-                  {
-                    id: "",
-                    nodeName: "INPUT",
-                    name: "name_cc",
-                    placeholder: "",
-                    autocomplete: "cc-name"
-                  },
-                  {
-                    id: "",
-                    nodeName: "INPUT",
-                    name: "CCNo",
-                    placeholder: "",
-                    autocomplete: "cc-number"
-                  },
-                  {
-                    id: "",
-                    nodeName: "SELECT",
-                    name: "CCExpiresMonth",
-                    autocomplete: "cc-exp-month"
-                  },
-                  {
-                    id: "",
-                    nodeName: "SELECT",
-                    name: "CCExpiresYear",
-                    autocomplete: "cc-exp-year"
-                  },
-                  {
-                    id: "",
-                    nodeName: "INPUT",
-                    name: "cvc",
-                    placeholder: "",
-                    autocomplete: "cc-csc"
-                  },
-                  {
-                    id: "",
-                    nodeName: "INPUT",
-                    name: "",
-                    placeholder: "",
-                    autocomplete: ""
-                  }
-                ],
-                labels: []
-              },
-              {
-                attributes: undefined,
-                inputs: [
-                  {
-                    id: "fill",
-                    nodeName: "INPUT",
-                    name: "",
-                    placeholder: "",
-                    autocomplete: ""
-                  },
-                  {
-                    id: "",
-                    nodeName: "INPUT",
-                    name: "name_shipping",
-                    placeholder: "",
-                    autocomplete: ""
-                  },
-                  {
-                    id: "",
-                    nodeName: "INPUT",
-                    name: "address_shipping",
-                    placeholder: "",
-                    autocomplete: ""
-                  },
-                  {
-                    id: "",
-                    nodeName: "INPUT",
-                    name: "city_shipping",
-                    placeholder: "",
-                    autocomplete: ""
-                  },
-                  {
-                    id: "",
-                    nodeName: "INPUT",
-                    name: "zip_shipping",
-                    placeholder: "",
-                    autocomplete: ""
-                  },
-                  {
-                    id: "submit1",
-                    nodeName: "INPUT",
-                    name: "",
-                    placeholder: "",
-                    autocomplete: ""
-                  },
-                  {
-                    id: "",
-                    nodeName: "INPUT",
-                    name: "name_billing",
-                    placeholder: "",
-                    autocomplete: ""
-                  },
-                  {
-                    id: "",
-                    nodeName: "INPUT",
-                    name: "address_billing",
-                    placeholder: "",
-                    autocomplete: ""
-                  },
-                  {
-                    id: "",
-                    nodeName: "INPUT",
-                    name: "city_billing",
-                    placeholder: "",
-                    autocomplete: ""
-                  },
-                  {
-                    id: "",
-                    nodeName: "INPUT",
-                    name: "zip_billing",
-                    placeholder: "",
-                    autocomplete: ""
-                  },
-                  {
-                    id: "submit2",
-                    nodeName: "INPUT",
-                    name: "",
-                    placeholder: "",
-                    autocomplete: ""
-                  },
-                  {
-                    id: "",
-                    nodeName: "INPUT",
-                    name: "CCname",
-                    placeholder: "",
-                    autocomplete: ""
-                  },
-                  {
-                    id: "",
-                    nodeName: "INPUT",
-                    name: "CCNo",
-                    placeholder: "",
-                    autocomplete: ""
-                  },
-                  {
-                    id: "",
-                    nodeName: "INPUT",
-                    name: "cvc",
-                    placeholder: "",
-                    autocomplete: ""
-                  },
-                  {
-                    id: "submit3",
-                    nodeName: "INPUT",
-                    name: "",
-                    placeholder: "",
-                    autocomplete: ""
-                  },
-                  {
-                    id: "",
-                    nodeName: "SELECT",
-                    name: "state_shipping",
-                    autocomplete: ""
-                  },
-                  {
-                    id: "",
-                    nodeName: "SELECT",
-                    name: "state_billing",
-                    autocomplete: ""
-                  },
-                  {
-                    id: "",
-                    nodeName: "SELECT",
-                    name: "CCExpiresMonth",
-                    autocomplete: ""
-                  },
-                  {
-                    id: "",
-                    nodeName: "SELECT",
-                    name: "CCExpiresYear",
-                    autocomplete: ""
-                  }
-                ],
-                labels: []
-              }
-          
-        ],
-      },  
+              id: '',
+              nodeName: 'INPUT',
+              name: 'name_cc',
+              placeholder: '',
+              autocomplete: 'cc-name',
+            },
+            {
+              id: '',
+              nodeName: 'INPUT',
+              name: 'CCNo',
+              placeholder: '',
+              autocomplete: 'cc-number',
+            },
+            {
+              id: '',
+              nodeName: 'SELECT',
+              name: 'CCExpiresMonth',
+              autocomplete: 'cc-exp-month',
+            },
+            {
+              id: '',
+              nodeName: 'SELECT',
+              name: 'CCExpiresYear',
+              autocomplete: 'cc-exp-year',
+            },
+            {
+              id: '',
+              nodeName: 'INPUT',
+              name: 'cvc',
+              placeholder: '',
+              autocomplete: 'cc-csc',
+            },
+            {
+              id: '',
+              nodeName: 'INPUT',
+              name: '',
+              placeholder: '',
+              autocomplete: '',
+            },
+          ],
+          labels: [],
+        },
+        {
+          attributes: undefined,
+          inputs: [
+            {
+              id: 'fill',
+              nodeName: 'INPUT',
+              name: '',
+              placeholder: '',
+              autocomplete: '',
+            },
+            {
+              id: '',
+              nodeName: 'INPUT',
+              name: 'name_shipping',
+              placeholder: '',
+              autocomplete: '',
+            },
+            {
+              id: '',
+              nodeName: 'INPUT',
+              name: 'address_shipping',
+              placeholder: '',
+              autocomplete: '',
+            },
+            {
+              id: '',
+              nodeName: 'INPUT',
+              name: 'city_shipping',
+              placeholder: '',
+              autocomplete: '',
+            },
+            {
+              id: '',
+              nodeName: 'INPUT',
+              name: 'zip_shipping',
+              placeholder: '',
+              autocomplete: '',
+            },
+            {
+              id: 'submit1',
+              nodeName: 'INPUT',
+              name: '',
+              placeholder: '',
+              autocomplete: '',
+            },
+            {
+              id: '',
+              nodeName: 'INPUT',
+              name: 'name_billing',
+              placeholder: '',
+              autocomplete: '',
+            },
+            {
+              id: '',
+              nodeName: 'INPUT',
+              name: 'address_billing',
+              placeholder: '',
+              autocomplete: '',
+            },
+            {
+              id: '',
+              nodeName: 'INPUT',
+              name: 'city_billing',
+              placeholder: '',
+              autocomplete: '',
+            },
+            {
+              id: '',
+              nodeName: 'INPUT',
+              name: 'zip_billing',
+              placeholder: '',
+              autocomplete: '',
+            },
+            {
+              id: 'submit2',
+              nodeName: 'INPUT',
+              name: '',
+              placeholder: '',
+              autocomplete: '',
+            },
+            {
+              id: '',
+              nodeName: 'INPUT',
+              name: 'CCname',
+              placeholder: '',
+              autocomplete: '',
+            },
+            {
+              id: '',
+              nodeName: 'INPUT',
+              name: 'CCNo',
+              placeholder: '',
+              autocomplete: '',
+            },
+            {
+              id: '',
+              nodeName: 'INPUT',
+              name: 'cvc',
+              placeholder: '',
+              autocomplete: '',
+            },
+            {
+              id: 'submit3',
+              nodeName: 'INPUT',
+              name: '',
+              placeholder: '',
+              autocomplete: '',
+            },
+            {
+              id: '',
+              nodeName: 'SELECT',
+              name: 'state_shipping',
+              autocomplete: '',
+            },
+            {
+              id: '',
+              nodeName: 'SELECT',
+              name: 'state_billing',
+              autocomplete: '',
+            },
+            {
+              id: '',
+              nodeName: 'SELECT',
+              name: 'CCExpiresMonth',
+              autocomplete: '',
+            },
+            {
+              id: '',
+              nodeName: 'SELECT',
+              name: 'CCExpiresYear',
+              autocomplete: '',
+            },
+          ],
+          labels: [],
+        },
+      ],
+    },
     lhr: {
       requestedUrl: 'http://localhost:10200/form.html',
       finalUrl: 'http://localhost:10200/form.html',
       audits: {
       },
-    },  
+    },
   },
 ];
 

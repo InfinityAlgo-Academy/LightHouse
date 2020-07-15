@@ -18,11 +18,12 @@ const pageFunctions = require('../../lib/page-functions.js');
 /* istanbul ignore next */
 function getChildrenInputs(formElement) {
   /** @type {{ id: any; nodeName: any; name: any; placeholder: any; autocomplete: any; }[]} */
-  const inputsArray = []; 
+  const inputsArray = [];
   const childrenArray = Array.prototype.slice.call(formElement.childNodes);
-  
-  for (const element of childrenArray){
-    if (element.nodeName == 'INPUT' || element.nodeName == 'SELECT' || element.nodeName == 'TEXTAREA'){
+
+  for (const element of childrenArray) {
+    if (element.nodeName === 'INPUT' || element.nodeName === 'SELECT'
+    || element.nodeName === 'TEXTAREA') {
       /** @type { { id: any; nodeName: any; name: any; placeholder: any; autocomplete: any;} } */
       const inputAttributes = {
         id: element.id,
@@ -30,11 +31,11 @@ function getChildrenInputs(formElement) {
         name: element.name,
         placeholder: element.placeholder,
         autocomplete: element.autocomplete,
-      }
+      };
       inputsArray.push(inputAttributes);
     }
-  };
-  
+  }
+
   return inputsArray;
 }
 
@@ -48,72 +49,68 @@ function getChildrenLabels(formElement) {
   const labelsArray = [];
 
   const childrenArray = Array.prototype.slice.call(formElement.childNodes);
-  for (const element of childrenArray){
-    if (element.nodeName == 'LABEL'){
-       /** @type { {id: any; nodeName: any; name: any; for: any;} } */
+  for (const element of childrenArray) {
+    if (element.nodeName === 'LABEL') {
+      /** @type { {id: any; nodeName: any; name: any; for: any;} } */
       const labelAttributes = {
         id: element.id,
         nodeName: element.nodeName,
         name: element.name,
         for: element.for,
-      }
+      };
       labelsArray.push(labelAttributes);
     }
-  };
+  }
 
   return labelsArray;
 }
 
 /**
  * @param {HTMLElement[]} formChildren
- * @return { { inputs: { id: any; nodeName: any; name: any; placeholder: any; autocomplete: any; }[], labels: { id: any; nodeName: any; name: any; for: any; }[] } } 
+ * @return { { inputs: { id: any; nodeName: any; name: any; placeholder: any; autocomplete: any; }[], labels: { id: any; nodeName: any; name: any; for: any; }[] } }
  */
 /* istanbul ignore next */
 function getFormlessElements(formChildren) {
-
   /** @type { { inputs: { id: any; nodeName: any; name: any; placeholder: any; autocomplete: any; }[], labels: { id: any; nodeName: any; name: any; for: any; }[] } } */
   const formless = {
     inputs: [],
     labels: [],
   };
 
-  for (const childElement of formChildren){
-    if (childElement instanceof HTMLInputElement || childElement instanceof HTMLTextAreaElement || childElement instanceof HTMLLabelElement || childElement instanceof HTMLSelectElement){
+  for (const childElement of formChildren) {
+    if (childElement instanceof HTMLInputElement || childElement instanceof HTMLTextAreaElement
+      || childElement instanceof HTMLLabelElement || childElement instanceof HTMLSelectElement) {
       if (childElement.form ) continue;
     }
 
-    if (childElement instanceof HTMLInputElement || childElement instanceof HTMLTextAreaElement ){
+    if (childElement instanceof HTMLInputElement || childElement instanceof HTMLTextAreaElement ) {
       const inputAttributes = {
         id: childElement.id,
         nodeName: childElement.nodeName,
         name: childElement.name,
         placeholder: childElement.placeholder,
         autocomplete: childElement.autocomplete,
-      }
+      };
       formless.inputs.push(inputAttributes);
-    }
-
-    else if (childElement instanceof HTMLSelectElement ){
+    } else if (childElement instanceof HTMLSelectElement ) {
       const selectAttributes = {
         id: childElement.id,
         nodeName: childElement.nodeName,
         name: childElement.name,
         placeholder: childElement.getAttribute('placeholder'),
         autocomplete: childElement.autocomplete,
-      }
+      };
       formless.inputs.push(selectAttributes);
-    }
-
-    else if (childElement instanceof HTMLLabelElement){
+    } else if (childElement instanceof HTMLLabelElement) {
       const labelAttributes = {
         id: childElement.id,
         nodeName: childElement.nodeName,
         name: childElement.getAttribute('name'),
         for: childElement.htmlFor,
-      }
+      };
       formless.labels.push(labelAttributes);
     }
-  };
+  }
 
   return formless;
 }
@@ -124,7 +121,6 @@ function getFormlessElements(formChildren) {
  */
 /* istanbul ignore next */
 function collectFormElements() {
-
   // @ts-ignore - put into scope via stringification
   const formElements = getElementsInDocument('form'); // eslint-disable-line no-undef
   // @ts-ignore - put into scope via stringification
@@ -136,24 +132,24 @@ function collectFormElements() {
   // @ts-ignore - put into scope via stringification
   const selects = getElementsInDocument('select'); // eslint-disable-line no-undef
 
-  const formChildren = inputs.concat(labels, textareas, selects)
+  const formChildren = inputs.concat(labels, textareas, selects);
   const formless = getFormlessElements(formChildren);
-  
+
   const forms = formElements.map(/** @param {HTMLFormElement} formElement */ (formElement) => {
     const attributes = {
       id: formElement.id,
-      name:formElement.name,
-      autocomplete:formElement.autocomplete,
-    }
+      name: formElement.name,
+      autocomplete: formElement.autocomplete,
+    };
 
-    return{
+    return {
       attributes: attributes,
       inputs: getChildrenInputs(formElement),
       labels: getChildrenLabels(formElement),
-    }
+    };
   });
 
-  if (formless.inputs.length > 0 || formless.labels.length > 0){
+  if (formless.inputs.length > 0 || formless.labels.length > 0) {
     forms.push(formless);
   }
   return forms;
