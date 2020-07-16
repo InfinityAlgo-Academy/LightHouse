@@ -237,6 +237,7 @@ const defaultConfig = {
     'largest-contentful-paint-element',
     'layout-shift-elements',
     'long-tasks',
+    'autocomplete',
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',
     'manual/pwa-each-page-has-url',
