@@ -56,7 +56,7 @@ function getChildrenLabels(formElement) {
         id: element.id,
         nodeName: element.nodeName,
         name: element.name,
-        for: element.for,
+        for: element.htmlFor,
       };
       labelsArray.push(labelAttributes);
     }
