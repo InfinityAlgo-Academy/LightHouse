@@ -416,6 +416,12 @@
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | title": {
     "message": "Ûśê v́îd́êó f̂ór̂ḿât́ŝ f́ôŕ âńîḿât́êd́ ĉón̂t́êńt̂"
   },
+  "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | description": {
+    "message": "P̂ól̂ýf̂íl̂ĺŝ án̂d́ t̂ŕâńŝf́ôŕm̂ś êńâb́l̂é l̂éĝáĉý b̂ŕôẃŝér̂ś t̂ó ûśê ńêẃ Ĵáv̂áŜćr̂íp̂t́ f̂éât́ûŕêś. Ĥóŵév̂ér̂, ḿâńŷ ár̂én̂'t́ n̂éĉéŝśâŕŷ f́ôŕ m̂ód̂ér̂ń b̂ŕôẃŝér̂ś. F̂ór̂ ýôúr̂ b́ûńd̂ĺêd́ Ĵáv̂áŜćr̂íp̂t́, âd́ôṕt̂ á m̂ód̂ér̂ń ŝćr̂íp̂t́ d̂ép̂ĺôým̂én̂t́ ŝt́r̂át̂éĝý ûśîńĝ ḿôd́ûĺê/ńôḿôd́ûĺê f́êát̂úr̂é d̂ét̂éĉt́îón̂ t́ô ŕêd́ûćê t́ĥé âḿôún̂t́ ôf́ ĉód̂é ŝh́îṕp̂éd̂ t́ô ḿôd́êŕn̂ b́r̂óŵśêŕŝ, ẃĥíl̂é r̂ét̂áîńîńĝ śûṕp̂ór̂t́ f̂ór̂ ĺêǵâćŷ b́r̂óŵśêŕŝ. [Ĺêár̂ń M̂ór̂é](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
+  },
+  "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
+    "message": "Âv́ôíd̂ śêŕv̂ín̂ǵ l̂éĝáĉý Ĵáv̂áŜćr̂íp̂t́ t̂ó m̂ód̂ér̂ń b̂ŕôẃŝér̂ś"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "Ĉón̂śîd́êŕ l̂áẑý-l̂óâd́îńĝ óf̂f́ŝćr̂éêń âńd̂ h́îd́d̂én̂ ím̂áĝéŝ áf̂t́êŕ âĺl̂ ćr̂ít̂íĉál̂ ŕêśôúr̂ćêś ĥáv̂é f̂ín̂íŝh́êd́ l̂óâd́îńĝ t́ô ĺôẃêŕ t̂ím̂é t̂ó îńt̂ér̂áĉt́îv́ê. [Ĺêár̂ń m̂ór̂é](https://web.dev/offscreen-images/)."
   },
@@ -459,7 +465,7 @@
     "message": "R̂ém̂óv̂é ûńûśêd́ ĈŚŜ"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "R̂ém̂óv̂é ûńûśêd́ Ĵáv̂áŜćr̂íp̂t́ t̂ó r̂éd̂úĉé b̂ýt̂éŝ ćôńŝúm̂éd̂ b́ŷ ńêt́ŵór̂ḱ âćt̂ív̂ít̂ý. [L̂éâŕn̂ ḿôŕê](https://web.dev/remove-unused-code/)."
+    "message": "R̂ém̂óv̂é ûńûśêd́ Ĵáv̂áŜćr̂íp̂t́ t̂ó r̂éd̂úĉé b̂ýt̂éŝ ćôńŝúm̂éd̂ b́ŷ ńêt́ŵór̂ḱ âćt̂ív̂ít̂ý. [L̂éâŕn̂ ḿôŕê](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "R̂ém̂óv̂é ûńûśêd́ Ĵáv̂áŜćr̂íp̂t́"
@@ -746,8 +752,8 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Âĺl̂ t́êx́t̂ ŕêḿâín̂ś v̂íŝíb̂ĺê d́ûŕîńĝ ẃêb́f̂ón̂t́ l̂óâd́ŝ"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "L̂íĝh́t̂h́ôúŝé ŵáŝ ún̂áb̂ĺê t́ô áût́ôḿât́îćâĺl̂ý ĉh́êćk̂ t́ĥé f̂ón̂t́-d̂íŝṕl̂áŷ v́âĺûé f̂ór̂ t́ĥé f̂ól̂ĺôẃîńĝ ÚR̂Ĺ: {fontURL}."
+  "lighthouse-core/audits/font-display.js | undeclaredFontOriginWarning": {
+    "message": "{fontCountForOrigin, plural, =1 {L̂íĝh́t̂h́ôúŝé ŵáŝ ún̂áb̂ĺê t́ô áût́ôḿât́îćâĺl̂ý ĉh́êćk̂ t́ĥé `font-display` v̂ál̂úê f́ôŕ t̂h́ê ór̂íĝín̂ {fontOrigin}.} other {Ĺîǵĥt́ĥóûśê ẃâś ûńâb́l̂é t̂ó âút̂óm̂át̂íĉál̂ĺŷ ćĥéĉḱ t̂h́ê `font-display` v́âĺûéŝ f́ôŕ t̂h́ê ór̂íĝín̂ {fontOrigin}.}}"
   },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Âśp̂éĉt́ R̂át̂íô (Áĉt́ûál̂)"
@@ -794,8 +800,17 @@
   "lighthouse-core/audits/installable-manifest.js | title": {
     "message": "Ŵéb̂ áp̂ṕ m̂án̂íf̂éŝt́ m̂éêt́ŝ t́ĥé îńŝt́âĺl̂áb̂íl̂ít̂ý r̂éq̂úîŕêḿêńt̂ś"
   },
+  "lighthouse-core/audits/is-on-https.js | allowed": {
+    "message": "Âĺl̂óŵéd̂"
+  },
+  "lighthouse-core/audits/is-on-https.js | blocked": {
+    "message": "B̂ĺôćk̂éd̂"
+  },
   "lighthouse-core/audits/is-on-https.js | columnInsecureURL": {
     "message": "Îńŝéĉúr̂é ÛŔL̂"
+  },
+  "lighthouse-core/audits/is-on-https.js | columnResolution": {
+    "message": "R̂éq̂úêśt̂ Ŕêśôĺût́îón̂"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
     "message": "Âĺl̂ śît́êś ŝh́ôúl̂d́ b̂é p̂ŕôt́êćt̂éd̂ ẃît́ĥ H́T̂T́P̂Ś, êv́êń ôńêś t̂h́ât́ d̂ón̂'t́ ĥán̂d́l̂é ŝén̂śît́îv́ê d́ât́â. T́ĥíŝ ín̂ćl̂úd̂éŝ áv̂óîd́îńĝ [ḿîx́êd́ ĉón̂t́êńt̂](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), ẃĥér̂é ŝóm̂é r̂éŝóûŕĉéŝ ár̂é l̂óâd́êd́ ôv́êŕ ĤT́T̂Ṕ d̂éŝṕît́ê t́ĥé îńît́îál̂ ŕêq́ûéŝt́ b̂éîńĝ śêŕv̂éd̂óv̂ér̂ H́T̂T́P̂Ś. ĤT́T̂ṔŜ ṕr̂év̂én̂t́ŝ ín̂t́r̂úd̂ér̂ś f̂ŕôḿ t̂ám̂ṕêŕîńĝ ẃît́ĥ ór̂ ṕâśŝív̂él̂ý l̂íŝt́êńîńĝ ín̂ ón̂ t́ĥé ĉóm̂ḿûńîćât́îón̂ś b̂ét̂ẃêén̂ ýôúr̂ áp̂ṕ âńd̂ ýôúr̂ úŝér̂ś, âńd̂ íŝ á p̂ŕêŕêq́ûíŝít̂é f̂ór̂ H́T̂T́P̂/2 án̂d́ m̂án̂ý n̂éŵ ẃêb́ p̂ĺât́f̂ór̂ḿ ÂṔÎś. [L̂éâŕn̂ ḿôŕê](https://web.dev/is-on-https/)."
@@ -808,6 +823,12 @@
   },
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Ûśêś ĤT́T̂ṔŜ"
+  },
+  "lighthouse-core/audits/is-on-https.js | upgraded": {
+    "message": "Âút̂óm̂át̂íĉál̂ĺŷ úp̂ǵr̂ád̂éd̂ t́ô H́T̂T́P̂Ś"
+  },
+  "lighthouse-core/audits/is-on-https.js | warning": {
+    "message": "Âĺl̂óŵéd̂ ẃît́ĥ ẃâŕn̂ín̂ǵ"
   },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "T̂h́îś îś t̂h́ê ĺâŕĝéŝt́ ĉón̂t́êńt̂f́ûĺ êĺêḿêńt̂ ṕâín̂t́êd́ ŵít̂h́îń t̂h́ê v́îéŵṕôŕt̂. [Ĺêár̂ń M̂ór̂é](https://web.dev/lighthouse-largest-contentful-paint/)"
@@ -829,12 +850,6 @@
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Âv́ôíd̂ ĺâŕĝé l̂áŷóût́ ŝh́îf́t̂ś"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "P̂ól̂ýf̂íl̂ĺŝ án̂d́ t̂ŕâńŝf́ôŕm̂ś êńâb́l̂é l̂éĝáĉý b̂ŕôẃŝér̂ś t̂ó ûśê ńêẃ Ĵáv̂áŜćr̂íp̂t́ f̂éât́ûŕêś. Ĥóŵév̂ér̂, ḿâńŷ ár̂én̂'t́ n̂éĉéŝśâŕŷ f́ôŕ m̂ód̂ér̂ń b̂ŕôẃŝér̂ś. F̂ór̂ ýôúr̂ b́ûńd̂ĺêd́ Ĵáv̂áŜćr̂íp̂t́, âd́ôṕt̂ á m̂ód̂ér̂ń ŝćr̂íp̂t́ d̂ép̂ĺôým̂én̂t́ ŝt́r̂át̂éĝý ûśîńĝ ḿôd́ûĺê/ńôḿôd́ûĺê f́êát̂úr̂é d̂ét̂éĉt́îón̂ t́ô ŕêd́ûćê t́ĥé âḿôún̂t́ ôf́ ĉód̂é ŝh́îṕp̂éd̂ t́ô ḿôd́êŕn̂ b́r̂óŵśêŕŝ, ẃĥíl̂é r̂ét̂áîńîńĝ śûṕp̂ór̂t́ f̂ór̂ ĺêǵâćŷ b́r̂óŵśêŕŝ. [Ĺêár̂ń M̂ór̂é](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "Âv́ôíd̂ śêŕv̂ín̂ǵ l̂éĝáĉý Ĵáv̂áŜćr̂íp̂t́ t̂ó m̂ód̂ér̂ń b̂ŕôẃŝér̂ś"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "Â f́âśt̂ ṕâǵê ĺôád̂ óv̂ér̂ á ĉél̂ĺûĺâŕ n̂ét̂ẃôŕk̂ én̂śûŕêś â ǵôód̂ ḿôb́îĺê úŝér̂ éx̂ṕêŕîén̂ćê. [Ĺêár̂ń m̂ór̂é](https://web.dev/load-fast-enough-for-pwa/)."
@@ -1359,7 +1374,7 @@
     "message": "N̂áv̂íĝát̂íôń"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
-    "message": "T̂h́êśê ár̂é ôṕp̂ór̂t́ûńît́îéŝ t́ô t́ô ím̂ṕr̂óv̂é t̂h́ê éx̂ṕêŕîén̂ćê óf̂ ŕêád̂ín̂ǵ t̂áb̂úl̂ár̂ ór̂ ĺîśt̂ d́ât́â úŝín̂ǵ âśŝíŝt́îv́ê t́êćĥńôĺôǵŷ, ĺîḱê á ŝćr̂éêń r̂éâd́êŕ."
+    "message": "T̂h́êśê ár̂é ôṕp̂ór̂t́ûńît́îéŝ t́ô ím̂ṕr̂óv̂é t̂h́ê éx̂ṕêŕîén̂ćê óf̂ ŕêád̂ín̂ǵ t̂áb̂úl̂ár̂ ór̂ ĺîśt̂ d́ât́â úŝín̂ǵ âśŝíŝt́îv́ê t́êćĥńôĺôǵŷ, ĺîḱê á ŝćr̂éêń r̂éâd́êŕ."
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "T̂áb̂ĺêś âńd̂ ĺîśt̂ś"
@@ -1606,6 +1621,9 @@
   },
   "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": {
     "message": "R̂éq̂úîŕêd́ {artifactName} ĝát̂h́êŕêŕ d̂íd̂ ńôt́ r̂ún̂."
+  },
+  "lighthouse-core/lib/lh-error.js | notHtml": {
+    "message": "T̂h́ê ṕâǵê ṕr̂óv̂íd̂éd̂ íŝ ńôt́ ĤT́M̂Ĺ (ŝér̂v́êd́ âś M̂ÍM̂É t̂ýp̂é {mimeType})."
   },
   "lighthouse-core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
     "message": "T̂h́îś v̂ér̂śîón̂ óf̂ Ćĥŕôḿê íŝ t́ôó ôĺd̂ t́ô śûṕp̂ór̂t́ '{featureName}'. Ûśê á n̂éŵér̂ v́êŕŝíôń t̂ó ŝéê f́ûĺl̂ ŕêśûĺt̂ś."

@@ -416,6 +416,12 @@
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | title": {
     "message": "Use video formats for animated content"
   },
+  "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | description": {
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
+  },
+  "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
+    "message": "Avoid serving legacy JavaScript to modern browsers"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "Consider lazy-loading offscreen and hidden images after all critical resources have finished loading to lower time to interactive. [Learn more](https://web.dev/offscreen-images/)."
   },
@@ -459,7 +465,7 @@
     "message": "Remove unused CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Remove unused JavaScript to reduce bytes consumed by network activity. [Learn more](https://web.dev/remove-unused-code/)."
+    "message": "Remove unused JavaScript to reduce bytes consumed by network activity. [Learn more](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Remove unused JavaScript"
@@ -746,8 +752,8 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "All text remains visible during webfont loads"
   },
-  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Lighthouse was unable to automatically check the font-display value for the following URL: {fontURL}."
+  "lighthouse-core/audits/font-display.js | undeclaredFontOriginWarning": {
+    "message": "{fontCountForOrigin, plural, =1 {Lighthouse was unable to automatically check the `font-display` value for the origin {fontOrigin}.} other {Lighthouse was unable to automatically check the `font-display` values for the origin {fontOrigin}.}}"
   },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Aspect Ratio (Actual)"
@@ -794,8 +800,17 @@
   "lighthouse-core/audits/installable-manifest.js | title": {
     "message": "Web app manifest meets the installability requirements"
   },
+  "lighthouse-core/audits/is-on-https.js | allowed": {
+    "message": "Allowed"
+  },
+  "lighthouse-core/audits/is-on-https.js | blocked": {
+    "message": "Blocked"
+  },
   "lighthouse-core/audits/is-on-https.js | columnInsecureURL": {
     "message": "Insecure URL"
+  },
+  "lighthouse-core/audits/is-on-https.js | columnResolution": {
+    "message": "Request Resolution"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
     "message": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. This includes avoiding [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), where some resources are loaded over HTTP despite the initial request being servedover HTTPS. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more](https://web.dev/is-on-https/)."
@@ -808,6 +823,12 @@
   },
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Uses HTTPS"
+  },
+  "lighthouse-core/audits/is-on-https.js | upgraded": {
+    "message": "Automatically upgraded to HTTPS"
+  },
+  "lighthouse-core/audits/is-on-https.js | warning": {
+    "message": "Allowed with warning"
   },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "This is the largest contentful element painted within the viewport. [Learn More](https://web.dev/lighthouse-largest-contentful-paint/)"
@@ -829,12 +850,6 @@
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Avoid large layout shifts"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | description": {
-    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
-  },
-  "lighthouse-core/audits/legacy-javascript.js | title": {
-    "message": "Avoid serving legacy JavaScript to modern browsers"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "A fast page load over a cellular network ensures a good mobile user experience. [Learn more](https://web.dev/load-fast-enough-for-pwa/)."
@@ -1359,7 +1374,7 @@
     "message": "Navigation"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
-    "message": "These are opportunities to to improve the experience of reading tabular or list data using assistive technology, like a screen reader."
+    "message": "These are opportunities to improve the experience of reading tabular or list data using assistive technology, like a screen reader."
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Tables and lists"
@@ -1606,6 +1621,9 @@
   },
   "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": {
     "message": "Required {artifactName} gatherer did not run."
+  },
+  "lighthouse-core/lib/lh-error.js | notHtml": {
+    "message": "The page provided is not HTML (served as MIME type {mimeType})."
   },
   "lighthouse-core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
     "message": "This version of Chrome is too old to support '{featureName}'. Use a newer version to see full results."

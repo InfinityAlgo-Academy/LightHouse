@@ -12,16 +12,17 @@
  * ./lighthouse-core/scripts/legacy-javascript - verification tool.
  */
 
-/** @typedef {{name: string, expression: string}} Pattern */
-/** @typedef {{name: string, line: number, column: number}} PatternMatchResult */
-/** @typedef {{url: string, subItems: {type: 'subitems', items: SubItem[]}}} Item */
+/** @typedef {{name: string, expression: string, estimateBytes?: (result: PatternMatchResult) => number}} Pattern */
+/** @typedef {{name: string, line: number, column: number, count: number}} PatternMatchResult */
+/** @typedef {import('./byte-efficiency-audit.js').ByteEfficiencyProduct} ByteEfficiencyProduct */
+/** @typedef {LH.Audit.ByteEfficiencyItem & {subItems: {type: 'subitems', items: SubItem[]}}} Item */
 /** @typedef {{signal: string, location: LH.Audit.Details.SourceLocationValue}} SubItem */
 
-const Audit = require('./audit.js');
-const NetworkRecords = require('../computed/network-records.js');
-const JSBundles = require('../computed/js-bundles.js');
-const i18n = require('../lib/i18n/i18n.js');
-const thirdPartyWeb = require('../lib/third-party-web.js');
+const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
+const JsBundles = require('../../computed/js-bundles.js');
+const i18n = require('../../lib/i18n/i18n.js');
+const thirdPartyWeb = require('../../lib/third-party-web.js');
+const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
 
 const UIStrings = {
   /** Title of a Lighthouse audit that tells the user about legacy polyfills and transforms used on the page. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -79,11 +80,9 @@ class CodePatternMatcher {
       }
       const pattern = this.patterns[patternExpressionMatches.findIndex(Boolean)];
 
-      // Don't report more than one instance of a pattern for this code.
-      // Would result in multiple matches for the same pattern, ex: if both '='
-      // and 'Object.defineProperty' are used conditionally based on feature detection.
-      // Would also result in many matches for transform patterns.
       if (seen.has(pattern)) {
+        const existingMatch = matches.find(m => m.name === pattern.name);
+        if (existingMatch) existingMatch.count += 1;
         continue;
       }
       seen.add(pattern);
@@ -92,6 +91,7 @@ class CodePatternMatcher {
         name: pattern.name,
         line,
         column: result.index - lineBeginsAtIndex,
+        count: 1,
       });
     }
 
@@ -99,17 +99,17 @@ class CodePatternMatcher {
   }
 }
 
-class LegacyJavascript extends Audit {
+class LegacyJavascript extends ByteEfficiencyAudit {
   /**
    * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
       id: 'legacy-javascript',
-      scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
+      scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
       description: str_(UIStrings.description),
       title: str_(UIStrings.title),
-      requiredArtifacts: ['devtoolsLogs', 'ScriptElements', 'SourceMaps', 'URL'],
+      requiredArtifacts: ['devtoolsLogs', 'traces', 'ScriptElements', 'SourceMaps', 'URL'],
     };
   }
 
@@ -256,14 +256,19 @@ class LegacyJavascript extends Audit {
       {
         name: '@babel/plugin-transform-classes',
         expression: 'Cannot call a class as a function',
+        estimateBytes: result => 150 + result.count * '_classCallCheck()'.length,
       },
       {
         name: '@babel/plugin-transform-regenerator',
         expression: /regeneratorRuntime\.a?wrap/.source,
+        // Example of this transform: https://gist.github.com/connorjclark/af8bccfff377ac44efc104a79bc75da2
+        // `regeneratorRuntime.awrap` is generated for every usage of `await`, and adds ~80 bytes each.
+        estimateBytes: result => result.count * 80,
       },
       {
         name: '@babel/plugin-transform-spread',
         expression: /\.apply\(void 0,\s?_toConsumableArray/.source,
+        estimateBytes: result => 1169 + result.count * '_toConsumableArray()'.length,
       },
     ];
   }
@@ -303,9 +308,9 @@ class LegacyJavascript extends Audit {
 
           const mapping = bundle.map.mappings().find(m => m.sourceURL === source);
           if (mapping) {
-            matches.push({name, line: mapping.lineNumber, column: mapping.columnNumber});
+            matches.push({name, line: mapping.lineNumber, column: mapping.columnNumber, count: 1});
           } else {
-            matches.push({name, line: 0, column: 0});
+            matches.push({name, line: 0, column: 0, count: 1});
           }
         }
       }
@@ -318,35 +323,116 @@ class LegacyJavascript extends Audit {
   }
 
   /**
-   * @param {LH.Artifacts} artifacts
-   * @param {LH.Audit.Context} context
-   * @return {Promise<LH.Audit.Product>}
+   * @param {PatternMatchResult[]} matches
+   * @return {number}
    */
-  static async audit(artifacts, context) {
-    const devtoolsLog = artifacts.devtoolsLogs[LegacyJavascript.DEFAULT_PASS];
-    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
-    const bundles = await JSBundles.request(artifacts, context);
+  static estimateWastedBytes(matches) {
+    // Split up results based on polyfill / transform. Only transforms start with @.
+    const polyfillResults = matches.filter(m => !m.name.startsWith('@'));
+    const transformResults = matches.filter(m => m.name.startsWith('@'));
+
+    let estimatedWastedBytesFromPolyfills = 0;
+    /** @type {import('../../scripts/legacy-javascript/create-polyfill-size-estimation.js').PolyfillSizeEstimator} */
+    const graph = require('./polyfill-graph-data.json');
+    const modulesSeen = new Set();
+    for (const result of polyfillResults) {
+      const modules = graph.dependencies[result.name];
+      if (!modules) continue; // Shouldn't happen.
+      for (const module of modules) {
+        modulesSeen.add(module);
+      }
+    }
+
+    if (polyfillResults.length > 0) estimatedWastedBytesFromPolyfills += graph.baseSize;
+    estimatedWastedBytesFromPolyfills += [...modulesSeen].reduce((acc, moduleIndex) => {
+      return acc + graph.moduleSizes[moduleIndex];
+    }, 0);
+    estimatedWastedBytesFromPolyfills = Math.min(estimatedWastedBytesFromPolyfills, graph.maxSize);
+
+    let estimatedWastedBytesFromTransforms = 0;
+
+    for (const result of transformResults) {
+      const pattern = this.getTransformPatterns().find(p => p.name === result.name);
+      if (!pattern || !pattern.estimateBytes) continue;
+      estimatedWastedBytesFromTransforms += pattern.estimateBytes(result);
+    }
+
+    const estimatedWastedBytes =
+      estimatedWastedBytesFromPolyfills + estimatedWastedBytesFromTransforms;
+    return estimatedWastedBytes;
+  }
+
+  /**
+   * Utility function to estimate transfer size and cache calculation.
+   *
+   * Note: duplicated-javascript does this exact thing. In the future, consider
+   * making a generic estimator on ByteEfficienyAudit.
+   * @param {Map<string, number>} transferRatioByUrl
+   * @param {string} url
+   * @param {LH.Artifacts} artifacts
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
+   */
+  static async estimateTransferRatioForScript(transferRatioByUrl, url, artifacts, networkRecords) {
+    let transferRatio = transferRatioByUrl.get(url);
+    if (transferRatio !== undefined) return transferRatio;
+
+    const mainDocumentRecord = await NetworkAnalyzer.findMainDocument(networkRecords);
+    const networkRecord = url === artifacts.URL.finalUrl ?
+      mainDocumentRecord :
+      networkRecords.find(n => n.url === url);
+    const script = artifacts.ScriptElements.find(script => script.src === url);
+
+    if (!script || script.content === null) {
+      // Can't find content, so just use 1.
+      transferRatio = 1;
+    } else {
+      const contentLength = script.content.length;
+      const transferSize =
+        ByteEfficiencyAudit.estimateTransferSize(networkRecord, contentLength, 'Script');
+      transferRatio = transferSize / contentLength;
+    }
+
+    transferRatioByUrl.set(url, transferRatio);
+    return transferRatio;
+  }
+
+  /**
+   * @param {LH.Artifacts} artifacts
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
+   * @param {LH.Audit.Context} context
+   * @return {Promise<ByteEfficiencyProduct>}
+   */
+  static async audit_(artifacts, networkRecords, context) {
+    const mainDocumentEntity = thirdPartyWeb.getEntity(artifacts.URL.finalUrl);
+    const bundles = await JsBundles.request(artifacts, context);
 
     /** @type {Item[]} */
     const items = [];
-    let signalCount = 0;
 
-    // TODO(cjamcl): Use SourceMaps, and only pattern match if maps are not available.
     const matcher = new CodePatternMatcher([
       ...this.getPolyfillPatterns(),
       ...this.getTransformPatterns(),
     ]);
 
+    /** @type {Map<string, number>} */
+    const transferRatioByUrl = new Map();
+
     const urlToMatchResults =
       this.detectAcrossScripts(matcher, artifacts.ScriptElements, networkRecords, bundles);
-    urlToMatchResults.forEach((matches, url) => {
+    for (const [url, matches] of urlToMatchResults.entries()) {
+      const transferRatio = await this.estimateTransferRatioForScript(
+        transferRatioByUrl, url, artifacts, networkRecords);
+      const wastedBytes = Math.round(this.estimateWastedBytes(matches) * transferRatio);
       /** @type {typeof items[number]} */
       const item = {
         url,
+        wastedBytes,
         subItems: {
           type: 'subitems',
           items: [],
         },
+        // Not needed, but keeps typescript happy.
+        totalBytes: 0,
       };
       for (const match of matches) {
         const {name, line, column} = match;
@@ -364,33 +450,30 @@ class LegacyJavascript extends Audit {
         item.subItems.items.push(subItem);
       }
       items.push(item);
-      signalCount += item.subItems.items.length;
-    });
+    }
 
-    /** @type {LH.Audit.Details.Table['headings']} */
+    /** @type {Map<string, number>} */
+    const wastedBytesByUrl = new Map();
+    for (const item of items) {
+      // Only estimate savings if first party code has legacy code.
+      if (thirdPartyWeb.isFirstParty(item.url, mainDocumentEntity)) {
+        wastedBytesByUrl.set(item.url, item.wastedBytes);
+      }
+    }
+
+    /** @type {LH.Audit.Details.OpportunityColumnHeading[]} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'url', itemType: 'url', subItemsHeading: {key: 'location', itemType: 'source-location'}, text: str_(i18n.UIStrings.columnURL)},
-      {key: null, itemType: 'code', subItemsHeading: {key: 'signal'}, text: ''},
+      {key: 'url', valueType: 'url', subItemsHeading: {key: 'location', valueType: 'source-location'}, label: str_(i18n.UIStrings.columnURL)},
+      {key: null, valueType: 'code', subItemsHeading: {key: 'signal'}, label: ''},
+      {key: 'wastedBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnWastedBytes)},
       /* eslint-enable max-len */
     ];
-    const details = Audit.makeTableDetails(headings, items);
 
-    /** @type {LH.Audit.Details.DebugData} */
-    const debugData = {
-      type: 'debugdata',
-      signalCount,
-    };
-
-    // Only fail if first party code has legacy code.
-    const mainDocumentEntity = thirdPartyWeb.getEntity(artifacts.URL.finalUrl);
-    const foundSignalInFirstPartyCode = items.some(row => {
-      return thirdPartyWeb.isFirstParty(row.url, mainDocumentEntity);
-    });
     return {
-      score: foundSignalInFirstPartyCode ? 0 : 1,
-      notApplicable: !foundSignalInFirstPartyCode,
-      details: {...details, debugData},
+      items,
+      headings,
+      wastedBytesByUrl,
     };
   }
 }

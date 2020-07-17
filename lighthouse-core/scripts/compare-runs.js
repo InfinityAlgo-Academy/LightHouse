@@ -179,14 +179,15 @@ async function audit() {
       if (fs.existsSync(outputPath)) continue;
 
       try {
-        await execFile('node', [
+        const args = [
           `${LH_ROOT}/lighthouse-cli`,
           url,
           `--audit-mode=${gatherDir}`,
           `--output-path=${outputPath}`,
           '--output=json',
-          argv.lhFlags,
-        ]);
+        ];
+        if (argv.lhFlags) args.push(argv.lhFlags);
+        await execFile('node', args);
       } catch (e) {
         console.error('audit error:', e);
       }

@@ -29,7 +29,8 @@
         ],
         "items": [
           {
-            "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"
+            "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
+            "resolution": "Allowed"
           }
         ]
       }
@@ -2892,7 +2893,7 @@
     "unused-javascript": {
       "id": "unused-javascript",
       "title": "Remove unused JavaScript",
-      "description": "Remove unused JavaScript to reduce bytes consumed by network activity. [Learn more](https://web.dev/remove-unused-code/).",
+      "description": "Remove unused JavaScript to reduce bytes consumed by network activity. [Learn more](https://web.dev/unused-javascript/).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
@@ -3048,6 +3049,94 @@
         "items": [],
         "overallSavingsMs": 0,
         "overallSavingsBytes": 0
+      }
+    },
+    "duplicated-javascript": {
+      "id": "duplicated-javascript",
+      "title": "Remove duplicate modules in JavaScript bundles",
+      "description": "Remove large, duplicate JavaScript modules from bundles to reduce unnecessary bytes consumed by network activity. ",
+      "score": 1,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 0,
+      "numericUnit": "millisecond",
+      "displayValue": "",
+      "details": {
+        "type": "opportunity",
+        "headings": [],
+        "items": [],
+        "overallSavingsMs": 0,
+        "overallSavingsBytes": 0
+      }
+    },
+    "legacy-javascript": {
+      "id": "legacy-javascript",
+      "title": "Avoid serving legacy JavaScript to modern browsers",
+      "description": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)",
+      "score": 1,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 0,
+      "numericUnit": "millisecond",
+      "displayValue": "Potential savings of 21 KiB",
+      "details": {
+        "type": "opportunity",
+        "headings": [
+          {
+            "key": "url",
+            "valueType": "url",
+            "subItemsHeading": {
+              "key": "location",
+              "valueType": "source-location"
+            },
+            "label": "URL"
+          },
+          {
+            "key": null,
+            "valueType": "code",
+            "subItemsHeading": {
+              "key": "signal"
+            },
+            "label": ""
+          },
+          {
+            "key": "wastedBytes",
+            "valueType": "bytes",
+            "label": "Potential Savings"
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:10200/zone.js",
+            "wastedBytes": 21205,
+            "subItems": {
+              "type": "subitems",
+              "items": [
+                {
+                  "signal": "Object.defineProperty",
+                  "location": {
+                    "type": "source-location",
+                    "url": "http://localhost:10200/zone.js",
+                    "line": 1290,
+                    "column": 4,
+                    "urlProvider": "network"
+                  }
+                },
+                {
+                  "signal": "Object.defineProperties",
+                  "location": {
+                    "type": "source-location",
+                    "url": "http://localhost:10200/zone.js",
+                    "line": 1300,
+                    "column": 4,
+                    "urlProvider": "network"
+                  }
+                }
+              ]
+            },
+            "totalBytes": 0
+          }
+        ],
+        "overallSavingsMs": 0,
+        "overallSavingsBytes": 21205
       }
     },
     "appcache-manifest": {
@@ -4012,6 +4101,16 @@
           "group": "load-opportunities"
         },
         {
+          "id": "duplicated-javascript",
+          "weight": 0,
+          "group": "load-opportunities"
+        },
+        {
+          "id": "legacy-javascript",
+          "weight": 0,
+          "group": "load-opportunities"
+        },
+        {
           "id": "total-byte-weight",
           "weight": 0,
           "group": "diagnostics"
@@ -4698,7 +4797,7 @@
     },
     "a11y-tables-lists": {
       "title": "Tables and lists",
-      "description": "These are opportunities to to improve the experience of reading tabular or list data using assistive technology, like a screen reader."
+      "description": "These are opportunities to improve the experience of reading tabular or list data using assistive technology, like a screen reader."
     },
     "seo-mobile": {
       "title": "Mobile Friendly",
@@ -5689,6 +5788,30 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:duplicated-javascript",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:ModuleDuplication",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:JSBundles",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:legacy-javascript",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:appcache-manifest",
         "duration": 100,
         "entryType": "measure"
@@ -5911,6 +6034,9 @@
       "lighthouse-core/audits/is-on-https.js | columnInsecureURL": [
         "audits[is-on-https].details.headings[0].text"
       ],
+      "lighthouse-core/audits/is-on-https.js | allowed": [
+        "audits[is-on-https].details.items[0].resolution"
+      ],
       "lighthouse-core/audits/redirects-http.js | failureTitle": [
         "audits[redirects-http].title"
       ],
@@ -6101,6 +6227,7 @@
         "audits[unminified-javascript].details.headings[0].label",
         "audits[uses-webp-images].details.headings[1].label",
         "audits[uses-text-compression].details.headings[0].label",
+        "audits[legacy-javascript].details.headings[0].label",
         "audits[geolocation-on-start].details.headings[0].text",
         "audits[no-document-write].details.headings[0].text",
         "audits[notification-on-start].details.headings[0].text",
@@ -6829,7 +6956,8 @@
         "audits[render-blocking-resources].details.headings[2].label",
         "audits[unminified-javascript].details.headings[2].label",
         "audits[uses-webp-images].details.headings[3].label",
-        "audits[uses-text-compression].details.headings[2].label"
+        "audits[uses-text-compression].details.headings[2].label",
+        "audits[legacy-javascript].details.headings[2].label"
       ],
       "lighthouse-core/audits/byte-efficiency/unminified-css.js | title": [
         "audits[unminified-css].title"
@@ -6861,6 +6989,12 @@
             "wastedBytes": 64646
           },
           "path": "audits[uses-text-compression].displayValue"
+        },
+        {
+          "values": {
+            "wastedBytes": 21205
+          },
+          "path": "audits[legacy-javascript].displayValue"
         }
       ],
       "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": [
@@ -6907,6 +7041,18 @@
       ],
       "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | description": [
         "audits[efficient-animated-content].description"
+      ],
+      "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | title": [
+        "audits[duplicated-javascript].title"
+      ],
+      "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | description": [
+        "audits[duplicated-javascript].description"
+      ],
+      "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": [
+        "audits[legacy-javascript].title"
+      ],
+      "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | description": [
+        "audits[legacy-javascript].description"
       ],
       "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": [
         "audits[appcache-manifest].title"
