@@ -679,6 +679,7 @@ declare global {
       }
 
       export interface Form {
+        /** If attributes is missing that means this is a formless set of elements. */
         attributes?: {id: string, name: string, autocomplete: string}
         inputs: { id: any; nodeName: any; name: any; placeholder: any; autocomplete: any; }[];
         labels: { id: any; nodeName: any; name: any; for: any; }[];
