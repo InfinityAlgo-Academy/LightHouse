@@ -13,10 +13,8 @@
 'use strict';
 
 const Audit = require('./audit.js');
-const Sentry = require('../lib/sentry.js');
-const semver = require('semver');
-const snykDatabase = require('../../third-party/snyk/snapshot.json');
 const i18n = require('../lib/i18n/i18n.js');
+
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides d. */
@@ -50,120 +48,33 @@ const UIStrings = {
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
-const SEMVER_REGEX = /^(\d+\.\d+\.\d+)[^-0-9]+/;
+/** @type {string[]} */
+const validAutocompleteAttributeNames = ['name', 'honorific-prefix', 'given-name',
+  'additional-name', 'family-name', 'honorific-suffix', 'nickname', 'username', 'new-password',
+  'current-password', 'one-time-code', 'organization-title', 'organization', 'street-address',
+  'address-line1', 'address-line2', 'address-line3', 'address-level4', 'address-level3',
+  'address-level2', 'address-level1', 'country', 'country-name', 'postal-code', 'cc-name',
+  'cc-given-name', 'cc-additional-name', 'cc-family-name', 'cc-number', 'cc-exp',
+  'cc-exp-month', 'cc-exp-year', 'cc-csc', 'cc-type', 'transaction-currency',
+  'transaction-amount', 'language', 'bday', 'bday-day', 'bday-month', 'bday-year',
+  'sex', 'url', 'photo', 'tel', 'tel-country-code', 'tel-national', 'tel-area-code',
+  'tel-local', 'tel-local-prefix', 'tel-local-suffix', 'tel-extension', 'email', 'impp'];
+/** @type {string[]} */
+const optionalAutocompleteAttributePrefixes = ['home', 'work', 'mobile', 'fax', 'pager',
+  'shipping', 'billing'];
 
-/** @type {Object<string, string>} */
-const rowMap = {
-  'low': str_(UIStrings.rowSeverityLow),
-  'medium': str_(UIStrings.rowSeverityMedium),
-  'high': str_(UIStrings.rowSeverityHigh),
-};
-
-/** @typedef {{npm: Object<string, Array<{id: string, severity: string, semver: {vulnerable: Array<string>}}>>}} SnykDB */
-/** @typedef {{severity: string, numericSeverity: number, library: string, url: string}} Vulnerability */
-
-class NoVulnerableLibrariesAudit extends Audit {
+class AutocompleteAudit extends Audit {
   /**
    * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
-      id: 'no-vulnerable-libraries',
+      id: 'autocomplete',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['Stacks'],
+      requiredArtifacts: ['Forms'],
     };
-  }
-
-  /**
-   * @return {SnykDB}
-   */
-  static get snykDB() {
-    return snykDatabase;
-  }
-
-  /**
-   * @return {Object<string, number>}
-   */
-  static get severityMap() {
-    return {
-      high: 3,
-      medium: 2,
-      low: 1,
-    };
-  }
-
-  /**
-   * Attempts to normalize the version.
-   * @param {string|undefined} version
-   * @return {string|undefined}
-   */
-  static normalizeVersion(version) {
-    if (!version) return version;
-    if (semver.valid(version)) return version;
-
-    // converts 1.5 -> 1.5.0
-    if (/^\d+\.\d+$/.test(version)) return `${version}.0`;
-    // converts 1.0.0a-bunch-of-crap -> 1.0.0
-    const versionMatch = version.match(SEMVER_REGEX);
-    if (versionMatch) return versionMatch[1];
-    // leave everything else untouched
-    return version;
-  }
-
-  /**
-   * @param {string} normalizedVersion
-   * @param {LH.Artifacts.DetectedStack} lib
-   * @param {SnykDB} snykDB
-   * @return {Array<Vulnerability>}
-   */
-  static getVulnerabilities(normalizedVersion, lib, snykDB) {
-    if (!lib.npm || !snykDB.npm[lib.npm]) {
-      return [];
-    }
-
-    // Verify the version is well-formed first
-    try {
-      semver.satisfies(normalizedVersion, '*');
-    } catch (err) {
-      err.pkgName = lib.npm;
-      // Report the failure and skip this library if the version was ill-specified
-      Sentry.captureException(err, {level: 'warning'});
-      return [];
-    }
-
-    // Match the vulnerability candidates from snyk against the version we see in the page
-    const vulnCandidatesForLib = snykDB.npm[lib.npm];
-    const matchingVulns = vulnCandidatesForLib.filter(vulnCandidate => {
-      // Each snyk vulnerability comes with an array of semver ranges
-      // The page is vulnerable if any of the ranges match.
-      const hasMatchingVersion = vulnCandidate.semver.vulnerable.some(vulnSemverRange =>
-        semver.satisfies(normalizedVersion, vulnSemverRange)
-      );
-      return hasMatchingVersion;
-    });
-
-    const vulns = matchingVulns.map(vuln => {
-      return {
-        severity: rowMap[vuln.severity],
-        numericSeverity: this.severityMap[vuln.severity],
-        library: `${lib.name}@${normalizedVersion}`,
-        url: 'https://snyk.io/vuln/' + vuln.id,
-      };
-    });
-
-    return vulns;
-  }
-
-  /**
-   * @param {Array<Vulnerability>} vulnerabilities
-   * @return {string}
-   */
-  static highestSeverity(vulnerabilities) {
-    const sortedVulns = vulnerabilities
-      .sort((a, b) => b.numericSeverity - a.numericSeverity);
-    return sortedVulns[0].severity;
   }
 
   /**
@@ -171,61 +82,37 @@ class NoVulnerableLibrariesAudit extends Audit {
    * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
-    const foundLibraries = artifacts.Stacks.filter(stack => stack.detector === 'js');
-    const snykDB = NoVulnerableLibrariesAudit.snykDB;
-
-    if (!foundLibraries.length) {
-      return {
-        score: 1,
-      };
-    }
-
-    let totalVulns = 0;
-    /** @type {Array<{highestSeverity: string, vulnCount: number, detectedLib: LH.Audit.Details.LinkValue}>} */
-    const vulnerabilityResults = [];
-
-    for (const lib of foundLibraries) {
-      const version = this.normalizeVersion(lib.version) || '';
-      const vulns = this.getVulnerabilities(version, lib, snykDB);
-      const vulnCount = vulns.length;
-      totalVulns += vulnCount;
-
-      let highestSeverity;
-      if (vulns.length > 0) {
-        highestSeverity = this.highestSeverity(vulns);
-
-        vulnerabilityResults.push({
-          highestSeverity,
-          vulnCount,
-          detectedLib: {
-            text: lib.name + '@' + version,
-            url: `https://snyk.io/vuln/npm:${lib.npm}?lh=${version}&utm_source=lighthouse&utm_medium=ref&utm_campaign=audit`,
-            type: 'link',
-          },
-        });
+    const forms = artifacts.Forms;
+    let totalCount = 0;
+    const noAutocomplete = [];
+    const offAutocomplete = [];
+    const invalidAutocomplete = [];
+    const onAutocomplete = [];
+    for (const form of forms) {
+      for (const input of form.inputs) {
+        totalCount += 1;
+        if (!input.autocomplete) {
+          noAutocomplete.push(input);
+        } else if (input.autocomplete === 'off') {
+          offAutocomplete.push(input);
+        } else if (input.autocomplete === 'on') {
+          onAutocomplete.push(input);
+        } else {
+          let autocomplete = input.autocomplete;
+          for (const prefix of optionalAutocompleteAttributePrefixes) {
+            if (autocomplete.includes(prefix)) {
+              autocomplete = autocomplete.slice(prefix.length, autocomplete.length - 1);
+              break;
+            }
+          }
+          if (!validAutocompleteAttributeNames.includes(autocomplete)) {
+            invalidAutocomplete.push(input);
+          }
+        }
       }
     }
-
-    let displayValue = '';
-    if (totalVulns > 0) {
-      displayValue = str_(UIStrings.displayValue, {itemCount: totalVulns});
-    }
-
-    /** @type {LH.Audit.Details.Table['headings']} */
-    const headings = [
-      {key: 'detectedLib', itemType: 'link', text: str_(UIStrings.columnVersion)},
-      {key: 'vulnCount', itemType: 'text', text: str_(UIStrings.columnVuln)},
-      {key: 'highestSeverity', itemType: 'text', text: str_(UIStrings.columnSeverity)},
-    ];
-    const details = Audit.makeTableDetails(headings, vulnerabilityResults, {});
-
-    return {
-      score: Number(totalVulns === 0),
-      displayValue,
-      details,
-    };
   }
 }
 
-module.exports = NoVulnerableLibrariesAudit;
+module.exports = AutocompleteAudit;
 module.exports.UIStrings = UIStrings;
