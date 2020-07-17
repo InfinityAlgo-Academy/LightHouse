@@ -323,6 +323,7 @@ declare global {
       };
       pid: number;
       tid: number;
+      /** Timestamp of the event in microseconds. */
       ts: number;
       dur: number;
       ph: 'B'|'b'|'D'|'E'|'e'|'F'|'I'|'M'|'N'|'n'|'O'|'R'|'S'|'T'|'X';

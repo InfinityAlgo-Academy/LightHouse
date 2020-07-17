@@ -24,6 +24,9 @@ const config = {
       'unminified-javascript',
       'unused-css-rules',
       'unused-javascript',
+      // image-size-responsive is not a byte-efficiency audit but a counterbalance to the byte-efficiency audits
+      // that makes sense to test together.
+      'image-size-responsive',
     ],
     throttlingMethod: 'devtools',
   },

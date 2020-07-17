@@ -77,8 +77,6 @@ declare global {
       /** Error message from any exception thrown while running this audit. */
       errorMessage?: string;
       warnings?: string[];
-      /** Deprecated and does not make its way into the Lighthouse report. */
-      extendedInfo?: {[p: string]: any};
       /** Overrides scoreDisplayMode with notApplicable if set to true */
       notApplicable?: boolean;
       /** Extra information about the page provided by some types of audits, in one of several possible forms that can be rendered in the HTML report. */

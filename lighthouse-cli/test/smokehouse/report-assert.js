@@ -10,6 +10,7 @@
  * against the results actually collected from Lighthouse.
  */
 
+const cloneDeep = require('lodash.clonedeep');
 const log = require('lighthouse-logger');
 const LocalConsole = require('./lib/local-console.js');
 
@@ -152,9 +153,58 @@ function makeComparison(name, actualResult, expectedResult) {
 }
 
 /**
+ * Delete expectations that don't match environment criteria.
+ * @param {LocalConsole} localConsole
+ * @param {LH.Result} lhr
+ * @param {Smokehouse.ExpectedRunnerResult} expected
+ */
+function pruneExpectations(localConsole, lhr, expected) {
+  const userAgent = lhr.environment.hostUserAgent;
+  const userAgentMatch = /Chrome\/(\d+)/.exec(userAgent); // Chrome/85.0.4174.0
+  if (!userAgentMatch) throw new Error('Could not get chrome version.');
+  const actualChromeVersion = Number(userAgentMatch[1]);
+
+  /**
+   * @param {*} obj
+   */
+  function failsChromeVersionCheck(obj) {
+    if (!obj._minChromiumMilestone) return false;
+    return actualChromeVersion < obj._minChromiumMilestone;
+  }
+
+  /**
+   * @param {*} obj
+   */
+  function pruneNewerChromeExpectations(obj) {
+    for (const key of Object.keys(obj)) {
+      const value = obj[key];
+      if (!value || typeof value !== 'object') {
+        continue;
+      }
+
+      if (failsChromeVersionCheck(value)) {
+        localConsole.log([
+          `[${key}] failed chrome version check, pruning expectation:`,
+          JSON.stringify(value, null, 2),
+          `Actual Chromium version: ${actualChromeVersion}`,
+        ].join(' '));
+        delete obj[key];
+      } else {
+        pruneNewerChromeExpectations(value);
+      }
+    }
+    delete obj._minChromiumMilestone;
+  }
+
+  const cloned = cloneDeep(expected);
+  pruneNewerChromeExpectations(cloned);
+  return cloned;
+}
+
+/**
  * Collate results into comparisons of actual and expected scores on each audit/artifact.
  * @param {LocalConsole} localConsole
- * @param {Smokehouse.ExpectedRunnerResult} actual
+ * @param {{lhr: LH.Result, artifacts: LH.Artifacts}} actual
  * @param {Smokehouse.ExpectedRunnerResult} expected
  * @return {Comparison[]}
  */
@@ -286,6 +336,7 @@ function assertLogString(count) {
 function report(actual, expected, reportOptions = {}) {
   const localConsole = new LocalConsole();
 
+  expected = pruneExpectations(localConsole, actual.lhr, expected);
   const comparisons = collateResults(localConsole, actual, expected);
 
   let correctCount = 0;

@@ -13,7 +13,7 @@ cd $LH_ROOT_PATH
 if [[ -f lantern-data/version ]] && [[ "$VERSION" != "$(cat lantern-data/version)" ]]; then
   if ! [[ "$CI" ]]; then
     echo "Version out of date. About to delete ./lantern-data..."
-    echo "Press any key to continue, Ctrl+C to exit"
+    echo "Press Space to continue, Ctrl+C to exit"
     read -n 1 -r unused_variable
   fi
   echo "Deleting old lantern data."

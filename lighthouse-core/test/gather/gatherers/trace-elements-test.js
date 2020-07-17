@@ -10,7 +10,7 @@
 const TraceElementsGatherer = require('../../../gather/gatherers/trace-elements.js');
 
 describe('Trace Elements gatherer - GetTopLayoutShiftElements', () => {
-  function makeTraceEvent(score, impactedNodes) {
+  function makeTraceEvent(score, impactedNodes, had_recent_input = false) {
     return {
       name: 'LayoutShift',
       cat: 'loading',
@@ -20,7 +20,7 @@ describe('Trace Elements gatherer - GetTopLayoutShiftElements', () => {
       ts: 308559814315,
       args: {
         data: {
-          had_recent_input: false,
+          had_recent_input,
           impacted_nodes: impactedNodes,
           score: score,
         },
@@ -66,6 +66,118 @@ describe('Trace Elements gatherer - GetTopLayoutShiftElements', () => {
     ]);
     const total = sumScores(result);
     expectEqualFloat(total, 1.0);
+  });
+
+  it('does not ignore initial trace events with input', () => {
+    const traceEvents = [
+      makeTraceEvent(1, [
+        {
+          new_rect: [0, 0, 200, 200],
+          node_id: 1,
+          old_rect: [0, 0, 200, 100],
+        },
+      ], true),
+      makeTraceEvent(1, [
+        {
+          new_rect: [0, 0, 200, 200],
+          node_id: 2,
+          old_rect: [0, 0, 200, 100],
+        },
+      ], true),
+    ];
+
+    const result = TraceElementsGatherer.getTopLayoutShiftElements(traceEvents);
+    expect(result).toEqual([
+      {nodeId: 1, score: 1},
+      {nodeId: 2, score: 1},
+    ]);
+  });
+
+  it('does ignore later trace events with input', () => {
+    const traceEvents = [
+      makeTraceEvent(1, [
+        {
+          new_rect: [0, 0, 200, 200],
+          node_id: 1,
+          old_rect: [0, 0, 200, 100],
+        },
+      ]),
+      makeTraceEvent(1, [
+        {
+          new_rect: [0, 0, 200, 200],
+          node_id: 2,
+          old_rect: [0, 0, 200, 100],
+        },
+      ], true),
+    ];
+
+    const result = TraceElementsGatherer.getTopLayoutShiftElements(traceEvents);
+    expect(result).toEqual([
+      {nodeId: 1, score: 1},
+    ]);
+  });
+
+  it('correctly ignores trace events with input (complex)', () => {
+    const traceEvents = [
+      makeTraceEvent(1, [
+        {
+          new_rect: [0, 0, 200, 200],
+          node_id: 1,
+          old_rect: [0, 0, 200, 100],
+        },
+      ], true),
+      makeTraceEvent(1, [
+        {
+          new_rect: [0, 0, 200, 200],
+          node_id: 2,
+          old_rect: [0, 0, 200, 100],
+        },
+      ], true),
+      makeTraceEvent(1, [
+        {
+          new_rect: [0, 0, 200, 200],
+          node_id: 3,
+          old_rect: [0, 0, 200, 100],
+        },
+      ]),
+      makeTraceEvent(1, [
+        {
+          new_rect: [0, 0, 200, 200],
+          node_id: 4,
+          old_rect: [0, 0, 200, 100],
+        },
+      ]),
+      makeTraceEvent(1, [
+        {
+          new_rect: [0, 0, 200, 200],
+          node_id: 5,
+          old_rect: [0, 0, 200, 100],
+        },
+      ], true),
+      makeTraceEvent(1, [
+        {
+          new_rect: [0, 0, 200, 200],
+          node_id: 6,
+          old_rect: [0, 0, 200, 100],
+        },
+      ], true),
+      makeTraceEvent(1, [
+        {
+          new_rect: [0, 0, 200, 200],
+          node_id: 7,
+          old_rect: [0, 0, 200, 100],
+        },
+      ]),
+    ];
+
+    const result = TraceElementsGatherer.getTopLayoutShiftElements(traceEvents);
+    expect(result).toEqual([
+      {nodeId: 1, score: 1},
+      {nodeId: 2, score: 1},
+      {nodeId: 3, score: 1},
+      {nodeId: 4, score: 1},
+      {nodeId: 7, score: 1},
+    ]);
   });
 
   it('combines scores for the same nodeId accross multiple shift events', () => {
