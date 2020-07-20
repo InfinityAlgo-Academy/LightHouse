@@ -84,6 +84,12 @@ declare global {
       ViewportDimensions: Artifacts.ViewportDimensions;
       /** All the form elements in the page and formless inputs. */
       Forms: Artifacts.Form[];
+      /** Attributes of a particular form. */
+      FormAttributes: Artifacts.FormAttributeType;
+      /** Attributes of an input element. */
+      FormInputs: Artifacts.FormInputsType;
+      /** Attributes of a label element */
+      FormLabels: Artifacts.FormLabelsType;
     }
 
     /**
@@ -680,10 +686,34 @@ declare global {
 
       export interface Form {
         /** If attributes is missing that means this is a formless set of elements. */
-        attributes?: {id: string, name: string, autocomplete: string}
-        inputs: { id: any; nodeName: any; name: any; placeholder: any; autocomplete: any; }[];
-        labels: { id: any; nodeName: any; name: any; for: any; }[];
+        attributes?: { id: string, name: string, autocomplete: string };
+        inputs: { id: string; nodeName: string; name: string; placeholder: string; autocomplete: string; }[];
+        labels: { id: string; nodeName: string; for: string; }[];
       }
+
+      /** Attributes collected for each form element from the form interface. */
+      export interface FormAttributeType {
+        id: string;
+        name: string;
+        autocomplete: string;
+      }
+
+      /** Attributes collected for every input element in the inputs array from the forms interface. */
+      export interface FormInputsType {
+        id: string;
+        nodeName: string;
+        name: string;
+        placeholder: string|null;
+        autocomplete: string;
+      }
+
+      /** Attributes collected for every label element in the labels array from the forms interface */
+      export interface FormLabelsType {
+        id: string;
+        nodeName: string;
+        for: string;
+      }
+
     }
   }
 }

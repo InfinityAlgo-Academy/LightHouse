@@ -13,18 +13,18 @@ const pageFunctions = require('../../lib/page-functions.js');
 
 /**
  *  @param {HTMLFormElement} formElement
- *  @return { { id: any; nodeName: any; name: any; placeholder: any; autocomplete: any; }[] }
+ *  @return { LH.Artifacts['FormInputs'][]}
  */
 /* istanbul ignore next */
 function getChildrenInputs(formElement) {
-  /** @type {{ id: any; nodeName: any; name: any; placeholder: any; autocomplete: any; }[]} */
+  /** @type {LH.Artifacts['FormInputs'][]} */
   const inputsArray = [];
   const childrenArray = Array.prototype.slice.call(formElement.childNodes);
 
   for (const element of childrenArray) {
     if (element.nodeName === 'INPUT' || element.nodeName === 'SELECT'
     || element.nodeName === 'TEXTAREA') {
-      /** @type { { id: any; nodeName: any; name: any; placeholder: any; autocomplete: any;} } */
+      /** @type { LH.Artifacts['FormInputs']} */
       const inputAttributes = {
         id: element.id,
         nodeName: element.nodeName,
@@ -41,21 +41,20 @@ function getChildrenInputs(formElement) {
 
 /**
  *  @param {HTMLFormElement} formElement
- *  @return { { id: any; nodeName: any; name: any; for: any; }[] }
+ *  @return { LH.Artifacts['FormLabels'][]}}
  */
 /* istanbul ignore next */
 function getChildrenLabels(formElement) {
-  /** @type {{ id: any; nodeName: any; name: any; for: any; }[]} */
+  /** @type {LH.Artifacts['FormLabels'][]} */
   const labelsArray = [];
 
   const childrenArray = Array.prototype.slice.call(formElement.childNodes);
   for (const element of childrenArray) {
     if (element.nodeName === 'LABEL') {
-      /** @type { {id: any; nodeName: any; name: any; for: any;} } */
+      /** @type {LH.Artifacts['FormLabels']} */
       const labelAttributes = {
         id: element.id,
         nodeName: element.nodeName,
-        name: element.name,
         for: element.htmlFor,
       };
       labelsArray.push(labelAttributes);
@@ -67,11 +66,11 @@ function getChildrenLabels(formElement) {
 
 /**
  * @param {HTMLElement[]} formChildren
- * @return { { inputs: { id: any; nodeName: any; name: any; placeholder: any; autocomplete: any; }[], labels: { id: any; nodeName: any; name: any; for: any; }[] } }
+ * @return { { inputs: LH.Artifacts['FormInputs'][], labels: LH.Artifacts['FormLabels'][] } }
  */
 /* istanbul ignore next */
 function getFormlessElements(formChildren) {
-  /** @type { { inputs: { id: any; nodeName: any; name: any; placeholder: any; autocomplete: any; }[], labels: { id: any; nodeName: any; name: any; for: any; }[] } } */
+  /** @type { { inputs: LH.Artifacts['FormInputs'][], labels: LH.Artifacts['FormLabels'][] }  } */
   const formless = {
     inputs: [],
     labels: [],
@@ -105,7 +104,6 @@ function getFormlessElements(formChildren) {
       const labelAttributes = {
         id: childElement.id,
         nodeName: childElement.nodeName,
-        name: childElement.getAttribute('name'),
         for: childElement.htmlFor,
       };
       formless.labels.push(labelAttributes);
@@ -168,10 +166,7 @@ class Forms extends Gatherer {
       ${getChildrenInputs.toString()};
       ${getChildrenLabels.toString()};
       ${getFormlessElements.toString()};
-      ${pageFunctions.getOuterHTMLSnippetString};
       ${pageFunctions.getElementsInDocumentString};
-      ${pageFunctions.isPositionFixedString};
-      ${pageFunctions.getNodePathString};
       return (${collectFormElements})();
 
     })()`;
