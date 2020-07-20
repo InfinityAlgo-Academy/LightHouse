@@ -147,93 +147,135 @@
   "LinkElements": [
     {
       "rel": "stylesheet",
-      "href": "http://localhost:54819/dobetterweb/dobetterweb/dbw_tester.css?delay=100",
-      "hrefRaw": "http://localhost:54819/dobetterweb/dobetterweb/dbw_tester.css?delay=100",
+      "href": "http://localhost:50114/dobetterweb/dbw_tester.css?delay=100",
       "hreflang": "",
       "as": "",
       "crossOrigin": null,
-      "source": "head"
+      "devtoolsNodePath": "3,HTML,0,HEAD,9,LINK",
+      "hrefRaw": "./dbw_tester.css?delay=100",
+      "source": "head",
+      "selector": "head > link",
+      "nodeLabel": "link"
     },
     {
       "rel": "stylesheet",
-      "href": "http://localhost:54819/dobetterweb/unknown404.css?delay=200",
-      "hrefRaw": "http://localhost:54819/dobetterweb/unknown404.css?delay=200",
+      "href": "http://localhost:50114/dobetterweb/unknown404.css?delay=200",
       "hreflang": "",
       "as": "",
       "crossOrigin": null,
-      "source": "head"
+      "devtoolsNodePath": "3,HTML,0,HEAD,10,LINK",
+      "hrefRaw": "./unknown404.css?delay=200",
+      "source": "head",
+      "selector": "head > link",
+      "nodeLabel": "link"
     },
     {
       "rel": "stylesheet",
-      "href": "http://localhost:54819/dobetterweb/dbw_tester.css?delay=2200",
-      "hrefRaw": "http://localhost:54819/dobetterweb/dbw_tester.css?delay=2200",
+      "href": "http://localhost:50114/dobetterweb/dbw_tester.css?delay=2200",
       "hreflang": "",
       "as": "",
       "crossOrigin": null,
-      "source": "head"
+      "devtoolsNodePath": "3,HTML,0,HEAD,12,LINK",
+      "hrefRaw": "./dbw_tester.css?delay=2200",
+      "source": "head",
+      "selector": "head > link",
+      "nodeLabel": "link"
     },
     {
       "rel": "stylesheet",
-      "href": "http://localhost:54819/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
-      "hrefRaw": "http://localhost:54819/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
+      "href": "http://localhost:50114/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
       "hreflang": "",
       "as": "",
       "crossOrigin": null,
-      "source": "head"
+      "devtoolsNodePath": "3,HTML,0,HEAD,14,LINK",
+      "hrefRaw": "./dbw_disabled.css?delay=200&isdisabled",
+      "source": "head",
+      "selector": "head > link",
+      "nodeLabel": "link"
     },
     {
       "rel": "import",
-      "href": "http://localhost:54819/dobetterweb/dbw_partial_a.html?delay=200",
-      "hrefRaw": "http://localhost:54819/dobetterweb/dbw_partial_a.html?delay=200",
+      "href": "http://localhost:50114/dobetterweb/dbw_partial_a.html?delay=200",
       "hreflang": "",
       "as": "",
       "crossOrigin": null,
-      "source": "head"
+      "devtoolsNodePath": "3,HTML,0,HEAD,16,LINK",
+      "hrefRaw": "./dbw_partial_a.html?delay=200",
+      "source": "head",
+      "selector": "head > link",
+      "nodeLabel": "link"
     },
     {
       "rel": "import",
-      "href": "http://localhost:54819/dobetterweb/dbw_partial_b.html?delay=200&isasync",
-      "hrefRaw": "http://localhost:54819/dobetterweb/dbw_partial_b.html?delay=200&isasync",
+      "href": "http://localhost:50114/dobetterweb/dbw_partial_b.html?delay=200&isasync",
       "hreflang": "",
       "as": "",
       "crossOrigin": null,
-      "source": "head"
+      "devtoolsNodePath": "3,HTML,0,HEAD,18,LINK",
+      "hrefRaw": "./dbw_partial_b.html?delay=200&isasync",
+      "source": "head",
+      "selector": "head > link",
+      "nodeLabel": "link"
     },
     {
       "rel": "stylesheet",
-      "href": "http://localhost:54819/dobetterweb/dbw_tester.css?delay=3000&capped",
-      "hrefRaw": "http://localhost:54819/dobetterweb/dbw_tester.css?delay=3000&capped",
+      "href": "http://localhost:50114/dobetterweb/dbw_tester.css?delay=3000&capped",
       "hreflang": "",
       "as": "",
       "crossOrigin": null,
-      "source": "head"
+      "devtoolsNodePath": "3,HTML,0,HEAD,21,LINK",
+      "hrefRaw": "./dbw_tester.css?delay=3000&capped",
+      "source": "head",
+      "selector": "head > link#amp-style-link",
+      "nodeLabel": "link"
     },
     {
       "rel": "stylesheet",
-      "href": "http://localhost:54819/dobetterweb/dbw_tester.css?delay=2000&async=true",
-      "hrefRaw": "http://localhost:54819/dobetterweb/dbw_tester.css?delay=2000&async=true",
+      "href": "http://localhost:50114/dobetterweb/dbw_tester.css?delay=2000&async=true",
       "hreflang": "",
       "as": "style",
       "crossOrigin": null,
-      "source": "head"
+      "devtoolsNodePath": "3,HTML,0,HEAD,23,LINK",
+      "hrefRaw": "./dbw_tester.css?delay=2000&async=true",
+      "source": "head",
+      "selector": "head > link",
+      "nodeLabel": "link"
     },
     {
       "rel": "stylesheet",
-      "href": "http://localhost:54819/dobetterweb/dbw_tester.css?delay=3000&async=true",
-      "hrefRaw": "http://localhost:54819/dobetterweb/dbw_tester.css?delay=3000&async=true",
+      "href": "http://localhost:50114/dobetterweb/dbw_tester.css?delay=3000&async=true",
       "hreflang": "",
       "as": "",
       "crossOrigin": null,
-      "source": "head"
+      "devtoolsNodePath": "3,HTML,0,HEAD,25,LINK",
+      "hrefRaw": "./dbw_tester.css?delay=3000&async=true",
+      "source": "head",
+      "selector": "head > link",
+      "nodeLabel": "link"
+    },
+    {
+      "rel": "alternate stylesheet",
+      "href": "http://localhost:50114/dobetterweb/empty.css",
+      "hreflang": "",
+      "as": "",
+      "crossOrigin": null,
+      "devtoolsNodePath": "3,HTML,0,HEAD,27,LINK",
+      "hrefRaw": "./empty.css",
+      "source": "head",
+      "selector": "head > link",
+      "nodeLabel": "link"
     },
     {
       "rel": "stylesheet",
-      "href": "http://localhost:54819/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
-      "hrefRaw": "http://localhost:54819/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
+      "href": "http://localhost:50114/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
       "hreflang": "",
       "as": "",
       "crossOrigin": null,
-      "source": "head"
+      "devtoolsNodePath": "3,HTML,0,HEAD,44,LINK",
+      "hrefRaw": "./dbw_tester.css?scriptActivated&delay=200",
+      "source": "head",
+      "selector": "head > link",
+      "nodeLabel": "link"
     }
   ],
   "ScriptElements": [

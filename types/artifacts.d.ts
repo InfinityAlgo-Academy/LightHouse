@@ -233,7 +233,7 @@ declare global {
         rel: 'alternate'|'canonical'|'dns-prefetch'|'preconnect'|'preload'|'stylesheet'|string;
         /** The `href` attribute of the link or `null` if it was invalid in the header. */
         href: string | null
-        /** The raw value of the `href` attribute. Only different from `href` when source is 'header' */
+        /** The raw value of the `href` attribute. Only different from `href` when source is 'headers' */
         hrefRaw: string
         /** The `hreflang` attribute of the link */
         hreflang: string
@@ -243,6 +243,12 @@ declare global {
         crossOrigin: string | null
         /** Where the link was found, either in the DOM or in the headers of the main document */
         source: 'head'|'body'|'headers'
+        /** Path that uniquely identifies the node in the DOM. This is not defined when `source` is 'headers' */
+        devtoolsNodePath?: string
+        /** Selector for the DOM node. This is not defined when `source` is 'headers' */
+        selector?: string
+        /** Human readable label for the element. This is not defined when `source` is 'headers' */
+        nodeLabel?: string
       }
 
       export interface ScriptElement {
