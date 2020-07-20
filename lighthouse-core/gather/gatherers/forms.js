@@ -125,7 +125,7 @@ function collectFormElements() {
   // @ts-ignore - put into scope via stringification
   const inputs = getElementsInDocument('input'); // eslint-disable-line no-undef
   // @ts-ignore - put into scope via stringification
-  const labels = getElementsInDocument('labels'); // eslint-disable-line no-undef
+  const labels = getElementsInDocument('label'); // eslint-disable-line no-undef
   // @ts-ignore - put into scope via stringification
   const textareas = getElementsInDocument('textarea'); // eslint-disable-line no-undef
   // @ts-ignore - put into scope via stringification
