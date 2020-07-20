@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* global window, document, getOuterHTMLSnippet, getNodePath, getNodeLabel */
+/* global window, document, getOuterHTMLSnippet, getBoundingClientRect, getNodePath, getNodeLabel */
 
 const Gatherer = require('./gatherer.js');
 const fs = require('fs');
@@ -52,6 +52,10 @@ function runA11yChecks() {
     },
     // @ts-ignore
   }).then(axeResult => {
+    // axe just scrolled the page, scroll back to the top of the page so that element positions
+    // are relative to the top of the page
+    document.documentElement.scrollTop = 0;
+
     // @ts-ignore
     const augmentAxeNodes = result => {
       // @ts-ignore
@@ -60,6 +64,12 @@ function runA11yChecks() {
         node.path = getNodePath(node.element);
         // @ts-ignore - getOuterHTMLSnippet put into scope via stringification
         node.snippet = getOuterHTMLSnippet(node.element);
+        // @ts-ignore - getBoundingClientRect put into scope via stringification
+        const rect = getBoundingClientRect(node.element);
+        if (rect.width > 0 && rect.height > 0) {
+          node.boundingRect = rect;
+        }
+
         // @ts-ignore - getNodeLabel put into scope via stringification
         node.nodeLabel = getNodeLabel(node.element);
         // avoid circular JSON concerns
@@ -100,6 +110,7 @@ class Accessibility extends Gatherer {
     const driver = passContext.driver;
     const expression = `(function () {
       ${pageFunctions.getOuterHTMLSnippetString};
+      ${pageFunctions.getBoundingClientRectString};
       ${pageFunctions.getNodePathString};
       ${pageFunctions.getNodeLabelString};
       ${axeLibSource};

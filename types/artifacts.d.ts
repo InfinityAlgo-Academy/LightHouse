@@ -110,6 +110,8 @@ declare global {
       Fonts: Artifacts.Font[];
       /** Information on poorly sized font usage and the text affected by it. */
       FontSize: Artifacts.FontSize;
+      /** Screenshot of the entire page (rather than just the above the fold content). */
+      FullPageScreenshot: Artifacts.FullPageScreenshot | null;
       /** The issues surfaced in the devtools Issues panel */
       InspectorIssues: Artifacts.InspectorIssues;
       /** The page's document body innerText if loaded with JavaScript disabled. */
@@ -163,6 +165,7 @@ declare global {
         nodes: Array<{
           path: string;
           html: string;
+          boundingRect?: Rect;
           snippet: string;
           target: Array<string>;
           failureSummary?: string;
@@ -477,6 +480,7 @@ declare global {
         path: string;
         href: string;
         clientRects: Rect[];
+        boundingRect: Rect;
       }
 
       export interface TraceElement {
@@ -486,6 +490,7 @@ declare global {
         devtoolsNodePath: string;
         snippet?: string;
         score?: number;
+        boundingRect: Rect;
       }
 
       export interface ViewportDimensions {
@@ -631,6 +636,13 @@ declare global {
         version?: string;
         /** The package name on NPM, if it exists. */
         npm?: string;
+      }
+
+      export interface FullPageScreenshot {
+        /** Base64 image data URL. */
+        data: string;
+        width: number;
+        height: number;
       }
 
       export interface TimingSummary {

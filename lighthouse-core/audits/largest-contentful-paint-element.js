@@ -53,6 +53,7 @@ class LargestContentfulPaintElement extends Audit {
           selector: lcpElement.selector,
           nodeLabel: lcpElement.nodeLabel,
           snippet: lcpElement.snippet,
+          boundingRect: lcpElement.boundingRect,
         }),
       });
     }

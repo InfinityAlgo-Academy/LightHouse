@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* global document, window, getComputedStyle, getElementsInDocument, Node, getNodePath, getNodeSelector, getNodeLabel */
+/* global document, window, getComputedStyle, getBoundingClientRect, getElementsInDocument, Node, getNodePath, getNodeSelector, getNodeLabel */
 
 const Gatherer = require('../gatherer.js');
 const pageFunctions = require('../../../lib/page-functions.js');
@@ -283,6 +283,8 @@ function gatherTapTargets() {
   for (const {tapTargetElement, visibleClientRects} of tapTargetsWithVisibleClientRects) {
     targets.push({
       clientRects: visibleClientRects,
+      // @ts-ignore - getBoundingClientRect put into scope via stringification
+      boundingRect: getBoundingClientRect(tapTargetElement),
       snippet: truncate(tapTargetElement.outerHTML, 300),
       // @ts-ignore - getNodePath put into scope via stringification
       path: getNodePath(tapTargetElement),
@@ -316,6 +318,7 @@ class TapTargets extends Gatherer {
       ${getClientRects.toString()};
       ${hasTextNodeSiblingsFormingTextBlock.toString()};
       ${elementIsInTextBlock.toString()};
+      ${pageFunctions.getBoundingClientRectString};
       ${getRectArea.toString()};
       ${getLargestRect.toString()};
       ${getRectCenterPoint.toString()};

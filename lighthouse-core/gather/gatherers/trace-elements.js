@@ -38,6 +38,8 @@ function setAttributeMarker(metricName) {
       nodeLabel: getNodeLabel(elem), // eslint-disable-line no-undef
       // @ts-ignore - put into scope via stringification
       snippet: getOuterHTMLSnippet(elem), // eslint-disable-line no-undef
+      // @ts-ignore - put into scope via stringification
+      boundingRect: getBoundingClientRect(elem), // eslint-disable-line no-undef
     };
   }
   return traceElement;
@@ -173,6 +175,7 @@ class TraceElements extends Gatherer {
           ${pageFunctions.getNodeSelectorString};
           ${pageFunctions.getNodeLabelString};
           ${pageFunctions.getOuterHTMLSnippetString};
+          ${pageFunctions.getBoundingClientRectString};
           return setAttributeMarker.call(this, '${metricName}');
         }`,
         returnByValue: true,

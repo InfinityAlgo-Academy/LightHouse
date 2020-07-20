@@ -223,13 +223,14 @@ function collateResults(localConsole, actual, expected) {
   if (expected.artifacts) {
     const expectedArtifacts = expected.artifacts;
     const artifactNames = /** @type {(keyof LH.Artifacts)[]} */ (Object.keys(expectedArtifacts));
+    const actualArtifacts = actual.artifacts || {};
     artifactAssertions = artifactNames.map(artifactName => {
-      const actualResult = (actual.artifacts || {})[artifactName];
-      if (!actualResult) {
+      if (!(artifactName in actualArtifacts)) {
         localConsole.log(log.redify('Error: ') +
           `Config run did not generate artifact ${artifactName}`);
       }
 
+      const actualResult = actualArtifacts[artifactName];
       const expectedResult = expectedArtifacts[artifactName];
       return makeComparison(artifactName + ' artifact', actualResult, expectedResult);
     });
