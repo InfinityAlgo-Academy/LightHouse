@@ -170,7 +170,7 @@ describe('TraceProcessor', () => {
       const baseTime = 20000 * 1000;
       const name = 'TaskQueueManager::ProcessTaskFromWorkQueue';
       const tabTrace = {
-        navigationStartEvt: {ts: baseTime},
+        timeOriginEvt: {ts: baseTime},
         mainThreadEvents: [
           // 15ms to 25ms
           {ts: baseTime + 15 * 1000, dur: 10 * 1000, name},
@@ -263,14 +263,14 @@ describe('TraceProcessor', () => {
       });
 
       assert.ok(firstEvt.pid === trace.mainFrameIds.pid);
-      assert.ok(firstEvt.pid === trace.navigationStartEvt.pid);
+      assert.ok(firstEvt.pid === trace.timeOriginEvt.pid);
       assert.ok(firstEvt.pid === trace.firstContentfulPaintEvt.pid);
       assert.ok(firstEvt.pid === trace.firstMeaningfulPaintEvt.pid);
     });
 
     it('computes timings of each event', () => {
       const trace = TraceProcessor.computeTraceOfTab(lateTracingStartedTrace);
-      assert.equal(Math.round(trace.timings.navigationStart), 0);
+      assert.equal(Math.round(trace.timings.timeOrigin), 0);
       assert.equal(Math.round(trace.timings.firstPaint), 80);
       assert.equal(Math.round(trace.timings.firstContentfulPaint), 80);
       assert.equal(Math.round(trace.timings.firstMeaningfulPaint), 530);
@@ -279,7 +279,7 @@ describe('TraceProcessor', () => {
 
     it('computes timestamps of each event', () => {
       const trace = TraceProcessor.computeTraceOfTab(lateTracingStartedTrace);
-      assert.equal(Math.round(trace.timestamps.navigationStart), 29343540951);
+      assert.equal(Math.round(trace.timestamps.timeOrigin), 29343540951);
       assert.equal(Math.round(trace.timestamps.firstPaint), 29343620997);
       assert.equal(Math.round(trace.timestamps.firstContentfulPaint), 29343621005);
       assert.equal(Math.round(trace.timestamps.firstMeaningfulPaint), 29344070867);
@@ -290,7 +290,7 @@ describe('TraceProcessor', () => {
       it('if there was a tracingStartedInPage after the frame\'s navStart', () => {
         const trace = TraceProcessor.computeTraceOfTab(lateTracingStartedTrace);
         assert.equal(trace.mainFrameIds.frameId, '0x163736997740');
-        assert.equal(trace.navigationStartEvt.ts, 29343540951);
+        assert.equal(trace.timeOriginEvt.ts, 29343540951);
         assert.equal(trace.firstContentfulPaintEvt.ts, 29343621005);
         assert.equal(trace.firstMeaningfulPaintEvt.ts, 29344070867);
         assert.ok(!trace.fmpFellBack);
@@ -299,7 +299,7 @@ describe('TraceProcessor', () => {
       it('if there was a tracingStartedInPage after the frame\'s navStart #2', () => {
         const trace = TraceProcessor.computeTraceOfTab(badNavStartTrace);
         assert.equal(trace.mainFrameIds.frameId, '0x89915541e48');
-        assert.equal(trace.navigationStartEvt.ts, 8885424467);
+        assert.equal(trace.timeOriginEvt.ts, 8885424467);
         assert.equal(trace.firstContentfulPaintEvt.ts, 8886056886);
         assert.equal(trace.firstMeaningfulPaintEvt.ts, 8886056891);
         assert.ok(!trace.fmpFellBack);
@@ -308,7 +308,7 @@ describe('TraceProcessor', () => {
       it('if it appears slightly before the fCP', () => {
         const trace = TraceProcessor.computeTraceOfTab(preactTrace);
         assert.equal(trace.mainFrameIds.frameId, '0x25edaa521e58');
-        assert.equal(trace.navigationStartEvt.ts, 1805796384607);
+        assert.equal(trace.timeOriginEvt.ts, 1805796384607);
         assert.equal(trace.firstContentfulPaintEvt.ts, 1805797263653);
         assert.equal(trace.firstMeaningfulPaintEvt.ts, 1805797262960);
         assert.ok(!trace.fmpFellBack);
@@ -317,7 +317,7 @@ describe('TraceProcessor', () => {
       it('from candidates if no defined FMP exists', () => {
         const trace = TraceProcessor.computeTraceOfTab(noFMPtrace);
         assert.equal(trace.mainFrameIds.frameId, '0x150343381dd0');
-        assert.equal(trace.navigationStartEvt.ts, 2146735807738);
+        assert.equal(trace.timeOriginEvt.ts, 2146735807738);
         assert.equal(trace.firstContentfulPaintEvt.ts, 2146737302468);
         assert.equal(trace.firstMeaningfulPaintEvt.ts, 2146740268666);
         assert.ok(trace.fmpFellBack);
@@ -331,7 +331,7 @@ describe('TraceProcessor', () => {
           'firstContentfulPaintEvt.ts': trace.firstContentfulPaintEvt.ts,
           'largestContentfulPaintEvt.ts': trace.largestContentfulPaintEvt.ts,
           'mainFrameIds.frameId': trace.mainFrameIds.frameId,
-          'navigationStartEvt.ts': trace.navigationStartEvt.ts,
+          'timeOriginEvt.ts': trace.timeOriginEvt.ts,
           'timestamps.firstContentfulPaint': trace.timestamps.firstContentfulPaint,
           'timestamps.largestContentfulPaint': trace.timestamps.largestContentfulPaint,
           'timings.firstContentfulPaint': trace.timings.firstContentfulPaint,
@@ -341,7 +341,7 @@ Object {
   "firstContentfulPaintEvt.ts": 713038144775,
   "largestContentfulPaintEvt.ts": 713038144775,
   "mainFrameIds.frameId": "70B6647836A0A07265E532B094184D2A",
-  "navigationStartEvt.ts": 713037023064,
+  "timeOriginEvt.ts": 713037023064,
   "timestamps.firstContentfulPaint": 713038144775,
   "timestamps.largestContentfulPaint": 713038144775,
   "timings.firstContentfulPaint": 1121.711,
@@ -352,7 +352,7 @@ Object {
       });
 
       it('uses latest candidate', () => {
-        const testTrace = createTestTrace({navigationStart: 0, traceEnd: 2000});
+        const testTrace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
         const frame = testTrace.traceEvents[0].args.frame;
         const args = {frame};
         const cat = 'loading,rail,devtools.timeline';
@@ -367,14 +367,14 @@ Object {
       });
 
       it('undefined if no candidates', () => {
-        const testTrace = createTestTrace({navigationStart: 0, traceEnd: 2000});
+        const testTrace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
         const trace = TraceProcessor.computeTraceOfTab(testTrace);
         assert.equal(trace.timestamps.largestContentfulPaint, undefined);
         assert.ok(!trace.lcpInvalidated);
       });
 
       it('invalidates if last event is ::Invalidate', () => {
-        const testTrace = createTestTrace({navigationStart: 0, traceEnd: 2000});
+        const testTrace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
         const frame = testTrace.traceEvents[0].args.frame;
         const args = {frame};
         const cat = 'loading,rail,devtools.timeline';
@@ -387,8 +387,8 @@ Object {
         assert.ok(trace.lcpInvalidated);
       });
 
-      it('ignores candidates before navstart', () => {
-        const testTrace = createTestTrace({navigationStart: 1100, traceEnd: 2000});
+      it('ignores candidates before timeOrigin', () => {
+        const testTrace = createTestTrace({timeOrigin: 1100, traceEnd: 2000});
         const frame = testTrace.traceEvents[0].args.frame;
         const args = {frame};
         const cat = 'loading,rail,devtools.timeline';
@@ -404,10 +404,10 @@ Object {
     it('handles traces missing a paints (captured in background tab)', () => {
       const trace = TraceProcessor.computeTraceOfTab(backgroundTabTrace);
       assert.equal(trace.mainFrameIds.frameId, '0x53965941e30');
-      assert.notEqual(trace.navigationStartEvt.ts, 1966813346529, 'picked wrong frame');
-      assert.notEqual(trace.navigationStartEvt.ts, 1966813520313, 'picked wrong frame');
+      assert.notEqual(trace.timeOriginEvt.ts, 1966813346529, 'picked wrong frame');
+      assert.notEqual(trace.timeOriginEvt.ts, 1966813520313, 'picked wrong frame');
       assert.equal(
-        trace.navigationStartEvt.ts,
+        trace.timeOriginEvt.ts,
         1966813258737,
         'didnt select navStart event with same timestamp as usertiming measure'
       );
@@ -471,7 +471,7 @@ Object {
         }]};
       const trace = TraceProcessor.computeTraceOfTab(tracingStartedInBrowserTrace);
       assert.equal(trace.mainFrameIds.frameId, 'B192D1F3355A6F961EC8F0B01623C1FB');
-      assert.equal(trace.navigationStartEvt.ts, 2193564790059);
+      assert.equal(trace.timeOriginEvt.ts, 2193564790059);
     });
 
     it('handles no TracingStarted errors in m74+', () => {

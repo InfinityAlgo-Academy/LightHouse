@@ -1382,6 +1382,8 @@
             "totalBlockingTime": 117,
             "maxPotentialFID": 123,
             "cumulativeLayoutShift": 0.42,
+            "observedTimeOrigin": 0,
+            "observedTimeOriginTs": 185603319912,
             "observedNavigationStart": 0,
             "observedNavigationStartTs": 185603319912,
             "observedFirstPaint": 3969,

@@ -578,7 +578,7 @@ declare global {
       export type Speedline = speedline.Output<'speedIndex'>;
 
       export interface TraceTimes {
-        navigationStart: number;
+        timeOrigin: number;
         firstPaint?: number;
         firstContentfulPaint: number;
         firstMeaningfulPaint?: number;
@@ -601,8 +601,8 @@ declare global {
         mainFrameIds: {pid: number, tid: number, frameId: string};
         /** The list of frames committed in the trace. */
         frames: Array<{frame: string, url: string}>;
-        /** The trace event marking navigationStart. */
-        navigationStartEvt: TraceEvent;
+        /** The trace event marking the time at which the page load should consider to have begun. Typically the same as the navigationStart but might differ due to SPA navigations, client-side redirects, etc. */
+        timeOriginEvt: TraceEvent;
         /** The trace event marking firstPaint, if it was found. */
         firstPaintEvt?: TraceEvent;
         /** The trace event marking firstContentfulPaint, if it was found. */
@@ -663,6 +663,8 @@ declare global {
         maxPotentialFID: number | undefined;
         cumulativeLayoutShift: number | undefined;
         totalBlockingTime: number;
+        observedTimeOrigin: number;
+        observedTimeOriginTs: number;
         observedNavigationStart: number;
         observedNavigationStartTs: number;
         observedCumulativeLayoutShift: number | undefined;
