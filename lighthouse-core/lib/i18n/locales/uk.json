@@ -1761,7 +1761,7 @@
     "message": "Переконайтеся, що ви використовуєте дійсні теги `amp-img` для зображень, які автоматично відкладено завантажуються поза межами першої області перегляду. [Докладніше](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "Використовуйте інструменти, наприклад [Оптимізатор сторінок AMP](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer), щоб [обробляти макети AMP на сервері](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+    "message": "Використовуйте інструменти, наприклад [Оптимізатор сторінок AMP](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer), щоб [обробляти макети AMP на сервері](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
   },
   "stack-packs/packs/amp.js | unminified_css": {
     "message": "Перегляньте [документацію AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/), щоб переконатися, що всі стилі підтримуються."

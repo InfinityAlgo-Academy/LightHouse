@@ -1761,7 +1761,7 @@
     "message": "Pass på å bruke gyldige `amp-img`-tagger for bilder som automatisk lastes inn med utsettelse utenfor det første synlige området. [Finn ut mer](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "Bruk verktøy som [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) for å [gjengi AMP-layouter på tjenersiden](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+    "message": "Bruk verktøy som [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer) for å [gjengi AMP-layouter på tjenersiden](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
   },
   "stack-packs/packs/amp.js | unminified_css": {
     "message": "Se [AMP-dokumentasjonen](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) for å forsikre deg om at alle stilene støttes."

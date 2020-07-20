@@ -1761,7 +1761,7 @@
     "message": "మీ చిత్రాల కోసం మొదటి వీక్షణ పోర్ట్ వెలుపల ఆటోమేటిక్‌గా లేజీ లోడ్ కాబడే చెల్లుబాటయ్యే `amp-img` ట్యాగ్‌లను మీరు ఉపయోగిస్తున్నట్లు నిర్ధారించుకోండి. [మరింత తెలుసుకోండి](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "[సర్వర్ వైపు అమలు చేసే AMP లేఅవుట్‌ల](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/) కోసం [AMP ఆప్టిమైజర్](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) లాంటి సాధనాలను ఉపయోగించండి."
+    "message": "[సర్వర్ వైపు అమలు చేసే AMP లేఅవుట్‌ల](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/) కోసం [AMP ఆప్టిమైజర్](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer) లాంటి సాధనాలను ఉపయోగించండి."
   },
   "stack-packs/packs/amp.js | unminified_css": {
     "message": "మీ అన్ని శైలులకు మద్దతు ఉందో లేదో నిర్ధారించుకోవడానికి [AMP పత్రాలు](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) చూడండి."

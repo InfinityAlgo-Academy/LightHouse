@@ -1761,7 +1761,7 @@
     "message": "Assicurati di usare tag `amp-img` validi per le immagini di cui viene eseguito automaticamente il caricamento lento all'esterno della prima area visibile. [Ulteriori informazioni](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "Usa strumenti quali lo [strumento di ottimizzazione AMP](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) per [eseguire il rendering lato server dei layout AMP](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+    "message": "Usa strumenti quali lo [strumento di ottimizzazione AMP](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer) per [eseguire il rendering lato server dei layout AMP](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
   },
   "stack-packs/packs/amp.js | unminified_css": {
     "message": "Consulta la [documentazione relativa ad AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) per verificare che tutti i tuoi stili siano supportati."

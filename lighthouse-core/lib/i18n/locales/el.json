@@ -1761,7 +1761,7 @@
     "message": "Βεβαιωθείτε ότι χρησιμοποιείτε έγκυρες ετικέτες `amp-img` για τις εικόνες σας, για τις οποίες πραγματοποιείται αργή φόρτωση εκτός της πρώτης θύρας προβολής. [Μάθετε περισσότερα](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "Χρησιμοποιήστε εργαλεία όπως το [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) για να [αποδώσετε διατάξεις AMP στον διακομιστή](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+    "message": "Χρησιμοποιήστε εργαλεία όπως το [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer) για να [αποδώσετε διατάξεις AMP στον διακομιστή](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
   },
   "stack-packs/packs/amp.js | unminified_css": {
     "message": "Ανατρέξτε στην [τεκμηρίωση AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) για να βεβαιωθείτε ότι υποστηρίζονται όλα τα στιλ σας."

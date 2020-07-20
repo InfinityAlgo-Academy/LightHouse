@@ -1761,7 +1761,7 @@
     "message": "יש להקפיד להשתמש בתגי `amp-img` חוקיים בשביל התמונות שנטענות באופן הדרגתי מחוץ לאזור התצוגה הראשון. [מידע נוסף](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "אפשר להשתמש בכלים כמו [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) כדי [לרנדר פריסות AMP בצד השרת](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+    "message": "אפשר להשתמש בכלים כמו [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer) כדי [לרנדר פריסות AMP בצד השרת](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
   },
   "stack-packs/packs/amp.js | unminified_css": {
     "message": "יש לעיין ב[תיעוד של AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) כדי לוודא שכל הסגנונות שלך נתמכים."

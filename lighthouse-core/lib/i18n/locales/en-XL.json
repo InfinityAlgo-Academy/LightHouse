@@ -1797,7 +1797,7 @@
     "message": "Êńŝúr̂é t̂h́ât́ ŷóû ár̂é ŷóû úŝín̂ǵ v̂ál̂íd̂ `amp-img` t́âǵŝ f́ôŕ ŷóûŕ îḿâǵêś ŵh́îćĥ áût́ôḿât́îćâĺl̂ý l̂áẑý-l̂óâd́ ôút̂śîd́ê t́ĥé f̂ír̂śt̂ v́îéŵṕôŕt̂. [Ĺêár̂ń m̂ór̂é](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "Ûśê t́ôól̂ś ŝúĉh́ âś [ÂḾP̂ Óp̂t́îḿîźêŕ](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) t̂ó [ŝér̂v́êŕ-ŝíd̂é r̂én̂d́êŕ ÂḾP̂ ĺâýôút̂ś](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+    "message": "Ûśê t́ôól̂ś ŝúĉh́ âś [ÂḾP̂ Óp̂t́îḿîźêŕ](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer) t̂ó [ŝér̂v́êŕ-ŝíd̂é r̂én̂d́êŕ ÂḾP̂ ĺâýôút̂ś](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
   },
   "stack-packs/packs/amp.js | unminified_css": {
     "message": "R̂éf̂ér̂ t́ô t́ĥé [ÂḾP̂ d́ôćûḿêńt̂át̂íôń](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) t̂ó êńŝúr̂é âĺl̂ ýôúr̂ śt̂ýl̂éŝ ár̂é ŝúp̂ṕôŕt̂éd̂."

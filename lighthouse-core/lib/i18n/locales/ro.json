@@ -1761,7 +1761,7 @@
     "message": "Verifică dacă folosești etichete `amp-img` valide pentru imaginile tale, care se încarcă lent automat în afara primei arii vizibile. [Află mai multe](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "Folosește instrumente precum [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) pentru a [reda aspectele AMP pe server](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+    "message": "Folosește instrumente precum [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer) pentru a [reda aspectele AMP pe server](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
   },
   "stack-packs/packs/amp.js | unminified_css": {
     "message": "Consultă [documentația AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) ca să te asiguri că se acceptă toate stilurile."

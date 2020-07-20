@@ -1761,7 +1761,7 @@
     "message": "Įsitikinkite, kad naudojate tinkamas vaizdų žymas „`amp-img`“, kurios, naudojant atidėtąjį įkėlimą, automatiškai įkeliamos už peržiūros srities. [Sužinokite daugiau](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)"
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "[Serveryje pateikdami AMP išdėstymus](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/) naudokite tokius įrankius kaip [AMP optimizavimo priemonė](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer)."
+    "message": "[Serveryje pateikdami AMP išdėstymus](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/) naudokite tokius įrankius kaip [AMP optimizavimo priemonė](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer)."
   },
   "stack-packs/packs/amp.js | unminified_css": {
     "message": "Peržiūrėkite [AMP dokumentus](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) ir isitikinkite, kad visi jūsų naudojami stiliai yra palaikomi."
