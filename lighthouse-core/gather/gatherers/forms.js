@@ -79,7 +79,7 @@ function getFormlessElements(formChildren) {
   for (const childElement of formChildren) {
     if (childElement instanceof HTMLInputElement || childElement instanceof HTMLTextAreaElement
       || childElement instanceof HTMLLabelElement || childElement instanceof HTMLSelectElement) {
-      if (childElement.form ) continue;
+      if (childElement.form) continue;
     }
 
     if (childElement instanceof HTMLInputElement || childElement instanceof HTMLTextAreaElement ) {
