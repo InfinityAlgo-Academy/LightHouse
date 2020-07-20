@@ -10,7 +10,6 @@ const pageFunctions = require('../../lib/page-functions.js');
 
 /* eslint-env browser, node */
 
-
 /**
  *  @param {HTMLFormElement} formElement
  *  @return { { id: any; nodeName: any; name: any; placeholder: any; autocomplete: any; }[] }
