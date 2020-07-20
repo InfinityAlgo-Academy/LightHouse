@@ -159,7 +159,6 @@ class Forms extends Gatherer {
   /**
    * @param {LH.Gatherer.PassContext} passContext
    * @return {Promise<LH.Artifacts['Forms']>}
-   * @override
    */
   async afterPass(passContext) {
     const driver = passContext.driver;
