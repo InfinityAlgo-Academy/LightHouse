@@ -131,7 +131,7 @@ function collectFormElements() {
   // @ts-ignore - put into scope via stringification
   const selects = getElementsInDocument('select'); // eslint-disable-line no-undef
 
-  const formChildren = inputs.concat(labels, textareas, selects);
+  const formChildren = [...inputs, ...labels, ...textareas, ...selects];
   const formless = getFormlessElements(formChildren);
 
   const forms = formElements.map(/** @param {HTMLFormElement} formElement */ (formElement) => {
