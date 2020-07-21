@@ -39,7 +39,7 @@ describe('PWA: load-fast-enough-for-pwa audit', () => {
       {ts: 12000, duration: 100},
       {ts: 14900, duration: 100},
     ];
-    const longTrace = createTestTrace({navigationStart: 0, traceEnd: 20000, topLevelTasks});
+    const longTrace = createTestTrace({timeOrigin: 0, traceEnd: 20000, topLevelTasks});
     const devtoolsLog = networkRecordsToDevtoolsLog([{url: 'https://example.com'}]);
 
     const artifacts = {
@@ -99,7 +99,7 @@ describe('PWA: load-fast-enough-for-pwa audit', () => {
       {ts: 12000, duration: 1000},
       {ts: 14900, duration: 1000},
     ];
-    const longTrace = createTestTrace({navigationStart: 0, traceEnd: 20000, topLevelTasks});
+    const longTrace = createTestTrace({timeOrigin: 0, traceEnd: 20000, topLevelTasks});
 
     const artifacts = {
       traces: {defaultPass: longTrace},

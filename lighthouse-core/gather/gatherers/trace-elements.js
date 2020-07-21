@@ -38,6 +38,8 @@ function setAttributeMarker(metricName) {
       nodeLabel: getNodeLabel(elem), // eslint-disable-line no-undef
       // @ts-ignore - put into scope via stringification
       snippet: getOuterHTMLSnippet(elem), // eslint-disable-line no-undef
+      // @ts-ignore - put into scope via stringification
+      boundingRect: getBoundingClientRect(elem), // eslint-disable-line no-undef
     };
   }
   return traceElement;
@@ -82,10 +84,18 @@ class TraceElements extends Gatherer {
     const shiftEvents = mainThreadEvents
       .filter(e => e.name === 'LayoutShift')
       .map(e => e.args && e.args.data);
+    const indexFirstEventWithoutInput =
+      shiftEvents.findIndex(event => event && !event.had_recent_input);
 
-    shiftEvents.forEach(event => {
-      if (!event || !event.impacted_nodes || !event.score || event.had_recent_input) {
+    shiftEvents.forEach((event, index) => {
+      if (!event || !event.impacted_nodes || !event.score) {
         return;
+      }
+
+      // Ignore events with input, unless it's one of the initial events.
+      // See comment in computed/metrics/cumulative-layout-shift.js.
+      if (indexFirstEventWithoutInput !== -1 && index >= indexFirstEventWithoutInput) {
+        if (event.had_recent_input) return;
       }
 
       let totalAreaOfImpact = 0;
@@ -165,6 +175,7 @@ class TraceElements extends Gatherer {
           ${pageFunctions.getNodeSelectorString};
           ${pageFunctions.getNodeLabelString};
           ${pageFunctions.getOuterHTMLSnippetString};
+          ${pageFunctions.getBoundingClientRectString};
           return setAttributeMarker.call(this, '${metricName}');
         }`,
         returnByValue: true,

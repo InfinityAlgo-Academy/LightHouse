@@ -111,9 +111,6 @@ class UserTimings extends Audit {
         score: Number(userTimings.length === 0),
         notApplicable: userTimings.length === 0,
         displayValue,
-        extendedInfo: {
-          value: userTimings,
-        },
         details,
       };
     });

@@ -113,6 +113,8 @@ declare global {
       Fonts: Artifacts.Font[];
       /** Information on poorly sized font usage and the text affected by it. */
       FontSize: Artifacts.FontSize;
+      /** Screenshot of the entire page (rather than just the above the fold content). */
+      FullPageScreenshot: Artifacts.FullPageScreenshot | null;
       /** The issues surfaced in the devtools Issues panel */
       InspectorIssues: Artifacts.InspectorIssues;
       /** The page's document body innerText if loaded with JavaScript disabled. */
@@ -166,6 +168,7 @@ declare global {
         nodes: Array<{
           path: string;
           html: string;
+          boundingRect?: Rect;
           snippet: string;
           target: Array<string>;
           failureSummary?: string;
@@ -233,7 +236,7 @@ declare global {
         rel: 'alternate'|'canonical'|'dns-prefetch'|'preconnect'|'preload'|'stylesheet'|string;
         /** The `href` attribute of the link or `null` if it was invalid in the header. */
         href: string | null
-        /** The raw value of the `href` attribute. Only different from `href` when source is 'header' */
+        /** The raw value of the `href` attribute. Only different from `href` when source is 'headers' */
         hrefRaw: string
         /** The `hreflang` attribute of the link */
         hreflang: string
@@ -243,6 +246,12 @@ declare global {
         crossOrigin: string | null
         /** Where the link was found, either in the DOM or in the headers of the main document */
         source: 'head'|'body'|'headers'
+        /** Path that uniquely identifies the node in the DOM. This is not defined when `source` is 'headers' */
+        devtoolsNodePath?: string
+        /** Selector for the DOM node. This is not defined when `source` is 'headers' */
+        selector?: string
+        /** Human readable label for the element. This is not defined when `source` is 'headers' */
+        nodeLabel?: string
       }
 
       export interface ScriptElement {
@@ -392,6 +401,8 @@ declare global {
 
       export interface ImageElement {
         src: string;
+        /** The srcset attribute value. @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/srcset */
+        srcset: string;
         /** The displayed width of the image, uses img.width when available falling back to clientWidth. See https://codepen.io/patrickhulce/pen/PXvQbM for examples. */
         displayedWidth: number;
         /** The displayed height of the image, uses img.height when available falling back to clientHeight. See https://codepen.io/patrickhulce/pen/PXvQbM for examples. */
@@ -478,6 +489,7 @@ declare global {
         path: string;
         href: string;
         clientRects: Rect[];
+        boundingRect: Rect;
       }
 
       export interface TraceElement {
@@ -487,6 +499,7 @@ declare global {
         devtoolsNodePath: string;
         snippet?: string;
         score?: number;
+        boundingRect: Rect;
       }
 
       export interface ViewportDimensions {
@@ -582,7 +595,7 @@ declare global {
       export type Speedline = speedline.Output<'speedIndex'>;
 
       export interface TraceTimes {
-        navigationStart: number;
+        timeOrigin: number;
         firstPaint?: number;
         firstContentfulPaint: number;
         firstMeaningfulPaint?: number;
@@ -605,8 +618,8 @@ declare global {
         mainFrameIds: {pid: number, tid: number, frameId: string};
         /** The list of frames committed in the trace. */
         frames: Array<{frame: string, url: string}>;
-        /** The trace event marking navigationStart. */
-        navigationStartEvt: TraceEvent;
+        /** The trace event marking the time at which the page load should consider to have begun. Typically the same as the navigationStart but might differ due to SPA navigations, client-side redirects, etc. */
+        timeOriginEvt: TraceEvent;
         /** The trace event marking firstPaint, if it was found. */
         firstPaintEvt?: TraceEvent;
         /** The trace event marking firstContentfulPaint, if it was found. */
@@ -642,6 +655,13 @@ declare global {
         npm?: string;
       }
 
+      export interface FullPageScreenshot {
+        /** Base64 image data URL. */
+        data: string;
+        width: number;
+        height: number;
+      }
+
       export interface TimingSummary {
         firstContentfulPaint: number;
         firstContentfulPaintTs: number | undefined;
@@ -660,6 +680,8 @@ declare global {
         maxPotentialFID: number | undefined;
         cumulativeLayoutShift: number | undefined;
         totalBlockingTime: number;
+        observedTimeOrigin: number;
+        observedTimeOriginTs: number;
         observedNavigationStart: number;
         observedNavigationStartTs: number;
         observedCumulativeLayoutShift: number | undefined;

@@ -118,6 +118,7 @@ class GatherRunner {
     await driver.cacheNatives();
     await driver.registerPerformanceObserver();
     await driver.dismissJavaScriptDialogs();
+    await driver.registerRequestIdleCallbackWrap(options.settings);
     if (resetStorage) await driver.clearDataForOrigin(options.requestedUrl);
     log.timeEnd(status);
   }
@@ -216,6 +217,26 @@ class GatherRunner {
   }
 
   /**
+   * Returns an error if we try to load a non-HTML page.
+   * @param {LH.Artifacts.NetworkRequest|undefined} mainRecord
+   * @return {LH.LighthouseError|undefined}
+   */
+  static getNonHtmlError(mainRecord) {
+    // MIME types are case-insenstive but Chrome normalizes MIME types to be lowercase.
+    const HTML_MIME_TYPE = 'text/html';
+
+    // If we never requested a document, there's no doctype error, let other cases handle it.
+    if (!mainRecord) return undefined;
+
+    // mimeType is determined by the browser, we assume Chrome is determining mimeType correctly,
+    // independently of 'Content-Type' response headers, and always sending mimeType if well-formed.
+    if (HTML_MIME_TYPE !== mainRecord.mimeType) {
+      return new LHError(LHError.errors.NOT_HTML, {mimeType: mainRecord.mimeType});
+    }
+    return undefined;
+  }
+
+  /**
    * Returns an error if the page load should be considered failed, e.g. from a
    * main document request failure, a security issue, etc.
    * @param {LH.Gatherer.PassContext} passContext
@@ -233,6 +254,7 @@ class GatherRunner {
 
     const networkError = GatherRunner.getNetworkError(mainRecord);
     const interstitialError = GatherRunner.getInterstitialError(mainRecord, networkRecords);
+    const nonHtmlError = GatherRunner.getNonHtmlError(mainRecord);
 
     // Check to see if we need to ignore the page load failure.
     // e.g. When the driver is offline, the load will fail without page offline support.
@@ -245,6 +267,9 @@ class GatherRunner {
     // Prefer networkError over navigationError.
     // Example: `DNS_FAILURE` is better than `NO_FCP`.
     if (networkError) return networkError;
+
+    // Error if page is not HTML.
+    if (nonHtmlError) return nonHtmlError;
 
     // Navigation errors are rather generic and express some failure of the page to render properly.
     // Use `navigationError` as the last resort.
@@ -516,7 +541,7 @@ class GatherRunner {
       await passContext.driver.sendCommand('Page.getInstallabilityErrors');
 
     let errors = response.installabilityErrors;
-    // Before M82, `getInstallabilityErrors` was not localized and just english
+    // COMPAT: Before M82, `getInstallabilityErrors` was not localized and just english
     // error strings were returned. Convert the values we care about to the new error id format.
     if (!errors) {
       /** @type {string[]} */

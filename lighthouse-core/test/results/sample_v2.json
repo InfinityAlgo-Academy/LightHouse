@@ -29,7 +29,8 @@
         ],
         "items": [
           {
-            "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"
+            "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
+            "resolution": "Allowed"
           }
         ]
       }
@@ -1381,6 +1382,8 @@
             "totalBlockingTime": 117,
             "maxPotentialFID": 123,
             "cumulativeLayoutShift": 0.42,
+            "observedTimeOrigin": 0,
+            "observedTimeOriginTs": 185603319912,
             "observedNavigationStart": 0,
             "observedNavigationStartTs": 185603319912,
             "observedFirstPaint": 3969,
@@ -2025,6 +2028,14 @@
               "selector": "h2",
               "path": "3,HTML,1,BODY,5,DIV,0,H2",
               "snippet": "<h2>Do better web tester page</h2>",
+              "boundingRect": {
+                "width": 396,
+                "height": 28,
+                "top": 335,
+                "right": 404,
+                "bottom": 363,
+                "left": 8
+              },
               "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 18.0pt, font weight: bold). Expected contrast ratio of 3:1",
               "nodeLabel": "Do better web tester page"
             }
@@ -2035,6 +2046,14 @@
               "selector": "span",
               "path": "3,HTML,1,BODY,5,DIV,1,SPAN",
               "snippet": "<span>Hi there!</span>",
+              "boundingRect": {
+                "width": 57,
+                "height": 18,
+                "top": 383,
+                "right": 65,
+                "bottom": 401,
+                "left": 8
+              },
               "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 12.0pt, font weight: normal). Expected contrast ratio of 4.5:1",
               "nodeLabel": "Hi there!"
             }
@@ -2149,6 +2168,14 @@
               "selector": "html",
               "path": "3,HTML",
               "snippet": "<html manifest=\"clock.appcache\">",
+              "boundingRect": {
+                "width": 412,
+                "height": 1442,
+                "top": 0,
+                "right": 412,
+                "bottom": 1442,
+                "left": 0
+              },
               "explanation": "Fix any of the following:\n  The <html> element does not have a lang attribute",
               "nodeLabel": "html"
             }
@@ -2194,6 +2221,14 @@
               "selector": "img[height=\"\\35 7\"]",
               "path": "3,HTML,1,BODY,10,IMG",
               "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"57\">",
+              "boundingRect": {
+                "width": 480,
+                "height": 57,
+                "top": 419,
+                "right": 488,
+                "bottom": 476,
+                "left": 8
+              },
               "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "img"
             }
@@ -2204,6 +2239,14 @@
               "selector": "img[height=\"\\33 18\"]",
               "path": "3,HTML,1,BODY,12,IMG",
               "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"318\">",
+              "boundingRect": {
+                "width": 480,
+                "height": 318,
+                "top": 480,
+                "right": 488,
+                "bottom": 798,
+                "left": 8
+              },
               "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "img"
             }
@@ -2214,6 +2257,14 @@
               "selector": "img[src$=\"lighthouse-rotating\\.gif\"]",
               "path": "3,HTML,1,BODY,14,IMG",
               "snippet": "<img src=\"lighthouse-rotating.gif\" width=\"811\" height=\"462\">",
+              "boundingRect": {
+                "width": 811,
+                "height": 462,
+                "top": 802,
+                "right": 819,
+                "bottom": 1264,
+                "left": 8
+              },
               "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "img"
             }
@@ -2223,7 +2274,15 @@
               "type": "node",
               "selector": "img:nth-child(30)",
               "path": "3,HTML,1,BODY,53,IMG",
-              "snippet": "<img src=\"blob:http://localhost:62824/289254fd-ef1d-4c1a-96a8-ba291caa2140\">",
+              "snippet": "<img src=\"blob:http://localhost:54759/41e77cc6-8eb2-49d5-a819-7edf852531be\">",
+              "boundingRect": {
+                "width": 16,
+                "height": 16,
+                "top": 1413,
+                "right": 294,
+                "bottom": 1429,
+                "left": 278
+              },
               "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "img"
             }
@@ -2271,6 +2330,14 @@
               "selector": "input[onpaste=\"event\\.preventDefault\\(\\)\\;\"]",
               "path": "3,HTML,1,BODY,48,INPUT",
               "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">",
+              "boundingRect": {
+                "width": 131,
+                "height": 19,
+                "top": 1394,
+                "right": 323,
+                "bottom": 1413,
+                "left": 192
+              },
               "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
               "nodeLabel": "input"
             }
@@ -2281,6 +2348,14 @@
               "selector": "input:nth-child(28)",
               "path": "3,HTML,1,BODY,50,INPUT",
               "snippet": "<input type=\"password\">",
+              "boundingRect": {
+                "width": 131,
+                "height": 19,
+                "top": 1415.8125,
+                "right": 139,
+                "bottom": 1434.8125,
+                "left": 8
+              },
               "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
               "nodeLabel": "input"
             }
@@ -2291,6 +2366,14 @@
               "selector": "input[onpaste=\"return\\ false\\;\"]",
               "path": "3,HTML,1,BODY,52,INPUT",
               "snippet": "<input type=\"password\" onpaste=\"return false;\">",
+              "boundingRect": {
+                "width": 131,
+                "height": 19,
+                "top": 1415,
+                "right": 274,
+                "bottom": 1434,
+                "left": 143
+              },
               "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
               "nodeLabel": "input"
             }
@@ -2423,6 +2506,14 @@
               "selector": "#\\35 934a",
               "path": "3,HTML,1,BODY,2,OBJECT",
               "snippet": "<object id=\"5934a\"></object>",
+              "boundingRect": {
+                "width": 300,
+                "height": 150,
+                "top": 8,
+                "right": 308,
+                "bottom": 158,
+                "left": 8
+              },
               "explanation": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "object"
             }
@@ -2433,6 +2524,14 @@
               "selector": "#\\35 934b",
               "path": "3,HTML,1,BODY,3,OBJECT",
               "snippet": "<object id=\"5934b\"></object>",
+              "boundingRect": {
+                "width": 300,
+                "height": 150,
+                "top": 162,
+                "right": 308,
+                "bottom": 312,
+                "left": 8
+              },
               "explanation": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "object"
             }
@@ -2892,7 +2991,7 @@
     "unused-javascript": {
       "id": "unused-javascript",
       "title": "Remove unused JavaScript",
-      "description": "Remove unused JavaScript to reduce bytes consumed by network activity. [Learn more](https://web.dev/remove-unused-code/).",
+      "description": "Remove unused JavaScript to reduce bytes consumed by network activity. [Learn more](https://web.dev/unused-javascript/).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
@@ -3048,6 +3147,94 @@
         "items": [],
         "overallSavingsMs": 0,
         "overallSavingsBytes": 0
+      }
+    },
+    "duplicated-javascript": {
+      "id": "duplicated-javascript",
+      "title": "Remove duplicate modules in JavaScript bundles",
+      "description": "Remove large, duplicate JavaScript modules from bundles to reduce unnecessary bytes consumed by network activity. ",
+      "score": 1,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 0,
+      "numericUnit": "millisecond",
+      "displayValue": "",
+      "details": {
+        "type": "opportunity",
+        "headings": [],
+        "items": [],
+        "overallSavingsMs": 0,
+        "overallSavingsBytes": 0
+      }
+    },
+    "legacy-javascript": {
+      "id": "legacy-javascript",
+      "title": "Avoid serving legacy JavaScript to modern browsers",
+      "description": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)",
+      "score": 1,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 0,
+      "numericUnit": "millisecond",
+      "displayValue": "Potential savings of 21 KiB",
+      "details": {
+        "type": "opportunity",
+        "headings": [
+          {
+            "key": "url",
+            "valueType": "url",
+            "subItemsHeading": {
+              "key": "location",
+              "valueType": "source-location"
+            },
+            "label": "URL"
+          },
+          {
+            "key": null,
+            "valueType": "code",
+            "subItemsHeading": {
+              "key": "signal"
+            },
+            "label": ""
+          },
+          {
+            "key": "wastedBytes",
+            "valueType": "bytes",
+            "label": "Potential Savings"
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:10200/zone.js",
+            "wastedBytes": 21205,
+            "subItems": {
+              "type": "subitems",
+              "items": [
+                {
+                  "signal": "Object.defineProperty",
+                  "location": {
+                    "type": "source-location",
+                    "url": "http://localhost:10200/zone.js",
+                    "line": 1290,
+                    "column": 4,
+                    "urlProvider": "network"
+                  }
+                },
+                {
+                  "signal": "Object.defineProperties",
+                  "location": {
+                    "type": "source-location",
+                    "url": "http://localhost:10200/zone.js",
+                    "line": 1300,
+                    "column": 4,
+                    "urlProvider": "network"
+                  }
+                }
+              ]
+            },
+            "totalBytes": 0
+          }
+        ],
+        "overallSavingsMs": 0,
+        "overallSavingsBytes": 21205
       }
     },
     "appcache-manifest": {
@@ -3695,6 +3882,14 @@
               "snippet": "<button class=\"small-button\">Do something</button>",
               "path": "3,HTML,1,BODY,17,BUTTON",
               "selector": "body > button.small-button",
+              "boundingRect": {
+                "left": 8,
+                "right": 208,
+                "top": 1268.8125,
+                "bottom": 1286.8125,
+                "width": 200,
+                "height": 18
+              },
               "nodeLabel": "Do something"
             },
             "overlappingTarget": {
@@ -3702,6 +3897,14 @@
               "snippet": "<button class=\"small-button\">Do something else</button>",
               "path": "3,HTML,1,BODY,18,BUTTON",
               "selector": "body > button.small-button",
+              "boundingRect": {
+                "left": 8,
+                "right": 208,
+                "top": 1286.8125,
+                "bottom": 1304.8125,
+                "width": 200,
+                "height": 18
+              },
               "nodeLabel": "Do something else"
             },
             "tapTargetScore": 864,
@@ -4008,6 +4211,16 @@
         },
         {
           "id": "efficient-animated-content",
+          "weight": 0,
+          "group": "load-opportunities"
+        },
+        {
+          "id": "duplicated-javascript",
+          "weight": 0,
+          "group": "load-opportunities"
+        },
+        {
+          "id": "legacy-javascript",
           "weight": 0,
           "group": "load-opportunities"
         },
@@ -4698,7 +4911,7 @@
     },
     "a11y-tables-lists": {
       "title": "Tables and lists",
-      "description": "These are opportunities to to improve the experience of reading tabular or list data using assistive technology, like a screen reader."
+      "description": "These are opportunities to improve the experience of reading tabular or list data using assistive technology, like a screen reader."
     },
     "seo-mobile": {
       "title": "Mobile Friendly",
@@ -5689,6 +5902,30 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:duplicated-javascript",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:ModuleDuplication",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:JSBundles",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:legacy-javascript",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:appcache-manifest",
         "duration": 100,
         "entryType": "measure"
@@ -5911,6 +6148,9 @@
       "lighthouse-core/audits/is-on-https.js | columnInsecureURL": [
         "audits[is-on-https].details.headings[0].text"
       ],
+      "lighthouse-core/audits/is-on-https.js | allowed": [
+        "audits[is-on-https].details.items[0].resolution"
+      ],
       "lighthouse-core/audits/redirects-http.js | failureTitle": [
         "audits[redirects-http].title"
       ],
@@ -6101,6 +6341,7 @@
         "audits[unminified-javascript].details.headings[0].label",
         "audits[uses-webp-images].details.headings[1].label",
         "audits[uses-text-compression].details.headings[0].label",
+        "audits[legacy-javascript].details.headings[0].label",
         "audits[geolocation-on-start].details.headings[0].text",
         "audits[no-document-write].details.headings[0].text",
         "audits[notification-on-start].details.headings[0].text",
@@ -6829,7 +7070,8 @@
         "audits[render-blocking-resources].details.headings[2].label",
         "audits[unminified-javascript].details.headings[2].label",
         "audits[uses-webp-images].details.headings[3].label",
-        "audits[uses-text-compression].details.headings[2].label"
+        "audits[uses-text-compression].details.headings[2].label",
+        "audits[legacy-javascript].details.headings[2].label"
       ],
       "lighthouse-core/audits/byte-efficiency/unminified-css.js | title": [
         "audits[unminified-css].title"
@@ -6861,6 +7103,12 @@
             "wastedBytes": 64646
           },
           "path": "audits[uses-text-compression].displayValue"
+        },
+        {
+          "values": {
+            "wastedBytes": 21205
+          },
+          "path": "audits[legacy-javascript].displayValue"
         }
       ],
       "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": [
@@ -6907,6 +7155,18 @@
       ],
       "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | description": [
         "audits[efficient-animated-content].description"
+      ],
+      "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | title": [
+        "audits[duplicated-javascript].title"
+      ],
+      "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | description": [
+        "audits[duplicated-javascript].description"
+      ],
+      "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": [
+        "audits[legacy-javascript].title"
+      ],
+      "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | description": [
+        "audits[legacy-javascript].description"
       ],
       "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": [
         "audits[appcache-manifest].title"

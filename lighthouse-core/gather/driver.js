@@ -1514,13 +1514,27 @@ class Driver {
   }
 
   /**
+   * Use a RequestIdleCallback shim for tests run with simulated throttling, so that the deadline can be used without
+   * a penalty
+   * @param {LH.Config.Settings} settings
+   * @return {Promise<void>}
+   */
+  async registerRequestIdleCallbackWrap(settings) {
+    if (settings.throttlingMethod === 'simulate') {
+      const scriptStr = `(${pageFunctions.wrapRequestIdleCallbackString})
+        (${settings.throttling.cpuSlowdownMultiplier})`;
+      await this.evaluateScriptOnNewDocument(scriptStr);
+    }
+  }
+
+  /**
    * @param {Array<string>} urls URL patterns to block. Wildcards ('*') are allowed.
    * @return {Promise<void>}
    */
   blockUrlPatterns(urls) {
     return this.sendCommand('Network.setBlockedURLs', {urls})
       .catch(err => {
-        // TODO: remove this handler once m59 hits stable
+        // TODO(COMPAT): remove this handler once m59 hits stable
         if (!/wasn't found/.test(err.message)) {
           throw err;
         }

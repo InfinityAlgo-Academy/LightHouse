@@ -45,6 +45,7 @@ function getHTMLImages(allElements) {
       // currentSrc used over src to get the url as determined by the browser
       // after taking into account srcset/media/sizes/etc.
       src: element.currentSrc,
+      srcset: element.srcset,
       displayedWidth: element.width,
       displayedHeight: element.height,
       clientRect: getClientRect(element),
@@ -91,6 +92,7 @@ function getCSSImages(allElements) {
 
     images.push({
       src: url,
+      srcset: '',
       displayedWidth: element.clientWidth,
       displayedHeight: element.clientHeight,
       clientRect: getClientRect(element),
@@ -224,7 +226,7 @@ class ImageElements extends Gatherer {
       // Additional fetch is expensive; don't bother if we don't have a networkRecord for the image,
       // or it's not in the top 50 largest images.
       if (
-        (element.isPicture || element.isCss) &&
+        (element.isPicture || element.isCss || element.srcset) &&
         networkRecord &&
         top50Images.includes(networkRecord)
       ) {

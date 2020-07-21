@@ -361,6 +361,12 @@ Object {
       "path": "byte-efficiency/efficient-animated-content",
     },
     Object {
+      "path": "byte-efficiency/duplicated-javascript",
+    },
+    Object {
+      "path": "byte-efficiency/legacy-javascript",
+    },
+    Object {
       "path": "dobetterweb/appcache-manifest",
     },
     Object {
@@ -888,6 +894,16 @@ Object {
           "weight": 0,
         },
         Object {
+          "group": "load-opportunities",
+          "id": "duplicated-javascript",
+          "weight": 0,
+        },
+        Object {
+          "group": "load-opportunities",
+          "id": "legacy-javascript",
+          "weight": 0,
+        },
+        Object {
           "group": "diagnostics",
           "id": "total-byte-weight",
           "weight": 0,
@@ -1213,7 +1229,7 @@ Object {
       "title": "Navigation",
     },
     "a11y-tables-lists": Object {
-      "description": "These are opportunities to to improve the experience of reading tabular or list data using assistive technology, like a screen reader.",
+      "description": "These are opportunities to improve the experience of reading tabular or list data using assistive technology, like a screen reader.",
       "title": "Tables and lists",
     },
     "best-practices-browser-compat": Object {
@@ -1497,7 +1513,7 @@ Object {
       "title": "Navigation",
     },
     "a11y-tables-lists": Object {
-      "description": "These are opportunities to to improve the experience of reading tabular or list data using assistive technology, like a screen reader.",
+      "description": "These are opportunities to improve the experience of reading tabular or list data using assistive technology, like a screen reader.",
       "title": "Tables and lists",
     },
     "best-practices-browser-compat": Object {
