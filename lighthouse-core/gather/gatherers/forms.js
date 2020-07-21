@@ -122,15 +122,8 @@ function collectFormElements() {
   // @ts-ignore - put into scope via stringification
   const formElements = getElementsInDocument('form'); // eslint-disable-line no-undef
   // @ts-ignore - put into scope via stringification
-  const inputs = getElementsInDocument('input'); // eslint-disable-line no-undef
-  // @ts-ignore - put into scope via stringification
-  const labels = getElementsInDocument('labels'); // eslint-disable-line no-undef
-  // @ts-ignore - put into scope via stringification
-  const textareas = getElementsInDocument('textarea'); // eslint-disable-line no-undef
-  // @ts-ignore - put into scope via stringification
-  const selects = getElementsInDocument('select'); // eslint-disable-line no-undef
+  const formChildren = getElementsInDocument('textarea, input, labels, select'); // eslint-disable-line no-undef
 
-  const formChildren = inputs.concat(labels, textareas, selects);
   const formless = getFormlessElements(formChildren);
 
   const forms = formElements.map(/** @param {HTMLFormElement} formElement */ (formElement) => {
