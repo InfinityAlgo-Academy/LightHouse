@@ -46,7 +46,7 @@ function getChildrenInputs(formElement) {
 /* istanbul ignore next */
 function getChildrenLabels(formElement) {
   /** @type {LH.Artifacts['FormLabels'][]} */
-  const labelsArray = [];
+  const labels = [];
 
   const childrenArray = Array.prototype.slice.call(formElement.childNodes);
   for (const element of childrenArray) {
@@ -57,11 +57,11 @@ function getChildrenLabels(formElement) {
         nodeName: element.nodeName,
         for: element.htmlFor,
       };
-      labelsArray.push(labelAttributes);
+      labels.push(labelAttributes);
     }
   }
 
-  return labelsArray;
+  return labels;
 }
 
 /**
