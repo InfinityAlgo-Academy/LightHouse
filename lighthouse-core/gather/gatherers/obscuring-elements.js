@@ -8,85 +8,102 @@
 const Gatherer = require('./gatherer.js');
 const pageFunctions = require('../../lib/page-functions.js');
 const TraceProcessor = require('../../lib/tracehouse/trace-processor.js');
-const { getOuterHTMLSnippet } = require('../../lib/page-functions.js');
-
-/** @typedef {{element?: string, x?: number, y?:number, retList?: Array<any>}} MyData */
-/** @typedef {{xCoord: number, yCoord: number}} Point */
+const rectHelpers = require('../../lib/rect-helpers.js');
 
 /**
  * @this {HTMLElement}
- * @return {MyData}
+ * @return {Array<LH.Artifacts.ObscuringElement>}
  */
 /* istanbul ignore next */
 function checkIntersection() {
-  const lcpElement = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement; // eslint-disable-line no-undef
-  const lcpHTMLSnippet = lcpElement && getOuterHTMLSnippet(lcpElement);
+  /** @type {Array<LH.Artifacts.ObscuringElement>} */
   const obscuringElements = [];
+
+  const lcpElement = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement; // eslint-disable-line no-undef
+  if (!lcpElement) return obscuringElements;
+
+  const boundingRect = lcpElement.getBoundingClientRect();
+  if (!boundingRect) return obscuringElements;
+
+  /** @type {Set<Element>} */
   const seen = new Set();
   /**
-   * @param {HTMLElement | Element} el 
+   * @param {Element} el
    */
-  function getChildrenSnippets(el) {
+  function findDescendantElements(el) {
     if (!el) return;
-    const snippet = getOuterHTMLSnippet(el);
-    seen.add(snippet);
+    seen.add(el);
     for (const child of el.children) {
-      getChildrenSnippets(child);
+      findDescendantElements(child);
     }
   }
-  lcpElement && getChildrenSnippets(lcpElement);
-  const boundingRect = lcpElement && lcpElement.getBoundingClientRect();
-  if (!boundingRect) return {};
+
+  for (const child of lcpElement.children) {
+    findDescendantElements(child);
+  }
   const {x, y, width, height} = boundingRect;
-  /** @type {Array<Point>} */
-  const points = [];
   for (let i = 0.1; i < 1.0; i += 0.2) {
     for (let j = 0.1; j < 1.0; j += 0.2) {
       const xCoord = x + Math.round(width * i);
       const yCoord = y + Math.round(height * j);
-      points.push({xCoord, yCoord});
+      for (const element of document.elementsFromPoint(xCoord, yCoord)) { // eslint-disable-line no-undef
+        if (element === lcpElement) break;
+        if (seen.has(element)) {
+          continue;
+        }
+        seen.add(element);
+      }
     }
   }
 
-  for (const {xCoord, yCoord} of points) {
-    for (const element of document.elementsFromPoint(xCoord, yCoord)) {
+  const biggestOverlappingElements = Array.from(seen)
+  .sort((a, b) => {
+    const rect1 = a.getBoundingClientRect();
+    const rect2 = b.getBoundingClientRect();
+    return (rect2.width * rect2.height) - (rect1.width * rect1.height);
+  })
+  .slice(0, 5)
+  .filter(elem => {
+    return elem.parentElement && !seen.has(elem.parentElement);
+  })
+  .map(elem => {
+    const rect = elem.getBoundingClientRect();
+    return {
       // @ts-ignore - put into scope via stringification
-      const snippet = getOuterHTMLSnippet(element); // eslint-disable-line no-undef
-      // if (snippet === lcpHTMLSnippet) break;
-      if (element === lcpElement) break;
-      if (seen.has(snippet))
-        continue;
-      seen.add(snippet);
-      const rect = element.getBoundingClientRect();
-      obscuringElements.push({x: rect.x, y: rect.y, width: rect.width, height: rect.height, snippet});
-    }
-  }
+      devtoolsNodePath: getNodePath(elem), // eslint-disable-line no-undef
+      // @ts-ignore - put into scope via stringification
+      selector: getNodeSelector(elem), // eslint-disable-line no-undef
+      // @ts-ignore - put into scope via stringification
+      nodeLabel: getNodeLabel(elem), // eslint-disable-line no-undef
+      // @ts-ignore - put into scope via stringification
+      snippet: getOuterHTMLSnippet(elem), // eslint-disable-line no-undef
+      // @ts-ignore - put into scope via stringification
+      boundingRect: addRectTopAndBottom(rect), // eslint-disable-line no-undef
+    };
+  });
 
-  return {
-    element: lcpHTMLSnippet || '',
-    x,
-    y,
-    retList: obscuringElements,
-  };
+  return biggestOverlappingElements;
 }
 
-class ObscuringElements extends Gatherer {  
+class ElementsObscuringLCPElement extends Gatherer {
   /**
    * @param {LH.Gatherer.PassContext} passContext
    * @param {LH.Gatherer.LoadData} loadData
-   * @return {Promise<LH.Artifacts['ObscuringElements'] | null>}
+   * @return {Promise<LH.Artifacts['ElementsObscuringLCPElement']>}
    */
   async afterPass(passContext, loadData) {
     const driver = passContext.driver;
     if (!loadData.trace) {
       throw new Error('Trace is missing!');
     }
+    /** @type {Array<LH.Artifacts.ObscuringElement>} */
+    const obscuringElements = [];
 
     const {largestContentfulPaintEvt} = TraceProcessor.computeTraceOfTab(loadData.trace);
     const backendNodeId = largestContentfulPaintEvt && largestContentfulPaintEvt.args &&
       largestContentfulPaintEvt.args.data && largestContentfulPaintEvt.args.data.nodeId;
 
-    if (!backendNodeId) return null;
+    if (!backendNodeId) return obscuringElements;
     const objectId = await driver.resolveNodeIdToObjectId(backendNodeId);
     const response = await driver.sendCommand('Runtime.callFunctionOn', {
       objectId,
@@ -96,20 +113,19 @@ class ObscuringElements extends Gatherer {
         ${pageFunctions.getNodeSelectorString};
         ${pageFunctions.getNodeLabelString};
         ${pageFunctions.getOuterHTMLSnippetString};
+        ${rectHelpers.addRectTopAndBottom.toString()};
         return checkIntersection.call(this);
       }`,
       returnByValue: true,
       awaitPromise: true,
     });
 
-    let obscuringElements = [];
     if (response && response.result && response.result.value) {
-      console.dir(response.result.value);
-      obscuringElements.push(...response.result.value.retList);
+      obscuringElements.push(...response.result.value);
     }
 
     return obscuringElements;
   }
 }
 
-module.exports = ObscuringElements;
+module.exports = ElementsObscuringLCPElement;

@@ -9,6 +9,7 @@ import _LanternSimulator = require('../lighthouse-core/lib/dependency-graph/simu
 import _NetworkRequest = require('../lighthouse-core/lib/network-request.js');
 import speedline = require('speedline-core');
 import TextSourceMap = require('../lighthouse-core/lib/cdt/generated/SourceMap.js');
+import ObscuringElements = require('../lighthouse-core/gather/gatherers/obscuring-elements.js');
 
 type _TaskNode = import('../lighthouse-core/lib/tracehouse/main-thread-tasks.js').TaskNode;
 
@@ -104,6 +105,8 @@ declare global {
       Doctype: Artifacts.Doctype | null;
       /** Information on the size of all DOM nodes in the page and the most extreme members. */
       DOMStats: Artifacts.DOMStats;
+      /** Elements that obscure the Largest Contentful Paint element. */
+      ElementsObscuringLCPElement: Array<Artifacts.ObscuringElement>;
       /** Relevant attributes and child properties of all <object>s, <embed>s and <applet>s in the page. */
       EmbeddedContent: Artifacts.EmbeddedContentInfo[];
       /** Information for font faces used in the page. */
@@ -122,8 +125,6 @@ declare global {
       Manifest: Artifacts.Manifest | null;
       /** The URL loaded with interception */
       MixedContent: {url: string};
-      /** Elements that obscure the Largest Contentful Paint element. */
-      ObscuringElements: Array<any>;
       /** The status code of the attempted load of the page while network access is disabled. */
       Offline: number;
       /** Size and compression opportunity information for all the images in the page. */
@@ -498,6 +499,14 @@ declare global {
 
       export interface InspectorIssues {
         mixedContent: Crdp.Audits.MixedContentIssueDetails[];
+      }
+
+      export interface ObscuringElement {
+        selector: string;
+        nodeLabel: string;
+        devtoolsNodePath: string;
+        snippet: string;
+        boundingRect: any;
       }
 
       // Computed artifact types below.

@@ -29,7 +29,7 @@ class ObscuredLargestContentfulPaint extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['traces', 'ObscuringElements'],
+      requiredArtifacts: ['traces', 'ElementsObscuringLCPElement'],
     };
   }
 
@@ -38,9 +38,27 @@ class ObscuredLargestContentfulPaint extends Audit {
    * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
-    const obscuringElements = artifacts.ObscuringElements;
+    const obscuringElements = artifacts.ElementsObscuringLCPElement
+      .map(element => {
+        return {
+          node: /** @type {LH.Audit.Details.NodeValue} */ ({
+            type: 'node',
+            path: element.devtoolsNodePath,
+            selector: element.selector,
+            nodeLabel: element.nodeLabel,
+            snippet: element.snippet,
+          }),
+        };
+      });
+
+    /** @type {LH.Audit.Details.Table['headings']} */
+    const headings = [
+      {key: 'node', itemType: 'node', text: str_(i18n.UIStrings.columnElement)},
+    ];
+
     return {
       score: obscuringElements.length > 0 ? 0 : 1,
+      details: Audit.makeTableDetails(headings, obscuringElements),
     };
   }
 }
