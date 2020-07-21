@@ -13,7 +13,6 @@
 
 const Gatherer = require('./gatherer.js');
 const pageFunctions = require('../../lib/page-functions.js');
-const TraceProcessor = require('../../lib/tracehouse/trace-processor.js');
 const RectHelpers = require('../../lib/rect-helpers.js');
 
 /** @typedef {{nodeId: number, score?: number}} TraceElementData */
@@ -144,12 +143,11 @@ class TraceElements extends Gatherer {
    */
   async afterPass(passContext, loadData) {
     const driver = passContext.driver;
-    if (!loadData.trace) {
-      throw new Error('Trace is missing!');
+    if (!loadData.traceOfTab) {
+      throw new Error('Trace of tab is missing!');
     }
 
-    const {largestContentfulPaintEvt, mainThreadEvents} =
-      TraceProcessor.computeTraceOfTab(loadData.trace);
+    const {largestContentfulPaintEvt, mainThreadEvents} = loadData.traceOfTab;
     /** @type {Array<TraceElementData>} */
     const backendNodeData = [];
 

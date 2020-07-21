@@ -14,6 +14,7 @@ const NetworkRecorder = require('../lib/network-recorder.js');
 const constants = require('../config/constants.js');
 const i18n = require('../lib/i18n/i18n.js');
 const URL = require('../lib/url-shim.js');
+const TraceOfTab = require('../computed/trace-of-tab.js');
 
 const UIStrings = {
   /**
@@ -332,12 +333,19 @@ class GatherRunner {
   static async endRecording(passContext) {
     const {driver, passConfig} = passContext;
 
+    /** @type {LH.Trace|undefined} */
     let trace;
+    /** @type {LH.Artifacts.TraceOfTab|undefined} */
+    let traceOfTab;
     if (passConfig.recordTrace) {
       const status = {msg: 'Gathering trace', id: `lh:gather:getTrace`};
       log.time(status);
       trace = await driver.endTrace();
       log.timeEnd(status);
+      traceOfTab = await TraceOfTab.request(trace, {
+        settings: passContext.settings,
+        computedCache: passContext.computedCache,
+      });
     }
 
     const status = {
@@ -353,6 +361,7 @@ class GatherRunner {
       networkRecords,
       devtoolsLog,
       trace,
+      traceOfTab,
     };
   }
 
@@ -636,7 +645,7 @@ class GatherRunner {
 
   /**
    * @param {Array<LH.Config.Pass>} passConfigs
-   * @param {{driver: Driver, requestedUrl: string, settings: LH.Config.Settings}} options
+   * @param {{driver: Driver, requestedUrl: string, settings: LH.Config.Settings, computedCache: LH.Gatherer.PassContext['computedCache']}} options
    * @return {Promise<LH.Artifacts>}
    */
   static async run(passConfigs, options) {
@@ -663,6 +672,7 @@ class GatherRunner {
           driver,
           url: options.requestedUrl,
           settings: options.settings,
+          computedCache: options.computedCache,
           passConfig,
           baseArtifacts,
           LighthouseRunWarnings: baseArtifacts.LighthouseRunWarnings,

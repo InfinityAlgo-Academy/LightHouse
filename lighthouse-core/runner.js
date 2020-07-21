@@ -41,6 +41,11 @@ class Runner {
        * @type {Array<string>}
        */
       const lighthouseRunWarnings = [];
+      /**
+       * The cache for computed artifacts used to avoid duplicating expensive computations.
+       * @type {Map<string, import('./lib/arbitrary-equality-map.js')>}
+       */
+      const computedCache = new Map();
 
       const sentryContext = Sentry.getContext();
       Sentry.captureBreadcrumb({
@@ -78,7 +83,8 @@ class Runner {
           throw new LHError(LHError.errors.INVALID_URL);
         }
 
-        artifacts = await Runner._gatherArtifactsFromBrowser(requestedUrl, runOpts, connection);
+        artifacts = await Runner._gatherArtifactsFromBrowser(requestedUrl, runOpts, connection,
+          computedCache);
         // -G means save these to ./latest-run, etc.
         if (settings.gatherMode) {
           const path = Runner._getArtifactsPath(settings);
@@ -94,7 +100,7 @@ class Runner {
         throw new Error('No audits to evaluate.');
       }
       const auditResults = await Runner._runAudits(settings, runOpts.config.audits, artifacts,
-          lighthouseRunWarnings);
+          lighthouseRunWarnings, computedCache);
 
       // LHR construction phase
       const resultsStatus = {msg: 'Generating results...', id: 'lh:runner:generate'};
@@ -200,9 +206,10 @@ class Runner {
    * @param {string} requestedUrl
    * @param {{config: Config, driverMock?: Driver}} runnerOpts
    * @param {Connection} connection
+   * @param {LH.Gatherer.PassContext['computedCache']} computedCache
    * @return {Promise<LH.Artifacts>}
    */
-  static async _gatherArtifactsFromBrowser(requestedUrl, runnerOpts, connection) {
+  static async _gatherArtifactsFromBrowser(requestedUrl, runnerOpts, connection, computedCache) {
     if (!runnerOpts.config.passes) {
       throw new Error('No browser artifacts are either provided or requested.');
     }
@@ -210,6 +217,7 @@ class Runner {
     const gatherOpts = {
       driver,
       requestedUrl,
+      computedCache,
       settings: runnerOpts.config.settings,
     };
     const artifacts = await GatherRunner.run(runnerOpts.config.passes, gatherOpts);
@@ -222,9 +230,10 @@ class Runner {
    * @param {Array<LH.Config.AuditDefn>} audits
    * @param {LH.Artifacts} artifacts
    * @param {Array<string>} runWarnings
+   * @param {LH.Audit.Context['computedCache']} computedCache
    * @return {Promise<Array<LH.Audit.Result>>}
    */
-  static async _runAudits(settings, audits, artifacts, runWarnings) {
+  static async _runAudits(settings, audits, artifacts, runWarnings, computedCache) {
     const status = {msg: 'Analyzing and running audits...', id: 'lh:runner:auditing'};
     log.time(status);
 
@@ -248,7 +257,7 @@ class Runner {
     // Members of LH.Audit.Context that are shared across all audits.
     const sharedAuditContext = {
       settings,
-      computedCache: new Map(),
+      computedCache,
     };
 
     // Run each audit sequentially
