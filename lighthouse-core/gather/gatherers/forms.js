@@ -10,7 +10,6 @@ const pageFunctions = require('../../lib/page-functions.js');
 
 /* eslint-env browser, node */
 
-
 /**
  *  @param {HTMLFormElement} formElement
  *  @return { LH.Artifacts['FormInputs'][]}
@@ -79,7 +78,7 @@ function getFormlessElements(formChildren) {
   for (const childElement of formChildren) {
     if (childElement instanceof HTMLInputElement || childElement instanceof HTMLTextAreaElement
       || childElement instanceof HTMLLabelElement || childElement instanceof HTMLSelectElement) {
-      if (childElement.form ) continue;
+      if (childElement.form) continue;
     }
 
     if (childElement instanceof HTMLInputElement || childElement instanceof HTMLTextAreaElement ) {
@@ -123,7 +122,6 @@ function collectFormElements() {
   const formElements = getElementsInDocument('form'); // eslint-disable-line no-undef
   // @ts-ignore - put into scope via stringification
   const formChildren = getElementsInDocument('textarea, input, labels, select'); // eslint-disable-line no-undef
-
   const formless = getFormlessElements(formChildren);
 
   const forms = formElements.map(/** @param {HTMLFormElement} formElement */ (formElement) => {
@@ -150,7 +148,6 @@ class Forms extends Gatherer {
   /**
    * @param {LH.Gatherer.PassContext} passContext
    * @return {Promise<LH.Artifacts['Forms']>}
-   * @override
    */
   async afterPass(passContext) {
     const driver = passContext.driver;

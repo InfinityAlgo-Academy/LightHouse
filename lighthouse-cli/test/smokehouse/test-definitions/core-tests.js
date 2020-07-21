@@ -75,7 +75,7 @@ const smokeTests = [{
   expectations: require('./source-maps/expectations.js'),
   config: require('./source-maps/source-maps-config.js'),
 }, {
-  id: 'source-maps',
+  id: 'forms',
   expectations: require('./forms/form-expectations.js'),
   config: require('./forms/form-config.js'),
 }];
