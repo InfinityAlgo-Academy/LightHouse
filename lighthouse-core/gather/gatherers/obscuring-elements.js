@@ -8,7 +8,6 @@
 const Gatherer = require('./gatherer.js');
 const pageFunctions = require('../../lib/page-functions.js');
 const TraceProcessor = require('../../lib/tracehouse/trace-processor.js');
-const rectHelpers = require('../../lib/rect-helpers.js');
 
 /**
  * @this {HTMLElement}
@@ -22,7 +21,8 @@ function checkIntersection() {
   const lcpElement = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement; // eslint-disable-line no-undef
   if (!lcpElement) return obscuringElements;
 
-  const boundingRect = lcpElement.getBoundingClientRect();
+  // @ts-ignore - put into scope via stringification
+  const boundingRect = getBoundingClientRect(lcpElement); // eslint-disable-line no-undef
   if (!boundingRect) return obscuringElements;
 
   /** @type {Set<Element>} */
@@ -41,12 +41,12 @@ function checkIntersection() {
   for (const child of lcpElement.children) {
     findDescendantElements(child);
   }
-  const {x, y, width, height} = boundingRect;
+  const {left, top, width, height} = boundingRect;
   for (let i = 0.1; i < 1.0; i += 0.2) {
     for (let j = 0.1; j < 1.0; j += 0.2) {
-      const xCoord = x + Math.round(width * i);
-      const yCoord = y + Math.round(height * j);
-      for (const element of document.elementsFromPoint(xCoord, yCoord)) { // eslint-disable-line no-undef
+      const x = left + Math.round(width * i);
+      const y = top + Math.round(height * j);
+      for (const element of document.elementsFromPoint(x, y)) { // eslint-disable-line no-undef
         if (element === lcpElement) break;
         if (seen.has(element)) {
           continue;
@@ -58,8 +58,10 @@ function checkIntersection() {
 
   const biggestOverlappingElements = Array.from(seen)
   .sort((a, b) => {
-    const rect1 = a.getBoundingClientRect();
-    const rect2 = b.getBoundingClientRect();
+    // @ts-ignore - put into scope via stringification
+    const rect1 = getBoundingClientRect(a); // eslint-disable-line no-undef
+    // @ts-ignore - put into scope via stringification
+    const rect2 = getBoundingClientRect(b); // eslint-disable-line no-undef
     return (rect2.width * rect2.height) - (rect1.width * rect1.height);
   })
   .slice(0, 5)
@@ -67,7 +69,6 @@ function checkIntersection() {
     return elem.parentElement && !seen.has(elem.parentElement);
   })
   .map(elem => {
-    const rect = elem.getBoundingClientRect();
     return {
       // @ts-ignore - put into scope via stringification
       devtoolsNodePath: getNodePath(elem), // eslint-disable-line no-undef
@@ -78,7 +79,7 @@ function checkIntersection() {
       // @ts-ignore - put into scope via stringification
       snippet: getOuterHTMLSnippet(elem), // eslint-disable-line no-undef
       // @ts-ignore - put into scope via stringification
-      boundingRect: addRectTopAndBottom(rect), // eslint-disable-line no-undef
+      boundingRect: getBoundingClientRect(elem), // eslint-disable-line no-undef
     };
   });
 
@@ -113,7 +114,7 @@ class ElementsObscuringLCPElement extends Gatherer {
         ${pageFunctions.getNodeSelectorString};
         ${pageFunctions.getNodeLabelString};
         ${pageFunctions.getOuterHTMLSnippetString};
-        ${rectHelpers.addRectTopAndBottom.toString()};
+        ${pageFunctions.getBoundingClientRectString};
         return checkIntersection.call(this);
       }`,
       returnByValue: true,
