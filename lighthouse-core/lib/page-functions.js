@@ -325,6 +325,7 @@ function getNodeLabel(node) {
  * @param {HTMLElement} element
  * @param {LH.Artifacts.Rect}
  */
+/* istanbul ignore next */
 function getBoundingClientRect(element) {
   // The protocol does not serialize getters, so extract the values explicitly.
   const rect = element.getBoundingClientRect();
