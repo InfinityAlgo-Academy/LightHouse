@@ -197,6 +197,12 @@ const expectations = [
           },
         },
       ],
+      GlobalListeners: [{
+        type: 'unload',
+        scriptId: /^\d+$/,
+        lineNumber: '>300',
+        columnNumber: '>30',
+      }],
     },
     lhr: {
       requestedUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
@@ -411,6 +417,20 @@ const expectations = [
                 element: {value: '<div id="shadow-root-container">'},
               },
             ],
+          },
+        },
+        'no-unload-listeners': {
+          score: 0,
+          details: {
+            items: [{
+              source: {
+                type: 'source-location',
+                url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+                urlProvider: 'network',
+                line: '>300',
+                column: '>30',
+              },
+            }],
           },
         },
       },

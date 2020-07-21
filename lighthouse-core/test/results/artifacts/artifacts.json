@@ -390,7 +390,60 @@
       "requestId": "75994.22"
     }
   ],
-  "JsUsage": [],
+  "JsUsage": {
+    "http://localhost:58599/dobetterweb/dbw_tester.html": [
+      {
+        "scriptId": "12",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "13",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "16",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "17",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "19",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "20",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "21",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "22",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "23",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "44",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      }
+    ]
+  },
   "CSSUsage": {
     "rules": [
       {
@@ -2409,5 +2462,13 @@
   "InspectorIssues": {
     "blockedByResponse": [],
     "mixedContent": []
-  }
+  },
+  "GlobalListeners": [
+    {
+      "type": "unload",
+      "scriptId": "23",
+      "lineNumber": 386,
+      "columnNumber": 36
+    }
+  ]
 }

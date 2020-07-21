@@ -160,6 +160,9 @@ Object {
       "path": "long-tasks",
     },
     Object {
+      "path": "no-unload-listeners",
+    },
+    Object {
       "path": "manual/pwa-cross-browser",
     },
     Object {
@@ -749,6 +752,11 @@ Object {
         },
         Object {
           "group": "best-practices-general",
+          "id": "no-unload-listeners",
+          "weight": 1,
+        },
+        Object {
+          "group": "best-practices-general",
           "id": "appcache-manifest",
           "weight": 1,
         },
@@ -1322,6 +1330,9 @@ Object {
         },
         Object {
           "path": "main-document-content",
+        },
+        Object {
+          "path": "global-listeners",
         },
         Object {
           "path": "dobetterweb/appcache",
