@@ -21,6 +21,10 @@ const {createMockSendCommandFn} = require('./mock-commands.js');
 
 jest.mock('../../lib/stack-collector.js', () => () => Promise.resolve([]));
 
+// Concatenate the path so typescript doesn't try to come up with a type for the trace.
+// It fails with a "too complex" error message.
+const traceData = require('../fixtures' + '/traces/progressive-app-m60.json');
+
 /**
  * @template {unknown[]} TParams
  * @template TReturn
@@ -142,6 +146,12 @@ beforeEach(() => {
 });
 
 describe('GatherRunner', function() {
+  /** @type {Map<string, any>} */
+  let computedCache;
+  beforeEach(() => {
+    computedCache = new Map();
+  });
+
   it('loads a page and updates passContext.URL on redirect', () => {
     const url1 = 'https://example.com';
     const url2 = 'https://example.com/interstitial';
@@ -188,7 +198,7 @@ describe('GatherRunner', function() {
     const requestedUrl = 'https://example.com';
     const driver = fakeDriver;
     const config = makeConfig({passes: []});
-    const options = {requestedUrl, driver, settings: config.settings};
+    const options = {requestedUrl, computedCache, driver, settings: config.settings};
 
     const results = await GatherRunner.run(config.passes, options);
     expect(Number.isFinite(results.BenchmarkIndex)).toBeTruthy();
@@ -198,7 +208,7 @@ describe('GatherRunner', function() {
     const requestedUrl = 'https://example.com';
     const driver = fakeDriver;
     const config = makeConfig({passes: []});
-    const options = {requestedUrl, driver, settings: config.settings};
+    const options = {requestedUrl, computedCache, driver, settings: config.settings};
 
     const results = await GatherRunner.run(config.passes, options);
     expect(results.HostUserAgent).toEqual(fakeDriver.protocolGetVersionResponse.userAgent);
@@ -209,7 +219,7 @@ describe('GatherRunner', function() {
     const requestedUrl = 'https://example.com';
     const driver = fakeDriver;
     const config = makeConfig({passes: [{}]});
-    const options = {requestedUrl, driver, settings: config.settings};
+    const options = {requestedUrl, computedCache, driver, settings: config.settings};
 
     const results = await GatherRunner.run(config.passes, options);
     expect(results.NetworkUserAgent).toContain('Mozilla');
@@ -224,7 +234,7 @@ describe('GatherRunner', function() {
       },
     });
     const config = makeConfig({passes: [{}]});
-    const options = {requestedUrl, driver, settings: config.settings};
+    const options = {requestedUrl, computedCache, driver, settings: config.settings};
 
     return GatherRunner.run(config.passes, options).then(artifacts => {
       assert.deepStrictEqual(artifacts.URL, {requestedUrl, finalUrl},
@@ -241,7 +251,7 @@ describe('GatherRunner', function() {
         passes: [],
         settings: {emulatedFormFactor: 'none', internalDisableDeviceScreenEmulation: false},
       });
-      const options = {requestedUrl, driver, settings: config.settings};
+      const options = {requestedUrl, computedCache, driver, settings: config.settings};
 
       const results = await GatherRunner.run(config.passes, options);
       expect(results.TestedAsMobileDevice).toBe(false);
@@ -253,7 +263,7 @@ describe('GatherRunner', function() {
         passes: [],
         settings: {emulatedFormFactor: 'mobile', internalDisableDeviceScreenEmulation: false},
       });
-      const options = {requestedUrl, driver, settings: config.settings};
+      const options = {requestedUrl, computedCache, driver, settings: config.settings};
 
       const results = await GatherRunner.run(config.passes, options);
       expect(results.TestedAsMobileDevice).toBe(true);
@@ -265,7 +275,7 @@ describe('GatherRunner', function() {
         passes: [],
         settings: {emulatedFormFactor: 'none', internalDisableDeviceScreenEmulation: false},
       });
-      const options = {requestedUrl, driver, settings: config.settings};
+      const options = {requestedUrl, computedCache, driver, settings: config.settings};
 
       const results = await GatherRunner.run(config.passes, options);
       expect(results.TestedAsMobileDevice).toBe(true);
@@ -277,7 +287,7 @@ describe('GatherRunner', function() {
         passes: [],
         settings: {emulatedFormFactor: 'desktop', internalDisableDeviceScreenEmulation: false},
       });
-      const options = {requestedUrl, driver, settings: config.settings};
+      const options = {requestedUrl, computedCache, driver, settings: config.settings};
 
       const results = await GatherRunner.run(config.passes, options);
       expect(results.TestedAsMobileDevice).toBe(false);
@@ -303,7 +313,7 @@ describe('GatherRunner', function() {
           passes: [],
           settings: {},
         });
-        const options = {requestedUrl, driver, settings: config.settings};
+        const options = {requestedUrl, computedCache, driver, settings: config.settings};
 
         const results = await GatherRunner.run(config.passes, options);
         expect(results.HostFormFactor).toBe(expectedValue);
@@ -437,7 +447,7 @@ describe('GatherRunner', function() {
       setThrottling: asyncFunc,
       blockUrlPatterns: asyncFunc,
       setExtraHTTPHeaders: asyncFunc,
-      endTrace: asyncFunc,
+      endTrace: async () => traceData,
       endDevtoolsLog: () => [],
       getBrowserVersion: async () => ({userAgent: ''}),
       getScrollPosition: async () => 1,
@@ -458,6 +468,7 @@ describe('GatherRunner', function() {
       driver,
       passConfig,
       settings,
+      computedCache,
       baseArtifacts: await GatherRunner.initializeBaseArtifacts({driver, settings, requestedUrl}),
     };
 
@@ -488,6 +499,7 @@ describe('GatherRunner', function() {
     });
     const options = {
       driver,
+      computedCache,
       requestedUrl,
       settings: config.settings,
     };
@@ -522,6 +534,7 @@ describe('GatherRunner', function() {
     });
     const options = {
       driver,
+      computedCache,
       requestedUrl,
       settings: config.settings,
     };
@@ -562,6 +575,7 @@ describe('GatherRunner', function() {
     });
     const options = {
       driver,
+      computedCache,
       requestedUrl,
       settings: config.settings,
     };
@@ -614,6 +628,7 @@ describe('GatherRunner', function() {
   it('tells the driver to block given URL patterns when blockedUrlPatterns is given', async () => {
     await GatherRunner.setupPassNetwork({
       driver,
+      computedCache,
       settings: {
         blockedUrlPatterns: ['http://*.evil.com', '.jpg', '.woff2'],
       },
@@ -632,6 +647,7 @@ describe('GatherRunner', function() {
   it('does not throw when blockedUrlPatterns is not given', async () => {
     await GatherRunner.setupPassNetwork({
       driver,
+      computedCache,
       settings: {},
       passConfig: {gatherers: []},
     });
@@ -685,12 +701,11 @@ describe('GatherRunner', function() {
   it('tells the driver to end tracing', () => {
     const url = 'https://example.com';
     let calledTrace = false;
-    const fakeTraceData = {traceEvents: ['reallyBelievableTraceEvents']};
 
     const driver = Object.assign({}, fakeDriver, {
       endTrace() {
         calledTrace = true;
-        return Promise.resolve(fakeTraceData);
+        return Promise.resolve(traceData);
       },
     });
 
@@ -701,9 +716,9 @@ describe('GatherRunner', function() {
       ],
     };
 
-    return GatherRunner.endRecording({url, driver, passConfig}).then(passData => {
+    return GatherRunner.endRecording({url, computedCache, driver, passConfig}).then(passData => {
       assert.equal(calledTrace, true);
-      assert.equal(passData.trace, fakeTraceData);
+      assert.equal(passData.trace, traceData);
     });
   });
 
@@ -810,6 +825,7 @@ describe('GatherRunner', function() {
 
     return GatherRunner.run(config.passes, {
       driver: fakeDriver,
+      computedCache,
       requestedUrl: 'https://example.com',
       settings: config.settings,
     }).then(_ => {
@@ -832,6 +848,7 @@ describe('GatherRunner', function() {
     });
     const options = {
       driver: fakeDriver,
+      computedCache,
       requestedUrl: 'https://example.com',
       settings: config.settings,
     };
@@ -861,7 +878,7 @@ describe('GatherRunner', function() {
         gatherers: [{instance: new TestGatherer()}],
       }],
     });
-    const options = {driver, requestedUrl, settings: config.settings};
+    const options = {driver, computedCache, requestedUrl, settings: config.settings};
     const artifacts = await GatherRunner.run(config.passes, options);
 
     expect(artifacts.PageLoadError).toMatchObject({code: 'NO_DOCUMENT_REQUEST'});
@@ -908,7 +925,7 @@ describe('GatherRunner', function() {
       },
       online: true,
     });
-    const options = {driver, requestedUrl, settings: config.settings};
+    const options = {driver, computedCache, requestedUrl, settings: config.settings};
     const artifacts = await GatherRunner.run(config.passes, options);
 
     // t1.pass() and t2.pass() called; t3.pass(), after the error, was not.
@@ -1654,6 +1671,7 @@ describe('GatherRunner', function() {
       });
 
       return GatherRunner.run(config.passes, {
+        computedCache,
         driver: unresolvedDriver,
         requestedUrl,
         settings: config.settings,
@@ -1682,6 +1700,7 @@ describe('GatherRunner', function() {
       });
 
       return GatherRunner.run(config.passes, {
+        computedCache,
         driver: timedoutDriver,
         requestedUrl,
         settings: config.settings,
@@ -1714,6 +1733,7 @@ describe('GatherRunner', function() {
       });
 
       return GatherRunner.run(config.passes, {
+        computedCache,
         driver: unresolvedDriver,
         requestedUrl,
         settings: config.settings,

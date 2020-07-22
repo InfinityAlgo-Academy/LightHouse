@@ -85,7 +85,7 @@ function makeFakeDriver({protocolGetVersionResponse}) {
     endTrace() {
       // Minimal indirection so TypeScript doesn't crash trying to infer a type.
       const modulePath = '../fixtures/traces/progressive-app.json';
-      return Promise.resolve(require(modulePath));
+      return Promise.resolve({traceEvents: require(modulePath)});
     },
     beginDevtoolsLog() {},
     endDevtoolsLog() {
