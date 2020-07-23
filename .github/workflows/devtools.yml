@@ -26,7 +26,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 10.x
-    
+
+    -run: apt-get install apache2
+
     - name: Set $BLINK_TOOLS_PATH
       run: echo ::set-env name=BLINK_TOOLS_PATH::/home/runner/blink_tools
     - name: Set $DEVTOOLS_PATH
