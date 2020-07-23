@@ -6,14 +6,6 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LH_ROOT="$SCRIPT_DIR/../../.."
 
-ls "$LH_ROOT/.test_cache"
-ls "$LH_ROOT/.test_cache/791019"
-ls "$LH_ROOT/.test_cache/791019/out"
-ls "$LH_ROOT/.test_cache/791019/out/Release"
-ls "$LH_ROOT/.test_cache/791019/out/Release/content_shell"
-
-tree "$LH_ROOT/.test_cache/791019/out"
-
 if [ x"$BLINK_TOOLS_PATH" == x ]; then
   echo "Error: Environment variable BLINK_TOOLS_PATH not set"
   exit 1
@@ -24,10 +16,15 @@ if [ x"$DEVTOOLS_PATH" == x ]; then
   exit 1
 fi
 
+unset -v latest_content_shell
+for file in "$LH_ROOT/.test_cache"/*/; do
+  [[ $file -nt $latest_content_shell ]] && latest_content_shell=$file
+done
+
 # Add typ to python path. The regular method assumes there is a chromium checkout.
 # See https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink/tools/blinkpy/common/path_finder.py;l=35;drc=61e88d0e7fa9217a8f5395edd0e03b1c1991257c
 PYTHONPATH="${PYTHONPATH}:$BLINK_TOOLS_PATH/third_party/typ" python \
   "$BLINK_TOOLS_PATH/third_party/blink/tools/run_web_tests.py" \
   --layout-tests-directory="$DEVTOOLS_PATH/test/webtests" \
-  --build-directory="$LH_ROOT/.test_cache/791019/out" \
+  --build-directory="$latest_content_shell/out" \
   http/tests/devtools/lighthouse
