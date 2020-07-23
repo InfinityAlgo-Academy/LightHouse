@@ -4,6 +4,12 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LH_ROOT="$SCRIPT_DIR/../../.."
 
+echo "$LH_ROOT/.test_cache"
+echo "$LH_ROOT/.test_cache/791019"
+echo "$LH_ROOT/.test_cache/791019/out"
+echo "$LH_ROOT/.test_cache/791019/out/Release"
+echo "$LH_ROOT/.test_cache/791019/out/Release/content_shell"
+
 if [ x"$BLINK_TOOLS_PATH" == x ]; then
   echo "Error: Environment variable BLINK_TOOLS_PATH not set"
   exit 1
