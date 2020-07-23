@@ -13,11 +13,14 @@ jobs:
     steps:
     - name: git clone
       uses: actions/checkout@v2
+      with:
+        path: lighthouse
 
-    # - uses: actions/checkout@v2
-    #   with:
-    #     name: ChromeDevTools/devtools-frontend
-    #     ref: refs/heads/master
+    - uses: actions/checkout@v2
+      with:
+        path: devtools-frontend
+        repository: ChromeDevTools/devtools-frontend
+        ref: refs/heads/master
 
     - name: Use Node.js 10.x
       uses: actions/setup-node@v1
