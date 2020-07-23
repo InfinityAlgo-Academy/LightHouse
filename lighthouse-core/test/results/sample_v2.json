@@ -470,21 +470,12 @@
                 }
               }
             }
-          },
-          "75994.33": {
-            "request": {
-              "url": "http://localhost:10200/favicon.ico",
-              "startTime": 185608.288594,
-              "endTime": 185608.857719,
-              "responseReceivedTime": 185608.85586200003,
-              "transferSize": 221
-            }
           }
         },
         "longestChain": {
-          "duration": 5536.498000001302,
-          "length": 1,
-          "transferSize": 221
+          "duration": 4796.288000012282,
+          "length": 2,
+          "transferSize": 30174
         }
       }
     },

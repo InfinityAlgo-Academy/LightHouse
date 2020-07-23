@@ -8,6 +8,7 @@
 /* eslint-env jest */
 
 const CriticalRequestChains = require('../../audits/critical-request-chains.js');
+const redditDevtoolsLog = require('../fixtures/artifacts/perflog/defaultPass.devtoolslog.json');
 const assert = require('assert').strict;
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
@@ -94,6 +95,19 @@ describe('Performance: critical-request-chains audit', () => {
       assert.equal(output.details.longestChain.duration, 1000);
       assert.equal(output.displayValue, '');
       assert.equal(output.score, 1);
+    });
+  });
+
+  it('calculates the correct chain result for a real trace', () => {
+    const artifacts = {
+      devtoolsLogs: {defaultPass: redditDevtoolsLog},
+      URL: {finalUrl: 'https://www.reddit.com/r/nba'},
+    };
+    const context = {computedCache: new Map()};
+    return CriticalRequestChains.audit(artifacts, context).then(output => {
+      expect(output.details.longestChain.duration).toBeCloseTo(656.491);
+      expect(output.details.longestChain.transferSize).toEqual(2468);
+      expect(output).toHaveProperty('score', 0);
     });
   });
 
