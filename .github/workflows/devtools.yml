@@ -12,7 +12,7 @@ jobs:
 
     steps:
     - name: Set $BLINK_TOOLS_PATH
-      run: echo ::set-env name=BLINK_TOOLS_PATH::/home/runner/blink_tools
+      run: echo ::set-env name=BLINK_TOOLS_PATH::$HOME/blink_tools
     - name: Set $DEVTOOLS_PATH
       run: echo ::set-env name=DEVTOOLS_PATH::$GITHUB_WORKSPACE/devtools-frontend
 
