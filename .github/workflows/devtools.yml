@@ -26,11 +26,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 10.x
-    
-    - run: ls
-    - run: ls $GITHUB_WORKSPACE
-    - run: ls $GITHUB_WORKSPACE/lighthouse-core/scripts
-    - run: ls $GITHUB_WORKSPACE/lighthouse-core/scripts/chromium-web-tests
 
     - name: Download Blink Tools
       run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/chromium-web-tests/download-blink-tools.sh
@@ -41,7 +36,7 @@ jobs:
       run: node $GITHUB_WORKSPACE/lighthouse-core/scripts/chromium-web-tests/download-content-shell.js
     
     - name: Run Web Tests
-      run: node $GITHUB_WORKSPACE/lighthouse-core/scripts/chromium-web-tests/run-web-tests.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/chromium-web-tests/run-web-tests.sh
       env:
         BLINK_TOOLS_PATH: /home/runner/blink_tools
     
