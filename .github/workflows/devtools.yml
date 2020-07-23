@@ -39,5 +39,4 @@ jobs:
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/run-web-tests.sh
       env:
         BLINK_TOOLS_PATH: /home/runner/blink_tools
-    
-    - run: node $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/devtools-smoke-test.js
+        DEVTOOLS_PATH: $GITHUB_WORKSPACE/devtools-frontend
