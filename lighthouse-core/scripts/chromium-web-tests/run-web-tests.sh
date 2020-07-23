@@ -9,6 +9,7 @@ LH_ROOT="$SCRIPT_DIR/../../.."
 echo "$LH_ROOT/.test_cache"
 echo "$LH_ROOT/.test_cache/791019"
 echo "$LH_ROOT/.test_cache/791019/out"
+echo "tree $LH_ROOT/.test_cache/791019/out"
 echo "$LH_ROOT/.test_cache/791019/out/Release"
 echo "$LH_ROOT/.test_cache/791019/out/Release/content_shell"
 
