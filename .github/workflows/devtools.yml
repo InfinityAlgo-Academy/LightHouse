@@ -24,6 +24,11 @@ jobs:
       with:
         node-version: 10.x
     
+    - run: ls
+    - run: ls $GITHUB_WORKSPACE
+    - run: ls $GITHUB_WORKSPACE/lighthouse-core/scripts
+    - run: ls $GITHUB_WORKSPACE/lighthouse-core/scripts/chromium-web-tests
+
     - name: Download Blink Tools
       run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/chromium-web-tests/download-blink-tools.sh
       env:
