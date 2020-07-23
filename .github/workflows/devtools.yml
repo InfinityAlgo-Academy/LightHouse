@@ -16,7 +16,9 @@ jobs:
     steps:
     - name: git clone
       uses: actions/checkout@v2
-    
+      with:
+        ref: refs/heads/master
+
     - uses: actions/checkout@master
       with:
         name: ChromeDevTools/devtools-frontend
@@ -28,15 +30,15 @@ jobs:
         node-version: 10.x
     
     - name: Download Blink Tools
-      run: bash lighthouse-core/chromium-web-tests/download-blink-tools.sh
+      run: bash lighthouse-core/scripts/chromium-web-tests/download-blink-tools.sh
       env:
         BLINK_TOOLS_PATH: /home/runner/blink_tools
     
     - name: Download Content Shell
-      run: node lighthouse-core/chromium-web-tests/download-content-shell.js
+      run: node lighthouse-core/scripts/chromium-web-tests/download-content-shell.js
     
     - name: Run Web Tests
-      run: node lighthouse-core/chromium-web-tests/run-web-tests.sh
+      run: node lighthouse-core/scripts/chromium-web-tests/run-web-tests.sh
       env:
         BLINK_TOOLS_PATH: /home/runner/blink_tools
     
