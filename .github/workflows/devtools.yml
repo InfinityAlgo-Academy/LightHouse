@@ -34,6 +34,8 @@ jobs:
 
     # - run: sudo apt-get install apache2 php libapache2-mod-php
 
+    - run: less /etc/apache2/httpd.conf
+
     - name: Download Blink Tools
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/download-blink-tools.sh
 
