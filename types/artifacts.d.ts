@@ -686,16 +686,9 @@ declare global {
 
       export interface Form {
         /** If attributes is missing that means this is a formless set of elements. */
-        attributes?: { id: string, name: string, autocomplete: string };
-        inputs: { id: string; nodeName: string; name: string; placeholder: string; autocomplete: string; }[];
-        labels: { id: string; nodeName: string; for: string; }[];
-      }
-
-      /** Attributes collected for each form element from the form interface. */
-      export interface FormAttributeType {
-        id: string;
-        name: string;
-        autocomplete: string;
+        attributes?: { id: string, name: string, autocomplete: string, devtoolsNodePath: string, };
+        inputs: { id: string; nodeName: string; name: string; placeholder: string; autocomplete: string; devtoolsNodePath: string;}[];
+        labels: { id: string; nodeName: string; for: string; devtoolsNodePath: string;}[];
       }
 
       /** Attributes collected for every input element in the inputs array from the forms interface. */
@@ -703,8 +696,9 @@ declare global {
         id: string;
         nodeName: string;
         name: string;
-        placeholder: string|null;
+        placeholder: string;
         autocomplete: string;
+        devtoolsNodePath: string;
       }
 
       /** Attributes collected for every label element in the labels array from the forms interface */
@@ -712,6 +706,7 @@ declare global {
         id: string;
         nodeName: string;
         for: string;
+        devtoolsNodePath: string;
       }
 
     }
