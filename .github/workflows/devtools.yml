@@ -1,0 +1,43 @@
+# https://chromium.googlesource.com/chromium/src/+archive/master/third_party/blink/tools.tar.gz
+
+name: DevTools
+
+on:
+  # push:
+  #   branches: [master]
+  # pull_request: # run on all PRs, not just PRs to a particular branch
+  push:
+
+jobs:
+  smoke-devtools:
+    runs-on: ubuntu-latest
+    name: smoke_devtools
+
+    steps:
+    - name: git clone
+      uses: actions/checkout@v2
+    
+    - uses: actions/checkout@master
+      with:
+        name: ChromeDevTools/devtools-frontend
+        ref: refs/heads/master
+
+    - name: Use Node.js 10.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.x
+    
+    - name: Download Blink Tools
+      run: bash lighthouse-core/chromium-web-tests/download-blink-tools.sh
+      env:
+        BLINK_TOOLS_PATH: /home/runner/blink_tools
+    
+    - name: Download Content Shell
+      run: node lighthouse-core/chromium-web-tests/download-content-shell.js
+    
+    - name: Run Web Tests
+      run: node lighthouse-core/chromium-web-tests/run-web-tests.sh
+      env:
+        BLINK_TOOLS_PATH: /home/runner/blink_tools
+    
+    - run: node lighthouse-core/scripts/devtools-smoke-test.js
