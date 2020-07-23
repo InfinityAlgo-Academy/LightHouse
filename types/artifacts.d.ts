@@ -84,8 +84,6 @@ declare global {
       ViewportDimensions: Artifacts.ViewportDimensions;
       /** All the form elements in the page and formless inputs. */
       Forms: Artifacts.Form[];
-      /** Attributes of a particular form. */
-      FormAttributes: Artifacts.FormAttributeType;
       /** Attributes of an input element. */
       FormInputs: Artifacts.FormInputsType;
       /** Attributes of a label element */
