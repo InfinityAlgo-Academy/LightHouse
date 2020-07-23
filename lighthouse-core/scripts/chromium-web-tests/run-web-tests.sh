@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # BLINK_TOOLS_PATH=~/tmp/blink_tools bash lighthouse-core/scripts/chromium-web-tests/download-blink-tools.sh
 # BLINK_TOOLS_PATH=~/tmp/blink_tools DEVTOOLS_PATH=~/src/devtools/devtools-frontend bash lighthouse-core/scripts/chromium-web-tests/run-web-tests.sh
 
