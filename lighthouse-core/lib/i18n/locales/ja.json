@@ -1761,7 +1761,7 @@
     "message": "最初のビューポートの外側で自動的に遅延読み込みされる画像に対し、有効な `amp-img` タグを使用していることを確認します。[詳細](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)"
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "[AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) などのツールを使用して、[AMP レイアウトをサーバーサイドでレンダリング](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)します。"
+    "message": "[AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer) などのツールを使用して、[AMP レイアウトをサーバーサイドでレンダリング](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)します。"
   },
   "stack-packs/packs/amp.js | unminified_css": {
     "message": "[AMP のドキュメント](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/)で、使用しているスタイルがすべてサポートされているか確認します。"

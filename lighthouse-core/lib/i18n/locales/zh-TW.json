@@ -1761,7 +1761,7 @@
     "message": "請確認你的圖片具備有效的 `amp-img` 標記，可以讓圖片在首要可視區域外自動延遲載入。[瞭解詳情](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)。"
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "使用 [AMP 最佳化工具](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer)或類似工具，在[伺服器端轉譯 AMP 版面配置](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)。"
+    "message": "使用 [AMP 最佳化工具](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer)或類似工具，在[伺服器端轉譯 AMP 版面配置](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)。"
   },
   "stack-packs/packs/amp.js | unminified_css": {
     "message": "請參閱 [AMP 說明文件](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/)，確保你的所有樣式都受到支援。"

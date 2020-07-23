@@ -322,6 +322,24 @@ function getNodeLabel(node) {
 }
 
 /**
+ * @param {HTMLElement} element
+ * @param {LH.Artifacts.Rect}
+ */
+/* istanbul ignore next */
+function getBoundingClientRect(element) {
+  // The protocol does not serialize getters, so extract the values explicitly.
+  const rect = element.getBoundingClientRect();
+  return {
+    top: Math.round(rect.top),
+    bottom: Math.round(rect.bottom),
+    left: Math.round(rect.left),
+    right: Math.round(rect.right),
+    width: Math.round(rect.width),
+    height: Math.round(rect.height),
+  };
+}
+
+/*
  * RequestIdleCallback shim that calculates the remaining deadline time in order to avoid a potential lighthouse
  * penalty for tests run with simulated throttling. Reduces the deadline time to (50 - safetyAllowance) / cpuSlowdownMultiplier to
  * ensure a long task is very unlikely if using the API correctly.
@@ -370,4 +388,5 @@ module.exports = {
   getNodeLabelString: getNodeLabel.toString(),
   isPositionFixedString: isPositionFixed.toString(),
   wrapRequestIdleCallbackString: wrapRequestIdleCallback.toString(),
+  getBoundingClientRectString: getBoundingClientRect.toString(),
 };

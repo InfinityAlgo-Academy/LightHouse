@@ -1761,7 +1761,7 @@
     "message": "첫 표시 영역의 외부에서 자동으로 지연 로드하는 이미지에 유효한 `amp-img` 태그를 사용하는지 확인하세요. [자세히 알아보기](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)"
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "[AMP 최적화 도구](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer)와 같은 도구를 사용하여 [서버 측에서 AMP 레이아웃을 렌더링](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)합니다."
+    "message": "[AMP 최적화 도구](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer)와 같은 도구를 사용하여 [서버 측에서 AMP 레이아웃을 렌더링](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)합니다."
   },
   "stack-packs/packs/amp.js | unminified_css": {
     "message": "[AMP 도움말](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/)을 참조하여 모든 스타일이 지원되는지 확인하세요."

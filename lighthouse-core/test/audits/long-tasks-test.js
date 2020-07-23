@@ -50,7 +50,7 @@ function generateTraceWithLongTasks({count, duration = 200, withChildTasks = fal
   }
   return createTestTrace({
     topLevelTasks: traceTasks,
-    navigationStart: BASE_TS,
+    timeOrigin: BASE_TS,
   });
 }
 
@@ -88,7 +88,7 @@ describe('Long tasks audit', () => {
 
   it('should filter out tasks with duration less than 50 ms', async () => {
     const trace = createTestTrace({
-      navigationStart: BASE_TS,
+      timeOrigin: BASE_TS,
       topLevelTasks: [
         {ts: BASE_TS, duration: 1},
         {ts: BASE_TS + 1000, duration: 30},

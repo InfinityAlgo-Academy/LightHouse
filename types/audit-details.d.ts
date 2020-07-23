@@ -13,6 +13,7 @@ declare global {
       Details.List |
       Details.Opportunity |
       Details.Screenshot |
+      Details.FullPageScreenshot |
       Details.Table;
 
     // Details namespace.
@@ -59,6 +60,17 @@ declare global {
         timing: number;
         timestamp: number;
         data: string;
+      }
+
+      /**
+       * A screenshot of the entire page, including width and height information.
+       * Used for element screenshots.
+       */
+      export interface FullPageScreenshot {
+        type: 'full-page-screenshot';
+        data: string;
+        width: number;
+        height: number;
       }
 
       export interface Table {
@@ -193,6 +205,7 @@ declare global {
         type: 'node';
         path?: string;
         selector?: string;
+        boundingRect?: Artifacts.Rect;
         /** An HTML snippet used to identify the node. */
         snippet?: string;
         /** A human-friendly text descriptor that's used to identify the node more quickly. */

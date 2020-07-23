@@ -167,6 +167,28 @@ class BaseNode {
   }
 
   /**
+   * Computes whether the given node is anywhere in the dependency graph of this node.
+   * While this method can prevent cycles, it walks the graph and should be used sparingly.
+   * Nodes are always considered dependent on themselves for the purposes of cycle detection.
+   * @param {BaseNode} node
+   * @return {boolean}
+   */
+  isDependentOn(node) {
+    let isDependentOnNode = false;
+    this.traverse(currentNode => {
+      if (isDependentOnNode) return;
+      isDependentOnNode = currentNode === node;
+    }, currentNode => {
+      // If we've already found the dependency, don't traverse further.
+      if (isDependentOnNode) return [];
+      // Otherwise, traverse the dependencies.
+      return currentNode.getDependencies();
+    });
+
+    return isDependentOnNode;
+  }
+
+  /**
    * Clones the node's information without adding any dependencies/dependents.
    * @return {Node}
    */

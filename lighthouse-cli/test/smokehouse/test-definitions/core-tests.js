@@ -78,6 +78,10 @@ const smokeTests = [{
   id: 'forms',
   expectations: require('./forms/form-expectations.js'),
   config: require('./forms/form-config.js'),
+}, {
+  id: 'screenshot',
+  expectations: require('./screenshot/expectations.js'),
+  config: require('./screenshot/screenshot-config.js'),
 }];
 
 module.exports = smokeTests;

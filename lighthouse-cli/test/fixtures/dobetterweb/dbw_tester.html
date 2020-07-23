@@ -383,6 +383,12 @@ function isOnHttps() {
   document.body.appendChild(img); // PASS
 }
 
+function noUnloadListenersTest() {
+  window.addEventListener('unload', () => {
+    console.log('unload on unload');
+  });
+}
+
 // Figure out which tests to fun.
 const params = new URLSearchParams(location.search);
 if (location.search === '') {
@@ -398,6 +404,7 @@ if (location.search === '') {
   deprecationsTest();
   passwordInputsCanBePastedIntoTest();
   isOnHttps();
+  noUnloadListenersTest();
 } else {
   if (params.has('documentWrite')) {
     documentWriteTest();

@@ -1761,7 +1761,7 @@
     "message": "Ügyeljen arra, hogy érvényes `amp-img` címkéket használjon azoknál a képeknél, amelyek betöltése automatikusan késleltetve történik meg az első megjelenítési területen kívül. [További információ](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "Ha [szerveroldalon jeleníti meg az AMP-elrendezéseket](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/), használhat olyan eszközöket, mint az [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer)."
+    "message": "Ha [szerveroldalon jeleníti meg az AMP-elrendezéseket](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/), használhat olyan eszközöket, mint az [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer)."
   },
   "stack-packs/packs/amp.js | unminified_css": {
     "message": "Nézzen utána az [AMP dokumentációjában](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) annak, hogy az Ön által használt összes stílus támogatott-e."
