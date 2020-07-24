@@ -64,13 +64,13 @@ Trace-of-tab identifies trace events for key moments (navigation start, first me
   processEvents: [/* all trace events in the main process */],
   mainThreadEvents: [/* all trace events on the main thread */],
   timings: {
-    navigationStart: 0,
-    firstPaint: 150, // firstPaint time in ms after nav start
+    timeOrigin: 0, // timeOrigin is always 0 ms
+    firstPaint: 150, // firstPaint time in ms after time origin
     /* other key moments */
-    traceEnd: 16420, // traceEnd time in ms after nav start
+    traceEnd: 16420, // traceEnd time in ms after time origin
   },
   timestamps: {
-    navigationStart: 623000000, // navigationStart timestamp in microseconds
+    timeOrigin: 623000000, // timeOrigin timestamp in microseconds, marks the start of the navigation of interest
     firstPaint: 623150000, // firstPaint timestamp in microseconds
     /* other key moments */
     traceEnd: 639420000, // traceEnd timestamp in microseconds

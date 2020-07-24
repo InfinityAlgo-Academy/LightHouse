@@ -93,7 +93,7 @@ describe('TraceOfTabComputed', () => {
         pid: 44277,
         tid: 775,
       },
-      navigationStartEvt: {
+      timeOriginEvt: {
         args: {
           frame: '0x25a638821e30',
         },
@@ -112,7 +112,7 @@ describe('TraceOfTabComputed', () => {
         firstMeaningfulPaint: 225414955343,
         firstPaint: 225414670868,
         load: 225416370913,
-        navigationStart: 225414172015,
+        timeOrigin: 225414172015,
         traceEnd: 225426711887,
       },
       timings: {
@@ -121,7 +121,7 @@ describe('TraceOfTabComputed', () => {
         firstMeaningfulPaint: 783.328,
         firstPaint: 498.853,
         load: 2198.898,
-        navigationStart: 0,
+        timeOrigin: 0,
         traceEnd: 12539.872,
       },
     });

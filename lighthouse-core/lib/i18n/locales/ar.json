@@ -1761,7 +1761,7 @@
     "message": "تأكّد من استخدامك لعلامات `amp-img` الصالحة لصورك التي يتم تحميلها في وضع خامل تلقائيًا خارج إطار العرض الأول. [مزيد من المعلومات](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)"
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "استخدِم الأدوات، مثل [مُحسِّن AMP](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) في [تنسيقات AMP للعرض من جانب الخادم](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+    "message": "استخدِم الأدوات، مثل [مُحسِّن AMP](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer) في [تنسيقات AMP للعرض من جانب الخادم](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
   },
   "stack-packs/packs/amp.js | unminified_css": {
     "message": "يُرجى الرجوع إلى [مستندات AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) للتأكد من توفُّر جميع الأنماط."

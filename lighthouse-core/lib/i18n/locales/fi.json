@@ -1761,7 +1761,7 @@
     "message": "Varmista, että käytät kuviin oikeanlaisia `amp-img`-tageja, jotka lykkäävät lataamista automaattisesti ensinäkymän ulkopuolella. [Lue lisää](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "Käytä [AMP-optimoijaa](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) ja muita työkaluja [AMP-asettelujen palvelinpuolen renderöintiin](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+    "message": "Käytä [AMP-optimoijaa](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer) ja muita työkaluja [AMP-asettelujen palvelinpuolen renderöintiin](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
   },
   "stack-packs/packs/amp.js | unminified_css": {
     "message": "Lue [AMP-dokumentaatio](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) ja varmista, että kaikkia tyylejäsi tuetaan."

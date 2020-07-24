@@ -48,6 +48,7 @@ const UIStrings = {
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
+// TODO: add more comments to talk about where the documentation for these attributes come from?
 /** @type {string[]} */
 const validAutocompleteAttributeNames = ['name', 'honorific-prefix', 'given-name',
   'additional-name', 'family-name', 'honorific-suffix', 'nickname', 'username', 'new-password',

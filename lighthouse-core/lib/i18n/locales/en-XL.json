@@ -959,6 +959,15 @@
   "lighthouse-core/audits/network-server-latency.js | title": {
     "message": "Ŝér̂v́êŕ B̂áĉḱêńd̂ Ĺât́êńĉíêś"
   },
+  "lighthouse-core/audits/no-unload-listeners.js | description": {
+    "message": "T̂h́ê `unload` év̂én̂t́ d̂óêś n̂ót̂ f́îŕê ŕêĺîáb̂ĺŷ án̂d́ l̂íŝt́êńîńĝ f́ôŕ ît́ ĉán̂ ṕr̂év̂én̂t́ b̂ŕôẃŝér̂ óp̂t́îḿîźât́îón̂ś l̂ík̂é t̂h́ê B́âćk̂-F́ôŕŵár̂d́ Ĉáĉh́ê. Ćôńŝíd̂ér̂ úŝín̂ǵ t̂h́ê `pagehide` ór̂ `visibilitychange` év̂én̂t́ŝ ín̂śt̂éâd́. [L̂éâŕn̂ Ḿôŕê](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
+  },
+  "lighthouse-core/audits/no-unload-listeners.js | failureTitle": {
+    "message": "R̂éĝíŝt́êŕŝ án̂ `unload` ĺîśt̂én̂ér̂"
+  },
+  "lighthouse-core/audits/no-unload-listeners.js | title": {
+    "message": "Âv́ôíd̂ś `unload` êv́êńt̂ ĺîśt̂én̂ér̂ś"
+  },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Â śêŕv̂íĉé ŵór̂ḱêŕ êńâb́l̂éŝ ýôúr̂ ẃêb́ âṕp̂ t́ô b́ê ŕêĺîáb̂ĺê ín̂ ún̂ṕr̂éd̂íĉt́âb́l̂é n̂ét̂ẃôŕk̂ ćôńd̂ít̂íôńŝ. [Ĺêár̂ń m̂ór̂é](https://web.dev/offline-start-url/)."
   },
@@ -1797,7 +1806,7 @@
     "message": "Êńŝúr̂é t̂h́ât́ ŷóû ár̂é ŷóû úŝín̂ǵ v̂ál̂íd̂ `amp-img` t́âǵŝ f́ôŕ ŷóûŕ îḿâǵêś ŵh́îćĥ áût́ôḿât́îćâĺl̂ý l̂áẑý-l̂óâd́ ôút̂śîd́ê t́ĥé f̂ír̂śt̂ v́îéŵṕôŕt̂. [Ĺêár̂ń m̂ór̂é](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "Ûśê t́ôól̂ś ŝúĉh́ âś [ÂḾP̂ Óp̂t́îḿîźêŕ](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) t̂ó [ŝér̂v́êŕ-ŝíd̂é r̂én̂d́êŕ ÂḾP̂ ĺâýôút̂ś](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+    "message": "Ûśê t́ôól̂ś ŝúĉh́ âś [ÂḾP̂ Óp̂t́îḿîźêŕ](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer) t̂ó [ŝér̂v́êŕ-ŝíd̂é r̂én̂d́êŕ ÂḾP̂ ĺâýôút̂ś](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
   },
   "stack-packs/packs/amp.js | unminified_css": {
     "message": "R̂éf̂ér̂ t́ô t́ĥé [ÂḾP̂ d́ôćûḿêńt̂át̂íôń](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) t̂ó êńŝúr̂é âĺl̂ ýôúr̂ śt̂ýl̂éŝ ár̂é ŝúp̂ṕôŕt̂éd̂."

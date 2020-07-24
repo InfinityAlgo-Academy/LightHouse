@@ -1761,7 +1761,7 @@
     "message": "İlk görüntü alanının dışında otomatik olarak geç yüklenen görüntüleriniz için geçerli `amp-img` etiketleri kullandığınızdan emin olun. [Daha fazla bilgi](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "[Sunucu tarafı oluşturucu AMP düzenleri](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/) için [AMP Optimize Edici](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) gibi araçları kullanın."
+    "message": "[Sunucu tarafı oluşturucu AMP düzenleri](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/) için [AMP Optimize Edici](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer) gibi araçları kullanın."
   },
   "stack-packs/packs/amp.js | unminified_css": {
     "message": "Tüm stillerinizin desteklendiğinden emin olmak için [AMP belgelerine](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) bakın."

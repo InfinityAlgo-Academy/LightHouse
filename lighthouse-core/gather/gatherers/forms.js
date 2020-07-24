@@ -10,170 +10,92 @@ const pageFunctions = require('../../lib/page-functions.js');
 
 /* eslint-env browser, node */
 
-
-/**
- *  @param {HTMLFormElement} formElement
- *  @return { { id: any; nodeName: any; name: any; placeholder: any; autocomplete: any; }[] }
- */
-/* istanbul ignore next */
-function getChildrenInputs(formElement) {
-  /** @type {{ id: any; nodeName: any; name: any; placeholder: any; autocomplete: any; }[]} */
-  const inputsArray = [];
-  const childrenArray = Array.prototype.slice.call(formElement.childNodes);
-
-  for (const element of childrenArray) {
-    if (element.nodeName === 'INPUT' || element.nodeName === 'SELECT'
-    || element.nodeName === 'TEXTAREA') {
-      /** @type { { id: any; nodeName: any; name: any; placeholder: any; autocomplete: any;} } */
-      const inputAttributes = {
-        id: element.id,
-        nodeName: element.nodeName,
-        name: element.name,
-        placeholder: element.placeholder,
-        autocomplete: element.autocomplete,
-      };
-      inputsArray.push(inputAttributes);
-    }
-  }
-
-  return inputsArray;
-}
-
-/**
- *  @param {HTMLFormElement} formElement
- *  @return { { id: any; nodeName: any; name: any; for: any; }[] }
- */
-/* istanbul ignore next */
-function getChildrenLabels(formElement) {
-  /** @type {{ id: any; nodeName: any; name: any; for: any; }[]} */
-  const labelsArray = [];
-
-  const childrenArray = Array.prototype.slice.call(formElement.childNodes);
-  for (const element of childrenArray) {
-    if (element.nodeName === 'LABEL') {
-      /** @type { {id: any; nodeName: any; name: any; for: any;} } */
-      const labelAttributes = {
-        id: element.id,
-        nodeName: element.nodeName,
-        name: element.name,
-        for: element.for,
-      };
-      labelsArray.push(labelAttributes);
-    }
-  }
-
-  return labelsArray;
-}
-
-/**
- * @param {HTMLElement[]} formChildren
- * @return { { inputs: { id: any; nodeName: any; name: any; placeholder: any; autocomplete: any; }[], labels: { id: any; nodeName: any; name: any; for: any; }[] } }
- */
-/* istanbul ignore next */
-function getFormlessElements(formChildren) {
-  /** @type { { inputs: { id: any; nodeName: any; name: any; placeholder: any; autocomplete: any; }[], labels: { id: any; nodeName: any; name: any; for: any; }[] } } */
-  const formless = {
-    inputs: [],
-    labels: [],
-  };
-
-  for (const childElement of formChildren) {
-    if (childElement instanceof HTMLInputElement || childElement instanceof HTMLTextAreaElement
-      || childElement instanceof HTMLLabelElement || childElement instanceof HTMLSelectElement) {
-      if (childElement.form ) continue;
-    }
-
-    if (childElement instanceof HTMLInputElement || childElement instanceof HTMLTextAreaElement ) {
-      const inputAttributes = {
-        id: childElement.id,
-        nodeName: childElement.nodeName,
-        name: childElement.name,
-        placeholder: childElement.placeholder,
-        autocomplete: childElement.autocomplete,
-      };
-      formless.inputs.push(inputAttributes);
-    } else if (childElement instanceof HTMLSelectElement ) {
-      const selectAttributes = {
-        id: childElement.id,
-        nodeName: childElement.nodeName,
-        name: childElement.name,
-        placeholder: childElement.getAttribute('placeholder'),
-        autocomplete: childElement.autocomplete,
-      };
-      formless.inputs.push(selectAttributes);
-    } else if (childElement instanceof HTMLLabelElement) {
-      const labelAttributes = {
-        id: childElement.id,
-        nodeName: childElement.nodeName,
-        name: childElement.getAttribute('name'),
-        for: childElement.htmlFor,
-      };
-      formless.labels.push(labelAttributes);
-    }
-  }
-
-  return formless;
-}
-
-
 /**
  * @return {LH.Artifacts['Forms']}
  */
 /* istanbul ignore next */
 function collectFormElements() {
   // @ts-ignore - put into scope via stringification
-  const formElements = getElementsInDocument('form'); // eslint-disable-line no-undef
-  // @ts-ignore - put into scope via stringification
-  const inputs = getElementsInDocument('input'); // eslint-disable-line no-undef
-  // @ts-ignore - put into scope via stringification
-  const labels = getElementsInDocument('labels'); // eslint-disable-line no-undef
-  // @ts-ignore - put into scope via stringification
-  const textareas = getElementsInDocument('textarea'); // eslint-disable-line no-undef
-  // @ts-ignore - put into scope via stringification
-  const selects = getElementsInDocument('select'); // eslint-disable-line no-undef
+  const formChildren = getElementsInDocument('textarea, input, label, select'); // eslint-disable-line no-undef
+  const forms = new Map();
+  /** @type { { inputs: LH.Artifacts['FormInputs'][], labels: LH.Artifacts['FormLabels'][] }  } */
+  const formlessObj = {
+    inputs: [],
+    labels: [],
+  };
+  for (const child of formChildren) {
+    const hasForm = child.closest('form');
+    if (hasForm && !forms.has(hasForm)) {
+      const newFormObj = {
+        attributes: {
+          id: hasForm.id,
+          name: hasForm.name,
+          autocomplete: hasForm.autocomplete,
+          // @ts-ignore - put into scope via stringification
+          devtoolsNodePath: getNodePath(hasForm), // eslint-disable-line no-undef
+        },
+        inputs: [],
+        labels: [],
+      };
+      forms.set(hasForm, newFormObj);
+    }
+    const formObj = hasForm ? forms.get(hasForm) : formlessObj;
 
-  const formChildren = inputs.concat(labels, textareas, selects);
-  const formless = getFormlessElements(formChildren);
-
-  const forms = formElements.map(/** @param {HTMLFormElement} formElement */ (formElement) => {
-    const attributes = {
-      id: formElement.id,
-      name: formElement.name,
-      autocomplete: formElement.autocomplete,
-    };
-
-    return {
-      attributes: attributes,
-      inputs: getChildrenInputs(formElement),
-      labels: getChildrenLabels(formElement),
-    };
-  });
-
-  if (formless.inputs.length > 0 || formless.labels.length > 0) {
-    forms.push(formless);
+    if (child instanceof HTMLInputElement || child instanceof HTMLTextAreaElement) {
+      if (child.type !== 'submit' && child.type !== 'button') {
+        formObj.inputs.push({
+          id: child.id,
+          nodeName: child.nodeName,
+          name: child.name,
+          placeholder: child.placeholder,
+          autocomplete: child.autocomplete,
+          // @ts-ignore - put into scope via stringification
+          devtoolsNodePath: getNodePath(child), // eslint-disable-line no-undef
+        });
+      }
+    }
+    if (child instanceof HTMLSelectElement) {
+      formObj.inputs.push({
+        id: child.id,
+        nodeName: child.nodeName,
+        name: child.name,
+        autocomplete: child.autocomplete,
+        // @ts-ignore - put into scope via stringification
+        devtoolsNodePath: getNodePath(child), // eslint-disable-line no-undef
+      });
+    }
+    if (child instanceof HTMLLabelElement) {
+      formObj.labels.push({
+        id: child.id,
+        nodeName: child.nodeName,
+        for: child.htmlFor,
+        // @ts-ignore - put into scope via stringification
+        devtoolsNodePath: getNodePath(child), // eslint-disable-line no-undef
+      });
+    }
   }
-  return forms;
+
+  if (formlessObj.inputs.length > 0 || formlessObj.labels.length > 0) {
+    forms.set('formless', {
+      inputs: formlessObj.inputs,
+      labels: formlessObj.labels,
+    });
+  }
+  return [...forms.values()];
 }
 
 class Forms extends Gatherer {
   /**
    * @param {LH.Gatherer.PassContext} passContext
    * @return {Promise<LH.Artifacts['Forms']>}
-   * @override
    */
   async afterPass(passContext) {
     const driver = passContext.driver;
 
     const expression = `(() => {
-      ${getChildrenInputs.toString()};
-      ${getChildrenLabels.toString()};
-      ${getFormlessElements.toString()};
-      ${pageFunctions.getOuterHTMLSnippetString};
       ${pageFunctions.getElementsInDocumentString};
-      ${pageFunctions.isPositionFixedString};
       ${pageFunctions.getNodePathString};
       return (${collectFormElements})();
-
     })()`;
 
     /** @type {LH.Artifacts['Forms']} */

@@ -1761,7 +1761,7 @@
     "message": "‏‮Ensure‬‏ ‏‮that‬‏ ‏‮you‬‏ ‏‮are‬‏ ‏‮you‬‏ ‏‮using‬‏ ‏‮valid‬‏ `amp-img` ‏‮tags‬‏ ‏‮for‬‏ ‏‮your‬‏ ‏‮images‬‏ ‏‮which‬‏ ‏‮automatically‬‏ ‏‮lazy‬‏-‏‮load‬‏ ‏‮outside‬‏ ‏‮the‬‏ ‏‮first‬‏ ‏‮viewport‬‏. [‏‮Learn‬‏ ‏‮more‬‏](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "‏‮Use‬‏ ‏‮tools‬‏ ‏‮such‬‏ ‏‮as‬‏ [‏‮AMP‬‏ ‏‮Optimizer‬‏](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) ‏‮to‬‏ [‏‮server‬‏-‏‮side‬‏ ‏‮render‬‏ ‏‮AMP‬‏ ‏‮layouts‬‏](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+    "message": "‏‮Use‬‏ ‏‮tools‬‏ ‏‮such‬‏ ‏‮as‬‏ [‏‮AMP‬‏ ‏‮Optimizer‬‏](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer) ‏‮to‬‏ [‏‮server‬‏-‏‮side‬‏ ‏‮render‬‏ ‏‮AMP‬‏ ‏‮layouts‬‏](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
   },
   "stack-packs/packs/amp.js | unminified_css": {
     "message": "‏‮Refer‬‏ ‏‮to‬‏ ‏‮the‬‏ [‏‮AMP‬‏ ‏‮documentation‬‏](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) ‏‮to‬‏ ‏‮ensure‬‏ ‏‮all‬‏ ‏‮your‬‏ ‏‮styles‬‏ ‏‮are‬‏ ‏‮supported‬‏."

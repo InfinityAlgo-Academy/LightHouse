@@ -1761,7 +1761,7 @@
     "message": "Đảm bảo rằng bạn đang sử dụng thẻ `amp-img` hợp lệ cho những hình ảnh tự động tải từng phần bên ngoài khung nhìn đầu tiên. [Tìm hiểu thêm](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "Sử dụng các công cụ như [Trình tối ưu hóa AMP](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) để [hiển thị các bố cục AMP ở phía máy chủ](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+    "message": "Sử dụng các công cụ như [Trình tối ưu hóa AMP](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer) để [hiển thị các bố cục AMP ở phía máy chủ](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
   },
   "stack-packs/packs/amp.js | unminified_css": {
     "message": "Tham khảo [tài liệu về AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) để đảm bảo tất cả các kiểu của bạn đều được hỗ trợ."

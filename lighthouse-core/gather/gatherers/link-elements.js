@@ -5,11 +5,16 @@
  */
 'use strict';
 
-const Gatherer = require('./gatherer.js');
-const URL = require('../../lib/url-shim.js').URL;
-const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
 const LinkHeader = require('http-link-header');
-const {getElementsInDocumentString} = require('../../lib/page-functions.js');
+const Gatherer = require('./gatherer.js');
+const {URL} = require('../../lib/url-shim.js');
+const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
+const {
+  getElementsInDocumentString,
+  getNodePathString,
+  getNodeSelectorString,
+  getNodeLabelString,
+} = require('../../lib/page-functions.js');
 
 /* globals HTMLLinkElement */
 
@@ -59,14 +64,27 @@ function getLinkElementsInDOM() {
     // https://github.com/GoogleChrome/lighthouse/issues/9764
     if (!(link instanceof HTMLLinkElement)) continue;
 
+    // @ts-ignore - put into scope via stringification
+    const nodePath = getNodePath(link); // eslint-disable-line no-undef
+    // @ts-ignore - getNodeSelector put into scope via stringification
+    const selector = getNodeSelector(link); // eslint-disable-line no-undef
+    // @ts-ignore - getNodeLabel put into scope via stringification
+    const nodeLabel = getNodeLabel(link); // eslint-disable-line no-undef
+
+    const hrefRaw = link.getAttribute('href') || '';
+    const source = link.closest('head') ? 'head' : 'body';
+
     linkElements.push({
       rel: link.rel,
       href: link.href,
-      hrefRaw: link.getAttribute('href') || '',
       hreflang: link.hreflang,
       as: link.as,
       crossOrigin: link.crossOrigin,
-      source: link.closest('head') ? 'head' : 'body',
+      devtoolsNodePath: nodePath,
+      hrefRaw,
+      source,
+      selector,
+      nodeLabel,
     });
   }
 
@@ -84,6 +102,9 @@ class LinkElements extends Gatherer {
     return passContext.driver.evaluateAsync(`(() => {
       ${getElementsInDocumentString};
       ${getLinkElementsInDOM};
+      ${getNodePathString};
+      ${getNodeSelectorString};
+      ${getNodeLabelString};
 
       return getLinkElementsInDOM();
     })()`, {useIsolation: true});

@@ -1761,7 +1761,7 @@
     "message": "ตรวจสอบให้แน่ใจว่าคุณกำลังใช้แท็ก `amp-img` ที่ถูกต้องสำหรับรูปภาพที่มีการโหลดแบบ Lazy Loading โดยอัตโนมัตินอกวิวพอร์ตแรก [ดูข้อมูลเพิ่มเติม](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)"
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "ใช้เครื่องมือ เช่น [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) เพื่อ[แสดงเลย์เอาต์ AMP ฝั่งเซิร์ฟเวอร์](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)"
+    "message": "ใช้เครื่องมือ เช่น [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer) เพื่อ[แสดงเลย์เอาต์ AMP ฝั่งเซิร์ฟเวอร์](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)"
   },
   "stack-packs/packs/amp.js | unminified_css": {
     "message": "ดู[เอกสาร AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) เพื่อให้แน่ใจว่าระบบรองรับรูปแบบทั้งหมด"

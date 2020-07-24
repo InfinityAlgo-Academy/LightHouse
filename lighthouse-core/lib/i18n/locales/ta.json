@@ -1761,7 +1761,7 @@
     "message": "தானாகவே முதல் காட்சிப் பகுதிக்கு வெளியே மெதுவாக ஏற்றும் வகையிலான சரியான `amp-img` குறியிடல்களைப் படங்களுக்குப் பயன்படுத்துவதை உறுதிப்படுத்திக்கொள்ளவும். [மேலும் அறிக](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "[AMP மேம்படுத்துதல் அம்சம்](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) முதல் [சேவையகத் தரப்பு ரெண்டரிங் AMP தளவமைப்புகள்](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/) போன்ற அம்சங்களைப் பயன்படுத்தவும்."
+    "message": "[AMP மேம்படுத்துதல் அம்சம்](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer) முதல் [சேவையகத் தரப்பு ரெண்டரிங் AMP தளவமைப்புகள்](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/) போன்ற அம்சங்களைப் பயன்படுத்தவும்."
   },
   "stack-packs/packs/amp.js | unminified_css": {
     "message": "அனைத்து ஸ்டைல்களும் ஆதரிக்கப்படுவதை உறுதிப்படுத்த [AMP ஆவணமாக்கத்தைப்](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) பார்க்கவும்."

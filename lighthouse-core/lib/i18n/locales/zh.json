@@ -1761,7 +1761,7 @@
     "message": "确保您对图片使用了有效的 `amp-img` 标记，以便在第一个视口外自动延迟加载。[了解详情](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)。"
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "使用 [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) 之类的工具[在服务器端呈现 AMP 布局](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)。"
+    "message": "使用 [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer) 之类的工具[在服务器端呈现 AMP 布局](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)。"
   },
   "stack-packs/packs/amp.js | unminified_css": {
     "message": "请参阅 [AMP 文档](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/)以确保您的所有样式均受支持。"

@@ -1761,7 +1761,7 @@
     "message": "Zaistite používanie platných značiek `amp-img` pre obrázky, ktoré automaticky oneskorene načítavajú mimo prvej oblasti zobrazenia. [Ďalšie informácie](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)"
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "Na [serverové vykresľovanie rozložení AMP](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/) používajte nástroje, ako je [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer)."
+    "message": "Na [serverové vykresľovanie rozložení AMP](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/) používajte nástroje, ako je [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer)."
   },
   "stack-packs/packs/amp.js | unminified_css": {
     "message": "Ak chcete zaistiť, aby všetky použité štýly boli podporované, prečítajte si [dokumentáciu pre stránky AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/)."

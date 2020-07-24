@@ -18,6 +18,7 @@ const {
   allRectsContainedWithinEachOther,
   getLargestRect,
   getBoundingRectWithPadding,
+  getBoundingRect,
 } = require('../../lib/rect-helpers.js');
 const {getTappableRectsFromClientRects} = require('../../lib/tappable-rects.js');
 const i18n = require('../../lib/i18n/i18n.js');
@@ -244,11 +245,14 @@ function getTableItems(overlapFailures) {
  * @returns {LH.Audit.Details.NodeValue}
  */
 function targetToTableNode(target) {
+  const boundingRect = getBoundingRect(target.clientRects);
+
   return {
     type: 'node',
     snippet: target.snippet,
     path: target.path,
     selector: target.selector,
+    boundingRect,
     nodeLabel: target.nodeLabel,
   };
 }

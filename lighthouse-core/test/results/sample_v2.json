@@ -1382,6 +1382,8 @@
             "totalBlockingTime": 117,
             "maxPotentialFID": 123,
             "cumulativeLayoutShift": 0.42,
+            "observedTimeOrigin": 0,
+            "observedTimeOriginTs": 185603319912,
             "observedNavigationStart": 0,
             "observedNavigationStartTs": 185603319912,
             "observedFirstPaint": 3969,
@@ -1855,6 +1857,34 @@
         ]
       }
     },
+    "no-unload-listeners": {
+      "id": "no-unload-listeners",
+      "title": "Registers an `unload` listener",
+      "description": "The `unload` event does not fire reliably and listening for it can prevent browser optimizations like the Back-Forward Cache. Consider using the `pagehide` or `visibilitychange` events instead. [Learn More](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)",
+      "score": 0,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "source",
+            "itemType": "source-location",
+            "text": "URL"
+          }
+        ],
+        "items": [
+          {
+            "source": {
+              "type": "source-location",
+              "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 386,
+              "column": 36
+            }
+          }
+        ]
+      }
+    },
     "pwa-cross-browser": {
       "id": "pwa-cross-browser",
       "title": "Site works cross-browser",
@@ -2026,6 +2056,14 @@
               "selector": "h2",
               "path": "3,HTML,1,BODY,5,DIV,0,H2",
               "snippet": "<h2>Do better web tester page</h2>",
+              "boundingRect": {
+                "width": 396,
+                "height": 28,
+                "top": 335,
+                "right": 404,
+                "bottom": 363,
+                "left": 8
+              },
               "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 18.0pt, font weight: bold). Expected contrast ratio of 3:1",
               "nodeLabel": "Do better web tester page"
             }
@@ -2036,6 +2074,14 @@
               "selector": "span",
               "path": "3,HTML,1,BODY,5,DIV,1,SPAN",
               "snippet": "<span>Hi there!</span>",
+              "boundingRect": {
+                "width": 57,
+                "height": 18,
+                "top": 383,
+                "right": 65,
+                "bottom": 401,
+                "left": 8
+              },
               "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 12.0pt, font weight: normal). Expected contrast ratio of 4.5:1",
               "nodeLabel": "Hi there!"
             }
@@ -2150,6 +2196,14 @@
               "selector": "html",
               "path": "3,HTML",
               "snippet": "<html manifest=\"clock.appcache\">",
+              "boundingRect": {
+                "width": 412,
+                "height": 1442,
+                "top": 0,
+                "right": 412,
+                "bottom": 1442,
+                "left": 0
+              },
               "explanation": "Fix any of the following:\n  The <html> element does not have a lang attribute",
               "nodeLabel": "html"
             }
@@ -2195,6 +2249,14 @@
               "selector": "img[height=\"\\35 7\"]",
               "path": "3,HTML,1,BODY,10,IMG",
               "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"57\">",
+              "boundingRect": {
+                "width": 480,
+                "height": 57,
+                "top": 419,
+                "right": 488,
+                "bottom": 476,
+                "left": 8
+              },
               "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "img"
             }
@@ -2205,6 +2267,14 @@
               "selector": "img[height=\"\\33 18\"]",
               "path": "3,HTML,1,BODY,12,IMG",
               "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"318\">",
+              "boundingRect": {
+                "width": 480,
+                "height": 318,
+                "top": 480,
+                "right": 488,
+                "bottom": 798,
+                "left": 8
+              },
               "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "img"
             }
@@ -2215,6 +2285,14 @@
               "selector": "img[src$=\"lighthouse-rotating\\.gif\"]",
               "path": "3,HTML,1,BODY,14,IMG",
               "snippet": "<img src=\"lighthouse-rotating.gif\" width=\"811\" height=\"462\">",
+              "boundingRect": {
+                "width": 811,
+                "height": 462,
+                "top": 802,
+                "right": 819,
+                "bottom": 1264,
+                "left": 8
+              },
               "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "img"
             }
@@ -2224,7 +2302,15 @@
               "type": "node",
               "selector": "img:nth-child(30)",
               "path": "3,HTML,1,BODY,53,IMG",
-              "snippet": "<img src=\"blob:http://localhost:62824/289254fd-ef1d-4c1a-96a8-ba291caa2140\">",
+              "snippet": "<img src=\"blob:http://localhost:54759/41e77cc6-8eb2-49d5-a819-7edf852531be\">",
+              "boundingRect": {
+                "width": 16,
+                "height": 16,
+                "top": 1413,
+                "right": 294,
+                "bottom": 1429,
+                "left": 278
+              },
               "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "img"
             }
@@ -2272,6 +2358,14 @@
               "selector": "input[onpaste=\"event\\.preventDefault\\(\\)\\;\"]",
               "path": "3,HTML,1,BODY,48,INPUT",
               "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">",
+              "boundingRect": {
+                "width": 131,
+                "height": 19,
+                "top": 1394,
+                "right": 323,
+                "bottom": 1413,
+                "left": 192
+              },
               "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
               "nodeLabel": "input"
             }
@@ -2282,6 +2376,14 @@
               "selector": "input:nth-child(28)",
               "path": "3,HTML,1,BODY,50,INPUT",
               "snippet": "<input type=\"password\">",
+              "boundingRect": {
+                "width": 131,
+                "height": 19,
+                "top": 1415.8125,
+                "right": 139,
+                "bottom": 1434.8125,
+                "left": 8
+              },
               "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
               "nodeLabel": "input"
             }
@@ -2292,6 +2394,14 @@
               "selector": "input[onpaste=\"return\\ false\\;\"]",
               "path": "3,HTML,1,BODY,52,INPUT",
               "snippet": "<input type=\"password\" onpaste=\"return false;\">",
+              "boundingRect": {
+                "width": 131,
+                "height": 19,
+                "top": 1415,
+                "right": 274,
+                "bottom": 1434,
+                "left": 143
+              },
               "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
               "nodeLabel": "input"
             }
@@ -2424,6 +2534,14 @@
               "selector": "#\\35 934a",
               "path": "3,HTML,1,BODY,2,OBJECT",
               "snippet": "<object id=\"5934a\"></object>",
+              "boundingRect": {
+                "width": 300,
+                "height": 150,
+                "top": 8,
+                "right": 308,
+                "bottom": 158,
+                "left": 8
+              },
               "explanation": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "object"
             }
@@ -2434,6 +2552,14 @@
               "selector": "#\\35 934b",
               "path": "3,HTML,1,BODY,3,OBJECT",
               "snippet": "<object id=\"5934b\"></object>",
+              "boundingRect": {
+                "width": 300,
+                "height": 150,
+                "top": 162,
+                "right": 308,
+                "bottom": 312,
+                "left": 8
+              },
               "explanation": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "object"
             }
@@ -3784,6 +3910,14 @@
               "snippet": "<button class=\"small-button\">Do something</button>",
               "path": "3,HTML,1,BODY,17,BUTTON",
               "selector": "body > button.small-button",
+              "boundingRect": {
+                "left": 8,
+                "right": 208,
+                "top": 1268.8125,
+                "bottom": 1286.8125,
+                "width": 200,
+                "height": 18
+              },
               "nodeLabel": "Do something"
             },
             "overlappingTarget": {
@@ -3791,6 +3925,14 @@
               "snippet": "<button class=\"small-button\">Do something else</button>",
               "path": "3,HTML,1,BODY,18,BUTTON",
               "selector": "body > button.small-button",
+              "boundingRect": {
+                "left": 8,
+                "right": 208,
+                "top": 1286.8125,
+                "bottom": 1304.8125,
+                "width": 200,
+                "height": 18
+              },
               "nodeLabel": "Do something else"
             },
             "tapTargetScore": 864,
@@ -4544,6 +4686,11 @@
           "group": "best-practices-browser-compat"
         },
         {
+          "id": "no-unload-listeners",
+          "weight": 1,
+          "group": "best-practices-general"
+        },
+        {
           "id": "appcache-manifest",
           "weight": 1,
           "group": "best-practices-general"
@@ -4565,7 +4712,7 @@
         }
       ],
       "id": "best-practices",
-      "score": 0.08
+      "score": 0.07
     },
     "seo": {
       "title": "SEO",
@@ -5357,6 +5504,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:long-tasks",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:no-unload-listeners",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6221,6 +6374,7 @@
         "audits[network-rtt].details.headings[0].text",
         "audits[network-server-latency].details.headings[0].text",
         "audits[long-tasks].details.headings[0].text",
+        "audits[no-unload-listeners].details.headings[0].text",
         "audits[uses-long-cache-ttl].details.headings[0].text",
         "audits[total-byte-weight].details.headings[0].text",
         "audits[render-blocking-resources].details.headings[0].label",
@@ -6628,6 +6782,12 @@
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnDuration": [
         "audits[long-tasks].details.headings[2].text"
+      ],
+      "lighthouse-core/audits/no-unload-listeners.js | failureTitle": [
+        "audits[no-unload-listeners].title"
+      ],
+      "lighthouse-core/audits/no-unload-listeners.js | description": [
+        "audits[no-unload-listeners].description"
       ],
       "lighthouse-core/audits/manual/pwa-cross-browser.js | title": [
         "audits[pwa-cross-browser].title"

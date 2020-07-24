@@ -1761,7 +1761,7 @@
     "message": "Uverite se da koristite važeće oznake`amp-img` za slike koje se automatski odloženo učitavaju van prve oblasti prikaza. [Saznajte više](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "Koristite alatke kao što je [AMP optimizator](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) da biste [prikazivali AMP rasporede na serveru](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+    "message": "Koristite alatke kao što je [AMP optimizator](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer) da biste [prikazivali AMP rasporede na serveru](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
   },
   "stack-packs/packs/amp.js | unminified_css": {
     "message": "Pogledajte [AMP dokumentaciju](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) da biste se uverili da su svi stilovi podržani."

@@ -22,7 +22,7 @@ const expectations = [
       }, {
         id: 'wordpress',
       }],
-      MainDocumentContent: /^<!doctype html>.*DoBetterWeb Mega Tester.*aggressive-promise-polyfill.*<\/html>\n$/s,
+      MainDocumentContent: /^<!doctype html>.*DoBetterWeb Mega Tester.*aggressive-promise-polyfill.*<\/html>[\r\n]*$/s,
       LinkElements: [
         {
           rel: 'stylesheet',
@@ -197,6 +197,12 @@ const expectations = [
           },
         },
       ],
+      GlobalListeners: [{
+        type: 'unload',
+        scriptId: /^\d+$/,
+        lineNumber: '>300',
+        columnNumber: '>30',
+      }],
     },
     lhr: {
       requestedUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
@@ -411,6 +417,20 @@ const expectations = [
                 element: {value: '<div id="shadow-root-container">'},
               },
             ],
+          },
+        },
+        'no-unload-listeners': {
+          score: 0,
+          details: {
+            items: [{
+              source: {
+                type: 'source-location',
+                url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+                urlProvider: 'network',
+                line: '>300',
+                column: '>30',
+              },
+            }],
           },
         },
       },

@@ -1761,7 +1761,7 @@
     "message": "Проверете дали използвате валидни маркери `amp-img` за изображенията си, което автоматично води до отложено зареждане извън първия прозоречен изглед. [Научете повече](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "Използвайте инструменти като [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer), за да [рендерирате оформления за AMP върху сървъра](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+    "message": "Използвайте инструменти като [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer), за да [рендерирате оформления за AMP върху сървъра](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
   },
   "stack-packs/packs/amp.js | unminified_css": {
     "message": "Разгледайте [документацията на AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/), за да се уверите, че всичките ви стилове се поддържат."
