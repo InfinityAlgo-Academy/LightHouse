@@ -30,5 +30,10 @@ else
   wget "https://chromium.googlesource.com/catapult/+archive/$commit_catapult/third_party/typ.tar.gz" --no-check-certificate -q -O blinktools.tar.gz && tar -xf blinktools.tar.gz -C "$BLINK_TOOLS_PATH/third_party/typ"
 
   cd "$BLINK_TOOLS_PATH"
+  git init
+  echo "*.pyc" > .gitignore
+  git add .
+  git commit -m baseline
   patch -p1 < "$SCRIPT_DIR/blink-tools.patch"
+  echo "if you want to make changes, run 'git diff' in $BLINK_TOOLS_PATH to create a patchfile"
 fi
