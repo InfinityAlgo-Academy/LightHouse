@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# BLINK_TOOLS_PATH=~/tmp/blink_tools bash lighthouse-core/scripts/chromium-web-tests/download-blink-tools.sh
-# BLINK_TOOLS_PATH=~/tmp/blink_tools DEVTOOLS_PATH=~/src/devtools/devtools-frontend bash lighthouse-core/scripts/chromium-web-tests/run-web-tests.sh
-
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LH_ROOT="$SCRIPT_DIR/../../.."
 
@@ -20,6 +17,24 @@ unset -v latest_content_shell
 for file in "$LH_ROOT/.test_cache"/*/; do
   [[ $file -nt $latest_content_shell ]] && latest_content_shell=$file
 done
+
+# Run a very basic server on port 8000. Only thing we need is:
+#   - /devtools -> the layout tests for devtools frontend
+#   - /inspector-sources -> the inspector resources from the content shell
+#   - CORS (Access-Control-Allow-Origin header)
+
+# Setup inspector-sources
+ln -s "$latest_content_shell/out/Release/resources/inspector" "$DEVTOOLS_PATH/test/webtests/inspector-sources"
+
+# Kill background jobs when script ends.
+cleanup() {
+  rm "$DEVTOOLS_PATH/test/webtests/inspector-sources"
+  kill 0
+}
+trap 'cleanup' EXIT
+
+# Serve from devtools frontend webtests folder.
+(npx http-server "$DEVTOOLS_PATH/test/webtests/http/tests" -p 8000 --cors > /dev/null 2>&1) &
 
 # Add typ to python path. The regular method assumes there is a chromium checkout.
 # See https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink/tools/blinkpy/common/path_finder.py;l=35;drc=61e88d0e7fa9217a8f5395edd0e03b1c1991257c

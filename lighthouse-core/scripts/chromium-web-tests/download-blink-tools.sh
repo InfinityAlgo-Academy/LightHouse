@@ -35,5 +35,4 @@ else
   git add .
   git commit -m baseline
   patch -p1 < "$SCRIPT_DIR/blink-tools.patch"
-  echo "if you want to make changes, run 'git diff' in $BLINK_TOOLS_PATH to create a patchfile"
 fi
