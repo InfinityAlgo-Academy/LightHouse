@@ -39,8 +39,19 @@ trap 'cleanup' EXIT
 
 sleep 5
 
+echo "==============="
 ls "$DEVTOOLS_PATH/test/webtests/http/tests"
-curl 'http://127.0.0.1:8000/devtools/lighthouse/lighthouse-view-trace-run.js'
+
+echo "=============== $latest_content_shell/out/Release/resources/inspector"
+ls "$latest_content_shell/out/Release/resources/inspector"
+
+echo "=============== $latest_content_shell/out/Release/resources"
+ls "$latest_content_shell/out/Release/resources"
+
+echo "=============== $latest_content_shell/"
+ls "$latest_content_shell/"
+
+# curl 'http://127.0.0.1:8000/devtools/lighthouse/lighthouse-view-trace-run.js'
 curl 'http://localhost:8000/inspector-sources/integration_test_runner.html?experiments=true&test=http://127.0.0.1:8000/devtools/lighthouse/lighthouse-view-trace-run.js'
 
 sleep 30
