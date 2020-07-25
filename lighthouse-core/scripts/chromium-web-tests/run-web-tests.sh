@@ -37,12 +37,13 @@ trap 'cleanup' EXIT
 (npx http-server "$DEVTOOLS_PATH/test/webtests/http/tests" -p 8000 --cors > /dev/null 2>&1) &
 # (npx http-server "$DEVTOOLS_PATH/test/webtests/http/tests" -p 8000 --cors) &
 
-echo "==============="
-ls "$DEVTOOLS_PATH/test/webtests/http/tests"
-
-# curl 'http://127.0.0.1:8000/devtools/lighthouse/lighthouse-view-trace-run.js'
-sleep 2
-curl 'http://localhost:8000/inspector-sources/integration_test_runner.html?experiments=true&test=http://127.0.0.1:8000/devtools/lighthouse/lighthouse-view-trace-run.js'
+echo "Waiting for server"
+health_check_url='http://localhost:8000/inspector-sources/integration_test_runner.html?experiments=true&test=http://127.0.0.1:8000/devtools/lighthouse/lighthouse-view-trace-run.js'
+until $(curl --output /dev/null --silent --head --fail $health_check_url); do
+  printf '.'
+  sleep 1
+done
+echo "Server is up"
 
 # Add typ to python path. The regular method assumes there is a chromium checkout.
 # See https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink/tools/blinkpy/common/path_finder.py;l=35;drc=61e88d0e7fa9217a8f5395edd0e03b1c1991257c
