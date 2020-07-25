@@ -41,7 +41,7 @@ echo "==============="
 ls "$DEVTOOLS_PATH/test/webtests/http/tests"
 
 # curl 'http://127.0.0.1:8000/devtools/lighthouse/lighthouse-view-trace-run.js'
-sleep 1
+sleep 2
 curl 'http://localhost:8000/inspector-sources/integration_test_runner.html?experiments=true&test=http://127.0.0.1:8000/devtools/lighthouse/lighthouse-view-trace-run.js'
 
 # Add typ to python path. The regular method assumes there is a chromium checkout.
