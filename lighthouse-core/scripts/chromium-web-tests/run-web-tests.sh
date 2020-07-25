@@ -37,6 +37,8 @@ trap 'cleanup' EXIT
 # (npx http-server "$DEVTOOLS_PATH/test/webtests/http/tests" -p 8000 --cors > /dev/null 2>&1) &
 (npx http-server "$DEVTOOLS_PATH/test/webtests/http/tests" -p 8000 --cors) &
 
+sleep 5
+
 ls "$DEVTOOLS_PATH/test/webtests/http/tests"
 curl 'http://127.0.0.1:8000/devtools/lighthouse/lighthouse-view-trace-run.js'
 curl 'http://localhost:8000/inspector-sources/integration_test_runner.html?experiments=true&test=http://127.0.0.1:8000/devtools/lighthouse/lighthouse-view-trace-run.js'
