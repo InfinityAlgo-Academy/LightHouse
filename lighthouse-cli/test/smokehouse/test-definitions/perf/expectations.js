@@ -156,6 +156,68 @@ module.exports = [
     },
   },
   {
+    artifacts: {
+      TraceElements: [
+        {
+          traceEventType: 'largest-contentful-paint',
+          selector: 'body > div#late-content > img',
+          nodeLabel: 'img',
+          snippet: '<img src="../dobetterweb/lighthouse-480x318.jpg">',
+          boundingRect: {
+            top: 108,
+            bottom: 426,
+            left: 8,
+            right: 488,
+            width: 480,
+            height: 318,
+          },
+        },
+        {
+          traceEventType: 'layout-shift',
+          selector: 'body > h1',
+          nodeLabel: 'Please don\'t move me',
+          snippet: '<h1>',
+          boundingRect: {
+            top: 465,
+            bottom: 502,
+            left: 8,
+            right: 352,
+            width: 344,
+            height: 37,
+          },
+          score: '0.058 +/- 0.01',
+        },
+        {
+          traceEventType: 'layout-shift',
+          selector: 'body > div#late-content > div',
+          nodeLabel: 'Sorry!',
+          snippet: '<div style="height: 18px;">',
+          boundingRect: {
+            top: 426,
+            bottom: 444,
+            left: 8,
+            right: 352,
+            width: 344,
+            height: 18,
+          },
+          score: '0.026 +/- 0.01',
+        },
+        {
+          traceEventType: 'animation',
+          selector: 'body > div#animate-me',
+          nodeLabel: 'div',
+          snippet: '<div id="animate-me">',
+          boundingRect: {
+            top: 8,
+            bottom: 108,
+            left: 8,
+            right: 108,
+            width: 100,
+            height: 100,
+          },
+        },
+      ],
+    },
     lhr: {
       requestedUrl: 'http://localhost:10200/perf/trace-elements.html',
       finalUrl: 'http://localhost:10200/perf/trace-elements.html',
