@@ -90,7 +90,7 @@ class AutocompleteAudit extends Audit {
             type: 'node',
             path: input.devtoolsNodePath,
             snippet: input.snippet,
-            nodeLabel: input.nodeName,
+            nodeLabel: input.nodeLabel,
           }),
         });
       }
@@ -103,7 +103,7 @@ class AutocompleteAudit extends Audit {
             type: 'node',
             path: input.devtoolsNodePath,
             snippet: input.snippet,
-            nodeLabel: input.nodeName,
+            nodeLabel: input.nodeLabel,
           }),
         });
       }
