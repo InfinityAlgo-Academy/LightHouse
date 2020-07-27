@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{1 kahilingan ang hindi naihatid sa pamamagitan ng HTTP/2}one{# kahilingan ang hindi naihatid sa pamamagitan ng HTTP/2}other{# na kahilingan ang hindi naihatid sa pamamagitan ng HTTP/2}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "Hindi gumagamit ng HTTP/2 para sa lahat ng resource nito"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "Hindi gumagamit ng HTTP/2 para sa mga sarili nitong resource"
   },

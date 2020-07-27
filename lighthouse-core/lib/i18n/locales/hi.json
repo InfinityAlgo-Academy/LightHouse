@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{1 अनुरोध HTTP/2 से सर्व नहीं किया गया}one{# अनुरोध HTTP/2 से सर्व नहीं किए गए}other{# अनुरोध HTTP/2 से सर्व नहीं किए गए}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "अपने सभी संसाधनों के लिए HTTP/2 का इस्तेमाल नहीं करता"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "अपने संसाधन के लिए HTTP/2 का इस्तेमाल किया जाता है"
   },

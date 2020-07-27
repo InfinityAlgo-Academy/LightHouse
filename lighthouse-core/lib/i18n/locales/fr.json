@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{1 requête non traitée via le protocole HTTP/2}one{# requête non traitée via le protocole HTTP/2}other{# requêtes non traitées via le protocole HTTP/2}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "La page n'utilise pas le protocole HTTP/2 pour toutes ses ressources"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "La page utilise le protocole HTTP/2 pour ses propres ressources"
   },

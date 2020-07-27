@@ -898,6 +898,11 @@ Object {
         },
         Object {
           "group": "load-opportunities",
+          "id": "uses-http2",
+          "weight": 0,
+        },
+        Object {
+          "group": "load-opportunities",
           "id": "efficient-animated-content",
           "weight": 0,
         },
@@ -979,11 +984,6 @@ Object {
         Object {
           "group": "diagnostics",
           "id": "layout-shift-elements",
-          "weight": 0,
-        },
-        Object {
-          "group": "diagnostics",
-          "id": "uses-http2",
           "weight": 0,
         },
         Object {

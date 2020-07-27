@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{1 запрос не передан через HTTP/2}one{# запрос не передан через HTTP/2}few{# запроса не передано через HTTP/2}many{# запросов не передано через HTTP/2}other{# запроса не передано через HTTP/2}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "Не использует протокол HTTP/2 для всех ресурсов"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "Протокол HTTP/2 используется для собственных ресурсов"
   },

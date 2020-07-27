@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{1 запит не розміщено через протокол HTTP/2}one{# запит не розміщено через протокол HTTP/2}few{# запити не розміщено через протокол HTTP/2}many{# запитів не розміщено через протокол HTTP/2}other{# запиту не розміщено через протокол HTTP/2}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "Не використовує протокол HTTP/2 для всіх ресурсів"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "Використовує протокол HTTP/2 для власних ресурсів"
   },

@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{בקשה אחת לא מולאה דרך HTTP/2}two{# בקשות לא מולאו דרך HTTP/2}many{# בקשות לא מולאו דרך HTTP/2}other{# בקשות לא מולאו דרך HTTP/2}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "לא נעשה שימוש ב-HTTP/2 עבור כל משאבי הדף"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "נעשה שימוש ב-HTTP/2 עבור משאבי הדף"
   },

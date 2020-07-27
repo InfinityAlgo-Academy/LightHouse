@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{1 užklausa nepateikta naudojant HTTP/2}one{# užklausa nepateikta naudojant HTTP/2}few{# užklausos nepateiktos naudojant HTTP/2}many{# užklausos nepateikta naudojant HTTP/2}other{# užklausų nepateikta naudojant HTTP/2}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "Nenaudojamas HTTP/2 visuose šaltiniuose"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "Naudojamas HTTP/2 puslapio šaltiniuose"
   },

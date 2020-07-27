@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{1 zahteva ni bila poslana prek HTTP/2}one{# zahteva ni bila poslana prek HTTP/2}two{# zahtevi nista bili poslani prek HTTP/2}few{# zahteve niso bile poslane prek HTTP/2}other{# zahtev ni bilo poslanih prek HTTP/2}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "Ne uporablja HTTP/2 za vsa svoja sredstva"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "Uporablja HTTP/2 za svoja sredstva"
   },

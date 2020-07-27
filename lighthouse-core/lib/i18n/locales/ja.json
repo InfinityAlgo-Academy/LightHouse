@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{HTTP/2 経由で配信されなかったリクエストが 1 件あります}other{HTTP/2 経由で配信されなかったリクエストが # 件あります}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "ページリソースの一部で HTTP/2 が使用されていません"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "ページ独自のリソースで HTTP/2 が使用されています"
   },

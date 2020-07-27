@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{1 αίτημα δεν εξυπηρετήθηκε μεσω HTTP/2}other{# αιτήματα δεν εξυπηρετήθηκαν μέσω HTTP/2}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "Δεν χρησιμοποιεί HTTP/2 για όλους τους πόρους της"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "Χρησιμοποιεί HTTP/2 για τους πόρους της"
   },

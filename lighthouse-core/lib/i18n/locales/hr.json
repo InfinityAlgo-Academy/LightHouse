@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{Jedan zahtjev koji nije poslužen protokolom HTTP/2}one{Broj zahtjeva koji nisu posluženi protokolom HTTP/2: #}few{Broj zahtjeva koji nisu posluženi protokolom HTTP/2: #}other{Broj zahtjeva koji nisu posluženi protokolom HTTP/2: #}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "Ne upotrebljava HTTP/2 za sve svoje resurse"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "Upotrebljava HTTP/2 za svoje resurse"
   },

@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{1 条请求未通过 HTTP/2 传送}other{# 条请求未通过 HTTP/2 传送}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "没有对所有网页资源使用 HTTP/2"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "对其自身资源使用了 HTTP/2"
   },

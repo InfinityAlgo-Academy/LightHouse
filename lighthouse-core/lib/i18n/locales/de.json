@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{Ressourcen für 1 Anfrage nicht über HTTP/2 bereitgestellt}other{Ressourcen für # Anfragen nicht über HTTP/2 bereitgestellt}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "Verwendet HTTP/2 nicht für alle Ressourcen"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "Verwendet HTTP/2 für eigene Ressourcen"
   },

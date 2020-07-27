@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{1 żądanie nieprzesłane przez HTTP/2}few{# żądania nieprzesłane przez HTTP/2}many{# żądań nieprzesłanych przez HTTP/2}other{# żądania nieprzesłanego przez HTTP/2}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "Nie używa HTTP/2 dla wszystkich swoich zasobów"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "Używa HTTP/2 dla własnych zasobów"
   },

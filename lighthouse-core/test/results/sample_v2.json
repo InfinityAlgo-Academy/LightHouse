@@ -3622,23 +3622,25 @@
     },
     "uses-http2": {
       "id": "uses-http2",
-      "title": "Does not use HTTP/2 for all of its resources",
+      "title": "Use HTTP/2",
       "description": "HTTP/2 offers many benefits over HTTP/1.1, including binary headers, multiplexing, and server push. [Learn more](https://web.dev/uses-http2/).",
-      "score": 0,
+      "score": 0.41,
       "scoreDisplayMode": "binary",
+      "numericValue": 1550,
+      "numericUnit": "millisecond",
       "displayValue": "15 requests not served via HTTP/2",
       "details": {
-        "type": "table",
+        "type": "opportunity",
         "headings": [
           {
             "key": "url",
-            "itemType": "url",
-            "text": "URL"
+            "valueType": "url",
+            "label": "URL"
           },
           {
             "key": "protocol",
-            "itemType": "text",
-            "text": "Protocol"
+            "valueType": "text",
+            "label": "Protocol"
           }
         ],
         "items": [
@@ -3702,7 +3704,8 @@
             "protocol": "http/1.1",
             "url": "http://localhost:10200/favicon.ico"
           }
-        ]
+        ],
+        "overallSavingsMs": 1550
       }
     },
     "uses-passive-event-listeners": {
@@ -4229,6 +4232,11 @@
           "group": "load-opportunities"
         },
         {
+          "id": "uses-http2",
+          "weight": 0,
+          "group": "load-opportunities"
+        },
+        {
           "id": "efficient-animated-content",
           "weight": 0,
           "group": "load-opportunities"
@@ -4310,11 +4318,6 @@
         },
         {
           "id": "layout-shift-elements",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
-          "id": "uses-http2",
           "weight": 0,
           "group": "diagnostics"
         },
@@ -6376,7 +6379,7 @@
         "audits[geolocation-on-start].details.headings[0].text",
         "audits[no-document-write].details.headings[0].text",
         "audits[notification-on-start].details.headings[0].text",
-        "audits[uses-http2].details.headings[0].text",
+        "audits[uses-http2].details.headings[0].label",
         "audits[uses-passive-event-listeners].details.headings[0].text"
       ],
       "lighthouse-core/audits/errors-in-console.js | columnDesc": [
@@ -7348,7 +7351,7 @@
       "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": [
         "audits[password-inputs-can-be-pasted-into].details.headings[0].text"
       ],
-      "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": [
+      "lighthouse-core/audits/dobetterweb/uses-http2.js | title": [
         "audits[uses-http2].title"
       ],
       "lighthouse-core/audits/dobetterweb/uses-http2.js | description": [
@@ -7363,7 +7366,7 @@
         }
       ],
       "lighthouse-core/audits/dobetterweb/uses-http2.js | columnProtocol": [
-        "audits[uses-http2].details.headings[1].text"
+        "audits[uses-http2].details.headings[1].label"
       ],
       "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | failureTitle": [
         "audits[uses-passive-event-listeners].title"

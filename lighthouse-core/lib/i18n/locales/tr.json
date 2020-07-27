@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{1 istek HTTP/2 üzerinden sunulmuyor}other{# istek HTTP/2 üzerinden sunulmuyor}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "Tüm kaynakları için HTTP/2 kullanmıyor"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "Kendi kaynakları için HTTP/2 kullanıyor"
   },
