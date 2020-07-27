@@ -27,15 +27,15 @@ function getNodeDetailsData() {
   let traceElement;
   if (elem) {
     traceElement = {
-      // @ts-ignore - put into scope via stringification
+      // @ts-expect-error - put into scope via stringification
       devtoolsNodePath: getNodePath(elem), // eslint-disable-line no-undef
-      // @ts-ignore - put into scope via stringification
+      // @ts-expect-error - put into scope via stringification
       selector: getNodeSelector(elem), // eslint-disable-line no-undef
-      // @ts-ignore - put into scope via stringification
+      // @ts-expect-error - put into scope via stringification
       nodeLabel: getNodeLabel(elem), // eslint-disable-line no-undef
-      // @ts-ignore - put into scope via stringification
+      // @ts-expect-error - put into scope via stringification
       snippet: getOuterHTMLSnippet(elem), // eslint-disable-line no-undef
-      // @ts-ignore - put into scope via stringification
+      // @ts-expect-error - put into scope via stringification
       boundingRect: getBoundingClientRect(elem), // eslint-disable-line no-undef
     };
   }
