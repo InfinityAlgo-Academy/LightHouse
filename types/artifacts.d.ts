@@ -706,9 +706,9 @@ declare global {
 
       export interface Form {
         /** If attributes is missing that means this is a formless set of elements. */
-        attributes?: { id: string, name: string, autocomplete: string, devtoolsNodePath: string, };
-        inputs: { id: string; nodeName: string; name: string; placeholder: string; autocomplete: string; devtoolsNodePath: string;}[];
-        labels: { id: string; nodeName: string; for: string; devtoolsNodePath: string;}[];
+        attributes?: { id: string, name: string, autocomplete: string, devtoolsNodePath: string, snippet: string,};
+        inputs: { id: string; nodeName: string; name: string; placeholder: string; autocomplete: string; devtoolsNodePath: string; snippet: string;}[];
+        labels: { id: string; nodeName: string; for: string; devtoolsNodePath: string; snippet: string;}[];
       }
 
       /** Attributes collected for every input element in the inputs array from the forms interface. */
@@ -719,6 +719,7 @@ declare global {
         placeholder: string;
         autocomplete: string;
         devtoolsNodePath: string;
+        snippet: string;
       }
 
       /** Attributes collected for every label element in the labels array from the forms interface */
@@ -727,6 +728,7 @@ declare global {
         nodeName: string;
         for: string;
         devtoolsNodePath: string;
+        snippet: string;
       }
 
       /** Information about an event listener registered on the global object. */
