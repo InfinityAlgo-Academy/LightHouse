@@ -17,38 +17,30 @@ const i18n = require('../lib/i18n/i18n.js');
 
 
 const UIStrings = {
-  /** Title of a Lighthouse audit that provides d. */
+  /** Title of a Lighthouse audit that lets the user know if there are any missing or invalid autocomplete attributes on page inputs. This descriptive title is shown to users when all input attributes have a valid autocomplete attribute. */
   title: 'Input elements use metadata to enable autocomplete',
-  /** Title of a Lighthouse audit that provides detail on Javascript libraries the page uses. This descriptive title is shown to users when some detected Javascript libraries have known security vulnerabilities. */
+  /** Title of a Lighthouse audit that lets the user know if there are any missing or invalid autocomplete attributes on page inputs. This descriptive title is shown to users when one or more inputs do not have autocomplete set or has an invalid autocomplete set. */
   failureTitle: 'Input elements do not have correct attributes for autocomplete',
-  /** Description of a Lighthouse audit that tells the user why they should be concerned about the third party Javascript libraries that they use. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that lets the user know if there are any missing or invalid autocomplete attributes on page inputs. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'To reduce user manual input work, each input element should have the' +
   ' appropriate the "autocomplete" attribute. Consider enabling autocomplete by setting' +
-  ' the autocomplete attribute to a valid name to ensure that the user has the best form filling expirence.' +
+  ' the autocomplete attribute to a valid name to ensure that the user has the best form' +
+  ' filling expirence.' +
   ' [Learn more](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill)',
-  /** [ICU Syntax] Label for the audit identifying the number of vulnerable Javascript libraries found. */
+  /** [ICU Syntax] Label for the audit identifying the number of elements with invalid autocomplete attributes. */
   displayValue: `{nodeCount, plural,
     =1 {1 element found}
     other {# elements found}
     }`,
-  /** Label for a column in a data table; entries will be the version numbers of the Javascript libraries found.  */
-  noAutocomplete: 'No Autocomplete',
-  /** Label for a column in a data table; entries will be the counts of JavaScript-library vulnerabilities found.  */
-  autocompleteOff: 'Autocomplete Off',
-  /** Label for a column in a data table; entries will be the severity of the vulnerabilities found within a Javascript library. */
-  autocompleteOn: 'Autocomplete On',
-  /** Table row value for the severity of a small, or low impact Javascript vulnerability.  Part of a ranking scale in the form: low, medium, high. */
-  autocompleteIvalid: 'Autocomplete Invalid',
-  /** Table row value for the severity of a Javascript vulnerability.  Part of a ranking scale in the form: low, medium, high. */
-  rowSeverityMedium: 'Elements with no autocomplete',
-  /** Table row value for the severity of a high impact, or dangerous Javascript vulnerability.  Part of a ranking scale in the form: low, medium, high. */
-  rowSeverityHigh: 'Elements with no autocomplete',
+  /** Label for a column in a data table; entries will be the elements that do not have autocomplete.  */
+  failingElements: 'Failing Elements',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
-// TODO: add more comments to talk about where the documentation for these attributes come from?
+
 /** @type {string[]} */
+/** As of July 2020, this array contains all acceptable autocomplete attributes from the WHATWG standard.  */
 const validAutocompleteAttributeNames = ['name', 'honorific-prefix', 'given-name',
   'additional-name', 'family-name', 'honorific-suffix', 'nickname', 'username', 'new-password',
   'current-password', 'one-time-code', 'organization-title', 'organization', 'street-address',
@@ -57,8 +49,8 @@ const validAutocompleteAttributeNames = ['name', 'honorific-prefix', 'given-name
   'cc-given-name', 'cc-additional-name', 'cc-family-name', 'cc-number', 'cc-exp',
   'cc-exp-month', 'cc-exp-year', 'cc-csc', 'cc-type', 'transaction-currency',
   'transaction-amount', 'language', 'bday', 'bday-day', 'bday-month', 'bday-year',
-  'sex', 'url', 'photo', 'tel', 'tel-country-code', 'tel-national', 'tel-area-code',
-  'tel-local', 'tel-local-prefix', 'tel-local-suffix', 'tel-extension', 'email', 'impp'];
+  'sex', 'url', 'photo', 'tel', 'tel-country-code', 'tel-national', 'tel-area-code', 'on',
+  'tel-local', 'tel-local-prefix', 'tel-local-suffix', 'tel-extension', 'email', 'impp', 'off'];
 
 class AutocompleteAudit extends Audit {
   /**
@@ -80,88 +72,55 @@ class AutocompleteAudit extends Audit {
    */
   static audit(artifacts) {
     const forms = artifacts.Forms;
-    const noAutocomplete = forms.filter(element => {
-      element.inputs.filter(input => !input.autocomplete);
+    const noAutocomplete = forms.map(element => {
+      return {...element, inputs: element.inputs.filter(input => !input.autocomplete)};
     });
-    const autocompleteOff = forms.filter(element => {
-      element.inputs.filter(input => input.autocomplete === 'off');
-    });
-    const autocompleteOn = forms.filter(element => {
-      element.inputs.filter(input => input.autocomplete === 'on');
-    });
-    const autocompleteInvalid = forms.filter(element =>
-      element.inputs.filter(input => {
+    const autocompleteInvalid = forms.map(element => {
+      return {...element, inputs: element.inputs.filter(input => {
         for (const name of validAutocompleteAttributeNames) {
           input.autocomplete.includes(name);
         }
-      }
-    ));
+      })};
+    });
     const noAutocompleteData = [];
     for (const form of noAutocomplete) {
       for (const input of form.inputs) {
         noAutocompleteData.push({
-          autocompleteOff: /** @type {LH.Audit.Details.NodeValue} */ ({
+          failingElements: /** @type {LH.Audit.Details.NodeValue} */ ({
             type: 'node',
             path: input.devtoolsNodePath,
             snippet: input.snippet,
+            nodeLabel: input.nodeName,
           }),
         });
       }
     }
-    const autocompleteOffData = [];
-    for (const form of autocompleteOff) {
-      for (const input of form.inputs) {
-        autocompleteOffData.push({
-          autocompleteOff: /** @type {LH.Audit.Details.NodeValue} */ ({
-            type: 'node',
-            path: input.devtoolsNodePath,
-            snippet: input.snippet,
-          }),
-        });
-      }
-    }
-    const autocompleteOnData = [];
-    for (const form of autocompleteOn) {
-      for (const input of form.inputs) {
-        autocompleteOnData.push({
-          autocompleteOff: /** @type {LH.Audit.Details.NodeValue} */ ({
-            type: 'node',
-            path: input.devtoolsNodePath,
-            snippet: input.snippet,
-          }),
-        });
-      }
-    }
-
     const autocompleteInvalidData = [];
     for (const form of autocompleteInvalid) {
       for (const input of form.inputs) {
         autocompleteInvalidData.push({
-          autocompleteOff: /** @type {LH.Audit.Details.NodeValue} */ ({
+          failingElements: /** @type {LH.Audit.Details.NodeValue} */ ({
             type: 'node',
             path: input.devtoolsNodePath,
             snippet: input.snippet,
+            nodeLabel: input.nodeName,
           }),
         });
       }
     }
-    const autocompleteData = [...noAutocompleteData, ...autocompleteOffData,
-      ...autocompleteOnData, ...autocompleteInvalidData];
+    const autocompleteData = [...noAutocompleteData, ...autocompleteInvalidData];
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'noAutocomplete', itemType: 'node', text: str_(UIStrings.noAutocomplete)},
-      {key: 'autocompleteOff', itemType: 'node', text: str_(UIStrings.autocompleteOff)},
-      {key: 'autocompleteOn', itemType: 'node', text: str_(UIStrings.autocompleteOn)},
-      {key: 'autocompleteInvalid', itemType: 'node', text: str_(UIStrings.autocompleteIvalid)},
+      {key: 'failingElements', itemType: 'node', text: str_(UIStrings.failingElements)},
     ];
     const details = Audit.makeTableDetails(headings, autocompleteData);
     let displayValue;
     if (autocompleteData.length > 0) {
       displayValue = str_(UIStrings.displayValue, {nodeCount: autocompleteData.length});
     }
-
+    const score = (autocompleteData.length > 0) ? 0 : 1;
     return {
-      score: 0,
+      score: score,
       displayValue,
       details,
     };
