@@ -32,6 +32,8 @@ function collectFormElements() {
           name: hasForm.name,
           autocomplete: hasForm.autocomplete,
           // @ts-ignore - put into scope via stringification
+          nodeLabel: getNodeLabel(child), // eslint-disable-line no-undef,
+          // @ts-ignore - put into scope via stringification
           devtoolsNodePath: getNodePath(hasForm), // eslint-disable-line no-undef
           // @ts-ignore - put into scope via stringification
           snippet: getOuterHTMLSnippet(hasForm), // eslint-disable-line no-undef
@@ -47,10 +49,11 @@ function collectFormElements() {
       if (child.type !== 'submit' && child.type !== 'button') {
         formObj.inputs.push({
           id: child.id,
-          nodeName: child.nodeName,
           name: child.name,
           placeholder: child.placeholder,
           autocomplete: child.autocomplete,
+          // @ts-ignore - put into scope via stringification
+          nodeLabel: getNodeLabel(child), // eslint-disable-line no-undef,
           // @ts-ignore - put into scope via stringification
           devtoolsNodePath: getNodePath(child), // eslint-disable-line no-undef
           // @ts-ignore - put into scope via stringification
@@ -61,9 +64,10 @@ function collectFormElements() {
     if (child instanceof HTMLSelectElement) {
       formObj.inputs.push({
         id: child.id,
-        nodeName: child.nodeName,
         name: child.name,
         autocomplete: child.autocomplete,
+        // @ts-ignore - put into scope via stringification
+        nodeLabel: getNodeLabel(child), // eslint-disable-line no-undef,
         // @ts-ignore - put into scope via stringification
         devtoolsNodePath: getNodePath(child), // eslint-disable-line no-undef
         // @ts-ignore - put into scope via stringification
@@ -73,8 +77,9 @@ function collectFormElements() {
     if (child instanceof HTMLLabelElement) {
       formObj.labels.push({
         id: child.id,
-        nodeName: child.nodeName,
         for: child.htmlFor,
+        // @ts-ignore - put into scope via stringification
+        nodeLabel: getNodeLabel(child), // eslint-disable-line no-undef,
         // @ts-ignore - put into scope via stringification
         devtoolsNodePath: getNodePath(child), // eslint-disable-line no-undef
         // @ts-ignore - put into scope via stringification
@@ -104,6 +109,7 @@ class Forms extends Gatherer {
       ${pageFunctions.getElementsInDocumentString};
       ${pageFunctions.getNodePathString};
       ${pageFunctions.getOuterHTMLSnippetString};
+      ${pageFunctions.getNodeLabelString};
       return (${collectFormElements})();
     })()`;
 
