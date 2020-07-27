@@ -18,32 +18,31 @@ const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides d. */
-  title: 'Avoids front-end JavaScript libraries' +
-    ' with known security vulnerabilities',
+  title: 'Input elements use metadata to enable autocomplete',
   /** Title of a Lighthouse audit that provides detail on Javascript libraries the page uses. This descriptive title is shown to users when some detected Javascript libraries have known security vulnerabilities. */
-  failureTitle: 'Includes front-end JavaScript libraries' +
-    ' with known security vulnerabilities',
+  failureTitle: 'Input elements do not have correct attributes for autocomplete',
   /** Description of a Lighthouse audit that tells the user why they should be concerned about the third party Javascript libraries that they use. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  description: 'Some third-party scripts may contain known security vulnerabilities ' +
-    'that are easily identified and exploited by attackers. ' +
-    '[Learn more](https://web.dev/no-vulnerable-libraries/).',
+  description: 'To reduce user manual input work, each input element should have the' +
+  ' appropriate the "autocomplete" attribute. Consider enabling autocomplete by setting' +
+  ' the autocomplete attribute to a valid name to ensure that the user has the best form filling expirence.' +
+  ' [Learn more](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill)',
   /** [ICU Syntax] Label for the audit identifying the number of vulnerable Javascript libraries found. */
-  displayValue: `{itemCount, plural,
-    =1 {1 vulnerability detected}
-    other {# vulnerabilities detected}
+  displayValue: `{nodeCount, plural,
+    =1 {1 element found}
+    other {# elements found}
     }`,
   /** Label for a column in a data table; entries will be the version numbers of the Javascript libraries found.  */
-  columnVersion: 'Library Version',
+  noAutocomplete: 'No Autocomplete',
   /** Label for a column in a data table; entries will be the counts of JavaScript-library vulnerabilities found.  */
-  columnVuln: 'Vulnerability Count',
+  autocompleteOff: 'Autocomplete Off',
   /** Label for a column in a data table; entries will be the severity of the vulnerabilities found within a Javascript library. */
-  columnSeverity: 'Highest Severity',
+  autocompleteOn: 'Autocomplete On',
   /** Table row value for the severity of a small, or low impact Javascript vulnerability.  Part of a ranking scale in the form: low, medium, high. */
-  rowSeverityLow: 'Low',
+  autocompleteIvalid: 'Autocomplete Invalid',
   /** Table row value for the severity of a Javascript vulnerability.  Part of a ranking scale in the form: low, medium, high. */
-  rowSeverityMedium: 'Medium',
+  rowSeverityMedium: 'Elements with no autocomplete',
   /** Table row value for the severity of a high impact, or dangerous Javascript vulnerability.  Part of a ranking scale in the form: low, medium, high. */
-  rowSeverityHigh: 'High',
+  rowSeverityHigh: 'Elements with no autocomplete',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -60,9 +59,6 @@ const validAutocompleteAttributeNames = ['name', 'honorific-prefix', 'given-name
   'transaction-amount', 'language', 'bday', 'bday-day', 'bday-month', 'bday-year',
   'sex', 'url', 'photo', 'tel', 'tel-country-code', 'tel-national', 'tel-area-code',
   'tel-local', 'tel-local-prefix', 'tel-local-suffix', 'tel-extension', 'email', 'impp'];
-/** @type {string[]} */
-const optionalAutocompleteAttributePrefixes = ['home', 'work', 'mobile', 'fax', 'pager',
-  'shipping', 'billing'];
 
 class AutocompleteAudit extends Audit {
   /**
@@ -84,34 +80,87 @@ class AutocompleteAudit extends Audit {
    */
   static audit(artifacts) {
     const forms = artifacts.Forms;
-    let totalCount = 0;
-    const noAutocomplete = [];
-    const offAutocomplete = [];
-    const invalidAutocomplete = [];
-    const onAutocomplete = [];
-    for (const form of forms) {
-      for (const input of form.inputs) {
-        totalCount += 1;
-        if (!input.autocomplete) {
-          noAutocomplete.push(input);
-        } else if (input.autocomplete === 'off') {
-          offAutocomplete.push(input);
-        } else if (input.autocomplete === 'on') {
-          onAutocomplete.push(input);
-        } else {
-          let autocomplete = input.autocomplete;
-          for (const prefix of optionalAutocompleteAttributePrefixes) {
-            if (autocomplete.includes(prefix)) {
-              autocomplete = autocomplete.slice(prefix.length, autocomplete.length - 1);
-              break;
-            }
-          }
-          if (!validAutocompleteAttributeNames.includes(autocomplete)) {
-            invalidAutocomplete.push(input);
-          }
+    const noAutocomplete = forms.filter(element => {
+      element.inputs.filter(input => !input.autocomplete);
+    });
+    const autocompleteOff = forms.filter(element => {
+      element.inputs.filter(input => input.autocomplete === 'off');
+    });
+    const autocompleteOn = forms.filter(element => {
+      element.inputs.filter(input => input.autocomplete === 'on');
+    });
+    const autocompleteInvalid = forms.filter(element =>
+      element.inputs.filter(input => {
+        for (const name of validAutocompleteAttributeNames) {
+          input.autocomplete.includes(name);
         }
       }
+    ));
+    const noAutocompleteData = [];
+    for (const form of noAutocomplete) {
+      for (const input of form.inputs) {
+        noAutocompleteData.push({
+          autocompleteOff: /** @type {LH.Audit.Details.NodeValue} */ ({
+            type: 'node',
+            path: input.devtoolsNodePath,
+          }),
+        });
+      }
     }
+    const autocompleteOffData = [];
+    for (const form of autocompleteOff) {
+      for (const input of form.inputs) {
+        autocompleteOffData.push({
+          autocompleteOff: /** @type {LH.Audit.Details.NodeValue} */ ({
+            type: 'node',
+            path: input.devtoolsNodePath,
+          }),
+        });
+      }
+    }
+    const autocompleteOnData = [];
+    for (const form of autocompleteOn) {
+      for (const input of form.inputs) {
+        autocompleteOnData.push({
+          autocompleteOff: /** @type {LH.Audit.Details.NodeValue} */ ({
+            type: 'node',
+            path: input.devtoolsNodePath,
+          }),
+        });
+      }
+    }
+
+    const autocompleteInvalidData = [];
+    for (const form of autocompleteInvalid) {
+      for (const input of form.inputs) {
+        autocompleteInvalidData.push({
+          autocompleteOff: /** @type {LH.Audit.Details.NodeValue} */ ({
+            type: 'node',
+            path: input.devtoolsNodePath,
+          }),
+        });
+      }
+    }
+    const autocompleteData = [...noAutocompleteData, ...autocompleteOffData,
+      ...autocompleteOnData, ...autocompleteInvalidData];
+    /** @type {LH.Audit.Details.Table['headings']} */
+    const headings = [
+      {key: 'noAutocomplete', itemType: 'node', text: str_(UIStrings.noAutocomplete)},
+      {key: 'autocompleteOff', itemType: 'node', text: str_(UIStrings.autocompleteOff)},
+      {key: 'autocompleteOn', itemType: 'node', text: str_(UIStrings.autocompleteOn)},
+      {key: 'autocompleteInvalid', itemType: 'node', text: str_(UIStrings.autocompleteIvalid)},
+    ];
+    const details = Audit.makeTableDetails(headings, autocompleteData);
+    let displayValue;
+    if (autocompleteData.length > 0) {
+      displayValue = str_(UIStrings.displayValue, {nodeCount: autocompleteData.length});
+    }
+
+    return {
+      score: 0,
+      displayValue,
+      details,
+    };
   }
 }
 
