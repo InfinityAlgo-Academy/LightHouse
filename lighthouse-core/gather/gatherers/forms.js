@@ -33,6 +33,8 @@ function collectFormElements() {
           autocomplete: hasForm.autocomplete,
           // @ts-ignore - put into scope via stringification
           devtoolsNodePath: getNodePath(hasForm), // eslint-disable-line no-undef
+          // @ts-ignore - put into scope via stringification
+          snippet: getOuterHTMLSnippet(hasForm), // eslint-disable-line no-undef
         },
         inputs: [],
         labels: [],
@@ -51,6 +53,8 @@ function collectFormElements() {
           autocomplete: child.autocomplete,
           // @ts-ignore - put into scope via stringification
           devtoolsNodePath: getNodePath(child), // eslint-disable-line no-undef
+          // @ts-ignore - put into scope via stringification
+          snippet: getOuterHTMLSnippet(child), // eslint-disable-line no-undef
         });
       }
     }
@@ -62,6 +66,8 @@ function collectFormElements() {
         autocomplete: child.autocomplete,
         // @ts-ignore - put into scope via stringification
         devtoolsNodePath: getNodePath(child), // eslint-disable-line no-undef
+        // @ts-ignore - put into scope via stringification
+        snippet: getOuterHTMLSnippet(child), // eslint-disable-line no-undef
       });
     }
     if (child instanceof HTMLLabelElement) {
@@ -71,6 +77,8 @@ function collectFormElements() {
         for: child.htmlFor,
         // @ts-ignore - put into scope via stringification
         devtoolsNodePath: getNodePath(child), // eslint-disable-line no-undef
+        // @ts-ignore - put into scope via stringification
+        snippet: getOuterHTMLSnippet(child), // eslint-disable-line no-undef
       });
     }
   }
@@ -95,6 +103,7 @@ class Forms extends Gatherer {
     const expression = `(() => {
       ${pageFunctions.getElementsInDocumentString};
       ${pageFunctions.getNodePathString};
+      ${pageFunctions.getOuterHTMLSnippetString};
       return (${collectFormElements})();
     })()`;
 
