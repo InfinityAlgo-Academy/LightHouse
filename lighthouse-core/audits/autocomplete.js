@@ -103,6 +103,7 @@ class AutocompleteAudit extends Audit {
           autocompleteOff: /** @type {LH.Audit.Details.NodeValue} */ ({
             type: 'node',
             path: input.devtoolsNodePath,
+            snippet: input.snippet,
           }),
         });
       }
@@ -114,6 +115,7 @@ class AutocompleteAudit extends Audit {
           autocompleteOff: /** @type {LH.Audit.Details.NodeValue} */ ({
             type: 'node',
             path: input.devtoolsNodePath,
+            snippet: input.snippet,
           }),
         });
       }
@@ -125,6 +127,7 @@ class AutocompleteAudit extends Audit {
           autocompleteOff: /** @type {LH.Audit.Details.NodeValue} */ ({
             type: 'node',
             path: input.devtoolsNodePath,
+            snippet: input.snippet,
           }),
         });
       }
@@ -137,6 +140,7 @@ class AutocompleteAudit extends Audit {
           autocompleteOff: /** @type {LH.Audit.Details.NodeValue} */ ({
             type: 'node',
             path: input.devtoolsNodePath,
+            snippet: input.snippet,
           }),
         });
       }
