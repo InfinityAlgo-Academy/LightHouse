@@ -5,6 +5,9 @@
 ```sh
 yarn build-devtools
 node lighthouse-core/scripts/chromium-web-tests/test.sh
+
+# Reset the results.
+node lighthouse-core/scripts/chromium-web-tests/test.sh --reset-results
 ```
 
 ## Modifying blink-tools

@@ -20,7 +20,4 @@ bash "$SCRIPT_DIR/download-blink-tools.sh"
 node "$SCRIPT_DIR/download-content-shell.js"
 
 # Run web tests.
-bash "$SCRIPT_DIR/run-web-tests.sh"
-
-# Reset the results.
-bash "$SCRIPT_DIR/run-web-tests.sh" --reset-results
+bash "$SCRIPT_DIR/run-web-tests.sh" $*
