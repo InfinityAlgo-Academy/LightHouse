@@ -11,10 +11,12 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - name: Set $BLINK_TOOLS_PATH
-      run: echo ::set-env name=BLINK_TOOLS_PATH::$GITHUB_WORKSPACE/blink_tools
+    - name: Set $DEPOT_TOOLS_PATH
+      run: echo ::set-env name=DEPOT_TOOLS_PATH::$GITHUB_WORKSPACE/depot-tools
     - name: Set $DEVTOOLS_PATH
       run: echo ::set-env name=DEVTOOLS_PATH::$GITHUB_WORKSPACE/devtools-frontend
+    - name: Set $BLINK_TOOLS_PATH
+      run: echo ::set-env name=BLINK_TOOLS_PATH::$GITHUB_WORKSPACE/blink_tools
 
     - name: git clone
       uses: actions/checkout@v2
@@ -25,6 +27,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: |
+          ${{ env.DEPOT_TOOLS_PATH }}
           ${{ env.BLINK_TOOLS_PATH }}
           ${{ github.workspace }}/lighthouse/.test-cache
         key: ${{ runner.os }}-${{ hashFiles('lighthouse/lighthouse-core/scripts/chromium-web-tests/download-*') }}
