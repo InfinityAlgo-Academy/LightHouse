@@ -27,7 +27,7 @@ jobs:
         path: |
           ${{ env.BLINK_TOOLS_PATH }}
           ${{ github.workspace }}/lighthouse/.test-cache
-        key: ${{ runner.os }}-${{ hashFiles('lighthouse/lighthouse-core/scripts/chromium-web-tests/download-*') }}-1
+        key: ${{ runner.os }}-${{ hashFiles('lighthouse/lighthouse-core/scripts/chromium-web-tests/download-*') }}
 
     - uses: actions/checkout@v2
       with:
@@ -49,13 +49,9 @@ jobs:
     - name: Run Web Tests
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/run-web-tests.sh
 
-    - name: blah
-      if: failure()
-      run: ls /Users/runner/work/lighthouse/lighthouse/lighthouse/.test-cache
-
     - name: Upload results
       uses: actions/upload-artifact@v2
       if: failure()
       with:
         name: results
-        path: ${{ github.workspace }}/lighthouse/.test-cache/results.html
+        path: ${{ github.workspace }}/lighthouse/.test-cache/layout-test-results

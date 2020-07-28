@@ -52,8 +52,6 @@ until $(curl --output /dev/null --silent --head --fail $health_check_url); do
 done
 echo "Server is up"
 
-echo "connor 1"
-
 # Add typ to python path. The regular method assumes there is a chromium checkout.
 # See https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink/tools/blinkpy/common/path_finder.py;l=35;drc=61e88d0e7fa9217a8f5395edd0e03b1c1991257c
 PYTHONPATH="${PYTHONPATH}:$BLINK_TOOLS_PATH/third_party/typ" python \
@@ -63,13 +61,6 @@ PYTHONPATH="${PYTHONPATH}:$BLINK_TOOLS_PATH/third_party/typ" python \
   http/tests/devtools/lighthouse
 status=$?
 
-echo "connor 2"
-cp "$latest_content_shell/out/Release/layout-test-results/results.html" "$LH_ROOT/.test-cache/results.html"
+cp "$latest_content_shell/out/Release/layout-test-results" "$LH_ROOT/.test-cache/layout-test-results"
 
-echo "connor 3"
-set -o xtrace
-ls "$latest_content_shell/out/Release/layout-test-results"
-ls "$LH_ROOT/.test-cache"
-
-echo "connor 4"
 exit $status
