@@ -26,7 +26,7 @@ jobs:
       with:
         path: |
           ${{ env.BLINK_TOOLS_PATH }}
-          ${{ env.GITHUB_WORKSPACE }}/lighthouse/.test-cache
+          ${{ github.workspace }}/lighthouse/.test-cache
         key: ${{ runner.os }}-${{ hashFiles('lighthouse/lighthouse-core/scripts/chromium-web-tests/download-*') }}-1
 
     - uses: actions/checkout@v2
@@ -54,4 +54,4 @@ jobs:
       if: failure()
       with:
         name: results
-        path: ${{ env.GITHUB_WORKSPACE }}/lighthouse/.test-cache/results.html
+        path: ${{ github.workspace }}/lighthouse/.test-cache/results.html
