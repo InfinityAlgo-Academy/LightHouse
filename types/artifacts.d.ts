@@ -712,7 +712,7 @@ declare global {
       }
 
       /** Attributes collected for every input element in the inputs array from the forms interface. */
-      export interface FormInputsType {
+      export interface FormInput {
         id: string;
         nodeName: string;
         placeholder: string;
@@ -723,7 +723,7 @@ declare global {
       }
 
       /** Attributes collected for every label element in the labels array from the forms interface */
-      export interface FormLabelsType {
+      export interface FormLabel {
         id: string;
         nodeName: string;
         for: string;

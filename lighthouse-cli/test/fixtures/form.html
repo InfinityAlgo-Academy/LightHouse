@@ -10,9 +10,10 @@
 </head>
 <body>
   <form id="checkout" name="checkout" action="../done.html" method="post">
-      <label id="cardName" for="name_cc">Name on card:</label> <textarea type="text" id="name_cc" autocomplete="cc-name"></textarea><br>
-      <label id="cardNumber" for="CCNo">Credit card number:</label> <input type="text" id="CCNo" autocomplete="cc-number"><br>
-      <label id="expDate" for="CCExpiresMonth">Expiry Date:</label> <select id="CCExpiresMonth" autocomplete="cc-exp-month">
+      <!-- FormElements Gatherer - textarea example -->
+      <label id="cardName" for="name_cc">Name on card:</label> <textarea type="text" name="name_cc" autocomplete="cc-name"></textarea><br>
+      <label id="cardNumber" for="CCNo">Credit card number:</label> <input type="text" name="CCNo" autocomplete="cc-number"><br>
+      <label id="expDate" for="CCExpiresMonth">Expiry Date:</label> <select name="CCExpiresMonth" autocomplete="cc-exp-month">
         <option value="">MM</option>
         <option value="01">01</option>
         <option value="02">02</option>
