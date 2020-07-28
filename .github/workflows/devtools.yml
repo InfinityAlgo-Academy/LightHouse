@@ -8,7 +8,7 @@ on:
 
 jobs:
   smoke-devtools:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
     - name: Set $BLINK_TOOLS_PATH
