@@ -723,7 +723,7 @@ declare global {
       }
 
       /** Attributes collected for every label element in the labels array from the forms interface */
-      export interface FormLabelsType {
+      export interface FormLabel {
         id: string;
         nodeName: string;
         for: string;
