@@ -3,7 +3,7 @@ node_modules
 npm-debug.log
 .vscode
 .tmp
-.test_cache
+.test-cache
 .idea
 
 /dist

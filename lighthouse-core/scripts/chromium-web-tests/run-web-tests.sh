@@ -14,7 +14,7 @@ if [ x"$DEVTOOLS_PATH" == x ]; then
 fi
 
 unset -v latest_content_shell
-for file in "$LH_ROOT/.test_cache"/*/; do
+for file in "$LH_ROOT/.test-cache"/*/; do
   [[ $file -nt $latest_content_shell ]] && latest_content_shell=$file
 done
 
@@ -64,12 +64,12 @@ PYTHONPATH="${PYTHONPATH}:$BLINK_TOOLS_PATH/third_party/typ" python \
 status=$?
 
 echo "connor 2"
-cp "$latest_content_shell/out/Release/layout-test-results/results.html" "$LH_ROOT/.test_cache/results.html"
+cp "$latest_content_shell/out/Release/layout-test-results/results.html" "$LH_ROOT/.test-cache/results.html"
 
 echo "connor 3"
 set -o xtrace
 ls "$latest_content_shell/out/Release/layout-test-results"
-ls "$LH_ROOT/.test_cache"
+ls "$LH_ROOT/.test-cache"
 
 echo "connor 4"
 exit $status
