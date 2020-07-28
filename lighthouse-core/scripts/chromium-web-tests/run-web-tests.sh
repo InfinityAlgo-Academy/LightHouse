@@ -59,5 +59,8 @@ PYTHONPATH="${PYTHONPATH}:$BLINK_TOOLS_PATH/third_party/typ" python \
   --layout-tests-directory="$DEVTOOLS_PATH/test/webtests" \
   --build-directory="$latest_content_shell/out" \
   http/tests/devtools/lighthouse
+status=$?
 
 cp "$latest_content_shell/out/Release/layout-test-results/results.html" "$LH_ROOT/.test_cache/results.html"
+
+exit $status
