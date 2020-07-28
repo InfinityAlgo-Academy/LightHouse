@@ -14,6 +14,9 @@ yarn build-devtools
 
 # Run web tests.
 bash lighthouse-core/scripts/chromium-web-tests/run-web-tests.sh
+
+# Reset the results.
+bash lighthouse-core/scripts/chromium-web-tests/run-web-tests.sh --reset-results
 ```
 
 ## Modifying blink-tools
