@@ -61,6 +61,6 @@ PYTHONPATH="${PYTHONPATH}:$BLINK_TOOLS_PATH/third_party/typ" python \
   http/tests/devtools/lighthouse
 status=$?
 
-cp "$latest_content_shell/out/Release/layout-test-results" "$LH_ROOT/.test-cache/layout-test-results"
+cp -r "$latest_content_shell/out/Release/layout-test-results" "$LH_ROOT/.test-cache/layout-test-results"
 
 exit $status
