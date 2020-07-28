@@ -25,8 +25,8 @@ jobs:
       uses: actions/cache@v2
       with:
         path: |
-          $BLINK_TOOLS_PATH
-          $GITHUB_WORKSPACE/lighthouse/.test-cache
+          ${{ env.BLINK_TOOLS_PATH }}
+          ${{ env.GITHUB_WORKSPACE }}/lighthouse/.test-cache
         key: ${{ runner.os }}-${{ hashFiles('lighthouse/lighthouse-core/scripts/chromium-web-tests/download-*') }}
 
     - uses: actions/checkout@v2
