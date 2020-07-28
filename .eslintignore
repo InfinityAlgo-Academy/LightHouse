@@ -16,3 +16,4 @@ coverage/**
 !.eslintrc.js
 
 lighthouse-core/scripts/legacy-javascript/variants
+lighthouse-core/scripts/chromium-web-tests/webtests
