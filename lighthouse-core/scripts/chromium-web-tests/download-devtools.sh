@@ -15,8 +15,13 @@ if [ -d "$DEVTOOLS_PATH" ]
 then
   echo "Directory $DEVTOOLS_PATH already exists."
   cd "$DEVTOOLS_PATH"
-  gn gen out/Default
+
+  git checkout 3dc032a7f76a2b80d1e58676473aaaaf464f74f4 # [1]
+  # git fetch origin
+  # git checkout origin/master
   gclient sync
+
+  gn gen out/Default
   exit 0
 fi
 
@@ -25,4 +30,7 @@ cd `dirname $DEVTOOLS_PATH`
 fetch devtools-frontend
 cd devtools-frontend
 
+git checkout 3dc032a7f76a2b80d1e58676473aaaaf464f74f4 && gclient sync # [1]
 gn gen out/Default
+
+# [1] Temporary. Latest DevTools fails to build.

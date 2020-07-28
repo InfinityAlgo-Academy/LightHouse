@@ -8,11 +8,12 @@
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LH_ROOT="$SCRIPT_DIR/../../.."
+TEST_DIR="$LH_ROOT/.tmp/chromium-web-tests"
 
 # Setup dependencies.
-export DEPOT_TOOLS="$LH_ROOT/.tmp/depot-tools"
-export DEVTOOLS_PATH="$LH_ROOT/.tmp/devtools/devtools-frontend"
-export BLINK_TOOLS_PATH="$LH_ROOT/.tmp/blink_tools"
+export DEPOT_TOOLS="$TEST_DIR/depot-tools"
+export DEVTOOLS_PATH="$TEST_DIR/devtools/devtools-frontend"
+export BLINK_TOOLS_PATH="$TEST_DIR/blink_tools"
 export PATH=$DEPOT_TOOLS_PATH:$PATH
 
 bash "$SCRIPT_DIR/download-depot-tools.sh"
