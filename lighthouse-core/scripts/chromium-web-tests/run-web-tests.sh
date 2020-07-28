@@ -36,13 +36,13 @@ ln -s "$latest_content_shell/out/Release/resources/inspector" "$DEVTOOLS_PATH/te
 # Kill background jobs when script ends.
 cleanup() {
   rm "$DEVTOOLS_PATH/test/webtests/http/tests/inspector-sources"
-  kill 0
+  kill ${SERVER_PID}
 }
 trap 'cleanup' EXIT
 
 # Serve from devtools frontend webtests folder.
 (npx http-server "$DEVTOOLS_PATH/test/webtests/http/tests" -p 8000 --cors > /dev/null 2>&1) &
-# (npx http-server "$DEVTOOLS_PATH/test/webtests/http/tests" -p 8000 --cors) &
+SERVER_PID=$!
 
 echo "Waiting for server"
 health_check_url='http://localhost:8000/inspector-sources/integration_test_runner.html?experiments=true&test=http://127.0.0.1:8000/devtools/lighthouse/lighthouse-view-trace-run.js'
