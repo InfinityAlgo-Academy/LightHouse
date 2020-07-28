@@ -39,6 +39,9 @@ jobs:
     - run: yarn build-devtools
       working-directory: ${{ github.workspace }}/lighthouse
 
+    - name: Download depot tools
+      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/download-depot-tools.sh
+
     - name: Download DevTools Frontend
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/download-devtools.sh
 

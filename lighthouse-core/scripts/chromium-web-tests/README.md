@@ -4,9 +4,11 @@
 
 ```sh
 # Setup dependencies.
+export DEPOT_TOOLS=~/tools/depot-tools
 export DEVTOOLS_PATH=~/tmp/devtools/devtools-frontend
 export BLINK_TOOLS_PATH=~/tmp/blink_tools
 
+bash lighthouse-core/scripts/chromium-web-tests/download-depot-tools.sh
 bash lighthouse-core/scripts/chromium-web-tests/download-devtools.sh
 bash lighthouse-core/scripts/chromium-web-tests/download-blink-tools.sh
 node lighthouse-core/scripts/chromium-web-tests/download-content-shell.js
