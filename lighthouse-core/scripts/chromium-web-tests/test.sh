@@ -7,11 +7,12 @@
 ##
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+LH_ROOT="$SCRIPT_DIR/../../.."
 
 # Setup dependencies.
-export DEPOT_TOOLS=~/tools/depot-tools
-export DEVTOOLS_PATH=~/tmp/devtools/devtools-frontend
-export BLINK_TOOLS_PATH=~/tmp/blink_tools
+export DEPOT_TOOLS="$LH_ROOT/.tmp/depot-tools"
+export DEVTOOLS_PATH="$LH_ROOT/.tmp/devtools/devtools-frontend"
+export BLINK_TOOLS_PATH="$LH_ROOT/.tmp/blink_tools"
 export PATH=$DEPOT_TOOLS_PATH:$PATH
 
 bash "$SCRIPT_DIR/download-depot-tools.sh"
