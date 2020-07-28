@@ -49,7 +49,10 @@ jobs:
     - name: Run Web Tests
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/run-web-tests.sh
 
-    - run: ls /Users/runner/work/lighthouse/lighthouse/lighthouse/.test-cache
+    - name: blah
+      if: failure()
+      run: ls /Users/runner/work/lighthouse/lighthouse/lighthouse/.test-cache
+
     - name: Upload results
       uses: actions/upload-artifact@v2
       if: failure()
