@@ -54,4 +54,4 @@ jobs:
       if: failure()
       with:
         name: results
-        path: ${{ github.workspace }}/lighthouse/.test-cache/layout-test-results
+        path: ${{ github.workspace }}/lighthouse/.tmp/layout-test-results
