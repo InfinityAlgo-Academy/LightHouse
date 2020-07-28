@@ -44,17 +44,8 @@ jobs:
     - run: yarn build-devtools
       working-directory: ${{ github.workspace }}/lighthouse
 
-    - name: Download depot tools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/download-depot-tools.sh
-    - name: Download DevTools Frontend
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/download-devtools.sh
-    - name: Download Blink Tools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/download-blink-tools.sh
-    - name: Download Content Shell
-      run: node $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/download-content-shell.js
-
     - name: Run Web Tests
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/run-web-tests.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/test.sh
 
     - name: Upload results
       uses: actions/upload-artifact@v2
