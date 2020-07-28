@@ -32,6 +32,8 @@ jobs:
       with:
         node-version: 10.x
 
+    - run: sudo apt-get install xvfb
+
     - name: Download Blink Tools
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/download-blink-tools.sh
 
