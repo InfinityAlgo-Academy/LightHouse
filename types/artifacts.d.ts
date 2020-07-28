@@ -712,7 +712,7 @@ declare global {
       }
 
       /** Attributes collected for every input element in the inputs array from the forms interface. */
-      export interface FormInputsType {
+      export interface FormInput {
         id: string;
         nodeName: string;
         placeholder: string;
