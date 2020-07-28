@@ -25,7 +25,9 @@ for file in "$LH_ROOT/.test-cache"/*/; do
 done
 
 # Roll devtools.
+cd "$LH_ROOT"
 yarn devtools "$DEVTOOLS_PATH"
+cd -
 
 # Run a very basic server on port 8000. Only thing we need is:
 #   - /devtools -> the layout tests for devtools frontend
