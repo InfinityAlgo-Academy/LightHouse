@@ -15,6 +15,14 @@ jobs:
       run: echo ::set-env name=BLINK_TOOLS_PATH::$HOME/blink_tools
     - name: Set $DEVTOOLS_PATH
       run: echo ::set-env name=DEVTOOLS_PATH::$GITHUB_WORKSPACE/devtools-frontend
+    
+    - name: Cache blink tools and content shell
+      uses: actions/cache@v2
+      with:
+        path: |
+          $BLINK_TOOLS_PATH
+          $GITHUB_WORKSPACE/lighthouse/.test-cache
+        key: ${{ runner.os }}-${{ hashFiles('$GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/download-*') }}
 
     - name: git clone
       uses: actions/checkout@v2
