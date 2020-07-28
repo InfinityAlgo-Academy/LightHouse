@@ -4,12 +4,16 @@
 
 ```sh
 # Setup dependencies.
-git clone https://chromium.googlesource.com/devtools/devtools-frontend.git ~/tmp/devtools
-BLINK_TOOLS_PATH=~/tmp/blink_tools bash lighthouse-core/scripts/chromium-web-tests/download-blink-tools.sh
+export DEVTOOLS_PATH=~/tmp/devtools/devtools-frontend
+export BLINK_TOOLS_PATH=~/tmp/blink_tools
+
+bash lighthouse-core/scripts/chromium-web-tests/download-devtools.sh
+bash lighthouse-core/scripts/chromium-web-tests/download-blink-tools.sh
 node lighthouse-core/scripts/chromium-web-tests/download-content-shell.js
+yarn build-devtools
 
 # Run web tests.
-BLINK_TOOLS_PATH=~/tmp/blink_tools DEVTOOLS_PATH=~/tmp/devtools bash lighthouse-core/scripts/chromium-web-tests/run-web-tests.sh
+bash lighthouse-core/scripts/chromium-web-tests/run-web-tests.sh
 ```
 
 ## Modifying blink-tools

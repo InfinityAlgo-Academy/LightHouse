@@ -363,7 +363,7 @@ bootup-time: flaky
 button-name: notApplicable
 bypass: notApplicable
 canonical: notApplicable
-charset: pass
+charset: fail
 color-contrast: pass
 content-width: fail
 crawlable-anchors: pass

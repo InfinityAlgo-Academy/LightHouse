@@ -1,9 +1,10 @@
 name: DevTools
 
 on:
+  # push:
+  #   branches: [master]
+  # pull_request: # run on all PRs, not just PRs to a particular branch
   push:
-    branches: [master]
-  pull_request: # run on all PRs, not just PRs to a particular branch
 
 jobs:
   smoke-devtools:
@@ -28,16 +29,16 @@ jobs:
           ${{ github.workspace }}/lighthouse/.test-cache
         key: ${{ runner.os }}-${{ hashFiles('lighthouse/lighthouse-core/scripts/chromium-web-tests/download-*') }}
 
-    - uses: actions/checkout@v2
-      with:
-        path: devtools-frontend
-        repository: ChromeDevTools/devtools-frontend
-        ref: refs/heads/master
-
     - name: Use Node.js 10.x
       uses: actions/setup-node@v1
       with:
         node-version: 10.x
+
+    - run: yarn --frozen-lockfile
+    - run: yarn build-devtools
+
+    - name: Download DevTools Frontend
+      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/download-devtools.sh
 
     - name: Download Blink Tools
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/download-blink-tools.sh

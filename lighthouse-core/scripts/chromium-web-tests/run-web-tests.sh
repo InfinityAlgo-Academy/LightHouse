@@ -24,21 +24,22 @@ for file in "$LH_ROOT/.test-cache"/*/; do
   [[ $file -nt $latest_content_shell ]] && latest_content_shell=$file
 done
 
-if [[ $* == *--flag* ]]; then
-  echo "Error: Did not find a content shell"
-  exit 1
-fi
-
-rm -rf "$latest_content_shell/out/Release/layout-test-results"
+# Roll devtools.
+yarn devtools "$DEVTOOLS_PATH"
 
 # Run a very basic server on port 8000. Only thing we need is:
 #   - /devtools -> the layout tests for devtools frontend
 #   - /inspector-sources -> the inspector resources from the content shell
 #   - CORS (Access-Control-Allow-Origin header)
 
-# Setup inspector-sources
-ln -s "$latest_content_shell/out/Release/resources/inspector" "$DEVTOOLS_PATH/test/webtests/http/tests/inspector-sources"
-# Setup lighthouse webtests
+# Setup inspector-sources.
+
+cd "$DEVTOOLS_PATH"
+autoninja -C out/Default # Build devtools resources.
+cd -
+ln -s "$DEVTOOLS_PATH/out/Default/resources/inspector" "$DEVTOOLS_PATH/test/webtests/http/tests/inspector-sources"
+
+# Setup lighthouse webtests.
 rm -rf "$DEVTOOLS_PATH/test/webtests/http/tests/devtools/lighthouse"
 ln -s "$SCRIPT_DIR/webtests/http/tests/devtools/lighthouse" "$DEVTOOLS_PATH/test/webtests/http/tests/devtools/lighthouse"
 
@@ -61,7 +62,10 @@ until $(curl --output /dev/null --silent --head --fail $health_check_url); do
 done
 echo "Server is up"
 
-# Add typ to python path. The regular method assumes there is a chromium checkout.
+# webtests sometimes error if results are already present.
+rm -rf "$latest_content_shell/out/Release/layout-test-results"
+
+# Add typ to python path. The regular method assumes there is a Chromium checkout.
 # See https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink/tools/blinkpy/common/path_finder.py;l=35;drc=61e88d0e7fa9217a8f5395edd0e03b1c1991257c
 set -o xtrace
 PYTHONPATH="${PYTHONPATH}:$BLINK_TOOLS_PATH/third_party/typ" python \
@@ -73,6 +77,7 @@ PYTHONPATH="${PYTHONPATH}:$BLINK_TOOLS_PATH/third_party/typ" python \
 status=$?
 set +o xtrace
 
+rm -rf "$LH_ROOT/.tmp/layout-test-results"
 cp -r "$latest_content_shell/out/Release/layout-test-results" "$LH_ROOT/.tmp/layout-test-results"
 
 exit $status
