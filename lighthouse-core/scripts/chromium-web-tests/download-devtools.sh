@@ -14,6 +14,8 @@ fi
 if [ -d "$DEVTOOLS_PATH" ]
 then
   echo "Directory $DEVTOOLS_PATH already exists."
+  cd "$DEVTOOLS_PATH"
+  gn gen out/Default
   gclient sync
   exit 0
 fi
