@@ -8,7 +8,7 @@ on:
 
 jobs:
   smoke-devtools:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
     - name: Set $BLINK_TOOLS_PATH
@@ -31,8 +31,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 10.x
-
-    - run: sudo apt-get install xvfb
 
     - name: Download Blink Tools
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/download-blink-tools.sh
