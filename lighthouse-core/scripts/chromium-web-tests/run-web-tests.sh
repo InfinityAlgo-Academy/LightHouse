@@ -52,6 +52,8 @@ until $(curl --output /dev/null --silent --head --fail $health_check_url); do
 done
 echo "Server is up"
 
+exit 0
+
 # Add typ to python path. The regular method assumes there is a chromium checkout.
 # See https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink/tools/blinkpy/common/path_finder.py;l=35;drc=61e88d0e7fa9217a8f5395edd0e03b1c1991257c
 PYTHONPATH="${PYTHONPATH}:$BLINK_TOOLS_PATH/third_party/typ" python \
