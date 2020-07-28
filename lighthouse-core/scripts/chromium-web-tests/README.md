@@ -7,6 +7,7 @@
 export DEPOT_TOOLS=~/tools/depot-tools
 export DEVTOOLS_PATH=~/tmp/devtools/devtools-frontend
 export BLINK_TOOLS_PATH=~/tmp/blink_tools
+export PATH=$DEPOT_TOOLS_PATH:$PATH
 
 bash lighthouse-core/scripts/chromium-web-tests/download-depot-tools.sh
 bash lighthouse-core/scripts/chromium-web-tests/download-devtools.sh

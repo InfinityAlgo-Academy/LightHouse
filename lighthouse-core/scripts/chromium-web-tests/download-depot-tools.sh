@@ -1,5 +1,4 @@
 # Install depot_tools.
-export PATH=$DEPOT_TOOLS_PATH:$PATH
 
 if command -v fetch &> /dev/null
 then

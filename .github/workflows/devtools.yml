@@ -17,6 +17,8 @@ jobs:
       run: echo ::set-env name=DEVTOOLS_PATH::$GITHUB_WORKSPACE/devtools-frontend
     - name: Set $BLINK_TOOLS_PATH
       run: echo ::set-env name=BLINK_TOOLS_PATH::$GITHUB_WORKSPACE/blink_tools
+    - name: Set $PATH
+      run: echo ::set-env name=PATH::$DEPOT_TOOLS_PATH:$PATH
 
     - name: git clone
       uses: actions/checkout@v2
@@ -44,13 +46,10 @@ jobs:
 
     - name: Download depot tools
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/download-depot-tools.sh
-
     - name: Download DevTools Frontend
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/download-devtools.sh
-
     - name: Download Blink Tools
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/download-blink-tools.sh
-
     - name: Download Content Shell
       run: node $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/download-content-shell.js
 
