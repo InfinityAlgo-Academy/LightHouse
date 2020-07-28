@@ -63,4 +63,8 @@ status=$?
 
 cp "$latest_content_shell/out/Release/layout-test-results/results.html" "$LH_ROOT/.test_cache/results.html"
 
+set -o xtrace
+ls "$latest_content_shell/out/Release/layout-test-results"
+ls "$LH_ROOT/.test_cache"
+
 exit $status
