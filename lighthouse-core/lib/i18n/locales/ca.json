@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{No s'ha atès 1 sol·licitud mitjançant HTTP/2}other{No s'han atès # sol·licituds mitjançant HTTP/2}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "No utilitza HTTP/2 per a tots els recursos"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "Utilitza HTTP/2 per als recursos propis"
   },

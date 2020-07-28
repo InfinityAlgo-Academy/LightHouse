@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{[1 ŕéqûéšţ ñöţ šéŕvéð vîå ĤŢŢÞ/2 one two three four five six seven]}other{[# ŕéqûéšţš ñöţ šéŕvéð vîå ĤŢŢÞ/2 one two three four five six seven]}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "[Ðöéš ñöţ ûšé ĤŢŢÞ/2 ƒöŕ åļļ öƒ îţš ŕéšöûŕçéš one two three four five six seven eight nine]"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "[Ûšéš ĤŢŢÞ/2 ƒöŕ îţš öŵñ ŕéšöûŕçéš one two three four five six seven]"
   },

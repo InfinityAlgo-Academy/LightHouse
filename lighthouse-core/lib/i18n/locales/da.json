@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{1 anmodning blev ikke leveret via HTTP/2}one{# anmodning blev ikke leveret via HTTP/2}other{# anmodninger blev ikke leveret via HTTP/2}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "Anvender ikke HTTP/2 til alle sine ressourcer"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "Anvender HTTP/2 til egne ressourcer"
   },

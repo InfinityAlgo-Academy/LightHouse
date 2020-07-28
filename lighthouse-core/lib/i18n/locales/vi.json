@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{Chưa phân phát 1 yêu cầu qua HTTP/2}other{Chưa phân phát # yêu cầu qua HTTP/2}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "Không sử dụng HTTP/2 cho tất cả các tài nguyên của trang web"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "Sử dụng HTTP/2 cho các tài nguyên của chính trang web"
   },

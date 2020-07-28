@@ -115,12 +115,14 @@ declare global {
       FontSize: Artifacts.FontSize;
       /** Screenshot of the entire page (rather than just the above the fold content). */
       FullPageScreenshot: Artifacts.FullPageScreenshot | null;
-      /** The issues surfaced in the devtools Issues panel */
-      InspectorIssues: Artifacts.InspectorIssues;
+      /** Information about event listeners registered on the global object. */
+      GlobalListeners: Array<Artifacts.GlobalListener>;
       /** The page's document body innerText if loaded with JavaScript disabled. */
       HTMLWithoutJavaScript: {bodyText: string, hasNoScript: boolean};
       /** Whether the page ended up on an HTTPS page after attempting to load the HTTP version. */
       HTTPRedirect: {value: boolean};
+      /** The issues surfaced in the devtools Issues panel */
+      InspectorIssues: Artifacts.InspectorIssues;
       /** JS coverage information for code used during page load. Keyed by URL. */
       JsUsage: Record<string, Crdp.Profiler.ScriptCoverage[]>;
       /** Parsed version of the page's Web App Manifest, or null if none found. */
@@ -493,13 +495,14 @@ declare global {
       }
 
       export interface TraceElement {
-        metricName: string;
+        traceEventType: 'largest-contentful-paint'|'layout-shift'|'animation';
         selector: string;
         nodeLabel?: string;
         devtoolsNodePath: string;
         snippet?: string;
         score?: number;
         boundingRect: Rect;
+        nodeId?: number;
       }
 
       export interface ViewportDimensions {
@@ -705,6 +708,18 @@ declare global {
         observedLastVisualChangeTs: number;
         observedSpeedIndex: number;
         observedSpeedIndexTs: number;
+      }
+
+      /** Information about an event listener registered on the global object. */
+      export interface GlobalListener {
+        /** Event listener type, limited to those events currently of interest. */
+        type: 'pagehide'|'unload'|'visibilitychange';
+        /** The DevTools protocol script identifier. */
+        scriptId: string;
+        /** Line number in the script (0-based). */
+        lineNumber: number;
+        /** Column number in the script (0-based). */
+        columnNumber: number;
       }
     }
   }

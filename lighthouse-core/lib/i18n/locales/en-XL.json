@@ -716,11 +716,8 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount, plural,\n    =1 {1 r̂éq̂úêśt̂ ńôt́ ŝér̂v́êd́ v̂íâ H́T̂T́P̂/2}\n    other {# ŕêq́ûéŝt́ŝ ńôt́ ŝér̂v́êd́ v̂íâ H́T̂T́P̂/2}\n    }"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "D̂óêś n̂ót̂ úŝé ĤT́T̂Ṕ/2 f̂ór̂ ál̂ĺ ôf́ ît́ŝ ŕêśôúr̂ćêś"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "Ûśêś ĤT́T̂Ṕ/2 f̂ór̂ ít̂ś ôẃn̂ ŕêśôúr̂ćêś"
+    "message": "Ûśê H́T̂T́P̂/2"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "Ĉón̂śîd́êŕ m̂ár̂ḱîńĝ ýôúr̂ t́ôúĉh́ âńd̂ ẃĥéêĺ êv́êńt̂ ĺîśt̂én̂ér̂ś âś `passive` t̂ó îḿp̂ŕôv́ê ýôúr̂ ṕâǵê'ś ŝćr̂ól̂ĺ p̂ér̂f́ôŕm̂án̂ćê. [Ĺêár̂ń m̂ór̂é](https://web.dev/uses-passive-event-listeners/)."
@@ -958,6 +955,15 @@
   },
   "lighthouse-core/audits/network-server-latency.js | title": {
     "message": "Ŝér̂v́êŕ B̂áĉḱêńd̂ Ĺât́êńĉíêś"
+  },
+  "lighthouse-core/audits/no-unload-listeners.js | description": {
+    "message": "T̂h́ê `unload` év̂én̂t́ d̂óêś n̂ót̂ f́îŕê ŕêĺîáb̂ĺŷ án̂d́ l̂íŝt́êńîńĝ f́ôŕ ît́ ĉán̂ ṕr̂év̂én̂t́ b̂ŕôẃŝér̂ óp̂t́îḿîźât́îón̂ś l̂ík̂é t̂h́ê B́âćk̂-F́ôŕŵár̂d́ Ĉáĉh́ê. Ćôńŝíd̂ér̂ úŝín̂ǵ t̂h́ê `pagehide` ór̂ `visibilitychange` év̂én̂t́ŝ ín̂śt̂éâd́. [L̂éâŕn̂ Ḿôŕê](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
+  },
+  "lighthouse-core/audits/no-unload-listeners.js | failureTitle": {
+    "message": "R̂éĝíŝt́êŕŝ án̂ `unload` ĺîśt̂én̂ér̂"
+  },
+  "lighthouse-core/audits/no-unload-listeners.js | title": {
+    "message": "Âv́ôíd̂ś `unload` êv́êńt̂ ĺîśt̂én̂ér̂ś"
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Â śêŕv̂íĉé ŵór̂ḱêŕ êńâb́l̂éŝ ýôúr̂ ẃêb́ âṕp̂ t́ô b́ê ŕêĺîáb̂ĺê ín̂ ún̂ṕr̂éd̂íĉt́âb́l̂é n̂ét̂ẃôŕk̂ ćôńd̂ít̂íôńŝ. [Ĺêár̂ń m̂ór̂é](https://web.dev/offline-start-url/)."

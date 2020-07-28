@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{1 pyyntöä ei tehty HTTP/2:n kautta}other{# pyyntöä ei tehty HTTP/2:n kautta}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "Ei käytä HTTP/2:ta kaikille resursseille"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "Käyttää HTTP/2:ta omille resursseilleen"
   },

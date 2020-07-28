@@ -20,25 +20,22 @@ const RectHelpers = require('../../lib/rect-helpers.js');
 
 /**
  * @this {HTMLElement}
- * @param {string} metricName
- * @return {LH.Artifacts.TraceElement | undefined}
  */
 /* istanbul ignore next */
-function setAttributeMarker(metricName) {
+function getNodeDetailsData() {
   const elem = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement; // eslint-disable-line no-undef
   let traceElement;
   if (elem) {
     traceElement = {
-      metricName,
-      // @ts-ignore - put into scope via stringification
+      // @ts-expect-error - put into scope via stringification
       devtoolsNodePath: getNodePath(elem), // eslint-disable-line no-undef
-      // @ts-ignore - put into scope via stringification
+      // @ts-expect-error - put into scope via stringification
       selector: getNodeSelector(elem), // eslint-disable-line no-undef
-      // @ts-ignore - put into scope via stringification
+      // @ts-expect-error - put into scope via stringification
       nodeLabel: getNodeLabel(elem), // eslint-disable-line no-undef
-      // @ts-ignore - put into scope via stringification
+      // @ts-expect-error - put into scope via stringification
       snippet: getOuterHTMLSnippet(elem), // eslint-disable-line no-undef
-      // @ts-ignore - put into scope via stringification
+      // @ts-expect-error - put into scope via stringification
       boundingRect: getBoundingClientRect(elem), // eslint-disable-line no-undef
     };
   }
@@ -138,6 +135,24 @@ class TraceElements extends Gatherer {
   }
 
   /**
+   * Find the node ids of elements which are animated using the Animation trace events.
+   * @param {Array<LH.TraceEvent>} mainThreadEvents
+   * @return {Array<TraceElementData>}
+   */
+  static getAnimatedElements(mainThreadEvents) {
+    const animatedElementIds = new Set(mainThreadEvents
+      .filter(e => e.name === 'Animation' && e.ph === 'b')
+      .map(e => this.getNodeIDFromTraceEvent(e)));
+
+    /** @type Array<TraceElementData> */
+    const animatedElementData = [];
+    for (const nodeId of animatedElementIds) {
+      nodeId && animatedElementData.push({nodeId});
+    }
+    return animatedElementData;
+  }
+
+  /**
    * @param {LH.Gatherer.PassContext} passContext
    * @param {LH.Gatherer.LoadData} loadData
    * @return {Promise<LH.Artifacts['TraceElements']>}
@@ -150,40 +165,47 @@ class TraceElements extends Gatherer {
 
     const {largestContentfulPaintEvt, mainThreadEvents} =
       TraceProcessor.computeTraceOfTab(loadData.trace);
-    /** @type {Array<TraceElementData>} */
-    const backendNodeData = [];
 
     const lcpNodeId = TraceElements.getNodeIDFromTraceEvent(largestContentfulPaintEvt);
     const clsNodeData = TraceElements.getTopLayoutShiftElements(mainThreadEvents);
-    if (lcpNodeId) {
-      backendNodeData.push({nodeId: lcpNodeId});
-    }
-    backendNodeData.push(...clsNodeData);
+    const animatedElementData = TraceElements.getAnimatedElements(mainThreadEvents);
+
+    /** @type Map<string, {nodeId: number, score?: number}[]> */
+    const backendNodeDataMap = new Map([
+      ['largest-contentful-paint', lcpNodeId ? [{nodeId: lcpNodeId}] : []],
+      ['layout-shift', clsNodeData],
+      ['animation', animatedElementData],
+    ]);
 
     const traceElements = [];
-    for (let i = 0; i < backendNodeData.length; i++) {
-      const backendNodeId = backendNodeData[i].nodeId;
-      const metricName =
-        lcpNodeId === backendNodeId ? 'largest-contentful-paint' : 'cumulative-layout-shift';
-      const objectId = await driver.resolveNodeIdToObjectId(backendNodeId);
-      if (!objectId) continue;
-      const response = await driver.sendCommand('Runtime.callFunctionOn', {
-        objectId,
-        functionDeclaration: `function () {
-          ${setAttributeMarker.toString()};
-          ${pageFunctions.getNodePathString};
-          ${pageFunctions.getNodeSelectorString};
-          ${pageFunctions.getNodeLabelString};
-          ${pageFunctions.getOuterHTMLSnippetString};
-          ${pageFunctions.getBoundingClientRectString};
-          return setAttributeMarker.call(this, '${metricName}');
-        }`,
-        returnByValue: true,
-        awaitPromise: true,
-      });
+    for (const [traceEventType, backendNodeData] of backendNodeDataMap) {
+      for (let i = 0; i < backendNodeData.length; i++) {
+        const backendNodeId = backendNodeData[i].nodeId;
+        const objectId = await driver.resolveNodeIdToObjectId(backendNodeId);
+        if (!objectId) continue;
+        const response = await driver.sendCommand('Runtime.callFunctionOn', {
+          objectId,
+          functionDeclaration: `function () {
+            ${getNodeDetailsData.toString()};
+            ${pageFunctions.getNodePathString};
+            ${pageFunctions.getNodeSelectorString};
+            ${pageFunctions.getNodeLabelString};
+            ${pageFunctions.getOuterHTMLSnippetString};
+            ${pageFunctions.getBoundingClientRectString};
+            return getNodeDetailsData.call(this);
+          }`,
+          returnByValue: true,
+          awaitPromise: true,
+        });
 
-      if (response && response.result && response.result.value) {
-        traceElements.push({...response.result.value, score: backendNodeData[i].score});
+        if (response && response.result && response.result.value) {
+          traceElements.push({
+            traceEventType,
+            ...response.result.value,
+            score: backendNodeData[i].score,
+            nodeId: backendNodeId,
+          });
+        }
       }
     }
 

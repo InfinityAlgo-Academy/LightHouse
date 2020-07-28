@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{1 richiesta non pubblicata tramite HTTP/2}other{# richieste non pubblicate tramite HTTP/2}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "Non usa HTTP/2 per tutte le sue risorse"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "Usa HTTP/2 per le proprie risorse"
   },

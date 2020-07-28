@@ -470,21 +470,12 @@
                 }
               }
             }
-          },
-          "75994.33": {
-            "request": {
-              "url": "http://localhost:10200/favicon.ico",
-              "startTime": 185608.288594,
-              "endTime": 185608.857719,
-              "responseReceivedTime": 185608.85586200003,
-              "transferSize": 221
-            }
           }
         },
         "longestChain": {
-          "duration": 5536.498000001302,
-          "length": 1,
-          "transferSize": 221
+          "duration": 4796.288000012282,
+          "length": 2,
+          "transferSize": 30174
         }
       }
     },
@@ -1853,6 +1844,34 @@
             "url": "http://localhost:10200/zone.js",
             "duration": 96.198,
             "startTime": 3996.134
+          }
+        ]
+      }
+    },
+    "no-unload-listeners": {
+      "id": "no-unload-listeners",
+      "title": "Registers an `unload` listener",
+      "description": "The `unload` event does not fire reliably and listening for it can prevent browser optimizations like the Back-Forward Cache. Consider using the `pagehide` or `visibilitychange` events instead. [Learn More](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)",
+      "score": 0,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "source",
+            "itemType": "source-location",
+            "text": "URL"
+          }
+        ],
+        "items": [
+          {
+            "source": {
+              "type": "source-location",
+              "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 386,
+              "column": 36
+            }
           }
         ]
       }
@@ -3603,23 +3622,25 @@
     },
     "uses-http2": {
       "id": "uses-http2",
-      "title": "Does not use HTTP/2 for all of its resources",
+      "title": "Use HTTP/2",
       "description": "HTTP/2 offers many benefits over HTTP/1.1, including binary headers, multiplexing, and server push. [Learn more](https://web.dev/uses-http2/).",
-      "score": 0,
+      "score": 0.41,
       "scoreDisplayMode": "binary",
+      "numericValue": 1550,
+      "numericUnit": "millisecond",
       "displayValue": "15 requests not served via HTTP/2",
       "details": {
-        "type": "table",
+        "type": "opportunity",
         "headings": [
           {
             "key": "url",
-            "itemType": "url",
-            "text": "URL"
+            "valueType": "url",
+            "label": "URL"
           },
           {
             "key": "protocol",
-            "itemType": "text",
-            "text": "Protocol"
+            "valueType": "text",
+            "label": "Protocol"
           }
         ],
         "items": [
@@ -3683,7 +3704,8 @@
             "protocol": "http/1.1",
             "url": "http://localhost:10200/favicon.ico"
           }
-        ]
+        ],
+        "overallSavingsMs": 1550
       }
     },
     "uses-passive-event-listeners": {
@@ -4210,6 +4232,11 @@
           "group": "load-opportunities"
         },
         {
+          "id": "uses-http2",
+          "weight": 0,
+          "group": "load-opportunities"
+        },
+        {
           "id": "efficient-animated-content",
           "weight": 0,
           "group": "load-opportunities"
@@ -4291,11 +4318,6 @@
         },
         {
           "id": "layout-shift-elements",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
-          "id": "uses-http2",
           "weight": 0,
           "group": "diagnostics"
         },
@@ -4658,6 +4680,11 @@
           "group": "best-practices-browser-compat"
         },
         {
+          "id": "no-unload-listeners",
+          "weight": 1,
+          "group": "best-practices-general"
+        },
+        {
           "id": "appcache-manifest",
           "weight": 1,
           "group": "best-practices-general"
@@ -4679,7 +4706,7 @@
         }
       ],
       "id": "best-practices",
-      "score": 0.08
+      "score": 0.07
     },
     "seo": {
       "title": "SEO",
@@ -5471,6 +5498,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:long-tasks",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:no-unload-listeners",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6335,6 +6368,7 @@
         "audits[network-rtt].details.headings[0].text",
         "audits[network-server-latency].details.headings[0].text",
         "audits[long-tasks].details.headings[0].text",
+        "audits[no-unload-listeners].details.headings[0].text",
         "audits[uses-long-cache-ttl].details.headings[0].text",
         "audits[total-byte-weight].details.headings[0].text",
         "audits[render-blocking-resources].details.headings[0].label",
@@ -6345,7 +6379,7 @@
         "audits[geolocation-on-start].details.headings[0].text",
         "audits[no-document-write].details.headings[0].text",
         "audits[notification-on-start].details.headings[0].text",
-        "audits[uses-http2].details.headings[0].text",
+        "audits[uses-http2].details.headings[0].label",
         "audits[uses-passive-event-listeners].details.headings[0].text"
       ],
       "lighthouse-core/audits/errors-in-console.js | columnDesc": [
@@ -6742,6 +6776,12 @@
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnDuration": [
         "audits[long-tasks].details.headings[2].text"
+      ],
+      "lighthouse-core/audits/no-unload-listeners.js | failureTitle": [
+        "audits[no-unload-listeners].title"
+      ],
+      "lighthouse-core/audits/no-unload-listeners.js | description": [
+        "audits[no-unload-listeners].description"
       ],
       "lighthouse-core/audits/manual/pwa-cross-browser.js | title": [
         "audits[pwa-cross-browser].title"
@@ -7311,7 +7351,7 @@
       "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": [
         "audits[password-inputs-can-be-pasted-into].details.headings[0].text"
       ],
-      "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": [
+      "lighthouse-core/audits/dobetterweb/uses-http2.js | title": [
         "audits[uses-http2].title"
       ],
       "lighthouse-core/audits/dobetterweb/uses-http2.js | description": [
@@ -7326,7 +7366,7 @@
         }
       ],
       "lighthouse-core/audits/dobetterweb/uses-http2.js | columnProtocol": [
-        "audits[uses-http2].details.headings[1].text"
+        "audits[uses-http2].details.headings[1].label"
       ],
       "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | failureTitle": [
         "audits[uses-passive-event-listeners].title"

@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{1 permintaan tidak dilayani melalui HTTP/2}other{# permintaan tidak dilayani melalui HTTP/2}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "Tidak menggunakan HTTP/2 untuk semua resourcenya"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "Menggunakan HTTP/2 untuk resource miliknya sendiri"
   },

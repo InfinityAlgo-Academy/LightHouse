@@ -390,7 +390,60 @@
       "requestId": "75994.22"
     }
   ],
-  "JsUsage": [],
+  "JsUsage": {
+    "http://localhost:58599/dobetterweb/dbw_tester.html": [
+      {
+        "scriptId": "12",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "13",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "16",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "17",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "19",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "20",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "21",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "22",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "23",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "44",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      }
+    ]
+  },
   "CSSUsage": {
     "rules": [
       {
@@ -2344,35 +2397,35 @@
   ],
   "TraceElements": [
     {
-      "metricName": "largest-contentful-paint",
+      "traceEventType": "largest-contentful-paint",
       "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,1,P",
       "selector": "body > div > p",
       "nodeLabel": "This domain is for use in illustrative examples in documents. You may use this …",
       "snippet": "<p class=\"paragraph\">"
     },
     {
-      "metricName": "cumulative-layout-shift",
+      "traceEventType": "layout-shift",
       "devtoolsNodePath": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,3,H5",
       "selector": "div.blog-index > article > div.entry-content > h5",
       "nodeLabel": "Debugging Node.js with Chrome DevTools",
       "snippet": "<h5>"
     },
     {
-      "metricName": "cumulative-layout-shift",
+      "traceEventType": "layout-shift",
       "devtoolsNodePath": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,4,P",
       "selector": "div.blog-index > article > div.entry-content > p",
       "nodeLabel": "The canonical guide to using the Chrome DevTools UI for debugging Node.js. It d…",
       "snippet": "<p>"
     },
     {
-      "metricName": "cumulative-layout-shift",
+      "traceEventType": "layout-shift",
       "devtoolsNodePath": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,5,HR",
       "selector": "div.blog-index > article > div.entry-content > hr",
       "nodeLabel": "hr",
       "snippet": "<hr>"
     },
     {
-      "metricName": "cumulative-layout-shift",
+      "traceEventType": "layout-shift",
       "devtoolsNodePath": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,6,P",
       "selector": "div.blog-index > article > div.entry-content > p",
       "nodeLabel": "Aside from that, I’ve been busy working on Lighthouse, performance metrics, too…",
@@ -2409,5 +2462,13 @@
   "InspectorIssues": {
     "blockedByResponse": [],
     "mixedContent": []
-  }
+  },
+  "GlobalListeners": [
+    {
+      "type": "unload",
+      "scriptId": "23",
+      "lineNumber": 386,
+      "columnNumber": 36
+    }
+  ]
 }

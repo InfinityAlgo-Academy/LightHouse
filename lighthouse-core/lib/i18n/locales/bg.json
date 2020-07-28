@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{1 заявка не е обслужена през HTTP/2}other{# заявки не са обслужени през HTTP/2}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "Не използва HTTP/2 за всичките си ресурси"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "Използва HTTP/2 за собствените си ресурси"
   },

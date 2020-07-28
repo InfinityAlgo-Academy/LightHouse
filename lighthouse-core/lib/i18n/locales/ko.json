@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{HTTP/2를 통해 게재되지 않는 요청 1건}other{HTTP/2를 통해 게재되지 않는 요청 #건}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "모든 리소스에 HTTP/2를 사용하지 않음"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "자체 리소스에 HTTP/2 사용"
   },

@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{HTTP/2 வழியாக 1 கோரிக்கை பதிலளிக்கப்படவில்லை}other{HTTP/2 வழியாக # கோரிக்கைகள் பதிலளிக்கப்படவில்லை}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "அதன் அனைத்து ஆதாரங்களுக்கும் HTTP/2வைப் பயன்படுத்தவில்லை"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "அதன் சொந்த ஆதாரங்களுக்கு HTTP/2வைப் பயன்படுத்துகிறது"
   },

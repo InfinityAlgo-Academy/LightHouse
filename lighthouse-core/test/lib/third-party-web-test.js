@@ -21,7 +21,7 @@ describe('third party web', () => {
   it('not third party if main document is same entity', () => {
     const mainDocumentEntity = thirdPartyWeb.getEntity('https://www.googletagmanager.com');
     expect(thirdPartyWeb.isThirdParty('https://www.googletagmanager.com/a.js', mainDocumentEntity)).toBe(false);
-    expect(thirdPartyWeb.isThirdParty('https://blah.atdmt.com', mainDocumentEntity)).toBe(true);
+    expect(thirdPartyWeb.isThirdParty('https://www.google-analytics.com', mainDocumentEntity)).toBe(true);
     expect(thirdPartyWeb.isThirdParty('https://www.example.com', mainDocumentEntity)).toBe(false);
   });
 });

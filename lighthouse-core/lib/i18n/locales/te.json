@@ -710,9 +710,6 @@
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{1 అభ్యర్థన 'HTTP/2' ద్వారా అందించబడలేదు}other{# అభ్యర్థనలు 'HTTP/2' ద్వారా అందించబడలేదు}}"
   },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "'HTTP/2' దాని వనరులు అన్నింటిలో వినియోగించబడలేదు"
-  },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "\"HTTP/2\" దాని స్వంత వనరులు అన్నింటిలో వినియోగించబడుతోంది"
   },
