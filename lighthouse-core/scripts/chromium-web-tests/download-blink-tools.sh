@@ -25,6 +25,10 @@ if [ -e "$BLINK_TOOLS_PATH" ]; then
 else
   mkdir -p "$BLINK_TOOLS_PATH/third_party/blink/tools"
   wget "https://chromium.googlesource.com/chromium/src/+archive/$commit_chromium/third_party/blink/tools.tar.gz" --no-check-certificate -q -O blinktools.tar.gz && tar -xf blinktools.tar.gz -C "$BLINK_TOOLS_PATH/third_party/blink/tools"
+
+  # Just need this for the results.html template.
+  mkdir -p "$BLINK_TOOLS_PATH/third_party/blink/web_tests/fast/harness"
+  wget "https://chromium.googlesource.com/chromium/src/+archive/$commit_chromium/third_party/blink/web_tests/fast/harness.tar.gz" --no-check-certificate -q -O harness.tar.gz && tar -xf harness.tar.gz -C "$BLINK_TOOLS_PATH/third_party/blink/web_tests/fast/harness"
   
   mkdir -p "$BLINK_TOOLS_PATH/third_party/typ"
   wget "https://chromium.googlesource.com/catapult/+archive/$commit_catapult/third_party/typ.tar.gz" --no-check-certificate -q -O blinktools.tar.gz && tar -xf blinktools.tar.gz -C "$BLINK_TOOLS_PATH/third_party/typ"

@@ -18,6 +18,13 @@ for file in "$LH_ROOT/.test_cache"/*/; do
   [[ $file -nt $latest_content_shell ]] && latest_content_shell=$file
 done
 
+if [ x"$latest_content_shell" == x ]; then
+  echo "Error: Did not find a content shell"
+  exit 1
+fi
+
+rm -rf "$latest_content_shell/out/Release/layout-test-results"
+
 # Run a very basic server on port 8000. Only thing we need is:
 #   - /devtools -> the layout tests for devtools frontend
 #   - /inspector-sources -> the inspector resources from the content shell
@@ -52,3 +59,5 @@ PYTHONPATH="${PYTHONPATH}:$BLINK_TOOLS_PATH/third_party/typ" python \
   --layout-tests-directory="$DEVTOOLS_PATH/test/webtests" \
   --build-directory="$latest_content_shell/out" \
   http/tests/devtools/lighthouse
+
+cp "$latest_content_shell/out/Release/layout-test-results/results.html" "$LH_ROOT/.test_cache/results.html"
