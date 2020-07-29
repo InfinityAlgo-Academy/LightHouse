@@ -10,6 +10,8 @@
 
 /* eslint-disable no-console */
 
+// Grabbed from https://github.com/ChromeDevTools/devtools-frontend/commit/26bb5ad91b147e9c918819711542ec2337d6b268
+
 const fs = require('fs');
 const path = require('path');
 const shell = require('child_process').execSync;
@@ -73,6 +75,7 @@ function findMostRecentChromiumCommit() {
   // const commitMessage = shell('git log --max-count=1 --grep="Cr-Commit-Position"').toString().trim();
   // const commitPosition = commitMessage.match(/Cr-Commit-Position: refs\/heads\/master@\{#([0-9]+)\}/)[1];
   // return commitPosition;
+  // TODO: make this dynamic.
   return '791033';
 }
 
