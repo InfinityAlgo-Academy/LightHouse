@@ -22,3 +22,6 @@ mkdir -p `dirname $DEVTOOLS_PATH`
 cd `dirname $DEVTOOLS_PATH`
 fetch devtools-frontend
 cd devtools-frontend
+
+gclient sync
+gn gen out/Default

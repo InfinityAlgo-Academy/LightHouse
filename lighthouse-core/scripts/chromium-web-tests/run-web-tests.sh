@@ -39,11 +39,7 @@ roll_devtools() {
 
 # Setup inspector-sources.
 cd "$DEVTOOLS_PATH"
-git clean -fxd
-git checkout origin/master
 roll_devtools
-gclient sync
-gn gen out/Default
 autoninja -C out/Default # Build devtools resources.
 cd -
 ln -s "$DEVTOOLS_PATH/out/Default/resources/inspector" "$DEVTOOLS_PATH/test/webtests/http/tests/inspector-sources"
@@ -84,5 +80,9 @@ set +o xtrace
 
 rm -rf "$LH_ROOT/.tmp/layout-test-results"
 cp -r "$latest_content_shell/out/Release/layout-test-results" "$LH_ROOT/.tmp/layout-test-results"
+
+if [ ! $status -eq 0 ]; then
+  find "$LH_ROOT/.tmp/layout-test-results/retry_3" -name '*-diff.txt' -exec cat {} \;
+fi
 
 exit $status
