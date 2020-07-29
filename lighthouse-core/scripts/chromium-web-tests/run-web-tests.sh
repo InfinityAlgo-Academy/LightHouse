@@ -20,7 +20,7 @@ if [ x"$DEVTOOLS_PATH" == x ]; then
 fi
 
 unset -v latest_content_shell
-for file in "$LH_ROOT/.test-cache"/*/; do
+for file in "$LH_ROOT/.tmp/chromium-web-tests/content-shells"/*/; do
   [[ $file -nt $latest_content_shell ]] && latest_content_shell=$file
 done
 
@@ -37,6 +37,8 @@ cd -
 # Setup inspector-sources.
 
 cd "$DEVTOOLS_PATH"
+git checkout 3dc032a7f76a2b80d1e58676473aaaaf464f74f4 # Temporary. Latest DevTools fails to build.
+gclient sync
 autoninja -C out/Default # Build devtools resources.
 cd -
 ln -s "$DEVTOOLS_PATH/out/Default/resources/inspector" "$DEVTOOLS_PATH/test/webtests/http/tests/inspector-sources"

@@ -31,7 +31,7 @@ jobs:
         path: |
           ${{ env.DEPOT_TOOLS_PATH }}
           ${{ env.BLINK_TOOLS_PATH }}
-          ${{ github.workspace }}/lighthouse/.test-cache
+          ${{ github.workspace }}/lighthouse/.tmp/chromium-web-tests/content-shells
         key: ${{ runner.os }}-${{ hashFiles('lighthouse/lighthouse-core/scripts/chromium-web-tests/download-*') }}
 
     - name: Use Node.js 10.x

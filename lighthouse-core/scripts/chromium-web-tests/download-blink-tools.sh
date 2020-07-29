@@ -13,8 +13,6 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 commit_chromium="41f18f569f022d78337f586dacc6eff0e0477e46"
 commit_catapult="95c1f426155576790a73778571c34a0f3cd6d608"
 
-# https://chromium.googlesource.com/catapult/+archive/refs/heads/master/third_party/typ.tar.gz
-
 if [ x"$BLINK_TOOLS_PATH" == x ]; then
   echo "Error: Environment variable BLINK_TOOLS_PATH not set"
   exit 1
@@ -24,11 +22,15 @@ if [ -e "$BLINK_TOOLS_PATH" ]; then
   echo "cached blink tools found"
 else
   mkdir -p "$BLINK_TOOLS_PATH/third_party/blink/tools"
-  wget "https://chromium.googlesource.com/chromium/src/+archive/$commit_chromium/third_party/blink/tools.tar.gz" --no-check-certificate -q -O blinktools.tar.gz && tar -xf blinktools.tar.gz -C "$BLINK_TOOLS_PATH/third_party/blink/tools"
+  wget "https://chromium.googlesource.com/chromium/src/+archive/$commit_chromium/third_party/blink/tools.tar.gz" --no-check-certificate -q -O blinktools.tar.gz
+  tar -xf blinktools.tar.gz -C "$BLINK_TOOLS_PATH/third_party/blink/tools"
+  rm blinktools.tar.gz
 
   # Just need this for the results.html template.
   mkdir -p "$BLINK_TOOLS_PATH/third_party/blink/web_tests/fast/harness"
-  wget "https://chromium.googlesource.com/chromium/src/+archive/$commit_chromium/third_party/blink/web_tests/fast/harness.tar.gz" --no-check-certificate -q -O harness.tar.gz && tar -xf harness.tar.gz -C "$BLINK_TOOLS_PATH/third_party/blink/web_tests/fast/harness"
+  wget "https://chromium.googlesource.com/chromium/src/+archive/$commit_chromium/third_party/blink/web_tests/fast/harness.tar.gz" --no-check-certificate -q -O harness.tar.gz
+  tar -xf harness.tar.gz -C "$BLINK_TOOLS_PATH/third_party/blink/web_tests/fast/harness"
+  rm harness.tar.gz
   
   mkdir -p "$BLINK_TOOLS_PATH/third_party/typ"
   wget "https://chromium.googlesource.com/catapult/+archive/$commit_catapult/third_party/typ.tar.gz" --no-check-certificate -q -O blinktools.tar.gz && tar -xf blinktools.tar.gz -C "$BLINK_TOOLS_PATH/third_party/typ"

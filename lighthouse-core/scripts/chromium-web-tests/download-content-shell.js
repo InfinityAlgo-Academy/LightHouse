@@ -20,7 +20,7 @@ const CONTENT_SHELL_ZIP = 'content-shell.zip';
 const MAX_CONTENT_SHELLS = 10;
 const PLATFORM = getPlatform();
 const LH_ROOT = `${__dirname}/../../..`;
-const CACHE_PATH = path.resolve(LH_ROOT, '.test-cache');
+const CACHE_PATH = path.resolve(LH_ROOT, '.tmp', 'chromium-web-tests', 'content-shells');
 
 function main() {
   if (!utils.isDir(CACHE_PATH)) {
@@ -34,7 +34,6 @@ function main() {
 
   function onError(error) {
     console.log('Unable to download because of error:', error);
-    // console.log(`Try removing the .test-cache folder [${CACHE_PATH}] and retrying`);
   }
 }
 main();
