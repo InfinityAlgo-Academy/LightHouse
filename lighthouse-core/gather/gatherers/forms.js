@@ -24,42 +24,39 @@ function collectFormElements() {
     labels: [],
   };
   for (const child of formChildren) {
-    const hasForm = child.closest('form');
-    if (hasForm && !forms.has(hasForm)) {
+    const parentFormElement = child.closest('form');
+    const hasForm = !!parentFormElement;
+    if (hasForm && !forms.has(parentFormElement)) {
       const newFormObj = {
         attributes: {
-          id: hasForm.id,
-          name: hasForm.name,
-          autocomplete: hasForm.autocomplete,
+          id: parentFormElement.id,
+          name: parentFormElement.name,
+          autocomplete: parentFormElement.autocomplete,
           // @ts-ignore - put into scope via stringification
           nodeLabel: getNodeLabel(child), // eslint-disable-line no-undef,
           // @ts-ignore - put into scope via stringification
-          devtoolsNodePath: getNodePath(hasForm), // eslint-disable-line no-undef
-          // @ts-ignore - put into scope via stringification
-          snippet: getOuterHTMLSnippet(hasForm), // eslint-disable-line no-undef
+          snippet: getOuterHTMLSnippet(parentFormElement), // eslint-disable-line no-undef
         },
         inputs: [],
         labels: [],
       };
-      forms.set(hasForm, newFormObj);
+      forms.set(parentFormElement, newFormObj);
     }
-    const formObj = hasForm ? forms.get(hasForm) : formlessObj;
+    const formObj = hasForm ? forms.get(parentFormElement) : formlessObj;
 
     if (child instanceof HTMLInputElement || child instanceof HTMLTextAreaElement) {
-      if (child.type !== 'submit' && child.type !== 'button') {
-        formObj.inputs.push({
-          id: child.id,
-          name: child.name,
-          placeholder: child.placeholder,
-          autocomplete: child.autocomplete,
-          // @ts-ignore - put into scope via stringification
-          nodeLabel: getNodeLabel(child), // eslint-disable-line no-undef,
-          // @ts-ignore - put into scope via stringification
-          devtoolsNodePath: getNodePath(child), // eslint-disable-line no-undef
-          // @ts-ignore - put into scope via stringification
-          snippet: getOuterHTMLSnippet(child), // eslint-disable-line no-undef
-        });
-      }
+      const isButton = child instanceof HTMLInputElement && (child.type === 'submit' || child.type === 'button');
+      if (isButton) continue;
+      formObj.inputs.push({
+        id: child.id,
+        name: child.name,
+        placeholder: child.placeholder,
+        autocomplete: child.autocomplete,
+        // @ts-ignore - put into scope via stringification
+        nodeLabel: getNodeLabel(child), // eslint-disable-line no-undef,
+        // @ts-ignore - put into scope via stringification
+        snippet: getOuterHTMLSnippet(child), // eslint-disable-line no-undef
+      });
     }
     if (child instanceof HTMLSelectElement) {
       formObj.inputs.push({
@@ -68,8 +65,6 @@ function collectFormElements() {
         autocomplete: child.autocomplete,
         // @ts-ignore - put into scope via stringification
         nodeLabel: getNodeLabel(child), // eslint-disable-line no-undef,
-        // @ts-ignore - put into scope via stringification
-        devtoolsNodePath: getNodePath(child), // eslint-disable-line no-undef
         // @ts-ignore - put into scope via stringification
         snippet: getOuterHTMLSnippet(child), // eslint-disable-line no-undef
       });
@@ -80,8 +75,6 @@ function collectFormElements() {
         for: child.htmlFor,
         // @ts-ignore - put into scope via stringification
         nodeLabel: getNodeLabel(child), // eslint-disable-line no-undef,
-        // @ts-ignore - put into scope via stringification
-        devtoolsNodePath: getNodePath(child), // eslint-disable-line no-undef
         // @ts-ignore - put into scope via stringification
         snippet: getOuterHTMLSnippet(child), // eslint-disable-line no-undef
       });

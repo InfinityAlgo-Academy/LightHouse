@@ -85,9 +85,6 @@ declare global {
       /** All the form elements in the page and formless inputs. */
       Forms: Artifacts.Form[];
       /** Attributes of an input element. */
-      FormInputs: Artifacts.FormInputsType;
-      /** Attributes of a label element */
-      FormLabels: Artifacts.FormLabelsType;
     }
 
     /**
