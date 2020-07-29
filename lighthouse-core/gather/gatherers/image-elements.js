@@ -13,7 +13,7 @@ const Gatherer = require('./gatherer.js');
 const pageFunctions = require('../../lib/page-functions.js');
 const Driver = require('../driver.js'); // eslint-disable-line no-unused-vars
 
-/* global window, getElementsInDocument, Image */
+/* global window, getElementsInDocument, Image, getNodePath, getNodeSelector, getNodeLabel, getOuterHTMLSnippet */
 
 
 /** @param {Element} element */
@@ -51,8 +51,10 @@ function getHTMLImages(allElements) {
       clientRect: getClientRect(element),
       naturalWidth: element.naturalWidth,
       naturalHeight: element.naturalHeight,
+      attributeWidth: element.getAttribute('width') || '',
+      attributeHeight: element.getAttribute('height') || '',
       isCss: false,
-      // @ts-ignore: loading attribute not yet added to HTMLImageElement definition.
+      // @ts-expect-error: loading attribute not yet added to HTMLImageElement definition.
       loading: element.loading,
       resourceSize: 0, // this will get overwritten below
       isPicture: !!element.parentElement && element.parentElement.tagName === 'PICTURE',
@@ -64,6 +66,14 @@ function getHTMLImages(allElements) {
       ),
       // https://html.spec.whatwg.org/multipage/images.html#pixel-density-descriptor
       usesSrcSetDensityDescriptor: / \d+(\.\d+)?x/.test(element.srcset),
+      // @ts-ignore - getNodePath put into scope via stringification
+      devtoolsNodePath: getNodePath(element),
+      // @ts-ignore - put into scope via stringification
+      selector: getNodeSelector(element),
+      // @ts-ignore - put into scope via stringification
+      nodeLabel: getNodeLabel(element),
+      // @ts-ignore - put into scope via stringification
+      snippet: getOuterHTMLSnippet(element),
     };
   });
 }
@@ -87,7 +97,7 @@ function getCSSImages(allElements) {
     if (!style.backgroundImage || !CSS_URL_REGEX.test(style.backgroundImage)) continue;
 
     const imageMatch = style.backgroundImage.match(CSS_URL_REGEX);
-    // @ts-ignore test() above ensures that there is a match.
+    // @ts-expect-error test() above ensures that there is a match.
     const url = imageMatch[1];
 
     images.push({
@@ -99,6 +109,8 @@ function getCSSImages(allElements) {
       // CSS Images do not expose natural size, we'll determine the size later
       naturalWidth: 0,
       naturalHeight: 0,
+      attributeWidth: '',
+      attributeHeight: '',
       isCss: true,
       isPicture: false,
       usesObjectFit: false,
@@ -107,6 +119,14 @@ function getCSSImages(allElements) {
       ),
       usesSrcSetDensityDescriptor: false,
       resourceSize: 0, // this will get overwritten below
+      // @ts-ignore - getNodePath put into scope via stringification
+      devtoolsNodePath: getNodePath(element),
+      // @ts-ignore - put into scope via stringification
+      selector: getNodeSelector(element),
+      // @ts-ignore - put into scope via stringification
+      nodeLabel: getNodeLabel(element),
+      // @ts-ignore - put into scope via stringification
+      snippet: getOuterHTMLSnippet(element),
     });
   }
 
@@ -117,7 +137,7 @@ function getCSSImages(allElements) {
 /* istanbul ignore next */
 function collectImageElementInfo() {
   /** @type {Array<Element>} */
-  // @ts-ignore - added by getElementsInDocumentFnString
+  // @ts-expect-error - added by getElementsInDocumentFnString
   const allElements = getElementsInDocument();
   return getHTMLImages(allElements).concat(getCSSImages(allElements));
 }
@@ -192,6 +212,10 @@ class ImageElements extends Gatherer {
 
     const expression = `(function() {
       ${pageFunctions.getElementsInDocumentString}; // define function on page
+      ${pageFunctions.getNodePathString};
+      ${pageFunctions.getNodeSelectorString};
+      ${pageFunctions.getNodeLabelString};
+      ${pageFunctions.getOuterHTMLSnippetString};
       ${getClientRect.toString()};
       ${getHTMLImages.toString()};
       ${getCSSImages.toString()};

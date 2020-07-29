@@ -50,11 +50,16 @@ const GatherRunner = {
 };
 
 /**
- * @param {RecursivePartial<LH.Config.Json>} json
+ * @param {LH.Config.Json} json
  */
 function makeConfig(json) {
-  // @ts-ignore: allow recursive partial.
-  return new Config(json);
+  const config = new Config(json);
+
+  // Since the config is for `gather-runner`, ensure it has `passes`.
+  if (!config.passes) {
+    throw new Error('gather-runner test configs must have `passes`');
+  }
+  return /** @type {Config & {passes: Array<LH.Config.Pass>}} */ (config);
 }
 
 const LoadFailureMode = {
@@ -131,9 +136,9 @@ function resetDefaultMockResponses() {
 }
 
 beforeEach(() => {
-  // @ts-ignore - connectionStub has a mocked version of sendCommand implemented in each test
+  // @ts-expect-error - connectionStub has a mocked version of sendCommand implemented in each test
   connectionStub = new Connection();
-  // @ts-ignore
+  // @ts-expect-error
   connectionStub.sendCommand = cmd => {
     throw new Error(`${cmd} not implemented`);
   };
@@ -208,7 +213,7 @@ describe('GatherRunner', function() {
   it('collects network user agent as an artifact', async () => {
     const requestedUrl = 'https://example.com';
     const driver = fakeDriver;
-    const config = makeConfig({passes: [{}]});
+    const config = makeConfig({passes: [{passName: 'defaultPass'}]});
     const options = {requestedUrl, driver, settings: config.settings};
 
     const results = await GatherRunner.run(config.passes, options);
@@ -223,7 +228,7 @@ describe('GatherRunner', function() {
         return Promise.resolve({finalUrl, timedOut: false});
       },
     });
-    const config = makeConfig({passes: [{}]});
+    const config = makeConfig({passes: [{passName: 'defaultPass'}]});
     const options = {requestedUrl, driver, settings: config.settings};
 
     return GatherRunner.run(config.passes, options).then(artifacts => {
@@ -496,7 +501,7 @@ describe('GatherRunner', function() {
     expect(artifacts.LighthouseRunWarnings).toHaveLength(1);
     expect(artifacts.PageLoadError).toBeInstanceOf(Error);
     expect(artifacts.PageLoadError).toMatchObject({code: 'ERRORED_DOCUMENT_REQUEST'});
-    // @ts-ignore: Test-only gatherer.
+    // @ts-expect-error: Test-only gatherer.
     expect(artifacts.TestGatherer).toBeUndefined();
   });
 
@@ -530,7 +535,7 @@ describe('GatherRunner', function() {
     expect(artifacts.LighthouseRunWarnings).toHaveLength(1);
     expect(artifacts.PageLoadError).toBeInstanceOf(Error);
     expect(artifacts.PageLoadError).toMatchObject({code: 'NO_FCP'});
-    // @ts-ignore: Test-only gatherer.
+    // @ts-expect-error: Test-only gatherer.
     expect(artifacts.TestGatherer).toBeUndefined();
   });
 
@@ -569,7 +574,7 @@ describe('GatherRunner', function() {
     const artifacts = await GatherRunner.run(config.passes, options);
     expect(artifacts.LighthouseRunWarnings).toHaveLength(1);
     expect(artifacts.PageLoadError).toEqual(null);
-    // @ts-ignore: Test-only gatherer.
+    // @ts-expect-error: Test-only gatherer.
     expect(artifacts.TestGatherer).toBeUndefined();
     expect(artifacts.devtoolsLogs).toHaveProperty('pageLoadError-nextPass');
   });
@@ -865,7 +870,7 @@ describe('GatherRunner', function() {
     const artifacts = await GatherRunner.run(config.passes, options);
 
     expect(artifacts.PageLoadError).toMatchObject({code: 'NO_DOCUMENT_REQUEST'});
-    // @ts-ignore: Test-only gatherer.
+    // @ts-expect-error: Test-only gatherer.
     expect(artifacts.TestGatherer).toBeUndefined();
 
     // The only loadData available should be prefixed with `pageLoadError-`.
@@ -917,11 +922,11 @@ describe('GatherRunner', function() {
     expect(t3.called).toBe(false);
 
     // But only t1 has a valid artifact; t2 and t3 aren't defined.
-    // @ts-ignore: Test-only gatherer.
+    // @ts-expect-error: Test-only gatherer.
     expect(artifacts.Test1).toBe('MyArtifact');
-    // @ts-ignore: Test-only gatherer.
+    // @ts-expect-error: Test-only gatherer.
     expect(artifacts.Test2).toBeUndefined();
-    // @ts-ignore: Test-only gatherer.
+    // @ts-expect-error: Test-only gatherer.
     expect(artifacts.Test3).toBeUndefined();
 
     // PageLoadError artifact has the error.
@@ -1355,6 +1360,7 @@ describe('GatherRunner', function() {
       ];
       const config = makeConfig({
         passes: [{
+          passName: 'defaultPass',
           gatherers: gatherers.map(G => ({instance: new G()})),
         }],
       });
@@ -1411,6 +1417,7 @@ describe('GatherRunner', function() {
       const gathererNames = gatherers.map(gatherer => gatherer.instance.name);
       const config = makeConfig({
         passes: [{
+          passName: 'defaultPass',
           gatherers,
         }],
       });
@@ -1445,7 +1452,7 @@ describe('GatherRunner', function() {
           /** @param {LH.Gatherer.PassContext} context */
           afterPass(context) {
             calls.afterPass.push(context.options);
-            // @ts-ignore
+            // @ts-expect-error
             return context.options.x || 'none';
           },
         });
@@ -1458,7 +1465,10 @@ describe('GatherRunner', function() {
       ];
 
       const config = makeConfig({
-        passes: [{gatherers}],
+        passes: [{
+          passName: 'defaultPass',
+          gatherers,
+        }],
       });
 
       /** @type {any} Using Test-only gatherers. */
@@ -1544,6 +1554,7 @@ describe('GatherRunner', function() {
 
       const config = makeConfig({
         passes: [{
+          passName: 'defaultPass',
           gatherers: [{instance: new WarningGatherer()}],
         }],
       });
@@ -1597,6 +1608,7 @@ describe('GatherRunner', function() {
       const gathererNames = gatherers.map(gatherer => gatherer.instance.name);
       const config = makeConfig({
         passes: [{
+          passName: 'defaultPass',
           gatherers,
         }],
       });
@@ -1748,7 +1760,7 @@ describe('GatherRunner', function() {
     it('should transform the response from the protocol, if in <M82 format', async () => {
       connectionStub.sendCommand
         .mockResponse('Page.getInstallabilityErrors', {
-          // @ts-ignore
+          // @ts-expect-error
           errors: ['Downloaded icon was empty or corrupted'],
         });
       const result = await GatherRunner.getInstallabilityErrors(passContext);

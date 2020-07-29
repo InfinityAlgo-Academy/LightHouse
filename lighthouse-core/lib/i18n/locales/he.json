@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "הדף לא מבקש הרשאה להתראות במהלך טעינת הדף"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "רכיבים שנכשלו בבדיקה"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "מניעה של הדבקת סיסמאות פוגעת ביכולת לקיים מדיניות אבטחה טובה. [מידע נוסף](https://web.dev/password-inputs-can-be-pasted-into/)."
   },
@@ -709,9 +706,6 @@
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{בקשה אחת לא מולאה דרך HTTP/2}two{# בקשות לא מולאו דרך HTTP/2}many{# בקשות לא מולאו דרך HTTP/2}other{# בקשות לא מולאו דרך HTTP/2}}"
-  },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "לא נעשה שימוש ב-HTTP/2 עבור כל משאבי הדף"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "נעשה שימוש ב-HTTP/2 עבור משאבי הדף"

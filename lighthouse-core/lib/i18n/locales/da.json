@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Undgår at anmode om tilladelse til notifikationer ved indlæsning af siden"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "Elementer, der ikke bestod gennemgangen"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "En god sikkerhedspolitik undermineres ved at forhindre indsættelse af adgangskoder. [Få flere oplysninger](https://web.dev/password-inputs-can-be-pasted-into/)."
   },
@@ -709,9 +706,6 @@
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{1 anmodning blev ikke leveret via HTTP/2}one{# anmodning blev ikke leveret via HTTP/2}other{# anmodninger blev ikke leveret via HTTP/2}}"
-  },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "Anvender ikke HTTP/2 til alle sine ressourcer"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "Anvender HTTP/2 til egne ressourcer"

@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Nie pyta o zgodę na wyświetlanie powiadomień podczas wczytywania strony"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "Nieprawidłowe elementy"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "Uniemożliwianie wklejania haseł jest sprzeczne z dobrymi zasadami bezpieczeństwa. [Więcej informacji](https://web.dev/password-inputs-can-be-pasted-into/)"
   },
@@ -709,9 +706,6 @@
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{1 żądanie nieprzesłane przez HTTP/2}few{# żądania nieprzesłane przez HTTP/2}many{# żądań nieprzesłanych przez HTTP/2}other{# żądania nieprzesłanego przez HTTP/2}}"
-  },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "Nie używa HTTP/2 dla wszystkich swoich zasobów"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "Używa HTTP/2 dla własnych zasobów"

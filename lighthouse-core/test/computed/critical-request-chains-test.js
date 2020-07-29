@@ -116,7 +116,7 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
     }
   );
 
-  it('returns correct data for two parallel chains', () => {
+  it('prunes chains not connected to the root document', () => {
     const networkRecords = mockTracingData([HIGH, HIGH, HIGH, HIGH], [[0, 2], [1, 3]]);
     const mainResource = networkRecords[0];
     const criticalChains = CriticalRequestChains.extractChain(networkRecords, mainResource);
@@ -126,15 +126,6 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
         children: {
           2: {
             request: networkRecords[2],
-            children: {},
-          },
-        },
-      },
-      1: {
-        request: networkRecords[1],
-        children: {
-          3: {
-            request: networkRecords[3],
             children: {},
           },
         },
@@ -168,11 +159,11 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
     });
   });
 
-  it('returns empty chain list when no critical request', () => {
-    const networkRecords = mockTracingData([LOW, LOW], [[0, 1]]);
+  it('returns single chain list when only root document', () => {
+    const networkRecords = mockTracingData([VERY_HIGH, LOW], [[0, 1]]);
     const mainResource = networkRecords[0];
     const criticalChains = CriticalRequestChains.extractChain(networkRecords, mainResource);
-    assert.deepEqual(criticalChains, {});
+    assert.deepEqual(criticalChains, {0: {request: mainResource, children: {}}});
   });
 
   it('returns empty chain list when no request whatsoever', () => {
@@ -182,26 +173,10 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
     assert.deepEqual(criticalChains, {});
   });
 
-  it('returns two single node chains for two independent requests', () => {
-    const networkRecords = mockTracingData([HIGH, HIGH], []);
-    const mainResource = networkRecords[0];
-    const criticalChains = CriticalRequestChains.extractChain(networkRecords, mainResource);
-    assert.deepEqual(criticalChains, {
-      0: {
-        request: networkRecords[0],
-        children: {},
-      },
-      1: {
-        request: networkRecords[1],
-        children: {},
-      },
-    });
-  });
-
   it('returns correct data on a random big graph', () => {
     const networkRecords = mockTracingData(
       Array(9).fill(HIGH),
-      [[0, 1], [1, 2], [1, 3], [4, 5], [5, 7], [7, 8], [5, 6]]
+      [[0, 1], [1, 2], [1, 3], [0, 4], [4, 5], [5, 7], [7, 8], [5, 6]]
     );
     const mainResource = networkRecords[0];
     const criticalChains = CriticalRequestChains.extractChain(networkRecords, mainResource);
@@ -222,26 +197,26 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
               },
             },
           },
-        },
-      },
-      4: {
-        request: networkRecords[4],
-        children: {
-          5: {
-            request: networkRecords[5],
+          4: {
+            request: networkRecords[4],
             children: {
-              7: {
-                request: networkRecords[7],
+              5: {
+                request: networkRecords[5],
                 children: {
-                  8: {
-                    request: networkRecords[8],
+                  7: {
+                    request: networkRecords[7],
+                    children: {
+                      8: {
+                        request: networkRecords[8],
+                        children: {},
+                      },
+                    },
+                  },
+                  6: {
+                    request: networkRecords[6],
                     children: {},
                   },
                 },
-              },
-              6: {
-                request: networkRecords[6],
-                children: {},
               },
             },
           },
@@ -264,6 +239,7 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
     networkRecords[3].statusCode = 302;
     networkRecords[3].redirectDestination = {
       redirectDestination: {
+        initiatorRequest: networkRecords[2],
         resourceType: NetworkRequest.TYPES.Stylesheet,
         priority: 'High',
       },
