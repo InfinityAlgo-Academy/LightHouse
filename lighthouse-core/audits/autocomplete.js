@@ -88,7 +88,6 @@ class AutocompleteAudit extends Audit {
         noAutocompleteData.push({
           failingElements: /** @type {LH.Audit.Details.NodeValue} */ ({
             type: 'node',
-            path: input.devtoolsNodePath,
             snippet: input.snippet,
             nodeLabel: input.nodeLabel,
           }),
@@ -101,7 +100,6 @@ class AutocompleteAudit extends Audit {
         autocompleteInvalidData.push({
           failingElements: /** @type {LH.Audit.Details.NodeValue} */ ({
             type: 'node',
-            path: input.devtoolsNodePath,
             snippet: input.snippet,
             nodeLabel: input.nodeLabel,
           }),

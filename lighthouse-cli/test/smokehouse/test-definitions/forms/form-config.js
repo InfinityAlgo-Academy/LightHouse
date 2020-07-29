@@ -11,6 +11,11 @@
  */
 const config = {
   extends: 'lighthouse:default',
+  settings: {
+    onlyAudits: [
+      'autocomplete',
+    ],
+  },
 };
 
 module.exports = config;
