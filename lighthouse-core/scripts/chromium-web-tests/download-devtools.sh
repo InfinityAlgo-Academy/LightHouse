@@ -15,7 +15,6 @@ if [ -d "$DEVTOOLS_PATH" ]
 then
   echo "Directory $DEVTOOLS_PATH already exists."
   cd "$DEVTOOLS_PATH"
-  gn gen out/Default
   exit 0
 fi
 
@@ -23,4 +22,3 @@ mkdir -p `dirname $DEVTOOLS_PATH`
 cd `dirname $DEVTOOLS_PATH`
 fetch devtools-frontend
 cd devtools-frontend
-gn gen out/Default

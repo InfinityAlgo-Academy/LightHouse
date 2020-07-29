@@ -39,6 +39,7 @@ cd -
 cd "$DEVTOOLS_PATH"
 git checkout 3dc032a7f76a2b80d1e58676473aaaaf464f74f4 # Temporary. Latest DevTools fails to build.
 gclient sync
+gn gen out/Default
 autoninja -C out/Default # Build devtools resources.
 cd -
 ln -s "$DEVTOOLS_PATH/out/Default/resources/inspector" "$DEVTOOLS_PATH/test/webtests/http/tests/inspector-sources"
