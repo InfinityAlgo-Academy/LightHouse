@@ -45,7 +45,8 @@ function collectFormElements() {
     const formObj = hasForm ? forms.get(parentFormElement) : formlessObj;
 
     if (child instanceof HTMLInputElement || child instanceof HTMLTextAreaElement) {
-      const isButton = child instanceof HTMLInputElement && (child.type === 'submit' || child.type === 'button');
+      const isButton = child instanceof HTMLInputElement &&
+      (child.type === 'submit' || child.type === 'button');
       if (isButton) continue;
       formObj.inputs.push({
         id: child.id,
