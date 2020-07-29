@@ -18,7 +18,7 @@ function collectFormElements() {
   // @ts-ignore - put into scope via stringification
   const formChildren = getElementsInDocument('textarea, input, label, select'); // eslint-disable-line no-undef
   const forms = new Map();
-  /** @type { { inputs: LH.Artifacts['FormInputs'][], labels: LH.Artifacts['FormLabels'][] }  } */
+  /** @type { { inputs: Array<LH.Artifacts.FormInput>, labels: Array<LH.Artifacts.FormLabel> }  } */
   const formlessObj = {
     inputs: [],
     labels: [],
