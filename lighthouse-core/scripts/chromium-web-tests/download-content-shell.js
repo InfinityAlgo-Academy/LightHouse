@@ -25,9 +25,7 @@ const LH_ROOT = `${__dirname}/../../..`;
 const CACHE_PATH = path.resolve(LH_ROOT, '.tmp', 'chromium-web-tests', 'content-shells');
 
 function main() {
-  if (!utils.isDir(CACHE_PATH)) {
-    fs.mkdirSync(CACHE_PATH);
-  }
+  fs.mkdirSync(CACHE_PATH, {recursive: true});
   deleteOldContentShells();
 
   findPreviousUploadedPosition(findMostRecentChromiumCommit())
