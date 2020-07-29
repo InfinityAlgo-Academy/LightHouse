@@ -24,11 +24,13 @@ for file in "$LH_ROOT/.tmp/chromium-web-tests/content-shells"/*/; do
   [[ $file -nt $latest_content_shell ]] && latest_content_shell=$file
 done
 
-# Roll devtools. Besides giving DevTools the latest lighthouse source files,
-# this also copies over the webtests.
-cd "$LH_ROOT"
-yarn devtools "$DEVTOOLS_PATH"
-cd -
+roll_devtools() {
+  # Roll devtools. Besides giving DevTools the latest lighthouse source files,
+  # this also copies over the webtests.
+  cd "$LH_ROOT"
+  yarn devtools "$DEVTOOLS_PATH"
+  cd -
+}
 
 # Run a very basic server on port 8000. Only thing we need is:
 #   - /devtools -> the layout tests for devtools frontend
@@ -37,7 +39,9 @@ cd -
 
 # Setup inspector-sources.
 cd "$DEVTOOLS_PATH"
-git checkout 3dc032a7f76a2b80d1e58676473aaaaf464f74f4 # Temporary. Latest DevTools fails to build.
+git clean -fxd
+git checkout origin/master
+roll_devtools
 gclient sync
 gn gen out/Default
 autoninja -C out/Default # Build devtools resources.
@@ -52,7 +56,7 @@ cleanup() {
 trap 'cleanup' EXIT
 
 # Serve from devtools frontend webtests folder.
-(npx http-server "$DEVTOOLS_PATH/test/webtests/http/tests" -p 8000 --cors > /dev/null 2>&1) &
+(npx http-server@0.12.3 "$DEVTOOLS_PATH/test/webtests/http/tests" -p 8000 --cors > /dev/null 2>&1) &
 SERVER_PID=$!
 
 echo "Waiting for server"

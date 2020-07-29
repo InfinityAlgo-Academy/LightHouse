@@ -33,7 +33,9 @@ else
   rm harness.tar.gz
 
   mkdir -p "$BLINK_TOOLS_PATH/third_party/typ"
-  wget "https://chromium.googlesource.com/catapult/+archive/$commit_catapult/third_party/typ.tar.gz" --no-check-certificate -q -O blinktools.tar.gz && tar -xf blinktools.tar.gz -C "$BLINK_TOOLS_PATH/third_party/typ"
+  wget "https://chromium.googlesource.com/catapult/+archive/$commit_catapult/third_party/typ.tar.gz" --no-check-certificate -q -O typ.tar.gz
+  tar -xf typ.tar.gz -C "$BLINK_TOOLS_PATH/third_party/typ"
+  rm typ.tar.gz
 
   cd "$BLINK_TOOLS_PATH"
   git init
