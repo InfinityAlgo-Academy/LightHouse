@@ -55,6 +55,9 @@ jobs:
     - name: Run Web Tests
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/run-web-tests.sh
 
+    - name: Print diff
+      if: failure()
+      run: cat $GITHUB_WORKSPACE/lighthouse/.tmp/layout-test-results/retry_3/**/*-diff.txt
     - name: Upload results
       uses: actions/upload-artifact@v2
       if: failure()
