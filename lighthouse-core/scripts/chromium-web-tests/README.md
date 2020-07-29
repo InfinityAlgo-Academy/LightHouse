@@ -28,6 +28,8 @@ Normally, running these webtests requires a full Chromium checkout. However, tha
 
 `run_web_tests.py` normally uses Apache to host the webtest resources while the tests run. However, Apache is a very heavy dependency, and doesn't work well in GitHub actions. The majority of how Apache is configured is unnecessary for our layout tests, so instead `npx http-server` is used. How the web server is launched is not configurable in `run_web_tests.py`, so instead we apply a small patch to skip its usage.
 
+`run_web_tests.py` also verifies that `image_diff` has been built from the Chromium checkout. We don't need that in our tests, so we skip that check. It's only for screenshot tests.
+
 `run_web_tests.py` requires a content shell binary. Instead of building it, we download it.
 
 2) Download a prebuilt content shell (barebones Chromium that is used by webtests)
