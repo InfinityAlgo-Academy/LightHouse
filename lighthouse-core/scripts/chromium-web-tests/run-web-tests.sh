@@ -24,7 +24,8 @@ for file in "$LH_ROOT/.tmp/chromium-web-tests/content-shells"/*/; do
   [[ $file -nt $latest_content_shell ]] && latest_content_shell=$file
 done
 
-# Roll devtools.
+# Roll devtools. Besides giving DevTools the latest lighthouse source files,
+# this also copies over the webtests.
 cd "$LH_ROOT"
 yarn devtools "$DEVTOOLS_PATH"
 cd -
@@ -35,17 +36,12 @@ cd -
 #   - CORS (Access-Control-Allow-Origin header)
 
 # Setup inspector-sources.
-
 cd "$DEVTOOLS_PATH"
 git checkout 3dc032a7f76a2b80d1e58676473aaaaf464f74f4 # Temporary. Latest DevTools fails to build.
 gclient sync
 autoninja -C out/Default # Build devtools resources.
 cd -
 ln -s "$DEVTOOLS_PATH/out/Default/resources/inspector" "$DEVTOOLS_PATH/test/webtests/http/tests/inspector-sources"
-
-# Setup lighthouse webtests.
-rm -rf "$DEVTOOLS_PATH/test/webtests/http/tests/devtools/lighthouse"
-ln -s "$SCRIPT_DIR/webtests/http/tests/devtools/lighthouse" "$DEVTOOLS_PATH/test/webtests/http/tests/devtools/lighthouse"
 
 # Kill background jobs when script ends.
 cleanup() {
