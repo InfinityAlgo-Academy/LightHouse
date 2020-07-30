@@ -29,6 +29,7 @@ jobs:
       with:
         path: |
           ${{ env.DEPOT_TOOLS_PATH }}
+          ${{ env.DEVTOOLS_PATH }}
           ${{ env.BLINK_TOOLS_PATH }}
           ${{ github.workspace }}/lighthouse/.tmp/chromium-web-tests/content-shells
         key: ${{ runner.os }}-${{ hashFiles('lighthouse/lighthouse-core/scripts/chromium-web-tests/download-*') }}
@@ -68,12 +69,14 @@ jobs:
     - name: Reset Results
       if: failure() && github.actor != 'patrickhulce' && github.actor != 'brendankenny'
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/run-web-tests.sh --reset-results
+    - run: cd $GITHUB_WORKSPACE/lighthouse && git status
+      if: failure() && github.actor != 'patrickhulce' && github.actor != 'brendankenny'
     - name: Commit new expectations
       if: failure() && github.actor != 'patrickhulce' && github.actor != 'brendankenny'
       uses: EndBug/add-and-commit@v4
       with:
-        add: lighthouse-core/scripts/chromium-web-tests/webtests
         cwd: ${{ github.workspace }}/lighthouse
-        message: 'update webtest expectations'
+        add: lighthouse-core/scripts/chromium-web-tests/webtests
+        message: update webtest expectations
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
