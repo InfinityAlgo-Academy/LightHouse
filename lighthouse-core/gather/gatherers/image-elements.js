@@ -148,9 +148,11 @@ function collectImageElementInfo() {
  */
 /* istanbul ignore next */
 function determineNaturalSize(url) {
+  // @ts-expect-error nativePromise installed by driver.cacheNatives()
   return new __nativePromise((resolve, reject) => {
     const img = new Image();
     img.addEventListener('error', _ =>
+        // @ts-expect-error __nativeError installed by driver.cacheNatives()
         reject(new __nativeError('determineNaturalSize failed img load')));
     img.addEventListener('load', () => {
       resolve({
