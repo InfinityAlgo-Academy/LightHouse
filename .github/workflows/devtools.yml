@@ -64,11 +64,16 @@ jobs:
       with:
         name: results
         path: ${{ github.workspace }}/lighthouse/.tmp/layout-test-results
+
     - name: Reset Results
       if: failure() && github.actor != 'patrickhulce' && github.actor != 'brendankenny'
-      run: |
-        bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/run-web-tests.sh --reset-results
-        cd $GITHUB_WORKSPACE/lighthouse
-        git add lighthouse-core/scripts/chromium-web-tests/webtests
-        git commit -m 'update webtest expectations'
-        git push
+      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/run-web-tests.sh --reset-results
+    - name: Commit new expectations
+      if: failure() && github.actor != 'patrickhulce' && github.actor != 'brendankenny'
+      uses: EndBug/add-and-commit@v4
+      with:
+        add: lighthouse-core/scripts/chromium-web-tests/webtests
+        cwd: ${{ github.workspace }}/lighthouse
+        message: 'update webtest expectations'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

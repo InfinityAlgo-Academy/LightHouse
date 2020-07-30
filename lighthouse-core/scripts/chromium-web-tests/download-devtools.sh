@@ -20,7 +20,7 @@ fi
 
 mkdir -p `dirname $DEVTOOLS_PATH`
 cd `dirname $DEVTOOLS_PATH`
-fetch devtools-frontend
+fetch --nohooks --no-history devtools-frontend
 cd devtools-frontend
 
 gclient sync
