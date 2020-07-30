@@ -24,7 +24,7 @@ jobs:
       with:
         path: lighthouse
     
-    - name: Cache depot tools, blink tools and content shell
+    - name: Cache depot tools, devtools, blink tools and content shell
       uses: actions/cache@v2
       with:
         path: |

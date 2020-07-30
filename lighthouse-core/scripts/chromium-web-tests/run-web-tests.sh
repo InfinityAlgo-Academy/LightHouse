@@ -82,6 +82,7 @@ set +o xtrace
 
 rm -rf "$LH_ROOT/.tmp/layout-test-results"
 cp -r "$latest_content_shell/out/Release/layout-test-results" "$LH_ROOT/.tmp/layout-test-results"
+cp "$DEVTOOLS_PATH/test/webtests/http/tests/devtools/lighthouse/"*-expected.txt "$SCRIPT_DIR/webtests/http/tests/devtools/lighthouse"
 
 if [ ! $status -eq 0 ]; then
   find "$LH_ROOT/.tmp/layout-test-results/retry_3" -name '*-diff.txt' -exec cat {} \;
