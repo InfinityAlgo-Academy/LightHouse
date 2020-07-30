@@ -10,7 +10,7 @@ const assert = require('assert').strict;
 const {computeCSSTokenLength, computeJSTokenLength} = require('../../lib/minification-estimator.js'); // eslint-disable-line max-len
 
 const angularFullScript = fs.readFileSync(require.resolve('angular/angular.js'), 'utf8');
-const zoneMinifiedScript = fs.readFileSync(`${__dirname}/../../../lighthouse-cli/test/fixtures/dobetterweb/third_party/aggressive-promise-polyfill.js`, 'utf8'); // eslint-disable-line max-len
+const zoneMinifiedScript = fs.readFileSync(`${__dirname}/../../../lighthouse-cli/test/fixtures/dobetterweb/third_party/bad-promise-polyfill.js`, 'utf8'); // eslint-disable-line max-len
 
 /* eslint-env jest */
 
