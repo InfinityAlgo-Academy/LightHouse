@@ -72,7 +72,6 @@ function collectFormElements() {
     }
     if (child instanceof HTMLLabelElement) {
       formObj.labels.push({
-        id: child.id,
         for: child.htmlFor,
         // @ts-ignore - put into scope via stringification
         nodeLabel: getNodeLabel(child), // eslint-disable-line no-undef,
