@@ -184,7 +184,7 @@ class NoVulnerableLibrariesAudit extends Audit {
     /** @type {Array<{highestSeverity: string, vulnCount: number, detectedLib: LH.Audit.Details.LinkValue}>} */
     const vulnerabilityResults = [];
 
-    const libraryVulns = foundLibraries.map(lib => {
+    for (const lib of foundLibraries) {
       const version = this.normalizeVersion(lib.version) || '';
       const vulns = this.getVulnerabilities(version, lib, snykDB);
       const vulnCount = vulns.length;
@@ -204,15 +204,7 @@ class NoVulnerableLibrariesAudit extends Audit {
           },
         });
       }
-
-      return {
-        name: lib.name,
-        npmPkgName: lib.npm,
-        version,
-        vulns,
-        highestSeverity,
-      };
-    });
+    }
 
     let displayValue = '';
     if (totalVulns > 0) {
@@ -230,10 +222,6 @@ class NoVulnerableLibrariesAudit extends Audit {
     return {
       score: Number(totalVulns === 0),
       displayValue,
-      extendedInfo: {
-        jsLibs: libraryVulns,
-        vulnerabilities: vulnerabilityResults,
-      },
       details,
     };
   }

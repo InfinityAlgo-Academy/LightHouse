@@ -74,6 +74,7 @@ setTimeout(() => {
   <!-- FAIL(optimized): image is not JPEG optimized -->
   <!-- FAIL(webp): image is not WebP optimized -->
   <!-- PASS(responsive): image is used at full size -->
+  <!-- PASS(responsive-inverse): image is not visible -->
   <!-- FAIL(offscreen): image is offscreen -->
   <img style="position: absolute; top: -10000px;" src="lighthouse-unoptimized.jpg">
 
@@ -81,77 +82,108 @@ setTimeout(() => {
   <!-- FAIL(optimized): image is not optimized -->
   <!-- FAIL(webp): image is not WebP optimized -->
   <!-- PASS(responsive): image is used at full size -->
+  <!-- FAIL(responsive-inverse): image does not account for DPR 2.625 -->
   <!--<img src="http://localhost:10503/byte-efficiency/lighthouse-unoptimized.jpg">-->
 
   <!-- PASS(optimized): image is JPEG optimized -->
   <!-- FAIL(webp): image is not WebP optimized -->
   <!-- FAIL(responsive): image is 50% used at DPR 3 -->
+  <!-- PASS(responsive-inverse): image is big enough -->
   <!-- PASS(offscreen): image is onscreen -->
   <img style="width: 256px; height: 170px;" src="lighthouse-1024x680.jpg">
 
   <!-- PASS(optimized): image is JPEG optimized -->
   <!-- PASS(webp): image is WebP optimized -->
   <!-- FAIL(responsive): image is 25% used at DPR 2.625 -->
+  <!-- PASS(responsive-inverse): image is big enough -->
   <!-- PASS(offscreen): image is offscreen but lazily loaded -->
   <img style="width: 0px; height: 0px;" src="lighthouse-2048x1356.webp?size0" loading="lazy">
 
   <!-- PASS(optimized): image is JPEG optimized -->
   <!-- FAIL(webp): image is not WebP optimized -->
   <!-- FAIL(responsive): image is not fully used at DPR 2.625 -->
+  <!-- PASS(responsive-inverse): image is big enough -->
   <!-- PASS(offscreen): image is onscreen -->
   <img style="width: 160px; height: 110px;" src="lighthouse-480x320.jpg">
 
   <!-- PASS(optimized): image is JPEG optimized -->
   <!-- PASS(webp): image has insigificant WebP savings -->
   <!-- PASS(responsive): image is used at full size -->
+  <!-- FAIL(responsive-inverse): image does not account for DPR 2.625 -->
   <!-- PASS(offscreen): image is onscreen -->
   <img src="lighthouse-320x212-poor.jpg">
 
   <!-- PASS(optimized): image is JPEG optimized -->
+  <!-- PASS(webp): image is WebP savings -->
+  <!-- PASS(responsive): image is used at full size with srcset -->
+  <!-- PASS(responsive-inverse): image is big enough -->
+  <!-- PASS(offscreen): image is onscreen -->
+  <img class="onscreen" sizes="(max-width: 2000px) 160px, 2048px" src="lighthouse-320x212-poor.jpg?srcset" srcset="lighthouse-480x320.webp?srcset 480w, lighthouse-2048x1356.webp?srcset 2048w">
+
+  <!-- PASS(optimized): image is JPEG optimized -->
+  <!-- PASS(webp): image is WebP savings -->
+  <!-- PASS(responsive): image is used at full size with <picture> -->
+  <!-- PASS(responsive-inverse): image is big enough -->
+  <!-- PASS(offscreen): image is onscreen -->
+  <picture class="onscreen">
+    <source media="(max-width: 2000px)" srcset="lighthouse-480x320.webp?picture">
+    <source media="(min-width: 2001px)" srcset="lighthouse-2048x1356.webp?picture">
+    <img src="lighthouse-320x212-poor.jpg?picture" height="108">
+  </picture>
+
+  <!-- PASS(optimized): image is JPEG optimized -->
   <!-- PASS(webp): image is WebP optimized -->
   <!-- FAIL(responsive): image is 50% used at DPR 2.625 (but small savings) -->
+  <!-- PASS(responsive-inverse): image is big enough -->
   <!-- FAIL(offscreen): image is offscreen -->
   <img style="margin-top: 4000px; width: 120px; height: 80px;" src="lighthouse-480x320.webp">
 
   <!-- PASS(optimized): image is JPEG optimized -->
   <!-- PASS(webp): image is WebP optimized -->
   <!-- PASS(responsive): image is not visible -->
+  <!-- PASS(responsive-inverse): is not visible -->
   <!-- FAIL(offscreen): image is not visible -->
   <div class="onscreen" style="display: none;"><img class="onscreen" style="width: 120px; height: 80px;" src="lighthouse-480x320.webp?invisible"></div>
 
   <!-- PASS(optimized): image is vector -->
   <!-- PASS(webp): image is vector -->
   <!-- PASS(responsive): image is vector -->
+  <!-- PASS(responsive-inverse): is vector -->
   <!-- FAIL(offscreen): image is offscreen -->
   <img style="width: 100px; height: 100px;" src="large.svg">
 
   <!-- PASS(optimized): image is vector -->
   <!-- PASS(webp): image is vector -->
   <!-- PASS(responsive): image is vector -->
+  <!-- PASS(responsive-inverse): is vector -->
   <!-- PASS(offscreen): image is offscreen and loads before TTI, but loads lazily -->
   <img style="width: 100px; height: 100px;" src="large.svg?nativeLazyLoad" loading="lazy">
 
   <!-- PASS(optimized): image is JPEG optimized -->
   <!-- PASS(webp): image has insigificant WebP savings -->
   <!-- PASS(responsive): image is later used at full size -->
+  <!-- PASS(responsive-inverse): image is big enough -->
   <!-- PASS(offscreen): image is later used onscreen -->
   <img style="width: 24px; height: 16px;"src="lighthouse-320x212-poor.jpg?duplicate">
 
   <!-- PASS(optimized): image is JPEG optimized -->
   <!-- PASS(webp): image has insigificant WebP savings -->
   <!-- PASS(responsive): image is used at full size -->
+  <!-- FAIL(responsive-inverse): image does not account for DPR 2.625 -->
   <!-- PASS(offscreen): image is onscreen -->
   <img class="onscreen" src="lighthouse-320x212-poor.jpg?duplicate">
 
   <!-- PASS(optimized): image is JPEG optimized -->
   <!-- FAIL(webp): image is not WebP optimized -->
   <!-- PASS(responsive): image is in CSS -->
+  <!-- PASS(responsive-inverse): image is in CSS -->
   <!-- PASS(offscreen): image is onscreen -->
   <div class="onscreen" style="width: 120px; height: 80px; background: 50% 50% url(lighthouse-480x320.jpg?css);"></div>
 
   <!-- PASS(optimized): image is JPEG optimized -->
   <!-- FAIL(webp): image is not WebP optimized -->
   <!-- PASS(responsive): image is in CSS -->
+  <!-- PASS(responsive-inverse): image is in CSS -->
   <!-- PASS(offscreen): image is onscreen -->
   <div class="onscreen" style="width: 30px; height: 30px; background: 0% 50% url(lighthouse-480x320.jpg?sprite);"></div>
   <div class="onscreen" style="width: 30px; height: 30px; background: 25% 50% url(lighthouse-480x320.jpg?sprite);"></div>

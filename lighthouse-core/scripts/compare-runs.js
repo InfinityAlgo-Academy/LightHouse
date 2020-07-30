@@ -179,14 +179,15 @@ async function audit() {
       if (fs.existsSync(outputPath)) continue;
 
       try {
-        await execFile('node', [
+        const args = [
           `${LH_ROOT}/lighthouse-cli`,
           url,
           `--audit-mode=${gatherDir}`,
           `--output-path=${outputPath}`,
           '--output=json',
-          argv.lhFlags,
-        ]);
+        ];
+        if (argv.lhFlags) args.push(argv.lhFlags);
+        await execFile('node', args);
       } catch (e) {
         console.error('audit error:', e);
       }
@@ -290,7 +291,7 @@ function filter(results) {
 
     for (const propName of Object.keys(result)) {
       if (reportExcludeRegex && reportExcludeRegex.test(propName)) {
-        // @ts-ignore: propName is a key.
+        // @ts-expect-error: propName is a key.
         delete result[propName];
       }
     }
@@ -367,9 +368,9 @@ function compare() {
 
   const sortByKey = `${argv.deltaPropertySort} Δ`;
   results.sort((a, b) => {
-    // @ts-ignore - shhh tsc.
+    // @ts-expect-error - shhh tsc.
     let aValue = a[sortByKey];
-    // @ts-ignore - shhh tsc.
+    // @ts-expect-error - shhh tsc.
     let bValue = b[sortByKey];
 
     // Always put the keys missing a result at the bottom of the table.

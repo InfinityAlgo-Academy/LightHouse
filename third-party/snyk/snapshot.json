@@ -1,6 +1,7 @@
 {
   "npm":{
     "angular":[
+      {"id":"SNYK-JS-ANGULAR-572020","severity":"high","semver":{"vulnerable":["<1.8.0"]}},
       {"id":"SNYK-JS-ANGULAR-570058","severity":"medium","semver":{"vulnerable":["<1.8.0"]}},
       {"id":"SNYK-JS-ANGULAR-534884","severity":"high","semver":{"vulnerable":[">=1.4.0-beta.6 <1.7.9"]}},
       {"id":"SNYK-JS-ANGULAR-471885","severity":"medium","semver":{"vulnerable":["<1.6.3"]}},

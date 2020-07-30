@@ -11,12 +11,10 @@ assumes you've installed Lighthouse as a dependency (`yarn add --dev lighthouse`
 const fs = require('fs');
 const lighthouse = require('lighthouse');
 const chromeLauncher = require('chrome-launcher');
-const log = require('lighthouse-logger');
 
 (async () => {
-  log.setLevel('info');
   const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
-  const options = {output: 'html', onlyCategories: ['performance'], port: chrome.port};
+  const options = {logLevel: 'info', output: 'html', onlyCategories: ['performance'], port: chrome.port};
   const runnerResult = await lighthouse('https://example.com', options);
 
   // `.report` is the HTML report as a string
@@ -65,15 +63,11 @@ Note that some flag functionality is only available to the CLI. The set of share
 
 ### Turn on logging
 
-If you want to see log output as Lighthouse runs, include the `lighthouse-logger` module
-and set an appropriate logging level in your code. You'll also need to pass
+If you want to see log output as Lighthouse runs, set an appropriate logging level in your code and pass
 the `logLevel` flag when calling `lighthouse`.
 
 ```javascript
-const log = require('lighthouse-logger');
-
 const flags = {logLevel: 'info'};
-log.setLevel(flags.logLevel);
 
 launchChromeAndRunLighthouse('https://example.com', flags).then(...);
 ```

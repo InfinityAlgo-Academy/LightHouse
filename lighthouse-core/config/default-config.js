@@ -72,7 +72,7 @@ const UIStrings = {
   /** Title of the navigation section within the Accessibility category. Within this section are audits with descriptive titles that highlight opportunities to improve the experience of reading tabular or list data using assistive technology. */
   a11yTablesListsVideoGroupTitle: 'Tables and lists',
   /** Description of the navigation section within the Accessibility category. Within this section are audits with descriptive titles that highlight opportunities to improve the experience of reading tabular or list data using assistive technology. */
-  a11yTablesListsVideoGroupDescription: 'These are opportunities to to improve the experience of reading tabular or list data using assistive technology, like a screen reader.',
+  a11yTablesListsVideoGroupDescription: 'These are opportunities to improve the experience of reading tabular or list data using assistive technology, like a screen reader.',
   /** Title of the Search Engine Optimization (SEO) category of audits. This is displayed at the top of a list of audits focused on topics related to optimizing a website for indexing by search engines. Also used as a label of a score gauge; try to limit to 20 characters. */
   seoCategoryTitle: 'SEO',
   /** Description of the Search Engine Optimization (SEO) category. This is displayed at the top of a list of audits focused on optimizing a website for indexing by search engines. No character length limits. 'Learn More' becomes link text to additional documentation. */
@@ -147,6 +147,7 @@ const defaultConfig = {
       'script-elements',
       'iframe-elements',
       'main-document-content',
+      'global-listeners',
       'dobetterweb/appcache',
       'dobetterweb/doctype',
       'dobetterweb/domstats',
@@ -236,6 +237,7 @@ const defaultConfig = {
     'largest-contentful-paint-element',
     'layout-shift-elements',
     'long-tasks',
+    'no-unload-listeners',
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',
     'manual/pwa-each-page-has-url',
@@ -303,6 +305,8 @@ const defaultConfig = {
     'byte-efficiency/uses-text-compression',
     'byte-efficiency/uses-responsive-images',
     'byte-efficiency/efficient-animated-content',
+    'byte-efficiency/duplicated-javascript',
+    'byte-efficiency/legacy-javascript',
     'dobetterweb/appcache-manifest',
     'dobetterweb/doctype',
     'dobetterweb/charset',
@@ -442,7 +446,10 @@ const defaultConfig = {
         {id: 'server-response-time', weight: 0, group: 'load-opportunities'},
         {id: 'redirects', weight: 0, group: 'load-opportunities'},
         {id: 'uses-rel-preload', weight: 0, group: 'load-opportunities'},
+        {id: 'uses-http2', weight: 0, group: 'load-opportunities'},
         {id: 'efficient-animated-content', weight: 0, group: 'load-opportunities'},
+        {id: 'duplicated-javascript', weight: 0, group: 'load-opportunities'},
+        {id: 'legacy-javascript', weight: 0, group: 'load-opportunities'},
         {id: 'total-byte-weight', weight: 0, group: 'diagnostics'},
         {id: 'uses-long-cache-ttl', weight: 0, group: 'diagnostics'},
         {id: 'dom-size', weight: 0, group: 'diagnostics'},
@@ -457,7 +464,6 @@ const defaultConfig = {
         {id: 'third-party-summary', weight: 0, group: 'diagnostics'},
         {id: 'largest-contentful-paint-element', weight: 0, group: 'diagnostics'},
         {id: 'layout-shift-elements', weight: 0, group: 'diagnostics'},
-        {id: 'uses-http2', weight: 0, group: 'diagnostics'},
         {id: 'uses-passive-event-listeners', weight: 0, group: 'diagnostics'},
         {id: 'no-document-write', weight: 0, group: 'diagnostics'},
         {id: 'long-tasks', weight: 0, group: 'diagnostics'},
@@ -552,6 +558,7 @@ const defaultConfig = {
         {id: 'doctype', weight: 1, group: 'best-practices-browser-compat'},
         {id: 'charset', weight: 1, group: 'best-practices-browser-compat'},
         // General Group
+        {id: 'no-unload-listeners', weight: 1, group: 'best-practices-general'},
         {id: 'appcache-manifest', weight: 1, group: 'best-practices-general'},
         {id: 'js-libraries', weight: 0, group: 'best-practices-general'},
         {id: 'deprecations', weight: 1, group: 'best-practices-general'},

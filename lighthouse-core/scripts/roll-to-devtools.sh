@@ -6,12 +6,17 @@
 # Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 ##
 
+# You will need a Chromium checkout: https://chromium.googlesource.com/devtools/devtools-frontend/+/HEAD/docs/workflows.md#integrated-checkout
+# You could use the standalone DevTools workflow, but you won't be able to run layout tests, so
+# if you are the release manager you'll need the full Chromium checkout.
+
 # usage:
 
+# default to an full checkout at ~/chromium/src
 #   yarn devtools
 
-# with a custom devtools front_end location:
-#   yarn devtools node_modules/temp-devtoolsfrontend/
+# with a custom devtools location (could be path to standalone checkout):
+#   yarn devtools ~/code/devtools/devtools-frontend
 
 chromium_dir="$HOME/chromium/src"
 check="\033[96m ✓\033[39m"
@@ -53,6 +58,6 @@ rsync -avh "$lh_locales_dir" "$fe_locales_dir" --exclude="*.ctc.json" --delete
 echo -e "$check Locale JSON files copied."
 
 echo ""
-echo "Done. To rebase the test expectations, run: "
-echo "    yarn --cwd ~/chromium/src/third_party/devtools-frontend/src test 'http/tests/devtools/lighthouse/*.js' --layout-tests-dir test/webtests --reset-results"
-echo " (you also need to do `autoninja -C out/Linux chrome blink_tests` in the chromium checkout)"
+echo "Done. To rebase the test expectations, run: " 
+echo "    cd '$chromium_dir' && third_party/blink/tools/run_web_tests.py http/tests/devtools/lighthouse -t Default --layout-tests-dir third_party/devtools-frontend/src/test/webtests --reset-results"
+echo " (you also need to do 'autoninja -C out/Default chrome blink_tests content_shell' in the chromium checkout)"
