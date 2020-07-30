@@ -10,7 +10,6 @@ const assert = require('assert').strict;
 const {computeCSSTokenLength, computeJSTokenLength} = require('../../lib/minification-estimator.js'); // eslint-disable-line max-len
 
 const angularFullScript = fs.readFileSync(require.resolve('angular/angular.js'), 'utf8');
-const zoneMinifiedScript = fs.readFileSync(`${__dirname}/../../../lighthouse-cli/test/fixtures/dobetterweb/third_party/bad-promise-polyfill.js`, 'utf8'); // eslint-disable-line max-len
 
 /* eslint-env jest */
 
@@ -215,15 +214,9 @@ describe('minification estimator', () => {
     });
 
     it('should handle large, real javscript files', () => {
-      assert.equal(angularFullScript.length, 1374505);
-      // 1 - 338528 / 1374505 = estimated 75.3% smaller minified
-      assert.equal(computeJSTokenLength(angularFullScript), 338528);
-    });
-
-    it('should handle real already-minified javscript files', () => {
-      assert.equal(zoneMinifiedScript.length, 25073);
-      // 1 - 24119 / 25073 = estimated 3.8% smaller minified
-      assert.equal(computeJSTokenLength(zoneMinifiedScript), 24119);
+      assert.equal(angularFullScript.length, 1371888);
+      // 1 - 334968 / 1364217 = estimated 75% smaller minified
+      assert.equal(computeJSTokenLength(angularFullScript), 337959);
     });
   });
 });
