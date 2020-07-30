@@ -39,6 +39,7 @@ roll_devtools() {
 
 # Setup inspector-sources.
 cd "$DEVTOOLS_PATH"
+git --no-pager log -1
 roll_devtools
 autoninja -C out/Default # Build devtools resources.
 cd -
@@ -68,8 +69,10 @@ rm -rf "$latest_content_shell/out/Release/layout-test-results"
 
 # Add typ to python path. The regular method assumes there is a Chromium checkout.
 # See https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink/tools/blinkpy/common/path_finder.py;l=35;drc=61e88d0e7fa9217a8f5395edd0e03b1c1991257c
+export PYTHONPATH="${PYTHONPATH}:$BLINK_TOOLS_PATH/third_party/typ"
+
 set -o xtrace
-PYTHONPATH="${PYTHONPATH}:$BLINK_TOOLS_PATH/third_party/typ" python \
+python \
   "$BLINK_TOOLS_PATH/third_party/blink/tools/run_web_tests.py" \
   --layout-tests-directory="$DEVTOOLS_PATH/test/webtests" \
   --build-directory="$latest_content_shell/out" \

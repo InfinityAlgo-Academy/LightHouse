@@ -68,6 +68,7 @@ jobs:
       if: failure() && github.actor != 'patrickhulce' && github.actor != 'brendankenny'
       run: |
         bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/run-web-tests.sh --reset-results
-        git add $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/webtests
+        cd $GITHUB_WORKSPACE/lighthouse
+        git add lighthouse-core/scripts/chromium-web-tests/webtests
         git commit -m 'update webtest expectations'
         git push
