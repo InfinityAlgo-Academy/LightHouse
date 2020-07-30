@@ -13,17 +13,32 @@
  * Later we decided to stop using this fancy file altogether so we can just ignore drama from both
  * third_party placement and node_modules imports.
  * @see https://github.com/GoogleChrome/lighthouse/pull/11043
+ *
+ * This promise polyfill isn't as aggressive as zone as it doesn't patch every interface
+ * that returns a promise (https://github.com/angular/zone.js/blob/v0.7.3/dist/zone.js#L1589-L1611)
+ * But we think that's ok.
  */
 
 (function(){
 
+  // Terribly unruly promise polyfill. All methods throw. Oof.
   class BadPromise {
-    then() { return null; }
-    all() { return null; }
-    race() { return null; }
-    resolve() { return null; }
-    reject() { return null; }
-    finally() { return null; }
+    constructor() {
+      // The dbw smoketest also redefines window.Error. We'd like to report this with a real error
+      const errorConstructor = (typeof __nativeError === 'function') ? __nativeError : Error;
+
+      // NOTE: If you're here because you were pwned by BadPromise, you should
+      // probably use a `new __nativePromise()` in the evaluateAsync rather than a `new Promise()`
+      this.err = new errorConstructor('pwned by BadPromise');
+
+      throw this.err;
+    }
+    then() { throw this.err; }
+    all() { throw this.err; }
+    race() { throw this.err; }
+    resolve() { throw this.err; }
+    reject() { throw this.err; }
+    finally() { throw this.err; }
   };
 
   globalThis.Promise = BadPromise;

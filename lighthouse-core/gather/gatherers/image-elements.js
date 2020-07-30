@@ -126,9 +126,10 @@ function collectImageElementInfo() {
  */
 /* istanbul ignore next */
 function determineNaturalSize(url) {
-  return new Promise((resolve, reject) => {
+  return new __nativePromise((resolve, reject) => {
     const img = new Image();
-    img.addEventListener('error', _ => reject(new Error('determineNaturalSize failed img load')));
+    img.addEventListener('error', _ =>
+        reject(new __nativeError('determineNaturalSize failed img load')));
     img.addEventListener('load', () => {
       resolve({
         naturalWidth: img.naturalWidth,

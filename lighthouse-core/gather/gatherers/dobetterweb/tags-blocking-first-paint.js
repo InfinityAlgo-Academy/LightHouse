@@ -46,7 +46,7 @@ function installMediaListener() {
  */
 /* istanbul ignore next */
 function collectTagsThatBlockFirstPaint() {
-  return new Promise((resolve, reject) => {
+  return new __nativePromise((resolve, reject) => {
     try {
       const tagList = [...document.querySelectorAll('link, head script[src]')]
         .filter(tag => {
@@ -87,7 +87,7 @@ function collectTagsThatBlockFirstPaint() {
       resolve(tagList);
     } catch (e) {
       const friendly = 'Unable to gather Scripts/Stylesheets/HTML Imports on the page';
-      reject(new Error(`${friendly}: ${e.message}`));
+      reject(new __nativeError(`${friendly}: ${e.message}`));
     }
   });
 }
