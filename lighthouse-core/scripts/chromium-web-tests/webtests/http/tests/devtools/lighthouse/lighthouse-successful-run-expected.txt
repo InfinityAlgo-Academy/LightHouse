@@ -327,7 +327,7 @@ Auditing: Avoids front-end JavaScript libraries with known security vulnerabilit
 Auditing: Detected JavaScript libraries
 Auditing: Avoids requesting the notification permission on page load
 Auditing: Allows users to paste into password fields
-Auditing: Uses HTTP/2 for its own resources
+Auditing: Use HTTP/2
 Auditing: Uses passive listeners to improve scrolling performance
 Auditing: Document has a meta description
 Auditing: Page has successful HTTP status code
@@ -487,7 +487,7 @@ unused-css-rules: flaky
 unused-javascript: numeric
 use-landmarks: manual
 user-timings: flaky
-uses-http2: fail
+uses-http2: pass
 uses-long-cache-ttl: numeric
 uses-optimized-images: flaky
 uses-passive-event-listeners: pass
