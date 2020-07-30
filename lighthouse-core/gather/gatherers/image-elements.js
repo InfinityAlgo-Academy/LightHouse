@@ -13,7 +13,7 @@ const Gatherer = require('./gatherer.js');
 const pageFunctions = require('../../lib/page-functions.js');
 const Driver = require('../driver.js'); // eslint-disable-line no-unused-vars
 
-/* global window, getElementsInDocument, Image, getNodePath, getNodeSelector, getNodeLabel, getOuterHTMLSnippet */
+/* global window, getElementsInDocument, Image, getNodePath, getNodeSelector, getNodeLabel, getOuterHTMLSnippet, __nativeError:readonly, __nativePromise:readonly */
 
 
 /** @param {Element} element */

@@ -22,7 +22,7 @@
 const Gatherer = require('../gatherer.js');
 const Driver = require('../../driver.js'); // eslint-disable-line no-unused-vars
 
-/* global document,window,HTMLLinkElement */
+/* global document,window,HTMLLinkElement, __nativeError:readonly, __nativePromise:readonly */
 
 /* istanbul ignore next */
 function installMediaListener() {

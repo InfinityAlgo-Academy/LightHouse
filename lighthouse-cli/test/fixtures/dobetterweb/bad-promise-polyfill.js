@@ -24,30 +24,42 @@
  * But we think that's ok.
  */
 
- 'use strict';
+'use strict';
 
-(function(){
+/* global globalThis __nativeError:readonly */
 
+(function() {
   // Terribly unruly promise polyfill. All methods throw. Oof.
   class BadPromise {
     constructor() {
       // The dbw smoketest also redefines window.Error. We'd like to report this with a real error
-      const errorConstructor = (typeof __nativeError === 'function') ? __nativeError : Error;
+      const ErrorConstructor = typeof __nativeError === 'function' ? __nativeError : Error;
 
       // NOTE: If you're here because you were pwned by BadPromise, you should
       // probably use a `new __nativePromise()` in the evaluateAsync rather than a `new Promise()`
-      this.err = new errorConstructor('pwned by BadPromise');
+      this.err = new ErrorConstructor('pwned by BadPromise');
 
       throw this.err;
     }
-    then() { throw this.err; }
-    all() { throw this.err; }
-    race() { throw this.err; }
-    resolve() { throw this.err; }
-    reject() { throw this.err; }
-    finally() { throw this.err; }
-  };
+    then() {
+      throw this.err;
+    }
+    all() {
+      throw this.err;
+    }
+    race() {
+      throw this.err;
+    }
+    resolve() {
+      throw this.err;
+    }
+    reject() {
+      throw this.err;
+    }
+    finally() {
+      throw this.err;
+    }
+  }
 
   globalThis.Promise = BadPromise;
-
 })();

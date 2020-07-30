@@ -6,7 +6,7 @@
 // @ts-nocheck
 'use strict';
 
-/* global window document Node ShadowRoot */
+/* global window document Node ShadowRoot __nativeError:readonly */
 
 /**
  * Helper functions that are passed by `toString()` by Driver to be evaluated in target page.
