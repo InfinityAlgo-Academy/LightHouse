@@ -1,0 +1,82 @@
+name: DevTools
+
+on:
+  push:
+    branches: [master]
+  pull_request: # run on all PRs, not just PRs to a particular branch
+
+jobs:
+  smoke-devtools:
+    runs-on: macos-latest
+
+    steps:
+    - name: Set $DEPOT_TOOLS_PATH
+      run: echo ::set-env name=DEPOT_TOOLS_PATH::$GITHUB_WORKSPACE/depot-tools
+    - name: Set $DEVTOOLS_PATH
+      run: echo ::set-env name=DEVTOOLS_PATH::$GITHUB_WORKSPACE/devtools-frontend
+    - name: Set $BLINK_TOOLS_PATH
+      run: echo ::set-env name=BLINK_TOOLS_PATH::$GITHUB_WORKSPACE/blink_tools
+    - name: Set $PATH
+      run: echo ::set-env name=PATH::$DEPOT_TOOLS_PATH:$PATH
+
+    - name: git clone
+      uses: actions/checkout@v2
+      with:
+        path: lighthouse
+    
+    - name: Cache depot tools, devtools, blink tools and content shell
+      uses: actions/cache@v2
+      with:
+        path: |
+          ${{ env.DEPOT_TOOLS_PATH }}
+          ${{ env.DEVTOOLS_PATH }}
+          ${{ env.BLINK_TOOLS_PATH }}
+          ${{ github.workspace }}/lighthouse/.tmp/chromium-web-tests/content-shells
+        key: ${{ runner.os }}-${{ hashFiles('lighthouse/lighthouse-core/scripts/chromium-web-tests/download-*') }}
+
+    - name: Use Node.js 10.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.x
+
+    - run: yarn --frozen-lockfile
+      working-directory: ${{ github.workspace }}/lighthouse
+    - run: yarn build-devtools
+      working-directory: ${{ github.workspace }}/lighthouse
+
+    - name: Download depot tools
+      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/download-depot-tools.sh
+    - name: Download DevTools Frontend
+      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/download-devtools.sh
+    - name: Download Blink Tools
+      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/download-blink-tools.sh
+    - name: Download Content Shell
+      run: node $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/download-content-shell.js
+
+    - name: Run Web Tests
+      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/run-web-tests.sh
+
+    - name: Print diff
+      if: failure()
+      run: find "$GITHUB_WORKSPACE/lighthouse/.tmp/layout-test-results/retry_3" -name '*-diff.txt' -exec cat {} \;
+    - name: Upload results
+      uses: actions/upload-artifact@v2
+      if: failure()
+      with:
+        name: results
+        path: ${{ github.workspace }}/lighthouse/.tmp/layout-test-results
+
+    - name: Reset Results
+      if: failure() && github.actor != 'patrickhulce' && github.actor != 'brendankenny'
+      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/chromium-web-tests/run-web-tests.sh --reset-results
+    - run: cd $GITHUB_WORKSPACE/lighthouse && git status
+      if: failure() && github.actor != 'patrickhulce' && github.actor != 'brendankenny'
+    - name: Commit new expectations
+      if: failure() && github.actor != 'patrickhulce' && github.actor != 'brendankenny'
+      uses: EndBug/add-and-commit@v4
+      with:
+        cwd: ${{ github.workspace }}/lighthouse
+        add: lighthouse-core/scripts/chromium-web-tests/webtests
+        message: update webtest expectations
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

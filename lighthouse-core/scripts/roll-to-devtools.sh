@@ -53,9 +53,13 @@ echo -e "$check Report resources copied."
 # copy locale JSON files (but not the .ctc.json ones)
 lh_locales_dir="lighthouse-core/lib/i18n/locales/"
 fe_locales_dir="$fe_lh_dir/locales"
-
 rsync -avh "$lh_locales_dir" "$fe_locales_dir" --exclude="*.ctc.json" --delete
 echo -e "$check Locale JSON files copied."
+
+# copy webtests
+lh_webtests_dir="lighthouse-core/scripts/chromium-web-tests/webtests/http/tests/devtools/lighthouse/"
+fe_webtests_dir="$dt_dir/test/webtests/http/tests/devtools/lighthouse"
+rsync -avh "$lh_webtests_dir" "$fe_webtests_dir" --exclude="OWNERS" --delete
 
 echo ""
 echo "Done. To rebase the test expectations, run: " 
