@@ -1,3 +1,4 @@
+image: node:latest
 
 stages:
   - build
@@ -8,7 +9,6 @@ cache:
     - node_modules/
 
 build:
-  image: node:latest
   stage: build
   script:
     - npm install
