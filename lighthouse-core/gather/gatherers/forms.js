@@ -100,7 +100,6 @@ class Forms extends Gatherer {
 
     const expression = `(() => {
       ${pageFunctions.getElementsInDocumentString};
-      ${pageFunctions.getNodePathString};
       ${pageFunctions.getOuterHTMLSnippetString};
       ${pageFunctions.getNodeLabelString};
       return (${collectFormElements})();
