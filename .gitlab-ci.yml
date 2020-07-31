@@ -1,4 +1,3 @@
-image: node:latest
 
 stages:
   - build
@@ -9,6 +8,7 @@ cache:
     - node_modules/
 
 build:
+  image: node:latest
   stage: build
   script:
     - npm install
@@ -19,4 +19,7 @@ build:
 unit:
   stage: unit
   script:
-    - yarn unit-cli
+    - yarn --frozen-lockfile
+    - yarn test-proto
+    - yarn unit
+    - yarn diff:sample-json
