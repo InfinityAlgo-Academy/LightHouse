@@ -1329,7 +1329,7 @@ Object {
           "path": "iframe-elements",
         },
         Object {
-          "path": "forms",
+          "path": "form-elements",
         },
         Object {
           "path": "main-document-content",
