@@ -83,7 +83,7 @@ declare global {
       /** The dimensions and devicePixelRatio of the loaded viewport. */
       ViewportDimensions: Artifacts.ViewportDimensions;
       /** All the form elements in the page and formless inputs. */
-      Forms: Artifacts.Form[];
+      FormElements: Artifacts.Form[];
     }
 
     /**

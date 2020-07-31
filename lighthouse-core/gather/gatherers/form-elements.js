@@ -90,10 +90,10 @@ function collectFormElements() {
   return [...forms.values()];
 }
 
-class Forms extends Gatherer {
+class FormElements extends Gatherer {
   /**
    * @param {LH.Gatherer.PassContext} passContext
-   * @return {Promise<LH.Artifacts['Forms']>}
+   * @return {Promise<LH.Artifacts['FormElements']>}
    */
   async afterPass(passContext) {
     const driver = passContext.driver;
@@ -105,10 +105,10 @@ class Forms extends Gatherer {
       return (${collectFormElements})();
     })()`;
 
-    /** @type {LH.Artifacts['Forms']} */
+    /** @type {LH.Artifacts['FormElements']} */
     const formElements = await driver.evaluateAsync(expression, {useIsolation: true});
     return formElements;
   }
 }
 
-module.exports = Forms;
+module.exports = FormElements;

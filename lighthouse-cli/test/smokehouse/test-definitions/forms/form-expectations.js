@@ -12,7 +12,7 @@
 const expectations = [
   {
     artifacts: {
-      Forms: [
+      FormElements: [
         {
           attributes: {
             id: 'checkout1',
@@ -240,9 +240,9 @@ const expectations = [
               snippet: '<label for="address_billing">',
             },
             {
-              for: '',
+              for: 'city_billing',
               nodeLabel: 'City:',
-              snippet: '<label label="city_billing">',
+              snippet: '<label for="city_billing">',
             },
             {
               for: 'state_billing',
@@ -278,7 +278,6 @@ const expectations = [
         },
       ],
     },
-
     lhr: {
       requestedUrl: 'http://localhost:10200/form.html',
       finalUrl: 'http://localhost:10200/form.html',
