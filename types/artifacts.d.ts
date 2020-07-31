@@ -83,7 +83,7 @@ declare global {
       /** The dimensions and devicePixelRatio of the loaded viewport. */
       ViewportDimensions: Artifacts.ViewportDimensions;
       /** All the form elements in the page and formless inputs. */
-      Forms: Artifacts.Form[];
+      FormElements: Artifacts.Form[];
     }
 
     /**
@@ -718,7 +718,6 @@ declare global {
 
       /** Attributes collected for every label element in the labels array from the forms interface */
       export interface FormLabel {
-        id: string;
         for: string;
         nodeLabel: string;
         snippet: string;

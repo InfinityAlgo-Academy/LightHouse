@@ -12,7 +12,11 @@
   <form id="checkout1" name="checkout" action="../done.html" method="post">
       <label for="name_cc1">Name on card:</label> <textarea type="text" id="name_cc1" autocomplete="cc-name"></textarea><br>
       <label for="CCNo1">Credit card number:</label> <input type="text" id="CCNo1" autocomplete="cc-number"><br>
+<<<<<<< HEAD
       <label id="expDate1" for="CCExpiresMonth1">Expiry Date:</label> <select id="CCExpiresMonth1" autocomplete="cc-exp-month">
+=======
+      <label for="CCExpiresMonth1">Expiry Date:</label> <select id="CCExpiresMonth1" autocomplete="cc-exp-month">
+>>>>>>> 72454db10f785606542ab8c2127b279cc8e4124d
         <option value="">MM</option>
         <option value="01">01</option>
         <option value="02">02</option>
@@ -61,14 +65,18 @@
       <option value="IL">IL</option>
       <option value="DC">DC</option>
     </select><br>
-    <label id="zip_shipping" for="zip_shipping">Zip:</label> <input type="text" id="zip_shipping"><br>
-    <input id="submit1" type="button" value="Submit">
+    <label for="zip_shipping">Zip:</label> <input type="text" id="zip_shipping"><br>
+    <input type="button" value="Submit">
   </div>
   <div id="billing" style="display: none">
     <u>Billing address:</u><br>
     <label for="name_billing">Name:</label> <input type="text" id="name_billing"><br>
     <label for="address_billing">Address:</label> <input type="text" id="address_billing" autocomplete="billing street-address"><br>
+<<<<<<< HEAD
     <label label="city_billing">City:</label> <input type="text" id="city_billing"><br>
+=======
+    <label for="city_billing">City:</label> <input type="text" id="city_billing"><br>
+>>>>>>> 72454db10f785606542ab8c2127b279cc8e4124d
     <label for="state_billing">State:</label> <select id="state_billing">
       <option value="" selected="">Select a state</option>
       <option value="CA">CA</option>
@@ -114,7 +122,7 @@
       <option value="2028">2028</option>
       <option value="2029">2029</option>
     </select><br>
-    <label id="cvc" for="cvc2">CVC:</label> <input id="cvc2" autocomplete="cc-csc"><br>
+    <label for="cvc2">CVC:</label> <input id="cvc2" autocomplete="cc-csc"><br>
     <br>
     <input id="submit3" type="button" value="Submit">
   </div>

@@ -72,7 +72,6 @@ function collectFormElements() {
     }
     if (child instanceof HTMLLabelElement) {
       formObj.labels.push({
-        id: child.id,
         for: child.htmlFor,
         // @ts-ignore - put into scope via stringification
         nodeLabel: getNodeLabel(child), // eslint-disable-line no-undef,
@@ -91,26 +90,25 @@ function collectFormElements() {
   return [...forms.values()];
 }
 
-class Forms extends Gatherer {
+class FormElements extends Gatherer {
   /**
    * @param {LH.Gatherer.PassContext} passContext
-   * @return {Promise<LH.Artifacts['Forms']>}
+   * @return {Promise<LH.Artifacts['FormElements']>}
    */
   async afterPass(passContext) {
     const driver = passContext.driver;
 
     const expression = `(() => {
       ${pageFunctions.getElementsInDocumentString};
-      ${pageFunctions.getNodePathString};
       ${pageFunctions.getOuterHTMLSnippetString};
       ${pageFunctions.getNodeLabelString};
       return (${collectFormElements})();
     })()`;
 
-    /** @type {LH.Artifacts['Forms']} */
+    /** @type {LH.Artifacts['FormElements']} */
     const formElements = await driver.evaluateAsync(expression, {useIsolation: true});
     return formElements;
   }
 }
 
-module.exports = Forms;
+module.exports = FormElements;
