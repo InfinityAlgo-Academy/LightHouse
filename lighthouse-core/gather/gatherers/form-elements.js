@@ -11,7 +11,7 @@ const pageFunctions = require('../../lib/page-functions.js');
 /* eslint-env browser, node */
 
 /**
- * @return {LH.Artifacts['Forms']}
+ * @return {LH.Artifacts['FormElements']}
  */
 /* istanbul ignore next */
 function collectFormElements() {
