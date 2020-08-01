@@ -711,7 +711,7 @@ declare global {
       export interface FormInput {
         id: string;
         name: string;
-        placeholder: string|null;
+        placeholder?: string;
         autocomplete: string;
         nodeLabel: string;
         snippet: string;

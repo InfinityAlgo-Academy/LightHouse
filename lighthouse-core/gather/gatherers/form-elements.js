@@ -17,7 +17,7 @@ const pageFunctions = require('../../lib/page-functions.js');
 function collectFormElements() {
   // @ts-ignore - put into scope via stringification
   const formChildren = getElementsInDocument('textarea, input, label, select'); // eslint-disable-line no-undef
-  /** @type {Map<HTMLFormElement|String, LH.Artifacts.Form>} */
+  /** @type {Map<HTMLFormElement|string, LH.Artifacts.Form>} */
   const forms = new Map();
   /** @type {LH.Artifacts.Form} */
   const formlessObj = {
@@ -50,10 +50,12 @@ function collectFormElements() {
       const isButton = child instanceof HTMLInputElement &&
       (child.type === 'submit' || child.type === 'button');
       if (isButton) continue;
+      // @ts-ignore
       formObj.inputs.push({
         id: child.id,
         name: child.name,
-        placeholder: child.getAttribute('placeholder'),
+        // @ts-ignore - optional for select elements
+        placeholder: child.placeholder,
         autocomplete: child.autocomplete,
         // @ts-ignore - put into scope via stringification
         nodeLabel: getNodeLabel(child), // eslint-disable-line no-undef,
@@ -62,6 +64,7 @@ function collectFormElements() {
       });
     }
     if (child instanceof HTMLLabelElement) {
+      // @ts-ignore
       formObj.labels.push({
         for: child.htmlFor,
         // @ts-ignore - put into scope via stringification
