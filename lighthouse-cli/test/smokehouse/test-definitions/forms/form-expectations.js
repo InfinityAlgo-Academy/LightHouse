@@ -15,7 +15,7 @@ const expectations = [
       FormElements: [
         {
           attributes: {
-            id: 'checkout1',
+            id: 'checkout',
             name: 'checkout',
             autocomplete: 'on',
             nodeLabel: 'Name on card:',

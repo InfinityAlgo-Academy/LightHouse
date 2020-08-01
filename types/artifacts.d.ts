@@ -710,7 +710,8 @@ declare global {
       /** Attributes collected for every input element in the inputs array from the forms interface. */
       export interface FormInput {
         id: string;
-        placeholder: string;
+        name: string;
+        placeholder: string|null;
         autocomplete: string;
         nodeLabel: string;
         snippet: string;

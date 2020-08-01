@@ -17,7 +17,7 @@ const pageFunctions = require('../../lib/page-functions.js');
 function collectFormElements() {
   // @ts-ignore - put into scope via stringification
   const formChildren = getElementsInDocument('textarea, input, label, select'); // eslint-disable-line no-undef
-  /** @type {Map<HTMLFormElement, LH.Artifacts.Form>} */
+  /** @type {Map<HTMLFormElement|String, LH.Artifacts.Form>} */
   const forms = new Map();
   /** @type {LH.Artifacts.Form} */
   const formlessObj = {
@@ -45,25 +45,15 @@ function collectFormElements() {
     }
     const formObj = hasForm ? forms.get(parentFormElement) : formlessObj;
 
-    if (child instanceof HTMLInputElement || child instanceof HTMLTextAreaElement) {
+    if (child instanceof HTMLInputElement || child instanceof HTMLTextAreaElement
+      || child instanceof HTMLSelectElement) {
       const isButton = child instanceof HTMLInputElement &&
       (child.type === 'submit' || child.type === 'button');
       if (isButton) continue;
       formObj.inputs.push({
         id: child.id,
         name: child.name,
-        placeholder: child.placeholder,
-        autocomplete: child.autocomplete,
-        // @ts-ignore - put into scope via stringification
-        nodeLabel: getNodeLabel(child), // eslint-disable-line no-undef,
-        // @ts-ignore - put into scope via stringification
-        snippet: getOuterHTMLSnippet(child), // eslint-disable-line no-undef
-      });
-    }
-    if (child instanceof HTMLSelectElement) {
-      formObj.inputs.push({
-        id: child.id,
-        name: child.name,
+        placeholder: child.getAttribute('placeholder'),
         autocomplete: child.autocomplete,
         // @ts-ignore - put into scope via stringification
         nodeLabel: getNodeLabel(child), // eslint-disable-line no-undef,
