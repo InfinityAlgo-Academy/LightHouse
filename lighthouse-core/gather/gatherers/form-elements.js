@@ -34,7 +34,7 @@ function collectFormElements() {
           name: parentFormElement.name,
           autocomplete: parentFormElement.autocomplete,
           // @ts-ignore - put into scope via stringification
-          nodeLabel: getNodeLabel(child), // eslint-disable-line no-undef,
+          nodeLabel: getNodeLabel(parentFormElement), // eslint-disable-line no-undef,
           // @ts-ignore - put into scope via stringification
           snippet: getOuterHTMLSnippet(parentFormElement), // eslint-disable-line no-undef
         },
