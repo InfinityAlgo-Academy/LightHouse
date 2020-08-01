@@ -17,6 +17,7 @@ const pageFunctions = require('../../lib/page-functions.js');
 function collectFormElements() {
   // @ts-ignore - put into scope via stringification
   const formChildren = getElementsInDocument('textarea, input, label, select'); // eslint-disable-line no-undef
+  /** @type {Map<HTMLFormElement, LH.Artifacts.Form>} */
   const forms = new Map();
   /** @type {LH.Artifacts.Form} */
   const formlessObj = {
