@@ -54,8 +54,7 @@ function collectFormElements() {
       formObj.inputs.push({
         id: child.id,
         name: child.name,
-        // @ts-ignore - optional for select elements
-        placeholder: child.placeholder,
+        placeholder: child instanceof HTMLSelectElement ? undefined : child.placeholder,
         autocomplete: child.autocomplete,
         // @ts-expect-error - put into scope via stringification
         nodeLabel: getNodeLabel(child), // eslint-disable-line no-undef,
