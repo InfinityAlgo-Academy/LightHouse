@@ -67,7 +67,7 @@ function collectFormElements() {
       // @ts-ignore
       formObj.labels.push({
         for: child.htmlFor,
-        // @ts-ignore - put into scope via stringification
+        // @ts-expect-error - put into scope via stringification
         nodeLabel: getNodeLabel(child), // eslint-disable-line no-undef,
         // @ts-expect-error - put into scope via stringification
         snippet: getOuterHTMLSnippet(child), // eslint-disable-line no-undef
