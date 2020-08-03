@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Ne zahteva dovoljenja za obvestila pri nalaganju strani"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "Neuspešni elementi"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "Preprečevanje lepljenja gesel omeji dober pravilnik o varnosti. [Več o tem](https://web.dev/password-inputs-can-be-pasted-into/)."
   },
@@ -709,9 +706,6 @@
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{1 zahteva ni bila poslana prek HTTP/2}one{# zahteva ni bila poslana prek HTTP/2}two{# zahtevi nista bili poslani prek HTTP/2}few{# zahteve niso bile poslane prek HTTP/2}other{# zahtev ni bilo poslanih prek HTTP/2}}"
-  },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "Ne uporablja HTTP/2 za vsa svoja sredstva"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "Uporablja HTTP/2 za svoja sredstva"

@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Tránh yêu cầu quyền truy cập thông báo khi tải trang"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "Các phần tử không đạt"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "Việc ngăn dán mật khẩu sẽ làm giảm tác dụng của chính sách bảo mật hiệu quả. [Tìm hiểu thêm](https://web.dev/password-inputs-can-be-pasted-into/)."
   },
@@ -709,9 +706,6 @@
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{Chưa phân phát 1 yêu cầu qua HTTP/2}other{Chưa phân phát # yêu cầu qua HTTP/2}}"
-  },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "Không sử dụng HTTP/2 cho tất cả các tài nguyên của trang web"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "Sử dụng HTTP/2 cho các tài nguyên của chính trang web"

@@ -15,16 +15,17 @@ const pageFunctions = require('../../lib/page-functions.js');
  */
 /* istanbul ignore next */
 function collectFormElements() {
-  // @ts-ignore - put into scope via stringification
+  // @ts-expect-error - put into scope via stringification
   const formChildren = getElementsInDocument('textarea, input, label, select'); // eslint-disable-line no-undef
+  /** @type {Map<HTMLFormElement|string, LH.Artifacts.Form>} */
   const forms = new Map();
-  /** @type { { inputs: Array<LH.Artifacts.FormInput>, labels: Array<LH.Artifacts.FormLabel> }  } */
+  /** @type {LH.Artifacts.Form} */
   const formlessObj = {
     inputs: [],
     labels: [],
   };
   for (const child of formChildren) {
-    const parentFormElement = child.closest('form');
+    const parentFormElement = child.form;
     const hasForm = !!parentFormElement;
     if (hasForm && !forms.has(parentFormElement)) {
       const newFormObj = {
@@ -32,9 +33,9 @@ function collectFormElements() {
           id: parentFormElement.id,
           name: parentFormElement.name,
           autocomplete: parentFormElement.autocomplete,
-          // @ts-ignore - put into scope via stringification
-          nodeLabel: getNodeLabel(child), // eslint-disable-line no-undef,
-          // @ts-ignore - put into scope via stringification
+          // @ts-expect-error - put into scope via stringification
+          nodeLabel: getNodeLabel(parentFormElement), // eslint-disable-line no-undef,
+          // @ts-expect-error - put into scope via stringification
           snippet: getOuterHTMLSnippet(parentFormElement), // eslint-disable-line no-undef
         },
         inputs: [],
@@ -44,38 +45,30 @@ function collectFormElements() {
     }
     const formObj = hasForm ? forms.get(parentFormElement) : formlessObj;
 
-    if (child instanceof HTMLInputElement || child instanceof HTMLTextAreaElement) {
+    if (child instanceof HTMLInputElement || child instanceof HTMLTextAreaElement
+      || child instanceof HTMLSelectElement) {
       const isButton = child instanceof HTMLInputElement &&
       (child.type === 'submit' || child.type === 'button');
       if (isButton) continue;
+      // @ts-expect-error - formObj is never undefined
       formObj.inputs.push({
         id: child.id,
         name: child.name,
-        placeholder: child.placeholder,
+        placeholder: child instanceof HTMLSelectElement ? undefined : child.placeholder,
         autocomplete: child.autocomplete,
-        // @ts-ignore - put into scope via stringification
+        // @ts-expect-error - put into scope via stringification
         nodeLabel: getNodeLabel(child), // eslint-disable-line no-undef,
-        // @ts-ignore - put into scope via stringification
-        snippet: getOuterHTMLSnippet(child), // eslint-disable-line no-undef
-      });
-    }
-    if (child instanceof HTMLSelectElement) {
-      formObj.inputs.push({
-        id: child.id,
-        name: child.name,
-        autocomplete: child.autocomplete,
-        // @ts-ignore - put into scope via stringification
-        nodeLabel: getNodeLabel(child), // eslint-disable-line no-undef,
-        // @ts-ignore - put into scope via stringification
+        // @ts-expect-error - put into scope via stringification
         snippet: getOuterHTMLSnippet(child), // eslint-disable-line no-undef
       });
     }
     if (child instanceof HTMLLabelElement) {
+      // @ts-expect-error - formObj is never undefined
       formObj.labels.push({
         for: child.htmlFor,
-        // @ts-ignore - put into scope via stringification
+        // @ts-expect-error - put into scope via stringification
         nodeLabel: getNodeLabel(child), // eslint-disable-line no-undef,
-        // @ts-ignore - put into scope via stringification
+        // @ts-expect-error - put into scope via stringification
         snippet: getOuterHTMLSnippet(child), // eslint-disable-line no-undef
       });
     }

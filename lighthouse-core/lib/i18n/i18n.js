@@ -25,10 +25,10 @@ const MESSAGE_INSTANCE_ID_QUICK_REGEX = / # \d+$/;
   // See https://nodejs.org/api/intl.html#intl_options_for_building_node_js
 
   // Conditionally polyfills itself. Bundler removes this dep, so this will be a no-op in browsers.
-  // @ts-ignore
+  // @ts-expect-error
   require('intl-pluralrules');
 
-  // @ts-ignore
+  // @ts-expect-error
   const IntlPolyfill = require('intl');
 
   // The bundler also removes this dep, so there's nothing to do if it's empty.
@@ -88,6 +88,8 @@ const UIStrings = {
   columnStartTime: 'Start Time',
   /** Label for a column in a data table; entries will be the total number of milliseconds from the start time until the end time. */
   columnDuration: 'Duration',
+  /** Label for a column in a data table; entries will be a representation of a DOM element that did not meet certain suggestions. */
+  columnFailingElem: 'Failing Elements',
   /** Label for a row in a data table; entries will be the total number and byte size of all resources loaded by a web page. */
   totalResourceType: 'Total',
   /** Label for a row in a data table; entries will be the total number and byte size of all 'Document' resources loaded by a web page. */

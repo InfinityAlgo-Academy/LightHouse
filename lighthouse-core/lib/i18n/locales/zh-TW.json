@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "避免在載入網頁時要求使用者允許網站顯示通知"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "未通過稽核的元素"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "禁止貼上密碼會對安全性政策造成不良影響[瞭解詳情](https://web.dev/password-inputs-can-be-pasted-into/)。"
   },
@@ -709,9 +706,6 @@
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{有 1 項要求未透過 HTTP/2 傳送}other{有 # 項要求未透過 HTTP/2 傳送}}"
-  },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "網頁要求的部分資源未使用 HTTP/2"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "針對本身的資源使用 HTTP/2"

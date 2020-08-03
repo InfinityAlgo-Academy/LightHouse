@@ -28,8 +28,9 @@ async function rerender(iterations) {
 setTimeout(() => {
   const imgEl = document.createElement('img');
   imgEl.src = '../dobetterweb/lighthouse-480x318.jpg';
-  const textEl = document.createElement('span');
+  const textEl = document.createElement('div');
   textEl.textContent = 'Sorry!';
+  textEl.style.height = '18px' // this height can be flaky so we set it manually
   const top = document.getElementById('late-content');
   top.appendChild(imgEl);
   top.appendChild(textEl);

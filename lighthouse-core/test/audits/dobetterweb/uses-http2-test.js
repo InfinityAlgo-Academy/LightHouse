@@ -6,85 +6,71 @@
 'use strict';
 
 const UsesHTTP2Audit = require('../../../audits/dobetterweb/uses-http2.js');
-const assert = require('assert').strict;
+const trace = require('../../fixtures/traces/progressive-app-m60.json');
+const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+const NetworkRecords = require('../../../computed/network-records.js');
 const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
-
-const URL = 'https://webtide.com/http2-push-demo/';
-const networkRecords = require('../../fixtures/networkRecords-mix.json');
 
 /* eslint-env jest */
 
 describe('Resources are fetched over http/2', () => {
-  function getArtifacts(networkRecords, finalUrl) {
-    // networkRecords-mix.json is an old network request format, so don't verify round-trip.
-    const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords, {skipVerification: true});
+  let artifacts = {};
+  let context = {};
 
-    return {
-      URL: {finalUrl},
-      devtoolsLogs: {[UsesHTTP2Audit.DEFAULT_PASS]: devtoolsLog},
+  beforeEach(() => {
+    context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
+
+    artifacts = {
+      traces: {defaultPass: trace},
+      devtoolsLogs: {defaultPass: devtoolsLog},
     };
-  }
-
-  it('fails when some resources were requested via http/1.x', () => {
-    return UsesHTTP2Audit.audit(getArtifacts(networkRecords, URL), {computedCache: new Map()}).then(
-      auditResult => {
-        assert.equal(auditResult.score, 0);
-        expect(auditResult.displayValue).toBeDisplayString('3 requests not served via HTTP/2');
-        assert.equal(auditResult.details.items.length, 3);
-        assert.equal(
-          auditResult.details.items[0].url,
-          'https://webtide.com/wp-content/plugins/wp-pagenavi/pagenavi-css.css?ver=2.70'
-        );
-        const headers = auditResult.details.headings;
-        expect(headers[0].text).toBeDisplayString('URL');
-        expect(headers[1].text).toBeDisplayString('Protocol');
-      }
-    );
   });
 
-  it('displayValue is correct when only one resource fails', () => {
-    const entryWithHTTP1 = networkRecords.slice(1, 2);
-    return UsesHTTP2Audit.audit(getArtifacts(entryWithHTTP1, URL), {computedCache: new Map()}).then(
-      auditResult => {
-        expect(auditResult.displayValue).toBeDisplayString('1 request not served via HTTP/2');
-      }
-    );
+  it('should pass when resources are requested via http/2', async () => {
+    const results = await UsesHTTP2Audit.audit(artifacts, context);
+    expect(results).toHaveProperty('score', 1);
+    expect(results.details.items).toHaveLength(0);
   });
 
-  it('passes when all resources were requested via http/2', () => {
-    const h2Records = JSON.parse(JSON.stringify(networkRecords));
-    h2Records.forEach(record => {
-      record.protocol = 'h2';
-    });
+  it('should fail when resources are requested via http/1.x', async () => {
+    const records = await NetworkRecords.compute_(artifacts.devtoolsLogs.defaultPass);
+    records.forEach(record => (record.protocol = 'HTTP/1.1'));
+    artifacts.devtoolsLogs.defaultPass = networkRecordsToDevtoolsLog(records);
+    const result = await UsesHTTP2Audit.audit(artifacts, context);
+    const hosts = new Set(result.details.items.map(item => new URL(item.url).host));
 
-    return UsesHTTP2Audit.audit(getArtifacts(h2Records, URL), {computedCache: new Map()}).then(
-      auditResult => {
-        assert.equal(auditResult.score, 1);
-        assert.ok(auditResult.displayValue === '');
-      }
-    );
+    // make sure we don't pull in domains with only a few requests (GTM, GA)
+    expect(hosts).toEqual(new Set(['pwa.rocks']));
+    // make sure we flag all the rest
+    expect(result.details.items).toHaveLength(60);
+    // make sure we report savings
+    expect(result.numericValue).toMatchInlineSnapshot(`1030`);
+    expect(result.details.overallSavingsMs).toMatchInlineSnapshot(`1030`);
+    // make sure we have a failing score
+    expect(result.score).toBeLessThan(0.5);
   });
 
-  it('results are correct when some requests are handled by service worker', () => {
-    const clonedNetworkRecords = JSON.parse(JSON.stringify(networkRecords));
-    clonedNetworkRecords.forEach(record => {
-      // convert http 1.1 to service worker requests
-      if (record.protocol === 'http/1.1') {
-        record.fetchedViaServiceWorker = true;
-      }
+  it('should ignore service worker requests', async () => {
+    const records = await NetworkRecords.compute_(artifacts.devtoolsLogs.defaultPass);
+    records.forEach(record => (record.protocol = 'HTTP/1.1'));
+    records.slice(30).forEach(record => {
+      // Force the records we're making service worker to another origin.
+      // Because it doesn't make sense to have half H2 half not to the same origin.
+      const url = record.url;
+      if (url.includes('pwa.rocks')) record.url = url.replace('pwa.rocks', 'pwa2.rocks');
+      record.fetchedViaServiceWorker = true;
+      delete record.parsedURL;
     });
 
-    return UsesHTTP2Audit.audit(getArtifacts(clonedNetworkRecords, URL), {
-      computedCache: new Map(),
-    }).then(auditResult => {
-      assert.equal(auditResult.score, 0);
-      expect(auditResult.displayValue).toBeDisplayString('1 request not served via HTTP/2');
-      // Protocol is http/1.0 which we don't mark as fetched fetchedViaServiceWorker on line 73.
-      assert.equal(
-        auditResult.details.items[0].url,
-        'https://webtide.com/wp-content/themes/clean-retina-pro/library/js/tinynav.js?ver=4.5.4'
-      );
-      assert.equal(auditResult.details.items[0].protocol, 'http/1.0');
-    });
+    artifacts.devtoolsLogs.defaultPass = networkRecordsToDevtoolsLog(records);
+    const result = await UsesHTTP2Audit.audit(artifacts, context);
+    const urls = new Set(result.details.items.map(item => item.url));
+
+    // make sure we flag only the non-sw ones
+    expect(urls).not.toContain(records[30].url);
+    expect(result.details.items).toHaveLength(30);
+    // make sure we report less savings
+    expect(result.numericValue).toMatchInlineSnapshot(`250`);
+    expect(result.details.overallSavingsMs).toMatchInlineSnapshot(`250`);
   });
 });

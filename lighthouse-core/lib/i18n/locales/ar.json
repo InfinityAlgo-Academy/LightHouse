@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "يتم تجنُّب طلب إذن الإشعار عند تحميل الصفحة"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "العناصر التي لا تسمح بلصق المحتوى"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "يؤدي منع لصق كلمة المرور إلى تقويض سياسة الأمان الجيدة. [مزيد من المعلومات](https://web.dev/password-inputs-can-be-pasted-into/)"
   },
@@ -709,9 +706,6 @@
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{لم يتم عرض طلب واحد عبر HTTP/2}zero{لم يتم عرض # طلب عبر HTTP/2}two{لم يتم عرض طلبين (#) عبر HTTP/2}few{لم يتم عرض # طلبات عبر HTTP/2}many{لم يتم عرض # طلبًا عبر HTTP/2}other{لم يتم عرض # طلب عبر HTTP/2}}"
-  },
-  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
-    "message": "لا تستخدم صفحة الويب HTTP/2 لجميع مواردها"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
     "message": "تستخدم صفحة الويب HTTP/2 لمواردها الخاصة"
