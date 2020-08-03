@@ -50,7 +50,7 @@ function collectFormElements() {
       const isButton = child instanceof HTMLInputElement &&
       (child.type === 'submit' || child.type === 'button');
       if (isButton) continue;
-      // @ts-ignore
+      // @ts-expect-error - formObj is never undefined
       formObj.inputs.push({
         id: child.id,
         name: child.name,
@@ -63,7 +63,7 @@ function collectFormElements() {
       });
     }
     if (child instanceof HTMLLabelElement) {
-      // @ts-ignore
+      // @ts-expect-error - formObj is never undefined
       formObj.labels.push({
         for: child.htmlFor,
         // @ts-expect-error - put into scope via stringification
