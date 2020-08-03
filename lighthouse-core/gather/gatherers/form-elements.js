@@ -15,7 +15,7 @@ const pageFunctions = require('../../lib/page-functions.js');
  */
 /* istanbul ignore next */
 function collectFormElements() {
-  // @ts-ignore - put into scope via stringification
+  // @ts-expect-error - put into scope via stringification
   const formChildren = getElementsInDocument('textarea, input, label, select'); // eslint-disable-line no-undef
   /** @type {Map<HTMLFormElement|string, LH.Artifacts.Form>} */
   const forms = new Map();
