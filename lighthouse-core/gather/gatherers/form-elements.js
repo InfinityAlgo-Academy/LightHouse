@@ -25,7 +25,7 @@ function collectFormElements() {
     labels: [],
   };
   for (const child of formChildren) {
-    const parentFormElement = child.closest('form');
+    const parentFormElement = child.form;
     const hasForm = !!parentFormElement;
     if (hasForm && !forms.has(parentFormElement)) {
       const newFormObj = {
