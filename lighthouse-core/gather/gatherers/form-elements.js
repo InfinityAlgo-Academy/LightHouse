@@ -35,7 +35,7 @@ function collectFormElements() {
           autocomplete: parentFormElement.autocomplete,
           // @ts-ignore - put into scope via stringification
           nodeLabel: getNodeLabel(parentFormElement), // eslint-disable-line no-undef,
-          // @ts-ignore - put into scope via stringification
+          // @ts-expect-error - put into scope via stringification
           snippet: getOuterHTMLSnippet(parentFormElement), // eslint-disable-line no-undef
         },
         inputs: [],
