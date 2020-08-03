@@ -16,6 +16,7 @@ const config = {
       'accesskeys', // run axe on the page since we've had problems with interactions
       'network-requests',
       'offscreen-images',
+      'uses-http2',
       'uses-webp-images',
       'uses-optimized-images',
       'uses-text-compression',

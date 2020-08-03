@@ -16,29 +16,26 @@ const pageFunctions = require('../../lib/page-functions.js');
 const TraceProcessor = require('../../lib/tracehouse/trace-processor.js');
 const RectHelpers = require('../../lib/rect-helpers.js');
 
-/** @typedef {{nodeId: number, score?: number}} TraceElementData */
+/** @typedef {{nodeId: number, score?: number, animations?: {id: string, name?: string}[]}} TraceElementData */
 
 /**
  * @this {HTMLElement}
- * @param {string} metricName
- * @return {LH.Artifacts.TraceElement | undefined}
  */
 /* istanbul ignore next */
-function setAttributeMarker(metricName) {
+function getNodeDetailsData() {
   const elem = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement; // eslint-disable-line no-undef
   let traceElement;
   if (elem) {
     traceElement = {
-      metricName,
-      // @ts-ignore - put into scope via stringification
+      // @ts-expect-error - put into scope via stringification
       devtoolsNodePath: getNodePath(elem), // eslint-disable-line no-undef
-      // @ts-ignore - put into scope via stringification
+      // @ts-expect-error - put into scope via stringification
       selector: getNodeSelector(elem), // eslint-disable-line no-undef
-      // @ts-ignore - put into scope via stringification
+      // @ts-expect-error - put into scope via stringification
       nodeLabel: getNodeLabel(elem), // eslint-disable-line no-undef
-      // @ts-ignore - put into scope via stringification
+      // @ts-expect-error - put into scope via stringification
       snippet: getOuterHTMLSnippet(elem), // eslint-disable-line no-undef
-      // @ts-ignore - put into scope via stringification
+      // @ts-expect-error - put into scope via stringification
       boundingRect: getBoundingClientRect(elem), // eslint-disable-line no-undef
     };
   }
@@ -56,6 +53,15 @@ class TraceElements extends Gatherer {
   }
 
   /**
+   * @param {LH.TraceEvent | undefined} event
+   * @return {string | undefined}
+   */
+  static getAnimationIDFromTraceEvent(event) {
+    return event && event.args &&
+      event.args.data && event.args.data.id;
+  }
+
+  /**
    * @param {Array<number>} rect
    * @return {LH.Artifacts.Rect}
    */
@@ -67,6 +73,29 @@ class TraceElements extends Gatherer {
       height: rect[3],
     };
     return RectHelpers.addRectTopAndBottom(rectArgs);
+  }
+
+  /**
+   * @param {LH.Gatherer.PassContext} passContext
+   * @param {string} animationId
+   * @return {Promise<string | undefined>}
+   */
+  static async resolveAnimationName(passContext, animationId) {
+    const driver = passContext.driver;
+    try {
+      const result = await driver.sendCommand('Animation.resolveAnimation', {animationId});
+      const objectId = result.remoteObject.objectId;
+      if (!objectId) return undefined;
+      const response = await driver.sendCommand('Runtime.getProperties', {
+        objectId,
+      });
+      const nameProperty = response.result.find((property) => property.name === 'animationName');
+      const animationName = nameProperty && nameProperty.value && nameProperty.value.value;
+      return animationName;
+    } catch (err) {
+      // Animation name is not mission critical information and can be evicted, so don't throw fatally if we can't find it.
+      return undefined;
+    }
   }
 
   /**
@@ -138,6 +167,49 @@ class TraceElements extends Gatherer {
   }
 
   /**
+   * Find the node ids of elements which are animated using the Animation trace events.
+   * @param {LH.Gatherer.PassContext} passContext
+   * @param {Array<LH.TraceEvent>} mainThreadEvents
+   * @return {Promise<Array<TraceElementData>>}
+   */
+  static async getAnimatedElements(passContext, mainThreadEvents) {
+    /** @type Map<number, Set<string>> */
+    const elementAnimations = new Map();
+    mainThreadEvents.filter(e => e.name === 'Animation' && e.ph === 'b')
+      .map(e => {
+        return {
+          nodeId: this.getNodeIDFromTraceEvent(e),
+          animationId: this.getAnimationIDFromTraceEvent(e),
+        };
+      })
+      .forEach(({nodeId, animationId}) => {
+        if (!nodeId || !animationId) return;
+        const animationIds = elementAnimations.get(nodeId) || new Set();
+        animationIds.add(animationId);
+        elementAnimations.set(nodeId, animationIds);
+      });
+
+    /** @type Array<TraceElementData> */
+    const animatedElementData = [];
+    for (const [nodeId, animationIds] of elementAnimations) {
+      const animations = [];
+      for (const animationId of animationIds) {
+        const animationName = await this.resolveAnimationName(passContext, animationId);
+        animations.push({id: animationId, name: animationName});
+      }
+      animatedElementData.push({nodeId, animations});
+    }
+    return animatedElementData;
+  }
+
+  /**
+   * @param {LH.Gatherer.PassContext} passContext
+   */
+  async beforePass(passContext) {
+    await passContext.driver.sendCommand('Animation.enable');
+  }
+
+  /**
    * @param {LH.Gatherer.PassContext} passContext
    * @param {LH.Gatherer.LoadData} loadData
    * @return {Promise<LH.Artifacts['TraceElements']>}
@@ -150,42 +222,53 @@ class TraceElements extends Gatherer {
 
     const {largestContentfulPaintEvt, mainThreadEvents} =
       TraceProcessor.computeTraceOfTab(loadData.trace);
-    /** @type {Array<TraceElementData>} */
-    const backendNodeData = [];
 
     const lcpNodeId = TraceElements.getNodeIDFromTraceEvent(largestContentfulPaintEvt);
     const clsNodeData = TraceElements.getTopLayoutShiftElements(mainThreadEvents);
-    if (lcpNodeId) {
-      backendNodeData.push({nodeId: lcpNodeId});
-    }
-    backendNodeData.push(...clsNodeData);
+    const animatedElementData =
+      await TraceElements.getAnimatedElements(passContext, mainThreadEvents);
+
+    /** @type Map<string, TraceElementData[]> */
+    const backendNodeDataMap = new Map([
+      ['largest-contentful-paint', lcpNodeId ? [{nodeId: lcpNodeId}] : []],
+      ['layout-shift', clsNodeData],
+      ['animation', animatedElementData],
+    ]);
 
     const traceElements = [];
-    for (let i = 0; i < backendNodeData.length; i++) {
-      const backendNodeId = backendNodeData[i].nodeId;
-      const metricName =
-        lcpNodeId === backendNodeId ? 'largest-contentful-paint' : 'cumulative-layout-shift';
-      const objectId = await driver.resolveNodeIdToObjectId(backendNodeId);
-      if (!objectId) continue;
-      const response = await driver.sendCommand('Runtime.callFunctionOn', {
-        objectId,
-        functionDeclaration: `function () {
-          ${setAttributeMarker.toString()};
-          ${pageFunctions.getNodePathString};
-          ${pageFunctions.getNodeSelectorString};
-          ${pageFunctions.getNodeLabelString};
-          ${pageFunctions.getOuterHTMLSnippetString};
-          ${pageFunctions.getBoundingClientRectString};
-          return setAttributeMarker.call(this, '${metricName}');
-        }`,
-        returnByValue: true,
-        awaitPromise: true,
-      });
+    for (const [traceEventType, backendNodeData] of backendNodeDataMap) {
+      for (let i = 0; i < backendNodeData.length; i++) {
+        const backendNodeId = backendNodeData[i].nodeId;
+        const objectId = await driver.resolveNodeIdToObjectId(backendNodeId);
+        if (!objectId) continue;
+        const response = await driver.sendCommand('Runtime.callFunctionOn', {
+          objectId,
+          functionDeclaration: `function () {
+            ${getNodeDetailsData.toString()};
+            ${pageFunctions.getNodePathString};
+            ${pageFunctions.getNodeSelectorString};
+            ${pageFunctions.getNodeLabelString};
+            ${pageFunctions.getOuterHTMLSnippetString};
+            ${pageFunctions.getBoundingClientRectString};
+            return getNodeDetailsData.call(this);
+          }`,
+          returnByValue: true,
+          awaitPromise: true,
+        });
 
-      if (response && response.result && response.result.value) {
-        traceElements.push({...response.result.value, score: backendNodeData[i].score});
+        if (response && response.result && response.result.value) {
+          traceElements.push({
+            traceEventType,
+            ...response.result.value,
+            score: backendNodeData[i].score,
+            animations: backendNodeData[i].animations,
+            nodeId: backendNodeId,
+          });
+        }
       }
     }
+
+    await driver.sendCommand('Animation.disable');
 
     return traceElements;
   }
