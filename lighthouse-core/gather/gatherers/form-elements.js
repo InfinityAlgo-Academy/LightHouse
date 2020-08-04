@@ -63,7 +63,6 @@ function collectFormElements() {
       });
     }
     if (child instanceof HTMLLabelElement) {
-      // @ts-expect-error - formObj is never undefined
       formObj.labels.push({
         for: child.htmlFor,
         // @ts-expect-error - put into scope via stringification
