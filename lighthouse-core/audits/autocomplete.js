@@ -40,7 +40,7 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 
 /** @type {string[]} */
-/** As of July 2020, this array contains all acceptable autocomplete attributes from the WHATWG standard.  */
+/** This array contains all acceptable autocomplete attributes from the WHATWG standard as of August 2020.  */
 const validAutocompleteAttributeNames = ['name', 'honorific-prefix', 'given-name',
   'additional-name', 'family-name', 'honorific-suffix', 'nickname', 'username', 'new-password',
   'current-password', 'one-time-code', 'organization-title', 'organization', 'street-address',
@@ -62,7 +62,7 @@ class AutocompleteAudit extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['Forms'],
+      requiredArtifacts: ['FormElements'],
     };
   }
 
@@ -71,7 +71,7 @@ class AutocompleteAudit extends Audit {
    * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
-    const forms = artifacts.Forms;
+    const forms = artifacts.FormElements;
     const noAutocomplete = forms.map(element => {
       return {...element, inputs: element.inputs.filter(input => !input.autocomplete)};
     });
