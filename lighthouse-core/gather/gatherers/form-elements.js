@@ -51,7 +51,6 @@ function collectFormElements() {
 
     if (child instanceof HTMLInputElement || child instanceof HTMLTextAreaElement
       || child instanceof HTMLSelectElement) {
-      // @ts-expect-error - formObj is never undefined
       formObj.inputs.push({
         id: child.id,
         name: child.name,
