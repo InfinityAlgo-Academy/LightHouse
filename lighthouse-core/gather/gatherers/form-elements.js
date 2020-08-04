@@ -25,6 +25,10 @@ function collectFormElements() {
     labels: [],
   };
   for (const child of formChildren) {
+    const isButton = child instanceof HTMLInputElement &&
+      (child.type === 'submit' || child.type === 'button');
+    if (isButton) continue;
+
     const parentFormElement = child.form;
     const hasForm = !!parentFormElement;
     if (hasForm && !forms.has(parentFormElement)) {
@@ -47,9 +51,6 @@ function collectFormElements() {
 
     if (child instanceof HTMLInputElement || child instanceof HTMLTextAreaElement
       || child instanceof HTMLSelectElement) {
-      const isButton = child instanceof HTMLInputElement &&
-      (child.type === 'submit' || child.type === 'button');
-      if (isButton) continue;
       // @ts-expect-error - formObj is never undefined
       formObj.inputs.push({
         id: child.id,
