@@ -47,11 +47,10 @@ function collectFormElements() {
       };
       forms.set(parentFormElement, newFormObj);
     }
-    const formObj = hasForm ? forms.get(parentFormElement) : formlessObj;
+    const formObj = forms.get(parentFormElement) || formlessObj;
 
     if (child instanceof HTMLInputElement || child instanceof HTMLTextAreaElement
       || child instanceof HTMLSelectElement) {
-      // @ts-expect-error - formObj is never undefined
       formObj.inputs.push({
         id: child.id,
         name: child.name,
@@ -64,7 +63,6 @@ function collectFormElements() {
       });
     }
     if (child instanceof HTMLLabelElement) {
-      // @ts-expect-error - formObj is never undefined
       formObj.labels.push({
         for: child.htmlFor,
         // @ts-expect-error - put into scope via stringification
