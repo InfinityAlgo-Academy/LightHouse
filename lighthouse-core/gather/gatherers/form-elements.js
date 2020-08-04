@@ -47,7 +47,7 @@ function collectFormElements() {
       };
       forms.set(parentFormElement, newFormObj);
     }
-    const formObj = hasForm ? forms.get(parentFormElement) : formlessObj;
+    const formObj = forms.get(parentFormElement) || formlessObj;
 
     if (child instanceof HTMLInputElement || child instanceof HTMLTextAreaElement
       || child instanceof HTMLSelectElement) {
