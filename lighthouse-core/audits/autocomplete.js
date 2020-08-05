@@ -5,9 +5,8 @@
  */
 
 /**
- * @fileoverview Audits a page to make sure there are no JS libraries with
- * known vulnerabilities being used. Checks against a vulnerability db
- * provided by Snyk.io and checked in locally as third-party/snyk/snapshot.json
+ * @fileoverview Audits a page to make sure all input elements
+ *  have an autocomplete attribute set.
  */
 
 'use strict';
