@@ -416,6 +416,12 @@
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | title": {
     "message": "Naudokite vaizdo įrašo formatus animuotam turiniui pateikti"
   },
+  "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | description": {
+    "message": "Naudojant kodus ir transformacijas pasenusiose naršyklėse galima naudoti naujas „JavaScript“ funkcijas. Tačiau dauguma jų nereikalingi modernioms naršyklėms. Į grupę įtrauktai „JavaScript“ pritaikykite modernią scenarijaus diegimo strategiją naudodami modulio ir (arba) ne modulio funkcijos aptikimą, kad sumažintumėte į modernias naršykles siunčiamo kodo kiekį, išlaikydami pasenusių naršyklių palaikymą. [Sužinokite daugiau](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
+  },
+  "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
+    "message": "Neteikite pasenusios „JavaScript“ modernioms naršyklėms"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "Apsvarstykite galimybę įkelti ne ekraninius ir paslėptus vaizdus tik tada, kai bus įkelti visi svarbiausi ištekliai, kad sutrumpėtų laikas iki sąveikos. [Sužinokite daugiau](https://web.dev/offscreen-images/)."
   },
@@ -432,7 +438,7 @@
     "message": "Naudotojai turi mokėti už dideles tinklo naudingąsias apkrovas, be to, jos glaudžiai susijusios su ilgu įkėlimo laiku. [Sužinokite daugiau](https://web.dev/total-byte-weight/)."
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | displayValue": {
-    "message": "Total size was {totalBytes, number, bytes} KiB"
+    "message": "Bendras dydis: {totalBytes, number, bytes} KiB"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | failureTitle": {
     "message": "Išvenkite didelių tinklo naudingųjų apkrovų"
@@ -459,7 +465,7 @@
     "message": "Pašalinkite nevartojamą CSS kalbą"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Pašalinkite nenaudojamą „JavaScript“, kad tinklo veikla sunaudotų mažiau baitų. [Sužinokite daugiau](https://web.dev/remove-unused-code/)."
+    "message": "Pašalinkite nenaudojamą „JavaScript“, kad tinklo veikla sunaudotų mažiau baitų. [Sužinokite daugiau](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Pašalinkite nenaudojamą „JavaScript“"
@@ -708,7 +714,7 @@
     "message": "{itemCount,plural, =1{1 užklausa nepateikta naudojant HTTP/2}one{# užklausa nepateikta naudojant HTTP/2}few{# užklausos nepateiktos naudojant HTTP/2}many{# užklausos nepateikta naudojant HTTP/2}other{# užklausų nepateikta naudojant HTTP/2}}"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "Naudojamas HTTP/2 puslapio šaltiniuose"
+    "message": "Use HTTP/2"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "Apsvarstykite galimybę pažymėti lietimo ir pelės ratuko sukimo įvykių apdorojimą kaip „`passive`“, kad pagerintumėte puslapio slinkimo našumą. [Sužinokite daugiau](https://web.dev/uses-passive-event-listeners/)."
@@ -739,6 +745,9 @@
   },
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Įkeliant žiniatinklio šriftą matomas visas tekstas"
+  },
+  "lighthouse-core/audits/font-display.js | undeclaredFontOriginWarning": {
+    "message": "{fontCountForOrigin,plural, =1{„Lighthouse“ nepavyko automatiškai patikrinti `font-display` vertės (pradinis URL: {fontOrigin}).}one{„Lighthouse“ nepavyko automatiškai patikrinti `font-display` vertės (pradinis URL: {fontOrigin}).}few{„Lighthouse“ nepavyko automatiškai patikrinti `font-display` verčių (pradinis URL: {fontOrigin}).}many{„Lighthouse“ nepavyko automatiškai patikrinti `font-display` vertės (pradinis URL: {fontOrigin}).}other{„Lighthouse“ nepavyko automatiškai patikrinti `font-display` verčių (pradinis URL: {fontOrigin}).}}"
   },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Formato koeficientas (faktinis)"
@@ -771,10 +780,10 @@
     "message": "Kad vaizdas būtų kuo aiškesnis, natūralūs vaizdo aspektai turi būti proporcingi ekrano dydžiui ir taškų koeficientui. [Sužinokite daugiau](https://web.dev/serve-responsive-images/)."
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Serves images with low resolution"
+    "message": "Teikiami žemos raiškos vaizdai"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Serves images with appropriate resolution"
+    "message": "Teikiami tinkamos raiškos vaizdai"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Naršyklės gali aktyviai raginti naudotojus pridėti jūsų programą prie pagrindinio ekrano, tai paskatintų geresnį įtraukimą. [Sužinokite daugiau](https://web.dev/installable-manifest/)"
@@ -785,8 +794,17 @@
   "lighthouse-core/audits/installable-manifest.js | title": {
     "message": "Žiniatinklio programos aprašas atitinka diegiamumo reikalavimus"
   },
+  "lighthouse-core/audits/is-on-https.js | allowed": {
+    "message": "Leidžiama"
+  },
+  "lighthouse-core/audits/is-on-https.js | blocked": {
+    "message": "Užblokuota"
+  },
   "lighthouse-core/audits/is-on-https.js | columnInsecureURL": {
     "message": "Nesaugus URL"
+  },
+  "lighthouse-core/audits/is-on-https.js | columnResolution": {
+    "message": "Užklausos sprendimas"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
     "message": "Visos svetainės turėtų būti apsaugotos naudojant HTTPS, net ir tos, kuriose nėra neskelbtinų duomenų. Reikėtų vengti [įvairaus turinio](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), kai tam tikri šaltiniai įkeliami naudojant HTTP, nors pradinė užklausa pateikiama naudojant HTTPS. Naudojant HTTPS įsibrovėliams neleidžiama gadinti ar pasyviai klausytis jūsų programos ir jos naudotojų komunikacijos, be to, jį privaloma naudoti HTTP/2 ir daugelyje naujų žiniatinklio platformų API. [Sužinokite daugiau](https://web.dev/is-on-https/)"
@@ -800,8 +818,14 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Naudojamas HTTPS"
   },
+  "lighthouse-core/audits/is-on-https.js | upgraded": {
+    "message": "Automatiškai naujovinta į HTTPS"
+  },
+  "lighthouse-core/audits/is-on-https.js | warning": {
+    "message": "Leidžiama su įspėjimu"
+  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
-    "message": "This is the largest contentful element painted within the viewport. [Learn More](https://web.dev/lighthouse-largest-contentful-paint/)"
+    "message": "Tai didžiausias turiningas elementas, pažymėtas peržiūros srityje. [Sužinokite daugiau](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
   "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
     "message": "{itemCount,plural, =1{Rastas 1 elementas}one{Rastas # elementas}few{Rasti # elementai}many{Rasta # elemento}other{Rasta # elementų}}"
@@ -810,13 +834,13 @@
     "message": "Didžiausio turiningo žymėjimo elementas"
   },
   "lighthouse-core/audits/layout-shift-elements.js | columnContribution": {
-    "message": "CLS Contribution"
+    "message": "Prisideda prie KIP rezultato"
   },
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "Šie DOM elementai labiausiai prisideda prie puslapio KIP."
   },
   "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
+    "message": "{nodeCount,plural, =1{Rastas vienas elementas}one{Rastas # elementas}few{Rasti # elementai}many{Rasta # elemento}other{Rasta # elementų}}"
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Venkite didelių išdėstymo poslinkių"
@@ -840,13 +864,13 @@
     "message": "Puslapis įkeliamas pakankamai sparčiai mobiliojo ryšio tinkluose"
   },
   "lighthouse-core/audits/long-tasks.js | description": {
-    "message": "Lists the longest tasks on the main thread, useful for identifying worst contributors to input delay. [Learn more](https://web.dev/long-tasks-devtools/)"
+    "message": "Sudaromas ilgiausių pagrindinės grupės užduočių sąrašas, naudingas siekiant nustatyti, kas labiausiai prisideda prie įvesties delsos. [Sužinokite daugiau](https://web.dev/long-tasks-devtools/)"
   },
   "lighthouse-core/audits/long-tasks.js | displayValue": {
-    "message": "{itemCount, plural,\n  =1 {# long task found}\n  other {# long tasks found}\n  }"
+    "message": "{itemCount,plural, =1{Rasta # ilga užduotis}one{Rasta # ilga užduotis}few{Rastos # ilgos užduotys}many{Rasta # ilgos užduoties}other{Rasta # ilgų užduočių}}"
   },
   "lighthouse-core/audits/long-tasks.js | title": {
-    "message": "Avoid long main-thread tasks"
+    "message": "Venkite ilgų pagrindinės grupės užduočių"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | columnCategory": {
     "message": "Kategorija"
@@ -929,6 +953,15 @@
   "lighthouse-core/audits/network-server-latency.js | title": {
     "message": "Serverio vidinės pusės delsa"
   },
+  "lighthouse-core/audits/no-unload-listeners.js | description": {
+    "message": "Įvykis „`unload`“ patikimai nesuaktyvinamas ir jį apdorojant gali būti neleidžiama optimizuoti naršyklės, pvz., persiuntimo atgal ir pirmyn talpyklos. Apsvarstykite galimybę naudoti įvykius „`pagehide`“ arba „`visibilitychange`“. [Sužinokite daugiau](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
+  },
+  "lighthouse-core/audits/no-unload-listeners.js | failureTitle": {
+    "message": "Užregistruojama „`unload`“ apdorojimo priemonė"
+  },
+  "lighthouse-core/audits/no-unload-listeners.js | title": {
+    "message": "Vengiama įvykio „`unload`“ apdorojimo priemonių"
+  },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Pagalbinis „JavaScript“ failas įgalina žiniatinklio programą veikti patikimai nenuspėjamomis tinklo sąlygomis. [Sužinokite daugiau](https://web.dev/offline-start-url/)"
   },
@@ -972,7 +1005,7 @@
     "message": "Kad nustatytumėte puslapio išteklių kiekio ir dydžio biudžetus, pridėkite biudžeto .json failą. [Sužinokite daugiau](https://web.dev/use-lighthouse-for-performance-budgets/)."
   },
   "lighthouse-core/audits/resource-summary.js | displayValue": {
-    "message": "{requestCount, plural, =1 {1 request • {byteCount, number, bytes} KiB} other {# requests • {byteCount, number, bytes} KiB}}"
+    "message": "{requestCount,plural, =1{Viena užklausa • {byteCount, number, bytes} KiB}one{# užklausa • {byteCount, number, bytes} KiB}few{# užklausos • {byteCount, number, bytes} KiB}many{# užklausos • {byteCount, number, bytes} KiB}other{# užklausų • {byteCount, number, bytes} KiB}}"
   },
   "lighthouse-core/audits/resource-summary.js | title": {
     "message": "Pasistenkite neteikti daug užklausų ir neperkelti daug duomenų"
@@ -1005,16 +1038,16 @@
     "message": "Dokumente yra tinkamas atributas „`rel=canonical`“"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | columnFailingLink": {
-    "message": "Uncrawlable Link"
+    "message": "Netikrinama nuoroda"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | description": {
-    "message": "Search engines may use `href` attributes on links to crawl websites. Ensure that the `href` attribute of anchor elements links to an appropriate destination, so more pages of the site can be discovered. [Learn More](https://support.google.com/webmasters/answer/9112205)"
+    "message": "Paieškos varikliuose, nuorodose į tikrinimo svetaines, gali būti naudojami „`href`“ atributai. Įsitikinkite, kad prieraišo elementų „`href`“ atributas susieja su tinkama paskirties vieta, kad būtų galima rasti daugiau svetainės puslapių. [Sužinokite daugiau](https://support.google.com/webmasters/answer/9112205)"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | failureTitle": {
-    "message": "Links are not crawlable"
+    "message": "Nuorodos netikrinamos"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | title": {
-    "message": "Links are crawlable"
+    "message": "Nuorodos tikrinamos"
   },
   "lighthouse-core/audits/seo/font-size.js | description": {
     "message": "Mažesnis nei 12 piks. šriftas yra per mažas, kad būtų įskaitomas, todėl mobiliuosius įrenginius naudojantys lankytojai turi keisti mastelį suėmę pirštais, kad galėtų perskaityti. Pasistenkite, kad daugiau nei 60 proc. puslapio teksto šrifto dydis būtų 12 piks. arba didesnis. [Sužinokite daugiau](https://web.dev/font-size/)."
@@ -1037,8 +1070,14 @@
   "lighthouse-core/audits/seo/hreflang.js | failureTitle": {
     "message": "Dokumente nėra tinkamo atributo „`hreflang`“"
   },
+  "lighthouse-core/audits/seo/hreflang.js | notFullyQualified": {
+    "message": "Santykinė atributo „href“ vertė"
+  },
   "lighthouse-core/audits/seo/hreflang.js | title": {
     "message": "Dokumente yra tinkamas atributas „`hreflang`“"
+  },
+  "lighthouse-core/audits/seo/hreflang.js | unexpectedLanguage": {
+    "message": "Netikėtas kalbos kodas"
   },
   "lighthouse-core/audits/seo/http-status-code.js | description": {
     "message": "Puslapiai, kurių HTTP būsenos kodų nepavyko pateikti, gali būti indeksuojami netinkamai. [Sužinokite daugiau](https://web.dev/http-status-code/)."
@@ -1216,6 +1255,15 @@
   },
   "lighthouse-core/audits/timing-budget.js | title": {
     "message": "Laiko biudžetas"
+  },
+  "lighthouse-core/audits/unsized-images.js | description": {
+    "message": "Always include explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+  },
+  "lighthouse-core/audits/unsized-images.js | failureTitle": {
+    "message": "Image elements do not have explicit `width` and `height`"
+  },
+  "lighthouse-core/audits/unsized-images.js | title": {
+    "message": "Image elements have explicit `width` and `height`"
   },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "Tipas"
@@ -1454,6 +1502,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnElement": {
     "message": "Elementas"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
+    "message": "Failing Elements"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "Vietovė"
   },
@@ -1500,7 +1551,7 @@
     "message": "Cumulative Layout Shift"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Potential savings of {wastedBytes, number, bytes} KiB"
+    "message": "Galima sutaupyti {wastedBytes, number, bytes} KiB"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Galima sutaupyti {wastedMs, number, milliseconds} ms"
@@ -1515,7 +1566,7 @@
     "message": "Pirmas cent. procesoriaus laisvas laikas"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
-    "message": "Pirmasis „Contentful“ parodymas"
+    "message": "First Contentful Paint"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
     "message": "Pirmasis reikšmingas parodymas"
@@ -1527,10 +1578,10 @@
     "message": "Vaizdas"
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
-    "message": "Laikas iki sąveikos"
+    "message": "Time to Interactive"
   },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
-    "message": "Didžiausias turiningas žymėjimas"
+    "message": "Largest Contentful Paint"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Maksimali potenciali pirmosios įvesties delsa"
@@ -1551,7 +1602,7 @@
     "message": "{timeInMs, number, seconds} sek."
   },
   "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
-    "message": "Greičio rodiklis"
+    "message": "Speed Index"
   },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Stiliaus failas"
@@ -1560,7 +1611,7 @@
     "message": "Trečioji šalis"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
-    "message": "Bendras blokavimo laikas"
+    "message": "Total Blocking Time"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Iš viso"
@@ -1585,6 +1636,12 @@
   },
   "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": {
     "message": "Reikiamo ištekliaus „{artifactName}“ rinkimo priemonė nebuvo paleista."
+  },
+  "lighthouse-core/lib/lh-error.js | notHtml": {
+    "message": "Pateiktas puslapis nėra HTML (pateiktas kaip MIME tipas {mimeType})."
+  },
+  "lighthouse-core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "Ši „Chrome“ versija yra per sena ir nepalaiko „{featureName}“. Jei norite peržiūrėti visus rezultatus, naudokite naujesnę versiją."
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailed": {
     "message": "„Lighthouse“ nepavyko patikimai įkelti puslapio, kurio užklausą pateikėte. Įsitikinkite, kad testuojate tinkamą URL ir kad serveris tinkamai atsako į visas užklausas."

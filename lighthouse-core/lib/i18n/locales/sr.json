@@ -416,6 +416,12 @@
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | title": {
     "message": "Користите видео формате за анимирани садржај"
   },
+  "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | description": {
+    "message": "Полифили и трансформације омогућавају да старе верзије прегледача користе нове функције JavaScript-а. Међутим, многи нису неопходни за модерне прегледаче. За JavaScript пакете користите модерну стратегију примене скрипте помоћу откривања функција модулом/без модула да бисте смањили количину кода који се шаље модерним прегледачима, притом задржавајући подршку за старе верзије прегледача. [Сазнајте више](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
+  },
+  "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
+    "message": "Избегавајте приказивање застарелог JavaScript-а модерним прегледачима"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "Препоручујемо вам да одложите учитавање слика ван екрана и скривених слика док се сви веома важни ресурси не учитају како бисте смањили време до почетка интеракције. [Сазнајте више](https://web.dev/offscreen-images/)."
   },
@@ -432,7 +438,7 @@
     "message": "Велике мрежне ресурсе корисници морају да плате стварним новцем и они су веома повезани са дугим временима учитавања. [Сазнајте више](https://web.dev/total-byte-weight/)."
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | displayValue": {
-    "message": "Total size was {totalBytes, number, bytes} KiB"
+    "message": "Укупна величина је била {totalBytes, number, bytes} KiB"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | failureTitle": {
     "message": "Избегавајте огромне мрежне ресурсе"
@@ -459,7 +465,7 @@
     "message": "Уклоните некоришћени CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Уклоните некоришћени JavaScript да бисте смањили потрошњу података током мрежних активности. [Сазнајте више](https://web.dev/remove-unused-code/)."
+    "message": "Уклоните некоришћени JavaScript да бисте смањили потрошњу података током мрежних активности. [Сазнајте више](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Уклоните некоришћени JavaScript"
@@ -708,7 +714,7 @@
     "message": "{itemCount,plural, =1{1 захтев није испоручен преко протокола HTTP/2}one{# захтев није испоручен преко протокола HTTP/2}few{# захтева нису испоручена преко протокола HTTP/2}other{# захтева није испоручено преко протокола HTTP/2}}"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "Користи HTTP/2 за своје ресурсе"
+    "message": "Use HTTP/2"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "Препоручујемо вам да пасивне обрађиваче догађаја означите као `passive` да бисте побољшали резултате померања. [Сазнајте више](https://web.dev/uses-passive-event-listeners/)."
@@ -739,6 +745,9 @@
   },
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Сав текст остаје видљив током учитавања веб-фонтова"
+  },
+  "lighthouse-core/audits/font-display.js | undeclaredFontOriginWarning": {
+    "message": "{fontCountForOrigin,plural, =1{Lighthouse није успео да аутоматски провери вредност `font-display` за полазни URL {fontOrigin}.}one{Lighthouse није успео да аутоматски провери `font-display` вредности за полазни URL {fontOrigin}.}few{Lighthouse није успео да аутоматски провери `font-display` вредности за полазни URL {fontOrigin}.}other{Lighthouse није успео да аутоматски провери `font-display` вредности за полазни URL {fontOrigin}.}}"
   },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Размера (стварна)"
@@ -771,10 +780,10 @@
     "message": "Природне димензије слике треба да буду пропорционалне размери величине екрана и пиксела да би слике биле што јасније. [Сазнајте више](https://web.dev/serve-responsive-images/)."
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Serves images with low resolution"
+    "message": "Приказује слике са ниском резолуцијом"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Serves images with appropriate resolution"
+    "message": "Приказује слике са одговарајућом резолуцијом"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Прегледачи могу проактивно да траже од корисника да додају апликацију на почетни екран, што може да доведе до већег ангажовања. [Сазнајте више](https://web.dev/installable-manifest/)."
@@ -785,8 +794,17 @@
   "lighthouse-core/audits/installable-manifest.js | title": {
     "message": "Манифест веб-апликације задовољава услове за инсталирање"
   },
+  "lighthouse-core/audits/is-on-https.js | allowed": {
+    "message": "Дозвољен"
+  },
+  "lighthouse-core/audits/is-on-https.js | blocked": {
+    "message": "Блокиран"
+  },
   "lighthouse-core/audits/is-on-https.js | columnInsecureURL": {
     "message": "Небезбедан URL"
+  },
+  "lighthouse-core/audits/is-on-https.js | columnResolution": {
+    "message": "Разрешење захтева"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
     "message": "Сви сајтови треба да буду заштићени HTTPS-ом, чак и они који не обрађују осетљиве податке. То обухвата избегавање [мешовитог садржаја](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content) односно учитавање неких ресурса преко HTTP-а иако се почетни захтев приказује преко HTTPS-а. HTTPS спречава уљезе да неовлашћено приступају комуникацији између апликације и корисника или да је пасивно слушају. Он је предуслов за HTTP/2 i API-је бројних нових веб-платформи. [Сазнајте више](https://web.dev/is-on-https/)."
@@ -800,8 +818,14 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Користи HTTPS"
   },
+  "lighthouse-core/audits/is-on-https.js | upgraded": {
+    "message": "Аутоматски надограђен на HTTPS"
+  },
+  "lighthouse-core/audits/is-on-https.js | warning": {
+    "message": "Дозвољен уз упозорење"
+  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
-    "message": "This is the largest contentful element painted within the viewport. [Learn More](https://web.dev/lighthouse-largest-contentful-paint/)"
+    "message": "Ово је највећи елемент садржаја који је приказан у области приказа. [Сазнајте више](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
   "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
     "message": "{itemCount,plural, =1{Пронађен је 1 елемент}one{Пронађен је # елемент}few{Пронађена су # елемента}other{Пронађено је # елемената}}"
@@ -810,13 +834,13 @@
     "message": "Елемент са највећим приказивањем садржаја"
   },
   "lighthouse-core/audits/layout-shift-elements.js | columnContribution": {
-    "message": "CLS Contribution"
+    "message": "CLS допринос"
   },
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "Ови DOM елементи највише доприносе CLS-у странице."
   },
   "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
+    "message": "{nodeCount,plural, =1{Пронађен је 1 елемент}one{Пронађен је # елемент}few{Пронађена су # елемента}other{Пронађено је # елемената}}"
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Избегавајте велике промене распореда"
@@ -840,13 +864,13 @@
     "message": "Учитавање странице је довољно брзо на мобилним мрежама"
   },
   "lighthouse-core/audits/long-tasks.js | description": {
-    "message": "Lists the longest tasks on the main thread, useful for identifying worst contributors to input delay. [Learn more](https://web.dev/long-tasks-devtools/)"
+    "message": "Наводи најдуже задатке у главној нити, што је корисно за идентификовање оних који највише доприносе кашњењу приказа. [Сазнајте више](https://web.dev/long-tasks-devtools/)"
   },
   "lighthouse-core/audits/long-tasks.js | displayValue": {
-    "message": "{itemCount, plural,\n  =1 {# long task found}\n  other {# long tasks found}\n  }"
+    "message": "{itemCount,plural, =1{Пронађен је # дуги задатак}one{Пронађен је # дуги задатак}few{Пронађена су # дуга задатка}other{Пронађено је # дугих задатака}}"
   },
   "lighthouse-core/audits/long-tasks.js | title": {
-    "message": "Avoid long main-thread tasks"
+    "message": "Избегавајте дуге задатке у главној нити"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | columnCategory": {
     "message": "Категорија"
@@ -929,6 +953,15 @@
   "lighthouse-core/audits/network-server-latency.js | title": {
     "message": "Позадинска кашњења сервера"
   },
+  "lighthouse-core/audits/no-unload-listeners.js | description": {
+    "message": "Догађај `unload` се не покреће поуздано и ако се он обрађује, то може да спречи оптимизације прегледача попут кеша за кретање уназад и унапред. Предлажемо вам да користите догађаје `pagehide` или `visibilitychange` уместо њега. [Сазнајте више](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
+  },
+  "lighthouse-core/audits/no-unload-listeners.js | failureTitle": {
+    "message": "Региструје обрађивача догађаја `unload`"
+  },
+  "lighthouse-core/audits/no-unload-listeners.js | title": {
+    "message": "Избегава обрађиваче догађаја `unload`"
+  },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Сервисер омогућава да веб-апликација буде поуздана у непредвидивим условима мреже. [Сазнајте више](https://web.dev/offline-start-url/)."
   },
@@ -972,7 +1005,7 @@
     "message": "Да бисте подесили циљеве за количину и величину ресурса странице, додајте датотеку budget.json file. [Сазнајте више](https://web.dev/use-lighthouse-for-performance-budgets/)."
   },
   "lighthouse-core/audits/resource-summary.js | displayValue": {
-    "message": "{requestCount, plural, =1 {1 request • {byteCount, number, bytes} KiB} other {# requests • {byteCount, number, bytes} KiB}}"
+    "message": "{requestCount,plural, =1{1 захтев • {byteCount, number, bytes} KiB}one{# захтев • {byteCount, number, bytes} KiB}few{# захтева • {byteCount, number, bytes} KiB}other{# захтева • {byteCount, number, bytes} KiB}}"
   },
   "lighthouse-core/audits/resource-summary.js | title": {
     "message": "Омогући да број захтева и величине преноса буду мали"
@@ -1005,16 +1038,16 @@
     "message": "Документ има важећи атрибут `rel=canonical`"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | columnFailingLink": {
-    "message": "Uncrawlable Link"
+    "message": "Линк који не може да се попише"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | description": {
-    "message": "Search engines may use `href` attributes on links to crawl websites. Ensure that the `href` attribute of anchor elements links to an appropriate destination, so more pages of the site can be discovered. [Learn More](https://support.google.com/webmasters/answer/9112205)"
+    "message": "Претраживачи могу да користе `href` атрибуте на линковима за пописивање веб-сајтова. Уверите се да `href` атрибут елемената сидра води на одговарајуће одредиште како би више страница са сајта могло да се открије. [Сазнајте више](https://support.google.com/webmasters/answer/9112205)"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | failureTitle": {
-    "message": "Links are not crawlable"
+    "message": "Линкови не могу да се попишу"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | title": {
-    "message": "Links are crawlable"
+    "message": "Линкови могу да се попишу"
   },
   "lighthouse-core/audits/seo/font-size.js | description": {
     "message": "Величине фонтова испод 12 пиксела су премале да би биле читљиве и због њих корисници на мобилним уређајима морају да „зумирају прстима“ како би могли да читају садржај. Потрудите се да >60% текста странице буде ≥12 пиксела. [Сазнајте више](https://web.dev/font-size/)."
@@ -1037,8 +1070,14 @@
   "lighthouse-core/audits/seo/hreflang.js | failureTitle": {
     "message": "Документ нема важећи атрибут `hreflang`"
   },
+  "lighthouse-core/audits/seo/hreflang.js | notFullyQualified": {
+    "message": "Релативна href вредност"
+  },
   "lighthouse-core/audits/seo/hreflang.js | title": {
     "message": "Документ има важећи атрибут `hreflang`"
+  },
+  "lighthouse-core/audits/seo/hreflang.js | unexpectedLanguage": {
+    "message": "Неочекивани кôд језика"
   },
   "lighthouse-core/audits/seo/http-status-code.js | description": {
     "message": "Странице са неуспешним HTTP кодовима статуса можда неће бити правилно индексиране. [Сазнајте више](https://web.dev/http-status-code/)."
@@ -1217,6 +1256,15 @@
   "lighthouse-core/audits/timing-budget.js | title": {
     "message": "Буџет за брзину учитавања"
   },
+  "lighthouse-core/audits/unsized-images.js | description": {
+    "message": "Always include explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+  },
+  "lighthouse-core/audits/unsized-images.js | failureTitle": {
+    "message": "Image elements do not have explicit `width` and `height`"
+  },
+  "lighthouse-core/audits/unsized-images.js | title": {
+    "message": "Image elements have explicit `width` and `height`"
+  },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "Тип"
   },
@@ -1338,7 +1386,7 @@
     "message": "Навигација"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
-    "message": "То су прилике за побољшање доживљаја при читању података из табела и листа помоћу технологије за помоћ особама са инвалидитетом, попут читача екрана."
+    "message": "Ово су прилике за побољшање доживљаја при читању података из табела или листа помоћу технологије за помоћ особама са инвалидитетом, попут читача екрана."
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Табеле и листе"
@@ -1454,6 +1502,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnElement": {
     "message": "Елемент"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
+    "message": "Failing Elements"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "Локација"
   },
@@ -1500,7 +1551,7 @@
     "message": "Cumulative Layout Shift"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Potential savings of {wastedBytes, number, bytes} KiB"
+    "message": "Потенцијална уштеда од {wastedBytes, number, bytes} KiB"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Потенцијална уштеда од {wastedMs, number, milliseconds} ms"
@@ -1515,7 +1566,7 @@
     "message": "Време првог неактивног процесора"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
-    "message": "Прво приказивање садржаја"
+    "message": "First Contentful Paint"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
     "message": "Прво значајно приказивање"
@@ -1527,10 +1578,10 @@
     "message": "Слика"
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
-    "message": "Време почетка интеракције"
+    "message": "Time to Interactive"
   },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
-    "message": "Највеће приказивање садржаја"
+    "message": "Largest Contentful Paint"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Макс. потенцијално кашњење првог приказа"
@@ -1551,7 +1602,7 @@
     "message": "{timeInMs, number, seconds} сек"
   },
   "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
-    "message": "Индекс брзине"
+    "message": "Speed Index"
   },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Опис стила"
@@ -1560,7 +1611,7 @@
     "message": "Независни ресурси"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
-    "message": "Укупно време блокирања"
+    "message": "Total Blocking Time"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Укупно"
@@ -1585,6 +1636,12 @@
   },
   "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": {
     "message": "Прикупљач за обавезни ресурс {artifactName} се није покренуо."
+  },
+  "lighthouse-core/lib/lh-error.js | notHtml": {
+    "message": "Наведена страница није HTML (приказује се као {mimeType} MIME типа)."
+  },
+  "lighthouse-core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "Ова верзија Chrome-а је престара да би подржавала „{featureName}“. Користите новију верзију да бисте видели комплетне резултате."
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailed": {
     "message": "Lighthouse није успео да поуздано учита страницу коју сте захтевали. Уверите се да тестирате одговарајући URL и да сервер правилно одговара на све захтеве."

@@ -416,6 +416,12 @@
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | title": {
     "message": "Χρήση μορφών βίντεο για περιεχόμενο κινούμενων εικόνων"
   },
+  "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | description": {
+    "message": "Τα Polyfill και οι μετασχηματισμοί επιτρέπουν στα προγράμματα περιήγησης παλαιού τύπου να χρησιμοποιούν νέες λειτουργίες JavaScript. Ωστόσο, πολλές από αυτές δεν είναι απαραίτητες για σύγχρονα προγράμματα περιήγησης. Για JavaScript σε πακέτο, υιοθετήστε μια σύγχρονη στρατηγική ανάπτυξης σεναρίων χρησιμοποιώντας εντοπισμό λειτουργίας module/nomodule για μείωση του όγκου κώδικα που αποστέλλεται σε σύγχρονα προγράμματα περιήγησης, διατηρώντας την υποστήριξη για προγράμματα περιήγησης παλαιού τύπου. [Μάθετε περισσότερα](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
+  },
+  "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
+    "message": "Αποφύγετε την προβολή JavaScript παλαιού τύπου σε σύγχρονα προγράμματα περιήγησης"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "Εξετάστε το ενδεχόμενο αργής φόρτωσης των εικόνων εκτός οθόνης και των κρυφών εικόνων μετά τη φόρτωση όλων των κρίσιμων πόρων. Με αυτό τον τρόπο, μπορεί να ελλατώθεί ο χρόνος μετάβασης σε κατάσταση αλληλεπίδρασης. [Μάθετε περισσότερα](https://web.dev/offscreen-images/)."
   },
@@ -432,7 +438,7 @@
     "message": "Τα μεγάλα φορτία δικτύου συνεπάγονται οικονομικό κόστος για τους χρήστες και σχετίζονται σε μεγάλο βαθμό με εκτενείς χρόνους φόρτωσης. [Μάθετε περισσότερα](https://web.dev/total-byte-weight/)."
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | displayValue": {
-    "message": "Total size was {totalBytes, number, bytes} KiB"
+    "message": "Το συνολικό μέγεθος ήταν {totalBytes, number, bytes} KiB"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | failureTitle": {
     "message": "Αποφύγετε τα πολύ μεγάλα φορτία δεδομένων δικτύου"
@@ -459,7 +465,7 @@
     "message": "Κατάργηση CSS που δεν χρησιμοποιείται"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Καταργήστε τυχόν JavaScript που δεν χρησιμοποιείται, για να μειώσετε τα byte που καταναλώνονται από τη δραστηριότητα δικτύου. [Μάθετε περισσότερα](https://web.dev/remove-unused-code/)."
+    "message": "Καταργήστε τυχόν JavaScript που δεν χρησιμοποιείται, για να μειώσετε τα byte που καταναλώνονται από τη δραστηριότητα δικτύου. [Μάθετε περισσότερα](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Κατάργηση JavaScript που δεν χρησιμοποιείται"
@@ -708,7 +714,7 @@
     "message": "{itemCount,plural, =1{1 αίτημα δεν εξυπηρετήθηκε μεσω HTTP/2}other{# αιτήματα δεν εξυπηρετήθηκαν μέσω HTTP/2}}"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "Χρησιμοποιεί HTTP/2 για τους πόρους της"
+    "message": "Use HTTP/2"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "Εξετάστε το ενδεχόμενο να επισημάνετε τις λειτουργίες επεξεργασίας συμβάντων αφής και χρήσης τροχού κύλισης ως `passive` για να βελτιώσετε την απόδοση κύλισης της σελίδας σας. [Μάθετε περισσότερα](https://web.dev/uses-passive-event-listeners/)."
@@ -739,6 +745,9 @@
   },
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Όλο το κείμενο παραμένει ορατό κατά τη διάρκεια φορτώσεων γραμματοσειράς ιστοτόπου"
+  },
+  "lighthouse-core/audits/font-display.js | undeclaredFontOriginWarning": {
+    "message": "{fontCountForOrigin,plural, =1{Το Lighthouse δεν μπόρεσε να ελέγξει αυτόματα την τιμή `font-display` για την προέλευση {fontOrigin}.}other{Το Lighthouse δεν μπόρεσε να ελέγξει αυτόματα τις τιμές `font-display` για την προέλευση {fontOrigin}.}}"
   },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Λόγος διαστάσεων (Πραγματικός)"
@@ -771,10 +780,10 @@
     "message": "Για μεγιστοποίηση της ευκρίνειας της εικόνας, οι φυσικές διαστάσεις της πρέπει να αναλογούν στο μέγεθος της οθόνης και τον λόγο διαστάσεων pixel. [Μάθετε περισσότερα](https://web.dev/serve-responsive-images/)."
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Serves images with low resolution"
+    "message": "Προβάλλει εικόνες με χαμηλή ανάλυση"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Serves images with appropriate resolution"
+    "message": "Προβάλλει εικόνες με κατάλληλη ανάλυση"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Τα προγράμματα περιήγησης μπορούν προληπτικά να ζητήσουν από τους χρήστες να προσθέσουν την εφαρμογή σας στην αρχική οθόνη τους, το οποίο μπορεί να οδηγήσει σε μεγαλύτερη αφοσίωση. [Μάθετε περισσότερα](https://web.dev/installable-manifest/)."
@@ -785,8 +794,17 @@
   "lighthouse-core/audits/installable-manifest.js | title": {
     "message": "Το μανιφέστο εφαρμογής ιστού ικανοποιεί τις απαιτήσεις εγκαταστασιμότητας"
   },
+  "lighthouse-core/audits/is-on-https.js | allowed": {
+    "message": "Επιτρέπεται"
+  },
+  "lighthouse-core/audits/is-on-https.js | blocked": {
+    "message": "Αποκλεισμένο"
+  },
   "lighthouse-core/audits/is-on-https.js | columnInsecureURL": {
     "message": "Μη ασφαλές URL"
+  },
+  "lighthouse-core/audits/is-on-https.js | columnResolution": {
+    "message": "Επίλυση αιτήματος"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
     "message": "Όλοι οι ιστότοποι πρέπει να προστατεύονται με HTTPS, ακόμα και αν δεν χειρίζονται ευαίσθητα δεδομένα. Αυτό περιλαμβάνει την αποφυγή [μικτού περιεχομένου](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), όπου ορισμένοι πόροι φορτώνονται μέσω HTTP παρά την εξυπηρέτηση του αρχικού αιτήματος μέσω HTTPS. Το HTTPS εμποδίζει τους εισβολείς από την αλλοίωση ή την παθητική ακρόαση των επικοινωνιών μεταξύ της εφαρμογής και των χρηστών σας. Επιπλέον, αποτελεί προαπαιτούμενο για το HTTP/2 και πολλά νέα API πλατφορμών ιστού. [Μάθετε περισσότερα](https://web.dev/is-on-https/)."
@@ -800,8 +818,14 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Χρησιμοποιεί HTTPS"
   },
+  "lighthouse-core/audits/is-on-https.js | upgraded": {
+    "message": "Αναβαθμίστηκε αυτόματα σε HTTPS"
+  },
+  "lighthouse-core/audits/is-on-https.js | warning": {
+    "message": "Επιτρέπεται με προειδοποίηση"
+  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
-    "message": "This is the largest contentful element painted within the viewport. [Learn More](https://web.dev/lighthouse-largest-contentful-paint/)"
+    "message": "Αυτό είναι το μεγαλύτερο χρωματισμένο στοιχείο με περιεχόμενο στη θύρα προβολής. [Μάθετε περισσότερα](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
   "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
     "message": "{itemCount,plural, =1{Βρέθηκε 1 στοιχείο}other{Βρέθηκαν # στοιχεία}}"
@@ -810,13 +834,13 @@
     "message": "Στοιχείο Μεγαλύτερης σχεδίασης με περιεχόμενο"
   },
   "lighthouse-core/audits/layout-shift-elements.js | columnContribution": {
-    "message": "CLS Contribution"
+    "message": "Συνεισφορά CLS"
   },
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "Αυτά είναι τα στοιχεία DOM με τη μεγαλύτερη συνεισφορά στο CLS."
   },
   "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
+    "message": "{nodeCount,plural, =1{Βρέθηκε 1 στοιχείο}other{Βρέθηκαν # στοιχεία}}"
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Αποφύγετε τις μεγάλες μετατοπίσεις διάταξης"
@@ -840,13 +864,13 @@
     "message": "Η φόρτωση σελίδας είναι αρκετά γρήγορη σε δίκτυα κινητής τηλεφωνίας"
   },
   "lighthouse-core/audits/long-tasks.js | description": {
-    "message": "Lists the longest tasks on the main thread, useful for identifying worst contributors to input delay. [Learn more](https://web.dev/long-tasks-devtools/)"
+    "message": "Παραθέτει τις μεγαλύτερες εργασίες στο κύριο νήμα, κάτι που είναι χρήσιμο για τον εντοπισμό των συνεισφερόντων που συμβάλλουν περισσότερο στην καθυστέρηση εισόδου. [Μάθετε περισσότερα](https://web.dev/long-tasks-devtools/)"
   },
   "lighthouse-core/audits/long-tasks.js | displayValue": {
-    "message": "{itemCount, plural,\n  =1 {# long task found}\n  other {# long tasks found}\n  }"
+    "message": "{itemCount,plural, =1{Βρέθηκε # μεγάλη εργασία}other{Βρέθηκαν # μεγάλες εργασίες}}"
   },
   "lighthouse-core/audits/long-tasks.js | title": {
-    "message": "Avoid long main-thread tasks"
+    "message": "Αποφύγετε μεγάλες εργασίες στο κύριο νήμα"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | columnCategory": {
     "message": "Κατηγορία"
@@ -929,6 +953,15 @@
   "lighthouse-core/audits/network-server-latency.js | title": {
     "message": "Λανθάνοντες χρόνοι συστημάτων υποστήριξης διακομιστή"
   },
+  "lighthouse-core/audits/no-unload-listeners.js | description": {
+    "message": "Το συμβάν `unload` δεν ενεργοποιείται με αξιοπιστία και η ακρόαση για το συμβάν μπορεί να αποτρέψει τις βελτιστοποιήσεις προγράμματος περιήγησης, όπως την κρυφή μνήμη Πίσω/Εμπρός. Αντ΄ αυτού, εξετάστε το ενδεχόμενο χρήσης των συμβάντων `pagehide` ή `visibilitychange`. [Μάθετε περισσότερα](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
+  },
+  "lighthouse-core/audits/no-unload-listeners.js | failureTitle": {
+    "message": "Εγγράφει μια λειτουργία αναμονής `unload`"
+  },
+  "lighthouse-core/audits/no-unload-listeners.js | title": {
+    "message": "Αποφεύγει λειτουργίες αναμονής συμβάντων `unload`"
+  },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Ένα service worker επιτρέπει στην εφαρμογή ιστού σας να είναι πιο αξιόπιστη όταν εκτελείται σε απρόβλεπτες συνθήκες δικτύου. [Μάθετε περισσότερα](https://web.dev/offline-start-url/)."
   },
@@ -972,7 +1005,7 @@
     "message": "Για τον ορισμό προϋπολογισμών για την ποσότητα και το μέγεθος των πόρων μιας σελίδας, προσθέστε ένα αρχείο budget.json. [Μάθετε περισσότερα](https://web.dev/use-lighthouse-for-performance-budgets/)."
   },
   "lighthouse-core/audits/resource-summary.js | displayValue": {
-    "message": "{requestCount, plural, =1 {1 request • {byteCount, number, bytes} KiB} other {# requests • {byteCount, number, bytes} KiB}}"
+    "message": "{requestCount,plural, =1{1 αίτημα • {byteCount, number, bytes} KiB}other{# αιτήματα • {byteCount, number, bytes} KiB}}"
   },
   "lighthouse-core/audits/resource-summary.js | title": {
     "message": "Φροντίστε να διατηρείτε το πλήθος των αιτημάτων χαμηλό και το μέγεθος των μεταφορών μικρό"
@@ -1005,16 +1038,16 @@
     "message": "Το έγγραφο έχει ένα έγκυρο `rel=canonical`"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | columnFailingLink": {
-    "message": "Uncrawlable Link"
+    "message": "Μη ανιχνεύσιμος σύνδεσμος"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | description": {
-    "message": "Search engines may use `href` attributes on links to crawl websites. Ensure that the `href` attribute of anchor elements links to an appropriate destination, so more pages of the site can be discovered. [Learn More](https://support.google.com/webmasters/answer/9112205)"
+    "message": "Οι μηχανές αναζήτησης ενδέχεται να χρησιμοποιούν `href` χαρακτηριστικά σε συνδέσμους για ανίχνευση ιστοτόπων. Βεβαιωθείτε ότι το χαρακτηριστικό `href` των στοιχείων αγκύρωσης συνδέεται με έναν κατάλληλο προορισμό, έτσι ώστε να είναι δυνατή η ανακάλυψη περισσότερων σελίδων του ιστοτόπου. [Μάθετε περισσότερα](https://support.google.com/webmasters/answer/9112205)"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | failureTitle": {
-    "message": "Links are not crawlable"
+    "message": "Οι σύνδεσμοι δεν είναι ανιχνεύσιμοι"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | title": {
-    "message": "Links are crawlable"
+    "message": "Οι σύνδεσμοι είναι ανιχνεύσιμοι"
   },
   "lighthouse-core/audits/seo/font-size.js | description": {
     "message": "Τα μεγέθη γραμματοσειράς κάτω από 12px είναι πολύ μικρά για να είναι ευανάγνωστα, με αποτέλεσμα οι επισκέπτες από κινητά να χρειάζεται να μεγεθύνουν με τα δάχτυλά τους τη σελίδα για να διαβάσουν το περιεχόμενο. Προσπαθήστε πάνω από το 60% του κειμένου της σελίδας να έχει μέγεθος μεγαλύτερο από ή ίσο με 12px. [Μάθετε περισσότερα](https://web.dev/font-size/)."
@@ -1037,8 +1070,14 @@
   "lighthouse-core/audits/seo/hreflang.js | failureTitle": {
     "message": "Το έγγραφο δεν έχει ένα έγκυρο `hreflang`"
   },
+  "lighthouse-core/audits/seo/hreflang.js | notFullyQualified": {
+    "message": "Τιμή σχετικού href"
+  },
   "lighthouse-core/audits/seo/hreflang.js | title": {
     "message": "Το έγγραφο έχει ένα έγκυρο `hreflang`"
+  },
+  "lighthouse-core/audits/seo/hreflang.js | unexpectedLanguage": {
+    "message": "Μη αναμενόμενος κωδικός γλώσσας"
   },
   "lighthouse-core/audits/seo/http-status-code.js | description": {
     "message": "Οι σελίδες με ανεπιτυχείς κωδικούς κατάστασης HTTP μπορεί να μην ευρετηριαστούν σωστά. [Μάθετε περισσότερα](https://web.dev/http-status-code/)."
@@ -1216,6 +1255,15 @@
   },
   "lighthouse-core/audits/timing-budget.js | title": {
     "message": "Προϋπολογισμός χρονισμού"
+  },
+  "lighthouse-core/audits/unsized-images.js | description": {
+    "message": "Always include explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+  },
+  "lighthouse-core/audits/unsized-images.js | failureTitle": {
+    "message": "Image elements do not have explicit `width` and `height`"
+  },
+  "lighthouse-core/audits/unsized-images.js | title": {
+    "message": "Image elements have explicit `width` and `height`"
   },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "Τύπος"
@@ -1454,6 +1502,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnElement": {
     "message": "Στοιχείο"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
+    "message": "Failing Elements"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "Τοποθεσία"
   },
@@ -1500,7 +1551,7 @@
     "message": "Cumulative Layout Shift"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Potential savings of {wastedBytes, number, bytes} KiB"
+    "message": "Δυνητική εξοικονόμηση {wastedBytes, number, bytes} KiB"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Δυνητική εξοικονόμηση {wastedMs, number, milliseconds} χλστ.δ."
@@ -1515,7 +1566,7 @@
     "message": "Πρώτη αδράνεια CPU"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
-    "message": "Πρώτη μορφή με περιεχόμενο"
+    "message": "First Contentful Paint"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
     "message": "Πρώτη χρήσιμη μορφή"
@@ -1527,10 +1578,10 @@
     "message": "Εικόνα"
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
-    "message": "Χρόνος για Αλληλεπίδραση"
+    "message": "Time to Interactive"
   },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
-    "message": "Μεγαλύτερη μορφή με περιεχόμενο"
+    "message": "Largest Contentful Paint"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Μέγ. δυνατή καθυστέρηση πρώτης εισόδου"
@@ -1551,7 +1602,7 @@
     "message": "{timeInMs, number, seconds} δ."
   },
   "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
-    "message": "Ευρετήριο ταχύτητας"
+    "message": "Speed Index"
   },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Φύλλο στιλ"
@@ -1560,7 +1611,7 @@
     "message": "Τρίτο μέρος"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
-    "message": "Συνολικός χρόνος αποκλεισμού"
+    "message": "Total Blocking Time"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Σύνολο"
@@ -1585,6 +1636,12 @@
   },
   "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": {
     "message": "Δεν εκτελέστηκε η λειτουργία συγκέντρωσης για τον απαιτούμενο πόρο {artifactName}."
+  },
+  "lighthouse-core/lib/lh-error.js | notHtml": {
+    "message": "Η σελίδα που καταχωρίσατε δεν είναι HTML (προβάλλεται ως τύπος MIME {mimeType})."
+  },
+  "lighthouse-core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "Αυτή η έκδοση του Chrome είναι πολύ παλιά για να υποστηρίζει τη λειτουργία {featureName}. Χρησιμοποιήστε μια νεότερη έκδοση για να δείτε τα πλήρη αποτελέσματα."
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailed": {
     "message": "Το Lighthouse δεν ήταν δυνατό να φορτώσει με αξιοπιστία τη σελίδα που ζητήσατε. Βεβαιωθείτε ότι ελέγχετε το σωστό URL και ότι ο διακομιστής ανταποκρίνεται σωστά σε όλα τα αιτήματα."

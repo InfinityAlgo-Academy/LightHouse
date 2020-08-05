@@ -416,6 +416,12 @@
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | title": {
     "message": "使用影片格式的動畫內容"
   },
+  "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | description": {
+    "message": "Polyfill 和轉換可讓舊版瀏覽器使用新版 JavaScript 的功能。不過，有很多 Polyfill 和轉換都不是新型瀏覽器的必要項目。請使用模組/非模組的功能偵測，為 JavaScript 套件採用新型的指令碼部署策略，以減少送往新版瀏覽器的程式碼數量，同時保留對舊版瀏覽器的支援。[瞭解詳情](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
+  },
+  "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
+    "message": "避免向新型瀏覽器提供舊版 JavaScript"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "建議延遲載入螢幕外的項目並隱藏圖片，直到重要資源全部載入後再開始操作，以縮短可互動時間。[瞭解詳情](https://web.dev/offscreen-images/)。"
   },
@@ -432,7 +438,7 @@
     "message": "網絡負載過大會造成使用者的費用負擔，且往往與過長載入時間息息相關。[瞭解詳情](https://web.dev/total-byte-weight/)。"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | displayValue": {
-    "message": "Total size was {totalBytes, number, bytes} KiB"
+    "message": "總大小為 {totalBytes, number, bytes} KiB"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | failureTitle": {
     "message": "避免網絡負載過大"
@@ -459,7 +465,7 @@
     "message": "移除未使用的 CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "移除未使用的 JavaScript，以減少網絡活動耗用的位元組。[瞭解詳情](https://web.dev/remove-unused-code/)。"
+    "message": "移除未使用的 JavaScript，以減少網絡活動耗用的位元組。[瞭解詳情](https://web.dev/unused-javascript/)。"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "移除未使用的 JavaScript"
@@ -708,7 +714,7 @@
     "message": "{itemCount,plural, =1{有 1 個要求未透過 HTTP/2 傳送}other{有 # 個要求未透過 HTTP/2 傳送}}"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "為本身的資源使用 HTTP/2"
+    "message": "Use HTTP/2"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "建議將輕觸動作和滑鼠滾輪活動監聽器標示為 `passive`，以提升網頁的捲動效能。[瞭解詳情](https://web.dev/uses-passive-event-listeners/)。"
@@ -739,6 +745,9 @@
   },
   "lighthouse-core/audits/font-display.js | title": {
     "message": "在網頁字型載入時，所有文字仍然顯示"
+  },
+  "lighthouse-core/audits/font-display.js | undeclaredFontOriginWarning": {
+    "message": "{fontCountForOrigin,plural, =1{Lighthouse 無法為來源 ({fontOrigin}) 自動檢查 `font-display` 數值。}other{Lighthouse 無法為來源 ({fontOrigin}) 自動檢查 `font-display` 數值。}}"
   },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "實際的圖片長寬比"
@@ -771,10 +780,10 @@
     "message": "圖片自然尺寸應與顯示大小及像素比例成正比，才能令圖片達到最清晰。[瞭解詳情](https://web.dev/serve-responsive-images/)。"
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Serves images with low resolution"
+    "message": "提供的圖片解像度過低"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Serves images with appropriate resolution"
+    "message": "提供的圖片解像度適當"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "瀏覽器可主動提示使用者，建議他們將您的應用程式新增至主畫面，藉此提高參與度[瞭解詳情](https://web.dev/installable-manifest/)。"
@@ -785,8 +794,17 @@
   "lighthouse-core/audits/installable-manifest.js | title": {
     "message": "網絡應用程式資訊清單符合可安裝性要求"
   },
+  "lighthouse-core/audits/is-on-https.js | allowed": {
+    "message": "允許"
+  },
+  "lighthouse-core/audits/is-on-https.js | blocked": {
+    "message": "已封鎖"
+  },
   "lighthouse-core/audits/is-on-https.js | columnInsecureURL": {
     "message": "不安全的網址"
+  },
+  "lighthouse-core/audits/is-on-https.js | columnResolution": {
+    "message": "要求解決"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
     "message": "所有網站都應該使用 HTTPS 確保安全，即使網站不處理敏感資料亦然。這包括避免[混合內容](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content)，即使初始要求透過 HTTPS 提供，混合內容中的部分資源仍會透過 HTTP 載入。HTTPS 能防範入侵者竄改或被動監聽應用程式與使用者之間的通訊，且 HTTP/2 和很多新的網絡平台 API 都要求使用 HTTPS。[瞭解詳情](https://web.dev/is-on-https/)。"
@@ -800,8 +818,14 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "使用 HTTPS"
   },
+  "lighthouse-core/audits/is-on-https.js | upgraded": {
+    "message": "已自動升級為 HTTPS"
+  },
+  "lighthouse-core/audits/is-on-https.js | warning": {
+    "message": "允許 (附警告)"
+  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
-    "message": "This is the largest contentful element painted within the viewport. [Learn More](https://web.dev/lighthouse-largest-contentful-paint/)"
+    "message": "這是在檢視區中繪製的最大內容元素。[瞭解詳情](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
   "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
     "message": "{itemCount,plural, =1{找到 1 個元素}other{找到 # 個元素}}"
@@ -810,13 +834,13 @@
     "message": "「最大內容繪製」元素"
   },
   "lighthouse-core/audits/layout-shift-elements.js | columnContribution": {
-    "message": "CLS Contribution"
+    "message": "對 CLS 的影響"
   },
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "這些 DOM 元素在頁面造成最多累計版面配置轉移 (CLS)。"
   },
   "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
+    "message": "{nodeCount,plural, =1{找到 1 個元素}other{找到 # 個元素}}"
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "避免大幅度的版面配置轉移"
@@ -840,13 +864,13 @@
     "message": "網頁在流動網絡中的載入速度夠快"
   },
   "lighthouse-core/audits/long-tasks.js | description": {
-    "message": "Lists the longest tasks on the main thread, useful for identifying worst contributors to input delay. [Learn more](https://web.dev/long-tasks-devtools/)"
+    "message": "列出主要執行緒上執行時間最長的工作，有助辨識導致輸入延遲的主因。[瞭解詳情](https://web.dev/long-tasks-devtools/)"
   },
   "lighthouse-core/audits/long-tasks.js | displayValue": {
-    "message": "{itemCount, plural,\n  =1 {# long task found}\n  other {# long tasks found}\n  }"
+    "message": "{itemCount,plural, =1{找到 # 項長時間執行的工作}other{找到 # 項長時間執行的工作}}"
   },
   "lighthouse-core/audits/long-tasks.js | title": {
-    "message": "Avoid long main-thread tasks"
+    "message": "避免長時間在主要執行緒上執行的工作"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | columnCategory": {
     "message": "類別"
@@ -929,6 +953,15 @@
   "lighthouse-core/audits/network-server-latency.js | title": {
     "message": "伺服器後端延遲時間"
   },
+  "lighthouse-core/audits/no-unload-listeners.js | description": {
+    "message": "`unload` 事件無法保證觸發，而偵聽此事件可能會防礙瀏覽器優化項目操作，例如往返快取。請考慮改為使用 `pagehide` 或 `visibilitychange` 事件。[瞭解詳情](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
+  },
+  "lighthouse-core/audits/no-unload-listeners.js | failureTitle": {
+    "message": "發現 `unload` 偵聽器"
+  },
+  "lighthouse-core/audits/no-unload-listeners.js | title": {
+    "message": "避免 `unload` 事件偵聽器"
+  },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Service Worker 可確保您的網絡應用程式運作可靠，即使網絡連線不穩定亦然。[瞭解詳情](https://web.dev/offline-start-url/)。"
   },
@@ -972,7 +1005,7 @@
     "message": "如要設定網頁資源的數量和大小的預算，請新增 budget.json 檔案。[瞭解詳情](https://web.dev/use-lighthouse-for-performance-budgets/)。"
   },
   "lighthouse-core/audits/resource-summary.js | displayValue": {
-    "message": "{requestCount, plural, =1 {1 request • {byteCount, number, bytes} KiB} other {# requests • {byteCount, number, bytes} KiB}}"
+    "message": "{requestCount,plural, =1{1 個要求 • {byteCount, number, bytes} KiB}other{# 個要求 • {byteCount, number, bytes} KiB}}"
   },
   "lighthouse-core/audits/resource-summary.js | title": {
     "message": "降低要求數量並減少傳輸大小"
@@ -1005,16 +1038,16 @@
     "message": "文件具備有效的 `rel=canonical`"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | columnFailingLink": {
-    "message": "Uncrawlable Link"
+    "message": "無法檢索的連結"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | description": {
-    "message": "Search engines may use `href` attributes on links to crawl websites. Ensure that the `href` attribute of anchor elements links to an appropriate destination, so more pages of the site can be discovered. [Learn More](https://support.google.com/webmasters/answer/9112205)"
+    "message": "搜尋引擎可能會使用連結上的 `href` 屬性來檢索網站。請確認錨點元素的 `href` 屬性可連結適當的目的地，以便系統檢索網站上的更多網頁。[瞭解詳情](https://support.google.com/webmasters/answer/9112205)"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | failureTitle": {
-    "message": "Links are not crawlable"
+    "message": "無法檢索的連結"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | title": {
-    "message": "Links are crawlable"
+    "message": "可檢索的連結"
   },
   "lighthouse-core/audits/seo/font-size.js | description": {
     "message": "如果字型小於 12 像素，文字會太小而難以辨識，流動裝置訪客需要「兩指縮放」才能閱讀內容。網頁中應有超過 60% 採用 12 像素或以上大小的文字。[瞭解詳情](https://web.dev/font-size/)。"
@@ -1037,8 +1070,14 @@
   "lighthouse-core/audits/seo/hreflang.js | failureTitle": {
     "message": "文件並無有效的 `hreflang`"
   },
+  "lighthouse-core/audits/seo/hreflang.js | notFullyQualified": {
+    "message": "相對 href 數值"
+  },
   "lighthouse-core/audits/seo/hreflang.js | title": {
     "message": "文件具備有效的 `hreflang`"
+  },
+  "lighthouse-core/audits/seo/hreflang.js | unexpectedLanguage": {
+    "message": "非預期的語言代碼"
   },
   "lighthouse-core/audits/seo/http-status-code.js | description": {
     "message": "如果網頁傳回失敗的 HTTP 狀態碼，可能無法正確加入索引。[瞭解詳情](https://web.dev/http-status-code/)。"
@@ -1216,6 +1255,15 @@
   },
   "lighthouse-core/audits/timing-budget.js | title": {
     "message": "時間預算"
+  },
+  "lighthouse-core/audits/unsized-images.js | description": {
+    "message": "Always include explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+  },
+  "lighthouse-core/audits/unsized-images.js | failureTitle": {
+    "message": "Image elements do not have explicit `width` and `height`"
+  },
+  "lighthouse-core/audits/unsized-images.js | title": {
+    "message": "Image elements have explicit `width` and `height`"
   },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "類別"
@@ -1454,6 +1502,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnElement": {
     "message": "元素"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
+    "message": "Failing Elements"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "位置"
   },
@@ -1497,10 +1548,10 @@
     "message": "可節省的數據用量"
   },
   "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
-    "message": "累計版面配置轉移"
+    "message": "Cumulative Layout Shift"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Potential savings of {wastedBytes, number, bytes} KiB"
+    "message": "可節省 {wastedBytes, number, bytes} KiB"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "可減少 {wastedMs, number, milliseconds} 毫秒"
@@ -1515,7 +1566,7 @@
     "message": "首次 CPU 閒置時間"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
-    "message": "首次內容繪製時間"
+    "message": "First Contentful Paint"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
     "message": "首次有效繪製時間"
@@ -1527,10 +1578,10 @@
     "message": "圖片"
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
-    "message": "可互動所需時間"
+    "message": "Time to Interactive"
   },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
-    "message": "最大內容繪製"
+    "message": "Largest Contentful Paint"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "首次輸入延遲時間最長預計值"
@@ -1551,7 +1602,7 @@
     "message": "{timeInMs, number, seconds} 秒"
   },
   "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
-    "message": "速度指數"
+    "message": "Speed Index"
   },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "樣式表"
@@ -1560,7 +1611,7 @@
     "message": "第三方"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
-    "message": "總封鎖時間"
+    "message": "Total Blocking Time"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "總計"
@@ -1585,6 +1636,12 @@
   },
   "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": {
     "message": "未執行必要的 {artifactName} 收集程式。"
+  },
+  "lighthouse-core/lib/lh-error.js | notHtml": {
+    "message": "提供的頁面並非 HTML (MIME 類 {mimeType})。"
+  },
+  "lighthouse-core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "這個版本的 Chrome 太舊，無法支援「{featureName}」。請使用較新版本的 Chrome 以便查看完整結果。"
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailed": {
     "message": "Lighthouse 無法穩定載入您要求的網頁。請確認您測試的網址是否正確，以及伺服器是否正確回應所有要求。"
