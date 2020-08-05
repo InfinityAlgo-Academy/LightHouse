@@ -163,6 +163,9 @@ Object {
       "path": "no-unload-listeners",
     },
     Object {
+      "path": "non-composited-animations",
+    },
+    Object {
       "path": "manual/pwa-cross-browser",
     },
     Object {
@@ -999,6 +1002,11 @@ Object {
         Object {
           "group": "diagnostics",
           "id": "long-tasks",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "non-composited-animations",
           "weight": 0,
         },
         Object {
