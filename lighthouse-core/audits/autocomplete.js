@@ -82,10 +82,11 @@ class AutocompleteAudit extends Audit {
         }
       })};
     });
-    const noAutocompleteData = [];
-    for (const form of noAutocomplete) {
+    const failingForms = [...noAutocomplete, ...autocompleteInvalid];
+    const failingFormsData = [];
+    for (const form of failingForms) {
       for (const input of form.inputs) {
-        noAutocompleteData.push({
+        failingFormsData.push({
           failingElements: /** @type {LH.Audit.Details.NodeValue} */ ({
             type: 'node',
             snippet: input.snippet,
@@ -94,29 +95,17 @@ class AutocompleteAudit extends Audit {
         });
       }
     }
-    const autocompleteInvalidData = [];
-    for (const form of autocompleteInvalid) {
-      for (const input of form.inputs) {
-        autocompleteInvalidData.push({
-          failingElements: /** @type {LH.Audit.Details.NodeValue} */ ({
-            type: 'node',
-            snippet: input.snippet,
-            nodeLabel: input.nodeLabel,
-          }),
-        });
-      }
-    }
-    const autocompleteData = [...noAutocompleteData, ...autocompleteInvalidData];
+
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'failingElements', itemType: 'node', text: str_(UIStrings.failingElements)},
     ];
-    const details = Audit.makeTableDetails(headings, autocompleteData);
+    const details = Audit.makeTableDetails(headings, failingFormsData);
     let displayValue;
-    if (autocompleteData.length > 0) {
-      displayValue = str_(UIStrings.displayValue, {nodeCount: autocompleteData.length});
+    if (failingFormsData.length > 0) {
+      displayValue = str_(UIStrings.displayValue, {nodeCount: failingFormsData.length});
     }
-    const score = (autocompleteData.length > 0) ? 0 : 1;
+    const score = (failingFormsData.length > 0) ? 0 : 1;
     return {
       score: score,
       displayValue,
