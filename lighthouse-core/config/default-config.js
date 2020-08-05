@@ -146,6 +146,7 @@ const defaultConfig = {
       'meta-elements',
       'script-elements',
       'iframe-elements',
+      'form-elements',
       'main-document-content',
       'global-listeners',
       'dobetterweb/appcache',

@@ -1337,6 +1337,9 @@ Object {
           "path": "iframe-elements",
         },
         Object {
+          "path": "form-elements",
+        },
+        Object {
           "path": "main-document-content",
         },
         Object {
