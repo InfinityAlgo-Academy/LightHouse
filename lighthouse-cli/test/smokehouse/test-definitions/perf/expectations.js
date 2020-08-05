@@ -216,7 +216,13 @@ module.exports = [
             height: 100,
           },
           animations: [
-            {name: 'anim'},
+            {
+              // Requires compositor failure reasons to be in the trace
+              // https://chromiumdash.appspot.com/commit/995baabedf9e70d16deafc4bc37a2b215a9b8ec9
+              _minChromiumMilestone: 86,
+              name: 'anim',
+              failureReasonsMask: 8224,
+            },
           ],
         },
       ],
@@ -287,6 +293,50 @@ module.exports = [
           scoreDisplayMode: 'notApplicable',
           details: {
             items: [],
+          },
+        },
+      },
+    },
+  },
+  {
+    lhr: {
+      requestedUrl: 'http://localhost:10200/perf/animations.html',
+      finalUrl: 'http://localhost:10200/perf/animations.html',
+      audits: {
+        'non-composited-animations': {
+          // Requires compositor failure reasons to be in the trace
+          // https://chromiumdash.appspot.com/commit/995baabedf9e70d16deafc4bc37a2b215a9b8ec9
+          _minChromiumMilestone: 86,
+          score: null,
+          displayValue: '1 animated element found',
+          details: {
+            items: [
+              {
+                node: {
+                  type: 'node',
+                  path: '2,HTML,1,BODY,1,DIV',
+                  selector: 'body > div#animated-boi',
+                  nodeLabel: 'div',
+                  snippet: '<div id="animated-boi">',
+                },
+                subItems: {
+                  items: [
+                    {
+                      // From JavaScript `.animate` which has no animation display name
+                      failureReason: 'Unsupported CSS Property',
+                    },
+                    {
+                      failureReason: 'Unsupported CSS Property',
+                      animation: 'alpha',
+                    },
+                    {
+                      failureReason: 'Unsupported CSS Property',
+                      animation: 'beta',
+                    },
+                  ],
+                },
+              },
+            ],
           },
         },
       },

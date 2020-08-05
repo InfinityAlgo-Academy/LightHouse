@@ -1876,6 +1876,13 @@
         ]
       }
     },
+    "non-composited-animations": {
+      "id": "non-composited-animations",
+      "title": "Avoid non-composited animations",
+      "description": "Animations which are not composited can be janky and contribute to CLS. [Learn more](https://developers.google.com/web/fundamentals/performance/rendering/stick-to-compositor-only-properties-and-manage-layer-count)",
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
+    },
     "pwa-cross-browser": {
       "id": "pwa-cross-browser",
       "title": "Site works cross-browser",
@@ -4337,6 +4344,11 @@
           "group": "diagnostics"
         },
         {
+          "id": "non-composited-animations",
+          "weight": 0,
+          "group": "diagnostics"
+        },
+        {
           "id": "network-requests",
           "weight": 0
         },
@@ -5504,6 +5516,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:no-unload-listeners",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:non-composited-animations",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6782,6 +6800,12 @@
       ],
       "lighthouse-core/audits/no-unload-listeners.js | description": [
         "audits[no-unload-listeners].description"
+      ],
+      "lighthouse-core/audits/non-composited-animations.js | title": [
+        "audits[non-composited-animations].title"
+      ],
+      "lighthouse-core/audits/non-composited-animations.js | description": [
+        "audits[non-composited-animations].description"
       ],
       "lighthouse-core/audits/manual/pwa-cross-browser.js | title": [
         "audits[pwa-cross-browser].title"

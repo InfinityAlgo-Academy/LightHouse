@@ -85,6 +85,11 @@ const expectations = [
           ],
         },
         {
+<<<<<<< HEAD
+=======
+          /** All Elements in this object are formless because attributes is undefined */
+          attributes: undefined,
+>>>>>>> 8bc43c5bb966dc881e0b4d7c1f5408344fcd6a73
           inputs: [
             {
               id: 'name_shipping',
@@ -282,6 +287,7 @@ const expectations = [
       requestedUrl: 'http://localhost:10200/form.html',
       finalUrl: 'http://localhost:10200/form.html',
       audits: {
+<<<<<<< HEAD
         'autocomplete': {
           score: 0,
           details: {
@@ -349,6 +355,8 @@ const expectations = [
             ],
           },
         },
+=======
+>>>>>>> 8bc43c5bb966dc881e0b4d7c1f5408344fcd6a73
       },
     },
   },

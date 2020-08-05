@@ -11,11 +11,14 @@
  */
 const config = {
   extends: 'lighthouse:default',
+<<<<<<< HEAD
   settings: {
     onlyAudits: [
       'autocomplete',
     ],
   },
+=======
+>>>>>>> 8bc43c5bb966dc881e0b4d7c1f5408344fcd6a73
 };
 
 module.exports = config;

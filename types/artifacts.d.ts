@@ -515,6 +515,7 @@ declare global {
         score?: number;
         boundingRect: Rect;
         nodeId?: number;
+        animations?: {name?: string, failureReasonsMask?: number}[];
       }
 
       export interface ViewportDimensions {
