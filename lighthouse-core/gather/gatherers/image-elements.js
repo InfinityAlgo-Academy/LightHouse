@@ -36,6 +36,7 @@ function getClientRect(element) {
  * @param {Element} element
  * @param {CSSStyleDeclaration} computedStyle
  */
+/* istanbul ignore next */
 function getPosition(element, computedStyle) {
   if (element.parentElement && element.parentElement.tagName === 'PICTURE') {
     const parentStyle = window.getComputedStyle(element.parentElement);
