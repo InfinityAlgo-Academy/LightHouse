@@ -416,6 +416,12 @@
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | title": {
     "message": "アニメーション コンテンツでの動画フォーマットの使用"
   },
+  "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | description": {
+    "message": "ポリフィルと変換を使用すると、従来のブラウザで新しい JavaScript 機能を使用できるようになります。ただし、その機能の多くは最新ブラウザでは必要ありません。バンドルされた JavaScript の場合、モジュールあり / モジュールなしの機能検出を使用する最新スクリプトの導入戦略を採用することにより、従来のブラウザに対するサポートを維持しながら、最新ブラウザに送るコード量を減らすことができます。[詳細](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
+  },
+  "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
+    "message": "最新ブラウザに従来の JavaScript を配信しないようにしてください"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "オフスクリーンの非表示の画像は、重要なリソースをすべて読み込んだ後に遅れて読み込むようにして、操作可能になるまでの時間を短縮することをご検討ください。[詳細](https://web.dev/offscreen-images/)"
   },
@@ -432,7 +438,7 @@
     "message": "ネットワーク ペイロードのサイズが大きいと、ユーザーの金銭的負担が大きくなり、多くの場合、読み込み時間が長くなります。[詳細](https://web.dev/total-byte-weight/)"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | displayValue": {
-    "message": "Total size was {totalBytes, number, bytes} KiB"
+    "message": "合計サイズは {totalBytes, number, bytes} KiB でした"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | failureTitle": {
     "message": "過大なネットワーク ペイロードの回避"
@@ -459,7 +465,7 @@
     "message": "使用していない CSS を削除してください"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "使用していない JavaScript を削除して、データ通信量を減らしてください。[詳細](https://web.dev/remove-unused-code/)"
+    "message": "使用していない JavaScript を削除して、データ通信量を減らしてください。[詳細](https://web.dev/unused-javascript/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "使用していない JavaScript の削除"
@@ -708,7 +714,7 @@
     "message": "{itemCount,plural, =1{HTTP/2 経由で配信されなかったリクエストが 1 件あります}other{HTTP/2 経由で配信されなかったリクエストが # 件あります}}"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "ページ独自のリソースで HTTP/2 が使用されています"
+    "message": "Use HTTP/2"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "ページのスクロール パフォーマンスを高めるには、touch および wheel イベント リスナーを `passive` として指定することをご検討ください。[詳細](https://web.dev/uses-passive-event-listeners/)"
@@ -739,6 +745,9 @@
   },
   "lighthouse-core/audits/font-display.js | title": {
     "message": "ウェブフォント読み込み中の全テキストの表示"
+  },
+  "lighthouse-core/audits/font-display.js | undeclaredFontOriginWarning": {
+    "message": "{fontCountForOrigin,plural, =1{オリジンの {fontOrigin} の `font-display` の値を Lighthouse で確認できませんでした。}other{オリジンの {fontOrigin} の `font-display` の値を Lighthouse で確認できませんでした。}}"
   },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "アスペクト比（実際）"
@@ -771,10 +780,10 @@
     "message": "画像をできるだけ鮮明に表示するには、画像の実サイズを、表示するサイズとピクセル比に比例させる必要があります。[詳細](https://web.dev/serve-responsive-images/)"
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Serves images with low resolution"
+    "message": "画像が低い解像度で表示されています"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Serves images with appropriate resolution"
+    "message": "画像が適切な解像度で表示されています"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "ブラウザではホーム画面へのアプリの追加を促すメッセージを事前にユーザーに表示できます。これによりエンゲージメントが向上します。[詳細](https://web.dev/installable-manifest/)"
@@ -785,8 +794,17 @@
   "lighthouse-core/audits/installable-manifest.js | title": {
     "message": "ウェブアプリのマニフェストはインストール可能となる要件を満たしています"
   },
+  "lighthouse-core/audits/is-on-https.js | allowed": {
+    "message": "許可"
+  },
+  "lighthouse-core/audits/is-on-https.js | blocked": {
+    "message": "ブロック"
+  },
   "lighthouse-core/audits/is-on-https.js | columnInsecureURL": {
     "message": "安全でない URL"
+  },
+  "lighthouse-core/audits/is-on-https.js | columnResolution": {
+    "message": "リクエストの解決方法"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
     "message": "すべてのサイトは、機密性の高い情報を扱っていない場合でも、HTTPS で保護する必要があります。たとえば、[混合コンテンツ](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content)（HTTPS で送信されたリクエストに対して一部のリソースを HTTP で読み込む）などは使用しないようにします。HTTPS は、侵入者があなたのアプリとユーザー間の通信を改ざんしたり、傍受したりするのを防ぎます。HTTPS は、HTTP/2 や多くの新しいウェブ プラットフォーム API を使用するための前提条件となります。[詳細](https://web.dev/is-on-https/)"
@@ -800,8 +818,14 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "HTTPS を使用しています"
   },
+  "lighthouse-core/audits/is-on-https.js | upgraded": {
+    "message": "HTTPS に自動アップグレード"
+  },
+  "lighthouse-core/audits/is-on-https.js | warning": {
+    "message": "許可（警告あり）"
+  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
-    "message": "This is the largest contentful element painted within the viewport. [Learn More](https://web.dev/lighthouse-largest-contentful-paint/)"
+    "message": "ビューポート内で描画された最大のコンテンツ要素です。[詳細](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
   "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
     "message": "{itemCount,plural, =1{1 件の要素が見つかりました}other{# 件の要素が見つかりました}}"
@@ -810,13 +834,13 @@
     "message": "「最大コンテンツの描画」要素"
   },
   "lighthouse-core/audits/layout-shift-elements.js | columnContribution": {
-    "message": "CLS Contribution"
+    "message": "CLS への影響"
   },
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "ページの CLS への影響が特に大きい DOM 要素です。"
   },
   "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
+    "message": "{nodeCount,plural, =1{1 件の要素が見つかりました}other{# 件の要素が見つかりました}}"
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "レイアウトが大きく変わらないようにする"
@@ -840,13 +864,13 @@
     "message": "ページ読み込みはモバイル ネットワークで十分な速度で実行されます"
   },
   "lighthouse-core/audits/long-tasks.js | description": {
-    "message": "Lists the longest tasks on the main thread, useful for identifying worst contributors to input delay. [Learn more](https://web.dev/long-tasks-devtools/)"
+    "message": "メインスレッドで長時間実行されているタスクを表示します。入力の遅延に最も影響しているタスクを特定する際に役立ちます。[詳細](https://web.dev/long-tasks-devtools/)"
   },
   "lighthouse-core/audits/long-tasks.js | displayValue": {
-    "message": "{itemCount, plural,\n  =1 {# long task found}\n  other {# long tasks found}\n  }"
+    "message": "{itemCount,plural, =1{長時間実行されているタスクが # 件見つかりました}other{長時間実行されているタスクが # 件見つかりました}}"
   },
   "lighthouse-core/audits/long-tasks.js | title": {
-    "message": "Avoid long main-thread tasks"
+    "message": "メインスレッドでタスクが長時間実行されないようにしてください"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | columnCategory": {
     "message": "カテゴリ"
@@ -929,6 +953,15 @@
   "lighthouse-core/audits/network-server-latency.js | title": {
     "message": "サーバーのバックエンド待ち時間"
   },
+  "lighthouse-core/audits/no-unload-listeners.js | description": {
+    "message": "`unload` イベントの発生は安定していないため、これをリッスンするとブラウザの最適化機能（バックフォワード キャッシュなど）が妨げられる可能性があります。代わりに `pagehide` または `visibilitychange` イベントの使用をご検討ください。[詳細](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
+  },
+  "lighthouse-core/audits/no-unload-listeners.js | failureTitle": {
+    "message": "`unload` リスナーの登録"
+  },
+  "lighthouse-core/audits/no-unload-listeners.js | title": {
+    "message": "`unload` イベントのリスナーの回避"
+  },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Service Worker によって、ネットワークが予期しない状態になったときでもウェブアプリの安定した動作が可能になります。[詳細](https://web.dev/offline-start-url/)"
   },
@@ -972,7 +1005,7 @@
     "message": "ページリソースの数とサイズの予算を設定するには、budget.json ファイルを追加します。[詳細](https://web.dev/use-lighthouse-for-performance-budgets/)"
   },
   "lighthouse-core/audits/resource-summary.js | displayValue": {
-    "message": "{requestCount, plural, =1 {1 request • {byteCount, number, bytes} KiB} other {# requests • {byteCount, number, bytes} KiB}}"
+    "message": "{requestCount,plural, =1{1 件のリクエスト • {byteCount, number, bytes} KiB}other{# 件のリクエスト • {byteCount, number, bytes} KiB}}"
   },
   "lighthouse-core/audits/resource-summary.js | title": {
     "message": "リクエスト数を少なく、転送サイズを小さく維持してください"
@@ -1005,16 +1038,16 @@
     "message": "ドキュメントに有効な `rel=canonical` が指定されています"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | columnFailingLink": {
-    "message": "Uncrawlable Link"
+    "message": "クロール不可のリンク"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | description": {
-    "message": "Search engines may use `href` attributes on links to crawl websites. Ensure that the `href` attribute of anchor elements links to an appropriate destination, so more pages of the site can be discovered. [Learn More](https://support.google.com/webmasters/answer/9112205)"
+    "message": "検索エンジンでは、ウェブサイトのクロールにリンクの `href` 属性を使用する場合があります。アンカー要素の `href` 属性に適切なリンク先が設定されていて、ウェブサイトの他のページを見つけられるようになっていることを確認してください。[詳細](https://support.google.com/webmasters/answer/9112205)"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | failureTitle": {
-    "message": "Links are not crawlable"
+    "message": "リンクはクロールできません"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | title": {
-    "message": "Links are crawlable"
+    "message": "リンクはクロール可能です"
   },
   "lighthouse-core/audits/seo/font-size.js | description": {
     "message": "12 px より小さいフォントサイズは小さすぎて判読できず、モバイル ユーザーには「ピンチしてズーム」の操作が必要になります。60% を超えるページ テキストでフォント サイズが 12 px 以上になるようにしてください。[詳細](https://web.dev/font-size/)"
@@ -1037,8 +1070,14 @@
   "lighthouse-core/audits/seo/hreflang.js | failureTitle": {
     "message": "ドキュメントに有効な `hreflang` が指定されていません"
   },
+  "lighthouse-core/audits/seo/hreflang.js | notFullyQualified": {
+    "message": "関連する href 値"
+  },
   "lighthouse-core/audits/seo/hreflang.js | title": {
     "message": "ドキュメントに有効な `hreflang` が指定されています"
+  },
+  "lighthouse-core/audits/seo/hreflang.js | unexpectedLanguage": {
+    "message": "予期しない言語コード"
   },
   "lighthouse-core/audits/seo/http-status-code.js | description": {
     "message": "HTTP ステータス コードが正しくないページはインデックスに適切に登録されていない可能性があります。[詳細](https://web.dev/http-status-code/)"
@@ -1216,6 +1255,15 @@
   },
   "lighthouse-core/audits/timing-budget.js | title": {
     "message": "タイミング予算"
+  },
+  "lighthouse-core/audits/unsized-images.js | description": {
+    "message": "Always include explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+  },
+  "lighthouse-core/audits/unsized-images.js | failureTitle": {
+    "message": "Image elements do not have explicit `width` and `height`"
+  },
+  "lighthouse-core/audits/unsized-images.js | title": {
+    "message": "Image elements have explicit `width` and `height`"
   },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "タイプ"
@@ -1454,6 +1502,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnElement": {
     "message": "要素"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
+    "message": "Failing Elements"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "場所"
   },
@@ -1500,7 +1551,7 @@
     "message": "Cumulative Layout Shift"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Potential savings of {wastedBytes, number, bytes} KiB"
+    "message": "{wastedBytes, number, bytes} KiB 削減可能"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "{wastedMs, number, milliseconds} ミリ秒短縮できます"
@@ -1527,10 +1578,10 @@
     "message": "画像"
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
-    "message": "インタラクティブになるまでの時間"
+    "message": "Time to Interactive"
   },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
-    "message": "最大コンテンツの描画"
+    "message": "Largest Contentful Paint"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "初回入力遅延の最大推定時間"
@@ -1551,7 +1602,7 @@
     "message": "{timeInMs, number, seconds} 秒"
   },
   "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
-    "message": "速度インデックス"
+    "message": "Speed Index"
   },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "スタイルシート"
@@ -1560,7 +1611,7 @@
     "message": "第三者"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
-    "message": "合計ブロック時間"
+    "message": "Total Blocking Time"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "合計"
@@ -1585,6 +1636,12 @@
   },
   "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": {
     "message": "必須の {artifactName} の収集は行われませんでした。"
+  },
+  "lighthouse-core/lib/lh-error.js | notHtml": {
+    "message": "指定されたページは HTML ではありません（MIME タイプ {mimeType} として配信されています）。"
+  },
+  "lighthouse-core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "このバージョンの Chrome は古すぎて「{featureName}」に対応していません。すべての結果を表示するには最新バージョンを使用してください。"
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailed": {
     "message": "リクエストしたページを Lighthouse で正確に読み込めませんでした。正しい URL でテストを行い、すべてのリクエストに対してサーバーからの応答が適切であることを確認してください。"

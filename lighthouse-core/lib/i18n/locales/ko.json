@@ -416,6 +416,12 @@
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | title": {
     "message": "애니메이션 콘텐츠에 동영상 형식 사용하기"
   },
+  "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | description": {
+    "message": "Polyfill 및 변환을 통해 레거시 브라우저에서 새로운 자바스크립트 기능을 사용할 수 있습니다. 하지만 최신 브라우저에서는 대부분 필요하지 않습니다. 번들로 포함된 자바스크립트의 경우, module/nomodule 기능 감지를 사용하는 최신 스크립트 배포 전략을 채택하여 최신 브라우저에 적용되는 코드를 줄이고 레거시 브라우저 지원을 유지할 수 있습니다. [자세히 알아보기](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
+  },
+  "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
+    "message": "레거시 JavaScript를 최신 브라우저에 제공하지 않기"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "중요한 리소스의 로드가 모두 완료된 후에는 오프스크린 및 숨겨진 이미지를 지연 로드함으로써 상호작용 시간을 줄이는 것이 좋습니다. [자세히 알아보기](https://web.dev/offscreen-images/)"
   },
@@ -432,7 +438,7 @@
     "message": "네트워크 페이로드가 커지면 사용자에게 실제 비용 부담이 되며 로드 시간이 길어질 수 있습니다. [자세히 알아보기](https://web.dev/total-byte-weight/)"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | displayValue": {
-    "message": "Total size was {totalBytes, number, bytes} KiB"
+    "message": "총 크기: {totalBytes, number, bytes}KiB"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | failureTitle": {
     "message": "네트워크 페이로드가 커지지 않도록 관리하기"
@@ -459,7 +465,7 @@
     "message": "사용하지 않는 CSS 제거"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "사용하지 않는 자바스크립트를 삭제하여 네트워크 활동에 소비되는 바이트를 줄입니다. [자세히 알아보기](https://web.dev/remove-unused-code/)"
+    "message": "사용하지 않는 자바스크립트를 삭제하여 네트워크 활동에 소비되는 바이트를 줄입니다. [자세히 알아보기](https://web.dev/unused-javascript/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "사용하지 않는 자바스크립트 삭제하기"
@@ -708,7 +714,7 @@
     "message": "{itemCount,plural, =1{HTTP/2를 통해 게재되지 않는 요청 1건}other{HTTP/2를 통해 게재되지 않는 요청 #건}}"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "자체 리소스에 HTTP/2 사용"
+    "message": "Use HTTP/2"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "터치 및 휠 이벤트 리스너를 `passive`(으)로 표시하면 페이지 스크롤 성능을 개선할 수 있습니다. [자세히 알아보기](https://web.dev/uses-passive-event-listeners/)"
@@ -739,6 +745,9 @@
   },
   "lighthouse-core/audits/font-display.js | title": {
     "message": "웹폰트가 로드되는 동안 모든 텍스트가 계속 표시됩니다"
+  },
+  "lighthouse-core/audits/font-display.js | undeclaredFontOriginWarning": {
+    "message": "{fontCountForOrigin,plural, =1{Lighthouse에서 원본 {fontOrigin}의 `font-display` 값을 자동으로 확인할 수 없습니다.}other{Lighthouse에서 원본 {fontOrigin}의 `font-display` 값을 자동으로 확인할 수 없습니다.}}"
   },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "가로세로 비율(실제)"
@@ -771,10 +780,10 @@
     "message": "이미지의 본래 크기가 표시 크기와 픽셀 비율에 비례해야 이미지가 가장 선명하게 보입니다. [자세히 알아보기](https://web.dev/serve-responsive-images/)"
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Serves images with low resolution"
+    "message": "이미지가 낮은 해상도로 제공됨"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Serves images with appropriate resolution"
+    "message": "이미지가 적절한 해상도로 제공됨"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "브라우저는 사용자에게 홈 화면에 앱을 추가하라는 메시지를 사전에 표시할 수 있으며 이렇게 하면 참여도가 높아질 수 있습니다. [자세히 알아보기](https://web.dev/installable-manifest/)"
@@ -785,8 +794,17 @@
   "lighthouse-core/audits/installable-manifest.js | title": {
     "message": "웹 앱 매니페스트가 설치 가능 요건을 충족함"
   },
+  "lighthouse-core/audits/is-on-https.js | allowed": {
+    "message": "허용됨"
+  },
+  "lighthouse-core/audits/is-on-https.js | blocked": {
+    "message": "차단됨"
+  },
   "lighthouse-core/audits/is-on-https.js | columnInsecureURL": {
     "message": "안전하지 않은 URL"
+  },
+  "lighthouse-core/audits/is-on-https.js | columnResolution": {
+    "message": "해결 요청"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
     "message": "민감한 정보를 다루지 않는 사이트를 비롯해 모든 사이트는 HTTPS로 보호해야 합니다. 또한 [혼합 콘텐츠](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content)도 피해야 합니다. 혼합 콘텐츠에서는 초기 요청은 HTTPS로 전송되지만 일부 리소스가 HTTP를 통해 로드됩니다. HTTPS는 침입자가 앱과 사용자 사이의 통신을 조작하거나 통신에 대해 패시브 리스너를 사용하지 못하도록 방지하며 HTTP/2와 여러 신규 웹 플랫폼 API의 필수 요건이기도 합니다. [자세히 알아보기](https://web.dev/is-on-https/)"
@@ -800,8 +818,14 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "HTTPS 사용"
   },
+  "lighthouse-core/audits/is-on-https.js | upgraded": {
+    "message": "HTTPS로 자동 업그레이드됨"
+  },
+  "lighthouse-core/audits/is-on-https.js | warning": {
+    "message": "허용됨(경고 포함)"
+  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
-    "message": "This is the largest contentful element painted within the viewport. [Learn More](https://web.dev/lighthouse-largest-contentful-paint/)"
+    "message": "표시 영역에 페인팅된 가장 큰 콘텐츠가 포함된 요소입니다. [자세히 알아보기](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
   "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
     "message": "{itemCount,plural, =1{요소 1개 발견됨}other{요소 #개 발견됨}}"
@@ -810,13 +834,13 @@
     "message": "콘텐츠가 포함된 최대 페인트 요소"
   },
   "lighthouse-core/audits/layout-shift-elements.js | columnContribution": {
-    "message": "CLS Contribution"
+    "message": "CLS에 기여한 양"
   },
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "DOM 요소가 페이지 CLS의 대부분을 차지합니다."
   },
   "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
+    "message": "{nodeCount,plural, =1{요소 1개 발견됨}other{요소 #개 발견됨}}"
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "대규모 레이아웃 변경 피하기"
@@ -840,13 +864,13 @@
     "message": "모바일 네트워크에서 페이지 로드가 충분히 빠름"
   },
   "lighthouse-core/audits/long-tasks.js | description": {
-    "message": "Lists the longest tasks on the main thread, useful for identifying worst contributors to input delay. [Learn more](https://web.dev/long-tasks-devtools/)"
+    "message": "기본 스레드의 가장 긴 작업을 열거합니다. 입력 지연을 가장 많이 유발하는 작업을 찾을 때 용이합니다. [자세히 알아보기](https://web.dev/long-tasks-devtools/)"
   },
   "lighthouse-core/audits/long-tasks.js | displayValue": {
-    "message": "{itemCount, plural,\n  =1 {# long task found}\n  other {# long tasks found}\n  }"
+    "message": "{itemCount,plural, =1{긴 작업 #개 발견}other{긴 작업 #개 발견}}"
   },
   "lighthouse-core/audits/long-tasks.js | title": {
-    "message": "Avoid long main-thread tasks"
+    "message": "긴 기본 스레드 작업 피하기"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | columnCategory": {
     "message": "카테고리"
@@ -929,6 +953,15 @@
   "lighthouse-core/audits/network-server-latency.js | title": {
     "message": "서버 백엔드 지연 시간"
   },
+  "lighthouse-core/audits/no-unload-listeners.js | description": {
+    "message": "`unload` 이벤트는 안정적으로 실행되지 않으며 이 이벤트를 리스닝하면 '뒤로-앞으로' 캐시와 같은 브라우저 최적화 기능을 사용하지 못할 수 있습니다. `pagehide` 또는 `visibilitychange` 이벤트를 대신 사용해 보세요. [자세히 알아보기](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
+  },
+  "lighthouse-core/audits/no-unload-listeners.js | failureTitle": {
+    "message": "`unload` 리스너 등록"
+  },
+  "lighthouse-core/audits/no-unload-listeners.js | title": {
+    "message": "`unload` 이벤트 리스너를 사용하지 않음"
+  },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "서비스 워커를 사용하면 예측 불가능한 네트워크 상태에서도 웹 앱이 안정적으로 작동할 수 있습니다. [자세히 알아보기](https://web.dev/offline-start-url/)"
   },
@@ -972,7 +1005,7 @@
     "message": "페이지 리소스의 수량과 크기와 관련해 예산을 설정하려면 budget.json 파일을 추가하세요. [자세히 알아보기](https://web.dev/use-lighthouse-for-performance-budgets/)"
   },
   "lighthouse-core/audits/resource-summary.js | displayValue": {
-    "message": "{requestCount, plural, =1 {1 request • {byteCount, number, bytes} KiB} other {# requests • {byteCount, number, bytes} KiB}}"
+    "message": "{requestCount,plural, =1{요청 1개 • {byteCount, number, bytes}KiB}other{요청 #개 • {byteCount, number, bytes}KiB}}"
   },
   "lighthouse-core/audits/resource-summary.js | title": {
     "message": "요청 수는 낮게, 전송 크기는 작게 유지하기"
@@ -1005,16 +1038,16 @@
     "message": "문서에 유효한 `rel=canonical` 있음"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | columnFailingLink": {
-    "message": "Uncrawlable Link"
+    "message": "크롤링할 수 없는 링크"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | description": {
-    "message": "Search engines may use `href` attributes on links to crawl websites. Ensure that the `href` attribute of anchor elements links to an appropriate destination, so more pages of the site can be discovered. [Learn More](https://support.google.com/webmasters/answer/9112205)"
+    "message": "검색엔진에서 링크에 대해 `href` 속성을 사용하여 웹사이트를 크롤링할 수 있습니다. 앵커 요소의 `href` 속성이 적절한 대상에 연결되어 사이트에서 더 많은 페이지가 검색되도록 하세요. [자세히 알아보기](https://support.google.com/webmasters/answer/9112205)"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | failureTitle": {
-    "message": "Links are not crawlable"
+    "message": "링크를 크롤링할 수 없음"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | title": {
-    "message": "Links are crawlable"
+    "message": "링크를 크롤링할 수 있음"
   },
   "lighthouse-core/audits/seo/font-size.js | description": {
     "message": "12px보다 글꼴 크기가 작으면 읽기 어렵기 때문에 모바일 방문자가 '손가락으로 확대'해야만 읽을 수 있습니다. 페이지 텍스트의 60% 이상을 12px 이상으로 유지하도록 노력하세요. [자세히 알아보기](https://web.dev/font-size/)"
@@ -1037,8 +1070,14 @@
   "lighthouse-core/audits/seo/hreflang.js | failureTitle": {
     "message": "문서에 유효한 `hreflang` 없음"
   },
+  "lighthouse-core/audits/seo/hreflang.js | notFullyQualified": {
+    "message": "상대적인 href 값"
+  },
   "lighthouse-core/audits/seo/hreflang.js | title": {
     "message": "문서에 유효한 `hreflang` 있음"
+  },
+  "lighthouse-core/audits/seo/hreflang.js | unexpectedLanguage": {
+    "message": "예상치 못한 언어 코드"
   },
   "lighthouse-core/audits/seo/http-status-code.js | description": {
     "message": "실패한 HTTP 상태 코드가 있는 페이지는 제대로 색인이 생성되지 않을 수 있습니다. [자세히 알아보기](https://web.dev/http-status-code/)"
@@ -1217,6 +1256,15 @@
   "lighthouse-core/audits/timing-budget.js | title": {
     "message": "시기 예산"
   },
+  "lighthouse-core/audits/unsized-images.js | description": {
+    "message": "Always include explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+  },
+  "lighthouse-core/audits/unsized-images.js | failureTitle": {
+    "message": "Image elements do not have explicit `width` and `height`"
+  },
+  "lighthouse-core/audits/unsized-images.js | title": {
+    "message": "Image elements have explicit `width` and `height`"
+  },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "유형"
   },
@@ -1338,7 +1386,7 @@
     "message": "탐색"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
-    "message": "다음은 스크린 리더와 같은 보조 기술을 사용하여 표나 목록 데이터를 읽는 환경을 개선하도록 추천된 사항입니다."
+    "message": "다음은 스크린 리더와 같은 보조 기술을 사용하여 표나 목록 데이터를 읽는 사용자의 경험을 개선할 수 있는 기회입니다."
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "표와 목록"
@@ -1454,6 +1502,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnElement": {
     "message": "요소"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
+    "message": "Failing Elements"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "위치"
   },
@@ -1500,7 +1551,7 @@
     "message": "Cumulative Layout Shift"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Potential savings of {wastedBytes, number, bytes} KiB"
+    "message": "절감 가능치: {wastedBytes, number, bytes}KiB"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "절감 가능치: {wastedMs, number, milliseconds} 밀리초"
@@ -1515,7 +1566,7 @@
     "message": "최초 CPU 유휴 상태"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
-    "message": "최초 만족 페인트"
+    "message": "First Contentful Paint"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
     "message": "최초 유의미 페인트"
@@ -1527,10 +1578,10 @@
     "message": "이미지"
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
-    "message": "상호작용 시간"
+    "message": "Time to Interactive"
   },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
-    "message": "콘텐츠가 포함된 최대 페인트"
+    "message": "Largest Contentful Paint"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "최대 첫 입력 지연 예상 시간"
@@ -1551,7 +1602,7 @@
     "message": "{timeInMs, number, seconds} 초"
   },
   "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
-    "message": "속도 색인"
+    "message": "Speed Index"
   },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "스타일시트"
@@ -1560,7 +1611,7 @@
     "message": "타사"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
-    "message": "총 차단 시간"
+    "message": "Total Blocking Time"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "합계"
@@ -1585,6 +1636,12 @@
   },
   "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": {
     "message": "필수 {artifactName} 수집기가 실행되지 않았습니다."
+  },
+  "lighthouse-core/lib/lh-error.js | notHtml": {
+    "message": "입력한 페이지가 HTML이 아닙니다(MIME {mimeType} 유형으로 게시됨)."
+  },
+  "lighthouse-core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "이 Chrome 버전은 너무 오래되어 '{featureName}'을(를) 지원할 수 없습니다. 전체 결과를 보려면 최신 버전을 사용하세요."
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailed": {
     "message": "Lighthouse에서 사용자가 요청한 페이지를 안정적으로 로드하지 못했습니다. 올바른 URL을 테스트하고 있으며 서버에서 모든 요청에 적절하게 응답하고 있는지 확인하세요."

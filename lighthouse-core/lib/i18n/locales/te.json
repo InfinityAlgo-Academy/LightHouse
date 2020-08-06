@@ -416,6 +416,12 @@
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | title": {
     "message": "యానిమేటెడ్ కంటెంట్ కోసం వీడియో ఫార్మాట్‌లను ఉపయోగించండి"
   },
+  "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | description": {
+    "message": "బహుళ పూరణలు, రూపం మార్పులు అనేవి కొత్త JavaScript ఫీచర్‌లు ఉపయోగించగలిగేలా లెగసీ బ్రౌజర్‌లను ఎనేబుల్ చేస్తాయి. అయితే, ఆధునిక బ్రౌజర్‌లకు అనేకం అవసరం లేదు. మీ బండిల్ JavaScript కోసం, లెగసీ బ్రౌజర్‌లకు సపోర్ట్ అలాగే ఉంచుతూ, ఆధునిక బ్రౌజర్‌లకు షిప్పింగ్ అయ్యే కోడ్ పరిమాణం తగ్గించడానికి 'module/nomodule' ఫీచర్ గుర్తింపును ఉపయోగించి ఆధునిక స్క్రిప్ట్ అమలు వ్యూహం అనుసరించండి. [మరింత తెలుసుకోండి](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
+  },
+  "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
+    "message": "లెగసీ JavaScriptను మోడ్రన్ బ్రౌజర్‌లకు అందించడం మానివేయండి"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "పేజీలో పూర్తి పరస్పర చర్యకు పట్టే సమయం తగ్గించడానికి అన్ని క్లిష్టమైన వనరులు లోడ్ అవ్వడం పూర్తయిన తర్వాతే ఆఫ్‌స్క్రీన్, దాగి ఉన్న చిత్రాలను నెమ్మదిగా లోడ్ చేయడాన్ని పరిశీలించండి. [మరింత తెలుసుకోండి](https://web.dev/offscreen-images/)."
   },
@@ -432,7 +438,7 @@
     "message": "పెద్ద నెట్‌వర్క్ పేలోడ్‌లకు వినియోగదారులు నిజమైన డబ్బును చెల్లించాలి. అవి అధికంగా సుదీర్ఘ లోడ్ సమయాలతో ముడిపడి ఉంటాయి. [మరింత తెలుసుకోండి](https://web.dev/total-byte-weight/)."
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | displayValue": {
-    "message": "Total size was {totalBytes, number, bytes} KiB"
+    "message": "మొత్తం పరిమాణం {totalBytes, number, bytes} KiB"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | failureTitle": {
     "message": "అతి పెద్ద నెట్‌వర్క్ పేలోడ్‌లను నివారించండి"
@@ -459,7 +465,7 @@
     "message": "ఉపయోగించని CSS తీసివేయబడింది"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "నెట్‌వర్క్ కార్యకలాపం వినియోగించే బైట్‌లను తగ్గించడానికి ఉపయోగించని JavaScriptను తీసివేయండి. [మరింత తెలుసుకోండి](https://web.dev/remove-unused-code/)."
+    "message": "నెట్‌వర్క్ కార్యకలాపం వినియోగించే బైట్‌లను తగ్గించడానికి ఉపయోగించని JavaScriptను తీసివేయండి. [మరింత తెలుసుకోండి](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "ఉపయోగించని JavaScriptను తీసివేయండి"
@@ -708,7 +714,7 @@
     "message": "{itemCount,plural, =1{1 అభ్యర్థన 'HTTP/2' ద్వారా అందించబడలేదు}other{# అభ్యర్థనలు 'HTTP/2' ద్వారా అందించబడలేదు}}"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "\"HTTP/2\" దాని స్వంత వనరులు అన్నింటిలో వినియోగించబడుతోంది"
+    "message": "Use HTTP/2"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "మీ పేజీ స్క్రోలింగ్ పనితీరును మెరుగుపరచడానికి మీ స్పర్శ, చక్రం కదలికలను గుర్తుపట్టే లిజనర్‌లను '`passive`'కు సెట్ చేయడం పరిశీలించండి. [మరింత తెలుసుకోండి](https://web.dev/uses-passive-event-listeners/)."
@@ -739,6 +745,9 @@
   },
   "lighthouse-core/audits/font-display.js | title": {
     "message": "వెబ్ ఫాంట్ లోడ్‌ల సమయంలో వచనం మొత్తం కనిపిస్తూ ఉంటుంది"
+  },
+  "lighthouse-core/audits/font-display.js | undeclaredFontOriginWarning": {
+    "message": "{fontCountForOrigin,plural, =1{మూలం {fontOrigin}.కోసం `font-display` విలువను Lighthouse ఆటోమేటిక్‌గా చెక్ చేయలేకపోయింది.}other{`font-display` మూలానికి చెందిన విలువలను {fontOrigin} Lighthouse ఆటోమేటిక్‌గా చెక్ చేయలేకపోయింది.}}"
   },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "ఆకార నిష్పత్తి (ఉండాల్సినది)"
@@ -771,10 +780,10 @@
     "message": "ఇమేజ్ సహజ కొలతలు ప్రదర్శన సైజ్‌కు అనులోమానుపాతంలో ఉండాలి, పిక్సెల్ నిష్పత్తి ఇమేజ్ స్పష్టతను పెంచేదిగా ఉండాలి. [మరింత తెలుసుకోండి](https://web.dev/serve-responsive-images/)."
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Serves images with low resolution"
+    "message": "తక్కువ రిజల్యూషన్‌తో ఇమేజ్‌లను అందిస్తుంది"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Serves images with appropriate resolution"
+    "message": "తగిన రిజల్యూషన్‌తో ఇమేజ్‌లను అందిస్తుంది"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "మీ యాప్‌ను హోమ్ స్క్రీన్‌కు జోడించుకోవాల్సిందిగా బ్రౌజర్‌లు క్రియాశీలంగా వినియోగదారులను ప్రాంప్ట్ చేయగలవు, దీని వలన అధిక మంది జనాభాకు చేరువయ్యే అవకాశం పెరగవచ్చు. [మరింత తెలుసుకోండి](https://web.dev/installable-manifest/)."
@@ -785,8 +794,17 @@
   "lighthouse-core/audits/installable-manifest.js | title": {
     "message": "ఇన్‌స్టాల్ సామర్థ్య అవసరాలకు అనుగుణంగా వెబ్ యాప్ మానిఫెస్ట్ ఉంది"
   },
+  "lighthouse-core/audits/is-on-https.js | allowed": {
+    "message": "అనుమతించబడింది"
+  },
+  "lighthouse-core/audits/is-on-https.js | blocked": {
+    "message": "బ్లాక్ అయింది"
+  },
   "lighthouse-core/audits/is-on-https.js | columnInsecureURL": {
     "message": "అసురక్షితమైన URL"
+  },
+  "lighthouse-core/audits/is-on-https.js | columnResolution": {
+    "message": "రిజల్యూషన్ రిక్వెస్ట్ చేయండి"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
     "message": "అన్ని సైట్‌లకు HTTPS రక్షణను జోడించాలి. సున్నితమైన వ్యక్తిగత సమాచారం ఏదీ లేని వాటికి కూడా ఈ రక్షణను జోడించాలి. [మిశ్రమ కంటెంట్‌](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content)ను నివారించడం కూడా ఇందులో ఉంది, ప్రారంభ రిక్వెస్ట్ అనేది HTTPS ద్వారా అందించబడుతున్నప్పటికీ కొన్ని వనరులు HTTP ద్వారా లోడ్ చేయబడతాయి. HTTPS రక్షణను జోడించడం వలన దాడులకు పాల్పడే వారు ఎవరూ కూడా మీ యాప్, మీ యూజర్ల మధ్య జరిగే కమ్యూనికేషన్‌లను ట్యాంపర్ చేయడం లేదా దొంగచాటుగా వినడం లాంటివి చేయకుండా అడ్డుకోబడతారు. అలాగే HTTP/2, ఇంకా అనేక కొత్త వెబ్ ప్లాట్‌ఫామ్ APIల కోసం దీనిని తప్పనిసరిగా వినియోగించాలి. [మరింత తెలుసుకోండి](https://web.dev/is-on-https/)."
@@ -800,8 +818,14 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "HTTPSను ఉపయోగిస్తుంది"
   },
+  "lighthouse-core/audits/is-on-https.js | upgraded": {
+    "message": "ఆటోమేటిక్‌గా HTTPSకు అప్‌గ్రేడ్ చేయబడింది"
+  },
+  "lighthouse-core/audits/is-on-https.js | warning": {
+    "message": "హెచ్చరికతో అనుమతించబడింది"
+  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
-    "message": "This is the largest contentful element painted within the viewport. [Learn More](https://web.dev/lighthouse-largest-contentful-paint/)"
+    "message": "ఇది వీక్షణ పోర్ట్‌లో పెయింట్ చేయబడిన, అన్నిటికంటే ఎక్కువ కంటెంట్ ఉన్న ఎలిమెంట్. [మరింత తెలుసుకోండి](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
   "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
     "message": "{itemCount,plural, =1{1 మూలకం కనుగొనబడింది}other{# మూలకాలు కనుగొనబడ్డాయి}}"
@@ -810,13 +834,13 @@
     "message": "కంటెంట్ కలిగి ఉండే అతిపెద్ద పెయింట్ మూలకం"
   },
   "lighthouse-core/audits/layout-shift-elements.js | columnContribution": {
-    "message": "CLS Contribution"
+    "message": "CLS కంట్రిబ్యూషన్"
   },
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "ఈ DOM మూలకాలు పేజీ యొక్క CLSకు ఎక్కువగా కంట్రిబ్యూట్ చేస్తాయి."
   },
   "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
+    "message": "{nodeCount,plural, =1{1 ఎలిమెంట్ కనుగొనబడింది}other{# ఎలిమెంట్‌లు కనుగొనబడ్డాయి}}"
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "పెద్ద లేఅవుట్ షిఫ్ట్‌లను నివారించండి"
@@ -840,13 +864,13 @@
     "message": "మొబైల్ నెట్‌వర్క్‌లలో పేజీ తగినంత వేగంగా లోడ్ అవుతోంది"
   },
   "lighthouse-core/audits/long-tasks.js | description": {
-    "message": "Lists the longest tasks on the main thread, useful for identifying worst contributors to input delay. [Learn more](https://web.dev/long-tasks-devtools/)"
+    "message": "మెయిన్ థ్రెడ్‌లో అన్నిటికంటే సుదీర్ఘవైన టాస్క్‌లను లిస్టింగ్ చేస్తుంది, ఇది ఇన్‌పుట్ ఆలస్యానికి దారితీసే ఇబ్బందికరమైన కంట్రిబ్యూటర్‌లను గుర్తించడంలో ఉపయోగకరంగా ఉంటుంది. [మరింత తెలుసుకోండి](https://web.dev/long-tasks-devtools/)"
   },
   "lighthouse-core/audits/long-tasks.js | displayValue": {
-    "message": "{itemCount, plural,\n  =1 {# long task found}\n  other {# long tasks found}\n  }"
+    "message": "{itemCount,plural, =1{# సుదీర్ఘ టాస్క్ కనుగొనబడింది}other{# సుదీర్ఘ టాస్క్‌లు కనుగొనబడ్డాయి}}"
   },
   "lighthouse-core/audits/long-tasks.js | title": {
-    "message": "Avoid long main-thread tasks"
+    "message": "సుధీర్గ మెయిన్-థ్రెడ్ టాస్క్‌లను నివారించండి"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | columnCategory": {
     "message": "వర్గం"
@@ -929,6 +953,15 @@
   "lighthouse-core/audits/network-server-latency.js | title": {
     "message": "సర్వర్ బ్యాక్ఎండ్ ప్రతిస్పందన సమయాలు"
   },
+  "lighthouse-core/audits/no-unload-listeners.js | description": {
+    "message": "ఈ `unload` ఈవెంట్ ఆశించినట్టు పని చేయదు. దాని కోసం వేచి ఉంటే, Back-Forward Cache లాంటి బ్రౌజర్ ఆప్టిమైజేషన్లు నిరోధించబడవచ్చు. బదులుగా `pagehide` లేదా `visibilitychange` ఈవెంట్‌లను ఉపయోగించడాన్ని పరిశీలించండి. [మరింత తెలుసుకోండి](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
+  },
+  "lighthouse-core/audits/no-unload-listeners.js | failureTitle": {
+    "message": "`unload` లిజనర్‌గా రిజిస్టర్ చేస్తుంది"
+  },
+  "lighthouse-core/audits/no-unload-listeners.js | title": {
+    "message": "`unload` ఈవెంట్ లిజనర్స్‌ను అవాయిడ్‌ చేస్తుంది"
+  },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "సర్వీస్ వర్కర్ సహాయంతో, మీ వెబ్ యాప్ ఇబ్బందికరమైన నెట్‌వర్క్ పరిస్థితులలో కూడా విశ్వసనీయత కోల్పోకుండా పని చేయగలుగుతుంది. [మరింత తెలుసుకోండి](https://web.dev/offline-start-url/)."
   },
@@ -972,7 +1005,7 @@
     "message": "పేజీ వనరుల సంఖ్య, పరిమాణం కోసం బడ్జెట్‌లను సెట్ చేయడానికి, 'budget.json' ఫైల్‌ను జోడించండి. [మరింత తెలుసుకోండి](https://web.dev/use-lighthouse-for-performance-budgets/)."
   },
   "lighthouse-core/audits/resource-summary.js | displayValue": {
-    "message": "{requestCount, plural, =1 {1 request • {byteCount, number, bytes} KiB} other {# requests • {byteCount, number, bytes} KiB}}"
+    "message": "{requestCount,plural, =1{1 రిక్వెస్ట్ • {byteCount, number, bytes} KiB}other{# రిక్వెస్ట్‌లు • {byteCount, number, bytes} KiB}}"
   },
   "lighthouse-core/audits/resource-summary.js | title": {
     "message": "అభ్యర్థనల సంఖ్యను తగ్గించుకోండి, బదిలీ పరిమాణాలు తక్కువగా ఉండేలా చూసుకోండి"
@@ -1005,16 +1038,16 @@
     "message": "పత్రంలో చెల్లుబాటు అయ్యే '`rel=canonical`' ఉంది"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | columnFailingLink": {
-    "message": "Uncrawlable Link"
+    "message": "క్రాల్ చేయలేని లింక్"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | description": {
-    "message": "Search engines may use `href` attributes on links to crawl websites. Ensure that the `href` attribute of anchor elements links to an appropriate destination, so more pages of the site can be discovered. [Learn More](https://support.google.com/webmasters/answer/9112205)"
+    "message": "సెర్చ్ ఇంజిన్‌లు లింక్‌లలో ఉన్న `href` లక్షణాలను వెబ్‌సైట్‌ లను క్రాల్ చేయడానికి ఉపయోగించవచ్చు. యాంకర్ ఎలిమెంట్‌ల `href` లక్షణం తగిన గమ్యస్థానానికి లింక్ అవుతుందని నిర్ధారించుకోండి, తద్వారా సైట్‌లోని మరిన్ని పేజీలను కనుగొనవచ్చు. [మరింత తెలుసుకోండి](https://support.google.com/webmasters/answer/9112205)"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | failureTitle": {
-    "message": "Links are not crawlable"
+    "message": "లింక్‌లు క్రాల్ చేయదగినవి కావు"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | title": {
-    "message": "Links are crawlable"
+    "message": "లింక్‌లు క్రాల్ చేయదగినవి"
   },
   "lighthouse-core/audits/seo/font-size.js | description": {
     "message": "12px కంటే తక్కువగా ఉన్న ఫాంట్ పరిమాణాలు చాలా చిన్నవిగా ఉంటాయి, కనుక అవి సముచితంగా పరిగణించబడవు. వీటిని చదవడం కోసం మొబైల్ సందర్శకులు “జూమ్ చేయడానికి స్క్రీన్‌పై రెండు వేళ్లను ఉంచి ఆ వేళ్లను దగ్గరకు లేదా దూరానికి లాగాలి”. మీరు కలిగి ఉండాల్సింది >పేజీ వచనంలో 60% ≥12px. [మరింత తెలుసుకోండి](https://web.dev/font-size/)."
@@ -1037,8 +1070,14 @@
   "lighthouse-core/audits/seo/hreflang.js | failureTitle": {
     "message": "పత్రంలో చెల్లుబాటు అయ్యే ``hreflang`` లేదు"
   },
+  "lighthouse-core/audits/seo/hreflang.js | notFullyQualified": {
+    "message": "సంబంధిత href విలువ"
+  },
   "lighthouse-core/audits/seo/hreflang.js | title": {
     "message": "పత్రంలో చెల్లుబాటు అయ్యే '`hreflang`' ఉంది"
+  },
+  "lighthouse-core/audits/seo/hreflang.js | unexpectedLanguage": {
+    "message": "ఉహించని భాష కోడ్"
   },
   "lighthouse-core/audits/seo/http-status-code.js | description": {
     "message": "విజయవంతం కాని HTTP స్థితి కోడ్‌లను కలిగిన పేజీలు సరిగ్గా సూచిక చేయబడకపోవచ్చు. [మరింత తెలుసుకోండి](https://web.dev/http-status-code/)."
@@ -1217,6 +1256,15 @@
   "lighthouse-core/audits/timing-budget.js | title": {
     "message": "సమయం సంబంధిత బడ్జెట్"
   },
+  "lighthouse-core/audits/unsized-images.js | description": {
+    "message": "Always include explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+  },
+  "lighthouse-core/audits/unsized-images.js | failureTitle": {
+    "message": "Image elements do not have explicit `width` and `height`"
+  },
+  "lighthouse-core/audits/unsized-images.js | title": {
+    "message": "Image elements have explicit `width` and `height`"
+  },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "రకం"
   },
@@ -1338,7 +1386,7 @@
     "message": "నావిగేషన్"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
-    "message": "ఇవి, స్క్రీన్ రీడర్ వంటి సహాయకరమైన సాంకేతికతను ఉపయోగించి పట్టికను లేదా జాబితా డేటాను చదువుతున్నప్పుడు మెరుగైన అనుభవాన్ని అందించగల అవకాశాలు."
+    "message": "ఇవి, స్క్రీన్ రీడర్ లాంటి సహాయకరమైన సాంకేతికతను ఉపయోగించి పట్టికను లేదా లిస్ట్ డేటాను చదువుతున్నప్పుడు మెరుగైన అనుభవాన్ని అందించగల అవకాశాలు."
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "పట్టికలు మరియు జాబితాలు"
@@ -1454,6 +1502,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnElement": {
     "message": "మూలకం"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
+    "message": "Failing Elements"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "స్థానం"
   },
@@ -1500,7 +1551,7 @@
     "message": "Cumulative Layout Shift"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Potential savings of {wastedBytes, number, bytes} KiB"
+    "message": "ఆదా చేయగల పరిమాణం {wastedBytes, number, bytes} KiB"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "ఆదా చేయగల వ్యవధి {wastedMs, number, milliseconds} మి.సెలు"
@@ -1515,7 +1566,7 @@
     "message": "CPU మొదటి ఖాళీ సమయం"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
-    "message": "మొదటి కంటెంట్ సహిత పెయింట్"
+    "message": "First Contentful Paint"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
     "message": "మొదటి అర్థవంతమైన పెయింట్"
@@ -1527,10 +1578,10 @@
     "message": "చిత్రం"
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
-    "message": "పేజీలో పూర్తి పరస్పర చర్యకు పట్టే సమయం"
+    "message": "Time to Interactive"
   },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
-    "message": "కంటెంట్ కలిగి ఉండే అతిపెద్ద పెయింట్"
+    "message": "Largest Contentful Paint"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "మొదటి ఇన్‌పుట్ ఆలస్య గరిష్ఠ వ్యవధి"
@@ -1551,7 +1602,7 @@
     "message": "{timeInMs, number, seconds} సె"
   },
   "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
-    "message": "వేగం సూచిక"
+    "message": "Speed Index"
   },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "స్టైల్‌షీట్"
@@ -1560,7 +1611,7 @@
     "message": "మూడవ పక్షం"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
-    "message": "మొత్తం బ్లాక్ చేయబడే సమయం"
+    "message": "Total Blocking Time"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "మొత్తం"
@@ -1585,6 +1636,12 @@
   },
   "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": {
     "message": "అవసరమైన '{artifactName}' గ్యాదరర్ అమలు కాలేదు."
+  },
+  "lighthouse-core/lib/lh-error.js | notHtml": {
+    "message": "అందించబడిన పేజీ HTML కాదు (MIME రకం {mimeType}గా అందించబడింది)."
+  },
+  "lighthouse-core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "ఈ Chrome వెర్షన్ చాలా పాతది, కాబట్టి '{featureName}'కు సపోర్ట్ చెయ్యదు. పూర్తి ఫలితాలు చూడడానికి మరింత కొత్త వెర్షన్‌ను ఉపయోగించండి."
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailed": {
     "message": "మీరు అభ్యర్థించిన పేజీని Lighthouse విశ్వసనీయ రీతిలో పేజీని లోడ్ చేయలేకపోయింది. మీరు సరైన URLని పరీక్షిస్తున్నారని, సర్వర్ అన్ని అభ్యర్థనలకు సరిగ్గా ప్రతిస్పందిస్తుందని నిర్ధారించుకోండి."
