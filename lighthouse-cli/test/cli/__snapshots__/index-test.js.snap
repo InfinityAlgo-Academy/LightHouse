@@ -160,6 +160,9 @@ Object {
       "path": "long-tasks",
     },
     Object {
+      "path": "autocomplete",
+    },
+    Object {
       "path": "no-unload-listeners",
     },
     Object {
@@ -754,6 +757,11 @@ Object {
           "weight": 1,
         },
         Object {
+          "group": "best-practices-forms",
+          "id": "autocomplete",
+          "weight": 0,
+        },
+        Object {
           "group": "best-practices-general",
           "id": "no-unload-listeners",
           "weight": 1,
@@ -1251,6 +1259,9 @@ Object {
     "best-practices-browser-compat": Object {
       "title": "Browser Compatibility",
     },
+    "best-practices-forms": Object {
+      "title": "Forms",
+    },
     "best-practices-general": Object {
       "title": "General",
     },
@@ -1540,6 +1551,9 @@ Object {
     },
     "best-practices-browser-compat": Object {
       "title": "Browser Compatibility",
+    },
+    "best-practices-forms": Object {
+      "title": "Forms",
     },
     "best-practices-general": Object {
       "title": "General",
