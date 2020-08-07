@@ -85,7 +85,7 @@ function bakePlaceholders(messages) {
       }
     }
 
-    // Sanity check that all placeholders are gone
+    // Check that all placeholders are gone.
     if (message.match(/\$\w+\$/)) {
       throw Error(`Message "${message}" is missing placeholder(s): ${message.match(/\$\w+\$/g)}`);
     }
