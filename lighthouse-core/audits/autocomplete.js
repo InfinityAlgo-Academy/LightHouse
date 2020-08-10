@@ -26,13 +26,6 @@ const UIStrings = {
   ' the autocomplete attribute to a valid name to ensure that the user has the best form' +
   ' filling expirence.' +
   ' [Learn more](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill)',
-  /** [ICU Syntax] Label for the audit identifying the number of elements with invalid autocomplete attributes. */
-  displayValue: `{nodeCount, plural,
-    =1 {1 element found}
-    other {# elements found}
-    }`,
-  /** Label for a column in a data table; entries will be the elements that do not have autocomplete.  */
-  failingElements: 'Failing Elements',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -97,12 +90,12 @@ class AutocompleteAudit extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'failingElements', itemType: 'node', text: str_(UIStrings.failingElements)},
+      {key: 'failingElements', itemType: 'node', text: str_(i18n.UIStrings.columnFailingElem)},
     ];
     const details = Audit.makeTableDetails(headings, failingFormsData);
     let displayValue;
     if (failingFormsData.length > 0) {
-      displayValue = str_(UIStrings.displayValue, {nodeCount: failingFormsData.length});
+      displayValue = str_(i18n.UIStrings.displayNodes, {nodeCount: failingFormsData.length});
     }
     const score = (failingFormsData.length > 0) ? 0 : 1;
     return {

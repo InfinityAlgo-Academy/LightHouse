@@ -383,6 +383,15 @@
   "lighthouse-core/audits/apple-touch-icon.js | title": {
     "message": "P̂ŕôv́îd́êś â v́âĺîd́ `apple-touch-icon`"
   },
+  "lighthouse-core/audits/autocomplete.js | description": {
+    "message": "T̂ó r̂éd̂úĉé ûśêŕ m̂án̂úâĺ îńp̂út̂ ẃôŕk̂, éâćĥ ín̂ṕût́ êĺêḿêńt̂ śĥóûĺd̂ h́âv́ê t́ĥé âṕp̂ŕôṕr̂íât́ê t́ĥé \"âút̂óĉóm̂ṕl̂ét̂é\" ât́t̂ŕîb́ût́ê. Ćôńŝíd̂ér̂ én̂áb̂ĺîńĝ áût́ôćôḿp̂ĺêt́ê b́ŷ śêt́t̂ín̂ǵ t̂h́ê áût́ôćôḿp̂ĺêt́ê át̂t́r̂íb̂út̂é t̂ó â v́âĺîd́ n̂ám̂é t̂ó êńŝúr̂é t̂h́ât́ t̂h́ê úŝér̂ h́âś t̂h́ê b́êśt̂ f́ôŕm̂ f́îĺl̂ín̂ǵ êx́p̂ír̂én̂ćê. [Ĺêár̂ń m̂ór̂é](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill)"
+  },
+  "lighthouse-core/audits/autocomplete.js | failureTitle": {
+    "message": "Îńp̂út̂ él̂ém̂én̂t́ŝ d́ô ńôt́ ĥáv̂é ĉór̂ŕêćt̂ át̂t́r̂íb̂út̂éŝ f́ôŕ âút̂óĉóm̂ṕl̂ét̂é"
+  },
+  "lighthouse-core/audits/autocomplete.js | title": {
+    "message": "Îńp̂út̂ él̂ém̂én̂t́ŝ úŝé m̂ét̂ád̂át̂á t̂ó êńâb́l̂é âút̂óĉóm̂ṕl̂ét̂é"
+  },
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
     "message": "Ĉh́r̂óm̂é êx́t̂én̂śîón̂ś n̂éĝát̂ív̂él̂ý âf́f̂éĉt́êd́ t̂h́îś p̂áĝé'ŝ ĺôád̂ ṕêŕf̂ór̂ḿâńĉé. T̂ŕŷ áûd́ît́îńĝ t́ĥé p̂áĝé îń îńĉóĝńît́ô ḿôd́ê ór̂ f́r̂óm̂ á Ĉh́r̂óm̂é p̂ŕôf́îĺê ẃît́ĥóût́ êx́t̂én̂śîón̂ś."
   },
@@ -838,9 +847,6 @@
   },
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "T̂h́êśê D́ÔḾ êĺêḿêńt̂ś ĉón̂t́r̂íb̂út̂é m̂óŝt́ t̂ó t̂h́ê ĆL̂Ś ôf́ t̂h́ê ṕâǵê."
-  },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount, plural,\n    =1 {1 êĺêḿêńt̂ f́ôún̂d́}\n    other {# êĺêḿêńt̂ś f̂óûńd̂}\n    }"
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Âv́ôíd̂ ĺâŕĝé l̂áŷóût́ ŝh́îf́t̂ś"
@@ -1561,6 +1567,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Ĉúm̂úl̂át̂ív̂é L̂áŷóût́ Ŝh́îf́t̂"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | displayNodes": {
+    "message": "{nodeCount, plural, =1 {1 êĺêḿêńt̂ f́ôún̂d́} other {# êĺêḿêńt̂ś f̂óûńd̂}}"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "P̂ót̂én̂t́îál̂ śâv́îńĝś ôf́ {wastedBytes, number, bytes} K̂íB̂"

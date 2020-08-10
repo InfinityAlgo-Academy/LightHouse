@@ -1848,6 +1848,14 @@
         ]
       }
     },
+    "autocomplete": {
+      "id": "autocomplete",
+      "title": "Input elements use metadata to enable autocomplete",
+      "description": "To reduce user manual input work, each input element should have the appropriate the \"autocomplete\" attribute. Consider enabling autocomplete by setting the autocomplete attribute to a valid name to ensure that the user has the best form filling expirence. [Learn more](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill)",
+      "score": null,
+      "scoreDisplayMode": "error",
+      "errorMessage": "Required FormElements gatherer did not run."
+    },
     "no-unload-listeners": {
       "id": "no-unload-listeners",
       "title": "Registers an `unload` listener",
@@ -4682,6 +4690,11 @@
           "group": "best-practices-ux"
         },
         {
+          "id": "autocomplete",
+          "weight": 0,
+          "group": "best-practices-ux"
+        },
+        {
           "id": "doctype",
           "weight": 1,
           "group": "best-practices-browser-compat"
@@ -5510,6 +5523,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:long-tasks",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:autocomplete",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6764,7 +6783,7 @@
       "lighthouse-core/audits/layout-shift-elements.js | description": [
         "audits[layout-shift-elements].description"
       ],
-      "lighthouse-core/audits/layout-shift-elements.js | displayValue": [
+      "lighthouse-core/lib/i18n/i18n.js | displayNodes": [
         {
           "values": {
             "nodeCount": 4
@@ -6794,6 +6813,21 @@
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnDuration": [
         "audits[long-tasks].details.headings[2].text"
+      ],
+      "lighthouse-core/audits/autocomplete.js | title": [
+        "audits.autocomplete.title"
+      ],
+      "lighthouse-core/audits/autocomplete.js | description": [
+        "audits.autocomplete.description"
+      ],
+      "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": [
+        {
+          "values": {
+            "errorCode": "MISSING_REQUIRED_ARTIFACT",
+            "artifactName": "FormElements"
+          },
+          "path": "audits.autocomplete.errorMessage"
+        }
       ],
       "lighthouse-core/audits/no-unload-listeners.js | failureTitle": [
         "audits[no-unload-listeners].title"
