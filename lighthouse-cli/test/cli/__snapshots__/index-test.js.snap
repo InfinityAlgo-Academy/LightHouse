@@ -747,6 +747,11 @@ Object {
           "weight": 1,
         },
         Object {
+          "group": "best-practices-ux",
+          "id": "autocomplete",
+          "weight": 0,
+        },
+        Object {
           "group": "best-practices-browser-compat",
           "id": "doctype",
           "weight": 1,
@@ -755,11 +760,6 @@ Object {
           "group": "best-practices-browser-compat",
           "id": "charset",
           "weight": 1,
-        },
-        Object {
-          "group": "best-practices-forms",
-          "id": "autocomplete",
-          "weight": 0,
         },
         Object {
           "group": "best-practices-general",
@@ -1259,9 +1259,6 @@ Object {
     "best-practices-browser-compat": Object {
       "title": "Browser Compatibility",
     },
-    "best-practices-forms": Object {
-      "title": "Forms",
-    },
     "best-practices-general": Object {
       "title": "General",
     },
@@ -1551,9 +1548,6 @@ Object {
     },
     "best-practices-browser-compat": Object {
       "title": "Browser Compatibility",
-    },
-    "best-practices-forms": Object {
-      "title": "Forms",
     },
     "best-practices-general": Object {
       "title": "General",
