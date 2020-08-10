@@ -14,10 +14,9 @@
 const Audit = require('./audit.js');
 const i18n = require('../lib/i18n/i18n.js');
 
-
 const UIStrings = {
   /** Title of a Lighthouse audit that lets the user know if there are any missing or invalid autocomplete attributes on page inputs. This descriptive title is shown to users when all input attributes have a valid autocomplete attribute. */
-  title: 'Input elements use metadata to enable autocomplete',
+  title: 'Input elements use autocomplete',
   /** Title of a Lighthouse audit that lets the user know if there are any missing or invalid autocomplete attributes on page inputs. This descriptive title is shown to users when one or more inputs do not have autocomplete set or has an invalid autocomplete set. */
   failureTitle: 'Input elements do not have correct attributes for autocomplete',
   /** Description of a Lighthouse audit that lets the user know if there are any missing or invalid autocomplete attributes on page inputs. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
@@ -28,7 +27,6 @@ const UIStrings = {
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
-
 
 /** @type {string[]} */
 /** This array contains all acceptable autocomplete attributes from the WHATWG standard. More found at https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill  */
