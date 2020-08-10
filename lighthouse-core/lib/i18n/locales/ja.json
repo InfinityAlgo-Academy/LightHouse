@@ -815,9 +815,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "ページの CLS への影響が特に大きい DOM 要素です。"
   },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
-  },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "レイアウトが大きく変わらないようにする"
   },

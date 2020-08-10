@@ -815,9 +815,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "Nämä DOM-elementit tuottavat suurimman osan sivun CLS-arvosta."
   },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
-  },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Vältä suuria asettelun muutoksia"
   },

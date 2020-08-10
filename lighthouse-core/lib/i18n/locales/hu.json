@@ -815,9 +815,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "Ezek a DOM-elemek járulnak hozzá leginkább az oldal elrendezésének összmozgásához (Cumulative Layout Shift, CLS)."
   },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
-  },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Az elrendezés nagy mértékű mozgásának elkerülése"
   },

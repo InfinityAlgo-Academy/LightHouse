@@ -815,9 +815,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "[Ţĥéšé ÐÖM éļéméñţš çöñţŕîбûţé möšţ ţö ţĥé ÇĻŠ öƒ ţĥé þåĝé. one two three four five six seven eight nine ten eleven twelve]"
   },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount,plural, =1{[1 éļéméñţ ƒöûñð one two]}other{[# éļéméñţš ƒöûñð one two]}}"
-  },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "[Åvöîð ļåŕĝé ļåýöûţ šĥîƒţš one two three four five six]"
   },

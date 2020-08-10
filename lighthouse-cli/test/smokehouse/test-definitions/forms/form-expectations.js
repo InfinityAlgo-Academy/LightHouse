@@ -285,21 +285,8 @@ const expectations = [
       finalUrl: 'http://localhost:10200/form.html',
       audits: {
         'autocomplete': {
-          id: 'autocomplete',
-          title: 'Input elements do not have correct attributes for autocomplete',
-          description: 'To reduce user manual input work, each input element should have the appropriate the "autocomplete" attribute. Consider enabling autocomplete by setting the autocomplete attribute to a valid name to ensure that the user has the best form filling expirence. [Learn more](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill)',
           score: 0,
-          scoreDisplayMode: 'binary',
-          displayValue: '10 elements found',
           details: {
-            type: 'table',
-            headings: [
-              {
-                key: 'failingElements',
-                itemType: 'node',
-                text: 'Failing Elements',
-              },
-            ],
             items: [
               {
                 failingElements: {
