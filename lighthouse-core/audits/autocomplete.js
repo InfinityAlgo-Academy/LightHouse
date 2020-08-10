@@ -21,10 +21,9 @@ const UIStrings = {
   /** Title of a Lighthouse audit that lets the user know if there are any missing or invalid autocomplete attributes on page inputs. This descriptive title is shown to users when one or more inputs do not have autocomplete set or has an invalid autocomplete set. */
   failureTitle: 'Input elements do not have correct attributes for autocomplete',
   /** Description of a Lighthouse audit that lets the user know if there are any missing or invalid autocomplete attributes on page inputs. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  description: 'To reduce user manual input work, each input element should have the' +
-  ' appropriate the "autocomplete" attribute. Consider enabling autocomplete by setting' +
-  ' the autocomplete attribute to a valid name to ensure that the user has the best form' +
-  ' filling expirence.' +
+  description: 'Autocomplete helps users submit forms quicker. To reduce user' +
+   'effort, consider enabling autocomplete by setting the `autocomplete` ' +
+   'attribute to a valid value..' +
   ' [Learn more](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill)',
 };
 
