@@ -839,9 +839,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "பக்கத்தின் பெரும்பான்மையான CLSஸில் இந்த DOM உறுப்புகள் பங்களிக்கின்றன."
   },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount,plural, =1{1 உறுப்பு உள்ளது}other{# உறுப்புகள் உள்ளன}}"
-  },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "பெரிய தளவமைப்பு ஷிஃப்ட்களைத் தவிர்த்தல்"
   },

@@ -839,9 +839,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "Tyto prvky DOM nejvíce přispívají ke kumulativní změně rozvržení (CLS) stránky."
   },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount,plural, =1{Byl nalezen 1 prvek}few{Byly nalezeny # prvky}many{Bylo nalezeno # prvku}other{Bylo nalezeno # prvků}}"
-  },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Zajistěte, aby nedocházelo k velkým změnám rozvržení"
   },

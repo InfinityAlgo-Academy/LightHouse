@@ -839,9 +839,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "Elemen DOM ini paling banyak berkontribusi untuk CLS halaman."
   },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount,plural, =1{1 elemen ditemukan}other{# elemen ditemukan}}"
-  },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Hindari peralihan tata letak berukuran besar"
   },

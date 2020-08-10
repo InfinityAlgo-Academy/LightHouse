@@ -839,9 +839,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "Эти элементы DOM больше всего влияют на совокупное смещение макета страницы."
   },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount,plural, =1{Обнаружен 1 элемент}one{Обнаружен # элемент}few{Обнаружено # элемента}many{Обнаружено # элементов}other{Обнаружено # элемента}}"
-  },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Устраните большие смещения макета"
   },

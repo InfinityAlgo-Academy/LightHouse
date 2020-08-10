@@ -839,9 +839,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "تساهم عناصر DOM هذه أكثر في متغيّرات التصميم التراكمية (CLS) الخاصة بالصفحة."
   },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount,plural, =1{تم العثور على عنصر واحد}zero{تم العثور على # عنصر}two{تم العثور على عنصرَين}few{تم العثور على # عناصر}many{تم العثور على # عنصرًا}other{تم العثور على # عنصر}}"
-  },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "تجنُّب متغيّرات التصميم الكبيرة"
   },

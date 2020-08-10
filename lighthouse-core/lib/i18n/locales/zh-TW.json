@@ -839,9 +839,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "這些 DOM 元素對於頁面的「累計版面配置轉移」(CLS) 影響最大。"
   },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount,plural, =1{找到 1 個元素}other{找到 # 個元素}}"
-  },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "避免大量版面配置轉移"
   },

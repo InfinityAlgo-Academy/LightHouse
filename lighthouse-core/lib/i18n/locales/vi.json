@@ -839,9 +839,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "Những thành phần DOM này đóng góp nhiều nhất vào Điểm số tổng hợp về mức thay đổi bố cục (CLS) của trang."
   },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount,plural, =1{Phát hiện thấy 1 thành phần}other{Phát hiện thấy # thành phần}}"
-  },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Tránh các thay đổi lớn về bố cục"
   },

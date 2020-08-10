@@ -839,9 +839,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "DOM 요소가 페이지 CLS의 대부분을 차지합니다."
   },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount,plural, =1{요소 1개 발견됨}other{요소 #개 발견됨}}"
-  },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "대규모 레이아웃 변경 피하기"
   },

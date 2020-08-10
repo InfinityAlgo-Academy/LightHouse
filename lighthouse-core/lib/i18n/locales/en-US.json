@@ -384,13 +384,13 @@
     "message": "Provides a valid `apple-touch-icon`"
   },
   "lighthouse-core/audits/autocomplete.js | description": {
-    "message": "To reduce user manual input work, each input element should have the appropriate the \"autocomplete\" attribute. Consider enabling autocomplete by setting the autocomplete attribute to a valid name to ensure that the user has the best form filling expirence. [Learn more](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill)"
+    "message": "Autocomplete helps users submit forms quicker. To reduce usereffort, consider enabling autocomplete by setting the `autocomplete` attribute to a valid value.. [Learn more](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill)"
   },
   "lighthouse-core/audits/autocomplete.js | failureTitle": {
     "message": "Input elements do not have correct attributes for autocomplete"
   },
   "lighthouse-core/audits/autocomplete.js | title": {
-    "message": "Input elements use metadata to enable autocomplete"
+    "message": "Input elements use autocomplete"
   },
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
     "message": "Chrome extensions negatively affected this page's load performance. Try auditing the page in incognito mode or from a Chrome profile without extensions."

@@ -839,9 +839,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "Disse DOM-elementer bidrager mest til sidens CLS."
   },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount,plural, =1{1 element blev fundet}one{# element blev fundet}other{# elementer blev fundet}}"
-  },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Undgå store layoutskift"
   },

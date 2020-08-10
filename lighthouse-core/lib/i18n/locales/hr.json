@@ -839,9 +839,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "Ti DOM elementi najviše doprinose CLS-u stranice."
   },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount,plural, =1{Pronađen je jedan element}one{Pronađen je # element}few{Pronađena su # elementa}other{Pronađeno je # elemenata}}"
-  },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Izbjegavajte velike pomake izgleda"
   },

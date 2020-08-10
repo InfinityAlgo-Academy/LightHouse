@@ -839,9 +839,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "องค์ประกอบ DOM เหล่านี้มีส่วนอย่างมากที่สุดต่อ CLS ของหน้า"
   },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount,plural, =1{พบ 1 องค์ประกอบ}other{พบ # องค์ประกอบ}}"
-  },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "หลีกเลี่ยงการเลื่อนเลย์เอาต์ขนาดใหญ่"
   },

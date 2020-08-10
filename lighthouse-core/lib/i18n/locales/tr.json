@@ -839,9 +839,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "Sayfanın CLS'sine en fazla bu DOM öğeleri katkıda bulunur."
   },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount,plural, =1{1 öğe bulundu}other{# öğe bulundu}}"
-  },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Büyük düzen kaymalarından kaçının"
   },

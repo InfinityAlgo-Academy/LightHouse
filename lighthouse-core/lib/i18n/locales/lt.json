@@ -839,9 +839,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "Šie DOM elementai labiausiai prisideda prie puslapio KIP."
   },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount,plural, =1{Rastas vienas elementas}one{Rastas # elementas}few{Rasti # elementai}many{Rasta # elemento}other{Rasta # elementų}}"
-  },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Venkite didelių išdėstymo poslinkių"
   },

@@ -839,9 +839,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "Estes elementos DOM contribuem principalmente para a CLS da página."
   },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount,plural, =1{1 elemento encontrado}one{# elemento encontrado}other{# elementos encontrados}}"
-  },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Evite grandes mudanças no layout"
   },

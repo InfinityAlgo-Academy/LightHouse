@@ -839,9 +839,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "Αυτά είναι τα στοιχεία DOM με τη μεγαλύτερη συνεισφορά στο CLS."
   },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount,plural, =1{Βρέθηκε 1 στοιχείο}other{Βρέθηκαν # στοιχεία}}"
-  },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Αποφύγετε τις μεγάλες μετατοπίσεις διάταξης"
   },
