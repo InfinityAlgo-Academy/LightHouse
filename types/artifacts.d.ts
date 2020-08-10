@@ -83,6 +83,8 @@ declare global {
       ScriptElements: Array<Artifacts.ScriptElement>;
       /** The dimensions and devicePixelRatio of the loaded viewport. */
       ViewportDimensions: Artifacts.ViewportDimensions;
+      /** All the form elements in the page and formless inputs. */
+      FormElements: Artifacts.Form[];
     }
 
     /**
@@ -413,6 +415,14 @@ declare global {
         naturalWidth: number;
         /** The natural height of the underlying image, uses img.naturalHeight. See https://codepen.io/patrickhulce/pen/PXvQbM for examples. */
         naturalHeight: number;
+        /** The raw width attribute of the image element. CSS images will be set to the empty string. */
+        attributeWidth: string;
+        /** The raw height attribute of the image element. CSS images will be set to the empty string. */
+        attributeHeight: string;
+        /** The CSS width property of the image element. */
+        cssWidth?: string;
+        /** The CSS height property of the image element. */
+        cssHeight?: string;
         /** The BoundingClientRect of the element. */
         clientRect: {
           top: number;
@@ -420,10 +430,14 @@ declare global {
           left: number;
           right: number;
         };
+        /** The CSS position attribute of the element */
+        cssComputedPosition: string;
         /** Flags whether this element was an image via CSS background-image rather than <img> tag. */
         isCss: boolean;
         /** Flags whether this element was contained within a <picture> tag. */
         isPicture: boolean;
+        /** Flags whether this element was contained within a ShadowRoot */
+        isInShadowDOM: boolean;
         /** Flags whether this element was sized using a non-default `object-fit` CSS property. */
         usesObjectFit: boolean;
         /** Flags whether this element was rendered using a pixel art scaling method.
@@ -437,6 +451,11 @@ declare global {
         usesSrcSetDensityDescriptor: boolean;
         /** The size of the underlying image file in bytes. 0 if the file could not be identified. */
         resourceSize: number;
+        /** Path that uniquely identifies the node in the DOM */
+        devtoolsNodePath: string;
+        snippet: string;
+        selector: string;
+        nodeLabel: string;
         /** The MIME type of the underlying image file. */
         mimeType?: string;
         /** The loading attribute of the image. */
@@ -503,6 +522,7 @@ declare global {
         score?: number;
         boundingRect: Rect;
         nodeId?: number;
+        animations?: {name?: string, failureReasonsMask?: number}[];
       }
 
       export interface ViewportDimensions {
@@ -708,6 +728,30 @@ declare global {
         observedLastVisualChangeTs: number;
         observedSpeedIndex: number;
         observedSpeedIndexTs: number;
+      }
+
+      export interface Form {
+        /** If attributes is missing that means this is a formless set of elements. */
+        attributes?: { id: string, name: string, autocomplete: string, nodeLabel: string, snippet: string,};
+        inputs: Array<FormInput>;
+        labels: Array<FormLabel>;
+      }
+
+      /** Attributes collected for every input element in the inputs array from the forms interface. */
+      export interface FormInput {
+        id: string;
+        name: string;
+        placeholder?: string;
+        autocomplete: string;
+        nodeLabel: string;
+        snippet: string;
+      }
+
+      /** Attributes collected for every label element in the labels array from the forms interface */
+      export interface FormLabel {
+        for: string;
+        nodeLabel: string;
+        snippet: string;
       }
 
       /** Information about an event listener registered on the global object. */

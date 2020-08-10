@@ -22,8 +22,6 @@ const config = {
       'full-page-screenshot',
     ],
   }],
-  categories: {
-  },
 };
 
 module.exports = config;
