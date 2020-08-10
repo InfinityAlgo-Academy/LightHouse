@@ -119,8 +119,6 @@ const UIStrings = {
   pwaInstallableGroupTitle: 'Installable',
   /** Title of the "PWA Optimized" section of the web app category. Within this section are audits that check if the developer has taken advantage of features to make their web page more enjoyable and engaging for the user. */
   pwaOptimizedGroupTitle: 'PWA Optimized',
-  /** Title of the Form Autocomplete group of the Best Practices category. Within this section are the audits related to see if input metadata follow the best practices for autocomplete. */
-  bestPracticesFormsGroupTitle: 'Forms',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -420,9 +418,6 @@ const defaultConfig = {
     'best-practices-general': {
       title: str_(UIStrings.bestPracticesGeneralGroupTitle),
     },
-    'best-practices-forms': {
-      title: str_(UIStrings.bestPracticesFormsGroupTitle),
-    },
   },
   categories: {
     'performance': {
@@ -563,11 +558,10 @@ const defaultConfig = {
         {id: 'password-inputs-can-be-pasted-into', weight: 1, group: 'best-practices-ux'},
         {id: 'image-aspect-ratio', weight: 1, group: 'best-practices-ux'},
         {id: 'image-size-responsive', weight: 1, group: 'best-practices-ux'},
+        {id: 'autocomplete', weight: 0, group: 'best-practices-ux'},
         // Browser Compatibility
         {id: 'doctype', weight: 1, group: 'best-practices-browser-compat'},
         {id: 'charset', weight: 1, group: 'best-practices-browser-compat'},
-        // Forms
-        {id: 'autocomplete', weight: 0, group: 'best-practices-forms'},
         // General Group
         {id: 'no-unload-listeners', weight: 1, group: 'best-practices-general'},
         {id: 'appcache-manifest', weight: 1, group: 'best-practices-general'},
