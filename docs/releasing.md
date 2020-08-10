@@ -127,7 +127,7 @@ bash ./lighthouse-core/scripts/release/prepare-package.sh
 # Make sure you're in the Lighthouse pristine repo we just tested.
 cd ../lighthouse-pristine
 
-# Sanity check: last chance to abort.
+# Last chance to abort.
 git status
 git log
 

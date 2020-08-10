@@ -237,6 +237,9 @@ class DetailsRenderer {
         case 'node': {
           return this.renderNode(value);
         }
+        case 'numeric': {
+          return this._renderNumeric(value);
+        }
         case 'source-location': {
           return this.renderSourceLocation(value);
         }
