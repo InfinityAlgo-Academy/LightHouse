@@ -457,6 +457,39 @@ const expectations = [
       },
     },
   },
+  {
+    artifacts: {
+      ElementsObscuringLCPElement: [
+        {
+          "selector": "body > div#test-modal",
+          "nodeLabel": "×\nHello\n\nAm I blocking your view?",
+          "snippet": "<div id=\"test-modal\" class=\"modal\">",
+          "boundingRect": {
+            "top": 0,
+            "bottom": 640,
+            "left": 0,
+            "right": 360,
+            "width": 360,
+            "height": 640
+          }
+        },
+      ],
+    },
+    lhr: {
+      requestedUrl: 'http://localhost:10200/interstitial.html',
+      finalUrl: 'http://localhost:10200/interstitial.html',
+      audits: {
+        'obscured-largest-contentful-paint': {
+          score: 0,
+          details: {
+            items: {
+              length: 1,
+            },
+          },
+        },
+      },
+    },
+  },
 ];
 
 module.exports = expectations;
