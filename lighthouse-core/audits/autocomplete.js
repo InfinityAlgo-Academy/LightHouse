@@ -22,7 +22,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that lets the user know if there are any missing or invalid autocomplete attributes on page inputs. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Autocomplete helps users submit forms quicker. To reduce user ' +
    'effort, consider enabling autocomplete by setting the `autocomplete` ' +
-   'attribute to a valid value..' +
+   'attribute to a valid value.' +
   ' [Learn more](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill)',
 };
 
