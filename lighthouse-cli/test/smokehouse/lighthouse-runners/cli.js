@@ -72,19 +72,14 @@ async function internalRun(url, tmpPath, configJson, isDebug) {
     args.push(`--config-path=${configPath}`);
   }
 
-  if (process.env.APPVEYOR) {
-    // Appveyor is hella slow already, disable CPU throttling so we're not 16x slowdown
-    // see https://github.com/GoogleChrome/lighthouse/issues/4891
-    args.push('--throttling.cpuSlowdownMultiplier=1');
-  }
-
   const command = 'node';
+  const env = {...process.env, NODE_ENV: 'test'};
   localConsole.log(`${log.dim}$ ${command} ${args.join(' ')} ${log.reset}`);
 
   /** @type {{stdout: string, stderr: string, code?: number}} */
   let execResult;
   try {
-    execResult = await execFileAsync(command, args);
+    execResult = await execFileAsync(command, args, {env});
   } catch (e) {
     // exec-thrown errors have stdout, stderr, and exit code from child process.
     execResult = e;

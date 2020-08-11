@@ -27,7 +27,7 @@ function flatten(arr) {
  * @return {LH.CliFlags}
  */
 function getFlags(manualArgv) {
-  // @ts-ignore yargs() is incorrectly typed as not accepting a single string.
+  // @ts-expect-error yargs() is incorrectly typed as not accepting a single string.
   const y = manualArgv ? yargs(manualArgv) : yargs;
   // Intentionally left as type `any` because @types/yargs doesn't chain correctly.
   const argv = y.help('help')
@@ -155,7 +155,7 @@ function getFlags(manualArgv) {
       ])
       .choices('emulated-form-factor', ['mobile', 'desktop', 'none'])
       .choices('throttling-method', ['devtools', 'provided', 'simulate'])
-      .choices('preset', ['perf', 'mixed-content', 'experimental'])
+      .choices('preset', ['perf', 'experimental'])
       // force as an array
       // note MUST use camelcase versions or only the kebab-case version will be forced
       .array('blockedUrlPatterns')

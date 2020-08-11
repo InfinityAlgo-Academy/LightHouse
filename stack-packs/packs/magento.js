@@ -15,7 +15,7 @@ const UIStrings = {
   /** Additional description of a Lighthouse audit that tells the user how they can improve image loading by using webp in the context of the Magento platform. This is displayed after a user expands the section to see more. No character length limits. Links in (parenthesis) become link texts to additional documentation. */
   uses_webp_images: 'Consider searching the [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) for a variety of third-party extensions to leverage newer image formats.',
   /** Additional description of a Lighthouse audit that tells the user how they can improve performance by lazy loading images that are initially offscreen in the context of the Magento platform. This is displayed after a user expands the section to see more. No character length limits. Links in (parenthesis) become link texts to additional documentation. */
-  offscreen_images: 'Consider modifying your product and catalog templates to make use of the web platform\'s [lazy loading](https://web.dev/native-lazy-loading) feature.',
+  offscreen_images: 'Consider modifying your product and catalog templates to make use of the web platform\'s [lazy loading](https://web.dev/native-lazy-loading/) feature.',
   /** Additional description of a Lighthouse audit that tells the user how they can improve site loading performance by disabling JS bundling in the context of the Magento platform. This is displayed after a user expands the section to see more. No character length limits. Links in (parenthesis) become link texts to additional documentation. */
   disable_bundling: 'Disable Magento\'s built-in [JavaScript bundling and minification](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html), and consider using [baler](https://github.com/magento/baler/) instead.',
   /** Additional description of a Lighthouse audit that tells the user how they can improve performance by minifying their CSS files in the context of the Magento platform. This is displayed after a user expands the section to see more. No character length limits. Links in (parenthesis) become link texts to additional documentation. */
@@ -26,8 +26,8 @@ const UIStrings = {
   unused_javascript: 'Disable Magento\'s built-in [JavaScript bundling](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html).',
   /** Additional description of a Lighthouse audit that tells the user how they can improve site performance by optimizing images, in the context of the Magento platform. This is displayed after a user expands the section to see more. No character length limits. Links in (parenthesis) become link texts to additional documentation. */
   uses_optimized_images: 'Consider searching the [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) for a variety of third party extensions to optimize images.',
-  /** Additional description of a Lighthouse audit that tells the user how they can improve the time to first byte speed metric, in the context of the Magento platform. This is displayed after a user expands the section to see more. No character length limits. Links in (parenthesis) become link texts to additional documentation. */
-  time_to_first_byte: 'Use Magento\'s [Varnish integration](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html).',
+  /** Additional description of a Lighthouse audit that tells the user how they can improve the server-response-time speed metric, in the context of the Magento platform. This is displayed after a user expands the section to see more. No character length limits. Links in (parenthesis) become link texts to additional documentation. */
+  server_response_time: 'Use Magento\'s [Varnish integration](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html).',
   /** Additional description of a Lighthouse audit that tells the user how they can add preconnect or dns-prefetch resource hints, in the context of the Magento platform. This is displayed after a user expands the section to see more. No character length limits. Links in (parenthesis) become link texts to additional documentation. */
   uses_rel_preconnect: 'Preconnect or dns-prefetch resource hints can be added by [modifying a themes\'s layout](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html).',
   /** Additional description of a Lighthouse audit that tells the user how they can add preload tags, in the context of the Magento platform. This is displayed after a user expands the section to see more. No character length limits. Links in (parenthesis) become link texts to additional documentation. */
@@ -53,7 +53,7 @@ module.exports = {
     'unminified-javascript': str_(UIStrings.unminified_javascript),
     'unused-javascript': str_(UIStrings.unused_javascript),
     'uses-optimized-images': str_(UIStrings.uses_optimized_images),
-    'time-to-first-byte': str_(UIStrings.time_to_first_byte),
+    'server-response-time': str_(UIStrings.server_response_time),
     'uses-rel-preconnect': str_(UIStrings.uses_rel_preconnect),
     'uses-rel-preload': str_(UIStrings.uses_rel_preload),
     'critical-request-chains': str_(UIStrings.critical_request_chains),

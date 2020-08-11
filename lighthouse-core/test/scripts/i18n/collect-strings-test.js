@@ -59,7 +59,7 @@ describe('parseUIStrings', () => {
   it('errors when @description is blank', () => {
     const justUIStrings =
     `const UIStrings = {
-      /** 
+      /**
        * @description
        */
       exampleString: 'Hello World',
@@ -73,7 +73,7 @@ describe('parseUIStrings', () => {
   it('collects complex description', () => {
     const justUIStrings =
     `const UIStrings = {
-      /** 
+      /**
        * @description Tagged description for Hello World.
        */
       exampleString: 'Hello World',
@@ -93,7 +93,7 @@ describe('parseUIStrings', () => {
   it('collects complex multi-line description', () => {
     const justUIStrings =
     `const UIStrings = {
-      /** 
+      /**
        * @description Tagged description for Hello World,
        *              which is a long, indented(!) description
        */
@@ -114,7 +114,7 @@ describe('parseUIStrings', () => {
   it('collects multi-line description', () => {
     const justUIStrings =
     `const UIStrings = {
-      /** 
+      /**
        * Tagged description for Hello World,
        * which is a long description, that wraps.
        */
@@ -135,7 +135,7 @@ describe('parseUIStrings', () => {
   it('collects complex description with example', () => {
     const justUIStrings =
     `const UIStrings = {
-      /** 
+      /**
        * @description Tagged description for Hello World.
        * @example {Variable example.} variable
        */
@@ -158,7 +158,7 @@ describe('parseUIStrings', () => {
   it('collects complex multi-line description with example', () => {
     const justUIStrings =
     `const UIStrings = {
-      /** 
+      /**
        * @description Tagged description for Hello World,
        *              which is a long, indented(!) {word}
        * @example {description} word
@@ -182,7 +182,7 @@ describe('parseUIStrings', () => {
   it('collects complex description with multiple examples', () => {
     const justUIStrings =
     `const UIStrings = {
-      /** 
+      /**
        * @description Tagged description for Hello World.
        * @example {Variable example.} variable
        * @example {Variable2 example.} variable2
@@ -207,7 +207,7 @@ describe('parseUIStrings', () => {
   it('does not throw when no example for ICU', () => {
     const justUIStrings =
     `const UIStrings = {
-      /** 
+      /**
        * @description Tagged description for Hello World.
        */
       exampleString: 'Hello World {variable}',
@@ -227,7 +227,7 @@ describe('parseUIStrings', () => {
   it('throws when @example is blank', () => {
     const justUIStrings =
     `const UIStrings = {
-      /** 
+      /**
        * @description Some description.
        * @example
        */
@@ -242,7 +242,7 @@ describe('parseUIStrings', () => {
   it('throws when @example is missing a placeholder name', () => {
     const justUIStrings =
     `const UIStrings = {
-      /** 
+      /**
        * @description Some description.
        * @example {missingPlaceholdername}
        */
@@ -257,7 +257,7 @@ describe('parseUIStrings', () => {
   it('throws when @example is missing an exampleValue', () => {
     const justUIStrings =
     `const UIStrings = {
-      /** 
+      /**
        * @description Some description.
        * @example placeholderName
        */
@@ -287,7 +287,7 @@ describe('parseUIStrings', () => {
   it('parses UIStrings with multiple mixed-jsdoced messages', () => {
     const justUIStrings =
     `const UIStrings = {
-      /** 
+      /**
        * @description A description for Hello World.
        * @example {variable value} variable
        */
@@ -297,7 +297,7 @@ describe('parseUIStrings', () => {
        * across multiple lines.
        */
       exampleString2: 'Just a plain string',
-      /** 
+      /**
        * @description Tagged description for Hello World.
        * @example {50} count
        * @example {none of your beeswax} variables
@@ -330,6 +330,56 @@ describe('parseUIStrings', () => {
       },
     });
   });
+});
+
+describe('#_lhlValidityChecks', () => {
+  /* eslint-disable max-len */
+  it('errors when using non-supported custom-formatted ICU format', () => {
+    const message = 'Hello World took {var, badFormat, milliseconds}.';
+    expect(() => collect.convertMessageToCtc(message)).toThrow(
+      /Did not find the expected syntax \(one of 'number', 'date', 'time', 'plural', 'selectordinal', 'select'\) in message "Hello World took {var, badFormat, milliseconds}."$/);
+  });
+
+  it('errors when there is content outside of a plural argument', () => {
+    const message = 'We found {count, plural, =1 {1 request} other {# requests}}';
+    expect(() => collect.convertMessageToCtc(message)).toThrow(
+      /Content cannot appear outside plural or select ICU messages.*=1 {1 request} other {# requests}}'\)$/);
+  });
+
+  it('errors when there is content outside of a select argument', () => {
+    const message = '{user_gender, select, female {They} male {They} other {They}} were trying to block the main thread';
+    expect(() => collect.convertMessageToCtc(message)).toThrow(
+      /Content cannot appear outside plural or select ICU messages.*were trying to block the main thread'\)$/);
+  });
+
+  it('errors when there is whitespace outside of a plural argument', () => {
+    const message = '{count, plural, =1 {1 request} other {# requests}}  ';
+    expect(() => collect.convertMessageToCtc(message)).toThrow(
+      /Content cannot appear outside plural or select ICU messages.*=1 {1 request} other {# requests}} {2}'\)$/);
+  });
+
+  it('errors when there another argument outside of a plural argument', () => {
+    const message = '{count, plural, =1 {1 request} other {# requests}}{count, plural, =1 {1 request} other {# requests}}';
+    expect(() => collect.convertMessageToCtc(message)).toThrow(
+      /Content cannot appear outside plural or select ICU messages.*=1 {1 request} other {# requests}}'\)$/);
+  });
+
+  it('errors when there is content outside of a plural argument', () => {
+    const message = 'We found {count, plural, =1 {1 request} other {# requests}}';
+    expect(() => collect.convertMessageToCtc(message)).toThrow(
+      /Content cannot appear outside plural or select ICU messages.*=1 {1 request} other {# requests}}'\)$/);
+  });
+
+  it('errors when there is content outside of nested plural aguments', () => {
+    const message = `{user_gender, select,
+      female {Ms. {name} received {count, plural, =1 {one award.} other {# awards.}}}
+      male {Mr. {name} received {count, plural, =1 {one award.} other {# awards.}}}
+      other {{name} received {count, plural, =1 {one award.} other {# awards.}}}
+    }`;
+    expect(() => collect.convertMessageToCtc(message, {name: 'Elbert'})).toThrow(
+      /Content cannot appear outside plural or select ICU messages.*\(message: 'Ms. {name} received {count, plural, =1 {one award.} other {# awards.}}'\)$/);
+  });
+  /* eslint-enable max-len */
 });
 
 describe('Convert Message to Placeholder', () => {
@@ -489,12 +539,6 @@ describe('Convert Message to Placeholder', () => {
     });
   });
 
-  it('errors when using non-supported custom-formatted ICU format', () => {
-    const message = 'Hello World took {var, badFormat, milliseconds}.';
-    expect(() => collect.convertMessageToCtc(message)).toThrow(
-      /Unsupported custom-formatted ICU format var "badFormat" in message "Hello World took "/);
-  });
-
   it('errors when using non-supported custom-formatted ICU type', () => {
     const message = 'Hello World took {var, number, global_int}.';
     expect(() => collect.convertMessageToCtc(message)).toThrow(
@@ -537,6 +581,15 @@ describe('Convert Message to Placeholder', () => {
     const message = 'Hello ${name}';
     expect(() => collect.convertMessageToCtc(message, {name: 'Mary'})).
       toThrow(/Ctc messages cannot contain double dollar: Hello \$\$ICU_0\$/);
+  });
+
+  it('pass when double dollar is part of a message', () => {
+    const message = '$$';
+    expect(() => collect.convertMessageToCtc(message)).toThrow();
+    const message2 = '$ICU_0$$ICU_1$';
+    expect(() => collect.convertMessageToCtc(message2)).not.toThrow();
+    const message3 = '$ICU_0$$';
+    expect(() => collect.convertMessageToCtc(message3)).not.toThrow();
   });
 });
 

@@ -19,6 +19,10 @@ const expectations = [
           async: false,
           defer: false,
           source: 'head',
+          // Only do a single assertion for `devtoolsNodePath`: this can be flaky for elements
+          // deep in the DOM, and the sample LHR test has plenty of places that would catch
+          // a regression in `devtoolsNodePath` calculation. Keep just one for the benefit
+          // of other smoke test runners.
           devtoolsNodePath: '2,HTML,0,HEAD,3,SCRIPT',
         },
         {
@@ -27,7 +31,6 @@ const expectations = [
           async: false,
           defer: false,
           source: 'head',
-          devtoolsNodePath: '2,HTML,0,HEAD,5,SCRIPT',
         },
         {
           type: null,
@@ -35,7 +38,6 @@ const expectations = [
           async: false,
           defer: false,
           source: 'head',
-          devtoolsNodePath: '2,HTML,0,HEAD,6,SCRIPT',
         },
         {
           type: null,
@@ -43,7 +45,7 @@ const expectations = [
           async: false,
           defer: false,
           source: 'body',
-          devtoolsNodePath: '2,HTML,1,BODY,0,DIV,3,SCRIPT',
+          content: /shadowRoot/,
         },
         {
           type: null,
@@ -51,7 +53,7 @@ const expectations = [
           async: false,
           defer: false,
           source: 'body',
-          devtoolsNodePath: '2,HTML,1,BODY,3,SCRIPT',
+          content: /generateInlineStyleWithSize/,
         },
         {
           type: null,
@@ -59,7 +61,6 @@ const expectations = [
           async: true,
           defer: false,
           source: 'body',
-          devtoolsNodePath: '2,HTML,1,BODY,1438,SCRIPT',
         },
         {
           type: null,
@@ -67,7 +68,6 @@ const expectations = [
           async: false,
           defer: false,
           source: 'body',
-          devtoolsNodePath: '2,HTML,1,BODY,1439,SCRIPT',
           content: /Used block #1/,
         },
         {
@@ -76,7 +76,6 @@ const expectations = [
           async: false,
           defer: false,
           source: 'body',
-          devtoolsNodePath: '2,HTML,1,BODY,1440,SCRIPT',
           content: /Unused block #1/,
         },
       ],
@@ -85,6 +84,15 @@ const expectations = [
       requestedUrl: 'http://localhost:10200/byte-efficiency/tester.html',
       finalUrl: 'http://localhost:10200/byte-efficiency/tester.html',
       audits: {
+        'uses-http2': {
+          score: '<1',
+          details: {
+            overallSavingsMs: '>0',
+            items: {
+              length: '>10',
+            },
+          },
+        },
         'unminified-css': {
           details: {
             overallSavingsBytes: '>17000',
@@ -155,21 +163,13 @@ const expectations = [
                 url: 'http://localhost:10200/byte-efficiency/bundle.js',
                 totalBytes: '12913 +/- 1000',
                 wastedBytes: '5827 +/- 200',
-                sources: [
-                  '…./b.js',
-                  '…./c.js',
-                  '…webpack/bootstrap',
-                ],
-                sourceBytes: [
-                  '4417 +/- 50',
-                  '2200 +/- 50',
-                  '2809 +/- 50',
-                ],
-                sourceWastedBytes: [
-                  '2191 +/- 50',
-                  '2182 +/- 50',
-                  '1259 +/- 50',
-                ],
+                subItems: {
+                  items: [
+                    {source: '…./b.js', sourceBytes: '4417 +/- 50', sourceWastedBytes: '2191 +/- 50'},
+                    {source: '…./c.js', sourceBytes: '2200 +/- 50', sourceWastedBytes: '2182 +/- 50'},
+                    {source: '…webpack/bootstrap', sourceBytes: '2809 +/- 50', sourceWastedBytes: '1259 +/- 50'},
+                  ],
+                },
               },
             ],
           },
@@ -193,7 +193,7 @@ const expectations = [
           details: {
             overallSavingsBytes: '>60000',
             items: {
-              length: 5,
+              length: 6,
             },
           },
         },
@@ -217,15 +217,38 @@ const expectations = [
             },
           },
         },
+        // Check that images aren't TOO BIG.
         'uses-responsive-images': {
           details: {
-            overallSavingsBytes: '82000 +/- 5000',
-            items: {
-              0: {wastedPercent: '45 +/- 5', url: /lighthouse-1024x680.jpg/},
-              1: {wastedPercent: '72 +/- 5', url: /lighthouse-2048x1356.webp\?size0/},
-              2: {wastedPercent: '45 +/- 5', url: /lighthouse-480x320.webp/},
-              length: 3,
-            },
+            overallSavingsBytes: '113000 +/- 5000',
+            items: [
+              {wastedPercent: '56 +/- 5', url: /lighthouse-1024x680.jpg/},
+              {wastedPercent: '78 +/- 5', url: /lighthouse-2048x1356.webp\?size0/},
+              {wastedPercent: '56 +/- 5', url: /lighthouse-480x320.webp/},
+              {wastedPercent: '20 +/- 5', url: /lighthouse-480x320.jpg/},
+              {wastedPercent: '20 +/- 5', url: /lighthouse-480x320\.jpg\?attributesized/},
+            ],
+          },
+        },
+        // Checks that images aren't TOO SMALL.
+        'image-size-responsive': {
+          details: {
+            items: [
+              // One of these is the ?duplicate variant and another is the
+              // ?cssauto variant but sort order isn't guaranteed
+              // since the pixel diff is equivalent for identical images.
+              {url: /lighthouse-320x212-poor.jpg/},
+              {url: /lighthouse-320x212-poor.jpg/},
+              {url: /lighthouse-320x212-poor.jpg/},
+            ],
+          },
+        },
+        'unsized-images': {
+          details: {
+            items: [
+              {url: /lighthouse-320x212-poor\.jpg/},
+              {url: /lighthouse-320x212-poor\.jpg\?cssauto/},
+            ],
           },
         },
       },

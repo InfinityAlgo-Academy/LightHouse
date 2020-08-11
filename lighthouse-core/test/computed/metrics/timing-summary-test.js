@@ -53,6 +53,8 @@ describe('Timing summary', () => {
         "observedNavigationStartTs": 225414172015,
         "observedSpeedIndex": 604.7093900063634,
         "observedSpeedIndexTs": 225414776724.39,
+        "observedTimeOrigin": 0,
+        "observedTimeOriginTs": 225414172015,
         "observedTraceEnd": 12539.872,
         "observedTraceEndTs": 225426711887,
         "speedIndex": 1676.1335047609864,

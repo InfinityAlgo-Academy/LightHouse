@@ -79,11 +79,11 @@ gclient sync
 autoninja -C out/Release chrome blink_tests
 
 # Run tests and rebase.
-yarn --cwd ~/chromium/src/third_party/blink/renderer/devtools test 'http/tests/devtools/audits/*.js' --reset-results
+yarn --cwd ~/chromium/src/third_party/blink/renderer/devtools test 'http/tests/devtools/lighthouse/*.js' --reset-results
 # Verify the changes are expected.
 git diff
 
-# Verify that the Audits panel still works. Consider the new features that have been added.
+# Verify that the Lighthouse panel still works. Consider the new features that have been added.
 # If anything is wrong, stop releasing, investigate, land a fix and start over.
 
 # For bonus points, add some tests covering new features. Either a new test, or an extra
@@ -127,7 +127,7 @@ bash ./lighthouse-core/scripts/release/prepare-package.sh
 # Make sure you're in the Lighthouse pristine repo we just tested.
 cd ../lighthouse-pristine
 
-# Sanity check: last chance to abort.
+# Last chance to abort.
 git status
 git log
 

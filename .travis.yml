@@ -30,7 +30,6 @@ before_script:
   - google-chrome-stable --version
   - yarn build-all
 script:
-  - yarn bundlesize
   - yarn diff:sample-json
   - yarn lint
   - yarn test-legacy-javascript

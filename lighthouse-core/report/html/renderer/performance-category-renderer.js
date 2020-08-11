@@ -105,6 +105,62 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
   }
 
   /**
+   * Get a link to the interactive scoring calculator with the metric values.
+   * @param {LH.ReportResult.AuditRef[]} auditRefs
+   * @return {string}
+   */
+  _getScoringCalculatorHref(auditRefs) {
+    const v5andv6metrics = auditRefs.filter(audit => audit.group === 'metrics');
+    const fci = auditRefs.find(audit => audit.id === 'first-cpu-idle');
+    const fmp = auditRefs.find(audit => audit.id === 'first-meaningful-paint');
+    if (fci) v5andv6metrics.push(fci);
+    if (fmp) v5andv6metrics.push(fmp);
+
+    /** @type {Record<string, string>} */
+    const acronymMapping = {
+      'cumulative-layout-shift': 'CLS',
+      'first-contentful-paint': 'FCP',
+      'first-cpu-idle': 'FCI',
+      'first-meaningful-paint': 'FMP',
+      'interactive': 'TTI',
+      'largest-contentful-paint': 'LCP',
+      'speed-index': 'SI',
+      'total-blocking-time': 'TBT',
+    };
+
+    /**
+     * Clamp figure to 2 decimal places
+     * @param {number} val
+     * @return {number}
+     */
+    const clampTo2Decimals = val => Math.round(val * 100) / 100;
+
+    const metricPairs = v5andv6metrics.map(audit => {
+      let value;
+      if (typeof audit.result.numericValue === 'number') {
+        value = audit.id === 'cumulative-layout-shift' ?
+          clampTo2Decimals(audit.result.numericValue) :
+          Math.round(audit.result.numericValue);
+        value = value.toString();
+      } else {
+        value = 'null';
+      }
+      return [acronymMapping[audit.id] || audit.id, value];
+    });
+    const paramPairs = [...metricPairs];
+
+    if (Util.reportJson) {
+      paramPairs.push(['device', Util.reportJson.configSettings.emulatedFormFactor]);
+      paramPairs.push(['version', Util.reportJson.lighthouseVersion]);
+    }
+
+    const params = new URLSearchParams(paramPairs);
+    const url = new URL('https://googlechrome.github.io/lighthouse/scorecalc/');
+    url.hash = params.toString();
+    return url.href;
+  }
+
+  /**
    * @param {LH.ReportResult.Category} category
    * @param {Object<string, LH.Result.ReportGroup>} groups
    * @param {'PSI'=} environment 'PSI' and undefined are the only valid values
@@ -132,27 +188,22 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     metricAuditsEl.append(..._toggleEl.childNodes);
 
     const metricAudits = category.auditRefs.filter(audit => audit.group === 'metrics');
+    const metricsBoxesEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-metrics-container');
 
-    const keyMetrics = metricAudits.slice(0, 3);
-    const otherMetrics = metricAudits.slice(3);
-
-    const metricsBoxesEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-columns');
-    const metricsColumn1El = this.dom.createChildOf(metricsBoxesEl, 'div', 'lh-column');
-    const metricsColumn2El = this.dom.createChildOf(metricsBoxesEl, 'div', 'lh-column');
-
-    keyMetrics.forEach(item => {
-      metricsColumn1El.appendChild(this._renderMetric(item));
-    });
-    otherMetrics.forEach(item => {
-      metricsColumn2El.appendChild(this._renderMetric(item));
+    metricAudits.forEach(item => {
+      metricsBoxesEl.appendChild(this._renderMetric(item));
     });
 
-    // 'Values are estimated and may vary' is used as the category description for PSI
-    if (environment !== 'PSI') {
-      const estValuesEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-metrics__disclaimer');
-      const disclaimerEl = this.dom.convertMarkdownLinkSnippets(strings.varianceDisclaimer);
-      estValuesEl.appendChild(disclaimerEl);
-    }
+    const estValuesEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-metrics__disclaimer');
+    const disclaimerEl = this.dom.convertMarkdownLinkSnippets(strings.varianceDisclaimer);
+    estValuesEl.appendChild(disclaimerEl);
+
+    // Add link to score calculator.
+    const calculatorLink = this.dom.createChildOf(estValuesEl, 'a', 'lh-calclink');
+    calculatorLink.target = '_blank';
+    calculatorLink.textContent = strings.calculatorLink;
+    calculatorLink.href = this._getScoringCalculatorHref(category.auditRefs);
+
 
     metricAuditsEl.classList.add('lh-audit-group--metrics');
     element.appendChild(metricAuditsEl);

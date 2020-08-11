@@ -7,54 +7,232 @@
 
 /**
  * @fileoverview
- * This gatherer identifies the Largest Contentful Paint element from the trace. Since the trace only has the nodeId of the element,
- * we temporarily add an attribute so that we can identify the element in the DOM.
+ * This gatherer identifies elements that contribrute to metrics in the trace (LCP, CLS, etc.).
+ * We take the backend nodeId from the trace and use it to find the corresponding element in the DOM.
  */
 
 const Gatherer = require('./gatherer.js');
 const pageFunctions = require('../../lib/page-functions.js');
 const TraceProcessor = require('../../lib/tracehouse/trace-processor.js');
+const RectHelpers = require('../../lib/rect-helpers.js');
 
-const LH_ATTRIBUTE_MARKER = 'lhtemp';
+/** @typedef {{nodeId: number, score?: number, animations?: {name?: string, failureReasonsMask?: number}[]}} TraceElementData */
 
 /**
- * @param {string} attributeMarker
- * @return {LH.Artifacts['TraceElements']}
+ * @this {HTMLElement}
  */
 /* istanbul ignore next */
-function collectTraceElements(attributeMarker) {
-  /** @type {Array<HTMLElement>} */
-  // @ts-ignore - put into scope via stringification
-  const markedElements = getElementsInDocument('[' + attributeMarker + ']'); // eslint-disable-line no-undef
-  /** @type {LH.Artifacts['TraceElements']} */
-  const TraceElements = [];
-  for (const element of markedElements) {
-    const metricName = element.getAttribute(attributeMarker) || '';
-    element.removeAttribute(attributeMarker);
-    // @ts-ignore - put into scope via stringification
-    TraceElements.push({
-      metricName,
-      // @ts-ignore - put into scope via stringification
-      devtoolsNodePath: getNodePath(element), // eslint-disable-line no-undef
-      // @ts-ignore - put into scope via stringification
-      selector: getNodeSelector(element), // eslint-disable-line no-undef
-      // @ts-ignore - put into scope via stringification
-      nodeLabel: getNodeLabel(element), // eslint-disable-line no-undef
-      // @ts-ignore - put into scope via stringification
-      snippet: getOuterHTMLSnippet(element), // eslint-disable-line no-undef
-    });
+function getNodeDetailsData() {
+  const elem = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement; // eslint-disable-line no-undef
+  let traceElement;
+  if (elem) {
+    traceElement = {
+      // @ts-expect-error - put into scope via stringification
+      devtoolsNodePath: getNodePath(elem), // eslint-disable-line no-undef
+      // @ts-expect-error - put into scope via stringification
+      selector: getNodeSelector(elem), // eslint-disable-line no-undef
+      // @ts-expect-error - put into scope via stringification
+      nodeLabel: getNodeLabel(elem), // eslint-disable-line no-undef
+      // @ts-expect-error - put into scope via stringification
+      snippet: getOuterHTMLSnippet(elem), // eslint-disable-line no-undef
+      // @ts-expect-error - put into scope via stringification
+      boundingRect: getBoundingClientRect(elem), // eslint-disable-line no-undef
+    };
   }
-  return TraceElements;
+  return traceElement;
 }
 
 class TraceElements extends Gatherer {
   /**
-   * @param {LH.TraceEvent | undefined} lcpEvent
+   * @param {LH.TraceEvent | undefined} event
    * @return {number | undefined}
    */
-  static getNodeIDFromTraceEvent(lcpEvent) {
-    return lcpEvent && lcpEvent.args &&
-      lcpEvent.args.data && lcpEvent.args.data.nodeId;
+  static getNodeIDFromTraceEvent(event) {
+    return event && event.args &&
+      event.args.data && event.args.data.nodeId;
+  }
+
+  /**
+   * @param {LH.TraceEvent | undefined} event
+   * @return {string | undefined}
+   */
+  static getAnimationIDFromTraceEvent(event) {
+    return event && event.args &&
+      event.args.data && event.args.data.id;
+  }
+
+  /**
+   * @param {LH.TraceEvent | undefined} event
+   * @return {number | undefined}
+   */
+  static getFailureReasonsFromTraceEvent(event) {
+    return event && event.args &&
+      event.args.data && event.args.data.compositeFailed;
+  }
+
+  /**
+   * @param {Array<number>} rect
+   * @return {LH.Artifacts.Rect}
+   */
+  static traceRectToLHRect(rect) {
+    const rectArgs = {
+      x: rect[0],
+      y: rect[1],
+      width: rect[2],
+      height: rect[3],
+    };
+    return RectHelpers.addRectTopAndBottom(rectArgs);
+  }
+
+  /**
+   * @param {LH.Gatherer.PassContext} passContext
+   * @param {string} animationId
+   * @return {Promise<string | undefined>}
+   */
+  static async resolveAnimationName(passContext, animationId) {
+    const driver = passContext.driver;
+    try {
+      const result = await driver.sendCommand('Animation.resolveAnimation', {animationId});
+      const objectId = result.remoteObject.objectId;
+      if (!objectId) return undefined;
+      const response = await driver.sendCommand('Runtime.getProperties', {
+        objectId,
+      });
+      const nameProperty = response.result.find((property) => property.name === 'animationName');
+      const animationName = nameProperty && nameProperty.value && nameProperty.value.value;
+      if (animationName === '') return undefined;
+      return animationName;
+    } catch (err) {
+      // Animation name is not mission critical information and can be evicted, so don't throw fatally if we can't find it.
+      return undefined;
+    }
+  }
+
+  /**
+   * This function finds the top (up to 5) elements that contribute to the CLS score of the page.
+   * Each layout shift event has a 'score' which is the amount added to the CLS as a result of the given shift(s).
+   * We calculate the score per element by taking the 'score' of each layout shift event and
+   * distributing it between all the nodes that were shifted, proportianal to the impact region of
+   * each shifted element.
+   * @param {Array<LH.TraceEvent>} mainThreadEvents
+   * @return {Array<TraceElementData>}
+   */
+  static getTopLayoutShiftElements(mainThreadEvents) {
+    /** @type {Map<number, number>} */
+    const clsPerNode = new Map();
+    const shiftEvents = mainThreadEvents
+      .filter(e => e.name === 'LayoutShift')
+      .map(e => e.args && e.args.data);
+    const indexFirstEventWithoutInput =
+      shiftEvents.findIndex(event => event && !event.had_recent_input);
+
+    shiftEvents.forEach((event, index) => {
+      if (!event || !event.impacted_nodes || !event.score) {
+        return;
+      }
+
+      // Ignore events with input, unless it's one of the initial events.
+      // See comment in computed/metrics/cumulative-layout-shift.js.
+      if (indexFirstEventWithoutInput !== -1 && index >= indexFirstEventWithoutInput) {
+        if (event.had_recent_input) return;
+      }
+
+      let totalAreaOfImpact = 0;
+      /** @type {Map<number, number>} */
+      const pixelsMovedPerNode = new Map();
+
+      event.impacted_nodes.forEach(node => {
+        if (!node.node_id || !node.old_rect || !node.new_rect) {
+          return;
+        }
+
+        const oldRect = TraceElements.traceRectToLHRect(node.old_rect);
+        const newRect = TraceElements.traceRectToLHRect(node.new_rect);
+        const areaOfImpact = RectHelpers.getRectArea(oldRect) +
+          RectHelpers.getRectArea(newRect) -
+          RectHelpers.getRectOverlapArea(oldRect, newRect);
+
+        pixelsMovedPerNode.set(node.node_id, areaOfImpact);
+        totalAreaOfImpact += areaOfImpact;
+      });
+
+      for (const [nodeId, pixelsMoved] of pixelsMovedPerNode.entries()) {
+        let clsContribution = clsPerNode.get(nodeId) || 0;
+        clsContribution += (pixelsMoved / totalAreaOfImpact) * event.score;
+        clsPerNode.set(nodeId, clsContribution);
+      }
+    });
+
+    const topFive = [...clsPerNode.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5)
+    .map(([nodeId, clsContribution]) => {
+      return {
+        nodeId: nodeId,
+        score: clsContribution,
+      };
+    });
+
+    return topFive;
+  }
+
+  /**
+   * Find the node ids of elements which are animated using the Animation trace events.
+   * @param {LH.Gatherer.PassContext} passContext
+   * @param {Array<LH.TraceEvent>} mainThreadEvents
+   * @return {Promise<Array<TraceElementData>>}
+   */
+  static async getAnimatedElements(passContext, mainThreadEvents) {
+    /** @type {Map<string, {begin: LH.TraceEvent | undefined, status: LH.TraceEvent | undefined}>} */
+    const animationPairs = new Map();
+    for (const event of mainThreadEvents) {
+      if (event.name !== 'Animation') continue;
+
+      if (!event.id2 || !event.id2.local) continue;
+      const local = event.id2.local;
+
+      const pair = animationPairs.get(local) || {begin: undefined, status: undefined};
+      if (event.ph === 'b') {
+        pair.begin = event;
+      } else if (
+        event.ph === 'n' &&
+          event.args.data &&
+          event.args.data.compositeFailed !== undefined) {
+        pair.status = event;
+      }
+      animationPairs.set(local, pair);
+    }
+
+    /** @type Map<number, Set<{animationId: string, failureReasonsMask?: number}>> */
+    const elementAnimations = new Map();
+    for (const {begin, status} of animationPairs.values()) {
+      const nodeId = this.getNodeIDFromTraceEvent(begin);
+      const animationId = this.getAnimationIDFromTraceEvent(begin);
+      const failureReasonsMask = this.getFailureReasonsFromTraceEvent(status);
+      if (!nodeId || !animationId) continue;
+      const animationIds = elementAnimations.get(nodeId) || new Set();
+      animationIds.add({animationId, failureReasonsMask});
+      elementAnimations.set(nodeId, animationIds);
+    }
+
+    /** @type Array<TraceElementData> */
+    const animatedElementData = [];
+    for (const [nodeId, animationIds] of elementAnimations) {
+      const animations = [];
+      for (const {animationId, failureReasonsMask} of animationIds) {
+        const animationName = await this.resolveAnimationName(passContext, animationId);
+        animations.push({name: animationName, failureReasonsMask});
+      }
+      animatedElementData.push({nodeId, animations});
+    }
+    return animatedElementData;
+  }
+
+  /**
+   * @param {LH.Gatherer.PassContext} passContext
+   */
+  async beforePass(passContext) {
+    await passContext.driver.sendCommand('Animation.enable');
   }
 
   /**
@@ -67,38 +245,58 @@ class TraceElements extends Gatherer {
     if (!loadData.trace) {
       throw new Error('Trace is missing!');
     }
-    const traceOfTab = TraceProcessor.computeTraceOfTab(loadData.trace);
-    const lcpEvent = traceOfTab.largestContentfulPaintEvt;
-    /** @type {Array<number>} */
-    const backendNodeIds = [];
 
-    const lcpNodeId = TraceElements.getNodeIDFromTraceEvent(lcpEvent);
-    if (lcpNodeId) {
-      backendNodeIds.push(lcpNodeId);
+    const {largestContentfulPaintEvt, mainThreadEvents} =
+      TraceProcessor.computeTraceOfTab(loadData.trace);
+
+    const lcpNodeId = TraceElements.getNodeIDFromTraceEvent(largestContentfulPaintEvt);
+    const clsNodeData = TraceElements.getTopLayoutShiftElements(mainThreadEvents);
+    const animatedElementData =
+      await TraceElements.getAnimatedElements(passContext, mainThreadEvents);
+
+    /** @type Map<string, TraceElementData[]> */
+    const backendNodeDataMap = new Map([
+      ['largest-contentful-paint', lcpNodeId ? [{nodeId: lcpNodeId}] : []],
+      ['layout-shift', clsNodeData],
+      ['animation', animatedElementData],
+    ]);
+
+    const traceElements = [];
+    for (const [traceEventType, backendNodeData] of backendNodeDataMap) {
+      for (let i = 0; i < backendNodeData.length; i++) {
+        const backendNodeId = backendNodeData[i].nodeId;
+        const objectId = await driver.resolveNodeIdToObjectId(backendNodeId);
+        if (!objectId) continue;
+        const response = await driver.sendCommand('Runtime.callFunctionOn', {
+          objectId,
+          functionDeclaration: `function () {
+            ${getNodeDetailsData.toString()};
+            ${pageFunctions.getNodePathString};
+            ${pageFunctions.getNodeSelectorString};
+            ${pageFunctions.getNodeLabelString};
+            ${pageFunctions.getOuterHTMLSnippetString};
+            ${pageFunctions.getBoundingClientRectString};
+            return getNodeDetailsData.call(this);
+          }`,
+          returnByValue: true,
+          awaitPromise: true,
+        });
+
+        if (response && response.result && response.result.value) {
+          traceElements.push({
+            traceEventType,
+            ...response.result.value,
+            score: backendNodeData[i].score,
+            animations: backendNodeData[i].animations,
+            nodeId: backendNodeId,
+          });
+        }
+      }
     }
-    // DOM.getDocument is necessary for pushNodesByBackendIdsToFrontend to properly retrieve nodeIds.
-    await driver.sendCommand('DOM.getDocument', {depth: -1, pierce: true});
-    const translatedIds = await driver.sendCommand('DOM.pushNodesByBackendIdsToFrontend',
-      {backendNodeIds: backendNodeIds});
 
-    // Mark the LCP element so we can find it in the page.
-    await driver.sendCommand('DOM.setAttributeValue', {
-      nodeId: translatedIds.nodeIds[0],
-      name: LH_ATTRIBUTE_MARKER,
-      value: 'largest-contentful-paint',
-    });
+    await driver.sendCommand('Animation.disable');
 
-    const expression = `(() => {
-      ${pageFunctions.getElementsInDocumentString};
-      ${pageFunctions.getNodePathString};
-      ${pageFunctions.getNodeSelectorString};
-      ${pageFunctions.getNodeLabelString};
-      ${pageFunctions.getOuterHTMLSnippetString};
-
-      return (${collectTraceElements})('${LH_ATTRIBUTE_MARKER}');
-    })()`;
-
-    return driver.evaluateAsync(expression, {useIsolation: true});
+    return traceElements;
   }
 }
 

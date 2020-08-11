@@ -16,7 +16,7 @@
  */
 'use strict';
 
-/* globals self CriticalRequestChainRenderer SnippetRenderer Util URL */
+/* globals self CriticalRequestChainRenderer SnippetRenderer ElementScreenshotRenderer Util URL */
 
 /** @typedef {import('./dom.js')} DOM */
 
@@ -25,9 +25,12 @@ const URL_PREFIXES = ['http://', 'https://', 'data:'];
 class DetailsRenderer {
   /**
    * @param {DOM} dom
+   * @param {{fullPageScreenshot?: LH.Audit.Details.FullPageScreenshot}} [options]
    */
-  constructor(dom) {
+  constructor(dom, options = {}) {
     this._dom = dom;
+    this._fullPageScreenshot = options.fullPageScreenshot;
+
     /** @type {ParentNode} */
     this._templateContext; // eslint-disable-line no-unused-expressions
   }
@@ -59,10 +62,11 @@ class DetailsRenderer {
       // Internal-only details, not for rendering.
       case 'screenshot':
       case 'debugdata':
+      case 'full-page-screenshot':
         return null;
 
       default: {
-        // @ts-ignore tsc thinks this is unreachable, but be forward compatible
+        // @ts-expect-error tsc thinks this is unreachable, but be forward compatible
         // with new unexpected detail types.
         return this._renderUnknown(details.type, details);
       }
@@ -75,8 +79,11 @@ class DetailsRenderer {
    */
   _renderBytes(details) {
     // TODO: handle displayUnit once we have something other than 'kb'
-    const value = Util.i18n.formatBytesToKB(details.value, details.granularity);
-    return this._renderText(value);
+    // Note that 'kb' is historical and actually represents KiB.
+    const value = Util.i18n.formatBytesToKiB(details.value, details.granularity);
+    const textEl = this._renderText(value);
+    textEl.title = Util.i18n.formatBytes(details.value);
+    return textEl;
   }
 
   /**
@@ -155,7 +162,7 @@ class DetailsRenderer {
 
   /**
    * @param {string} text
-   * @return {Element}
+   * @return {HTMLDivElement}
    */
   _renderText(text) {
     const element = this._dom.createElement('div', 'lh-text');
@@ -164,14 +171,13 @@ class DetailsRenderer {
   }
 
   /**
-   * @param {string} text
+   * @param {{value: number, granularity?: number}} details
    * @return {Element}
    */
-  _renderNumeric(text) {
-    // TODO: this should probably accept a number and call `formatNumber` instead of being identical
-    // to _renderText.
+  _renderNumeric(details) {
+    const value = Util.i18n.formatNumber(details.value, details.granularity);
     const element = this._dom.createElement('div', 'lh-numeric');
-    element.textContent = text;
+    element.textContent = value;
     return element;
   }
 
@@ -231,6 +237,9 @@ class DetailsRenderer {
         case 'node': {
           return this.renderNode(value);
         }
+        case 'numeric': {
+          return this._renderNumeric(value);
+        }
         case 'source-location': {
           return this.renderSourceLocation(value);
         }
@@ -262,8 +271,8 @@ class DetailsRenderer {
         return this._renderMilliseconds(msValue);
       }
       case 'numeric': {
-        const strValue = String(value);
-        return this._renderNumeric(strValue);
+        const numValue = Number(value);
+        return this._renderNumeric({value: numValue, granularity: heading.granularity});
       }
       case 'text': {
         const strValue = String(value);
@@ -315,21 +324,15 @@ class DetailsRenderer {
    * @return {LH.Audit.Details.OpportunityColumnHeading}
    */
   _getCanonicalizedHeading(heading) {
-    let subRows;
-    if (heading.subRows) {
-      // @ts-ignore: It's ok that there is no text.
-      subRows = this._getCanonicalizedHeading(heading.subRows);
-      if (!subRows.key) {
-        // eslint-disable-next-line no-console
-        console.warn('key should not be null');
-      }
-      subRows = {...subRows, key: subRows.key || ''};
+    let subItemsHeading;
+    if (heading.subItemsHeading) {
+      subItemsHeading = this._getCanonicalizedsubItemsHeading(heading.subItemsHeading, heading);
     }
 
     return {
       key: heading.key,
       valueType: heading.itemType,
-      subRows,
+      subItemsHeading,
       label: heading.text,
       displayUnit: heading.displayUnit,
       granularity: heading.granularity,
@@ -337,22 +340,65 @@ class DetailsRenderer {
   }
 
   /**
-   * Renders a table cell for each column, defined by the provided heading and value pairs.
-   * @param {Array<{heading: LH.Audit.Details.OpportunityColumnHeading, value?: LH.Audit.Details.ItemValue}|null>} headingAndValuePairs
+   * @param {Exclude<LH.Audit.Details.TableColumnHeading['subItemsHeading'], undefined>} subItemsHeading
+   * @param {LH.Audit.Details.TableColumnHeading} parentHeading
+   * @return {LH.Audit.Details.OpportunityColumnHeading['subItemsHeading']}
    */
-  _renderRow(headingAndValuePairs) {
+  _getCanonicalizedsubItemsHeading(subItemsHeading, parentHeading) {
+    // Low-friction way to prevent commiting a falsy key (which is never allowed for
+    // a subItemsHeading) from passing in CI.
+    if (!subItemsHeading.key) {
+      // eslint-disable-next-line no-console
+      console.warn('key should not be null');
+    }
+
+    return {
+      key: subItemsHeading.key || '',
+      valueType: subItemsHeading.itemType || parentHeading.itemType,
+      granularity: subItemsHeading.granularity || parentHeading.granularity,
+      displayUnit: subItemsHeading.displayUnit || parentHeading.displayUnit,
+    };
+  }
+
+  /**
+   * Returns a new heading where the values are defined first by `heading.subItemsHeading`,
+   * and secondly by `heading`. If there is no subItemsHeading, returns null, which will
+   * be rendered as an empty column.
+   * @param {LH.Audit.Details.OpportunityColumnHeading} heading
+   * @return {LH.Audit.Details.OpportunityColumnHeading | null}
+   */
+  _getDerivedsubItemsHeading(heading) {
+    if (!heading.subItemsHeading) return null;
+    return {
+      key: heading.subItemsHeading.key || '',
+      valueType: heading.subItemsHeading.valueType || heading.valueType,
+      granularity: heading.subItemsHeading.granularity || heading.granularity,
+      displayUnit: heading.subItemsHeading.displayUnit || heading.displayUnit,
+      label: '',
+    };
+  }
+
+  /**
+   * @param {LH.Audit.Details.OpportunityItem | LH.Audit.Details.TableItem} item
+   * @param {(LH.Audit.Details.OpportunityColumnHeading | null)[]} headings
+   */
+  _renderTableRow(item, headings) {
     const rowElem = this._dom.createElement('tr');
 
-    for (const pair of headingAndValuePairs) {
-      const heading = pair && pair.heading;
-      const value = pair && pair.value;
+    for (const heading of headings) {
+      // Empty cell if no heading or heading key for this column.
+      if (!heading || !heading.key) {
+        this._dom.createChildOf(rowElem, 'td', 'lh-table-column--empty');
+        continue;
+      }
 
+      const value = item[heading.key];
       let valueElement;
-      if (heading && heading.key !== null && value !== undefined && value !== null) {
+      if (value !== undefined && value !== null) {
         valueElement = this._renderTableValue(value, heading);
       }
 
-      if (heading && valueElement) {
+      if (valueElement) {
         const classes = `lh-table-column--${heading.valueType}`;
         this._dom.createChildOf(rowElem, 'td', classes).appendChild(valueElement);
       } else {
@@ -368,69 +414,23 @@ class DetailsRenderer {
   }
 
   /**
-   * Renders one or more rows from a details item.
-   * @param {LH.Audit.Details.OpportunityItem | LH.Audit.Details.TableItem} row
+   * Renders one or more rows from a details table item. A single table item can
+   * expand into multiple rows, if there is a subItemsHeading.
+   * @param {LH.Audit.Details.OpportunityItem | LH.Audit.Details.TableItem} item
    * @param {LH.Audit.Details.OpportunityColumnHeading[]} headings
    */
-  _renderTableRow(row, headings) {
+  _renderTableRowsFromItem(item, headings) {
     const fragment = this._dom.createFragment();
+    fragment.append(this._renderTableRow(item, headings));
 
-    // Render the main row.
-    const headingAndValuePairs = [];
-    for (const heading of headings) {
-      const value = heading.key && row[heading.key];
-      if (value === undefined || value === null || Array.isArray(value)) {
-        headingAndValuePairs.push(null);
-        continue;
-      }
+    if (!item.subItems) return fragment;
 
-      headingAndValuePairs.push({heading, value});
-    }
+    const subItemsHeadings = headings.map(this._getDerivedsubItemsHeading);
+    if (!subItemsHeadings.some(Boolean)) return fragment;
 
-    fragment.append(this._renderRow(headingAndValuePairs));
-
-    // A single details item can expand into multiple table rows. These additional table rows
-    // are called sub-rows.
-
-    const subRowHeadings = headings.map(heading => {
-      if (!heading.subRows) return null;
-      return {
-        key: heading.subRows.key,
-        valueType: heading.subRows.valueType || heading.valueType,
-        granularity: heading.subRows.granularity || heading.granularity,
-        displayUnit: heading.subRows.displayUnit || heading.displayUnit,
-        label: '',
-      };
-    });
-
-    if (!subRowHeadings.some(Boolean)) return fragment;
-
-    // All sub-row data arrays should be the same length, but just in case they are not,
-    // determine the longest data array and fill the missing values with an
-    // null pair (which creates an empty cell).
-    let numSubRows = 0;
-    for (const heading of subRowHeadings) {
-      if (!heading) continue;
-      const values = row[heading.key];
-      if (!Array.isArray(values)) continue;
-      numSubRows = Math.max(numSubRows, values.length);
-    }
-
-    for (let i = 0; i < numSubRows; i++) {
-      const subRowData = [];
-      for (const heading of subRowHeadings) {
-        if (!heading) {
-          subRowData.push(null);
-          continue;
-        }
-
-        const values = row[heading.key];
-        if (!Array.isArray(values)) continue;
-        subRowData.push({heading, value: values[i]});
-      }
-
-      const rowEl = this._renderRow(subRowData);
-      rowEl.classList.add('lh-sub-row');
+    for (const subItem of item.subItems.items) {
+      const rowEl = this._renderTableRow(subItem, subItemsHeadings);
+      rowEl.classList.add('lh-sub-item-row');
       fragment.append(rowEl);
     }
 
@@ -460,14 +460,14 @@ class DetailsRenderer {
 
     const tbodyElem = this._dom.createChildOf(tableElem, 'tbody');
     let even = true;
-    for (const row of details.items) {
-      const rowFragment = this._renderTableRow(row, headings);
-      for (const rowEl of this._dom.findAll('tr', rowFragment)) {
-        // For zebra striping.
+    for (const item of details.items) {
+      const rowsFragment = this._renderTableRowsFromItem(item, headings);
+      for (const rowEl of this._dom.findAll('tr', rowsFragment)) {
+        // For zebra styling.
         rowEl.classList.add(even ? 'lh-row--even' : 'lh-row--odd');
       }
-      tbodyElem.append(rowFragment);
       even = !even;
+      tbodyElem.append(rowsFragment);
     }
 
     return tableElem;
@@ -511,6 +511,20 @@ class DetailsRenderer {
     if (item.path) element.setAttribute('data-path', item.path);
     if (item.selector) element.setAttribute('data-selector', item.selector);
     if (item.snippet) element.setAttribute('data-snippet', item.snippet);
+
+    if (!item.boundingRect || !this._fullPageScreenshot) {
+      return element;
+    }
+
+    const maxThumbnailSize = {width: 147, height: 100};
+    const elementScreenshot = ElementScreenshotRenderer.render(
+      this._dom,
+      this._templateContext,
+      this._fullPageScreenshot,
+      item.boundingRect,
+      maxThumbnailSize
+    );
+    element.prepend(elementScreenshot);
 
     return element;
   }

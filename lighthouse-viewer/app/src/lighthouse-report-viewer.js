@@ -179,6 +179,12 @@ class LighthouseReportViewer {
       json = /** @type {LH.RunnerResult} */ (json).lhr;
     }
 
+    // Install as global for easier debugging
+    // @ts-expect-error
+    window.__LIGHTHOUSE_JSON__ = json;
+    // eslint-disable-next-line no-console
+    console.log('window.__LIGHTHOUSE_JSON__', json);
+
     this._validateReportJson(json);
 
     // Redirect to old viewer if a v2 report. v3, v4, v5 handled by v5 viewer.

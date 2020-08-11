@@ -34,7 +34,7 @@ describe('DOM', () => {
   let document;
   beforeAll(() => {
     global.Util = Util;
-    global.Util.i18n = new I18n('en', {...Util.UIStrings});
+    global.I18n = I18n;
 
     global.DOM = DOM;
     global.CategoryRenderer = CategoryRenderer;
@@ -51,7 +51,7 @@ describe('DOM', () => {
   });
 
   afterAll(() => {
-    global.Util.i18n = undefined;
+    global.I18n = undefined;
     global.Util = undefined;
     global.DOM = undefined;
     global.CategoryRenderer = undefined;
@@ -66,7 +66,7 @@ describe('DOM', () => {
         const roundTripLHResult = /** @type {LH.Result} */ JSON.parse(sampleResultsRoundtripStr);
         const result = prepareLabData(roundTripLHResult, document);
 
-        // sanity check that the report exists and has some content
+        // Check that the report exists and has some content.
         assert.ok(result.perfCategoryEl instanceof document.defaultView.Element);
         assert.ok(result.perfCategoryEl.outerHTML.length > 50000, 'perfCategory HTML is populated');
         assert.ok(!result.perfCategoryEl.outerHTML.includes('lh-permalink'),

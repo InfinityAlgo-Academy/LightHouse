@@ -126,8 +126,8 @@ describe('DetailsRenderer', () => {
         type: 'opportunity',
         headings: [
           {key: 'url', valueType: 'url', label: 'URL'},
-          {key: 'totalBytes', valueType: 'bytes', label: 'Size (KB)'},
-          {key: 'wastedBytes', valueType: 'bytes', label: 'Potential Savings (KB)'},
+          {key: 'totalBytes', valueType: 'bytes', label: 'Size (KiB)'},
+          {key: 'wastedBytes', valueType: 'bytes', label: 'Potential Savings (KiB)'},
         ],
         items: [{
           url: 'https://example.com',
@@ -570,13 +570,29 @@ describe('DetailsRenderer', () => {
       assert.equal(urlEl.textContent, 'https://example.com');
     });
 
-    describe('subRows', () => {
+    describe('subitems', () => {
+      function makeSubitems(items) {
+        return {
+          type: 'subitems',
+          items,
+        };
+      }
+
       it('renders', () => {
         const details = {
           type: 'table',
-          headings: [{key: 'url', itemType: 'url', subRows: {key: 'sources', itemType: 'code'}}],
+          headings: [
+            {key: 'url', itemType: 'url', subItemsHeading: {key: 'source', itemType: 'code'}},
+          ],
           items: [
-            {url: 'https://www.example.com', sources: ['a', 'b', 'c']},
+            {
+              url: 'https://www.example.com',
+              subItems: makeSubitems([
+                {source: 'a'},
+                {source: 'b'},
+                {source: 'c'},
+              ]),
+            },
           ],
         };
 
@@ -594,28 +610,29 @@ describe('DetailsRenderer', () => {
         assert.ok(codeEl.classList.contains('lh-text__url'));
         assert.equal(codeEl.textContent, 'https://www.example.com');
 
-        // The sub-rows contain a 'code' item type.
-        for (let i = 0; i < details.items[0].sources.length; i++) {
+        // The subItems contain a 'code' item type.
+        for (let i = 0; i < details.items[0].subItems.items; i++) {
+          const source = details.items[0].subItems.items[i].source;
           rowEl = rowEls[i + 1];
           columnEl = rowEl.querySelector('td.lh-table-column--code');
-          assert.ok(rowEl.classList.contains('lh-sub-row'));
+          assert.ok(rowEl.classList.contains('lh-sub-item-row'));
           assert.ok(columnEl.firstChild.classList.contains('lh-code'));
-          assert.equal(rowEl.textContent, details.items[0].sources[i]);
+          assert.equal(rowEl.textContent, source);
         }
       });
 
       it('renders, uses heading properties as fallback', () => {
         const details = {
           type: 'table',
-          headings: [{key: 'url', itemType: 'url', subRows: {key: 'sources'}}],
+          headings: [{key: 'url', itemType: 'url', subItemsHeading: {key: 'source'}}],
           items: [
             {
               url: 'https://www.example.com',
-              sources: [
-                'https://www.a.com',
-                {type: 'code', value: 'https://www.b.com'},
-                'https://www.c.com',
-              ],
+              subItems: makeSubitems([
+                {source: 'https://www.a.com'},
+                {source: {type: 'code', value: 'https://www.b.com'}},
+                {source: 'https://www.c.com'},
+              ]),
             },
           ],
         };
@@ -634,16 +651,17 @@ describe('DetailsRenderer', () => {
         assert.equal(codeEl.textContent, 'https://www.example.com');
 
         // The sub-rows contain a 'url' item type, except for the second one, which is 'code'.
-        for (let i = 0; i < details.items[0].sources.length; i++) {
+        for (let i = 0; i < details.items[0].subItems.items.length; i++) {
+          const source = details.items[0].subItems.items[i].source;
           rowEl = rowEls[i + 1];
-          columnEl = rowEl.querySelector('td.lh-table-column--url');
-          assert.ok(rowEl.classList.contains('lh-sub-row'));
-          if (i === 1) {
-            assert.ok(columnEl.firstChild.classList.contains('lh-code'));
-            assert.equal(rowEl.textContent, details.items[0].sources[i].value);
-          } else {
+          assert.ok(rowEl.classList.contains('lh-sub-item-row'));
+          columnEl = rowEl.querySelector('td');
+          if (typeof source === 'string') {
             assert.ok(columnEl.firstChild.classList.contains('lh-text__url'));
-            assert.equal(rowEl.textContent, details.items[0].sources[i]);
+            assert.equal(rowEl.textContent, source);
+          } else {
+            assert.ok(columnEl.firstChild.classList.contains('lh-code'));
+            assert.equal(columnEl.textContent, source.value);
           }
         }
       });

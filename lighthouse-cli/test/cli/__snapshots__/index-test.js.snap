@@ -58,7 +58,7 @@ Object {
       "path": "errors-in-console",
     },
     Object {
-      "path": "time-to-first-byte",
+      "path": "server-response-time",
     },
     Object {
       "path": "metrics/first-cpu-idle",
@@ -152,6 +152,21 @@ Object {
     },
     Object {
       "path": "largest-contentful-paint-element",
+    },
+    Object {
+      "path": "layout-shift-elements",
+    },
+    Object {
+      "path": "long-tasks",
+    },
+    Object {
+      "path": "no-unload-listeners",
+    },
+    Object {
+      "path": "non-composited-animations",
+    },
+    Object {
+      "path": "unsized-images",
     },
     Object {
       "path": "manual/pwa-cross-browser",
@@ -355,6 +370,12 @@ Object {
       "path": "byte-efficiency/efficient-animated-content",
     },
     Object {
+      "path": "byte-efficiency/duplicated-javascript",
+    },
+    Object {
+      "path": "byte-efficiency/legacy-javascript",
+    },
+    Object {
       "path": "dobetterweb/appcache-manifest",
     },
     Object {
@@ -404,6 +425,9 @@ Object {
     },
     Object {
       "path": "seo/link-text",
+    },
+    Object {
+      "path": "seo/crawlable-anchors",
     },
     Object {
       "path": "seo/is-crawlable",
@@ -734,6 +758,11 @@ Object {
         },
         Object {
           "group": "best-practices-general",
+          "id": "no-unload-listeners",
+          "weight": 1,
+        },
+        Object {
+          "group": "best-practices-general",
           "id": "appcache-manifest",
           "weight": 1,
         },
@@ -860,7 +889,7 @@ Object {
         },
         Object {
           "group": "load-opportunities",
-          "id": "time-to-first-byte",
+          "id": "server-response-time",
           "weight": 0,
         },
         Object {
@@ -875,7 +904,22 @@ Object {
         },
         Object {
           "group": "load-opportunities",
+          "id": "uses-http2",
+          "weight": 0,
+        },
+        Object {
+          "group": "load-opportunities",
           "id": "efficient-animated-content",
+          "weight": 0,
+        },
+        Object {
+          "group": "load-opportunities",
+          "id": "duplicated-javascript",
+          "weight": 0,
+        },
+        Object {
+          "group": "load-opportunities",
+          "id": "legacy-javascript",
           "weight": 0,
         },
         Object {
@@ -945,7 +989,7 @@ Object {
         },
         Object {
           "group": "diagnostics",
-          "id": "uses-http2",
+          "id": "layout-shift-elements",
           "weight": 0,
         },
         Object {
@@ -956,6 +1000,21 @@ Object {
         Object {
           "group": "diagnostics",
           "id": "no-document-write",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "long-tasks",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "non-composited-animations",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "unsized-images",
           "weight": 0,
         },
         Object {
@@ -1111,6 +1170,11 @@ Object {
         },
         Object {
           "group": "seo-crawl",
+          "id": "crawlable-anchors",
+          "weight": 1,
+        },
+        Object {
+          "group": "seo-crawl",
           "id": "is-crawlable",
           "weight": 1,
         },
@@ -1189,7 +1253,7 @@ Object {
       "title": "Navigation",
     },
     "a11y-tables-lists": Object {
-      "description": "These are opportunities to to improve the experience of reading tabular or list data using assistive technology, like a screen reader.",
+      "description": "These are opportunities to improve the experience of reading tabular or list data using assistive technology, like a screen reader.",
       "title": "Tables and lists",
     },
     "best-practices-browser-compat": Object {
@@ -1281,7 +1345,13 @@ Object {
           "path": "iframe-elements",
         },
         Object {
+          "path": "form-elements",
+        },
+        Object {
           "path": "main-document-content",
+        },
+        Object {
+          "path": "global-listeners",
         },
         Object {
           "path": "dobetterweb/appcache",
@@ -1321,6 +1391,12 @@ Object {
         },
         Object {
           "path": "trace-elements",
+        },
+        Object {
+          "path": "inspector-issues",
+        },
+        Object {
+          "path": "source-maps",
         },
       ],
       "loadFailureMode": "fatal",
@@ -1467,7 +1543,7 @@ Object {
       "title": "Navigation",
     },
     "a11y-tables-lists": Object {
-      "description": "These are opportunities to to improve the experience of reading tabular or list data using assistive technology, like a screen reader.",
+      "description": "These are opportunities to improve the experience of reading tabular or list data using assistive technology, like a screen reader.",
       "title": "Tables and lists",
     },
     "best-practices-browser-compat": Object {

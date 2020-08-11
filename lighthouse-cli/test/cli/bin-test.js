@@ -85,18 +85,11 @@ describe('CLI bin', function() {
     });
 
     it('should load the config from the preset', async () => {
-      cliFlags = {...cliFlags, preset: 'mixed-content'};
-      const actualConfig = require('../../../lighthouse-core/config/mixed-content-config.js');
+      cliFlags = {...cliFlags, preset: 'experimental'};
+      const actualConfig = require('../../../lighthouse-core/config/experimental-config.js');
       await bin.begin();
 
       expect(getRunLighthouseArgs()[2]).toEqual(actualConfig);
-    });
-
-    it('should add headless when using mixed content', async () => {
-      cliFlags = {...cliFlags, preset: 'mixed-content'};
-      await bin.begin();
-
-      expect(getRunLighthouseArgs()[1].chromeFlags).toContain('--headless');
     });
   });
 
@@ -154,7 +147,7 @@ describe('CLI bin', function() {
 
   describe('extraHeaders', () => {
     it('should convert extra headers to object', async () => {
-      // @ts-ignore - see TODO: in bin.js
+      // @ts-expect-error - see TODO: in bin.js
       cliFlags = {...cliFlags, extraHeaders: '{"foo": "bar"}'};
       await bin.begin();
 
@@ -163,7 +156,7 @@ describe('CLI bin', function() {
 
     it('should read extra headers from file', async () => {
       const headersFile = require.resolve('../fixtures/extra-headers/valid.json');
-      // @ts-ignore - see TODO: in bin.js
+      // @ts-expect-error - see TODO: in bin.js
       cliFlags = {...cliFlags, extraHeaders: headersFile};
       await bin.begin();
 

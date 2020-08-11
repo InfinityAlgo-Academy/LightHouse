@@ -23,7 +23,7 @@ function load(name) {
 
 describe('DuplicatedJavascript computed artifact', () => {
   it('works (simple)', async () => {
-    const context = {computedCache: new Map(), options: {ignoreThresholdInBytes: 500}};
+    const context = {computedCache: new Map(), options: {ignoreThresholdInBytes: 200}};
     const {map, content} = load('foo.min');
     const artifacts = {
       URL: {finalUrl: 'https://example.com'},
@@ -44,25 +44,31 @@ describe('DuplicatedJavascript computed artifact', () => {
         "items": Array [
           Object {
             "source": "Other",
-            "sourceBytes": Array [],
+            "subItems": Object {
+              "items": Array [
+                Object {
+                  "url": "https://example.com/foo1.min.js",
+                },
+                Object {
+                  "url": "https://example.com/foo2.min.js",
+                },
+              ],
+              "type": "subitems",
+            },
             "totalBytes": 0,
             "url": "",
-            "urls": Array [
-              "https://example.com/foo1.min.js",
-              "https://example.com/foo2.min.js",
-            ],
-            "wastedBytes": 682,
+            "wastedBytes": 224,
           },
         ],
         "wastedBytesByUrl": Map {
-          "https://example.com/foo2.min.js" => 682,
+          "https://example.com/foo2.min.js" => 224,
         },
       }
     `);
   });
 
   it('works (complex)', async () => {
-    const context = {computedCache: new Map()};
+    const context = {computedCache: new Map(), options: {ignoreThresholdInBytes: 200}};
     const bundleData1 = load('coursehero-bundle-1');
     const bundleData2 = load('coursehero-bundle-2');
     const artifacts = {
@@ -84,173 +90,272 @@ describe('DuplicatedJavascript computed artifact', () => {
         "items": Array [
           Object {
             "source": "Control/assets/js/vendor/ng/select/select.js",
-            "sourceBytes": Array [
-              48513,
-              48513,
-            ],
+            "subItems": Object {
+              "items": Array [
+                Object {
+                  "sourceTransferBytes": 16009,
+                  "url": "https://example.com/coursehero-bundle-1.js",
+                },
+                Object {
+                  "sourceTransferBytes": 16009,
+                  "url": "https://example.com/coursehero-bundle-2.js",
+                },
+              ],
+              "type": "subitems",
+            },
             "totalBytes": 0,
             "url": "",
-            "urls": Array [
-              "https://example.com/coursehero-bundle-1.js",
-              "https://example.com/coursehero-bundle-2.js",
-            ],
-            "wastedBytes": 48513,
+            "wastedBytes": 16009,
           },
           Object {
             "source": "Control/assets/js/vendor/ng/select/angular-sanitize.js",
-            "sourceBytes": Array [
-              9135,
-              9135,
-            ],
+            "subItems": Object {
+              "items": Array [
+                Object {
+                  "sourceTransferBytes": 3015,
+                  "url": "https://example.com/coursehero-bundle-1.js",
+                },
+                Object {
+                  "sourceTransferBytes": 3015,
+                  "url": "https://example.com/coursehero-bundle-2.js",
+                },
+              ],
+              "type": "subitems",
+            },
             "totalBytes": 0,
             "url": "",
-            "urls": Array [
-              "https://example.com/coursehero-bundle-1.js",
-              "https://example.com/coursehero-bundle-2.js",
-            ],
-            "wastedBytes": 9135,
+            "wastedBytes": 3015,
           },
           Object {
             "source": "node_modules/@babel/runtime",
-            "sourceBytes": Array [
-              5467,
-              4410,
-            ],
+            "subItems": Object {
+              "items": Array [
+                Object {
+                  "sourceTransferBytes": 1804,
+                  "url": "https://example.com/coursehero-bundle-1.js",
+                },
+                Object {
+                  "sourceTransferBytes": 1455,
+                  "url": "https://example.com/coursehero-bundle-2.js",
+                },
+              ],
+              "type": "subitems",
+            },
             "totalBytes": 0,
             "url": "",
-            "urls": Array [
-              "https://example.com/coursehero-bundle-1.js",
-              "https://example.com/coursehero-bundle-2.js",
-            ],
-            "wastedBytes": 4410,
+            "wastedBytes": 1455,
           },
           Object {
             "source": "js/src/utils/service/amplitude-service.ts",
-            "sourceBytes": Array [
-              1348,
-              1325,
-            ],
+            "subItems": Object {
+              "items": Array [
+                Object {
+                  "sourceTransferBytes": 445,
+                  "url": "https://example.com/coursehero-bundle-1.js",
+                },
+                Object {
+                  "sourceTransferBytes": 437,
+                  "url": "https://example.com/coursehero-bundle-2.js",
+                },
+              ],
+              "type": "subitems",
+            },
             "totalBytes": 0,
             "url": "",
-            "urls": Array [
-              "https://example.com/coursehero-bundle-1.js",
-              "https://example.com/coursehero-bundle-2.js",
-            ],
-            "wastedBytes": 1325,
+            "wastedBytes": 437,
+          },
+          Object {
+            "source": "js/src/search/results/store/filter-actions.ts",
+            "subItems": Object {
+              "items": Array [
+                Object {
+                  "sourceTransferBytes": 315,
+                  "url": "https://example.com/coursehero-bundle-2.js",
+                },
+                Object {
+                  "sourceTransferBytes": 312,
+                  "url": "https://example.com/coursehero-bundle-1.js",
+                },
+              ],
+              "type": "subitems",
+            },
+            "totalBytes": 0,
+            "url": "",
+            "wastedBytes": 312,
+          },
+          Object {
+            "source": "js/src/search/results/store/item/resource-types.ts",
+            "subItems": Object {
+              "items": Array [
+                Object {
+                  "sourceTransferBytes": 258,
+                  "url": "https://example.com/coursehero-bundle-1.js",
+                },
+                Object {
+                  "sourceTransferBytes": 256,
+                  "url": "https://example.com/coursehero-bundle-2.js",
+                },
+              ],
+              "type": "subitems",
+            },
+            "totalBytes": 0,
+            "url": "",
+            "wastedBytes": 256,
           },
           Object {
             "source": "js/src/search/results/store/filter-store.ts",
-            "sourceBytes": Array [
-              12717,
-              12650,
-            ],
+            "subItems": Object {
+              "items": Array [
+                Object {
+                  "sourceTransferBytes": 4197,
+                  "url": "https://example.com/coursehero-bundle-1.js",
+                },
+                Object {
+                  "sourceTransferBytes": 4175,
+                  "url": "https://example.com/coursehero-bundle-2.js",
+                },
+              ],
+              "type": "subitems",
+            },
             "totalBytes": 0,
             "url": "",
-            "urls": Array [
-              "https://example.com/coursehero-bundle-1.js",
-              "https://example.com/coursehero-bundle-2.js",
-            ],
-            "wastedBytes": 12650,
+            "wastedBytes": 4175,
           },
           Object {
             "source": "js/src/search/results/view/filter/autocomplete-list.tsx",
-            "sourceBytes": Array [
-              1143,
-              1134,
-            ],
+            "subItems": Object {
+              "items": Array [
+                Object {
+                  "sourceTransferBytes": 377,
+                  "url": "https://example.com/coursehero-bundle-2.js",
+                },
+                Object {
+                  "sourceTransferBytes": 374,
+                  "url": "https://example.com/coursehero-bundle-1.js",
+                },
+              ],
+              "type": "subitems",
+            },
             "totalBytes": 0,
             "url": "",
-            "urls": Array [
-              "https://example.com/coursehero-bundle-2.js",
-              "https://example.com/coursehero-bundle-1.js",
-            ],
-            "wastedBytes": 1134,
+            "wastedBytes": 374,
           },
           Object {
             "source": "js/src/search/results/view/filter/autocomplete-filter.tsx",
-            "sourceBytes": Array [
-              3823,
-              3812,
-            ],
+            "subItems": Object {
+              "items": Array [
+                Object {
+                  "sourceTransferBytes": 1262,
+                  "url": "https://example.com/coursehero-bundle-1.js",
+                },
+                Object {
+                  "sourceTransferBytes": 1258,
+                  "url": "https://example.com/coursehero-bundle-2.js",
+                },
+              ],
+              "type": "subitems",
+            },
             "totalBytes": 0,
             "url": "",
-            "urls": Array [
-              "https://example.com/coursehero-bundle-1.js",
-              "https://example.com/coursehero-bundle-2.js",
-            ],
-            "wastedBytes": 3812,
+            "wastedBytes": 1258,
           },
           Object {
             "source": "js/src/search/results/view/filter/autocomplete-filter-with-icon.tsx",
-            "sourceBytes": Array [
-              2696,
-              2693,
-            ],
+            "subItems": Object {
+              "items": Array [
+                Object {
+                  "sourceTransferBytes": 890,
+                  "url": "https://example.com/coursehero-bundle-1.js",
+                },
+                Object {
+                  "sourceTransferBytes": 889,
+                  "url": "https://example.com/coursehero-bundle-2.js",
+                },
+              ],
+              "type": "subitems",
+            },
             "totalBytes": 0,
             "url": "",
-            "urls": Array [
-              "https://example.com/coursehero-bundle-1.js",
-              "https://example.com/coursehero-bundle-2.js",
-            ],
-            "wastedBytes": 2693,
+            "wastedBytes": 889,
           },
           Object {
             "source": "js/src/common/component/school-search.tsx",
-            "sourceBytes": Array [
-              5840,
-              5316,
-            ],
+            "subItems": Object {
+              "items": Array [
+                Object {
+                  "sourceTransferBytes": 1927,
+                  "url": "https://example.com/coursehero-bundle-2.js",
+                },
+                Object {
+                  "sourceTransferBytes": 1754,
+                  "url": "https://example.com/coursehero-bundle-1.js",
+                },
+              ],
+              "type": "subitems",
+            },
             "totalBytes": 0,
             "url": "",
-            "urls": Array [
-              "https://example.com/coursehero-bundle-2.js",
-              "https://example.com/coursehero-bundle-1.js",
-            ],
-            "wastedBytes": 5316,
+            "wastedBytes": 1754,
           },
           Object {
             "source": "js/src/common/component/search/abstract-taxonomy-search.tsx",
-            "sourceBytes": Array [
-              3103,
-              3098,
-            ],
+            "subItems": Object {
+              "items": Array [
+                Object {
+                  "sourceTransferBytes": 1024,
+                  "url": "https://example.com/coursehero-bundle-1.js",
+                },
+                Object {
+                  "sourceTransferBytes": 1022,
+                  "url": "https://example.com/coursehero-bundle-2.js",
+                },
+              ],
+              "type": "subitems",
+            },
             "totalBytes": 0,
             "url": "",
-            "urls": Array [
-              "https://example.com/coursehero-bundle-1.js",
-              "https://example.com/coursehero-bundle-2.js",
-            ],
-            "wastedBytes": 3098,
+            "wastedBytes": 1022,
           },
           Object {
             "source": "node_modules/lodash-es",
-            "sourceBytes": Array [
-              1751,
-              1708,
-            ],
+            "subItems": Object {
+              "items": Array [
+                Object {
+                  "sourceTransferBytes": 578,
+                  "url": "https://example.com/coursehero-bundle-2.js",
+                },
+                Object {
+                  "sourceTransferBytes": 564,
+                  "url": "https://example.com/coursehero-bundle-1.js",
+                },
+              ],
+              "type": "subitems",
+            },
             "totalBytes": 0,
             "url": "",
-            "urls": Array [
-              "https://example.com/coursehero-bundle-2.js",
-              "https://example.com/coursehero-bundle-1.js",
-            ],
-            "wastedBytes": 1708,
+            "wastedBytes": 564,
           },
           Object {
             "source": "Other",
-            "sourceBytes": Array [],
+            "subItems": Object {
+              "items": Array [
+                Object {
+                  "url": "https://example.com/coursehero-bundle-1.js",
+                },
+                Object {
+                  "url": "https://example.com/coursehero-bundle-2.js",
+                },
+              ],
+              "type": "subitems",
+            },
             "totalBytes": 0,
             "url": "",
-            "urls": Array [
-              "https://example.com/coursehero-bundle-1.js",
-              "https://example.com/coursehero-bundle-2.js",
-            ],
-            "wastedBytes": 4460,
+            "wastedBytes": 905,
           },
         ],
         "wastedBytesByUrl": Map {
-          "https://example.com/coursehero-bundle-2.js" => 88606,
-          "https://example.com/coursehero-bundle-1.js" => 9648,
+          "https://example.com/coursehero-bundle-2.js" => 29241,
+          "https://example.com/coursehero-bundle-1.js" => 3184,
         },
       }
     `);
@@ -279,8 +384,14 @@ describe('DuplicatedJavascript computed artifact', () => {
         },
       ],
       ScriptElements: [
-        {src: 'https://www.paulirish.com/javascripts/firebase-performance.js', content: bundleData1.content},
-        {src: 'https://www.paulirish.com/javascripts/firebase-app.js', content: bundleData2.content},
+        {
+          src: 'https://www.paulirish.com/javascripts/firebase-performance.js',
+          content: bundleData1.content,
+        },
+        {
+          src: 'https://www.paulirish.com/javascripts/firebase-app.js',
+          content: bundleData2.content,
+        },
       ],
     };
 

@@ -10,7 +10,7 @@ path_dir = os.path.dirname(path)
 
 path_sample_preprocessed = path_dir + '/sample_v2_processed.json'
 path_sample = path_dir + '/../../lighthouse-core/test/results/sample_v2.json'
-path_round_trip = path_dir + '/../sample_v2_round_trip.json'
+path_round_trip = path_dir + '/../../.tmp/sample_v2_round_trip.json'
 
 def clean():
     try:
@@ -22,7 +22,12 @@ def clean():
 clean()
 
 # preprocess the sample json
-cmd = ["node", "./../../lighthouse-core/lib/proto-preprocessor.js", "--in=./../../lighthouse-core/test/results/sample_v2.json", "--out=./sample_v2_processed.json"]
+cmd = [
+    "node",
+    "{0}/../../lighthouse-core/lib/proto-preprocessor.js".format(path_dir),
+    "--in={0}/../../lighthouse-core/test/results/sample_v2.json".format(path_dir),
+    "--out={0}/sample_v2_processed.json".format(path_dir)
+]
 process = subprocess.call(cmd)
 
 # open json

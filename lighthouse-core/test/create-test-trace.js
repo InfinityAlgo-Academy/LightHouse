@@ -9,7 +9,8 @@ const pid = 1111;
 const tid = 222;
 const frame = '3EFC2700D7BC3F4734CAF2F726EFB78C';
 
-/** @typedef {{ts: number, duration: number}} TopLevelTaskDef */
+/** @typedef {{ts: number, duration: number, children?: Array<ChildTaskDef>}} TopLevelTaskDef */
+/** @typedef {{ts: number, duration: number, url: string | undefined}} ChildTaskDef */
 
 /**
  * @param {TopLevelTaskDef} options
@@ -31,17 +32,39 @@ function getTopLevelTask({ts, duration}) {
 }
 
 /**
+ * @param {ChildTaskDef} options
+ */
+function getChildTask({ts, duration, url}) {
+  return {
+    name: 'FunctionCall',
+    ts: ts * 1000,
+    dur: duration * 1000,
+    pid,
+    tid,
+    ph: 'X',
+    cat: 'disabled-by-default-lighthouse',
+    args: {
+      src_file: '../../third_party/blink/renderer/core/fake_runner.cc',
+      src_func: 'FakeRunnerFinished',
+      data: {
+        url,
+      },
+    },
+  };
+}
+
+/**
  * Creates a simple trace that fits the desired options. Useful for basic trace
  * generation, e.g a trace that will result in particular long-task quiet
  * periods. Input times should be in milliseconds.
- * @param {{navigationStart?: number, traceEnd?: number, topLevelTasks?: Array<TopLevelTaskDef>}} options
+ * @param {{timeOrigin?: number, traceEnd?: number, topLevelTasks?: Array<TopLevelTaskDef>}} options
  */
 function createTestTrace(options) {
-  const navStart = (options.navigationStart || 0) * 1000;
+  const timeOrigin = (options.timeOrigin || 0) * 1000;
 
   const traceEvents = [{
     name: 'navigationStart',
-    ts: navStart,
+    ts: timeOrigin,
     pid,
     tid,
     ph: 'R',
@@ -52,7 +75,7 @@ function createTestTrace(options) {
     },
   }, {
     name: 'TracingStartedInBrowser',
-    ts: navStart,
+    ts: timeOrigin,
     pid,
     tid,
     ph: 'I',
@@ -68,7 +91,7 @@ function createTestTrace(options) {
   }, {
     // Needed to identify main thread for TracingStartedInBrowser.
     name: 'thread_name',
-    ts: navStart,
+    ts: timeOrigin,
     pid,
     tid,
     ph: 'M',
@@ -76,7 +99,7 @@ function createTestTrace(options) {
     args: {name: 'CrRendererMain'},
   }, {
     name: 'domContentLoadedEventEnd',
-    ts: navStart + 10,
+    ts: timeOrigin + 10,
     pid,
     tid,
     ph: 'R',
@@ -84,7 +107,7 @@ function createTestTrace(options) {
     args: {frame},
   }, {
     name: 'firstContentfulPaint',
-    ts: navStart + 10,
+    ts: timeOrigin + 10,
     pid,
     tid,
     ph: 'R',
@@ -92,7 +115,7 @@ function createTestTrace(options) {
     args: {frame},
   }, {
     name: 'firstMeaningfulPaint',
-    ts: navStart + 15,
+    ts: timeOrigin + 15,
     pid,
     tid,
     ph: 'R',
@@ -103,6 +126,12 @@ function createTestTrace(options) {
   if (options.topLevelTasks) {
     for (const task of options.topLevelTasks) {
       traceEvents.push(getTopLevelTask(task));
+      if (task.children &&
+        task.children.length) {
+        for (const child of task.children) {
+          traceEvents.push(getChildTask(child));
+        }
+      }
     }
   }
 

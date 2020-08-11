@@ -27,7 +27,7 @@ module.exports = [
         'interactive': {
           score: '>=0.90', // primarily just making sure it didn't fail/go crazy, specific value isn't that important
         },
-        'time-to-first-byte': {
+        'server-response-time': {
           // Can be flaky, so test float numericValue instead of binary score
           numericValue: '<1000',
         },
@@ -68,7 +68,7 @@ module.exports = [
       audits: {
         'resource-summary': {
           score: null,
-          displayValue: '10 requests • 164 KB',
+          displayValue: '10 requests • 164 KiB',
           details: {
             items: [
               {resourceType: 'total', requestCount: 10, transferSize: '168000±1000'},
@@ -136,21 +136,6 @@ module.exports = [
             ],
           },
         },
-        'largest-contentful-paint-element': {
-          score: null,
-          displayValue: '1 element found',
-          details: {
-            items: [
-              {
-                node: {
-                  type: 'node',
-                  nodeLabel: 'img',
-                  path: '2,HTML,1,BODY,0,IMG',
-                },
-              },
-            ],
-          },
-        },
       },
     },
   },
@@ -165,6 +150,193 @@ module.exports = [
             items: {
               length: 2,
             },
+          },
+        },
+      },
+    },
+  },
+  {
+    artifacts: {
+      TraceElements: [
+        {
+          traceEventType: 'largest-contentful-paint',
+          selector: 'body > div#late-content > img',
+          nodeLabel: 'img',
+          snippet: '<img src="../dobetterweb/lighthouse-480x318.jpg">',
+          boundingRect: {
+            top: 108,
+            bottom: 426,
+            left: 8,
+            right: 488,
+            width: 480,
+            height: 318,
+          },
+        },
+        {
+          traceEventType: 'layout-shift',
+          selector: 'body > h1',
+          nodeLabel: 'Please don\'t move me',
+          snippet: '<h1>',
+          boundingRect: {
+            top: 465,
+            bottom: 502,
+            left: 8,
+            right: 352,
+            width: 344,
+            height: 37,
+          },
+          score: '0.058 +/- 0.01',
+        },
+        {
+          traceEventType: 'layout-shift',
+          selector: 'body > div#late-content > div',
+          nodeLabel: 'Sorry!',
+          snippet: '<div style="height: 18px;">',
+          boundingRect: {
+            top: 426,
+            bottom: 444,
+            left: 8,
+            right: 352,
+            width: 344,
+            height: 18,
+          },
+          score: '0.026 +/- 0.01',
+        },
+        {
+          traceEventType: 'animation',
+          selector: 'body > div#animate-me',
+          nodeLabel: 'div',
+          snippet: '<div id="animate-me">',
+          boundingRect: {
+            top: 8,
+            bottom: 108,
+            left: 8,
+            right: 108,
+            width: 100,
+            height: 100,
+          },
+          animations: [
+            {
+              // Requires compositor failure reasons to be in the trace
+              // https://chromiumdash.appspot.com/commit/995baabedf9e70d16deafc4bc37a2b215a9b8ec9
+              _minChromiumMilestone: 86,
+              name: 'anim',
+              failureReasonsMask: 8224,
+            },
+          ],
+        },
+      ],
+    },
+    lhr: {
+      requestedUrl: 'http://localhost:10200/perf/trace-elements.html',
+      finalUrl: 'http://localhost:10200/perf/trace-elements.html',
+      audits: {
+        'largest-contentful-paint-element': {
+          score: null,
+          displayValue: '1 element found',
+          details: {
+            items: [
+              {
+                node: {
+                  type: 'node',
+                  nodeLabel: 'img',
+                  selector: 'body > div#late-content > img',
+                },
+              },
+            ],
+          },
+        },
+        'layout-shift-elements': {
+          score: null,
+          displayValue: '2 elements found',
+          details: {
+            items: {
+              length: 2,
+            },
+          },
+        },
+        'long-tasks': {
+          score: null,
+          details: {
+            items: {
+              0: {
+                url: 'http://localhost:10200/perf/delayed-element.js',
+                duration: '>500',
+                startTime: '5000 +/- 5000', // make sure it's on the right time scale, but nothing more
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  {
+    lhr: {
+      requestedUrl: 'http://localhost:10200/perf/trace-elements.html?missing',
+      finalUrl: 'http://localhost:10200/perf/trace-elements.html?missing',
+      audits: {
+        'largest-contentful-paint-element': {
+          score: null,
+          details: {
+            items: [
+              {
+                node: {
+                  type: 'node',
+                  selector: 'body',
+                },
+              },
+            ],
+          },
+        },
+        'layout-shift-elements': {
+          score: null,
+          scoreDisplayMode: 'notApplicable',
+          details: {
+            items: [],
+          },
+        },
+      },
+    },
+  },
+  {
+    lhr: {
+      requestedUrl: 'http://localhost:10200/perf/animations.html',
+      finalUrl: 'http://localhost:10200/perf/animations.html',
+      audits: {
+        'non-composited-animations': {
+          // Requires compositor failure reasons to be in the trace
+          // https://chromiumdash.appspot.com/commit/995baabedf9e70d16deafc4bc37a2b215a9b8ec9
+          _minChromiumMilestone: 86,
+          score: null,
+          displayValue: '1 animated element found',
+          details: {
+            items: [
+              {
+                node: {
+                  type: 'node',
+                  path: '2,HTML,1,BODY,1,DIV',
+                  selector: 'body > div#animated-boi',
+                  nodeLabel: 'div',
+                  snippet: '<div id="animated-boi">',
+                },
+                subItems: {
+                  items: [
+                    {
+                      // From JavaScript `.animate` which has no animation display name
+                      failureReason: 'Unsupported CSS Property',
+                    },
+                    {
+                      failureReason: 'Unsupported CSS Property',
+                      animation: 'alpha',
+                    },
+                    {
+                      failureReason: 'Unsupported CSS Property',
+                      animation: 'beta',
+                    },
+                  ],
+                },
+              },
+            ],
           },
         },
       },

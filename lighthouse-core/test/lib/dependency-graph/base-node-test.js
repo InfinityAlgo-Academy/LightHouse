@@ -87,6 +87,30 @@ describe('DependencyGraph/Node', () => {
     });
   });
 
+  describe('.isDependentOn', () => {
+    it('should identify the dependency relationships', () => {
+      const graph = createComplexGraph();
+      const nodes = Object.values(graph);
+      const {nodeA, nodeB, nodeD, nodeF, nodeH} = graph;
+
+      for (const node of nodes) {
+        expect(nodeA.isDependentOn(node)).toBe(node === nodeA);
+        expect(nodeB.isDependentOn(node)).toBe(node === nodeA || node === nodeB);
+        expect(nodeH.isDependentOn(node)).toBe(node !== nodeF);
+      }
+
+      expect(nodeD.isDependentOn(nodeA)).toBe(true);
+      expect(nodeD.isDependentOn(nodeB)).toBe(true);
+      expect(nodeD.isDependentOn(nodeD)).toBe(true);
+
+      expect(nodeD.isDependentOn(nodeH)).toBe(false);
+      expect(nodeH.isDependentOn(nodeD)).toBe(true);
+
+      expect(nodeF.isDependentOn(nodeH)).toBe(false);
+      expect(nodeH.isDependentOn(nodeF)).toBe(false);
+    });
+  });
+
   describe('.getRootNode', () => {
     it('should return the root node', () => {
       const graph = createComplexGraph();

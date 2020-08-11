@@ -8,31 +8,25 @@ The example below shows how to run Lighthouse programmatically as a Node module.
 assumes you've installed Lighthouse as a dependency (`yarn add --dev lighthouse`).
 
 ```javascript
+const fs = require('fs');
 const lighthouse = require('lighthouse');
 const chromeLauncher = require('chrome-launcher');
 
-function launchChromeAndRunLighthouse(url, opts, config = null) {
-  return chromeLauncher.launch({chromeFlags: opts.chromeFlags}).then(chrome => {
-    opts.port = chrome.port;
-    return lighthouse(url, opts, config).then(results => {
-      // use results.lhr for the JS-consumable output
-      // https://github.com/GoogleChrome/lighthouse/blob/master/types/lhr.d.ts
-      // use results.report for the HTML/JSON/CSV output as a string
-      // use results.artifacts for the trace/screenshots/other specific case you need (rarer)
-      return chrome.kill().then(() => results.lhr)
-    });
-  });
-}
+(async () => {
+  const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
+  const options = {logLevel: 'info', output: 'html', onlyCategories: ['performance'], port: chrome.port};
+  const runnerResult = await lighthouse('https://example.com', options);
 
-const opts = {
-  chromeFlags: ['--show-paint-rects']
-};
+  // `.report` is the HTML report as a string
+  const reportHtml = runnerResult.report;
+  fs.writeFileSync('lhreport.html', reportHtml);
 
-// Usage:
-launchChromeAndRunLighthouse('https://example.com', opts).then(results => {
-  // Use results!
-});
+  // `.lhr` is the Lighthouse Result as a JS object
+  console.log('Report is done for', runnerResult.lhr.finalUrl);
+  console.log('Performance score was', runnerResult.lhr.categories.performance.score * 100);
 
+  await chrome.kill();
+})();
 ```
 
 ### Performance-only Lighthouse run
@@ -46,7 +40,7 @@ const flags = {onlyCategories: ['performance']};
 launchChromeAndRunLighthouse(url, flags).then( // ...
 ```
 
-You can also craft your own config (e.g. [mixed-content-config.js](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/mixed-content-config.js)) for custom runs. Also see the [basic custom audit recipe](https://github.com/GoogleChrome/lighthouse/tree/master/docs/recipes/custom-audit).
+You can also craft your own config (e.g. [experimental-config.js](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/experimental-config.js)) for custom runs. Also see the [basic custom audit recipe](https://github.com/GoogleChrome/lighthouse/tree/master/docs/recipes/custom-audit).
 
 ### Differences from CLI flags
 
@@ -69,15 +63,11 @@ Note that some flag functionality is only available to the CLI. The set of share
 
 ### Turn on logging
 
-If you want to see log output as Lighthouse runs, include the `lighthouse-logger` module
-and set an appropriate logging level in your code. You'll also need to pass
+If you want to see log output as Lighthouse runs, set an appropriate logging level in your code and pass
 the `logLevel` flag when calling `lighthouse`.
 
 ```javascript
-const log = require('lighthouse-logger');
-
 const flags = {logLevel: 'info'};
-log.setLevel(flags.logLevel);
 
 launchChromeAndRunLighthouse('https://example.com', flags).then(...);
 ```
