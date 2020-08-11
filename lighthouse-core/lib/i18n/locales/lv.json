@@ -416,6 +416,12 @@
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | title": {
     "message": "Izmantojiet video failu formātus animētam saturam"
   },
+  "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | description": {
+    "message": "Polyfill elementi un pārveidošana ļauj mantotajās pārlūkprogrammās izmantot jaunas JavaScript funkcijas. Tomēr modernās pārlūkprogrammās daudzi no tiem nav nepieciešami. JavaScript pakai pielāgojiet modernu skripta izvietošanas stratēģiju, izmantojot moduļa/bez moduļa funkcijas noteikšanu, lai samazinātu uz modernām pārlūkprogrammām nosūtīta koda apjomu, vienlaikus nodrošinot atbalstu mantotām pārlūkprogrammām. [Uzziniet vairāk](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)."
+  },
+  "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
+    "message": "Novērsiet mantotā JavaScript koda izmantošanu modernos pārlūkos"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "Lai samazinātu laiku līdz interaktivitātei, ārpus ekrāna attēlus un paslēptos attēlus ar lēnu ielādi ieteicams atlikt līdz visu svarīgo resursu ielādes pabeigšanai. [Uzziniet vairāk](https://web.dev/offscreen-images/)."
   },
@@ -432,7 +438,7 @@
     "message": "Lielas tīkla lietderīgās slodzes izmaksā lietotājiem īstu naudu un ir cieši saistītas ar ilgu ielādes laiku. [Uzziniet vairāk](https://web.dev/total-byte-weight/)."
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | displayValue": {
-    "message": "Total size was {totalBytes, number, bytes} KiB"
+    "message": "Kopējais lielums bija {totalBytes, number, bytes} KiB"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | failureTitle": {
     "message": "Pārāk lielas tīkla lietderīgās slodzes nepieļaušana"
@@ -459,7 +465,7 @@
     "message": "Noņemt neizmantoto CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Noņemiet neizmantoto JavaScript, lai samazinātu tīkla aktivitātes izmantoto baitu apjomu. [Uzziniet vairāk](https://web.dev/remove-unused-code/)."
+    "message": "Noņemiet neizmantoto JavaScript, lai samazinātu tīkla aktivitātes izmantoto baitu apjomu. [Uzziniet vairāk](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Noņemiet neizmantoto JavaScript"
@@ -708,7 +714,7 @@
     "message": "{itemCount,plural, =1{1 pieprasījums nav parādīts, izmantojot HTTP/2}zero{# pieprasījumi nav parādīti, izmantojot HTTP/2}one{# pieprasījums nav parādīts, izmantojot HTTP/2}other{# pieprasījumi nav parādīti, izmantojot HTTP/2}}"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "Tiek izmantots protokols HTTP/2 tā resursiem"
+    "message": "Use HTTP/2"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "Llai uzlabotu savas lapas ritināšanas veiktspēju, ieteicams atzīmēt pieskārienu un peles ritentiņa notikumu uztvērējus kā “`passive`”. [Uzziniet vairāk](https://web.dev/uses-passive-event-listeners/)."
@@ -739,6 +745,9 @@
   },
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Tīmekļa fonta ielādes laikā viss teksts paliek redzams"
+  },
+  "lighthouse-core/audits/font-display.js | undeclaredFontOriginWarning": {
+    "message": "{fontCountForOrigin,plural, =1{Lighthouse nevarēja automātiski pārbaudīt `font-display` vērtību no šī avota: {fontOrigin}.}zero{Lighthouse nevarēja automātiski pārbaudīt `font-display` vērtības no šī avota: {fontOrigin}.}one{Lighthouse nevarēja automātiski pārbaudīt `font-display` vērtības no šī avota: {fontOrigin}.}other{Lighthouse nevarēja automātiski pārbaudīt `font-display` vērtības no šī avota: {fontOrigin}.}}"
   },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Malu attiecība (faktiskā)"
@@ -771,10 +780,10 @@
     "message": "Lai attēls būtu pēc iespējas skaidrāks, tā sākotnējiem izmēriem ir jābūt proporcionāliem attēlojuma lielumam un pikseļu attiecībai. [Uzziniet vairāk](https://web.dev/serve-responsive-images/)."
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Serves images with low resolution"
+    "message": "Attēli tiek rādīti zemā izšķirtspējā"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Serves images with appropriate resolution"
+    "message": "Attēli tiek rādīti piemērotā izšķirtspējā"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Pārlūkprogrammās var aktīvi rādīt lietotājiem uzvednes ar ierosinājumu pievienot jūsu lietotni sākuma ekrānam. Tādējādi var izdoties palielināt iesaisti. [Uzziniet vairāk](https://web.dev/installable-manifest/)."
@@ -785,8 +794,17 @@
   "lighthouse-core/audits/installable-manifest.js | title": {
     "message": "Tīmekļa lietotnes manifests atbilst instalējamības prasībām"
   },
+  "lighthouse-core/audits/is-on-https.js | allowed": {
+    "message": "Atļauts"
+  },
+  "lighthouse-core/audits/is-on-https.js | blocked": {
+    "message": "Bloķēts"
+  },
   "lighthouse-core/audits/is-on-https.js | columnInsecureURL": {
     "message": "Nedrošs URL"
+  },
+  "lighthouse-core/audits/is-on-https.js | columnResolution": {
+    "message": "Pieprasījuma atrisinājums"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
     "message": "Visas vietnes ir jāaizsargā ar protokolu HTTPS, pat ja tajās netiek apstrādāti sensitīvi dati. Tostarp jāizvairās no [jaukta satura](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content) izmantošanas, ja daļa resursu tiek ielādēta, izmantojot HTTP protokolu, bet sākotnējais pieprasījums tiek nosūtīts, izmantojot HTTPS protokolu. HTTPS neļauj iebrucējiem manipulēt vai pasīvi uztvert sakarus starp jūsu lietotni un lietotājiem, un tas ir HTTP/2 un daudzu jaunu tīmekļa platformu saskarņu API priekšnoteikums. [Uzziniet vairāk](https://web.dev/is-on-https/)."
@@ -800,8 +818,14 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Tiek izmantots protokols HTTPS"
   },
+  "lighthouse-core/audits/is-on-https.js | upgraded": {
+    "message": "Automātiski jaunināts uz HTTPS"
+  },
+  "lighthouse-core/audits/is-on-https.js | warning": {
+    "message": "Atļauts ar brīdinājumu"
+  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
-    "message": "This is the largest contentful element painted within the viewport. [Learn More](https://web.dev/lighthouse-largest-contentful-paint/)"
+    "message": "Tas ir lielākais skatvietā atveidotais satura elements. [Uzzināt vairāk](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
   "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
     "message": "{itemCount,plural, =1{Tika atrasts viens elements}zero{Tika atrasti # elementi}one{Tika atrasts # elements}other{Tika atrasti # elementi}}"
@@ -810,13 +834,13 @@
     "message": "Lielākā satura marķējuma elements"
   },
   "lighthouse-core/audits/layout-shift-elements.js | columnContribution": {
-    "message": "CLS Contribution"
+    "message": "CLS daļa"
   },
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "Šie DOM elementi visvairāk veicina lapas CLS."
   },
   "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
+    "message": "{nodeCount,plural, =1{Tika atrasts viens elements}zero{Tika atrasti # elementi}one{Tika atrasts # elements}other{Tika atrasti # elementi}}"
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Centieties novērst lielas izkārtojuma nobīdes"
@@ -840,13 +864,13 @@
     "message": "Lapas ielāde ir pietiekami ātra mobilajos tīklos"
   },
   "lighthouse-core/audits/long-tasks.js | description": {
-    "message": "Lists the longest tasks on the main thread, useful for identifying worst contributors to input delay. [Learn more](https://web.dev/long-tasks-devtools/)"
+    "message": "Šeit ir norādīti galvenā pavediena uzdevumi ar visilgāko izpildes laiku, lai palīdzētu noteikt, kuri uzdevumi visvairāk palielina ievades aizkavi. [Uzzināt vairāk](https://web.dev/long-tasks-devtools/)"
   },
   "lighthouse-core/audits/long-tasks.js | displayValue": {
-    "message": "{itemCount, plural,\n  =1 {# long task found}\n  other {# long tasks found}\n  }"
+    "message": "{itemCount,plural, =1{Tika atrasts # uzdevums ar ilgu izpildes laiku}zero{Tika atrasti # uzdevumi ar ilgu izpildes laiku}one{Tika atrasts # uzdevums ar ilgu izpildes laiku}other{Tika atrasti # uzdevumi ar ilgu izpildes laiku}}"
   },
   "lighthouse-core/audits/long-tasks.js | title": {
-    "message": "Avoid long main-thread tasks"
+    "message": "Izvairieties no galvenā pavediena uzdevumiem ar ilgu izpildes laiku"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | columnCategory": {
     "message": "Kategorija"
@@ -929,6 +953,15 @@
   "lighthouse-core/audits/network-server-latency.js | title": {
     "message": "Servera aizmugursistēmas latentums"
   },
+  "lighthouse-core/audits/no-unload-listeners.js | description": {
+    "message": "Notikums “`unload`” nenodrošināja uzticamu aktivizēšanu, un tā uztveršana var liegt pārlūkprogrammas optimizāciju, piemēram, funkciju atpakaļ/tālāk optimizāciju kešatmiņā. Tā vietā izvērtējiet iespēju izmantot notikumus “`pagehide`” vai “`visibilitychange`”. [Uzziniet vairāk](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)."
+  },
+  "lighthouse-core/audits/no-unload-listeners.js | failureTitle": {
+    "message": "Reģistrē notikuma “`unload`” uztvērēju"
+  },
+  "lighthouse-core/audits/no-unload-listeners.js | title": {
+    "message": "Izvairās no notikuma “`unload`” uztvērējiem"
+  },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Izmantojot pakalpojumu skriptu, varat nodrošināt uzticamu tīmekļa lietotnes darbību neparedzamos tīkla apstākļos. [Uzziniet vairāk](https://web.dev/offline-start-url/)."
   },
@@ -972,7 +1005,7 @@
     "message": "Lai iestatītu lapas resursu daudzuma un lieluma budžetus, pievienojiet failu budget.json. [Uzziniet vairāk](https://web.dev/use-lighthouse-for-performance-budgets/)."
   },
   "lighthouse-core/audits/resource-summary.js | displayValue": {
-    "message": "{requestCount, plural, =1 {1 request • {byteCount, number, bytes} KiB} other {# requests • {byteCount, number, bytes} KiB}}"
+    "message": "{requestCount,plural, =1{Viens pieprasījums • {byteCount, number, bytes} KiB}zero{# pieprasījumu • {byteCount, number, bytes} KiB}one{# pieprasījums • {byteCount, number, bytes} KiB}other{# pieprasījumi • {byteCount, number, bytes} KiB}}"
   },
   "lighthouse-core/audits/resource-summary.js | title": {
     "message": "Uzturiet nelielu pieprasījumu skaitu un mazu pārsūtīšanas failu lielumu"
@@ -1005,16 +1038,16 @@
     "message": "Dokumentam ir derīgs atribūts “`rel=canonical`”"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | columnFailingLink": {
-    "message": "Uncrawlable Link"
+    "message": "Nepārmeklējama saite"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | description": {
-    "message": "Search engines may use `href` attributes on links to crawl websites. Ensure that the `href` attribute of anchor elements links to an appropriate destination, so more pages of the site can be discovered. [Learn More](https://support.google.com/webmasters/answer/9112205)"
+    "message": "Saišu `href` atribūti dažreiz tiek izmantoti meklētājprogrammās, lai pārmeklētu tīmekļa vietnes. Nodrošiniet, lai enkurelementu `href` atribūtos būtu ietvertas saites uz piemērotiem galamērķiem, tādējādi ļaujot vietnē atklāt vairāk lapu. [Uzzināt vairāk](https://support.google.com/webmasters/answer/9112205)"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | failureTitle": {
-    "message": "Links are not crawlable"
+    "message": "Saites nav pārmeklējamas"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | title": {
-    "message": "Links are crawlable"
+    "message": "Saites ir pārmeklējamas"
   },
   "lighthouse-core/audits/seo/font-size.js | description": {
     "message": "Fonta izmērs, kas ir mazāks par 12 pikseļiem, ir pārāk mazs, lai būtu salasāms, un mobilo ierīču lietotāji ir spiesti tuvināt tekstu, lai varētu to salasīt. Centieties, lai vairāk nekā 60% lapas teksta būtu vismaz 12 pikseļu vai lielāka izmēra. [Uzziniet vairāk](https://web.dev/font-size/)."
@@ -1037,8 +1070,14 @@
   "lighthouse-core/audits/seo/hreflang.js | failureTitle": {
     "message": "Dokumentā nav derīga atribūta “`hreflang`”"
   },
+  "lighthouse-core/audits/seo/hreflang.js | notFullyQualified": {
+    "message": "Relatīva “href” vērtība"
+  },
   "lighthouse-core/audits/seo/hreflang.js | title": {
     "message": "Dokumentam ir derīgs atribūts “`hreflang`”"
+  },
+  "lighthouse-core/audits/seo/hreflang.js | unexpectedLanguage": {
+    "message": "Neparedzēts valodas kods"
   },
   "lighthouse-core/audits/seo/http-status-code.js | description": {
     "message": "Lapas ar nesekmīgu HTTP statusa kodu var tikt indeksētas nepareizi. [Uzziniet vairāk](https://web.dev/http-status-code/)."
@@ -1217,6 +1256,15 @@
   "lighthouse-core/audits/timing-budget.js | title": {
     "message": "Laika budžets"
   },
+  "lighthouse-core/audits/unsized-images.js | description": {
+    "message": "Always include explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+  },
+  "lighthouse-core/audits/unsized-images.js | failureTitle": {
+    "message": "Image elements do not have explicit `width` and `height`"
+  },
+  "lighthouse-core/audits/unsized-images.js | title": {
+    "message": "Image elements have explicit `width` and `height`"
+  },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "Veids"
   },
@@ -1338,7 +1386,7 @@
     "message": "Navigācija"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
-    "message": "Šie ieteikumi ļauj uzlabot tabulas vai sarakstu datu lasīšanu, izmantojot palīgtehnoloģijas, piemēram, ekrāna lasītājus."
+    "message": "Šeit ir norādītas iespējas uzlabot tabulu vai sarakstu datu lasīšanas pieredzi lietotājiem, kas izmanto palīgtehnoloģijas, piemēram, ekrāna lasītājus."
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Tabulas un saraksti"
@@ -1454,6 +1502,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnElement": {
     "message": "Elements"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
+    "message": "Failing Elements"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "Atrašanās vieta"
   },
@@ -1500,7 +1551,7 @@
     "message": "Cumulative Layout Shift"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Potential savings of {wastedBytes, number, bytes} KiB"
+    "message": "Potenciālais ietaupījums: {wastedBytes, number, bytes} KiB"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Potenciālais ietaupījums: {wastedMs, number, milliseconds} ms"
@@ -1515,7 +1566,7 @@
     "message": "Pirmā CPU dīkstāve"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
-    "message": "Pirmais saturīgais satura atveidojums"
+    "message": "First Contentful Paint"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
     "message": "Pirmais nozīmīgais satura atveidojums"
@@ -1527,10 +1578,10 @@
     "message": "Attēls"
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
-    "message": "Laiks līdz interaktivitātei"
+    "message": "Time to Interactive"
   },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
-    "message": "Lielākais satura marķējums"
+    "message": "Largest Contentful Paint"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Maks. potenciālā pirmā ievades aizkave"
@@ -1551,7 +1602,7 @@
     "message": "{timeInMs, number, seconds} s"
   },
   "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
-    "message": "Ātruma rādītājs"
+    "message": "Speed Index"
   },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Stilu lapa"
@@ -1560,7 +1611,7 @@
     "message": "Trešā puse"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
-    "message": "Kopējais bloķēšanas laiks"
+    "message": "Total Blocking Time"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Kopā"
@@ -1585,6 +1636,12 @@
   },
   "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": {
     "message": "Nepieciešamais parametra “{artifactName}” vācējs nedarbojās."
+  },
+  "lighthouse-core/lib/lh-error.js | notHtml": {
+    "message": "Norādītā lapa nav valodā HTML (tā tiek rādīta MIME veidā {mimeType})."
+  },
+  "lighthouse-core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "Šī Chrome versija ir pārāk veca, lai atbalstītu funkciju {featureName}. Lai skatītu visus rezultātus, izmantojiet jaunāku versiju."
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailed": {
     "message": "Lighthouse nevarēja droši ielādēt jūsu pieprasīto lapu. Pārliecinieties, ka testējat pareizo URL un serveris pareizi reaģē uz visiem pieprasījumiem."

@@ -416,6 +416,12 @@
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | title": {
     "message": "ใช้รูปแบบวิดีโอสำหรับเนื้อหาภาพเคลื่อนไหว"
   },
+  "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | description": {
+    "message": "โพลีฟิลล์และการเปลี่ยนรูปแบบช่วยให้เบราว์เซอร์เดิมใช้ฟีเจอร์ JavaScript ใหม่ได้ แต่ส่วนมากจะไม่จำเป็นสำหรับเบราว์เซอร์สมัยใหม่ สำหรับ JavaScript แบบแพ็กเกจ ให้ใช้กลยุทธ์การทำให้สคริปต์สมัยใหม่ใช้งานได้โดยใช้การตรวจหาฟีเจอร์โมดูล/ไม่มีโมดูลเพื่อลดจำนวนโค้ดที่ส่งไปยังเบราว์เซอร์สมัยใหม่ ขณะที่ยังรองรับเบราว์เซอร์เดิมอยู่ [ดูข้อมูลเพิ่มเติม](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
+  },
+  "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
+    "message": "หลีกเลี่ยงการแสดง JavaScript ในเบราว์เซอร์สมัยใหม่"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "พิจารณาโหลดรูปภาพนอกหน้าจอและรูปภาพที่ซ่อนไว้แบบ Lazy Loading หลังจากที่ทรัพยากรที่สำคัญทั้งหมดโหลดเสร็จแล้วเพื่อลดเวลาในการโต้ตอบ [ดูข้อมูลเพิ่มเติม](https://web.dev/offscreen-images/)"
   },
@@ -432,7 +438,7 @@
     "message": "เปย์โหลดปริมาณมากของเครือข่ายทำให้ผู้ใช้เสียค่าใช้จ่ายสูงและสัมพันธ์กับเวลาการโหลดนานเป็นอย่างมาก [ดูข้อมูลเพิ่มเติม](https://web.dev/total-byte-weight/)"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | displayValue": {
-    "message": "Total size was {totalBytes, number, bytes} KiB"
+    "message": "ขนาดรวมเดิมคือ {totalBytes, number, bytes} KiB"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | failureTitle": {
     "message": "หลีกเลี่ยงเปย์โหลดเครือข่ายปริมาณมาก"
@@ -459,7 +465,7 @@
     "message": "นำ CSS ที่ไม่ได้ใช้ออก"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "นำ JavaScript ที่ไม่ได้ใช้ออกเพื่อลดจำนวนไบต์ที่กิจกรรมเครือข่ายใช้ [ดูข้อมูลเพิ่มเติม](https://web.dev/remove-unused-code/)"
+    "message": "นำ JavaScript ที่ไม่ได้ใช้ออกเพื่อลดจำนวนไบต์ที่กิจกรรมเครือข่ายใช้ [ดูข้อมูลเพิ่มเติม](https://web.dev/unused-javascript/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "นำ JavaScript ที่ไม่ได้ใช้ออก"
@@ -708,7 +714,7 @@
     "message": "{itemCount,plural, =1{คำขอ 1 รายการไม่ได้แสดงผ่าน HTTP/2}other{คำขอ # รายการไม่ได้แสดงผ่าน HTTP/2}}"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "ใช้ HTTP/2 กับทรัพยากรของตนเอง"
+    "message": "Use HTTP/2"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "ลองระบุ Listener เหตุการณ์แบบแตะและลูกกลิ้งเป็น `passive` เพื่อปรับปรุงประสิทธิภาพการเลื่อนของหน้าเว็บ [ดูข้อมูลเพิ่มเติม](https://web.dev/uses-passive-event-listeners/)"
@@ -739,6 +745,9 @@
   },
   "lighthouse-core/audits/font-display.js | title": {
     "message": "ข้อความทั้งหมดจะยังมองเห็นได้ในระหว่างการโหลดเว็บฟอนต์"
+  },
+  "lighthouse-core/audits/font-display.js | undeclaredFontOriginWarning": {
+    "message": "{fontCountForOrigin,plural, =1{Lighthouse ตรวจสอบค่า`font-display`ของต้นทาง {fontOrigin} โดยอัตโนมัติไม่ได้}other{Lighthouse ตรวจสอบค่า`font-display`ของต้นทาง {fontOrigin} โดยอัตโนมัติไม่ได้}}"
   },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "สัดส่วนภาพ (ขนาดจริง)"
@@ -771,10 +780,10 @@
     "message": "ขนาดตามธรรมชาติของรูปภาพควรได้สัดส่วนกับขนาดการแสดงผลและอัตราส่วนพิกเซลเพื่อเพิ่มความชัดเจนของรูปภาพให้ได้มากที่สุด [ดูข้อมูลเพิ่มเติม](https://web.dev/serve-responsive-images/)"
   },
   "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
-    "message": "Serves images with low resolution"
+    "message": "แสดงรูปภาพที่มีความละเอียดต่ำ"
   },
   "lighthouse-core/audits/image-size-responsive.js | title": {
-    "message": "Serves images with appropriate resolution"
+    "message": "แสดงรูปภาพที่มีความละเอียดเหมาะสม"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "เบราว์เซอร์แจ้งผู้ใช้อย่างชัดแจ้งให้เพิ่มแอปของคุณในหน้าจอหลัก ซึ่งจะทำให้ผู้ใช้มีส่วนร่วมเพิ่มขึ้นได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/installable-manifest/)"
@@ -785,8 +794,17 @@
   "lighthouse-core/audits/installable-manifest.js | title": {
     "message": "ไฟล์ Manifest ของเว็บแอปตรงตามข้อกำหนดด้านความสามารถในการติดตั้ง"
   },
+  "lighthouse-core/audits/is-on-https.js | allowed": {
+    "message": "อนุญาต"
+  },
+  "lighthouse-core/audits/is-on-https.js | blocked": {
+    "message": "ถูกบล็อก"
+  },
   "lighthouse-core/audits/is-on-https.js | columnInsecureURL": {
     "message": "URL ไม่ปลอดภัย"
+  },
+  "lighthouse-core/audits/is-on-https.js | columnResolution": {
+    "message": "การแก้ไขปัญหาตามคำขอ"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
     "message": "ควรปกป้องทุกเว็บไซต์ด้วยการใช้ HTTPS แม้ว่าจะเป็นเว็บไซต์ที่ไม่มีข้อมูลที่ละเอียดอ่อนก็ตาม ซึ่งรวมถึงการหลีกเลี่ยง[เนื้อหาผสม](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content)ที่มีการโหลดทรัพยากรบางอย่างผ่าน HTTP แม้ว่าคำขอเริ่มแรกจะดำเนินการผ่าน HTTPS ก็ตาม HTTPS ป้องกันผู้บุกรุกไม่ให้แทรกแซงหรือแอบฟังการสื่อสารระหว่างแอปกับผู้ใช้ของคุณ และเป็นข้อกำหนดที่ต้องทำก่อนสำหรับ HTTP/2 รวมถึง API ของแพลตฟอร์มเว็บใหม่ๆ อีกมาก [ดูข้อมูลเพิ่มเติม](https://web.dev/is-on-https/)"
@@ -800,8 +818,14 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "ใช้ HTTPS"
   },
+  "lighthouse-core/audits/is-on-https.js | upgraded": {
+    "message": "อัปเกรดเป็น HTTPS โดยอัตโนมัติ"
+  },
+  "lighthouse-core/audits/is-on-https.js | warning": {
+    "message": "อนุญาตแบบมีคำเตือน"
+  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
-    "message": "This is the largest contentful element painted within the viewport. [Learn More](https://web.dev/lighthouse-largest-contentful-paint/)"
+    "message": "นี่คือองค์ประกอบที่มีเนื้อหาเต็มขนาดใหญ่ที่สุดซึ่งแสดงผลภายในวิวพอร์ต [ดูข้อมูลเพิ่มเติม](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
   "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
     "message": "{itemCount,plural, =1{พบ 1 องค์ประกอบ}other{พบ # องค์ประกอบ}}"
@@ -810,13 +834,13 @@
     "message": "องค์ประกอบ Largest Contentful Paint"
   },
   "lighthouse-core/audits/layout-shift-elements.js | columnContribution": {
-    "message": "CLS Contribution"
+    "message": "ปัจจัยที่ทำให้เกิด CLS"
   },
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "องค์ประกอบ DOM เหล่านี้มีส่วนอย่างมากที่สุดต่อ CLS ของหน้า"
   },
   "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
+    "message": "{nodeCount,plural, =1{พบ 1 องค์ประกอบ}other{พบ # องค์ประกอบ}}"
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "หลีกเลี่ยงการเลื่อนเลย์เอาต์ขนาดใหญ่"
@@ -840,13 +864,13 @@
     "message": "การโหลดหน้าเว็บเร็วพอเมื่อใช้เครือข่ายมือถือ"
   },
   "lighthouse-core/audits/long-tasks.js | description": {
-    "message": "Lists the longest tasks on the main thread, useful for identifying worst contributors to input delay. [Learn more](https://web.dev/long-tasks-devtools/)"
+    "message": "ระบุงานที่ใช้เวลานานที่สุดในเทรดหลัก เหมาะสำหรับการระบุปัจจัยที่แย่ที่สุดที่ทำให้อินพุตล่าช้า [ดูข้อมูลเพิ่มเติม](https://web.dev/long-tasks-devtools/)"
   },
   "lighthouse-core/audits/long-tasks.js | displayValue": {
-    "message": "{itemCount, plural,\n  =1 {# long task found}\n  other {# long tasks found}\n  }"
+    "message": "{itemCount,plural, =1{พบ # งานที่ใช้เวลานาน}other{พบ # งานที่ใช้เวลานาน}}"
   },
   "lighthouse-core/audits/long-tasks.js | title": {
-    "message": "Avoid long main-thread tasks"
+    "message": "หลีกเลี่ยงงานในเทรดหลักที่ใช้เวลานาน"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | columnCategory": {
     "message": "หมวดหมู่"
@@ -929,6 +953,15 @@
   "lighthouse-core/audits/network-server-latency.js | title": {
     "message": "เวลาในการตอบสนองจากแบ็กเอนด์ของเซิร์ฟเวอร์"
   },
+  "lighthouse-core/audits/no-unload-listeners.js | description": {
+    "message": "เหตุการณ์ `unload` เริ่มทำงานโดยไม่มีความเสถียร และการ Listen อาจทำให้การเพิ่มประสิทธิภาพเบราว์เซอร์อย่างแคชย้อนหลังไม่ทำงาน ลองพิจารณาใช้เหตุการณ์ `pagehide` หรือ `visibilitychange` แทน [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
+  },
+  "lighthouse-core/audits/no-unload-listeners.js | failureTitle": {
+    "message": "ลงทะเบียน Listener `unload`"
+  },
+  "lighthouse-core/audits/no-unload-listeners.js | title": {
+    "message": "หลีกเลี่ยง Listener เหตุการณ์ `unload`"
+  },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Service Worker ช่วยให้เว็บแอปของคุณเชื่อถือได้ในสภาวะของเครือข่ายที่คาดการณ์ไม่ได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/offline-start-url/)"
   },
@@ -972,7 +1005,7 @@
     "message": "หากต้องการตั้งงบประมาณสำหรับจำนวนและขนาดของทรัพยากรหน้า ให้เพิ่มไฟล์ budget.json [ดูข้อมูลเพิ่มเติม](https://web.dev/use-lighthouse-for-performance-budgets/)"
   },
   "lighthouse-core/audits/resource-summary.js | displayValue": {
-    "message": "{requestCount, plural, =1 {1 request • {byteCount, number, bytes} KiB} other {# requests • {byteCount, number, bytes} KiB}}"
+    "message": "{requestCount,plural, =1{1 คำขอ • {byteCount, number, bytes} KiB}other{# คำขอ • {byteCount, number, bytes} KiB}}"
   },
   "lighthouse-core/audits/resource-summary.js | title": {
     "message": "ควบคุมให้จำนวนคำขอมีไม่มากและการโอนมีขนาดเล็ก"
@@ -1005,16 +1038,16 @@
     "message": "เอกสารมี `rel=canonical` ที่ถูกต้อง"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | columnFailingLink": {
-    "message": "Uncrawlable Link"
+    "message": "รวบรวมข้อมูลลิงก์ไม่ได้"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | description": {
-    "message": "Search engines may use `href` attributes on links to crawl websites. Ensure that the `href` attribute of anchor elements links to an appropriate destination, so more pages of the site can be discovered. [Learn More](https://support.google.com/webmasters/answer/9112205)"
+    "message": "เครื่องมือค้นหาอาจใช้แอตทริบิวต์ `href` ในลิงก์เพื่อรวบรวมข้อมูลเว็บไซต์ โปรดตรวจสอบว่าแอตทริบิวต์ `href` ขององค์ประกอบแท็ก Anchor ลิงก์กับปลายทางที่เหมาะสมเพื่อให้ระบบค้นพบหน้าอื่นๆ ของเว็บไซต์ได้ [ดูข้อมูลเพิ่มเติม](https://support.google.com/webmasters/answer/9112205)"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | failureTitle": {
-    "message": "Links are not crawlable"
+    "message": "รวบรวมข้อมูลลิงก์ไม่ได้"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | title": {
-    "message": "Links are crawlable"
+    "message": "รวบรวมข้อมูลลิงก์ได้"
   },
   "lighthouse-core/audits/seo/font-size.js | description": {
     "message": "ขนาดตัวอักษรที่เล็กกว่า 12 พิกเซลจะเล็กเกินไปจนอ่านไม่ออกและทำให้ผู้เข้าชมในอุปกรณ์เคลื่อนที่ต้อง “บีบเพื่อซูมเข้า” เพื่ออ่าน พยายามให้ข้อความในหน้าเว็บมากกว่า 60% มีขนาดอย่างน้อย 12 พิกเซล [ดูข้อมูลเพิ่มเติม](https://web.dev/font-size/)"
@@ -1037,8 +1070,14 @@
   "lighthouse-core/audits/seo/hreflang.js | failureTitle": {
     "message": "เอกสารไม่มี `hreflang` ที่ถูกต้อง"
   },
+  "lighthouse-core/audits/seo/hreflang.js | notFullyQualified": {
+    "message": "ค่า href แบบสัมพัทธ์"
+  },
   "lighthouse-core/audits/seo/hreflang.js | title": {
     "message": "เอกสารมี `hreflang` ที่ถูกต้อง"
+  },
+  "lighthouse-core/audits/seo/hreflang.js | unexpectedLanguage": {
+    "message": "รหัสภาษาที่ไม่คาดคิด"
   },
   "lighthouse-core/audits/seo/http-status-code.js | description": {
     "message": "หน้าเว็บที่มีรหัสสถานะ HTTP ไม่สำเร็จอาจไม่ได้รับการจัดทำดัชนีอย่างถูกต้อง [ดูข้อมูลเพิ่มเติม](https://web.dev/http-status-code/)"
@@ -1217,6 +1256,15 @@
   "lighthouse-core/audits/timing-budget.js | title": {
     "message": "งบประมาณด้านเวลา"
   },
+  "lighthouse-core/audits/unsized-images.js | description": {
+    "message": "Always include explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+  },
+  "lighthouse-core/audits/unsized-images.js | failureTitle": {
+    "message": "Image elements do not have explicit `width` and `height`"
+  },
+  "lighthouse-core/audits/unsized-images.js | title": {
+    "message": "Image elements have explicit `width` and `height`"
+  },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "ประเภท"
   },
@@ -1338,7 +1386,7 @@
     "message": "การนำทาง"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
-    "message": "นี่เป็นโอกาสปรับปรุงประสบการณ์การอ่านตารางหรือข้อมูลรายการโดยใช้เทคโนโลยีอำนวยความสะดวก เช่น โปรแกรมอ่านหน้าจอ"
+    "message": "นี่เป็นโอกาสปรับปรุงประสบการณ์การอ่านตารางหรือข้อมูลรายการโดยใช้เทคโนโลยีความช่วยเหลือพิเศษ เช่น โปรแกรมอ่านหน้าจอ"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "ตารางและรายการ"
@@ -1454,6 +1502,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnElement": {
     "message": "องค์ประกอบ"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
+    "message": "Failing Elements"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "ตำแหน่ง"
   },
@@ -1500,7 +1551,7 @@
     "message": "Cumulative Layout Shift"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Potential savings of {wastedBytes, number, bytes} KiB"
+    "message": "อาจประหยัดพื้นที่ได้ {wastedBytes, number, bytes} KiB"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "อาจประหยัดได้ {wastedMs, number, milliseconds} มิลลิวินาที"
@@ -1515,7 +1566,7 @@
     "message": "CPU ไม่ได้ใช้งานครั้งแรก"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
-    "message": "การแสดงผลที่มีเนื้อหาเต็มครั้งแรก"
+    "message": "First Contentful Paint"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
     "message": "การแสดงผลที่มีความหมายครั้งแรก"
@@ -1527,7 +1578,7 @@
     "message": "รูปภาพ"
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
-    "message": "เวลาในการโต้ตอบ"
+    "message": "Time to Interactive"
   },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
     "message": "Largest Contentful Paint"
@@ -1551,7 +1602,7 @@
     "message": "{timeInMs, number, seconds} วินาที"
   },
   "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
-    "message": "ดัชนีความเร็ว"
+    "message": "Speed Index"
   },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "สไตล์ชีต"
@@ -1560,7 +1611,7 @@
     "message": "บุคคลที่สาม"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
-    "message": "เวลาที่บล็อกทั้งหมด"
+    "message": "Total Blocking Time"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "รวม"
@@ -1585,6 +1636,12 @@
   },
   "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": {
     "message": "ตัวรวบรวม {artifactName} ที่จำเป็นไม่ทำงาน"
+  },
+  "lighthouse-core/lib/lh-error.js | notHtml": {
+    "message": "หน้าที่ระบุไม่ใช่ HTML (แสดงเป็นประเภท MIME {mimeType})"
+  },
+  "lighthouse-core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "Chrome เวอร์ชันนี้เก่าเกินกว่าจะรองรับ \"{featureName}\" โปรดใช้เวอร์ชันใหม่เพื่อดูผลลัพธ์ทั้งหมด"
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailed": {
     "message": "Lighthouse โหลดหน้าเว็บที่คุณขออย่างน่าเชื่อถือไม่ได้ ตรวจสอบว่าคุณกำลังทดสอบ URL ที่ถูกต้องและเซิร์ฟเวอร์ตอบสนองคำขอทั้งหมดอย่างถูกต้อง"

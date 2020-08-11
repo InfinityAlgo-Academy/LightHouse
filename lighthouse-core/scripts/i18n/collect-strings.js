@@ -385,8 +385,14 @@ function _processPlaceholderDirectIcu(icu, examples) {
  */
 function _ctcValidityChecks(icu) {
   // '$$' i.e. "Double Dollar" is always invalid in ctc.
-  if (icu.message.match(/\$\$/)) {
-    throw new Error(`Ctc messages cannot contain double dollar: ${icu.message}`);
+  const regex = /\$([^$]*?)\$/g;
+  const matches = regex.exec(icu.message);
+  if (Array.isArray(matches)) {
+    matches.forEach(function(value) {
+      if (!value) {
+        throw new Error(`Ctc messages cannot contain double dollar: ${icu.message}`);
+      }
+    });
   }
 }
 

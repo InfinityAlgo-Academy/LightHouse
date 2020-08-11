@@ -41,7 +41,7 @@ class ServerResponseTime extends Audit {
   /**
    * @param {LH.Artifacts.NetworkRequest} record
    */
-  static caclulateResponseTime(record) {
+  static calculateResponseTime(record) {
     const timing = record.timing;
     return timing ? timing.receiveHeadersEnd - timing.sendEnd : 0;
   }
@@ -55,7 +55,7 @@ class ServerResponseTime extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
 
-    const responseTime = ServerResponseTime.caclulateResponseTime(mainResource);
+    const responseTime = ServerResponseTime.calculateResponseTime(mainResource);
     const passed = responseTime < RESPONSE_THRESHOLD;
     const displayValue = str_(UIStrings.displayValue, {timeInMs: responseTime});
 

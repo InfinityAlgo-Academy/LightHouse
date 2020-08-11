@@ -166,6 +166,9 @@ Object {
       "path": "non-composited-animations",
     },
     Object {
+      "path": "unsized-images",
+    },
+    Object {
       "path": "manual/pwa-cross-browser",
     },
     Object {
@@ -1007,6 +1010,11 @@ Object {
         Object {
           "group": "diagnostics",
           "id": "non-composited-animations",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "unsized-images",
           "weight": 0,
         },
         Object {
