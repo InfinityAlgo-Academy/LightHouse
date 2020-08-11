@@ -7,6 +7,7 @@
 /**
  * @fileoverview Audits a page to make sure all input elements
  *  have an autocomplete attribute set.
+ * See https://docs.google.com/document/d/1yiulNnV8uEy1jPaAEmWeHxHcQOzxpqvAV4hOFpXLJ1M/edit?usp=sharing
  */
 
 'use strict';
