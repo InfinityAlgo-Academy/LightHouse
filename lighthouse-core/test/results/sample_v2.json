@@ -1851,7 +1851,7 @@
     "autocomplete": {
       "id": "autocomplete",
       "title": "Input elements use autocomplete",
-      "description": "Autocomplete helps users submit forms quicker. To reduce user effort, consider enabling autocomplete by setting the `autocomplete` attribute to a valid value.. [Learn more](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill)",
+      "description": "Autocomplete helps users submit forms quicker. To reduce user effort, consider enabling autocomplete by setting the `autocomplete` attribute to a valid value. [Learn more](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill)",
       "score": null,
       "scoreDisplayMode": "error",
       "errorMessage": "Required FormElements gatherer did not run."

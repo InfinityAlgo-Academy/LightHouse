@@ -384,7 +384,7 @@
     "message": "Provides a valid `apple-touch-icon`"
   },
   "lighthouse-core/audits/autocomplete.js | description": {
-    "message": "Autocomplete helps users submit forms quicker. To reduce user effort, consider enabling autocomplete by setting the `autocomplete` attribute to a valid value.. [Learn more](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill)"
+    "message": "Autocomplete helps users submit forms quicker. To reduce user effort, consider enabling autocomplete by setting the `autocomplete` attribute to a valid value. [Learn more](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill)"
   },
   "lighthouse-core/audits/autocomplete.js | failureTitle": {
     "message": "Input elements do not have correct attributes for autocomplete"
