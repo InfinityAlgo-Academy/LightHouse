@@ -29,8 +29,7 @@ const UIStrings = {
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
-/** @type {string[]} */
-/** This array contains all acceptable autocomplete attributes from the WHATWG standard. More found at https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill  */
+/** @type {string[]} This array contains all acceptable autocomplete attributes from the WHATWG standard. More found at https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill */
 const validAutocompleteAttributeNames = ['name', 'honorific-prefix', 'given-name',
   'additional-name', 'family-name', 'honorific-suffix', 'nickname', 'username', 'new-password',
   'current-password', 'one-time-code', 'organization-title', 'organization', 'street-address',
