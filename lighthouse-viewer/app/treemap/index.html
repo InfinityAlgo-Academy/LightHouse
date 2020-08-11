@@ -16,23 +16,50 @@ Unless required by applicable law or agreed to in writing, software distributed 
   <meta name="theme-color" content="#304ffe">
   <link rel="stylesheet" href="treemap.css">
   <link href="https://unpkg.com/tabulator-tables@4.5.3/dist/css/tabulator.min.css" rel="stylesheet">
+  <style>
+    .lh-header--section {
+      display: flex;
+      justify-content: space-between;
+    }
+    .lh-header--title {
+      width: 50%;
+    }
+
+    .bundle-selector {
+      max-width: 30%;
+    }
+
+    .lh-button {
+
+    }
+  </style>
 </head>
 
 <body>
-  <main>
-    <div class="panel panel--modals">
-      <!-- View modes go here -->
-    </div>
-
+  <main class="lh-main">
     <div class="panel panel--settings">
       <header>
-        <select class="bundle-selector"></select>
-        <label>partition by</label>
-        <select class="partition-selector">
-          <option value="bytes">bytes</option>
-          <option value="wastedBytes">unused bytes</option>
-          <option value="executionTime">execution</option>
-        </select>
+        <div class="lh-header--section">
+          <!-- TODO: Logo -->
+          <span class="lh-header--title">Source Map Viewer</span>
+          <div>
+            <select class="bundle-selector"></select>
+            <label>partition by</label>
+            <select class="partition-selector">
+              <option value="bytes">bytes</option>
+              <option value="wastedBytes">unused bytes</option>
+              <option value="executionTime">execution</option>
+            </select>
+            <button class='lh-button lh-button--toggle-table'>Toggle Table</button>
+          </div>
+        </div>
+
+        <div class="lh-header--section">
+          <span>https://www.example.com * 10MB</span>
+          <div class="panel panel--modals">
+            <!-- View modes go here -->
+          </div>
+        </div>
       </header>
     </div>
 

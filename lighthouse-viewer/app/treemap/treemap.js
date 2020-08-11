@@ -347,6 +347,7 @@ class TreemapViewer {
 function createHeader(options) {
   const bundleSelectorEl = find('.bundle-selector');
   const partitionBySelectorEl = find('.partition-selector');
+  const toggleTableBtn = find('.lh-button--toggle-table');
 
   bundleSelectorEl.innerHTML = '';
 
@@ -393,6 +394,7 @@ function createHeader(options) {
   bundleSelectorEl.value = options.id;
   bundleSelectorEl.addEventListener('change', onChange);
   partitionBySelectorEl.addEventListener('change', onChange);
+  toggleTableBtn.addEventListener('click', toggleTable);
 }
 
 /**
@@ -625,4 +627,23 @@ function main() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', main);
+async function debugWrapper() {
+  if (new URLSearchParams(window.location.search).has('debug')) {
+    const response = await fetch('debug.json');
+    const json = await response.json();
+    window.__TREEMAP_OPTIONS = json;
+  }
+
+  main();
+}
+
+document.addEventListener('DOMContentLoaded', debugWrapper);
+
+function toggleTable() {
+  const mainEl = document.querySelector('main');
+  mainEl.addEventListener('animationstart', () => {
+    console.log('Animation started');
+  });
+  mainEl.classList.toggle('lh-main__show-table');
+  treemapViewer && treemapViewer.render();
+}

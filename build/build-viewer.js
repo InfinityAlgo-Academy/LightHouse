@@ -75,6 +75,7 @@ function copyAssets() {
     'treemap/index.html',
     'treemap/treemap.css',
     'treemap/treemap.js',
+    'treemap/debug.json',
   ], distDir, {
     cwd: `${sourceDir}/app/`,
     parents: true,
@@ -177,7 +178,7 @@ async function deploy() {
  */
 async function run() {
   // Clean and build.
-  rimraf.sync(distDir);
+  // rimraf.sync(distDir);
   await Promise.all([
     compileJs(),
     html(),

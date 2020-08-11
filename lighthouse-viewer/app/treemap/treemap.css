@@ -6,35 +6,39 @@ body {
   flex-direction: column;
 }
 
-main {
+.lh-main {
   display: grid;
   height: 100vh;
-  grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 0.1fr 1fr 1fr 1fr 0.5fr;
-  grid-template-areas:
-    "view    settings settings settings settings"
-    "view    treemap  treemap  treemap  treemap "
-    "view    treemap  treemap  treemap  treemap "
-    "view    treemap  treemap  treemap  treemap "
-    "grid    grid     grid     grid     grid    ";
+  grid-template-rows: 0.1fr 1fr 0fr;
+  /* grid-template-areas:
+    "header  header header header header"
+    "treemap    treemap  treemap  treemap  treemap"
+    "grid    grid     grid     grid     grid    "; */
   grid-column-gap: 0px;
   grid-row-gap: 0px;
+  transition: grid-template-rows 8s;
+  /* animation: 0.7s curtain cubic-bezier(.86,0,.07,1) 0.4s both; */
+}
+
+.lh-main__show-table {
+  grid-template-rows: 0.1fr 1fr 0.3fr;
 }
 
 .panel--modals {
-  grid-area: view;
+  display: flex;
+  /* grid-area: view; */
 }
 
 .panel--settings {
-  grid-area: settings;
+  /* grid-area: settings; */
 }
 
 .panel--treemap {
-  grid-area: treemap;
+  /* grid-area: treemap; */
 }
 
 .panel--datagrid {
-  grid-area: grid;
+  /* grid-area: grid; */
   overflow-y: hidden;
 }
 
@@ -42,13 +46,14 @@ main {
   cursor: pointer;
   border: solid 1px blue;
   padding: 5px;
-  margin: 10px;
+  /* margin: 10px; */
 }
 .view-mode--active {
   background-color: lightblue;
 }
 
 header {
+  /* grid-area: header; */
   margin: 5px;
 }
 
