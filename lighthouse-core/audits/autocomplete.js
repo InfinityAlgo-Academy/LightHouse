@@ -56,32 +56,36 @@ class AutocompleteAudit extends Audit {
   }
 
   /**
+   * @param {LH.Artifacts.FormInput} input
+   * @return {Boolean}
+   */
+  static isValidAutocomplete(input) {
+    for (const name of validAutocompleteAttributeNames) {
+      if (input.autocomplete.includes(name)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * @param {LH.Artifacts} artifacts
    * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
     const forms = artifacts.FormElements;
-    const noAutocomplete = forms.map(element => {
-      return {...element, inputs: element.inputs.filter(input => !input.autocomplete)};
-    });
-    const autocompleteInvalid = forms.map(element => {
-      return {...element, inputs: element.inputs.filter(input => {
-        for (const name of validAutocompleteAttributeNames) {
-          input.autocomplete.includes(name);
-        }
-      })};
-    });
-    const failingForms = [...noAutocomplete, ...autocompleteInvalid];
     const failingFormsData = [];
-    for (const form of failingForms) {
+    for (const form of forms) {
       for (const input of form.inputs) {
-        failingFormsData.push({
-          failingElements: /** @type {LH.Audit.Details.NodeValue} */ ({
-            type: 'node',
-            snippet: input.snippet,
-            nodeLabel: input.nodeLabel,
-          }),
-        });
+        if (!this.isValidAutocomplete(input)) {
+          failingFormsData.push({
+            failingElements: /** @type {LH.Audit.Details.NodeValue} */ ({
+              type: 'node',
+              snippet: input.snippet,
+              nodeLabel: input.nodeLabel,
+            }),
+          });
+        }
       }
     }
 
