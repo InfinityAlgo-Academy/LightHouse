@@ -5418,7 +5418,6 @@ lighthouse-plugin-publisher-ads@^1.1.0-beta.0:
     intl-messageformat "^4.1.2"
     yargs "^13.3.0"
 
-<<<<<<< HEAD
 lighthouse@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/lighthouse/-/lighthouse-6.0.0.tgz#4ef83f27442554ca805a8b1ebfa3595043bea087"
@@ -5455,12 +5454,10 @@ lighthouse@^6.0.0:
     ws "3.3.2"
     yargs "3.32.0"
     yargs-parser "^18.1.3"
-=======
 lines-and-columns@^1.1.6:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.1.6.tgz#1c00c743b433cd0a4e80758f7b64a57440d9ff00"
   integrity sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
->>>>>>> 3c6026430f30481ab6b9ec4b642bdfdcc85a4c9f
 
 load-json-file@^1.0.0:
   version "1.1.0"
