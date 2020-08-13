@@ -241,6 +241,7 @@ const defaultConfig = {
     'no-unload-listeners',
     'non-composited-animations',
     'unsized-images',
+    'large-javascript-libraries',
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',
     'manual/pwa-each-page-has-url',
@@ -472,6 +473,7 @@ const defaultConfig = {
         {id: 'long-tasks', weight: 0, group: 'diagnostics'},
         {id: 'non-composited-animations', weight: 0, group: 'diagnostics'},
         {id: 'unsized-images', weight: 0, group: 'diagnostics'},
+        {id: 'large-javascript-libraries', weight: 0, group: 'diagnostics'},
         // Audits past this point don't belong to a group and will not be shown automatically
         {id: 'network-requests', weight: 0},
         {id: 'network-rtt', weight: 0},

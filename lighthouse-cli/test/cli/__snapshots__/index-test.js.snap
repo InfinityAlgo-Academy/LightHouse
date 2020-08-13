@@ -169,6 +169,9 @@ Object {
       "path": "unsized-images",
     },
     Object {
+      "path": "large-javascript-libraries",
+    },
+    Object {
       "path": "manual/pwa-cross-browser",
     },
     Object {
@@ -1015,6 +1018,11 @@ Object {
         Object {
           "group": "diagnostics",
           "id": "unsized-images",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "large-javascript-libraries",
           "weight": 0,
         },
         Object {

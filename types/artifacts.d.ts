@@ -369,9 +369,20 @@ declare global {
         analyzedFailingTextLength: number;
         /** Elements that contain a text node that failed size criteria. */
         analyzedFailingNodesData: Array<{
+          /* nodeId of the failing TextNode. */
+          nodeId: number;
           fontSize: number;
           textLength: number;
-          node: FontSize.DomNodeWithParent;
+          parentNode: {
+            backendNodeId: number;
+            attributes: string[];
+            nodeName: string;
+            parentNode?: {
+              backendNodeId: number;
+              attributes: string[];
+              nodeName: string;
+            };
+          };
           cssRule?: {
             type: 'Regular' | 'Inline' | 'Attributes';
             range?: {startLine: number, startColumn: number};
@@ -380,17 +391,6 @@ declare global {
             stylesheet?: Crdp.CSS.CSSStyleSheetHeader;
           }
         }>
-      }
-
-      export module FontSize {
-        export interface DomNodeWithParent extends Crdp.DOM.Node {
-          parentId: number;
-          parentNode: DomNodeWithParent;
-        }
-
-        export interface DomNodeMaybeWithParent extends Crdp.DOM.Node {
-          parentNode?: DomNodeMaybeWithParent;
-        }
       }
 
       // TODO(bckenny): real type for parsed manifest.
