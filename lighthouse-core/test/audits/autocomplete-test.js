@@ -92,7 +92,7 @@ describe('Best Practices: autocomplete audit', () => {
         {
           failingElements: {
             nodeLabel: 'YY\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\n2027\n2028\n2029',
-            snippet: '<select name=\"CCExpiresYear">',
+            snippet: '<select name="CCExpiresYear">',
             type: 'node',
           },
         },
