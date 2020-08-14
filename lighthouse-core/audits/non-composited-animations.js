@@ -14,13 +14,19 @@ const UIStrings = {
   /** Description of a diagnostic LH audit that shows the user animations that are not composited. */
   description: 'Animations which are not composited can be janky and contribute to CLS. ' +
     '[Learn more](https://developers.google.com/web/fundamentals/performance/rendering/stick-to-compositor-only-properties-and-manage-layer-count)',
-  /** [ICU Syntax] Label identifying the number of animations that are not composited. */
+  /** [ICU Syntax] Label identifying the number of animated elements that are not composited. */
   displayValue: `{itemCount, plural,
   =1 {# animated element found}
   other {# animated elements found}
   }`,
-  /** Name of a compositor failure reason where the CSS property being animated is not supported on the compositor. */
-  unsupportedCSSProperty: 'Unsupported CSS Property',
+  /**
+   * @description [ICU Syntax] Name of a compositor failure reason where the CSS property being animated is not supported on the compositor.
+   * @example {height, width} properties
+   */
+  unsupportedCSSProperty: `{propertyCount, plural,
+    =1 {Unsupported CSS Property: {properties}}
+    other {Unsupported CSS Properties: {properties}}
+  }`,
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -33,7 +39,7 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 const ACTIONABLE_FAILURE_REASONS = [
   {
     flag: 1 << 13,
-    text: str_(UIStrings.unsupportedCSSProperty),
+    text: UIStrings.unsupportedCSSProperty,
   },
 ];
 
@@ -42,12 +48,21 @@ const ACTIONABLE_FAILURE_REASONS = [
  * Each flag is a number with a single bit set to 1 in the position corresponding to a failure reason.
  * We can check if a specific bit is true in the failure coding using bitwise and '&' with the flag.
  * @param {number} failureCode
+ * @param {string[]} unsupportedProperties
  * @return {string[]}
  */
-function getActionableFailureReasons(failureCode) {
+function getActionableFailureReasons(failureCode, unsupportedProperties) {
   return ACTIONABLE_FAILURE_REASONS
     .filter(reason => failureCode & reason.flag)
-    .map(reason => reason.text);
+    .map(reason => {
+      if (reason.text === UIStrings.unsupportedCSSProperty) {
+        return str_(reason.text, {
+          propertyCount: unsupportedProperties.length,
+          properties: unsupportedProperties.join(', '),
+        });
+      }
+      return str_(reason.text);
+    });
 }
 
 class NonCompositedAnimations extends Audit {
@@ -80,7 +95,7 @@ class NonCompositedAnimations extends Audit {
 
     /** @type LH.Audit.Details.TableItem[] */
     const results = [];
-    let hasDisplayNames = false;
+    let shouldAddAnimationNameColumn = false;
     artifacts.TraceElements.forEach(element => {
       if (element.traceEventType !== 'animation') return;
       /** @type LH.Audit.Details.NodeValue */
@@ -94,11 +109,13 @@ class NonCompositedAnimations extends Audit {
 
       const animations = element.animations || [];
       const animationReasons = new Map();
-      for (const {name, failureReasonsMask} of animations) {
+      for (const {name, failureReasonsMask, unsupportedProperties} of animations) {
         if (!failureReasonsMask) continue;
-        for (const failureReason of getActionableFailureReasons(failureReasonsMask)) {
+        const failureReasons =
+          getActionableFailureReasons(failureReasonsMask, unsupportedProperties || []);
+        for (const failureReason of failureReasons) {
           if (name) {
-            hasDisplayNames = true;
+            shouldAddAnimationNameColumn = true;
           }
           const reasons = animationReasons.get(name) || new Set();
           reasons.add(failureReason);
@@ -133,7 +150,7 @@ class NonCompositedAnimations extends Audit {
       /* eslint-enable max-len */
     ];
 
-    if (hasDisplayNames) {
+    if (shouldAddAnimationNameColumn) {
       headings.push(
         /* eslint-disable max-len */
         {key: null, itemType: 'text', subItemsHeading: {key: 'animation', itemType: 'text'}, text: str_(i18n.UIStrings.columnName)}

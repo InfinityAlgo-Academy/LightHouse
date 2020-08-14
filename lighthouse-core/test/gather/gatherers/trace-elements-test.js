@@ -338,21 +338,66 @@ describe('Trace Elements gatherer - Animated Elements', () => {
     const driver = new Driver(connectionStub);
     const traceEvents = [
       makeAnimationTraceEvent('0x363db876c1', 'b', {id: '1', nodeId: 5}),
-      makeAnimationTraceEvent('0x363db876c1', 'n', {compositeFailed: 8192}),
+      makeAnimationTraceEvent('0x363db876c1', 'n', {
+        compositeFailed: 8192,
+        unsupportedProperties: ['height'],
+      }),
       makeAnimationTraceEvent('0x363db876c2', 'b', {id: '2', nodeId: 5}),
-      makeAnimationTraceEvent('0x363db876c2', 'n', {compositeFailed: 8192}),
+      makeAnimationTraceEvent('0x363db876c2', 'n', {
+        compositeFailed: 8192,
+        unsupportedProperties: ['color'],
+      }),
       makeAnimationTraceEvent('0x363db876c3', 'b', {id: '3', nodeId: 6}),
-      makeAnimationTraceEvent('0x363db876c3', 'n', {compositeFailed: 8192}),
+      makeAnimationTraceEvent('0x363db876c3', 'n', {
+        compositeFailed: 8192,
+        unsupportedProperties: ['width'],
+      }),
     ];
 
     const result = await TraceElementsGatherer.getAnimatedElements({driver}, traceEvents);
     expect(result).toEqual([
       {nodeId: 5, animations: [
-        {name: 'alpha', failureReasonsMask: 8192},
-        {failureReasonsMask: 8192},
+        {name: 'alpha', failureReasonsMask: 8192, unsupportedProperties: ['height']},
+        {failureReasonsMask: 8192, unsupportedProperties: ['color']},
       ]},
       {nodeId: 6, animations: [
-        {name: 'beta', failureReasonsMask: 8192},
+        {name: 'beta', failureReasonsMask: 8192, unsupportedProperties: ['width']},
+      ]},
+    ]);
+  });
+
+  it('get non-composited animations with no unsupported properties', async () => {
+    const connectionStub = new Connection();
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('Animation.resolveAnimation', {remoteObject: {objectId: 1}})
+      .mockResponse('Runtime.getProperties', {result: [{
+        name: 'animationName',
+        value: {type: 'string', value: 'alpha'},
+      }]})
+      .mockResponse('Animation.resolveAnimation', {remoteObject: {objectId: 2}})
+      .mockResponse('Runtime.getProperties', {result: [{
+        name: 'animationName',
+        value: {type: 'string', value: ''},
+      }]});
+    const driver = new Driver(connectionStub);
+    const traceEvents = [
+      makeAnimationTraceEvent('0x363db876c1', 'b', {id: '1', nodeId: 5}),
+      makeAnimationTraceEvent('0x363db876c1', 'n', {
+        compositeFailed: 2048,
+        unsupportedProperties: [],
+      }),
+      makeAnimationTraceEvent('0x363db876c2', 'b', {id: '2', nodeId: 5}),
+      makeAnimationTraceEvent('0x363db876c2', 'n', {
+        compositeFailed: 2048,
+        unsupportedProperties: [],
+      }),
+    ];
+
+    const result = await TraceElementsGatherer.getAnimatedElements({driver}, traceEvents);
+    expect(result).toEqual([
+      {nodeId: 5, animations: [
+        {name: 'alpha', failureReasonsMask: 2048, unsupportedProperties: []},
+        {failureReasonsMask: 2048, unsupportedProperties: []},
       ]},
     ]);
   });
@@ -378,21 +423,21 @@ describe('Trace Elements gatherer - Animated Elements', () => {
     const driver = new Driver(connectionStub);
     const traceEvents = [
       makeAnimationTraceEvent('0x363db876c1', 'b', {id: '1', nodeId: 5}),
-      makeAnimationTraceEvent('0x363db876c1', 'n', {compositeFailed: 0}),
+      makeAnimationTraceEvent('0x363db876c1', 'n', {compositeFailed: 0, unsupportedProperties: []}),
       makeAnimationTraceEvent('0x363db876c2', 'b', {id: '2', nodeId: 5}),
-      makeAnimationTraceEvent('0x363db876c2', 'n', {compositeFailed: 0}),
+      makeAnimationTraceEvent('0x363db876c2', 'n', {compositeFailed: 0, unsupportedProperties: []}),
       makeAnimationTraceEvent('0x363db876c3', 'b', {id: '3', nodeId: 6}),
-      makeAnimationTraceEvent('0x363db876c3', 'n', {compositeFailed: 0}),
+      makeAnimationTraceEvent('0x363db876c3', 'n', {compositeFailed: 0, unsupportedProperties: []}),
     ];
 
     const result = await TraceElementsGatherer.getAnimatedElements({driver}, traceEvents);
     expect(result).toEqual([
       {nodeId: 5, animations: [
-        {name: 'alpha', failureReasonsMask: 0},
-        {failureReasonsMask: 0},
+        {name: 'alpha', failureReasonsMask: 0, unsupportedProperties: []},
+        {failureReasonsMask: 0, unsupportedProperties: []},
       ]},
       {nodeId: 6, animations: [
-        {name: 'beta', failureReasonsMask: 0},
+        {name: 'beta', failureReasonsMask: 0, unsupportedProperties: []},
       ]},
     ]);
   });
@@ -469,7 +514,10 @@ describe('Trace Elements gatherer - Animated Elements', () => {
       ])
     );
     trace.traceEvents.push(makeAnimationTraceEvent('0x363db876c8', 'b', {id: '1', nodeId: 5}));
-    trace.traceEvents.push(makeAnimationTraceEvent('0x363db876c8', 'n', {compositeFailed: 8192}));
+    trace.traceEvents.push(makeAnimationTraceEvent('0x363db876c8', 'n', {
+      compositeFailed: 8192,
+      unsupportedProperties: ['height'],
+    }));
     trace.traceEvents.push(makeLCPTraceEvent(6));
 
     const gatherer = new TraceElementsGatherer();
@@ -488,7 +536,7 @@ describe('Trace Elements gatherer - Animated Elements', () => {
       {
         ...animationNodeData,
         animations: [
-          {name: 'example', failureReasonsMask: 8192},
+          {name: 'example', failureReasonsMask: 8192, unsupportedProperties: ['height']},
         ],
         nodeId: 5,
       },
@@ -586,9 +634,9 @@ describe('Trace Elements gatherer - Animated Elements', () => {
       {
         ...animationNodeData,
         animations: [
-          {failureReasonsMask: 8224},
-          {name: 'alpha', failureReasonsMask: 8224},
-          {name: 'beta', failureReasonsMask: 8224},
+          {failureReasonsMask: 8224, unsupportedProperties: ['width']},
+          {name: 'alpha', failureReasonsMask: 8224, unsupportedProperties: ['height']},
+          {name: 'beta', failureReasonsMask: 8224, unsupportedProperties: ['background-color']},
         ],
         nodeId: 4,
       },

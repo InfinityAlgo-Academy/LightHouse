@@ -1,8 +1,8 @@
 {
-  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3358.0 Safari/537.36",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4232.0 Safari/537.36",
   "environment": {
     "networkUserAgent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/66.0.3359.30 Mobile Safari/537.36",
-    "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3358.0 Safari/537.36",
+    "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4232.0 Safari/537.36",
     "benchmarkIndex": 1000
   },
   "lighthouseVersion": "6.2.0",
@@ -1881,7 +1881,58 @@
       "title": "Avoid non-composited animations",
       "description": "Animations which are not composited can be janky and contribute to CLS. [Learn more](https://developers.google.com/web/fundamentals/performance/rendering/stick-to-compositor-only-properties-and-manage-layer-count)",
       "score": null,
-      "scoreDisplayMode": "notApplicable"
+      "scoreDisplayMode": "informative",
+      "displayValue": "1 animated element found",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "node",
+            "itemType": "node",
+            "subItemsHeading": {
+              "key": "failureReason",
+              "itemType": "text"
+            },
+            "text": "Element"
+          },
+          {
+            "key": null,
+            "itemType": "text",
+            "subItemsHeading": {
+              "key": "animation",
+              "itemType": "text"
+            },
+            "text": "Name"
+          }
+        ],
+        "items": [
+          {
+            "node": {
+              "type": "node",
+              "path": "1,HTML,1,BODY,0,DIV",
+              "selector": "body > div#animated-boi",
+              "nodeLabel": "div",
+              "snippet": "<div id=\"animated-boi\">"
+            },
+            "subItems": {
+              "type": "subitems",
+              "items": [
+                {
+                  "failureReason": "Unsupported CSS Property: width"
+                },
+                {
+                  "failureReason": "Unsupported CSS Properties: height, left",
+                  "animation": "alpha"
+                },
+                {
+                  "failureReason": "Unsupported CSS Property: background-color",
+                  "animation": "beta"
+                }
+              ]
+            }
+          }
+        ]
+      }
     },
     "unsized-images": {
       "id": "unsized-images",
@@ -6828,6 +6879,7 @@
       "lighthouse-core/lib/i18n/i18n.js | columnElement": [
         "audits[largest-contentful-paint-element].details.headings[0].text",
         "audits[layout-shift-elements].details.headings[0].text",
+        "audits[non-composited-animations].details.headings[0].text",
         "audits[dom-size].details.headings[1].text"
       ],
       "lighthouse-core/audits/layout-shift-elements.js | title": [
@@ -6878,6 +6930,41 @@
       ],
       "lighthouse-core/audits/non-composited-animations.js | description": [
         "audits[non-composited-animations].description"
+      ],
+      "lighthouse-core/audits/non-composited-animations.js | displayValue": [
+        {
+          "values": {
+            "itemCount": 1
+          },
+          "path": "audits[non-composited-animations].displayValue"
+        }
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnName": [
+        "audits[non-composited-animations].details.headings[1].text",
+        "audits[js-libraries].details.headings[0].text"
+      ],
+      "lighthouse-core/audits/non-composited-animations.js | unsupportedCSSProperty": [
+        {
+          "values": {
+            "propertyCount": 1,
+            "properties": "width"
+          },
+          "path": "audits[non-composited-animations].details.items[0].subItems.items[0].failureReason"
+        },
+        {
+          "values": {
+            "propertyCount": 2,
+            "properties": "height, left"
+          },
+          "path": "audits[non-composited-animations].details.items[0].subItems.items[1].failureReason"
+        },
+        {
+          "values": {
+            "propertyCount": 1,
+            "properties": "background-color"
+          },
+          "path": "audits[non-composited-animations].details.items[0].subItems.items[2].failureReason"
+        }
       ],
       "lighthouse-core/audits/unsized-images.js | failureTitle": [
         "audits[unsized-images].title"
@@ -7447,9 +7534,6 @@
       ],
       "lighthouse-core/audits/dobetterweb/js-libraries.js | description": [
         "audits[js-libraries].description"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | columnName": [
-        "audits[js-libraries].details.headings[0].text"
       ],
       "lighthouse-core/audits/dobetterweb/js-libraries.js | columnVersion": [
         "audits[js-libraries].details.headings[1].text"

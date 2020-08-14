@@ -21,9 +21,9 @@ describe('Non-composited animations audit', () => {
           snippet: '<div id="animated-boi">',
           nodeId: 4,
           animations: [
-            {failureReasonsMask: 8192},
-            {name: 'alpha', failureReasonsMask: 8192},
-            {name: 'beta', failureReasonsMask: 8192},
+            {failureReasonsMask: 8192, unsupportedProperties: ['height', 'width']},
+            {name: 'alpha', failureReasonsMask: 8192, unsupportedProperties: ['color']},
+            {name: 'beta', failureReasonsMask: 8192, unsupportedProperties: ['top']},
           ],
         },
       ],
@@ -44,15 +44,15 @@ describe('Non-composited animations audit', () => {
       snippet: '<div id="animated-boi">',
     });
     expect(auditResult.details.items[0].subItems.items[0].failureReason)
-      .toBeDisplayString('Unsupported CSS Property');
+      .toBeDisplayString('Unsupported CSS Properties: height, width');
     expect(auditResult.details.items[0].subItems.items[0].animation)
       .toBeUndefined();
     expect(auditResult.details.items[0].subItems.items[1].failureReason)
-      .toBeDisplayString('Unsupported CSS Property');
+      .toBeDisplayString('Unsupported CSS Property: color');
     expect(auditResult.details.items[0].subItems.items[1].animation)
       .toEqual('alpha');
     expect(auditResult.details.items[0].subItems.items[2].failureReason)
-      .toBeDisplayString('Unsupported CSS Property');
+      .toBeDisplayString('Unsupported CSS Property: top');
     expect(auditResult.details.items[0].subItems.items[2].animation)
       .toEqual('beta');
   });
@@ -68,8 +68,8 @@ describe('Non-composited animations audit', () => {
           snippet: '<div id="animated-1">',
           nodeId: 4,
           animations: [
-            {failureReasonsMask: 8192},
-            {failureReasonsMask: 8192},
+            {failureReasonsMask: 8192, unsupportedProperties: ['height']},
+            {failureReasonsMask: 8192, unsupportedProperties: ['height']},
           ],
         },
         {
@@ -80,7 +80,7 @@ describe('Non-composited animations audit', () => {
           snippet: '<div id="animated-2">',
           nodeId: 5,
           animations: [
-            {failureReasonsMask: 8192},
+            {failureReasonsMask: 8192, unsupportedProperties: ['height']},
           ],
         },
       ],
@@ -108,11 +108,11 @@ describe('Non-composited animations audit', () => {
       snippet: '<div id="animated-2">',
     });
     expect(auditResult.details.items[0].subItems.items[0].failureReason)
-      .toBeDisplayString('Unsupported CSS Property');
+      .toBeDisplayString('Unsupported CSS Property: height');
     expect(auditResult.details.items[0].subItems.items[0].animation)
       .toBeUndefined();
     expect(auditResult.details.items[1].subItems.items[0].failureReason)
-      .toBeDisplayString('Unsupported CSS Property');
+      .toBeDisplayString('Unsupported CSS Property: height');
     expect(auditResult.details.items[1].subItems.items[0].animation)
       .toBeUndefined();
   });
@@ -128,8 +128,8 @@ describe('Non-composited animations audit', () => {
           snippet: '<div id="animated-boi">',
           nodeId: 4,
           animations: [
-            {failureReasonsMask: 0},
-            {name: 'alpha', failureReasonsMask: 0},
+            {failureReasonsMask: 0, unsupportedProperties: []},
+            {name: 'alpha', failureReasonsMask: 0, unsupportedProperties: []},
           ],
         },
       ],
@@ -153,7 +153,7 @@ describe('Non-composited animations audit', () => {
           snippet: '<div id="animated-boi">',
           nodeId: 4,
           animations: [
-            {name: 'alpha', failureReasonsMask: 4}, // kInvalidAnimationOrEffect
+            {name: 'alpha', failureReasonsMask: 4, unsupportedProperties: []}, // kInvalidAnimationOrEffect
           ],
         },
       ],
