@@ -520,6 +520,7 @@ declare global {
         boundingRect: Rect;
         nodeId?: number;
         animations?: {name?: string, failureReasonsMask?: number}[];
+        elementType: string;
       }
 
       export interface ViewportDimensions {

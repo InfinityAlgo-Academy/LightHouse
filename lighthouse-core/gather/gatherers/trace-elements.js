@@ -37,6 +37,7 @@ function getNodeDetailsData() {
       snippet: getOuterHTMLSnippet(elem), // eslint-disable-line no-undef
       // @ts-expect-error - put into scope via stringification
       boundingRect: getBoundingClientRect(elem), // eslint-disable-line no-undef
+      elementType: elem.tagName,
     };
   }
   return traceElement;
