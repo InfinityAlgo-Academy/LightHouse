@@ -16,9 +16,6 @@ const UnusedJavaScriptSummary = require('../computed/unused-javascript-summary.j
 const ModuleDuplication = require('../computed/module-duplication.js');
 const NetworkRecords = require('../computed/network-records.js');
 const ResourceSummary = require('../computed/resource-summary.js');
-const BootupTime = require('../audits/bootup-time.js');
-const MainThreadTasks = require('../computed/main-thread-tasks.js');
-const {taskGroups} = require('../lib/tracehouse/task-groups.js');
 
 /**
  * @typedef {Record<string, RootNode[]>} TreemapData
@@ -156,8 +153,6 @@ class TreemapDataAudit extends Audit {
 
     const bundles = await JsBundles.request(artifacts, context);
     const duplication = await ModuleDuplication.request(artifacts, context);
-    // TODO: this should be a computed artifact.
-    // const executionTimings = await TreemapDataAudit.getExecutionTimings(artifacts, context);
 
     /** @type {Array<{src: string, length: number, unusedJavascriptSummary?: import('../computed/unused-javascript-summary.js').Summary}>} */
     const scriptData = [];
@@ -229,9 +224,6 @@ class TreemapDataAudit extends Audit {
           executionTime: 0,
         };
       }
-
-      // const executionTiming = executionTimings.find(timing => timing.url === src);
-      // node.executionTime = executionTiming ? Math.round(executionTiming.total) : 0;
 
       rootNodes.push({
         name: name,
@@ -307,51 +299,6 @@ class TreemapDataAudit extends Audit {
         children,
       },
     };
-  }
-
-  /**
-   * @param {LH.Artifacts} artifacts
-   * @param {LH.Audit.Context} context
-   */
-  static async getExecutionTimings(artifacts, context) {
-    const trace = artifacts.traces[BootupTime.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[BootupTime.DEFAULT_PASS];
-    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
-    const tasks = await MainThreadTasks.request(trace, context);
-    const multiplier = context.settings.throttlingMethod === 'simulate' ?
-      context.settings.throttling.cpuSlowdownMultiplier : 1;
-
-    const jsURLs = BootupTime.getJavaScriptURLs(networkRecords);
-    const executionTimings = BootupTime.getExecutionTimingsByURL(tasks, jsURLs);
-
-    return Array.from(executionTimings)
-      .map(([url, timingByGroupId]) => {
-        // Add up the totalExecutionTime for all the taskGroups
-        let totalExecutionTimeForURL = 0;
-        for (const [groupId, timespanMs] of Object.entries(timingByGroupId)) {
-          timingByGroupId[groupId] = timespanMs * multiplier;
-          totalExecutionTimeForURL += timespanMs * multiplier;
-        }
-
-        const scriptingTotal = timingByGroupId[taskGroups.scriptEvaluation.id] || 0;
-        const parseCompileTotal = timingByGroupId[taskGroups.scriptParseCompile.id] || 0;
-
-        // Add up all the JavaScript time of shown URLs
-        // if (totalExecutionTimeForURL >= context.options.thresholdInMs) {
-        // }
-
-        // hadExcessiveChromeExtension = hadExcessiveChromeExtension ||
-        //   (url.startsWith('chrome-extension:') && scriptingTotal > 100);
-
-        return {
-          url: url,
-          total: totalExecutionTimeForURL,
-          // Highlight the JavaScript task costs
-          scripting: scriptingTotal,
-          scriptParseCompile: parseCompileTotal,
-        };
-      })
-      .sort((a, b) => b.total - a.total);
   }
 
   /**
