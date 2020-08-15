@@ -80,7 +80,6 @@ function getProtoRoundTrip() {
 
 /**
  * @typedef PartialScriptCoverage
- * @property {string} scriptId
  * @property {string} url
  * @property {Array<{ranges: LH.Crdp.Profiler.CoverageRange[]}>} functions
  */
@@ -103,7 +102,6 @@ function loadSourceMapFixture(name) {
     /** @type {{url: string, ranges: Array<{start: number, end: number, count: number}>}} */
     const exportedUsage = JSON.parse(usageJson);
     usage = {
-      scriptId: '0',
       url: exportedUsage.url,
       functions: [
         {
