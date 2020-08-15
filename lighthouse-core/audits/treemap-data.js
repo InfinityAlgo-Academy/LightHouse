@@ -216,7 +216,6 @@ class TreemapDataAudit extends Audit {
           executionTime: 0,
         };
       } else {
-        // TODO ...?
         node = {
           name,
           resourceBytes: length,
@@ -258,7 +257,6 @@ class TreemapDataAudit extends Audit {
   static async makeResourceSummaryRootNode(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
-    const origin = new URL(artifacts.URL.finalUrl).origin;
 
     const totalCount = networkRecords.length;
     let totalSize = 0;
@@ -282,8 +280,6 @@ class TreemapDataAudit extends Audit {
       child.resourceBytes += networkRecord.resourceSize;
 
       let name = networkRecord.url;
-      // TODO ...
-      if (name.startsWith(origin)) name = name.replace(origin, '/');
       child.children = child.children || [];
       child.children.push({
         name,
