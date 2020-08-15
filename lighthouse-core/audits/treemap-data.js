@@ -50,7 +50,7 @@ class TreemapDataAudit extends Audit {
       id: 'treemap-data',
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: 'Treemap Data',
-      description: 'Used for treemap visualization.',
+      description: 'Used for treemap app.',
       requiredArtifacts:
         ['traces', 'devtoolsLogs', 'SourceMaps', 'ScriptElements', 'JsUsage', 'URL'],
     };
@@ -119,7 +119,7 @@ class TreemapDataAudit extends Audit {
 
     /**
      * Collapse nodes that have only one child.
-     * @param {*} node
+     * @param {Node} node
      */
     function collapse(node) {
       while (node.children && node.children.length === 1) {
@@ -225,28 +225,12 @@ class TreemapDataAudit extends Audit {
       }
 
       rootNodes.push({
-        name: name,
+        name,
         node,
       });
     }
 
     return rootNodes;
-  }
-
-  /**
-   * @param {LH.Artifacts.Bundle[]} bundles
-   * @param {string} url
-   * @param {LH.Artifacts['JsUsage']} JsUsage
-   * @param {LH.Audit.Context} context
-   */
-  static async getUnusedJavascriptSummary(bundles, url, JsUsage, context) {
-    const bundle = bundles.find(bundle => url === bundle.script.src);
-    const scriptCoverages = JsUsage[url];
-    if (!scriptCoverages) return;
-
-    const unusedJsSumary =
-      await UnusedJavaScriptSummary.request({url, scriptCoverages, bundle}, context);
-    return unusedJsSumary;
   }
 
   /**
