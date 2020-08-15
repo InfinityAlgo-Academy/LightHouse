@@ -18,17 +18,9 @@ const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.
 const Driver = require('../../gather/driver.js');
 const Connection = require('../../gather/connections/connection.js');
 const {createMockSendCommandFn} = require('./mock-commands.js');
+const {makeParamsOptional} = require('../test-utils.js');
 
 jest.mock('../../lib/stack-collector.js', () => () => Promise.resolve([]));
-
-/**
- * @template {unknown[]} TParams
- * @template TReturn
- * @param {(...args: TParams) => TReturn} fn
- */
-function makeParamsOptional(fn) {
-  return /** @type {(...args: RecursivePartial<TParams>) => TReturn} */ (fn);
-}
 
 const GatherRunner = {
   afterPass: makeParamsOptional(GatherRunner_.afterPass),
