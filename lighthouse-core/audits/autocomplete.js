@@ -55,7 +55,7 @@ class AutocompleteAudit extends Audit {
       for (const input of form.inputs) {
         if (!input.autocomplete) {
           failingFormsData.push({
-            failingElements: /** @type {LH.Audit.Details.NodeValue} */ ({
+            node: /** @type {LH.Audit.Details.NodeValue} */ ({
               type: 'node',
               snippet: input.snippet,
               nodeLabel: input.nodeLabel,
