@@ -12,8 +12,9 @@ DIRNAME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LH_ROOT="$DIRNAME/../../.."
 cd $DIRNAME
 
+GCLOUD_USER=$(gcloud config get-value account | awk -F '@' '{print $1}')
 INSTANCE_SUFFIX=${1:-instance0}
-INSTANCE_NAME="lighthouse-collection-$INSTANCE_SUFFIX"
+INSTANCE_NAME="lighthouse-collection-$GCLOUD_USER-$INSTANCE_SUFFIX"
 CLOUDSDK_CORE_PROJECT=${LIGHTHOUSE_COLLECTION_GCLOUD_PROJECT:-lighthouse-lantern-collect}
 LIGHTHOUSE_GIT_REF=${TARGET_GIT_REF:-master}
 NUMBER_OF_RUNS=${TARGET_RUNS:-1}
@@ -32,7 +33,7 @@ export BASE_LIGHTHOUSE_FLAGS="--max-wait-for-load=90000"
 EOF
 
 # Instance needs time to start up.
-until gcloud --project="$CLOUDSDK_CORE_PROJECT" compute scp ./.tmp_env $INSTANCE_NAME:/tmp/lhenv --zone="$ZONE"
+until gcloud --project="$CLOUDSDK_CORE_PROJECT" compute scp ./.tmp_env $INSTANCE_NAME:/tmp/lhenv --zone="$ZONE" --scp-flag="-o ConnectTimeout=5"
 do
   echo "Waiting for start up ..."
   sleep 10

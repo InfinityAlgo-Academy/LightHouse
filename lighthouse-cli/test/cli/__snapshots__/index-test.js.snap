@@ -160,10 +160,16 @@ Object {
       "path": "long-tasks",
     },
     Object {
+      "path": "autocomplete",
+    },
+    Object {
       "path": "no-unload-listeners",
     },
     Object {
       "path": "non-composited-animations",
+    },
+    Object {
+      "path": "unsized-images",
     },
     Object {
       "path": "manual/pwa-cross-browser",
@@ -744,6 +750,11 @@ Object {
           "weight": 1,
         },
         Object {
+          "group": "best-practices-ux",
+          "id": "autocomplete",
+          "weight": 0,
+        },
+        Object {
           "group": "best-practices-browser-compat",
           "id": "doctype",
           "weight": 1,
@@ -1007,6 +1018,11 @@ Object {
         Object {
           "group": "diagnostics",
           "id": "non-composited-animations",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "unsized-images",
           "weight": 0,
         },
         Object {
