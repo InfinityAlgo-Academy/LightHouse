@@ -46,6 +46,18 @@ function pathsAreEqual(path1, path2) {
   return true;
 }
 
+/**
+ * @param {string[]} maybeSubpath
+ * @param {string[]} path
+ */
+function pathIsSubpath(maybeSubpath, path) {
+  if (maybeSubpath.length > path.length) return false;
+  for (let i = 0; i < maybeSubpath.length; i++) {
+    if (maybeSubpath[i] !== path[i]) return false;
+  }
+  return true;
+}
+
 class TreemapViewer {
   /**
    * @param {Treemap.Options} options
@@ -183,12 +195,21 @@ class TreemapViewer {
   }
 
   render() {
+    // If particular nodes are highlighted we want to hide nodes that aren't in the highlighted
+    // nodes paths.
     let showNode;
-    // if (this.mode.highlightNodeNames) {
-    //   showNode = node => {
+    if (this.mode.highlightNodePaths) {
+      /** @param {Treemap.Node} node */
+      showNode = node => {
+        // Never happens.
+        if (!this.mode.highlightNodePaths) return false;
 
-    //   };
-    // }
+        const path = this.nodeToPathMap.get(node);
+        if (!path) return true;
+
+        return this.mode.highlightNodePaths.some(p => pathIsSubpath(path, p));
+      };
+    }
 
     webtreemap.render(this.el, this.currentRootNode, {
       padding: [18, 3, 3, 3],
