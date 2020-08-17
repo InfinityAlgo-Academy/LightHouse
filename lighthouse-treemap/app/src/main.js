@@ -15,6 +15,8 @@ let treemapViewer;
 
 // TODO: applyMutations option?
 
+// TODO: unused bytes of inline scripts?
+
 /**
  * @param {Treemap.Node} node
  * @param {(node: Treemap.Node, fullId: string) => void} fn
@@ -325,12 +327,11 @@ class TreemapViewer {
    */
   createTable(rootNodes) {
     const gridPanelEl = Util.find('.panel--datagrid');
-
     gridPanelEl.innerHTML = '';
 
+    /** @type {Array<{name: string, bytes: {resource: number, unused?: number}}>} */
     const data = [];
     let maxSize = 0;
-    let maxUnusedBytes = 0;
     for (const rootNode of rootNodes) {
       const node = rootNode.node;
       // if (node.children) node = node.children[0];
@@ -339,35 +340,53 @@ class TreemapViewer {
         if (node.children) return;
 
         if (node.resourceBytes) maxSize = Math.max(maxSize, node.resourceBytes);
-        if (node.unusedBytes) maxUnusedBytes = Math.max(maxUnusedBytes, node.unusedBytes);
-
         data.push({
           name: fullId,
-          resourceBytes: node.resourceBytes,
-          unusedBytes: node.unusedBytes,
+          bytes: {resource: node.resourceBytes, unused: node.unusedBytes},
         });
       });
     }
 
     const gridEl = document.createElement('div');
     gridPanelEl.append(gridEl);
-    const table = new Tabulator(gridEl, {
-      data, // load row data from array
+
+    /**
+     * @param {typeof data[0]['bytes']} a
+     * @param {typeof data[0]['bytes']} b
+     * @return {number}
+     */
+    const bytesSorter = (a, b) => a.resource - b.resource;
+
+    this.table = new Tabulator(gridEl, {
+      data,
       height: '100%',
-      layout: 'fitColumns', // fit columns to width of table
-      tooltips: true, // show tool tips on cells
-      addRowPos: 'top', // when adding a new row, add it to the top of the table
-      history: true, // allow undo and redo actions on the table
-      resizableRows: true, // allow row order to be changed
-      initialSort: [ // set the initial sort order of the data
-        {column: 'resourceBytes', dir: 'desc'},
+      layout: 'fitColumns',
+      tooltips: true,
+      addRowPos: 'top',
+      history: true,
+      resizableRows: true,
+      initialSort: [
+        {column: 'bytes', dir: 'desc'},
       ],
-      columns: [ // define the table columns
+      columns: [
         {title: 'Name', field: 'name'},
-        {title: 'Size', field: 'resourceBytes', align: 'left', formatter: cell => Util.formatBytes(cell.getValue())},
-        {title: 'Size', field: 'resourceBytes', formatter: 'progress', formatterParams: {min: 0, max: maxSize, width: '25%'}},
-        {title: 'Unused Bytes', field: 'unusedBytes', align: 'left', formatter: cell => Util.formatBytes(cell.getValue())},
-        {title: 'Unused Bytes', field: 'unusedBytes', formatter: 'progress', formatterParams: {min: 0, max: maxUnusedBytes, width: '25%'}},
+        {title: 'Size / Unused', field: 'bytes', sorter: bytesSorter, formatter: cell => {
+          const value = cell.getValue();
+          return `${Util.formatBytes(value.resource)} / ${Util.formatBytes(value.unused)}`;
+        }},
+        {title: 'Size / Unused', field: 'bytes', sorter: bytesSorter, formatter: cell => {
+          const value = cell.getValue();
+
+          const el = Util.createElement('div', 'lh-coverage-bar');
+          el.style.setProperty('--max', String(maxSize));
+          el.style.setProperty('--used', String(value.resource - value.unused));
+          el.style.setProperty('--unused', String(value.unused));
+
+          Util.createChildOf(el, 'div', 'lh-coverage-bar--used');
+          Util.createChildOf(el, 'div', 'lh-coverage-bar--unused');
+
+          return el;
+        }},
       ],
     });
   }

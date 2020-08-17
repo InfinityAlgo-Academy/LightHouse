@@ -90,3 +90,20 @@ header {
 .lh-button {
 
 }
+
+.lh-coverage-bar {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.lh-coverage-bar--used {
+  background-color: green;
+  width: calc(100% * var(--used) / var(--max));
+  height: 7px;
+}
+.lh-coverage-bar--unused {
+  background-color: red;
+  width: calc(100% * var(--unused) / var(--max));
+  height: 7px;
+  margin-left: 2px;
+}

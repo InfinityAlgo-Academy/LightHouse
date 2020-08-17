@@ -5,6 +5,8 @@
  */
 'use strict';
 
+/** @typedef {HTMLElementTagNameMap & {[id: string]: HTMLElement}} HTMLElementByTagName */
+
 const KB = 1024;
 const MB = KB * KB;
 
@@ -16,6 +18,45 @@ class Util {
   static elide(string, length) {
     if (string.length <= length) return string;
     return string.slice(0, length) + '…';
+  }
+
+  /**
+   * @template {string} T
+   * @param {T} name
+   * @param {string=} className
+   * @param {Object<string, (string|undefined)>=} attrs Attribute key/val pairs.
+   *     Note: if an attribute key has an undefined value, this method does not
+   *     set the attribute on the node.
+   * @return {HTMLElementByTagName[T]}
+   */
+  static createElement(name, className, attrs = {}) {
+    const element = document.createElement(name);
+    if (className) {
+      element.className = className;
+    }
+    Object.keys(attrs).forEach(key => {
+      const value = attrs[key];
+      if (typeof value !== 'undefined') {
+        element.setAttribute(key, value);
+      }
+    });
+    return element;
+  }
+
+  /**
+   * @template {string} T
+   * @param {Element} parentElem
+   * @param {T} elementName
+   * @param {string=} className
+   * @param {Object<string, (string|undefined)>=} attrs Attribute key/val pairs.
+   *     Note: if an attribute key has an undefined value, this method does not
+   *     set the attribute on the node.
+   * @return {HTMLElementByTagName[T]}
+   */
+  static createChildOf(parentElem, elementName, className, attrs) {
+    const element = this.createElement(elementName, className, attrs);
+    parentElem.appendChild(element);
+    return element;
   }
 
   /**
@@ -38,8 +79,8 @@ class Util {
    * @param {number} bytes
    */
   static formatBytes(bytes) {
-    if (bytes >= MB) return (bytes / MB).toFixed(2) + ' MB';
-    if (bytes >= KB) return (bytes / KB).toFixed(0) + ' KB';
+    if (bytes >= MB) return (bytes / MB).toFixed(2) + ' MiB';
+    if (bytes >= KB) return (bytes / KB).toFixed(0) + ' KiB';
     return bytes + ' B';
   }
 

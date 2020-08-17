@@ -103,6 +103,7 @@
     "@types/resize-observer-browser": "^0.1.1",
     "@types/rimraf": "^2.0.2",
     "@types/semver": "^5.5.0",
+    "@types/tabulator-tables": "^4.7.2",
     "@types/update-notifier": "^4.1.0",
     "@types/ws": "^4.0.1",
     "@types/yargs": "^8.0.2",
