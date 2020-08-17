@@ -217,6 +217,7 @@ class TreemapViewer {
       // showChildren: node => node.children && node.children.some(c => c.resourceBytes > 1000 * 100),
       // showNode: node => node.resourceBytes > 100 * 100,
       showNode,
+      // lowerBound: 0.3,
     });
     this.updateColors();
   }
