@@ -13,6 +13,8 @@ let treemapViewer;
 // TODO: use the full URL to shorten names?
 // if (id.startsWith(origin)) id = id.replace(origin, '/');
 
+// TODO: applyMutations option?
+
 /**
  * @param {Treemap.Node} node
  * @param {(node: Treemap.Node, fullId: string) => void} fn
