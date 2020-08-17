@@ -8,6 +8,8 @@
 /** @type {TreemapViewer} */
 let treemapViewer;
 
+// TODO: click on lighthouse logo -> default mode.
+
 // TODO: duplicate js modules should be within x% bytes in size of each other...
 
 // TODO: use the full URL to shorten names?
@@ -19,14 +21,14 @@ let treemapViewer;
 
 /**
  * @param {Treemap.Node} node
- * @param {(node: Treemap.Node, fullId: string) => void} fn
+ * @param {(node: Treemap.Node, fullName: string) => void} fn
  */
-function dfs(node, fn, fullId = '') {
-  fullId = fullId ? `${fullId}/${node.name}` : node.name;
-  fn(node, fullId);
+function dfs(node, fn, fullName = '') {
+  fullName = fullName ? `${fullName}/${node.name}` : node.name;
+  fn(node, fullName);
   if (node.children) {
     for (const child of node.children) {
-      dfs(child, fn, fullId);
+      dfs(child, fn, fullName);
     }
   }
 }
@@ -46,9 +48,13 @@ class TreemapViewer {
     /** @type {WeakMap<Treemap.Node, Treemap.RootNode>} */
     this.nodeToRootNodeMap = new WeakMap();
 
+    /** @type {WeakMap<Treemap.Node, string>} */
+    this.nodeToPathMap = new WeakMap();
+
     for (const rootNodes of Object.values(treemapData)) {
       for (const rootNode of rootNodes) {
         dfs(rootNode.node, node => this.nodeToRootNodeMap.set(node, rootNode));
+        dfs(rootNode.node, (node, fullName) => this.nodeToPathMap.set(node, fullName));
       }
     }
 
@@ -164,9 +170,19 @@ class TreemapViewer {
   }
 
   render() {
+    let showNode;
+    // if (this.mode.highlightNodeNames) {
+    //   showNode = node => {
+        
+    //   };
+    // }
+
     webtreemap.render(this.el, this.currentRootNode, {
       padding: [18, 3, 3, 3],
       caption: node => this.makeCaption(node),
+      // showChildren: node => node.children && node.children.some(c => c.resourceBytes > 1000 * 100),
+      // showNode: node => node.resourceBytes > 100 * 100,
+      showNode,
     });
     this.updateColors();
   }
@@ -240,8 +256,9 @@ class TreemapViewer {
       if (!node.dom) return;
 
       // A view can set nodes to highlight. Don't color anything else.
-      if (this.mode.highlightNodeIds) {
-        if (this.mode.highlightNodeIds.includes(node.name)) {
+      if (this.mode.highlightNodeNames) {
+        const path = this.nodeToPathMap.get(node) || '';
+        if (this.mode.highlightNodeNames.includes(path)) {
           // TODO: 'names' are just filenames, which aren't unique.
           node.dom.style.backgroundColor = 'yellow';
         }
@@ -423,7 +440,7 @@ function createViewModes(rootNodes, currentMode) {
       /** @type {Treemap.Mode} */
       const newMode = {
         ...currentMode,
-        highlightNodeIds: undefined,
+        highlightNodeNames: undefined,
         ...modeOptions,
         selector: {
           ...currentMode.selector,
@@ -463,20 +480,20 @@ function createViewModes(rootNodes, currentMode) {
   {
     let bytes = 0;
     /** @type {string[]} */
-    const highlightNodeIds = [];
+    const highlightNodeNames = [];
     for (const rootNode of rootNodes) {
-      dfs(rootNode.node, node => {
+      dfs(rootNode.node, (node, fullName) => {
         if (node.children) return; // Only consider leaf nodes.
         if (!node.unusedBytes || node.unusedBytes < 50 * 1024) return;
 
         bytes += node.unusedBytes;
-        highlightNodeIds.push(node.name);
+        highlightNodeNames.push(fullName);
       });
     }
     if (bytes) {
       makeViewMode('unused-js', `Unused JS (${Util.formatBytes(bytes)})`, {
         partitionBy: 'unusedBytes',
-        highlightNodeIds,
+        highlightNodeNames,
       });
     }
   }
@@ -484,22 +501,22 @@ function createViewModes(rootNodes, currentMode) {
   {
     let bytes = 0;
     /** @type {string[]} */
-    const highlightNodeIds = [];
+    const highlightNodeNames = [];
     for (const rootNode of rootNodes) {
       if (!rootNode.node.children) continue; // Only consider bundles.
 
-      dfs(rootNode.node, node => {
+      dfs(rootNode.node, (node, fullName) => {
         if (node.children) return; // Only consider leaf nodes.
         if (node.resourceBytes < 200 * 1024) return;
 
         bytes += node.resourceBytes;
-        highlightNodeIds.push(node.name);
+        highlightNodeNames.push(fullName);
       });
     }
     if (bytes) {
       makeViewMode('large-js', `Large Modules (${Util.formatBytes(bytes)})`, {
         partitionBy: 'resourceBytes',
-        highlightNodeIds,
+        highlightNodeNames,
       });
     }
   }
@@ -507,25 +524,25 @@ function createViewModes(rootNodes, currentMode) {
   {
     let bytes = 0;
     /** @type {string[]} */
-    const highlightNodeIds = [];
+    const highlightNodeNames = [];
     const duplicateIdsSeen = new Set();
     for (const rootNode of rootNodes) {
       if (!rootNode.node.children) continue; // Only consider bundles.
 
-      dfs(rootNode.node, node => {
+      dfs(rootNode.node, (node, fullName) => {
         if (node.children) return; // Only consider leaf nodes.
         if (!node.duplicate) return;
         if (duplicateIdsSeen.has(node.duplicate)) return;
         duplicateIdsSeen.add(node.duplicate);
 
         bytes += node.resourceBytes;
-        highlightNodeIds.push(node.name);
+        highlightNodeNames.push(fullName);
       });
     }
     if (bytes) {
       makeViewMode('duplicate-js', `Duplicate Modules (${Util.formatBytes(bytes)})`, {
         partitionBy: 'resourceBytes',
-        highlightNodeIds,
+        highlightNodeNames,
       });
     }
   }

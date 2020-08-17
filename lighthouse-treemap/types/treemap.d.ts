@@ -16,7 +16,8 @@ declare global {
     interface Mode {
       selector: DataSelector;
       partitionBy?: string;
-      highlightNodeIds?: string[];
+      // TODO: rename to paths?
+      highlightNodeNames?: string[];
     }
 
     interface DataSelector {
