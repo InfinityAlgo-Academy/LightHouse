@@ -51,7 +51,15 @@ async function detectLibraries() {
 
   for (const [name, lib] of Object.entries(libraryDetectorTests)) {
     try {
-      const result = await lib.test(window);
+      /** @type {NodeJS.Timeout|undefined} */
+      let timeout;
+      // Some library detections are async that can never return.
+      // Guard ourselves from PROTOCL_TIMEOUT by limiting each detection to a max of 1s.
+      // See https://github.com/GoogleChrome/lighthouse/issues/11124.
+      const timeoutPromise = new Promise(r => timeout = setTimeout(() => r(false), 1000));
+
+      const result = await Promise.race([lib.test(window), timeoutPromise]);
+      if (timeout) clearTimeout(timeout);
       if (result) {
         libraries.push({
           id: lib.id,

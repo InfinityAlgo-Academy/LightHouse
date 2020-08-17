@@ -289,64 +289,74 @@ const expectations = [
           details: {
             items: [
               {
-                type: 'node',
-                path: '0,HTML,1,BODY,1,DIV,11,INPUT',
-                snippet: '<input type="text" name="city_shipping">',
-                nodeLabel: 'input',
+                failingElements: {
+                  type: 'node',
+                  snippet: '<input type="text" id="city_shipping" placeholder="city you live">',
+                  nodeLabel: 'input',
+                },
               },
               {
-                type: 'node',
-                path: '0,HTML,1,BODY,1,DIV,14,SELECT',
-                snippet: '<select name="state_shipping">',
-                nodeLabel: 'Select a state\nCA\nMA\nNY\nMD\nOR\nOH\nIL\nDC',
+                failingElements: {
+                  type: 'node',
+                  snippet: '<select id="state_shipping">',
+                  nodeLabel: 'Select a state\nCA\nMA\nNY\nMD\nOR\nOH\nIL\nDC',
+                },
               },
               {
-                type: 'node',
-                path: '0,HTML,1,BODY,1,DIV,17,INPUT',
-                snippet: '<input type="text" name="zip_shipping">',
-                nodeLabel: 'input',
+                failingElements: {
+                  type: 'node',
+                  snippet: '<input type="text" id="zip_shipping">',
+                  nodeLabel: 'input',
+                },
               },
               {
-                type: 'node',
-                path: '0,HTML,1,BODY,2,DIV,3,INPUT',
-                snippet: '<input type="text" name="name_billing">',
-                nodeLabel: 'input',
+                failingElements: {
+                  type: 'node',
+                  snippet: '<input type="text" id="name_billing" name="name_billing" placeholder="your name">',
+                  nodeLabel: 'input',
+                },
               },
               {
-                type: 'node',
-                path: '0,HTML,1,BODY,2,DIV,9,INPUT',
-                snippet: '<input type="text" name="city_billing">',
-                nodeLabel: 'input',
+                failingElements: {
+                  type: 'node',
+                  snippet: '<input type="text" id="city_billing" name="city_billing" placeholder="city you live in">',
+                  nodeLabel: 'input',
+                },
               },
               {
-                type: 'node',
-                path: '0,HTML,1,BODY,2,DIV,12,SELECT',
-                snippet: '<select name="state_billing">',
-                nodeLabel: '\n      Select a state\n      CA\n      MA\n      NY\n      MD\n      OR\n      OH\n   …',
+                failingElements: {
+                  type: 'node',
+                  snippet: '<select id="state_billing" name="state_billing">',
+                  nodeLabel: '\n            Select a state\n            CA\n            MA\n            NY\n      …',
+                },
               },
               {
-                type: 'node',
-                path: '0,HTML,1,BODY,2,DIV,15,INPUT',
-                snippet: '<input type="text" name="zip_billing">',
-                nodeLabel: 'input',
+                failingElements: {
+                  type: 'node',
+                  snippet: '<input type="text" id="zip_billing">',
+                  nodeLabel: 'input',
+                },
               },
               {
-                type: 'node',
-                path: '0,HTML,1,BODY,3,DIV,5,INPUT',
-                snippet: '<input type="text" name="CCNo">',
-                nodeLabel: 'input',
+                failingElements: {
+                  type: 'node',
+                  snippet: '<input type="text" id="CCNo2" name="CCNo2">',
+                  nodeLabel: 'input',
+                },
               },
               {
-                type: 'node',
-                path: '0,HTML,1,BODY,3,DIV,9,SELECT',
-                snippet: '<select name="CCExpiresMonth">',
-                nodeLabel: 'MM\n01\n02\n03\n04\n05\n06\n07\n08\n09\n10\n11\n12',
+                failingElements: {
+                  type: 'node',
+                  snippet: '<select id="CCExpiresMonth2" name="CCExpiresMonth2">',
+                  nodeLabel: 'MM\n01\n02\n03\n04\n05\n06\n07\n08\n09\n10\n11\n12',
+                },
               },
               {
-                type: 'node',
-                path: '0,HTML,1,BODY,3,DIV,11,SELECT',
-                snippet: '<select name="CCExpiresYear">',
-                nodeLabel: 'YY\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\n2027\n2028\n2029',
+                failingElements: {
+                  type: 'node',
+                  snippet: '<select id="CCExpiresYear">',
+                  nodeLabel: 'YY\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\n2027\n2028\n2029',
+                },
               },
             ],
           },

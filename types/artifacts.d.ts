@@ -369,9 +369,20 @@ declare global {
         analyzedFailingTextLength: number;
         /** Elements that contain a text node that failed size criteria. */
         analyzedFailingNodesData: Array<{
+          /* nodeId of the failing TextNode. */
+          nodeId: number;
           fontSize: number;
           textLength: number;
-          node: FontSize.DomNodeWithParent;
+          parentNode: {
+            backendNodeId: number;
+            attributes: string[];
+            nodeName: string;
+            parentNode?: {
+              backendNodeId: number;
+              attributes: string[];
+              nodeName: string;
+            };
+          };
           cssRule?: {
             type: 'Regular' | 'Inline' | 'Attributes';
             range?: {startLine: number, startColumn: number};
@@ -380,17 +391,6 @@ declare global {
             stylesheet?: Crdp.CSS.CSSStyleSheetHeader;
           }
         }>
-      }
-
-      export module FontSize {
-        export interface DomNodeWithParent extends Crdp.DOM.Node {
-          parentId: number;
-          parentNode: DomNodeWithParent;
-        }
-
-        export interface DomNodeMaybeWithParent extends Crdp.DOM.Node {
-          parentNode?: DomNodeMaybeWithParent;
-        }
       }
 
       // TODO(bckenny): real type for parsed manifest.
@@ -417,9 +417,9 @@ declare global {
         /** The raw height attribute of the image element. CSS images will be set to the empty string. */
         attributeHeight: string;
         /** The CSS width property of the image element. */
-        cssWidth?: string | undefined;
+        cssWidth?: string;
         /** The CSS height property of the image element. */
-        cssHeight?: string | undefined;
+        cssHeight?: string;
         /** The BoundingClientRect of the element. */
         clientRect: {
           top: number;
@@ -427,10 +427,14 @@ declare global {
           left: number;
           right: number;
         };
+        /** The CSS position attribute of the element */
+        cssComputedPosition: string;
         /** Flags whether this element was an image via CSS background-image rather than <img> tag. */
         isCss: boolean;
         /** Flags whether this element was contained within a <picture> tag. */
         isPicture: boolean;
+        /** Flags whether this element was contained within a ShadowRoot */
+        isInShadowDOM: boolean;
         /** Flags whether this element was sized using a non-default `object-fit` CSS property. */
         usesObjectFit: boolean;
         /** Flags whether this element was rendered using a pixel art scaling method.

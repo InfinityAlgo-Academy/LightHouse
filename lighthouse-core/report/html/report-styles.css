@@ -1347,7 +1347,7 @@
 }
 
 .lh-table tr {
-  vertical-align: baseline;
+  vertical-align: middle;
 }
 
 /* Looks unnecessary, but mostly for keeping the <th>s left-aligned */

@@ -42,7 +42,7 @@ describe('Main Thread Tasks', () => {
     assert.equal(tasks.length, 2305);
     assert.equal(toplevelTasks.length, 296);
 
-    // Sanity check the reachability of tasks and summation of selfTime
+    // Check the reachability of tasks and summation of selfTime.
     const allTasks = [];
     const queue = toplevelTasks;
     let totalTime = 0;
