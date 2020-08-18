@@ -72,7 +72,7 @@ class AutocompleteAudit extends Audit {
     const details = Audit.makeTableDetails(headings, failingFormsData);
     let displayValue;
     if (failingFormsData.length > 0) {
-      displayValue = str_(i18n.UIStrings.displayNodes, {nodeCount: failingFormsData.length});
+      displayValue = str_(i18n.UIStrings.displayValueElementsFound, {nodeCount: failingFormsData.length});
     }
     return {
       score: (failingFormsData.length > 0) ? 0 : 1,
