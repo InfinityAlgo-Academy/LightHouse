@@ -198,7 +198,7 @@ class TreemapViewer {
     // If particular nodes are highlighted we want to hide nodes that aren't in the highlighted
     // nodes paths.
     let showNode;
-    if (this.mode.highlightNodePaths) {
+    if (this.mode.highlightNodePaths && this.mode.selector.viewId === 'duplicate-js') {
       /** @param {Treemap.Node} node */
       showNode = node => {
         // Never happens.
@@ -217,7 +217,7 @@ class TreemapViewer {
       // showChildren: node => node.children && node.children.some(c => c.resourceBytes > 1000 * 100),
       // showNode: node => node.resourceBytes > 100 * 100,
       showNode,
-      // lowerBound: 0.3,
+      // lowerBound: 0.2,
     });
     this.updateColors();
   }
@@ -290,18 +290,6 @@ class TreemapViewer {
     dfs(this.currentRootNode, node => {
       if (!node.dom) return;
 
-      // A view can set nodes to highlight. Don't color anything else.
-      if (this.mode.highlightNodePaths) {
-        const path = this.nodeToPathMap.get(node);
-        const shouldHighlight = path && this.mode.highlightNodePaths
-          .some(pathToHighlight => pathsAreEqual(pathToHighlight, path));
-        if (shouldHighlight) {
-          // TODO: 'names' are just filenames, which aren't unique.
-          node.dom.style.backgroundColor = 'yellow';
-        }
-        return;
-      }
-
       // Color a root node and all children the same color.
       const rootNode = this.nodeToRootNodeMap.get(node);
       const hueKey = rootNode ? rootNode.name : node.name;
@@ -315,6 +303,19 @@ class TreemapViewer {
 
       node.dom.style.backgroundColor = Util.hsl(hue, sat, Math.round(lum));
       node.dom.style.color = lum > 50 ? 'black' : 'white';
+
+      // A view can set nodes to highlight. Don't color anything else.
+      if (this.mode.highlightNodePaths) {
+        const path = this.nodeToPathMap.get(node);
+        const shouldHighlight = path && this.mode.highlightNodePaths
+          .some(pathToHighlight => pathsAreEqual(pathToHighlight, path));
+        if (shouldHighlight) {
+          // TODO: 'names' are just filenames, which aren't unique.
+          node.dom.style.backgroundColor = hue;
+        } else {
+          node.dom.style.backgroundColor = 'white';
+        }
+      }
     });
   }
 
@@ -428,7 +429,7 @@ class TreemapViewer {
           const value = cell.getValue();
           return `${Util.formatBytes(value.resource)} / ${Util.formatBytes(value.unused)}`;
         }},
-        {title: 'Size / Unused', field: 'bytes', sorter: bytesSorter, formatter: cell => {
+        {title: 'Coverage', field: 'bytes', sorter: bytesSorter, formatter: cell => {
           const value = cell.getValue();
 
           const el = Util.createElement('div', 'lh-coverage-bar');
