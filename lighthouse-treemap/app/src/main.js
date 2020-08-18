@@ -109,18 +109,21 @@ class TreemapViewer {
     });
 
     window.addEventListener('click', (e) => {
+      if (!(e.target instanceof HTMLElement)) return;
       const nodeEl = e.target.closest('.webtreemap-node');
       if (!nodeEl) return;
       this.updateColors();
     });
 
     window.addEventListener('mouseover', (e) => {
+      if (!(e.target instanceof HTMLElement)) return;
       const nodeEl = e.target.closest('.webtreemap-node');
       if (!nodeEl) return;
       nodeEl.classList.add('webtreemap-node--hover');
     });
 
     window.addEventListener('mouseout', (e) => {
+      if (!(e.target instanceof HTMLElement)) return;
       const nodeEl = e.target.closest('.webtreemap-node'); Util.COLOR_HUES;
       if (!nodeEl) return;
       nodeEl.classList.remove('webtreemap-node--hover');
@@ -185,7 +188,7 @@ class TreemapViewer {
       // for example, switching between "All JavaScript" and a specific bundle.
       delete node.dom;
 
-      // @ts-ignore: webtreemap used `size` to partition the treemap.
+      // @ts-ignore: webtreemap uses `size` to partition the treemap.
       node.size = node[mode.partitionBy || 'resourceBytes'];
     });
     webtreemap.sort(this.currentRootNode);
@@ -288,44 +291,45 @@ class TreemapViewer {
 
   updateColors() {
     dfs(this.currentRootNode, node => {
-      if (!node.dom) return;
-
       // Color a root node and all children the same color.
       const rootNode = this.nodeToRootNodeMap.get(node);
       const hueKey = rootNode ? rootNode.name : node.name;
       const hue = this.getHue(hueKey);
 
-      // Ran out of colors.
-      if (hue === undefined) return;
+      let backgroundColor = 'white';
+      let color = 'black';
 
-      const sat = 60;
-      const lum = 90;
+      if (hue !== undefined) {
+        const sat = 60;
+        const lum = 90;
+        backgroundColor = Util.hsl(hue, sat, Math.round(lum));
+        color = lum > 50 ? 'black' : 'white';
+      } else {
+        // Ran out of colors.
+      }
 
-      node.dom.style.backgroundColor = Util.hsl(hue, sat, Math.round(lum));
-      node.dom.style.color = lum > 50 ? 'black' : 'white';
-
-      // A view can set nodes to highlight. Don't color anything else.
+      // A view can set nodes to highlight. If so, don't color anything else.
       if (this.mode.highlightNodePaths) {
         const path = this.nodeToPathMap.get(node);
         const shouldHighlight = path && this.mode.highlightNodePaths
           .some(pathToHighlight => pathsAreEqual(pathToHighlight, path));
-        if (shouldHighlight) {
-          // TODO: 'names' are just filenames, which aren't unique.
-          node.dom.style.backgroundColor = hue;
-        } else {
-          node.dom.style.backgroundColor = 'white';
-        }
+        if (!shouldHighlight) backgroundColor = 'white';
+      }
+
+      if (node.dom) {
+        node.dom.style.backgroundColor = backgroundColor;
+        node.dom.style.color = color;
       }
     });
   }
 
   createHeader() {
     const bundleSelectorEl = /** @type {HTMLSelectElement} */ (Util.find('.bundle-selector'));
+    bundleSelectorEl.innerHTML = ''; // Clear just in case document was saved with Ctrl+S.
+
     const partitionBySelectorEl = /** @type {HTMLSelectElement} */ (
       Util.find('.partition-selector'));
     const toggleTableBtn = Util.find('.lh-button--toggle-table');
-
-    bundleSelectorEl.innerHTML = '';
 
     function makeOption(value, text) {
       const optionEl = document.createElement('option');
