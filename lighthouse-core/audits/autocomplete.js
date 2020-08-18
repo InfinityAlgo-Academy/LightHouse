@@ -24,7 +24,7 @@ const UIStrings = {
   description: 'Autocomplete helps users submit forms quicker. To reduce user ' +
    'effort, consider enabling autocomplete by setting the `autocomplete` ' +
    'attribute to a valid value.' +
-  ' [Learn more](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill)',
+  ' [Learn more](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
