@@ -27,10 +27,10 @@ function dfs(node, fn, path) {
   path.push(node.name);
 
   fn(node, path);
-  if (node.children) {
-    for (const child of node.children) {
-      dfs(child, fn, [...path]);
-    }
+  if (!node.children) return;
+
+  for (const child of node.children) {
+    dfs(child, fn, [...path]);
   }
 }
 
@@ -90,6 +90,10 @@ class TreemapViewer {
     this.documentUrl = options.lhr.requestedUrl;
     this.el = el;
     this.getHue = Util.stableHasher(Util.COLOR_HUES);
+
+    this.createHeader();
+    this.show(this.mode);
+    this.initListeners();
   }
 
   /**
@@ -331,11 +335,14 @@ class TreemapViewer {
       Util.find('.partition-selector'));
     const toggleTableBtn = Util.find('.lh-button--toggle-table');
 
+    /**
+     * @param {string} value
+     * @param {string} text
+     */
     function makeOption(value, text) {
-      const optionEl = document.createElement('option');
+      const optionEl = Util.createChildOf(bundleSelectorEl, 'option');
       optionEl.value = value;
       optionEl.innerText = text;
-      bundleSelectorEl.append(optionEl);
     }
 
     function onChange() {
@@ -474,8 +481,7 @@ function createViewModes(rootNodes, currentMode) {
    */
   function makeViewMode(viewId, name, modeOptions) {
     const isCurrentView = viewId === currentMode.selector.viewId;
-    const viewModeEl = document.createElement('div');
-    viewModeEl.classList.add('view-mode');
+    const viewModeEl = Util.createChildOf(viewModesPanel, 'div', 'view-mode');
     if (isCurrentView) viewModeEl.classList.add('view-mode--active');
     viewModeEl.innerText = name;
     viewModeEl.addEventListener('click', () => {
@@ -497,8 +503,6 @@ function createViewModes(rootNodes, currentMode) {
 
       treemapViewer.show(newMode);
     });
-
-    viewModesPanel.append(viewModeEl);
   }
 
   // TODO: Sort by savings?
@@ -595,9 +599,6 @@ function createViewModes(rootNodes, currentMode) {
  */
 function init(options) {
   treemapViewer = new TreemapViewer(options, Util.find('.panel--treemap'));
-  treemapViewer.createHeader();
-  treemapViewer.show(options.mode); // ?
-  treemapViewer.initListeners();
 
   // For debugging.
   window.__treemapViewer = treemapViewer;
