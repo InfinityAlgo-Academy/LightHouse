@@ -731,7 +731,8 @@ declare global {
         id: string;
         name: string;
         placeholder?: string;
-        autocomplete: string;
+        autocompleteProp: string;
+        autocompleteAttr: string | null;
         nodeLabel: string;
         snippet: string;
       }
