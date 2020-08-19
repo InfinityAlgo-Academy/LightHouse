@@ -473,6 +473,7 @@ class TreemapViewer {
  */
 function createViewModes(rootNodes, currentMode) {
   const viewModesPanel = Util.find('.panel--modals');
+  viewModesPanel.innerHTML = '';
 
   /**
    * @param {Treemap.DataSelector['viewId']} viewId
@@ -506,8 +507,6 @@ function createViewModes(rootNodes, currentMode) {
   }
 
   // TODO: Sort by savings?
-
-  viewModesPanel.innerHTML = '';
 
   {
     let bytes = 0;
