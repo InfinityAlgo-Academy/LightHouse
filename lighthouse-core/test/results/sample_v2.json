@@ -1672,31 +1672,52 @@
           {
             "key": "entity",
             "itemType": "link",
-            "text": "Third-Party"
+            "text": "Third-Party",
+            "subItemsHeading": {
+              "key": "url",
+              "itemType": "url"
+            }
           },
           {
             "key": "transferSize",
             "granularity": 1,
             "itemType": "bytes",
-            "text": "Transfer Size"
+            "text": "Transfer Size",
+            "subItemsHeading": {
+              "key": "transferSize"
+            }
           },
           {
             "key": "blockingTime",
             "granularity": 1,
             "itemType": "ms",
-            "text": "Main-Thread Blocking Time"
+            "text": "Main-Thread Blocking Time",
+            "subItemsHeading": {
+              "key": "blockingTime"
+            }
           }
         ],
         "items": [
           {
+            "mainThreadTime": 90.36300000000001,
+            "blockingTime": 22.918000000000006,
+            "transferSize": 30174,
             "entity": {
               "type": "link",
               "text": "Google CDN",
               "url": "https://developers.google.com/speed/libraries/"
             },
-            "transferSize": 30174,
-            "mainThreadTime": 90.36300000000001,
-            "blockingTime": 22.918000000000006
+            "subItems": {
+              "type": "subitems",
+              "items": [
+                {
+                  "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
+                  "mainThreadTime": 90.36300000000001,
+                  "blockingTime": 22.918000000000006,
+                  "transferSize": 30174
+                }
+              ]
+            }
           }
         ],
         "summary": {

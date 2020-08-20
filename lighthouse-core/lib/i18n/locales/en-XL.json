@@ -1283,6 +1283,9 @@
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "R̂éd̂úĉé t̂h́ê ím̂ṕâćt̂ óf̂ t́ĥír̂d́-p̂ár̂t́ŷ ćôd́ê"
   },
+  "lighthouse-core/audits/third-party-summary.js | otherValue": {
+    "message": "Ôt́ĥér̂ ŕêśôúr̂ćêś"
+  },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "M̂ín̂ím̂íẑé t̂h́îŕd̂-ṕâŕt̂ý ûśâǵê"
   },
