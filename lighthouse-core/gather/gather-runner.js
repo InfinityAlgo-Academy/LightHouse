@@ -645,18 +645,11 @@ class GatherRunner {
     /** @type {Partial<LH.GathererArtifacts>} */
     const artifacts = {};
 
-    const __internalSkipPageLoadForDevToolsA11y = Boolean(
-      global.isDevtools &&
-      options.settings.onlyCategories &&
-      options.settings.onlyCategories.length === 1 &&
-      options.settings.onlyCategories[0] === 'Accessibility'
-    );
-
     try {
       await driver.connect();
       // In the devtools/extension case, we can't still be on the site while trying to clear state
       // So we first navigate to about:blank, then apply our emulation & setup
-      if (!__internalSkipPageLoadForDevToolsA11y) await GatherRunner.loadBlank(driver);
+      await GatherRunner.loadBlank(driver);
 
       const baseArtifacts = await GatherRunner.initializeBaseArtifacts(options);
       baseArtifacts.BenchmarkIndex = await options.driver.getBenchmarkIndex();
@@ -673,7 +666,6 @@ class GatherRunner {
           passConfig,
           baseArtifacts,
           LighthouseRunWarnings: baseArtifacts.LighthouseRunWarnings,
-          __internalSkipPageLoadForDevToolsA11y,
         };
         const passResults = await GatherRunner.runPass(passContext);
         Object.assign(artifacts, passResults.artifacts);
@@ -694,6 +686,57 @@ class GatherRunner {
         // This cleanup should be removed once the only usage of
         // fetcher (fetching arbitrary URLs) is replaced by new protocol support.
         await driver.fetcher.disableRequestInterception();
+      }
+
+      await GatherRunner.disposeDriver(driver, options);
+      GatherRunner.finalizeBaseArtifacts(baseArtifacts);
+      return /** @type {LH.Artifacts} */ ({...baseArtifacts, ...artifacts}); // Cast to drop Partial<>.
+    } catch (err) {
+      // Clean up on error. Don't await so that the root error, not a disposal error, is shown.
+      GatherRunner.disposeDriver(driver, options);
+
+      throw err;
+    }
+  }
+
+  /**
+   * @param {Array<LH.Config.Pass>} passConfigs
+   * @param {{driver: Driver, requestedUrl: string, settings: LH.Config.Settings}} options
+   * @return {Promise<LH.Artifacts>}
+   */
+  static async _runWithoutPageLoadForDevtoolsA11y(passConfigs, options) {
+    const driver = options.driver;
+
+    /** @type {Partial<LH.GathererArtifacts>} */
+    const artifacts = {};
+
+    const baseArtifacts = await GatherRunner.initializeBaseArtifacts(options);
+
+    try {
+      await driver.connect();
+
+      await GatherRunner.setupDriver(driver, options);
+
+      for (const passConfig of passConfigs) {
+        /** @type {LH.Gatherer.PassContext} */
+        const passContext = {
+          driver,
+          url: options.requestedUrl,
+          settings: options.settings,
+          passConfig,
+          baseArtifacts,
+          LighthouseRunWarnings: baseArtifacts.LighthouseRunWarnings,
+        };
+
+        const gathererResults = {};
+        /** @type {LH.Gatherer.LoadData} */
+        const emptyLoadData = {
+          networkRecords: [],
+          devtoolsLog: [],
+        };
+        await GatherRunner.afterPass(passContext, emptyLoadData, gathererResults);
+        const passArtifacts = await GatherRunner.collectArtifacts(gathererResults);
+        Object.assign(artifacts, passArtifacts.artifacts);
       }
 
       await GatherRunner.disposeDriver(driver, options);

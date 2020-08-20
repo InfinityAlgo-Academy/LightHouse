@@ -22,7 +22,6 @@ declare global {
       /** Gatherers can push to this array to add top-level warnings to the LHR. */
       LighthouseRunWarnings: Array<string>;
       baseArtifacts: BaseArtifacts;
-      __internalSkipPageLoadForDevToolsA11y: boolean;
     }
 
     export interface LoadData {
