@@ -796,7 +796,6 @@ class GatherRunner {
     if (GatherRunner.shouldClearCaches(passContext)) {
       await driver.cleanBrowserCaches(); // Clear disk & memory cache if it's a perf run
     }
-
     await GatherRunner.beforePass(passContext, gathererResults);
 
     // Navigate, start recording, and run `pass()` on gatherers.
