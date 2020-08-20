@@ -17,6 +17,7 @@ const Runner = require('../runner.js');
 const ConfigPlugin = require('./config-plugin.js');
 const Budget = require('./budget.js');
 const {requireAudits, mergeOptionsOfItems, resolveModule} = require('./config-helpers.js');
+const Gatherer = require('../gather/gatherers/gatherer.js');
 
 /** @typedef {typeof import('../gather/gatherers/gatherer.js')} GathererConstructor */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
@@ -73,6 +74,12 @@ function assertValidPasses(passes, audits) {
       if (!isGatherRequiredByAudits) {
         const msg = `${gatherer.name} gatherer requested, however no audit requires it.`;
         log.warn('config', msg);
+      }
+
+      if (pass.skipPageLoad && (gatherer.pass !== Gatherer.prototype.pass ||
+                                gatherer.afterPass !== Gatherer.prototype.afterPass)) {
+        throw new Error(
+          '`skipPageLoad` may not be used with a gatherer that defines `pass` or `afterPass`');
       }
     });
   });

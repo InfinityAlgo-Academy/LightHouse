@@ -649,7 +649,7 @@ class GatherRunner {
       await driver.connect();
       // In the devtools/extension case, we can't still be on the site while trying to clear state
       // So we first navigate to about:blank, then apply our emulation & setup
-      await GatherRunner.loadBlank(driver);
+      if (passConfigs.some(c => !c.skipPageLoad)) await GatherRunner.loadBlank(driver);
 
       const baseArtifacts = await GatherRunner.initializeBaseArtifacts(options);
       baseArtifacts.BenchmarkIndex = await options.driver.getBenchmarkIndex();
@@ -740,12 +740,21 @@ class GatherRunner {
     const {driver, passConfig} = passContext;
 
     // Go to about:blank, set up, and run `beforePass()` on gatherers.
-    await GatherRunner.loadBlank(driver, passConfig.blankPage);
-    await GatherRunner.setupPassNetwork(passContext);
-    if (GatherRunner.shouldClearCaches(passContext)) {
-      await driver.cleanBrowserCaches(); // Clear disk & memory cache if it's a perf run
+    if (!passConfig.skipPageLoad) {
+      await GatherRunner.loadBlank(driver, passConfig.blankPage);
+      await GatherRunner.setupPassNetwork(passContext);
+      if (GatherRunner.shouldClearCaches(passContext)) {
+        await driver.cleanBrowserCaches(); // Clear disk & memory cache if it's a perf run
+      }
     }
+
     await GatherRunner.beforePass(passContext, gathererResults);
+
+    if (passConfig.skipPageLoad) {
+      const artifacts = GatherRunner.collectArtifacts(gathererResults);
+      log.timeEnd(status);
+      return artifacts;
+    }
 
     // Navigate, start recording, and run `pass()` on gatherers.
     await GatherRunner.beginRecording(passContext);

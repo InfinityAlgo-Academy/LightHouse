@@ -33,6 +33,7 @@ declare global {
         networkQuietThresholdMs?: number;
         cpuQuietThresholdMs?: number;
         blockedUrlPatterns?: string[];
+        skipPageLoad?: boolean;
         blankPage?: string;
         gatherers?: GathererJson[];
       }
