@@ -60,7 +60,7 @@ class LargestContentfulPaintElement extends Audit {
 
     const details = Audit.makeTableDetails(headings, lcpElementDetails);
 
-    const displayValue = str_(i18n.UIStrings.displayValueElementsFound, {itemCount: lcpElementDetails.length});
+    const displayValue = str_(i18n.UIStrings.displayValueElementsFound, {nodeCount: lcpElementDetails.length});
 
     return {
       score: 1,

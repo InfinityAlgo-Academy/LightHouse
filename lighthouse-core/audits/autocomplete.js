@@ -67,7 +67,7 @@ class AutocompleteAudit extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'failingElements', itemType: 'node', text: str_(i18n.UIStrings.columnFailingElem)},
+      {key: 'node', itemType: 'node', text: str_(i18n.UIStrings.columnFailingElem)},
     ];
     const details = Audit.makeTableDetails(headings, failingFormsData);
     let displayValue;
