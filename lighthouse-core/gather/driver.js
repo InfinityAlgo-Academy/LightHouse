@@ -1084,7 +1084,6 @@ class Driver {
    * @return {Promise<{finalUrl: string, timedOut: boolean}>}
    */
   async gotoURL(url, options = {}) {
-    console.log({url});
     const waitForFcp = options.waitForFcp || false;
     const waitForNavigated = options.waitForNavigated || false;
     const waitForLoad = options.waitForLoad || false;

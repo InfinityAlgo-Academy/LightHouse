@@ -791,21 +791,13 @@ class GatherRunner {
     const {driver, passConfig} = passContext;
 
     // Go to about:blank, set up, and run `beforePass()` on gatherers.
-    if (!passContext.__internalSkipPageLoadForDevToolsA11y) {
-      await GatherRunner.loadBlank(driver, passConfig.blankPage);
-      await GatherRunner.setupPassNetwork(passContext);
-      if (GatherRunner.shouldClearCaches(passContext)) {
-        await driver.cleanBrowserCaches(); // Clear disk & memory cache if it's a perf run
-      }
+    await GatherRunner.loadBlank(driver, passConfig.blankPage);
+    await GatherRunner.setupPassNetwork(passContext);
+    if (GatherRunner.shouldClearCaches(passContext)) {
+      await driver.cleanBrowserCaches(); // Clear disk & memory cache if it's a perf run
     }
 
     await GatherRunner.beforePass(passContext, gathererResults);
-
-    if (passContext.__internalSkipPageLoadForDevToolsA11y) {
-      const artifacts = GatherRunner.collectArtifacts(gathererResults);
-      log.timeEnd(status);
-      return artifacts;
-    }
 
     // Navigate, start recording, and run `pass()` on gatherers.
     await GatherRunner.beginRecording(passContext);
