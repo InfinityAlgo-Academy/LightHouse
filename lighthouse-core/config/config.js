@@ -67,6 +67,10 @@ function assertValidPasses(passes, audits) {
       pass.loadFailureMode = 'fatal';
     }
 
+    if (pass.skipPageLoad && !global.isDevtools) {
+      throw new Error('`skipPageLoad` is only supported for DevTools');
+    }
+
     pass.gatherers.forEach(gathererDefn => {
       const gatherer = gathererDefn.instance;
       foundGatherers.add(gatherer.name);
