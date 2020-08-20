@@ -29,6 +29,17 @@ const UIStrings = {
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
+/** @type {string[]} This array contains all acceptable autocomplete attributes from the WHATWG standard. More found at https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill */
+const validAutocompleteAttributeNames = ['name', 'honorific-prefix', 'given-name',
+  'additional-name', 'family-name', 'honorific-suffix', 'nickname', 'username', 'new-password',
+  'current-password', 'one-time-code', 'organization-title', 'organization', 'street-address',
+  'address-line1', 'address-line2', 'address-line3', 'address-level4', 'address-level3',
+  'address-level2', 'address-level1', 'country', 'country-name', 'postal-code', 'cc-name',
+  'cc-given-name', 'cc-additional-name', 'cc-family-name', 'cc-number', 'cc-exp',
+  'cc-exp-month', 'cc-exp-year', 'cc-csc', 'cc-type', 'transaction-currency',
+  'transaction-amount', 'language', 'bday', 'bday-day', 'bday-month', 'bday-year',
+  'sex', 'url', 'photo', 'tel', 'tel-country-code', 'tel-national', 'tel-area-code', 'on',
+  'tel-local', 'tel-local-prefix', 'tel-local-suffix', 'tel-extension', 'email', 'impp', 'off'];
 
 class AutocompleteAudit extends Audit {
   /**
@@ -45,6 +56,19 @@ class AutocompleteAudit extends Audit {
   }
 
   /**
+   * @param {LH.Artifacts.FormInput} input
+   * @return {Boolean}
+   */
+  static isValidAutocomplete(input) {
+    for (const name of validAutocompleteAttributeNames) {
+      const valid = input.autocompleteAttr ? input.autocompleteAttr.includes(name): false;
+      if (valid) {
+        return true;
+      }
+    }
+    return false;
+  }
+  /**
    * @param {LH.Artifacts} artifacts
    * @return {LH.Audit.Product}
    */
@@ -53,14 +77,16 @@ class AutocompleteAudit extends Audit {
     const failingFormsData = [];
     for (const form of forms) {
       for (const input of form.inputs) {
-        if (!input.autocomplete) {
-          failingFormsData.push({
-            node: /** @type {LH.Audit.Details.NodeValue} */ ({
-              type: 'node',
-              snippet: input.snippet,
-              nodeLabel: input.nodeLabel,
-            }),
-          });
+        if (!this.isValidAutocomplete(input) ) {
+          if (!input.autocompleteProp) {
+            failingFormsData.push({
+              node: /** @type {LH.Audit.Details.NodeValue} */ ({
+                type: 'node',
+                snippet: input.snippet,
+                nodeLabel: input.nodeLabel,
+              }),
+            });
+          }
         }
       }
     }
@@ -72,7 +98,8 @@ class AutocompleteAudit extends Audit {
     const details = Audit.makeTableDetails(headings, failingFormsData);
     let displayValue;
     if (failingFormsData.length > 0) {
-      displayValue = str_(i18n.UIStrings.displayValueElementsFound, {nodeCount: failingFormsData.length});
+      displayValue = str_(i18n.UIStrings.displayValueElementsFound, 
+        {nodeCount: failingFormsData.length});
     }
     return {
       score: (failingFormsData.length > 0) ? 0 : 1,
