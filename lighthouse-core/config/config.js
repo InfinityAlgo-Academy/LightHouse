@@ -67,10 +67,6 @@ function assertValidPasses(passes, audits) {
       pass.loadFailureMode = 'fatal';
     }
 
-    if (pass.skipPageLoad && !global.isDevtools) {
-      throw new Error('`skipPageLoad` is only supported for DevTools');
-    }
-
     pass.gatherers.forEach(gathererDefn => {
       const gatherer = gathererDefn.instance;
       foundGatherers.add(gatherer.name);
@@ -78,12 +74,6 @@ function assertValidPasses(passes, audits) {
       if (!isGatherRequiredByAudits) {
         const msg = `${gatherer.name} gatherer requested, however no audit requires it.`;
         log.warn('config', msg);
-      }
-
-      if (pass.skipPageLoad && (gatherer.pass !== Gatherer.prototype.pass ||
-                                gatherer.afterPass !== Gatherer.prototype.afterPass)) {
-        throw new Error(
-          '`skipPageLoad` may not be used with a gatherer that defines `pass` or `afterPass`');
       }
     });
   });

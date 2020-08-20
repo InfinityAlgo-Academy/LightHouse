@@ -645,11 +645,18 @@ class GatherRunner {
     /** @type {Partial<LH.GathererArtifacts>} */
     const artifacts = {};
 
+    const __internalSkipPageLoadForDevToolsA11y = Boolean(
+      global.isDevtools &&
+      options.settings.onlyCategories &&
+      options.settings.onlyCategories.length === 1 &&
+      options.settings.onlyCategories[0] === 'Accessibility'
+    );
+
     try {
       await driver.connect();
       // In the devtools/extension case, we can't still be on the site while trying to clear state
       // So we first navigate to about:blank, then apply our emulation & setup
-      if (passConfigs.some(c => !c.skipPageLoad)) await GatherRunner.loadBlank(driver);
+      if (!__internalSkipPageLoadForDevToolsA11y) await GatherRunner.loadBlank(driver);
 
       const baseArtifacts = await GatherRunner.initializeBaseArtifacts(options);
       baseArtifacts.BenchmarkIndex = await options.driver.getBenchmarkIndex();
@@ -666,6 +673,7 @@ class GatherRunner {
           passConfig,
           baseArtifacts,
           LighthouseRunWarnings: baseArtifacts.LighthouseRunWarnings,
+          __internalSkipPageLoadForDevToolsA11y,
         };
         const passResults = await GatherRunner.runPass(passContext);
         Object.assign(artifacts, passResults.artifacts);
@@ -740,7 +748,7 @@ class GatherRunner {
     const {driver, passConfig} = passContext;
 
     // Go to about:blank, set up, and run `beforePass()` on gatherers.
-    if (!passConfig.skipPageLoad) {
+    if (!passContext.__internalSkipPageLoadForDevToolsA11y) {
       await GatherRunner.loadBlank(driver, passConfig.blankPage);
       await GatherRunner.setupPassNetwork(passContext);
       if (GatherRunner.shouldClearCaches(passContext)) {
@@ -750,7 +758,7 @@ class GatherRunner {
 
     await GatherRunner.beforePass(passContext, gathererResults);
 
-    if (passConfig.skipPageLoad) {
+    if (passContext.__internalSkipPageLoadForDevToolsA11y) {
       const artifacts = GatherRunner.collectArtifacts(gathererResults);
       log.timeEnd(status);
       return artifacts;
