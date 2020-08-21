@@ -55,7 +55,8 @@ function collectFormElements() {
         id: child.id,
         name: child.name,
         placeholder: child instanceof HTMLSelectElement ? undefined : child.placeholder,
-        autocomplete: child.autocomplete,
+        autocompleteProp: child.autocomplete,
+        autocompleteAttr: child.getAttribute('autocomplete'),
         // @ts-expect-error - put into scope via stringification
         nodeLabel: getNodeLabel(child), // eslint-disable-line no-undef,
         // @ts-expect-error - put into scope via stringification
