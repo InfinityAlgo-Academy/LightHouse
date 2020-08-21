@@ -1848,14 +1848,6 @@
         ]
       }
     },
-    "autocomplete": {
-      "id": "autocomplete",
-      "title": "Input elements use autocomplete",
-      "description": "Autocomplete helps users submit forms quicker. To reduce user effort, consider enabling autocomplete by setting the `autocomplete` attribute to a valid value. [Learn more](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)",
-      "score": null,
-      "scoreDisplayMode": "error",
-      "errorMessage": "Required FormElements gatherer did not run."
-    },
     "no-unload-listeners": {
       "id": "no-unload-listeners",
       "title": "Registers an `unload` listener",
@@ -4749,11 +4741,6 @@
           "group": "best-practices-ux"
         },
         {
-          "id": "autocomplete",
-          "weight": 0,
-          "group": "best-practices-ux"
-        },
-        {
           "id": "doctype",
           "weight": 1,
           "group": "best-practices-browser-compat"
@@ -5582,12 +5569,6 @@
       {
         "startTime": 0,
         "name": "lh:audit:long-tasks",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:audit:autocomplete",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6883,21 +6864,6 @@
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnDuration": [
         "audits[long-tasks].details.headings[2].text"
-      ],
-      "lighthouse-core/audits/autocomplete.js | title": [
-        "audits.autocomplete.title"
-      ],
-      "lighthouse-core/audits/autocomplete.js | description": [
-        "audits.autocomplete.description"
-      ],
-      "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": [
-        {
-          "values": {
-            "errorCode": "MISSING_REQUIRED_ARTIFACT",
-            "artifactName": "FormElements"
-          },
-          "path": "audits.autocomplete.errorMessage"
-        }
       ],
       "lighthouse-core/audits/no-unload-listeners.js | failureTitle": [
         "audits[no-unload-listeners].title"
