@@ -65,7 +65,8 @@ class LayoutShiftElements extends Audit {
     const details = Audit.makeTableDetails(headings, clsElementData);
     let displayValue;
     if (clsElementData.length > 0) {
-      displayValue = str_(i18n.UIStrings.displayValueElementsFound, {nodeCount: clsElementData.length});
+      displayValue = str_(i18n.UIStrings.displayValueElementsFound,
+        {nodeCount: clsElementData.length});
     }
 
     return {
