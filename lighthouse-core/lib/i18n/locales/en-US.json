@@ -383,6 +383,15 @@
   "lighthouse-core/audits/apple-touch-icon.js | title": {
     "message": "Provides a valid `apple-touch-icon`"
   },
+  "lighthouse-core/audits/autocomplete.js | description": {
+    "message": "Autocomplete helps users submit forms quicker. To reduce user effort, consider enabling autocomplete by setting the `autocomplete` attribute to a valid value. [Learn more](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)"
+  },
+  "lighthouse-core/audits/autocomplete.js | failureTitle": {
+    "message": "Input elements do not have correct attributes for autocomplete"
+  },
+  "lighthouse-core/audits/autocomplete.js | title": {
+    "message": "Input elements use autocomplete"
+  },
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
     "message": "Chrome extensions negatively affected this page's load performance. Try auditing the page in incognito mode or from a Chrome profile without extensions."
   },
@@ -842,9 +851,6 @@
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "This is the largest contentful element painted within the viewport. [Learn More](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
-  "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
-    "message": "{itemCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
-  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | title": {
     "message": "Largest Contentful Paint element"
   },
@@ -853,9 +859,6 @@
   },
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "These DOM elements contribute most to the CLS of the page."
-  },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount, plural,\n    =1 {1 element found}\n    other {# elements found}\n    }"
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Avoid large layout shifts"
@@ -1615,6 +1618,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Potential savings of {wastedBytes, number, bytes} KiB"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | displayValueElementsFound": {
+    "message": "{nodeCount, plural, =1 {1 element found} other {# elements found}}"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Potential savings of {wastedMs, number, milliseconds} ms"

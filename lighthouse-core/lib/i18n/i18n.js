@@ -54,6 +54,8 @@ const UIStrings = {
   displayValueByteSavings: 'Potential savings of {wastedBytes, number, bytes}\xa0KiB',
   /** Label shown per-audit to show how many milliseconds faster the page load could be if the user implemented the suggestions. The `{wastedMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 140 ms) */
   displayValueMsSavings: 'Potential savings of {wastedMs, number, milliseconds}\xa0ms',
+  /** Label shown per-audit to show how many HTML elements did not pass the audit. The `{# elements found}` placeholder will be replaced with the number of failing HTML elements. */
+  displayValueElementsFound: `{nodeCount, plural, =1 {1 element found} other {# elements found}}`,
   /** Label for a column in a data table; entries will be the URL of a web resource */
   columnURL: 'URL',
   /** Label for a column in a data table; entries will be the size or quantity of some resource, e.g. the width and height dimensions of an image or the number of images in a web page. */
