@@ -1851,7 +1851,7 @@
     "autocomplete": {
       "id": "autocomplete",
       "title": "Input elements use autocomplete",
-      "description": "Autocomplete helps users submit forms quicker. To reduce user effort, consider enabling autocomplete by setting the `autocomplete` attribute to a valid value. [Learn more](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill)",
+      "description": "Autocomplete helps users submit forms quicker. To reduce user effort, consider enabling autocomplete by setting the `autocomplete` attribute to a valid value. [Learn more](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)",
       "score": null,
       "scoreDisplayMode": "error",
       "errorMessage": "Required FormElements gatherer did not run."
@@ -6836,12 +6836,18 @@
       "lighthouse-core/audits/largest-contentful-paint-element.js | description": [
         "audits[largest-contentful-paint-element].description"
       ],
-      "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": [
+      "lighthouse-core/lib/i18n/i18n.js | displayValueElementsFound": [
         {
           "values": {
-            "itemCount": 1
+            "nodeCount": 1
           },
           "path": "audits[largest-contentful-paint-element].displayValue"
+        },
+        {
+          "values": {
+            "nodeCount": 4
+          },
+          "path": "audits[layout-shift-elements].displayValue"
         }
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnElement": [
@@ -6854,14 +6860,6 @@
       ],
       "lighthouse-core/audits/layout-shift-elements.js | description": [
         "audits[layout-shift-elements].description"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | displayNodes": [
-        {
-          "values": {
-            "nodeCount": 4
-          },
-          "path": "audits[layout-shift-elements].displayValue"
-        }
       ],
       "lighthouse-core/audits/layout-shift-elements.js | columnContribution": [
         "audits[layout-shift-elements].details.headings[1].text"

@@ -827,9 +827,6 @@
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "Acesta este cel mai mare element de conținut redat în aria vizibilă. [Află mai multe](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
-  "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
-    "message": "{itemCount,plural, =1{A fost identificat un element}few{Au fost identificate # elemente}other{Au fost identificate # de elemente}}"
-  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | title": {
     "message": "Elementul cu cea mai mare redare de conținut"
   },

@@ -827,9 +827,6 @@
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "To je največji vsebinski element, izrisan znotraj vidnega območja. [Več o tem](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
-  "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
-    "message": "{itemCount,plural, =1{Najden je bil 1 element}one{Najden je bil # element}two{Najdena sta bila # elementa}few{Najdeni so bili # elementi}other{Najdenih je bilo # elementov}}"
-  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | title": {
     "message": "Element največjega vsebinskega izrisa"
   },

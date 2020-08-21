@@ -77,23 +77,21 @@ class AutocompleteAudit extends Audit {
     const failingFormsData = [];
     for (const form of forms) {
       for (const input of form.inputs) {
-        if (!this.isValidAutocomplete(input) ) {
-          if (!input.autocompleteProp) {
-            failingFormsData.push({
-              node: /** @type {LH.Audit.Details.NodeValue} */ ({
-                type: 'node',
-                snippet: input.snippet,
-                nodeLabel: input.nodeLabel,
-              }),
-            });
-          }
+        if (!this.isValidAutocomplete(input)) {
+          failingFormsData.push({
+            node: /** @type {LH.Audit.Details.NodeValue} */ ({
+              type: 'node',
+              snippet: input.snippet,
+              nodeLabel: input.nodeLabel,
+            }),
+          });
         }
       }
     }
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'failingElements', itemType: 'node', text: str_(i18n.UIStrings.columnFailingElem)},
+      {key: 'node', itemType: 'node', text: str_(i18n.UIStrings.columnFailingElem)},
     ];
     const details = Audit.makeTableDetails(headings, failingFormsData);
     let displayValue;
