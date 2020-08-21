@@ -827,9 +827,6 @@
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "இது காட்சிப் பகுதிக்குள் தோன்றக்கூடிய உள்ளடக்கமுள்ள மிகப்பெரிய உறுப்பாகும். [மேலும் அறிக](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
-  "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 உறுப்பு உள்ளது}other{# உறுப்புகள் உள்ளன}}"
-  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | title": {
     "message": "பெரிய பகுதியைக் காண்பிக்கும் நேரத்திற்கான உறுப்பு"
   },
@@ -838,9 +835,6 @@
   },
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "பக்கத்தின் பெரும்பான்மையான CLSஸில் இந்த DOM உறுப்புகள் பங்களிக்கின்றன."
-  },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount,plural, =1{1 உறுப்பு உள்ளது}other{# உறுப்புகள் உள்ளன}}"
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "பெரிய தளவமைப்பு ஷிஃப்ட்களைத் தவிர்த்தல்"

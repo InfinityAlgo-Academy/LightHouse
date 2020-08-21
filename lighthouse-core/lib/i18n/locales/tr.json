@@ -827,9 +827,6 @@
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "Bu, görüntü alanı içinde boyanan en büyük zengin içerikli öğedir. [Daha Fazla Bilgi](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
-  "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 öğe bulundu}other{# öğe bulundu}}"
-  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | title": {
     "message": "Largest Contentful Paint öğesi"
   },
@@ -838,9 +835,6 @@
   },
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "Sayfanın CLS'sine en fazla bu DOM öğeleri katkıda bulunur."
-  },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount,plural, =1{1 öğe bulundu}other{# öğe bulundu}}"
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Büyük düzen kaymalarından kaçının"

@@ -160,6 +160,9 @@ Object {
       "path": "long-tasks",
     },
     Object {
+      "path": "autocomplete",
+    },
+    Object {
       "path": "no-unload-listeners",
     },
     Object {
@@ -748,6 +751,11 @@ Object {
           "group": "best-practices-ux",
           "id": "image-size-responsive",
           "weight": 1,
+        },
+        Object {
+          "group": "best-practices-ux",
+          "id": "autocomplete",
+          "weight": 0,
         },
         Object {
           "group": "best-practices-browser-compat",

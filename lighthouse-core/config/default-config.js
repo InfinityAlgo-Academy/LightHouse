@@ -238,6 +238,7 @@ const defaultConfig = {
     'largest-contentful-paint-element',
     'layout-shift-elements',
     'long-tasks',
+    'autocomplete',
     'no-unload-listeners',
     'non-composited-animations',
     'unsized-images',
@@ -561,6 +562,7 @@ const defaultConfig = {
         {id: 'password-inputs-can-be-pasted-into', weight: 1, group: 'best-practices-ux'},
         {id: 'image-aspect-ratio', weight: 1, group: 'best-practices-ux'},
         {id: 'image-size-responsive', weight: 1, group: 'best-practices-ux'},
+        {id: 'autocomplete', weight: 0, group: 'best-practices-ux'},
         // Browser Compatibility
         {id: 'doctype', weight: 1, group: 'best-practices-browser-compat'},
         {id: 'charset', weight: 1, group: 'best-practices-browser-compat'},

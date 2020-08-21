@@ -827,9 +827,6 @@
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "Ez a legnagyobb tartalommal rendelkező elem a megjelenítési területen. [További információ](https://web.dev/lighthouse-largest-contentful-paint/)."
   },
-  "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 talált elem}other{# talált elem}}"
-  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | title": {
     "message": "A legnagyobb vizuális tartalomválasz eleme"
   },
@@ -838,9 +835,6 @@
   },
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "Ezek a DOM-elemek járulnak hozzá leginkább az oldal elrendezésének összmozgásához (Cumulative Layout Shift, CLS)."
-  },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount,plural, =1{1 elem található}other{# elem található}}"
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Az elrendezés nagy mértékű mozgásának elkerülése"

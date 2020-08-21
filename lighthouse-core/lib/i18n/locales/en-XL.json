@@ -383,6 +383,15 @@
   "lighthouse-core/audits/apple-touch-icon.js | title": {
     "message": "P̂ŕôv́îd́êś â v́âĺîd́ `apple-touch-icon`"
   },
+  "lighthouse-core/audits/autocomplete.js | description": {
+    "message": "Âút̂óĉóm̂ṕl̂ét̂é ĥél̂ṕŝ úŝér̂ś ŝúb̂ḿît́ f̂ór̂ḿŝ q́ûíĉḱêŕ. T̂ó r̂éd̂úĉé ûśêŕ êf́f̂ór̂t́, ĉón̂śîd́êŕ êńâb́l̂ín̂ǵ âút̂óĉóm̂ṕl̂ét̂é b̂ý ŝét̂t́îńĝ t́ĥé `autocomplete` ât́t̂ŕîb́ût́ê t́ô á v̂ál̂íd̂ v́âĺûé. [L̂éâŕn̂ ḿôŕê](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)"
+  },
+  "lighthouse-core/audits/autocomplete.js | failureTitle": {
+    "message": "Îńp̂út̂ él̂ém̂én̂t́ŝ d́ô ńôt́ ĥáv̂é ĉór̂ŕêćt̂ át̂t́r̂íb̂út̂éŝ f́ôŕ âút̂óĉóm̂ṕl̂ét̂é"
+  },
+  "lighthouse-core/audits/autocomplete.js | title": {
+    "message": "Îńp̂út̂ él̂ém̂én̂t́ŝ úŝé âút̂óĉóm̂ṕl̂ét̂é"
+  },
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
     "message": "Ĉh́r̂óm̂é êx́t̂én̂śîón̂ś n̂éĝát̂ív̂él̂ý âf́f̂éĉt́êd́ t̂h́îś p̂áĝé'ŝ ĺôád̂ ṕêŕf̂ór̂ḿâńĉé. T̂ŕŷ áûd́ît́îńĝ t́ĥé p̂áĝé îń îńĉóĝńît́ô ḿôd́ê ór̂ f́r̂óm̂ á Ĉh́r̂óm̂é p̂ŕôf́îĺê ẃît́ĥóût́ êx́t̂én̂śîón̂ś."
   },
@@ -842,9 +851,6 @@
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "T̂h́îś îś t̂h́ê ĺâŕĝéŝt́ ĉón̂t́êńt̂f́ûĺ êĺêḿêńt̂ ṕâín̂t́êd́ ŵít̂h́îń t̂h́ê v́îéŵṕôŕt̂. [Ĺêár̂ń M̂ór̂é](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
-  "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
-    "message": "{itemCount, plural,\n    =1 {1 êĺêḿêńt̂ f́ôún̂d́}\n    other {# êĺêḿêńt̂ś f̂óûńd̂}\n    }"
-  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | title": {
     "message": "L̂ár̂ǵêśt̂ Ćôńt̂én̂t́f̂úl̂ Ṕâín̂t́ êĺêḿêńt̂"
   },
@@ -853,9 +859,6 @@
   },
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "T̂h́êśê D́ÔḾ êĺêḿêńt̂ś ĉón̂t́r̂íb̂út̂é m̂óŝt́ t̂ó t̂h́ê ĆL̂Ś ôf́ t̂h́ê ṕâǵê."
-  },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount, plural,\n    =1 {1 êĺêḿêńt̂ f́ôún̂d́}\n    other {# êĺêḿêńt̂ś f̂óûńd̂}\n    }"
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Âv́ôíd̂ ĺâŕĝé l̂áŷóût́ ŝh́îf́t̂ś"
@@ -1579,6 +1582,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "P̂ót̂én̂t́îál̂ śâv́îńĝś ôf́ {wastedBytes, number, bytes} K̂íB̂"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | displayValueElementsFound": {
+    "message": "{nodeCount, plural, =1 {1 êĺêḿêńt̂ f́ôún̂d́} other {# êĺêḿêńt̂ś f̂óûńd̂}}"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "P̂ót̂én̂t́îál̂ śâv́îńĝś ôf́ {wastedMs, number, milliseconds} m̂ś"
