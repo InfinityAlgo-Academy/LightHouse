@@ -61,7 +61,7 @@ class AutocompleteAudit extends Audit {
    */
   static isValidAutocomplete(input) {
     for (const name of validAutocompleteAttributeNames) {
-      const valid = input.autocompleteAttr ? input.autocompleteAttr.includes(name): false;
+      const valid = input.autocompleteAttr ? input.autocompleteAttr.includes(name) : false;
       if (valid) {
         return true;
       }
@@ -98,7 +98,7 @@ class AutocompleteAudit extends Audit {
     const details = Audit.makeTableDetails(headings, failingFormsData);
     let displayValue;
     if (failingFormsData.length > 0) {
-      displayValue = str_(i18n.UIStrings.displayValueElementsFound, 
+      displayValue = str_(i18n.UIStrings.displayValueElementsFound,
         {nodeCount: failingFormsData.length});
     }
     return {
