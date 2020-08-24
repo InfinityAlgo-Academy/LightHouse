@@ -733,6 +733,7 @@ declare global {
         placeholder?: string;
         autocompleteProp: string;
         autocompleteAttr: string | null;
+        autofillPredict: string | null;
         nodeLabel: string;
         snippet: string;
       }
