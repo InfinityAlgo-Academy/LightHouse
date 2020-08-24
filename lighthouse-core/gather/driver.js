@@ -160,13 +160,13 @@ class Driver {
   }
 
   /**
-   * Computes the ULTRADUMB™ benchmark index to get a rough estimate of device class.
+   * Computes the benchmark index to get a rough estimate of device class.
    * @return {Promise<number>}
    */
   async getBenchmarkIndex() {
     const status = {msg: 'Benchmarking machine', id: 'lh:gather:getBenchmarkIndex'};
     log.time(status);
-    const indexVal = await this.evaluateAsync(`(${pageFunctions.ultradumbBenchmarkString})()`);
+    const indexVal = await this.evaluateAsync(`(${pageFunctions.computeBenchmarkIndexString})()`);
     log.timeEnd(status);
     return indexVal;
   }
