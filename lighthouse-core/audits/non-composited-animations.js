@@ -17,9 +17,9 @@ const i18n = require('../lib/i18n/i18n.js');
 const UIStrings = {
   /** Title of a diagnostic LH audit that provides details on animations that are not composited. */
   title: 'Avoid non-composited animations',
-  /** Description of a diagnostic LH audit that shows the user animations that are not composited. */
-  description: 'Animations which are not composited can be janky and contribute to CLS. ' +
-    '[Learn more](https://developers.google.com/web/fundamentals/performance/rendering/stick-to-compositor-only-properties-and-manage-layer-count)',
+  /** Description of a diagnostic LH audit that shows the user animations that are not composited. Janky means frames may be skipped and the animation will look bad. Acceptable alternatives here might be 'poor', or 'slow'. */
+  description: 'Animations which are not composited can be janky and increase CLS. ' +
+    '[Learn more](https://web.dev/non-composited-animations)',
   /** [ICU Syntax] Label identifying the number of animated elements that are not composited. */
   displayValue: `{itemCount, plural,
   =1 {# animated element found}

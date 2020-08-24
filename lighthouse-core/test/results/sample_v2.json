@@ -1900,7 +1900,7 @@
     "non-composited-animations": {
       "id": "non-composited-animations",
       "title": "Avoid non-composited animations",
-      "description": "Animations which are not composited can be janky and contribute to CLS. [Learn more](https://developers.google.com/web/fundamentals/performance/rendering/stick-to-compositor-only-properties-and-manage-layer-count)",
+      "description": "Animations which are not composited can be janky and increase CLS. [Learn more](https://web.dev/non-composited-animations)",
       "score": null,
       "scoreDisplayMode": "informative",
       "displayValue": "1 animated element found",

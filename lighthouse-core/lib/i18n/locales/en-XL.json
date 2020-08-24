@@ -981,7 +981,7 @@
     "message": "Âv́ôíd̂ś `unload` êv́êńt̂ ĺîśt̂én̂ér̂ś"
   },
   "lighthouse-core/audits/non-composited-animations.js | description": {
-    "message": "Âńîḿât́îón̂ś ŵh́îćĥ ár̂é n̂ót̂ ćôḿp̂óŝít̂éd̂ ćâń b̂é ĵán̂ḱŷ án̂d́ ĉón̂t́r̂íb̂út̂é t̂ó ĈĹŜ. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/fundamentals/performance/rendering/stick-to-compositor-only-properties-and-manage-layer-count)"
+    "message": "Âńîḿât́îón̂ś ŵh́îćĥ ár̂é n̂ót̂ ćôḿp̂óŝít̂éd̂ ćâń b̂é ĵán̂ḱŷ án̂d́ îńĉŕêáŝé ĈĹŜ. [Ĺêár̂ń m̂ór̂é](https://web.dev/non-composited-animations)"
   },
   "lighthouse-core/audits/non-composited-animations.js | displayValue": {
     "message": "{itemCount, plural,\n  =1 {# âńîḿât́êd́ êĺêḿêńt̂ f́ôún̂d́}\n  other {# âńîḿât́êd́ êĺêḿêńt̂ś f̂óûńd̂}\n  }"
