@@ -77,4 +77,14 @@ describe('util helpers', () => {
     assert.strictEqual(i18n.formatMilliseconds(number), `12.350${NBSP}ms`);
     assert.strictEqual(i18n.formatSeconds(number), `12,3${NBSP}s`);
   });
+
+  it('should not crash on unknown locales', () => {
+    const i18n = new I18n('unknown-mystery-locale', {...Util.UIStrings});
+    const timestamp = i18n.formatDateTime('2017-04-28T23:07:51.189Z');
+    assert.ok(
+      timestamp.includes('Apr 27, 2017') ||
+      timestamp.includes('Apr 28, 2017') ||
+      timestamp.includes('Apr 29, 2017')
+    );
+  });
 });

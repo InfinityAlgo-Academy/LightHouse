@@ -16,7 +16,7 @@ const pageFunctions = require('../../lib/page-functions.js');
 const TraceProcessor = require('../../lib/tracehouse/trace-processor.js');
 const RectHelpers = require('../../lib/rect-helpers.js');
 
-/** @typedef {{nodeId: number, score?: number, animations?: {name?: string, failureReasonsMask?: number}[]}} TraceElementData */
+/** @typedef {{nodeId: number, score?: number, animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[]}} TraceElementData */
 
 /**
  * @this {HTMLElement}
@@ -68,6 +68,15 @@ class TraceElements extends Gatherer {
   static getFailureReasonsFromTraceEvent(event) {
     return event && event.args &&
       event.args.data && event.args.data.compositeFailed;
+  }
+
+  /**
+   * @param {LH.TraceEvent | undefined} event
+   * @return {string[] | undefined}
+   */
+  static getUnsupportedPropertiesFromTraceEvent(event) {
+    return event && event.args &&
+      event.args.data && event.args.data.unsupportedProperties;
   }
 
   /**
@@ -203,15 +212,16 @@ class TraceElements extends Gatherer {
       animationPairs.set(local, pair);
     }
 
-    /** @type Map<number, Set<{animationId: string, failureReasonsMask?: number}>> */
+    /** @type Map<number, Set<{animationId: string, failureReasonsMask?: number, unsupportedProperties?: string[]}>> */
     const elementAnimations = new Map();
     for (const {begin, status} of animationPairs.values()) {
       const nodeId = this.getNodeIDFromTraceEvent(begin);
       const animationId = this.getAnimationIDFromTraceEvent(begin);
       const failureReasonsMask = this.getFailureReasonsFromTraceEvent(status);
+      const unsupportedProperties = this.getUnsupportedPropertiesFromTraceEvent(status);
       if (!nodeId || !animationId) continue;
       const animationIds = elementAnimations.get(nodeId) || new Set();
-      animationIds.add({animationId, failureReasonsMask});
+      animationIds.add({animationId, failureReasonsMask, unsupportedProperties});
       elementAnimations.set(nodeId, animationIds);
     }
 
@@ -219,9 +229,9 @@ class TraceElements extends Gatherer {
     const animatedElementData = [];
     for (const [nodeId, animationIds] of elementAnimations) {
       const animations = [];
-      for (const {animationId, failureReasonsMask} of animationIds) {
+      for (const {animationId, failureReasonsMask, unsupportedProperties} of animationIds) {
         const animationName = await this.resolveAnimationName(passContext, animationId);
-        animations.push({name: animationName, failureReasonsMask});
+        animations.push({name: animationName, failureReasonsMask, unsupportedProperties});
       }
       animatedElementData.push({nodeId, animations});
     }

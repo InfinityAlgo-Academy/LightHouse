@@ -277,6 +277,7 @@ declare global {
           score?: number,
           had_recent_input?: boolean;
           compositeFailed?: number;
+          unsupportedProperties?: string[];
         };
         frame?: string;
         name?: string;

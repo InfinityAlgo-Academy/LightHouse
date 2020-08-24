@@ -242,6 +242,7 @@ const defaultConfig = {
     'non-composited-animations',
     'unsized-images',
     'large-javascript-libraries',
+    'valid-source-maps',
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',
     'manual/pwa-each-page-has-url',
@@ -570,6 +571,7 @@ const defaultConfig = {
         {id: 'js-libraries', weight: 0, group: 'best-practices-general'},
         {id: 'deprecations', weight: 1, group: 'best-practices-general'},
         {id: 'errors-in-console', weight: 1, group: 'best-practices-general'},
+        {id: 'valid-source-maps', weight: 0, group: 'best-practices-general'},
       ],
     },
     'seo': {

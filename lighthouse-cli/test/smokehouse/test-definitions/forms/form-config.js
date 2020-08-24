@@ -5,12 +5,18 @@
  */
 'use strict';
 
+const experimentalConfig = require('../../../../../lighthouse-core/config/experimental-config.js');
+
 /**
  * @type {LH.Config.Json}
  * Config file for running form gatherer  tests.
  */
 const config = {
+<<<<<<< HEAD
   extends: 'lighthouse:default',
+=======
+  ...experimentalConfig,
+>>>>>>> 35f1a6f90e9443bdf42179a4c9823e6d4848a9e6
   settings: {
     onlyAudits: [
       'autocomplete',

@@ -3,7 +3,7 @@
   "BenchmarkIndex": 1000,
   "HostFormFactor": "desktop",
   "TestedAsMobileDevice": true,
-  "HostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3358.0 Safari/537.36",
+  "HostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4232.0 Safari/537.36",
   "NetworkUserAgent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/66.0.3359.30 Mobile Safari/537.36",
   "fetchTime": "2018-03-13T00:55:45.840Z",
   "URL": {
@@ -2444,6 +2444,37 @@
       "selector": "div.blog-index > article > div.entry-content > p",
       "nodeLabel": "Aside from that, I’ve been busy working on Lighthouse, performance metrics, too…",
       "snippet": "<p>"
+    },
+    {
+      "traceEventType": "animation",
+      "devtoolsNodePath": "1,HTML,1,BODY,0,DIV",
+      "selector": "body > div#animated-boi",
+      "nodeLabel": "div",
+      "snippet": "<div id=\"animated-boi\">",
+      "animations": [
+        {
+          "failureReasonsMask": 8224,
+          "unsupportedProperties": [
+            "width"
+          ]
+        },
+        {
+          "name": "alpha",
+          "failureReasonsMask": 8224,
+          "unsupportedProperties": [
+            "height",
+            "left"
+          ]
+        },
+        {
+          "name": "beta",
+          "failureReasonsMask": 8224,
+          "unsupportedProperties": [
+            "background-color"
+          ]
+        }
+      ],
+      "nodeId": 4
     }
   ],
   "ServiceWorker": {
