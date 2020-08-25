@@ -203,6 +203,7 @@ class PreloadLCPAudit extends Audit {
     if (!lcpElement || lcpElement.elementType != 'img') {
       return {
         score: 1,
+        notApplicable: true,
       };
     }
     /** @type {LH.Config.Settings} */
