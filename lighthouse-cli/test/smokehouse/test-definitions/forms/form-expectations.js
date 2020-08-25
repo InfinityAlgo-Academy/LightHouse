@@ -26,7 +26,7 @@ const expectations = [
             name: 'name_cc1',
             placeholder: 'John Doe',
             autocompleteProp: '',
-            autocompleteAttr: 'cc-namez',
+            autocompleteAttr: 'shipping cc-namez',
             autofillPredict: 'UNKNOWN_TYPE',
             nodeLabel: 'textarea',
             snippet: '<textarea type="text" id="name_cc1" name="name_cc1" autocomplete="cc-namez" placeholder="John Doe" title="overall type: UNKNOWN_TYPEnserver type: NO_SERVER_DATAnheuristic type: UNK…" autofill-information="overall type: UNKNOWN_TYPEnserver type: NO_SERVER_DATAnheuristic type: UNK…" autofill-prediction="UNKNOWN_TYPE">',
