@@ -1216,7 +1216,8 @@ class Driver {
       const resolveNodeResponse = await this.sendCommand('DOM.resolveNode', {backendNodeId});
       return resolveNodeResponse.object.objectId;
     } catch (err) {
-      if (/No node.*found/.test(err.message)) return undefined;
+      if (/No node.*found/.test(err.message) ||
+        /Node.*does not belong to the document/.test(err.message)) return undefined;
       throw err;
     }
   }

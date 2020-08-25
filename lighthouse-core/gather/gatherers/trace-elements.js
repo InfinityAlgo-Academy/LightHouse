@@ -15,6 +15,7 @@ const Gatherer = require('./gatherer.js');
 const pageFunctions = require('../../lib/page-functions.js');
 const TraceProcessor = require('../../lib/tracehouse/trace-processor.js');
 const RectHelpers = require('../../lib/rect-helpers.js');
+const Sentry = require('../../lib/sentry.js');
 
 /** @typedef {{nodeId: number, score?: number, animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[]}} TraceElementData */
 
@@ -113,6 +114,10 @@ class TraceElements extends Gatherer {
       return animationName;
     } catch (err) {
       // Animation name is not mission critical information and can be evicted, so don't throw fatally if we can't find it.
+      Sentry.captureException(err, {
+        tags: {gatherer: TraceElements.name},
+        level: 'error',
+      });
       return undefined;
     }
   }
@@ -275,22 +280,31 @@ class TraceElements extends Gatherer {
     for (const [traceEventType, backendNodeData] of backendNodeDataMap) {
       for (let i = 0; i < backendNodeData.length; i++) {
         const backendNodeId = backendNodeData[i].nodeId;
-        const objectId = await driver.resolveNodeIdToObjectId(backendNodeId);
-        if (!objectId) continue;
-        const response = await driver.sendCommand('Runtime.callFunctionOn', {
-          objectId,
-          functionDeclaration: `function () {
-            ${getNodeDetailsData.toString()};
-            ${pageFunctions.getNodePathString};
-            ${pageFunctions.getNodeSelectorString};
-            ${pageFunctions.getNodeLabelString};
-            ${pageFunctions.getOuterHTMLSnippetString};
-            ${pageFunctions.getBoundingClientRectString};
-            return getNodeDetailsData.call(this);
-          }`,
-          returnByValue: true,
-          awaitPromise: true,
-        });
+        let response;
+        try {
+          const objectId = await driver.resolveNodeIdToObjectId(backendNodeId);
+          if (!objectId) continue;
+          response = await driver.sendCommand('Runtime.callFunctionOn', {
+            objectId,
+            functionDeclaration: `function () {
+              ${getNodeDetailsData.toString()};
+              ${pageFunctions.getNodePathString};
+              ${pageFunctions.getNodeSelectorString};
+              ${pageFunctions.getNodeLabelString};
+              ${pageFunctions.getOuterHTMLSnippetString};
+              ${pageFunctions.getBoundingClientRectString};
+              return getNodeDetailsData.call(this);
+            }`,
+            returnByValue: true,
+            awaitPromise: true,
+          });
+        } catch (err) {
+          Sentry.captureException(err, {
+            tags: {gatherer: this.name},
+            level: 'error',
+          });
+          continue;
+        }
 
         if (response && response.result && response.result.value) {
           traceElements.push({
