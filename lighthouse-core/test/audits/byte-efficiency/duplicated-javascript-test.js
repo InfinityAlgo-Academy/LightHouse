@@ -41,28 +41,8 @@ describe('DuplicatedJavascript computed artifact', () => {
     expect({items: results.items, wastedBytesByUrl: results.wastedBytesByUrl})
       .toMatchInlineSnapshot(`
       Object {
-        "items": Array [
-          Object {
-            "source": "Other",
-            "subItems": Object {
-              "items": Array [
-                Object {
-                  "url": "https://example.com/foo1.min.js",
-                },
-                Object {
-                  "url": "https://example.com/foo2.min.js",
-                },
-              ],
-              "type": "subitems",
-            },
-            "totalBytes": 0,
-            "url": "",
-            "wastedBytes": 224,
-          },
-        ],
-        "wastedBytesByUrl": Map {
-          "https://example.com/foo2.min.js" => 224,
-        },
+        "items": Array [],
+        "wastedBytesByUrl": Map {},
       }
     `);
   });
@@ -131,11 +111,11 @@ describe('DuplicatedJavascript computed artifact', () => {
             "subItems": Object {
               "items": Array [
                 Object {
-                  "sourceTransferBytes": 1804,
+                  "sourceTransferBytes": 502,
                   "url": "https://example.com/coursehero-bundle-1.js",
                 },
                 Object {
-                  "sourceTransferBytes": 1455,
+                  "sourceTransferBytes": 502,
                   "url": "https://example.com/coursehero-bundle-2.js",
                 },
               ],
@@ -143,7 +123,7 @@ describe('DuplicatedJavascript computed artifact', () => {
             },
             "totalBytes": 0,
             "url": "",
-            "wastedBytes": 1455,
+            "wastedBytes": 502,
           },
           Object {
             "source": "js/src/utils/service/amplitude-service.ts",
@@ -317,25 +297,6 @@ describe('DuplicatedJavascript computed artifact', () => {
             "wastedBytes": 1022,
           },
           Object {
-            "source": "node_modules/lodash-es",
-            "subItems": Object {
-              "items": Array [
-                Object {
-                  "sourceTransferBytes": 578,
-                  "url": "https://example.com/coursehero-bundle-2.js",
-                },
-                Object {
-                  "sourceTransferBytes": 564,
-                  "url": "https://example.com/coursehero-bundle-1.js",
-                },
-              ],
-              "type": "subitems",
-            },
-            "totalBytes": 0,
-            "url": "",
-            "wastedBytes": 564,
-          },
-          Object {
             "source": "Other",
             "subItems": Object {
               "items": Array [
@@ -350,12 +311,12 @@ describe('DuplicatedJavascript computed artifact', () => {
             },
             "totalBytes": 0,
             "url": "",
-            "wastedBytes": 905,
+            "wastedBytes": 542,
           },
         ],
         "wastedBytesByUrl": Map {
-          "https://example.com/coursehero-bundle-2.js" => 29241,
-          "https://example.com/coursehero-bundle-1.js" => 3184,
+          "https://example.com/coursehero-bundle-2.js" => 27925,
+          "https://example.com/coursehero-bundle-1.js" => 2620,
         },
       }
     `);
