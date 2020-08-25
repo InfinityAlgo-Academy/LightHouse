@@ -60,17 +60,17 @@ class AutocompleteAudit extends Audit {
 
   /**
    * @param {LH.Artifacts.FormInput} input
-   * @return {{attribute: Boolean|null, prefix: Boolean|null, section:Boolean|null}}
+   * @return {{attribute: Boolean, prefix: Boolean, section:Boolean}}
    */
   static isValidAutocomplete(input) {
-    if (!input.autocompleteAttr) return {attribute: false, prefix: null, section: null};
+    if (!input.autocompleteAttr) return {attribute: false, prefix: true, section: true};
     if (input.autocompleteAttr.includes(' ') ) {
       const autoAttrArray = input.autocompleteAttr.split(' ');
       if (autoAttrArray.length === 2) {
         return {
           attribute: validAutocompleteAttributes.includes(autoAttrArray[1]),
           prefix: validAutocompletePrefixes.includes(autoAttrArray[0]),
-          section: null,
+          section: true,
         };
       } else if (autoAttrArray.length === 3) {
         return {
@@ -82,8 +82,8 @@ class AutocompleteAudit extends Audit {
     }
     return {
       attribute: validAutocompleteAttributes.includes(input.autocompleteAttr),
-      prefix: null,
-      section: null,
+      prefix: true,
+      section: true,
     };
   }
   /**
@@ -95,7 +95,8 @@ class AutocompleteAudit extends Audit {
     const failingFormsData = [];
     for (const form of forms) {
       for (const input of form.inputs) {
-        if (!this.isValidAutocomplete(input)) {
+        const valid = this.isValidAutocomplete(input);
+        if (!valid.attribute || !valid.section || !valid.prefix) {
           failingFormsData.push({
             node: /** @type {LH.Audit.Details.NodeValue} */ ({
               type: 'node',
