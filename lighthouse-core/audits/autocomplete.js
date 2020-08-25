@@ -97,10 +97,12 @@ class AutocompleteAudit extends Audit {
       for (const input of form.inputs) {
         const valid = this.isValidAutocomplete(input);
         if (!valid.attribute || !valid.section || !valid.prefix) {
+          const snippetArray = input.snippet.split(' title=');
+          const snippet = snippetArray[0] + '>';
           failingFormsData.push({
             node: /** @type {LH.Audit.Details.NodeValue} */ ({
               type: 'node',
-              snippet: input.snippet,
+              snippet: snippet,
               nodeLabel: input.nodeLabel,
             }),
           });
