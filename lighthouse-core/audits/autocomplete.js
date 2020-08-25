@@ -76,7 +76,7 @@ class AutocompleteAudit extends Audit {
         return {
           attribute: validAutocompleteAttributes.includes(autoAttrArray[2]),
           prefix: validAutocompletePrefixes.includes(autoAttrArray[1]),
-          section: autoAttrArray[0].slice(0, 7) !== 'section-',
+          section: autoAttrArray[0].slice(0, 8) === 'section-',
         };
       }
     }
