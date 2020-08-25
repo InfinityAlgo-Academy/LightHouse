@@ -218,6 +218,7 @@ const defaultConfig = {
     'content-width',
     'image-aspect-ratio',
     'image-size-responsive',
+    'preload-fonts',
     'deprecations',
     'mainthread-work-breakdown',
     'bootup-time',
@@ -562,6 +563,7 @@ const defaultConfig = {
         {id: 'password-inputs-can-be-pasted-into', weight: 1, group: 'best-practices-ux'},
         {id: 'image-aspect-ratio', weight: 1, group: 'best-practices-ux'},
         {id: 'image-size-responsive', weight: 1, group: 'best-practices-ux'},
+        {id: 'preload-fonts', weight: 1, group: 'best-practices-ux'},
         // Browser Compatibility
         {id: 'doctype', weight: 1, group: 'best-practices-browser-compat'},
         {id: 'charset', weight: 1, group: 'best-practices-browser-compat'},

@@ -670,6 +670,28 @@
         ]
       }
     },
+    "preload-fonts": {
+      "id": "preload-fonts",
+      "title": "Fonts with `font-display: optional` are not preloaded",
+      "description": "Preload `optional` fonts so first-time visitors may use them. [Learn More](https://web.dev/preload-optional-fonts/)",
+      "score": 0,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "url",
+            "itemType": "url",
+            "text": "URL"
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:10503/perf/lobster-two-v10-latin-700.woff2?cors=true"
+          }
+        ]
+      }
+    },
     "deprecations": {
       "id": "deprecations",
       "title": "Uses deprecated APIs",
@@ -4825,6 +4847,11 @@
           "group": "best-practices-ux"
         },
         {
+          "id": "preload-fonts",
+          "weight": 1,
+          "group": "best-practices-ux"
+        },
+        {
           "id": "doctype",
           "weight": 1,
           "group": "best-practices-browser-compat"
@@ -5514,6 +5541,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:image-size-responsive",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:preload-fonts",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6547,6 +6580,7 @@
         "audits[errors-in-console].details.headings[0].text",
         "audits[image-aspect-ratio].details.headings[1].text",
         "audits[image-size-responsive].details.headings[1].text",
+        "audits[preload-fonts].details.headings[0].text",
         "audits.deprecations.details.headings[1].text",
         "audits[bootup-time].details.headings[0].text",
         "audits[network-rtt].details.headings[0].text",
@@ -6686,6 +6720,12 @@
       ],
       "lighthouse-core/audits/image-size-responsive.js | columnExpected": [
         "audits[image-size-responsive].details.headings[4].text"
+      ],
+      "lighthouse-core/audits/preload-fonts.js | failureTitle": [
+        "audits[preload-fonts].title"
+      ],
+      "lighthouse-core/audits/preload-fonts.js | description": [
+        "audits[preload-fonts].description"
       ],
       "lighthouse-core/audits/deprecations.js | failureTitle": [
         "audits.deprecations.title"
