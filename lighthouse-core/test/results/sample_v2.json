@@ -1,8 +1,8 @@
 {
-  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3358.0 Safari/537.36",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4232.0 Safari/537.36",
   "environment": {
     "networkUserAgent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/66.0.3359.30 Mobile Safari/537.36",
-    "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3358.0 Safari/537.36",
+    "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4232.0 Safari/537.36",
     "benchmarkIndex": 1000
   },
   "lighthouseVersion": "6.2.0",
@@ -1672,31 +1672,52 @@
           {
             "key": "entity",
             "itemType": "link",
-            "text": "Third-Party"
+            "text": "Third-Party",
+            "subItemsHeading": {
+              "key": "url",
+              "itemType": "url"
+            }
           },
           {
             "key": "transferSize",
             "granularity": 1,
             "itemType": "bytes",
-            "text": "Transfer Size"
+            "text": "Transfer Size",
+            "subItemsHeading": {
+              "key": "transferSize"
+            }
           },
           {
             "key": "blockingTime",
             "granularity": 1,
             "itemType": "ms",
-            "text": "Main-Thread Blocking Time"
+            "text": "Main-Thread Blocking Time",
+            "subItemsHeading": {
+              "key": "blockingTime"
+            }
           }
         ],
         "items": [
           {
+            "mainThreadTime": 90.36300000000001,
+            "blockingTime": 22.918000000000006,
+            "transferSize": 30174,
             "entity": {
               "type": "link",
               "text": "Google CDN",
               "url": "https://developers.google.com/speed/libraries/"
             },
-            "transferSize": 30174,
-            "mainThreadTime": 90.36300000000001,
-            "blockingTime": 22.918000000000006
+            "subItems": {
+              "type": "subitems",
+              "items": [
+                {
+                  "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
+                  "mainThreadTime": 90.36300000000001,
+                  "blockingTime": 22.918000000000006,
+                  "transferSize": 30174
+                }
+              ]
+            }
           }
         ],
         "summary": {
@@ -1879,9 +1900,60 @@
     "non-composited-animations": {
       "id": "non-composited-animations",
       "title": "Avoid non-composited animations",
-      "description": "Animations which are not composited can be janky and contribute to CLS. [Learn more](https://developers.google.com/web/fundamentals/performance/rendering/stick-to-compositor-only-properties-and-manage-layer-count)",
+      "description": "Animations which are not composited can be janky and increase CLS. [Learn more](https://web.dev/non-composited-animations)",
       "score": null,
-      "scoreDisplayMode": "notApplicable"
+      "scoreDisplayMode": "informative",
+      "displayValue": "1 animated element found",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "node",
+            "itemType": "node",
+            "subItemsHeading": {
+              "key": "failureReason",
+              "itemType": "text"
+            },
+            "text": "Element"
+          },
+          {
+            "key": null,
+            "itemType": "text",
+            "subItemsHeading": {
+              "key": "animation",
+              "itemType": "text"
+            },
+            "text": "Name"
+          }
+        ],
+        "items": [
+          {
+            "node": {
+              "type": "node",
+              "path": "1,HTML,1,BODY,0,DIV",
+              "selector": "body > div#animated-boi",
+              "nodeLabel": "div",
+              "snippet": "<div id=\"animated-boi\">"
+            },
+            "subItems": {
+              "type": "subitems",
+              "items": [
+                {
+                  "failureReason": "Unsupported CSS Property: width"
+                },
+                {
+                  "failureReason": "Unsupported CSS Properties: height, left",
+                  "animation": "alpha"
+                },
+                {
+                  "failureReason": "Unsupported CSS Property: background-color",
+                  "animation": "beta"
+                }
+              ]
+            }
+          }
+        ]
+      }
     },
     "unsized-images": {
       "id": "unsized-images",
@@ -1916,6 +1988,32 @@
             }
           }
         ]
+      }
+    },
+    "large-javascript-libraries": {
+      "id": "large-javascript-libraries",
+      "title": "Avoids large JavaScript libraries with smaller alternatives",
+      "description": "Large JavaScript libraries can lead to poor performance. Prefer smaller, functionally equivalent libraries to reduce your bundle size. [Learn more](https://developers.google.com/web/fundamentals/performance/webpack/decrease-frontend-size#optimize_dependencies).",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "displayValue": "0 large libraries found",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": [],
+        "summary": {}
+      }
+    },
+    "valid-source-maps": {
+      "id": "valid-source-maps",
+      "title": "Page has valid source maps",
+      "description": "Source maps translate minified code to the original source code. This helps developers debug in production. In addition, Lighthouse is able to provide further insights. Consider deploying source maps to take advantage of these benefits. [Learn more](https://developers.google.com/web/tools/chrome-devtools/javascript/source-maps).",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
       }
     },
     "pwa-cross-browser": {
@@ -4389,6 +4487,11 @@
           "group": "diagnostics"
         },
         {
+          "id": "large-javascript-libraries",
+          "weight": 0,
+          "group": "diagnostics"
+        },
+        {
           "id": "network-requests",
           "weight": 0
         },
@@ -4754,6 +4857,11 @@
         {
           "id": "errors-in-console",
           "weight": 1,
+          "group": "best-practices-general"
+        },
+        {
+          "id": "valid-source-maps",
+          "weight": 0,
           "group": "best-practices-general"
         }
       ],
@@ -5568,6 +5676,18 @@
       {
         "startTime": 0,
         "name": "lh:audit:unsized-images",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:large-javascript-libraries",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:valid-source-maps",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6792,17 +6912,24 @@
       "lighthouse-core/audits/largest-contentful-paint-element.js | description": [
         "audits[largest-contentful-paint-element].description"
       ],
-      "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": [
+      "lighthouse-core/lib/i18n/i18n.js | displayValueElementsFound": [
         {
           "values": {
-            "itemCount": 1
+            "nodeCount": 1
           },
           "path": "audits[largest-contentful-paint-element].displayValue"
+        },
+        {
+          "values": {
+            "nodeCount": 4
+          },
+          "path": "audits[layout-shift-elements].displayValue"
         }
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnElement": [
         "audits[largest-contentful-paint-element].details.headings[0].text",
         "audits[layout-shift-elements].details.headings[0].text",
+        "audits[non-composited-animations].details.headings[0].text",
         "audits[dom-size].details.headings[1].text"
       ],
       "lighthouse-core/audits/layout-shift-elements.js | title": [
@@ -6810,14 +6937,6 @@
       ],
       "lighthouse-core/audits/layout-shift-elements.js | description": [
         "audits[layout-shift-elements].description"
-      ],
-      "lighthouse-core/audits/layout-shift-elements.js | displayValue": [
-        {
-          "values": {
-            "nodeCount": 4
-          },
-          "path": "audits[layout-shift-elements].displayValue"
-        }
       ],
       "lighthouse-core/audits/layout-shift-elements.js | columnContribution": [
         "audits[layout-shift-elements].details.headings[1].text"
@@ -6854,6 +6973,41 @@
       "lighthouse-core/audits/non-composited-animations.js | description": [
         "audits[non-composited-animations].description"
       ],
+      "lighthouse-core/audits/non-composited-animations.js | displayValue": [
+        {
+          "values": {
+            "itemCount": 1
+          },
+          "path": "audits[non-composited-animations].displayValue"
+        }
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnName": [
+        "audits[non-composited-animations].details.headings[1].text",
+        "audits[js-libraries].details.headings[0].text"
+      ],
+      "lighthouse-core/audits/non-composited-animations.js | unsupportedCSSProperty": [
+        {
+          "values": {
+            "propertyCount": 1,
+            "properties": "width"
+          },
+          "path": "audits[non-composited-animations].details.items[0].subItems.items[0].failureReason"
+        },
+        {
+          "values": {
+            "propertyCount": 2,
+            "properties": "height, left"
+          },
+          "path": "audits[non-composited-animations].details.items[0].subItems.items[1].failureReason"
+        },
+        {
+          "values": {
+            "propertyCount": 1,
+            "properties": "background-color"
+          },
+          "path": "audits[non-composited-animations].details.items[0].subItems.items[2].failureReason"
+        }
+      ],
       "lighthouse-core/audits/unsized-images.js | failureTitle": [
         "audits[unsized-images].title"
       ],
@@ -6869,6 +7023,26 @@
         "audits[link-name].details.headings[0].text",
         "audits[object-alt].details.headings[0].text",
         "audits[password-inputs-can-be-pasted-into].details.headings[0].text"
+      ],
+      "lighthouse-core/audits/large-javascript-libraries.js | title": [
+        "audits[large-javascript-libraries].title"
+      ],
+      "lighthouse-core/audits/large-javascript-libraries.js | description": [
+        "audits[large-javascript-libraries].description"
+      ],
+      "lighthouse-core/audits/large-javascript-libraries.js | displayValue": [
+        {
+          "values": {
+            "libraryCount": 0
+          },
+          "path": "audits[large-javascript-libraries].displayValue"
+        }
+      ],
+      "lighthouse-core/audits/valid-source-maps.js | title": [
+        "audits[valid-source-maps].title"
+      ],
+      "lighthouse-core/audits/valid-source-maps.js | description": [
+        "audits[valid-source-maps].description"
       ],
       "lighthouse-core/audits/manual/pwa-cross-browser.js | title": [
         "audits[pwa-cross-browser].title"
@@ -7408,9 +7582,6 @@
       ],
       "lighthouse-core/audits/dobetterweb/js-libraries.js | description": [
         "audits[js-libraries].description"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | columnName": [
-        "audits[js-libraries].details.headings[0].text"
       ],
       "lighthouse-core/audits/dobetterweb/js-libraries.js | columnVersion": [
         "audits[js-libraries].details.headings[1].text"

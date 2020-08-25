@@ -827,9 +827,6 @@
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "Це найбільший елемент контенту, який видно в області перегляду. [Докладніше](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
-  "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
-    "message": "{itemCount,plural, =1{Знайдено 1 елемент}one{Знайдено # елемент}few{Знайдено # елементи}many{Знайдено # елементів}other{Знайдено # елемента}}"
-  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | title": {
     "message": "Елемент візуалізації великого контенту"
   },
@@ -838,9 +835,6 @@
   },
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "Ці елементи DOM найбільше впливають на сукупне зміщення макета сторінки."
-  },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount,plural, =1{Знайдено 1 елемент}one{Знайдено # елемент}few{Знайдено # елементи}many{Знайдено # елементів}other{Знайдено # елемента}}"
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Уникайте великих зсувів макета"

@@ -827,9 +827,6 @@
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "Ito ang pinakamalaking contentful element na na-paint sa viewport. [Matuto Pa](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
-  "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 element ang nakita}one{# element ang nakita}other{# na element ang nakita}}"
-  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | title": {
     "message": "Element na Largest Contentful Paint"
   },
@@ -838,9 +835,6 @@
   },
   "lighthouse-core/audits/layout-shift-elements.js | description": {
     "message": "Ang mga DOM element na ito ang may pinakamalaking kontribusyon sa CLS ng page."
-  },
-  "lighthouse-core/audits/layout-shift-elements.js | displayValue": {
-    "message": "{nodeCount,plural, =1{1 element ang nakita}one{# element ang nakita}other{# na element ang nakita}}"
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Iwasan ang malalaking pagbabago ng layout"

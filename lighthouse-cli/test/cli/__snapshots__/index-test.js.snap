@@ -169,6 +169,12 @@ Object {
       "path": "unsized-images",
     },
     Object {
+      "path": "large-javascript-libraries",
+    },
+    Object {
+      "path": "valid-source-maps",
+    },
+    Object {
       "path": "manual/pwa-cross-browser",
     },
     Object {
@@ -781,6 +787,11 @@ Object {
           "id": "errors-in-console",
           "weight": 1,
         },
+        Object {
+          "group": "best-practices-general",
+          "id": "valid-source-maps",
+          "weight": 0,
+        },
       ],
       "title": "Best Practices",
     },
@@ -1015,6 +1026,11 @@ Object {
         Object {
           "group": "diagnostics",
           "id": "unsized-images",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "large-javascript-libraries",
           "weight": 0,
         },
         Object {

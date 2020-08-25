@@ -153,30 +153,74 @@ function getOuterHTMLSnippet(element, ignoreAttrs = [], snippetCharacterLimit = 
 
 /**
  * Computes a memory/CPU performance benchmark index to determine rough device class.
+ * @see https://github.com/GoogleChrome/lighthouse/issues/9085
  * @see https://docs.google.com/spreadsheets/d/1E0gZwKsxegudkjJl8Fki_sOwHKpqgXwt8aBAfuUaB8A/edit?usp=sharing
  *
- * The benchmark creates a string of length 100,000 in a loop.
- * The returned index is the number of times per second the string can be created.
+ * Historically (until LH 6.3), this benchmark created a string of length 100,000 in a loop, and returned
+ * the number of times per second the string can be created.
  *
- *  - 750+ is a desktop-class device, Core i3 PC, iPhone X, etc
- *  - 300+ is a high-end Android phone, Galaxy S8, low-end Chromebook, etc
- *  - 75+ is a mid-tier Android phone, Nexus 5X, etc
- *  - <75 is a budget Android phone, Alcatel Ideal, Galaxy J2, etc
+ * Changes to v8 in 8.6.106 changed this number and also made Chrome more variable w.r.t GC interupts.
+ * This benchmark now is a hybrid of a similar GC-heavy approach to the original benchmark and an array
+ * copy benchmark.
+ *
+ * As of Chrome m86...
+ *
+ *  - 1000+ is a desktop-class device, Core i3 PC, iPhone X, etc
+ *  - 800+ is a high-end Android phone, Galaxy S8, low-end Chromebook, etc
+ *  - 125+ is a mid-tier Android phone, Moto G4, etc
+ *  - <125 is a budget Android phone, Alcatel Ideal, Galaxy J2, etc
  */
 /* istanbul ignore next */
-function ultradumbBenchmark() {
-  const start = Date.now();
-  let iterations = 0;
+function computeBenchmarkIndex() {
+  /**
+   * The GC-heavy benchmark that creates a string of length 10000 in a loop.
+   * The returned index is the number of times per second the string can be created divided by 10.
+   * The division by 10 is to keep similar magnitudes to an earlier version of BenchmarkIndex that
+   * used a string length of 100000 instead of 10000.
+   */
+  function benchmarkIndexGC() {
+    const start = Date.now();
+    let iterations = 0;
 
-  while (Date.now() - start < 500) {
-    let s = ''; // eslint-disable-line no-unused-vars
-    for (let j = 0; j < 100000; j++) s += 'a';
+    while (Date.now() - start < 500) {
+      let s = ''; // eslint-disable-line no-unused-vars
+      for (let j = 0; j < 10000; j++) s += 'a';
 
-    iterations++;
+      iterations++;
+    }
+
+    const durationInSeconds = (Date.now() - start) / 1000;
+    return Math.round(iterations / 10 / durationInSeconds);
   }
 
-  const durationInSeconds = (Date.now() - start) / 1000;
-  return Math.round(iterations / durationInSeconds);
+  /**
+   * The non-GC-dependent benchmark that copies integers back and forth between two arrays of length 100000.
+   * The returned index is the number of times per second a copy can be made, divided by 10.
+   * The division by 10 is to keep similar magnitudes to the GC-dependent version.
+   */
+  function benchmarkIndexNoGC() {
+    const arrA = [];
+    const arrB = [];
+    for (let i = 0; i < 100000; i++) arrA[i] = arrB[i] = i;
+
+    const start = Date.now();
+    let iterations = 0;
+
+    while (Date.now() - start < 500) {
+      const src = iterations % 2 === 0 ? arrA : arrB;
+      const tgt = iterations % 2 === 0 ? arrB : arrA;
+
+      for (let j = 0; j < src.length; j++) tgt[j] = src[j];
+
+      iterations++;
+    }
+
+    const durationInSeconds = (Date.now() - start) / 1000;
+    return Math.round(iterations / 10 / durationInSeconds);
+  }
+
+  // The final BenchmarkIndex is a simple average of the two components.
+  return (benchmarkIndexGC() + benchmarkIndexNoGC()) / 2;
 }
 
 /**
@@ -379,8 +423,8 @@ module.exports = {
   getElementsInDocumentString: getElementsInDocument.toString(),
   getOuterHTMLSnippetString: getOuterHTMLSnippet.toString(),
   getOuterHTMLSnippet: getOuterHTMLSnippet,
-  ultradumbBenchmark: ultradumbBenchmark,
-  ultradumbBenchmarkString: ultradumbBenchmark.toString(),
+  computeBenchmarkIndex: computeBenchmarkIndex,
+  computeBenchmarkIndexString: computeBenchmarkIndex.toString(),
   getNodePathString: getNodePath.toString(),
   getNodeSelectorString: getNodeSelector.toString(),
   getNodeSelector: getNodeSelector,

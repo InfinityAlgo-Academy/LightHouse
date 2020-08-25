@@ -241,6 +241,8 @@ const defaultConfig = {
     'no-unload-listeners',
     'non-composited-animations',
     'unsized-images',
+    'large-javascript-libraries',
+    'valid-source-maps',
     'preload-lcp',
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',
@@ -474,6 +476,7 @@ const defaultConfig = {
         {id: 'long-tasks', weight: 0, group: 'diagnostics'},
         {id: 'non-composited-animations', weight: 0, group: 'diagnostics'},
         {id: 'unsized-images', weight: 0, group: 'diagnostics'},
+        {id: 'large-javascript-libraries', weight: 0, group: 'diagnostics'},
         // Audits past this point don't belong to a group and will not be shown automatically
         {id: 'network-requests', weight: 0},
         {id: 'network-rtt', weight: 0},
@@ -570,6 +573,7 @@ const defaultConfig = {
         {id: 'js-libraries', weight: 0, group: 'best-practices-general'},
         {id: 'deprecations', weight: 1, group: 'best-practices-general'},
         {id: 'errors-in-console', weight: 1, group: 'best-practices-general'},
+        {id: 'valid-source-maps', weight: 0, group: 'best-practices-general'},
       ],
     },
     'seo': {

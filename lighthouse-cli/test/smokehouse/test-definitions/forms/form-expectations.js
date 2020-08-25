@@ -284,6 +284,83 @@ const expectations = [
       requestedUrl: 'http://localhost:10200/form.html',
       finalUrl: 'http://localhost:10200/form.html',
       audits: {
+        'autocomplete': {
+          score: 0,
+          details: {
+            items: [
+              {
+                node: {
+                  type: 'node',
+                  snippet: '<input type="text" id="city_shipping" placeholder="city you live">',
+                  nodeLabel: 'input',
+                },
+              },
+              {
+                node: {
+                  type: 'node',
+                  snippet: '<select id="state_shipping">',
+                  nodeLabel: 'Select a state\nCA\nMA\nNY\nMD\nOR\nOH\nIL\nDC',
+                },
+              },
+              {
+                node: {
+                  type: 'node',
+                  snippet: '<input type="text" id="zip_shipping">',
+                  nodeLabel: 'input',
+                },
+              },
+              {
+                node: {
+                  type: 'node',
+                  snippet: '<input type="text" id="name_billing" name="name_billing" placeholder="your name">',
+                  nodeLabel: 'input',
+                },
+              },
+              {
+                node: {
+                  type: 'node',
+                  snippet: '<input type="text" id="city_billing" name="city_billing" placeholder="city you live in">',
+                  nodeLabel: 'input',
+                },
+              },
+              {
+                node: {
+                  type: 'node',
+                  snippet: '<select id="state_billing" name="state_billing">',
+                  nodeLabel: '\n            Select a state\n            CA\n            MA\n            NY\n      …',
+                },
+              },
+              {
+                node: {
+                  type: 'node',
+                  snippet: '<input type="text" id="zip_billing">',
+                  nodeLabel: 'input',
+                },
+              },
+              {
+                node: {
+                  type: 'node',
+                  snippet: '<input type="text" id="CCNo2" name="CCNo2">',
+                  nodeLabel: 'input',
+                },
+              },
+              {
+                node: {
+                  type: 'node',
+                  snippet: '<select id="CCExpiresMonth2" name="CCExpiresMonth2">',
+                  nodeLabel: 'MM\n01\n02\n03\n04\n05\n06\n07\n08\n09\n10\n11\n12',
+                },
+              },
+              {
+                node: {
+                  type: 'node',
+                  snippet: '<select id="CCExpiresYear">',
+                  nodeLabel: 'YY\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\n2027\n2028\n2029',
+                },
+              },
+            ],
+          },
+        },
       },
     },
   },
