@@ -30,7 +30,7 @@ const UIStrings = {
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 /** @type {string[]} This array contains all acceptable autocomplete attributes from the WHATWG standard. More found at https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill */
-const validAutocompleteAttributeNames = ['name', 'honorific-prefix', 'given-name',
+const validAutocompleteAttributes = ['name', 'honorific-prefix', 'given-name',
   'additional-name', 'family-name', 'honorific-suffix', 'nickname', 'username', 'new-password',
   'current-password', 'one-time-code', 'organization-title', 'organization', 'street-address',
   'address-line1', 'address-line2', 'address-line3', 'address-level4', 'address-level3',
@@ -40,6 +40,9 @@ const validAutocompleteAttributeNames = ['name', 'honorific-prefix', 'given-name
   'transaction-amount', 'language', 'bday', 'bday-day', 'bday-month', 'bday-year',
   'sex', 'url', 'photo', 'tel', 'tel-country-code', 'tel-national', 'tel-area-code', 'on',
   'tel-local', 'tel-local-prefix', 'tel-local-suffix', 'tel-extension', 'email', 'impp', 'off'];
+
+/** @type {string[]} This array contains all acceptable autocomplete prefix tokens from the WHATWG standard. More found at https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill */
+const validAutocompletePrefixes = ['home', 'work', 'mobile', 'fax', 'pager', 'shipping', 'billing'];
 
 class AutocompleteAudit extends Audit {
   /**
@@ -57,16 +60,31 @@ class AutocompleteAudit extends Audit {
 
   /**
    * @param {LH.Artifacts.FormInput} input
-   * @return {Boolean}
+   * @return {{attribute: Boolean|null, prefix: Boolean|null, section:Boolean|null}}
    */
   static isValidAutocomplete(input) {
-    for (const name of validAutocompleteAttributeNames) {
-      const valid = input.autocompleteAttr ? input.autocompleteAttr.includes(name) : false;
-      if (valid) {
-        return true;
+    if (!input.autocompleteAttr) return {attribute: false, prefix: null, section: null};
+    if (input.autocompleteAttr.includes(' ') ) {
+      const autoAttrArray = input.autocompleteAttr.split(' ');
+      if (autoAttrArray.length === 2) {
+        return {
+          attribute: validAutocompleteAttributes.includes(autoAttrArray[1]),
+          prefix: validAutocompletePrefixes.includes(autoAttrArray[0]),
+          section: null,
+        };
+      } else if (autoAttrArray.length === 3) {
+        return {
+          attribute: validAutocompleteAttributes.includes(autoAttrArray[2]),
+          prefix: validAutocompletePrefixes.includes(autoAttrArray[1]),
+          section: autoAttrArray[0].slice(0, 7) !== 'section-',
+        };
       }
     }
-    return false;
+    return {
+      attribute: validAutocompleteAttributes.includes(input.autocompleteAttr),
+      prefix: null,
+      section: null,
+    };
   }
   /**
    * @param {LH.Artifacts} artifacts
