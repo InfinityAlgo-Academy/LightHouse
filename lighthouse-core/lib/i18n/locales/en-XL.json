@@ -1826,6 +1826,9 @@
   "lighthouse-core/report/html/renderer/util.js | runtimeNoEmulation": {
     "message": "N̂ó êḿûĺât́îón̂"
   },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsAxeVersion": {
+    "message": "Âx́ê v́êŕŝíôń"
+  },
   "lighthouse-core/report/html/renderer/util.js | runtimeSettingsBenchmark": {
     "message": "ĈṔÛ/Ḿêḿôŕŷ Ṕôẃêŕ"
   },

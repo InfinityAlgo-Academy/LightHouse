@@ -3,7 +3,10 @@
   "environment": {
     "networkUserAgent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/66.0.3359.30 Mobile Safari/537.36",
     "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4232.0 Safari/537.36",
-    "benchmarkIndex": 1000
+    "benchmarkIndex": 1000,
+    "credits": {
+      "axe-core": "2.1.1"
+    }
   },
   "lighthouseVersion": "6.2.0",
   "fetchTime": "2018-03-13T00:55:45.840Z",
@@ -6330,6 +6333,7 @@
       "runtimeDesktopEmulation": "Emulated Desktop",
       "runtimeMobileEmulation": "Emulated Moto G4",
       "runtimeNoEmulation": "No emulation",
+      "runtimeSettingsAxeVersion": "Axe version",
       "runtimeSettingsBenchmark": "CPU/Memory Power",
       "runtimeSettingsChannel": "Channel",
       "runtimeSettingsCPUThrottling": "CPU throttling",

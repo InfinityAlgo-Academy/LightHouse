@@ -1277,6 +1277,7 @@
     }
   ],
   "Accessibility": {
+    "version": "2.1.1",
     "violations": [
       {
         "id": "color-contrast",

@@ -85,6 +85,9 @@ message LighthouseResult {
 
     // The benchmark index that indicates rough device class
     google.protobuf.DoubleValue benchmark_index = 3;
+
+    // The version of libraries with which these results were generated. Ex: axe-core.
+    map<string, string> credits = 4;
   }
 
   // The environment that the audit was run in
@@ -443,6 +446,9 @@ message I18n {
 
     // Text link pointing to the Lighthouse scoring calculator. This link immediately follows a sentence stating the performance score is calculated from the perf metrics.
     string calculator_link = 45;
+
+    // Label for a row in a table that shows the version of the Axe library used
+    string runtime_settings_axe_version = 46;
   }
 
   // The message holding all formatted strings
