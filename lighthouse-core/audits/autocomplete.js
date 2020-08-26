@@ -178,9 +178,11 @@ class AutocompleteAudit extends Audit {
     if (input.autocompleteAttr.includes(' ') ) {
       const autoAttrArray = input.autocompleteAttr.split(' ');
       if (autoAttrArray.length === 2) {
+        const prefix = autoAttrArray[0].slice(0, 8) === 'section-' ? true :
+         validAutocompletePrefixes.includes(autoAttrArray[0]);
         return {
           attribute: validAutocompleteAttributes.includes(autoAttrArray[1]),
-          prefix: validAutocompletePrefixes.includes(autoAttrArray[0]),
+          prefix: prefix,
           section: true,
         };
       } else if (autoAttrArray.length === 3) {
