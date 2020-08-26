@@ -305,9 +305,25 @@
       "displayValue": "Root document took 570 ms",
       "details": {
         "type": "opportunity",
-        "overallSavingsMs": -29.436999999999898,
-        "headings": [],
-        "items": []
+        "headings": [
+          {
+            "key": "url",
+            "valueType": "url",
+            "label": "URL"
+          },
+          {
+            "key": "responseTime",
+            "valueType": "timespanMs",
+            "label": "Time Spent"
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "responseTime": 570.5630000000001
+          }
+        ],
+        "overallSavingsMs": 470.5630000000001
       }
     },
     "first-cpu-idle": {
@@ -6578,6 +6594,7 @@
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnURL": [
         "audits[errors-in-console].details.headings[0].text",
+        "audits[server-response-time].details.headings[0].label",
         "audits[image-aspect-ratio].details.headings[1].text",
         "audits[image-size-responsive].details.headings[1].text",
         "audits[preload-fonts].details.headings[0].text",
@@ -6617,6 +6634,12 @@
           },
           "path": "audits[server-response-time].displayValue"
         }
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": [
+        "audits[server-response-time].details.headings[1].label",
+        "audits[mainthread-work-breakdown].details.headings[1].text",
+        "audits[network-rtt].details.headings[1].text",
+        "audits[network-server-latency].details.headings[1].text"
       ],
       "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": [
         "audits[first-cpu-idle].title",
@@ -6752,11 +6775,6 @@
       ],
       "lighthouse-core/audits/mainthread-work-breakdown.js | columnCategory": [
         "audits[mainthread-work-breakdown].details.headings[0].text"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": [
-        "audits[mainthread-work-breakdown].details.headings[1].text",
-        "audits[network-rtt].details.headings[1].text",
-        "audits[network-server-latency].details.headings[1].text"
       ],
       "lighthouse-core/audits/bootup-time.js | title": [
         "audits[bootup-time].title"
