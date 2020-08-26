@@ -714,7 +714,7 @@
     "message": "{itemCount,plural, =1{1 solicitação não veiculada via HTTP/2}one{# solicitação não veiculada via HTTP/2}other{# solicitações não veiculadas via HTTP/2}}"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "Use HTTP/2"
+    "message": "Use o HTTP/2"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "Marque os listeners de eventos de toque e rolagem como `passive` para melhorar o desempenho de rolagem da página. [Saiba mais](https://web.dev/uses-passive-event-listeners/)."
@@ -1251,13 +1251,13 @@
     "message": "Orçamento de tempo"
   },
   "lighthouse-core/audits/unsized-images.js | description": {
-    "message": "Always include explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+    "message": "Sempre inclua largura e altura explícitas em elementos de imagem para reduzir mudanças de layout e melhorar a CLS. [Saiba mais](https://web.dev/optimize-cls/#images-without-dimensions)"
   },
   "lighthouse-core/audits/unsized-images.js | failureTitle": {
-    "message": "Image elements do not have explicit `width` and `height`"
+    "message": "Os elementos de imagem não têm `width` e `height` explícitas"
   },
   "lighthouse-core/audits/unsized-images.js | title": {
-    "message": "Image elements have explicit `width` and `height`"
+    "message": "Os elementos de imagem têm `width` e `height` explícitas"
   },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "Tipo"
@@ -1497,7 +1497,7 @@
     "message": "Elemento"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
-    "message": "Failing Elements"
+    "message": "Elementos com falha"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "Localização"

@@ -714,7 +714,7 @@
     "message": "{itemCount,plural, =1{1 заявка не е обслужена през HTTP/2}other{# заявки не са обслужени през HTTP/2}}"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "Use HTTP/2"
+    "message": "Използвайте HTTP/2"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "За да подобрите ефективността на страницата си при превъртане, бихте могли да означите като `passive` приемателите си на събития, свързани с докосване и с колелцето на мишката. [Научете повече](https://web.dev/uses-passive-event-listeners/)."
@@ -1251,13 +1251,13 @@
     "message": "Времеви бюджет"
   },
   "lighthouse-core/audits/unsized-images.js | description": {
-    "message": "Always include explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+    "message": "Винаги посочвайте изрично широчина и височина за елементите на изображенията, за да намалите промените в оформлението и подобрите CLS. [Научете повече](https://web.dev/optimize-cls/#images-without-dimensions)"
   },
   "lighthouse-core/audits/unsized-images.js | failureTitle": {
-    "message": "Image elements do not have explicit `width` and `height`"
+    "message": "Елементите на изображенията не са с изрично посочени `width` и `height`"
   },
   "lighthouse-core/audits/unsized-images.js | title": {
-    "message": "Image elements have explicit `width` and `height`"
+    "message": "Елементите на изображенията са с изрично посочени `width` и `height`"
   },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "Тип"
@@ -1497,7 +1497,7 @@
     "message": "Елемент"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
-    "message": "Failing Elements"
+    "message": "Елементи с грешки"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "Местоположение"

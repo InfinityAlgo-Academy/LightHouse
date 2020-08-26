@@ -714,7 +714,7 @@
     "message": "{itemCount,plural, =1{1 pieprasījums nav parādīts, izmantojot HTTP/2}zero{# pieprasījumi nav parādīti, izmantojot HTTP/2}one{# pieprasījums nav parādīts, izmantojot HTTP/2}other{# pieprasījumi nav parādīti, izmantojot HTTP/2}}"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "Use HTTP/2"
+    "message": "Izmantojiet HTTP/2"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "Llai uzlabotu savas lapas ritināšanas veiktspēju, ieteicams atzīmēt pieskārienu un peles ritentiņa notikumu uztvērējus kā “`passive`”. [Uzziniet vairāk](https://web.dev/uses-passive-event-listeners/)."
@@ -1251,13 +1251,13 @@
     "message": "Laika budžets"
   },
   "lighthouse-core/audits/unsized-images.js | description": {
-    "message": "Always include explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+    "message": "Vienmēr iekļaujiet konkrētu platumu un augstumu attēlu elementiem, lai samazinātu izkārtojuma nobīdes un uzlabotu CLS. [Uzziniet vairāk](https://web.dev/optimize-cls/#images-without-dimensions)."
   },
   "lighthouse-core/audits/unsized-images.js | failureTitle": {
-    "message": "Image elements do not have explicit `width` and `height`"
+    "message": "Attēlu elementiem nav konkrēts `width` un `height`"
   },
   "lighthouse-core/audits/unsized-images.js | title": {
-    "message": "Image elements have explicit `width` and `height`"
+    "message": "Attēlu elementiem ir konkrēts `width` un `height`"
   },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "Veids"
@@ -1497,7 +1497,7 @@
     "message": "Elements"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
-    "message": "Failing Elements"
+    "message": "Nederīgi elementi"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "Atrašanās vieta"

@@ -714,7 +714,7 @@
     "message": "{itemCount,plural, =1{No s'ha atès 1 sol·licitud mitjançant HTTP/2}other{No s'han atès # sol·licituds mitjançant HTTP/2}}"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "Use HTTP/2"
+    "message": "Utilitza HTTP/2"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "Per millorar el rendiment del desplaçament de la pàgina, et recomanem que defineixis els detectors d'esdeveniments de roda de desplaçament com a `passive`. [Obtén més informació](https://web.dev/uses-passive-event-listeners/)."
@@ -948,7 +948,7 @@
     "message": "Latències dorsals del servidor"
   },
   "lighthouse-core/audits/no-unload-listeners.js | description": {
-    "message": "L'esdeveniment `unload` no es pot activar amb fiabilitat i detectar-lo pot impedir optimitzacions del navegador, com ara la memòria cau enrere/endavant. També pots fer servir els esdeveniments `pagehide` o `visibilitychange`. [Més informació](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
+    "message": "L'esdeveniment `unload` no es pot activar amb fiabilitat i detectar-lo pot impedir optimitzacions del navegador, com ara la memòria cau Back-Forward. També pots fer servir els esdeveniments `pagehide` o `visibilitychange`. [Més informació](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
   },
   "lighthouse-core/audits/no-unload-listeners.js | failureTitle": {
     "message": "Registra un detector de `unload`"
@@ -1251,13 +1251,13 @@
     "message": "Pressupost de temps"
   },
   "lighthouse-core/audits/unsized-images.js | description": {
-    "message": "Always include explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+    "message": "En els elements d'imatge, inclou sempre una amplada i una alçada explícites per reduir els canvis de disseny i millorar el CLS. [Més informació](https://web.dev/optimize-cls/#images-without-dimensions)"
   },
   "lighthouse-core/audits/unsized-images.js | failureTitle": {
-    "message": "Image elements do not have explicit `width` and `height`"
+    "message": "Els elements d'imatge no tenen una `width` ni una `height` explícites."
   },
   "lighthouse-core/audits/unsized-images.js | title": {
-    "message": "Image elements have explicit `width` and `height`"
+    "message": "Els elements d'imatge tenen una `width` i una `height` explícites"
   },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "Tipus"
@@ -1497,7 +1497,7 @@
     "message": "Element"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
-    "message": "Failing Elements"
+    "message": "Elements amb errors"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "Ubicació"

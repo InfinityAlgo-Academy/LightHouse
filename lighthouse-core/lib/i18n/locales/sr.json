@@ -714,7 +714,7 @@
     "message": "{itemCount,plural, =1{1 захтев није испоручен преко протокола HTTP/2}one{# захтев није испоручен преко протокола HTTP/2}few{# захтева нису испоручена преко протокола HTTP/2}other{# захтева није испоручено преко протокола HTTP/2}}"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "Use HTTP/2"
+    "message": "Користите HTTP/2"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "Препоручујемо вам да пасивне обрађиваче догађаја означите као `passive` да бисте побољшали резултате померања. [Сазнајте више](https://web.dev/uses-passive-event-listeners/)."
@@ -1251,13 +1251,13 @@
     "message": "Буџет за брзину учитавања"
   },
   "lighthouse-core/audits/unsized-images.js | description": {
-    "message": "Always include explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+    "message": "Увек укључите експлицитну ширину и висину у елементима слика ради смањења прелаза изгледа и побољшања кумулативног помака садржаја странице. [Сазнајте више](https://web.dev/optimize-cls/#images-without-dimensions)"
   },
   "lighthouse-core/audits/unsized-images.js | failureTitle": {
-    "message": "Image elements do not have explicit `width` and `height`"
+    "message": "Елементи слика немају експлицитне: `width` и `height`"
   },
   "lighthouse-core/audits/unsized-images.js | title": {
-    "message": "Image elements have explicit `width` and `height`"
+    "message": "Елементи слика имају експлицитне: `width` и `height`"
   },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "Тип"
@@ -1497,7 +1497,7 @@
     "message": "Елемент"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
-    "message": "Failing Elements"
+    "message": "Елементи који нису прошли проверу"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "Локација"

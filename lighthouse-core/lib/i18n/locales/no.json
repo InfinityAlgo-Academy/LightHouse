@@ -714,7 +714,7 @@
     "message": "{itemCount,plural, =1{1 forespørsel ble ikke vist via HTTP/2}other{# forespørsler ble ikke vist via HTTP/2}}"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "Use HTTP/2"
+    "message": "Bruk HTTP/2"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "Vurder å markere aktivitetslytterne for berøring og musehjul som `passive` for å oppnå bedre ytelse ved rulling på siden. [Finn ut mer](https://web.dev/uses-passive-event-listeners/)."
@@ -1251,13 +1251,13 @@
     "message": "Tidsbudsjett"
   },
   "lighthouse-core/audits/unsized-images.js | description": {
-    "message": "Always include explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+    "message": "Spesifiser alltid bredden og høyden på bildeelementer eksplisitt for å redusere utseendeforskyvninger og oppnå bedre CLS. [Finn ut mer](https://web.dev/optimize-cls/#images-without-dimensions)"
   },
   "lighthouse-core/audits/unsized-images.js | failureTitle": {
-    "message": "Image elements do not have explicit `width` and `height`"
+    "message": "Bildeelementer har ikke eksplisitte `width`- og `height`-attributter"
   },
   "lighthouse-core/audits/unsized-images.js | title": {
-    "message": "Image elements have explicit `width` and `height`"
+    "message": "Bildeelementer har eksplisitte `width`- og `height`-attributter"
   },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "Type"
@@ -1497,7 +1497,7 @@
     "message": "Element"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
-    "message": "Failing Elements"
+    "message": "Elementer som ikke besto kontrollen"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "Posisjon"

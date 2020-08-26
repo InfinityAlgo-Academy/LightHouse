@@ -714,7 +714,7 @@
     "message": "{itemCount,plural, =1{בקשה אחת לא מולאה דרך HTTP/2}two{# בקשות לא מולאו דרך HTTP/2}many{# בקשות לא מולאו דרך HTTP/2}other{# בקשות לא מולאו דרך HTTP/2}}"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "Use HTTP/2"
+    "message": "עליך להשתמש ב-HTTP/2"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "כדי לשפר את ביצועי הגלילה של הדף, מומלץ לשקול להוסיף סימון `passive` למעבדים של אירועי נגיעה וגלילה עם גלגל העכבר. [מידע נוסף](https://web.dev/uses-passive-event-listeners/)."
@@ -1251,13 +1251,13 @@
     "message": "תקציב תזמון"
   },
   "lighthouse-core/audits/unsized-images.js | description": {
-    "message": "Always include explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+    "message": "כדי להפחית שינויים בפריסה וכדי לשפר את ה-CLS, תמיד יש לכלול רוחב וגובה מפורשים ברכיבי תמונה. [למידע נוסף](https://web.dev/optimize-cls/#images-without-dimensions)"
   },
   "lighthouse-core/audits/unsized-images.js | failureTitle": {
-    "message": "Image elements do not have explicit `width` and `height`"
+    "message": "יש רכיבי תמונה ללא מאפייני `width` ו-`height` מפורשים"
   },
   "lighthouse-core/audits/unsized-images.js | title": {
-    "message": "Image elements have explicit `width` and `height`"
+    "message": "לרכיבי תמונה יש מאפייני `width` ו-`height` מפורשים"
   },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "סוג"
@@ -1497,7 +1497,7 @@
     "message": "רכיב"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
-    "message": "Failing Elements"
+    "message": "רכיבים שנכשלו בבדיקה"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "מיקום"

@@ -1497,7 +1497,7 @@
     "message": "Element"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
-    "message": "Failing Elements"
+    "message": "Failing elements"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "Location"

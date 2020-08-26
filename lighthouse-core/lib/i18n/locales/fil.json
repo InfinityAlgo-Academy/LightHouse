@@ -714,7 +714,7 @@
     "message": "{itemCount,plural, =1{1 kahilingan ang hindi naihatid sa pamamagitan ng HTTP/2}one{# kahilingan ang hindi naihatid sa pamamagitan ng HTTP/2}other{# na kahilingan ang hindi naihatid sa pamamagitan ng HTTP/2}}"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "Use HTTP/2"
+    "message": "Gumamit ng HTTP/2"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "Pag-isipang markahan ang iyong pan-detect ng event sa pagpindot at wheel bilang `passive` para mapahusay ang performance sa pag-scroll ng iyong page. [Matuto pa](https://web.dev/uses-passive-event-listeners/)."
@@ -1251,13 +1251,13 @@
     "message": "Badyet sa timing"
   },
   "lighthouse-core/audits/unsized-images.js | description": {
-    "message": "Always include explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+    "message": "Palaging isama ang tahasang lapad at taas sa mga element na larawan para mabawasan ang mga pagbabago sa layout at mapahusay ang CLS. [Matuto pa](https://web.dev/optimize-cls/#images-without-dimensions)"
   },
   "lighthouse-core/audits/unsized-images.js | failureTitle": {
-    "message": "Image elements do not have explicit `width` and `height`"
+    "message": "Walang tahasang `width` at `height` ang mga element na larawan"
   },
   "lighthouse-core/audits/unsized-images.js | title": {
-    "message": "Image elements have explicit `width` and `height`"
+    "message": "May tahasang `width` at `height`ang mga element na larawan"
   },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "Uri"
@@ -1497,7 +1497,7 @@
     "message": "Elemento"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
-    "message": "Failing Elements"
+    "message": "Mga Hindi Nakapasang Element"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "Lokasyon"

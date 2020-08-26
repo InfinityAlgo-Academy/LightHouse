@@ -714,7 +714,7 @@
     "message": "{itemCount,plural, =1{1 ‏‮request‬‏ ‏‮not‬‏ ‏‮served‬‏ ‏‮via‬‏ ‏‮HTTP‬‏/2}zero{# ‏‮requests‬‏ ‏‮not‬‏ ‏‮served‬‏ ‏‮via‬‏ ‏‮HTTP‬‏/2}two{# ‏‮requests‬‏ ‏‮not‬‏ ‏‮served‬‏ ‏‮via‬‏ ‏‮HTTP‬‏/2}few{# ‏‮requests‬‏ ‏‮not‬‏ ‏‮served‬‏ ‏‮via‬‏ ‏‮HTTP‬‏/2}many{# ‏‮requests‬‏ ‏‮not‬‏ ‏‮served‬‏ ‏‮via‬‏ ‏‮HTTP‬‏/2}other{# ‏‮requests‬‏ ‏‮not‬‏ ‏‮served‬‏ ‏‮via‬‏ ‏‮HTTP‬‏/2}}"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "Use HTTP/2"
+    "message": "‏‮Use‬‏ ‏‮HTTP‬‏/2"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "‏‮Consider‬‏ ‏‮marking‬‏ ‏‮your‬‏ ‏‮touch‬‏ ‏‮and‬‏ ‏‮wheel‬‏ ‏‮event‬‏ ‏‮listeners‬‏ ‏‮as‬‏ `passive` ‏‮to‬‏ ‏‮improve‬‏ ‏‮your‬‏ ‏‮page‬‏'‏‮s‬‏ ‏‮scroll‬‏ ‏‮performance‬‏. [‏‮Learn‬‏ ‏‮more‬‏](https://web.dev/uses-passive-event-listeners/)."
@@ -1251,13 +1251,13 @@
     "message": "‏‮Timing‬‏ ‏‮budget‬‏"
   },
   "lighthouse-core/audits/unsized-images.js | description": {
-    "message": "Always include explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+    "message": "‏‮Always‬‏ ‏‮include‬‏ ‏‮explicit‬‏ ‏‮width‬‏ ‏‮and‬‏ ‏‮height‬‏ ‏‮on‬‏ ‏‮image‬‏ ‏‮elements‬‏ ‏‮to‬‏ ‏‮reduce‬‏ ‏‮layout‬‏ ‏‮shifts‬‏ ‏‮and‬‏ ‏‮improve‬‏ ‏‮CLS‬‏. [‏‮Learn‬‏ ‏‮more‬‏](https://web.dev/optimize-cls/#images-without-dimensions)"
   },
   "lighthouse-core/audits/unsized-images.js | failureTitle": {
-    "message": "Image elements do not have explicit `width` and `height`"
+    "message": "‏‮Image‬‏ ‏‮elements‬‏ ‏‮do‬‏ ‏‮not‬‏ ‏‮have‬‏ ‏‮explicit‬‏ `width` ‏‮and‬‏ `height`"
   },
   "lighthouse-core/audits/unsized-images.js | title": {
-    "message": "Image elements have explicit `width` and `height`"
+    "message": "‏‮Image‬‏ ‏‮elements‬‏ ‏‮have‬‏ ‏‮explicit‬‏ `width` ‏‮and‬‏ `height`"
   },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "‏‮Type‬‏"
@@ -1497,7 +1497,7 @@
     "message": "‏‮Element‬‏"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
-    "message": "Failing Elements"
+    "message": "‏‮Failing‬‏ ‏‮Elements‬‏"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "‏‮Location‬‏"
