@@ -97,6 +97,7 @@
     "@types/lodash.isequal": "^4.5.2",
     "@types/lodash.set": "^4.3.6",
     "@types/node": "*",
+    "@types/puppeteer": "1.19.x",
     "@types/raven": "^2.5.1",
     "@types/resize-observer-browser": "^0.1.1",
     "@types/rimraf": "^2.0.2",
