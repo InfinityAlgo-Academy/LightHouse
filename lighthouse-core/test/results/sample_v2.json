@@ -7655,6 +7655,9 @@
           "path": "audits[font-size].displayValue"
         }
       ],
+      "lighthouse-core/audits/seo/font-size.js | legibleText": [
+        "audits[font-size].details.items[0].source.value"
+      ],
       "lighthouse-core/audits/seo/link-text.js | title": [
         "audits[link-text].title"
       ],

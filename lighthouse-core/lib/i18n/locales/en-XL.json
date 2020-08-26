@@ -1103,6 +1103,9 @@
   "lighthouse-core/audits/seo/crawlable-anchors.js | title": {
     "message": "L̂ín̂ḱŝ ár̂é ĉŕâẃl̂áb̂ĺê"
   },
+  "lighthouse-core/audits/seo/font-size.js | additionalIllegibleText": {
+    "message": "Âd́d̂'ĺ îĺl̂éĝíb̂ĺê t́êx́t̂"
+  },
   "lighthouse-core/audits/seo/font-size.js | description": {
     "message": "F̂ón̂t́ ŝíẑéŝ ĺêśŝ t́ĥán̂ 12ṕx̂ ár̂é t̂óô śm̂ál̂ĺ t̂ó b̂é l̂éĝíb̂ĺê án̂d́ r̂éq̂úîŕê ḿôb́îĺê v́îśît́ôŕŝ t́ô “ṕîńĉh́ t̂ó ẑóôḿ” îń ôŕd̂ér̂ t́ô ŕêád̂. Śt̂ŕîv́ê t́ô h́âv́ê >60% óf̂ ṕâǵê t́êx́t̂ ≥12ṕx̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/font-size/)."
   },
@@ -1114,6 +1117,9 @@
   },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "D̂óĉúm̂én̂t́ d̂óêśn̂'t́ ûśê ĺêǵîb́l̂é f̂ón̂t́ ŝíẑéŝ"
+  },
+  "lighthouse-core/audits/seo/font-size.js | legibleText": {
+    "message": "L̂éĝíb̂ĺê t́êx́t̂"
   },
   "lighthouse-core/audits/seo/font-size.js | title": {
     "message": "D̂óĉúm̂én̂t́ ûśêś l̂éĝíb̂ĺê f́ôńt̂ śîźêś"

@@ -24,6 +24,10 @@ const UIStrings = {
   /** Explanatory message stating that there was a failure in an audit caused by a missing page viewport meta tag configuration. "viewport" and "meta" are HTML terms and should not be translated. */
   explanationViewport: 'Text is illegible because there\'s no viewport meta tag optimized ' +
     'for mobile screens.',
+  /** Label for the table row which summarizes all failing nodes that were not fully analyzed. "Add'l" is shorthand for "Additional" */
+  additionalIllegibleText: 'Add\'l illegible text',
+  /** Label for the table row which displays the percentage of nodes that have proper font size. */
+  legibleText: 'Legible text',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -295,7 +299,7 @@ class FontSize extends Audit {
 
       tableData.push({
         // Overrides default `source-location`
-        source: {type: 'code', value: 'Add\'l illegible text'},
+        source: {type: 'code', value: str_(UIStrings.additionalIllegibleText)},
         selector: '',
         coverage: `${percentageOfUnanalyzedFailingText.toFixed(2)}%`,
         fontSize: '< 12px',
@@ -305,7 +309,7 @@ class FontSize extends Audit {
     if (percentageOfPassingText > 0) {
       tableData.push({
         // Overrides default `source-location`
-        source: {type: 'code', value: 'Legible text'},
+        source: {type: 'code', value: str_(UIStrings.legibleText)},
         selector: '',
         coverage: `${percentageOfPassingText.toFixed(2)}%`,
         fontSize: '≥ 12px',
