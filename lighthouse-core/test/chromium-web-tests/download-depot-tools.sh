@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -eo pipefail
 
 ##
 # @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.

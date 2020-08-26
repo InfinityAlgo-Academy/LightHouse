@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -eo pipefail
 
 ##
 # @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
@@ -20,6 +20,7 @@ then
   exit 0
 fi
 
+echo "Downloading DevTools frontend at $DEVTOOLS_PATH"
 mkdir -p `dirname $DEVTOOLS_PATH`
 cd `dirname $DEVTOOLS_PATH`
 fetch --nohooks --no-history devtools-frontend

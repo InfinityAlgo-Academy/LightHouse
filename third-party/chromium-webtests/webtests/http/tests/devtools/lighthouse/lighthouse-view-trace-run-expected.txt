@@ -56,7 +56,6 @@ total-blocking-time
 total-byte-weight
 unminified-css
 unminified-javascript
-unsized-images
 unused-css-rules
 unused-javascript
 user-timings
