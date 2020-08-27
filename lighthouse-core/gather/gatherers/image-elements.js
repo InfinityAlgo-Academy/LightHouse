@@ -371,14 +371,27 @@ class ImageElements extends Gatherer {
       const {resourceSize = 0, transferSize = 0} = networkRecord;
       element.resourceSize = Math.min(resourceSize, transferSize);
 
-      if (!element.isInShadowDOM) {
-        const status = {
-          msg: 'fetchSourceRules',
-          id: `lh:gather:image-elements:0`,
-        };
-        log.time(status);
-        await this.fetchSourceRules(driver, element.devtoolsNodePath, element);
-        log.timeEnd(status);
+      if (process.env.COMPARE_TEST === 'iscss') {
+        if (!element.isInShadowDOM && !element.isCss) {
+          const status = {
+            msg: 'fetchSourceRules',
+            id: `lh:gather:image-elements:0`,
+          };
+          log.time(status);
+          await this.fetchSourceRules(driver, element.devtoolsNodePath, element);
+          log.timeEnd(status);
+        }
+      } else {
+        // original
+        if (!element.isInShadowDOM) {
+          const status = {
+            msg: 'fetchSourceRules',
+            id: `lh:gather:image-elements:0`,
+          };
+          log.time(status);
+          await this.fetchSourceRules(driver, element.devtoolsNodePath, element);
+          log.timeEnd(status);
+        }
       }
       // Images within `picture` behave strangely and natural size information isn't accurate,
       // CSS images have no natural size information at all. Try to get the actual size if we can.
