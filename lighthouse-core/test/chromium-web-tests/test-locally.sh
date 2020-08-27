@@ -14,7 +14,7 @@ TEST_DIR="$LH_ROOT/.tmp/chromium-web-tests"
 
 # Setup dependencies.
 export DEPOT_TOOLS_PATH="$TEST_DIR/depot-tools"
-export DEVTOOLS_PATH="$TEST_DIR/devtools/devtools-frontend"
+export DEVTOOLS_PATH=${DEVTOOLS_PATH:-"$TEST_DIR/devtools/devtools-frontend"}
 export BLINK_TOOLS_PATH="$TEST_DIR/blink_tools"
 export PATH=$DEPOT_TOOLS_PATH:$PATH
 
