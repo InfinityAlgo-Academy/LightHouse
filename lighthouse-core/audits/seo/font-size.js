@@ -28,6 +28,12 @@ const UIStrings = {
   additionalIllegibleText: 'Add\'l illegible text',
   /** Label for the table row which displays the percentage of nodes that have proper font size. */
   legibleText: 'Legible text',
+  /** Label for a column in a data table; entries will be css style rule selectors. */
+  columnSelector: 'Selector',
+  /** Label for a column in a data table; entries will be the percent of page text a specific CSS rule applies to. */
+  columnPercentPageText: '% of Page Text',
+  /** Label for a column in a data table; entries will be text font sizes. */
+  columnFontSize: 'Font Size',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -273,10 +279,10 @@ class FontSize extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'source', itemType: 'source-location', text: 'Source'},
-      {key: 'selector', itemType: 'code', text: 'Selector'},
-      {key: 'coverage', itemType: 'text', text: '% of Page Text'},
-      {key: 'fontSize', itemType: 'text', text: 'Font Size'},
+      {key: 'source', itemType: 'source-location', text: str_(i18n.UIStrings.columnSource)},
+      {key: 'selector', itemType: 'code', text: str_(UIStrings.columnSelector)},
+      {key: 'coverage', itemType: 'text', text: str_(UIStrings.columnPercentPageText)},
+      {key: 'fontSize', itemType: 'text', text: str_(UIStrings.columnFontSize)},
     ];
 
     const tableData = failingRules.sort((a, b) => b.textLength - a.textLength)

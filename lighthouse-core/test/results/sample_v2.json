@@ -7655,6 +7655,18 @@
           "path": "audits[font-size].displayValue"
         }
       ],
+      "lighthouse-core/lib/i18n/i18n.js | columnSource": [
+        "audits[font-size].details.headings[0].text"
+      ],
+      "lighthouse-core/audits/seo/font-size.js | columnSelector": [
+        "audits[font-size].details.headings[1].text"
+      ],
+      "lighthouse-core/audits/seo/font-size.js | columnPercentPageText": [
+        "audits[font-size].details.headings[2].text"
+      ],
+      "lighthouse-core/audits/seo/font-size.js | columnFontSize": [
+        "audits[font-size].details.headings[3].text"
+      ],
       "lighthouse-core/audits/seo/font-size.js | legibleText": [
         "audits[font-size].details.items[0].source.value"
       ],
