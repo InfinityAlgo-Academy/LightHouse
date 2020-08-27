@@ -9,6 +9,7 @@
   */
 'use strict';
 
+const log = require('lighthouse-logger');
 const Gatherer = require('./gatherer.js');
 const pageFunctions = require('../../lib/page-functions.js');
 const Driver = require('../driver.js'); // eslint-disable-line no-unused-vars
@@ -275,16 +276,35 @@ class ImageElements extends Gatherer {
    */
   async fetchSourceRules(driver, devtoolsNodePath, element) {
     try {
+      const status1 = {
+        msg: 'DOM.pushNodeByPathToFrontend',
+        id: `lh:gather:image-elements:1`,
+      };
+      log.time(status1);
       const {nodeId} = await driver.sendCommand('DOM.pushNodeByPathToFrontend', {
         path: devtoolsNodePath,
       });
+      log.timeEnd(status1);
       if (!nodeId) return;
 
+      const status2 = {
+        msg: 'CSS.getMatchedStylesForNode',
+        id: `lh:gather:image-elements:2`,
+      };
+      log.time(status2);
       const matchedRules = await driver.sendCommand('CSS.getMatchedStylesForNode', {
         nodeId: nodeId,
       });
+      log.timeEnd(status2);
+
+      const status3 = {
+        msg: 'getEffectiveSizingRule',
+        id: `lh:gather:image-elements:3`,
+      };
+      log.time(status3);
       const sourceWidth = getEffectiveSizingRule(matchedRules, 'width');
       const sourceHeight = getEffectiveSizingRule(matchedRules, 'height');
+      log.timeEnd(status3);
       const sourceRules = {cssWidth: sourceWidth, cssHeight: sourceHeight};
       Object.assign(element, sourceRules);
     } catch (err) {
@@ -352,7 +372,13 @@ class ImageElements extends Gatherer {
       element.resourceSize = Math.min(resourceSize, transferSize);
 
       if (!element.isInShadowDOM) {
+        const status = {
+          msg: 'fetchSourceRules',
+          id: `lh:gather:image-elements:0`,
+        };
+        log.time(status);
         await this.fetchSourceRules(driver, element.devtoolsNodePath, element);
+        log.timeEnd(status);
       }
       // Images within `picture` behave strangely and natural size information isn't accurate,
       // CSS images have no natural size information at all. Try to get the actual size if we can.
