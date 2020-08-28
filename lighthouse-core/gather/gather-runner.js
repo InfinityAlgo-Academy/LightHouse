@@ -14,6 +14,7 @@ const NetworkRecorder = require('../lib/network-recorder.js');
 const constants = require('../config/constants.js');
 const i18n = require('../lib/i18n/i18n.js');
 const URL = require('../lib/url-shim.js');
+const Sentry = require('../lib/sentry.js');
 const TraceOfTab = require('../computed/trace-of-tab.js');
 
 const UIStrings = {
@@ -345,6 +346,13 @@ class GatherRunner {
       traceOfTab = await TraceOfTab.request(trace, {
         settings: passContext.settings,
         computedCache: passContext.computedCache,
+      }).catch(err => {
+        // If traceOfTab errored, let the more specific navigation failure reason take precedence.
+        // In the rare instance that a page load error does not catch it, individual gatherers
+        // depending on this will still fail with their own messages.
+        log.error('GatherRunner', 'failed to compute traceOfTab', err.message);
+        Sentry.captureException(err);
+        return undefined;
       });
     }
 
