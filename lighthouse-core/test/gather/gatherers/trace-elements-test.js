@@ -9,6 +9,7 @@
 
 const TraceElementsGatherer = require('../../../gather/gatherers/trace-elements.js');
 const Driver = require('../../../gather/driver.js');
+const TraceOfTab = require('../../../computed/trace-of-tab.js');
 const Connection = require('../../../gather/connections/connection.js');
 const createTestTrace = require('../../create-test-trace.js');
 const {createMockSendCommandFn} = require('../mock-commands.js');
@@ -519,9 +520,12 @@ describe('Trace Elements gatherer - Animated Elements', () => {
       unsupportedProperties: ['height'],
     }));
     trace.traceEvents.push(makeLCPTraceEvent(6));
+    trace.traceEvents.forEach(evt => Object.assign(evt, {pid: 1111, tid: 222}));
 
     const gatherer = new TraceElementsGatherer();
-    const result = await gatherer.afterPass({driver}, {trace});
+    const result = await gatherer.afterPass({driver}, {
+      traceOfTab: await TraceOfTab.compute_(trace),
+    });
 
     expect(result).toEqual([
       {
@@ -624,7 +628,9 @@ describe('Trace Elements gatherer - Animated Elements', () => {
     const driver = new Driver(connectionStub);
     const gatherer = new TraceElementsGatherer();
 
-    const result = await gatherer.afterPass({driver}, {trace: animationTrace});
+    const result = await gatherer.afterPass({driver}, {
+      traceOfTab: await TraceOfTab.compute_(animationTrace),
+    });
 
     expect(result).toEqual([
       {
@@ -714,9 +720,12 @@ describe('Trace Elements gatherer - Animated Elements', () => {
       unsupportedProperties: ['color'],
     }));
     trace.traceEvents.push(makeLCPTraceEvent(7));
+    trace.traceEvents.forEach(evt => Object.assign(evt, {pid: 1111, tid: 222}));
 
     const gatherer = new TraceElementsGatherer();
-    const result = await gatherer.afterPass({driver}, {trace});
+    const result = await gatherer.afterPass({driver}, {
+      traceOfTab: await TraceOfTab.compute_(trace),
+    });
 
     expect(result).toEqual([
       {
