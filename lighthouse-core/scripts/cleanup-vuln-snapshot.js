@@ -51,16 +51,25 @@ function cleanAndFormat(vulnString) {
     }
   }
 
-  for (const libEntries of Object.values(snapshot.npm)) {
+  for (const [packageName, libEntries] of Object.entries(snapshot.npm)) {
     libEntries.forEach((entry, i) => {
+      // snyk uses a convention for <0.0.0 to represent a mistaken vulnerability in their database.
+      // https://github.com/GoogleChrome/lighthouse/pull/11144#discussion_r465713835
+      // From Lighthouse's perspective we don't need to care about these.
+      const vulnerableVersions = entry.semver.vulnerable.filter(vuln => vuln !== '<0.0.0');
+
       const pruned = {
         id: entry.id,
         severity: entry.severity,
-        semver: {vulnerable: entry.semver.vulnerable},
+        semver: {vulnerable: vulnerableVersions},
       };
 
       libEntries[i] = pruned;
     });
+
+    const filteredEntries = libEntries.filter(entry => entry.semver.vulnerable.length);
+    snapshot.npm[packageName] = filteredEntries;
+    if (!filteredEntries.length) delete snapshot.npm[packageName];
   }
 
   // Normal pretty JSON-stringify has too many newlines. This strikes the right signal:noise ratio

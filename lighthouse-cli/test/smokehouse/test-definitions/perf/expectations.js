@@ -147,15 +147,99 @@ module.exports = [
         'font-display': {
           score: 0,
           details: {
-            items: {
-              length: 2,
-            },
+            items: [
+              {
+                url: 'http://localhost:10200/perf/lobster-v20-latin-regular.woff2',
+              },
+            ],
+          },
+        },
+        'preload-fonts': {
+          score: 0,
+          details: {
+            items: [
+              {
+                url: 'http://localhost:10200/perf/lobster-two-v10-latin-700.woff2?delay=1000',
+              },
+            ],
           },
         },
       },
     },
   },
   {
+    artifacts: {
+      TraceElements: [
+        {
+          traceEventType: 'largest-contentful-paint',
+          selector: 'body > div#late-content > img',
+          nodeLabel: 'img',
+          snippet: '<img src="../dobetterweb/lighthouse-480x318.jpg">',
+          boundingRect: {
+            top: 108,
+            bottom: 426,
+            left: 8,
+            right: 488,
+            width: 480,
+            height: 318,
+          },
+        },
+        {
+          traceEventType: 'layout-shift',
+          selector: 'body > h1',
+          nodeLabel: 'Please don\'t move me',
+          snippet: '<h1>',
+          boundingRect: {
+            top: 465,
+            bottom: 502,
+            left: 8,
+            right: 352,
+            width: 344,
+            height: 37,
+          },
+          score: '0.058 +/- 0.01',
+        },
+        {
+          traceEventType: 'layout-shift',
+          selector: 'body > div#late-content > div',
+          nodeLabel: 'Sorry!',
+          snippet: '<div style="height: 18px;">',
+          boundingRect: {
+            top: 426,
+            bottom: 444,
+            left: 8,
+            right: 352,
+            width: 344,
+            height: 18,
+          },
+          score: '0.026 +/- 0.01',
+        },
+        {
+          traceEventType: 'animation',
+          selector: 'body > div#animate-me',
+          nodeLabel: 'div',
+          snippet: '<div id="animate-me">',
+          boundingRect: {
+            top: 8,
+            bottom: 108,
+            left: 8,
+            right: 108,
+            width: 100,
+            height: 100,
+          },
+          animations: [
+            {
+              // Requires compositor failure reasons to be in the trace
+              // https://chromiumdash.appspot.com/commit/995baabedf9e70d16deafc4bc37a2b215a9b8ec9
+              _minChromiumMilestone: 86,
+              name: 'anim',
+              failureReasonsMask: 8224,
+              unsupportedProperties: ['background-color'],
+            },
+          ],
+        },
+      ],
+    },
     lhr: {
       requestedUrl: 'http://localhost:10200/perf/trace-elements.html',
       finalUrl: 'http://localhost:10200/perf/trace-elements.html',
@@ -222,6 +306,50 @@ module.exports = [
           scoreDisplayMode: 'notApplicable',
           details: {
             items: [],
+          },
+        },
+      },
+    },
+  },
+  {
+    lhr: {
+      requestedUrl: 'http://localhost:10200/perf/animations.html',
+      finalUrl: 'http://localhost:10200/perf/animations.html',
+      audits: {
+        'non-composited-animations': {
+          // Requires compositor failure reasons to be in the trace
+          // https://chromiumdash.appspot.com/commit/995baabedf9e70d16deafc4bc37a2b215a9b8ec9
+          _minChromiumMilestone: 86,
+          score: null,
+          displayValue: '1 animated element found',
+          details: {
+            items: [
+              {
+                node: {
+                  type: 'node',
+                  path: '2,HTML,1,BODY,1,DIV',
+                  selector: 'body > div#animated-boi',
+                  nodeLabel: 'div',
+                  snippet: '<div id="animated-boi">',
+                },
+                subItems: {
+                  items: [
+                    {
+                      // From JavaScript `.animate` which has no animation display name
+                      failureReason: 'Unsupported CSS Property: width',
+                    },
+                    {
+                      failureReason: 'Unsupported CSS Property: height',
+                      animation: 'alpha',
+                    },
+                    {
+                      failureReason: 'Unsupported CSS Property: background-color',
+                      animation: 'beta',
+                    },
+                  ],
+                },
+              },
+            ],
           },
         },
       },

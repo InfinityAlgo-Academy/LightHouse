@@ -82,6 +82,8 @@ declare global {
       ScriptElements: Array<Artifacts.ScriptElement>;
       /** The dimensions and devicePixelRatio of the loaded viewport. */
       ViewportDimensions: Artifacts.ViewportDimensions;
+      /** All the form elements in the page and formless inputs. */
+      FormElements: Artifacts.Form[];
     }
 
     /**
@@ -112,12 +114,14 @@ declare global {
       FontSize: Artifacts.FontSize;
       /** Screenshot of the entire page (rather than just the above the fold content). */
       FullPageScreenshot: Artifacts.FullPageScreenshot | null;
-      /** The issues surfaced in the devtools Issues panel */
-      InspectorIssues: Artifacts.InspectorIssues;
+      /** Information about event listeners registered on the global object. */
+      GlobalListeners: Array<Artifacts.GlobalListener>;
       /** The page's document body innerText if loaded with JavaScript disabled. */
       HTMLWithoutJavaScript: {bodyText: string, hasNoScript: boolean};
       /** Whether the page ended up on an HTTPS page after attempting to load the HTTP version. */
       HTTPRedirect: {value: boolean};
+      /** The issues surfaced in the devtools Issues panel */
+      InspectorIssues: Artifacts.InspectorIssues;
       /** JS coverage information for code used during page load. Keyed by URL. */
       JsUsage: Record<string, Crdp.Profiler.ScriptCoverage[]>;
       /** Parsed version of the page's Web App Manifest, or null if none found. */
@@ -233,7 +237,7 @@ declare global {
         rel: 'alternate'|'canonical'|'dns-prefetch'|'preconnect'|'preload'|'stylesheet'|string;
         /** The `href` attribute of the link or `null` if it was invalid in the header. */
         href: string | null
-        /** The raw value of the `href` attribute. Only different from `href` when source is 'header' */
+        /** The raw value of the `href` attribute. Only different from `href` when source is 'headers' */
         hrefRaw: string
         /** The `hreflang` attribute of the link */
         hreflang: string
@@ -243,6 +247,12 @@ declare global {
         crossOrigin: string | null
         /** Where the link was found, either in the DOM or in the headers of the main document */
         source: 'head'|'body'|'headers'
+        /** Path that uniquely identifies the node in the DOM. This is not defined when `source` is 'headers' */
+        devtoolsNodePath?: string
+        /** Selector for the DOM node. This is not defined when `source` is 'headers' */
+        selector?: string
+        /** Human readable label for the element. This is not defined when `source` is 'headers' */
+        nodeLabel?: string
       }
 
       export interface ScriptElement {
@@ -359,9 +369,20 @@ declare global {
         analyzedFailingTextLength: number;
         /** Elements that contain a text node that failed size criteria. */
         analyzedFailingNodesData: Array<{
+          /* nodeId of the failing TextNode. */
+          nodeId: number;
           fontSize: number;
           textLength: number;
-          node: FontSize.DomNodeWithParent;
+          parentNode: {
+            backendNodeId: number;
+            attributes: string[];
+            nodeName: string;
+            parentNode?: {
+              backendNodeId: number;
+              attributes: string[];
+              nodeName: string;
+            };
+          };
           cssRule?: {
             type: 'Regular' | 'Inline' | 'Attributes';
             range?: {startLine: number, startColumn: number};
@@ -370,17 +391,6 @@ declare global {
             stylesheet?: Crdp.CSS.CSSStyleSheetHeader;
           }
         }>
-      }
-
-      export module FontSize {
-        export interface DomNodeWithParent extends Crdp.DOM.Node {
-          parentId: number;
-          parentNode: DomNodeWithParent;
-        }
-
-        export interface DomNodeMaybeWithParent extends Crdp.DOM.Node {
-          parentNode?: DomNodeMaybeWithParent;
-        }
       }
 
       // TODO(bckenny): real type for parsed manifest.
@@ -402,6 +412,14 @@ declare global {
         naturalWidth: number;
         /** The natural height of the underlying image, uses img.naturalHeight. See https://codepen.io/patrickhulce/pen/PXvQbM for examples. */
         naturalHeight: number;
+        /** The raw width attribute of the image element. CSS images will be set to the empty string. */
+        attributeWidth: string;
+        /** The raw height attribute of the image element. CSS images will be set to the empty string. */
+        attributeHeight: string;
+        /** The CSS width property of the image element. */
+        cssWidth?: string | undefined;
+        /** The CSS height property of the image element. */
+        cssHeight?: string | undefined;
         /** The BoundingClientRect of the element. */
         clientRect: {
           top: number;
@@ -426,6 +444,11 @@ declare global {
         usesSrcSetDensityDescriptor: boolean;
         /** The size of the underlying image file in bytes. 0 if the file could not be identified. */
         resourceSize: number;
+        /** Path that uniquely identifies the node in the DOM */
+        devtoolsNodePath: string;
+        snippet: string;
+        selector: string;
+        nodeLabel: string;
         /** The MIME type of the underlying image file. */
         mimeType?: string;
         /** The loading attribute of the image. */
@@ -484,13 +507,15 @@ declare global {
       }
 
       export interface TraceElement {
-        metricName: string;
+        traceEventType: 'largest-contentful-paint'|'layout-shift'|'animation';
         selector: string;
         nodeLabel?: string;
         devtoolsNodePath: string;
         snippet?: string;
         score?: number;
         boundingRect: Rect;
+        nodeId?: number;
+        animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[];
       }
 
       export interface ViewportDimensions {
@@ -688,6 +713,42 @@ declare global {
         observedLastVisualChangeTs: number;
         observedSpeedIndex: number;
         observedSpeedIndexTs: number;
+      }
+
+      export interface Form {
+        /** If attributes is missing that means this is a formless set of elements. */
+        attributes?: { id: string, name: string, autocomplete: string, nodeLabel: string, snippet: string,};
+        inputs: Array<FormInput>;
+        labels: Array<FormLabel>;
+      }
+
+      /** Attributes collected for every input element in the inputs array from the forms interface. */
+      export interface FormInput {
+        id: string;
+        name: string;
+        placeholder?: string;
+        autocomplete: string;
+        nodeLabel: string;
+        snippet: string;
+      }
+
+      /** Attributes collected for every label element in the labels array from the forms interface */
+      export interface FormLabel {
+        for: string;
+        nodeLabel: string;
+        snippet: string;
+      }
+
+      /** Information about an event listener registered on the global object. */
+      export interface GlobalListener {
+        /** Event listener type, limited to those events currently of interest. */
+        type: 'pagehide'|'unload'|'visibilitychange';
+        /** The DevTools protocol script identifier. */
+        scriptId: string;
+        /** Line number in the script (0-based). */
+        lineNumber: number;
+        /** Column number in the script (0-based). */
+        columnNumber: number;
       }
     }
   }

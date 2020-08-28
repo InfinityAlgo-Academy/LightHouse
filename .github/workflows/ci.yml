@@ -1,7 +1,3 @@
-# The Travis CI is our full-fledged CI, but this Github workflow
-# runs the same tests. The GH workflow UI makes it simpler to hone
-# in on the step that failed.
-
 name: 💡🏠
 
 on:
@@ -37,6 +33,8 @@ jobs:
       run: xvfb-run --auto-servernum yarn test-bundle
     - name: yarn test-docs
       run: xvfb-run --auto-servernum yarn test-docs
+    - name: yarn test-viewer
+      run: xvfb-run --auto-servernum yarn test-viewer
 
     - run: yarn diff:sample-json
     - run: yarn type-check
@@ -67,7 +65,11 @@ jobs:
 
   # `unit` includes just unit and proto tests.
   unit:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    name: unit_${{ matrix.os }}
 
     steps:
     - name: git clone
@@ -98,20 +100,30 @@ jobs:
     - run: yarn test-proto # Run before unit-core because the roundtrip json is needed for proto tests.
 
     - run: sudo apt-get install xvfb
+      if: matrix.os == 'ubuntu-latest'
+
     - name: yarn unit
       run: xvfb-run --auto-servernum yarn unit
+      if: matrix.os == 'ubuntu-latest'
+
+    # For windows, just test the potentially platform-specific code.
+    - name: yarn unit-cli
+      run: yarn unit-cli
+      if: matrix.os == 'windows-latest'
+    - run: yarn diff:sample-json
+      if: matrix.os == 'windows-latest'
 
   # `smoke` runs as a matrix across 4 jobs:
   #  * The smoketest groups are split across two runners, to parallelize.
   #  * Then, those are run with both Chrome stable and ToT Chromium, in parallel
   smoke:
-    runs-on: ubuntu-latest
     strategy:
       matrix:
         chrome-channel: ['stable', 'ToT']
         smoke-test-invert: [false, true]
       # e.g. if smoke 0 fails, continue with smoke 1 anyway
       fail-fast: false
+    runs-on: ubuntu-latest
     env:
       # The smokehouse tests run by job `smoke_0`. `smoke_1` will run the rest.
       SMOKE_GROUP_1: a11y oopif pwa pwa2 pwa3 dbw redirects errors offline
@@ -139,6 +151,24 @@ jobs:
     - run: yarn --frozen-lockfile
 
     - run: sudo apt-get install xvfb
-
     - name: Run smoke tests
       run: xvfb-run --auto-servernum yarn smoke --debug -j=1 --retries=2 --invert-match ${{ matrix.smoke-test-invert }} $SMOKE_GROUP_1
+  
+  # Only run smoke tests for windows against stable chrome.
+  smoke-windows:
+    runs-on: windows-latest
+    name: smoke_stable_windows
+
+    steps:
+    - name: git clone
+      uses: actions/checkout@v2
+
+    - name: Use Node.js 10.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.x
+
+    - run: yarn --frozen-lockfile
+
+    - name: Run smoke tests
+      run: yarn smoke --debug -j=1 --retries=2 dbw oopif offline lantern metrics

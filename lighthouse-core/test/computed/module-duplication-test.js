@@ -31,40 +31,7 @@ describe('ModuleDuplication computed artifact', () => {
       ],
     };
     const results = await ModuleDuplication.request(artifacts, context);
-    expect(results).toMatchInlineSnapshot(`
-      Map {
-        "node_modules/browser-pack/_prelude.js" => Array [
-          Object {
-            "resourceSize": 480,
-            "scriptUrl": "https://example.com/foo1.min.js",
-          },
-          Object {
-            "resourceSize": 480,
-            "scriptUrl": "https://example.com/foo2.min.js",
-          },
-        ],
-        "src/bar.js" => Array [
-          Object {
-            "resourceSize": 104,
-            "scriptUrl": "https://example.com/foo1.min.js",
-          },
-          Object {
-            "resourceSize": 104,
-            "scriptUrl": "https://example.com/foo2.min.js",
-          },
-        ],
-        "src/foo.js" => Array [
-          Object {
-            "resourceSize": 98,
-            "scriptUrl": "https://example.com/foo1.min.js",
-          },
-          Object {
-            "resourceSize": 98,
-            "scriptUrl": "https://example.com/foo2.min.js",
-          },
-        ],
-      }
-    `);
+    expect(results).toMatchInlineSnapshot(`Map {}`);
   });
 
   it('works (complex)', async () => {
@@ -104,66 +71,6 @@ describe('ModuleDuplication computed artifact', () => {
             "scriptUrl": "https://example.com/coursehero-bundle-2.js",
           },
         ],
-        "node_modules/@babel/runtime/helpers/classCallCheck.js" => Array [
-          Object {
-            "resourceSize": 358,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-          Object {
-            "resourceSize": 236,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-        ],
-        "node_modules/@babel/runtime/helpers/createClass.js" => Array [
-          Object {
-            "resourceSize": 799,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-          Object {
-            "resourceSize": 496,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-        ],
-        "node_modules/@babel/runtime/helpers/assertThisInitialized.js" => Array [
-          Object {
-            "resourceSize": 296,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-          Object {
-            "resourceSize": 294,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-        ],
-        "node_modules/@babel/runtime/helpers/applyDecoratedDescriptor.js" => Array [
-          Object {
-            "resourceSize": 892,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-          Object {
-            "resourceSize": 446,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-        ],
-        "node_modules/@babel/runtime/helpers/possibleConstructorReturn.js" => Array [
-          Object {
-            "resourceSize": 230,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-          Object {
-            "resourceSize": 228,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-        ],
-        "node_modules/@babel/runtime/helpers/getPrototypeOf.js" => Array [
-          Object {
-            "resourceSize": 361,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-          Object {
-            "resourceSize": 338,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-        ],
         "node_modules/@babel/runtime/helpers/inherits.js" => Array [
           Object {
             "resourceSize": 528,
@@ -171,26 +78,6 @@ describe('ModuleDuplication computed artifact', () => {
           },
           Object {
             "resourceSize": 528,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-        ],
-        "node_modules/@babel/runtime/helpers/defineProperty.js" => Array [
-          Object {
-            "resourceSize": 290,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-          Object {
-            "resourceSize": 288,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-        ],
-        "node_modules/@babel/runtime/helpers/extends.js" => Array [
-          Object {
-            "resourceSize": 490,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-          Object {
-            "resourceSize": 245,
             "scriptUrl": "https://example.com/coursehero-bundle-2.js",
           },
         ],
@@ -204,26 +91,6 @@ describe('ModuleDuplication computed artifact', () => {
             "scriptUrl": "https://example.com/coursehero-bundle-2.js",
           },
         ],
-        "node_modules/@babel/runtime/helpers/setPrototypeOf.js" => Array [
-          Object {
-            "resourceSize": 290,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-          Object {
-            "resourceSize": 260,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-        ],
-        "js/src/common/base-component.ts" => Array [
-          Object {
-            "resourceSize": 459,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-          Object {
-            "resourceSize": 216,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-        ],
         "js/src/utils/service/amplitude-service.ts" => Array [
           Object {
             "resourceSize": 1348,
@@ -234,36 +101,6 @@ describe('ModuleDuplication computed artifact', () => {
             "scriptUrl": "https://example.com/coursehero-bundle-2.js",
           },
         ],
-        "js/src/aged-beef.ts" => Array [
-          Object {
-            "resourceSize": 213,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-          Object {
-            "resourceSize": 194,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-        ],
-        "js/src/utils/service/api-service.ts" => Array [
-          Object {
-            "resourceSize": 116,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-          Object {
-            "resourceSize": 54,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-        ],
-        "js/src/common/decorators/throttle.ts" => Array [
-          Object {
-            "resourceSize": 251,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-          Object {
-            "resourceSize": 244,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-        ],
         "js/src/utils/service/gsa-inmeta-tags.ts" => Array [
           Object {
             "resourceSize": 591,
@@ -271,16 +108,6 @@ describe('ModuleDuplication computed artifact', () => {
           },
           Object {
             "resourceSize": 563,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-        ],
-        "js/src/utils/service/global-service.ts" => Array [
-          Object {
-            "resourceSize": 336,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-          Object {
-            "resourceSize": 167,
             "scriptUrl": "https://example.com/coursehero-bundle-2.js",
           },
         ],
@@ -301,16 +128,6 @@ describe('ModuleDuplication computed artifact', () => {
           },
           Object {
             "resourceSize": 775,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-        ],
-        "js/src/common/input/keycode.ts" => Array [
-          Object {
-            "resourceSize": 237,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-          Object {
-            "resourceSize": 223,
             "scriptUrl": "https://example.com/coursehero-bundle-2.js",
           },
         ],
@@ -394,166 +211,6 @@ describe('ModuleDuplication computed artifact', () => {
             "scriptUrl": "https://example.com/coursehero-bundle-1.js",
           },
         ],
-        "node_modules/lodash-es/_freeGlobal.js" => Array [
-          Object {
-            "resourceSize": 118,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-          Object {
-            "resourceSize": 93,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-        ],
-        "node_modules/lodash-es/_root.js" => Array [
-          Object {
-            "resourceSize": 93,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-          Object {
-            "resourceSize": 93,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-        ],
-        "node_modules/lodash-es/_Symbol.js" => Array [
-          Object {
-            "resourceSize": 10,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-          Object {
-            "resourceSize": 10,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-        ],
-        "node_modules/lodash-es/_arrayMap.js" => Array [
-          Object {
-            "resourceSize": 99,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-          Object {
-            "resourceSize": 99,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-        ],
-        "node_modules/lodash-es/isArray.js" => Array [
-          Object {
-            "resourceSize": 16,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-          Object {
-            "resourceSize": 16,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-        ],
-        "node_modules/lodash-es/_getRawTag.js" => Array [
-          Object {
-            "resourceSize": 206,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-          Object {
-            "resourceSize": 206,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-        ],
-        "node_modules/lodash-es/_objectToString.js" => Array [
-          Object {
-            "resourceSize": 64,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-          Object {
-            "resourceSize": 64,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-        ],
-        "node_modules/lodash-es/_baseGetTag.js" => Array [
-          Object {
-            "resourceSize": 143,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-          Object {
-            "resourceSize": 143,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-        ],
-        "node_modules/lodash-es/isObjectLike.js" => Array [
-          Object {
-            "resourceSize": 54,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-          Object {
-            "resourceSize": 54,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-        ],
-        "node_modules/lodash-es/isSymbol.js" => Array [
-          Object {
-            "resourceSize": 79,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-          Object {
-            "resourceSize": 79,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-        ],
-        "node_modules/lodash-es/_baseToString.js" => Array [
-          Object {
-            "resourceSize": 198,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-          Object {
-            "resourceSize": 198,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-        ],
-        "node_modules/lodash-es/isObject.js" => Array [
-          Object {
-            "resourceSize": 80,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-          Object {
-            "resourceSize": 79,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-        ],
-        "node_modules/lodash-es/toNumber.js" => Array [
-          Object {
-            "resourceSize": 370,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-          Object {
-            "resourceSize": 354,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-        ],
-        "node_modules/lodash-es/toFinite.js" => Array [
-          Object {
-            "resourceSize": 118,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-          Object {
-            "resourceSize": 117,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-        ],
-        "node_modules/lodash-es/toInteger.js" => Array [
-          Object {
-            "resourceSize": 60,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-          Object {
-            "resourceSize": 60,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-        ],
-        "node_modules/lodash-es/toString.js" => Array [
-          Object {
-            "resourceSize": 43,
-            "scriptUrl": "https://example.com/coursehero-bundle-1.js",
-          },
-          Object {
-            "resourceSize": 43,
-            "scriptUrl": "https://example.com/coursehero-bundle-2.js",
-          },
-        ],
       }
     `);
   });
@@ -572,5 +229,31 @@ describe('ModuleDuplication computed artifact', () => {
     for (const [input, expected] of testCases) {
       expect(ModuleDuplication._normalizeSource(input)).toBe(expected);
     }
+  });
+
+  describe('_normalizeAggregatedData', () => {
+    it('removes entries with just one value', () => {
+      const data = new Map([['a.js', [{resourceSize: 100}]]]);
+      ModuleDuplication._normalizeAggregatedData(data);
+      expect(data).toMatchInlineSnapshot(`Map {}`);
+    });
+
+    it('sorts entries based on resource size', () => {
+      const data = new Map([
+        ['a.js', [{resourceSize: 250}, {resourceSize: 200}]],
+        ['b.js', [{resourceSize: 200}, {resourceSize: 250}]],
+      ]);
+      ModuleDuplication._normalizeAggregatedData(data);
+      expect(data).toMatchInlineSnapshot(`Map {}`);
+    });
+
+    it('removes data if size is much smaller than the largest', () => {
+      const data = new Map([
+        ['a.js', [{resourceSize: 200}, {resourceSize: 1}, {resourceSize: 250}]],
+        ['b.js', [{resourceSize: 250}, {resourceSize: 1}]],
+      ]);
+      ModuleDuplication._normalizeAggregatedData(data);
+      expect(data).toMatchInlineSnapshot(`Map {}`);
+    });
   });
 });

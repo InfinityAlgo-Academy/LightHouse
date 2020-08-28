@@ -62,10 +62,11 @@ class DetailsRenderer {
       // Internal-only details, not for rendering.
       case 'screenshot':
       case 'debugdata':
+      case 'full-page-screenshot':
         return null;
 
       default: {
-        // @ts-ignore tsc thinks this is unreachable, but be forward compatible
+        // @ts-expect-error tsc thinks this is unreachable, but be forward compatible
         // with new unexpected detail types.
         return this._renderUnknown(details.type, details);
       }
@@ -111,7 +112,7 @@ class DetailsRenderer {
     try {
       const parsed = Util.parseURL(url);
       displayedPath = parsed.file === '/' ? parsed.origin : parsed.file;
-      displayedHost = parsed.file === '/' ? '' : `(${parsed.hostname})`;
+      displayedHost = parsed.file === '/' || parsed.hostname === '' ? '' : `(${parsed.hostname})`;
       title = url;
     } catch (e) {
       displayedPath = url;
@@ -147,7 +148,9 @@ class DetailsRenderer {
 
     if (!url || !allowedProtocols.includes(url.protocol)) {
       // Fall back to just the link text if invalid or protocol not allowed.
-      return this._renderText(details.text);
+      const element = this._renderText(details.text);
+      element.classList.add('lh-link');
+      return element;
     }
 
     const a = this._dom.createElement('a');
@@ -155,7 +158,7 @@ class DetailsRenderer {
     a.target = '_blank';
     a.textContent = details.text;
     a.href = url.href;
-
+    a.classList.add('lh-link');
     return a;
   }
 
@@ -235,6 +238,9 @@ class DetailsRenderer {
         }
         case 'node': {
           return this.renderNode(value);
+        }
+        case 'numeric': {
+          return this._renderNumeric(value);
         }
         case 'source-location': {
           return this.renderSourceLocation(value);
@@ -542,7 +548,7 @@ class DetailsRenderer {
     let element;
     if (item.urlProvider === 'network') {
       element = this.renderTextURL(item.url);
-      this._dom.find('a', element).textContent += `:${line}:${column}`;
+      this._dom.find('.lh-link', element).textContent += `:${line}:${column}`;
     } else {
       element = this._renderText(`${item.url}:${line}:${column} (from sourceURL)`);
     }

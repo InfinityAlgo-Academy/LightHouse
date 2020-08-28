@@ -3,7 +3,7 @@
   "BenchmarkIndex": 1000,
   "HostFormFactor": "desktop",
   "TestedAsMobileDevice": true,
-  "HostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3358.0 Safari/537.36",
+  "HostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4232.0 Safari/537.36",
   "NetworkUserAgent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/66.0.3359.30 Mobile Safari/537.36",
   "fetchTime": "2018-03-13T00:55:45.840Z",
   "URL": {
@@ -147,93 +147,135 @@
   "LinkElements": [
     {
       "rel": "stylesheet",
-      "href": "http://localhost:54819/dobetterweb/dobetterweb/dbw_tester.css?delay=100",
-      "hrefRaw": "http://localhost:54819/dobetterweb/dobetterweb/dbw_tester.css?delay=100",
+      "href": "http://localhost:50114/dobetterweb/dbw_tester.css?delay=100",
       "hreflang": "",
       "as": "",
       "crossOrigin": null,
-      "source": "head"
+      "devtoolsNodePath": "3,HTML,0,HEAD,9,LINK",
+      "hrefRaw": "./dbw_tester.css?delay=100",
+      "source": "head",
+      "selector": "head > link",
+      "nodeLabel": "link"
     },
     {
       "rel": "stylesheet",
-      "href": "http://localhost:54819/dobetterweb/unknown404.css?delay=200",
-      "hrefRaw": "http://localhost:54819/dobetterweb/unknown404.css?delay=200",
+      "href": "http://localhost:50114/dobetterweb/unknown404.css?delay=200",
       "hreflang": "",
       "as": "",
       "crossOrigin": null,
-      "source": "head"
+      "devtoolsNodePath": "3,HTML,0,HEAD,10,LINK",
+      "hrefRaw": "./unknown404.css?delay=200",
+      "source": "head",
+      "selector": "head > link",
+      "nodeLabel": "link"
     },
     {
       "rel": "stylesheet",
-      "href": "http://localhost:54819/dobetterweb/dbw_tester.css?delay=2200",
-      "hrefRaw": "http://localhost:54819/dobetterweb/dbw_tester.css?delay=2200",
+      "href": "http://localhost:50114/dobetterweb/dbw_tester.css?delay=2200",
       "hreflang": "",
       "as": "",
       "crossOrigin": null,
-      "source": "head"
+      "devtoolsNodePath": "3,HTML,0,HEAD,12,LINK",
+      "hrefRaw": "./dbw_tester.css?delay=2200",
+      "source": "head",
+      "selector": "head > link",
+      "nodeLabel": "link"
     },
     {
       "rel": "stylesheet",
-      "href": "http://localhost:54819/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
-      "hrefRaw": "http://localhost:54819/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
+      "href": "http://localhost:50114/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
       "hreflang": "",
       "as": "",
       "crossOrigin": null,
-      "source": "head"
+      "devtoolsNodePath": "3,HTML,0,HEAD,14,LINK",
+      "hrefRaw": "./dbw_disabled.css?delay=200&isdisabled",
+      "source": "head",
+      "selector": "head > link",
+      "nodeLabel": "link"
     },
     {
       "rel": "import",
-      "href": "http://localhost:54819/dobetterweb/dbw_partial_a.html?delay=200",
-      "hrefRaw": "http://localhost:54819/dobetterweb/dbw_partial_a.html?delay=200",
+      "href": "http://localhost:50114/dobetterweb/dbw_partial_a.html?delay=200",
       "hreflang": "",
       "as": "",
       "crossOrigin": null,
-      "source": "head"
+      "devtoolsNodePath": "3,HTML,0,HEAD,16,LINK",
+      "hrefRaw": "./dbw_partial_a.html?delay=200",
+      "source": "head",
+      "selector": "head > link",
+      "nodeLabel": "link"
     },
     {
       "rel": "import",
-      "href": "http://localhost:54819/dobetterweb/dbw_partial_b.html?delay=200&isasync",
-      "hrefRaw": "http://localhost:54819/dobetterweb/dbw_partial_b.html?delay=200&isasync",
+      "href": "http://localhost:50114/dobetterweb/dbw_partial_b.html?delay=200&isasync",
       "hreflang": "",
       "as": "",
       "crossOrigin": null,
-      "source": "head"
+      "devtoolsNodePath": "3,HTML,0,HEAD,18,LINK",
+      "hrefRaw": "./dbw_partial_b.html?delay=200&isasync",
+      "source": "head",
+      "selector": "head > link",
+      "nodeLabel": "link"
     },
     {
       "rel": "stylesheet",
-      "href": "http://localhost:54819/dobetterweb/dbw_tester.css?delay=3000&capped",
-      "hrefRaw": "http://localhost:54819/dobetterweb/dbw_tester.css?delay=3000&capped",
+      "href": "http://localhost:50114/dobetterweb/dbw_tester.css?delay=3000&capped",
       "hreflang": "",
       "as": "",
       "crossOrigin": null,
-      "source": "head"
+      "devtoolsNodePath": "3,HTML,0,HEAD,21,LINK",
+      "hrefRaw": "./dbw_tester.css?delay=3000&capped",
+      "source": "head",
+      "selector": "head > link#amp-style-link",
+      "nodeLabel": "link"
     },
     {
       "rel": "stylesheet",
-      "href": "http://localhost:54819/dobetterweb/dbw_tester.css?delay=2000&async=true",
-      "hrefRaw": "http://localhost:54819/dobetterweb/dbw_tester.css?delay=2000&async=true",
+      "href": "http://localhost:50114/dobetterweb/dbw_tester.css?delay=2000&async=true",
       "hreflang": "",
       "as": "style",
       "crossOrigin": null,
-      "source": "head"
+      "devtoolsNodePath": "3,HTML,0,HEAD,23,LINK",
+      "hrefRaw": "./dbw_tester.css?delay=2000&async=true",
+      "source": "head",
+      "selector": "head > link",
+      "nodeLabel": "link"
     },
     {
       "rel": "stylesheet",
-      "href": "http://localhost:54819/dobetterweb/dbw_tester.css?delay=3000&async=true",
-      "hrefRaw": "http://localhost:54819/dobetterweb/dbw_tester.css?delay=3000&async=true",
+      "href": "http://localhost:50114/dobetterweb/dbw_tester.css?delay=3000&async=true",
       "hreflang": "",
       "as": "",
       "crossOrigin": null,
-      "source": "head"
+      "devtoolsNodePath": "3,HTML,0,HEAD,25,LINK",
+      "hrefRaw": "./dbw_tester.css?delay=3000&async=true",
+      "source": "head",
+      "selector": "head > link",
+      "nodeLabel": "link"
+    },
+    {
+      "rel": "alternate stylesheet",
+      "href": "http://localhost:50114/dobetterweb/empty.css",
+      "hreflang": "",
+      "as": "",
+      "crossOrigin": null,
+      "devtoolsNodePath": "3,HTML,0,HEAD,27,LINK",
+      "hrefRaw": "./empty.css",
+      "source": "head",
+      "selector": "head > link",
+      "nodeLabel": "link"
     },
     {
       "rel": "stylesheet",
-      "href": "http://localhost:54819/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
-      "hrefRaw": "http://localhost:54819/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
+      "href": "http://localhost:50114/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
       "hreflang": "",
       "as": "",
       "crossOrigin": null,
-      "source": "head"
+      "devtoolsNodePath": "3,HTML,0,HEAD,44,LINK",
+      "hrefRaw": "./dbw_tester.css?scriptActivated&delay=200",
+      "source": "head",
+      "selector": "head > link",
+      "nodeLabel": "link"
     }
   ],
   "ScriptElements": [
@@ -348,7 +390,60 @@
       "requestId": "75994.22"
     }
   ],
-  "JsUsage": [],
+  "JsUsage": {
+    "http://localhost:58599/dobetterweb/dbw_tester.html": [
+      {
+        "scriptId": "12",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "13",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "16",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "17",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "19",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "20",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "21",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "22",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "23",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      },
+      {
+        "scriptId": "44",
+        "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+        "functions": []
+      }
+    ]
+  },
   "CSSUsage": {
     "rules": [
       {
@@ -403,7 +498,7 @@
           "startColumn": 0,
           "length": 677
         },
-        "content": "/**\n * @license Copyright 2016 Google Inc. All Rights Reserved.\n * Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0\n * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.\n */\n\nbody {\n  background-color: #eee;\n}\n.doesnotapply {\n  display: flexbox; /* FAIL */\n}\n"
+        "content": "/**\n * @license Copyright 2016 Google Inc. All Rights Reserved.\n * Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0\n * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.\n */\n\nbody {\n  background-color: #eee;\n}\n.doesnotapply {\n  display: flexbox; /* FAIL */\n}\n@font-face {\n  font-family: 'Lobster Three';\n  font-display: optional;\n  src: url(\"http://localhost:10503/perf/lobster-two-v10-latin-700.woff2?cors=true\") format('woff2');\n}\n"
       },
       {
         "header": {
@@ -2302,39 +2397,70 @@
   ],
   "TraceElements": [
     {
-      "metricName": "largest-contentful-paint",
+      "traceEventType": "largest-contentful-paint",
       "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,1,P",
       "selector": "body > div > p",
       "nodeLabel": "This domain is for use in illustrative examples in documents. You may use this …",
       "snippet": "<p class=\"paragraph\">"
     },
     {
-      "metricName": "cumulative-layout-shift",
+      "traceEventType": "layout-shift",
       "devtoolsNodePath": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,3,H5",
       "selector": "div.blog-index > article > div.entry-content > h5",
       "nodeLabel": "Debugging Node.js with Chrome DevTools",
       "snippet": "<h5>"
     },
     {
-      "metricName": "cumulative-layout-shift",
+      "traceEventType": "layout-shift",
       "devtoolsNodePath": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,4,P",
       "selector": "div.blog-index > article > div.entry-content > p",
       "nodeLabel": "The canonical guide to using the Chrome DevTools UI for debugging Node.js. It d…",
       "snippet": "<p>"
     },
     {
-      "metricName": "cumulative-layout-shift",
+      "traceEventType": "layout-shift",
       "devtoolsNodePath": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,5,HR",
       "selector": "div.blog-index > article > div.entry-content > hr",
       "nodeLabel": "hr",
       "snippet": "<hr>"
     },
     {
-      "metricName": "cumulative-layout-shift",
+      "traceEventType": "layout-shift",
       "devtoolsNodePath": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,6,P",
       "selector": "div.blog-index > article > div.entry-content > p",
       "nodeLabel": "Aside from that, I’ve been busy working on Lighthouse, performance metrics, too…",
       "snippet": "<p>"
+    },
+    {
+      "traceEventType": "animation",
+      "devtoolsNodePath": "1,HTML,1,BODY,0,DIV",
+      "selector": "body > div#animated-boi",
+      "nodeLabel": "div",
+      "snippet": "<div id=\"animated-boi\">",
+      "animations": [
+        {
+          "failureReasonsMask": 8224,
+          "unsupportedProperties": [
+            "width"
+          ]
+        },
+        {
+          "name": "alpha",
+          "failureReasonsMask": 8224,
+          "unsupportedProperties": [
+            "height",
+            "left"
+          ]
+        },
+        {
+          "name": "beta",
+          "failureReasonsMask": 8224,
+          "unsupportedProperties": [
+            "background-color"
+          ]
+        }
+      ],
+      "nodeId": 4
     }
   ],
   "ServiceWorker": {
@@ -2367,5 +2493,13 @@
   "InspectorIssues": {
     "blockedByResponse": [],
     "mixedContent": []
-  }
+  },
+  "GlobalListeners": [
+    {
+      "type": "unload",
+      "scriptId": "23",
+      "lineNumber": 386,
+      "columnNumber": 36
+    }
+  ]
 }

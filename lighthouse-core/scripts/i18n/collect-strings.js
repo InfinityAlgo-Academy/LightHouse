@@ -13,9 +13,11 @@ const glob = require('glob');
 const path = require('path');
 const assert = require('assert').strict;
 const tsc = require('typescript');
+const MessageParser = require('intl-messageformat-parser').default;
 const Util = require('../../report/html/renderer/util.js');
 const {collectAndBakeCtcStrings} = require('./bake-ctc-to-lhl.js');
 const {pruneObsoleteLhlMessages} = require('./prune-obsolete-lhl-messages.js');
+const {countTranslatedMessages} = require('./count-translated.js');
 
 const LH_ROOT = path.join(__dirname, '../../../');
 const UISTRINGS_REGEX = /UIStrings = .*?\};\n/s;
@@ -126,16 +128,18 @@ function parseExampleJsDoc(rawExample) {
  *  },
  * }
  *
- * Throws if the message violates some basic sanity checking.
+ * Throws if the message violates some basic validity checking.
  *
- * @param {string} message
+ * @param {string} lhlMessage
  * @param {Record<string, string>} examples
  * @return {IncrementalCtc}
  */
-function convertMessageToCtc(message, examples = {}) {
+function convertMessageToCtc(lhlMessage, examples = {}) {
+  _lhlValidityChecks(lhlMessage);
+
   /** @type {IncrementalCtc} */
   const ctc = {
-    message,
+    message: lhlMessage,
     placeholders: {},
   };
 
@@ -148,9 +152,48 @@ function convertMessageToCtc(message, examples = {}) {
 
   _processPlaceholderDirectIcu(ctc, examples);
 
-  _ctcSanityChecks(ctc);
+  _ctcValidityChecks(ctc);
 
   return ctc;
+}
+
+/**
+ * Do some basic checks on an lhl message to confirm that it is valid. Future
+ * lhl regression catching should go here.
+ *
+ * @param {string} lhlMessage
+ */
+function _lhlValidityChecks(lhlMessage) {
+  let parsedMessage;
+  try {
+    parsedMessage = MessageParser.parse(lhlMessage);
+  } catch (err) {
+    if (err.name !== 'SyntaxError') throw err;
+    // Improve the intl-messageformat-parser syntax error output.
+    /** @type {Array<{text: string}>} */
+    const expected = err.expected;
+    const expectedStr = expected.map(exp => `'${exp.text}'`).join(', ');
+    throw new Error(`Did not find the expected syntax (one of ${expectedStr}) in message "${lhlMessage}"`);
+  }
+
+  for (const element of parsedMessage.elements) {
+    if (element.type !== 'argumentElement' || !element.format) continue;
+
+    if (element.format.type === 'pluralFormat' || element.format.type === 'selectFormat') {
+      // `plural`/`select` arguments can't have content before or after them.
+      // See http://userguide.icu-project.org/formatparse/messages#TOC-Complex-Argument-Types
+      // e.g. https://github.com/GoogleChrome/lighthouse/pull/11068#discussion_r451682796
+      if (parsedMessage.elements.length > 1) {
+        throw new Error(`Content cannot appear outside plural or select ICU messages. Instead, repeat that content in each option (message: '${lhlMessage}')`);
+      }
+
+      // Each option value must also be a valid lhlMessage.
+      for (const option of element.format.options) {
+        const optionStr = lhlMessage.slice(option.value.location.start.offset, option.value.location.end.offset);
+        _lhlValidityChecks(optionStr);
+      }
+    }
+  }
 }
 
 /**
@@ -335,15 +378,21 @@ function _processPlaceholderDirectIcu(icu, examples) {
 }
 
 /**
- * Do some basic sanity checks to a ctc object to confirm that it is valid. Future
+ * Do some basic checks on a ctc object to confirm that it is valid. Future
  * ctc regression catching should go here.
  *
  * @param {IncrementalCtc} icu the ctc output message to verify
  */
-function _ctcSanityChecks(icu) {
+function _ctcValidityChecks(icu) {
   // '$$' i.e. "Double Dollar" is always invalid in ctc.
-  if (icu.message.match(/\$\$/)) {
-    throw new Error(`Ctc messages cannot contain double dollar: ${icu.message}`);
+  const regex = /\$([^$]*?)\$/g;
+  const matches = regex.exec(icu.message);
+  if (Array.isArray(matches)) {
+    matches.forEach(function(value) {
+      if (!value) {
+        throw new Error(`Ctc messages cannot contain double dollar: ${icu.message}`);
+      }
+    });
   }
 }
 
@@ -443,7 +492,7 @@ function parseUIStrings(sourceStr, liveUIStrings) {
     // Use live message to avoid having to e.g. concat strings broken into parts.
     const message = liveUIStrings[key];
 
-    // @ts-ignore - Not part of the public tsc interface yet.
+    // @ts-expect-error - Not part of the public tsc interface yet.
     const jsDocComments = tsc.getJSDocCommentsAndTags(property);
     const {description, examples} = computeDescription(jsDocComments[0], message);
 
@@ -560,7 +609,7 @@ function writeStringsToCtcFiles(locale, strings) {
   fs.writeFileSync(fullPath, JSON.stringify(output, null, 2) + '\n');
 }
 
-// @ts-ignore Test if called from the CLI or as a module.
+// @ts-expect-error Test if called from the CLI or as a module.
 if (require.main === module) {
   const coreStrings = collectAllStringsInDir(path.join(LH_ROOT, 'lighthouse-core'));
   console.log('Collected from LH core!');
@@ -590,6 +639,17 @@ if (require.main === module) {
   // Remove any obsolete strings in existing LHL files.
   console.log('Checking for out-of-date LHL messages...');
   pruneObsoleteLhlMessages();
+
+  // Report on translation progress.
+  const progress = countTranslatedMessages();
+  console.log(`  ${progress.localeCount} translated locale files`);
+  console.log(`  ${progress.translatedCount}/${progress.messageCount} fully translated messages`);
+  if (progress.partiallyTranslatedCount) {
+    console.log(`  ${progress.partiallyTranslatedCount}/${progress.messageCount} partially translated messages`);
+  }
+  console.log(`  ${progress.notTranslatedCount}/${progress.messageCount} untranslated messages`);
+
+  console.log('✨ Complete!');
 }
 
 module.exports = {
