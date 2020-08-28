@@ -284,6 +284,7 @@ describe('Best Practices: autocomplete audit', () => {
               autocompleteAttr: 'cc-name',
               autofillPredict: 'UNKNOWN_TYPE',
               nodeLabel: 'textarea',
+              // eslint-disable-next-line max-len
               snippet: '<textarea type="text" name="name_cc" autocomplete="section-red shipping cc-name">',
             },
             {
@@ -322,6 +323,7 @@ describe('Best Practices: autocomplete audit', () => {
               autocompleteAttr: 'section-red shipping mobile tel',
               autofillPredict: 'HTML_TYPE_TEL',
               nodeLabel: 'input',
+              // eslint-disable-next-line max-len
               snippet: '<input name="mobile-number" autocomplete="section-red shipping mobile tel">',
             },
           ],
@@ -453,6 +455,7 @@ describe('Best Practices: autocomplete audit', () => {
               autocompleteAttr: 'shipping section-red cc-name',
               autofillPredict: 'HTML_TYPE_CREDIT_CARD_NAME_FULL',
               nodeLabel: 'textarea',
+              // eslint-disable-next-line max-len
               snippet: '<textarea type="text" name="name_cc2" autocomplete="shipping section-red cc-name">',
             },
             {
@@ -463,6 +466,7 @@ describe('Best Practices: autocomplete audit', () => {
               autocompleteAttr: 'shipping section-red  mobile tel',
               autofillPredict: 'HTML_TYPE_TEL',
               nodeLabel: 'input',
+              // eslint-disable-next-line max-len
               snippet: '<input type="text" name="CCNo2" autocomplete="shipping section-red  mobile tel">',
             },
           ],
@@ -492,6 +496,7 @@ describe('Best Practices: autocomplete audit', () => {
         {
           node: {
             nodeLabel: 'textarea',
+            // eslint-disable-next-line max-len
             snippet: '<textarea type="text" name="name_cc2" autocomplete="shipping section-red cc-name">>',
             type: 'node',
           },
@@ -501,6 +506,7 @@ describe('Best Practices: autocomplete audit', () => {
         {
           node: {
             nodeLabel: 'input',
+            // eslint-disable-next-line max-len
             snippet: '<input type="text" name="CCNo2" autocomplete="shipping section-red  mobile tel">>',
             type: 'node',
           },
