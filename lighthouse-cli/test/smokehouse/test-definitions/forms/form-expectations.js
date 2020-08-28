@@ -95,6 +95,8 @@ const expectations = [
           ],
         },
         {
+          /** All Elements in this object are formless because attributes is undefined */
+          attributes: undefined,
           inputs: [
             {
               id: 'name_shipping',
@@ -358,73 +360,102 @@ const expectations = [
             items: [
               {
                 node: {
+                  nodeLabel: 'textarea',
+                  snippet: '<textarea type="text" id="name_cc1" name="name_cc1" autocomplete="sectio-red shipping cc-namez" placeholder="John Doe">',
                   type: 'node',
-                  snippet: '<input type="text" id="city_shipping" placeholder="city you live">',
-                  nodeLabel: 'input',
                 },
+                prefix: 'Review: sectio-red',
+                suggestion: 'Requires manual review.',
               },
               {
                 node: {
+                  nodeLabel: 'input',
+                  snippet: '<input type="text" id="address_shipping" autocomplete="shippin street-address" placeholder="Your address">',
                   type: 'node',
-                  snippet: '<select id="state_shipping">',
+                },
+                prefix: 'Review: shippin',
+                suggestion: 'address-line1',
+              },
+              {
+                node: {
+                  nodeLabel: 'input',
+                  snippet: '<input type="text" id="city_shipping" placeholder="city you live" autocomplete="mobile section-red shipping address-level2">',
+                  type: 'node',
+                },
+                prefix: 'Review order of Autocomplete Tokens',
+                suggestion: 'address-level2',
+              },
+              {
+                node: {
                   nodeLabel: 'Select a state\nCA\nMA\nNY\nMD\nOR\nOH\nIL\nDC',
+                  snippet: '<select id="state_shipping">',
+                  type: 'node',
                 },
+                prefix: '',
+                suggestion: 'address-level1',
               },
               {
                 node: {
-                  type: 'node',
+                  nodeLabel: 'input',
                   snippet: '<input type="text" id="zip_shipping">',
-                  nodeLabel: 'input',
+                  type: 'node',
                 },
+                prefix: '',
+                suggestion: 'postal-code',
               },
               {
                 node: {
-                  type: 'node',
-                  snippet: '<input type="text" id="name_billing" name="name_billing" placeholder="your name">',
                   nodeLabel: 'input',
+                  snippet: '<input type="text" id="name_billing" name="name_billing" placeholder="your name" autocomplete="sectio-red billing name">',
+                  type: 'node',
                 },
+                prefix: 'Review: sectio-red',
+                suggestion: 'name',
               },
               {
                 node: {
-                  type: 'node',
-                  snippet: '<input type="text" id="city_billing" name="city_billing" placeholder="city you live in">',
                   nodeLabel: 'input',
+                  snippet: '<input type="text" id="city_billing" name="city_billing" placeholder="city you live in" autocomplete="section-red shipping ">',
+                  type: 'node',
                 },
+                prefix: 'Review order of Autocomplete Tokens',
+                suggestion: 'Requires manual review.',
               },
               {
                 node: {
-                  type: 'node',
+                  nodeLabel: 'Select a state\nCA\nMA\nNY\nMD\nOR\nOH\nIL\nDC',
                   snippet: '<select id="state_billing" name="state_billing">',
-                  nodeLabel: '\n            Select a state\n            CA\n            MA\n            NY\n      …',
+                  type: 'node',
                 },
+                prefix: '',
+                suggestion: 'address-level1',
               },
               {
                 node: {
-                  type: 'node',
+                  nodeLabel: 'input',
                   snippet: '<input type="text" id="zip_billing">',
-                  nodeLabel: 'input',
+                  type: 'node',
                 },
+                prefix: '',
+                suggestion: 'postal-code',
               },
               {
                 node: {
-                  type: 'node',
-                  snippet: '<input type="text" id="CCNo2" name="CCNo2">',
-                  nodeLabel: 'input',
-                },
-              },
-              {
-                node: {
-                  type: 'node',
-                  snippet: '<select id="CCExpiresMonth2" name="CCExpiresMonth2">',
                   nodeLabel: 'MM\n01\n02\n03\n04\n05\n06\n07\n08\n09\n10\n11\n12',
+                  snippet: '<select id="CCExpiresMonth2" name="CCExpiresMonth2">',
+                  type: 'node',
                 },
+                prefix: '',
+                suggestion: 'cc-exp-month',
               },
               {
                 node: {
-                  type: 'node',
-                  snippet: '<select id="CCExpiresYear">',
                   nodeLabel: 'YY\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\n2027\n2028\n2029',
+                  snippet: '<select id="CCExpiresYear">',
+                  type: 'node',
                 },
+                prefix: '',
+                suggestion: 'cc-exp-year',
               },
             ],
           },
