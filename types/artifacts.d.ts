@@ -106,6 +106,8 @@ declare global {
       Doctype: Artifacts.Doctype | null;
       /** Information on the size of all DOM nodes in the page and the most extreme members. */
       DOMStats: Artifacts.DOMStats;
+      /** DOM timeline */
+      DOMTimeline: Artifacts.DOMTimestamp[];
       /** Relevant attributes and child properties of all <object>s, <embed>s and <applet>s in the page. */
       EmbeddedContent: Artifacts.EmbeddedContentInfo[];
       /** Information for font faces used in the page. */
@@ -203,6 +205,15 @@ declare global {
         totalBodyElements: number;
         width: {max: number, pathToElement: Array<string>, snippet: string};
         depth: {max: number, pathToElement: Array<string>, snippet: string};
+      }
+
+      export interface DOMTimestamp {
+        time: string;
+        /** Path that uniquely identifies the node in the DOM */
+        devtoolsNodePath: string;
+        snippet: string;
+        selector: string;
+        nodeLabel: string;
       }
 
       export interface EmbeddedContentInfo {

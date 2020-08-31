@@ -597,6 +597,19 @@ class TraceProcessor {
       domContentLoaded: maybeGetTiming(timestamps.domContentLoaded),
     };
 
+    /** const layoutEvents = frameEvents
+      .filter(e => e.cat === 'devtools.timeline' && e.name === 'Layout')
+      .map(e => {
+        return {event: e, timing: maybeGetTiming(getTimestamp(e))};
+      });
+
+    const updateLayerTreeEvents = frameEvents
+      .filter(e => e.cat === 'devtools.timeline' && e.name === 'UpdateLayerTree')
+      .map(e => {
+        return {event: e, timing: maybeGetTiming(getTimestamp(e))};
+      });
+    */
+
     const frames = keyEvents
       .filter(evt => evt.name === 'FrameCommittedInBrowser')
       .map(evt => evt.args.data)
@@ -620,6 +633,9 @@ class TraceProcessor {
       domContentLoadedEvt: domContentLoaded,
       fmpFellBack,
       lcpInvalidated,
+      keyEvents,
+      // layoutEvents,
+      // updateLayerTreeEvents,
     };
   }
 }

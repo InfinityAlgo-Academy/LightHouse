@@ -1343,6 +1343,9 @@ Object {
           "path": "console-messages",
         },
         Object {
+          "path": "dom-timeline",
+        },
+        Object {
           "path": "anchor-elements",
         },
         Object {

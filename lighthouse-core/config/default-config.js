@@ -140,6 +140,7 @@ const defaultConfig = {
       'viewport-dimensions',
       'runtime-exceptions',
       'console-messages',
+      'dom-timeline',
       'anchor-elements',
       'image-elements',
       'link-elements',
