@@ -185,37 +185,59 @@ class DOMTimeline extends Gatherer {
       throw new Error('Trace is missing!');
     }
 
-    const {keyEvents} = TraceProcessor.computeTraceOfTab(loadData.trace);
+
+    const {keyEvents, timestamps} = TraceProcessor.computeTraceOfTab(loadData.trace);
     // console.log(keyEvents);
 
+    /** @param {{ts: number}=} event */
+    const getTimestamp = (event) => event && event.ts;
+    /** @param {number} ts */
+    const getTiming = (ts) => (ts - timestamps.timeOrigin) / 1000;
+    /** @param {number=} ts */
+    const maybeGetTiming = (ts) => ts === undefined ? undefined : getTiming(ts);
+
     const layoutEvents = keyEvents
-      .filter(e => e.cat === 'devtools.timeline' && e.name === 'Layout' ||
-      // e.cat === 'devtools.timeline' && e.name === 'UpdateLayerTree' ||
+      .filter(e => // e.cat === 'devtools.timeline' && e.name === 'Layout' ||
+      e.cat === 'devtools.timeline' && e.name === 'UpdateLayerTree' ||
       e.name === 'LayoutShift')
       .map(e => {
-        return {event: e} //, timing: maybeGetTiming(getTimestamp(e))};
+        return {event: e, timing: maybeGetTiming(getTimestamp(e))};
       });
     console.log(layoutEvents);
+
+    console.log('amount of layout shifts');
+    console.log(layoutEvents.filter(e => e.event.name === 'LayoutShift'));
 
     const windows = [];
     let end = undefined;
     let start = undefined;
-    for (const event in layoutEvents) {
-      if (event.name === 'Layout') {
-        start = event.ts;
+    for (let i = layoutEvents.length - 1; i >= 0; i--) {
+      if (!end && layoutEvents[i].event.name === 'LayoutShift') {
+        if (i - 1 >= 0 && layoutEvents[i - 1].event.name === 'UpdateLayerTree') {
+          end = layoutEvents[i - 1].timing;
+          i -= 1;
+          continue;
+        }
+      }
+      if (end && layoutEvents[i].event.name === 'UpdateLayerTree') {
+        start = layoutEvents[i].timing;
+        windows.push({start, end});
+        end = undefined;
+        start = undefined;
+      } else if (end && layoutEvents[i].event.name === 'LayoutShift') {
+        if (i - 1 >= 0 && layoutEvents[i - 1].event.name === 'UpdateLayerTree') {
+          start = layoutEvents[i - 1].timing;
+          windows.push({start, end});
+          end = layoutEvents[i - 1].timing;
+          start = undefined;
+          i -= 1;
+        }
       }
     }
+    console.log(windows);
     // refilter to only have Layout +- Layout LayoutShift patterns throughout
     // then can do forward pass and do Layout = start, LayoutShift = end, start again
 
-    /**
-    const updateLayerTreeEvents = keyEvents
-      .filter(e => e.cat === 'devtools.timeline' && e.name === 'UpdateLayerTree')
-      .map(e => {
-        return {event: e} //, timing: maybeGetTiming(getTimestamp(e))};
-      });
-    console.log(updateLayerTreeEvents);
-    */
 
     const expression = `(() => {
       return (${getDOMTimestamps.toString()})();
