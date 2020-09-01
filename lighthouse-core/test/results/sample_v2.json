@@ -2228,7 +2228,7 @@
               "type": "node",
               "selector": "h2",
               "path": "3,HTML,1,BODY,5,DIV,0,H2",
-              "snippet": "<h2>Do better web tester page</h2>",
+              "snippet": "<h2>",
               "boundingRect": {
                 "width": 396,
                 "height": 28,
@@ -2246,7 +2246,7 @@
               "type": "node",
               "selector": "span",
               "path": "3,HTML,1,BODY,5,DIV,1,SPAN",
-              "snippet": "<span>Hi there!</span>",
+              "snippet": "<span>",
               "boundingRect": {
                 "width": 57,
                 "height": 18,
@@ -2622,7 +2622,7 @@
               "type": "node",
               "selector": "a[href=\"javascript\\:void\\(0\\)\"]",
               "path": "3,HTML,1,BODY,44,A",
-              "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\"></a>",
+              "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\">",
               "explanation": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "a"
             }
@@ -2632,7 +2632,7 @@
               "type": "node",
               "selector": "a[href$=\"mailto\\:inbox\\@email\\.com\"]",
               "path": "3,HTML,1,BODY,46,A",
-              "snippet": "<a href=\"mailto:inbox@email.com\" target=\"_blank\"></a>",
+              "snippet": "<a href=\"mailto:inbox@email.com\" target=\"_blank\">",
               "explanation": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "a"
             }
@@ -2706,7 +2706,7 @@
               "type": "node",
               "selector": "#\\35 934a",
               "path": "3,HTML,1,BODY,2,OBJECT",
-              "snippet": "<object id=\"5934a\"></object>",
+              "snippet": "<object id=\"5934a\">",
               "boundingRect": {
                 "width": 300,
                 "height": 150,
@@ -2724,7 +2724,7 @@
               "type": "node",
               "selector": "#\\35 934b",
               "path": "3,HTML,1,BODY,3,OBJECT",
-              "snippet": "<object id=\"5934b\"></object>",
+              "snippet": "<object id=\"5934b\">",
               "boundingRect": {
                 "width": 300,
                 "height": 150,
