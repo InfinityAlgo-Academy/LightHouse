@@ -107,7 +107,7 @@ declare global {
       /** Information on the size of all DOM nodes in the page and the most extreme members. */
       DOMStats: Artifacts.DOMStats;
       /** DOM timeline */
-      DOMTimeline: Artifacts.DOMTimestamp[];
+      DOMTimeline: {timestamps: Artifacts.DOMTimestamp[], windows: Artifacts.DOMWindow[]};
       /** Relevant attributes and child properties of all <object>s, <embed>s and <applet>s in the page. */
       EmbeddedContent: Artifacts.EmbeddedContentInfo[];
       /** Information for font faces used in the page. */
@@ -208,12 +208,16 @@ declare global {
       }
 
       export interface DOMTimestamp {
-        time: string;
+        time: number;
         /** Path that uniquely identifies the node in the DOM */
         devtoolsNodePath: string;
         snippet: string;
         selector: string;
         nodeLabel: string;
+      }
+      export interface DOMWindow {
+        start: number;
+        end: number;
       }
 
       export interface EmbeddedContentInfo {

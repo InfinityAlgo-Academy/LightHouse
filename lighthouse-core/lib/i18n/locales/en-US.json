@@ -794,6 +794,15 @@
   "lighthouse-core/audits/image-size-responsive.js | title": {
     "message": "Serves images with appropriate resolution"
   },
+  "lighthouse-core/audits/injected-iframes.js | description": {
+    "message": "Description here"
+  },
+  "lighthouse-core/audits/injected-iframes.js | failureTitle": {
+    "message": "Failing"
+  },
+  "lighthouse-core/audits/injected-iframes.js | title": {
+    "message": "Passing"
+  },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://web.dev/installable-manifest/)."
   },

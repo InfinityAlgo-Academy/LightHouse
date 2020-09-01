@@ -2022,6 +2022,14 @@
         "items": []
       }
     },
+    "injected-iframes": {
+      "id": "injected-iframes",
+      "title": "Passing",
+      "description": "Description here",
+      "score": null,
+      "scoreDisplayMode": "error",
+      "errorMessage": "Required DOMTimeline gatherer did not run."
+    },
     "pwa-cross-browser": {
       "id": "pwa-cross-browser",
       "title": "Site works cross-browser",
@@ -4493,6 +4501,11 @@
           "group": "diagnostics"
         },
         {
+          "id": "injected-iframes",
+          "weight": 0,
+          "group": "diagnostics"
+        },
+        {
           "id": "network-requests",
           "weight": 0
         },
@@ -5694,6 +5707,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:valid-source-maps",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:injected-iframes",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7042,6 +7061,21 @@
       ],
       "lighthouse-core/audits/valid-source-maps.js | description": [
         "audits[valid-source-maps].description"
+      ],
+      "lighthouse-core/audits/injected-iframes.js | title": [
+        "audits[injected-iframes].title"
+      ],
+      "lighthouse-core/audits/injected-iframes.js | description": [
+        "audits[injected-iframes].description"
+      ],
+      "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": [
+        {
+          "values": {
+            "errorCode": "MISSING_REQUIRED_ARTIFACT",
+            "artifactName": "DOMTimeline"
+          },
+          "path": "audits[injected-iframes].errorMessage"
+        }
       ],
       "lighthouse-core/audits/manual/pwa-cross-browser.js | title": [
         "audits[pwa-cross-browser].title"

@@ -135,16 +135,16 @@ function setupObserver() {
   }
   window.___observedIframes = [];
   window.___observer = new MutationObserver((records) => {
-    const mark = performance.mark('lh_timealign');
+    const currTime = performance.now();
     for (const record of records) {
       if (record.type !== 'childList') return;
       const addedNodes = Array.from(record.addedNodes || []);
       if (!addedNodes || !addedNodes.some(node => node.nodeName === 'IFRAME')) return;
       for (const node of addedNodes) {
         if (node.nodeName !== 'IFRAME') continue;
-        // can verify that Iframe src is of an ad network / ignore non-ad iframes
+        // TODO: verify that Iframe src is of an ad network / ignore non-ad iframes
         window.___observedIframes.push({
-          time: mark.startTime,
+          time: currTime,
           devtoolsNodePath: getNodePath(node),
           snippet: getOuterHTMLSnippet(node),
           selector: getNodeSelector(node),
@@ -152,6 +152,14 @@ function setupObserver() {
         });
       }
     }
+  });
+  const mark = performance.mark('lh_timealign');
+  window.___observedIframes.push({
+    time: mark.startTime,
+    devtoolsNodePath: '',
+    snippet: '',
+    selector: '',
+    nodeLabel: '',
   });
   window.___observer.observe(document, {childList: true, subtree: true});
 }
@@ -161,7 +169,8 @@ function setupObserver() {
  */
 function getDOMTimestamps() {
   window.___observer.disconnect();
-  return window.___observedIframes;
+  const count = performance.getEntriesByName('lh_timealign').length;
+  return {obs: window.___observedIframes, count};
 }
 
 
@@ -208,12 +217,22 @@ class DOMTimeline extends Gatherer {
     console.log('amount of layout shifts');
     console.log(layoutEvents.filter(e => e.event.name === 'LayoutShift'));
 
+    // it looks like the time diffs oscillate between > 10ms and < 1ms
+    let ref = layoutEvents[0].timing;
+    for (const layoutEvent of layoutEvents) {
+      if (layoutEvent.event.name === 'UpdateLayerTree') {
+        console.log(layoutEvent.timing - ref);
+        ref = layoutEvent.timing;
+      }
+    }
+
     const windows = [];
     let end = undefined;
     let start = undefined;
     for (let i = layoutEvents.length - 1; i >= 0; i--) {
       if (!end && layoutEvents[i].event.name === 'LayoutShift') {
         if (i - 1 >= 0 && layoutEvents[i - 1].event.name === 'UpdateLayerTree') {
+          // TODO: have to confirm that the layoutshift happens within ULT
           end = layoutEvents[i - 1].timing;
           i -= 1;
           continue;
@@ -243,10 +262,11 @@ class DOMTimeline extends Gatherer {
       return (${getDOMTimestamps.toString()})();
     })()`;
 
-    const domTimestamps = await driver.evaluateAsync(expression);
-    console.log(domTimestamps);
+    const {obs, count} = await driver.evaluateAsync(expression);
+    console.log(obs); // (domTimestamps);
+    console.log(count);
 
-    return [];
+    return {timestamps: obs, windows};
   }
 }
 
