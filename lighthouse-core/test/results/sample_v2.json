@@ -528,6 +528,7 @@
             "failures": [
               "No manifest was fetched"
             ],
+            "manifestUrl": null,
             "isParseFailure": true,
             "parseFailureReason": "No manifest was fetched"
           }
