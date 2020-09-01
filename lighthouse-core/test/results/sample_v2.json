@@ -2024,8 +2024,8 @@
     },
     "injected-iframes": {
       "id": "injected-iframes",
-      "title": "Passing",
-      "description": "Description here",
+      "title": "Injected Iframes likely didn't contribute to CLS",
+      "description": "Injecting an Iframe with a correctly sized container can reduce layout shifting and improve CLS. [Learn More](https://web.dev/optimize-cls/#ads-embeds-and-iframes-without-dimensions)",
       "score": null,
       "scoreDisplayMode": "error",
       "errorMessage": "Required DOMTimeline gatherer did not run."

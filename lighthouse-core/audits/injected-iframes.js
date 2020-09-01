@@ -11,12 +11,12 @@ const i18n = require('./../lib/i18n/i18n.js');
 const ComputedUserTimings = require('../computed/user-timings.js');
 
 const UIStrings = {
-  /** comment */
-  title: 'Passing',
-  /** comment */
-  failureTitle: 'Failing',
-  /** comment */
-  description: 'Description here',
+  /** Title of a Lighthouse audit that provides a potential cause of CLS. This descriptive title is shown to users when no iframe is injected in a time window before a LayoutShift event. */
+  title: 'Injected Iframes likely didn\'t contribute to CLS',
+  /** Title of a Lighthouse audit that provides a potential cause of CLS. This descriptive title is shown to users when an iframe is injected in a time window before a LayoutShift event. */
+  failureTitle: 'Injected Iframes potentially contributed to CLS',
+  /** Description of a Lighthouse audit that tells the user potential causes of CLS. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  description: 'Injecting an Iframe with a correctly sized container can reduce layout shifting and improve CLS. [Learn More](https://web.dev/optimize-cls/#ads-embeds-and-iframes-without-dimensions)',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);

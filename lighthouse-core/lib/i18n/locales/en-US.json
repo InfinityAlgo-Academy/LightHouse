@@ -795,13 +795,13 @@
     "message": "Serves images with appropriate resolution"
   },
   "lighthouse-core/audits/injected-iframes.js | description": {
-    "message": "Description here"
+    "message": "Injecting an Iframe with a correctly sized container can reduce layout shifting and improve CLS. [Learn More](https://web.dev/optimize-cls/#ads-embeds-and-iframes-without-dimensions)"
   },
   "lighthouse-core/audits/injected-iframes.js | failureTitle": {
-    "message": "Failing"
+    "message": "Injected Iframes potentially contributed to CLS"
   },
   "lighthouse-core/audits/injected-iframes.js | title": {
-    "message": "Passing"
+    "message": "Injected Iframes likely didn't contribute to CLS"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://web.dev/installable-manifest/)."
