@@ -77,8 +77,8 @@ describe('Offline: service worker audit', () => {
 
     const output = ServiceWorker.audit(createArtifacts(swOpts, finalUrl, manifest));
     assert.deepStrictEqual(output.score, 1);
-    assert.deepStrictEqual(output.details.items[0].scopeUrl, 'https://example.com/');
-    assert.deepStrictEqual(output.details.items[0].scriptUrl, 'https://example.com/sw.js');
+    assert.deepStrictEqual(output.details.scopeUrl, 'https://example.com/');
+    assert.deepStrictEqual(output.details.scriptUrl, 'https://example.com/sw.js');
   });
 
   it('fails when controlling service worker is not activated', () => {
@@ -122,9 +122,10 @@ describe('Offline: service worker audit', () => {
 
   it('fails when start_url is out of scope', () => {
     const finalUrl = 'https://example.com/serviceworker/index.html';
+    const scriptURL = 'https://example.com/serviceworker/sw.js';
     const swOpts = [{
       status: 'activated',
-      scriptURL: 'https://example.com/serviceworker/sw.js',
+      scriptURL,
     }];
     const startUrl = 'https://example.com/';
     const manifest = {start_url: startUrl};
@@ -133,7 +134,11 @@ describe('Offline: service worker audit', () => {
 
     const output = ServiceWorker.audit(createArtifacts(swOpts, finalUrl, manifest));
     assert.strictEqual(output.score, 0);
-    assert.ok(output.details === undefined);
+    assert.deepStrictEqual(output.details, {
+      type: 'debugdata',
+      scriptUrl: scriptURL,
+      scopeUrl: scopeURL,
+    });
     expect(output.explanation).toBeDisplayString('This page is controlled by a service worker, ' +
       `however the \`start_url\` (${startUrl}) is not in the service worker's scope (${scopeURL})`);
   });
@@ -198,8 +203,8 @@ describe('Offline: service worker audit', () => {
 
     const output = ServiceWorker.audit(createArtifacts(swOpts, finalUrl, manifest));
     assert.deepStrictEqual(output.score, 1);
-    assert.deepStrictEqual(output.details.items[0].scopeUrl, 'https://example.com/project/');
-    assert.deepStrictEqual(output.details.items[0].scriptUrl, 'https://example.com/project/sw.js');
+    assert.deepStrictEqual(output.details.scopeUrl, 'https://example.com/project/');
+    assert.deepStrictEqual(output.details.scriptUrl, 'https://example.com/project/sw.js');
   });
 
   it('passes when multiple SWs control the origin but only one is in scope', () => {
@@ -221,8 +226,8 @@ describe('Offline: service worker audit', () => {
 
     const output = ServiceWorker.audit(createArtifacts(swOpts, finalUrl, manifest));
     assert.deepStrictEqual(output.score, 1);
-    assert.deepStrictEqual(output.details.items[0].scopeUrl, 'https://example.com/');
-    assert.deepStrictEqual(output.details.items[0].scriptUrl, 'https://example.com/project/subproject/sw.js');
+    assert.deepStrictEqual(output.details.scopeUrl, 'https://example.com/');
+    assert.deepStrictEqual(output.details.scriptUrl, 'https://example.com/project/subproject/sw.js');
   });
 
   it('fails when multiple SWs control the origin but are all out of scope', () => {
@@ -266,7 +271,11 @@ describe('Offline: service worker audit', () => {
 
     const output = ServiceWorker.audit(createArtifacts(swOpts, finalUrl, manifest));
     assert.strictEqual(output.score, 0);
-    assert.ok(output.details === undefined);
+    assert.deepStrictEqual(output.details, {
+      type: 'debugdata',
+      scriptUrl: 'https://example.com/project/sw.js',
+      scopeUrl: scopeURL,
+    });
     expect(output.explanation).toBeDisplayString('This page is controlled by a service worker, ' +
       `however the \`start_url\` (${startUrl}) is not in the service worker's scope (${scopeURL})`);
   });

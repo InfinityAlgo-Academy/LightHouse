@@ -148,11 +148,13 @@ class ServiceWorker extends Audit {
       };
     }
 
-    // Include the detailed pass/fail checklist as a diagnostic.
+    // Include the SW details as diagnostic data.
+    const {scriptUrl, scopeUrl} = serviceWorkerUrls;
     /** @type {LH.Audit.Details.DebugData} */
     const details = {
       type: 'debugdata',
-      items: [serviceWorkerUrls],
+      scriptUrl,
+      scopeUrl,
     };
 
     const startUrlFailure = ServiceWorker.checkStartUrl(artifacts.WebAppManifest,
@@ -160,6 +162,7 @@ class ServiceWorker extends Audit {
     if (startUrlFailure) {
       return {
         score: 0,
+        details,
         explanation: startUrlFailure,
       };
     }
