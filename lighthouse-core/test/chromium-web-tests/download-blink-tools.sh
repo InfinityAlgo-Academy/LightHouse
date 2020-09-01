@@ -15,11 +15,6 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 commit_chromium="41f18f569f022d78337f586dacc6eff0e0477e46"
 commit_catapult="95c1f426155576790a73778571c34a0f3cd6d608"
 
-if [ x"$BLINK_TOOLS_PATH" == x ]; then
-  echo "Error: Environment variable BLINK_TOOLS_PATH not set"
-  exit 1
-fi
-
 VERSIONED_DIR="$BLINK_TOOLS_PATH/$commit_chromium$commit_catapult"
 
 if [ -e "$VERSIONED_DIR" ]; then
