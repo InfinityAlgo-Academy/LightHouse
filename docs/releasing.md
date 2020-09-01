@@ -65,32 +65,29 @@ cd ../lighthouse-pristine
 
 Confirm DevTools integration will work:
 ```sh
-# You should have Chromium already checked out at ~/chromium/src
-# See: https://www.chromium.org/developers/how-tos/get-the-code
+# Checkout the DevTools Frontend code.
+# See: https://chromium.googlesource.com/devtools/devtools-frontend/+/HEAD/docs/workflows.md
 
-# Roll to Chromium folder.
-yarn devtools
+# Roll to DevTools Frontend folder.
+# If at ~/src/devtools/devtools-frontend, the command to run is:
+yarn devtools ~/src/devtools/devtools-frontend
 
-# Checkout latest Chromium code.
-cd ~/chromium/src
-git pull
-git new-branch lh-roll-x.x.x
-gclient sync
-autoninja -C out/Release chrome blink_tests
+# Build DevTools Frontend.
+cd ~/src/devtools/devtools-frontend
+gclient sync && autoninja -C out/Default
 
-# Run tests and rebase.
-yarn --cwd ~/chromium/src/third_party/blink/renderer/devtools test 'http/tests/devtools/lighthouse/*.js' --reset-results
-# Verify the changes are expected.
-git diff
+# Verify things work in DevTools.
+# Mac:
+"/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary" --custom-devtools-frontend=file://$HOME/src/devtools/devtools-frontend/out/Default/resources/inspector
 
 # Verify that the Lighthouse panel still works. Consider the new features that have been added.
 # If anything is wrong, stop releasing, investigate, land a fix and start over.
 
-# For bonus points, add some tests covering new features. Either a new test, or an extra
-# assertion in an existing test.
+# (TODO: when this is a required check in CI, can remove from release steps)
+# Run webtests.
+DEVTOOLS_PATH=~/src/devtools/devtools-frontend yarn test-devtools
 
-git cl upload --bypass-hooks
-# Go to Gerrit, run CQ dry run, ensure the tests all pass.
+# Done with DevTools for now, will open a CL later.
 ```
 
 Confirm Lightrider integration will work:
@@ -116,7 +113,12 @@ Now that the integrations are confirmed to work, go back to `lighthouse` folder.
 # Prepare the commit, replace x.x.x with the desired version
 bash ./lighthouse-core/scripts/release/prepare-commit.sh x.x.x
 
-# Open the PR and await merge...
+# Fix-up the CHANGELOG.
+
+# Rebaseline DevTools tests one more time (only version number should change).
+yarn update:test-devtools
+
+# Open PR with title `vx.x.x` and await merge...
 echo "It's been merged! 🎉"
 
 # One last test (this script uses origin/master, so we also get the commit with the new changelog - that commit should be HEAD).
@@ -165,6 +167,17 @@ echo "Complete the _Release publicity_ tasks documented above"
 If this is a branching week, wait until _after_ the branch point email, then land the CL.
 
 Otherwise, you can land it immediately.
+
+```sh
+git checkout vx.x.x # Checkout the specific version.
+yarn build-devtools
+yarn devtools ~/src/devtools/devtools-frontend
+
+cd ~/src/devtools/devtools-frontend
+git new-branch rls
+git commit -am "[Lighthouse] Roll Lighthouse x.x.x\n\nBug: 772558"
+git cl upload --bypass-hooks
+```
 
 ### The following Monday
 

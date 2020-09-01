@@ -1,3 +1,86 @@
+<a name="6.3.0"></a>
+# 6.3.0 (2020-08-26)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v6.2.0...v6.3.0)
+
+We expect this release to ship in the DevTools of [Chrome 87](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## New Contributors
+
+Thanks to our new contributors 👽🐷🐰🐯🐻!
+
+* Adriana Ixba @adrianaixba
+* Daniel Hollas @danielhollas
+* Danilo Velasquez Urrutia @dvelasquez
+* Jivthesh M R @jivthesh
+* Pete Nykänen @petetnt
+* Radu Micu @radum
+* ryo @ryoAccount
+* Saavan Nanavati @saavannanavati
+* Stanislav Popov @popstas
+* Wicked @Wicked7000
+
+## Notable Changes
+
+* revert: move unsized-images to experimental due to perf impact ([#11317](https://github.com/GoogleChrome/lighthouse/pull/11317))
+
+## New Audits
+
+* add preload-fonts audit ([#11255](https://github.com/GoogleChrome/lighthouse/pull/11255))
+* add large-javascript-libraries audit ([#11096](https://github.com/GoogleChrome/lighthouse/pull/11096))
+* add valid-source-maps audit ([#11236](https://github.com/GoogleChrome/lighthouse/pull/11236))
+* add autocomplete to experimental config ([#11186](https://github.com/GoogleChrome/lighthouse/pull/11186))
+
+## Core
+
+* global-listeners: dedupe duplicate events in GlobalListener gatherer ([#11303](https://github.com/GoogleChrome/lighthouse/pull/11303))
+* module-duplication: ignore smaller modules ([#11277](https://github.com/GoogleChrome/lighthouse/pull/11277))
+* non-composited-animations: add unsupported css properties ([#11246](https://github.com/GoogleChrome/lighthouse/pull/11246))
+* non-composited-animations: add more actionable failure reasons ([#11268](https://github.com/GoogleChrome/lighthouse/pull/11268))
+* non-composited-animations: update the "learn more" link ([#11258](https://github.com/GoogleChrome/lighthouse/pull/11258))
+* renderer: improve the unknown timezone checks in util.js ([#9822](https://github.com/GoogleChrome/lighthouse/pull/9822))
+* response-time: add time spent to details ([#11307](https://github.com/GoogleChrome/lighthouse/pull/11307))
+* trace-elements: do not break on unresolvable node id ([#11298](https://github.com/GoogleChrome/lighthouse/pull/11298))
+* font-size: remove deprecated DOM.getFlattenedDocument ([#11248](https://github.com/GoogleChrome/lighthouse/pull/11248))
+
+## Report
+
+* third-party-summary: show resources for entity ([#11219](https://github.com/GoogleChrome/lighthouse/pull/11219))
+* handle invalid urls for source location items ([#11299](https://github.com/GoogleChrome/lighthouse/pull/11299))
+* show axe version in runtime settings ([#10729](https://github.com/GoogleChrome/lighthouse/pull/10729))
+* use dash gauge for categories with entirely n/a audits ([#11024](https://github.com/GoogleChrome/lighthouse/pull/11024))
+
+## Deps
+
+* update lighthouse-plugin-publisher-ads to 1.2.0 ([#11301](https://github.com/GoogleChrome/lighthouse/pull/11301))
+
+## I18n
+
+* import ([#11324](https://github.com/GoogleChrome/lighthouse/pull/11324))
+* translate remaining strings in font-size ([#11327](https://github.com/GoogleChrome/lighthouse/pull/11327))
+* make double dollar validation less strict ([#10299](https://github.com/GoogleChrome/lighthouse/pull/10299))
+
+## Docs
+
+* add Code of Conduct to project ([#11212](https://github.com/GoogleChrome/lighthouse/pull/11212))
+* add audit naming guide ([#11308](https://github.com/GoogleChrome/lighthouse/pull/11308))
+* throttling: replace comcast with throttle and add more windows options ([#11143](https://github.com/GoogleChrome/lighthouse/pull/11143))
+* readme: add related projects: site-audit-seo ([#11305](https://github.com/GoogleChrome/lighthouse/pull/11305), [#11250](https://github.com/GoogleChrome/lighthouse/pull/11250))
+* readme: align headings with table of contents ([#11288](https://github.com/GoogleChrome/lighthouse/pull/11288))
+
+## Tests
+
+* run chromium webtests for devtools integration ([#11176](https://github.com/GoogleChrome/lighthouse/pull/11176), [#11328](https://github.com/GoogleChrome/lighthouse/pull/11328))
+
+## Misc
+
+* benchmark: update BenchmarkIndex for m86 changes ([#11304](https://github.com/GoogleChrome/lighthouse/pull/11304))
+* add benchmark script with octane and speedometer ([#11247](https://github.com/GoogleChrome/lighthouse/pull/11247))
+* add gcp fleet creation scripts ([#11257](https://github.com/GoogleChrome/lighthouse/pull/11257), [#11233](https://github.com/GoogleChrome/lighthouse/pull/11233))
+* rephrase comments to be more inclusive ([#11228](https://github.com/GoogleChrome/lighthouse/pull/11228))
+* fix types in duplicated-javascript ([#11278](https://github.com/GoogleChrome/lighthouse/pull/11278))
+* fix typo in method name ([#11239](https://github.com/GoogleChrome/lighthouse/pull/11239))
+* move doc link ([#11300](https://github.com/GoogleChrome/lighthouse/pull/11300))
+
 <a name="6.2.0"></a>
 # 6.2.0 (2020-08-06)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v6.1.1...v6.2.0)

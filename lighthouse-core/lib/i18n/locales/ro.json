@@ -714,7 +714,7 @@
     "message": "{itemCount,plural, =1{O solicitare nu a fost difuzată prin HTTP/2}few{# solicitări nu au fost difuzate prin HTTP/2}other{# de solicitări nu au fost difuzate prin HTTP/2}}"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "Use HTTP/2"
+    "message": "Folosește HTTP/2"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "Poți marca funcțiile de procesare a evenimentelor prin atingere sau derulare `passive` pentru a îmbunătăți capacitatea de derulare a paginii. [Află mai multe](https://web.dev/uses-passive-event-listeners/)."
@@ -1251,13 +1251,13 @@
     "message": "Buget pentru durată"
   },
   "lighthouse-core/audits/unsized-images.js | description": {
-    "message": "Always include explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+    "message": "Include întotdeauna lățimea și înălțimea explicite pentru elementele imagine, ca să reduci modificările de aspect și să îmbunătățești CLS. [Află mai multe](https://web.dev/optimize-cls/#images-without-dimensions)"
   },
   "lighthouse-core/audits/unsized-images.js | failureTitle": {
-    "message": "Image elements do not have explicit `width` and `height`"
+    "message": "Elementele imagine nu au `width` și `height` explicite"
   },
   "lighthouse-core/audits/unsized-images.js | title": {
-    "message": "Image elements have explicit `width` and `height`"
+    "message": "Elementele imagine au `width` și `height` explicite"
   },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "Tip"
@@ -1497,7 +1497,7 @@
     "message": "Element"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
-    "message": "Failing Elements"
+    "message": "Elemente cu probleme"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "Locație"

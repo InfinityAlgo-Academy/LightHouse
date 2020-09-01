@@ -3,9 +3,12 @@
   "environment": {
     "networkUserAgent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/66.0.3359.30 Mobile Safari/537.36",
     "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4232.0 Safari/537.36",
-    "benchmarkIndex": 1000
+    "benchmarkIndex": 1000,
+    "credits": {
+      "axe-core": "2.1.1"
+    }
   },
-  "lighthouseVersion": "6.2.0",
+  "lighthouseVersion": "6.3.0",
   "fetchTime": "2018-03-13T00:55:45.840Z",
   "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "finalUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
@@ -305,9 +308,25 @@
       "displayValue": "Root document took 570 ms",
       "details": {
         "type": "opportunity",
-        "overallSavingsMs": -29.436999999999898,
-        "headings": [],
-        "items": []
+        "headings": [
+          {
+            "key": "url",
+            "valueType": "url",
+            "label": "URL"
+          },
+          {
+            "key": "responseTime",
+            "valueType": "timespanMs",
+            "label": "Time Spent"
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "responseTime": 570.5630000000001
+          }
+        ],
+        "overallSavingsMs": 470.5630000000001
       }
     },
     "first-cpu-idle": {
@@ -509,6 +528,7 @@
             "failures": [
               "No manifest was fetched"
             ],
+            "manifestUrl": null,
             "isParseFailure": true,
             "parseFailureReason": "No manifest was fetched"
           }
@@ -666,6 +686,28 @@
             "actualPixels": 152640,
             "expectedSize": "1260 x 835",
             "expectedPixels": 1052100
+          }
+        ]
+      }
+    },
+    "preload-fonts": {
+      "id": "preload-fonts",
+      "title": "Fonts with `font-display: optional` are not preloaded",
+      "description": "Preload `optional` fonts so first-time visitors may use them. [Learn More](https://web.dev/preload-optional-fonts/)",
+      "score": 0,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "url",
+            "itemType": "url",
+            "text": "URL"
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:10503/perf/lobster-two-v10-latin-700.woff2?cors=true"
           }
         ]
       }
@@ -2186,7 +2228,7 @@
               "type": "node",
               "selector": "h2",
               "path": "3,HTML,1,BODY,5,DIV,0,H2",
-              "snippet": "<h2>Do better web tester page</h2>",
+              "snippet": "<h2>",
               "boundingRect": {
                 "width": 396,
                 "height": 28,
@@ -2204,7 +2246,7 @@
               "type": "node",
               "selector": "span",
               "path": "3,HTML,1,BODY,5,DIV,1,SPAN",
-              "snippet": "<span>Hi there!</span>",
+              "snippet": "<span>",
               "boundingRect": {
                 "width": 57,
                 "height": 18,
@@ -2580,7 +2622,7 @@
               "type": "node",
               "selector": "a[href=\"javascript\\:void\\(0\\)\"]",
               "path": "3,HTML,1,BODY,44,A",
-              "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\"></a>",
+              "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\">",
               "explanation": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "a"
             }
@@ -2590,7 +2632,7 @@
               "type": "node",
               "selector": "a[href$=\"mailto\\:inbox\\@email\\.com\"]",
               "path": "3,HTML,1,BODY,46,A",
-              "snippet": "<a href=\"mailto:inbox@email.com\" target=\"_blank\"></a>",
+              "snippet": "<a href=\"mailto:inbox@email.com\" target=\"_blank\">",
               "explanation": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "a"
             }
@@ -2664,7 +2706,7 @@
               "type": "node",
               "selector": "#\\35 934a",
               "path": "3,HTML,1,BODY,2,OBJECT",
-              "snippet": "<object id=\"5934a\"></object>",
+              "snippet": "<object id=\"5934a\">",
               "boundingRect": {
                 "width": 300,
                 "height": 150,
@@ -2682,7 +2724,7 @@
               "type": "node",
               "selector": "#\\35 934b",
               "path": "3,HTML,1,BODY,3,OBJECT",
-              "snippet": "<object id=\"5934b\"></object>",
+              "snippet": "<object id=\"5934b\">",
               "boundingRect": {
                 "width": 300,
                 "height": 150,
@@ -4825,6 +4867,11 @@
           "group": "best-practices-ux"
         },
         {
+          "id": "preload-fonts",
+          "weight": 1,
+          "group": "best-practices-ux"
+        },
+        {
           "id": "doctype",
           "weight": 1,
           "group": "best-practices-browser-compat"
@@ -5514,6 +5561,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:image-size-responsive",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:preload-fonts",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6327,6 +6380,7 @@
       "runtimeDesktopEmulation": "Emulated Desktop",
       "runtimeMobileEmulation": "Emulated Moto G4",
       "runtimeNoEmulation": "No emulation",
+      "runtimeSettingsAxeVersion": "Axe version",
       "runtimeSettingsBenchmark": "CPU/Memory Power",
       "runtimeSettingsChannel": "Channel",
       "runtimeSettingsCPUThrottling": "CPU throttling",
@@ -6545,8 +6599,10 @@
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnURL": [
         "audits[errors-in-console].details.headings[0].text",
+        "audits[server-response-time].details.headings[0].label",
         "audits[image-aspect-ratio].details.headings[1].text",
         "audits[image-size-responsive].details.headings[1].text",
+        "audits[preload-fonts].details.headings[0].text",
         "audits.deprecations.details.headings[1].text",
         "audits[bootup-time].details.headings[0].text",
         "audits[network-rtt].details.headings[0].text",
@@ -6583,6 +6639,12 @@
           },
           "path": "audits[server-response-time].displayValue"
         }
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": [
+        "audits[server-response-time].details.headings[1].label",
+        "audits[mainthread-work-breakdown].details.headings[1].text",
+        "audits[network-rtt].details.headings[1].text",
+        "audits[network-server-latency].details.headings[1].text"
       ],
       "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": [
         "audits[first-cpu-idle].title",
@@ -6687,6 +6749,12 @@
       "lighthouse-core/audits/image-size-responsive.js | columnExpected": [
         "audits[image-size-responsive].details.headings[4].text"
       ],
+      "lighthouse-core/audits/preload-fonts.js | failureTitle": [
+        "audits[preload-fonts].title"
+      ],
+      "lighthouse-core/audits/preload-fonts.js | description": [
+        "audits[preload-fonts].description"
+      ],
       "lighthouse-core/audits/deprecations.js | failureTitle": [
         "audits.deprecations.title"
       ],
@@ -6712,11 +6780,6 @@
       ],
       "lighthouse-core/audits/mainthread-work-breakdown.js | columnCategory": [
         "audits[mainthread-work-breakdown].details.headings[0].text"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": [
-        "audits[mainthread-work-breakdown].details.headings[1].text",
-        "audits[network-rtt].details.headings[1].text",
-        "audits[network-server-latency].details.headings[1].text"
       ],
       "lighthouse-core/audits/bootup-time.js | title": [
         "audits[bootup-time].title"
@@ -7646,6 +7709,21 @@
           },
           "path": "audits[font-size].displayValue"
         }
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnSource": [
+        "audits[font-size].details.headings[0].text"
+      ],
+      "lighthouse-core/audits/seo/font-size.js | columnSelector": [
+        "audits[font-size].details.headings[1].text"
+      ],
+      "lighthouse-core/audits/seo/font-size.js | columnPercentPageText": [
+        "audits[font-size].details.headings[2].text"
+      ],
+      "lighthouse-core/audits/seo/font-size.js | columnFontSize": [
+        "audits[font-size].details.headings[3].text"
+      ],
+      "lighthouse-core/audits/seo/font-size.js | legibleText": [
+        "audits[font-size].details.items[0].source.value"
       ],
       "lighthouse-core/audits/seo/link-text.js | title": [
         "audits[link-text].title"

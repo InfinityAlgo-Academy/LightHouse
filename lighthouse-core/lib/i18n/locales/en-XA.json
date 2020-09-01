@@ -714,7 +714,7 @@
     "message": "{itemCount,plural, =1{[1 ŕéqûéšţ ñöţ šéŕvéð vîå ĤŢŢÞ/2 one two three four five six seven]}other{[# ŕéqûéšţš ñöţ šéŕvéð vîå ĤŢŢÞ/2 one two three four five six seven]}}"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "Use HTTP/2"
+    "message": "[Ûšé ĤŢŢÞ/2 one two]"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "[Çöñšîðéŕ måŕķîñĝ ýöûŕ ţöûçĥ åñð ŵĥééļ évéñţ ļîšţéñéŕš åš ᐅ`passive`ᐊ ţö îmþŕövé ýöûŕ þåĝé'š šçŕöļļ þéŕƒöŕmåñçé. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/uses-passive-event-listeners/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen]"
@@ -1251,13 +1251,13 @@
     "message": "[Ţîmîñĝ бûðĝéţ one two]"
   },
   "lighthouse-core/audits/unsized-images.js | description": {
-    "message": "Always include explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+    "message": "[Åļŵåýš îñçļûðé éxþļîçîţ ŵîðţĥ åñð ĥéîĝĥţ öñ îmåĝé éļéméñţš ţö ŕéðûçé ļåýöûţ šĥîƒţš åñð îmþŕövé ÇĻŠ. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/optimize-cls/#images-without-dimensions)ᐊ one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen]"
   },
   "lighthouse-core/audits/unsized-images.js | failureTitle": {
-    "message": "Image elements do not have explicit `width` and `height`"
+    "message": "[Îmåĝé éļéméñţš ðö ñöţ ĥåvé éxþļîçîţ ᐅ`width`ᐊ åñð ᐅ`height`ᐊ one two three four five six seven eight nine ten]"
   },
   "lighthouse-core/audits/unsized-images.js | title": {
-    "message": "Image elements have explicit `width` and `height`"
+    "message": "[Îmåĝé éļéméñţš ĥåvé éxþļîçîţ ᐅ`width`ᐊ åñð ᐅ`height`ᐊ one two three four five six seven eight]"
   },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "[Ţýþé one]"
@@ -1497,7 +1497,7 @@
     "message": "[Éļéméñţ one]"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
-    "message": "Failing Elements"
+    "message": "[Fåîļîñĝ Éļéméñţš one two]"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "[Ļöçåţîöñ one]"

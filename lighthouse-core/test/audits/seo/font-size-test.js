@@ -152,10 +152,8 @@ describe('SEO: Font size audit', () => {
     const auditResult = await FontSizeAudit.audit(artifacts, getFakeContext());
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 3);
-    assert.deepEqual(auditResult.details.items[1].source, {
-      type: 'code',
-      value: 'Add\'l illegible text',
-    });
+    assert.equal(auditResult.details.items[1].source.type, 'code');
+    expect(auditResult.details.items[1].source.value).toBeDisplayString('Add\'l illegible text');
     assert.equal(auditResult.details.items[1].coverage, '40.00%');
     expect(auditResult.displayValue).toBeDisplayString('50% legible text');
   });

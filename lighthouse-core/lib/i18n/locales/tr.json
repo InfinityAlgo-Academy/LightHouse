@@ -714,7 +714,7 @@
     "message": "{itemCount,plural, =1{1 istek HTTP/2 üzerinden sunulmuyor}other{# istek HTTP/2 üzerinden sunulmuyor}}"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "Use HTTP/2"
+    "message": "HTTP/2'yi kullan"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "Sayfanızın kaydırma performansını artırmak için dokunma ve ve tekerlek etkinliği işleyicilerini `passive` olarak işaretlemeyi değerlendirin. [Daha fazla bilgi](https://web.dev/uses-passive-event-listeners/)."
@@ -1251,13 +1251,13 @@
     "message": "Zamanlama bütçesi"
   },
   "lighthouse-core/audits/unsized-images.js | description": {
-    "message": "Always include explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+    "message": "Düzen kaymalarını azaltmak ve CLS'yi iyileştirmek için her zaman resim öğelerine açıkça belirtilmiş genişlik ve yükseklik değeri ekleyin. [Daha fazla bilgi](https://web.dev/optimize-cls/#images-without-dimensions)"
   },
   "lighthouse-core/audits/unsized-images.js | failureTitle": {
-    "message": "Image elements do not have explicit `width` and `height`"
+    "message": "Resim öğelerinin açıkça belirtilmiş `width` ve `height` değerleri yok"
   },
   "lighthouse-core/audits/unsized-images.js | title": {
-    "message": "Image elements have explicit `width` and `height`"
+    "message": "Resim öğelerinin açıkça belirtilmiş `width` ve `height` değerleri var"
   },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "Tür"
@@ -1497,7 +1497,7 @@
     "message": "Öğe"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
-    "message": "Failing Elements"
+    "message": "Başarısız Öğeler"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "Konum"

@@ -714,7 +714,7 @@
     "message": "{itemCount,plural, =1{1 అభ్యర్థన 'HTTP/2' ద్వారా అందించబడలేదు}other{# అభ్యర్థనలు 'HTTP/2' ద్వారా అందించబడలేదు}}"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "Use HTTP/2"
+    "message": "HTTP/2ను ఉపయోగించండి"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "మీ పేజీ స్క్రోలింగ్ పనితీరును మెరుగుపరచడానికి మీ స్పర్శ, చక్రం కదలికలను గుర్తుపట్టే లిజనర్‌లను '`passive`'కు సెట్ చేయడం పరిశీలించండి. [మరింత తెలుసుకోండి](https://web.dev/uses-passive-event-listeners/)."
@@ -1251,13 +1251,13 @@
     "message": "సమయం సంబంధిత బడ్జెట్"
   },
   "lighthouse-core/audits/unsized-images.js | description": {
-    "message": "Always include explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+    "message": "లేఅవుట్ షిఫ్ట్‌లను తగ్గించడానికి, CLSను మెరుగుపరచడానికి ఎల్లప్పుడూ ఇమేజ్ మూలకాలపై తగిన వెడల్పు, ఎత్తును చేర్చండి. [మరింత తెలుసుకోండి](https://web.dev/optimize-cls/#images-without-dimensions)"
   },
   "lighthouse-core/audits/unsized-images.js | failureTitle": {
-    "message": "Image elements do not have explicit `width` and `height`"
+    "message": "ఇమేజ్ మూలకాలకు తగిన `width`, `height` లేదు"
   },
   "lighthouse-core/audits/unsized-images.js | title": {
-    "message": "Image elements have explicit `width` and `height`"
+    "message": "ఇమేజ్ మూలకాలు తగిన `width`, `height`ను కలిగి ఉన్నాయి"
   },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "రకం"
@@ -1497,7 +1497,7 @@
     "message": "మూలకం"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
-    "message": "Failing Elements"
+    "message": "విఫలం అవుతున్న మూలకాలు"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "స్థానం"

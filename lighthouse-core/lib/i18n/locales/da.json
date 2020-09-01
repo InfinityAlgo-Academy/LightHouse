@@ -714,7 +714,7 @@
     "message": "{itemCount,plural, =1{1 anmodning blev ikke leveret via HTTP/2}one{# anmodning blev ikke leveret via HTTP/2}other{# anmodninger blev ikke leveret via HTTP/2}}"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "Use HTTP/2"
+    "message": "Brug HTTP/2"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "Overvej at markere hændelsesfunktionerne for tryk og hjul som `passive` for at forbedre effektiviteten ved rulning på siden. [Få flere oplysninger](https://web.dev/uses-passive-event-listeners/)."
@@ -1251,13 +1251,13 @@
     "message": "Tidsbudget"
   },
   "lighthouse-core/audits/unsized-images.js | description": {
-    "message": "Always include explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+    "message": "Anvend altid eksplicit bredde og højde for billedelementer for at reducere layoutskift og forbedre CLS. [Få flere oplysninger](https://web.dev/optimize-cls/#images-without-dimensions)"
   },
   "lighthouse-core/audits/unsized-images.js | failureTitle": {
-    "message": "Image elements do not have explicit `width` and `height`"
+    "message": "Billedelementerne har ikke eksplicit `width` og `height`"
   },
   "lighthouse-core/audits/unsized-images.js | title": {
-    "message": "Image elements have explicit `width` and `height`"
+    "message": "Billedelementerne har eksplicit `width` og `height`"
   },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "Type"
@@ -1497,7 +1497,7 @@
     "message": "Element"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
-    "message": "Failing Elements"
+    "message": "Elementer, der ikke bestod gennemgangen"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "Placering"

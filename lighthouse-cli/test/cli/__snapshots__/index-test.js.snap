@@ -100,6 +100,9 @@ Object {
       "path": "image-size-responsive",
     },
     Object {
+      "path": "preload-fonts",
+    },
+    Object {
       "path": "deprecations",
     },
     Object {
@@ -750,6 +753,11 @@ Object {
         Object {
           "group": "best-practices-ux",
           "id": "image-size-responsive",
+          "weight": 1,
+        },
+        Object {
+          "group": "best-practices-ux",
+          "id": "preload-fonts",
           "weight": 1,
         },
         Object {

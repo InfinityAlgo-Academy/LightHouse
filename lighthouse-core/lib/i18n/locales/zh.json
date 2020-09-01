@@ -714,7 +714,7 @@
     "message": "{itemCount,plural, =1{1 条请求未通过 HTTP/2 传送}other{# 条请求未通过 HTTP/2 传送}}"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "Use HTTP/2"
+    "message": "使用 HTTP/2"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "建议您将触摸和滚轮事件监听器标记为 `passive`，以提高页面的滚动性能。[了解详情](https://web.dev/uses-passive-event-listeners/)。"
@@ -1251,13 +1251,13 @@
     "message": "时间预算"
   },
   "lighthouse-core/audits/unsized-images.js | description": {
-    "message": "Always include explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+    "message": "请务必为图片元素添加明确的宽度值和高度值，以减少布局偏移并改善 CLS。[了解详情](https://web.dev/optimize-cls/#images-without-dimensions)"
   },
   "lighthouse-core/audits/unsized-images.js | failureTitle": {
-    "message": "Image elements do not have explicit `width` and `height`"
+    "message": "图片元素没有明确的`width`和`height`"
   },
   "lighthouse-core/audits/unsized-images.js | title": {
-    "message": "Image elements have explicit `width` and `height`"
+    "message": "图片元素都有明确的`width`和`height`"
   },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "类型"
@@ -1497,7 +1497,7 @@
     "message": "元素"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
-    "message": "Failing Elements"
+    "message": "与建议不符的元素"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "位置"
