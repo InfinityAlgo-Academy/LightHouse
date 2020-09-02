@@ -2872,10 +2872,10 @@ detective@^5.0.2:
     defined "^1.0.0"
     minimist "^1.1.1"
 
-devtools-protocol@0.0.770484:
-  version "0.0.770484"
-  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.770484.tgz#e7e779431903c7295fd6c5cb118193f74502b9da"
-  integrity sha512-R99WYb9iVcUAjWBK+1DNpqKDsK/LKfBr+u6AJjTHrydqi2TRywZQs90R2tnI1nCzd7HlLrAnM9Yw4mjIAaokLQ==
+devtools-protocol@0.0.801017:
+  version "0.0.801017"
+  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.801017.tgz#340754ebff17b73ddea1b15716ec53887261372c"
+  integrity sha512-vsOhv/pe1CV3yO3d8ZCRuLlu9FY0Kw4P5TVIC6htjyVfNeklCpFmUrEfvY0ju/y9dyAgwiOhe7pcreRh4/EaZw==
 
 diff-sequences@^24.9.0:
   version "24.9.0"
