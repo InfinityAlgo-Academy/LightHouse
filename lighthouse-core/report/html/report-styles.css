@@ -1368,6 +1368,10 @@
   text-align: left;
 }
 
+.lh-table-column--code {
+  min-width: 100px;
+}
+
 .lh-table-column--bytes,
 .lh-table-column--timespanMs,
 .lh-table-column--ms,
