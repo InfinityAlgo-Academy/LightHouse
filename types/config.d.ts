@@ -29,6 +29,7 @@ declare global {
         recordTrace?: boolean;
         useThrottling?: boolean;
         pauseAfterFcpMs?: number;
+        pauseAfterLcpMs?: number;
         pauseAfterLoadMs?: number;
         networkQuietThresholdMs?: number;
         cpuQuietThresholdMs?: number;

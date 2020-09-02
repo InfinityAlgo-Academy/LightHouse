@@ -108,6 +108,8 @@ declare global {
       locale?: Locale;
       /** The maximum amount of time to wait for a page content render, in ms. If no content is rendered within this limit, the run is aborted with an error. */
       maxWaitForFcp?: number;
+      /** The maximum amount of time to wait for the largest page content to render, in ms. If the largest content is not rendered within this limit, the run is aborted with an error. */
+      maxWaitForLcp?: number;
       /** The maximum amount of time to wait for a page to load, in ms. */
       maxWaitForLoad?: number;
       /** List of URL patterns to block. */

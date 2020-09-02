@@ -26,6 +26,8 @@ const Connection = require('./connections/connection.js');
 
 // Controls how long to wait after FCP before continuing
 const DEFAULT_PAUSE_AFTER_FCP = 0;
+// Controls how long to wait after LCP before continuing
+const DEFAULT_PAUSE_AFTER_LCP = 0;
 // Controls how long to wait after onLoad before continuing
 const DEFAULT_PAUSE_AFTER_LOAD = 0;
 // Controls how long to wait between network requests before determining the network is quiet
@@ -659,30 +661,32 @@ class Driver {
 
   /**
    * Returns a promise that resolve when a frame has a FCP.
-   * @param {number} pauseAfterFcpMs
-   * @param {number} maxWaitForFcpMs
+   * @param {string} eventName
+   * @param {number} pauseAfterMs
+   * @param {number} maxWaitMs
+   * @param {LHError.LighthouseErrorDefinition} error
    * @return {{promise: Promise<void>, cancel: function(): void}}
    */
-  _waitForFcp(pauseAfterFcpMs, maxWaitForFcpMs) {
+  _waitForLifecycleEvent(eventName, pauseAfterMs, maxWaitMs, error) {
     /** @type {(() => void)} */
     let cancel = () => {
-      throw new Error('_waitForFcp.cancel() called before it was defined');
+      throw new Error(`${eventName}:_waitForLifecycleEvent.cancel() called before it was defined`);
     };
 
     const promise = new Promise((resolve, reject) => {
       const maxWaitTimeout = setTimeout(() => {
-        reject(new LHError(LHError.errors.NO_FCP));
-      }, maxWaitForFcpMs);
+        reject(new LHError(error));
+      }, maxWaitMs);
       /** @type {NodeJS.Timeout|undefined} */
       let loadTimeout;
 
       /** @param {LH.Crdp.Page.LifecycleEventEvent} e */
       const lifecycleListener = e => {
-        if (e.name === 'firstContentfulPaint') {
+        if (e.name === eventName) {
           loadTimeout = setTimeout(() => {
             resolve();
             cancel();
-          }, pauseAfterFcpMs);
+          }, pauseAfterMs);
         }
       };
 
@@ -695,7 +699,7 @@ class Driver {
         this.off('Page.lifecycleEvent', lifecycleListener);
         maxWaitTimeout && clearTimeout(maxWaitTimeout);
         loadTimeout && clearTimeout(loadTimeout);
-        reject(new Error('Wait for FCP canceled'));
+        reject(new Error(`Wait for "${eventName}" event canceled`));
       };
     });
 
@@ -703,6 +707,36 @@ class Driver {
       promise,
       cancel,
     };
+  }
+
+  /**
+   * Returns a promise that resolve when a frame has a LCP.
+   * @param {number} pauseAfterLcpMs
+   * @param {number} maxWaitForLcpMs
+   * @return {{promise: Promise<void>, cancel: function(): void}}
+   */
+  _waitForLcp(pauseAfterLcpMs, maxWaitForLcpMs) {
+    return this._waitForLifecycleEvent(
+      'largestContentfulPaint::Candidate',
+      pauseAfterLcpMs,
+      maxWaitForLcpMs,
+      LHError.errors.NO_LCP
+    );
+  }
+
+  /**
+   * Returns a promise that resolve when a frame has a FCP.
+   * @param {number} pauseAfterFcpMs
+   * @param {number} maxWaitForFcpMs
+   * @return {{promise: Promise<void>, cancel: function(): void}}
+   */
+  _waitForFcp(pauseAfterFcpMs, maxWaitForFcpMs) {
+    return this._waitForLifecycleEvent(
+      'firstContentfulPaint',
+      pauseAfterFcpMs,
+      maxWaitForFcpMs,
+      LHError.errors.NO_FCP
+    );
   }
 
   /**
@@ -921,22 +955,29 @@ class Driver {
    * - maxWaitForLoadedMs milliseconds have passed.
    * See https://github.com/GoogleChrome/lighthouse/issues/627 for more.
    * @param {number} pauseAfterFcpMs
+   * @param {number} pauseAfterLcpMs
    * @param {number} pauseAfterLoadMs
    * @param {number} networkQuietThresholdMs
    * @param {number} cpuQuietThresholdMs
    * @param {number} maxWaitForLoadedMs
    * @param {number=} maxWaitForFcpMs
+   * @param {number=} maxWaitForLcpMs
    * @return {Promise<{timedOut: boolean}>}
    * @private
    */
-  async _waitForFullyLoaded(pauseAfterFcpMs, pauseAfterLoadMs, networkQuietThresholdMs,
-      cpuQuietThresholdMs, maxWaitForLoadedMs, maxWaitForFcpMs) {
+  async _waitForFullyLoaded(pauseAfterFcpMs, pauseAfterLcpMs, pauseAfterLoadMs,
+      networkQuietThresholdMs, cpuQuietThresholdMs, maxWaitForLoadedMs, maxWaitForFcpMs,
+      maxWaitForLcpMs) {
     /** @type {NodeJS.Timer|undefined} */
     let maxTimeoutHandle;
 
     // Listener for FCP. Resolves pauseAfterFcpMs ms after first FCP event.
     const waitForFcp = maxWaitForFcpMs ?
       this._waitForFcp(pauseAfterFcpMs, maxWaitForFcpMs) :
+      this._waitForNothing();
+    // Listener for LCP. Resolves pauseAfterLcpMs ms after first LCP event.
+    const waitForLcp = maxWaitForLcpMs ?
+      this._waitForLcp(pauseAfterLcpMs, maxWaitForLcpMs) :
       this._waitForNothing();
     // Listener for onload. Resolves pauseAfterLoadMs ms after load.
     const waitForLoadEvent = this._waitForLoadEvent(pauseAfterLoadMs);
@@ -950,6 +991,7 @@ class Driver {
     /** @type {Promise<() => Promise<{timedOut: boolean}>>} */
     const loadPromise = Promise.all([
       waitForFcp.promise,
+      waitForLcp.promise,
       waitForLoadEvent.promise,
       waitForNetworkIdle.promise,
     ]).then(() => {
@@ -997,6 +1039,7 @@ class Driver {
 
     maxTimeoutHandle && clearTimeout(maxTimeoutHandle);
     waitForFcp.cancel();
+    waitForLcp.cancel();
     waitForLoadEvent.cancel();
     waitForNetworkIdle.cancel();
     waitForCPUIdle.cancel();
@@ -1080,17 +1123,18 @@ class Driver {
    * possible workaround.
    * Resolves on the url of the loaded page, taking into account any redirects.
    * @param {string} url
-   * @param {{waitForFcp?: boolean, waitForLoad?: boolean, waitForNavigated?: boolean, passContext?: LH.Gatherer.PassContext}} options
+   * @param {{waitForFcp?: boolean, waitForLcp?: boolean, waitForLoad?: boolean, waitForNavigated?: boolean, passContext?: LH.Gatherer.PassContext}} options
    * @return {Promise<{finalUrl: string, timedOut: boolean}>}
    */
   async gotoURL(url, options = {}) {
     const waitForFcp = options.waitForFcp || false;
+    const waitForLcp = options.waitForLcp || false;
     const waitForNavigated = options.waitForNavigated || false;
     const waitForLoad = options.waitForLoad || false;
     const passContext = /** @type {Partial<LH.Gatherer.PassContext>} */ (options.passContext || {});
     const disableJS = passContext.disableJavaScript || false;
 
-    if (waitForNavigated && (waitForFcp || waitForLoad)) {
+    if (waitForNavigated && (waitForFcp || waitForLcp || waitForLoad)) {
       throw new Error('Cannot use both waitForNavigated and another event, pick just one');
     }
 
@@ -1118,21 +1162,26 @@ class Driver {
       const passConfig = /** @type {Partial<LH.Config.Pass>} */ (passContext.passConfig || {});
 
       /* eslint-disable max-len */
-      let {pauseAfterFcpMs, pauseAfterLoadMs, networkQuietThresholdMs, cpuQuietThresholdMs} = passConfig;
+      let {pauseAfterFcpMs, pauseAfterLcpMs, pauseAfterLoadMs, networkQuietThresholdMs, cpuQuietThresholdMs} = passConfig;
       let maxWaitMs = passContext.settings && passContext.settings.maxWaitForLoad;
       let maxFCPMs = passContext.settings && passContext.settings.maxWaitForFcp;
+      let maxLCPMs = passContext.settings && passContext.settings.maxWaitForLcp;
 
       if (typeof pauseAfterFcpMs !== 'number') pauseAfterFcpMs = DEFAULT_PAUSE_AFTER_FCP;
+      if (typeof pauseAfterLcpMs !== 'number') pauseAfterLcpMs = DEFAULT_PAUSE_AFTER_LCP;
       if (typeof pauseAfterLoadMs !== 'number') pauseAfterLoadMs = DEFAULT_PAUSE_AFTER_LOAD;
       if (typeof networkQuietThresholdMs !== 'number') networkQuietThresholdMs = DEFAULT_NETWORK_QUIET_THRESHOLD;
       if (typeof cpuQuietThresholdMs !== 'number') cpuQuietThresholdMs = DEFAULT_CPU_QUIET_THRESHOLD;
       if (typeof maxWaitMs !== 'number') maxWaitMs = constants.defaultSettings.maxWaitForLoad;
       if (typeof maxFCPMs !== 'number') maxFCPMs = constants.defaultSettings.maxWaitForFcp;
+      if (typeof maxLCPMs !== 'number') maxLCPMs = constants.defaultSettings.maxWaitForLcp;
       /* eslint-enable max-len */
 
       if (!waitForFcp) maxFCPMs = undefined;
-      const loadResult = await this._waitForFullyLoaded(pauseAfterFcpMs, pauseAfterLoadMs,
-        networkQuietThresholdMs, cpuQuietThresholdMs, maxWaitMs, maxFCPMs);
+      if (!waitForLcp) maxLCPMs = undefined;
+      const loadResult = await this._waitForFullyLoaded(pauseAfterFcpMs, pauseAfterLcpMs,
+        pauseAfterLoadMs, networkQuietThresholdMs, cpuQuietThresholdMs, maxWaitMs, maxFCPMs,
+        maxLCPMs);
       timedOut = loadResult.timedOut;
     }
 

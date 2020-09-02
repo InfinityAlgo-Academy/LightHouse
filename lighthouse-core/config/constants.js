@@ -54,6 +54,7 @@ const throttling = {
 const defaultSettings = {
   output: 'json',
   maxWaitForFcp: 30 * 1000,
+  maxWaitForLcp: 40 * 1000,
   maxWaitForLoad: 45 * 1000,
   throttlingMethod: 'simulate',
   throttling: throttling.mobileSlow4G,
@@ -84,6 +85,7 @@ const defaultPassConfig = {
   recordTrace: false,
   useThrottling: false,
   pauseAfterFcpMs: 0,
+  pauseAfterLcpMs: 0,
   pauseAfterLoadMs: 0,
   networkQuietThresholdMs: 0,
   cpuQuietThresholdMs: 0,

@@ -123,6 +123,7 @@ async function flushAllTimersAndMicrotasks(ms = 1000) {
  * @property {ReturnType<typeof createMockOnceFn>} on
  * @property {ReturnType<typeof createMockOnceFn>} once
  * @property {ReturnType<typeof createMockWaitForFn>} _waitForFcp
+ * @property {ReturnType<typeof createMockWaitForFn>} _waitForLcp
  * @property {ReturnType<typeof createMockWaitForFn>} _waitForLoadEvent
  * @property {ReturnType<typeof createMockWaitForFn>} _waitForNetworkIdle
  * @property {ReturnType<typeof createMockWaitForFn>} _waitForCPUIdle
@@ -522,9 +523,10 @@ describe('.gotoURL', () => {
   describe('when waitForLoad', () => {
     const url = 'https://example.com';
 
-    ['Fcp', 'LoadEvent', 'NetworkIdle', 'CPUIdle'].forEach(name => {
+    ['Fcp', 'Lcp', 'LoadEvent', 'NetworkIdle', 'CPUIdle'].forEach(name => {
       it(`should wait for ${name}`, async () => {
         driver._waitForFcp = createMockWaitForFn();
+        driver._waitForLcp = createMockWaitForFn();
         driver._waitForLoadEvent = createMockWaitForFn();
         driver._waitForNetworkIdle = createMockWaitForFn();
         driver._waitForCPUIdle = createMockWaitForFn();
@@ -533,6 +535,7 @@ describe('.gotoURL', () => {
         const waitForResult = driver[`_waitFor${name}`];
         const otherWaitForResults = [
           driver._waitForFcp,
+          driver._waitForLcp,
           driver._waitForLoadEvent,
           driver._waitForNetworkIdle,
           driver._waitForCPUIdle,
@@ -540,6 +543,7 @@ describe('.gotoURL', () => {
 
         const loadPromise = makePromiseInspectable(driver.gotoURL(url, {
           waitForFcp: true,
+          waitForLcp: true,
           waitForLoad: true,
         }));
 
@@ -702,7 +706,83 @@ describe('._waitForFcp', () => {
     await flushAllTimersAndMicrotasks();
     expect(waitPromise).toBeDone('Did not cancel promise');
     expect(driver.off).toHaveBeenCalled();
-    await expect(waitPromise).rejects.toMatchObject({message: 'Wait for FCP canceled'});
+    await expect(waitPromise).rejects.toMatchObject(
+      {message: 'Wait for "firstContentfulPaint" event canceled'}
+    );
+  });
+});
+
+describe('._waitForLcp', () => {
+  it('should not resolve until LCP fires', async () => {
+    driver.on = driver.once = createMockOnceFn();
+
+    const waitPromise = makePromiseInspectable(driver._waitForLcp(0, 60 * 1000).promise);
+    const listener = driver.on.findListener('Page.lifecycleEvent');
+
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Resolved without LCP');
+
+    listener({name: 'domContentLoaded'});
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Resolved on wrong event');
+
+    listener({name: 'largestContentfulPaint::Candidate'});
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).toBeDone('Did not resolve with LCP');
+    await waitPromise;
+  });
+
+  it('should wait for pauseAfterLcpMs after LCP', async () => {
+    driver.on = driver.once = createMockOnceFn();
+
+    const waitPromise = makePromiseInspectable(driver._waitForLcp(5000, 60 * 1000).promise);
+    const listener = driver.on.findListener('Page.lifecycleEvent');
+
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Resolved without LCP');
+
+    listener({name: 'largestContentfulPaint::Candidate'});
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Did not wait for pauseAfterLcpMs');
+
+    jest.advanceTimersByTime(5001);
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).toBeDone('Did not resolve after pauseAfterLcpMs');
+
+    await waitPromise;
+  });
+
+  it('should timeout', async () => {
+    driver.on = driver.once = createMockOnceFn();
+
+    const waitPromise = makePromiseInspectable(driver._waitForLcp(0, 5000).promise);
+
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Resolved before timeout');
+
+    jest.advanceTimersByTime(5001);
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).toBeDone('Did not resolve after timeout');
+    await expect(waitPromise).rejects.toMatchObject({code: 'NO_LCP'});
+  });
+
+  it('should be cancellable', async () => {
+    driver.on = driver.once = createMockOnceFn();
+    driver.off = jest.fn();
+
+    const {promise: rawPromise, cancel} = driver._waitForLcp(0, 5000);
+    const waitPromise = makePromiseInspectable(rawPromise);
+
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Resolved before timeout');
+
+    cancel();
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).toBeDone('Did not cancel promise');
+    expect(driver.off).toHaveBeenCalled();
+    await expect(waitPromise).rejects.toMatchObject(
+      {message: 'Wait for "largestContentfulPaint::Candidate" event canceled'}
+    );
   });
 });
 
