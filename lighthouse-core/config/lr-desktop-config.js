@@ -12,6 +12,7 @@ const config = {
   extends: 'lighthouse:default',
   settings: {
     maxWaitForFcp: 15 * 1000,
+    maxWaitForLcp: 30 * 1000,
     maxWaitForLoad: 35 * 1000,
     emulatedFormFactor: 'desktop',
     throttling: desktopDense4G,

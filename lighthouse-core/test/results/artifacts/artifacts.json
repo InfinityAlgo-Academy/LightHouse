@@ -15,6 +15,7 @@
       "html"
     ],
     "maxWaitForFcp": 30000,
+    "maxWaitForLcp": 40000,
     "maxWaitForLoad": 45000,
     "throttlingMethod": "devtools",
     "throttling": {

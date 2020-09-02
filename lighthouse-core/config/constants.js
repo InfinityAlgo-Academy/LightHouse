@@ -96,6 +96,7 @@ const defaultPassConfig = {
 
 const nonSimulatedPassConfigOverrides = {
   pauseAfterFcpMs: 5250,
+  pauseAfterLcpMs: 5250,
   pauseAfterLoadMs: 5250,
   networkQuietThresholdMs: 5250,
   cpuQuietThresholdMs: 5250,
