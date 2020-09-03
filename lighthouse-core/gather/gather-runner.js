@@ -83,6 +83,7 @@ class GatherRunner {
     try {
       const {finalUrl, timedOut} = await driver.gotoURL(passContext.url, {
         waitForFcp: passContext.passConfig.recordTrace,
+        waitForLcp: passContext.passConfig.recordTrace,
         waitForLoad: true,
         passContext,
       });
