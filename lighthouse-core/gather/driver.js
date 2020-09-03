@@ -660,7 +660,7 @@ class Driver {
   }
 
   /**
-   * Returns a promise that resolve when a frame has a FCP.
+   * Returns a promise that resolves on a certain lifecycle Event.
    * @param {string} eventName
    * @param {number} pauseAfterMs
    * @param {number} maxWaitMs
@@ -710,7 +710,7 @@ class Driver {
   }
 
   /**
-   * Returns a promise that resolve when a frame has a LCP.
+   * Returns a promise that resolves when a frame has a LCP.
    * @param {number} pauseAfterLcpMs
    * @param {number} maxWaitForLcpMs
    * @return {{promise: Promise<void>, cancel: function(): void}}
@@ -725,7 +725,7 @@ class Driver {
   }
 
   /**
-   * Returns a promise that resolve when a frame has a FCP.
+   * Returns a promise that resolves when a frame has a FCP.
    * @param {number} pauseAfterFcpMs
    * @param {number} maxWaitForFcpMs
    * @return {{promise: Promise<void>, cancel: function(): void}}
