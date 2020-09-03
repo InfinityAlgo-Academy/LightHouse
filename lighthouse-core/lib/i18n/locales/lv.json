@@ -383,6 +383,15 @@
   "lighthouse-core/audits/apple-touch-icon.js | title": {
     "message": "Nodrošina derīgu atribūtu “`apple-touch-icon`”"
   },
+  "lighthouse-core/audits/autocomplete.js | description": {
+    "message": "Autocomplete helps users submit forms quicker. To reduce user effort, consider enabling autocomplete by setting the `autocomplete` attribute to a valid value. [Learn more](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)"
+  },
+  "lighthouse-core/audits/autocomplete.js | failureTitle": {
+    "message": "Input elements do not have correct attributes for autocomplete"
+  },
+  "lighthouse-core/audits/autocomplete.js | title": {
+    "message": "Input elements use autocomplete"
+  },
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
     "message": "Chrome paplašinājumi negatīvi ietekmē šīs lapas ielādes veiktspēju. Mēģiniet lapas pārbaudi veikt inkognito režīmā vai no Chrome profila bez paplašinājumiem."
   },
@@ -824,6 +833,21 @@
   "lighthouse-core/audits/is-on-https.js | warning": {
     "message": "Atļauts ar brīdinājumu"
   },
+  "lighthouse-core/audits/large-javascript-libraries.js | columnLibraryName": {
+    "message": "Library"
+  },
+  "lighthouse-core/audits/large-javascript-libraries.js | description": {
+    "message": "Large JavaScript libraries can lead to poor performance. Prefer smaller, functionally equivalent libraries to reduce your bundle size. [Learn more](https://developers.google.com/web/fundamentals/performance/webpack/decrease-frontend-size#optimize_dependencies)."
+  },
+  "lighthouse-core/audits/large-javascript-libraries.js | displayValue": {
+    "message": "{libraryCount, plural,\n    =1 {1 large library found}\n    other {# large libraries found}\n    }"
+  },
+  "lighthouse-core/audits/large-javascript-libraries.js | failureTitle": {
+    "message": "Replace unnecessarily large JavaScript libraries"
+  },
+  "lighthouse-core/audits/large-javascript-libraries.js | title": {
+    "message": "Avoids large JavaScript libraries with smaller alternatives"
+  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "Tas ir lielākais skatvietā atveidotais satura elements. [Uzzināt vairāk](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
@@ -956,6 +980,33 @@
   "lighthouse-core/audits/no-unload-listeners.js | title": {
     "message": "Izvairās no notikuma “`unload`” uztvērējiem"
   },
+  "lighthouse-core/audits/non-composited-animations.js | description": {
+    "message": "Animations which are not composited can be janky and increase CLS. [Learn more](https://web.dev/non-composited-animations)"
+  },
+  "lighthouse-core/audits/non-composited-animations.js | displayValue": {
+    "message": "{itemCount, plural,\n  =1 {# animated element found}\n  other {# animated elements found}\n  }"
+  },
+  "lighthouse-core/audits/non-composited-animations.js | filterMayMovePixels": {
+    "message": "Filter-related property may move pixels"
+  },
+  "lighthouse-core/audits/non-composited-animations.js | incompatibleAnimations": {
+    "message": "Target has another animation which is incompatible"
+  },
+  "lighthouse-core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
+    "message": "Effect has composite mode other than \"replace\""
+  },
+  "lighthouse-core/audits/non-composited-animations.js | title": {
+    "message": "Avoid non-composited animations"
+  },
+  "lighthouse-core/audits/non-composited-animations.js | transformDependsBoxSize": {
+    "message": "Transform-related property depends on box size"
+  },
+  "lighthouse-core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "{propertyCount, plural,\n    =1 {Unsupported CSS Property: {properties}}\n    other {Unsupported CSS Properties: {properties}}\n  }"
+  },
+  "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
+    "message": "Effect has unsupported timing parameters"
+  },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Izmantojot pakalpojumu skriptu, varat nodrošināt uzticamu tīmekļa lietotnes darbību neparedzamos tīkla apstākļos. [Uzziniet vairāk](https://web.dev/offline-start-url/)."
   },
@@ -979,6 +1030,15 @@
   },
   "lighthouse-core/audits/performance-budget.js | title": {
     "message": "Izpildes budžets"
+  },
+  "lighthouse-core/audits/preload-fonts.js | description": {
+    "message": "Preload `optional` fonts so first-time visitors may use them. [Learn More](https://web.dev/preload-optional-fonts/)"
+  },
+  "lighthouse-core/audits/preload-fonts.js | failureTitle": {
+    "message": "Fonts with `font-display: optional` are not preloaded"
+  },
+  "lighthouse-core/audits/preload-fonts.js | title": {
+    "message": "Fonts with `font-display: optional` are preloaded"
   },
   "lighthouse-core/audits/redirects-http.js | description": {
     "message": "Ja HTTPS protokols jau ir iestatīts, noteikti novirziet visu HTTP datplūsmu uz HTTPS, lai visiem lietotājiem iespējotu droša tīmekļa funkcijas. [Uzziniet vairāk](https://web.dev/redirects-http/)."
@@ -1043,6 +1103,18 @@
   "lighthouse-core/audits/seo/crawlable-anchors.js | title": {
     "message": "Saites ir pārmeklējamas"
   },
+  "lighthouse-core/audits/seo/font-size.js | additionalIllegibleText": {
+    "message": "Add'l illegible text"
+  },
+  "lighthouse-core/audits/seo/font-size.js | columnFontSize": {
+    "message": "Font Size"
+  },
+  "lighthouse-core/audits/seo/font-size.js | columnPercentPageText": {
+    "message": "% of Page Text"
+  },
+  "lighthouse-core/audits/seo/font-size.js | columnSelector": {
+    "message": "Selector"
+  },
   "lighthouse-core/audits/seo/font-size.js | description": {
     "message": "Fonta izmērs, kas ir mazāks par 12 pikseļiem, ir pārāk mazs, lai būtu salasāms, un mobilo ierīču lietotāji ir spiesti tuvināt tekstu, lai varētu to salasīt. Centieties, lai vairāk nekā 60% lapas teksta būtu vismaz 12 pikseļu vai lielāka izmēra. [Uzziniet vairāk](https://web.dev/font-size/)."
   },
@@ -1054,6 +1126,9 @@
   },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "Dokumentā netiek izmantoti salasāmi fonta izmēri"
+  },
+  "lighthouse-core/audits/seo/font-size.js | legibleText": {
+    "message": "Legible text"
   },
   "lighthouse-core/audits/seo/font-size.js | title": {
     "message": "Dokumentā izmantoti salasāmi fonta izmēri"
@@ -1235,6 +1310,9 @@
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "Samaziniet trešo pušu koda ietekmi"
   },
+  "lighthouse-core/audits/third-party-summary.js | otherValue": {
+    "message": "Other resources"
+  },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Samaziniet trešās puses koda lietojumu"
   },
@@ -1251,7 +1329,7 @@
     "message": "Laika budžets"
   },
   "lighthouse-core/audits/unsized-images.js | description": {
-    "message": "Vienmēr iekļaujiet konkrētu platumu un augstumu attēlu elementiem, lai samazinātu izkārtojuma nobīdes un uzlabotu CLS. [Uzziniet vairāk](https://web.dev/optimize-cls/#images-without-dimensions)."
+    "message": "Set an explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
   },
   "lighthouse-core/audits/unsized-images.js | failureTitle": {
     "message": "Attēlu elementiem nav konkrēts `width` un `height`"
@@ -1283,6 +1361,9 @@
   "lighthouse-core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
     "message": "Tika atrastas vairāk nekā divas iepriekšējas pieslēgšanas saites. Iepriekšējas pieslēgšanas saites ir jāizmanto ierobežoti un tikai svarīgākajos avotos."
   },
+  "lighthouse-core/audits/uses-rel-preconnect.js | unusedWarning": {
+    "message": "A preconnect <link> was found for \"{securityOrigin}\" but was not used by the browser. Only preconnect to important origins that the page will certainly request."
+  },
   "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
     "message": "Saitei “{preloadURL}” tika atrasts iepriekšējas ielādes parametrs <link>, taču pārlūkprogramma to neizmantoja. Pārbaudiet, vai pareizi izmantojat atribūtu “`crossorigin`”."
   },
@@ -1291,6 +1372,24 @@
   },
   "lighthouse-core/audits/uses-rel-preload.js | title": {
     "message": "Veiciet svarīgāko pieprasījumu iepriekšēju ielādi"
+  },
+  "lighthouse-core/audits/valid-source-maps.js | columnMapURL": {
+    "message": "Map URL"
+  },
+  "lighthouse-core/audits/valid-source-maps.js | description": {
+    "message": "Source maps translate minified code to the original source code. This helps developers debug in production. In addition, Lighthouse is able to provide further insights. Consider deploying source maps to take advantage of these benefits. [Learn more](https://developers.google.com/web/tools/chrome-devtools/javascript/source-maps)."
+  },
+  "lighthouse-core/audits/valid-source-maps.js | failureTitle": {
+    "message": "Missing source maps for large first-party JavaScript"
+  },
+  "lighthouse-core/audits/valid-source-maps.js | missingSourceMapErrorMessage": {
+    "message": "Large JavaScript file is missing a source map"
+  },
+  "lighthouse-core/audits/valid-source-maps.js | missingSourceMapItemsWarningMesssage": {
+    "message": "{missingItems, plural,\n    =1 {Warning: missing 1 item in `.sourcesContent`}\n    other {Warning: missing # items in `.sourcesContent`}\n    }"
+  },
+  "lighthouse-core/audits/valid-source-maps.js | title": {
+    "message": "Page has valid source maps"
   },
   "lighthouse-core/audits/viewport.js | description": {
     "message": "Pievienojiet tagu `<meta name=\"viewport\">`, lai optimizētu lietotni mobilo ierīču ekrāniem. [Uzziniet vairāk](https://web.dev/viewport/)."
@@ -1547,6 +1646,9 @@
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Potenciālais ietaupījums: {wastedBytes, number, bytes} KiB"
   },
+  "lighthouse-core/lib/i18n/i18n.js | displayValueElementsFound": {
+    "message": "{nodeCount, plural, =1 {1 element found} other {# elements found}}"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Potenciālais ietaupījums: {wastedMs, number, milliseconds} ms"
   },
@@ -1742,6 +1844,9 @@
   "lighthouse-core/report/html/renderer/util.js | runtimeNoEmulation": {
     "message": "Nav emulācijas"
   },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsAxeVersion": {
+    "message": "Axe version"
+  },
   "lighthouse-core/report/html/renderer/util.js | runtimeSettingsBenchmark": {
     "message": "Centrālā procesora/atmiņas jauda"
   },
@@ -1799,139 +1904,139 @@
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Brīdinājumi: "
   },
-  "stack-packs/packs/amp.js | efficient_animated_content": {
+  "node_modules/lighthouse-stack-packs/packs/amp.js | efficient_animated_content": {
     "message": "Animētam saturam izmantojiet komponentu [amp-anim](https://amp.dev/documentation/components/amp-anim/), lai samazinātu centrālā procesora lietojumu, kamēr saturs nav redzams ekrānā."
   },
-  "stack-packs/packs/amp.js | offscreen_images": {
+  "node_modules/lighthouse-stack-packs/packs/amp.js | offscreen_images": {
     "message": "Pārbaudiet, vai tiek izmantoti derīgi `amp-img` tagi attēliem, kuriem tiek automātiski veikta lēna ielāde ārpus pirmās skatvietas. [Uzziniet vairāk](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
-  "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "Izmantojiet tādus rīkus kā [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer), lai [servera pusē renderētu AMP izkārtojumus](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+  "node_modules/lighthouse-stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "Izmantojiet tādus rīkus kā [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer), lai [servera pusē renderētu AMP izkārtojumus](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
   },
-  "stack-packs/packs/amp.js | unminified_css": {
+  "node_modules/lighthouse-stack-packs/packs/amp.js | unminified_css": {
     "message": "Skatiet [AMP dokumentāciju](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/), lai pārliecinātos, vai visi jūsu stili tiek atbalstīti."
   },
-  "stack-packs/packs/amp.js | uses_responsive_images": {
+  "node_modules/lighthouse-stack-packs/packs/amp.js | uses_responsive_images": {
     "message": "Elements `amp-img` atbalsta atribūtu `srcset`, lai varētu norādīt, kurus attēlu līdzekļus izmantot atkarībā no attēla izmēra.  [Uzziniet vairāk](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
   },
-  "stack-packs/packs/amp.js | uses_webp_images": {
+  "node_modules/lighthouse-stack-packs/packs/amp.js | uses_webp_images": {
     "message": "Apsveriet iespēju attēlot visus `amp-img` komponentus WebP formātos un norādīt piemērotu atkāpšanās formātu citām pārlūkprogrammām. [Uzziniet vairāk](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
   },
-  "stack-packs/packs/angular.js | dom_size": {
+  "node_modules/lighthouse-stack-packs/packs/angular.js | dom_size": {
     "message": "Ja tiek renderēti ļoti lieli saraksti, apsveriet iespēju izmantot virtuālo ritināšanu ar komponentu izstrādes komplektu (Component Dev Kit — CDK). [Uzziniet vairāk](https://web.dev/virtualize-lists-with-angular-cdk/)."
   },
-  "stack-packs/packs/angular.js | total_byte_weight": {
+  "node_modules/lighthouse-stack-packs/packs/angular.js | total_byte_weight": {
     "message": "Lietojiet [koda dalīšanu maršruta līmenī](https://web.dev/route-level-code-splitting-in-angular/), lai samazinātu JavaScript paku lielumu. Apsveriet arī iespēju iepriekš saglabāt līdzekļus kešatmiņā, izmantojot [Angular pakalpojumu skriptu](https://web.dev/precaching-with-the-angular-service-worker/)."
   },
-  "stack-packs/packs/angular.js | unminified_warning": {
+  "node_modules/lighthouse-stack-packs/packs/angular.js | unminified_warning": {
     "message": "Ja izmantojat Angular CLI, būvējumi jāģenerē produkcijas režīmā. [Uzziniet vairāk](https://angular.io/guide/deployment#enable-runtime-production-mode)."
   },
-  "stack-packs/packs/angular.js | unused_javascript": {
+  "node_modules/lighthouse-stack-packs/packs/angular.js | unused_javascript": {
     "message": "Ja izmantojat Angular CLI, iekļaujiet produkcijas būvējumā avota kartes, lai pārbaudītu pakas. [Uzziniet vairāk](https://angular.io/guide/deployment#inspect-the-bundles)."
   },
-  "stack-packs/packs/angular.js | uses_rel_preload": {
+  "node_modules/lighthouse-stack-packs/packs/angular.js | uses_rel_preload": {
     "message": "Iepriekš ielādējiet maršrutus, lai paātrinātu navigāciju. [Uzziniet vairāk](https://web.dev/route-preloading-in-angular/)."
   },
-  "stack-packs/packs/angular.js | uses_responsive_images": {
+  "node_modules/lighthouse-stack-packs/packs/angular.js | uses_responsive_images": {
     "message": "Lai pārvaldītu attēlu robežvērtības, varat izmantot utilītprogrammu `BreakpointObserver`, kas ir pieejama komponentu izstrādes komplektā (Component Dev Kit — CDK). [Uzziniet vairāk](https://material.angular.io/cdk/layout/overview)."
   },
-  "stack-packs/packs/magento.js | critical_request_chains": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | critical_request_chains": {
     "message": "Ja negrupējat JavaScript līdzekļus, apsveriet iespēju izmantot programmu [baler](https://github.com/magento/baler)."
   },
-  "stack-packs/packs/magento.js | disable_bundling": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | disable_bundling": {
     "message": "Atspējojiet Magento iebūvēto [JavaScript grupēšanu un samazināšanu](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) un apsveriet iespēju izmantot programmu [baler](https://github.com/magento/baler/)."
   },
-  "stack-packs/packs/magento.js | font_display": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | font_display": {
     "message": "[Definējot pielāgotus fontus](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html), norādiet mainīgo `@font-display`."
   },
-  "stack-packs/packs/magento.js | offscreen_images": {
-    "message": "Apsveriet iespēju modificēt produktu un katalogu veidnes, lai izmantotu tīmekļa platformas [lēnas ielādes](https://web.dev/native-lazy-loading/) funkciju."
+  "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen_images": {
+    "message": "Apsveriet iespēju modificēt produktu un katalogu veidnes, lai izmantotu tīmekļa platformas [lēnas ielādes](https://web.dev/native-lazy-loading) funkciju."
   },
-  "stack-packs/packs/magento.js | server_response_time": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | time_to_first_byte": {
     "message": "Izmantojiet platformas Magento [Varnish integrāciju](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
   },
-  "stack-packs/packs/magento.js | unminified_css": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | unminified_css": {
     "message": "Veikala izstrādātāja iestatījumos iespējojiet opciju Minify CSS Files (Samazināt CSS failus). [Uzziniet vairāk](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
-  "stack-packs/packs/magento.js | unminified_javascript": {
-    "message": "Varat izmantot rīkkopu [Terser](https://www.npmjs.com/package/terser), lai samazinātu visus JavaScript līdzekļus no statiskas satura izvietošanas un atspējotu iebūvēto samazināšanas funkciju."
+  "node_modules/lighthouse-stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "Use [Terser](https://www.npmjs.com/package/terser) to minify all JavaScript assets from static content deployment, and disable the built-in minification feature."
   },
-  "stack-packs/packs/magento.js | unused_javascript": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | unused_javascript": {
     "message": "Atspējojiet Magento iebūvēto [JavaScript grupēšanu](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)."
   },
-  "stack-packs/packs/magento.js | uses_optimized_images": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | uses_optimized_images": {
     "message": "Veikalā [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) varat atrast dažādus trešo pušu paplašinājumus attēlu optimizācijai."
   },
-  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | uses_rel_preconnect": {
     "message": "Varat pievienot norādes par iepriekšēju pieslēgšanu vai DNS sākotnējo datu iegūšanas resursu, [modificējot motīva izkārtojumu](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
-  "stack-packs/packs/magento.js | uses_rel_preload": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | uses_rel_preload": {
     "message": "Varat pievienot `<link rel=preload>` tagus, [modificējot motīva izkārtojumu](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
-  "stack-packs/packs/magento.js | uses_webp_images": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | uses_webp_images": {
     "message": "Veikalā [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) varat atrast dažādus trešo pušu paplašinājumus jaunāku attēlu formātu izmantošanai."
   },
-  "stack-packs/packs/react.js | dom_size": {
-    "message": "Ja lapā renderējat daudzus atkārtotus elementus, apsveriet iespēju izmantot logošanas bibliotēku, piemēram, `react-window`, lai samazinātu izveidoto DOM mezglu skaitu. [Uzziniet vairāk](https://web.dev/virtualize-long-lists-react-window/). Ja izmantojat Effect aizķeri izpildlaika veiktspējas uzlabošanai, samaziniet lieku atkārtotu renderēšanu, izmantojot [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) vai [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) un [izlaišanas efektus](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) tikai līdz noteiktu atkarību maiņas brīdim."
+  "node_modules/lighthouse-stack-packs/packs/react.js | dom_size": {
+    "message": "Consider using a “windowing” library like `react-window` to minimize the number of DOM nodes created if you are rendering many repeated elements on the page. [Learn more](https://web.dev/virtualize-long-lists-react-window/). Also, minimize unnecessary re-renders using [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent), or [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) and [skip effects](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) only until certain dependencies have changed if you are using the Effect hook to improve runtime performance."
   },
-  "stack-packs/packs/react.js | redirects": {
+  "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "Ja izmantojat bibliotēku React Router, samaziniet komponenta `<Redirect>` lietojumu [maršrutu navigācijai](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "stack-packs/packs/react.js | server_response_time": {
+  "node_modules/lighthouse-stack-packs/packs/react.js | time_to_first_byte": {
     "message": "Ja renderējat React komponentus servera pusē, apsveriet iespēju izmantot metodi `renderToNodeStream()` vai `renderToStaticNodeStream()`, lai klients varētu saņemt un aizpildīt dažādas marķējuma daļas, nevis visu marķējumu reizē. [Uzziniet vairāk](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
   },
-  "stack-packs/packs/react.js | unminified_css": {
+  "node_modules/lighthouse-stack-packs/packs/react.js | unminified_css": {
     "message": "Ja būvējuma sistēmā CSS faili tiek automātiski samazināti, pārbaudiet, vai ir izvietots jūsu lietojumprogrammas produkcijas būvējums. To var pārbaudīt, izmantojot paplašinājumu React Developer Tools. [Uzziniet vairāk](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
-  "stack-packs/packs/react.js | unminified_javascript": {
+  "node_modules/lighthouse-stack-packs/packs/react.js | unminified_javascript": {
     "message": "Ja būvējuma sistēmā JavaScript faili tiek automātiski samazināti, pārbaudiet, vai ir izvietots jūsu lietojumprogrammas produkcijas būvējums. To var pārbaudīt, izmantojot paplašinājumu React Developer Tools. [Uzziniet vairāk](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
-  "stack-packs/packs/react.js | unused_javascript": {
+  "node_modules/lighthouse-stack-packs/packs/react.js | unused_javascript": {
     "message": "Ja neveicat renderēšanu servera pusē, [sadaliet JavaScript pakas](https://web.dev/code-splitting-suspense/), izmantojot `React.lazy()`. Pretējā gadījumā sadaliet kodu, izmantojot trešās puses bibliotēku, piemēram, [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
   },
-  "stack-packs/packs/react.js | user_timings": {
+  "node_modules/lighthouse-stack-packs/packs/react.js | user_timings": {
     "message": "Varat mērīt komponentu renderēšanas veiktspēju ar spraudni React DevTools Profiler, kurā tiek izmantots Profiler API. [Uzziniet vairāk.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
-  "stack-packs/packs/wordpress.js | efficient_animated_content": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "Apsveriet iespēju augšupielādēt GIF attēlu pakalpojumā, kuru varēs izmantot, lai iegultu GIF attēlu kā HTML5 videoklipu."
   },
-  "stack-packs/packs/wordpress.js | offscreen_images": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen_images": {
     "message": "Instalējiet [atliktās ielādes WordPress spraudni](https://wordpress.org/plugins/search/lazy+load/), kas sniedz iespēju atlikt jebkādus ārpus ekrāna esošus attēlus vai mainīt motīvu uz tādu, kurā šī funkcija tiek nodrošināta. Ieteicams izmantot arī [AMP spraudni](https://wordpress.org/plugins/amp/)."
   },
-  "stack-packs/packs/wordpress.js | render_blocking_resources": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Ir vairāki WordPress spraudņi, kas var palīdzēt [iekļaut būtiskus līdzekļus](https://wordpress.org/plugins/search/critical+css/) vai [atlikt mazāk svarīgus resursus](https://wordpress.org/plugins/search/defer+css+javascript/). Ņemiet vērā, ka šo spraudņu nodrošinātā optimizācija var traucēt funkciju darbībai jūsu motīvā vai spraudņos, tādēļ, visticamāk, jums būs jāveic koda izmaiņas."
   },
-  "stack-packs/packs/wordpress.js | server_response_time": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | time_to_first_byte": {
     "message": "Motīvi, spraudņi un servera specifikācijas ietekmē servera atbildes laiku. Apsveriet iespēju atrast optimizētāku motīvu, rūpīgi izvēlēties optimizācijas spraudni un/vai jaunināt serveri."
   },
-  "stack-packs/packs/wordpress.js | total_byte_weight": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Apsveriet iespēju rādīt fragmentus ziņu sarakstos (piemēram, izmantojot tagu “more”), samazināt attiecīgajā lapā rādāmo ziņu skaitu, sadalīt garas ziņas vairākās lapās vai izmantot spraudni, lai atliktu komentāru ielādi."
   },
-  "stack-packs/packs/wordpress.js | unminified_css": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | unminified_css": {
     "message": "Vairāki [WordPress spraudņi](https://wordpress.org/plugins/search/minify+css/) var paātrināt jūsu vietnes darbību, savienojot, samazinot un saspiežot stilus. Ja iespējams, varat arī veikt šo samazināšanu iepriekš izveides procesā."
   },
-  "stack-packs/packs/wordpress.js | unminified_javascript": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | unminified_javascript": {
     "message": "Vairāki [WordPress spraudņi](https://wordpress.org/plugins/search/minify+javascript/) var paātrināt jūsu vietnes darbību, savienojot, samazinot un saspiežot skriptus. Ja iespējams, varat veikt šo samazināšanu jau iepriekš izveides procesā."
   },
-  "stack-packs/packs/wordpress.js | unused_css_rules": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | unused_css_rules": {
     "message": "Ieteicams samazināt vai mainīt tādu [WordPress spraudņu](https://wordpress.org/plugins/) skaitu, kuri ielādē nelietotu CSS kodu jūsu lapā. Lai identificētu spraudņus, kuri pievieno lieku CSS kodu, mēģiniet izpildīt [koda pārklājumu](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage), izmantojot Chrome DevTools. Saistīto motīvu/spraudni varat identificēt stila lapas vietrādī URL. Meklējiet spraudņus, kuriem sarakstā ir daudz stila lapu ar daudz sarkanām atzīmēm koda pārklājumā. Spraudnim ir jāievieto rindā stilu lapa tikai tad, ja tā faktiski tiek izmantota lapā."
   },
-  "stack-packs/packs/wordpress.js | unused_javascript": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | unused_javascript": {
     "message": "Ieteicams samazināt vai mainīt tādu [WordPress spraudņu](https://wordpress.org/plugins/) skaitu, kuri ielādē nelietotu JavaScript kodu jūsu lapā. Lai identificētu spraudņus, kuri pievieno lieku JS kodu, mēģiniet izpildīt [koda pārklājumu](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage), izmantojot Chrome DevTools. Saistīto motīvu/spraudni varat identificēt skripta vietrādī URL. Meklējiet spraudņus, kuriem sarakstā ir daudz skriptu ar daudz sarkanām atzīmēm koda pārklājumā. Spraudnim ir jāievieto rindā skripts tikai tad, ja tas faktiski tiek izmantots lapā."
   },
-  "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
     "message": "Uzziniet par [pārlūkprogrammas datu saglabāšanu kešatmiņā programmatūrā WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
-  "stack-packs/packs/wordpress.js | uses_optimized_images": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Ieteicams izmantot [attēlu optimizācijas WordPress spraudni](https://wordpress.org/plugins/search/optimize+images/), kas saspiež attēlus, vienlaikus saglabājot kvalitāti."
   },
-  "stack-packs/packs/wordpress.js | uses_responsive_images": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses_responsive_images": {
     "message": "Tieši augšupielādējiet attēlus, izmantojot [multivides bibliotēku](https://wordpress.org/support/article/media-library-screen/), lai nodrošinātu nepieciešamo attēlu lielumu pieejamību. Pēc tam ievietojiet attēlus no multivides bibliotēkas vai izmantojiet attēlu logrīku, lai tiktu izmantoti optimāli attēlu lielumi (tostarp reaģējošām robežvērtībām paredzētie). Neizmantojiet `Full Size` attēlus, ja to izmēri neatbilst to lietojumam. [Uzziniet vairāk](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
-  "stack-packs/packs/wordpress.js | uses_text_compression": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Varat iespējot teksta saspiešanu tīmekļa servera konfigurācijā."
   },
-  "stack-packs/packs/wordpress.js | uses_webp_images": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses_webp_images": {
     "message": "Ieteicams izmantot [spraudni](https://wordpress.org/plugins/search/convert+webp/) vai pakalpojumu, kurā jūsu augšupielādētie attēli tiks automātiski pārveidoti optimālos formātos."
   }
 }

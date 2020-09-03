@@ -5,8 +5,21 @@
  */
 'use strict';
 
-const stackPacks = require('../../stack-packs/index.js');
 const log = require('lighthouse-logger');
+const stackPacks = require('lighthouse-stack-packs');
+const i18n = require('./i18n/i18n.js');
+
+/**
+ * Resolve a module on web and node
+ * @param {string} module
+ */
+function resolve(module) {
+  if (!require.resolve) {
+    return `node_modules/${module}`;
+  }
+
+  return require.resolve(module);
+}
 
 /**
  * Pairs consisting of a stack pack's ID and the set of stacks needed to be
@@ -52,7 +65,7 @@ function getStackPacks(pageStacks) {
       continue;
     }
 
-    // Grab the full pack definition
+    // Grab the full pack definition.
     const matchedPack = stackPacks.find(pack => pack.id === stackPackToIncl.packId);
     if (!matchedPack) {
       log.warn('StackPacks',
@@ -60,11 +73,29 @@ function getStackPacks(pageStacks) {
       continue;
     }
 
+    // Create i18n handler to get translated strings.
+    const str_ = i18n.createMessageInstanceIdFn(
+      resolve(`lighthouse-stack-packs/packs/${matchedPack.id}`),
+      matchedPack.UIStrings
+    );
+
+    /** @type {Record<string, string>} */
+    const descriptions = {};
+    /** @type {Record<string, string>} */
+    const UIStrings = matchedPack.UIStrings;
+
+    // Convert all strings into the correct translation.
+    for (const key in UIStrings) {
+      if (UIStrings[key]) {
+        descriptions[key] = str_(UIStrings[key]);
+      }
+    }
+
     packs.push({
       id: matchedPack.id,
       title: matchedPack.title,
-      iconDataURL: matchedPack.iconDataURL,
-      descriptions: matchedPack.descriptions,
+      iconDataURL: matchedPack.icon,
+      descriptions,
     });
   }
 

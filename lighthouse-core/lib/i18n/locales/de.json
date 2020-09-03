@@ -383,6 +383,15 @@
   "lighthouse-core/audits/apple-touch-icon.js | title": {
     "message": "Enthält ein gültiges `apple-touch-icon`"
   },
+  "lighthouse-core/audits/autocomplete.js | description": {
+    "message": "Autocomplete helps users submit forms quicker. To reduce user effort, consider enabling autocomplete by setting the `autocomplete` attribute to a valid value. [Learn more](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)"
+  },
+  "lighthouse-core/audits/autocomplete.js | failureTitle": {
+    "message": "Input elements do not have correct attributes for autocomplete"
+  },
+  "lighthouse-core/audits/autocomplete.js | title": {
+    "message": "Input elements use autocomplete"
+  },
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
     "message": "Chrome-Erweiterungen haben die Ladegeschwindigkeit dieser Seite beeinträchtigt. Versuchen Sie, die Seite im Inkognito-Modus oder mit einem Chrome-Profil ohne Erweiterungen zu überprüfen."
   },
@@ -824,6 +833,21 @@
   "lighthouse-core/audits/is-on-https.js | warning": {
     "message": "Zugelassen mit Warnung"
   },
+  "lighthouse-core/audits/large-javascript-libraries.js | columnLibraryName": {
+    "message": "Library"
+  },
+  "lighthouse-core/audits/large-javascript-libraries.js | description": {
+    "message": "Large JavaScript libraries can lead to poor performance. Prefer smaller, functionally equivalent libraries to reduce your bundle size. [Learn more](https://developers.google.com/web/fundamentals/performance/webpack/decrease-frontend-size#optimize_dependencies)."
+  },
+  "lighthouse-core/audits/large-javascript-libraries.js | displayValue": {
+    "message": "{libraryCount, plural,\n    =1 {1 large library found}\n    other {# large libraries found}\n    }"
+  },
+  "lighthouse-core/audits/large-javascript-libraries.js | failureTitle": {
+    "message": "Replace unnecessarily large JavaScript libraries"
+  },
+  "lighthouse-core/audits/large-javascript-libraries.js | title": {
+    "message": "Avoids large JavaScript libraries with smaller alternatives"
+  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "Dies ist das größte Inhaltselement, das im Darstellungsbereich angezeigt wird. [Weitere Informationen](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
@@ -956,6 +980,33 @@
   "lighthouse-core/audits/no-unload-listeners.js | title": {
     "message": "Keine `unload`-Ereignis-Listener gefunden"
   },
+  "lighthouse-core/audits/non-composited-animations.js | description": {
+    "message": "Animations which are not composited can be janky and increase CLS. [Learn more](https://web.dev/non-composited-animations)"
+  },
+  "lighthouse-core/audits/non-composited-animations.js | displayValue": {
+    "message": "{itemCount, plural,\n  =1 {# animated element found}\n  other {# animated elements found}\n  }"
+  },
+  "lighthouse-core/audits/non-composited-animations.js | filterMayMovePixels": {
+    "message": "Filter-related property may move pixels"
+  },
+  "lighthouse-core/audits/non-composited-animations.js | incompatibleAnimations": {
+    "message": "Target has another animation which is incompatible"
+  },
+  "lighthouse-core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
+    "message": "Effect has composite mode other than \"replace\""
+  },
+  "lighthouse-core/audits/non-composited-animations.js | title": {
+    "message": "Avoid non-composited animations"
+  },
+  "lighthouse-core/audits/non-composited-animations.js | transformDependsBoxSize": {
+    "message": "Transform-related property depends on box size"
+  },
+  "lighthouse-core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "{propertyCount, plural,\n    =1 {Unsupported CSS Property: {properties}}\n    other {Unsupported CSS Properties: {properties}}\n  }"
+  },
+  "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
+    "message": "Effect has unsupported timing parameters"
+  },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Mithilfe eines Service Workers kann Ihre Web-App auch bei schlechten Netzwerkbedingungen zuverlässig funktionieren. [Weitere Informationen.](https://web.dev/offline-start-url/)"
   },
@@ -979,6 +1030,15 @@
   },
   "lighthouse-core/audits/performance-budget.js | title": {
     "message": "Leistungsbudget"
+  },
+  "lighthouse-core/audits/preload-fonts.js | description": {
+    "message": "Preload `optional` fonts so first-time visitors may use them. [Learn More](https://web.dev/preload-optional-fonts/)"
+  },
+  "lighthouse-core/audits/preload-fonts.js | failureTitle": {
+    "message": "Fonts with `font-display: optional` are not preloaded"
+  },
+  "lighthouse-core/audits/preload-fonts.js | title": {
+    "message": "Fonts with `font-display: optional` are preloaded"
   },
   "lighthouse-core/audits/redirects-http.js | description": {
     "message": "Wenn Sie HTTPS bereits eingerichtet haben, sollten Sie den gesamten HTTP-Traffic auf HTTPS weiterleiten, damit für alle Ihre Nutzer sichere Webfunktionen aktiviert sind. [Weitere Informationen.](https://web.dev/redirects-http/)"
@@ -1043,6 +1103,18 @@
   "lighthouse-core/audits/seo/crawlable-anchors.js | title": {
     "message": "Links können gecrawlt werden"
   },
+  "lighthouse-core/audits/seo/font-size.js | additionalIllegibleText": {
+    "message": "Add'l illegible text"
+  },
+  "lighthouse-core/audits/seo/font-size.js | columnFontSize": {
+    "message": "Font Size"
+  },
+  "lighthouse-core/audits/seo/font-size.js | columnPercentPageText": {
+    "message": "% of Page Text"
+  },
+  "lighthouse-core/audits/seo/font-size.js | columnSelector": {
+    "message": "Selector"
+  },
   "lighthouse-core/audits/seo/font-size.js | description": {
     "message": "Schriftgrößen von weniger als 12 px sind zu klein und deshalb nicht gut lesbar, sodass Nutzer von Mobilgeräten den Text per Fingerbewegung heranzoomen müssen. Mindestens 60 % des Texts auf der Seite sollten deshalb eine Schriftgröße von mindestens 12 px haben. [Weitere Informationen.](https://web.dev/font-size/)"
   },
@@ -1054,6 +1126,9 @@
   },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "Dokument enthält keine gut lesbaren Schriftgrößen"
+  },
+  "lighthouse-core/audits/seo/font-size.js | legibleText": {
+    "message": "Legible text"
   },
   "lighthouse-core/audits/seo/font-size.js | title": {
     "message": "Dokument enthält gut lesbare Schriftgrößen"
@@ -1235,6 +1310,9 @@
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "Die Auswirkungen von Drittanbieter-Code minimieren"
   },
+  "lighthouse-core/audits/third-party-summary.js | otherValue": {
+    "message": "Other resources"
+  },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Drittanbieternutzung minimieren"
   },
@@ -1251,7 +1329,7 @@
     "message": "Zeitbudget"
   },
   "lighthouse-core/audits/unsized-images.js | description": {
-    "message": "Geben Sie immer die explizite Breite und Höhe für Bildelemente an, um Layoutverschiebungen zu reduzieren und CLS zu verbessern. [Weitere Informationen](https://web.dev/optimize-cls/#images-without-dimensions)"
+    "message": "Set an explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
   },
   "lighthouse-core/audits/unsized-images.js | failureTitle": {
     "message": "Bildelemente haben keine explizite `width` und `height`"
@@ -1283,6 +1361,9 @@
   "lighthouse-core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
     "message": "Es wurden mehr als zwei Vorverbindungslinks gefunden. Vorverbindungslinks sollten sparsam und nur zu den wichtigsten Ursprüngen gesetzt werden."
   },
+  "lighthouse-core/audits/uses-rel-preconnect.js | unusedWarning": {
+    "message": "A preconnect <link> was found for \"{securityOrigin}\" but was not used by the browser. Only preconnect to important origins that the page will certainly request."
+  },
   "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
     "message": "Ein <link>-Element zum Vorabladen wurde für {preloadURL} gefunden, aber nicht vom Browser verwendet. Überprüfen Sie, ob das `crossorigin`-Attribut richtig verwendet wird."
   },
@@ -1291,6 +1372,24 @@
   },
   "lighthouse-core/audits/uses-rel-preload.js | title": {
     "message": "Wichtige Anforderungen vorab laden"
+  },
+  "lighthouse-core/audits/valid-source-maps.js | columnMapURL": {
+    "message": "Map URL"
+  },
+  "lighthouse-core/audits/valid-source-maps.js | description": {
+    "message": "Source maps translate minified code to the original source code. This helps developers debug in production. In addition, Lighthouse is able to provide further insights. Consider deploying source maps to take advantage of these benefits. [Learn more](https://developers.google.com/web/tools/chrome-devtools/javascript/source-maps)."
+  },
+  "lighthouse-core/audits/valid-source-maps.js | failureTitle": {
+    "message": "Missing source maps for large first-party JavaScript"
+  },
+  "lighthouse-core/audits/valid-source-maps.js | missingSourceMapErrorMessage": {
+    "message": "Large JavaScript file is missing a source map"
+  },
+  "lighthouse-core/audits/valid-source-maps.js | missingSourceMapItemsWarningMesssage": {
+    "message": "{missingItems, plural,\n    =1 {Warning: missing 1 item in `.sourcesContent`}\n    other {Warning: missing # items in `.sourcesContent`}\n    }"
+  },
+  "lighthouse-core/audits/valid-source-maps.js | title": {
+    "message": "Page has valid source maps"
   },
   "lighthouse-core/audits/viewport.js | description": {
     "message": "Fügen Sie ein `<meta name=\"viewport\">`-Tag hinzu, um Ihre App für Bildschirme von Mobilgeräten zu optimieren. [Weitere Informationen.](https://web.dev/viewport/)"
@@ -1547,6 +1646,9 @@
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Mögliche Einsparung von {wastedBytes, number, bytes} KiB"
   },
+  "lighthouse-core/lib/i18n/i18n.js | displayValueElementsFound": {
+    "message": "{nodeCount, plural, =1 {1 element found} other {# elements found}}"
+  },
   "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Mögliche Einsparung von {wastedMs, number, milliseconds} ms"
   },
@@ -1742,6 +1844,9 @@
   "lighthouse-core/report/html/renderer/util.js | runtimeNoEmulation": {
     "message": "Keine Emulation"
   },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsAxeVersion": {
+    "message": "Axe version"
+  },
   "lighthouse-core/report/html/renderer/util.js | runtimeSettingsBenchmark": {
     "message": "CPU-/Arbeitsspeicherleistung"
   },
@@ -1799,139 +1904,139 @@
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Warnungen: "
   },
-  "stack-packs/packs/amp.js | efficient_animated_content": {
+  "node_modules/lighthouse-stack-packs/packs/amp.js | efficient_animated_content": {
     "message": "Verwenden Sie für animierte Inhalte [amp-anim](https://amp.dev/documentation/components/amp-anim/), um die CPU-Last auf ein Mindestmaß zu reduzieren, während die Inhalte nicht zu sehen sind."
   },
-  "stack-packs/packs/amp.js | offscreen_images": {
+  "node_modules/lighthouse-stack-packs/packs/amp.js | offscreen_images": {
     "message": "Achten Sie darauf, gültige \"`amp-img`\"-Tags für Ihre Bilder zu verwenden, die außerhalb des ersten Darstellungsbereich automatisch per Lazy Load geladen werden. [Weitere Informationen.](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)"
   },
-  "stack-packs/packs/amp.js | render_blocking_resources": {
-    "message": "Verwenden Sie Tools wie [AMP-Optimierer](https://github.com/ampproject/amp-toolbox/tree/main/packages/optimizer), um [AMP-Layouts serverseitig zu rendern](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+  "node_modules/lighthouse-stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "Verwenden Sie Tools wie [AMP-Optimierer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer), um [AMP-Layouts serverseitig zu rendern](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
   },
-  "stack-packs/packs/amp.js | unminified_css": {
+  "node_modules/lighthouse-stack-packs/packs/amp.js | unminified_css": {
     "message": "In der [AMP-Dokumentation](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) können Sie nachsehen, ob alle Ihre Stile unterstützt werden."
   },
-  "stack-packs/packs/amp.js | uses_responsive_images": {
+  "node_modules/lighthouse-stack-packs/packs/amp.js | uses_responsive_images": {
     "message": "Das Element \"`amp-img`\" unterstützt das Attribut \"`srcset`\" und gibt auf Grundlage der Bildschirmgröße an, welche Bild-Assets verwendet werden sollten.  [Weitere Informationen.](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)"
   },
-  "stack-packs/packs/amp.js | uses_webp_images": {
+  "node_modules/lighthouse-stack-packs/packs/amp.js | uses_webp_images": {
     "message": "Sie können alle Ihre `amp-img`-Komponenten in WebP-Formaten darstellen lassen, während Sie einen geeigneten Ersatz für andere Browser angeben. [Weitere Informationen.](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)"
   },
-  "stack-packs/packs/angular.js | dom_size": {
+  "node_modules/lighthouse-stack-packs/packs/angular.js | dom_size": {
     "message": "Sie können virtuelles Scrolling mit dem Component Dev Kit (CDK) verwenden, wenn sehr umfangreiche Listen gerendert werden. [Weitere Informationen.](https://web.dev/virtualize-lists-with-angular-cdk/)"
   },
-  "stack-packs/packs/angular.js | total_byte_weight": {
+  "node_modules/lighthouse-stack-packs/packs/angular.js | total_byte_weight": {
     "message": "Verwenden Sie die [Codeaufteilung auf Routing-Ebene](https://web.dev/route-level-code-splitting-in-angular/), um die Größe Ihrer JavaScript-Bundles zu reduzieren. Außerdem können Sie Assets mit dem [Angular-Service-Worker](https://web.dev/precaching-with-the-angular-service-worker/) vorab im Cache speichern lassen."
   },
-  "stack-packs/packs/angular.js | unminified_warning": {
+  "node_modules/lighthouse-stack-packs/packs/angular.js | unminified_warning": {
     "message": "Wenn Sie Angular CLI verwenden, sollten Builds im Produktionsmodus erzeugt werden. [Weitere Informationen.](https://angular.io/guide/deployment#enable-runtime-production-mode)"
   },
-  "stack-packs/packs/angular.js | unused_javascript": {
+  "node_modules/lighthouse-stack-packs/packs/angular.js | unused_javascript": {
     "message": "Wenn Sie Angular CLI verwenden, müssen Sie Quellzuordnungen in den Produktions-Build aufnehmen, um Ihre Bundles zu überprüfen. [Weitere Informationen.](https://angular.io/guide/deployment#inspect-the-bundles)"
   },
-  "stack-packs/packs/angular.js | uses_rel_preload": {
+  "node_modules/lighthouse-stack-packs/packs/angular.js | uses_rel_preload": {
     "message": "Lassen Sie Routings vorab laden, um die Bedienung zu beschleunigen. [Weitere Informationen.](https://web.dev/route-preloading-in-angular/)"
   },
-  "stack-packs/packs/angular.js | uses_responsive_images": {
+  "node_modules/lighthouse-stack-packs/packs/angular.js | uses_responsive_images": {
     "message": "Sie können das Dienstprogramm `BreakpointObserver` im Component Dev Kit (CDK) verwenden, um Haltepunkte in Bildern zu verwalten. [Weitere Informationen.](https://material.angular.io/cdk/layout/overview)"
   },
-  "stack-packs/packs/magento.js | critical_request_chains": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | critical_request_chains": {
     "message": "Wenn Sie Ihre JavaScript-Assets nicht in einem Bundle zusammenführen, empfehlen wir Ihnen die Verwendung von [Baler](https://github.com/magento/baler)."
   },
-  "stack-packs/packs/magento.js | disable_bundling": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | disable_bundling": {
     "message": "Deaktivieren Sie die integrierte [JavaScript-Bundle-Erstellung und -Komprimierung](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) von Magento und nutzen Sie stattdessen [Baler](https://github.com/magento/baler/)."
   },
-  "stack-packs/packs/magento.js | font_display": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | font_display": {
     "message": "Geben Sie \"`@font-display`\" an, wenn Sie [benutzerdefinierte Schriftarten definieren](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)."
   },
-  "stack-packs/packs/magento.js | offscreen_images": {
-    "message": "Sie können Ihre Produkt- und Katalogvorlagen anpassen, um die [Lazy Loading](https://web.dev/native-lazy-loading/)-Funktion der Webplattform nutzen können."
+  "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen_images": {
+    "message": "Sie können Ihre Produkt- und Katalogvorlagen anpassen, um die [Lazy Loading](https://web.dev/native-lazy-loading)-Funktion der Webplattform nutzen können."
   },
-  "stack-packs/packs/magento.js | server_response_time": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | time_to_first_byte": {
     "message": "Verwenden Sie die [Varnish-Integration](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) von Magento."
   },
-  "stack-packs/packs/magento.js | unminified_css": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | unminified_css": {
     "message": "Sie können die Option zum Komprimieren von CSS-Dateien in den Entwicklereinstellungen des Stores aktivieren. [Weitere Informationen.](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
   },
-  "stack-packs/packs/magento.js | unminified_javascript": {
-    "message": "Verwenden Sie [Terser](https://www.npmjs.com/package/terser), um alle JavaScript-Assets aus der statischen Inhaltsbereitstellung zu komprimieren, und deaktivieren Sie die integrierte Komprimierungsfunktion."
+  "node_modules/lighthouse-stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "Use [Terser](https://www.npmjs.com/package/terser) to minify all JavaScript assets from static content deployment, and disable the built-in minification feature."
   },
-  "stack-packs/packs/magento.js | unused_javascript": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | unused_javascript": {
     "message": "Deaktivieren Sie die integrierte [JavaScript-Bundle-Erstellung](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) von Magento."
   },
-  "stack-packs/packs/magento.js | uses_optimized_images": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | uses_optimized_images": {
     "message": "Auf dem [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) finden Sie eine Auswahl an Drittanbietererweiterungen, mit denen Sie Bilder optimieren können."
   },
-  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | uses_rel_preconnect": {
     "message": "Sie können Hinweise auf Ressourcen als \"preconnect\" oder \"dns-prefetch\" hinzufügen, indem Sie [das Layout eines Designs ändern](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
-  "stack-packs/packs/magento.js | uses_rel_preload": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | uses_rel_preload": {
     "message": "Sie können \"`<link rel=preload>`\"-Tags hinzufügen, indem Sie [das Layout eines Designs ändern](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
-  "stack-packs/packs/magento.js | uses_webp_images": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | uses_webp_images": {
     "message": "Auf dem [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) finden Sie eine Auswahl an Drittanbietererweiterungen, mit denen Sie aktuelle Bildformate nutzen können."
   },
-  "stack-packs/packs/react.js | dom_size": {
-    "message": "Sie haben die Möglichkeit, eine Bibliothek wie \"`react-window`\" zur Fensterverwaltung zu nutzen, um die Anzahl an DOM-Konten zu minimieren, die beim Rendern vieler sich wiederholender Elemente auf der Seite erstellt werden. [Weitere Informationen.](https://web.dev/virtualize-long-lists-react-window/) Sie können [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) oder [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) nutzen, um wiederholtes Rendern auf ein Mindestmaß zu reduzieren, und außerdem [skip effects](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects), aber nur, bis sich bestimmte Abhängigkeiten geändert haben (sofern Sie den \"Effect\"-Hook zur Verbesserung der Laufzeitleistung verwenden)."
+  "node_modules/lighthouse-stack-packs/packs/react.js | dom_size": {
+    "message": "Consider using a “windowing” library like `react-window` to minimize the number of DOM nodes created if you are rendering many repeated elements on the page. [Learn more](https://web.dev/virtualize-long-lists-react-window/). Also, minimize unnecessary re-renders using [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent), or [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) and [skip effects](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) only until certain dependencies have changed if you are using the Effect hook to improve runtime performance."
   },
-  "stack-packs/packs/react.js | redirects": {
+  "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "Wenn Sie React Router nutzen, empfehlen wir, die Komponente \"`<Redirect>`\" für das [Bedienungs-Routing](https://reacttraining.com/react-router/web/api/Redirect) so wenig wie möglich zu verwenden."
   },
-  "stack-packs/packs/react.js | server_response_time": {
+  "node_modules/lighthouse-stack-packs/packs/react.js | time_to_first_byte": {
     "message": "Wenn Sie serverseitig React-Komponenten rendern, empfehlen wir den Einsatz von \"`renderToNodeStream()`\" oder \"`renderToStaticNodeStream()`\", um dem Client zu ermöglichen, einzelne Teile des Markups abzurufen und auszufüllen. So müssen nicht alle auf einmal abgerufen werden. [Weitere Informationen.](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
   },
-  "stack-packs/packs/react.js | unminified_css": {
+  "node_modules/lighthouse-stack-packs/packs/react.js | unminified_css": {
     "message": "Wenn Ihr Build-System CSS-Dateien automatisch komprimiert, achten Sie darauf, dass Sie den Produktions-Build Ihrer App verfügbar machen. Das können Sie mit der Erweiterung \"React Developer Tools\" überprüfen. [Weitere Informationen.](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
   },
-  "stack-packs/packs/react.js | unminified_javascript": {
+  "node_modules/lighthouse-stack-packs/packs/react.js | unminified_javascript": {
     "message": "Wenn Ihr Build-System JS-Dateien automatisch komprimiert, achten Sie darauf, dass Sie den Produktions-Build Ihrer App verfügbar machen. Das können Sie mit der Erweiterung \"React Developer Tools\" überprüfen. [Weitere Informationen.](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
   },
-  "stack-packs/packs/react.js | unused_javascript": {
+  "node_modules/lighthouse-stack-packs/packs/react.js | unused_javascript": {
     "message": "Wenn Sie nicht serverseitig rendern lassen, [können Sie Ihre JavaScript-Bundles mit \"`React.lazy()`\" aufteilen](https://web.dev/code-splitting-suspense/). Andernfalls haben Sie die Möglichkeit, Ihren Code mit einer Drittanbieterbibliothek wie [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/) zu splitten."
   },
-  "stack-packs/packs/react.js | user_timings": {
+  "node_modules/lighthouse-stack-packs/packs/react.js | user_timings": {
     "message": "Verwenden Sie den React DevTools Profiler. Dieser greift auf die Profiler API zurück, um die Rendering-Leistung Ihrer Komponenten zu messen. [Weitere Informationen.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
-  "stack-packs/packs/wordpress.js | efficient_animated_content": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "Sie haben die Möglichkeit, Ihr GIF bei einem Dienst hochzuladen, der dafür sorgt, dass es als HTML5-Video eingebettet werden kann."
   },
-  "stack-packs/packs/wordpress.js | offscreen_images": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen_images": {
     "message": "Sie können ein [Lazy-Loading-Plug-in für WordPress](https://wordpress.org/plugins/search/lazy+load/) installieren, mit dem Sie nicht sichtbare Bilder aufschieben. Alternativ können Sie auch zu einem Design wechseln, das diese Funktion bietet. Sie sollten sich auch überlegen, [das AMP-Plug-in](https://wordpress.org/plugins/amp/) zu verwenden."
   },
-  "stack-packs/packs/wordpress.js | render_blocking_resources": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Es gibt eine Reihe von WordPress-Plug-ins, mit denen Sie [wichtige Assets einbetten](https://wordpress.org/plugins/search/critical+css/) oder [weniger wichtige Ressourcen aufschieben](https://wordpress.org/plugins/search/defer+css+javascript/) können. Beachten Sie, dass über diese Plug-ins bereitgestellte Optimierungen dazu führen können, dass Ihre Designs oder Plug-ins nicht funktionieren. Daher müssen Sie wahrscheinlich Änderungen am Code vornehmen."
   },
-  "stack-packs/packs/wordpress.js | server_response_time": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | time_to_first_byte": {
     "message": "Sowohl Designs, Plug-ins als auch Serverspezifikationen tragen zur Serverantwortzeit bei. Versuchen Sie, ein noch weiter optimiertes Design zu finden, wählen Sie ein geeignetes Optimierungs-Plug-in aus und/oder upgraden Sie Ihren Server."
   },
-  "stack-packs/packs/wordpress.js | total_byte_weight": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Sie haben die Möglichkeit, Auszüge in Ihrer Beitragsliste einzublenden (z. B. über das Tag \"Mehr\"), die Anzahl der Beiträge auf einer Seite zu verringern, lange Beiträge auf mehrere Seiten aufzuteilen oder ein Plug-in für das Lazy Loading von Kommentaren zu verwenden."
   },
-  "stack-packs/packs/wordpress.js | unminified_css": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | unminified_css": {
     "message": "Ihre Website lässt sich mit einer Reihe von [WordPress-Plug-ins](https://wordpress.org/plugins/search/minify+css/) beschleunigen, durch die Ihre Stile verkettet und komprimiert werden. Sofern möglich, können Sie diese Komprimierung auch im Voraus über einen Build-Prozess vornehmen."
   },
-  "stack-packs/packs/wordpress.js | unminified_javascript": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | unminified_javascript": {
     "message": "Ihre Website lässt sich mit einer Reihe von [WordPress-Plug-ins](https://wordpress.org/plugins/search/minify+javascript/) beschleunigen, durch die Ihre Skripts verkettet und komprimiert werden. Sofern möglich, können Sie diese Komprimierung auch im Voraus über einen Build-Prozess vornehmen."
   },
-  "stack-packs/packs/wordpress.js | unused_css_rules": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | unused_css_rules": {
     "message": "Prüfen Sie, ob Sie [WordPress-Plug-ins](https://wordpress.org/plugins/), über die nicht verwendete CSS auf Ihre Seite geladen werden, entfernen oder durch alternative Plug-ins ersetzen können. Wenn Sie die Plug-ins ermitteln möchten, über die irrelevante CSS hinzugefügt werden, können Sie das Prüftool zur [Codeabdeckung](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in den Chrome-Entwicklertools verwenden. Das entsprechende Design/Plug-in können Sie anhand der URL des Stylesheets erkennen. Suchen Sie in der Liste nach Plug-ins mit vielen Stylesheets, bei denen im Prüftool zur Codeabdeckung viel nicht verwendeter Code (markiert in Rot) angezeigt wird. Ein Stylesheet sollte nur dann in ein Plug-in aufgenommen werden, wenn es auch tatsächlich auf der Seite verwendet wird."
   },
-  "stack-packs/packs/wordpress.js | unused_javascript": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | unused_javascript": {
     "message": "Prüfen Sie, ob Sie [WordPress-Plug-ins](https://wordpress.org/plugins/), über die nicht verwendete JavaScript-Dateien auf Ihre Seite geladen werden, entfernen oder durch alternative Plug-ins ersetzen können. Wenn Sie die Plug-ins ermitteln möchten, über die irrelevante JavaScript-Dateien hinzugefügt werden, können Sie das Prüftool zur [Codeabdeckung](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in den Chrome-Entwicklertools verwenden. Das entsprechende Design/Plug-in können Sie anhand der URL des Skripts erkennen. Suchen Sie in der Liste nach Plug-ins mit vielen Skripts, bei denen im Prüftool zur Codeabdeckung viel nicht verwendeter Code (markiert in Rot) angezeigt wird. Ein Skript sollte nur dann in ein Plug-in aufgenommen werden, wenn es auch tatsächlich auf der Seite verwendet wird."
   },
-  "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
     "message": "Hier erhalten Sie Informationen zum [Browser-Caching in WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
-  "stack-packs/packs/wordpress.js | uses_optimized_images": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Sie haben die Möglichkeit, ein [WordPress-Plug-in für die Bildoptimierung](https://wordpress.org/plugins/search/optimize+images/) zu verwenden, durch das Ihre Bilder komprimiert werden, die Qualität jedoch gleich bleibt."
   },
-  "stack-packs/packs/wordpress.js | uses_responsive_images": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses_responsive_images": {
     "message": "Sie haben die Möglichkeit, Bilder direkt über die [Mediathek](https://wordpress.org/support/article/media-library-screen/) hochzuladen, damit die erforderlichen Bildgrößen verfügbar sind. Die Bilder können Sie dann aus der Mediathek einfügen oder auch das Bild-Widget nutzen, damit die optimalen Bildgrößen verwendet werden (einschließlich derjenigen für die responsiven Haltepunkte). Bilder in `Full Size` sollten nur verwendet werden, wenn die Abmessungen für die entsprechende Nutzung geeignet sind. [Weitere Informationen.](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)"
   },
-  "stack-packs/packs/wordpress.js | uses_text_compression": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Sie können die Textkomprimierung in der Konfiguration Ihres Webservers aktivieren."
   },
-  "stack-packs/packs/wordpress.js | uses_webp_images": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses_webp_images": {
     "message": "Sie haben die Möglichkeit, Ihre hochgeladenen Bilder mithilfe eines [Plug-ins](https://wordpress.org/plugins/search/convert+webp/) oder eines Dienstes automatisch in das optimale Format zu konvertieren."
   }
 }
