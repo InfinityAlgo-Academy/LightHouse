@@ -27,20 +27,21 @@ function checkIntersection() {
 
   /** @type {Set<Element>} */
   const seen = new Set();
+  /** @type {Set<Element>} */
+  const descendents = new Set();
   /**
    * @param {Element} el
    */
   function findDescendantElements(el) {
     if (!el) return;
-    seen.add(el);
+    descendents.add(el);
     for (const child of el.children) {
       findDescendantElements(child);
     }
   }
 
-  for (const child of lcpElement.children) {
-    findDescendantElements(child);
-  }
+  findDescendantElements(lcpElement);
+  
   const {left, top, width, height} = boundingRect;
   for (let i = 0.1; i < 1.0; i += 0.2) {
     for (let j = 0.1; j < 1.0; j += 0.2) {
@@ -48,7 +49,7 @@ function checkIntersection() {
       const y = top + Math.round(height * j);
       for (const element of document.elementsFromPoint(x, y)) { // eslint-disable-line no-undef
         if (element === lcpElement) break;
-        if (seen.has(element)) {
+        if (descendents.has(element) || seen.has(element)) {
           continue;
         }
         seen.add(element);
