@@ -27,6 +27,8 @@ declare global {
       networkUserAgent: string;
       /** The benchmark index number that indicates rough device class. */
       benchmarkIndex: number;
+      /** The version of libraries with which these results were generated. Ex: axe-core. */
+      credits: Record<string, string>,
     }
 
     /**

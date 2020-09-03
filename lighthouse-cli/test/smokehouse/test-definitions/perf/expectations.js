@@ -147,9 +147,21 @@ module.exports = [
         'font-display': {
           score: 0,
           details: {
-            items: {
-              length: 2,
-            },
+            items: [
+              {
+                url: 'http://localhost:10200/perf/lobster-v20-latin-regular.woff2',
+              },
+            ],
+          },
+        },
+        'preload-fonts': {
+          score: 0,
+          details: {
+            items: [
+              {
+                url: 'http://localhost:10200/perf/lobster-two-v10-latin-700.woff2?delay=1000',
+              },
+            ],
           },
         },
       },
@@ -203,6 +215,10 @@ module.exports = [
           score: '0.026 +/- 0.01',
         },
         {
+          // Requires compositor failure reasons to be in the trace
+          // for `failureReasonsMask` and `unsupportedProperties`
+          // https://chromiumdash.appspot.com/commit/995baabedf9e70d16deafc4bc37a2b215a9b8ec9
+          _minChromiumMilestone: 86,
           traceEventType: 'animation',
           selector: 'body > div#animate-me',
           nodeLabel: 'div',
@@ -217,11 +233,9 @@ module.exports = [
           },
           animations: [
             {
-              // Requires compositor failure reasons to be in the trace
-              // https://chromiumdash.appspot.com/commit/995baabedf9e70d16deafc4bc37a2b215a9b8ec9
-              _minChromiumMilestone: 86,
               name: 'anim',
               failureReasonsMask: 8224,
+              unsupportedProperties: ['background-color'],
             },
           ],
         },
@@ -323,14 +337,14 @@ module.exports = [
                   items: [
                     {
                       // From JavaScript `.animate` which has no animation display name
-                      failureReason: 'Unsupported CSS Property',
+                      failureReason: 'Unsupported CSS Property: width',
                     },
                     {
-                      failureReason: 'Unsupported CSS Property',
+                      failureReason: 'Unsupported CSS Property: height',
                       animation: 'alpha',
                     },
                     {
-                      failureReason: 'Unsupported CSS Property',
+                      failureReason: 'Unsupported CSS Property: background-color',
                       animation: 'beta',
                     },
                   ],

@@ -12,6 +12,8 @@ const MessageFormat = require('intl-messageformat').default;
 const lookupClosestLocale = require('lookup-closest-locale');
 const LOCALES = require('./locales.js');
 
+const DEFAULT_LOCALE = 'en';
+
 /** @typedef {import('intl-messageformat-parser').Element} MessageElement */
 /** @typedef {import('intl-messageformat-parser').ArgumentElement} ArgumentElement */
 
@@ -54,6 +56,8 @@ const UIStrings = {
   displayValueByteSavings: 'Potential savings of {wastedBytes, number, bytes}\xa0KiB',
   /** Label shown per-audit to show how many milliseconds faster the page load could be if the user implemented the suggestions. The `{wastedMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 140 ms) */
   displayValueMsSavings: 'Potential savings of {wastedMs, number, milliseconds}\xa0ms',
+  /** Label shown per-audit to show how many HTML elements did not pass the audit. The `{# elements found}` placeholder will be replaced with the number of failing HTML elements. */
+  displayValueElementsFound: `{nodeCount, plural, =1 {1 element found} other {# elements found}}`,
   /** Label for a column in a data table; entries will be the URL of a web resource */
   columnURL: 'URL',
   /** Label for a column in a data table; entries will be the size or quantity of some resource, e.g. the width and height dimensions of an image or the number of images in a web page. */
@@ -78,7 +82,7 @@ const UIStrings = {
   columnRequests: 'Requests',
   /** Label for a column in a data table; entries will be the names of arbitrary objects, e.g. the name of a Javascript library, or the name of a user defined timing event. */
   columnName: 'Name',
-  /** Label for a column in a data table; entries will be the names of JavaScript code, e.g. the name of a Javascript package or module. */
+  /** Label for a column in a data table; entries will be the locations of JavaScript or CSS code, e.g. the name of a Javascript package or module. */
   columnSource: 'Source',
   /** Label for a column in a data table; entries will be how much a predetermined budget has been exeeded by. Depending on the context, this number could represent an excess in quantity or size of network requests, or, an excess in the duration of time that it takes for the page to load.*/
   columnOverBudget: 'Over Budget',
@@ -155,18 +159,17 @@ const formats = {
  * Look up the best available locale for the requested language through these fall backs:
  * - exact match
  * - progressively shorter prefixes (`de-CH-1996` -> `de-CH` -> `de`)
- * - the default locale ('en') if no match is found
  *
- * If `locale` isn't provided, the default is used.
- * @param {string=} locale
+ * If `locale` isn't provided or one could not be found, DEFAULT_LOCALE is returned.
+ * @param {string|string[]=} locales
  * @return {LH.Locale}
  */
-function lookupLocale(locale) {
+function lookupLocale(locales) {
   // TODO: could do more work to sniff out default locale
-  const canonicalLocale = Intl.getCanonicalLocales(locale)[0];
+  const canonicalLocales = Intl.getCanonicalLocales(locales);
 
-  const closestLocale = lookupClosestLocale(canonicalLocale, LOCALES);
-  return closestLocale || 'en';
+  const closestLocale = lookupClosestLocale(canonicalLocales, LOCALES);
+  return closestLocale || DEFAULT_LOCALE;
 }
 
 /**

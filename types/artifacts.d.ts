@@ -125,8 +125,8 @@ declare global {
       HTTPRedirect: {value: boolean};
       /** The issues surfaced in the devtools Issues panel */
       InspectorIssues: Artifacts.InspectorIssues;
-      /** JS coverage information for code used during page load. Keyed by URL. */
-      JsUsage: Record<string, Crdp.Profiler.ScriptCoverage[]>;
+      /** JS coverage information for code used during page load. Keyed by network URL. */
+      JsUsage: Record<string, Array<Omit<Crdp.Profiler.ScriptCoverage, 'url'>>>;
       /** Parsed version of the page's Web App Manifest, or null if none found. */
       Manifest: Artifacts.Manifest | null;
       /** The URL loaded with interception */
@@ -187,6 +187,7 @@ declare global {
         violations: Array<AxeResult>;
         notApplicable: Array<Pick<AxeResult, 'id'>>;
         incomplete: Array<AxeResult>;
+        version: string;
       }
 
       export interface CSSStyleSheetInfo {
@@ -372,9 +373,20 @@ declare global {
         analyzedFailingTextLength: number;
         /** Elements that contain a text node that failed size criteria. */
         analyzedFailingNodesData: Array<{
+          /* nodeId of the failing TextNode. */
+          nodeId: number;
           fontSize: number;
           textLength: number;
-          node: FontSize.DomNodeWithParent;
+          parentNode: {
+            backendNodeId: number;
+            attributes: string[];
+            nodeName: string;
+            parentNode?: {
+              backendNodeId: number;
+              attributes: string[];
+              nodeName: string;
+            };
+          };
           cssRule?: {
             type: 'Regular' | 'Inline' | 'Attributes';
             range?: {startLine: number, startColumn: number};
@@ -383,17 +395,6 @@ declare global {
             stylesheet?: Crdp.CSS.CSSStyleSheetHeader;
           }
         }>
-      }
-
-      export module FontSize {
-        export interface DomNodeWithParent extends Crdp.DOM.Node {
-          parentId: number;
-          parentNode: DomNodeWithParent;
-        }
-
-        export interface DomNodeMaybeWithParent extends Crdp.DOM.Node {
-          parentNode?: DomNodeMaybeWithParent;
-        }
       }
 
       // TODO(bckenny): real type for parsed manifest.
@@ -522,7 +523,7 @@ declare global {
         score?: number;
         boundingRect: Rect;
         nodeId?: number;
-        animations?: {name?: string, failureReasonsMask?: number}[];
+        animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[];
       }
 
       export interface ViewportDimensions {
@@ -732,7 +733,13 @@ declare global {
 
       export interface Form {
         /** If attributes is missing that means this is a formless set of elements. */
-        attributes?: { id: string, name: string, autocomplete: string, nodeLabel: string, snippet: string,};
+        attributes?: {
+          id: string,
+          name: string,
+          autocomplete: string,
+          nodeLabel: string,
+          snippet: string,
+        };
         inputs: Array<FormInput>;
         labels: Array<FormLabel>;
       }
@@ -742,7 +749,11 @@ declare global {
         id: string;
         name: string;
         placeholder?: string;
-        autocomplete: string;
+        autocomplete: {
+          property: string;
+          attribute: string | null;
+          prediction: string | null;
+        }
         nodeLabel: string;
         snippet: string;
       }

@@ -351,7 +351,7 @@ class ImageElements extends Gatherer {
       const {resourceSize = 0, transferSize = 0} = networkRecord;
       element.resourceSize = Math.min(resourceSize, transferSize);
 
-      if (!element.isInShadowDOM) {
+      if (!element.isInShadowDOM && !element.isCss) {
         await this.fetchSourceRules(driver, element.devtoolsNodePath, element);
       }
       // Images within `picture` behave strangely and natural size information isn't accurate,
