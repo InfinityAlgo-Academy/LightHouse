@@ -10,129 +10,10 @@ const Gatherer = require('./gatherer.js');
 const pageFunctions = require('../../lib/page-functions.js');
 const TraceProcessor = require('../../lib/tracehouse/trace-processor.js');
 
-/* global window, MutationObserver, document, performance, getNodePath, getOuterHTMLSnippet, getNodeSelector, getNodeLabel, ShadowRoot */
+/* global window, MutationObserver, document, performance, getNodePath, getOuterHTMLSnippet, getNodeSelector, getNodeLabel */
 
 
 function setupObserver() {
-  function getNodePath(node) {
-  /** @param {Node} node */
-    function getNodeIndex(node) {
-      let index = 0;
-      let prevNode;
-      while (prevNode = node.previousSibling) {
-        node = prevNode;
-        // skip empty text nodes
-        if (node.nodeType === Node.TEXT_NODE && node.nodeValue.trim().length === 0) continue;
-        index++;
-      }
-      return index;
-    }
-
-    const path = [];
-    while (node && node.parentNode) {
-      const index = getNodeIndex(node);
-      path.push([index, node.nodeName]);
-      node = node.parentNode;
-    }
-    path.reverse();
-    return path.join(',');
-  }
-  function getNodeLabel(node) {
-    // Inline so that audits that import getNodeLabel don't
-    // also need to import truncate
-    /**
-     * @param {string} str
-     * @param {number} maxLength
-     * @return {string}
-     */
-    function truncate(str, maxLength) {
-      if (str.length <= maxLength) {
-        return str;
-      }
-      return str.slice(0, maxLength - 1) + '…';
-    }
-
-    const tagName = node.tagName.toLowerCase();
-    // html and body content is too broad to be useful, since they contain all page content
-    if (tagName !== 'html' && tagName !== 'body') {
-      const nodeLabel = node.innerText || node.getAttribute('alt') || node.getAttribute('aria-label');
-      if (nodeLabel) {
-        return truncate(nodeLabel, 80);
-      } else {
-        // If no useful label was found then try to get one from a child.
-        // E.g. if an a tag contains an image but no text we want the image alt/aria-label attribute.
-        const nodeToUseForLabel = node.querySelector('[alt], [aria-label]');
-        if (nodeToUseForLabel) {
-          return getNodeLabel(/** @type {HTMLElement} */ (nodeToUseForLabel));
-        }
-      }
-    }
-    return tagName;
-  }
-  function getOuterHTMLSnippet(element, ignoreAttrs = [], snippetCharacterLimit = 500) {
-    const ATTRIBUTE_CHAR_LIMIT = 75;
-    try {
-      // ShadowRoots are sometimes passed in; use their hosts' outerHTML.
-      if (element instanceof ShadowRoot) {
-        element = element.host;
-      }
-
-      const clone = element.cloneNode();
-      ignoreAttrs.forEach(attribute =>{
-        clone.removeAttribute(attribute);
-      });
-      let charCount = 0;
-      for (const attributeName of clone.getAttributeNames()) {
-        if (charCount > snippetCharacterLimit) {
-          clone.removeAttribute(attributeName);
-        } else {
-          let attributeValue = clone.getAttribute(attributeName);
-          if (attributeValue.length > ATTRIBUTE_CHAR_LIMIT) {
-            attributeValue = attributeValue.slice(0, ATTRIBUTE_CHAR_LIMIT - 1) + '…';
-            clone.setAttribute(attributeName, attributeValue);
-          }
-          charCount += attributeName.length + attributeValue.length;
-        }
-      }
-
-      const reOpeningTag = /^[\s\S]*?>/;
-      const [match] = clone.outerHTML.match(reOpeningTag) || [];
-      if (match && charCount > snippetCharacterLimit) {
-        return match.slice(0, match.length - 1) + ' …>';
-      }
-      return match || '';
-    } catch (_) {
-      // As a last resort, fall back to localName.
-      return `<${element.localName}>`;
-    }
-  }
-  function getNodeSelector(node) {
-    /**
-     * @param {Element} node
-     */
-    function getSelectorPart(node) {
-      let part = node.tagName.toLowerCase();
-      if (node.id) {
-        part += '#' + node.id;
-      } else if (node.classList.length > 0) {
-        part += '.' + node.classList[0];
-      }
-      return part;
-    }
-
-    const parts = [];
-    while (parts.length < 4) {
-      parts.unshift(getSelectorPart(node));
-      if (!node.parentElement) {
-        break;
-      }
-      node = node.parentElement;
-      if (node.tagName === 'HTML') {
-        break;
-      }
-    }
-    return parts.join(' > ');
-  }
   window.___observedIframes = [];
   window.___observer = new MutationObserver((records) => {
     const currTime = performance.now();
@@ -153,14 +34,6 @@ function setupObserver() {
       }
     }
   });
-  const mark = performance.mark('lh_timealign');
-  window.___observedIframes.push({
-    time: mark.startTime,
-    devtoolsNodePath: '',
-    snippet: '',
-    selector: '',
-    nodeLabel: '',
-  });
   window.___observer.observe(document, {childList: true, subtree: true});
 }
 
@@ -169,17 +42,58 @@ function setupObserver() {
  */
 function getDOMTimestamps() {
   window.___observer.disconnect();
-  const count = performance.getEntriesByName('lh_timealign').length;
-  return {obs: window.___observedIframes, count};
+  return window.___observedIframes;
 }
 
+/**
+ * @return {Array<LH.Artifacts.DOMWindow>}
+ */
+function getLayoutShiftWindows(layoutEvents) {
+  const windows = [];
+  let end = undefined;
+  let start = undefined;
+  for (let i = layoutEvents.length - 1; i >= 0; i--) {
+    if (!end && layoutEvents[i].event.name === 'LayoutShift') {
+      if (i - 1 >= 0 && layoutEvents[i - 1].event.name === 'UpdateLayerTree') {
+        // TODO: have to confirm that the layoutshift happens within ULT
+        end = layoutEvents[i - 1].timing;
+        i -= 1;
+        continue;
+      }
+    }
+    if (end && layoutEvents[i].event.name === 'UpdateLayerTree') {
+      start = layoutEvents[i].timing;
+      windows.push({start, end});
+      end = undefined;
+      start = undefined;
+    } else if (end && layoutEvents[i].event.name === 'LayoutShift') {
+      if (i - 1 >= 0 && layoutEvents[i - 1].event.name === 'UpdateLayerTree') {
+        start = layoutEvents[i - 1].timing;
+        windows.push({start, end});
+        end = layoutEvents[i - 1].timing;
+        start = undefined;
+        i -= 1;
+      }
+    }
+  }
+  return windows;
+}
 
 class DOMTimeline extends Gatherer {
   /**
    * @param {LH.Gatherer.PassContext} passContext
    */
   async beforePass(passContext) {
-    return passContext.driver.evaluateScriptOnNewDocument(`(${setupObserver.toString()})()`);
+    const script = `(() => {
+      ${pageFunctions.getNodePathString}
+      ${pageFunctions.getNodeLabelString}
+      ${pageFunctions.getNodeSelectorString}
+      ${pageFunctions.getOuterHTMLSnippetString}
+      ${setupObserver.toString()
+        .replace('function setupObserver() {', '')
+        .replace('e});\n}', 'e});')}
+    })()`;
+    return passContext.driver.evaluateScriptOnNewDocument(script);
   }
 
 
@@ -194,30 +108,14 @@ class DOMTimeline extends Gatherer {
       throw new Error('Trace is missing!');
     }
 
-
-    const {keyEvents, timestamps} = TraceProcessor.computeTraceOfTab(loadData.trace);
-    // console.log(keyEvents);
-
-    /** @param {{ts: number}=} event */
-    const getTimestamp = (event) => event && event.ts;
-    /** @param {number} ts */
-    const getTiming = (ts) => (ts - timestamps.timeOrigin) / 1000;
-    /** @param {number=} ts */
-    const maybeGetTiming = (ts) => ts === undefined ? undefined : getTiming(ts);
-
-    const layoutEvents = keyEvents
-      .filter(e => // e.cat === 'devtools.timeline' && e.name === 'Layout' ||
-      e.cat === 'devtools.timeline' && e.name === 'UpdateLayerTree' ||
-      e.name === 'LayoutShift')
-      .map(e => {
-        return {event: e, timing: maybeGetTiming(getTimestamp(e))};
-      });
+    const layoutEvents =
+      TraceProcessor.computeTraceOfTab(loadData.trace).layoutShiftTimelineEvents;
     console.log(layoutEvents);
 
     console.log('amount of layout shifts');
     console.log(layoutEvents.filter(e => e.event.name === 'LayoutShift'));
 
-    // it looks like the time diffs oscillate between > 10ms and < 1ms
+    console.log('layout time diffs')
     let ref = layoutEvents[0].timing;
     for (const layoutEvent of layoutEvents) {
       if (layoutEvent.event.name === 'UpdateLayerTree') {
@@ -226,47 +124,16 @@ class DOMTimeline extends Gatherer {
       }
     }
 
-    const windows = [];
-    let end = undefined;
-    let start = undefined;
-    for (let i = layoutEvents.length - 1; i >= 0; i--) {
-      if (!end && layoutEvents[i].event.name === 'LayoutShift') {
-        if (i - 1 >= 0 && layoutEvents[i - 1].event.name === 'UpdateLayerTree') {
-          // TODO: have to confirm that the layoutshift happens within ULT
-          end = layoutEvents[i - 1].timing;
-          i -= 1;
-          continue;
-        }
-      }
-      if (end && layoutEvents[i].event.name === 'UpdateLayerTree') {
-        start = layoutEvents[i].timing;
-        windows.push({start, end});
-        end = undefined;
-        start = undefined;
-      } else if (end && layoutEvents[i].event.name === 'LayoutShift') {
-        if (i - 1 >= 0 && layoutEvents[i - 1].event.name === 'UpdateLayerTree') {
-          start = layoutEvents[i - 1].timing;
-          windows.push({start, end});
-          end = layoutEvents[i - 1].timing;
-          start = undefined;
-          i -= 1;
-        }
-      }
-    }
-    console.log(windows);
-    // refilter to only have Layout +- Layout LayoutShift patterns throughout
-    // then can do forward pass and do Layout = start, LayoutShift = end, start again
-
+    const windows = getLayoutShiftWindows(layoutEvents);
 
     const expression = `(() => {
       return (${getDOMTimestamps.toString()})();
     })()`;
 
-    const {obs, count} = await driver.evaluateAsync(expression);
-    console.log(obs); // (domTimestamps);
-    console.log(count);
+    const timestamps = await driver.evaluateAsync(expression);
+    console.log(timestamps);
 
-    return {timestamps: obs, windows};
+    return {timestamps, windows};
   }
 }
 
