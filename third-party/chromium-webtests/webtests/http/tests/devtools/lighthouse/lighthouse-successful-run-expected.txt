@@ -7,7 +7,7 @@ Tests that audits panel works.
 [x] Best practices
 [x] Accessibility
 [x] SEO
-[ ] Publisher Ads
+[x] Publisher Ads
 [x] Clear storage
 [x] Simulated throttling
 Generate report: enabled visible
@@ -38,6 +38,7 @@ Gathering setup: ImageElements
 Gathering setup: LinkElements
 Gathering setup: MetaElements
 Gathering setup: ScriptElements
+Gathering setup: IFrameElements
 Gathering setup: MainDocumentContent
 Gathering setup: GlobalListeners
 Gathering setup: AppCacheManifest
@@ -69,6 +70,7 @@ Gathering in-page: ImageElements
 Gathering in-page: LinkElements
 Gathering in-page: MetaElements
 Gathering in-page: ScriptElements
+Gathering in-page: IFrameElements
 Gathering in-page: MainDocumentContent
 Gathering in-page: GlobalListeners
 Gathering in-page: AppCacheManifest
@@ -99,6 +101,7 @@ Gathering: ImageElements
 Gathering: LinkElements
 Gathering: MetaElements
 Gathering: ScriptElements
+Gathering: IFrameElements
 Gathering: MainDocumentContent
 Gathering: GlobalListeners
 Gathering: AppCacheManifest
@@ -346,6 +349,35 @@ Auditing: Document has a valid `hreflang`
 Auditing: Document avoids plugins
 Auditing: Document has a valid `rel=canonical`
 Auditing: Structured data is valid
+Auditing: No long tasks blocking ad-related network requests
+Computing artifact: LongTasks
+Auditing: Minimal render-blocking resources found
+Auditing: Ad request waterfall
+Computing artifact: AdRequestTime
+Computing artifact: LanternAdRequestTime
+Auditing: First bid request time
+Computing artifact: BidRequestTime
+Computing artifact: LanternBidRequestTime
+Auditing: First ad request time
+Auditing: No ad found at the very top of the viewport
+Auditing: Few or no ads loaded outside viewport
+Auditing: Ad tag is loaded asynchronously
+Auditing: Ads not blocked by load events
+Auditing: No bottleneck requests found
+Auditing: No duplicate tags found
+Auditing: Latency of first ad render
+Computing artifact: AdRenderTime
+Computing artifact: LanternAdRenderTime
+Auditing: GPT and bids loaded in parallel
+Auditing: GPT tag is loaded from recommended host
+Auditing: Ad tag is loaded over HTTPS
+Auditing: Ad scripts are loaded statically
+Auditing: Header bidding is parallelized
+Auditing: Tag load time
+Computing artifact: TagLoadTime
+Computing artifact: LanternTagLoadTime
+Auditing: Ad density in initial viewport is within recommended range
+Auditing: Cumulative ad shift
 Generating results...
 
 =============== Lighthouse Results ===============
@@ -362,6 +394,12 @@ ViewportDimensions: {
 
 
 accesskeys: notApplicable
+ad-blocking-tasks: notApplicable
+ad-render-blocking-resources: notApplicable
+ad-request-critical-path: notApplicable
+ad-request-from-page-start: notApplicable
+ad-top-of-viewport: notApplicable
+ads-in-viewport: notApplicable
 appcache-manifest: pass
 apple-touch-icon: fail
 aria-allowed-attr: notApplicable
@@ -375,7 +413,11 @@ aria-roles: notApplicable
 aria-toggle-field-name: notApplicable
 aria-valid-attr: notApplicable
 aria-valid-attr-value: notApplicable
+async-ad-tags: notApplicable
+bid-request-from-page-start: notApplicable
+blocking-load-events: notApplicable
 bootup-time: flaky
+bottleneck-requests: notApplicable
 button-name: notApplicable
 bypass: notApplicable
 canonical: notApplicable
@@ -384,6 +426,7 @@ color-contrast: pass
 content-width: fail
 crawlable-anchors: pass
 critical-request-chains: notApplicable
+cumulative-ad-shift: notApplicable
 cumulative-layout-shift: numeric
 custom-controls-labels: manual
 custom-controls-roles: manual
@@ -396,12 +439,14 @@ document-title: fail
 dom-size: numeric
 duplicate-id-active: notApplicable
 duplicate-id-aria: notApplicable
+duplicate-tags: notApplicable
 duplicated-javascript: numeric
 efficient-animated-content: flaky
 errors-in-console: pass
 estimated-input-latency: flaky
 external-anchors-use-rel-noopener: pass
 final-screenshot: ERROR Chrome didn't collect any screenshots during the page load. Please make sure there is content visible on the page, and then try re-running Lighthouse. (NO_SCREENSHOTS)
+first-ad-render: notApplicable
 first-contentful-paint: flaky
 first-cpu-idle: flaky
 first-meaningful-paint: flaky
@@ -412,6 +457,7 @@ font-size: fail
 form-field-multiple-labels: notApplicable
 frame-title: notApplicable
 geolocation-on-start: pass
+gpt-bids-parallel: notApplicable
 heading-order: notApplicable
 hreflang: pass
 html-has-lang: fail
@@ -439,6 +485,8 @@ link-text: pass
 list: notApplicable
 listitem: notApplicable
 load-fast-enough-for-pwa: flaky
+loads-ad-tag-over-https: notApplicable
+loads-gpt-from-sgdn: notApplicable
 logical-tab-order: manual
 long-tasks: flaky
 main-thread-tasks: informative
@@ -475,12 +523,15 @@ render-blocking-resources: flaky
 resource-summary: informative
 robots-txt: notApplicable
 screenshot-thumbnails: flaky
+script-injected-tags: notApplicable
+serial-header-bidding: notApplicable
 server-response-time: pass
 service-worker: fail
 speed-index: flaky
 splash-screen: fail
 structured-data: manual
 tabindex: notApplicable
+tag-load-time: notApplicable
 tap-targets: fail
 td-headers-attr: notApplicable
 th-has-data-cells: notApplicable
@@ -510,9 +561,10 @@ valid-source-maps: pass
 video-caption: notApplicable
 video-description: notApplicable
 viewport: fail
+viewport-ad-density: notApplicable
 visual-order-follows-dom: manual
 without-javascript: pass
 works-offline: fail
 
-# of .lh-audit divs: 136
+# of .lh-audit divs: 156
 

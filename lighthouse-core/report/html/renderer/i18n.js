@@ -66,7 +66,9 @@ class I18n {
    */
   formatMilliseconds(ms, granularity = 10) {
     const coarseTime = Math.round(ms / granularity) * granularity;
-    return `${this._numberFormatter.format(coarseTime)}${NBSP2}ms`;
+    return coarseTime === 0
+      ? `${this._numberFormatter.format(0)}${NBSP2}ms`
+      : `${this._numberFormatter.format(coarseTime)}${NBSP2}ms`;
   }
 
   /**

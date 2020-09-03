@@ -82,6 +82,7 @@ describe('SourceMaps gatherer', () => {
 
     const sourceMaps = new SourceMaps();
     await sourceMaps.beforePass({driver});
+    // Needed for protocol events to emit.
     jest.advanceTimersByTime(1);
     return sourceMaps.afterPass({driver});
   }

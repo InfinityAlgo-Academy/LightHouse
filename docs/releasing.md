@@ -6,29 +6,29 @@ This doc is only relevant to core member.
 
 ### Cadence
 
-We aim to release every 3 weeks. Our schedule is set as follows: One day before the [expected Chromium branch point](https://www.chromium.org/developers/calendar) (which is every six weeks) and again exactly 3 weeks after that day.
+We aim to release every 3 weeks. Our schedule is set as follows: Two days before the [expected Chromium branch point](https://www.chromium.org/developers/calendar) (which is every six weeks) and again exactly 3 weeks after that day. These are Tuesdays.
 
 For example, following this schedule, we will attempt a release on these dates:
 
-* _Oct 15 2019_
-* Nov 5 2019
-* _Nov 26 2019_
-* Dec 17 2019
+* _Sep 29 2020_ (M87)
+* Oct 20 2020
+* _Nov 10 2020_ (M88)
+* Dec 1 2020
 * ...
 
-Italicized dates are the day before the expected Chromium branch point.
+Italicized dates are two days before the expected Chromium branch point.
 
 The planned ship dates are added to the internal Lighthouse calendar.
 
 If a release is necessary outside these scheduled dates, we may choose to skip the next scheduled release.
 
-In general, the above release dates are when new versions will be available in npm. About a week later, it will be reflected in LR / PSI. Some 10 weeks later, it will be available in Stable Chrome.
+In general, the above release dates are when new versions will be available in npm. Within 2 weeks, it will be reflected in LR / PSI. Some 10 weeks later, it will be available in Stable Chrome.
 
 ### Release manager
 
 Release manager is appointed, according to the list below. However, if the appointed manager is absent, the next engineer in line in the list would own it.
 
-    bckenny, paulirish, patrickhulce
+    @cjamcl, @adamraine, @Beytoven
 
 Release manager follows the below _Release Process_.
 
@@ -39,13 +39,11 @@ Note: actively undergoing changes by @exterkamp and @egsweeny.
 1. Release mgr copies changelog to a new [Releases](https://github.com/GoogleChrome/lighthouse/releases). Tags and ships it.
 1. Release mgr tells the _LH public_ Hangout chat about the new version.
 1. V & Kayce write and publish the [/updates](https://developers.google.com/web/updates/) blog post
-1. Paul writes the tweet (linking the /updates post) and sends it on [@____lighthouse](https://twitter.com/____lighthouse).
-1. Paul prepares a roll for DevTools frontend
+1. Addy writes the tweet (linking the /updates post) and sends it on [@____lighthouse](https://twitter.com/____lighthouse).
 
 ### Versioning
 
 We follow [semver](https://semver.org/) versioning semantics (`vMajor.Minor.Patch`). Breaking changes will bump the major version. New features or bug fixes will bump the minor version. If a release contains no new features, then we'll only bump the patch version.
-
 
 ## Release Process
 
