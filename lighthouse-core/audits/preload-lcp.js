@@ -199,13 +199,7 @@ class PreloadLCPAudit extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[PreloadLCPAudit.DEFAULT_PASS];
     const URL = artifacts.URL;
     const simulatorOptions = {trace, devtoolsLog, settings: context.settings};
-    const lcpElement = artifacts.TraceElements.find(elem => elem.traceEventType === 'largest-contentful-paint');
-    if (!lcpElement || lcpElement.elementType != 'img') {
-      return {
-        score: 1,
-        notApplicable: true,
-      };
-    }
+
     /** @type {LH.Config.Settings} */
     // @ts-expect-error 
     const settings = {};
