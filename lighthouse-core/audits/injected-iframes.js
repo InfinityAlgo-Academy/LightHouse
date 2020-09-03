@@ -52,10 +52,8 @@ class PreloadFontsAudit extends Audit {
     });
 
     const results = [];
-    console.log(windows);
     for (const timestamp of timestamps) {
       const time = timestamp.time + timingNormalization;
-      console.log(time);
       for (const window of windows) {
         if (time > window.start && time < window.end) {
           results.push({

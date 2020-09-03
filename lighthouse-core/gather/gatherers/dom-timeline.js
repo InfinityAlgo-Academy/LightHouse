@@ -14,7 +14,9 @@ const TraceProcessor = require('../../lib/tracehouse/trace-processor.js');
 
 
 function setupObserver() {
+  // @ts-expect-error ___observedIframes does not exist on window by default
   window.___observedIframes = [];
+  // @ts-expect-error ___observer does not exist on window by default
   window.___observer = new MutationObserver((records) => {
     const currTime = performance.now();
     for (const record of records) {
@@ -24,16 +26,22 @@ function setupObserver() {
       for (const node of addedNodes) {
         if (node.nodeName !== 'IFRAME') continue;
         // TODO: verify that Iframe src is of an ad network / ignore non-ad iframes
+        // @ts-expect-error ___observedIframes does not exist on window by default
         window.___observedIframes.push({
           time: currTime,
+          // @ts-expect-error - put into scope via stringification
           devtoolsNodePath: getNodePath(node),
+          // @ts-expect-error - put into scope via stringification
           snippet: getOuterHTMLSnippet(node),
+          // @ts-expect-error - put into scope via stringification
           selector: getNodeSelector(node),
+          // @ts-expect-error - put into scope via stringification
           nodeLabel: getNodeLabel(node),
         });
       }
     }
   });
+  // @ts-expect-error ___observer does not exist on window by default
   window.___observer.observe(document, {childList: true, subtree: true});
 }
 
@@ -41,11 +49,14 @@ function setupObserver() {
  * //@return {Array<LH.Artifacts.DOMTimestamp>}
  */
 function getDOMTimestamps() {
+  // @ts-expect-error ___observer does not exist on window by default
   window.___observer.disconnect();
+  // @ts-expect-error ___observedIframes does not exist on window by default
   return window.___observedIframes;
 }
 
 /**
+ * @param {LH.Artifacts.TraceOfTab['layoutShiftTimelineEvents']} layoutEvents
  * @return {Array<LH.Artifacts.DOMWindow>}
  */
 function getLayoutShiftWindows(layoutEvents) {
@@ -83,6 +94,7 @@ class DOMTimeline extends Gatherer {
   /**
    * @param {LH.Gatherer.PassContext} passContext
    */
+  // @ts-expect-error we will not return a phase result
   async beforePass(passContext) {
     const script = `(() => {
       ${pageFunctions.getNodePathString}
@@ -110,19 +122,6 @@ class DOMTimeline extends Gatherer {
 
     const layoutEvents =
       TraceProcessor.computeTraceOfTab(loadData.trace).layoutShiftTimelineEvents;
-    console.log(layoutEvents);
-
-    console.log('amount of layout shifts');
-    console.log(layoutEvents.filter(e => e.event.name === 'LayoutShift'));
-
-    console.log('layout time diffs')
-    let ref = layoutEvents[0].timing;
-    for (const layoutEvent of layoutEvents) {
-      if (layoutEvent.event.name === 'UpdateLayerTree') {
-        console.log(layoutEvent.timing - ref);
-        ref = layoutEvent.timing;
-      }
-    }
 
     const windows = getLayoutShiftWindows(layoutEvents);
 
@@ -131,7 +130,6 @@ class DOMTimeline extends Gatherer {
     })()`;
 
     const timestamps = await driver.evaluateAsync(expression);
-    console.log(timestamps);
 
     return {timestamps, windows};
   }

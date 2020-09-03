@@ -608,7 +608,7 @@ class TraceProcessor {
       .filter(evt => (evt.cat === 'devtools.timeline' && evt.name === 'UpdateLayerTree')
         || evt.name === 'LayoutShift')
       .map(evt => {
-        return {event: evt, timing: maybeGetTiming(getTimestamp(evt))};
+        return {event: evt, timing: getTiming(evt.ts)};
       });
 
     return {
@@ -628,7 +628,6 @@ class TraceProcessor {
       fmpFellBack,
       lcpInvalidated,
       layoutShiftTimelineEvents,
-      // keyEvents,
     };
   }
 }
