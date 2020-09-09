@@ -28,6 +28,11 @@
             "key": "url",
             "itemType": "url",
             "text": "Insecure URL"
+          },
+          {
+            "key": "resolution",
+            "itemType": "text",
+            "text": "Request Resolution"
           }
         ],
         "items": [
@@ -6418,6 +6423,9 @@
       ],
       "lighthouse-core/audits/is-on-https.js | columnInsecureURL": [
         "audits[is-on-https].details.headings[0].text"
+      ],
+      "lighthouse-core/audits/is-on-https.js | columnResolution": [
+        "audits[is-on-https].details.headings[1].text"
       ],
       "lighthouse-core/audits/is-on-https.js | allowed": [
         "audits[is-on-https].details.items[0].resolution"

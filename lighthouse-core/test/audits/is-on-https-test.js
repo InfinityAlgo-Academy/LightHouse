@@ -43,7 +43,6 @@ describe('Security: HTTPS audit', () => {
       assert.strictEqual(result.score, 0);
       expect(result.displayValue).toBeDisplayString('1 insecure request found');
       expect(result.details.items[0]).toMatchObject({url: 'http://insecure.com/image.jpeg'});
-      assert.strictEqual(result.details.headings.length, 1);
     });
   });
 
@@ -70,7 +69,6 @@ describe('Security: HTTPS audit', () => {
     const artifacts = getArtifacts(networkRecords, mixedContentIssues);
     const result = await Audit.audit(artifacts, {computedCache: new Map()});
 
-    expect(result.details.headings).toHaveLength(2);
     expect(result.details.items).toHaveLength(3);
 
     expect(result.details.items[0]).toMatchObject({
