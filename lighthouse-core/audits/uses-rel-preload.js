@@ -24,7 +24,7 @@ const UIStrings = {
    * @description A warning message that is shown when the user tried to follow the advice of the audit, but it's not working as expected. Forgetting to set the `crossorigin` HTML attribute, or setting it to an incorrect value, on the link is a common mistake when adding preload links.
    * @example {https://example.com} preloadURL
    * */
-  crossoriginWarning: 'A preload <link> was found for "{preloadURL}" but was not used ' +
+  crossoriginWarning: 'A preload `<link>` was found for "{preloadURL}" but was not used ' +
     'by the browser. Check that you are using the `crossorigin` attribute properly.',
 };
 

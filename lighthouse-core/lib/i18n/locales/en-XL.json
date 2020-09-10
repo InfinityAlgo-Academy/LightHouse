@@ -1368,7 +1368,7 @@
     "message": "Ûśêŕ T̂ím̂ín̂ǵ m̂ár̂ḱŝ án̂d́ m̂éâśûŕêś"
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | crossoriginWarning": {
-    "message": "Â ṕr̂éĉón̂ńêćt̂ <ĺîńk̂> ẃâś f̂óûńd̂ f́ôŕ \"{securityOrigin}\" b̂út̂ ẃâś n̂ót̂ úŝéd̂ b́ŷ t́ĥé b̂ŕôẃŝér̂. Ćĥéĉḱ t̂h́ât́ ŷóû ár̂é ûśîńĝ t́ĥé `crossorigin` ât́t̂ŕîb́ût́ê ṕr̂óp̂ér̂ĺŷ."
+    "message": "Â ṕr̂éĉón̂ńêćt̂ `<link>` ẃâś f̂óûńd̂ f́ôŕ \"{securityOrigin}\" b̂út̂ ẃâś n̂ót̂ úŝéd̂ b́ŷ t́ĥé b̂ŕôẃŝér̂. Ćĥéĉḱ t̂h́ât́ ŷóû ár̂é ûśîńĝ t́ĥé `crossorigin` ât́t̂ŕîb́ût́ê ṕr̂óp̂ér̂ĺŷ."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | description": {
     "message": "Ĉón̂śîd́êŕ âd́d̂ín̂ǵ `preconnect` ôŕ `dns-prefetch` r̂éŝóûŕĉé ĥín̂t́ŝ t́ô éŝt́âb́l̂íŝh́ êár̂ĺŷ ćôńn̂éĉt́îón̂ś t̂ó îḿp̂ór̂t́âńt̂ t́ĥír̂d́-p̂ár̂t́ŷ ór̂íĝín̂ś. [L̂éâŕn̂ ḿôŕê](https://web.dev/uses-rel-preconnect/)."
@@ -1380,10 +1380,10 @@
     "message": "M̂ór̂é t̂h́âń 2 p̂ŕêćôńn̂éĉt́ l̂ín̂ḱŝ ẃêŕê f́ôún̂d́. P̂ŕêćôńn̂éĉt́ l̂ín̂ḱŝ śĥóûĺd̂ b́ê úŝéd̂ śp̂ár̂ín̂ǵl̂ý âńd̂ ón̂ĺŷ t́ô t́ĥé m̂óŝt́ îḿp̂ór̂t́âńt̂ ór̂íĝín̂ś."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | unusedWarning": {
-    "message": "Â ṕr̂éĉón̂ńêćt̂ <ĺîńk̂> ẃâś f̂óûńd̂ f́ôŕ \"{securityOrigin}\" b̂út̂ ẃâś n̂ót̂ úŝéd̂ b́ŷ t́ĥé b̂ŕôẃŝér̂. Ón̂ĺŷ ṕr̂éĉón̂ńêćt̂ t́ô ím̂ṕôŕt̂án̂t́ ôŕîǵîńŝ t́ĥát̂ t́ĥé p̂áĝé ŵíl̂ĺ ĉér̂t́âín̂ĺŷ ŕêq́ûéŝt́."
+    "message": "Â ṕr̂éĉón̂ńêćt̂ `<link>` ẃâś f̂óûńd̂ f́ôŕ \"{securityOrigin}\" b̂út̂ ẃâś n̂ót̂ úŝéd̂ b́ŷ t́ĥé b̂ŕôẃŝér̂. Ón̂ĺŷ ṕr̂éĉón̂ńêćt̂ t́ô ím̂ṕôŕt̂án̂t́ ôŕîǵîńŝ t́ĥát̂ t́ĥé p̂áĝé ŵíl̂ĺ ĉér̂t́âín̂ĺŷ ŕêq́ûéŝt́."
   },
   "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
-    "message": "Â ṕr̂él̂óâd́ <l̂ín̂ḱ> ŵáŝ f́ôún̂d́ f̂ór̂ \"{preloadURL}\" b́ût́ ŵáŝ ńôt́ ûśêd́ b̂ý t̂h́ê b́r̂óŵśêŕ. Ĉh́êćk̂ t́ĥát̂ ýôú âŕê úŝín̂ǵ t̂h́ê `crossorigin` át̂t́r̂íb̂út̂é p̂ŕôṕêŕl̂ý."
+    "message": "Â ṕr̂él̂óâd́ `<link>` ŵáŝ f́ôún̂d́ f̂ór̂ \"{preloadURL}\" b́ût́ ŵáŝ ńôt́ ûśêd́ b̂ý t̂h́ê b́r̂óŵśêŕ. Ĉh́êćk̂ t́ĥát̂ ýôú âŕê úŝín̂ǵ t̂h́ê `crossorigin` át̂t́r̂íb̂út̂é p̂ŕôṕêŕl̂ý."
   },
   "lighthouse-core/audits/uses-rel-preload.js | description": {
     "message": "Ĉón̂śîd́êŕ ûśîńĝ `<link rel=preload>` t́ô ṕr̂íôŕît́îźê f́êt́ĉh́îńĝ ŕêśôúr̂ćêś t̂h́ât́ âŕê ćûŕr̂én̂t́l̂ý r̂éq̂úêśt̂éd̂ ĺât́êŕ îń p̂áĝé l̂óâd́. [L̂éâŕn̂ ḿôŕê](https://web.dev/uses-rel-preload/)."

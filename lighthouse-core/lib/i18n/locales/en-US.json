@@ -1368,7 +1368,7 @@
     "message": "User Timing marks and measures"
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | crossoriginWarning": {
-    "message": "A preconnect <link> was found for \"{securityOrigin}\" but was not used by the browser. Check that you are using the `crossorigin` attribute properly."
+    "message": "A preconnect `<link>` was found for \"{securityOrigin}\" but was not used by the browser. Check that you are using the `crossorigin` attribute properly."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | description": {
     "message": "Consider adding `preconnect` or `dns-prefetch` resource hints to establish early connections to important third-party origins. [Learn more](https://web.dev/uses-rel-preconnect/)."
@@ -1380,10 +1380,10 @@
     "message": "More than 2 preconnect links were found. Preconnect links should be used sparingly and only to the most important origins."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | unusedWarning": {
-    "message": "A preconnect <link> was found for \"{securityOrigin}\" but was not used by the browser. Only preconnect to important origins that the page will certainly request."
+    "message": "A preconnect `<link>` was found for \"{securityOrigin}\" but was not used by the browser. Only preconnect to important origins that the page will certainly request."
   },
   "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
-    "message": "A preload <link> was found for \"{preloadURL}\" but was not used by the browser. Check that you are using the `crossorigin` attribute properly."
+    "message": "A preload `<link>` was found for \"{preloadURL}\" but was not used by the browser. Check that you are using the `crossorigin` attribute properly."
   },
   "lighthouse-core/audits/uses-rel-preload.js | description": {
     "message": "Consider using `<link rel=preload>` to prioritize fetching resources that are currently requested later in page load. [Learn more](https://web.dev/uses-rel-preload/)."
