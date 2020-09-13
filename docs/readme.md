@@ -133,7 +133,7 @@ $ lighthouse --port=9222 --emulated-form-factor=none --throttling.cpuSlowdownMul
 
 ## Lighthouse as trace processor
 
-Lighthouse can be used to analyze trace and performance data collected from other tools (like WebPageTest and ChromeDriver). The `traces` and `devtoolsLogs` artifact items can be provided using a string for the absolute path on disk if they're saved with `.trace.json` and `.devtoolslog.json` file extensions, respectively. The `devtoolsLogs` array is captured from the `Network` and `Page` domains (a la ChromeDriver's [enableNetwork and enablePage options]((https://sites.google.com/a/chromium.org/chromedriver/capabilities#TOC-perfLoggingPrefs-object)).
+Lighthouse can be used to analyze trace and performance data collected from other tools (like WebPageTest and ChromeDriver). The `traces` and `devtoolsLogs` artifact items can be provided using a string for the absolute path on disk if they're saved with `.trace.json` and `.devtoolslog.json` file extensions, respectively. The `devtoolsLogs` array is captured from the `Network` and `Page` domains (a la ChromeDriver's [enableNetwork and enablePage options](https://sites.google.com/a/chromium.org/chromedriver/capabilities#TOC-perfLoggingPrefs-object)).
 
 As an example, here's a trace-only run that reports on user timings and critical request chains:
 
