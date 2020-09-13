@@ -275,5 +275,6 @@ describe('Full-page screenshot gatherer', () => {
     );
 
     expect(result).toBeNull();
+    expect(passContext.LighthouseRunWarnings[0]).toMatch('Full page screenshot is too big');
   });
 });
