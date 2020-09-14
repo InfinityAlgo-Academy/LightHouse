@@ -162,7 +162,7 @@ declare global {
         message: string;
       }
 
-      export interface AxeResult {
+      export interface AxeRuleResult {
         id: string;
         impact: string;
         tags: Array<string>;
@@ -181,9 +181,9 @@ declare global {
       }
 
       export interface Accessibility {
-        violations: Array<AxeResult>;
-        notApplicable: Array<Pick<AxeResult, 'id'>>;
-        incomplete: Array<AxeResult>;
+        violations: Array<AxeRuleResult>;
+        notApplicable: Array<Pick<AxeRuleResult, 'id'>>;
+        incomplete: Array<AxeRuleResult>;
         version: string;
       }
 
