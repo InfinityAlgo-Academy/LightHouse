@@ -12,6 +12,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const assert = require('assert').strict;
 const mkdir = fs.promises.mkdir;
 
 const LighthouseRunner = require('../lighthouse-core/runner.js');
@@ -39,7 +40,8 @@ const locales = fs.readdirSync(__dirname + '/../lighthouse-core/lib/i18n/locales
 const pubAdsAudits = require('lighthouse-plugin-publisher-ads/plugin.js').audits.map(a => a.path);
 
 /** @param {string} file */
-const isDevtools = file => path.basename(file).includes('devtools');
+const isDevtools = file =>
+  path.basename(file).includes('devtools') || path.basename(file).endsWith('dt-bundle.js');
 /** @param {string} file */
 const isLightrider = file => path.basename(file).includes('lightrider');
 
@@ -143,7 +145,13 @@ function minifyScript(filePath) {
     // sourceMaps: 'both'
   };
 
-  const minified = BANNER + babel.transformFileSync(filePath, opts).code;
+  // Add the banner and modify globals for DevTools if necessary
+  let minified = BANNER + babel.transformFileSync(filePath, opts).code;
+  if (isDevtools(filePath)) {
+    assert.ok(minified.includes('\nrequire='), 'missing browserify require stub');
+    minified = minified.replace('\nrequire=', '\nglobalThis.require=');
+    assert.ok(!minified.includes('\nrequire='), 'contained unexpected browserify require stub');
+  }
   fs.writeFileSync(filePath, minified);
 }
 
