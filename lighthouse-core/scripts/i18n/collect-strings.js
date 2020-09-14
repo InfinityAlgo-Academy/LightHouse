@@ -464,7 +464,9 @@ function createPsuedoLocaleStrings(messages) {
  * @return {string}
  */
 function getIdentifier(node) {
-  if (!node.name || !tsc.isIdentifier(node.name)) throw new Error('no Identifier found');
+  if (!node.name || !(tsc.isIdentifier(node.name) || tsc.isStringLiteral(node.name))) {
+    throw new Error('no Identifier found');
+  }
 
   return node.name.text;
 }
@@ -629,7 +631,7 @@ if (require.main === module) {
 
   if (collisions > 0) {
     console.log(`MEANING COLLISION: ${collisions} string(s) have the same content.`);
-    assert.equal(collisions, 16, `The number of duplicate strings have changed, update this assertion if that is expected, or reword strings. Collisions: ${collisionStrings}`);
+    assert.equal(collisions, 21, `The number of duplicate strings have changed, update this assertion if that is expected, or reword strings. Collisions: ${collisionStrings}`);
   }
 
   writeStringsToCtcFiles('en-US', strings);

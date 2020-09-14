@@ -5425,10 +5425,10 @@ lighthouse-plugin-publisher-ads@^1.2.0:
     intl-messageformat "^4.1.2"
     yargs "^13.3.0"
 
-lighthouse-stack-packs@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/lighthouse-stack-packs/-/lighthouse-stack-packs-1.0.0.tgz#e31ae871c775da1a121bab968c9b4a13ec599a23"
-  integrity sha512-6btAhPYM7+ZisPymQP07QHOCMkYE6kjBeOFB1oS0mIuk1+WhClSdT5ri3sv6jQrS/xablpfWtJf3R23HCoHr2w==
+lighthouse-stack-packs@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/lighthouse-stack-packs/-/lighthouse-stack-packs-1.2.0.tgz#6cc1571c0ad3549dc0ffca55e9e195b3671b176a"
+  integrity sha512-AyXXDmZJR4mlPLMeXwhK09Xfgky5JIxPUaJA8f6R8zlVhPd1rPaBlGR2GdsOHT9pgRuAcj6sxEQVi3JOlxCrPg==
 
 lines-and-columns@^1.1.6:
   version "1.1.6"
