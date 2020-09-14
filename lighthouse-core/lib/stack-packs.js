@@ -32,6 +32,10 @@ const stackPacksToInclude = [
     requiredStacks: ['js:wordpress'],
   },
   {
+    packId: 'drupal',
+    requiredStacks: ['js:drupal'],
+  },
+  {
     packId: 'react',
     requiredStacks: ['js:react'],
   },
