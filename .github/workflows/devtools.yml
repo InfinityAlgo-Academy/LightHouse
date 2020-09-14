@@ -23,7 +23,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         path: lighthouse
-    
+
     # Caches last ~week, so CI will refresh these dependencies that often.
     - name: Cache depot tools, devtools, blink tools and content shell
       uses: actions/cache@v2
@@ -33,7 +33,7 @@ jobs:
           ${{ env.DEVTOOLS_PATH }}
           ${{ env.BLINK_TOOLS_PATH }}
           ${{ github.workspace }}/lighthouse/.tmp/chromium-web-tests/content-shells
-        key: ${{ runner.os }}-${{ hashFiles('lighthouse/lighthouse-core/test/chromium-web-tests/download-*') }}
+        key: ${{ runner.os }}-${{ hashFiles('lighthouse/.github/workflows/devtools.yml', 'lighthouse/lighthouse-core/test/chromium-web-tests/download-*', 'lighthouse/clients/devtools-entry.js', 'lighthouse/clients/devtools-report-assets.js', 'lighthouse/build/build-bundle.js', 'lighthouse/build/build-dt-report-resources.js') }}
 
     - name: Use Node.js 10.x
       uses: actions/setup-node@v1
