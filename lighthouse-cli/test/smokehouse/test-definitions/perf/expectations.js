@@ -172,7 +172,6 @@ module.exports = [
       TraceElements: [
         {
           traceEventType: 'largest-contentful-paint',
-          selector: 'body > div#late-content > img',
           nodeLabel: 'img',
           snippet: '<img src="../dobetterweb/lighthouse-480x318.jpg">',
           boundingRect: {
@@ -201,7 +200,6 @@ module.exports = [
         },
         {
           traceEventType: 'layout-shift',
-          selector: 'body > div#late-content > div',
           nodeLabel: 'Sorry!',
           snippet: '<div style="height: 18px;">',
           boundingRect: {
@@ -254,7 +252,7 @@ module.exports = [
                 node: {
                   type: 'node',
                   nodeLabel: 'img',
-                  selector: 'body > div#late-content > img',
+                  path: '0,HTML,1,BODY,1,DIV,a,#document-fragment,0,SECTION,0,IMG',
                 },
               },
             ],

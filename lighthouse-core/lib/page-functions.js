@@ -229,14 +229,25 @@ function computeBenchmarkIndex() {
 
 /**
  * Adapted from DevTools' SDK.DOMNode.prototype.path
- *   https://github.com/ChromeDevTools/devtools-frontend/blob/7a2e162ddefd/front_end/sdk/DOMModel.js#L530-L552
- * TODO: Doesn't handle frames or shadow roots...
+ *   https://github.com/ChromeDevTools/devtools-frontend/blob/4fff931bb/front_end/sdk/DOMModel.js#L625-L647
+ * Backend: https://source.chromium.org/search?q=f:node.cc%20symbol:PrintNodePathTo&sq=&ss=chromium%2Fchromium%2Fsrc
+ *
+ * TODO: DevTools nodePath handling doesn't support iframes, but probably could. https://crbug.com/1127635
  * @param {Node} node
  */
 /* istanbul ignore next */
 function getNodePath(node) {
+  // For our purposes, there's no worthwhile difference between shadow root and document fragment
+  // We can consider them entirely synonymous.
+  const isShadowRoot = node => node.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
+  const getNodeParent = node => isShadowRoot(node) ? node.host : node.parentNode;
+
   /** @param {Node} node */
   function getNodeIndex(node) {
+    if (isShadowRoot(node)) {
+      // User-agent shadow roots get 'u'. Non-UA shadow roots get 'a'.
+      return 'a';
+    }
     let index = 0;
     let prevNode;
     while (prevNode = node.previousSibling) {
@@ -249,10 +260,10 @@ function getNodePath(node) {
   }
 
   const path = [];
-  while (node && node.parentNode) {
+  while (node && getNodeParent(node)) {
     const index = getNodeIndex(node);
     path.push([index, node.nodeName]);
-    node = node.parentNode;
+    node = getNodeParent(node);
   }
   path.reverse();
   return path.join(',');
@@ -261,6 +272,14 @@ function getNodePath(node) {
 /**
  * @param {Element} node
  * @return {string}
+ *
+ * Note: CSS Selectors having no standard mechanism to describe shadow DOM piercing. So we can't.
+ *
+ * If the node resides within shadow DOM, the selector *only* starts from the shadow root.
+ * For example, consider this img within a <section> within a shadow root..
+ *  - DOM: <html> <body> <div> #shadow-root <section> <img/>
+ *  - nodePath: 0,HTML,1,BODY,1,DIV,a,#document-fragment,0,SECTION,0,IMG
+ *  - nodeSelector: section > img
  */
 /* istanbul ignore next */
 function getNodeSelector(node) {
