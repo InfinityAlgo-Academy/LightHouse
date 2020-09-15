@@ -17,6 +17,19 @@ commit_catapult="95c1f426155576790a73778571c34a0f3cd6d608"
 
 VERSIONED_DIR="$BLINK_TOOLS_PATH/$commit_chromium$commit_catapult"
 
+if ! type -P wget; then
+  echo "wget could not be found"
+  exit 1
+fi
+if ! type -P tar; then
+  echo "tar could not be found"
+  exit 1
+fi
+if ! type -P git; then
+  echo "git could not be found"
+  exit 1
+fi
+
 if [ -e "$VERSIONED_DIR" ]; then
   echo "cached blink tools found"
 else
