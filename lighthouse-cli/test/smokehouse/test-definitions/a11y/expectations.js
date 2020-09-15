@@ -419,22 +419,24 @@ const expectations = [
             ],
           },
         },
-        'label': {
-          score: 0,
-          details: {
-            items: [
-              {
-                node: {
-                  'type': 'node',
-                  'selector': '#label',
-                  'snippet': '<input id="label" type="text">',
-                  'explanation': 'Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty',
-                  'nodeLabel': 'input',
-                },
-              },
-            ],
-          },
-        },
+        // TODO(paulirish): restore when we stop using --enable-features=AutofillShowTypePredictions
+        // See https://github.com/GoogleChrome/lighthouse/pull/11342
+        // 'label': {
+        //   score: 0,
+        //   details: {
+        //     items: [
+        //       {
+        //         node: {
+        //           'type': 'node',
+        //           'selector': '#label',
+        //           'snippet': '<input id="label" type="text">',
+        //           'explanation': 'Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty',
+        //           'nodeLabel': 'input',
+        //         },
+        //       },
+        //     ],
+        //   },
+        // },
         'layout-table': {
           score: 1,
           details: {

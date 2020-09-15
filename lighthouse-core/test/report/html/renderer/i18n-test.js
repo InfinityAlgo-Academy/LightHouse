@@ -47,6 +47,8 @@ describe('util helpers', () => {
     const i18n = new I18n('en', {...Util.UIStrings});
     assert.equal(i18n.formatMilliseconds(123), `120${NBSP}ms`);
     assert.equal(i18n.formatMilliseconds(2456.5, 0.1), `2,456.5${NBSP}ms`);
+    assert.equal(i18n.formatMilliseconds(0.000001), `0${NBSP}ms`);
+    assert.equal(i18n.formatMilliseconds(-0.000001), `0${NBSP}ms`);
   });
 
   it('formats a duration', () => {

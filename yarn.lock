@@ -2872,10 +2872,10 @@ detective@^5.0.2:
     defined "^1.0.0"
     minimist "^1.1.1"
 
-devtools-protocol@0.0.770484:
-  version "0.0.770484"
-  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.770484.tgz#e7e779431903c7295fd6c5cb118193f74502b9da"
-  integrity sha512-R99WYb9iVcUAjWBK+1DNpqKDsK/LKfBr+u6AJjTHrydqi2TRywZQs90R2tnI1nCzd7HlLrAnM9Yw4mjIAaokLQ==
+devtools-protocol@0.0.801017:
+  version "0.0.801017"
+  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.801017.tgz#340754ebff17b73ddea1b15716ec53887261372c"
+  integrity sha512-vsOhv/pe1CV3yO3d8ZCRuLlu9FY0Kw4P5TVIC6htjyVfNeklCpFmUrEfvY0ju/y9dyAgwiOhe7pcreRh4/EaZw==
 
 diff-sequences@^24.9.0:
   version "24.9.0"
@@ -5106,10 +5106,10 @@ jpeg-js@^0.4.1:
   resolved "https://registry.yarnpkg.com/jpeg-js/-/jpeg-js-0.4.1.tgz#937a3ae911eb6427f151760f8123f04c8bfe6ef7"
   integrity sha512-jA55yJiB5tCXEddos8JBbvW+IMrqY0y1tjjx9KNVtA+QPmu7ND5j0zkKopClpUTsaETL135uOM2XfcYG4XRjmw==
 
-js-library-detector@^5.7.0:
-  version "5.7.0"
-  resolved "https://registry.yarnpkg.com/js-library-detector/-/js-library-detector-5.7.0.tgz#27199e0728273de9333d69b2be92f144cad94380"
-  integrity sha512-pUHR7ryXqiew2agkQ3NppopqJDi5qkJtI86PyQ9LLtg1iGzwIsMz+QNq3ky5bPogSie7AkL/xvcObXu3Veh61Q==
+js-library-detector@^5.9.0:
+  version "5.9.0"
+  resolved "https://registry.yarnpkg.com/js-library-detector/-/js-library-detector-5.9.0.tgz#ad0add7f4991424326895b273e774876555d0e1b"
+  integrity sha512-0wYHRVJv8uVsylJhfQQaH2vOBYGehyZyJbtaHuchoTP3Mb6hqYvrA0hoMQ1ZhARLHzHJMbMc/nCr4D3pTNSCgw==
 
 js-tokens@^1.0.1:
   version "1.0.3"
@@ -5424,6 +5424,11 @@ lighthouse-plugin-publisher-ads@^1.2.0:
     esprima "^4.0.1"
     intl-messageformat "^4.1.2"
     yargs "^13.3.0"
+
+lighthouse-stack-packs@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/lighthouse-stack-packs/-/lighthouse-stack-packs-1.2.0.tgz#6cc1571c0ad3549dc0ffca55e9e195b3671b176a"
+  integrity sha512-AyXXDmZJR4mlPLMeXwhK09Xfgky5JIxPUaJA8f6R8zlVhPd1rPaBlGR2GdsOHT9pgRuAcj6sxEQVi3JOlxCrPg==
 
 lines-and-columns@^1.1.6:
   version "1.1.6"

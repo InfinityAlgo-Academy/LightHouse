@@ -139,7 +139,7 @@ function requireAudits(audits, configDir) {
       let requirePath = `../audits/${audit.path}`;
       if (!coreAudit) {
         // TODO: refactor and delete `global.isDevtools`.
-        if (global.isDevtools) {
+        if (global.isDevtools || global.isLightrider) {
           // This is for pubads bundling.
           requirePath = audit.path;
         } else {

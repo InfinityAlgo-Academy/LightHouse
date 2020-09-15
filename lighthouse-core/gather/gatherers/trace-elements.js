@@ -218,7 +218,7 @@ class TraceElements extends Gatherer {
       animationPairs.set(local, pair);
     }
 
-    /** @type Map<number, Set<{animationId: string, failureReasonsMask?: number, unsupportedProperties?: string[]}>> */
+    /** @type {Map<number, Set<{animationId: string, failureReasonsMask?: number, unsupportedProperties?: string[]}>>} */
     const elementAnimations = new Map();
     for (const {begin, status} of animationPairs.values()) {
       const nodeId = this.getNodeIDFromTraceEvent(begin);
@@ -231,7 +231,7 @@ class TraceElements extends Gatherer {
       elementAnimations.set(nodeId, animationIds);
     }
 
-    /** @type Array<TraceElementData> */
+    /** @type {Array<TraceElementData>} */
     const animatedElementData = [];
     for (const [nodeId, animationIds] of elementAnimations) {
       const animations = [];
@@ -270,7 +270,7 @@ class TraceElements extends Gatherer {
     const animatedElementData =
       await TraceElements.getAnimatedElements(passContext, mainThreadEvents);
 
-    /** @type Map<string, TraceElementData[]> */
+    /** @type {Map<string, TraceElementData[]>} */
     const backendNodeDataMap = new Map([
       ['largest-contentful-paint', lcpNodeId ? [{nodeId: lcpNodeId}] : []],
       ['layout-shift', clsNodeData],

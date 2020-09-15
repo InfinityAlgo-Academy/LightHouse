@@ -96,22 +96,18 @@ class HTTPS extends Audit {
       /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
         {key: 'url', itemType: 'url', text: str_(UIStrings.columnInsecureURL)},
+        {key: 'resolution', itemType: 'text', text: str_(UIStrings.columnResolution)},
       ];
 
-      // Mixed-content issues aren't emitted until M84.
-      if (artifacts.InspectorIssues.mixedContent.length) {
-        headings.push(
-          {key: 'resolution', itemType: 'text', text: str_(UIStrings.columnResolution)});
-        for (const details of artifacts.InspectorIssues.mixedContent) {
-          let item = items.find(item => item.url === details.insecureURL);
-          if (!item) {
-            item = {url: details.insecureURL};
-            items.push(item);
-          }
-          item.resolution = resolutionToString[details.resolutionStatus] ?
-            str_(resolutionToString[details.resolutionStatus]) :
-            details.resolutionStatus;
+      for (const details of artifacts.InspectorIssues.mixedContent) {
+        let item = items.find(item => item.url === details.insecureURL);
+        if (!item) {
+          item = {url: details.insecureURL};
+          items.push(item);
         }
+        item.resolution = resolutionToString[details.resolutionStatus] ?
+          str_(resolutionToString[details.resolutionStatus]) :
+          details.resolutionStatus;
       }
 
       // If a resolution wasn't assigned from an InspectorIssue, then the item
