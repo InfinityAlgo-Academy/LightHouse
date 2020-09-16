@@ -14,7 +14,7 @@ const pageFunctions = require('../../lib/page-functions.js');
 const Driver = require('../driver.js'); // eslint-disable-line no-unused-vars
 const FontSize = require('./seo/font-size.js');
 
-/* global window, getElementsInDocument, Image, getNodePath, getNodeSelector, getNodeLabel, getOuterHTMLSnippet, ShadowRoot */
+/* global window, getElementsInDocument, Image, getNodeDetails, ShadowRoot */
 
 
 /** @param {Element} element */
@@ -86,14 +86,8 @@ function getHTMLImages(allElements) {
       isInShadowDOM: element.getRootNode() instanceof ShadowRoot,
       // https://html.spec.whatwg.org/multipage/images.html#pixel-density-descriptor
       usesSrcSetDensityDescriptor: / \d+(\.\d+)?x/.test(element.srcset),
-      // @ts-ignore - getNodePath put into scope via stringification
-      devtoolsNodePath: getNodePath(element),
-      // @ts-ignore - put into scope via stringification
-      selector: getNodeSelector(element),
-      // @ts-ignore - put into scope via stringification
-      nodeLabel: getNodeLabel(element),
-      // @ts-ignore - put into scope via stringification
-      snippet: getOuterHTMLSnippet(element),
+      // @ts-expect-error - getNodeDetails put into scope via stringification
+      ...getNodeDetails(element),
     };
   });
 }
@@ -143,14 +137,8 @@ function getCSSImages(allElements) {
       ),
       usesSrcSetDensityDescriptor: false,
       resourceSize: 0, // this will get overwritten below
-      // @ts-ignore - getNodePath put into scope via stringification
-      devtoolsNodePath: getNodePath(element),
-      // @ts-ignore - put into scope via stringification
-      selector: getNodeSelector(element),
-      // @ts-ignore - put into scope via stringification
-      nodeLabel: getNodeLabel(element),
-      // @ts-ignore - put into scope via stringification
-      snippet: getOuterHTMLSnippet(element),
+      // @ts-expect-error - getNodeDetails put into scope via stringification
+      ...getNodeDetails(element),
     });
   }
 
@@ -312,10 +300,8 @@ class ImageElements extends Gatherer {
 
     const expression = `(function() {
       ${pageFunctions.getElementsInDocumentString}; // define function on page
-      ${pageFunctions.getNodePathString};
-      ${pageFunctions.getNodeSelectorString};
-      ${pageFunctions.getNodeLabelString};
-      ${pageFunctions.getOuterHTMLSnippetString};
+      ${pageFunctions.getBoundingClientRectString};
+      ${pageFunctions.getNodeDetailsString};
       ${getClientRect.toString()};
       ${getPosition.toString()};
       ${getHTMLImages.toString()};

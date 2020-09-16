@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* global document, window, getComputedStyle, getBoundingClientRect, getElementsInDocument, Node, getNodePath, getNodeSelector, getNodeLabel */
+/* global document, window, getComputedStyle, getElementsInDocument, Node, getNodeDetails */
 
 const Gatherer = require('../gatherer.js');
 const pageFunctions = require('../../../lib/page-functions.js');
@@ -142,19 +142,6 @@ function elementIsInTextBlock(element) {
 }
 
 /**
- * @param {string} str
- * @param {number} maxLength
- * @return {string}
- */
-/* istanbul ignore next */
-function truncate(str, maxLength) {
-  if (str.length <= maxLength) {
-    return str;
-  }
-  return str.slice(0, maxLength - 1) + '…';
-}
-
-/**
  * @param {Element} el
  * @param {{x: number, y: number}} elCenterPoint
  */
@@ -283,16 +270,9 @@ function gatherTapTargets() {
   for (const {tapTargetElement, visibleClientRects} of tapTargetsWithVisibleClientRects) {
     targets.push({
       clientRects: visibleClientRects,
-      // @ts-expect-error - getBoundingClientRect put into scope via stringification
-      boundingRect: getBoundingClientRect(tapTargetElement),
-      snippet: truncate(tapTargetElement.outerHTML, 300),
-      // @ts-expect-error - getNodePath put into scope via stringification
-      path: getNodePath(tapTargetElement),
-      // @ts-expect-error - getNodeSelector put into scope via stringification
-      selector: getNodeSelector(tapTargetElement),
-      // @ts-expect-error - getNodeLabel put into scope via stringification
-      nodeLabel: getNodeLabel(tapTargetElement),
       href: /** @type {HTMLAnchorElement} */(tapTargetElement)['href'] || '',
+      // @ts-expect-error - getNodeDetails put into scope via stringification
+      ...getNodeDetails(tapTargetElement),
     });
   }
 
@@ -314,18 +294,14 @@ class TapTargets extends Gatherer {
       ${elementIsVisible.toString()};
       ${elementHasAncestorTapTarget.toString()};
       ${elementCenterIsAtZAxisTop.toString()}
-      ${truncate.toString()};
       ${getClientRects.toString()};
       ${hasTextNodeSiblingsFormingTextBlock.toString()};
       ${elementIsInTextBlock.toString()};
-      ${pageFunctions.getBoundingClientRectString};
       ${getRectArea.toString()};
       ${getLargestRect.toString()};
       ${getRectCenterPoint.toString()};
       ${rectContains.toString()};
-      ${pageFunctions.getNodePathString};
-      ${pageFunctions.getNodeSelectorString};
-      ${pageFunctions.getNodeLabelString};
+      ${pageFunctions.getNodeDetailsString};
       ${gatherTapTargets.toString()};
 
       return gatherTapTargets();

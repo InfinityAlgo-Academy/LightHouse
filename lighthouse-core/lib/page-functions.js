@@ -439,6 +439,21 @@ function wrapRequestIdleCallback(cpuSlowdownMultiplier) {
   };
 }
 
+const getNodeDetailsString = `function getNodeDetails(elem) {
+  ${getNodePath.toString()};
+  ${getNodeSelector.toString()};
+  ${getBoundingClientRect.toString()};
+  ${getOuterHTMLSnippet.toString()};
+  ${getNodeLabel.toString()};
+  return {
+    devtoolsNodePath: getNodePath(elem),
+    selector: getNodeSelector(elem),
+    boundingRect: getBoundingClientRect(elem),
+    snippet: getOuterHTMLSnippet(elem),
+    nodeLabel: getNodeLabel(elem),
+  };
+}`;
+
 module.exports = {
   wrapRuntimeEvalErrorInBrowserString: wrapRuntimeEvalErrorInBrowser.toString(),
   registerPerformanceObserverInPageString: registerPerformanceObserverInPage.toString(),
@@ -448,6 +463,7 @@ module.exports = {
   getOuterHTMLSnippet: getOuterHTMLSnippet,
   computeBenchmarkIndex: computeBenchmarkIndex,
   computeBenchmarkIndexString: computeBenchmarkIndex.toString(),
+  getNodeDetailsString,
   getNodePathString: getNodePath.toString(),
   getNodeSelectorString: getNodeSelector.toString(),
   getNodeSelector: getNodeSelector,

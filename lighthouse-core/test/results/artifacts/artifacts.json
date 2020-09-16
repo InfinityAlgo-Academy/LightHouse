@@ -1312,7 +1312,7 @@
               "h2"
             ],
             "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 18.0pt, font weight: bold). Expected contrast ratio of 3:1",
-            "path": "3,HTML,1,BODY,5,DIV,0,H2",
+            "devtoolsNodePath": "3,HTML,1,BODY,5,DIV,0,H2",
             "snippet": "<h2>",
             "boundingRect": {
               "width": 396,
@@ -1331,7 +1331,7 @@
               "span"
             ],
             "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 12.0pt, font weight: normal). Expected contrast ratio of 4.5:1",
-            "path": "3,HTML,1,BODY,5,DIV,1,SPAN",
+            "devtoolsNodePath": "3,HTML,1,BODY,5,DIV,1,SPAN",
             "snippet": "<span>",
             "boundingRect": {
               "width": 57,
@@ -1364,7 +1364,7 @@
               "html"
             ],
             "failureSummary": "Fix any of the following:\n  The <html> element does not have a lang attribute",
-            "path": "3,HTML",
+            "devtoolsNodePath": "3,HTML",
             "snippet": "<html manifest=\"clock.appcache\">",
             "boundingRect": {
               "width": 412,
@@ -1399,7 +1399,7 @@
               "img[height=\"\\35 7\"]"
             ],
             "failureSummary": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-            "path": "3,HTML,1,BODY,10,IMG",
+            "devtoolsNodePath": "3,HTML,1,BODY,10,IMG",
             "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"57\">",
             "boundingRect": {
               "width": 480,
@@ -1418,7 +1418,7 @@
               "img[height=\"\\33 18\"]"
             ],
             "failureSummary": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-            "path": "3,HTML,1,BODY,12,IMG",
+            "devtoolsNodePath": "3,HTML,1,BODY,12,IMG",
             "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"318\">",
             "boundingRect": {
               "width": 480,
@@ -1437,7 +1437,7 @@
               "img[src$=\"lighthouse-rotating\\.gif\"]"
             ],
             "failureSummary": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-            "path": "3,HTML,1,BODY,14,IMG",
+            "devtoolsNodePath": "3,HTML,1,BODY,14,IMG",
             "snippet": "<img src=\"lighthouse-rotating.gif\" width=\"811\" height=\"462\">",
             "boundingRect": {
               "width": 811,
@@ -1456,7 +1456,7 @@
               "img:nth-child(30)"
             ],
             "failureSummary": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-            "path": "3,HTML,1,BODY,53,IMG",
+            "devtoolsNodePath": "3,HTML,1,BODY,53,IMG",
             "snippet": "<img src=\"blob:http://localhost:54759/41e77cc6-8eb2-49d5-a819-7edf852531be\">",
             "boundingRect": {
               "width": 16,
@@ -1492,7 +1492,7 @@
               "input[onpaste=\"event\\.preventDefault\\(\\)\\;\"]"
             ],
             "failureSummary": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
-            "path": "3,HTML,1,BODY,48,INPUT",
+            "devtoolsNodePath": "3,HTML,1,BODY,48,INPUT",
             "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">",
             "boundingRect": {
               "width": 131,
@@ -1511,7 +1511,7 @@
               "input:nth-child(28)"
             ],
             "failureSummary": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
-            "path": "3,HTML,1,BODY,50,INPUT",
+            "devtoolsNodePath": "3,HTML,1,BODY,50,INPUT",
             "snippet": "<input type=\"password\">",
             "boundingRect": {
               "width": 131,
@@ -1530,7 +1530,7 @@
               "input[onpaste=\"return\\ false\\;\"]"
             ],
             "failureSummary": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
-            "path": "3,HTML,1,BODY,52,INPUT",
+            "devtoolsNodePath": "3,HTML,1,BODY,52,INPUT",
             "snippet": "<input type=\"password\" onpaste=\"return false;\">",
             "boundingRect": {
               "width": 131,
@@ -1566,7 +1566,7 @@
               "a[href=\"javascript\\:void\\(0\\)\"]"
             ],
             "failureSummary": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-            "path": "3,HTML,1,BODY,44,A",
+            "devtoolsNodePath": "3,HTML,1,BODY,44,A",
             "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\">",
             "nodeLabel": "a"
           },
@@ -1577,7 +1577,7 @@
               "a[href$=\"mailto\\:inbox\\@email\\.com\"]"
             ],
             "failureSummary": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-            "path": "3,HTML,1,BODY,46,A",
+            "devtoolsNodePath": "3,HTML,1,BODY,46,A",
             "snippet": "<a href=\"mailto:inbox@email.com\" target=\"_blank\">",
             "nodeLabel": "a"
           }
@@ -1604,7 +1604,7 @@
               "#\\35 934a"
             ],
             "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-            "path": "3,HTML,1,BODY,2,OBJECT",
+            "devtoolsNodePath": "3,HTML,1,BODY,2,OBJECT",
             "snippet": "<object id=\"5934a\">",
             "boundingRect": {
               "width": 300,
@@ -1623,7 +1623,7 @@
               "#\\35 934b"
             ],
             "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-            "path": "3,HTML,1,BODY,3,OBJECT",
+            "devtoolsNodePath": "3,HTML,1,BODY,3,OBJECT",
             "snippet": "<object id=\"5934b\">",
             "boundingRect": {
               "width": 300,
@@ -1966,8 +1966,16 @@
       "target": "_blank",
       "devtoolsNodePath": "3,HTML,1,BODY,36,A",
       "selector": "body > a",
+      "boundingRect": {
+        "top": 1166,
+        "bottom": 1184,
+        "left": 91,
+        "right": 171,
+        "width": 80,
+        "height": 18
+      },
+      "snippet": "<a href=\"https://www.google.com/\" target=\"_blank\">",
       "nodeLabel": "external link",
-      "outerHTML": "<a href=\"https://www.google.com/\" target=\"_blank\">",
       "listeners": []
     },
     {
@@ -1981,8 +1989,16 @@
       "target": "_blank",
       "devtoolsNodePath": "3,HTML,1,BODY,38,A",
       "selector": "body > a",
+      "boundingRect": {
+        "top": 1166,
+        "bottom": 1184,
+        "left": 175,
+        "right": 255,
+        "width": 80,
+        "height": 18
+      },
+      "snippet": "<a target=\"_blank\">",
       "nodeLabel": "external link",
-      "outerHTML": "<a target=\"_blank\">",
       "listeners": []
     },
     {
@@ -1996,8 +2012,16 @@
       "target": "_blank",
       "devtoolsNodePath": "3,HTML,1,BODY,40,A",
       "selector": "body > a",
+      "boundingRect": {
+        "top": 1166,
+        "bottom": 1184,
+        "left": 259,
+        "right": 340,
+        "width": 80,
+        "height": 18
+      },
+      "snippet": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"nofollow\">",
       "nodeLabel": "external link",
-      "outerHTML": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"nofollow\">",
       "listeners": []
     },
     {
@@ -2011,8 +2035,16 @@
       "target": "_blank",
       "devtoolsNodePath": "3,HTML,1,BODY,42,A",
       "selector": "body > a",
+      "boundingRect": {
+        "top": 1184,
+        "bottom": 1220,
+        "left": 8,
+        "right": 311,
+        "width": 303,
+        "height": 36
+      },
+      "snippet": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"noopener nofollow\">",
       "nodeLabel": "external link that uses rel noopener and another unrelated rel attribute",
-      "outerHTML": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"noopener nofollow\">",
       "listeners": []
     },
     {
@@ -2026,8 +2058,16 @@
       "target": "_blank",
       "devtoolsNodePath": "3,HTML,1,BODY,44,A",
       "selector": "body > a",
+      "boundingRect": {
+        "top": 1202,
+        "bottom": 1238,
+        "left": 8,
+        "right": 311,
+        "width": 303,
+        "height": 36
+      },
+      "snippet": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"noreferrer nofollow\">",
       "nodeLabel": "external link that uses rel noreferrer and another unrelated rel attribute",
-      "outerHTML": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"noreferrer nofollow\">",
       "listeners": []
     },
     {
@@ -2041,8 +2081,16 @@
       "target": "_blank",
       "devtoolsNodePath": "3,HTML,1,BODY,46,A",
       "selector": "body > a",
+      "boundingRect": {
+        "top": 1220,
+        "bottom": 1256,
+        "left": 8,
+        "right": 348,
+        "width": 340,
+        "height": 36
+      },
+      "snippet": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"noopener\">",
       "nodeLabel": "external link that uses rel noopener",
-      "outerHTML": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"noopener\">",
       "listeners": []
     },
     {
@@ -2056,8 +2104,16 @@
       "target": "_blank",
       "devtoolsNodePath": "3,HTML,1,BODY,48,A",
       "selector": "body > a",
+      "boundingRect": {
+        "top": 1238,
+        "bottom": 1274,
+        "left": 8,
+        "right": 342,
+        "width": 334,
+        "height": 36
+      },
+      "snippet": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"noreferrer\">",
       "nodeLabel": "external link that uses rel noreferrer",
-      "outerHTML": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"noreferrer\">",
       "listeners": []
     },
     {
@@ -2071,12 +2127,20 @@
       "target": "_blank",
       "devtoolsNodePath": "3,HTML,1,BODY,50,A",
       "selector": "body > a",
+      "boundingRect": {
+        "top": 1256,
+        "bottom": 1293,
+        "left": 8,
+        "right": 327,
+        "width": 319,
+        "height": 37
+      },
+      "snippet": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"noopener noreferrer\">",
       "nodeLabel": "external link that uses rel noopener and noreferrer",
-      "outerHTML": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"noopener noreferrer\">",
       "listeners": []
     },
     {
-      "href": "http://localhost:53133/dobetterweb/doesnotexist",
+      "href": "http://localhost:53522/dobetterweb/doesnotexist",
       "rawHref": "./doesnotexist",
       "onclick": "",
       "role": "",
@@ -2086,8 +2150,16 @@
       "target": "_blank",
       "devtoolsNodePath": "3,HTML,1,BODY,52,A",
       "selector": "body > a",
+      "boundingRect": {
+        "top": 1275,
+        "bottom": 1293,
+        "left": 76,
+        "right": 188,
+        "width": 112,
+        "height": 18
+      },
+      "snippet": "<a href=\"./doesnotexist\" target=\"_blank\">",
       "nodeLabel": "internal link is ok",
-      "outerHTML": "<a href=\"./doesnotexist\" target=\"_blank\">",
       "listeners": []
     },
     {
@@ -2101,8 +2173,16 @@
       "target": "_blank",
       "devtoolsNodePath": "3,HTML,1,BODY,54,A",
       "selector": "body > a",
+      "boundingRect": {
+        "top": 1275,
+        "bottom": 1293,
+        "left": 192,
+        "right": 192,
+        "width": 0,
+        "height": 18
+      },
+      "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\">",
       "nodeLabel": "a",
-      "outerHTML": "<a href=\"javascript:void(0)\" target=\"_blank\">",
       "listeners": []
     },
     {
@@ -2116,8 +2196,16 @@
       "target": "_blank",
       "devtoolsNodePath": "3,HTML,1,BODY,56,A",
       "selector": "body > a",
+      "boundingRect": {
+        "top": 1275,
+        "bottom": 1293,
+        "left": 192,
+        "right": 192,
+        "width": 0,
+        "height": 18
+      },
+      "snippet": "<a href=\"mailto:inbox@email.com\" target=\"_blank\">",
       "nodeLabel": "a",
-      "outerHTML": "<a href=\"mailto:inbox@email.com\" target=\"_blank\">",
       "listeners": []
     }
   ],
@@ -2387,7 +2475,7 @@
         }
       ],
       "snippet": "<button class=\"small-button\">Do something</button>",
-      "path": "3,HTML,1,BODY,17,BUTTON",
+      "devtoolsNodePath": "3,HTML,1,BODY,17,BUTTON",
       "selector": "body > button.small-button",
       "nodeLabel": "Do something",
       "href": ""
@@ -2404,7 +2492,7 @@
         }
       ],
       "snippet": "<button class=\"small-button\">Do something else</button>",
-      "path": "3,HTML,1,BODY,18,BUTTON",
+      "devtoolsNodePath": "3,HTML,1,BODY,18,BUTTON",
       "selector": "body > button.small-button",
       "nodeLabel": "Do something else",
       "href": ""
