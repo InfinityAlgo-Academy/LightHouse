@@ -59,7 +59,6 @@ function runA11yChecks() {
     // @ts-expect-error
     const augmentAxeNodes = result => {
       // @ts-expect-error
-
       result.nodes.forEach(node => {
         // @ts-expect-error - getNodeDetails put into scope via stringification
         Object.assign(node, getNodeDetails(node.element));

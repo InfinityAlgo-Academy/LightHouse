@@ -5,7 +5,7 @@
     "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4232.0 Safari/537.36",
     "benchmarkIndex": 1000,
     "credits": {
-      "axe-core": "2.1.1"
+      "axe-core": "3.5.5"
     }
   },
   "lighthouseVersion": "6.3.0",
@@ -2095,8 +2095,13 @@
       "id": "aria-allowed-attr",
       "title": "`[aria-*]` attributes match their roles",
       "description": "Each ARIA `role` supports a specific subset of `aria-*` attributes. Mismatching these invalidates the `aria-*` attributes. [Learn more](https://web.dev/aria-allowed-attr/).",
-      "score": null,
-      "scoreDisplayMode": "notApplicable"
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
     },
     "aria-hidden-body": {
       "id": "aria-hidden-body",
@@ -2114,58 +2119,20 @@
       "id": "aria-hidden-focus",
       "title": "`[aria-hidden=\"true\"]` elements do not contain focusable descendents",
       "description": "Focusable descendents within an `[aria-hidden=\"true\"]` element prevent those interactive elements from being available to users of assistive technologies like screen readers. [Learn more](https://web.dev/aria-hidden-focus/).",
-      "score": 1,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [],
-        "items": []
-      }
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
     },
     "aria-input-field-name": {
       "id": "aria-input-field-name",
       "title": "ARIA input fields have accessible names",
       "description": "When an input field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-input-field-name/).",
-      "score": 1,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [],
-        "items": []
-      }
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
     },
     "aria-required-attr": {
       "id": "aria-required-attr",
       "title": "`[role]`s have all required `[aria-*]` attributes",
       "description": "Some ARIA roles have required attributes that describe the state of the element to screen readers. [Learn more](https://web.dev/aria-required-attr/).",
-      "score": null,
-      "scoreDisplayMode": "notApplicable"
-    },
-    "aria-required-children": {
-      "id": "aria-required-children",
-      "title": "Elements with an ARIA `[role]` that require children to contain a specific `[role]` have all required children.",
-      "description": "Some ARIA parent roles must contain specific child roles to perform their intended accessibility functions. [Learn more](https://web.dev/aria-required-children/).",
-      "score": null,
-      "scoreDisplayMode": "notApplicable"
-    },
-    "aria-required-parent": {
-      "id": "aria-required-parent",
-      "title": "`[role]`s are contained by their required parent element",
-      "description": "Some ARIA child roles must be contained by specific parent roles to properly perform their intended accessibility functions. [Learn more](https://web.dev/aria-required-parent/).",
-      "score": null,
-      "scoreDisplayMode": "notApplicable"
-    },
-    "aria-roles": {
-      "id": "aria-roles",
-      "title": "`[role]` values are valid",
-      "description": "ARIA roles must have valid values in order to perform their intended accessibility functions. [Learn more](https://web.dev/aria-roles/).",
-      "score": null,
-      "scoreDisplayMode": "notApplicable"
-    },
-    "aria-toggle-field-name": {
-      "id": "aria-toggle-field-name",
-      "title": "ARIA toggle fields have accessible names",
-      "description": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-toggle-field-name/).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "details": {
@@ -2174,19 +2141,72 @@
         "items": []
       }
     },
+    "aria-required-children": {
+      "id": "aria-required-children",
+      "title": "Elements with an ARIA `[role]` that require children to contain a specific `[role]` have all required children.",
+      "description": "Some ARIA parent roles must contain specific child roles to perform their intended accessibility functions. [Learn more](https://web.dev/aria-required-children/).",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
+    },
+    "aria-required-parent": {
+      "id": "aria-required-parent",
+      "title": "`[role]`s are contained by their required parent element",
+      "description": "Some ARIA child roles must be contained by specific parent roles to properly perform their intended accessibility functions. [Learn more](https://web.dev/aria-required-parent/).",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
+    },
+    "aria-roles": {
+      "id": "aria-roles",
+      "title": "`[role]` values are valid",
+      "description": "ARIA roles must have valid values in order to perform their intended accessibility functions. [Learn more](https://web.dev/aria-roles/).",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
+    },
+    "aria-toggle-field-name": {
+      "id": "aria-toggle-field-name",
+      "title": "ARIA toggle fields have accessible names",
+      "description": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-toggle-field-name/).",
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
+    },
     "aria-valid-attr-value": {
       "id": "aria-valid-attr-value",
       "title": "`[aria-*]` attributes have valid values",
       "description": "Assistive technologies, like screen readers, can't interpret ARIA attributes with invalid values. [Learn more](https://web.dev/aria-valid-attr-value/).",
-      "score": null,
-      "scoreDisplayMode": "notApplicable"
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
     },
     "aria-valid-attr": {
       "id": "aria-valid-attr",
       "title": "`[aria-*]` attributes are valid and not misspelled",
       "description": "Assistive technologies, like screen readers, can't interpret ARIA attributes with invalid names. [Learn more](https://web.dev/aria-valid-attr/).",
-      "score": null,
-      "scoreDisplayMode": "notApplicable"
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
     },
     "button-name": {
       "id": "button-name",
@@ -2231,36 +2251,36 @@
           {
             "node": {
               "type": "node",
-              "selector": "h2",
-              "path": "3,HTML,1,BODY,5,DIV,0,H2",
+              "selector": "body > div > h2",
+              "path": "3,HTML,1,BODY,7,DIV,0,H2",
               "snippet": "<h2>",
               "boundingRect": {
-                "width": 396,
-                "height": 28,
-                "top": 335,
-                "right": 404,
-                "bottom": 363,
-                "left": 8
+                "top": 336,
+                "bottom": 364,
+                "left": 8,
+                "right": 352,
+                "width": 344,
+                "height": 28
               },
-              "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 18.0pt, font weight: bold). Expected contrast ratio of 3:1",
+              "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 18.0pt (24px), font weight: bold). Expected contrast ratio of 3:1",
               "nodeLabel": "Do better web tester page"
             }
           },
           {
             "node": {
               "type": "node",
-              "selector": "span",
-              "path": "3,HTML,1,BODY,5,DIV,1,SPAN",
+              "selector": "body > div > span",
+              "path": "3,HTML,1,BODY,7,DIV,1,SPAN",
               "snippet": "<span>",
               "boundingRect": {
-                "width": 57,
-                "height": 18,
-                "top": 383,
+                "top": 384,
+                "bottom": 402,
+                "left": 8,
                 "right": 65,
-                "bottom": 401,
-                "left": 8
+                "width": 57,
+                "height": 18
               },
-              "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 12.0pt, font weight: normal). Expected contrast ratio of 4.5:1",
+              "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1",
               "nodeLabel": "Hi there!"
             }
           }
@@ -2306,13 +2326,8 @@
       "id": "duplicate-id-active",
       "title": "`[id]` attributes on active, focusable elements are unique",
       "description": "All focusable elements must have a unique `id` to ensure that they're visible to assistive technologies. [Learn more](https://web.dev/duplicate-id-active/).",
-      "score": 1,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [],
-        "items": []
-      }
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
     },
     "duplicate-id-aria": {
       "id": "duplicate-id-aria",
@@ -2375,12 +2390,12 @@
               "path": "3,HTML",
               "snippet": "<html manifest=\"clock.appcache\">",
               "boundingRect": {
-                "width": 412,
-                "height": 1442,
                 "top": 0,
-                "right": 412,
-                "bottom": 1442,
-                "left": 0
+                "bottom": 1345,
+                "left": 0,
+                "right": 360,
+                "width": 360,
+                "height": 1345
               },
               "explanation": "Fix any of the following:\n  The <html> element does not have a lang attribute",
               "nodeLabel": "html"
@@ -2424,34 +2439,16 @@
           {
             "node": {
               "type": "node",
-              "selector": "img[height=\"\\35 7\"]",
-              "path": "3,HTML,1,BODY,10,IMG",
-              "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"57\">",
-              "boundingRect": {
-                "width": 480,
-                "height": 57,
-                "top": 419,
-                "right": 488,
-                "bottom": 476,
-                "left": 8
-              },
-              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-              "nodeLabel": "img"
-            }
-          },
-          {
-            "node": {
-              "type": "node",
-              "selector": "img[height=\"\\33 18\"]",
+              "selector": "body > img",
               "path": "3,HTML,1,BODY,12,IMG",
-              "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"318\">",
+              "snippet": "<img src=\"lighthouse-480x318.jpg?iar1\" width=\"120\" height=\"15\">",
               "boundingRect": {
-                "width": 480,
-                "height": 318,
-                "top": 480,
-                "right": 488,
-                "bottom": 798,
-                "left": 8
+                "top": 639,
+                "bottom": 654,
+                "left": 8,
+                "right": 128,
+                "width": 120,
+                "height": 15
               },
               "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "img"
@@ -2460,16 +2457,106 @@
           {
             "node": {
               "type": "node",
-              "selector": "img[src$=\"lighthouse-rotating\\.gif\"]",
+              "selector": "body > img",
               "path": "3,HTML,1,BODY,14,IMG",
+              "snippet": "<img src=\"lighthouse-480x318.jpg?iar2\" width=\"120\" height=\"80\">",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 654,
+                "left": 132,
+                "right": 252,
+                "width": 120,
+                "height": 80
+              },
+              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+              "nodeLabel": "img"
+            }
+          },
+          {
+            "node": {
+              "type": "node",
+              "selector": "body > img",
+              "path": "3,HTML,1,BODY,16,IMG",
+              "snippet": "<img src=\"lighthouse-480x318.jpg?isr1\" width=\"4800\" height=\"3180\" style=\"position: absolute;\">",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 3754,
+                "left": 252,
+                "right": 5052,
+                "width": 4800,
+                "height": 3180
+              },
+              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+              "nodeLabel": "img"
+            }
+          },
+          {
+            "node": {
+              "type": "node",
+              "selector": "body > img",
+              "path": "3,HTML,1,BODY,18,IMG",
+              "snippet": "<img src=\"lighthouse-480x318.jpg?isr2\" width=\"120\" height=\"80\" style=\"position: absolute;\">",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 654,
+                "left": 252,
+                "right": 372,
+                "width": 120,
+                "height": 80
+              },
+              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+              "nodeLabel": "img"
+            }
+          },
+          {
+            "node": {
+              "type": "node",
+              "selector": "body > img",
+              "path": "3,HTML,1,BODY,20,IMG",
+              "snippet": "<img src=\"lighthouse-480x318.jpg?isr3\" width=\"960\" height=\"636\" style=\"image-rendering: pixelated; position: absolute;\">",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 1210,
+                "left": 252,
+                "right": 1212,
+                "width": 960,
+                "height": 636
+              },
+              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+              "nodeLabel": "img"
+            }
+          },
+          {
+            "node": {
+              "type": "node",
+              "selector": "body > img",
+              "path": "3,HTML,1,BODY,22,IMG",
+              "snippet": "<img src=\"lighthouse-480x318.jpg?isr4\" srcset=\"lighthouse-480x318.jpg 2x\" width=\"960\" height=\"636\" style=\"position: absolute;\">",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 1210,
+                "left": 252,
+                "right": 1212,
+                "width": 960,
+                "height": 636
+              },
+              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+              "nodeLabel": "img"
+            }
+          },
+          {
+            "node": {
+              "type": "node",
+              "selector": "body > img",
+              "path": "3,HTML,1,BODY,24,IMG",
               "snippet": "<img src=\"lighthouse-rotating.gif\" width=\"811\" height=\"462\">",
               "boundingRect": {
-                "width": 811,
-                "height": 462,
-                "top": 802,
+                "top": 658,
+                "bottom": 1120,
+                "left": 8,
                 "right": 819,
-                "bottom": 1264,
-                "left": 8
+                "width": 811,
+                "height": 462
               },
               "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "img"
@@ -2478,16 +2565,34 @@
           {
             "node": {
               "type": "node",
-              "selector": "img:nth-child(30)",
-              "path": "3,HTML,1,BODY,53,IMG",
-              "snippet": "<img src=\"blob:http://localhost:54759/41e77cc6-8eb2-49d5-a819-7edf852531be\">",
+              "selector": "body > img",
+              "path": "3,HTML,1,BODY,63,IMG",
+              "snippet": "<img src=\"blob:http://localhost:53943/75859e89-fbad-4471-b196-9304adbb874a\">",
               "boundingRect": {
+                "top": 1295,
+                "bottom": 1311,
+                "left": 322,
+                "right": 338,
                 "width": 16,
-                "height": 16,
-                "top": 1413,
-                "right": 294,
-                "bottom": 1429,
-                "left": 278
+                "height": 16
+              },
+              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+              "nodeLabel": "img"
+            }
+          },
+          {
+            "node": {
+              "type": "node",
+              "selector": "body > img",
+              "path": "3,HTML,1,BODY,72,IMG",
+              "snippet": "<img src=\"filesystem:http://localhost:53943/temporary/empty-0.34660357368794004.png\">",
+              "boundingRect": {
+                "top": 1317,
+                "bottom": 1333,
+                "left": 8,
+                "right": 24,
+                "width": 16,
+                "height": 16
               },
               "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "img"
@@ -2533,16 +2638,16 @@
           {
             "node": {
               "type": "node",
-              "selector": "input[onpaste=\"event\\.preventDefault\\(\\)\\;\"]",
-              "path": "3,HTML,1,BODY,48,INPUT",
+              "selector": "body > input",
+              "path": "3,HTML,1,BODY,58,INPUT",
               "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">",
               "boundingRect": {
-                "width": 131,
-                "height": 19,
-                "top": 1394,
-                "right": 323,
-                "bottom": 1413,
-                "left": 192
+                "top": 1274,
+                "bottom": 1295,
+                "left": 192,
+                "right": 345,
+                "width": 153,
+                "height": 21
               },
               "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
               "nodeLabel": "input"
@@ -2551,16 +2656,16 @@
           {
             "node": {
               "type": "node",
-              "selector": "input:nth-child(28)",
-              "path": "3,HTML,1,BODY,50,INPUT",
+              "selector": "body > input",
+              "path": "3,HTML,1,BODY,60,INPUT",
               "snippet": "<input type=\"password\">",
               "boundingRect": {
-                "width": 131,
-                "height": 19,
-                "top": 1415.8125,
-                "right": 139,
-                "bottom": 1434.8125,
-                "left": 8
+                "top": 1296,
+                "bottom": 1317,
+                "left": 8,
+                "right": 161,
+                "width": 153,
+                "height": 21
               },
               "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
               "nodeLabel": "input"
@@ -2569,16 +2674,16 @@
           {
             "node": {
               "type": "node",
-              "selector": "input[onpaste=\"return\\ false\\;\"]",
-              "path": "3,HTML,1,BODY,52,INPUT",
+              "selector": "body > input",
+              "path": "3,HTML,1,BODY,62,INPUT",
               "snippet": "<input type=\"password\" onpaste=\"return false;\">",
               "boundingRect": {
-                "width": 131,
-                "height": 19,
-                "top": 1415,
-                "right": 274,
-                "bottom": 1434,
-                "left": 143
+                "top": 1296,
+                "bottom": 1317,
+                "left": 165,
+                "right": 318,
+                "width": 153,
+                "height": 21
               },
               "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
               "nodeLabel": "input"
@@ -2591,7 +2696,7 @@
           "tags": [
             "cat.forms",
             "wcag2a",
-            "wcag332",
+            "wcag412",
             "wcag131",
             "section508",
             "section508.22.n"
@@ -2625,9 +2730,17 @@
           {
             "node": {
               "type": "node",
-              "selector": "a[href=\"javascript\\:void\\(0\\)\"]",
-              "path": "3,HTML,1,BODY,44,A",
+              "selector": "body > a",
+              "path": "3,HTML,1,BODY,54,A",
               "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\">",
+              "boundingRect": {
+                "top": 1275,
+                "bottom": 1293,
+                "left": 192,
+                "right": 192,
+                "width": 0,
+                "height": 18
+              },
               "explanation": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "a"
             }
@@ -2635,9 +2748,17 @@
           {
             "node": {
               "type": "node",
-              "selector": "a[href$=\"mailto\\:inbox\\@email\\.com\"]",
-              "path": "3,HTML,1,BODY,46,A",
+              "selector": "body > a",
+              "path": "3,HTML,1,BODY,56,A",
               "snippet": "<a href=\"mailto:inbox@email.com\" target=\"_blank\">",
+              "boundingRect": {
+                "top": 1275,
+                "bottom": 1293,
+                "left": 192,
+                "right": 192,
+                "width": 0,
+                "height": 18
+              },
               "explanation": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "a"
             }
@@ -2709,16 +2830,16 @@
           {
             "node": {
               "type": "node",
-              "selector": "#\\35 934a",
+              "selector": "body > object#5934a",
               "path": "3,HTML,1,BODY,2,OBJECT",
               "snippet": "<object id=\"5934a\">",
               "boundingRect": {
-                "width": 300,
-                "height": 150,
                 "top": 8,
-                "right": 308,
                 "bottom": 158,
-                "left": 8
+                "left": 8,
+                "right": 308,
+                "width": 300,
+                "height": 150
               },
               "explanation": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "object"
@@ -2727,16 +2848,16 @@
           {
             "node": {
               "type": "node",
-              "selector": "#\\35 934b",
+              "selector": "body > object#5934b",
               "path": "3,HTML,1,BODY,3,OBJECT",
               "snippet": "<object id=\"5934b\">",
               "boundingRect": {
-                "width": 300,
-                "height": 150,
                 "top": 162,
-                "right": 308,
                 "bottom": 312,
-                "left": 8
+                "left": 8,
+                "right": 308,
+                "width": 300,
+                "height": 150
               },
               "explanation": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "object"
@@ -4586,7 +4707,7 @@
         },
         {
           "id": "aria-allowed-attr",
-          "weight": 0,
+          "weight": 10,
           "group": "a11y-aria"
         },
         {
@@ -4596,47 +4717,47 @@
         },
         {
           "id": "aria-hidden-focus",
-          "weight": 3,
+          "weight": 0,
           "group": "a11y-aria"
         },
         {
           "id": "aria-input-field-name",
-          "weight": 3,
+          "weight": 0,
           "group": "a11y-aria"
         },
         {
           "id": "aria-required-attr",
-          "weight": 0,
+          "weight": 10,
           "group": "a11y-aria"
         },
         {
           "id": "aria-required-children",
-          "weight": 0,
+          "weight": 10,
           "group": "a11y-aria"
         },
         {
           "id": "aria-required-parent",
-          "weight": 0,
+          "weight": 10,
           "group": "a11y-aria"
         },
         {
           "id": "aria-roles",
-          "weight": 0,
+          "weight": 10,
           "group": "a11y-aria"
         },
         {
           "id": "aria-toggle-field-name",
-          "weight": 3,
+          "weight": 0,
           "group": "a11y-aria"
         },
         {
           "id": "aria-valid-attr-value",
-          "weight": 0,
+          "weight": 10,
           "group": "a11y-aria"
         },
         {
           "id": "aria-valid-attr",
-          "weight": 0,
+          "weight": 10,
           "group": "a11y-aria"
         },
         {
@@ -4671,7 +4792,7 @@
         },
         {
           "id": "duplicate-id-active",
-          "weight": 3,
+          "weight": 0,
           "group": "a11y-navigation"
         },
         {
@@ -4826,7 +4947,7 @@
         }
       ],
       "id": "accessibility",
-      "score": 0.65
+      "score": 0.79
     },
     "best-practices": {
       "title": "Best Practices",

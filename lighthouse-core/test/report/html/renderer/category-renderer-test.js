@@ -257,7 +257,7 @@ describe('CategoryRenderer', () => {
       const categoryDOM = renderer.render(a11yCategory, sampleResults.categoryGroups);
       const percentageEl = categoryDOM.querySelectorAll('.lh-gauge__percentage');
 
-      assert.equal(percentageEl[0].textContent, '65', 'score shows a non-dash value');
+      assert.equal(percentageEl[0].textContent, '79', 'score shows a non-dash value');
     });
   });
 
@@ -272,7 +272,7 @@ describe('CategoryRenderer', () => {
       const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
 
       const gauge = categoryDOM.querySelector('.lh-gauge__percentage');
-      assert.equal(gauge.textContent.trim(), '65', 'score is 0-100');
+      assert.equal(gauge.textContent.trim(), '79', 'score is 0-100');
 
       const score = categoryDOM.querySelector('.lh-category-header');
       const value = categoryDOM.querySelector('.lh-gauge__percentage');
