@@ -987,6 +987,11 @@
             "text": "URL"
           },
           {
+            "key": "protocol",
+            "itemType": "text",
+            "text": "Protocol"
+          },
+          {
             "key": "startTime",
             "itemType": "ms",
             "granularity": 1,
@@ -1031,6 +1036,7 @@
         "items": [
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "protocol": "http/1.1",
             "startTime": 0,
             "endTime": 640.1550000009593,
             "finished": true,
@@ -1042,6 +1048,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true",
+            "protocol": "http/1.1",
             "startTime": 630.2950000099372,
             "endTime": 2635.035000013886,
             "finished": true,
@@ -1053,6 +1060,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
+            "protocol": "http/1.1",
             "startTime": 635.496000002604,
             "endTime": 1204.6590000099968,
             "finished": true,
@@ -1064,6 +1072,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
+            "protocol": "http/1.1",
             "startTime": 636.6400000115391,
             "endTime": 1213.2910000218544,
             "finished": true,
@@ -1075,6 +1084,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
+            "protocol": "http/1.1",
             "startTime": 638.0040000076406,
             "endTime": 2849.3670000170823,
             "finished": true,
@@ -1086,6 +1096,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
+            "protocol": "http/1.1",
             "startTime": 638.7899999972433,
             "endTime": 1220.04100002232,
             "finished": true,
@@ -1097,6 +1108,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_partial_a.html?delay=200",
+            "protocol": "http/1.1",
             "startTime": 640.5979999981355,
             "endTime": 1228.5180000180844,
             "finished": true,
@@ -1108,6 +1120,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_partial_b.html?delay=200&isasync",
+            "protocol": "http/1.1",
             "startTime": 641.3450000109151,
             "endTime": 1776.4320000133011,
             "finished": true,
@@ -1119,6 +1132,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
+            "protocol": "http/1.1",
             "startTime": 642.8679999953602,
             "endTime": 4216.161000018474,
             "finished": true,
@@ -1130,6 +1144,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+            "protocol": "http/1.1",
             "startTime": 644.0820000134408,
             "endTime": 1792.0860000012908,
             "finished": true,
@@ -1141,6 +1156,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
+            "protocol": "http/1.1",
             "startTime": 645.529000001261,
             "endTime": 1236.1859999946319,
             "finished": true,
@@ -1152,6 +1168,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
+            "protocol": "http/1.1",
             "startTime": 3951.6250000160653,
             "endTime": 4779.641000000993,
             "finished": true,
@@ -1163,6 +1180,7 @@
           },
           {
             "url": "http://localhost:10200/zone.js",
+            "protocol": "http/1.1",
             "startTime": 2849.7340000176337,
             "endTime": 3961.049000005005,
             "finished": true,
@@ -1174,6 +1192,7 @@
           },
           {
             "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
+            "protocol": "http/1.1",
             "startTime": 3874.7540000185836,
             "endTime": 4796.288000012282,
             "finished": true,
@@ -1185,6 +1204,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
+            "protocol": "http/1.1",
             "startTime": 2924.34100000537,
             "endTime": 3964.233000006061,
             "finished": true,
@@ -1196,6 +1216,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "protocol": "http/1.1",
             "startTime": 3066.252999997232,
             "endTime": 3772.7560000203084,
             "finished": true,
@@ -1207,6 +1228,7 @@
           },
           {
             "url": "blob:http://localhost:10200/ae0eac03-ab9b-4a6a-b299-f5212153e277",
+            "protocol": "blob",
             "startTime": 3829.6360000094865,
             "endTime": 3968.59800000675,
             "finished": true,
@@ -1218,6 +1240,7 @@
           },
           {
             "url": "http://localhost:10200/favicon.ico",
+            "protocol": "http/1.1",
             "startTime": 4967.373000021325,
             "endTime": 5536.498000001302,
             "finished": true,
