@@ -8,8 +8,7 @@
 /* global window, document, getNodeDetails */
 
 const Gatherer = require('./gatherer.js');
-const fs = require('fs');
-const axeLibSource = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
+const axeLibSource = require('../../lib/axe.js').source;
 const pageFunctions = require('../../lib/page-functions.js');
 
 /**
