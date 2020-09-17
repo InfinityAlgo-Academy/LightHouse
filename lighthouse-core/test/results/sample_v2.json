@@ -603,8 +603,7 @@
       "title": "Content is sized correctly for the viewport",
       "description": "If the width of your app's content doesn't match the width of the viewport, your app might not be optimized for mobile screens. [Learn more](https://web.dev/content-width/).",
       "score": 1,
-      "scoreDisplayMode": "binary",
-      "explanation": ""
+      "scoreDisplayMode": "binary"
     },
     "image-aspect-ratio": {
       "id": "image-aspect-ratio",

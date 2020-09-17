@@ -210,7 +210,7 @@ class UsesHTTP2Audit extends Audit {
     const resources = UsesHTTP2Audit.determineNonHttp2Resources(networkRecords);
     const wastedMs = UsesHTTP2Audit.computeWasteWithTTIGraph(resources, graph, simulator);
 
-    let displayValue = '';
+    let displayValue;
     if (resources.length > 0) {
       displayValue = str_(UIStrings.displayValue, {itemCount: resources.length});
     }

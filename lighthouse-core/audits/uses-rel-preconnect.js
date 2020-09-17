@@ -108,7 +108,7 @@ class UsesRelPreconnectAudit extends Audit {
     const settings = context.settings;
 
     let maxWasted = 0;
-    /** @type {string[]} */
+    /** @type {Array<LH.IcuMessage>} */
     const warnings = [];
 
     const [networkRecords, mainResource, loadSimulator, traceOfTab, pageGraph] = await Promise.all([

@@ -85,7 +85,7 @@ const ACTIONABLE_FAILURE_REASONS = [
  * We can check if a specific bit is true in the failure coding using bitwise and '&' with the flag.
  * @param {number} failureCode
  * @param {string[]} unsupportedProperties
- * @return {string[]}
+ * @return {LH.IcuMessage[]}
  */
 function getActionableFailureReasons(failureCode, unsupportedProperties) {
   return ACTIONABLE_FAILURE_REASONS

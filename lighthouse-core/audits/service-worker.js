@@ -107,7 +107,7 @@ class ServiceWorker extends Audit {
    * contolled by the scopeUrl.
    * @param {LH.Artifacts['WebAppManifest']} WebAppManifest
    * @param {string} scopeUrl
-   * @return {string|undefined}
+   * @return {LH.IcuMessage|undefined}
    */
   static checkStartUrl(WebAppManifest, scopeUrl) {
     if (!WebAppManifest) {

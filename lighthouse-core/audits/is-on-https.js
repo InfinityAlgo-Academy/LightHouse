@@ -90,7 +90,7 @@ class HTTPS extends Audit {
           .filter(record => !HTTPS.isSecureRecord(record))
           .map(record => URL.elideDataURI(record.url));
 
-      /** @type {Array<{url: string, resolution?: string}>}  */
+      /** @type {Array<{url: string, resolution?: LH.IcuMessage|string}>}  */
       const items = Array.from(new Set(insecureURLs)).map(url => ({url, resolution: undefined}));
 
       /** @type {LH.Audit.Details.Table['headings']} */
@@ -119,7 +119,7 @@ class HTTPS extends Audit {
         if (!item.resolution) item.resolution = str_(UIStrings.allowed);
       }
 
-      let displayValue = '';
+      let displayValue;
       if (items.length > 0) {
         displayValue = str_(UIStrings.displayValue, {itemCount: items.length});
       }

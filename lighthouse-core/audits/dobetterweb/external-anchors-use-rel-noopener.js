@@ -49,7 +49,7 @@ class ExternalAnchorsUseRelNoopenerAudit extends Audit {
    * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
-    /** @type {string[]} */
+    /** @type {LH.IcuMessage[]} */
     const warnings = [];
     const pageHost = new URL(artifacts.URL.finalUrl).host;
     const failingAnchors = artifacts.AnchorElements
