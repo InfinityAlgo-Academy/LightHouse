@@ -5,6 +5,7 @@
  */
 
 /**
+ * @fileoverview
  * Lighthouse backstory:
  * Zone aggressively polyfills promises including rewriting Promise.prototype.then which caused
  * problems for our evaluateAsync code where we rely on a window.__nativePromise to work.
