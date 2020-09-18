@@ -459,10 +459,10 @@ class CategoryRenderer {
 
   /**
    *
-   * @param {LH.ReportResult.AuditRef[]} auditRefs
-   * @param {Object<string, LH.Result.ReportGroup>} [groupDefinitions]
-   * @param {LH.Result.Category.manualDescription} [manualDescription]
-   * @return {Element[]}
+   * @param {Array<LH.ReportResult.AuditRef>} auditRefs
+   * @param {Record<string, LH.Result.ReportGroup>} groupDefinitions
+   * @param {LH.Result.Category['manualDescription']} [manualDescription]
+   * @return {Array<Element>}
    */
   _splitAndRenderClumps(auditRefs, groupDefinitions = {}, manualDescription) {
     const clumpElems = [];
