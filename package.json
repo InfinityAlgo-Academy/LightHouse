@@ -146,7 +146,7 @@
   },
   "dependencies": {
     "axe-core": "3.5.5",
-    "chrome-launcher": "^0.13.3",
+    "chrome-launcher": "^0.13.4",
     "configstore": "^5.0.1",
     "cssstyle": "1.2.1",
     "details-element-polyfill": "^2.4.0",
