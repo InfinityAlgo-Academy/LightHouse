@@ -425,6 +425,22 @@ class CategoryRenderer {
   }
 
   /**
+   * @param {LH.ReportResult.Category} category
+   * @param {Object<string, LH.Result.ReportGroup>} [groupDefinitions]
+   * @return {Element}
+   */
+  render(category, groupDefinitions = {}) {
+    const element = this.dom.createElement('div', 'lh-category');
+    this.createPermalinkSpan(element, category.id);
+    element.appendChild(this.renderCategoryHeader(category, groupDefinitions));
+
+    const clumpElems = this.renderClumps(category.auditRefs, groupDefinitions,
+      category.manualDescription);
+    element.append(...clumpElems);
+    return element;
+  }
+
+  /**
    * Renders a set of top level sections (clumps), under a status of failed, warning,
    * manual, passed, or notApplicable. The result ends up something like:
    *
@@ -442,23 +458,6 @@ class CategoryRenderer {
    *   ├── audit 2
    *   ├── …
    *   ⋮
-   * @param {LH.ReportResult.Category} category
-   * @param {Object<string, LH.Result.ReportGroup>} [groupDefinitions]
-   * @return {Element}
-   */
-  render(category, groupDefinitions = {}) {
-    const element = this.dom.createElement('div', 'lh-category');
-    this.createPermalinkSpan(element, category.id);
-    element.appendChild(this.renderCategoryHeader(category, groupDefinitions));
-
-    const clumpElems = this.renderClumps(category.auditRefs, groupDefinitions,
-      category.manualDescription);
-    element.append(...clumpElems);
-    return element;
-  }
-
-  /**
-   *
    * @param {Array<LH.ReportResult.AuditRef>} auditRefs
    * @param {Record<string, LH.Result.ReportGroup>} groupDefinitions
    * @param {LH.Result.Category['manualDescription']} [manualDescription]
