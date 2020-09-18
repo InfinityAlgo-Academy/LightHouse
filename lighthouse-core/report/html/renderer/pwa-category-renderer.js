@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2018 Google Inc. All Rights Reserved.
+ * Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,16 +17,6 @@
 'use strict';
 
 /* globals self, Util, CategoryRenderer */
-
-/**
- * An always-increasing counter for making unique SVG ID suffixes.
- */
-const getUniqueSuffix = (() => {
-  let svgSuffix = 0;
-  return function() {
-    return svgSuffix++;
-  };
-})();
 
 class PwaCategoryRenderer extends CategoryRenderer {
   /**
@@ -96,7 +86,7 @@ class PwaCategoryRenderer extends CategoryRenderer {
   /**
    * Returns the group IDs found in auditRefs.
    * @param {Array<LH.ReportResult.AuditRef>} auditRefs
-   * @return {Set<string>}
+   * @return {!Set<string>}
    */
   _getGroupIds(auditRefs) {
     const groupIds = auditRefs.map(ref => ref.group).filter(/** @return {g is string} */ g => !!g);
@@ -174,7 +164,7 @@ class PwaCategoryRenderer extends CategoryRenderer {
     const defsEl = svgRoot.querySelector('defs');
     if (!defsEl) return;
 
-    const idSuffix = getUniqueSuffix();
+    const idSuffix = Util.getUniqueSuffix();
     const elementsToUpdate = defsEl.querySelectorAll('[id]');
     for (const el of elementsToUpdate) {
       const oldId = el.id;

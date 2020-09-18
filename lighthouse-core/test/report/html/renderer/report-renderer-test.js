@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,15 +7,18 @@
 
 /* eslint-env jest */
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const fs = require('fs');
 const jsdom = require('jsdom');
 const Util = require('../../../../report/html/renderer/util.js');
+const I18n = require('../../../../report/html/renderer/i18n.js');
 const URL = require('../../../../lib/url-shim.js');
 const DOM = require('../../../../report/html/renderer/dom.js');
 const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
 const ReportUIFeatures = require('../../../../report/html/renderer/report-ui-features.js');
 const CategoryRenderer = require('../../../../report/html/renderer/category-renderer.js');
+const ElementScreenshotRenderer =
+  require('../../../../report/html/renderer/element-screenshot-renderer.js');
 const CriticalRequestChainRenderer = require(
     '../../../../report/html/renderer/crc-details-renderer.js');
 const ReportRenderer = require('../../../../report/html/renderer/report-renderer.js');
@@ -30,12 +33,13 @@ describe('ReportRenderer', () => {
   let sampleResults;
 
   beforeAll(() => {
-    global.URL = URL;
     global.Util = Util;
+    global.I18n = I18n;
     global.ReportUIFeatures = ReportUIFeatures;
     global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
     global.DetailsRenderer = DetailsRenderer;
     global.CategoryRenderer = CategoryRenderer;
+    global.ElementScreenshotRenderer = ElementScreenshotRenderer;
 
     // lazy loaded because they depend on CategoryRenderer to be available globally
     global.PerformanceCategoryRenderer =
@@ -62,13 +66,14 @@ describe('ReportRenderer', () => {
 
   afterAll(() => {
     global.self = undefined;
-    global.URL = undefined;
     global.Util = undefined;
+    global.I18n = undefined;
     global.ReportUIFeatures = undefined;
     global.matchMedia = undefined;
     global.CriticalRequestChainRenderer = undefined;
     global.DetailsRenderer = undefined;
     global.CategoryRenderer = undefined;
+    global.ElementScreenshotRenderer = undefined;
     global.PerformanceCategoryRenderer = undefined;
     global.PwaCategoryRenderer = undefined;
   });
@@ -114,15 +119,18 @@ describe('ReportRenderer', () => {
       const container = renderer._dom._document.body;
       const output = renderer.renderReport(sampleResultsCopy, container);
 
+      function isPWAGauge(el) {
+        return el.querySelector('.lh-gauge__label').textContent === 'Progressive Web App';
+      }
+      function isPluginGauge(el) {
+        return el.querySelector('.lh-gauge__label').textContent === 'Some Plugin';
+      }
+
       const indexOfPwaGauge = Array.from(output
-        .querySelectorAll('.lh-scores-header > a[class*="lh-gauge"]')).findIndex(el => {
-        return el.matches('.lh-gauge--pwa__wrapper');
-      });
+        .querySelectorAll('.lh-scores-header > a[class*="lh-gauge"]')).findIndex(isPWAGauge);
 
       const indexOfPluginGauge = Array.from(output
-        .querySelectorAll('.lh-scores-header > a[class*="lh-gauge"]')).findIndex(el => {
-        return el.matches('.lh-gauge__wrapper--plugin');
-      });
+        .querySelectorAll('.lh-scores-header > a[class*="lh-gauge"]')).findIndex(isPluginGauge);
 
       const scoresHeaderElem = output.querySelector('.lh-scores-header');
       assert.equal(scoresHeaderElem.children.length - 2, indexOfPwaGauge);
@@ -134,9 +142,9 @@ describe('ReportRenderer', () => {
 
         assert.ok(gauge.classList.contains('lh-gauge__wrapper'));
         if (i >= indexOfPluginGauge) {
-          assert.ok(gauge.classList.contains('lh-gauge__wrapper--plugin'));
+          assert.ok(isPluginGauge(gauge));
         } else if (i >= indexOfPwaGauge) {
-          assert.ok(gauge.classList.contains('lh-gauge--pwa__wrapper'));
+          assert.ok(isPWAGauge(gauge));
         }
       }
     });
@@ -196,10 +204,10 @@ describe('ReportRenderer', () => {
       assert.ok(descriptions.length >= 3);
 
       const descriptionsTxt = descriptions.map(el => el.textContent).join('\n');
-      assert.ok(/Nexus/.test(descriptionsTxt), 'should have added device emulation');
-      assert.ok(/RTT/.test(descriptionsTxt), 'should have added network');
-      assert.ok(/\dx/.test(descriptionsTxt), 'should have added CPU');
-      assert.ok(descriptionsTxt.includes(sampleResults.userAgent), 'user agent populated');
+      expect(descriptionsTxt).toContain('Moto G4');
+      expect(descriptionsTxt).toContain('RTT');
+      expect(descriptionsTxt).toMatch(/\dx/);
+      expect(descriptionsTxt).toContain(sampleResults.userAgent);
     });
   });
 
@@ -220,15 +228,16 @@ describe('ReportRenderer', () => {
     const container = renderer._dom._document.body;
     const output = renderer.renderReport(sampleResults, container);
 
+    const DOCS_ORIGINS = ['https://developers.google.com', 'https://web.dev'];
     const utmChannels = [...output.querySelectorAll('a[href*="utm_source=lighthouse"')]
       .map(a => new URL(a.href))
-      .filter(url => url.origin === 'https://developers.google.com')
+      .filter(url => DOCS_ORIGINS.includes(url.origin))
       .map(url => url.searchParams.get('utm_medium'));
 
-    assert.ok(utmChannels.length > 20);
-    utmChannels.forEach(anchorChannel => {
-      assert.strictEqual(anchorChannel, lhrChannel);
-    });
+    assert.ok(utmChannels.length > 100);
+    for (const utmChannel of utmChannels) {
+      assert.strictEqual(utmChannel, lhrChannel);
+    }
   });
 
   it('renders `not_applicable` audits as `notApplicable`', () => {
@@ -250,5 +259,57 @@ describe('ReportRenderer', () => {
     const notApplicableElementCount = reportElement
       .querySelectorAll('.lh-audit--notapplicable').length;
     assert.strictEqual(notApplicableCount, notApplicableElementCount);
+  });
+
+  describe('axe-core', () => {
+    let axe;
+
+    beforeAll(() =>{
+      // Needed by axe-core
+      // https://github.com/dequelabs/axe-core/blob/581c441c/doc/examples/jsdom/test/a11y.js#L24
+      global.window = global.self;
+      global.Node = global.self.Node;
+      global.Element = global.self.Element;
+
+      // axe-core must be required after the global polyfills
+      axe = require('axe-core');
+    });
+
+    afterAll(() => {
+      global.window = undefined;
+      global.Node = undefined;
+      global.Element = undefined;
+    });
+
+    it('renders without axe violations', (done) => {
+      const container = renderer._dom._document.createElement('main');
+      const output = renderer.renderReport(sampleResults, container);
+      renderer._dom._document.body.appendChild(container);
+
+      const config = {
+        rules: {
+          // Reports may have duplicate ids
+          // https://github.com/GoogleChrome/lighthouse/issues/9432
+          'duplicate-id': {enabled: false},
+          'duplicate-id-aria': {enabled: false},
+          'landmark-no-duplicate-contentinfo': {enabled: false},
+          // The following rules are disable for axe-core + jsdom compatibility
+          // https://github.com/dequelabs/axe-core/tree/b573b1c1/doc/examples/jest_react#to-run-the-example
+          'color-contrast': {enabled: false},
+          'link-in-text-block': {enabled: false},
+          // Report has empty links prior to i18n-ing.
+          'link-name': {enabled: false},
+        },
+      };
+
+      axe.run(output, config, (error, {violations}) => {
+        assert.ifError(error);
+        assert.ok(violations.length === 0, JSON.stringify(violations, null, 1));
+        done();
+      });
+
+    // Set timeout to 10s to give axe-core enough time to complete
+    // https://github.com/dequelabs/axe-core/tree/b573b1c1/doc/examples/jest_react#timeout-issues
+    }, /* timeout= */ 10 * 1000);
   });
 });

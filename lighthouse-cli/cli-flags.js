@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -27,7 +27,7 @@ function flatten(arr) {
  * @return {LH.CliFlags}
  */
 function getFlags(manualArgv) {
-  // @ts-ignore yargs() is incorrectly typed as not accepting a single string.
+  // @ts-expect-error yargs() is incorrectly typed as not accepting a single string.
   const y = manualArgv ? yargs(manualArgv) : yargs;
   // Intentionally left as type `any` because @types/yargs doesn't chain correctly.
   const argv = y.help('help')
@@ -60,8 +60,7 @@ function getFlags(manualArgv) {
           'Path to JSON file of HTTP Header key/value pairs to send in requests')
       .example(
           'lighthouse <url> --only-categories=performance,pwa',
-          'Only run specific categories.')
-
+          'Only run the specified categories. Available categories: accessibility, best-practices, performance, pwa, seo')
       /**
        * Also accept a file for all of these flags. Yargs will merge in and override the file-based
        * flags with the command-line flags.
@@ -129,7 +128,7 @@ function getFlags(manualArgv) {
         'precomputed-lantern-data-path': 'Path to the file where lantern simulation data should be read from, overwriting the lantern observed estimates for RTT and server latency.',
         'lantern-data-output-path': 'Path to the file where lantern simulation data should be written to, can be used in a future run with the `precomputed-lantern-data-path` flag.',
         'only-audits': 'Only run the specified audits',
-        'only-categories': 'Only run the specified categories',
+        'only-categories': 'Only run the specified categories. Available categories: accessibility, best-practices, performance, pwa, seo',
         'skip-audits': 'Run everything except these audits',
         'plugins': 'Run the specified plugins',
         'print-config': 'Print the normalized config for the given config and options, then exit.',
@@ -139,7 +138,7 @@ function getFlags(manualArgv) {
 
       .group(['output', 'output-path', 'view'], 'Output:')
       .describe({
-        'output': `Reporter for the results, supports multiple values`,
+        'output': `Reporter for the results, supports multiple values. choices: ${printer.getValidOutputOptions().map(s => `"${s}"`).join(', ')}`,
         'output-path': `The file path to output the results. Use 'stdout' to write to stdout.
   If using JSON output, default is stdout.
   If using HTML or CSV output, default is a file in the working directory with a name based on the test URL and date.
@@ -152,11 +151,11 @@ function getFlags(manualArgv) {
       .boolean([
         'disable-storage-reset', 'save-assets', 'list-all-audits',
         'list-trace-categories', 'view', 'verbose', 'quiet', 'help', 'print-config',
+        'chrome-ignore-default-flags',
       ])
-      .choices('output', printer.getValidOutputOptions())
       .choices('emulated-form-factor', ['mobile', 'desktop', 'none'])
       .choices('throttling-method', ['devtools', 'provided', 'simulate'])
-      .choices('preset', ['full', 'perf', 'mixed-content'])
+      .choices('preset', ['perf', 'experimental'])
       // force as an array
       // note MUST use camelcase versions or only the kebab-case version will be forced
       .array('blockedUrlPatterns')

@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -26,7 +26,7 @@ const ACCEPTABLE_NAVIGATION_URL_REGEX = /^(chrome|https?):/;
 // The ideal input response latency, the time between the input task and the
 // first frame of the response.
 const BASE_RESPONSE_LATENCY = 16;
-// m71+ We added RunTask to `disabled-by-default-lighthouse`
+// COMPAT: m71+ We added RunTask to `disabled-by-default-lighthouse`
 const SCHEDULABLE_TASK_TITLE_LH = 'RunTask';
 // m69-70 DoWork is different and we now need RunTask, see https://bugs.chromium.org/p/chromium/issues/detail?id=871204#c11
 const SCHEDULABLE_TASK_TITLE_ALT1 = 'ThreadControllerImpl::RunTask';
@@ -62,10 +62,114 @@ class TraceProcessor {
   }
 
   /**
+   * This method sorts a group of trace events that have the same timestamp. We want to...
+   *
+   * 1. Put E events first, we finish off our existing events before we start new ones.
+   * 2. Order B/X events by their duration, we want parents to start before child events.
+   * 3. If we don't have any of this to go on, just use the position in the original array (stable sort).
+   *
+   * Note that the typical group size with the same timestamp will be quite small (<10 or so events),
+   * and the number of groups typically ~1% of total trace, so the same ultra-performance-sensitive consideration
+   * given to functions that run on entire traces does not necessarily apply here.
+   *
+   * @param {number[]} tsGroupIndices
+   * @param {number[]} timestampSortedIndices
+   * @param {number} indexOfTsGroupIndicesStart
+   * @param {LH.TraceEvent[]} traceEvents
+   * @return {number[]}
+   */
+  static _sortTimestampEventGroup(
+      tsGroupIndices,
+      timestampSortedIndices,
+      indexOfTsGroupIndicesStart,
+      traceEvents
+  ) {
+    /*
+     * We have two different sets of indices going on here.
+
+     *    1. There's the index for an element of `traceEvents`, referred to here as an `ArrayIndex`.
+     *       `timestampSortedIndices` is an array of `ArrayIndex` elements.
+     *    2. There's the index for an element of `timestampSortedIndices`, referred to here as a `TsIndex`.
+     *       A `TsIndex` is therefore an index to an element which is itself an index.
+     *
+     * These two helper functions help resolve this layer of indirection.
+     * Our final return value is an array of `ArrayIndex` in their final sort order.
+     */
+    /** @param {number} i */
+    const lookupArrayIndexByTsIndex = i => timestampSortedIndices[i];
+    /** @param {number} i */
+    const lookupEventByTsIndex = i => traceEvents[lookupArrayIndexByTsIndex(i)];
+
+    /** @type {Array<number>} */
+    const eEventIndices = [];
+    /** @type {Array<number>} */
+    const bxEventIndices = [];
+    /** @type {Array<number>} */
+    const otherEventIndices = [];
+
+    for (const tsIndex of tsGroupIndices) {
+      // See comment above for the distinction between `tsIndex` and `arrayIndex`.
+      const arrayIndex = lookupArrayIndexByTsIndex(tsIndex);
+      const event = lookupEventByTsIndex(tsIndex);
+      if (event.ph === 'E') eEventIndices.push(arrayIndex);
+      else if (event.ph === 'X' || event.ph === 'B') bxEventIndices.push(arrayIndex);
+      else otherEventIndices.push(arrayIndex);
+    }
+
+    /** @type {Map<number, number>} */
+    const effectiveDuration = new Map();
+    for (const index of bxEventIndices) {
+      const event = traceEvents[index];
+      if (event.ph === 'X') {
+        effectiveDuration.set(index, event.dur);
+      } else {
+        // Find the next available 'E' event *after* the current group of events that matches our name, pid, and tid.
+        let duration = Number.MAX_SAFE_INTEGER;
+        // To find the next "available" 'E' event, we need to account for nested events of the same name.
+        let additionalNestedEventsWithSameName = 0;
+        const startIndex = indexOfTsGroupIndicesStart + tsGroupIndices.length;
+        for (let j = startIndex; j < timestampSortedIndices.length; j++) {
+          const potentialMatchingEvent = lookupEventByTsIndex(j);
+          const eventMatches = potentialMatchingEvent.name === event.name &&
+            potentialMatchingEvent.pid === event.pid &&
+            potentialMatchingEvent.tid === event.tid;
+
+          // The event doesn't match, just skip it.
+          if (!eventMatches) continue;
+
+          if (potentialMatchingEvent.ph === 'E' && additionalNestedEventsWithSameName === 0) {
+            // It's the next available 'E' event for us, so set the duration and break the loop.
+            duration = potentialMatchingEvent.ts - event.ts;
+            break;
+          } else if (potentialMatchingEvent.ph === 'E') {
+            // It's an 'E' event but for a nested event. Decrement our counter and move on.
+            additionalNestedEventsWithSameName--;
+          } else if (potentialMatchingEvent.ph === 'B') {
+            // It's a nested 'B' event. Increment our counter and move on.
+            additionalNestedEventsWithSameName++;
+          }
+        }
+
+        effectiveDuration.set(index, duration);
+      }
+    }
+
+    bxEventIndices.sort((indexA, indexB) => ((effectiveDuration.get(indexB) || 0) -
+      (effectiveDuration.get(indexA) || 0) || (indexA - indexB)));
+
+    otherEventIndices.sort((indexA, indexB) => indexA - indexB);
+
+    return [...eEventIndices, ...bxEventIndices, ...otherEventIndices];
+  }
+
+  /**
+   * Sorts and filters trace events by timestamp and respecting the nesting structure inherent to
+   * parent/child event relationships.
+   *
    * @param {LH.TraceEvent[]} traceEvents
    * @param {(e: LH.TraceEvent) => boolean} filter
    */
-  static _filteredStableSort(traceEvents, filter) {
+  static filteredTraceSort(traceEvents, filter) {
     // create an array of the indices that we want to keep
     const indices = [];
     for (let srcIndex = 0; srcIndex < traceEvents.length; srcIndex++) {
@@ -74,11 +178,33 @@ class TraceProcessor {
       }
     }
 
-    // sort by ts, if there's no ts difference sort by index
-    indices.sort((indexA, indexB) => {
-      const result = traceEvents[indexA].ts - traceEvents[indexB].ts;
-      return result ? result : indexA - indexB;
-    });
+    // Sort by ascending timestamp first.
+    indices.sort((indexA, indexB) => traceEvents[indexA].ts - traceEvents[indexB].ts);
+
+    // Now we find groups with equal timestamps and order them by their nesting structure.
+    for (let i = 0; i < indices.length - 1; i++) {
+      const ts = traceEvents[indices[i]].ts;
+      const tsGroupIndices = [i];
+      for (let j = i + 1; j < indices.length; j++) {
+        if (traceEvents[indices[j]].ts !== ts) break;
+        tsGroupIndices.push(j);
+      }
+
+      // We didn't find any other events with the same timestamp, just keep going.
+      if (tsGroupIndices.length === 1) continue;
+
+      // Sort the group by other criteria and replace our index array with it.
+      const finalIndexOrder = TraceProcessor._sortTimestampEventGroup(
+        tsGroupIndices,
+        indices,
+        i,
+        traceEvents
+      );
+      indices.splice(i, finalIndexOrder.length, ...finalIndexOrder);
+      // We just sorted this set of identical timestamps, so skip over the rest of the group.
+      // -1 because we already have i++.
+      i += tsGroupIndices.length - 1;
+    }
 
     // create a new array using the target indices from previous sort step
     const sorted = [];
@@ -176,8 +302,8 @@ class TraceProcessor {
    * selected percentiles within a window of the main thread.
    * @see https://docs.google.com/document/d/1b9slyaB9yho91YTOkAQfpCdULFkZM9LqsipcX3t7He8/preview
    * @param {Array<ToplevelEvent>} events
-   * @param {number} startTime Start time (in ms relative to navstart) of range of interest.
-   * @param {number} endTime End time (in ms relative to navstart) of range of interest.
+   * @param {number} startTime Start time (in ms relative to timeOrigin) of range of interest.
+   * @param {number} endTime End time (in ms relative to timeOrigin) of range of interest.
    * @param {!Array<number>=} percentiles Optional array of percentiles to compute. Defaults to [0.5, 0.75, 0.9, 0.99, 1].
    * @return {!Array<{percentile: number, time: number}>}
    */
@@ -198,8 +324,8 @@ class TraceProcessor {
   /**
    * Provides durations in ms of all main thread top-level events
    * @param {Array<ToplevelEvent>} topLevelEvents
-   * @param {number} startTime Optional start time (in ms relative to navstart) of range of interest. Defaults to navstart.
-   * @param {number} endTime Optional end time (in ms relative to navstart) of range of interest. Defaults to trace end.
+   * @param {number} startTime Optional start time (in ms relative to timeOrigin) of range of interest. Defaults to 0.
+   * @param {number} endTime Optional end time (in ms relative to timeOrigin) of range of interest. Defaults to trace end.
    * @return {{durations: Array<number>, clippedLength: number}}
    */
   static getMainThreadTopLevelEventDurations(topLevelEvents, startTime = 0, endTime = Infinity) {
@@ -240,8 +366,8 @@ class TraceProcessor {
    * Provides the top level events on the main thread with timestamps in ms relative to navigation
    * start.
    * @param {LH.Artifacts.TraceOfTab} tabTrace
-   * @param {number=} startTime Optional start time (in ms relative to navstart) of range of interest. Defaults to navstart.
-   * @param {number=} endTime Optional end time (in ms relative to navstart) of range of interest. Defaults to trace end.
+   * @param {number=} startTime Optional start time (in ms relative to timeOrigin) of range of interest. Defaults to 0.
+   * @param {number=} endTime Optional end time (in ms relative to timeOrigin) of range of interest. Defaults to trace end.
    * @return {Array<ToplevelEvent>}
    */
   static getMainThreadTopLevelEvents(tabTrace, startTime = 0, endTime = Infinity) {
@@ -250,8 +376,8 @@ class TraceProcessor {
     for (const event of tabTrace.mainThreadEvents) {
       if (!this.isScheduleableTask(event) || !event.dur) continue;
 
-      const start = (event.ts - tabTrace.navigationStartEvt.ts) / 1000;
-      const end = (event.ts + event.dur - tabTrace.navigationStartEvt.ts) / 1000;
+      const start = (event.ts - tabTrace.timeOriginEvt.ts) / 1000;
+      const end = (event.ts + event.dur - tabTrace.timeOriginEvt.ts) / 1000;
       if (start > endTime || end < startTime) continue;
 
       topLevelEvents.push({
@@ -352,7 +478,7 @@ class TraceProcessor {
   static computeTraceOfTab(trace) {
     // Parse the trace for our key events and sort them by timestamp. Note: sort
     // *must* be stable to keep events correctly nested.
-    const keyEvents = this._filteredStableSort(trace.traceEvents, e => {
+    const keyEvents = this.filteredTraceSort(trace.traceEvents, e => {
       return e.cat.includes('blink.user_timing') ||
           e.cat.includes('loading') ||
           e.cat.includes('devtools.timeline') ||
@@ -362,24 +488,25 @@ class TraceProcessor {
     // Find the inspected frame
     const mainFrameIds = this.findMainFrameIds(keyEvents);
 
-    // Filter to just events matching the frame ID for sanity
+    // Filter to just events matching the frame ID, just to make sure.
     const frameEvents = keyEvents.filter(e => e.args.frame === mainFrameIds.frameId);
 
     // Our navStart will be the last frame navigation in the trace
     const navigationStart = frameEvents.filter(this._isNavigationStartOfInterest).pop();
     if (!navigationStart) throw this.createNoNavstartError();
+    const timeOriginEvt = navigationStart;
 
     // Find our first paint of this frame
-    const firstPaint = frameEvents.find(e => e.name === 'firstPaint' && e.ts > navigationStart.ts);
+    const firstPaint = frameEvents.find(e => e.name === 'firstPaint' && e.ts > timeOriginEvt.ts);
 
     // FCP will follow at/after the FP. Used in so many places we require it.
     const firstContentfulPaint = frameEvents.find(
-      e => e.name === 'firstContentfulPaint' && e.ts > navigationStart.ts
+      e => e.name === 'firstContentfulPaint' && e.ts > timeOriginEvt.ts
     );
 
     // fMP will follow at/after the FP
     let firstMeaningfulPaint = frameEvents.find(
-      e => e.name === 'firstMeaningfulPaint' && e.ts > navigationStart.ts
+      e => e.name === 'firstMeaningfulPaint' && e.ts > timeOriginEvt.ts
     );
     let fmpFellBack = false;
 
@@ -398,20 +525,43 @@ class TraceProcessor {
       firstMeaningfulPaint = lastCandidate;
     }
 
-    const load = frameEvents.find(e => e.name === 'loadEventEnd' && e.ts > navigationStart.ts);
+    // LCP's trace event was first introduced in m78. We can't surface an LCP for older Chrome versions
+    // LCP comes from the latest `largestContentfulPaint::Candidate`, but it can be invalidated
+    // by a `largestContentfulPaint::Invalidate` event. In the case that the last candidate is
+    // invalidated, the value will be undefined.
+    let largestContentfulPaint;
+    let lcpInvalidated = false;
+    // Iterate the events backwards.
+    for (let i = frameEvents.length - 1; i >= 0; i--) {
+      const e = frameEvents[i];
+      // If the event's timestamp is before the time origin, stop.
+      if (e.ts <= timeOriginEvt.ts) break;
+      // If the last lcp event in the trace is 'Invalidate', there is inconclusive data to determine LCP.
+      if (e.name === 'largestContentfulPaint::Invalidate') {
+        lcpInvalidated = true;
+        break;
+      }
+      // If not an lcp 'Candidate', keep iterating.
+      if (e.name !== 'largestContentfulPaint::Candidate') continue;
+      // Found the last LCP candidate in the trace, let's use it.
+      largestContentfulPaint = e;
+      break;
+    }
+
+    const load = frameEvents.find(e => e.name === 'loadEventEnd' && e.ts > timeOriginEvt.ts);
     const domContentLoaded = frameEvents.find(
-      e => e.name === 'domContentLoadedEventEnd' && e.ts > navigationStart.ts
+      e => e.name === 'domContentLoadedEventEnd' && e.ts > timeOriginEvt.ts
     );
 
     // subset all trace events to just our tab's process (incl threads other than main)
     // stable-sort events to keep them correctly nested.
     const processEvents = TraceProcessor
-      ._filteredStableSort(trace.traceEvents, e => e.pid === mainFrameIds.pid);
+      .filteredTraceSort(trace.traceEvents, e => e.pid === mainFrameIds.pid);
 
     const mainThreadEvents = processEvents
       .filter(e => e.tid === mainFrameIds.tid);
 
-    // traceEnd must exist since at least navigationStart event was verified as existing.
+    // traceEnd must exist since at least timeOrigin event was verified as existing.
     const traceEnd = trace.traceEvents.reduce((max, evt) => {
       return max.ts > evt.ts ? max : evt;
     });
@@ -421,29 +571,38 @@ class TraceProcessor {
     const getTimestamp = (event) => event && event.ts;
     /** @type {TraceTimesWithoutFCP} */
     const timestamps = {
-      navigationStart: navigationStart.ts,
+      timeOrigin: timeOriginEvt.ts,
       firstPaint: getTimestamp(firstPaint),
       firstContentfulPaint: getTimestamp(firstContentfulPaint),
       firstMeaningfulPaint: getTimestamp(firstMeaningfulPaint),
+      largestContentfulPaint: getTimestamp(largestContentfulPaint),
       traceEnd: fakeEndOfTraceEvt.ts,
       load: getTimestamp(load),
       domContentLoaded: getTimestamp(domContentLoaded),
     };
 
     /** @param {number} ts */
-    const getTiming = (ts) => (ts - navigationStart.ts) / 1000;
+    const getTiming = (ts) => (ts - timeOriginEvt.ts) / 1000;
     /** @param {number=} ts */
     const maybeGetTiming = (ts) => ts === undefined ? undefined : getTiming(ts);
     /** @type {TraceTimesWithoutFCP} */
     const timings = {
-      navigationStart: 0,
+      timeOrigin: 0,
       firstPaint: maybeGetTiming(timestamps.firstPaint),
       firstContentfulPaint: maybeGetTiming(timestamps.firstContentfulPaint),
       firstMeaningfulPaint: maybeGetTiming(timestamps.firstMeaningfulPaint),
+      largestContentfulPaint: maybeGetTiming(timestamps.largestContentfulPaint),
       traceEnd: getTiming(timestamps.traceEnd),
       load: maybeGetTiming(timestamps.load),
       domContentLoaded: maybeGetTiming(timestamps.domContentLoaded),
     };
+
+    const frames = keyEvents
+      .filter(evt => evt.name === 'FrameCommittedInBrowser')
+      .map(evt => evt.args.data)
+      .filter(/** @return {data is {frame: string, url: string}} */ data => {
+        return Boolean(data && data.frame && data.url);
+      });
 
     return {
       timings,
@@ -451,13 +610,16 @@ class TraceProcessor {
       processEvents,
       mainThreadEvents,
       mainFrameIds,
-      navigationStartEvt: navigationStart,
+      frames,
+      timeOriginEvt: timeOriginEvt,
       firstPaintEvt: firstPaint,
       firstContentfulPaintEvt: firstContentfulPaint,
       firstMeaningfulPaintEvt: firstMeaningfulPaint,
+      largestContentfulPaintEvt: largestContentfulPaint,
       loadEvt: load,
       domContentLoadedEvt: domContentLoaded,
       fmpFellBack,
+      lcpInvalidated,
     };
   }
 }

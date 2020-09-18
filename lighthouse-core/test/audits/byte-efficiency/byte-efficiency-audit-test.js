@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -15,7 +15,7 @@ const LoadSimulator = require('../../../computed/load-simulator.js');
 
 const trace = require('../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
-const assert = require('assert');
+const assert = require('assert').strict;
 
 /* eslint-env jest */
 
@@ -45,9 +45,7 @@ describe('Byte efficiency base audit', () => {
   });
 
   const baseHeadings = [
-    {key: 'totalBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1, text: ''},
     {key: 'wastedBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1, text: ''},
-    {key: 'wastedMs', itemType: 'text', text: ''},
   ];
 
   describe('#estimateTransferSize', () => {
@@ -75,6 +73,12 @@ describe('Byte efficiency base audit', () => {
     it('should not error when missing resource size', () => {
       const resourceType = 'Other';
       const result = estimate({transferSize: 1000, resourceType}, 100);
+      assert.equal(result, 100);
+    });
+
+    it('should not error when resource size is 0', () => {
+      const resourceType = 'Other';
+      const result = estimate({transferSize: 1000, resourceSize: 0, resourceType}, 100);
       assert.equal(result, 100);
     });
   });
@@ -140,7 +144,7 @@ describe('Byte efficiency base audit', () => {
     });
   });
 
-  it('should populate KB', () => {
+  it('should populate KiB', () => {
     const result = ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
       items: [
@@ -191,7 +195,7 @@ describe('Byte efficiency base audit', () => {
     const simulator = await LoadSimulator.request({devtoolsLog, settings}, {computedCache});
     const result = ByteEfficiencyAudit.createAuditProduct(
       {
-        headings: [{key: 'value', text: 'Label'}],
+        headings: [{key: 'wastedBytes', text: 'Label'}],
         items: [
           {url: 'https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW', wastedBytes: 30 * 1024},
         ],

@@ -24,10 +24,13 @@ lighthouse-logger/
 # keep smokehouse tests, etc
 !lighthouse-cli/test
 
-node_modules/
 results/
 lantern-data/
-latest-run/
+timings-data/
+
+# ignore all folders named as such
+node_modules
+latest-run
 
 # generated files
 **/pages/scripts/lighthouse-report.js
@@ -44,9 +47,9 @@ results.html
 *.lcov
 
 # dev files
-.appveyor.yml
 .DS_Store
 .editorconfig
 .eslintignore
 .eslintrc.js
 .travis.yml
+*.tgz

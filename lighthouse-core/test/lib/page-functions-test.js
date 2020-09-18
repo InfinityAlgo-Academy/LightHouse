@@ -1,11 +1,11 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const jsdom = require('jsdom');
 const DOM = require('../../report/html/renderer/dom.js');
 const pageFunctions = require('../../lib/page-functions.js');
@@ -60,6 +60,28 @@ describe('Page Functions', () => {
     it('works if attribute values contain line breaks', () => {
       assert.equal(pageFunctions.getOuterHTMLSnippet(
         dom.createElement('div', '', {style: 'style1\nstyle2'})), '<div style="style1\nstyle2">');
+    });
+
+    it('truncates attribute values that are too long', () => {
+      const longClass = 'a'.repeat(200);
+      const truncatedExpectation = 'a'.repeat(74) + '…';
+      assert.equal(pageFunctions.getOuterHTMLSnippet(
+        dom.createElement('div', '', {class: longClass})), `<div class="${truncatedExpectation}">`
+      );
+    });
+
+    it('removes attributes if the length of the attribute name + value is too long', () => {
+      const longValue = 'a'.repeat(200);
+      const truncatedValue = 'a'.repeat(74) + '…';
+      const element = dom.createElement('div', '', {
+        class: longValue,
+        id: longValue,
+        att1: 'shouldn\'t see this',
+        att2: 'shouldn\'t see this either',
+      });
+      const snippet = pageFunctions.getOuterHTMLSnippet(element, [], 150);
+      assert.equal(snippet, `<div class="${truncatedValue}" id="${truncatedValue}" …>`
+      );
     });
   });
 

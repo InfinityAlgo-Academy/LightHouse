@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an AS IS' BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
@@ -18,11 +18,15 @@ describe('Third party summary', () => {
     const artifacts = {
       devtoolsLogs: {defaultPass: pwaDevtoolsLog},
       traces: {defaultPass: pwaTrace},
+      URL: {finalUrl: 'https://pwa-rocks.com'},
     };
 
     const results = await ThirdPartySummary.audit(artifacts, {computedCache: new Map()});
 
-    expect(results.displayValue).toBeDisplayString('2 Third-Parties Found');
+    expect(results.score).toBe(1);
+    expect(results.displayValue).toBeDisplayString(
+      'Third-party code blocked the main thread for 20 ms'
+    );
     expect(results.details.items).toEqual([
       {
         entity: {
@@ -30,8 +34,20 @@ describe('Third party summary', () => {
           type: 'link',
           url: 'https://marketingplatform.google.com/about/tag-manager/',
         },
-        mainThreadTime: 104.70300000000002,
+        mainThreadTime: 127.15300000000003,
+        blockingTime: 18.186999999999998,
         transferSize: 30827,
+        subItems: {
+          items: [
+            {
+              blockingTime: 18.186999999999998,
+              mainThreadTime: 127.15300000000003,
+              transferSize: 30827,
+              url: 'https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW',
+            },
+          ],
+          type: 'subitems',
+        },
       },
       {
         entity: {
@@ -39,30 +55,53 @@ describe('Third party summary', () => {
           type: 'link',
           url: 'https://www.google.com/analytics/analytics/',
         },
-        mainThreadTime: 87.576,
+        mainThreadTime: 95.15599999999999,
+        blockingTime: 0,
         transferSize: 20913,
+        subItems: {
+          items: [
+            {
+              blockingTime: 0,
+              mainThreadTime: 55.246999999999986,
+              transferSize: 12906,
+              url: 'https://www.google-analytics.com/analytics.js',
+            },
+            {
+              blockingTime: 0,
+              transferSize: 8007,
+              url: expect.any(String),
+            },
+          ],
+          type: 'subitems',
+        },
       },
     ]);
+    expect(results.details.items[1].subItems.items[1].url).toBeDisplayString('Other resources');
   });
 
   it('account for simulated throttling', async () => {
     const artifacts = {
       devtoolsLogs: {defaultPass: pwaDevtoolsLog},
       traces: {defaultPass: pwaTrace},
+      URL: {finalUrl: 'https://pwa-rocks.com'},
     };
 
     const settings = {throttlingMethod: 'simulate', throttling: {cpuSlowdownMultiplier: 4}};
     const results = await ThirdPartySummary.audit(artifacts, {computedCache: new Map(), settings});
 
+    expect(results.score).toBe(0);
     expect(results.details.items).toHaveLength(2);
-    expect(Math.round(results.details.items[0].mainThreadTime)).toEqual(419);
-    expect(Math.round(results.details.items[1].mainThreadTime)).toEqual(350);
+    expect(Math.round(results.details.items[0].mainThreadTime)).toEqual(509);
+    expect(Math.round(results.details.items[0].blockingTime)).toEqual(250);
+    expect(Math.round(results.details.items[1].mainThreadTime)).toEqual(381);
+    expect(Math.round(results.details.items[1].blockingTime)).toEqual(157);
   });
 
   it('be not applicable when no third parties are present', async () => {
     const artifacts = {
       devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog([{url: 'chrome://version'}])},
       traces: {defaultPass: noThirdPartyTrace},
+      URL: {finalUrl: 'chrome://version'},
     };
 
     const settings = {throttlingMethod: 'simulate', throttling: {cpuSlowdownMultiplier: 4}};
@@ -72,5 +111,38 @@ describe('Third party summary', () => {
       score: 1,
       notApplicable: true,
     });
+  });
+
+  it('does not return third party entity that matches main resource entity', async () => {
+    const externalArtifacts = {
+      devtoolsLogs: {
+        defaultPass: networkRecordsToDevtoolsLog([
+          {url: 'http://example.com'},
+          {url: 'http://photos-c.ak.fbcdn.net/photos-ak-sf2p/photo.jpg'},
+        ]),
+      },
+      traces: {defaultPass: pwaTrace},
+      URL: {finalUrl: 'http://example.com'},
+    };
+    const facebookArtifacts = {
+      devtoolsLogs: {
+        defaultPass: networkRecordsToDevtoolsLog([
+          {url: 'http://facebook.com'},
+          {url: 'http://photos-c.ak.fbcdn.net/photos-ak-sf2p/photo.jpg'},
+        ]),
+      },
+      traces: {defaultPass: pwaTrace},
+      URL: {finalUrl: 'http://facebook.com'},
+    };
+    const context = {computedCache: new Map()};
+
+    const resultsOnExternal = await ThirdPartySummary.audit(externalArtifacts, context);
+    const resultsOnFacebook = await ThirdPartySummary.audit(facebookArtifacts, context);
+
+    const externalEntities = resultsOnExternal.details.items.map(item => item.entity.text);
+    const facebookEntities = resultsOnFacebook.details.items.map(item => item.entity.text);
+
+    expect(externalEntities).toEqual(['Google Tag Manager', 'Facebook', 'Google Analytics']);
+    expect(facebookEntities).toEqual(['Google Tag Manager', 'Google Analytics']);
   });
 });

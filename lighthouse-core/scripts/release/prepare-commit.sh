@@ -40,11 +40,8 @@ git checkout -b "$BRANCH_NAME"
 # Install the dependencies.
 yarn install
 
-# Bump the version in package.json and clients/extension/manifest.json
-NEEDLE="^  \"version\": \"$SEMVER_PATTERN\""
-REPLACEMENT="  \"version\": \"$NEW_VERSION\""
-
-sed -i '' "s/$NEEDLE/$REPLACEMENT/g" package.json clients/extension/manifest.json
+# Bump the version in package.json and others.
+node lighthouse-core/scripts/release/bump-versions.js $NEW_VERSION
 
 # Update the fixtures with the new version
 yarn update:sample-json
@@ -58,6 +55,8 @@ git --no-pager shortlog -s -e -n "v${OLD_VERSION}..HEAD" | cut -f 2 | sort > aut
 NEW_CONTRIBUTORS=$(comm -13 auto_contribs_prior_to_last auto_contribs_since_last)
 rm auto_contribs_prior_to_last auto_contribs_since_last
 
+set +x
+
 if [[ $(echo "$NEW_CONTRIBUTORS" | wc -l) -gt 1 ]]; then
   printf "Thanks to our new contributors 👽🐷🐰🐯🐻! \n$NEW_CONTRIBUTORS\n" | cat - changelog.md > tmp-changelog
   mv tmp-changelog changelog.md
@@ -68,9 +67,9 @@ git commit -m "v$NEW_VERSION"
 
 echo "Version bump commit ready on the ${TXT_BOLD}$BRANCH_NAME${TXT_RESET} branch!"
 
-echo "${TXT_DIM}Press any key to see the git diff, CTRL+C to exit...${TXT_RESET}"
+echo "${TXT_DIM}Press Space to see the git diff, CTRL+C to exit...${TXT_RESET}"
 read -n 1 -r unused_variable
 git diff HEAD^
-echo "${TXT_DIM}Press any key to push to GitHub, CTRL+C to exit...${TXT_RESET}"
+echo "${TXT_DIM}Press Space to push to GitHub, CTRL+C to exit...${TXT_RESET}"
 read -n 1 -r unused_variable
 git push -u origin "$BRANCH_NAME"

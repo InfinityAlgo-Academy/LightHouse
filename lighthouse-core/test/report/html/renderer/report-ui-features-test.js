@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,14 +7,18 @@
 
 /* eslint-env jest */
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const fs = require('fs');
 const jsdom = require('jsdom');
 const Util = require('../../../../report/html/renderer/util.js');
+const I18n = require('../../../../report/html/renderer/i18n.js');
 const DOM = require('../../../../report/html/renderer/dom.js');
 const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
 const ReportUIFeatures = require('../../../../report/html/renderer/report-ui-features.js');
 const CategoryRenderer = require('../../../../report/html/renderer/category-renderer.js');
+const ElementScreenshotRenderer =
+  require('../../../../report/html/renderer/element-screenshot-renderer.js');
+const RectHelpers = require('../../../../../lighthouse-core/lib/rect-helpers.js');
 const CriticalRequestChainRenderer = require(
     '../../../../report/html/renderer/crc-details-renderer.js');
 const ReportRenderer = require('../../../../report/html/renderer/report-renderer.js');
@@ -45,10 +49,13 @@ describe('ReportUIFeatures', () => {
 
   beforeAll(() => {
     global.Util = Util;
+    global.I18n = I18n;
     global.ReportUIFeatures = ReportUIFeatures;
     global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
     global.DetailsRenderer = DetailsRenderer;
     global.CategoryRenderer = CategoryRenderer;
+    global.ElementScreenshotRenderer = ElementScreenshotRenderer;
+    global.RectHelpers = RectHelpers;
 
     // lazy loaded because they depend on CategoryRenderer to be available globally
     global.PerformanceCategoryRenderer =
@@ -73,6 +80,7 @@ describe('ReportUIFeatures', () => {
       };
     };
 
+    global.HTMLElement = document.window.HTMLElement;
     global.HTMLInputElement = document.window.HTMLInputElement;
 
     global.window = document.window;
@@ -85,20 +93,25 @@ describe('ReportUIFeatures', () => {
 
     dom = new DOM(document.window.document);
     sampleResults = Util.prepareReportResult(sampleResultsOrig);
+    render(sampleResults);
   });
 
   afterAll(() => {
     global.self = undefined;
     global.Util = undefined;
+    global.I18n = undefined;
     global.ReportUIFeatures = undefined;
     global.matchMedia = undefined;
     global.self.matchMedia = undefined;
     global.CriticalRequestChainRenderer = undefined;
     global.DetailsRenderer = undefined;
     global.CategoryRenderer = undefined;
+    global.ElementScreenshotRenderer = undefined;
+    global.RectHelpers = undefined;
     global.PerformanceCategoryRenderer = undefined;
     global.PwaCategoryRenderer = undefined;
     global.window = undefined;
+    global.HTMLElement = undefined;
     global.HTMLInputElement = undefined;
   });
 
@@ -128,6 +141,7 @@ describe('ReportUIFeatures', () => {
           sampleResults.audits['render-blocking-resources'].details.items[0];
         const textCompressionAuditItemTemplate =
           sampleResults.audits['uses-text-compression'].details.items[0];
+
         // Interleave first/third party URLs to test restoring order.
         lhr.audits['uses-webp-images'].details.items = [
           {
@@ -142,6 +156,53 @@ describe('ReportUIFeatures', () => {
             ...webpAuditItemTemplate,
             url: 'http://www.notexample.com/img3.jpg', // Third party, will be filtered.
           },
+        ];
+
+        // Test sub-item rows.
+        lhr.audits['unused-javascript'].details.items = [
+          {
+            ...webpAuditItemTemplate,
+            url: 'http://www.cdn.com/script1.js', // Third party, will be filtered.
+            subItems: {
+              type: 'subitems',
+              items: [
+                {source: '1', sourceBytes: 1, sourceWastedBytes: 1},
+                {source: '2', sourceBytes: 2, sourceWastedBytes: 2},
+              ],
+            },
+          },
+          {
+            ...webpAuditItemTemplate,
+            url: 'http://www.example.com/script2.js', // First party, not filtered.
+            subItems: {
+              type: 'subitems',
+              items: [
+                {source: '3', sourceBytes: 3, sourceWastedBytes: 3},
+                {source: '4', sourceBytes: 4, sourceWastedBytes: 4},
+              ],
+            },
+          },
+          {
+            ...webpAuditItemTemplate,
+            url: 'http://www.notexample.com/script3.js', // Third party, will be filtered.
+            subItems: {
+              type: 'subitems',
+              items: [
+                {source: '5', sourceBytes: 5, sourceWastedBytes: 5},
+                {source: '6', sourceBytes: 6, sourceWastedBytes: 6},
+              ],
+            },
+          },
+        ];
+        // Sample json currently doesn't have any results for `unused-javascript`, so
+        // headings is empty. Can delete this block of code if that changes.
+        expect(lhr.audits['unused-javascript'].details.headings).toHaveLength(0);
+        lhr.audits['unused-javascript'].details.headings = [
+          /* t-disable max-len */
+          {key: 'url', valueType: 'url', subItemsHeading: {key: 'source', valueType: 'code'}},
+          {key: 'totalBytes', valueType: 'bytes', subItemsHeading: {key: 'sourceBytes'}},
+          {key: 'wastedBytes', valueType: 'bytes', subItemsHeading: {key: 'sourceWastedBytes'}},
+          /* eslint-enable max-len */
         ];
 
         // Only third party URLs to test that checkbox is hidden
@@ -180,12 +241,13 @@ describe('ReportUIFeatures', () => {
         container = render(lhr);
       });
 
-      it('filters out third party resources in details tables when checkbox is clicked', () => {
+      it('filters out third party resources in on click', () => {
         const filterCheckbox = dom.find('#uses-webp-images .lh-3p-filter-input', container);
 
         function getUrlsInTable() {
           return dom
-            .findAll('#uses-webp-images .lh-details .lh-text__url .lh-text:first-child', container)
+            .findAll(
+              '#uses-webp-images tr:not(.lh-row--hidden) .lh-text__url a:first-child', container)
             .map(el => el.textContent);
         }
 
@@ -194,6 +256,40 @@ describe('ReportUIFeatures', () => {
         expect(getUrlsInTable()).toEqual(['/img2.jpg']);
         filterCheckbox.click();
         expect(getUrlsInTable()).toEqual(['/img1.jpg', '/img2.jpg', '/img3.jpg']);
+      });
+
+      it('filters out sub-item rows of third party resources on click', () => {
+        dom.find('#unused-javascript', container);
+        const filterCheckbox = dom.find('#unused-javascript .lh-3p-filter-input', container);
+
+        function getRowIdentifiers() {
+          return dom
+            .findAll(
+              '#unused-javascript tbody tr:not(.lh-row--hidden)', container)
+            .map(el => el.textContent);
+        }
+
+        const initialExpected = [
+          '/script1.js(www.cdn.com)24 KiB8.8 KiB',
+          '10 KiB0 KiB',
+          '20 KiB0 KiB',
+          '/script2.js(www.example.com)24 KiB8.8 KiB',
+          '30 KiB0 KiB',
+          '40 KiB0 KiB',
+          '/script3.js(www.notexample.com)24 KiB8.8 KiB',
+          '50 KiB0 KiB',
+          '60 KiB0 KiB',
+        ];
+
+        expect(getRowIdentifiers()).toEqual(initialExpected);
+        filterCheckbox.click();
+        expect(getRowIdentifiers()).toEqual([
+          '/script2.js(www.example.com)24 KiB8.8 KiB',
+          '30 KiB0 KiB',
+          '40 KiB0 KiB',
+        ]);
+        filterCheckbox.click();
+        expect(getRowIdentifiers()).toEqual(initialExpected);
       });
 
       it('adds no filter for audits in thirdPartyFilterAuditExclusions', () => {
@@ -206,18 +302,17 @@ describe('ReportUIFeatures', () => {
           .toThrowError('query #uses-rel-preconnect .lh-3p-filter-input not found');
       });
 
-      it('adds no filter for audits with tables containing only third party resources', () => {
-        const checkboxClassName = 'lh-3p-filter-input';
-
-        expect(() => dom.find(`#render-blocking-resources .${checkboxClassName}`, container))
-          .toThrowError('query #render-blocking-resources .lh-3p-filter-input not found');
+      it('filter is disabled and checked for when just third party resources', () => {
+        const filterCheckbox =
+          dom.find('#render-blocking-resources .lh-3p-filter-input', container);
+        expect(filterCheckbox.disabled).toEqual(true);
+        expect(filterCheckbox.checked).toEqual(true);
       });
 
-      it('adds no filter for audits with tables containing only first party resources', () => {
-        const checkboxClassName = 'lh-3p-filter-input';
-
-        expect(() => dom.find(`#uses-text-compression .${checkboxClassName}`, container))
-          .toThrowError('query #uses-text-compression .lh-3p-filter-input not found');
+      it('filter is disabled and not checked for just first party resources', () => {
+        const filterCheckbox = dom.find('#uses-text-compression .lh-3p-filter-input', container);
+        expect(filterCheckbox.disabled).toEqual(true);
+        expect(filterCheckbox.checked).toEqual(false);
       });
     });
   });
@@ -235,6 +330,17 @@ describe('ReportUIFeatures', () => {
       Object.values(lhr.categories).forEach(element => {
         element.score = 1;
       });
+      const container = render(lhr);
+      assert.ok(container.querySelector('.score100'), 'has fireworks treatment');
+    });
+
+    it('should show fireworks for all 100s except PWA', () => {
+      const lhr = JSON.parse(JSON.stringify(sampleResults));
+      Object.values(lhr.categories).forEach(element => {
+        element.score = 1;
+      });
+      lhr.categories.pwa.score = 0;
+
       const container = render(lhr);
       assert.ok(container.querySelector('.score100'), 'has fireworks treatment');
     });
@@ -263,6 +369,197 @@ describe('ReportUIFeatures', () => {
       lhr.audits['first-contentful-paint'].errorMessage = 'Error.';
       const container = render(lhr);
       assert.ok(container.querySelector('.lh-metrics-toggle__input').checked);
+    });
+  });
+
+  describe('tools button', () => {
+    let window;
+    let dropDown;
+
+    beforeEach(() => {
+      window = dom.document().defaultView;
+      const features = new ReportUIFeatures(dom);
+      features.initFeatures(sampleResults);
+      dropDown = features._dropDown;
+    });
+
+    it('click should toggle active class', () => {
+      dropDown._toggleEl.click();
+      assert.ok(dropDown._toggleEl.classList.contains('active'));
+
+      dropDown._toggleEl.click();
+      assert.ok(!dropDown._toggleEl.classList.contains('active'));
+    });
+
+
+    it('Escape key removes active class', () => {
+      dropDown._toggleEl.click();
+      assert.ok(dropDown._toggleEl.classList.contains('active'));
+
+      const escape = new window.KeyboardEvent('keydown', {keyCode: /* ESC */ 27});
+      dom.document().dispatchEvent(escape);
+      assert.ok(!dropDown._toggleEl.classList.contains('active'));
+    });
+
+    ['ArrowUp', 'ArrowDown', 'Enter', ' '].forEach((code) => {
+      it(`'${code}' adds active class`, () => {
+        const event = new window.KeyboardEvent('keydown', {code});
+        dropDown._toggleEl.dispatchEvent(event);
+        assert.ok(dropDown._toggleEl.classList.contains('active'));
+      });
+    });
+
+    it('ArrowUp on the first menu element should focus the last element', () => {
+      dropDown._toggleEl.click();
+
+      const arrowUp = new window.KeyboardEvent('keydown', {bubbles: true, code: 'ArrowUp'});
+      dropDown._menuEl.firstElementChild.dispatchEvent(arrowUp);
+
+      assert.strictEqual(dom.document().activeElement, dropDown._menuEl.lastElementChild);
+    });
+
+    it('ArrowDown on the first menu element should focus the second element', () => {
+      dropDown._toggleEl.click();
+
+      const {nextElementSibling} = dropDown._menuEl.firstElementChild;
+      const arrowDown = new window.KeyboardEvent('keydown', {bubbles: true, code: 'ArrowDown'});
+      dropDown._menuEl.firstElementChild.dispatchEvent(arrowDown);
+
+      assert.strictEqual(dom.document().activeElement, nextElementSibling);
+    });
+
+    it('Home on the last menu element should focus the first element', () => {
+      dropDown._toggleEl.click();
+
+      const {firstElementChild} = dropDown._menuEl;
+      const home = new window.KeyboardEvent('keydown', {bubbles: true, code: 'Home'});
+      dropDown._menuEl.lastElementChild.dispatchEvent(home);
+
+      assert.strictEqual(dom.document().activeElement, firstElementChild);
+    });
+
+    it('End on the first menu element should focus the last element', () => {
+      dropDown._toggleEl.click();
+
+      const {lastElementChild} = dropDown._menuEl;
+      const end = new window.KeyboardEvent('keydown', {bubbles: true, code: 'End'});
+      dropDown._menuEl.firstElementChild.dispatchEvent(end);
+
+      assert.strictEqual(dom.document().activeElement, lastElementChild);
+    });
+
+    describe('_getNextSelectableNode', () => {
+      let createDiv;
+
+      beforeAll(() => {
+        createDiv = () => dom.document().createElement('div');
+      });
+
+      it('should return undefined when nodes is empty', () => {
+        const nodes = [];
+
+        const nextNode = dropDown._getNextSelectableNode(nodes);
+
+        assert.strictEqual(nextNode, undefined);
+      });
+
+      it('should return the only node when start is defined', () => {
+        const node = createDiv();
+
+        const nextNode = dropDown._getNextSelectableNode([node], node);
+
+        assert.strictEqual(nextNode, node);
+      });
+
+      it('should return first node when start is undefined', () => {
+        const nodes = [createDiv(), createDiv()];
+
+        const nextNode = dropDown._getNextSelectableNode(nodes);
+
+        assert.strictEqual(nextNode, nodes[0]);
+      });
+
+      it('should return second node when start is first node', () => {
+        const nodes = [createDiv(), createDiv()];
+
+        const nextNode = dropDown._getNextSelectableNode(nodes, nodes[0]);
+
+        assert.strictEqual(nextNode, nodes[1]);
+      });
+
+      it('should return first node when start is second node', () => {
+        const nodes = [createDiv(), createDiv()];
+
+        const nextNode = dropDown._getNextSelectableNode(nodes, nodes[1]);
+
+        assert.strictEqual(nextNode, nodes[0]);
+      });
+
+      it('should skip the undefined node', () => {
+        const nodes = [createDiv(), undefined, createDiv()];
+
+        const nextNode = dropDown._getNextSelectableNode(nodes, nodes[0]);
+
+        assert.strictEqual(nextNode, nodes[2]);
+      });
+
+      it('should skip the disabled node', () => {
+        const disabledNode = createDiv();
+        disabledNode.setAttribute('disabled', true);
+        const nodes = [createDiv(), disabledNode, createDiv()];
+
+        const nextNode = dropDown._getNextSelectableNode(nodes, nodes[0]);
+
+        assert.strictEqual(nextNode, nodes[2]);
+      });
+    });
+
+    describe('onMenuFocusOut', () => {
+      beforeEach(() => {
+        dropDown._toggleEl.click();
+        assert.ok(dropDown._toggleEl.classList.contains('active'));
+      });
+
+      it('should toggle active class when focus relatedTarget is null', () => {
+        const event = new window.FocusEvent('focusout', {relatedTarget: null});
+        dropDown.onMenuFocusOut(event);
+
+        assert.ok(!dropDown._toggleEl.classList.contains('active'));
+      });
+
+      it('should toggle active class when focus relatedTarget is document.body', () => {
+        const relatedTarget = dom.document().body;
+        const event = new window.FocusEvent('focusout', {relatedTarget});
+        dropDown.onMenuFocusOut(event);
+
+        assert.ok(!dropDown._toggleEl.classList.contains('active'));
+      });
+
+      it('should toggle active class when focus relatedTarget is _toggleEl', () => {
+        const relatedTarget = dropDown._toggleEl;
+        const event = new window.FocusEvent('focusout', {relatedTarget});
+        dropDown.onMenuFocusOut(event);
+
+        assert.ok(!dropDown._toggleEl.classList.contains('active'));
+      });
+
+      it('should not toggle active class when focus relatedTarget is a menu item', () => {
+        const relatedTarget = dropDown._getNextMenuItem();
+        const event = new window.FocusEvent('focusout', {relatedTarget});
+        dropDown.onMenuFocusOut(event);
+
+        assert.ok(dropDown._toggleEl.classList.contains('active'));
+      });
+    });
+  });
+
+  describe('data-i18n', () => {
+    it('should have only valid data-i18n values in template', () => {
+      const container = render(sampleResults);
+      for (const node of dom.findAll('[data-i18n]', container)) {
+        const val = node.getAttribute('data-i18n');
+        assert.ok(val in Util.UIStrings, `Invalid data-i18n value of: "${val}" found.`);
+      }
     });
   });
 });

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2017 Google Inc. All Rights Reserved.
+ * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,9 +23,10 @@
  * Dummy text for ensuring report robustness: </script> pre$`post %%LIGHTHOUSE_JSON%%
  */
 
+/** @typedef {import('./category-renderer')} CategoryRenderer */
 /** @typedef {import('./dom.js')} DOM */
 
-/* globals self, Util, DetailsRenderer, CategoryRenderer, PerformanceCategoryRenderer, PwaCategoryRenderer */
+/* globals self, Util, DetailsRenderer, CategoryRenderer, I18n, PerformanceCategoryRenderer, PwaCategoryRenderer, ElementScreenshotRenderer */
 
 class ReportRenderer {
   /**
@@ -41,21 +42,15 @@ class ReportRenderer {
   /**
    * @param {LH.Result} result
    * @param {Element} container Parent element to render the report into.
-   * @return {Element}
+   * @return {!Element}
    */
   renderReport(result, container) {
-    // Mutate the UIStrings if necessary (while saving originals)
-    const originalUIStrings = JSON.parse(JSON.stringify(Util.UIStrings));
-
     this._dom.setLighthouseChannel(result.configSettings.channel || 'unknown');
 
     const report = Util.prepareReportResult(result);
 
     container.textContent = ''; // Remove previous report.
     container.appendChild(this._renderReport(report));
-
-    // put the UIStrings back into original state
-    Util.updateAllUIStrings(originalUIStrings);
 
     return container;
   }
@@ -77,6 +72,7 @@ class ReportRenderer {
     const el = this._dom.cloneTemplate('#tmpl-lh-topbar', this._templateContext);
     const metadataUrl = /** @type {HTMLAnchorElement} */ (this._dom.find('.lh-topbar__url', el));
     metadataUrl.href = metadataUrl.textContent = report.finalUrl;
+    metadataUrl.title = report.finalUrl;
     return el;
   }
 
@@ -100,25 +96,38 @@ class ReportRenderer {
 
     const env = this._dom.find('.lh-env__items', footer);
     env.id = 'runtime-settings';
+    this._dom.find('.lh-env__title', footer).textContent = Util.i18n.strings.runtimeSettingsTitle;
+
     const envValues = Util.getEnvironmentDisplayValues(report.configSettings || {});
-    [
-      {name: 'URL', description: report.finalUrl},
-      {name: 'Fetch time', description: Util.formatDateTime(report.fetchTime)},
+    const runtimeValues = [
+      {name: Util.i18n.strings.runtimeSettingsUrl, description: report.finalUrl},
+      {name: Util.i18n.strings.runtimeSettingsFetchTime,
+        description: Util.i18n.formatDateTime(report.fetchTime)},
       ...envValues,
-      {name: 'User agent (host)', description: report.userAgent},
-      {name: 'User agent (network)', description: report.environment &&
+      {name: Util.i18n.strings.runtimeSettingsChannel, description: report.configSettings.channel},
+      {name: Util.i18n.strings.runtimeSettingsUA, description: report.userAgent},
+      {name: Util.i18n.strings.runtimeSettingsUANetwork, description: report.environment &&
         report.environment.networkUserAgent},
-      {name: 'CPU/Memory Power', description: report.environment &&
+      {name: Util.i18n.strings.runtimeSettingsBenchmark, description: report.environment &&
         report.environment.benchmarkIndex.toFixed(0)},
-    ].forEach(runtime => {
-      if (!runtime.description) return;
+    ];
+    if (report.environment.credits && report.environment.credits['axe-core']) {
+      runtimeValues.push({
+        name: Util.i18n.strings.runtimeSettingsAxeVersion,
+        description: report.environment.credits['axe-core'],
+      });
+    }
+
+    for (const runtime of runtimeValues) {
+      if (!runtime.description) continue;
 
       const item = this._dom.cloneTemplate('#tmpl-lh-env__items', env);
       this._dom.find('.lh-env__name', item).textContent = runtime.name;
       this._dom.find('.lh-env__description', item).textContent = runtime.description;
       env.appendChild(item);
-    });
+    }
 
+    this._dom.find('.lh-footer__version_issue', footer).textContent = Util.i18n.strings.footerIssue;
     this._dom.find('.lh-footer__version', footer).textContent = report.lighthouseVersion;
     return footer;
   }
@@ -135,7 +144,7 @@ class ReportRenderer {
 
     const container = this._dom.cloneTemplate('#tmpl-lh-warnings--toplevel', this._templateContext);
     const message = this._dom.find('.lh-warnings__msg', container);
-    message.textContent = Util.UIStrings.toplevelWarningsMessage;
+    message.textContent = Util.i18n.strings.toplevelWarningsMessage;
 
     const warnings = this._dom.find('ul', container);
     for (const warningString of report.runWarnings) {
@@ -150,7 +159,7 @@ class ReportRenderer {
    * @param {LH.ReportResult} report
    * @param {CategoryRenderer} categoryRenderer
    * @param {Record<string, CategoryRenderer>} specificCategoryRenderers
-   * @return {DocumentFragment[]}
+   * @return {!DocumentFragment[]}
    */
   _renderScoreGauges(report, categoryRenderer, specificCategoryRenderers) {
     // Group gauges in this order: default, pwa, plugins.
@@ -181,10 +190,27 @@ class ReportRenderer {
 
   /**
    * @param {LH.ReportResult} report
-   * @return {DocumentFragment}
+   * @return {!DocumentFragment}
    */
   _renderReport(report) {
-    const detailsRenderer = new DetailsRenderer(this._dom);
+    const i18n = new I18n(report.configSettings.locale, {
+      // Set missing renderer strings to default (english) values.
+      ...Util.UIStrings,
+      ...report.i18n.rendererFormattedStrings,
+    });
+    Util.i18n = i18n;
+    Util.reportJson = report;
+
+    const fullPageScreenshot =
+      report.audits['full-page-screenshot'] && report.audits['full-page-screenshot'].details &&
+      report.audits['full-page-screenshot'].details.type === 'full-page-screenshot' ?
+      report.audits['full-page-screenshot'].details : undefined;
+    const detailsRenderer = new DetailsRenderer(this._dom, {
+      fullPageScreenshot,
+    });
+    const fullPageScreenshotStyleEl = fullPageScreenshot &&
+      ElementScreenshotRenderer.createBackgroundImageStyle(this._dom, fullPageScreenshot);
+
     const categoryRenderer = new CategoryRenderer(this._dom, detailsRenderer);
     categoryRenderer.setTemplateContext(this._templateContext);
 
@@ -242,14 +268,12 @@ class ReportRenderer {
     reportFragment.appendChild(reportContainer);
     reportContainer.appendChild(headerContainer);
     reportContainer.appendChild(reportSection);
+    fullPageScreenshotStyleEl && reportContainer.appendChild(fullPageScreenshotStyleEl);
     reportSection.appendChild(this._renderReportFooter(report));
 
     return reportFragment;
   }
 }
-
-/** @type {LH.I18NRendererStrings} */
-ReportRenderer._UIStringsStash = {};
 
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = ReportRenderer;

@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -70,15 +70,12 @@ class Runner {
           throw new Error('Cannot run audit mode on different URL');
         }
       } else {
-        if (typeof runOpts.url !== 'string' || runOpts.url.length === 0) {
-          throw new Error(`You must provide a url to the runner. '${runOpts.url}' provided.`);
-        }
-
-        try {
+        // verify the url is valid and that protocol is allowed
+        if (runOpts.url && URL.isValid(runOpts.url) && URL.isProtocolAllowed(runOpts.url)) {
           // Use canonicalized URL (with trailing slashes and such)
           requestedUrl = new URL(runOpts.url).href;
-        } catch (e) {
-          throw new Error('The url provided should have a proper protocol and hostname.');
+        } else {
+          throw new LHError(LHError.errors.INVALID_URL);
         }
 
         artifacts = await Runner._gatherArtifactsFromBrowser(requestedUrl, runOpts, connection);
@@ -110,6 +107,13 @@ class Runner {
       // Entering: conclusion of the lighthouse result object
       const lighthouseVersion = require('../package.json').version;
 
+      // Use version from gathering stage.
+      // If accessibility gatherer didn't run or errored, it won't be in credits.
+      const axeVersion = artifacts.Accessibility && artifacts.Accessibility.version;
+      const credits = {
+        'axe-core': axeVersion,
+      };
+
       /** @type {Object<string, LH.Audit.Result>} */
       const resultsById = {};
       for (const audit of auditResults) {
@@ -132,6 +136,7 @@ class Runner {
           networkUserAgent: artifacts.NetworkUserAgent,
           hostUserAgent: artifacts.HostUserAgent,
           benchmarkIndex: artifacts.BenchmarkIndex,
+          credits,
         },
         lighthouseVersion,
         fetchTime: artifacts.fetchTime,
@@ -251,14 +256,14 @@ class Runner {
     // Members of LH.Audit.Context that are shared across all audits.
     const sharedAuditContext = {
       settings,
-      LighthouseRunWarnings: runWarnings,
       computedCache: new Map(),
     };
 
     // Run each audit sequentially
     const auditResults = [];
     for (const auditDefn of audits) {
-      const auditResult = await Runner._runAudit(auditDefn, artifacts, sharedAuditContext);
+      const auditResult = await Runner._runAudit(auditDefn, artifacts, sharedAuditContext,
+          runWarnings);
       auditResults.push(auditResult);
     }
 
@@ -271,11 +276,12 @@ class Runner {
    * Otherwise returns error audit result.
    * @param {LH.Config.AuditDefn} auditDefn
    * @param {LH.Artifacts} artifacts
-   * @param {Pick<LH.Audit.Context, 'settings'|'LighthouseRunWarnings'|'computedCache'>} sharedAuditContext
+   * @param {Pick<LH.Audit.Context, 'settings'|'computedCache'>} sharedAuditContext
+   * @param {Array<string>} runWarnings
    * @return {Promise<LH.Audit.Result>}
    * @private
    */
-  static async _runAudit(auditDefn, artifacts, sharedAuditContext) {
+  static async _runAudit(auditDefn, artifacts, sharedAuditContext, runWarnings) {
     const audit = auditDefn.implementation;
     const status = {
       msg: `Auditing: ${i18n.getFormatted(audit.meta.title, 'en-US')}`,
@@ -289,20 +295,22 @@ class Runner {
       for (const artifactName of audit.meta.requiredArtifacts) {
         const noArtifact = artifacts[artifactName] === undefined;
 
-        // If trace required, check that DEFAULT_PASS trace exists.
-        // TODO: need pass-specific check of networkRecords and traces.
-        const noTrace = artifactName === 'traces' && !artifacts.traces[Audit.DEFAULT_PASS];
+        // If trace/devtoolsLog required, check that DEFAULT_PASS trace/devtoolsLog exists.
+        // NOTE: for now, not a pass-specific check of traces or devtoolsLogs.
+        const noRequiredTrace = artifactName === 'traces' && !artifacts.traces[Audit.DEFAULT_PASS];
+        const noRequiredDevtoolsLog = artifactName === 'devtoolsLogs' &&
+            !artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
 
-        if (noArtifact || noTrace) {
+        if (noArtifact || noRequiredTrace || noRequiredDevtoolsLog) {
           log.warn('Runner',
               `${artifactName} gatherer, required by audit ${audit.meta.id}, did not run.`);
-          throw new Error(`Required ${artifactName} gatherer did not run.`);
+          throw new LHError(LHError.errors.MISSING_REQUIRED_ARTIFACT, {artifactName});
         }
 
         // If artifact was an error, output error result on behalf of audit.
         if (artifacts[artifactName] instanceof Error) {
           /** @type {Error} */
-          // @ts-ignore An artifact *could* be an Error, but caught here, so ignore elsewhere.
+          // @ts-expect-error An artifact *could* be an Error, but caught here, so ignore elsewhere.
           const artifactError = artifacts[artifactName];
 
           Sentry.captureException(artifactError, {
@@ -314,9 +322,9 @@ class Runner {
             ` encountered an error: ${artifactError.message}`);
 
           // Create a friendlier display error and mark it as expected to avoid duplicates in Sentry
-          const error = new Error(
-              `Required ${artifactName} gatherer encountered an error: ${artifactError.message}`);
-          // @ts-ignore Non-standard property added to Error
+          const error = new LHError(LHError.errors.ERRORED_REQUIRED_ARTIFACT,
+              {artifactName, errorMessage: artifactError.message});
+          // @ts-expect-error Non-standard property added to Error
           error.expected = true;
           throw error;
         }
@@ -329,18 +337,27 @@ class Runner {
         ...sharedAuditContext,
       };
 
-      // Only pass the declared `requiredArtifacts` to the audit
+      // Only pass the declared required and optional artifacts to the audit
       // The type is masquerading as `LH.Artifacts` but will only contain a subset of the keys
       // to prevent consumers from unnecessary type assertions.
-      const requiredArtifacts = audit.meta.requiredArtifacts
-        .reduce((requiredArtifacts, artifactName) => {
-          requiredArtifacts[artifactName] = artifacts[artifactName];
-          return requiredArtifacts;
+      const requestedArtifacts = audit.meta.requiredArtifacts
+        .concat(audit.meta.__internalOptionalArtifacts || []);
+      const narrowedArtifacts = requestedArtifacts
+        .reduce((narrowedArtifacts, artifactName) => {
+          const requestedArtifact = artifacts[artifactName];
+          // @ts-expect-error tsc can't yet express that artifactName is only a single type in each iteration, not a union of types.
+          narrowedArtifacts[artifactName] = requestedArtifact;
+          return narrowedArtifacts;
         }, /** @type {LH.Artifacts} */ ({}));
-      const product = await audit.audit(requiredArtifacts, auditContext);
+      const product = await audit.audit(narrowedArtifacts, auditContext);
+      runWarnings.push(...product.runWarnings || []);
+
       auditResult = Audit.generateAuditResult(audit, product);
     } catch (err) {
-      log.warn(audit.meta.id, `Caught exception: ${err.message}`);
+      // Log error if it hasn't already been logged above.
+      if (err.code !== 'MISSING_REQUIRED_ARTIFACT' && err.code !== 'ERRORED_REQUIRED_ARTIFACT') {
+        log.warn(audit.meta.id, `Caught exception: ${err.message}`);
+      }
 
       Sentry.captureException(err, {tags: {audit: audit.meta.id}, level: 'error'});
       // Errors become error audit result.

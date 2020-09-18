@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -9,6 +9,7 @@ const lighthouse = require('../../lighthouse-core/index.js');
 
 const LHError = require('../../lighthouse-core/lib/lh-error.js');
 const preprocessor = require('../../lighthouse-core/lib/proto-preprocessor.js');
+const assetSaver = require('../../lighthouse-core/lib/asset-saver.js');
 
 /** @type {Record<'mobile'|'desktop', LH.Config.Json>} */
 const LR_PRESETS = {
@@ -54,15 +55,22 @@ async function runLighthouseInLR(connection, url, flags, lrOpts) {
     const runnerResult = await lighthouse(url, flags, config, connection);
     if (!runnerResult) throw new Error('Lighthouse finished without a runnerResult');
 
+    // pre process the LHR for proto
+    const preprocessedLhr = preprocessor.processForProto(runnerResult.lhr);
+
     // When LR is called with |internal: {keep_raw_response: true, save_lighthouse_assets: true}|,
-    // this code will log artifacts to raw_response.artifacts.
+    // we log artifacts to raw_response.artifacts.
     if (logAssets) {
-      // @ts-ignore - piggyback the artifacts on the LHR.
-      runnerResult.lhr.artifacts = runnerResult.artifacts;
+      // Properly serialize artifact errors.
+      const artifactsJson = JSON.stringify(runnerResult.artifacts, assetSaver.stringifyReplacer);
+
+      return JSON.stringify({
+        ...preprocessedLhr,
+        artifacts: JSON.parse(artifactsJson),
+      });
     }
 
-    // pre process the LHR for proto
-    return JSON.stringify(preprocessor.processForProto(runnerResult.lhr));
+    return JSON.stringify(preprocessedLhr);
   } catch (err) {
     // If an error ruined the entire lighthouse run, attempt to return a meaningful error.
     let runtimeError;
@@ -93,6 +101,6 @@ if (typeof module !== 'undefined' && module.exports) {
 
 // Expose on window for browser-residing consumers of file.
 if (typeof window !== 'undefined') {
-  // @ts-ignore
+  // @ts-expect-error - not worth typing a property on `window`.
   window.runLighthouseInLR = runLighthouseInLR;
 }

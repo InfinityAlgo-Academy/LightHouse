@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -17,13 +17,14 @@ describe('Performance: Resource budgets audit', () => {
     artifacts = {
       devtoolsLogs: {
         defaultPass: networkRecordsToDevtoolsLog([
-          {url: 'http://example.com/file.html', resourceType: 'Document', transferSize: 30},
+          {url: 'http://example.com', resourceType: 'Document', transferSize: 30},
           {url: 'http://example.com/app.js', resourceType: 'Script', transferSize: 10},
+          {url: 'http://my-cdn.com/styles.css', resourceType: 'Stylesheet', transferSize: 25},
           {url: 'http://third-party.com/script.js', resourceType: 'Script', transferSize: 50},
           {url: 'http://third-party.com/file.jpg', resourceType: 'Image', transferSize: 70},
         ]),
       },
-      URL: {requestedURL: 'http://example.com', finalURL: 'http://example.com'},
+      URL: {requestedUrl: 'http://example.com', finalUrl: 'http://example.com'},
     };
     context = {computedCache: new Map(), settings: {}};
   });
@@ -31,6 +32,7 @@ describe('Performance: Resource budgets audit', () => {
   describe('with a budget.json', () => {
     beforeEach(() => {
       context.settings.budgets = [{
+        path: '/',
         resourceSizes: [
           {
             resourceType: 'script',
@@ -64,7 +66,7 @@ describe('Performance: Resource budgets audit', () => {
       const item = result.details.items[0];
       expect(item.label).toBeDisplayString('Script');
       expect(item.requestCount).toBe(2);
-      expect(item.size).toBe(60);
+      expect(item.transferSize).toBe(60);
       expect(item.sizeOverBudget).toBe(60);
       expect(item.countOverBudget).toBeDisplayString('2 requests');
     });
@@ -86,6 +88,7 @@ describe('Performance: Resource budgets audit', () => {
 
       it('convert budgets from kilobytes to bytes during calculations', async () => {
         context.settings.budgets = [{
+          path: '/',
           resourceSizes: [
             {
               resourceType: 'document',
@@ -98,6 +101,53 @@ describe('Performance: Resource budgets audit', () => {
       });
     });
 
+    describe('third-party resource identification', () => {
+      it('guesses root domain if firstPartyHostnames is not provided', async () => {
+        context.settings.budgets = [{
+          path: '/',
+          resourceSizes: [
+            {
+              resourceType: 'third-party',
+              budget: 0,
+            },
+          ],
+          resourceCounts: [
+            {
+              resourceType: 'third-party',
+              budget: 0,
+            },
+          ],
+        }];
+        const result = await ResourceBudgetAudit.audit(artifacts, context);
+        expect(result.details.items[0].transferSize).toBe(145);
+        expect(result.details.items[0].requestCount).toBe(3);
+      });
+
+      it('uses firstPartyHostnames when provided', async () => {
+        context.settings.budgets = [{
+          path: '/',
+          options: {
+            firstPartyHostnames: ['example.com', 'my-cdn.com'],
+          },
+          resourceSizes: [
+            {
+              resourceType: 'third-party',
+              budget: 0,
+            },
+          ],
+          resourceCounts: [
+            {
+              resourceType: 'third-party',
+              budget: 0,
+            },
+          ],
+        }];
+        const result = await ResourceBudgetAudit.audit(artifacts, context);
+        expect(result.details.items[0].transferSize).toBe(120);
+        expect(result.details.items[0].requestCount).toBe(2);
+      });
+    });
+
     it('only includes rows for resource types with budgets', async () => {
       const result = await ResourceBudgetAudit.audit(artifacts, context);
       expect(result.details.items).toHaveLength(2);
@@ -105,6 +155,7 @@ describe('Performance: Resource budgets audit', () => {
 
     it('sorts rows by descending file size overage', async () => {
       context.settings.budgets = [{
+        path: '/',
         resourceSizes: [
           {
             resourceType: 'document',
@@ -123,42 +174,84 @@ describe('Performance: Resource budgets audit', () => {
       const result = await ResourceBudgetAudit.audit(artifacts, context);
       const items = result.details.items;
       items.slice(0, -1).forEach((item, index) => {
-        expect(item.size).toBeGreaterThanOrEqual(items[index + 1].size);
+        expect(item.transferSize).toBeGreaterThanOrEqual(items[index + 1].transferSize);
       });
-    });
-
-    it('uses the first budget in budgets', async () => {
-      context.settings.budgets = [{
-        resourceSizes: [
-          {
-            resourceType: 'image',
-            budget: 0,
-          },
-        ],
-      },
-      {
-        resourceSizes: [
-          {
-            resourceType: 'script',
-            budget: 0,
-          },
-        ],
-      },
-      ];
-      const result = await ResourceBudgetAudit.audit(artifacts, context);
-      expect(result.details.items[0].resourceType).toBe('image');
     });
   });
 
-  describe('without a budget.json', () => {
-    beforeEach(() => {
-      context.settings.budgets = null;
+  describe('budget selection', () => {
+    describe('with a matching budget', () => {
+      it('applies the correct budget', async () => {
+        artifacts = {
+          devtoolsLogs: {
+            defaultPass: networkRecordsToDevtoolsLog([
+              {url: 'http://example.com/file.html', resourceType: 'Document', transferSize: 30},
+              {url: 'http://third-party.com/script.js', resourceType: 'Script', transferSize: 50},
+            ]),
+          },
+          URL: {requestedUrl: 'http://example.com/file.html', finalUrl: 'http://example.com/file.html'},
+        };
+        context.settings.budgets = [{
+          path: '/',
+          resourceSizes: [
+            {
+              resourceType: 'script',
+              budget: 0,
+            },
+          ],
+        },
+        {
+          path: '/file.html',
+          resourceSizes: [
+            {
+              resourceType: 'image',
+              budget: 0,
+            },
+          ],
+        },
+        {
+          path: '/not-a-match',
+          resourceSizes: [
+            {
+              resourceType: 'document',
+              budget: 0,
+            },
+          ],
+        },
+        ];
+        const result = await ResourceBudgetAudit.audit(artifacts, context);
+        expect(result.details.items[0].resourceType).toBe('image');
+      });
     });
 
-    it('audit does not apply', async () => {
-      const result = await ResourceBudgetAudit.audit(artifacts, context);
-      expect(result.details).toBeUndefined();
-      expect(result.notApplicable).toBe(true);
+    describe('without a matching budget', () => {
+      it('returns "audit does not apply"', async () => {
+        context.settings.budgets = [{
+          path: '/not-a-match',
+          resourceSizes: [
+            {
+              resourceType: 'script',
+              budget: 0,
+            },
+          ],
+        },
+        ];
+        const result = await ResourceBudgetAudit.audit(artifacts, context);
+        expect(result.details).toBeUndefined();
+        expect(result.notApplicable).toBe(true);
+      });
+    });
+
+    describe('without a budget.json', () => {
+      beforeEach(() => {
+        context.settings.budgets = null;
+      });
+
+      it('returns "audit does not apply"', async () => {
+        const result = await ResourceBudgetAudit.audit(artifacts, context);
+        expect(result.details).toBeUndefined();
+        expect(result.notApplicable).toBe(true);
+      });
     });
   });
 });
