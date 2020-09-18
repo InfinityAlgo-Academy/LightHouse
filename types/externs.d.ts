@@ -233,6 +233,13 @@ declare global {
       [futureProps: string]: any;
     }
 
+    /** The type of the Profile & ProfileChunk event in Chromium traces. Note that this is subtly different from Crdp.Profiler.Profile. */
+    export interface TraceCpuProfile {
+      nodes?: Array<{id: number, callFrame: {functionName: string, url?: string}, parent?: number}>
+      samples?: Array<number>
+      timeDeltas?: Array<number>
+    }
+
     /**
      * @see https://docs.google.com/document/d/1CvAClvFfyA5R-PhYUmn5OOQtYMH4h6I0nSsKchNAySU/preview
      */
@@ -259,6 +266,10 @@ declare global {
           page?: string;
           readyState?: number;
           requestId?: string;
+          startTime?: number;
+          timeDeltas?: TraceCpuProfile['timeDeltas'];
+          cpuProfile?: TraceCpuProfile;
+          callFrame?: Required<TraceCpuProfile>['nodes'][0]['callFrame']
           stackTrace?: {
             url: string
           }[];
@@ -276,6 +287,8 @@ declare global {
           }>;
           score?: number,
           had_recent_input?: boolean;
+          compositeFailed?: number;
+          unsupportedProperties?: string[];
         };
         frame?: string;
         name?: string;
@@ -289,6 +302,9 @@ declare global {
       ph: 'B'|'b'|'D'|'E'|'e'|'F'|'I'|'M'|'N'|'n'|'O'|'R'|'S'|'T'|'X';
       s?: 't';
       id?: string;
+      id2?: {
+        local?: string;
+      };
     }
 
     export interface DevToolsJsonTarget {

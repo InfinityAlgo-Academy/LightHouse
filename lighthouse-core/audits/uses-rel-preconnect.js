@@ -13,6 +13,9 @@ const i18n = require('../lib/i18n/i18n.js');
 const NetworkRecords = require('../computed/network-records.js');
 const MainResource = require('../computed/main-resource.js');
 const LoadSimulator = require('../computed/load-simulator.js');
+const TraceOfTab = require('../computed/trace-of-tab.js');
+const PageDependencyGraph = require('../computed/page-dependency-graph.js');
+const LanternLCP = require('../computed/metrics/lantern-largest-contentful-paint.js');
 
 // Preconnect establishes a "clean" socket. Chrome's socket manager will keep an unused socket
 // around for 10s. Meaning, the time delta between processing preconnect a request should be <10s,
@@ -30,10 +33,16 @@ const UIStrings = {
     'Consider adding `preconnect` or `dns-prefetch` resource hints to establish early ' +
     `connections to important third-party origins. [Learn more](https://web.dev/uses-rel-preconnect/).`,
   /**
+   * @description A warning message that is shown when the user tried to follow the advice of the audit, but it's not working as expected.
+   * @example {https://example.com} securityOrigin
+   * */
+  unusedWarning: 'A preconnect `<link>` was found for "{securityOrigin}" but was not used ' +
+    'by the browser. Only preconnect to important origins that the page will certainly request.',
+  /**
    * @description A warning message that is shown when the user tried to follow the advice of the audit, but it's not working as expected. Forgetting to set the `crossorigin` HTML attribute, or setting it to an incorrect value, on the link is a common mistake when adding preconnect links.
    * @example {https://example.com} securityOrigin
    * */
-  crossoriginWarning: 'A preconnect <link> was found for "{securityOrigin}" but was not used ' +
+  crossoriginWarning: 'A preconnect `<link>` was found for "{securityOrigin}" but was not used ' +
     'by the browser. Check that you are using the `crossorigin` attribute properly.',
   /** A warning message that is shown when found more than 2 preconnected links */
   tooManyPreconnectLinksWarning: 'More than 2 preconnect links were found. ' +
@@ -51,7 +60,7 @@ class UsesRelPreconnectAudit extends Audit {
       id: 'uses-rel-preconnect',
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['devtoolsLogs', 'URL', 'LinkElements'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL', 'LinkElements'],
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
     };
   }
@@ -94,36 +103,48 @@ class UsesRelPreconnectAudit extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
+    const trace = artifacts.traces[UsesRelPreconnectAudit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[UsesRelPreconnectAudit.DEFAULT_PASS];
     const settings = context.settings;
+
     let maxWasted = 0;
     /** @type {string[]} */
     const warnings = [];
 
-    const [networkRecords, mainResource, loadSimulator] = await Promise.all([
+    const [networkRecords, mainResource, loadSimulator, traceOfTab, pageGraph] = await Promise.all([
       NetworkRecords.request(devtoolsLog, context),
       MainResource.request({devtoolsLog, URL: artifacts.URL}, context),
       LoadSimulator.request({devtoolsLog, settings}, context),
+      TraceOfTab.request(trace, context),
+      PageDependencyGraph.request({trace, devtoolsLog}, context),
     ]);
 
     const {rtt, additionalRttByOrigin} = loadSimulator.getOptions();
+    const lcpGraph = await LanternLCP.getPessimisticGraph(pageGraph, traceOfTab);
+    /** @type {Set<string>} */
+    const lcpGraphURLs = new Set();
+    lcpGraph.traverse(node => {
+      if (node.type === 'network' ) lcpGraphURLs.add(node.record.url);
+    });
 
     /** @type {Map<string, LH.Artifacts.NetworkRequest[]>}  */
     const origins = new Map();
     networkRecords
       .forEach(record => {
         if (
-          // filter out all resources where timing info was invalid
+          // Filter out all resources where timing info was invalid.
           !UsesRelPreconnectAudit.hasValidTiming(record) ||
-          // filter out all resources that are loaded by the document
+          // Filter out all resources that are loaded by the document. Connections are already early.
           record.initiator.url === mainResource.url ||
-          // filter out urls that do not have an origin (data, ...)
+          // Filter out urls that do not have an origin (data, file, etc).
           !record.parsedURL || !record.parsedURL.securityOrigin ||
-          // filter out all resources that have the same origin
+          // Filter out all resources that have the same origin. We're already connected.
           mainResource.parsedURL.securityOrigin === record.parsedURL.securityOrigin ||
-          // filter out all resources where origins are already resolved
+          // Filter out anything that wasn't part of LCP. Only recommend important origins.
+          !lcpGraphURLs.has(record.url) ||
+          // Filter out all resources where origins are already resolved.
           UsesRelPreconnectAudit.hasAlreadyConnectedToOrigin(record) ||
-          // make sure the requests are below the PRECONNECT_SOCKET_MAX_IDLE (15s) mark
+          // Make sure the requests are below the PRECONNECT_SOCKET_MAX_IDLE (15s) mark.
           !UsesRelPreconnectAudit.socketStartTimeIsBelowThreshold(record, mainResource)
         ) {
           return;
@@ -183,6 +204,13 @@ class UsesRelPreconnectAudit extends Audit {
 
     results = results
       .sort((a, b) => b.wastedMs - a.wastedMs);
+
+    // Add warnings for any preconnect origins that aren't being used.
+    for (const origin of preconnectOrigins) {
+      if (!origin) continue;
+      if (networkRecords.some(record => origin === record.parsedURL.securityOrigin)) continue;
+      warnings.push(str_(UIStrings.unusedWarning, {securityOrigin: origin}));
+    }
 
     // Shortcut early with a pass when the user has already configured preconnect.
     // https://twitter.com/_tbansal/status/1197771385172480001

@@ -51,7 +51,7 @@ function runA11yChecks() {
       'audio-caption': {enabled: false},
     },
     // @ts-expect-error
-  }).then(axeResult => {
+  }).then(axeResults => {
     // axe just scrolled the page, scroll back to the top of the page so that element positions
     // are relative to the top of the page
     document.documentElement.scrollTop = 0;
@@ -88,16 +88,17 @@ function runA11yChecks() {
     };
 
     // Augment the node objects with outerHTML snippet & custom path string
-    axeResult.violations.forEach(augmentAxeNodes);
-    axeResult.incomplete.forEach(augmentAxeNodes);
+    axeResults.violations.forEach(augmentAxeNodes);
+    axeResults.incomplete.forEach(augmentAxeNodes);
 
     // We only need violations, and circular references are possible outside of violations
-    axeResult = {
-      violations: axeResult.violations,
-      notApplicable: axeResult.inapplicable,
-      incomplete: axeResult.incomplete,
+    axeResults = {
+      violations: axeResults.violations,
+      notApplicable: axeResults.inapplicable,
+      incomplete: axeResults.incomplete,
+      version: axeResults.testEngine.version,
     };
-    return axeResult;
+    return axeResults;
   });
 }
 

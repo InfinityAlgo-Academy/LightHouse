@@ -82,6 +82,8 @@ declare global {
       ScriptElements: Array<Artifacts.ScriptElement>;
       /** The dimensions and devicePixelRatio of the loaded viewport. */
       ViewportDimensions: Artifacts.ViewportDimensions;
+      /** All the form elements in the page and formless inputs. */
+      FormElements: Artifacts.Form[];
     }
 
     /**
@@ -120,8 +122,8 @@ declare global {
       HTTPRedirect: {value: boolean};
       /** The issues surfaced in the devtools Issues panel */
       InspectorIssues: Artifacts.InspectorIssues;
-      /** JS coverage information for code used during page load. Keyed by URL. */
-      JsUsage: Record<string, Crdp.Profiler.ScriptCoverage[]>;
+      /** JS coverage information for code used during page load. Keyed by network URL. */
+      JsUsage: Record<string, Array<Omit<Crdp.Profiler.ScriptCoverage, 'url'>>>;
       /** Parsed version of the page's Web App Manifest, or null if none found. */
       Manifest: Artifacts.Manifest | null;
       /** The URL loaded with interception */
@@ -160,7 +162,7 @@ declare global {
         message: string;
       }
 
-      export interface AxeResult {
+      export interface AxeRuleResult {
         id: string;
         impact: string;
         tags: Array<string>;
@@ -179,9 +181,10 @@ declare global {
       }
 
       export interface Accessibility {
-        violations: Array<AxeResult>;
-        notApplicable: Array<Pick<AxeResult, 'id'>>;
-        incomplete: Array<AxeResult>;
+        violations: Array<AxeRuleResult>;
+        notApplicable: Array<Pick<AxeRuleResult, 'id'>>;
+        incomplete: Array<AxeRuleResult>;
+        version: string;
       }
 
       export interface CSSStyleSheetInfo {
@@ -367,9 +370,20 @@ declare global {
         analyzedFailingTextLength: number;
         /** Elements that contain a text node that failed size criteria. */
         analyzedFailingNodesData: Array<{
+          /* nodeId of the failing TextNode. */
+          nodeId: number;
           fontSize: number;
           textLength: number;
-          node: FontSize.DomNodeWithParent;
+          parentNode: {
+            backendNodeId: number;
+            attributes: string[];
+            nodeName: string;
+            parentNode?: {
+              backendNodeId: number;
+              attributes: string[];
+              nodeName: string;
+            };
+          };
           cssRule?: {
             type: 'Regular' | 'Inline' | 'Attributes';
             range?: {startLine: number, startColumn: number};
@@ -378,17 +392,6 @@ declare global {
             stylesheet?: Crdp.CSS.CSSStyleSheetHeader;
           }
         }>
-      }
-
-      export module FontSize {
-        export interface DomNodeWithParent extends Crdp.DOM.Node {
-          parentId: number;
-          parentNode: DomNodeWithParent;
-        }
-
-        export interface DomNodeMaybeWithParent extends Crdp.DOM.Node {
-          parentNode?: DomNodeMaybeWithParent;
-        }
       }
 
       // TODO(bckenny): real type for parsed manifest.
@@ -415,9 +418,9 @@ declare global {
         /** The raw height attribute of the image element. CSS images will be set to the empty string. */
         attributeHeight: string;
         /** The CSS width property of the image element. */
-        cssWidth?: string | undefined;
+        cssWidth?: string;
         /** The CSS height property of the image element. */
-        cssHeight?: string | undefined;
+        cssHeight?: string;
         /** The BoundingClientRect of the element. */
         clientRect: {
           top: number;
@@ -425,10 +428,14 @@ declare global {
           left: number;
           right: number;
         };
+        /** The CSS position attribute of the element */
+        cssComputedPosition: string;
         /** Flags whether this element was an image via CSS background-image rather than <img> tag. */
         isCss: boolean;
         /** Flags whether this element was contained within a <picture> tag. */
         isPicture: boolean;
+        /** Flags whether this element was contained within a ShadowRoot */
+        isInShadowDOM: boolean;
         /** Flags whether this element was sized using a non-default `object-fit` CSS property. */
         usesObjectFit: boolean;
         /** Flags whether this element was rendered using a pixel art scaling method.
@@ -513,6 +520,7 @@ declare global {
         score?: number;
         boundingRect: Rect;
         nodeId?: number;
+        animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[];
       }
 
       export interface ViewportDimensions {
@@ -710,6 +718,40 @@ declare global {
         observedLastVisualChangeTs: number;
         observedSpeedIndex: number;
         observedSpeedIndexTs: number;
+      }
+
+      export interface Form {
+        /** If attributes is missing that means this is a formless set of elements. */
+        attributes?: {
+          id: string,
+          name: string,
+          autocomplete: string,
+          nodeLabel: string,
+          snippet: string,
+        };
+        inputs: Array<FormInput>;
+        labels: Array<FormLabel>;
+      }
+
+      /** Attributes collected for every input element in the inputs array from the forms interface. */
+      export interface FormInput {
+        id: string;
+        name: string;
+        placeholder?: string;
+        autocomplete: {
+          property: string;
+          attribute: string | null;
+          prediction: string | null;
+        }
+        nodeLabel: string;
+        snippet: string;
+      }
+
+      /** Attributes collected for every label element in the labels array from the forms interface */
+      export interface FormLabel {
+        for: string;
+        nodeLabel: string;
+        snippet: string;
       }
 
       /** Information about an event listener registered on the global object. */

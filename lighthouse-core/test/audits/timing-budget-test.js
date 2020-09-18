@@ -111,7 +111,7 @@ describe('Performance: Timing budget audit', () => {
           if (metric === 'largest-contentful-paint') {
             expect(result.details.items[0].measurement).toEqual(undefined);
           } else if (metric === 'cumulative-layout-shift') {
-            expect(result.details.items[0].measurement).toEqual(0);
+            expect(result.details.items[0].measurement.value).toEqual(0);
           } else {
             expect(result.details.items[0].measurement).toBeGreaterThanOrEqual(1);
           }

@@ -100,6 +100,9 @@ Object {
       "path": "image-size-responsive",
     },
     Object {
+      "path": "preload-fonts",
+    },
+    Object {
       "path": "deprecations",
     },
     Object {
@@ -161,6 +164,18 @@ Object {
     },
     Object {
       "path": "no-unload-listeners",
+    },
+    Object {
+      "path": "non-composited-animations",
+    },
+    Object {
+      "path": "unsized-images",
+    },
+    Object {
+      "path": "large-javascript-libraries",
+    },
+    Object {
+      "path": "valid-source-maps",
     },
     Object {
       "path": "manual/pwa-cross-browser",
@@ -741,6 +756,11 @@ Object {
           "weight": 1,
         },
         Object {
+          "group": "best-practices-ux",
+          "id": "preload-fonts",
+          "weight": 1,
+        },
+        Object {
           "group": "best-practices-browser-compat",
           "id": "doctype",
           "weight": 1,
@@ -774,6 +794,11 @@ Object {
           "group": "best-practices-general",
           "id": "errors-in-console",
           "weight": 1,
+        },
+        Object {
+          "group": "best-practices-general",
+          "id": "valid-source-maps",
+          "weight": 0,
         },
       ],
       "title": "Best Practices",
@@ -999,6 +1024,21 @@ Object {
         Object {
           "group": "diagnostics",
           "id": "long-tasks",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "non-composited-animations",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "unsized-images",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "large-javascript-libraries",
           "weight": 0,
         },
         Object {
@@ -1327,6 +1367,9 @@ Object {
         },
         Object {
           "path": "iframe-elements",
+        },
+        Object {
+          "path": "form-elements",
         },
         Object {
           "path": "main-document-content",

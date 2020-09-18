@@ -14,7 +14,7 @@
 const config = {
   extends: 'lighthouse:default',
   audits: [
-    'unsized-images',
+    'autocomplete',
     'full-page-screenshot',
   ],
   passes: [{
@@ -28,7 +28,7 @@ const config = {
     // config is awkward - easier to omit the property here. Will defer to default config.
     'best-practices': {
       auditRefs: [
-        {id: 'unsized-images', weight: 1, group: 'best-practices-ux'},
+        {id: 'autocomplete', weight: 0, group: 'best-practices-ux'},
       ],
     },
   },

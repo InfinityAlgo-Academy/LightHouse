@@ -590,7 +590,7 @@ class MainThreadTasks {
       task.duration /= 1000;
       task.selfTime /= 1000;
 
-      // sanity check that we have selfTime which captures all other timing data
+      // Check that we have selfTime which captures all other timing data.
       if (!Number.isFinite(task.selfTime)) {
         throw new Error('Invalid task timing data');
       }

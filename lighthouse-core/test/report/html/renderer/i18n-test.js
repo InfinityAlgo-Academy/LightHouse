@@ -47,6 +47,8 @@ describe('util helpers', () => {
     const i18n = new I18n('en', {...Util.UIStrings});
     assert.equal(i18n.formatMilliseconds(123), `120${NBSP}ms`);
     assert.equal(i18n.formatMilliseconds(2456.5, 0.1), `2,456.5${NBSP}ms`);
+    assert.equal(i18n.formatMilliseconds(0.000001), `0${NBSP}ms`);
+    assert.equal(i18n.formatMilliseconds(-0.000001), `0${NBSP}ms`);
   });
 
   it('formats a duration', () => {
@@ -76,5 +78,15 @@ describe('util helpers', () => {
     assert.strictEqual(i18n.formatBytesToKiB(number), `12,1${NBSP}KiB`);
     assert.strictEqual(i18n.formatMilliseconds(number), `12.350${NBSP}ms`);
     assert.strictEqual(i18n.formatSeconds(number), `12,3${NBSP}s`);
+  });
+
+  it('should not crash on unknown locales', () => {
+    const i18n = new I18n('unknown-mystery-locale', {...Util.UIStrings});
+    const timestamp = i18n.formatDateTime('2017-04-28T23:07:51.189Z');
+    assert.ok(
+      timestamp.includes('Apr 27, 2017') ||
+      timestamp.includes('Apr 28, 2017') ||
+      timestamp.includes('Apr 29, 2017')
+    );
   });
 });

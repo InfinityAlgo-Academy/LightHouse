@@ -15,8 +15,9 @@ const Gatherer = require('./gatherer.js');
 const pageFunctions = require('../../lib/page-functions.js');
 const TraceProcessor = require('../../lib/tracehouse/trace-processor.js');
 const RectHelpers = require('../../lib/rect-helpers.js');
+const Sentry = require('../../lib/sentry.js');
 
-/** @typedef {{nodeId: number, score?: number, animations?: {id: string, name?: string}[]}} TraceElementData */
+/** @typedef {{nodeId: number, score?: number, animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[]}} TraceElementData */
 
 /**
  * @this {HTMLElement}
@@ -62,6 +63,24 @@ class TraceElements extends Gatherer {
   }
 
   /**
+   * @param {LH.TraceEvent | undefined} event
+   * @return {number | undefined}
+   */
+  static getFailureReasonsFromTraceEvent(event) {
+    return event && event.args &&
+      event.args.data && event.args.data.compositeFailed;
+  }
+
+  /**
+   * @param {LH.TraceEvent | undefined} event
+   * @return {string[] | undefined}
+   */
+  static getUnsupportedPropertiesFromTraceEvent(event) {
+    return event && event.args &&
+      event.args.data && event.args.data.unsupportedProperties;
+  }
+
+  /**
    * @param {Array<number>} rect
    * @return {LH.Artifacts.Rect}
    */
@@ -91,9 +110,14 @@ class TraceElements extends Gatherer {
       });
       const nameProperty = response.result.find((property) => property.name === 'animationName');
       const animationName = nameProperty && nameProperty.value && nameProperty.value.value;
+      if (animationName === '') return undefined;
       return animationName;
     } catch (err) {
       // Animation name is not mission critical information and can be evicted, so don't throw fatally if we can't find it.
+      Sentry.captureException(err, {
+        tags: {gatherer: TraceElements.name},
+        level: 'error',
+      });
       return undefined;
     }
   }
@@ -173,29 +197,46 @@ class TraceElements extends Gatherer {
    * @return {Promise<Array<TraceElementData>>}
    */
   static async getAnimatedElements(passContext, mainThreadEvents) {
-    /** @type Map<number, Set<string>> */
-    const elementAnimations = new Map();
-    mainThreadEvents.filter(e => e.name === 'Animation' && e.ph === 'b')
-      .map(e => {
-        return {
-          nodeId: this.getNodeIDFromTraceEvent(e),
-          animationId: this.getAnimationIDFromTraceEvent(e),
-        };
-      })
-      .forEach(({nodeId, animationId}) => {
-        if (!nodeId || !animationId) return;
-        const animationIds = elementAnimations.get(nodeId) || new Set();
-        animationIds.add(animationId);
-        elementAnimations.set(nodeId, animationIds);
-      });
+    /** @type {Map<string, {begin: LH.TraceEvent | undefined, status: LH.TraceEvent | undefined}>} */
+    const animationPairs = new Map();
+    for (const event of mainThreadEvents) {
+      if (event.name !== 'Animation') continue;
 
-    /** @type Array<TraceElementData> */
+      if (!event.id2 || !event.id2.local) continue;
+      const local = event.id2.local;
+
+      const pair = animationPairs.get(local) || {begin: undefined, status: undefined};
+      if (event.ph === 'b') {
+        pair.begin = event;
+      } else if (
+        event.ph === 'n' &&
+          event.args.data &&
+          event.args.data.compositeFailed !== undefined) {
+        pair.status = event;
+      }
+      animationPairs.set(local, pair);
+    }
+
+    /** @type {Map<number, Set<{animationId: string, failureReasonsMask?: number, unsupportedProperties?: string[]}>>} */
+    const elementAnimations = new Map();
+    for (const {begin, status} of animationPairs.values()) {
+      const nodeId = this.getNodeIDFromTraceEvent(begin);
+      const animationId = this.getAnimationIDFromTraceEvent(begin);
+      const failureReasonsMask = this.getFailureReasonsFromTraceEvent(status);
+      const unsupportedProperties = this.getUnsupportedPropertiesFromTraceEvent(status);
+      if (!nodeId || !animationId) continue;
+      const animationIds = elementAnimations.get(nodeId) || new Set();
+      animationIds.add({animationId, failureReasonsMask, unsupportedProperties});
+      elementAnimations.set(nodeId, animationIds);
+    }
+
+    /** @type {Array<TraceElementData>} */
     const animatedElementData = [];
     for (const [nodeId, animationIds] of elementAnimations) {
       const animations = [];
-      for (const animationId of animationIds) {
+      for (const {animationId, failureReasonsMask, unsupportedProperties} of animationIds) {
         const animationName = await this.resolveAnimationName(passContext, animationId);
-        animations.push({id: animationId, name: animationName});
+        animations.push({name: animationName, failureReasonsMask, unsupportedProperties});
       }
       animatedElementData.push({nodeId, animations});
     }
@@ -228,7 +269,7 @@ class TraceElements extends Gatherer {
     const animatedElementData =
       await TraceElements.getAnimatedElements(passContext, mainThreadEvents);
 
-    /** @type Map<string, TraceElementData[]> */
+    /** @type {Map<string, TraceElementData[]>} */
     const backendNodeDataMap = new Map([
       ['largest-contentful-paint', lcpNodeId ? [{nodeId: lcpNodeId}] : []],
       ['layout-shift', clsNodeData],
@@ -239,22 +280,31 @@ class TraceElements extends Gatherer {
     for (const [traceEventType, backendNodeData] of backendNodeDataMap) {
       for (let i = 0; i < backendNodeData.length; i++) {
         const backendNodeId = backendNodeData[i].nodeId;
-        const objectId = await driver.resolveNodeIdToObjectId(backendNodeId);
-        if (!objectId) continue;
-        const response = await driver.sendCommand('Runtime.callFunctionOn', {
-          objectId,
-          functionDeclaration: `function () {
-            ${getNodeDetailsData.toString()};
-            ${pageFunctions.getNodePathString};
-            ${pageFunctions.getNodeSelectorString};
-            ${pageFunctions.getNodeLabelString};
-            ${pageFunctions.getOuterHTMLSnippetString};
-            ${pageFunctions.getBoundingClientRectString};
-            return getNodeDetailsData.call(this);
-          }`,
-          returnByValue: true,
-          awaitPromise: true,
-        });
+        let response;
+        try {
+          const objectId = await driver.resolveNodeIdToObjectId(backendNodeId);
+          if (!objectId) continue;
+          response = await driver.sendCommand('Runtime.callFunctionOn', {
+            objectId,
+            functionDeclaration: `function () {
+              ${getNodeDetailsData.toString()};
+              ${pageFunctions.getNodePathString};
+              ${pageFunctions.getNodeSelectorString};
+              ${pageFunctions.getNodeLabelString};
+              ${pageFunctions.getOuterHTMLSnippetString};
+              ${pageFunctions.getBoundingClientRectString};
+              return getNodeDetailsData.call(this);
+            }`,
+            returnByValue: true,
+            awaitPromise: true,
+          });
+        } catch (err) {
+          Sentry.captureException(err, {
+            tags: {gatherer: this.name},
+            level: 'error',
+          });
+          continue;
+        }
 
         if (response && response.result && response.result.value) {
           traceElements.push({

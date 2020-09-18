@@ -398,10 +398,10 @@ const expectations = [
         },
         'dom-size': {
           score: 1,
-          numericValue: 147,
+          numericValue: 148,
           details: {
             items: [
-              {statistic: 'Total DOM Elements', value: '147'},
+              {statistic: 'Total DOM Elements', value: '148'},
               {statistic: 'Maximum DOM Depth', value: '4'},
               {
                 statistic: 'Maximum Child Elements',
@@ -431,9 +431,6 @@ const expectations = [
   {
     artifacts: {
       InspectorIssues: {
-        // Mixed Content issues weren't added to the protocol until M84.
-        // https://chromiumdash.appspot.com/commit/52ed57138d0b83e8afd9de25e60655c6ace7527c
-        _minChromiumMilestone: 84,
         mixedContent: [
           {
             resourceType: 'Image',

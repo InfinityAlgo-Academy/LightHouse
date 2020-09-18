@@ -478,7 +478,11 @@ describe('.gotoURL', () => {
 
     /** @param {LH.Crdp.Page.Frame} frame */
     const navigate = frame => driver._eventEmitter.emit('Page.frameNavigated', {frame});
-    const baseFrame = {id: 'ABC', loaderId: '', securityOrigin: '', mimeType: 'text/html'};
+    const baseFrame = {
+      id: 'ABC', loaderId: '', securityOrigin: '', mimeType: 'text/html', domainAndRegistry: '',
+      secureContextType: /** @type {'Secure'} */ ('Secure'),
+      crossOriginIsolatedContextType: /** @type {'Isolated'} */ ('Isolated'),
+    };
     navigate({...baseFrame, url: 'http://example.com'});
     navigate({...baseFrame, url: 'https://example.com'});
     navigate({...baseFrame, url: 'https://www.example.com'});

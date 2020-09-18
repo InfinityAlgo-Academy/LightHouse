@@ -103,7 +103,7 @@ declare global {
       type ItemValueType = 'bytes' | 'code' | 'link' | 'ms' | 'multi' | 'node' | 'source-location' | 'numeric' | 'text' | 'thumbnail' | 'timespanMs' | 'url';
 
       /** Possible types of values found within table items. */
-      type ItemValue = string | number | boolean | DebugData | NodeValue | SourceLocationValue | LinkValue | UrlValue | CodeValue | TableSubItems;
+      type ItemValue = string | number | boolean | DebugData | NodeValue | SourceLocationValue | LinkValue | UrlValue | CodeValue | NumericValue | TableSubItems;
 
       // TODO: drop TableColumnHeading, rename OpportunityColumnHeading to TableColumnHeading and
       // use that for all table-like audit details.
@@ -265,6 +265,16 @@ declare global {
         generalMessages: {
           message: string
         }[];
+      }
+
+      /**
+       * A value used within a details object, intended to be displayed as a ms timing
+       * or a numeric value based on the metric name.
+       */
+      export interface NumericValue {
+        type: 'numeric',
+        value: number,
+        granularity?: number,
       }
     }
   }

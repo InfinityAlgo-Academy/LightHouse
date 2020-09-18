@@ -9,13 +9,13 @@
 
 /* eslint-disable no-console */
 
-const ultradumbBenchmark = require('../lib/page-functions.js').ultradumbBenchmark;
+const computeBenchmarkIndex = require('../lib/page-functions.js').computeBenchmarkIndex;
 
-console.log('Running ULTRADUMB™ benchmark 10 times...');
+console.log('Computing BenchmarkIndex 10 times...');
 
 let total = 0;
 for (let i = 0; i < 10; i++) {
-  const result = ultradumbBenchmark();
+  const result = computeBenchmarkIndex();
   console.log(`Result ${i + 1}: ${result.toFixed(0)}`);
   total += result;
 }
