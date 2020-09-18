@@ -6,7 +6,8 @@
 
 declare global {
   interface Window {
-    __nativePromise: typeof Promise
+    __nativePromise: typeof Promise;
+    __nativeError: typeof Error;
   }
 }
 
