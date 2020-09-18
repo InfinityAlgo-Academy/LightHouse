@@ -221,7 +221,8 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     // Budgets
     /** @type {Array<Element>} */
     const budgetTableEls = [];
-    category.auditRefs.filter(audit => audit.group === 'budgets').forEach(audit => {
+    const budgetAudits = category.auditRefs.filter(audit => audit.group === 'budgets')
+    budgetAudits.forEach(audit => {
       if (audit && audit.result.details) {
         const table = this.detailsRenderer.render(audit.result.details);
         if (table) {
@@ -281,7 +282,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     }
 
     // Everything else (passed, passed with warnings, n/a)
-    const renderedAudits = [...metricAudits, thumbnailAudit, budgetAudit, ...opportunityAudits,
+    const renderedAudits = [...metricAudits, thumbnailAudit, ...budgetAudits, ...opportunityAudits,
       ...diagnosticAudits];
     const unrenderedAudits = category.auditRefs.filter(ref => !renderedAudits.includes(ref));
     const remainingAudits = unrenderedAudits.filter(ref => !!ref.group);
