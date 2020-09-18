@@ -357,7 +357,7 @@ const defaultConfig = {
       description: str_(UIStrings.diagnosticsGroupDescription),
     },
     'filmstrip': {
-      title: ''
+      title: '',
     },
     'pwa-fast-reliable': {
       title: str_(UIStrings.pwaFastReliableGroupTitle),

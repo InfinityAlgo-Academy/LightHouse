@@ -224,7 +224,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     // Budgets
     /** @type {Array<Element>} */
     const budgetTableEls = [];
-    const budgetAudits = category.auditRefs.filter(audit => audit.group === 'budgets')
+    const budgetAudits = category.auditRefs.filter(audit => audit.group === 'budgets');
     budgetAudits.forEach(audit => {
       if (audit && audit.result.details) {
         const table = this.detailsRenderer.render(audit.result.details);
