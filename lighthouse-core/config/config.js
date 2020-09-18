@@ -10,6 +10,11 @@ const defaultConfig = require('./default-config.js');
 const constants = require('./constants.js');
 const i18n = require('./../lib/i18n/i18n.js');
 
+const a = require('../gather/gatherers/trace-elements.js')
+console.log(a);
+const b = require('' + '../gather/gatherers/trace-elements.js');
+console.log('connor', b);
+
 const isDeepEqual = require('lodash.isequal');
 const log = require('lighthouse-logger');
 const path = require('path');
@@ -442,6 +447,7 @@ class Config {
       const pluginPath = global.isDevtools ?
         pluginName :
         resolveModule(pluginName, configDir, 'plugin');
+      debugger;
       const rawPluginJson = require(pluginPath);
       const pluginJson = ConfigPlugin.parsePlugin(rawPluginJson, pluginName);
 
@@ -755,6 +761,7 @@ class Config {
       requirePath = resolveModule(path, configDir, 'gatherer');
     }
 
+    debugger;
     const GathererClass = /** @type {GathererConstructor} */ (require(requirePath));
 
     return {

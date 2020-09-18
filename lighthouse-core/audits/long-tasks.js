@@ -9,6 +9,7 @@ const Audit = require('./audit.js');
 const NetworkRecords = require('../computed/network-records.js');
 const i18n = require('../lib/i18n/i18n.js');
 const MainThreadTasks = require('../computed/main-thread-tasks.js');
+debugger;
 const BootupTime = require('./bootup-time.js');
 const PageDependencyGraph = require('../computed/page-dependency-graph.js');
 const LoadSimulator = require('../computed/load-simulator.js');

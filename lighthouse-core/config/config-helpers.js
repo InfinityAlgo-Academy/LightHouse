@@ -150,6 +150,7 @@ function requireAudits(audits, configDir) {
           requirePath = path.relative(__dirname, absolutePath);
         }
       }
+      debugger;
       implementation = /** @type {typeof Audit} */ (require(requirePath));
     }
 

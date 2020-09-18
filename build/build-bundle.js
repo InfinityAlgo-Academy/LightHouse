@@ -25,13 +25,13 @@ const COMMIT_HASH = require('child_process')
   .toString().trim();
 
 const audits = LighthouseRunner.getAuditList()
-  .map(f => './lighthouse-core/audits/' + f.replace(/\.js$/, ''));
+    .map(f => './lighthouse-core/audits/' + f.replace(/\.js$/, ''));
 
 const gatherers = LighthouseRunner.getGathererList()
-  .map(f => './lighthouse-core/gather/gatherers/' + f.replace(/\.js$/, ''));
+    .map(f => './lighthouse-core/gather/gatherers/' + f.replace(/\.js$/, ''));
 
 const locales = fs.readdirSync(__dirname + '/../lighthouse-core/lib/i18n/locales/')
-  .map(f => require.resolve(`../lighthouse-core/lib/i18n/locales/${f}`));
+    .map(f => require.resolve(`../lighthouse-core/lib/i18n/locales/${f}`));
 
 // HACK: manually include the lighthouse-plugin-publisher-ads audits.
 /** @type {Array<string>} */
@@ -56,11 +56,7 @@ const DEBUG = false;
  * @return {Promise<void>}
  */
 async function browserifyFile(entryPath, distPath) {
-  if (process.env.USE_ROLLUP === '1') {
-    return bundleWithRollup(entryPath, distPath);
-  }
-
-  let bundle = browserify(entryPath, { debug: DEBUG });
+  let bundle = browserify(entryPath, {debug: DEBUG});
 
   bundle
     .plugin('browserify-banner', {
@@ -68,7 +64,7 @@ async function browserifyFile(entryPath, distPath) {
       file: require.resolve('./banner.txt'),
     })
     // Transform the fs.readFile etc into inline strings.
-    .transform('@wardpeet/brfs', { global: true, parserOpts: { ecmaVersion: 10 } })
+    .transform('@wardpeet/brfs', {global: true, parserOpts: {ecmaVersion: 10}})
     // Strip everything out of package.json includes except for the version.
     .transform('package-json-versionify');
 
@@ -101,10 +97,10 @@ async function browserifyFile(entryPath, distPath) {
   const corePath = './lighthouse-core/';
   const driverPath = `${corePath}gather/`;
   audits.forEach(audit => {
-    bundle = bundle.require(audit, { expose: audit.replace(corePath, '../') });
+    bundle = bundle.require(audit, {expose: audit.replace(corePath, '../')});
   });
   gatherers.forEach(gatherer => {
-    bundle = bundle.require(gatherer, { expose: gatherer.replace(driverPath, '../gather/') });
+    bundle = bundle.require(gatherer, {expose: gatherer.replace(driverPath, '../gather/')});
   });
 
   // HACK: manually include the lighthouse-plugin-publisher-ads audits.
@@ -119,12 +115,12 @@ async function browserifyFile(entryPath, distPath) {
   // and within robots-parser, it does `var URL = require('url').URL`, so we expose our own.
   // @see https://github.com/GoogleChrome/lighthouse/issues/5273
   const pathToURLShim = require.resolve('../lighthouse-core/lib/url-shim.js');
-  bundle = bundle.require(pathToURLShim, { expose: 'url' });
+  bundle = bundle.require(pathToURLShim, {expose: 'url'});
 
   let bundleStream = bundle.bundle();
 
   // Make sure path exists.
-  await mkdir(path.dirname(distPath), { recursive: true });
+  await mkdir(path.dirname(distPath), {recursive: true});
   return new Promise((resolve, reject) => {
     const writeStream = fs.createWriteStream(distPath);
     writeStream.on('finish', resolve);
@@ -138,38 +134,6 @@ async function browserifyFile(entryPath, distPath) {
 
 /**
  * Minify a javascript file, in place.
- * Browserify starting at the file at entryPath. Contains entry-point-specific
- * ignores (e.g. for DevTools or the extension) to trim the bundle depending on
- * the eventual use case.
- * @param {string} entryPath
- * @param {string} distPath
- * @return {Promise<void>}
- */
-async function bundleWithRollup(entryPath, distPath) {
-  const rollup = require('rollup');
-
-  const bundle = await rollup.rollup({
-    input: entryPath,
-    plugins: [
-      require('@rollup/plugin-node-resolve').nodeResolve(),
-      // @ts-expect-error - Types don't match package.
-      require('rollup-plugin-node-polyfills')(),
-      // @ts-expect-error - Types don't match package.
-      require('@rollup/plugin-commonjs')(),
-      // @ts-expect-error - Types don't match package.
-      require('@rollup/plugin-json')(),
-    ],
-  });
-
-  await bundle.write({
-    file: distPath,
-    format: 'iife',
-    sourcemap: true,
-  });
-}
-
-/**
- * Minimally minify a javascript file, in place.
  * @param {string} filePath
  */
 function minifyScript(filePath) {
@@ -217,8 +181,11 @@ function minifyScript(filePath) {
  * @return {Promise<void>}
  */
 async function build(entryPath, distPath) {
+  if (process.env.USE_ROLLUP === '1')
+    return require('./build-bundle-rollup.js').build(entryPath, distPath);
+
   await browserifyFile(entryPath, distPath);
-  // minifyScript(distPath);
+  minifyScript(distPath);
 }
 
 /**
