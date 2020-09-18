@@ -466,6 +466,7 @@ module.exports = {
   getNodeDetailsString,
   getNodePathString: getNodePath.toString(),
   getNodeSelectorString: getNodeSelector.toString(),
+  getNodePath,
   getNodeSelector: getNodeSelector,
   getNodeLabel: getNodeLabel,
   getNodeLabelString: getNodeLabel.toString(),
