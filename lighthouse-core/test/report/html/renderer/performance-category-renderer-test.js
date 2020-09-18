@@ -176,7 +176,7 @@ Array [
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
     const passedSection = categoryDOM.querySelector('.lh-category > .lh-clump--passed');
 
-    const passedAudits = category.auditRefs.filter(
+    const passedAuditIds = category.auditRefs.filter(
       audit =>
         audit.group &&
         audit.group !== 'metrics' &&
@@ -187,7 +187,7 @@ Array [
 
     const passedElements = passedSection.querySelectorAll('.lh-audit');
     const passedElemIds = Array.from(passedElements).map(el => el.id);
-    expect(passedAudits).toEqual(passedElemIds);
+    expect(passedAuditIds).toEqual(passedElemIds);
   });
 
   // Unsupported by perf cat renderer right now.
