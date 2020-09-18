@@ -287,7 +287,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     const unrenderedAudits = category.auditRefs.filter(ref => !renderedAudits.includes(ref));
     const remainingAudits = unrenderedAudits.filter(ref => !!ref.group);
 
-    const clumpElems = this._splitAndRenderClumps(remainingAudits, groups);
+    const clumpElems = this.renderClumps(remainingAudits, groups);
     element.append(...clumpElems);
     return element;
   }

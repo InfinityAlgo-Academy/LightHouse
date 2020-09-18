@@ -451,7 +451,7 @@ class CategoryRenderer {
     this.createPermalinkSpan(element, category.id);
     element.appendChild(this.renderCategoryHeader(category, groupDefinitions));
 
-    const clumpElems = this._splitAndRenderClumps(category.auditRefs, groupDefinitions,
+    const clumpElems = this.renderClumps(category.auditRefs, groupDefinitions,
       category.manualDescription);
     element.append(...clumpElems);
     return element;
@@ -464,7 +464,7 @@ class CategoryRenderer {
    * @param {LH.Result.Category['manualDescription']} [manualDescription]
    * @return {Array<Element>}
    */
-  _splitAndRenderClumps(auditRefs, groupDefinitions = {}, manualDescription) {
+  renderClumps(auditRefs, groupDefinitions = {}, manualDescription) {
     const clumpElems = [];
 
     // Top level clumps for audits, in order they will appear in the report.
