@@ -175,12 +175,17 @@ module.exports = function rollupPluginHypothetical(options) {
   return {
     resolveId: resolveId,
     load: function(id) {
-      if (files.has(id)) {
-        return files.get(id);
-      } else {
-        id = resolveId(id);
-        return id && files.get(id);
+      let key = id;
+      if (id.includes('node_modules')) {
+        id.lastIndexOf('node_modules/')
+        key = id.slice(id.lastIndexOf('node_modules/') + 'node_modules/'.length)
       }
+
+      if (id.includes('node.js')) {
+        console.log(id, key, files.has(key));
+      }
+
+      return files.get(key);
     },
   };
 };

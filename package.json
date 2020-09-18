@@ -81,6 +81,7 @@
     "@firebase/app-types": "0.3.1",
     "@firebase/auth-types": "0.3.2",
     "@firebase/util": "0.2.1",
+    "@rollup/plugin-alias": "^3.1.1",
     "@rollup/plugin-commonjs": "^15.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^9.0.0",

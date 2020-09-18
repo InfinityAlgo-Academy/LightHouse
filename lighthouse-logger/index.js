@@ -24,7 +24,11 @@ const colors = {
 };
 
 // allow non-red/yellow colors for debug()
-debug.colors = [colors.cyan, colors.green, colors.blue, colors.magenta];
+// debug.colors = [colors.cyan, colors.green, colors.blue, colors.magenta];
+// debug.colors[0] = colors.cyan;
+// debug.colors[1] = colors.green;
+// debug.colors[2] = colors.blue;
+// debug.colors[3] = colors.magenta;
 
 class Emitter extends EventEmitter {
   /**
@@ -59,7 +63,7 @@ class Log {
     const log = Log.loggerfn(title);
     log(...argsArray);
   }
-
+  
   static loggerfn(title) {
     let log = loggersByTitle[title];
     if (!log) {

@@ -150,7 +150,6 @@ function requireAudits(audits, configDir) {
           requirePath = path.relative(__dirname, absolutePath);
         }
       }
-      debugger;
       implementation = /** @type {typeof Audit} */ (require(requirePath));
     }
 
@@ -226,7 +225,7 @@ function requireModule(path) {
   if (global.isLightrider || global.isDevtools) {
     if (path === 'lighthouse-plugin-publisher-ads') {
       // @ts-expect-error
-      return require('lighthouse-plugin-publisher-ads/plugin.js');
+      return require('' + 'lighthouse-plugin-publisher-ads/plugin.js');
     }
     // return require('dynamic-targets')[path];
   }

@@ -8,6 +8,7 @@
 // @ts-ignore
 // require('dynamic-targets');
 // require('lighthouse-plugin-publisher-ads');
+// require('debug');
 
 const lighthouse = require('../lighthouse-core/index.js');
 const RawProtocol = require('../lighthouse-core/gather/connections/raw.js');

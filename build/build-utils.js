@@ -14,21 +14,29 @@ const terser = require('terser');
  * @param {string} file
  */
 function minifyFileTransform(file) {
+  if (!file.endsWith('.js')) {
+    return new stream.Transform({
+      transform(chunk, enc, next) {
+        this.push(chunk);
+        next();
+      }
+    });
+  }
+
+  let code = '';
   return new stream.Transform({
     transform(chunk, enc, next) {
-      if (file.endsWith('.js')) {
-        const result = terser.minify(chunk.toString());
-        if (result.error) {
-          throw result.error;
-        }
-
-        this.push(result.code);
-      } else {
-        this.push(chunk);
-      }
-
+      code += chunk.toString();
       next();
     },
+    final(next) {
+      const result = terser.minify(code);
+      if (result.error) {
+        throw result.error;
+      }
+      this.push(result.code);
+      next();
+    }
   });
 }
 

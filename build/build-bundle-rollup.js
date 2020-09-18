@@ -14,12 +14,12 @@ const fs = require('fs');
 const path = require('path');
 const assert = require('assert').strict;
 const mkdir = fs.promises.mkdir;
-
-const LighthouseRunner = require('../lighthouse-core/runner.js');
-// const brfs = require('@wardpeet/brfs');
-const brfs = require('brfs');
-const terser = require('terser');
 const { Readable } = require('stream');
+const brfs = require('@wardpeet/brfs');
+const LighthouseRunner = require('../lighthouse-core/runner.js');
+// const brfs = require('brfs');
+const terser = require('terser');
+const {minifyFileTransform} = require('./build-utils.js');
 
 const COMMIT_HASH = require('child_process')
   .execSync('git rev-parse HEAD')
@@ -61,7 +61,7 @@ async function bundleWithRollup(entryPath, distPath) {
   const rollup = require('rollup');
   const modulesToIgnore = [
     'source-map',
-    'debug/node',
+    // 'debug/src/node.js',
     'intl',
     'intl-pluralrules',
     'raven',
@@ -154,6 +154,8 @@ async function bundleWithRollup(entryPath, distPath) {
     };
   };
 
+  files['lighthouse-logger/index.js'] = fs.readFileSync(require.resolve('../lighthouse-logger/index.js'), 'utf-8');
+
   // files['test.js'] = 'require("" + "/Users/cjamcl/src/lighthouse/lighthouse-core/audits/metrics/first-cpu-idle.js")';
   
   // entryPath = '/Users/cjamcl/src/lighthouse/lighthouse-core/report/html/html-report-assets.js';
@@ -188,7 +190,14 @@ async function bundleWithRollup(entryPath, distPath) {
         allowFallthrough: true,
       }),
 
+      require('@rollup/plugin-alias')({
+        entries: [
+          {find: 'debug', replacement: 'debug/src/browser.js'},
+        ],
+      }),
+
       rollupBrfs({
+        readFileSyncTransform: minifyFileTransform,
         global: true,
         parserOpts: {ecmaVersion: 10},
         // sourceMap: true,
@@ -241,14 +250,6 @@ async function bundleWithRollup(entryPath, distPath) {
       //     return null;
       //   }
       // },
-
-      
-
-
-      
-
-
-
 
       require('@rollup/plugin-node-resolve').nodeResolve({preferBuiltins: true}),
       // @ts-expect-error - Types don't match package.
