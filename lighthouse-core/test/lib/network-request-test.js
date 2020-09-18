@@ -71,6 +71,45 @@ describe('NetworkRequest', () => {
     });
   });
 
+  describe('update protocol for Lightrider', () => {
+    function getRequest() {
+      return {
+        protocol: 'http/1.1',
+        responseHeaders: [{name: NetworkRequest.HEADER_PROTOCOL_IS_H2, value: '1'}],
+      };
+    }
+
+    it('does nothing if not Lightrider', () => {
+      const req = getRequest();
+
+      const devtoolsLog = networkRecordsToDevtoolsLog([req]);
+      const record = NetworkRecorder.recordsFromLogs(devtoolsLog)[0];
+
+      expect(record.protocol).toStrictEqual('http/1.1');
+    });
+
+    it('updates protocol if Lightrider', () => {
+      const req = getRequest();
+
+      const devtoolsLog = networkRecordsToDevtoolsLog([req]);
+      global.isLightrider = true;
+      const record = NetworkRecorder.recordsFromLogs(devtoolsLog)[0];
+
+      expect(record.protocol).toStrictEqual('h2');
+    });
+
+    it('does nothing if no header is set', () => {
+      const req = getRequest();
+      req.responseHeaders = [];
+
+      const devtoolsLog = networkRecordsToDevtoolsLog([req]);
+      global.isLightrider = true;
+      const record = NetworkRecorder.recordsFromLogs(devtoolsLog)[0];
+
+      expect(record.protocol).toStrictEqual('http/1.1');
+    });
+  });
+
   describe('update fetch stats for Lightrider', () => {
     function getRequest() {
       return {

@@ -46,11 +46,11 @@ declare global {
       /** The string identifier of the audit, in kebab case. */
       id: string;
       /** Short, user-visible title for the audit when successful. */
-      title: string;
+      title: string | IcuMessage;
       /** Short, user-visible title for the audit when failing. */
-      failureTitle?: string;
+      failureTitle?: string | IcuMessage;
       /** A more detailed description that describes why the audit is important and links to Lighthouse documentation on the audit; markdown links supported. */
-      description: string;
+      description: string | IcuMessage;
       /** A list of the members of LH.Artifacts that must be present for the audit to execute. */
       requiredArtifacts: Array<keyof Artifacts>;
       /** A list of the members of LH.Artifacts that augment the audit, but aren't necessary. For internal use only with experimental-config. */
@@ -66,23 +66,25 @@ declare global {
       wastedPercent?: number;
     }
 
+    // TODO: consider making some of the `string | IcuMessage` into just `IcuMessage` to require i18n.
+
     /** The shared properties of an Audit.Product whether it has a numericValue or not. We want to enforce `numericUnit` accompanying `numericValue` whenever it is set, so the final Audit.Product type is a discriminated union on `'numericValue' in audit`*/
     interface ProductBase {
       /** The scored value of the audit, provided in the range `0-1`, or null if `scoreDisplayMode` indicates not scored. */
       score: number | null;
       /** The i18n'd string value that the audit wishes to display for its results. This value is not necessarily the string version of the `numericValue`. */
-      displayValue?: string;
+      displayValue?: string | IcuMessage;
       /** An explanation of why the audit failed on the test page. */
-      explanation?: string;
+      explanation?: string | IcuMessage;
       /** Error message from any exception thrown while running this audit. */
-      errorMessage?: string;
-      warnings?: string[];
+      errorMessage?: string | IcuMessage;
+      warnings?: Array<string | IcuMessage>;
       /** Overrides scoreDisplayMode with notApplicable if set to true */
       notApplicable?: boolean;
       /** Extra information about the page provided by some types of audits, in one of several possible forms that can be rendered in the HTML report. */
       details?: Audit.Details;
       /** If an audit encounters unusual execution circumstances, strings can be put in this optional array to add top-level warnings to the LHR. */
-      runWarnings?: Array<string>;
+      runWarnings?: Array<IcuMessage>;
     }
 
     /** The Audit.Product type for audits that do not return a `numericValue`. */
@@ -132,7 +134,7 @@ declare global {
       /** The unit of `numericValue`, used when the consumer wishes to convert numericValue to a display string. */
       numericUnit?: string;
       /** Extra information about the page provided by some types of audits, in one of several possible forms that can be rendered in the HTML report. */
-      details?: Audit.Details;
+      details?: FormattedIcu<Audit.Details>;
     }
 
     export interface Results {

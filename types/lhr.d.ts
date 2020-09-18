@@ -5,20 +5,10 @@
  */
 
 import LHError = require('../lighthouse-core/lib/lh-error.js');
-import Util = require('../lighthouse-core/report/html/renderer/util.js');
 
 declare global {
   module LH {
     export type LighthouseError = LHError;
-
-    export type I18NMessageValuesEntry = {path: string, values:  Record<string, string | number>};
-    export type I18NMessageEntry = string | I18NMessageValuesEntry;
-
-    export interface I18NMessages {
-      [icuMessageId: string]: I18NMessageEntry[];
-    }
-
-    export type I18NRendererStrings = typeof Util['UIStrings'];
 
     export interface Environment {
       /** The user agent string of the version of Chrome used. */
@@ -63,7 +53,7 @@ declare global {
       /** Execution timings for the Lighthouse run */
       timing: Result.Timing;
       /** The record of all formatted string locations in the LHR and their corresponding source values. */
-      i18n: {rendererFormattedStrings: I18NRendererStrings, icuMessagePaths: I18NMessages};
+      i18n: {rendererFormattedStrings: I18NRendererStrings, icuMessagePaths: IcuMessagePaths};
       /** An array containing the result of all stack packs. */
       stackPacks?: Result.StackPack[];
     }

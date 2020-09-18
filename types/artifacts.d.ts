@@ -27,7 +27,7 @@ declare global {
       /** The ISO-8601 timestamp of when the test page was fetched and artifacts collected. */
       fetchTime: string;
       /** A set of warnings about unexpected things encountered while loading and testing the page. */
-      LighthouseRunWarnings: string[];
+      LighthouseRunWarnings: Array<string | IcuMessage>;
       /** Whether the page was loaded on either a real or emulated mobile device. */
       TestedAsMobileDevice: boolean;
       /** Device which Chrome is running on. */

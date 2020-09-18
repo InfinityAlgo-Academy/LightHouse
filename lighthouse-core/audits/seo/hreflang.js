@@ -7,7 +7,7 @@
 
 /** @typedef {string|LH.Audit.Details.NodeValue|undefined} Source */
 /** @typedef {{source: Source, subItems: {type: 'subitems', items: SubItem[]}}} InvalidHreflang */
-/** @typedef {{reason: string}} SubItem */
+/** @typedef {{reason: LH.IcuMessage}} SubItem */
 
 const Audit = require('../audit.js');
 const VALID_LANGS = importValidLangs();

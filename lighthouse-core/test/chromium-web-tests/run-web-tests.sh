@@ -84,7 +84,7 @@ cp "$DEVTOOLS_PATH/test/webtests/http/tests/devtools/lighthouse/"*-expected.txt 
 if [ ! $status -eq 0 ]; then
   # Print failure diffs to stdout.
   find "$LH_ROOT/.tmp/layout-test-results/retry_3" -name '*-diff.txt' -exec cat {} \;
-  echo "❌❌❌ webtests failed. to rebaseline run: yarn update:webtests ❌❌❌"
+  echo "❌❌❌ webtests failed. to rebaseline run: yarn update:test-devtools ❌❌❌"
 fi
 
 exit $status
