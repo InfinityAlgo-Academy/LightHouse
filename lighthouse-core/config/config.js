@@ -21,7 +21,7 @@ const path = require('path');
 const Runner = require('../runner.js');
 const ConfigPlugin = require('./config-plugin.js');
 const Budget = require('./budget.js');
-const {requireAudits, mergeOptionsOfItems, resolveModule} = require('./config-helpers.js');
+const {requireAudits, mergeOptionsOfItems, resolveModule, requireModule} = require('./config-helpers.js');
 
 /** @typedef {typeof import('../gather/gatherers/gatherer.js')} GathererConstructor */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
@@ -447,8 +447,7 @@ class Config {
       const pluginPath = global.isDevtools ?
         pluginName :
         resolveModule(pluginName, configDir, 'plugin');
-      debugger;
-      const rawPluginJson = require(pluginPath);
+      const rawPluginJson = requireModule(pluginPath);
       const pluginJson = ConfigPlugin.parsePlugin(rawPluginJson, pluginName);
 
       configJSON = Config.extendConfigJSON(configJSON, pluginJson);
@@ -761,8 +760,7 @@ class Config {
       requirePath = resolveModule(path, configDir, 'gatherer');
     }
 
-    debugger;
-    const GathererClass = /** @type {GathererConstructor} */ (require(requirePath));
+    const GathererClass = /** @type {GathererConstructor} */ (requireModule(requirePath));
 
     return {
       instance: new GathererClass(),

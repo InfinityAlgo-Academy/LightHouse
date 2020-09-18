@@ -177,6 +177,10 @@ function requireAudits(audits, configDir) {
  * @throws {Error}
  */
 function resolveModule(moduleIdentifier, configDir, category) {
+  if (global.isLightrider || global.isDevtools) {
+    return moduleIdentifier;
+  }
+
   // First try straight `require()`. Unlikely to be specified relative to this
   // file, but adds support for Lighthouse modules from npm since
   // `require()` walks up parent directories looking inside any node_modules/
@@ -215,8 +219,20 @@ function resolveModule(moduleIdentifier, configDir, category) {
        ${relativePath}`);
 }
 
+/**
+ * @param {string} path
+ */
+function requireModule(path) {
+  if (global.isLightrider || global.isDevtools) {
+    return require('dynamic-targets')[path];
+  }
+
+  return require(path);
+}
+
 module.exports = {
   mergeOptionsOfItems,
   requireAudits,
   resolveModule,
+  requireModule,
 };

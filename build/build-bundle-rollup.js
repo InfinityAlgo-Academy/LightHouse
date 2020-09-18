@@ -67,6 +67,8 @@ async function bundleWithRollup(entryPath, distPath) {
     'rimraf',
     'pako/lib/zlib/inflate.js',
   ];
+
+  // TODO: rename
   const dynamicRequireTargets = [];
 
   // Don't include the desktop protocol connection.
@@ -182,7 +184,7 @@ async function bundleWithRollup(entryPath, distPath) {
           }
 
           if (importer === 'dynamic-targets') {
-            return require.resolve(id);
+            // return require.resolve(id);
           }
 
           return null;
@@ -192,16 +194,14 @@ async function bundleWithRollup(entryPath, distPath) {
         // functions that import those files as values
         load(id) {
           if (id === 'dynamic-targets') {
+            // const files = [...dynamicRequireTargets, require.resolve('../lighthouse-core/index.js')];
             const files = dynamicRequireTargets;
             const requires = files
-              .map((file, i) => `import v${i} from '${file}';`)
+              .map((file, i) => `import * as v${i} from '${file}';`)
               .join('\n');
             const props = files
               .map((file, i) => `'${file}': v${i},`)
               .join('\n');
-            // const registers = files
-            //   .map((file, i) => `re()`)
-            //   .join('\n');
             // TODO: remove export?
             return `${requires};\nexport default {\n${props}\n};`;
 
@@ -235,7 +235,7 @@ async function bundleWithRollup(entryPath, distPath) {
       require('@rollup/plugin-node-resolve').nodeResolve({preferBuiltins: true}),
       // @ts-expect-error - Types don't match package.
       require('@rollup/plugin-commonjs')({
-        dynamicRequireTargets,
+        // dynamicRequireTargets: [require.resolve('../lighthouse-core/index.js')],
         transformMixedEsModules: true,
       }),
       // @ts-expect-error - Types don't match package.
