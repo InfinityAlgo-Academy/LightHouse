@@ -210,12 +210,15 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     // Filmstrip
     const timelineEl = this.dom.createChildOf(element, 'div', 'lh-filmstrip-container');
-    const thumbnailAudit = category.auditRefs.find(audit => audit.group === 'filmstrip');
-    const thumbnailResult = thumbnailAudit && thumbnailAudit.result;
-    if (thumbnailResult && thumbnailResult.details) {
-      timelineEl.id = thumbnailResult.id;
-      const filmstripEl = this.detailsRenderer.render(thumbnailResult.details);
-      filmstripEl && timelineEl.appendChild(filmstripEl);
+    // We only expect one of these, but the renderer will support multiple
+    const thumbnailAudits = category.auditRefs.filter(audit => audit.group === 'filmstrip');
+    for (const thumbnailAudit of thumbnailAudits) {
+      const result = thumbnailAudit.result;
+      if (result && result.details) {
+        timelineEl.id = result.id;
+        const filmstripEl = this.detailsRenderer.render(result.details);
+        filmstripEl && timelineEl.appendChild(filmstripEl);
+      }
     }
 
     // Budgets
@@ -282,8 +285,8 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     }
 
     // Everything else (passed, passed with warnings, n/a)
-    const renderedAudits = [...metricAudits, thumbnailAudit, ...budgetAudits, ...opportunityAudits,
-      ...diagnosticAudits];
+    const renderedAudits = [...metricAudits, ...thumbnailAudits, ...budgetAudits,
+      ...opportunityAudits, ...diagnosticAudits];
     const unrenderedAudits = category.auditRefs.filter(ref => !renderedAudits.includes(ref));
     const remainingAudits = unrenderedAudits.filter(ref => !!ref.group);
 
