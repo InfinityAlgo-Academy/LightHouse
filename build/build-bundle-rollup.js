@@ -19,6 +19,7 @@ const LighthouseRunner = require('../lighthouse-core/runner.js');
 // const brfs = require('@wardpeet/brfs');
 const brfs = require('brfs');
 const terser = require('terser');
+const { Readable } = require('stream');
 
 const COMMIT_HASH = require('child_process')
   .execSync('git rev-parse HEAD')
@@ -92,22 +93,26 @@ async function bundleWithRollup(entryPath, distPath) {
   audits.forEach(audit => {
     // bundle = bundle.require(audit, {expose: audit.replace(corePath, '../')});
     // dynamicRequireTargets.push(audit);
-    dynamicRequireTargets.push(require.resolve(audit));
     // dynamicRequireTargets.push(audit.replace(corePath, '../'));
+    
+    dynamicRequireTargets.push(require.resolve(audit));
   });
   gatherers.forEach(gatherer => {
     // bundle = bundle.require(gatherer, {expose: gatherer.replace(driverPath, '../gather/')});
     // dynamicRequireTargets.push(gatherer);
     // dynamicRequireTargets.push(gatherer.replace(driverPath, '../gather/'));
     // console.log(gatherer)
-    // dynamicRequireTargets.push(require.resolve(gatherer));
+    
+    dynamicRequireTargets.push(require.resolve(gatherer));
   });
 
   // HACK: manually include the lighthouse-plugin-publisher-ads audits.
   if (isDevtools(entryPath) || isLightrider(entryPath)) {
     dynamicRequireTargets.push(require.resolve('lighthouse-plugin-publisher-ads'));
+    // dynamicRequireTargets.push('lighthouse-plugin-publisher-ads');
     pubAdsAudits.forEach(pubAdAudit => {
       dynamicRequireTargets.push(require.resolve(pubAdAudit));
+      // dynamicRequireTargets.push(pubAdAudit + '.js');
     });
   }
 
@@ -135,7 +140,7 @@ async function bundleWithRollup(entryPath, distPath) {
 
         return new Promise((resolve, reject) => {
           let output = '';
-          const stream = fs.createReadStream(id).pipe(brfs(id, options));
+          const stream = Readable.from(_code).pipe(brfs(id, options));
           stream.on('data', (data) => {
             output += data.toString();
           });
@@ -156,6 +161,17 @@ async function bundleWithRollup(entryPath, distPath) {
   // entryPath = dynamicRequireTargets[0]
   // entryPath = '/Users/cjamcl/src/lighthouse/lighthouse-core/config/config.js'
 
+  // const LH_ROOT = `${__dirname}/..`;
+  // const tmpPath = `${LH_ROOT}/.tmp/dynamic-requires.js`;
+  // const requires = dynamicRequireTargets.slice(0,1)
+  //   .map((file, i) => `const v${i} = require('${file}');`)
+  //   .join('\n');
+  // const props = dynamicRequireTargets.slice(0,1)
+  //   .map((file, i) => `'${file}': v${i},`)
+  //   .join('\n');
+  // const dynamicCode = `${requires};\nmodule.exports = {\n${props}\n};`;
+  // fs.writeFileSync(tmpPath, dynamicCode);
+
   const bundle = await rollup.rollup({
     input: entryPath,
     plugins: [
@@ -172,56 +188,6 @@ async function bundleWithRollup(entryPath, distPath) {
         allowFallthrough: true,
       }),
 
-      
-
-      // https://github.com/rollup/rollup/issues/2463#issuecomment-455957865
-      {
-        // this is necessary to tell rollup that it should not try to resolve "dynamic-targets"
-        // via other means
-        resolveId(id, importer) {
-          if (id === 'dynamic-targets') {
-            return id;
-          }
-
-          if (importer === 'dynamic-targets') {
-            // return require.resolve(id);
-          }
-
-          return null;
-        },
-    
-        // create a module that exports an object containing file names as keys and
-        // functions that import those files as values
-        load(id) {
-          if (id === 'dynamic-targets') {
-            // const files = [...dynamicRequireTargets, require.resolve('../lighthouse-core/index.js')];
-            const files = dynamicRequireTargets;
-            const requires = files
-              .map((file, i) => `import * as v${i} from '${file}';`)
-              .join('\n');
-            const props = files
-              .map((file, i) => `'${file}': v${i},`)
-              .join('\n');
-            // TODO: remove export?
-            return `${requires};\nexport default {\n${props}\n};`;
-
-            // const files = dynamicRequireTargets;
-            // const requires = files
-            //   .map((file, i) => `const v${i} = require('${file}');`)
-            //   .join('\n');
-            // const props = files
-            //   .map((file, i) => `'${file}': v${i},`)
-            //   .join('\n');
-            // // TODO: remove export?
-            // return `${requires};\nmodule.exports = {\n${props}\n};`;
-          }
-          return null;
-        }
-      },
-
-      
-
-
       rollupBrfs({
         global: true,
         parserOpts: {ecmaVersion: 10},
@@ -229,12 +195,65 @@ async function bundleWithRollup(entryPath, distPath) {
         ignore: modulesToIgnore,
       }),
 
+      
+
+      // https://github.com/rollup/rollup/issues/2463#issuecomment-455957865
+      // {
+      //   // this is necessary to tell rollup that it should not try to resolve "dynamic-targets"
+      //   // via other means
+      //   resolveId(id, importer) {
+      //     if (id === 'dynamic-targets') {
+      //       return id;
+      //     }
+
+      //     if (importer === 'dynamic-targets') {
+      //       // return require.resolve(id);
+      //     }
+
+      //     return null;
+      //   },
+    
+      //   // create a module that exports an object containing file names as keys and
+      //   // functions that import those files as values
+      //   load(id) {
+      //     if (id === 'dynamic-targets') {
+      //       // const files = [...dynamicRequireTargets, require.resolve('../lighthouse-core/index.js')];
+      //       const files = dynamicRequireTargets;
+      //       const requires = files
+      //         .map((file, i) => `import * as v${i} from '${file}';`)
+      //         .join('\n');
+      //       const props = files
+      //         .map((file, i) => `'${file}': v${i},`)
+      //         .join('\n');
+      //       // TODO: remove export?
+      //       return `${requires};\nexport default {\n${props}\n};`;
+
+      //       // const files = dynamicRequireTargets;
+      //       // const requires = files
+      //       //   .map((file, i) => `const v${i} = require('${file}');`)
+      //       //   .join('\n');
+      //       // const props = files
+      //       //   .map((file, i) => `'${file}': v${i},`)
+      //       //   .join('\n');
+      //       // // TODO: remove export?
+      //       // return `${requires};\nmodule.exports = {\n${props}\n};`;
+      //     }
+      //     return null;
+      //   }
+      // },
+
+      
+
+
+      
+
 
 
 
       require('@rollup/plugin-node-resolve').nodeResolve({preferBuiltins: true}),
       // @ts-expect-error - Types don't match package.
       require('@rollup/plugin-commonjs')({
+        dynamicRequireTargets,
         // dynamicRequireTargets: [require.resolve('../lighthouse-core/index.js')],
         transformMixedEsModules: true,
       }),

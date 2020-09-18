@@ -5,6 +5,10 @@
  */
 'use strict';
 
+// @ts-ignore
+// require('dynamic-targets');
+// require('lighthouse-plugin-publisher-ads');
+
 const lighthouse = require('../lighthouse-core/index.js');
 const RawProtocol = require('../lighthouse-core/gather/connections/raw.js');
 const log = require('lighthouse-logger');
