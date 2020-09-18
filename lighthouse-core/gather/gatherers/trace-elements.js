@@ -27,6 +27,14 @@ function getNodeDetailsData() {
   const elem = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement; // eslint-disable-line no-undef
   let traceElement;
   if (elem) {
+    const elementType = elem.tagName.toLowerCase();
+    const style = window.getComputedStyle(elem); // eslint-disable-line no-undef
+    let imageSrc;
+    if (elementType === 'img') {
+      imageSrc = elem.getAttribute('src');
+    } else if (style.backgroundImage) {
+      imageSrc = style.backgroundImage.slice(4, -1).replace(/['"]/g, '');
+    }
     traceElement = {
       // @ts-expect-error - put into scope via stringification
       devtoolsNodePath: getNodePath(elem), // eslint-disable-line no-undef
@@ -38,7 +46,8 @@ function getNodeDetailsData() {
       snippet: getOuterHTMLSnippet(elem), // eslint-disable-line no-undef
       // @ts-expect-error - put into scope via stringification
       boundingRect: getBoundingClientRect(elem), // eslint-disable-line no-undef
-      elementType: elem.tagName,
+      elementType: elem.tagName.toLowerCase(),
+      imageSource: imageSrc,
     };
   }
   return traceElement;

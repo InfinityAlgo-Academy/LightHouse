@@ -522,6 +522,7 @@ declare global {
         nodeId?: number;
         animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[];
         elementType: string;
+        imageSource?: string;
       }
 
       export interface ViewportDimensions {

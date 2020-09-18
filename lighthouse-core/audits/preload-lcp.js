@@ -33,7 +33,7 @@ class PreloadLCPAudit extends Audit {
       id: 'preload-lcp',
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['traces','devtoolsLogs','URL','TraceElements'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL', 'TraceElements'],
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
     };
   }
@@ -68,62 +68,35 @@ class PreloadLCPAudit extends Audit {
   /**
    * @param {LH.Artifacts.NetworkRequest} mainResource
    * @param {LH.Gatherer.Simulation.GraphNode} graph
-   * @return {Set<string>}
+   * @param {LH.Artifacts.TraceElement|undefined} lcpElement
+   * @return {string|null}
    */
-  static getURLsToPreload(mainResource, graph) {
-    /** @type {Set<string>} */
-    const urls = new Set();
+  static getURLToPreload(mainResource, graph, lcpElement) {
+    if (!lcpElement || !lcpElement.imageSource) {
+      return null;
+    }
 
+    let lcpUrl = null;
     graph.traverse((node, traversalPath) => {
       if (node.type !== 'network') return;
       // Don't include the node itself or any CPU nodes in the initiatorPath
       const path = traversalPath.slice(1).filter(initiator => initiator.type === 'network');
       if (!PreloadLCPAudit.shouldPreloadRequest(node.record, mainResource, path)) return;
-      urls.add(node.record.url);
+      lcpUrl = node.record.url;
     });
 
-    return urls;
+    return lcpUrl;
   }
 
   /**
-   * Finds which URLs were attempted to be preloaded, but failed to be reused and were requested again.
-   *
-   * @param {LH.Gatherer.Simulation.GraphNode} graph
-   * @return {Set<string>}
-   */
-  static getURLsFailedToPreload(graph) {
-    /** @type {Array<LH.Artifacts.NetworkRequest>} */
-    const requests = [];
-    graph.traverse(node => node.type === 'network' && requests.push(node.record));
-
-    const preloadRequests = requests.filter(req => req.isLinkPreload);
-    const preloadURLsByFrame = new Map();
-    for (const request of preloadRequests) {
-      const preloadURLs = preloadURLsByFrame.get(request.frameId) || new Set();
-      preloadURLs.add(request.url);
-      preloadURLsByFrame.set(request.frameId, preloadURLs);
-    }
-
-    // A failed preload attempt will manifest as a URL that was requested twice within the same frame.
-    // Once with `isLinkPreload` AND again without `isLinkPreload`.
-    const duplicateRequestsAfterPreload = requests.filter(request => {
-      const preloadURLsForFrame = preloadURLsByFrame.get(request.frameId);
-      if (!preloadURLsForFrame) return false;
-      if (!preloadURLsForFrame.has(request.url)) return false;
-      return !request.isLinkPreload;
-    });
-    return new Set(duplicateRequestsAfterPreload.map(req => req.url));
-  }
-
-  /**
-   * Computes the estimated effect of preloading all the resources.
-   * @param {Set<string>} urls The array of byte savings results per resource
+   * Computes the estimated effect of preloading the LCP.
+   * @param {string} lcpUrl The image URL of the LCP
    * @param {LH.Gatherer.Simulation.GraphNode} graph
    * @param {LH.Gatherer.Simulation.Simulator} simulator
    * @return {{wastedMs: number, results: Array<{url: string, wastedMs: number}>}}
    */
-  static computeWasteWithGraph(urls, graph, simulator) {
-    if (!urls.size) {
+  static computeWasteWithGraph(lcpUrl, graph, simulator) {
+    if (!lcpUrl) {
       return {wastedMs: 0, results: []};
     }
 
@@ -132,8 +105,8 @@ class PreloadLCPAudit extends Audit {
     const simulationBeforeChanges = simulator.simulate(graph, {flexibleOrdering: true});
     const modifiedGraph = graph.cloneWithRelationships();
 
-    /** @type {Array<LH.Gatherer.Simulation.GraphNetworkNode>} */
-    const nodesToPreload = [];
+    /** @type {LH.Gatherer.Simulation.GraphNode|null} */
+    let lcpNode = null;
     /** @type {LH.Gatherer.Simulation.GraphNode|null} */
     let mainDocumentNode = null;
     modifiedGraph.traverse(node => {
@@ -142,8 +115,8 @@ class PreloadLCPAudit extends Audit {
       const networkNode = /** @type {LH.Gatherer.Simulation.GraphNetworkNode} */ (node);
       if (node.isMainDocument()) {
         mainDocumentNode = networkNode;
-      } else if (networkNode.record && urls.has(networkNode.record.url)) {
-        nodesToPreload.push(networkNode);
+      } else if (networkNode.record && lcpUrl === networkNode.record.url) {
+        lcpNode = networkNode;
       }
     });
 
@@ -152,12 +125,14 @@ class PreloadLCPAudit extends Audit {
       throw new Error('Could not find main document node');
     }
 
-    // Preload has the effect of moving the resource's only dependency to the main HTML document
-    // Remove all dependencies of the nodes
-    for (const node of nodesToPreload) {
-      node.removeAllDependencies();
-      node.addDependency(mainDocumentNode);
+    if (!lcpNode) {
+      return {wastedMs: 0, results: []};
     }
+
+    // Preload has the effect of moving the resource's only dependency to the main HTML document
+    // Remove all dependencies of the LCP node
+    lcpNode.removeAllDependencies();
+    lcpNode.addDependency(mainDocumentNode);
 
     // Once we've modified the dependencies, simulate the new graph with flexible ordering.
     const simulationAfterChanges = simulator.simulate(modifiedGraph, {flexibleOrdering: true});
@@ -165,27 +140,21 @@ class PreloadLCPAudit extends Audit {
         // @ts-expect-error we don't care if all nodes without a record collect on `undefined`
         .reduce((map, node) => map.set(node.record, node), new Map());
 
-    const results = [];
-    for (const node of nodesToPreload) {
-      const originalNode = originalNodesByRecord.get(node.record);
-      const timingAfter = simulationAfterChanges.nodeTimings.get(node);
-      const timingBefore = simulationBeforeChanges.nodeTimings.get(originalNode);
-      if (!timingBefore || !timingAfter) throw new Error('Missing preload node');
+    const originalNode = originalNodesByRecord.get(lcpNode.record);
+    const timingAfter = simulationAfterChanges.nodeTimings.get(lcpNode);
+    const timingBefore = simulationBeforeChanges.nodeTimings.get(originalNode);
+    if (!timingBefore || !timingAfter) throw new Error('Missing preload node');
 
-      const wastedMs = Math.round(timingBefore.endTime - timingAfter.endTime);
-      if (wastedMs < THRESHOLD_IN_MS) continue;
-      results.push({url: node.record.url, wastedMs});
-    }
-
-    if (!results.length) {
-      return {wastedMs: 0, results};
+    const wastedMs = Math.round(timingBefore.endTime - timingAfter.endTime);
+    if (wastedMs < THRESHOLD_IN_MS) {
+      return {wastedMs: 0, results: []};
     }
 
     return {
-      // Preload won't necessarily impact the deepest chain/overall time
-      // We'll use the maximum endTime improvement for now
-      wastedMs: Math.max(...results.map(item => item.wastedMs)),
-      results,
+      wastedMs,
+      results: [
+        {wastedMs, url: lcpUrl},
+      ],
     };
   }
 
@@ -199,36 +168,29 @@ class PreloadLCPAudit extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[PreloadLCPAudit.DEFAULT_PASS];
     const URL = artifacts.URL;
     const simulatorOptions = {trace, devtoolsLog, settings: context.settings};
-    const lcpElement = artifacts.TraceElements.find(element => element.traceEventType === 'largest-contentful-paint');
-    if (!lcpElement || lcpElement.elementType !== 'img') {
-      return {
-        score: 1,
-        notApplicable: true,
-      };
-    }
+    const lcpElement = artifacts.TraceElements
+      .find(element => element.traceEventType === 'largest-contentful-paint');
+
     /** @type {LH.Config.Settings} */
-    // @ts-expect-error 
+    // @ts-expect-error
     const settings = {};
 
     const [mainResource, lanternLCP, simulator] = await Promise.all([
       MainResource.request({devtoolsLog, URL}, context),
       LanternLCP.request({trace, devtoolsLog, settings}, context),
       LoadSimulator.request(simulatorOptions, context),
-    ])
+    ]);
 
     const graph = lanternLCP.optimisticGraph;
-    const urls = PreloadLCPAudit.getURLsToPreload(mainResource, graph);
-    const {results, wastedMs} = PreloadLCPAudit.computeWasteWithGraph(urls, graph, simulator);
-    // sort results by wastedTime DESC
-    results.sort((a, b) => b.wastedMs - a.wastedMs);
-
-    /** @type {Array<string>|undefined} */
-    let warnings;
-    const failedURLs = PreloadLCPAudit.getURLsFailedToPreload(graph);
-    if (failedURLs.size) {
-      warnings = Array.from(failedURLs)
-        .map(preloadURL => 'Preload warning for: ' + preloadURL);
+    const lcpUrl = PreloadLCPAudit.getURLToPreload(mainResource, graph, lcpElement);
+    if (!lcpUrl) {
+      return {
+        score: 1,
+        notApplicable: true,
+      };
     }
+
+    const {results, wastedMs} = PreloadLCPAudit.computeWasteWithGraph(lcpUrl, graph, simulator);
 
     /** @type {LH.Audit.Details.Opportunity['headings']} */
     const headings = [
@@ -243,7 +205,6 @@ class PreloadLCPAudit extends Audit {
       numericUnit: 'millisecond',
       displayValue: wastedMs ? str_(i18n.UIStrings.displayValueMsSavings, {wastedMs}) : '',
       details,
-      warnings,
     };
   }
 }
