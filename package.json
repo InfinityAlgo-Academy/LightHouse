@@ -114,7 +114,6 @@
     "@wardpeet/brfs": "2.1.0-0",
     "angular": "^1.7.4",
     "archiver": "^3.0.0",
-    "brfs": "^2.0.2",
     "browserify": "^16.2.3",
     "browserify-banner": "^1.0.15",
     "bundle-phobia-cli": "^0.14.6",

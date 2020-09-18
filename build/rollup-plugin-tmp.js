@@ -44,7 +44,7 @@ module.exports = function rollupPluginHypothetical(options) {
   if (allowExternalFallthrough === undefined) {
     allowExternalFallthrough = true;
   }
-  const leaveIdsAlone = options.leaveIdsAlone || false;
+  const leaveIdsAlone = options.leaveIdsAlone || true;
   let impliedExtensions = options.impliedExtensions;
   if (impliedExtensions === undefined) {
     impliedExtensions = ['.js', '/'];
@@ -62,7 +62,7 @@ module.exports = function rollupPluginHypothetical(options) {
   const files = new Map();
   if (leaveIdsAlone) {
     forEachInObjectOrMap(files0, files0AsMap, function(contents, f) {
-      files.set(f, contents);
+      files.set(normalizeModulePath(f), contents);
     });
   } else {
     forEachInObjectOrMap(files0, files0AsMap, function(contents, f) {
@@ -172,18 +172,25 @@ module.exports = function rollupPluginHypothetical(options) {
     }
   };
 
-  return {
-    resolveId: resolveId,
-    load: function(id) {
-      let key = id;
-      if (id.includes('node_modules')) {
-        id.lastIndexOf('node_modules/')
-        key = id.slice(id.lastIndexOf('node_modules/') + 'node_modules/'.length)
-      }
+  /**
+   * @param {string} path
+   */
+  function normalizeModulePath(path) {
+    if (path.includes('node_modules')) {
+      path.lastIndexOf('node_modules/')
+      return path.slice(path.lastIndexOf('node_modules/') + 'node_modules/'.length)
+    }
 
-      if (id.includes('node.js')) {
-        console.log(id, key, files.has(key));
-      }
+    return path;
+  }
+
+  return {
+    // resolveId: resolveId,
+    load: function(id) {
+      const key = normalizeModulePath(id);
+
+      // if (id.includes('rimraf')) console.log('!', id);
+      // if (files.has(key)) console.log(id);
 
       return files.get(key);
     },

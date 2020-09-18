@@ -17,7 +17,6 @@ const mkdir = fs.promises.mkdir;
 const { Readable } = require('stream');
 const brfs = require('@wardpeet/brfs');
 const LighthouseRunner = require('../lighthouse-core/runner.js');
-// const brfs = require('brfs');
 const terser = require('terser');
 const {minifyFileTransform} = require('./build-utils.js');
 
@@ -60,14 +59,12 @@ const DEBUG = false;
 async function bundleWithRollup(entryPath, distPath) {
   const rollup = require('rollup');
   const modulesToIgnore = [
-    'source-map',
-    // 'debug/src/node.js',
     'intl',
     'intl-pluralrules',
     'raven',
     'rimraf',
     'pako/lib/zlib/inflate.js',
-  ];
+  ].map(p => require.resolve(p));
 
   // TODO: rename
   const dynamicRequireTargets = [];
@@ -326,17 +323,6 @@ function minifyScript(filePath) {
 async function build(entryPath, distPath) {
   await bundleWithRollup(entryPath, distPath);
   // minifyScript(distPath);
-
-  // Add the banner and modify globals for DevTools.
-  // if (isDevtools(distPath)) {
-  //   let code = fs.readFileSync(distPath, 'utf-8');
-
-  //   assert.ok(code.includes('\nrequire='), 'missing browserify require stub');
-  //   code = code.replace('\nrequire=', '\nglobalThis.require=');
-  //   assert.ok(!code.includes('\nrequire='), 'contained unexpected browserify require stub');
-
-  //   fs.writeFileSync(distPath, code);
-  // }
 }
 
 /**
