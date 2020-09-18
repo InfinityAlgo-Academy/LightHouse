@@ -10,6 +10,7 @@ const fs = require('fs');
 const path = require('path');
 const rimraf = require('rimraf');
 const assert = require('assert').strict;
+const terser = require('terser');
 
 const distDir = path.join(__dirname, '..', 'dist', 'dt-report-resources');
 const bundleOutFile = `${distDir}/report-generator.js`;
@@ -26,10 +27,21 @@ function writeFile(name, content) {
   fs.writeFileSync(`${distDir}/${name}`, content);
 }
 
+/**
+ * @param {string} content
+ */
+function minify(content) {
+  const result = terser.minify(content);
+  if (result.error) {
+    throw result.error;
+  }
+  return result.code || '';
+}
+
 rimraf.sync(distDir);
 fs.mkdirSync(distDir);
 
-writeFile('report.js', htmlReportAssets.REPORT_JAVASCRIPT);
+writeFile('report.js', minify(htmlReportAssets.REPORT_JAVASCRIPT));
 writeFile('report.css', htmlReportAssets.REPORT_CSS);
 writeFile('template.html', htmlReportAssets.REPORT_TEMPLATE);
 writeFile('templates.html', htmlReportAssets.REPORT_TEMPLATES);
