@@ -414,12 +414,12 @@ const expectations = [
         autocomplete: {
           score: 0,
           warnings: [
-            'Autocomplete token(s): "sectio-red shipping cc-namez" is invalid in <textarea type="text" id="name_cc1" name="name_cc1" autocomplete="sectio-red shipping cc-namez" placeholder="John Doe">',
-            'Autocomplete token(s): "shippin street-address" is invalid in <input type="text" id="address_shipping" autocomplete="shippin street-address" placeholder="Your address">',
-            'Autocomplete token(s): "mobile section-red shipping address-level2" is invalid in <input type="text" id="city_shipping" placeholder="city you live" autocomplete="mobile section-red shipping address-level2">',
+            '`autocomplete` token(s): "sectio-red shipping cc-namez" is invalid in <textarea type="text" id="name_cc1" name="name_cc1" autocomplete="sectio-red shipping cc-namez" placeholder="John Doe">',
+            '`autocomplete` token(s): "shippin street-address" is invalid in <input type="text" id="address_shipping" autocomplete="shippin street-address" placeholder="Your address">',
+            '`autocomplete` token(s): "mobile section-red shipping address-level2" is invalid in <input type="text" id="city_shipping" placeholder="city you live" autocomplete="mobile section-red shipping address-level2">',
             'Review order of tokens: "mobile section-red shipping address-level2" in <input type="text" id="city_shipping" placeholder="city you live" autocomplete="mobile section-red shipping address-level2">',
-            'Autocomplete token(s): "sectio-red billing name" is invalid in <input type="text" id="name_billing" name="name_billing" placeholder="your name" autocomplete="sectio-red billing name">',
-            'Autocomplete token(s): "section-red shipping " is invalid in <input type="text" id="city_billing" name="city_billing" placeholder="city you live in" autocomplete="section-red shipping ">',
+            '`autocomplete` token(s): "sectio-red billing name" is invalid in <input type="text" id="name_billing" name="name_billing" placeholder="your name" autocomplete="sectio-red billing name">',
+            '`autocomplete` token(s): "section-red shipping " is invalid in <input type="text" id="city_billing" name="city_billing" placeholder="city you live in" autocomplete="section-red shipping ">',
           ],
           details: {
             items: [

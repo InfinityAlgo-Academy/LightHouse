@@ -18,24 +18,24 @@ const log = require('lighthouse-logger');
 
 const UIStrings = {
   /** Title of a Lighthouse audit that lets the user know if there are any missing or invalid autocomplete attributes on page inputs. This descriptive title is shown to users when all input attributes have a valid autocomplete attribute. */
-  title: 'Input elements use autocomplete',
+  title: '`<input>` elements correctly use `autocomplete`',
   /** Title of a Lighthouse audit that lets the user know if there are any missing or invalid autocomplete attributes on page inputs. This descriptive title is shown to users when one or more inputs do not have autocomplete set or has an invalid autocomplete set. */
-  failureTitle: 'Input elements do not have correct attributes for autocomplete',
+  failureTitle: '`<input>` elements do not have correct `autocomplete` attributes',
   /** Description of a Lighthouse audit that lets the user know if there are any missing or invalid autocomplete attributes on page inputs. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  description: 'Autocomplete helps users submit forms quicker. To reduce user ' +
-   'effort, consider enabling autocomplete by setting the `autocomplete` ' +
+  description: '`autocomplete` helps users submit forms quicker. To reduce user ' +
+   'effort, consider enabling by setting the `autocomplete` ' +
    'attribute to a valid value.' +
   ' [Learn more](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)',
   /** Label for a column in a data table; entries will be the autocomplete token suggestions based on heuristics. */
-  columnSuggestions: 'Autocomplete Suggested Token',
+  columnSuggestions: 'Suggested Token',
   /** Label for a column in a data table; entries will be the incorrect optional autocomplete tokens or prompting user to review them. */
-  columnCurrent: 'Autocomplete Current Value',
+  columnCurrent: 'Current Value',
   /**
    * @description Warning that autocomplete token is invalid.
    * @example {invalid-token name} token
    * @example {<autocomplete="invalid-token name">} snippet
    */
-  warningInvalid: 'Autocomplete token(s): "{token}" is invalid in {snippet}',
+  warningInvalid: '`autocomplete` token(s): "{token}" is invalid in {snippet}',
   /**
    * @description Warning that autocomplete token order is invalid.
    * @example {mobile section-red cc-name} tokens

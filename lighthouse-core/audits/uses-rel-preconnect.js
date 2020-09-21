@@ -31,22 +31,24 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user how to connect early to third-party domains that will be used to load page resources. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description:
     'Consider adding `preconnect` or `dns-prefetch` resource hints to establish early ' +
-    `connections to important third-party origins. [Learn more](https://web.dev/uses-rel-preconnect/).`,
+    'connections to important third-party origins. ' +
+    '[Learn more](https://web.dev/uses-rel-preconnect/).',
   /**
    * @description A warning message that is shown when the user tried to follow the advice of the audit, but it's not working as expected.
    * @example {https://example.com} securityOrigin
    * */
-  unusedWarning: 'A preconnect `<link>` was found for "{securityOrigin}" but was not used ' +
-    'by the browser. Only preconnect to important origins that the page will certainly request.',
+  unusedWarning: 'A `<link rel=preconnect>` was found for "{securityOrigin}" but was not used ' +
+    'by the browser. Only use `preconnect` for important origins ' +
+    'that the page will certainly request.',
   /**
    * @description A warning message that is shown when the user tried to follow the advice of the audit, but it's not working as expected. Forgetting to set the `crossorigin` HTML attribute, or setting it to an incorrect value, on the link is a common mistake when adding preconnect links.
    * @example {https://example.com} securityOrigin
    * */
-  crossoriginWarning: 'A preconnect `<link>` was found for "{securityOrigin}" but was not used ' +
-    'by the browser. Check that you are using the `crossorigin` attribute properly.',
+  crossoriginWarning: 'A `<link rel=preconnect>` was found for "{securityOrigin}" but was not ' +
+    'used by the browser. Check that you are using the `crossorigin` attribute properly.',
   /** A warning message that is shown when found more than 2 preconnected links */
-  tooManyPreconnectLinksWarning: 'More than 2 preconnect links were found. ' +
-   'Preconnect links should be used sparingly and only to the most important origins.',
+  tooManyPreconnectLinksWarning: 'More than 2 `<link rel=preconnect>` connections were found. ' +
+   'These should be used sparingly and only to the most important origins.',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);

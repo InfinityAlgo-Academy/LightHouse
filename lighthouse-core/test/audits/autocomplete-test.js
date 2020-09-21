@@ -358,9 +358,9 @@ describe('Best Practices: autocomplete audit', () => {
 
     expect(warnings).toEqual([
       // eslint-disable-next-line max-len
-      expect.toBeDisplayString('Autocomplete token(s): "namez" is invalid in <input type="text" name="name_cc" autocomplete="namez">'),
+      expect.toBeDisplayString('`autocomplete` token(s): "namez" is invalid in <input type="text" name="name_cc" autocomplete="namez">'),
       // eslint-disable-next-line max-len
-      expect.toBeDisplayString('Autocomplete token(s): "ccc-num" is invalid in <input type="text" name="CCNo" autocomplete="ccc-num">'),
+      expect.toBeDisplayString('`autocomplete` token(s): "ccc-num" is invalid in <input type="text" name="CCNo" autocomplete="ccc-num">'),
     ]);
   });
 
@@ -404,11 +404,11 @@ describe('Best Practices: autocomplete audit', () => {
 
     expect(warnings).toEqual([
       // eslint-disable-next-line max-len
-      expect.toBeDisplayString('Autocomplete token(s): "shipping section-red cc-name" is invalid in <textarea type="text" name="name_cc2" autocomplete="shipping section-red cc-name">'),
+      expect.toBeDisplayString('`autocomplete` token(s): "shipping section-red cc-name" is invalid in <textarea type="text" name="name_cc2" autocomplete="shipping section-red cc-name">'),
       // eslint-disable-next-line max-len
       expect.toBeDisplayString('Review order of tokens: "shipping section-red cc-name" in <textarea type="text" name="name_cc2" autocomplete="shipping section-red cc-name">'),
       // eslint-disable-next-line max-len
-      expect.toBeDisplayString('Autocomplete token(s): "shipping section-red mobile tel" is invalid in <input type="text" name="CCNo2" autocomplete="shipping section-red mobile tel">'),
+      expect.toBeDisplayString('`autocomplete` token(s): "shipping section-red mobile tel" is invalid in <input type="text" name="CCNo2" autocomplete="shipping section-red mobile tel">'),
       // eslint-disable-next-line max-len
       expect.toBeDisplayString('Review order of tokens: "shipping section-red mobile tel" in <input type="text" name="CCNo2" autocomplete="shipping section-red mobile tel">'),
     ]);
