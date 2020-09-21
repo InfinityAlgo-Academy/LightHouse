@@ -19,6 +19,7 @@ const LighthouseRunner = require('../lighthouse-core/runner.js');
 const exorcist = require('exorcist');
 const browserify = require('browserify');
 const terser = require('terser');
+const {minifyFileTransform} = require('./build-utils.js');
 
 const COMMIT_HASH = require('child_process')
   .execSync('git rev-parse HEAD')
@@ -64,7 +65,11 @@ async function browserifyFile(entryPath, distPath) {
       file: require.resolve('./banner.txt'),
     })
     // Transform the fs.readFile etc into inline strings.
-    .transform('@wardpeet/brfs', {global: true, parserOpts: {ecmaVersion: 10}})
+    .transform('@wardpeet/brfs', {
+      readFileSyncTransform: minifyFileTransform,
+      global: true,
+      parserOpts: {ecmaVersion: 10},
+    })
     // Strip everything out of package.json includes except for the version.
     .transform('package-json-versionify');
 
