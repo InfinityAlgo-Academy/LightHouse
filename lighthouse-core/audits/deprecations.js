@@ -87,7 +87,7 @@ class Deprecations extends Audit {
     ];
     const details = Audit.makeTableDetails(headings, deprecations);
 
-    let displayValue = '';
+    let displayValue;
     if (deprecations.length > 0) {
       displayValue = str_(UIStrings.displayValue, {itemCount: deprecations.length});
     }

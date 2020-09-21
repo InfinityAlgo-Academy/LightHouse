@@ -16,11 +16,11 @@ const assert = require('assert').strict;
 const mkdir = fs.promises.mkdir;
 
 const LighthouseRunner = require('../lighthouse-core/runner.js');
-const babel = require('babel-core');
+const exorcist = require('exorcist');
 const browserify = require('browserify');
-const pkg = require('../package.json');
+const terser = require('terser');
+const {minifyFileTransform} = require('./build-utils.js');
 
-const VERSION = pkg.version;
 const COMMIT_HASH = require('child_process')
   .execSync('git rev-parse HEAD')
   .toString().trim();
@@ -45,9 +45,8 @@ const isDevtools = file =>
 /** @param {string} file */
 const isLightrider = file => path.basename(file).includes('lightrider');
 
-const BANNER = `// lighthouse, browserified. ${VERSION} (${COMMIT_HASH})\n` +
-  '// @ts-nocheck\n'; // To prevent tsc stepping into any required bundles.
-const DEBUG = false; // true for sourcemaps
+// Set to true for source maps.
+const DEBUG = false;
 
 /**
  * Browserify starting at the file at entryPath. Contains entry-point-specific
@@ -61,8 +60,16 @@ async function browserifyFile(entryPath, distPath) {
   let bundle = browserify(entryPath, {debug: DEBUG});
 
   bundle
+    .plugin('browserify-banner', {
+      pkg: Object.assign({COMMIT_HASH}, require('../package.json')),
+      file: require.resolve('./banner.txt'),
+    })
     // Transform the fs.readFile etc into inline strings.
-    .transform('@wardpeet/brfs', {global: true, parserOpts: {ecmaVersion: 10}})
+    .transform('@wardpeet/brfs', {
+      readFileSyncTransform: minifyFileTransform,
+      global: true,
+      parserOpts: {ecmaVersion: 10},
+    })
     // Strip everything out of package.json includes except for the version.
     .transform('package-json-versionify');
 
@@ -115,7 +122,7 @@ async function browserifyFile(entryPath, distPath) {
   const pathToURLShim = require.resolve('../lighthouse-core/lib/url-shim.js');
   bundle = bundle.require(pathToURLShim, {expose: 'url'});
 
-  const bundleStream = bundle.bundle();
+  let bundleStream = bundle.bundle();
 
   // Make sure path exists.
   await mkdir(path.dirname(distPath), {recursive: true});
@@ -124,35 +131,52 @@ async function browserifyFile(entryPath, distPath) {
     writeStream.on('finish', resolve);
     writeStream.on('error', reject);
 
+    // Extract the inline source map to an external file.
+    if (DEBUG) bundleStream = bundleStream.pipe(exorcist(`${distPath}.map`));
     bundleStream.pipe(writeStream);
   });
 }
 
 /**
- * Minimally minify a javascript file, in place.
+ * Minify a javascript file, in place.
  * @param {string} filePath
  */
 function minifyScript(filePath) {
-  const opts = {
-    compact: true, // Do not include superfluous whitespace characters and line terminators.
-    retainLines: true, // Keep things on the same line (looks wonky but helps with stacktraces)
-    comments: false, // Don't output comments
-    shouldPrintComment: () => false, // Don't include @license or @preserve comments either
-    plugins: [
-      'syntax-object-rest-spread',
-      'syntax-async-generators',
-    ],
-    // sourceMaps: 'both'
-  };
-
-  // Add the banner and modify globals for DevTools if necessary
-  let minified = BANNER + babel.transformFileSync(filePath, opts).code;
-  if (isDevtools(filePath)) {
-    assert.ok(minified.includes('\nrequire='), 'missing browserify require stub');
-    minified = minified.replace('\nrequire=', '\nglobalThis.require=');
-    assert.ok(!minified.includes('\nrequire='), 'contained unexpected browserify require stub');
+  const result = terser.minify(fs.readFileSync(filePath, 'utf-8'), {
+    output: {
+      comments: /^!/,
+      // @ts-expect-error - terser types are whack-a-doodle wrong.
+      max_line_len: /** @type {boolean} */ (1000),
+    },
+    // The config relies on class names for gatherers.
+    keep_classnames: true,
+    // Runtime.evaluate errors if function names are elided.
+    keep_fnames: true,
+    sourceMap: DEBUG && {
+      content: JSON.parse(fs.readFileSync(`${filePath}.map`, 'utf-8')),
+      url: path.basename(`${filePath}.map`),
+    },
+  });
+  if (result.error) {
+    throw result.error;
   }
-  fs.writeFileSync(filePath, minified);
+
+  // Add the banner and modify globals for DevTools if necessary.
+  if (isDevtools(filePath) && result.code) {
+    // Add a comment for TypeScript, but not if in DEBUG mode so that source maps are not affected.
+    // See lighthouse-cli/test/smokehouse/lighthouse-runners/bundle.js
+    if (!DEBUG) {
+      result.code =
+        '// @ts-nocheck - Prevent tsc stepping into any required bundles.\n' + result.code;
+    }
+
+    assert.ok(result.code.includes('\nrequire='), 'missing browserify require stub');
+    result.code = result.code.replace('\nrequire=', '\nglobalThis.require=');
+    assert.ok(!result.code.includes('\nrequire='), 'contained unexpected browserify require stub');
+  }
+
+  fs.writeFileSync(filePath, result.code);
+  if (DEBUG) fs.writeFileSync(`${filePath}.map`, result.map);
 }
 
 /**
@@ -163,9 +187,7 @@ function minifyScript(filePath) {
  */
 async function build(entryPath, distPath) {
   await browserifyFile(entryPath, distPath);
-  if (!DEBUG) {
-    minifyScript(distPath);
-  }
+  minifyScript(distPath);
 }
 
 /**

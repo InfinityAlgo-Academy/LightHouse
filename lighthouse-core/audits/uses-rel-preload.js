@@ -221,7 +221,7 @@ class UsesRelPreloadAudit extends Audit {
     // sort results by wastedTime DESC
     results.sort((a, b) => b.wastedMs - a.wastedMs);
 
-    /** @type {Array<string>|undefined} */
+    /** @type {Array<LH.IcuMessage>|undefined} */
     let warnings;
     const failedURLs = UsesRelPreloadAudit.getURLsFailedToPreload(graph);
     if (failedURLs.size) {

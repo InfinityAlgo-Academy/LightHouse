@@ -27,9 +27,9 @@ const WASTED_MS_FOR_SCORE_OF_ZERO = 5000;
  * @property {Array<LH.Audit.ByteEfficiencyItem>} items
  * @property {Map<string, number>=} wastedBytesByUrl
  * @property {LH.Audit.Details.Opportunity['headings']} headings
- * @property {string} [displayValue]
- * @property {string} [explanation]
- * @property {Array<string>} [warnings]
+ * @property {LH.IcuMessage} [displayValue]
+ * @property {LH.IcuMessage} [explanation]
+ * @property {Array<string | LH.IcuMessage>} [warnings]
  */
 
 /**

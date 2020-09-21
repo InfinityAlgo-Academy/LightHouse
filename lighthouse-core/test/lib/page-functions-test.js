@@ -16,13 +16,15 @@ describe('Page Functions', () => {
   let dom;
 
   beforeAll(() => {
-    const {document, ShadowRoot} = new jsdom.JSDOM().window;
+    const {document, ShadowRoot, Node} = new jsdom.JSDOM().window;
     global.ShadowRoot = ShadowRoot;
+    global.Node = Node;
     dom = new DOM(document);
   });
 
   afterAll(() => {
     global.ShadowRoot = undefined;
+    global.Node = undefined;
   });
 
   describe('get outer HTML snippets', () => {
@@ -124,6 +126,34 @@ describe('Page Functions', () => {
       const childEl = dom.createElement('span');
       el.appendChild(childEl);
       assert.equal(pageFunctions.getNodeLabel(el), 'div');
+    });
+  });
+
+  describe('getNodePath', () => {
+    it('returns basic node path', () => {
+      const el = dom.createElement('div');
+      el.innerHTML = `
+        <section>
+          <span>Sup</span>
+          <img src="#">
+        </section>
+      `;
+      const img = el.querySelector('img');
+      // The img is index 1 of section's children (excluding some whitespace only text nodes).
+      assert.equal(pageFunctions.getNodePath(img), '0,SECTION,1,IMG');
+    });
+
+    it('returns node path through shadow root', () => {
+      const el = dom.createElement('div');
+      const main = el.appendChild(dom.createElement('main'));
+      const shadowRoot = main.attachShadow({mode: 'open'});
+      const sectionEl = dom.createElement('section');
+      const img = dom.createElement('img');
+      img.src = '#';
+      sectionEl.append(img);
+      shadowRoot.append(sectionEl);
+
+      assert.equal(pageFunctions.getNodePath(img), '0,MAIN,a,#document-fragment,0,SECTION,0,IMG');
     });
   });
 });
