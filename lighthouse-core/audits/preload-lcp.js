@@ -48,19 +48,27 @@ class PreloadLCPAudit extends Audit {
    * @param {LH.Artifacts.NetworkRequest} request
    * @param {LH.Artifacts.NetworkRequest} mainResource
    * @param {Array<LH.Gatherer.Simulation.GraphNode>} initiatorPath
+   * @param {string|undefined} lcpImageSource
    * @return {boolean}
    */
-  static shouldPreloadRequest(request, mainResource, initiatorPath) {
+  static shouldPreloadRequest(request, mainResource, initiatorPath, lcpImageSource) {
     const mainResourceDepth = mainResource.redirects ? mainResource.redirects.length : 0;
 
+    // If it's not the request for the LCP image, don't recommend it.
+    if (request.url !== lcpImageSource) return false;
+    console.log(1);
     // If it's already preloaded, no need to recommend it.
     if (request.isLinkPreload) return false;
+    console.log(2);
     // It's not a request loaded over the network, don't recommend it.
     if (URL.NON_NETWORK_PROTOCOLS.includes(request.protocol)) return false;
+    console.log(3);
     // It's not at the right depth, don't recommend it.
-    if (initiatorPath.length !== mainResourceDepth + 2) return false;
+    // if (initiatorPath.length !== mainResourceDepth + 2) return false;
+    // console.log(4);
     // It's not a request for the main frame, it wouldn't get reused even if you did preload it.
     if (request.frameId !== mainResource.frameId) return false;
+    console.log(4);
     // We survived everything else, just check that it's a first party request.
     return URL.rootDomainsMatch(request.url, mainResource.url);
   }
@@ -72,16 +80,17 @@ class PreloadLCPAudit extends Audit {
    * @return {string|null}
    */
   static getURLToPreload(mainResource, graph, lcpElement) {
-    if (!lcpElement || !lcpElement.imageSource) {
+    if (!lcpElement) {
       return null;
     }
+    console.log(lcpElement.imageSource);
 
     let lcpUrl = null;
     graph.traverse((node, traversalPath) => {
       if (node.type !== 'network') return;
       // Don't include the node itself or any CPU nodes in the initiatorPath
       const path = traversalPath.slice(1).filter(initiator => initiator.type === 'network');
-      if (!PreloadLCPAudit.shouldPreloadRequest(node.record, mainResource, path)) return;
+      if (!PreloadLCPAudit.shouldPreloadRequest(node.record, mainResource, path, lcpElement.imageSource)) return;
       lcpUrl = node.record.url;
     });
 
@@ -181,9 +190,10 @@ class PreloadLCPAudit extends Audit {
       LoadSimulator.request(simulatorOptions, context),
     ]);
 
-    const graph = lanternLCP.optimisticGraph;
+    const graph = lanternLCP.pessimisticGraph;
     const lcpUrl = PreloadLCPAudit.getURLToPreload(mainResource, graph, lcpElement);
     if (!lcpUrl) {
+      console.log('Did not find the LCP node');
       return {
         score: 1,
         notApplicable: true,
