@@ -33,7 +33,6 @@ const ResourceSummary = require('../computed/resource-summary.js');
  * @property {string} name Arbitrary name identifier. Usually a path component from a source map.
  * @property {number} resourceBytes
  * @property {number=} unusedBytes
- * @property {number=} executionTime
  * @property {string=} duplicate If present, this module is a duplicate. String is normalized source path. See ModuleDuplication.normalizeSource
  * @property {Node[]=} children
  */
@@ -175,7 +174,6 @@ class TreemapDataAudit extends Audit {
           name,
           resourceBytes: inlineScriptLength,
           unusedBytes: 0,
-          executionTime: 0,
         },
       });
     }
@@ -199,18 +197,27 @@ class TreemapDataAudit extends Audit {
       const name = scriptElement.src;
 
       let node;
-      if (bundle && unusedJavascriptSummary && unusedJavascriptSummary.sourcesWastedBytes) {
+      if (!unusedJavascriptSummary) {
+        node = {
+          name,
+          resourceBytes: length,
+          unusedBytes: 0,
+        };
+      } else if (!unusedJavascriptSummary.sourcesWastedBytes) {
+        node = {
+          name,
+          resourceBytes: unusedJavascriptSummary.totalBytes,
+          unusedBytes: unusedJavascriptSummary.wastedBytes,
+        };
+      } else {
         /** @type {Record<string, SourceData>} */
         const sourcesData = {};
         for (const source of Object.keys(bundle.sizes.files)) {
           /** @type {SourceData} */
           const sourceData = {
             resourceBytes: bundle.sizes.files[source],
+            unusedBytes: unusedJavascriptSummary.sourcesWastedBytes[source],
           };
-
-          if (unusedJavascriptSummary && unusedJavascriptSummary.sourcesWastedBytes) {
-            sourceData.unusedBytes = unusedJavascriptSummary.sourcesWastedBytes[source];
-          }
 
           const key = ModuleDuplication.normalizeSource(source);
           if (duplication.has(key)) sourceData.duplicate = key;
@@ -219,20 +226,6 @@ class TreemapDataAudit extends Audit {
         }
 
         node = this.prepareTreemapNodes(bundle.rawMap.sourceRoot || '', sourcesData);
-      } else if (unusedJavascriptSummary) {
-        node = {
-          name,
-          resourceBytes: unusedJavascriptSummary.totalBytes,
-          unusedBytes: unusedJavascriptSummary.wastedBytes,
-          executionTime: 0,
-        };
-      } else {
-        node = {
-          name,
-          resourceBytes: length,
-          unusedBytes: 0,
-          executionTime: 0,
-        };
       }
 
       rootNodes.push({
