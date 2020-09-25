@@ -7,7 +7,7 @@
 
 /**
  * @fileoverview
- * Creates treemap data for webtreemap.
+ * Creates treemap data for treemap app.
  */
 
 const Audit = require('./audit.js');
@@ -18,22 +18,23 @@ const NetworkRecords = require('../computed/network-records.js');
 const ResourceSummary = require('../computed/resource-summary.js');
 
 /**
+ * A collection of root nodes, grouped by type.
  * @typedef {Record<string, RootNode[]>} TreemapData
  */
 
 /**
  * @typedef RootNode
- * @property {string} name
+ * @property {string} name Arbitrary name identifier. Usually a script url.
  * @property {Node} node
  */
 
 /**
  * @typedef Node
- * @property {string} name
+ * @property {string} name Arbitrary name identifier. Usually a path component from a source map.
  * @property {number} resourceBytes
  * @property {number=} unusedBytes
  * @property {number=} executionTime
- * @property {string=} duplicate
+ * @property {string=} duplicate If present, this module is a duplicate. String is normalized source path. See ModuleDuplication.normalizeSource
  * @property {Node[]=} children
  */
 
@@ -50,13 +51,17 @@ class TreemapDataAudit extends Audit {
       id: 'treemap-data',
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: 'Treemap Data',
-      description: 'Used for treemap app.',
+      description: 'Used for treemap app',
       requiredArtifacts:
         ['traces', 'devtoolsLogs', 'SourceMaps', 'ScriptElements', 'JsUsage', 'URL'],
     };
   }
 
   /**
+   * Returns a tree data structure where leaf nodes are sources (ie. real files from source tree)
+   * from a source map, and non-leaf nodes are directories. Leaf nodes have data
+   * for bytes, coverage, etc., when available, and non-leaf nodes have the
+   * same data as the sum of all descendant leaf nodes.
    * @param {string} sourceRoot
    * @param {Record<string, SourceData>} sourcesData
    * @return {Node}
@@ -161,22 +166,26 @@ class TreemapDataAudit extends Audit {
       length: 0,
     };
     for (const scriptElement of artifacts.ScriptElements) {
-      // Normalize ScriptElements so that inline scripts show up as a single entity.
+      // No src means script is inline.
+      // Combine these ScriptElements so that inline scripts show up as a single root node.
       if (!scriptElement.src) {
         inlineScriptData.length += (scriptElement.content || '').length;
         continue;
       }
 
-      const url = scriptElement.src;
-      const bundle = bundles.find(bundle => url === bundle.script.src);
-      const scriptCoverages = artifacts.JsUsage[url];
-      if (!bundle || !scriptCoverages) continue;
+      const bundle = bundles.find(bundle => scriptElement.src === bundle.script.src);
+      // No source map for this script, so skip the rest of this.
+      if (!bundle) continue;
 
+      const scriptCoverages = artifacts.JsUsage[scriptElement.src];
+      if (!scriptCoverages) continue;
+
+      const unusedJavascriptSummary = await UnusedJavaScriptSummary.request(
+        {url: scriptElement.src, scriptCoverages, bundle}, context);
       scriptData.push({
         src: scriptElement.src,
         length: (scriptElement.content || '').length,
-        unusedJavascriptSummary:
-          await UnusedJavaScriptSummary.request({url, scriptCoverages, bundle}, context),
+        unusedJavascriptSummary,
       });
     }
     if (inlineScriptData.length) scriptData.unshift(inlineScriptData);
@@ -199,10 +208,8 @@ class TreemapDataAudit extends Audit {
             sourceData.unusedBytes = unusedJavascriptSummary.sourcesWastedBytes[source];
           }
 
-          if (duplication) {
-            const key = ModuleDuplication._normalizeSource(source);
-            if (duplication.has(key)) sourceData.duplicate = key;
-          }
+          const key = ModuleDuplication.normalizeSource(source);
+          if (duplication.has(key)) sourceData.duplicate = key;
 
           sourcesData[source] = sourceData;
         }
@@ -263,10 +270,9 @@ class TreemapDataAudit extends Audit {
       totalSize += networkRecord.resourceSize;
       child.resourceBytes += networkRecord.resourceSize;
 
-      let name = networkRecord.url;
       child.children = child.children || [];
       child.children.push({
-        name,
+        name: networkRecord.url,
         resourceBytes: networkRecord.resourceSize,
       });
     }

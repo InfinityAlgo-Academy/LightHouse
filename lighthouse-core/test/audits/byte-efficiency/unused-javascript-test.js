@@ -17,7 +17,7 @@ const {loadSourceMapFixture} = require('../../test-utils.js');
  */
 function load(name) {
   const data = loadSourceMapFixture(name);
-  if (!data.usage) throw new Error('exepcted usage');
+  if (!data.usage) throw new Error('expected usage');
   return {...data, usage: data.usage};
 }
 
