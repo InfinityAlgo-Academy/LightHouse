@@ -159,17 +159,29 @@ class TreemapDataAudit extends Audit {
     const bundles = await JsBundles.request(artifacts, context);
     const duplication = await ModuleDuplication.request(artifacts, context);
 
-    /** @type {Array<{src: string, length: number, unusedJavascriptSummary?: import('../computed/unused-javascript-summary.js').Summary}>} */
-    const scriptData = [];
-    const inlineScriptData = {
-      src: artifacts.URL.finalUrl,
-      length: 0,
-    };
+    let inlineScriptLength = 0;
     for (const scriptElement of artifacts.ScriptElements) {
       // No src means script is inline.
       // Combine these ScriptElements so that inline scripts show up as a single root node.
       if (!scriptElement.src) {
-        inlineScriptData.length += (scriptElement.content || '').length;
+        inlineScriptLength += (scriptElement.content || '').length;
+      }
+    }
+    if (inlineScriptLength) {
+      const name = artifacts.URL.finalUrl;
+      rootNodes.push({
+        name,
+        node: {
+          name,
+          resourceBytes: inlineScriptLength,
+          unusedBytes: 0,
+          executionTime: 0,
+        },
+      });
+    }
+
+    for (const scriptElement of artifacts.ScriptElements) {
+      if (!scriptElement.src) {
         continue;
       }
 
@@ -182,17 +194,9 @@ class TreemapDataAudit extends Audit {
 
       const unusedJavascriptSummary = await UnusedJavaScriptSummary.request(
         {url: scriptElement.src, scriptCoverages, bundle}, context);
-      scriptData.push({
-        src: scriptElement.src,
-        length: (scriptElement.content || '').length,
-        unusedJavascriptSummary,
-      });
-    }
-    if (inlineScriptData.length) scriptData.unshift(inlineScriptData);
 
-    for (const {src, length, unusedJavascriptSummary} of scriptData) {
-      const bundle = bundles.find(bundle => bundle.script.src === src);
-      const name = src;
+      const length = (scriptElement.content || '').length;
+      const name = scriptElement.src;
 
       let node;
       if (bundle && unusedJavascriptSummary && unusedJavascriptSummary.sourcesWastedBytes) {
