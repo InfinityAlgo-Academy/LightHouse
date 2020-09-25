@@ -45,7 +45,11 @@ class PasswordInputsCanBePastedIntoAudit extends Audit {
     const items = [];
     passwordInputsWithPreventedPaste.forEach(input => {
       items.push({
-        node: {type: 'node', snippet: input.snippet},
+        node: /** @type {LH.Audit.Details.NodeValue} */ ({
+          type: 'node',
+          snippet: input.snippet,
+          path: input.devtoolsNodePath,
+        }),
       });
     });
 

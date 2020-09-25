@@ -1795,6 +1795,7 @@ describe('GatherRunner', function() {
         name: {value: 'App', raw: 'App'},
         start_url: {value: passContext.url, raw: undefined},
       });
+      expect(result && result.url).toMatch(MANIFEST_URL);
     });
   });
 });

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* global window, document, getOuterHTMLSnippet, getBoundingClientRect, getNodePath, getNodeLabel */
+/* global window, document, getNodeDetails */
 
 const Gatherer = require('./gatherer.js');
 const fs = require('fs');
@@ -51,7 +51,7 @@ function runA11yChecks() {
       'audio-caption': {enabled: false},
     },
     // @ts-expect-error
-  }).then(axeResult => {
+  }).then(axeResults => {
     // axe just scrolled the page, scroll back to the top of the page so that element positions
     // are relative to the top of the page
     document.documentElement.scrollTop = 0;
@@ -60,18 +60,8 @@ function runA11yChecks() {
     const augmentAxeNodes = result => {
       // @ts-expect-error
       result.nodes.forEach(node => {
-        // @ts-expect-error - getNodePath put into scope via stringification
-        node.path = getNodePath(node.element);
-        // @ts-expect-error - getOuterHTMLSnippet put into scope via stringification
-        node.snippet = getOuterHTMLSnippet(node.element);
-        // @ts-expect-error - getBoundingClientRect put into scope via stringification
-        const rect = getBoundingClientRect(node.element);
-        if (rect.width > 0 && rect.height > 0) {
-          node.boundingRect = rect;
-        }
-
-        // @ts-expect-error - getNodeLabel put into scope via stringification
-        node.nodeLabel = getNodeLabel(node.element);
+        // @ts-expect-error - getNodeDetails put into scope via stringification
+        Object.assign(node, getNodeDetails(node.element));
         // avoid circular JSON concerns
         node.element = node.any = node.all = node.none = undefined;
       });
@@ -88,16 +78,17 @@ function runA11yChecks() {
     };
 
     // Augment the node objects with outerHTML snippet & custom path string
-    axeResult.violations.forEach(augmentAxeNodes);
-    axeResult.incomplete.forEach(augmentAxeNodes);
+    axeResults.violations.forEach(augmentAxeNodes);
+    axeResults.incomplete.forEach(augmentAxeNodes);
 
     // We only need violations, and circular references are possible outside of violations
-    axeResult = {
-      violations: axeResult.violations,
-      notApplicable: axeResult.inapplicable,
-      incomplete: axeResult.incomplete,
+    axeResults = {
+      violations: axeResults.violations,
+      notApplicable: axeResults.inapplicable,
+      incomplete: axeResults.incomplete,
+      version: axeResults.testEngine.version,
     };
-    return axeResult;
+    return axeResults;
   });
 }
 
@@ -109,10 +100,7 @@ class Accessibility extends Gatherer {
   afterPass(passContext) {
     const driver = passContext.driver;
     const expression = `(function () {
-      ${pageFunctions.getOuterHTMLSnippetString};
-      ${pageFunctions.getBoundingClientRectString};
-      ${pageFunctions.getNodePathString};
-      ${pageFunctions.getNodeLabelString};
+      ${pageFunctions.getNodeDetailsString};
       ${axeLibSource};
       return (${runA11yChecks.toString()}());
     })()`;

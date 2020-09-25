@@ -3,9 +3,12 @@
   "environment": {
     "networkUserAgent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/66.0.3359.30 Mobile Safari/537.36",
     "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4232.0 Safari/537.36",
-    "benchmarkIndex": 1000
+    "benchmarkIndex": 1000,
+    "credits": {
+      "axe-core": "3.5.5"
+    }
   },
-  "lighthouseVersion": "6.2.0",
+  "lighthouseVersion": "6.3.0",
   "fetchTime": "2018-03-13T00:55:45.840Z",
   "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "finalUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
@@ -14,7 +17,7 @@
     "is-on-https": {
       "id": "is-on-https",
       "title": "Does not use HTTPS",
-      "description": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. This includes avoiding [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), where some resources are loaded over HTTP despite the initial request being servedover HTTPS. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more](https://web.dev/is-on-https/).",
+      "description": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. This includes avoiding [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), where some resources are loaded over HTTP despite the initial request being served over HTTPS. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more](https://web.dev/is-on-https/).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "displayValue": "1 insecure request found",
@@ -25,6 +28,11 @@
             "key": "url",
             "itemType": "url",
             "text": "Insecure URL"
+          },
+          {
+            "key": "resolution",
+            "itemType": "text",
+            "text": "Request Resolution"
           }
         ],
         "items": [
@@ -305,9 +313,25 @@
       "displayValue": "Root document took 570 ms",
       "details": {
         "type": "opportunity",
-        "overallSavingsMs": -29.436999999999898,
-        "headings": [],
-        "items": []
+        "headings": [
+          {
+            "key": "url",
+            "valueType": "url",
+            "label": "URL"
+          },
+          {
+            "key": "responseTime",
+            "valueType": "timespanMs",
+            "label": "Time Spent"
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "responseTime": 570.5630000000001
+          }
+        ],
+        "overallSavingsMs": 470.5630000000001
       }
     },
     "first-cpu-idle": {
@@ -509,6 +533,7 @@
             "failures": [
               "No manifest was fetched"
             ],
+            "manifestUrl": null,
             "isParseFailure": true,
             "parseFailureReason": "No manifest was fetched"
           }
@@ -578,8 +603,7 @@
       "title": "Content is sized correctly for the viewport",
       "description": "If the width of your app's content doesn't match the width of the viewport, your app might not be optimized for mobile screens. [Learn more](https://web.dev/content-width/).",
       "score": 1,
-      "scoreDisplayMode": "binary",
-      "explanation": ""
+      "scoreDisplayMode": "binary"
     },
     "image-aspect-ratio": {
       "id": "image-aspect-ratio",
@@ -666,6 +690,28 @@
             "actualPixels": 152640,
             "expectedSize": "1260 x 835",
             "expectedPixels": 1052100
+          }
+        ]
+      }
+    },
+    "preload-fonts": {
+      "id": "preload-fonts",
+      "title": "Fonts with `font-display: optional` are not preloaded",
+      "description": "Preload `optional` fonts so first-time visitors may use them. [Learn More](https://web.dev/preload-optional-fonts/)",
+      "score": 0,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "url",
+            "itemType": "url",
+            "text": "URL"
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:10503/perf/lobster-two-v10-latin-700.woff2?cors=true"
           }
         ]
       }
@@ -940,6 +986,11 @@
             "text": "URL"
           },
           {
+            "key": "protocol",
+            "itemType": "text",
+            "text": "Protocol"
+          },
+          {
             "key": "startTime",
             "itemType": "ms",
             "granularity": 1,
@@ -984,6 +1035,7 @@
         "items": [
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "protocol": "http/1.1",
             "startTime": 0,
             "endTime": 640.1550000009593,
             "finished": true,
@@ -995,6 +1047,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true",
+            "protocol": "http/1.1",
             "startTime": 630.2950000099372,
             "endTime": 2635.035000013886,
             "finished": true,
@@ -1006,6 +1059,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
+            "protocol": "http/1.1",
             "startTime": 635.496000002604,
             "endTime": 1204.6590000099968,
             "finished": true,
@@ -1017,6 +1071,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
+            "protocol": "http/1.1",
             "startTime": 636.6400000115391,
             "endTime": 1213.2910000218544,
             "finished": true,
@@ -1028,6 +1083,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
+            "protocol": "http/1.1",
             "startTime": 638.0040000076406,
             "endTime": 2849.3670000170823,
             "finished": true,
@@ -1039,6 +1095,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
+            "protocol": "http/1.1",
             "startTime": 638.7899999972433,
             "endTime": 1220.04100002232,
             "finished": true,
@@ -1050,6 +1107,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_partial_a.html?delay=200",
+            "protocol": "http/1.1",
             "startTime": 640.5979999981355,
             "endTime": 1228.5180000180844,
             "finished": true,
@@ -1061,6 +1119,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_partial_b.html?delay=200&isasync",
+            "protocol": "http/1.1",
             "startTime": 641.3450000109151,
             "endTime": 1776.4320000133011,
             "finished": true,
@@ -1072,6 +1131,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
+            "protocol": "http/1.1",
             "startTime": 642.8679999953602,
             "endTime": 4216.161000018474,
             "finished": true,
@@ -1083,6 +1143,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+            "protocol": "http/1.1",
             "startTime": 644.0820000134408,
             "endTime": 1792.0860000012908,
             "finished": true,
@@ -1094,6 +1155,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
+            "protocol": "http/1.1",
             "startTime": 645.529000001261,
             "endTime": 1236.1859999946319,
             "finished": true,
@@ -1105,6 +1167,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
+            "protocol": "http/1.1",
             "startTime": 3951.6250000160653,
             "endTime": 4779.641000000993,
             "finished": true,
@@ -1116,6 +1179,7 @@
           },
           {
             "url": "http://localhost:10200/zone.js",
+            "protocol": "http/1.1",
             "startTime": 2849.7340000176337,
             "endTime": 3961.049000005005,
             "finished": true,
@@ -1127,6 +1191,7 @@
           },
           {
             "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
+            "protocol": "http/1.1",
             "startTime": 3874.7540000185836,
             "endTime": 4796.288000012282,
             "finished": true,
@@ -1138,6 +1203,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
+            "protocol": "http/1.1",
             "startTime": 2924.34100000537,
             "endTime": 3964.233000006061,
             "finished": true,
@@ -1149,6 +1215,7 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "protocol": "http/1.1",
             "startTime": 3066.252999997232,
             "endTime": 3772.7560000203084,
             "finished": true,
@@ -1160,6 +1227,7 @@
           },
           {
             "url": "blob:http://localhost:10200/ae0eac03-ab9b-4a6a-b299-f5212153e277",
+            "protocol": "blob",
             "startTime": 3829.6360000094865,
             "endTime": 3968.59800000675,
             "finished": true,
@@ -1171,6 +1239,7 @@
           },
           {
             "url": "http://localhost:10200/favicon.ico",
+            "protocol": "http/1.1",
             "startTime": 4967.373000021325,
             "endTime": 5536.498000001302,
             "finished": true,
@@ -1672,31 +1741,52 @@
           {
             "key": "entity",
             "itemType": "link",
-            "text": "Third-Party"
+            "text": "Third-Party",
+            "subItemsHeading": {
+              "key": "url",
+              "itemType": "url"
+            }
           },
           {
             "key": "transferSize",
             "granularity": 1,
             "itemType": "bytes",
-            "text": "Transfer Size"
+            "text": "Transfer Size",
+            "subItemsHeading": {
+              "key": "transferSize"
+            }
           },
           {
             "key": "blockingTime",
             "granularity": 1,
             "itemType": "ms",
-            "text": "Main-Thread Blocking Time"
+            "text": "Main-Thread Blocking Time",
+            "subItemsHeading": {
+              "key": "blockingTime"
+            }
           }
         ],
         "items": [
           {
+            "mainThreadTime": 90.36300000000001,
+            "blockingTime": 22.918000000000006,
+            "transferSize": 30174,
             "entity": {
               "type": "link",
               "text": "Google CDN",
               "url": "https://developers.google.com/speed/libraries/"
             },
-            "transferSize": 30174,
-            "mainThreadTime": 90.36300000000001,
-            "blockingTime": 22.918000000000006
+            "subItems": {
+              "type": "subitems",
+              "items": [
+                {
+                  "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
+                  "mainThreadTime": 90.36300000000001,
+                  "blockingTime": 22.918000000000006,
+                  "transferSize": 30174
+                }
+              ]
+            }
           }
         ],
         "summary": {
@@ -1879,7 +1969,7 @@
     "non-composited-animations": {
       "id": "non-composited-animations",
       "title": "Avoid non-composited animations",
-      "description": "Animations which are not composited can be janky and contribute to CLS. [Learn more](https://developers.google.com/web/fundamentals/performance/rendering/stick-to-compositor-only-properties-and-manage-layer-count)",
+      "description": "Animations which are not composited can be janky and increase CLS. [Learn more](https://web.dev/non-composited-animations)",
       "score": null,
       "scoreDisplayMode": "informative",
       "displayValue": "1 animated element found",
@@ -1983,6 +2073,18 @@
         "summary": {}
       }
     },
+    "valid-source-maps": {
+      "id": "valid-source-maps",
+      "title": "Page has valid source maps",
+      "description": "Source maps translate minified code to the original source code. This helps developers debug in production. In addition, Lighthouse is able to provide further insights. Consider deploying source maps to take advantage of these benefits. [Learn more](https://developers.google.com/web/tools/chrome-devtools/javascript/source-maps).",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
+    },
     "pwa-cross-browser": {
       "id": "pwa-cross-browser",
       "title": "Site works cross-browser",
@@ -2015,8 +2117,13 @@
       "id": "aria-allowed-attr",
       "title": "`[aria-*]` attributes match their roles",
       "description": "Each ARIA `role` supports a specific subset of `aria-*` attributes. Mismatching these invalidates the `aria-*` attributes. [Learn more](https://web.dev/aria-allowed-attr/).",
-      "score": null,
-      "scoreDisplayMode": "notApplicable"
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
     },
     "aria-hidden-body": {
       "id": "aria-hidden-body",
@@ -2034,58 +2141,20 @@
       "id": "aria-hidden-focus",
       "title": "`[aria-hidden=\"true\"]` elements do not contain focusable descendents",
       "description": "Focusable descendents within an `[aria-hidden=\"true\"]` element prevent those interactive elements from being available to users of assistive technologies like screen readers. [Learn more](https://web.dev/aria-hidden-focus/).",
-      "score": 1,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [],
-        "items": []
-      }
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
     },
     "aria-input-field-name": {
       "id": "aria-input-field-name",
       "title": "ARIA input fields have accessible names",
       "description": "When an input field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-input-field-name/).",
-      "score": 1,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [],
-        "items": []
-      }
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
     },
     "aria-required-attr": {
       "id": "aria-required-attr",
       "title": "`[role]`s have all required `[aria-*]` attributes",
       "description": "Some ARIA roles have required attributes that describe the state of the element to screen readers. [Learn more](https://web.dev/aria-required-attr/).",
-      "score": null,
-      "scoreDisplayMode": "notApplicable"
-    },
-    "aria-required-children": {
-      "id": "aria-required-children",
-      "title": "Elements with an ARIA `[role]` that require children to contain a specific `[role]` have all required children.",
-      "description": "Some ARIA parent roles must contain specific child roles to perform their intended accessibility functions. [Learn more](https://web.dev/aria-required-children/).",
-      "score": null,
-      "scoreDisplayMode": "notApplicable"
-    },
-    "aria-required-parent": {
-      "id": "aria-required-parent",
-      "title": "`[role]`s are contained by their required parent element",
-      "description": "Some ARIA child roles must be contained by specific parent roles to properly perform their intended accessibility functions. [Learn more](https://web.dev/aria-required-parent/).",
-      "score": null,
-      "scoreDisplayMode": "notApplicable"
-    },
-    "aria-roles": {
-      "id": "aria-roles",
-      "title": "`[role]` values are valid",
-      "description": "ARIA roles must have valid values in order to perform their intended accessibility functions. [Learn more](https://web.dev/aria-roles/).",
-      "score": null,
-      "scoreDisplayMode": "notApplicable"
-    },
-    "aria-toggle-field-name": {
-      "id": "aria-toggle-field-name",
-      "title": "ARIA toggle fields have accessible names",
-      "description": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-toggle-field-name/).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "details": {
@@ -2094,19 +2163,72 @@
         "items": []
       }
     },
+    "aria-required-children": {
+      "id": "aria-required-children",
+      "title": "Elements with an ARIA `[role]` that require children to contain a specific `[role]` have all required children.",
+      "description": "Some ARIA parent roles must contain specific child roles to perform their intended accessibility functions. [Learn more](https://web.dev/aria-required-children/).",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
+    },
+    "aria-required-parent": {
+      "id": "aria-required-parent",
+      "title": "`[role]`s are contained by their required parent element",
+      "description": "Some ARIA child roles must be contained by specific parent roles to properly perform their intended accessibility functions. [Learn more](https://web.dev/aria-required-parent/).",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
+    },
+    "aria-roles": {
+      "id": "aria-roles",
+      "title": "`[role]` values are valid",
+      "description": "ARIA roles must have valid values in order to perform their intended accessibility functions. [Learn more](https://web.dev/aria-roles/).",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
+    },
+    "aria-toggle-field-name": {
+      "id": "aria-toggle-field-name",
+      "title": "ARIA toggle fields have accessible names",
+      "description": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-toggle-field-name/).",
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
+    },
     "aria-valid-attr-value": {
       "id": "aria-valid-attr-value",
       "title": "`[aria-*]` attributes have valid values",
       "description": "Assistive technologies, like screen readers, can't interpret ARIA attributes with invalid values. [Learn more](https://web.dev/aria-valid-attr-value/).",
-      "score": null,
-      "scoreDisplayMode": "notApplicable"
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
     },
     "aria-valid-attr": {
       "id": "aria-valid-attr",
       "title": "`[aria-*]` attributes are valid and not misspelled",
       "description": "Assistive technologies, like screen readers, can't interpret ARIA attributes with invalid names. [Learn more](https://web.dev/aria-valid-attr/).",
-      "score": null,
-      "scoreDisplayMode": "notApplicable"
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
     },
     "button-name": {
       "id": "button-name",
@@ -2151,36 +2273,36 @@
           {
             "node": {
               "type": "node",
-              "selector": "h2",
-              "path": "3,HTML,1,BODY,5,DIV,0,H2",
-              "snippet": "<h2>Do better web tester page</h2>",
+              "selector": "body > div > h2",
+              "path": "3,HTML,1,BODY,7,DIV,0,H2",
+              "snippet": "<h2>",
               "boundingRect": {
-                "width": 396,
-                "height": 28,
-                "top": 335,
-                "right": 404,
-                "bottom": 363,
-                "left": 8
+                "top": 336,
+                "bottom": 364,
+                "left": 8,
+                "right": 352,
+                "width": 344,
+                "height": 28
               },
-              "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 18.0pt, font weight: bold). Expected contrast ratio of 3:1",
+              "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 18.0pt (24px), font weight: bold). Expected contrast ratio of 3:1",
               "nodeLabel": "Do better web tester page"
             }
           },
           {
             "node": {
               "type": "node",
-              "selector": "span",
-              "path": "3,HTML,1,BODY,5,DIV,1,SPAN",
-              "snippet": "<span>Hi there!</span>",
+              "selector": "body > div > span",
+              "path": "3,HTML,1,BODY,7,DIV,1,SPAN",
+              "snippet": "<span>",
               "boundingRect": {
-                "width": 57,
-                "height": 18,
-                "top": 383,
+                "top": 384,
+                "bottom": 402,
+                "left": 8,
                 "right": 65,
-                "bottom": 401,
-                "left": 8
+                "width": 57,
+                "height": 18
               },
-              "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 12.0pt, font weight: normal). Expected contrast ratio of 4.5:1",
+              "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1",
               "nodeLabel": "Hi there!"
             }
           }
@@ -2226,13 +2348,8 @@
       "id": "duplicate-id-active",
       "title": "`[id]` attributes on active, focusable elements are unique",
       "description": "All focusable elements must have a unique `id` to ensure that they're visible to assistive technologies. [Learn more](https://web.dev/duplicate-id-active/).",
-      "score": 1,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [],
-        "items": []
-      }
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
     },
     "duplicate-id-aria": {
       "id": "duplicate-id-aria",
@@ -2295,12 +2412,12 @@
               "path": "3,HTML",
               "snippet": "<html manifest=\"clock.appcache\">",
               "boundingRect": {
-                "width": 412,
-                "height": 1442,
                 "top": 0,
-                "right": 412,
-                "bottom": 1442,
-                "left": 0
+                "bottom": 1345,
+                "left": 0,
+                "right": 360,
+                "width": 360,
+                "height": 1345
               },
               "explanation": "Fix any of the following:\n  The <html> element does not have a lang attribute",
               "nodeLabel": "html"
@@ -2344,34 +2461,16 @@
           {
             "node": {
               "type": "node",
-              "selector": "img[height=\"\\35 7\"]",
-              "path": "3,HTML,1,BODY,10,IMG",
-              "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"57\">",
-              "boundingRect": {
-                "width": 480,
-                "height": 57,
-                "top": 419,
-                "right": 488,
-                "bottom": 476,
-                "left": 8
-              },
-              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-              "nodeLabel": "img"
-            }
-          },
-          {
-            "node": {
-              "type": "node",
-              "selector": "img[height=\"\\33 18\"]",
+              "selector": "body > img",
               "path": "3,HTML,1,BODY,12,IMG",
-              "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"318\">",
+              "snippet": "<img src=\"lighthouse-480x318.jpg?iar1\" width=\"120\" height=\"15\">",
               "boundingRect": {
-                "width": 480,
-                "height": 318,
-                "top": 480,
-                "right": 488,
-                "bottom": 798,
-                "left": 8
+                "top": 639,
+                "bottom": 654,
+                "left": 8,
+                "right": 128,
+                "width": 120,
+                "height": 15
               },
               "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "img"
@@ -2380,16 +2479,106 @@
           {
             "node": {
               "type": "node",
-              "selector": "img[src$=\"lighthouse-rotating\\.gif\"]",
+              "selector": "body > img",
               "path": "3,HTML,1,BODY,14,IMG",
+              "snippet": "<img src=\"lighthouse-480x318.jpg?iar2\" width=\"120\" height=\"80\">",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 654,
+                "left": 132,
+                "right": 252,
+                "width": 120,
+                "height": 80
+              },
+              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+              "nodeLabel": "img"
+            }
+          },
+          {
+            "node": {
+              "type": "node",
+              "selector": "body > img",
+              "path": "3,HTML,1,BODY,16,IMG",
+              "snippet": "<img src=\"lighthouse-480x318.jpg?isr1\" width=\"4800\" height=\"3180\" style=\"position: absolute;\">",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 3754,
+                "left": 252,
+                "right": 5052,
+                "width": 4800,
+                "height": 3180
+              },
+              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+              "nodeLabel": "img"
+            }
+          },
+          {
+            "node": {
+              "type": "node",
+              "selector": "body > img",
+              "path": "3,HTML,1,BODY,18,IMG",
+              "snippet": "<img src=\"lighthouse-480x318.jpg?isr2\" width=\"120\" height=\"80\" style=\"position: absolute;\">",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 654,
+                "left": 252,
+                "right": 372,
+                "width": 120,
+                "height": 80
+              },
+              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+              "nodeLabel": "img"
+            }
+          },
+          {
+            "node": {
+              "type": "node",
+              "selector": "body > img",
+              "path": "3,HTML,1,BODY,20,IMG",
+              "snippet": "<img src=\"lighthouse-480x318.jpg?isr3\" width=\"960\" height=\"636\" style=\"image-rendering: pixelated; position: absolute;\">",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 1210,
+                "left": 252,
+                "right": 1212,
+                "width": 960,
+                "height": 636
+              },
+              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+              "nodeLabel": "img"
+            }
+          },
+          {
+            "node": {
+              "type": "node",
+              "selector": "body > img",
+              "path": "3,HTML,1,BODY,22,IMG",
+              "snippet": "<img src=\"lighthouse-480x318.jpg?isr4\" srcset=\"lighthouse-480x318.jpg 2x\" width=\"960\" height=\"636\" style=\"position: absolute;\">",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 1210,
+                "left": 252,
+                "right": 1212,
+                "width": 960,
+                "height": 636
+              },
+              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+              "nodeLabel": "img"
+            }
+          },
+          {
+            "node": {
+              "type": "node",
+              "selector": "body > img",
+              "path": "3,HTML,1,BODY,24,IMG",
               "snippet": "<img src=\"lighthouse-rotating.gif\" width=\"811\" height=\"462\">",
               "boundingRect": {
-                "width": 811,
-                "height": 462,
-                "top": 802,
+                "top": 658,
+                "bottom": 1120,
+                "left": 8,
                 "right": 819,
-                "bottom": 1264,
-                "left": 8
+                "width": 811,
+                "height": 462
               },
               "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "img"
@@ -2398,16 +2587,34 @@
           {
             "node": {
               "type": "node",
-              "selector": "img:nth-child(30)",
-              "path": "3,HTML,1,BODY,53,IMG",
-              "snippet": "<img src=\"blob:http://localhost:54759/41e77cc6-8eb2-49d5-a819-7edf852531be\">",
+              "selector": "body > img",
+              "path": "3,HTML,1,BODY,63,IMG",
+              "snippet": "<img src=\"blob:http://localhost:53943/75859e89-fbad-4471-b196-9304adbb874a\">",
               "boundingRect": {
+                "top": 1295,
+                "bottom": 1311,
+                "left": 322,
+                "right": 338,
                 "width": 16,
-                "height": 16,
-                "top": 1413,
-                "right": 294,
-                "bottom": 1429,
-                "left": 278
+                "height": 16
+              },
+              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+              "nodeLabel": "img"
+            }
+          },
+          {
+            "node": {
+              "type": "node",
+              "selector": "body > img",
+              "path": "3,HTML,1,BODY,72,IMG",
+              "snippet": "<img src=\"filesystem:http://localhost:53943/temporary/empty-0.34660357368794004.png\">",
+              "boundingRect": {
+                "top": 1317,
+                "bottom": 1333,
+                "left": 8,
+                "right": 24,
+                "width": 16,
+                "height": 16
               },
               "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "img"
@@ -2453,16 +2660,16 @@
           {
             "node": {
               "type": "node",
-              "selector": "input[onpaste=\"event\\.preventDefault\\(\\)\\;\"]",
-              "path": "3,HTML,1,BODY,48,INPUT",
+              "selector": "body > input",
+              "path": "3,HTML,1,BODY,58,INPUT",
               "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">",
               "boundingRect": {
-                "width": 131,
-                "height": 19,
-                "top": 1394,
-                "right": 323,
-                "bottom": 1413,
-                "left": 192
+                "top": 1274,
+                "bottom": 1295,
+                "left": 192,
+                "right": 345,
+                "width": 153,
+                "height": 21
               },
               "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
               "nodeLabel": "input"
@@ -2471,16 +2678,16 @@
           {
             "node": {
               "type": "node",
-              "selector": "input:nth-child(28)",
-              "path": "3,HTML,1,BODY,50,INPUT",
+              "selector": "body > input",
+              "path": "3,HTML,1,BODY,60,INPUT",
               "snippet": "<input type=\"password\">",
               "boundingRect": {
-                "width": 131,
-                "height": 19,
-                "top": 1415.8125,
-                "right": 139,
-                "bottom": 1434.8125,
-                "left": 8
+                "top": 1296,
+                "bottom": 1317,
+                "left": 8,
+                "right": 161,
+                "width": 153,
+                "height": 21
               },
               "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
               "nodeLabel": "input"
@@ -2489,16 +2696,16 @@
           {
             "node": {
               "type": "node",
-              "selector": "input[onpaste=\"return\\ false\\;\"]",
-              "path": "3,HTML,1,BODY,52,INPUT",
+              "selector": "body > input",
+              "path": "3,HTML,1,BODY,62,INPUT",
               "snippet": "<input type=\"password\" onpaste=\"return false;\">",
               "boundingRect": {
-                "width": 131,
-                "height": 19,
-                "top": 1415,
-                "right": 274,
-                "bottom": 1434,
-                "left": 143
+                "top": 1296,
+                "bottom": 1317,
+                "left": 165,
+                "right": 318,
+                "width": 153,
+                "height": 21
               },
               "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
               "nodeLabel": "input"
@@ -2511,7 +2718,7 @@
           "tags": [
             "cat.forms",
             "wcag2a",
-            "wcag332",
+            "wcag412",
             "wcag131",
             "section508",
             "section508.22.n"
@@ -2545,9 +2752,17 @@
           {
             "node": {
               "type": "node",
-              "selector": "a[href=\"javascript\\:void\\(0\\)\"]",
-              "path": "3,HTML,1,BODY,44,A",
-              "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\"></a>",
+              "selector": "body > a",
+              "path": "3,HTML,1,BODY,54,A",
+              "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\">",
+              "boundingRect": {
+                "top": 1275,
+                "bottom": 1293,
+                "left": 192,
+                "right": 192,
+                "width": 0,
+                "height": 18
+              },
               "explanation": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "a"
             }
@@ -2555,9 +2770,17 @@
           {
             "node": {
               "type": "node",
-              "selector": "a[href$=\"mailto\\:inbox\\@email\\.com\"]",
-              "path": "3,HTML,1,BODY,46,A",
-              "snippet": "<a href=\"mailto:inbox@email.com\" target=\"_blank\"></a>",
+              "selector": "body > a",
+              "path": "3,HTML,1,BODY,56,A",
+              "snippet": "<a href=\"mailto:inbox@email.com\" target=\"_blank\">",
+              "boundingRect": {
+                "top": 1275,
+                "bottom": 1293,
+                "left": 192,
+                "right": 192,
+                "width": 0,
+                "height": 18
+              },
               "explanation": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "a"
             }
@@ -2629,16 +2852,16 @@
           {
             "node": {
               "type": "node",
-              "selector": "#\\35 934a",
+              "selector": "body > object#5934a",
               "path": "3,HTML,1,BODY,2,OBJECT",
-              "snippet": "<object id=\"5934a\"></object>",
+              "snippet": "<object id=\"5934a\">",
               "boundingRect": {
-                "width": 300,
-                "height": 150,
                 "top": 8,
-                "right": 308,
                 "bottom": 158,
-                "left": 8
+                "left": 8,
+                "right": 308,
+                "width": 300,
+                "height": 150
               },
               "explanation": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "object"
@@ -2647,16 +2870,16 @@
           {
             "node": {
               "type": "node",
-              "selector": "#\\35 934b",
+              "selector": "body > object#5934b",
               "path": "3,HTML,1,BODY,3,OBJECT",
-              "snippet": "<object id=\"5934b\"></object>",
+              "snippet": "<object id=\"5934b\">",
               "boundingRect": {
-                "width": 300,
-                "height": 150,
                 "top": 162,
-                "right": 308,
                 "bottom": 312,
-                "left": 8
+                "left": 8,
+                "right": 308,
+                "width": 300,
+                "height": 150
               },
               "explanation": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "object"
@@ -3381,7 +3604,7 @@
     "charset": {
       "id": "charset",
       "title": "Charset declaration is missing or occurs too late in the HTML",
-      "description": "A character encoding declaration is required. It can be done with a <meta> tag in the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more](https://web.dev/charset/).",
+      "description": "A character encoding declaration is required. It can be done with a `<meta>` tag in the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more](https://web.dev/charset/).",
       "score": 0,
       "scoreDisplayMode": "binary"
     },
@@ -3504,7 +3727,7 @@
               "nodeLabel": "internal link is ok",
               "snippet": "<a href=\"./doesnotexist\" target=\"_blank\">"
             },
-            "href": "http://localhost:53133/dobetterweb/doesnotexist",
+            "href": "http://localhost:53522/dobetterweb/doesnotexist",
             "target": "_blank",
             "rel": "",
             "outerHTML": "<a href=\"./doesnotexist\" target=\"_blank\">"
@@ -4506,7 +4729,7 @@
         },
         {
           "id": "aria-allowed-attr",
-          "weight": 0,
+          "weight": 10,
           "group": "a11y-aria"
         },
         {
@@ -4516,47 +4739,47 @@
         },
         {
           "id": "aria-hidden-focus",
-          "weight": 3,
+          "weight": 0,
           "group": "a11y-aria"
         },
         {
           "id": "aria-input-field-name",
-          "weight": 3,
+          "weight": 0,
           "group": "a11y-aria"
         },
         {
           "id": "aria-required-attr",
-          "weight": 0,
+          "weight": 10,
           "group": "a11y-aria"
         },
         {
           "id": "aria-required-children",
-          "weight": 0,
+          "weight": 10,
           "group": "a11y-aria"
         },
         {
           "id": "aria-required-parent",
-          "weight": 0,
+          "weight": 10,
           "group": "a11y-aria"
         },
         {
           "id": "aria-roles",
-          "weight": 0,
+          "weight": 10,
           "group": "a11y-aria"
         },
         {
           "id": "aria-toggle-field-name",
-          "weight": 3,
+          "weight": 0,
           "group": "a11y-aria"
         },
         {
           "id": "aria-valid-attr-value",
-          "weight": 0,
+          "weight": 10,
           "group": "a11y-aria"
         },
         {
           "id": "aria-valid-attr",
-          "weight": 0,
+          "weight": 10,
           "group": "a11y-aria"
         },
         {
@@ -4591,7 +4814,7 @@
         },
         {
           "id": "duplicate-id-active",
-          "weight": 3,
+          "weight": 0,
           "group": "a11y-navigation"
         },
         {
@@ -4746,7 +4969,7 @@
         }
       ],
       "id": "accessibility",
-      "score": 0.65
+      "score": 0.79
     },
     "best-practices": {
       "title": "Best Practices",
@@ -4792,6 +5015,11 @@
           "group": "best-practices-ux"
         },
         {
+          "id": "preload-fonts",
+          "weight": 1,
+          "group": "best-practices-ux"
+        },
+        {
           "id": "doctype",
           "weight": 1,
           "group": "best-practices-browser-compat"
@@ -4824,6 +5052,11 @@
         {
           "id": "errors-in-console",
           "weight": 1,
+          "group": "best-practices-general"
+        },
+        {
+          "id": "valid-source-maps",
+          "weight": 0,
           "group": "best-practices-general"
         }
       ],
@@ -5481,6 +5714,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:preload-fonts",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:deprecations",
         "duration": 100,
         "entryType": "measure"
@@ -5644,6 +5883,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:large-javascript-libraries",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:valid-source-maps",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6283,6 +6528,7 @@
       "runtimeDesktopEmulation": "Emulated Desktop",
       "runtimeMobileEmulation": "Emulated Moto G4",
       "runtimeNoEmulation": "No emulation",
+      "runtimeSettingsAxeVersion": "Axe version",
       "runtimeSettingsBenchmark": "CPU/Memory Power",
       "runtimeSettingsChannel": "Channel",
       "runtimeSettingsCPUThrottling": "CPU throttling",
@@ -6320,6 +6566,9 @@
       ],
       "lighthouse-core/audits/is-on-https.js | columnInsecureURL": [
         "audits[is-on-https].details.headings[0].text"
+      ],
+      "lighthouse-core/audits/is-on-https.js | columnResolution": [
+        "audits[is-on-https].details.headings[1].text"
       ],
       "lighthouse-core/audits/is-on-https.js | allowed": [
         "audits[is-on-https].details.items[0].resolution"
@@ -6501,8 +6750,10 @@
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnURL": [
         "audits[errors-in-console].details.headings[0].text",
+        "audits[server-response-time].details.headings[0].label",
         "audits[image-aspect-ratio].details.headings[1].text",
         "audits[image-size-responsive].details.headings[1].text",
+        "audits[preload-fonts].details.headings[0].text",
         "audits.deprecations.details.headings[1].text",
         "audits[bootup-time].details.headings[0].text",
         "audits[network-rtt].details.headings[0].text",
@@ -6539,6 +6790,12 @@
           },
           "path": "audits[server-response-time].displayValue"
         }
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": [
+        "audits[server-response-time].details.headings[1].label",
+        "audits[mainthread-work-breakdown].details.headings[1].text",
+        "audits[network-rtt].details.headings[1].text",
+        "audits[network-server-latency].details.headings[1].text"
       ],
       "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": [
         "audits[first-cpu-idle].title",
@@ -6643,6 +6900,12 @@
       "lighthouse-core/audits/image-size-responsive.js | columnExpected": [
         "audits[image-size-responsive].details.headings[4].text"
       ],
+      "lighthouse-core/audits/preload-fonts.js | failureTitle": [
+        "audits[preload-fonts].title"
+      ],
+      "lighthouse-core/audits/preload-fonts.js | description": [
+        "audits[preload-fonts].description"
+      ],
       "lighthouse-core/audits/deprecations.js | failureTitle": [
         "audits.deprecations.title"
       ],
@@ -6668,11 +6931,6 @@
       ],
       "lighthouse-core/audits/mainthread-work-breakdown.js | columnCategory": [
         "audits[mainthread-work-breakdown].details.headings[0].text"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": [
-        "audits[mainthread-work-breakdown].details.headings[1].text",
-        "audits[network-rtt].details.headings[1].text",
-        "audits[network-server-latency].details.headings[1].text"
       ],
       "lighthouse-core/audits/bootup-time.js | title": [
         "audits[bootup-time].title"
@@ -6868,12 +7126,18 @@
       "lighthouse-core/audits/largest-contentful-paint-element.js | description": [
         "audits[largest-contentful-paint-element].description"
       ],
-      "lighthouse-core/audits/largest-contentful-paint-element.js | displayValue": [
+      "lighthouse-core/lib/i18n/i18n.js | displayValueElementsFound": [
         {
           "values": {
-            "itemCount": 1
+            "nodeCount": 1
           },
           "path": "audits[largest-contentful-paint-element].displayValue"
+        },
+        {
+          "values": {
+            "nodeCount": 4
+          },
+          "path": "audits[layout-shift-elements].displayValue"
         }
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnElement": [
@@ -6887,14 +7151,6 @@
       ],
       "lighthouse-core/audits/layout-shift-elements.js | description": [
         "audits[layout-shift-elements].description"
-      ],
-      "lighthouse-core/audits/layout-shift-elements.js | displayValue": [
-        {
-          "values": {
-            "nodeCount": 4
-          },
-          "path": "audits[layout-shift-elements].displayValue"
-        }
       ],
       "lighthouse-core/audits/layout-shift-elements.js | columnContribution": [
         "audits[layout-shift-elements].details.headings[1].text"
@@ -6995,6 +7251,12 @@
           },
           "path": "audits[large-javascript-libraries].displayValue"
         }
+      ],
+      "lighthouse-core/audits/valid-source-maps.js | title": [
+        "audits[valid-source-maps].title"
+      ],
+      "lighthouse-core/audits/valid-source-maps.js | description": [
+        "audits[valid-source-maps].description"
       ],
       "lighthouse-core/audits/manual/pwa-cross-browser.js | title": [
         "audits[pwa-cross-browser].title"
@@ -7599,6 +7861,21 @@
           "path": "audits[font-size].displayValue"
         }
       ],
+      "lighthouse-core/lib/i18n/i18n.js | columnSource": [
+        "audits[font-size].details.headings[0].text"
+      ],
+      "lighthouse-core/audits/seo/font-size.js | columnSelector": [
+        "audits[font-size].details.headings[1].text"
+      ],
+      "lighthouse-core/audits/seo/font-size.js | columnPercentPageText": [
+        "audits[font-size].details.headings[2].text"
+      ],
+      "lighthouse-core/audits/seo/font-size.js | columnFontSize": [
+        "audits[font-size].details.headings[3].text"
+      ],
+      "lighthouse-core/audits/seo/font-size.js | legibleText": [
+        "audits[font-size].details.items[0].source.value"
+      ],
       "lighthouse-core/audits/seo/link-text.js | title": [
         "audits[link-text].title"
       ],
@@ -7814,47 +8091,47 @@
       "lighthouse-core/config/default-config.js | bestPracticesGeneralGroupTitle": [
         "categoryGroups[best-practices-general].title"
       ],
-      "stack-packs/packs/wordpress.js | unused_css_rules": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | unused-css-rules": [
         "stackPacks[0].descriptions[unused-css-rules]"
       ],
-      "stack-packs/packs/wordpress.js | uses_webp_images": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-webp-images": [
         "stackPacks[0].descriptions[uses-webp-images]"
       ],
-      "stack-packs/packs/wordpress.js | offscreen_images": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen-images": [
         "stackPacks[0].descriptions[offscreen-images]"
       ],
-      "stack-packs/packs/wordpress.js | total_byte_weight": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": [
         "stackPacks[0].descriptions[total-byte-weight]"
       ],
-      "stack-packs/packs/wordpress.js | render_blocking_resources": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | render-blocking-resources": [
         "stackPacks[0].descriptions[render-blocking-resources]"
       ],
-      "stack-packs/packs/wordpress.js | unminified_css": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | unminified-css": [
         "stackPacks[0].descriptions[unminified-css]"
       ],
-      "stack-packs/packs/wordpress.js | unminified_javascript": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | unminified-javascript": [
         "stackPacks[0].descriptions[unminified-javascript]"
       ],
-      "stack-packs/packs/wordpress.js | efficient_animated_content": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient-animated-content": [
         "stackPacks[0].descriptions[efficient-animated-content]"
       ],
-      "stack-packs/packs/wordpress.js | unused_javascript": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | unused-javascript": [
         "stackPacks[0].descriptions[unused-javascript]"
       ],
-      "stack-packs/packs/wordpress.js | uses_long_cache_ttl": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-long-cache-ttl": [
         "stackPacks[0].descriptions[uses-long-cache-ttl]"
       ],
-      "stack-packs/packs/wordpress.js | uses_optimized_images": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-optimized-images": [
         "stackPacks[0].descriptions[uses-optimized-images]"
       ],
-      "stack-packs/packs/wordpress.js | uses_text_compression": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-text-compression": [
         "stackPacks[0].descriptions[uses-text-compression]"
       ],
-      "stack-packs/packs/wordpress.js | uses_responsive_images": [
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-responsive-images": [
         "stackPacks[0].descriptions[uses-responsive-images]"
       ],
-      "stack-packs/packs/wordpress.js | server_response_time": [
-        "stackPacks[0].descriptions[server-response-time]"
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | time-to-first-byte": [
+        "stackPacks[0].descriptions[time-to-first-byte]"
       ]
     }
   },
@@ -7862,7 +8139,7 @@
     {
       "id": "wordpress",
       "title": "WordPress",
-      "iconDataURL": "data:image/svg+xml,%3Csvg viewBox='0 0 122.5 122.5' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%232f3439'%3E%3Cpath d='M8.7 61.3c0 20.8 12.1 38.7 29.6 47.3l-25-68.7c-3 6.5-4.6 13.7-4.6 21.4zM96.7 58.6c0-6.5-2.3-11-4.3-14.5-2.7-4.3-5.2-8-5.2-12.3 0-4.8 3.7-9.3 8.9-9.3h.7a52.4 52.4 0 0 0-79.4 9.9h3.3c5.5 0 14-.6 14-.6 2.9-.2 3.2 4 .4 4.3 0 0-2.9.4-6 .5l19.1 57L59.7 59l-8.2-22.5c-2.8-.1-5.5-.5-5.5-.5-2.8-.1-2.5-4.5.3-4.3 0 0 8.7.7 13.9.7 5.5 0 14-.7 14-.7 2.8-.2 3.2 4 .3 4.3 0 0-2.8.4-6 .5l19 56.5 5.2-17.5c2.3-7.3 4-12.5 4-17z'/%3E%3Cpath d='M62.2 65.9l-15.8 45.8a52.6 52.6 0 0 0 32.3-.9l-.4-.7zM107.4 36a49.6 49.6 0 0 1-3.6 24.2l-16.1 46.5A52.5 52.5 0 0 0 107.4 36z'/%3E%3Cpath d='M61.3 0a61.3 61.3 0 1 0 .1 122.7A61.3 61.3 0 0 0 61.3 0zm0 119.7a58.5 58.5 0 1 1 .1-117 58.5 58.5 0 0 1-.1 117z'/%3E%3C/g%3E%3C/svg%3E",
+      "iconDataURL": "data:image/svg+xml,%3Csvg viewBox=\"0 0 122.5 122.5\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"%232f3439\"%3E%3Cpath d=\"M8.7 61.3c0 20.8 12.1 38.7 29.6 47.3l-25-68.7c-3 6.5-4.6 13.7-4.6 21.4zM96.7 58.6c0-6.5-2.3-11-4.3-14.5-2.7-4.3-5.2-8-5.2-12.3 0-4.8 3.7-9.3 8.9-9.3h.7a52.4 52.4 0 0 0-79.4 9.9h3.3c5.5 0 14-.6 14-.6 2.9-.2 3.2 4 .4 4.3 0 0-2.9.4-6 .5l19.1 57L59.7 59l-8.2-22.5c-2.8-.1-5.5-.5-5.5-.5-2.8-.1-2.5-4.5.3-4.3 0 0 8.7.7 13.9.7 5.5 0 14-.7 14-.7 2.8-.2 3.2 4 .3 4.3 0 0-2.8.4-6 .5l19 56.5 5.2-17.5c2.3-7.3 4-12.5 4-17z\"/%3E%3Cpath d=\"M62.2 65.9l-15.8 45.8a52.6 52.6 0 0 0 32.3-.9l-.4-.7zM107.4 36a49.6 49.6 0 0 1-3.6 24.2l-16.1 46.5A52.5 52.5 0 0 0 107.4 36z\"/%3E%3Cpath d=\"M61.3 0a61.3 61.3 0 1 0 .1 122.7A61.3 61.3 0 0 0 61.3 0zm0 119.7a58.5 58.5 0 1 1 .1-117 58.5 58.5 0 0 1-.1 117z\"/%3E%3C/g%3E%3C/svg%3E",
       "descriptions": {
         "unused-css-rules": "Consider reducing, or switching, the number of [WordPress plugins](https://wordpress.org/plugins/) loading unused CSS in your page. To identify plugins that are adding extraneous CSS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/plugin responsible from the URL of the stylesheet. Look out for plugins that have many stylesheets in the list which have a lot of red in code coverage. A plugin should only enqueue a stylesheet if it is actually used on the page.",
         "uses-webp-images": "Consider using a [plugin](https://wordpress.org/plugins/search/convert+webp/) or service that will automatically convert your uploaded images to the optimal formats.",
@@ -7877,7 +8154,7 @@
         "uses-optimized-images": "Consider using an [image optimization WordPress plugin](https://wordpress.org/plugins/search/optimize+images/) that compresses your images while retaining quality.",
         "uses-text-compression": "You can enable text compression in your web server configuration.",
         "uses-responsive-images": "Upload images directly through the [media library](https://wordpress.org/support/article/media-library-screen/) to ensure that the required image sizes are available, and then insert them from the media library or use the image widget to ensure the optimal image sizes are used (including those for the responsive breakpoints). Avoid using `Full Size` images unless the dimensions are adequate for their usage. [Learn More](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/).",
-        "server-response-time": "Themes, plugins, and server specifications all contribute to server response time. Consider finding a more optimized theme, carefully selecting an optimization plugin, and/or upgrading your server."
+        "time-to-first-byte": "Themes, plugins, and server specifications all contribute to server response time. Consider finding a more optimized theme, carefully selecting an optimization plugin, and/or upgrading your server."
       }
     }
   ]

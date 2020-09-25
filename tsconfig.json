@@ -26,6 +26,7 @@
     "clients/test/**/*.js",
     "lighthouse-cli/test/fixtures/**/*.js",
     "lighthouse-core/scripts/legacy-javascript/variants",
+    "lighthouse-core/test/chromium-web-tests/webtests",
   ],
   "files": [
     // Opt-in to typechecking for some core tests.

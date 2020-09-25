@@ -57,7 +57,7 @@ function getChildTask({ts, duration, url}) {
  * Creates a simple trace that fits the desired options. Useful for basic trace
  * generation, e.g a trace that will result in particular long-task quiet
  * periods. Input times should be in milliseconds.
- * @param {{timeOrigin?: number, traceEnd?: number, topLevelTasks?: Array<TopLevelTaskDef>}} options
+ * @param {{timeOrigin?: number, largestContentfulPaint?: number, traceEnd?: number, topLevelTasks?: Array<TopLevelTaskDef>}} options
  */
 function createTestTrace(options) {
   const timeOrigin = (options.timeOrigin || 0) * 1000;
@@ -122,6 +122,18 @@ function createTestTrace(options) {
     cat: 'loading,rail,devtools.timeline',
     args: {frame},
   }];
+
+  if (options.largestContentfulPaint) {
+    traceEvents.push({
+      name: 'largestContentfulPaint::Candidate',
+      ts: options.largestContentfulPaint,
+      pid,
+      tid,
+      ph: 'R',
+      cat: 'loading,rail,devtools.timeline',
+      args: {frame},
+    });
+  }
 
   if (options.topLevelTasks) {
     for (const task of options.topLevelTasks) {

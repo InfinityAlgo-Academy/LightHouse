@@ -160,13 +160,13 @@ class Driver {
   }
 
   /**
-   * Computes the ULTRADUMB™ benchmark index to get a rough estimate of device class.
+   * Computes the benchmark index to get a rough estimate of device class.
    * @return {Promise<number>}
    */
   async getBenchmarkIndex() {
     const status = {msg: 'Benchmarking machine', id: 'lh:gather:getBenchmarkIndex'};
     log.time(status);
-    const indexVal = await this.evaluateAsync(`(${pageFunctions.ultradumbBenchmarkString})()`);
+    const indexVal = await this.evaluateAsync(`(${pageFunctions.computeBenchmarkIndexString})()`);
     log.timeEnd(status);
     return indexVal;
   }
@@ -1216,7 +1216,8 @@ class Driver {
       const resolveNodeResponse = await this.sendCommand('DOM.resolveNode', {backendNodeId});
       return resolveNodeResponse.object.objectId;
     } catch (err) {
-      if (/No node.*found/.test(err.message)) return undefined;
+      if (/No node.*found/.test(err.message) ||
+        /Node.*does not belong to the document/.test(err.message)) return undefined;
       throw err;
     }
   }

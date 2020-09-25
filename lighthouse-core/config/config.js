@@ -394,7 +394,7 @@ class Config {
     }
 
     // Printed config is more useful with localized strings.
-    i18n.replaceIcuMessageInstanceIds(jsonConfig, jsonConfig.settings.locale);
+    i18n.replaceIcuMessages(jsonConfig, jsonConfig.settings.locale);
 
     return JSON.stringify(jsonConfig, null, 2);
   }
@@ -661,22 +661,6 @@ class Config {
     });
 
     return {categories, requestedAuditNames: includedAudits};
-  }
-
-  /**
-   * @param {LH.Config.Json} config
-   * @return {Array<{id: string, title: string}>}
-   */
-  static getCategories(config) {
-    const categories = config.categories;
-    if (!categories) {
-      return [];
-    }
-
-    return Object.keys(categories).map(id => {
-      const title = categories[id].title;
-      return {id, title};
-    });
   }
 
   /**

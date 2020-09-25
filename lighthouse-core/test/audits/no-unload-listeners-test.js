@@ -11,16 +11,16 @@ const NoUnloadListeners = require('../../audits/no-unload-listeners.js');
 
 const testJsUsage = {
   'https://example.com/1.js': [
-    {scriptId: '12', url: 'https://example.com/1.js', functions: []},
-    {scriptId: '13', url: 'https://example.com/1.js', functions: []},
-    {scriptId: '16', url: 'https://example.com/1.js', functions: []},
-    {scriptId: '17', url: 'https://example.com/1.js', functions: []},
+    {scriptId: '12', functions: []},
+    {scriptId: '13', functions: []},
+    {scriptId: '16', functions: []},
+    {scriptId: '17', functions: []},
   ],
   'https://example.com/2.js': [
-    {scriptId: '22', url: 'https://example.com/2.js', functions: []},
-    {scriptId: '23', url: 'https://example.com/2.js', functions: []},
-    {scriptId: '26', url: 'https://example.com/2.js', functions: []},
-    {scriptId: '27', url: 'https://example.com/2.js', functions: []},
+    {scriptId: '22', functions: []},
+    {scriptId: '23', functions: []},
+    {scriptId: '26', functions: []},
+    {scriptId: '27', functions: []},
   ],
 };
 

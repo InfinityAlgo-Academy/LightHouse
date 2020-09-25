@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* global document, window, getComputedStyle, getBoundingClientRect, getElementsInDocument, Node, getNodePath, getNodeSelector, getNodeLabel */
+/* global document, window, getComputedStyle, getElementsInDocument, Node, getNodeDetails */
 
 const Gatherer = require('../gatherer.js');
 const pageFunctions = require('../../../lib/page-functions.js');
@@ -69,17 +69,18 @@ function getClientRects(element) {
 
 /**
  * @param {Element} element
+ * @param {string} tapTargetsSelector
  * @returns {boolean}
  */
 /* istanbul ignore next */
-function elementHasAncestorTapTarget(element) {
+function elementHasAncestorTapTarget(element, tapTargetsSelector) {
   if (!element.parentElement) {
     return false;
   }
   if (element.parentElement.matches(tapTargetsSelector)) {
     return true;
   }
-  return elementHasAncestorTapTarget(element.parentElement);
+  return elementHasAncestorTapTarget(element.parentElement, tapTargetsSelector);
 }
 
 /**
@@ -142,19 +143,6 @@ function elementIsInTextBlock(element) {
 }
 
 /**
- * @param {string} str
- * @param {number} maxLength
- * @return {string}
- */
-/* istanbul ignore next */
-function truncate(str, maxLength) {
-  if (str.length <= maxLength) {
-    return str;
-  }
-  return str.slice(0, maxLength - 1) + '…';
-}
-
-/**
  * @param {Element} el
  * @param {{x: number, y: number}} elCenterPoint
  */
@@ -202,10 +190,11 @@ function disableFixedAndStickyElementPointerEvents() {
 }
 
 /**
+ * @param {string} tapTargetsSelector
  * @returns {LH.Artifacts.TapTarget[]}
  */
 /* istanbul ignore next */
-function gatherTapTargets() {
+function gatherTapTargets(tapTargetsSelector) {
   /** @type {LH.Artifacts.TapTarget[]} */
   const targets = [];
 
@@ -223,7 +212,7 @@ function gatherTapTargets() {
   const tapTargetsWithClientRects = [];
   tapTargetElements.forEach(tapTargetElement => {
     // Filter out tap targets that are likely to cause false failures:
-    if (elementHasAncestorTapTarget(tapTargetElement)) {
+    if (elementHasAncestorTapTarget(tapTargetElement, tapTargetsSelector)) {
       // This is usually intentional, either the tap targets trigger the same action
       // or there's a child with a related action (like a delete button for an item)
       return;
@@ -283,16 +272,9 @@ function gatherTapTargets() {
   for (const {tapTargetElement, visibleClientRects} of tapTargetsWithVisibleClientRects) {
     targets.push({
       clientRects: visibleClientRects,
-      // @ts-expect-error - getBoundingClientRect put into scope via stringification
-      boundingRect: getBoundingClientRect(tapTargetElement),
-      snippet: truncate(tapTargetElement.outerHTML, 300),
-      // @ts-expect-error - getNodePath put into scope via stringification
-      path: getNodePath(tapTargetElement),
-      // @ts-expect-error - getNodeSelector put into scope via stringification
-      selector: getNodeSelector(tapTargetElement),
-      // @ts-expect-error - getNodeLabel put into scope via stringification
-      nodeLabel: getNodeLabel(tapTargetElement),
       href: /** @type {HTMLAnchorElement} */(tapTargetElement)['href'] || '',
+      // @ts-expect-error - getNodeDetails put into scope via stringification
+      ...getNodeDetails(tapTargetElement),
     });
   }
 
@@ -308,27 +290,22 @@ class TapTargets extends Gatherer {
    */
   afterPass(passContext) {
     const expression = `(function() {
-      const tapTargetsSelector = "${tapTargetsSelector}";
       ${pageFunctions.getElementsInDocumentString};
       ${disableFixedAndStickyElementPointerEvents.toString()};
       ${elementIsVisible.toString()};
       ${elementHasAncestorTapTarget.toString()};
       ${elementCenterIsAtZAxisTop.toString()}
-      ${truncate.toString()};
       ${getClientRects.toString()};
       ${hasTextNodeSiblingsFormingTextBlock.toString()};
       ${elementIsInTextBlock.toString()};
-      ${pageFunctions.getBoundingClientRectString};
       ${getRectArea.toString()};
       ${getLargestRect.toString()};
       ${getRectCenterPoint.toString()};
       ${rectContains.toString()};
-      ${pageFunctions.getNodePathString};
-      ${pageFunctions.getNodeSelectorString};
-      ${pageFunctions.getNodeLabelString};
+      ${pageFunctions.getNodeDetailsString};
       ${gatherTapTargets.toString()};
 
-      return gatherTapTargets();
+      return gatherTapTargets("${tapTargetsSelector}");
     })()`;
 
     return passContext.driver.evaluateAsync(expression, {useIsolation: true});

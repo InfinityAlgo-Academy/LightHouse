@@ -17,6 +17,7 @@ const assert = require('assert').strict;
 const path = require('path');
 const rimraf = require('rimraf');
 const LHError = require('../lib/lh-error.js');
+const i18n = require('../lib/i18n/i18n.js');
 
 /* eslint-env jest */
 
@@ -153,6 +154,63 @@ describe('Runner', () => {
         expect(gatherRunnerRunSpy).toHaveBeenCalled();
         expect(saveArtifactsSpy).not.toHaveBeenCalled();
         expect(runAuditSpy).toHaveBeenCalled();
+      });
+    });
+
+    it('serializes IcuMessages in gatherMode and is able to use them in auditMode', async () => {
+      // Can use this to access shared UIStrings in i18n.js.
+      // For future changes: exact messages aren't important, just choose ones with replacements.
+      const str_ = i18n.createMessageInstanceIdFn(__filename, {});
+
+      // A gatherer that produces an IcuMessage runWarning and LighthouseError artifact.
+      class WarningAndErrorGatherer extends Gatherer {
+        afterPass(passContext) {
+          const warning = str_(i18n.UIStrings.displayValueByteSavings, {wastedBytes: 2222});
+          passContext.LighthouseRunWarnings.push(warning);
+          throw new LHError(LHError.errors.UNSUPPORTED_OLD_CHROME, {featureName: 'VRML'});
+        }
+      }
+      const gatherConfig = new Config({
+        settings: {gatherMode: artifactsPath},
+        passes: [{gatherers: [WarningAndErrorGatherer]}],
+      });
+      await Runner.run(null, {url, config: gatherConfig, driverMock});
+
+      // Artifacts are still localizable.
+      const artifacts = assetSaver.loadArtifacts(resolvedPath);
+      expect(artifacts.LighthouseRunWarnings[0]).not.toBe('string');
+      expect(artifacts.LighthouseRunWarnings[0]).toBeDisplayString('Potential savings of 2 KiB');
+      expect(artifacts.WarningAndErrorGatherer).toMatchObject({
+        name: 'LHError',
+        code: 'UNSUPPORTED_OLD_CHROME',
+        // eslint-disable-next-line max-len
+        friendlyMessage: expect.toBeDisplayString(`This version of Chrome is too old to support 'VRML'. Use a newer version to see full results.`),
+      });
+
+      // Now run auditMode using errored artifacts to ensure the errors come through.
+      class DummyAudit extends Audit {
+        static get meta() {
+          return {
+            id: 'dummy-audit',
+            title: 'Dummy',
+            description: 'Will fail because required artifact is an error',
+            requiredArtifacts: ['WarningAndErrorGatherer'],
+          };
+        }
+        static audit() {}
+      }
+      const auditConfig = new Config({
+        settings: {auditMode: artifactsPath},
+        audits: [{implementation: DummyAudit}],
+      });
+      const {lhr} = await Runner.run(null, {url, config: auditConfig});
+
+      // Messages are now localized and formatted.
+      expect(lhr.runWarnings[0]).toBe('Potential savings of 2 KiB');
+      expect(lhr.audits['dummy-audit']).toMatchObject({
+        scoreDisplayMode: 'error',
+        // eslint-disable-next-line max-len
+        errorMessage: 'Required WarningAndErrorGatherer gatherer encountered an error: UNSUPPORTED_OLD_CHROME',
       });
     });
   });

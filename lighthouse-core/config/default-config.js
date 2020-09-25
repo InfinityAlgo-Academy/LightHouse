@@ -218,6 +218,7 @@ const defaultConfig = {
     'content-width',
     'image-aspect-ratio',
     'image-size-responsive',
+    'preload-fonts',
     'deprecations',
     'mainthread-work-breakdown',
     'bootup-time',
@@ -242,6 +243,7 @@ const defaultConfig = {
     'non-composited-animations',
     'unsized-images',
     'large-javascript-libraries',
+    'valid-source-maps',
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',
     'manual/pwa-each-page-has-url',
@@ -561,6 +563,7 @@ const defaultConfig = {
         {id: 'password-inputs-can-be-pasted-into', weight: 1, group: 'best-practices-ux'},
         {id: 'image-aspect-ratio', weight: 1, group: 'best-practices-ux'},
         {id: 'image-size-responsive', weight: 1, group: 'best-practices-ux'},
+        {id: 'preload-fonts', weight: 1, group: 'best-practices-ux'},
         // Browser Compatibility
         {id: 'doctype', weight: 1, group: 'best-practices-browser-compat'},
         {id: 'charset', weight: 1, group: 'best-practices-browser-compat'},
@@ -570,6 +573,7 @@ const defaultConfig = {
         {id: 'js-libraries', weight: 0, group: 'best-practices-general'},
         {id: 'deprecations', weight: 1, group: 'best-practices-general'},
         {id: 'errors-in-console', weight: 1, group: 'best-practices-general'},
+        {id: 'valid-source-maps', weight: 0, group: 'best-practices-general'},
       ],
     },
     'seo': {

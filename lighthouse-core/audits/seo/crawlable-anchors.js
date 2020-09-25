@@ -84,7 +84,7 @@ class CrawlableAnchors extends Audit {
           path: anchor.devtoolsNodePath || '',
           selector: anchor.selector || '',
           nodeLabel: anchor.nodeLabel || '',
-          snippet: anchor.outerHTML || '',
+          snippet: anchor.snippet || '',
         },
       };
     });
