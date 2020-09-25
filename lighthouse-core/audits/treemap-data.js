@@ -147,6 +147,8 @@ class TreemapDataAudit extends Audit {
   }
 
   /**
+   * Returns a root node where the first level of nodes are script URLs.
+   * If a script has a source map, that node will be set by prepareTreemapNodes.
    * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<RootNode[]>}
@@ -179,9 +181,7 @@ class TreemapDataAudit extends Audit {
     }
 
     for (const scriptElement of artifacts.ScriptElements) {
-      if (!scriptElement.src) {
-        continue;
-      }
+      if (!scriptElement.src) continue;
 
       const bundle = bundles.find(bundle => scriptElement.src === bundle.script.src);
       // No source map for this script, so skip the rest of this.
@@ -193,17 +193,9 @@ class TreemapDataAudit extends Audit {
       const unusedJavascriptSummary = await UnusedJavaScriptSummary.request(
         {url: scriptElement.src, scriptCoverages, bundle}, context);
 
-      const length = (scriptElement.content || '').length;
       const name = scriptElement.src;
-
       let node;
-      if (!unusedJavascriptSummary) {
-        node = {
-          name,
-          resourceBytes: length,
-          unusedBytes: 0,
-        };
-      } else if (!unusedJavascriptSummary.sourcesWastedBytes) {
+      if (!unusedJavascriptSummary.sourcesWastedBytes) {
         node = {
           name,
           resourceBytes: unusedJavascriptSummary.totalBytes,
@@ -238,6 +230,9 @@ class TreemapDataAudit extends Audit {
   }
 
   /**
+   * Returns root node where the first level is network resource type,
+   * followed by the leaf nodes which are are all network requests. Data
+   * contained is the resourceBytes.
    * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<RootNode>}
