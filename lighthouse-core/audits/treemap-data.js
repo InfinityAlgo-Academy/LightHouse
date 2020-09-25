@@ -23,6 +23,7 @@ const ResourceSummary = require('../computed/resource-summary.js');
  */
 
 /**
+ * Ex: https://gist.github.com/connorjclark/0ef1099ae994c075e36d65fecb4d26a7
  * @typedef RootNode
  * @property {string} name Arbitrary name identifier. Usually a script url.
  * @property {Node} node

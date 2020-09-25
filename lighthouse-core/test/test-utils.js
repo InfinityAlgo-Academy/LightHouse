@@ -79,14 +79,8 @@ function getProtoRoundTrip() {
 }
 
 /**
- * @typedef PartialScriptCoverage
- * @property {string} url
- * @property {Array<{ranges: LH.Crdp.Profiler.CoverageRange[]}>} functions
- */
-
-/**
  * @param {string} name
- * @return {{map: LH.Artifacts.RawSourceMap, content: string, usage?: PartialScriptCoverage}}
+ * @return {{map: LH.Artifacts.RawSourceMap, content: string, usage?: LH.Crdp.Profiler.ScriptCoverage}}
  */
 function loadSourceMapFixture(name) {
   const dir = `${__dirname}/fixtures/source-maps`;
@@ -94,7 +88,7 @@ function loadSourceMapFixture(name) {
   const content = fs.readFileSync(`${dir}/${name}.js`, 'utf-8');
 
   const usagePath = `${dir}/${name}.usage.json`;
-  let usage = undefined;
+  let usage;
   if (fs.existsSync(usagePath)) {
     const usageJson = fs.readFileSync(`${dir}/${name}.usage.json`, 'utf-8');
     // Usage is exported from DevTools, which simplifies the real format of the
@@ -102,9 +96,12 @@ function loadSourceMapFixture(name) {
     /** @type {{url: string, ranges: Array<{start: number, end: number, count: number}>}} */
     const exportedUsage = JSON.parse(usageJson);
     usage = {
+      scriptId: 'FakeId', // Not used.
       url: exportedUsage.url,
       functions: [
         {
+          functionName: 'FakeFunctionName', // Not used.
+          isBlockCoverage: false, // Not used.
           ranges: exportedUsage.ranges.map((range, i) => {
             return {
               startOffset: range.start,
