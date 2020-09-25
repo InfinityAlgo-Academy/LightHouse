@@ -183,17 +183,23 @@ class TreemapDataAudit extends Audit {
     for (const scriptElement of artifacts.ScriptElements) {
       if (!scriptElement.src) continue;
 
+      const name = scriptElement.src;
       const bundle = bundles.find(bundle => scriptElement.src === bundle.script.src);
-      // No source map for this script, so skip the rest of this.
-      if (!bundle) continue;
-
       const scriptCoverages = artifacts.JsUsage[scriptElement.src];
-      if (!scriptCoverages) continue;
+      if (!bundle || !scriptCoverages) {
+        rootNodes.push({
+          name,
+          node: {
+            name,
+            resourceBytes: scriptElement.src.length,
+          },
+        });
+        continue;
+      }
 
       const unusedJavascriptSummary = await UnusedJavaScriptSummary.request(
         {url: scriptElement.src, scriptCoverages, bundle}, context);
 
-      const name = scriptElement.src;
       let node;
       if (!unusedJavascriptSummary.sourcesWastedBytes) {
         node = {
@@ -291,6 +297,7 @@ class TreemapDataAudit extends Audit {
       resources: [await TreemapDataAudit.makeResourceSummaryRootNode(artifacts, context)],
     };
 
+    // TODO: when out of experimental should make a new detail type.
     /** @type {LH.Audit.Details.DebugData} */
     const details = {
       type: 'debugdata',

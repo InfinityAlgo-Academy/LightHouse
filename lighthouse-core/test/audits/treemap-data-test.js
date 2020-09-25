@@ -27,11 +27,11 @@ function load(name) {
 
 /**
  * @param {string} url
- * @param {number} transferSize
+ * @param {number} resourceSize
  * @param {LH.Crdp.Network.ResourceType} resourceType
  */
-function generateRecord(url, transferSize, resourceType) {
-  return {url, transferSize, resourceType};
+function generateRecord(url, resourceSize, resourceType) {
+  return {url, resourceSize, resourceType};
 }
 
 describe('TreemapData audit', () => {
@@ -45,12 +45,18 @@ describe('TreemapData audit', () => {
       const scriptUrl = 'https://squoosh.app/main-app.js';
       const networkRecords = [generateRecord(scriptUrl, content.length, 'Script')];
 
+      // Add a script with no source map or usage.
+      const noSourceMapScript = {src: 'https://sqoosh.app/no-map-or-usage.js', content: '// hi'};
+      networkRecords.push(
+        generateRecord(noSourceMapScript.src, noSourceMapScript.content.length, 'Script')
+      );
+
       const artifacts = {
         URL: {requestedUrl: mainUrl, finalUrl: mainUrl},
         JsUsage: {[usage.url]: [usage]},
         devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(networkRecords)},
         SourceMaps: [{scriptUrl: scriptUrl, map}],
-        ScriptElements: [{src: scriptUrl, content}],
+        ScriptElements: [{src: scriptUrl, content}, noSourceMapScript],
       };
       const results = await TreemapData.audit(artifacts, context);
 
@@ -62,11 +68,11 @@ describe('TreemapData audit', () => {
       expect(Object.keys(treemapData)).toEqual(['scripts', 'resources']);
     });
 
-    it('js', () => {
+    it('scripts', () => {
       expect(treemapData.scripts).toMatchSnapshot();
     });
 
-    it('resource summary', () => {
+    it('resources', () => {
       expect(treemapData.resources).toMatchInlineSnapshot(`
         Array [
           Object {
@@ -76,16 +82,20 @@ describe('TreemapData audit', () => {
                 Object {
                   "children": Array [
                     Object {
-                      "name": "//main-app.js",
-                      "resourceBytes": 0,
+                      "name": "https://squoosh.app/main-app.js",
+                      "resourceBytes": 83748,
+                    },
+                    Object {
+                      "name": "https://sqoosh.app/blah.js",
+                      "resourceBytes": 8,
                     },
                   ],
                   "name": "script",
-                  "resourceBytes": 0,
+                  "resourceBytes": 83756,
                 },
               ],
-              "name": "1 requests",
-              "resourceBytes": 0,
+              "name": "2 requests",
+              "resourceBytes": 83756,
             },
           },
         ]

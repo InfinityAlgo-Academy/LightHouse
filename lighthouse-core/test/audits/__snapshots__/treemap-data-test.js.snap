@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TreemapData audit squoosh fixture js 1`] = `
+exports[`TreemapData audit squoosh fixture scripts 1`] = `
 Array [
   Object {
     "name": "https://squoosh.app/main-app.js",
@@ -577,6 +577,13 @@ Array [
       "name": "/webpack:/.",
       "resourceBytes": 73687,
       "unusedBytes": 3066,
+    },
+  },
+  Object {
+    "name": "https://sqoosh.app/blah.js",
+    "node": Object {
+      "name": "https://sqoosh.app/blah.js",
+      "resourceBytes": 26,
     },
   },
 ]
