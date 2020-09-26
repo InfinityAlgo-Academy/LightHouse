@@ -7,7 +7,7 @@
 
 const TreemapData_ = require('../../audits/treemap-data.js');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
-const {loadSourceMapFixture, makeParamsOptional} = require('../test-utils.js');
+const {loadSourceMapAndUsageFixture, makeParamsOptional} = require('../test-utils.js');
 
 /* eslint-env jest */
 
@@ -15,15 +15,6 @@ const TreemapData = {
   audit: makeParamsOptional(TreemapData_.audit),
   prepareTreemapNodes: makeParamsOptional(TreemapData_.prepareTreemapNodes),
 };
-
-/**
- * @param {string} name
- */
-function load(name) {
-  const data = loadSourceMapFixture(name);
-  if (!data.usage) throw new Error('expected usage');
-  return {...data, usage: data.usage};
-}
 
 /**
  * @param {string} url
@@ -40,7 +31,7 @@ describe('TreemapData audit', () => {
     let treemapData;
     beforeAll(async () => {
       const context = {computedCache: new Map()};
-      const {map, content, usage} = load('squoosh');
+      const {map, content, usage} = loadSourceMapAndUsageFixture('squoosh');
       const mainUrl = 'https://squoosh.app';
       const scriptUrl = 'https://squoosh.app/main-app.js';
       const networkRecords = [generateRecord(scriptUrl, content.length, 'Script')];

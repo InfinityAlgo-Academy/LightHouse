@@ -38,7 +38,7 @@ expect.extend({
     // done for asymmetric matchers anyways.
     const thisObj = (this && this.utils) ? this :
         {isNot: false, promise: ''};
-
+    // @ts-ignore
     return toBeCloseTo.call(thisObj, ...args);
   },
 });
@@ -80,43 +80,51 @@ function getProtoRoundTrip() {
 
 /**
  * @param {string} name
- * @return {{map: LH.Artifacts.RawSourceMap, content: string, usage?: LH.Crdp.Profiler.ScriptCoverage}}
+ * @return {{map: LH.Artifacts.RawSourceMap, content: string}}
  */
 function loadSourceMapFixture(name) {
   const dir = `${__dirname}/fixtures/source-maps`;
   const mapJson = fs.readFileSync(`${dir}/${name}.js.map`, 'utf-8');
   const content = fs.readFileSync(`${dir}/${name}.js`, 'utf-8');
-
-  const usagePath = `${dir}/${name}.usage.json`;
-  let usage;
-  if (fs.existsSync(usagePath)) {
-    const usageJson = fs.readFileSync(`${dir}/${name}.usage.json`, 'utf-8');
-    // Usage is exported from DevTools, which simplifies the real format of the
-    // usage protocol.
-    /** @type {{url: string, ranges: Array<{start: number, end: number, count: number}>}} */
-    const exportedUsage = JSON.parse(usageJson);
-    usage = {
-      scriptId: 'FakeId', // Not used.
-      url: exportedUsage.url,
-      functions: [
-        {
-          functionName: 'FakeFunctionName', // Not used.
-          isBlockCoverage: false, // Not used.
-          ranges: exportedUsage.ranges.map((range, i) => {
-            return {
-              startOffset: range.start,
-              endOffset: range.end,
-              count: i % 2 === 0 ? 0 : 1,
-            };
-          }),
-        },
-      ],
-    };
-  }
-
   return {
     map: JSON.parse(mapJson),
     content,
+  };
+}
+
+/**
+ * @param {string} name
+ * @return {{map: LH.Artifacts.RawSourceMap, content: string, usage: LH.Crdp.Profiler.ScriptCoverage}}
+ */
+function loadSourceMapAndUsageFixture(name) {
+  const dir = `${__dirname}/fixtures/source-maps`;
+  const usagePath = `${dir}/${name}.usage.json`;
+  const usageJson = fs.readFileSync(usagePath, 'utf-8');
+
+  // Usage is exported from DevTools, which simplifies the real format of the
+  // usage protocol.
+  /** @type {{url: string, ranges: Array<{start: number, end: number, count: number}>}} */
+  const exportedUsage = JSON.parse(usageJson);
+  const usage = {
+    scriptId: 'FakeId', // Not used.
+    url: exportedUsage.url,
+    functions: [
+      {
+        functionName: 'FakeFunctionName', // Not used.
+        isBlockCoverage: false, // Not used.
+        ranges: exportedUsage.ranges.map((range, i) => {
+          return {
+            startOffset: range.start,
+            endOffset: range.end,
+            count: i % 2 === 0 ? 0 : 1,
+          };
+        }),
+      },
+    ],
+  };
+
+  return {
+    ...loadSourceMapFixture(name),
     usage,
   };
 }
@@ -133,5 +141,6 @@ function makeParamsOptional(fn) {
 module.exports = {
   getProtoRoundTrip,
   loadSourceMapFixture,
+  loadSourceMapAndUsageFixture,
   makeParamsOptional,
 };
