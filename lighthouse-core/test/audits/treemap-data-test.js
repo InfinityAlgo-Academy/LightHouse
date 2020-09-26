@@ -60,10 +60,24 @@ describe('TreemapData audit', () => {
     });
 
     it('scripts', () => {
+      expect(treemapData.scripts.find(s => s.name === 'https://sqoosh.app/no-map-or-usage.js'))
+        .toMatchInlineSnapshot(`
+        Object {
+          "name": "https://sqoosh.app/no-map-or-usage.js",
+          "node": Object {
+            "name": "https://sqoosh.app/no-map-or-usage.js",
+            "resourceBytes": 37,
+          },
+        }
+      `);
+
       expect(treemapData.scripts).toMatchSnapshot();
     });
 
     it('resources', () => {
+      const scriptsNode = (treemapData.resources[0].node.children || [])[0];
+      expect(scriptsNode.children || []).toHaveLength(2);
+
       expect(treemapData.resources).toMatchInlineSnapshot(`
         Array [
           Object {
