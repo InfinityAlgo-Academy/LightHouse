@@ -109,73 +109,42 @@ describe('TreemapData audit', () => {
   });
 
   describe('.prepareTreemapNodes', () => {
-    it('basics 1', () => {
-      const rootNode = TreemapData.prepareTreemapNodes('', {'main.js': {resourceBytes: 100}});
-      expect(rootNode).toMatchInlineSnapshot(`
-        Object {
-          "children": undefined,
-          "name": "/main.js",
-          "resourceBytes": 100,
-        }
-      `);
-    });
-
-    it('basics 2', () => {
-      const sourcesData = {
-        'some/prefix/main.js': {resourceBytes: 100},
-        'a.js': {resourceBytes: 101},
-      };
-      const rootNode = TreemapData.prepareTreemapNodes('some/prefix', sourcesData);
+    it('uses node data when available', () => {
+      const rootNode = TreemapData.prepareTreemapNodes('', {
+        'a.js': {resourceBytes: 100},
+        'b.js': {resourceBytes: 100, duplicate: 'blah'},
+        'c.js': {resourceBytes: 100, unusedBytes: 50},
+      });
       expect(rootNode).toMatchInlineSnapshot(`
         Object {
           "children": Array [
-            Object {
-              "children": undefined,
-              "name": "/main.js",
-              "resourceBytes": 100,
-            },
             Object {
               "name": "a.js",
-              "resourceBytes": 101,
-            },
-          ],
-          "name": "some/prefix",
-          "resourceBytes": 201,
-        }
-      `);
-    });
-
-    it('basics 3', () => {
-      const sourcesData = {
-        'lib/a.js': {resourceBytes: 100},
-        'main.js': {resourceBytes: 101},
-      };
-      const rootNode = TreemapData.prepareTreemapNodes('', sourcesData);
-      expect(rootNode).toMatchInlineSnapshot(`
-        Object {
-          "children": Array [
-            Object {
-              "children": undefined,
-              "name": "lib/a.js",
               "resourceBytes": 100,
             },
             Object {
-              "name": "main.js",
-              "resourceBytes": 101,
+              "duplicate": "blah",
+              "name": "b.js",
+              "resourceBytes": 100,
+            },
+            Object {
+              "name": "c.js",
+              "resourceBytes": 100,
+              "unusedBytes": 50,
             },
           ],
           "name": "",
-          "resourceBytes": 201,
+          "resourceBytes": 300,
+          "unusedBytes": 50,
         }
       `);
     });
 
-    it('basics 4', () => {
-      const sourcesData = {
-        'lib/folder/a.js': {resourceBytes: 100},
-        'lib/folder/b.js': {resourceBytes: 101},
-      };
-      const rootNode = TreemapData.prepareTreemapNodes('', sourcesData);
+    it('creates directory node when multiple leaf nodes', () => {
+      const rootNode = TreemapData.prepareTreemapNodes('', {
+        'folder/a.js': {resourceBytes: 100},
+        'folder/b.js': {resourceBytes: 100},
+      });
       expect(rootNode).toMatchInlineSnapshot(`
         Object {
           "children": Array [
@@ -185,13 +154,75 @@ describe('TreemapData audit', () => {
             },
             Object {
               "name": "b.js",
-              "resourceBytes": 101,
+              "resourceBytes": 100,
             },
           ],
-          "name": "/lib/folder",
-          "resourceBytes": 201,
+          "name": "/folder",
+          "resourceBytes": 200,
         }
       `);
+    });
+
+    it('flattens directory node when single leaf nodes', () => {
+      const rootNode = TreemapData.prepareTreemapNodes('', {
+        'root/folder1/a.js': {resourceBytes: 100},
+        'root/folder2/b.js': {resourceBytes: 100},
+      });
+      expect(rootNode).toMatchInlineSnapshot(`
+        Object {
+          "children": Array [
+            Object {
+              "children": undefined,
+              "name": "folder1/a.js",
+              "resourceBytes": 100,
+            },
+            Object {
+              "children": undefined,
+              "name": "folder2/b.js",
+              "resourceBytes": 100,
+            },
+          ],
+          "name": "/root",
+          "resourceBytes": 200,
+        }
+      `);
+    });
+
+    it('source root replaces matching prefixes', () => {
+      const sourcesData = {
+        'some/prefix/main.js': {resourceBytes: 100, unusedBytes: 50},
+        'not/some/prefix/a.js': {resourceBytes: 101, unusedBytes: 51},
+      };
+      const rootNode = TreemapData.prepareTreemapNodes('some/prefix', sourcesData);
+      expect(rootNode).toMatchInlineSnapshot(`
+        Object {
+          "children": Array [
+            Object {
+              "children": undefined,
+              "name": "/main.js",
+              "resourceBytes": 100,
+              "unusedBytes": 50,
+            },
+            Object {
+              "children": undefined,
+              "name": "not/a.js",
+              "resourceBytes": 101,
+              "unusedBytes": 51,
+            },
+          ],
+          "name": "some/prefix",
+          "resourceBytes": 201,
+          "unusedBytes": 101,
+        }
+      `);
+
+      expect(rootNode.name).toBe('some/prefix');
+      expect(rootNode.resourceBytes).toBe(201);
+      expect(rootNode.unusedBytes).toBe(101);
+
+      const children = rootNode.children || [];
+      expect(children[0].name).toBe('/main.js');
+      expect(children[1].name).toBe('not/a.js');
     });
 
     it('unusedBytes', () => {
