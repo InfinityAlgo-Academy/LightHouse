@@ -34,6 +34,7 @@ last-run-results.html
 !lighthouse-core/test/fixtures/traces/**/*.devtoolslog.json
 
 lighthouse-core/scripts/legacy-javascript/variants
+lighthouse-core/scripts/gcp-collection/gcp-data
 
 latest-run
 lantern-data
