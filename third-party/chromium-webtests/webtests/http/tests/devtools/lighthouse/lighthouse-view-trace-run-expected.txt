@@ -27,7 +27,6 @@ first-cpu-idle
 first-meaningful-paint
 font-display
 interactive
-large-javascript-libraries
 largest-contentful-paint
 largest-contentful-paint-element
 layout-shift-elements

@@ -2059,20 +2059,6 @@
         ]
       }
     },
-    "large-javascript-libraries": {
-      "id": "large-javascript-libraries",
-      "title": "Avoids large JavaScript libraries with smaller alternatives",
-      "description": "Large JavaScript libraries can lead to poor performance. Prefer smaller, functionally equivalent libraries to reduce your bundle size. [Learn more](https://developers.google.com/web/fundamentals/performance/webpack/decrease-frontend-size#optimize_dependencies).",
-      "score": 1,
-      "scoreDisplayMode": "binary",
-      "displayValue": "0 large libraries found",
-      "details": {
-        "type": "table",
-        "headings": [],
-        "items": [],
-        "summary": {}
-      }
-    },
     "valid-source-maps": {
       "id": "valid-source-maps",
       "title": "Page has valid source maps",
@@ -4677,11 +4663,6 @@
           "group": "diagnostics"
         },
         {
-          "id": "large-javascript-libraries",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
           "id": "network-requests",
           "weight": 0
         },
@@ -5877,12 +5858,6 @@
       {
         "startTime": 0,
         "name": "lh:audit:unsized-images",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:audit:large-javascript-libraries",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7237,20 +7212,6 @@
         "audits[link-name].details.headings[0].text",
         "audits[object-alt].details.headings[0].text",
         "audits[password-inputs-can-be-pasted-into].details.headings[0].text"
-      ],
-      "lighthouse-core/audits/large-javascript-libraries.js | title": [
-        "audits[large-javascript-libraries].title"
-      ],
-      "lighthouse-core/audits/large-javascript-libraries.js | description": [
-        "audits[large-javascript-libraries].description"
-      ],
-      "lighthouse-core/audits/large-javascript-libraries.js | displayValue": [
-        {
-          "values": {
-            "libraryCount": 0
-          },
-          "path": "audits[large-javascript-libraries].displayValue"
-        }
       ],
       "lighthouse-core/audits/valid-source-maps.js | title": [
         "audits[valid-source-maps].title"

@@ -172,9 +172,6 @@ Object {
       "path": "unsized-images",
     },
     Object {
-      "path": "large-javascript-libraries",
-    },
-    Object {
       "path": "valid-source-maps",
     },
     Object {
@@ -1034,11 +1031,6 @@ Object {
         Object {
           "group": "diagnostics",
           "id": "unsized-images",
-          "weight": 0,
-        },
-        Object {
-          "group": "diagnostics",
-          "id": "large-javascript-libraries",
           "weight": 0,
         },
         Object {

@@ -247,7 +247,6 @@ Auditing: Avoid long main-thread tasks
 Auditing: Avoids `unload` event listeners
 Auditing: Avoid non-composited animations
 Auditing: Image elements have explicit `width` and `height`
-Auditing: Avoids large JavaScript libraries with smaller alternatives
 Auditing: Page has valid source maps
 Auditing: Site works cross-browser
 Auditing: Page transitions don't feel like they block on the network
@@ -474,7 +473,6 @@ is-crawlable: pass
 is-on-https: pass
 js-libraries: pass
 label: notApplicable
-large-javascript-libraries: pass
 largest-contentful-paint: numeric
 largest-contentful-paint-element: informative
 layout-shift-elements: notApplicable
@@ -566,5 +564,5 @@ visual-order-follows-dom: manual
 without-javascript: pass
 works-offline: fail
 
-# of .lh-audit divs: 156
+# of .lh-audit divs: 155
 
