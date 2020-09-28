@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,7 +7,7 @@
 
 const assetSaver = require('../../lib/asset-saver.js');
 const Metrics = require('../../lib/traces/pwmetrics-events.js');
-const assert = require('assert');
+const assert = require('assert').strict;
 const fs = require('fs');
 const rimraf = require('rimraf');
 const LHError = require('../../lib/lh-error.js');
@@ -45,11 +45,14 @@ describe('asset-saver helper', () => {
       return assetSaver.saveAssets(artifacts, dbwResults.audits, process.cwd() + '/the_file');
     });
 
-    it('trace file saved to disk with only trace events', () => {
+    it('trace file saved to disk with trace events and extra fakeEvents', () => {
       const traceFilename = 'the_file-0.trace.json';
       const traceFileContents = fs.readFileSync(traceFilename, 'utf8');
-      const traceEventsFromDisk = JSON.parse(traceFileContents).traceEvents;
-      assertTraceEventsEqual(traceEventsFromDisk, traceEvents);
+      const traceEventsOnDisk = JSON.parse(traceFileContents).traceEvents;
+      const traceEventsWithoutExtrasOnDisk = traceEventsOnDisk.slice(0, traceEvents.length);
+      const traceEventsFake = traceEventsOnDisk.slice(traceEvents.length);
+      assertTraceEventsEqual(traceEventsWithoutExtrasOnDisk, traceEvents);
+      assert.equal(traceEventsFake.length, 20);
       fs.unlinkSync(traceFilename);
     });
 
@@ -73,8 +76,8 @@ describe('asset-saver helper', () => {
       const beforeCount = countEvents(dbwTrace);
       return assetSaver.prepareAssets(mockArtifacts, dbwResults.audits).then(preparedAssets => {
         const afterCount = countEvents(preparedAssets[0].traceData);
-        const metricsSansNavStart = Metrics.metricsDefinitions.length - 1;
-        assert.equal(afterCount, beforeCount + (2 * metricsSansNavStart), 'unexpected event count');
+        const metricsMinusTimeOrigin = Metrics.metricsDefinitions.length - 1;
+        assert.equal(afterCount, beforeCount + (2 * metricsMinusTimeOrigin));
       });
     });
   });

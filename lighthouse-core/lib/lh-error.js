@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -47,6 +47,11 @@ const UIStrings = {
   internalChromeError: 'An internal Chrome error occurred. Please restart Chrome and try re-running Lighthouse.',
   /** Error message explaining that fetching the resources of the webpage has taken longer than the maximum time. */
   requestContentTimeout: 'Fetching resource content has exceeded the allotted time',
+  /**
+   * @description Error message explaining that the webpage is non-HTML, so audits are ill-defined.
+   * @example {application/xml} mimeType
+   * */
+  notHtml: 'The page provided is not HTML (served as MIME type {mimeType}).',
   /** Error message explaining that the provided URL Lighthouse points to is not valid, and cannot be loaded. */
   urlInvalid: 'The URL you have provided appears to be invalid.',
   /**
@@ -71,6 +76,12 @@ const UIStrings = {
    * @example {Manifest invalid} errorMessage
    * */
   erroredRequiredArtifact: 'Required {artifactName} gatherer encountered an error: {errorMessage}',
+
+  /**
+   * @description Error message explaining that a feature is unavailable due to an old version of Chrome. "featureName" will be replaced by the name of the feature which is not supported.
+   * @example {Largest Contentful Paint} featureName
+   * */
+  oldChromeDoesNotSupportFeature: 'This version of Chrome is too old to support \'{featureName}\'. Use a newer version to see full results.',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -100,7 +111,8 @@ class LighthouseError extends Error {
     super(errorDefinition.code);
     this.name = 'LHError';
     this.code = errorDefinition.code;
-    // Insert the i18n reference with errorCode and all additional ICU replacement properties.
+    // Add additional properties to be ICU replacements in the error string.
+    // `code` is always added as `errorCode` so callers don't need to specify the code multiple times.
     this.friendlyMessage = str_(errorDefinition.message, {errorCode: this.code, ...properties});
     this.lhrRuntimeError = !!errorDefinition.lhrRuntimeError;
     if (properties) Object.assign(this, properties);
@@ -119,10 +131,7 @@ class LighthouseError extends Error {
     // if we find one, use the friendly LighthouseError definition
     const matchedErrorDefinition = protocolErrors.find(e => e.pattern.test(protocolError.message));
     if (matchedErrorDefinition) {
-      return new LighthouseError(matchedErrorDefinition, {
-        protocolMethod: method,
-        protocolError: protocolError.message,
-      });
+      return new LighthouseError(matchedErrorDefinition);
     }
 
     // otherwise fallback to building a generic Error
@@ -157,7 +166,7 @@ class LighthouseError extends Error {
     // Unexpected errors won't be LHErrors, but we want them serialized as well.
     if (err instanceof Error) {
       const {message, stack} = err;
-      // @ts-ignore - code can be helpful for e.g. node errors, so preserve it if it's present.
+      // @ts-expect-error - code can be helpful for e.g. node errors, so preserve it if it's present.
       const code = err.code;
       return {
         sentinel: ERROR_SENTINEL,
@@ -252,6 +261,19 @@ const ERRORS = {
     code: 'NO_FMP',
     message: UIStrings.badTraceRecording,
   },
+  NO_LCP: {
+    code: 'NO_LCP',
+    message: UIStrings.badTraceRecording,
+  },
+  UNSUPPORTED_OLD_CHROME: {
+    code: 'UNSUPPORTED_OLD_CHROME',
+    message: UIStrings.oldChromeDoesNotSupportFeature,
+  },
+  /** Layout Shift trace events are found but without data */
+  LAYOUT_SHIFT_MISSING_DATA: {
+    code: 'LAYOUT_SHIFT_MISSING_DATA',
+    message: UIStrings.badTraceRecording,
+  },
 
   // TTI calculation failures
   FMP_TOO_LATE_FOR_FCPUI: {code: 'FMP_TOO_LATE_FOR_FCPUI', message: UIStrings.pageLoadTookTooLong},
@@ -303,6 +325,12 @@ const ERRORS = {
   PAGE_HUNG: {
     code: 'PAGE_HUNG',
     message: UIStrings.pageLoadFailedHung,
+    lhrRuntimeError: true,
+  },
+  /* Used when the page is non-HTML. */
+  NOT_HTML: {
+    code: 'NOT_HTML',
+    message: UIStrings.notHtml,
     lhrRuntimeError: true,
   },
 
@@ -374,6 +402,7 @@ const ERRORS = {
   },
 
   // Hey! When adding a new error type, update lighthouse-result.proto too.
+  // Only necessary for runtime errors, which come from artifacts or pageLoadErrors.
 };
 
 /** @type {Record<keyof typeof ERRORS, LighthouseErrorDefinition>} */

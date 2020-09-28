@@ -4,6 +4,7 @@ npm-debug.log
 .vscode
 .tmp
 .idea
+.tmp_env
 
 /dist
 coverage
@@ -29,9 +30,14 @@ last-run-results.html
 !lighthouse-core/test/results/artifacts/*.devtoolslog.json
 !lighthouse-core/test/fixtures/artifacts/**/*.trace.json
 !lighthouse-core/test/fixtures/artifacts/**/*.devtoolslog.json
+!lighthouse-core/test/fixtures/traces/**/*.trace.json
+!lighthouse-core/test/fixtures/traces/**/*.devtoolslog.json
+
+lighthouse-core/scripts/legacy-javascript/variants
 
 latest-run
 lantern-data
+timings-data
 
 closure-error.log
 yarn-error.log
@@ -45,3 +51,7 @@ yarn-error.log
 proto/scripts/*_pb2.*
 proto/scripts/*_pb.*
 proto/scripts/*_processed.json
+
+# require any lock file to be checked in explicitly
+yarn.lock
+

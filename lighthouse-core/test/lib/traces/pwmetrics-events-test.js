@@ -1,12 +1,12 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
 const Metrics = require('../../../lib/traces/pwmetrics-events.js');
-const assert = require('assert');
+const assert = require('assert').strict;
 
 const dbwTrace = require('../../results/artifacts/defaultPass.trace.json');
 const dbwResults = require('../../results/sample_v2.json');
@@ -20,12 +20,12 @@ describe('metrics events class', () => {
   it('generates fake trace events', () => {
     const evts = new Metrics(dbwTrace.traceEvents, dbwResults.audits).generateFakeEvents();
 
-    const metricsWithoutNavstart = Metrics.metricsDefinitions.length - 1;
+    const metricsMinusTimeOrigin = Metrics.metricsDefinitions.length - 1;
     // The trace events must come in pairs, thus the `2 * n`
-    assert.equal(evts.length, 2 * metricsWithoutNavstart, 'All expected fake events not created');
+    assert.equal(evts.length, 2 * metricsMinusTimeOrigin, 'All expected fake events not created');
 
     const definitionsWithoutEvents = Metrics.metricsDefinitions
-        .filter(metric => metric.id !== 'navstart')
+        .filter(metric => metric.id !== 'timeorigin')
         .filter(metric => !evts.find(e => e.name === metric.name));
     assert.strictEqual(definitionsWithoutEvents.length, 0, 'metrics are missing fake events');
 

@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -16,7 +16,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user why they should care that a site's content size should match its viewport size, which is the size of the screen the site is displayed on. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'If the width of your app\'s content doesn\'t match the width ' +
     'of the viewport, your app might not be optimized for mobile screens. ' +
-    '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/content-sized-correctly-for-viewport).',
+    '[Learn more](https://web.dev/content-width/).',
   /**
    * @description Explanatory message stating that the viewport size and window size differ.
    * @example {100} innerWidth

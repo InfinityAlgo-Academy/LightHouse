@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -19,22 +19,44 @@ const pageFunctions = require('../../lib/page-functions.js');
 /* istanbul ignore next */
 function collectAllScriptElements() {
   /** @type {HTMLScriptElement[]} */
-  // @ts-ignore - getElementsInDocument put into scope via stringification
+  // @ts-expect-error - getElementsInDocument put into scope via stringification
   const scripts = getElementsInDocument('script'); // eslint-disable-line no-undef
 
   return scripts.map(script => {
     return {
       type: script.type || null,
       src: script.src || null,
+      id: script.id || null,
       async: script.async,
       defer: script.defer,
       source: /** @type {'head'|'body'} */ (script.closest('head') ? 'head' : 'body'),
-      // @ts-ignore - getNodePath put into scope via stringification
+      // @ts-expect-error - getNodePath put into scope via stringification
       devtoolsNodePath: getNodePath(script),
       content: script.src ? null : script.text,
       requestId: null,
     };
   });
+}
+
+/**
+ * @template T, U
+ * @param {Array<T>} values
+ * @param {(value: T) => Promise<U>} promiseMapper
+ * @param {boolean} runInSeries
+ * @return {Promise<Array<U>>}
+ */
+async function runInSeriesOrParallel(values, promiseMapper, runInSeries) {
+  if (runInSeries) {
+    const results = [];
+    for (const value of values) {
+      const result = await promiseMapper(value);
+      results.push(result);
+    }
+    return results;
+  } else {
+    const promises = values.map(promiseMapper);
+    return await Promise.all(promises);
+  }
 }
 
 /**
@@ -67,28 +89,35 @@ class ScriptElements extends Gatherer {
       // Only get the content of script requests
       .filter(record => record.resourceType === NetworkRequest.TYPES.Script);
 
-    for (const record of scriptRecords) {
-      try {
-        const content = await driver.getRequestContent(record.requestId);
-        if (!content) continue;
+    // If run on a mobile device, be sensitive to memory limitations and only request one
+    // record at a time.
+    const scriptRecordContents = await runInSeriesOrParallel(
+      scriptRecords,
+      record => driver.getRequestContent(record.requestId).catch(() => ''),
+      passContext.baseArtifacts.HostFormFactor === 'mobile' /* runInSeries*/ );
 
-        const matchedScriptElement = scripts.find(script => script.src === record.url);
-        if (matchedScriptElement) {
-          matchedScriptElement.requestId = record.requestId;
-          matchedScriptElement.content = content;
-        } else {
-          scripts.push({
-            devtoolsNodePath: '',
-            type: null,
-            src: record.url,
-            async: false,
-            defer: false,
-            source: 'network',
-            requestId: record.requestId,
-            content,
-          });
-        }
-      } catch (e) {}
+    for (let i = 0; i < scriptRecords.length; i++) {
+      const record = scriptRecords[i];
+      const content = scriptRecordContents[i];
+      if (!content) continue;
+
+      const matchedScriptElement = scripts.find(script => script.src === record.url);
+      if (matchedScriptElement) {
+        matchedScriptElement.requestId = record.requestId;
+        matchedScriptElement.content = content;
+      } else {
+        scripts.push({
+          devtoolsNodePath: '',
+          type: null,
+          src: record.url,
+          id: null,
+          async: false,
+          defer: false,
+          source: 'network',
+          requestId: record.requestId,
+          content,
+        });
+      }
     }
 
     return scripts;

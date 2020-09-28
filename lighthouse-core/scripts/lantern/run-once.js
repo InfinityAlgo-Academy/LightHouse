@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -19,10 +19,13 @@ async function run() {
   const traces = {defaultPass: require(tracePath)};
   const devtoolsLogs = {defaultPass: require(path.resolve(process.cwd(), process.argv[3]))};
   const artifacts = {traces, devtoolsLogs};
+  const context = {computedCache: new Map(), settings: {locale: 'en-us'}};
 
-  const context = {computedCache: new Map()};
-  // @ts-ignore - We don't need the full artifacts
+  // @ts-expect-error - We don't need the full artifacts or context.
   const result = await PredictivePerf.audit(artifacts, context);
+  if (!result.details || result.details.type !== 'debugdata') {
+    throw new Error('Unexpected audit details from PredictivePerf');
+  }
   process.stdout.write(JSON.stringify(result.details.items[0], null, 2));
 
   // Dump the TTI graph with simulated timings to a trace if LANTERN_DEBUG is enabled

@@ -1,11 +1,11 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-/* global document, window, getComputedStyle, getElementsInDocument, Node, getNodePath, getNodeSelector, getNodeLabel */
+/* global document, window, getComputedStyle, getBoundingClientRect, getElementsInDocument, Node, getNodePath, getNodeSelector, getNodeLabel */
 
 const Gatherer = require('../gatherer.js');
 const pageFunctions = require('../../../lib/page-functions.js');
@@ -213,7 +213,7 @@ function gatherTapTargets() {
   window.scrollTo(0, 0);
 
   /** @type {HTMLElement[]} */
-  // @ts-ignore - getElementsInDocument put into scope via stringification
+  // @ts-expect-error - getElementsInDocument put into scope via stringification
   const tapTargetElements = getElementsInDocument(tapTargetsSelector);
 
   /** @type {{
@@ -283,12 +283,14 @@ function gatherTapTargets() {
   for (const {tapTargetElement, visibleClientRects} of tapTargetsWithVisibleClientRects) {
     targets.push({
       clientRects: visibleClientRects,
+      // @ts-expect-error - getBoundingClientRect put into scope via stringification
+      boundingRect: getBoundingClientRect(tapTargetElement),
       snippet: truncate(tapTargetElement.outerHTML, 300),
-      // @ts-ignore - getNodePath put into scope via stringification
+      // @ts-expect-error - getNodePath put into scope via stringification
       path: getNodePath(tapTargetElement),
-      // @ts-ignore - getNodeSelector put into scope via stringification
+      // @ts-expect-error - getNodeSelector put into scope via stringification
       selector: getNodeSelector(tapTargetElement),
-      // @ts-ignore - getNodeLabel put into scope via stringification
+      // @ts-expect-error - getNodeLabel put into scope via stringification
       nodeLabel: getNodeLabel(tapTargetElement),
       href: /** @type {HTMLAnchorElement} */(tapTargetElement)['href'] || '',
     });
@@ -316,6 +318,7 @@ class TapTargets extends Gatherer {
       ${getClientRects.toString()};
       ${hasTextNodeSiblingsFormingTextBlock.toString()};
       ${elementIsInTextBlock.toString()};
+      ${pageFunctions.getBoundingClientRectString};
       ${getRectArea.toString()};
       ${getLargestRect.toString()};
       ${getRectCenterPoint.toString()};

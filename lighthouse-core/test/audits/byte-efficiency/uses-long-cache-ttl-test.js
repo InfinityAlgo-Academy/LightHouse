@@ -1,12 +1,12 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
 const CacheHeadersAudit = require('../../../audits/byte-efficiency/uses-long-cache-ttl.js');
-const assert = require('assert');
+const assert = require('assert').strict;
 const NetworkRequest = require('../../../lib/network-request.js');
 const options = CacheHeadersAudit.defaultOptions;
 const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
@@ -44,7 +44,7 @@ describe('Cache headers audit', () => {
     const networkRecords = [networkRecord()];
     const context = {options, computedCache: new Map()};
     return CacheHeadersAudit.audit(getArtifacts(networkRecords), context).then(result => {
-      const items = result.extendedInfo.value.results;
+      const items = result.details.items;
       assert.equal(items.length, 1);
       assert.equal(items[0].cacheLifetimeMs, 0);
       assert.equal(items[0].wastedBytes, 10000);
@@ -104,7 +104,7 @@ describe('Cache headers audit', () => {
 
     const context = {options, computedCache: new Map()};
     return CacheHeadersAudit.audit(getArtifacts(networkRecords), context).then(result => {
-      const items = result.extendedInfo.value.results;
+      const items = result.details.items;
       assert.equal(items.length, 3);
       closeEnough(items[0].cacheLifetimeMs, 3600 * 1000);
       assert.equal(Math.round(items[0].wastedBytes), 8000);
@@ -130,7 +130,7 @@ describe('Cache headers audit', () => {
 
     const context = {options, computedCache: new Map()};
     return CacheHeadersAudit.audit(getArtifacts(networkRecords), context).then(result => {
-      const items = result.extendedInfo.value.results;
+      const items = result.details.items;
       assert.equal(items.length, 2);
       assert.ok(Math.abs(items[0].cacheLifetimeMs - 3600 * 1000) <= 5, 'invalid expires parsing');
       assert.equal(Math.round(items[0].wastedBytes), 8000);
@@ -154,7 +154,7 @@ describe('Cache headers audit', () => {
 
     const context = {options, computedCache: new Map()};
     return CacheHeadersAudit.audit(getArtifacts(networkRecords), context).then(result => {
-      const items = result.extendedInfo.value.results;
+      const items = result.details.items;
       assert.equal(items.length, 1);
     });
   });
@@ -167,7 +167,7 @@ describe('Cache headers audit', () => {
 
     const context = {options, computedCache: new Map()};
     return CacheHeadersAudit.audit(getArtifacts(networkRecords), context).then(result => {
-      const items = result.extendedInfo.value.results;
+      const items = result.details.items;
       assert.equal(items.length, 2);
     });
   });
@@ -183,7 +183,7 @@ describe('Cache headers audit', () => {
 
     const context = {options, computedCache: new Map()};
     return CacheHeadersAudit.audit(getArtifacts(networkRecords), context).then(result => {
-      const items = result.extendedInfo.value.results;
+      const items = result.details.items;
       assert.equal(result.score, 1);
       assert.equal(items.length, 0);
     });
@@ -198,7 +198,7 @@ describe('Cache headers audit', () => {
 
     const context = {options, computedCache: new Map()};
     return CacheHeadersAudit.audit(getArtifacts(networkRecords), context).then(result => {
-      const items = result.extendedInfo.value.results;
+      const items = result.details.items;
       assert.equal(result.score, 1);
       assert.equal(items.length, 0);
     });
@@ -216,9 +216,8 @@ describe('Cache headers audit', () => {
     const context = {options, computedCache: new Map()};
     return CacheHeadersAudit.audit(getArtifacts(networkRecords), context).then(result => {
       assert.equal(result.score, 1);
-      const items = result.extendedInfo.value.results;
+      const items = result.details.items;
       assert.equal(items.length, 1);
-      assert.equal(result.extendedInfo.value.queryStringCount, 1);
     });
   });
 });

@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -27,7 +27,7 @@ const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user that their page has loaded fast enough to be considered a Progressive Web App. This imperative title is shown to users when the web page has loaded too slowly to be considered a Progressive Web App. */
   failureTitle: 'Page load is not fast enough on mobile networks',
   /** Description of a Lighthouse audit that tells the user *why* they need to load fast enough on mobile networks. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  description: 'A fast page load over a cellular network ensures a good mobile user experience. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/fast-3g).',
+  description: 'A fast page load over a cellular network ensures a good mobile user experience. [Learn more](https://web.dev/load-fast-enough-for-pwa/).',
   /** Label for the audit identifying the time it took for the page to become interactive. */
   displayValueText: 'Interactive at {timeInMs, number, seconds}\xa0s',
   /** Label for the audit identifying the time it took for the page to become interactive on a mobile network. */
@@ -98,6 +98,7 @@ class LoadFastEnough4Pwa extends Audit {
       displayValue,
       explanation,
       numericValue: tti.timing,
+      numericUnit: 'millisecond',
     };
   }
 }

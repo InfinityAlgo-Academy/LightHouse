@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -26,7 +26,7 @@ const ACCEPTABLE_NAVIGATION_URL_REGEX = /^(chrome|https?):/;
 // The ideal input response latency, the time between the input task and the
 // first frame of the response.
 const BASE_RESPONSE_LATENCY = 16;
-// m71+ We added RunTask to `disabled-by-default-lighthouse`
+// COMPAT: m71+ We added RunTask to `disabled-by-default-lighthouse`
 const SCHEDULABLE_TASK_TITLE_LH = 'RunTask';
 // m69-70 DoWork is different and we now need RunTask, see https://bugs.chromium.org/p/chromium/issues/detail?id=871204#c11
 const SCHEDULABLE_TASK_TITLE_ALT1 = 'ThreadControllerImpl::RunTask';
@@ -302,8 +302,8 @@ class TraceProcessor {
    * selected percentiles within a window of the main thread.
    * @see https://docs.google.com/document/d/1b9slyaB9yho91YTOkAQfpCdULFkZM9LqsipcX3t7He8/preview
    * @param {Array<ToplevelEvent>} events
-   * @param {number} startTime Start time (in ms relative to navstart) of range of interest.
-   * @param {number} endTime End time (in ms relative to navstart) of range of interest.
+   * @param {number} startTime Start time (in ms relative to timeOrigin) of range of interest.
+   * @param {number} endTime End time (in ms relative to timeOrigin) of range of interest.
    * @param {!Array<number>=} percentiles Optional array of percentiles to compute. Defaults to [0.5, 0.75, 0.9, 0.99, 1].
    * @return {!Array<{percentile: number, time: number}>}
    */
@@ -324,8 +324,8 @@ class TraceProcessor {
   /**
    * Provides durations in ms of all main thread top-level events
    * @param {Array<ToplevelEvent>} topLevelEvents
-   * @param {number} startTime Optional start time (in ms relative to navstart) of range of interest. Defaults to navstart.
-   * @param {number} endTime Optional end time (in ms relative to navstart) of range of interest. Defaults to trace end.
+   * @param {number} startTime Optional start time (in ms relative to timeOrigin) of range of interest. Defaults to 0.
+   * @param {number} endTime Optional end time (in ms relative to timeOrigin) of range of interest. Defaults to trace end.
    * @return {{durations: Array<number>, clippedLength: number}}
    */
   static getMainThreadTopLevelEventDurations(topLevelEvents, startTime = 0, endTime = Infinity) {
@@ -366,8 +366,8 @@ class TraceProcessor {
    * Provides the top level events on the main thread with timestamps in ms relative to navigation
    * start.
    * @param {LH.Artifacts.TraceOfTab} tabTrace
-   * @param {number=} startTime Optional start time (in ms relative to navstart) of range of interest. Defaults to navstart.
-   * @param {number=} endTime Optional end time (in ms relative to navstart) of range of interest. Defaults to trace end.
+   * @param {number=} startTime Optional start time (in ms relative to timeOrigin) of range of interest. Defaults to 0.
+   * @param {number=} endTime Optional end time (in ms relative to timeOrigin) of range of interest. Defaults to trace end.
    * @return {Array<ToplevelEvent>}
    */
   static getMainThreadTopLevelEvents(tabTrace, startTime = 0, endTime = Infinity) {
@@ -376,8 +376,8 @@ class TraceProcessor {
     for (const event of tabTrace.mainThreadEvents) {
       if (!this.isScheduleableTask(event) || !event.dur) continue;
 
-      const start = (event.ts - tabTrace.navigationStartEvt.ts) / 1000;
-      const end = (event.ts + event.dur - tabTrace.navigationStartEvt.ts) / 1000;
+      const start = (event.ts - tabTrace.timeOriginEvt.ts) / 1000;
+      const end = (event.ts + event.dur - tabTrace.timeOriginEvt.ts) / 1000;
       if (start > endTime || end < startTime) continue;
 
       topLevelEvents.push({
@@ -488,24 +488,25 @@ class TraceProcessor {
     // Find the inspected frame
     const mainFrameIds = this.findMainFrameIds(keyEvents);
 
-    // Filter to just events matching the frame ID for sanity
+    // Filter to just events matching the frame ID, just to make sure.
     const frameEvents = keyEvents.filter(e => e.args.frame === mainFrameIds.frameId);
 
     // Our navStart will be the last frame navigation in the trace
     const navigationStart = frameEvents.filter(this._isNavigationStartOfInterest).pop();
     if (!navigationStart) throw this.createNoNavstartError();
+    const timeOriginEvt = navigationStart;
 
     // Find our first paint of this frame
-    const firstPaint = frameEvents.find(e => e.name === 'firstPaint' && e.ts > navigationStart.ts);
+    const firstPaint = frameEvents.find(e => e.name === 'firstPaint' && e.ts > timeOriginEvt.ts);
 
     // FCP will follow at/after the FP. Used in so many places we require it.
     const firstContentfulPaint = frameEvents.find(
-      e => e.name === 'firstContentfulPaint' && e.ts > navigationStart.ts
+      e => e.name === 'firstContentfulPaint' && e.ts > timeOriginEvt.ts
     );
 
     // fMP will follow at/after the FP
     let firstMeaningfulPaint = frameEvents.find(
-      e => e.name === 'firstMeaningfulPaint' && e.ts > navigationStart.ts
+      e => e.name === 'firstMeaningfulPaint' && e.ts > timeOriginEvt.ts
     );
     let fmpFellBack = false;
 
@@ -524,9 +525,32 @@ class TraceProcessor {
       firstMeaningfulPaint = lastCandidate;
     }
 
-    const load = frameEvents.find(e => e.name === 'loadEventEnd' && e.ts > navigationStart.ts);
+    // LCP's trace event was first introduced in m78. We can't surface an LCP for older Chrome versions
+    // LCP comes from the latest `largestContentfulPaint::Candidate`, but it can be invalidated
+    // by a `largestContentfulPaint::Invalidate` event. In the case that the last candidate is
+    // invalidated, the value will be undefined.
+    let largestContentfulPaint;
+    let lcpInvalidated = false;
+    // Iterate the events backwards.
+    for (let i = frameEvents.length - 1; i >= 0; i--) {
+      const e = frameEvents[i];
+      // If the event's timestamp is before the time origin, stop.
+      if (e.ts <= timeOriginEvt.ts) break;
+      // If the last lcp event in the trace is 'Invalidate', there is inconclusive data to determine LCP.
+      if (e.name === 'largestContentfulPaint::Invalidate') {
+        lcpInvalidated = true;
+        break;
+      }
+      // If not an lcp 'Candidate', keep iterating.
+      if (e.name !== 'largestContentfulPaint::Candidate') continue;
+      // Found the last LCP candidate in the trace, let's use it.
+      largestContentfulPaint = e;
+      break;
+    }
+
+    const load = frameEvents.find(e => e.name === 'loadEventEnd' && e.ts > timeOriginEvt.ts);
     const domContentLoaded = frameEvents.find(
-      e => e.name === 'domContentLoadedEventEnd' && e.ts > navigationStart.ts
+      e => e.name === 'domContentLoadedEventEnd' && e.ts > timeOriginEvt.ts
     );
 
     // subset all trace events to just our tab's process (incl threads other than main)
@@ -537,7 +561,7 @@ class TraceProcessor {
     const mainThreadEvents = processEvents
       .filter(e => e.tid === mainFrameIds.tid);
 
-    // traceEnd must exist since at least navigationStart event was verified as existing.
+    // traceEnd must exist since at least timeOrigin event was verified as existing.
     const traceEnd = trace.traceEvents.reduce((max, evt) => {
       return max.ts > evt.ts ? max : evt;
     });
@@ -547,29 +571,38 @@ class TraceProcessor {
     const getTimestamp = (event) => event && event.ts;
     /** @type {TraceTimesWithoutFCP} */
     const timestamps = {
-      navigationStart: navigationStart.ts,
+      timeOrigin: timeOriginEvt.ts,
       firstPaint: getTimestamp(firstPaint),
       firstContentfulPaint: getTimestamp(firstContentfulPaint),
       firstMeaningfulPaint: getTimestamp(firstMeaningfulPaint),
+      largestContentfulPaint: getTimestamp(largestContentfulPaint),
       traceEnd: fakeEndOfTraceEvt.ts,
       load: getTimestamp(load),
       domContentLoaded: getTimestamp(domContentLoaded),
     };
 
     /** @param {number} ts */
-    const getTiming = (ts) => (ts - navigationStart.ts) / 1000;
+    const getTiming = (ts) => (ts - timeOriginEvt.ts) / 1000;
     /** @param {number=} ts */
     const maybeGetTiming = (ts) => ts === undefined ? undefined : getTiming(ts);
     /** @type {TraceTimesWithoutFCP} */
     const timings = {
-      navigationStart: 0,
+      timeOrigin: 0,
       firstPaint: maybeGetTiming(timestamps.firstPaint),
       firstContentfulPaint: maybeGetTiming(timestamps.firstContentfulPaint),
       firstMeaningfulPaint: maybeGetTiming(timestamps.firstMeaningfulPaint),
+      largestContentfulPaint: maybeGetTiming(timestamps.largestContentfulPaint),
       traceEnd: getTiming(timestamps.traceEnd),
       load: maybeGetTiming(timestamps.load),
       domContentLoaded: maybeGetTiming(timestamps.domContentLoaded),
     };
+
+    const frames = keyEvents
+      .filter(evt => evt.name === 'FrameCommittedInBrowser')
+      .map(evt => evt.args.data)
+      .filter(/** @return {data is {frame: string, url: string}} */ data => {
+        return Boolean(data && data.frame && data.url);
+      });
 
     return {
       timings,
@@ -577,13 +610,16 @@ class TraceProcessor {
       processEvents,
       mainThreadEvents,
       mainFrameIds,
-      navigationStartEvt: navigationStart,
+      frames,
+      timeOriginEvt: timeOriginEvt,
       firstPaintEvt: firstPaint,
       firstContentfulPaintEvt: firstContentfulPaint,
       firstMeaningfulPaintEvt: firstMeaningfulPaint,
+      largestContentfulPaintEvt: largestContentfulPaint,
       loadEvt: load,
       domContentLoadedEvt: domContentLoaded,
       fmpFellBack,
+      lcpInvalidated,
     };
   }
 }

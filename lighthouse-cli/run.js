@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -8,6 +8,7 @@
 /* eslint-disable no-console */
 
 const path = require('path');
+const psList = require('ps-list');
 
 const Printer = require('./printer.js');
 const ChromeLauncher = require('chrome-launcher');
@@ -27,12 +28,27 @@ const _PROTOCOL_TIMEOUT_EXIT_CODE = 67;
 
 /**
  * exported for testing
- * @param {string} flags
+ * @param {string|Array<string>} flags
  * @return {Array<string>}
  */
 function parseChromeFlags(flags = '') {
-  const parsed = yargsParser(
-      flags.trim(), {configuration: {'camel-case-expansion': false, 'boolean-negation': false}});
+  // flags will be a string if there is only one chrome-flag parameter:
+  // i.e. `lighthouse --chrome-flags="--user-agent='My Agent' --headless"`
+  // flags will be an array if there are multiple chrome-flags parameters
+  // i.e. `lighthouse --chrome-flags="--user-agent='My Agent'" --chrome-flags="--headless"`
+  const trimmedFlags = (Array.isArray(flags) ? flags : [flags])
+      // `child_process.execFile` and other programmatic invocations will pass Lighthouse arguments atomically.
+      // Many developers aren't aware of this and attempt to pass arguments to LH as they would to a shell `--chromeFlags="--headless --no-sandbox"`.
+      // In this case, yargs will see `"--headless --no-sandbox"` and treat it as a single argument instead of the intended `--headless --no-sandbox`.
+      // We remove quotes that surround the entire expression to make this work.
+      // i.e. `child_process.execFile("lighthouse", ["http://google.com", "--chrome-flags='--headless --no-sandbox'")`
+      // the following regular expression removes those wrapping quotes:
+      .map((flagsGroup) => flagsGroup.replace(/^\s*('|")(.+)\1\s*$/, '$2').trim())
+      .join(' ').trim();
+
+  const parsed = yargsParser(trimmedFlags, {
+    configuration: {'camel-case-expansion': false, 'boolean-negation': false},
+  });
 
   return Object
       .keys(parsed)
@@ -57,6 +73,7 @@ function parseChromeFlags(flags = '') {
 function getDebuggableChrome(flags) {
   return ChromeLauncher.launch({
     port: flags.port,
+    ignoreDefaultFlags: flags.chromeIgnoreDefaultFlags,
     chromeFlags: parseChromeFlags(flags.chromeFlags),
     logLevel: flags.logLevel,
   });
@@ -155,11 +172,25 @@ async function saveResults(runnerResult, flags) {
 async function potentiallyKillChrome(launchedChrome) {
   if (!launchedChrome) return;
 
+  /** @type {NodeJS.Timeout} */
+  let timeout;
+  const timeoutPromise = new Promise((_, reject) => {
+    timeout = setTimeout(() => reject(new Error('Timed out waiting to kill Chrome')), 5000);
+  });
+
   return Promise.race([
     launchedChrome.kill(),
-    new Promise((_, reject) => setTimeout(reject, 5000, 'Timed out.')),
-  ]).catch(err => {
+    timeoutPromise,
+  ]).catch(async err => {
+    const runningProcesses = await psList();
+    if (!runningProcesses.some(proc => proc.pid === launchedChrome.pid)) {
+      log.warn('CLI', 'Warning: Chrome process could not be killed because it already exited.');
+      return;
+    }
+
     throw new Error(`Couldn't quit Chrome process. ${err}`);
+  }).finally(() => {
+    clearTimeout(timeout);
   });
 }
 
