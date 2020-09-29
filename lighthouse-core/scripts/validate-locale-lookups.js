@@ -12,9 +12,7 @@ const cldrParentsData = require('cldr-core/supplemental/parentLocales.json');
 const cldrParentLocales = cldrParentsData.supplemental.parentLocales.parentLocale;
 
 
-// const
-// Object.entries(cldrAliases).forEach(([alias, entry]) => { if (locales[entry._replacement]) console.log(alias, entry) })
-
+// Get list of locales we have string files for
 const lhLocales = glob
   .sync('./lighthouse-core/lib/i18n/locales/*.json')
   .filter(f => !f.includes('.ctc.json'))
@@ -46,9 +44,10 @@ Object.entries(cldrAliases).forEach(([alias, entry]) => {
     }
   }
 });
-console.log({aliasesSubset, aliasesSubsetMacroLanguage});
-fs.writeFileSync(__dirname + '/../lib/i18n/cldrdata/aliases.json', JSON.stringify(aliasesSubset, null, 2));
-fs.writeFileSync(__dirname + '/../lib/i18n/cldrdata/aliases-macrolanguage.json', JSON.stringify(aliasesSubsetMacroLanguage, null, 2));
+
+writeJSONFile('aliasesSubset', aliasesSubset, __dirname + '/../lib/i18n/cldrdata/aliases.json');
+writeJSONFile('aliasesSubsetMacroLanguage', aliasesSubsetMacroLanguage,
+  __dirname + '/../lib/i18n/cldrdata/aliases-macrolanguage.json');
 
 //
 // 3. generate subsetted list of parentLocales
@@ -65,8 +64,16 @@ Object.entries(cldrParentLocales).forEach(([locale, parentLocale]) => {
   }
 });
 
-console.log({parentsSubset});
-fs.writeFileSync(__dirname + '/../lib/i18n/cldrdata/parentLocales.json', JSON.stringify(parentsSubset, null, 2));
+writeJSONFile('parentsSubset', parentsSubset, __dirname + '/../lib/i18n/cldrdata/parentLocales.json');
 
-
-console.log('done', Date.now());
+/**
+ *
+ * @param {string} name
+ * @param {Object} data
+ * @param {string} filename
+ */
+function writeJSONFile(name, data, filename) {
+  console.log({[name]: data});
+  fs.writeFileSync(filename, JSON.stringify(data, null, 2));
+  console.log(`Wrote to disk at ${filename}.`);
+}
