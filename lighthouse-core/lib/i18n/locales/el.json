@@ -384,31 +384,31 @@
     "message": "Παρέχει ένα έγκυρο `apple-touch-icon`"
   },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
-    "message": "Autocomplete Current Value"
+    "message": "Current Value"
   },
   "lighthouse-core/audits/autocomplete.js | columnSuggestions": {
-    "message": "Autocomplete Suggested Token"
+    "message": "Suggested Token"
   },
   "lighthouse-core/audits/autocomplete.js | description": {
-    "message": "Η αυτόματη συμπλήρωση βοηθά τους χρήστες να υποβάλλουν πιο γρήγορα φόρμες. Για να μειώσετε τον φόρτο εργασίας των χρηστών, εξετάστε το ενδεχόμενο ενεργοποίησης της αυτόματης συμπλήρωσης ορίζοντας το χαρακτηριστικό `autocomplete` σε μια έγκυρη τιμή. [Μάθετε περισσότερα](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)"
+    "message": "`autocomplete` helps users submit forms quicker. To reduce user effort, consider enabling by setting the `autocomplete` attribute to a valid value. [Learn more](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)"
   },
   "lighthouse-core/audits/autocomplete.js | failureTitle": {
-    "message": "Τα στοιχεία εισόδου δεν έχουν σωστά χαρακτηριστικά για αυτόματη συμπλήρωση"
+    "message": "`<input>` elements do not have correct `autocomplete` attributes"
   },
   "lighthouse-core/audits/autocomplete.js | manualReview": {
-    "message": "Requires manual review"
+    "message": "Απαιτεί μη αυτόματο έλεγχο"
   },
   "lighthouse-core/audits/autocomplete.js | reviewOrder": {
-    "message": "Review order of tokens"
+    "message": "Ελέγξτε τη σειρά των διακριτικών"
   },
   "lighthouse-core/audits/autocomplete.js | title": {
-    "message": "Τα στοιχεία εισόδου χρησιμοποιούν αυτόματη συμπλήρωση"
+    "message": "`<input>` elements correctly use `autocomplete`"
   },
   "lighthouse-core/audits/autocomplete.js | warningInvalid": {
-    "message": "Autocomplete token(s): \"{token}\" is invalid in {snippet}"
+    "message": "`autocomplete` token(s): \"{token}\" is invalid in {snippet}"
   },
   "lighthouse-core/audits/autocomplete.js | warningOrder": {
-    "message": "Review order of tokens: \"{tokens}\" in {snippet}"
+    "message": "Έλεγχος σειράς διακριτικών: \"{tokens}\" στο {snippet}"
   },
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
     "message": "Οι επεκτάσεις του Chrome επηρέασαν αρνητικά την απόδοση φόρτωσης αυτής της σελίδας. Δοκιμάστε να ελέγξετε τη σελίδα σε κατάσταση ανώνυμης περιήγησης ή από ένα προφίλ του Chrome χωρίς επεκτάσεις."
@@ -585,7 +585,7 @@
     "message": "Αποφυγή προσωρινής μνήμης εφαρμογής"
   },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
-    "message": "Απαιτείται δήλωση κωδικοποίησης χαρακτήρων. Μπορεί να πραγματοποιηθεί με μια ετικέτα <meta> στα πρώτα 1024 byte του κώδικα HTML ή στην κεφαλίδα απόκρισης HTTP Content-Type. [Μάθετε περισσότερα](https://web.dev/charset/)."
+    "message": "A character encoding declaration is required. It can be done with a `<meta>` tag in the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more](https://web.dev/charset/)."
   },
   "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
     "message": "Η δήλωση συνόλου χαρακτήρων λείπει ή εμφανίζεται πολύ αργά στον κώδικα HTML"
@@ -834,7 +834,7 @@
     "message": "Επίλυση αιτήματος"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
-    "message": "Όλοι οι ιστότοποι πρέπει να προστατεύονται με HTTPS, ακόμα και αν δεν χειρίζονται ευαίσθητα δεδομένα. Αυτό περιλαμβάνει την αποφυγή [μικτού περιεχομένου](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), όπου ορισμένοι πόροι φορτώνονται μέσω HTTP παρά την εξυπηρέτηση του αρχικού αιτήματος μέσω HTTPS. Το HTTPS εμποδίζει τους εισβολείς από την αλλοίωση ή την παθητική ακρόαση των επικοινωνιών μεταξύ της εφαρμογής και των χρηστών σας. Επιπλέον, αποτελεί προαπαιτούμενο για το HTTP/2 και πολλά νέα API πλατφορμών ιστού. [Μάθετε περισσότερα](https://web.dev/is-on-https/)."
+    "message": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. This includes avoiding [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), where some resources are loaded over HTTP despite the initial request being served over HTTPS. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more](https://web.dev/is-on-https/)."
   },
   "lighthouse-core/audits/is-on-https.js | displayValue": {
     "message": "{itemCount,plural, =1{Βρέθηκε 1 μη ασφαλές αίτημα}other{Βρέθηκαν # μη ασφαλή αιτήματα}}"
@@ -1122,16 +1122,16 @@
     "message": "Οι σύνδεσμοι είναι ανιχνεύσιμοι"
   },
   "lighthouse-core/audits/seo/font-size.js | additionalIllegibleText": {
-    "message": "Add'l illegible text"
+    "message": "Επιπλέον δυσανάγνωστο κείμενο"
   },
   "lighthouse-core/audits/seo/font-size.js | columnFontSize": {
-    "message": "Font Size"
+    "message": "Μέγεθος γραμματοσειράς"
   },
   "lighthouse-core/audits/seo/font-size.js | columnPercentPageText": {
-    "message": "% of Page Text"
+    "message": "% του κειμένου σελίδας"
   },
   "lighthouse-core/audits/seo/font-size.js | columnSelector": {
-    "message": "Selector"
+    "message": "Επιλογέας"
   },
   "lighthouse-core/audits/seo/font-size.js | description": {
     "message": "Τα μεγέθη γραμματοσειράς κάτω από 12px είναι πολύ μικρά για να είναι ευανάγνωστα, με αποτέλεσμα οι επισκέπτες από κινητά να χρειάζεται να μεγεθύνουν με τα δάχτυλά τους τη σελίδα για να διαβάσουν το περιεχόμενο. Προσπαθήστε πάνω από το 60% του κειμένου της σελίδας να έχει μέγεθος μεγαλύτερο από ή ίσο με 12px. [Μάθετε περισσότερα](https://web.dev/font-size/)."
@@ -1146,7 +1146,7 @@
     "message": "Το έγγραφο δεν χρησιμοποιεί ευανάγνωστα μεγέθη γραμματοσειράς"
   },
   "lighthouse-core/audits/seo/font-size.js | legibleText": {
-    "message": "Legible text"
+    "message": "Ευανάγνωστο κείμενο"
   },
   "lighthouse-core/audits/seo/font-size.js | title": {
     "message": "Το έγγραφο χρησιμοποιεί ευανάγνωστα μεγέθη γραμματοσειράς"
@@ -1347,7 +1347,7 @@
     "message": "Προϋπολογισμός χρονισμού"
   },
   "lighthouse-core/audits/unsized-images.js | description": {
-    "message": "Set an explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+    "message": "Ορίστε ένα αποκλειστικό πλάτος και ύψος στα στοιχεία εικόνας για να μειώσετε τις μετατοπίσεις διάταξης και να βελτιώσετε το CLS. [Μάθετε περισσότερα](https://web.dev/optimize-cls/#images-without-dimensions)"
   },
   "lighthouse-core/audits/unsized-images.js | failureTitle": {
     "message": "Τα στοιχεία εικόνας δεν έχουν σαφές `width` και `height`"
@@ -1368,7 +1368,7 @@
     "message": "Ενδείξεις και μετρήσεις Χρόνων χρήστη"
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | crossoriginWarning": {
-    "message": "Βρέθηκε ένα <link> προσύνδεσης για το {securityOrigin}, αλλά δεν χρησιμοποιήθηκε από το πρόγραμμα περιήγησης. Ελέγξτε ότι χρησιμοποιείτε σωστά το χαρακτηριστικό `crossorigin`."
+    "message": "A `<link rel=preconnect>` was found for \"{securityOrigin}\" but was not used by the browser. Check that you are using the `crossorigin` attribute properly."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | description": {
     "message": "Εξετάστε το ενδεχόμενο προσθήκης υποδείξεων πόρων `preconnect` ή `dns-prefetch`, για να δημιουργήσετε πρώιμες συνδέσεις σε σημαντικές προελεύσεις τρίτους μέρους. [Μάθετε περισσότερα](https://web.dev/uses-rel-preconnect/)."
@@ -1377,13 +1377,13 @@
     "message": "Προσύνδεση σε απαιτούμενες προελεύσεις"
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
-    "message": "Βρέθηκαν περισσότεροι από δύο σύνδεσμοι προσύνδεσης. Οι σύνδεσμοι προσύνδεσης πρέπει να χρησιμοποιούνται με μέτρο και μόνο στις σημαντικότερες προελεύσεις."
+    "message": "More than 2 `<link rel=preconnect>` connections were found. These should be used sparingly and only to the most important origins."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | unusedWarning": {
-    "message": "A preconnect <link> was found for \"{securityOrigin}\" but was not used by the browser. Only preconnect to important origins that the page will certainly request."
+    "message": "A `<link rel=preconnect>` was found for \"{securityOrigin}\" but was not used by the browser. Only use `preconnect` for important origins that the page will certainly request."
   },
   "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
-    "message": "Βρέθηκε ένα <link> προφόρτωσης για το {preloadURL}, αλλά δεν χρησιμοποιήθηκε από το πρόγραμμα περιήγησης. Ελέγξτε ότι χρησιμοποιείτε σωστά το χαρακτηριστικό `crossorigin`."
+    "message": "A preload `<link>` was found for \"{preloadURL}\" but was not used by the browser. Check that you are using the `crossorigin` attribute properly."
   },
   "lighthouse-core/audits/uses-rel-preload.js | description": {
     "message": "Εξετάστε το ενδεχόμενο χρήσης του `<link rel=preload>` για την προτεραιοποίηση της ανάκτησης των πόρων που τώρα ζητούνται αργότερα κατά τη φόρτωση της σελίδας. [Μάθετε περισσότερα](https://web.dev/uses-rel-preload/)."
@@ -1863,7 +1863,7 @@
     "message": "Χωρίς προσομοίωση"
   },
   "lighthouse-core/report/html/renderer/util.js | runtimeSettingsAxeVersion": {
-    "message": "Axe version"
+    "message": "'Εκδοση Axe"
   },
   "lighthouse-core/report/html/renderer/util.js | runtimeSettingsBenchmark": {
     "message": "Ισχύς CPU/μνήμης"
@@ -1923,34 +1923,34 @@
     "message": "Προειδοποιήσεις: "
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
-    "message": "Για περιεχόμενο κινούμενης εικόνας, χρησιμοποιήστε το [amp-anim](https://amp.dev/documentation/components/amp-anim/) για να ελαχιστοποιήσετε τη χρήση CPU ενώ το περιεχόμενο παραμένει εκτός οθόνης."
+    "message": "For animated content, use [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) to minimize CPU usage when the content is offscreen."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | offscreen-images": {
-    "message": "Βεβαιωθείτε ότι χρησιμοποιείτε έγκυρες ετικέτες `amp-img` για τις εικόνες σας, για τις οποίες πραγματοποιείται αργή φόρτωση εκτός της πρώτης θύρας προβολής. [Μάθετε περισσότερα](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
+    "message": "Ensure that you are using [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) for images to automatically lazy-load. [Learn more](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | render-blocking-resources": {
     "message": "Χρησιμοποιήστε εργαλεία όπως το [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) για να [αποδώσετε διατάξεις AMP στον διακομιστή](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | unminified-css": {
-    "message": "Ανατρέξτε στην [τεκμηρίωση AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) για να βεβαιωθείτε ότι υποστηρίζονται όλα τα στιλ σας."
+    "message": "Refer to the [AMP documentation](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) to ensure all styles are supported."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | uses-responsive-images": {
-    "message": "Το στοιχείο `amp-img` υποστηρίζει το χαρακτηριστικό `srcset`, ορίζοντας ποια στοιχεία εικόνας θα χρησιμοποιούνται, βάσει μεγέθους οθόνης.  [Μάθετε περισσότερα](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
+    "message": "The [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) component supports the [`srcset`](https://web.dev/use-srcset-to-automatically-choose-the-right-image/) attribute to specify which image assets to use based on the screen size. [Learn more](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | uses-webp-images": {
-    "message": "Μπορείτε να εμφανίσετε όλα τα στοιχεία `amp-img` σε μορφές WebP, ορίζοντας μια κατάλληλη εναλλακτική για άλλα προγράμματα περιήγησης. [Μάθετε περισσότερα](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+    "message": "Consider displaying all [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) components in WebP formats while specifying an appropriate fallback for other browsers. [Learn more](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
   },
   "node_modules/lighthouse-stack-packs/packs/angular.js | dom-size": {
     "message": "Μπορείτε να χρησιμοποιήσετε εικονική κύλιση με το Component Dev Kit (CDK), όταν αποδίδονται πολύ μεγάλες λίστες. [Μάθετε περισσότερα](https://web.dev/virtualize-lists-with-angular-cdk/)."
   },
   "node_modules/lighthouse-stack-packs/packs/angular.js | total-byte-weight": {
-    "message": "Εφαρμόστε [διαχωρισμό κώδικα σε επίπεδο διαδρομής](https://web.dev/route-level-code-splitting-in-angular/) για να ελαχιστοποιήσετε το μέγεθος των πακέτων JavaScript. Μπορείτε επίσης να πραγματοποιήσετε πρόωρη προσωρινή αποθήκευση στοιχείων με το[Angular service worker](https://web.dev/precaching-with-the-angular-service-worker/)."
+    "message": "Apply [route-level code splitting](https://web.dev/route-level-code-splitting-in-angular/) to minimize the size of your JavaScript bundles. Also, consider precaching assets with the [Angular service worker](https://web.dev/precaching-with-the-angular-service-worker/)."
   },
   "node_modules/lighthouse-stack-packs/packs/angular.js | unminified-warning": {
     "message": "Εάν χρησιμοποιείτε το Angular CLI, βεβαιωθείτε ότι οι εκδόσεις δημιουργούνται σε λειτουργία παραγωγής. [Μάθετε περισσότερα](https://angular.io/guide/deployment#enable-runtime-production-mode)."
   },
   "node_modules/lighthouse-stack-packs/packs/angular.js | unused-javascript": {
-    "message": "Εάν χρησιμοποιείτε το Angular CLI, συμπεριλάβετε χάρτες πηγής στην έκδοση παραγωγής σας, για να ελέγξετε τα πακέτα σας. [Μάθετε περισσότερα](https://angular.io/guide/deployment#inspect-the-bundles)."
+    "message": "If you are using Angular CLI, include source maps in your production build to inspect your bundles. [Learn more](https://angular.io/guide/deployment#inspect-the-bundles)."
   },
   "node_modules/lighthouse-stack-packs/packs/angular.js | uses-rel-preload": {
     "message": "Προφορτώστε τις διαδρομές εκ των προτέρων, για να επιταχύνετε την πλοήγηση. [Μάθετε περισσότερα](https://web.dev/route-preloading-in-angular/)."
@@ -1959,91 +1959,91 @@
     "message": "Μπορείτε να χρησιμοποιήσετε το βοηθητικό πρόγραμμα `BreakpointObserver` στο Component Dev Kit (CDK) για να διαχειρίζεστε τα σημεία διακοπής εικόνας. [Μάθετε περισσότερα](https://material.angular.io/cdk/layout/overview)."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | efficient-animated-content": {
-    "message": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video."
+    "message": "Εξετάστε το ενδεχόμενο μεταφόρτωσης του GIF σε μια υπηρεσία η οποία θα το διαθέσει για ενσωμάτωση ως βίντεο HTML5."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | font-display": {
-    "message": "Specify `@font-display` when defining custom fonts in your theme."
+    "message": "Καθορίστε τη `@font-display` κατά τον προσδιορισμό προσαρμοσμένων γραμματοσειρών στο θέμα σας."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | offscreen-images": {
-    "message": "Install [a Drupal module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A67&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=%22lazy+load%22&solrsort=iss_project_release_usage+desc&op=Search) that can leverage JavaScript or [Intersection Observer API](https://developers.google.com/web/updates/2016/04/intersectionobserver) lazy loading of images. Such modules provide the ability to defer any offscreen images to improve performance."
+    "message": "Install [a Drupal module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A67&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=%22lazy+load%22&solrsort=iss_project_release_usage+desc&op=Search) that can lazy load images. Such modules provide the ability to defer any offscreen images to improve performance."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
-    "message": "Consider using a module to inline critical CSS and JavaScipt, or potentially load assets asynchronously via JavaScript such as the [Advanced CSS/JS Aggregation](https://www.drupal.org/project/advagg) module. Beware that optimizations provided by this module may break your site, so you will likely need to make code changes."
+    "message": "Consider using a module to inline critical CSS and JavaScript, or potentially load assets asynchronously via JavaScript such as the [Advanced CSS/JS Aggregation](https://www.drupal.org/project/advagg) module. Beware that optimizations provided by this module may break your site, so you will likely need to make code changes."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | time-to-first-byte": {
-    "message": "Themes, modules, and server specifications all contribute to server response time. Consider finding a more optimized theme, carefully selecting an optimization module, and/or upgrading your server. Your hosting servers should make use of PHP opcode caching, memory-caching to reduce database query times such as Redis or Memcached, as well as optimized application logic to prepare pages faster."
+    "message": "Τα θέματα, οι ενότητες και οι προδιαγραφές διακομιστή συμβάλλουν στον χρόνο απόκρισης του διακομιστή. Αν θέλετε, μπορείτε να ψάξετε για ένα περισσότερο βελτιστοποιημένο θέμα, να επιλέξετε προσεκτικά μια ενότητα βελτιστοποίησης ή/και να αναβαθμίσετε τον διακομιστή σας. Οι διακομιστές φιλοξενίας σας θα πρέπει να χρησιμοποιούν την προσωρινή αποθήκευση κώδικα λειτουργίας (opcode) PHP, την προσωρινή αποθήκευση μνήμης για τη μείωση των χρόνων ερωτημάτων βάσης δεδομένων, όπως στα Redis και Memcached, καθώς και βελτιστοποιημένη λογική εφαρμογής για την πιο γρήγορη προετοιμασία σελίδων."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
-    "message": "Consider using [Responsive Image Styles](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) to reduce the size of images loaded on your page. If you are using Views to show multiple content items on a page, consider implementing pagination to limit the number of content items shown on a given page."
+    "message": "Εξετάστε το ενδεχόμενο χρήσης [Στιλ αποκριτικών εικόνων](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) για να μειώσετε το μέγεθος των εικόνων που φορτώνονται στη σελίδα σας. Εάν χρησιμοποιείτε τις Προβολές για την εμφάνιση πολλαπλών στοιχείων περιεχομένου σε μια σελίδα, εξετάστε το ενδεχόμενο ενσωμάτωσης σελιδοποίησης προκειμένου να περιορίσετε τον αριθμό των στοιχειών περιεχομένου σε μια συγκεκριμένη σελίδα."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unminified-css": {
-    "message": "Ensure you have enabled \"Aggregate CSS files\" in the \"Administration » Configuration » Development\" page. You can also configure more advanced aggregation options through [additional modules](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=css+aggregation&solrsort=iss_project_release_usage+desc&op=Search) to speed up your site by concatenating, minifying, and compressing your CSS styles."
+    "message": "Βεβαιωθείτε ότι έχετε ενεργοποιήσετε τη Συγκέντρωση αρχείων CSS στη σελίδα Διαχείριση » Διαμόρφωση » Ανάπτυξη. Μπορείτε επίσης να διαμορφώσετε πιο σύνθετες επιλογές συγκέντρωσης μέσω [πρόσθετων ενοτήτων](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=css+aggregation&solrsort=iss_project_release_usage+desc&op=Search), για να αυξήσετε την ταχύτητα του ιστοτόπου σας συνενώνοντας, ελαχιστοποιώντας και συμπιέζοντας τα στιλ CSS που χρησιμοποιείτε."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unminified-javascript": {
-    "message": "Ensure you have enabled \"Aggregate JavaScript files\" in the \"Administration » Configuration » Development\" page. You can also configure more advanced aggregation options through [additional modules](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=javascript+aggregation&solrsort=iss_project_release_usage+desc&op=Search) to speed up your site by concatenating, minifying, and compressing your JavaScript assets."
+    "message": "Βεβαιωθείτε ότι έχετε ενεργοποιήσετε τη Συγκέντρωση αρχείων JavaScript στη σελίδα Διαχείριση » Διαμόρφωση » Ανάπτυξη. Μπορείτε επίσης να διαμορφώσετε πιο σύνθετες επιλογές συγκέντρωσης μέσω [πρόσθετων ενοτήτων](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=javascript+aggregation&solrsort=iss_project_release_usage+desc&op=Search), για να αυξήσετε την ταχύτητα του ιστοτόπου σας συνενώνοντας, ελαχιστοποιώντας και συμπιέζοντας τα στοιχεία JavaScript που χρησιμοποιείτε."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unused-css-rules": {
-    "message": "Consider removing unused CSS rules and only attach the needed Drupal libraries to the relevant page or component in a page. See the [Drupal documentation link](https://www.drupal.org/docs/8/creating-custom-modules/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-module#library) for details. To identify attached libraries that are adding extraneous CSS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/module responsible from the URL of the stylesheet when CSS aggregation is disabled in your Drupal site. Look out for themes/modules that have many stylesheets in the list which have a lot of red in code coverage. A theme/module should only enqueue a stylesheet if it is actually used on the page."
+    "message": "Εξετάστε το ενδεχόμενο να καταργήσετε τους κανόνες CSS που δεν χρησιμοποιούνται και να προσαρτήσετε μόνο τις αναγκαίες βιβλιοθήκες Drupal στη σχετική σελίδα ή στο σχετικό στοιχείο σε μια σελίδα. Για λεπτομέρειες, ανατρέξτε στον [σύνδεσμο τεκμηρίωσης Drupal](https://www.drupal.org/docs/8/creating-custom-modules/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-module#library). Για να προσδιορίσετε τις προσαρτημένες βιβλιοθήκες που προσθέτουν περιττό κώδικα CSS, δοκιμάστε να εκτελέσετε [κάλυψη κώδικα](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) στο Chrome DevTools. Μπορείτε να προσδιορίσετε το θέμα/την ενότητα που ευθύνεται μέσω του URL του φύλλου στιλ όταν η συγκέντρωση CSS είναι απενεργοποιημένη στον ιστότοπό σας στο Drupal. Αναζητήστε θέματα/ενότητες που διαθέτουν πολλά φύλλα στιλ στη λίστα, στα οποία ένα μεγάλο μέρος της κάλυψης κώδικα έχει κόκκινο χρώμα. Ένα θέμα/μια ενότητα θα πρέπει να τοποθετεί στην ουρά ένα φύλλο στιλ, μόνο αν χρησιμοποιείται στη σελίδα."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unused-javascript": {
-    "message": "Consider removing unused JavaScipt assets and only attach the needed Drupal libraries to the relevant page or component in a page. See the [Drupal documentation link](https://www.drupal.org/docs/8/creating-custom-modules/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-module#library) for details. To identify attached libraries that are adding extraneous JavaScript, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/module responsible from the URL of the script when JavaScript aggregation is disabled in your Drupal site. Look out for themes/modules that have many scripts in the list which have a lot of red in code coverage. A theme/module should only enqueue a script if it is actually used on the page."
+    "message": "Consider removing unused JavaScript assets and only attach the needed Drupal libraries to the relevant page or component in a page. See the [Drupal documentation link](https://www.drupal.org/docs/8/creating-custom-modules/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-module#library) for details. To identify attached libraries that are adding extraneous JavaScript, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/module responsible from the URL of the script when JavaScript aggregation is disabled in your Drupal site. Look out for themes/modules that have many scripts in the list which have a lot of red in code coverage. A theme/module should only enqueue a script if it is actually used on the page."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-long-cache-ttl": {
-    "message": "Set the \"Browser and proxy cache maximum age\" in the \"Administration » Configuration » Development\" page. Read about [Drupal cache and optimizing for performance](https://www.drupal.org/docs/7/managing-site-performance-and-scalability/caching-to-improve-performance/caching-overview#s-drupal-performance-resources)."
+    "message": "Ορίστε τη Μέγιστη ηλικία κρυφής μνήμης διακομιστή μεσολάβησης προγράμματος περιήγησης στη σελίδα Διαχείριση » Διαμόρφωση » Ανάπτυξη. Διαβάστε σχετικά με την [Κρυφή μνήμη Drupal και βελτιστοποίηση για μεγαλύτερη απόδοση](https://www.drupal.org/docs/7/managing-site-performance-and-scalability/caching-to-improve-performance/caching-overview#s-drupal-performance-resources)."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-optimized-images": {
-    "message": "Consider using [a module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=optimize+images&solrsort=iss_project_release_usage+desc&op=Search) that automatically optimizes and reduces the size of images uploaded through the site while retaining quality. Also, ensure you are using the native [Responsive Image Styles](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) provided from Drupal (available in Drupal 8 and above) for all images rendered on the site."
+    "message": "Εξετάστε το ενδεχόμενο χρήσης [μιας ενότητας](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=optimize+images&solrsort=iss_project_release_usage+desc&op=Search) η οποία βελτιστοποιεί αυτόματα και μειώνει το μέγεθος των εικόνων που μεταφορτώνονται μέσω του ιστοτόπου, διατηρώντας την ποιότητα. Επιπλέον, βεβαιωθείτε ότι χρησιμοποιείτε τα εγγενή [Στιλ αποκριτικών εικόνων](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) που παρέχονται από το Drupal (διατίθενται στο Drupal 8 και σε νεότερες εκδόσεις) για όλες τις εικόνες που αποδίδονται στον ιστότοπο."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-rel-preconnect": {
-    "message": "Preconnect or dns-prefetch resource hints can be added by installing and configuring [a module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=dns-prefetch&solrsort=iss_project_release_usage+desc&op=Search) that provides facilities for user agent resource hints."
+    "message": "Υποδείξεις πόρων πρόωρης σύνδεσης ή πρόωρης λήψης dns μπορούν να προστεθούν μέσω της εγκατάστασης και της διαμόρφωσης [μιας ενότητας](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=dns-prefetch&solrsort=iss_project_release_usage+desc&op=Search) η οποία παρέχει λειτουργίες για υποδείξεις πόρων παραγόντων χρήστη."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-responsive-images": {
-    "message": "Ensure that you are using the native [Responsive Image Styles](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) provided from Drupal (available in Drupal 8 and above). Use the Responsive Image Styles when rendering image fields through view modes, views, or images uploaded through the WYSIWYG editor."
+    "message": "Βεβαιωθείτε ότι χρησιμοποιείτε τα εγγενή [Στιλ αποκριτικών εικόνων](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) που παρέχονται από το Drupal (διατίθενται στο Drupal 8 και σε νεότερες εκδόσεις). Χρησιμοποιήστε Στιλ αποκριτικών εικόνων κατά την απόδοση πεδίων εικόνων μέσω λειτουργιών προβολής, προβολών ή εικόνων που μεταφορτώθηκαν μέσω του εργαλείου επεξεργασίας WYSIWYG."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-webp-images": {
-    "message": "Consider installing and configuring [a module to leverage WebP image formats](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search) in your site. Such modules would automatically generate a WebP version of your uploaded images to optimize loading times."
+    "message": "Consider installing and configuring [a module to leverage WebP image formats](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search) in your site. Such modules automatically generate a WebP version of your uploaded images to optimize loading times."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
-    "message": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video."
+    "message": "Εξετάστε το ενδεχόμενο μεταφόρτωσης του GIF σε μια υπηρεσία η οποία θα το διαθέσει για ενσωμάτωση ως βίντεο HTML5."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | offscreen-images": {
-    "message": "Install a [lazy-load Joomla plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading) that provides the ability to defer any offscreen images, or switch to a template that provides that functionality. Starting with Joomla 4.0 the core is shipping an dedicated lazyloading plugin please enable the \"Content - Lazy Loading Images\" plugin. Also consider using [an AMP plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=amp)."
+    "message": "Install a [lazy-load Joomla plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading) that provides the ability to defer any offscreen images, or switch to a template that provides that functionality. Starting with Joomla 4.0, a dedicated lazy-loading plugin can be enabled by using the \"Content - Lazy Loading Images\" plugin. Also consider using [an AMP plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=amp)."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | render-blocking-resources": {
-    "message": "There are a number of Joomla plugins that can help you [inline critical assets](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) or [defer less important resources](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance). Beware that optimizations provided by these plugins may break features of your templates or plugins, so you will need to test these thoroughly."
+    "message": "Υπάρχουν διάφορες προσθήκες Joomla που μπορούν να σας βοηθήσουν στην [ενσωμάτωση των σημαντικών στοιχείων](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) ή στην [καθυστέρηση των λιγότερο σημαντικών πόρων](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance). Λάβετε υπόψη ότι οι βελτιστοποιήσεις που παρέχονται από αυτές τις προσθήκες μπορεί να προκαλέσουν προβλήματα στις λειτουργίες των προτύπων ή των προσθηκών σας. Συνεπώς, είναι πιθανό να χρειαστεί να τις ελέγξετε προσεκτικά."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | server-response-time": {
-    "message": "Templates, extensions, and server specifications all contribute to server response time. Consider finding a more optimized template, carefully selecting an optimization extension, and/or upgrading your server."
+    "message": "Τα πρότυπα, οι επεκτάσεις και οι προδιαγραφές διακομιστή συμβάλλουν στον χρόνο απόκρισης του διακομιστή. Αν θέλετε, μπορείτε να ψάξετε για ένα περισσότερο βελτιστοποιημένο πρότυπο, να επιλέξετε προσεκτικά μια επέκταση βελτιστοποίησης ή/και να αναβαθμίσετε τον διακομιστή σας."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | total-byte-weight": {
-    "message": "Consider showing excerpts in your article categories (e.g. via the read more link), reducing the number of articles shown on a given page, breaking your long posts into multiple pages, or using a plugin to lazy-load comments."
+    "message": "Εξετάστε το ενδεχόμενο εμφάνισης αποσπασμάτων στις κατηγορίες άρθρων σας (π.χ. μέσω της ετικέτας περισσότερα), μειώνοντας τον αριθμό των άρθρων που εμφανίζονται σε μια συγκεκριμένη σελίδα, χωρίζοντας τις μεγάλες αναρτήσεις σε πολλές σελίδες ή χρησιμοποιώντας μια προσθήκη για φόρτωση με καθυστέρηση των σχολίων."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unminified-css": {
-    "message": "A number of [Joomla extensions](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) can speed up your site by concatenating, minifying, and compressing your css styles. There are also templates that provide this functionality."
+    "message": "Μερικές [επεκτάσεις Joomla](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) μπορούν να επιταχύνουν τον ιστότοπό σας συνενώνοντας, ελαχιστοποιώντας και συμπιέζοντας τα στιλ σας. Υπάρχουν επίσης πρότυπα που παρέχουν αυτήν τη λειτουργία."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unminified-javascript": {
-    "message": "A number of [Joomla extensions](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) can speed up your site by concatenating, minifying, and compressing your scripts. There are also templates that provide this functionality."
+    "message": "Μερικές [προσθήκες Joomla](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) μπορούν να επιταχύνουν τον ιστότοπό σας συνενώνοντας, ελαχιστοποιώντας και συμπιέζοντας τα σενάριά σας. Υπάρχουν επίσης πρότυπα που παρέχουν αυτήν τη λειτουργία."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unused-css-rules": {
-    "message": "Consider reducing, or switching, the number of [Joomla extensions](https://extensions.joomla.org/) loading unused CSS in your page. To identify extensions that are adding extraneous CSS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/plugin responsible from the URL of the stylesheet. Look out for plugins that have many stylesheets in the list which have a lot of red in code coverage. A plugin should only enqueue a stylesheet if it is actually used on the page."
+    "message": "Εξετάστε το ενδεχόμενο μείωσης ή αλλαγής των [επεκτάσεων Joomla](https://extensions.joomla.org/) που φορτώνουν μη χρησιμοποιούμενα CSS στη σελίδα σας. Για να προσδιορίσετε τις επεκτάσεις που προσθέτουν περιττό κώδικα CSS, δοκιμάστε να εκτελέσετε [κάλυψη κώδικα](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) στο Chrome DevTools. Μπορείτε να προσδιορίσετε το θέμα ή την προσθήκη που ευθύνεται μέσω του URL του φύλλου στιλ. Αναζητήστε προσθήκες που διαθέτουν πολλά φύλλα στιλ στη λίστα, στα οποία ένα μεγάλο μέρος της κάλυψης κώδικα έχει κόκκινο χρώμα. Μια προσθήκη θα πρέπει να τοποθετεί στην ουρά ένα φύλλο στιλ, μόνο αν χρησιμοποιείται στη σελίδα."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unused-javascript": {
-    "message": "Consider reducing, or switching, the number of [Joomla extensions](https://extensions.joomla.org/) loading unused JavaScript in your page. To identify plugins that are adding extraneous JS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the extension responsible from the URL of the script. Look out for extensions that have many scripts in the list which have a lot of red in code coverage. An extension should only enqueue a script if it is actually used on the page."
+    "message": "Εξετάστε το ενδεχόμενο μείωσης ή αλλαγής των [επεκτάσεων Joomla](https://extensions.joomla.org/) που φορτώνουν μη χρησιμοποιούμενα JavaScript στη σελίδα σας. Για να προσδιορίσετε τις προσθήκες που προσθέτουν περιττό κώδικα JS, δοκιμάστε να εκτελέσετε [κάλυψη κώδικα](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) στο Chrome DevTools. Μπορείτε να προσδιορίσετε την επέκταση που ευθύνεται μέσω του URL του σεναρίου. Αναζητήστε επεκτάσεις που διαθέτουν πολλά σενάρια στη λίστα, στα οποία ένα μεγάλο μέρος της κάλυψης κώδικα έχει κόκκινο χρώμα. Μια επέκταση θα πρέπει να τοποθετεί στην ουρά ένα σενάριο, μόνο αν χρησιμοποιείται στη σελίδα."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-long-cache-ttl": {
-    "message": "Read about [Browser Caching in Joomla](https://docs.joomla.org/Cache)."
+    "message": "Διαβάστε σχετικά με την [Κρυφή μνήμη προγράμματος περιήγησης στο Joomla](https://docs.joomla.org/Cache)."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-optimized-images": {
-    "message": "Consider using an [image optimization plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) that compresses your images while retaining quality."
+    "message": "Εξετάστε το ενδεχόμενο να χρησιμοποιήσετε μια [προσθήκη βελτιστοποίησης εικόνων](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) που συμπιέζει τις εικόνες διατηρώντας όμως την ποιότητά τους."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-responsive-images": {
-    "message": "Consider using a [responsive images plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=responsive%20images) to use responsive images in your content."
+    "message": "Εξετάστε το ενδεχόμενο χρήσης μιας [προσθήκης αποκριτικών εικόνων](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=responsive%20images), για να χρησιμοποιείτε αποκριτικές εικόνες στο περιεχόμενό σας."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-text-compression": {
-    "message": "You can enable text compression by enabling Gzip Page Compression in Joomla (System > Global configuration > Server)."
+    "message": "Μπορείτε να ενεργοποιήσετε τη συμπίεση κειμένου μέσω της ενεργοποίησης της Συμπίεσης σελίδας Gzip στο Joomla (Σύστημα > Καθολική διαμόρφωση > Διακομιστής)."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-webp-images": {
-    "message": "Consider using a [plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) or service that will automatically convert your uploaded images to the optimal formats."
+    "message": "Εξετάστε το ενδεχόμενο να χρησιμοποιήσετε μια [προσθήκη](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) ή μια υπηρεσία που θα μετατρέπει αυτόματα τις μεταφορτωμένες εικόνες σας στη βέλτιστη μορφή."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | critical-request-chains": {
     "message": "Εάν δεν δημιουργείτε δικά σας στοιχεία JavaScript, σκεφτείτε να χρησιμοποιήσετε [δεματοποιητή](https://github.com/magento/baler)."
@@ -2064,7 +2064,7 @@
     "message": "Ενεργοποιήστε την επιλογή Ελαχιστοποίηση αρχείων CSS στις ρυθμίσεις Προγραμματιστή του καταστήματός σας. [Μάθετε περισσότερα](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-javascript": {
-    "message": "Use [Terser](https://www.npmjs.com/package/terser) to minify all JavaScript assets from static content deployment, and disable the built-in minification feature."
+    "message": "Χρησιμοποιήστε το [Terser](https://www.npmjs.com/package/terser) για να ελαχιστοποιήσετε όλα τα στοιχεία JavaScript από την ανάπτυξη στατικού περιεχομένου και να απενεργοποιήσετε την ενσωματωμένη λειτουργία ελαχιστοποίησης."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unused-javascript": {
     "message": "Απενεργοποιήστε την ενσωματωμένη [πακετοποίηση JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) του Magento."
@@ -2082,7 +2082,7 @@
     "message": "Μπορείτε να πραγματοποιήσετε αναζήτηση στο [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) για διάφορες επεκτάσεις τρίτων μερών, ώστε να αξιοποιήσετε νεότερες μορφές εικόνας."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | dom-size": {
-    "message": "Consider using a “windowing” library like `react-window` to minimize the number of DOM nodes created if you are rendering many repeated elements on the page. [Learn more](https://web.dev/virtualize-long-lists-react-window/). Also, minimize unnecessary re-renders using [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent), or [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) and [skip effects](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) only until certain dependencies have changed if you are using the Effect hook to improve runtime performance."
+    "message": "Consider using a “windowing” library like `react-window` to minimize the number of DOM nodes created if you are rendering many repeated elements on the page. [Learn more](https://web.dev/virtualize-long-lists-react-window/). Also, minimize unnecessary re-renders using [`shouldComponentUpdate`](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [`PureComponent`](https://reactjs.org/docs/react-api.html#reactpurecomponent), or [`React.memo`](https://reactjs.org/docs/react-api.html#reactmemo) and [skip effects](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) only until certain dependencies have changed if you are using the `Effect` hook to improve runtime performance."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "Εάν χρησιμοποιείτε το React Router, ελαχιστοποιήστε τη χρήση του στοιχείου `<Redirect>` για [πλοηγήσεις διαδρομής](https://reacttraining.com/react-router/web/api/Redirect)."
@@ -2091,10 +2091,10 @@
     "message": "Εάν πραγματοποιείτε απόδοση στοιχείων React στον διακομιστή, μπορείτε να χρησιμοποιήσετε το `renderToNodeStream()` ή το `renderToStaticNodeStream()` για να επιτρέψετε στον υπολογιστή-πελάτη να λαμβάνει και να ενισχύει διαφορετικά μέρη της σήμανσης, αντί για όλα μαζί. [Μάθετε περισσότερα](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
-    "message": "Εάν το σύστημα έκδοσής σας ελαχιστοποιεί τα αρχεία CSS σας αυτόματα, βεβαιωθείτε ότι αναπτύσσετε την έκδοση παραγωγής της εφαρμογής σας. Μπορείτε να το ελέγξετε αυτό από την επέκταση React Developer Tools. [Μάθετε περισσότερα](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+    "message": "If your build system minifies CSS files automatically, ensure that you are deploying the production build of your application. You can check this with the React Developer Tools extension. [Learn more](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-javascript": {
-    "message": "Εάν το σύστημα έκδοσής σας ελαχιστοποιεί τα αρχεία JS αυτόματα, βεβαιωθείτε ότι αναπτύσσετε την έκδοση παραγωγής της εφαρμογής σας. Μπορείτε να το ελέγξετε αυτό από την επέκταση React Developer Tools. [Μάθετε περισσότερα](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+    "message": "If your build system minifies JS files automatically, ensure that you are deploying the production build of your application. You can check this with the React Developer Tools extension. [Learn more](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
     "message": "Εάν δεν πραγματοποιείτε απόδοση στον διακομιστή, [χωρίστε τα πακέτα JavaScript](https://web.dev/code-splitting-suspense/) με το `React.lazy()`. Διαφορετικά, χωρίστε με χρήση κώδικα, χρησιμοποιώντας μια βιβλιοθήκη τρίτου μέρους, όπως τα [στοιχεία με δυνατότητα φόρτωσης](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
@@ -2103,7 +2103,7 @@
     "message": "Χρησιμοποιήστε το React DevTools Profiler, το οποίο χρησιμοποιεί το API του Profiler, για να μετρήσετε τις επιδόσεις απόδοσης των στοιχείων σας. [Μάθετε περισσότερα.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient-animated-content": {
-    "message": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video."
+    "message": "Εξετάστε το ενδεχόμενο μεταφόρτωσης του GIF σε μια υπηρεσία η οποία θα το διαθέσει για ενσωμάτωση ως βίντεο HTML5."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen-images": {
     "message": "Εγκαταστήστε μια προσθήκη [WordPress αργής φόρτωσης](https://wordpress.org/plugins/search/lazy+load/) η οποία παρέχει τη δυνατότητα αναβολής φόρτωσης των εικόνων εκτός οθόνης. Εναλλακτικά, χρησιμοποιήστε ένα θέμα που παρέχει αυτή τη δυνατότητα. Εξετάστε επίσης το ενδεχόμενο χρήσης της [προσθήκης AMP](https://wordpress.org/plugins/amp/)."
@@ -2142,6 +2142,6 @@
     "message": "Μπορείτε να ενεργοποιήσετε τη συμπίεση κειμένου στη διαμόρφωση του διακομιστή ιστού σας."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-webp-images": {
-    "message": "Consider using a [plugin](https://wordpress.org/plugins/search/convert+webp/) or service that will automatically convert your uploaded images to the optimal formats."
+    "message": "Εξετάστε το ενδεχόμενο να χρησιμοποιήσετε μια [προσθήκη](https://wordpress.org/plugins/search/convert+webp/) ή μια υπηρεσία που θα μετατρέπει αυτόματα τις μεταφορτωμένες εικόνες σας στη βέλτιστη μορφή."
   }
 }
