@@ -210,7 +210,11 @@ function computeBenchmarkIndex() {
     const start = Date.now();
     let iterations = 0;
 
-    while (Date.now() - start < 500) {
+    // Some Intel CPUs have a performance cliff due to unlucky JCC instruction alignment.
+    // Two possible fixes: call Date.now less often, or manually unroll the inner loop a bit.
+    // We'll call Date.now less and only check the duration on every 10th iteration for simplicity.
+    // See https://bugs.chromium.org/p/v8/issues/detail?id=10954#c1.
+    while (iterations % 10 !== 0 || Date.now() - start < 500) {
       const src = iterations % 2 === 0 ? arrA : arrB;
       const tgt = iterations % 2 === 0 ? arrB : arrA;
 
