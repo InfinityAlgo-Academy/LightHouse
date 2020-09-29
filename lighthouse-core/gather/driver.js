@@ -12,6 +12,7 @@ const LHElement = require('../lib/lh-element.js');
 const LHError = require('../lib/lh-error.js');
 const NetworkRequest = require('../lib/network-request.js');
 const EventEmitter = require('events').EventEmitter;
+const i18n = require('../lib/i18n/i18n.js');
 const URL = require('../lib/url-shim.js');
 const constants = require('../config/constants.js');
 
@@ -23,6 +24,24 @@ const pageFunctions = require('../lib/page-functions.js');
 // Pulled in for Connection type checking.
 // eslint-disable-next-line no-unused-vars
 const Connection = require('./connections/connection.js');
+
+const UIStrings = {
+  /**
+   * @description A warning that previously-saved data may have affected the measured performance and instructions on how to avoid the problem. "locations" will be a list of possible types of data storage locations, e.g. "IndexedDB",  "Local Storage", or "Web SQL".
+   * @example {IndexedDB, Local Storage} locations
+   */
+  warningData: `{locationCount, plural,
+    =1 {There may be stored data affecting loading performance in this location: {locations}. ` +
+      `Audit this page in an incognito window to prevent those resources ` +
+      `from affecting your scores.}
+    other {There may be stored data affecting loading ` +
+      `performance in these locations: {locations}. ` +
+      `Audit this page in an incognito window to prevent those resources ` +
+      `from affecting your scores.}
+  }`,
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 // Controls how long to wait after FCP before continuing
 const DEFAULT_PAUSE_AFTER_FCP = 0;
@@ -1445,16 +1464,15 @@ class Driver {
   async clearDataForOrigin(url) {
     const origin = new URL(url).origin;
 
-    // Clear all types of storage except cookies, so the user isn't logged out.
+    // Clear some types of storage.
+    // Cookies are not cleared, so the user isn't logged out.
+    // indexeddb, websql, and localstorage are not cleared to prevent loss of potentially important data.
     //   https://chromedevtools.github.io/debugger-protocol-viewer/tot/Storage/#type-StorageType
     const typesToClear = [
       'appcache',
       // 'cookies',
       'file_systems',
-      'indexeddb',
-      'local_storage',
       'shader_cache',
-      'websql',
       'service_workers',
       'cache_storage',
     ].join(',');
@@ -1474,6 +1492,33 @@ class Driver {
       } else {
         throw err;
       }
+    }
+  }
+
+  /**
+   * @param {string} url
+   * @return {Promise<LH.IcuMessage | undefined>}
+   */
+  async getImportantStorageWarning(url) {
+    const usageData = await this.sendCommand('Storage.getUsageAndQuota', {
+      origin: url,
+    });
+    /** @type {Record<string, string>} */
+    const storageTypeNames = {
+      local_storage: 'Local Storage',
+      indexeddb: 'IndexedDB',
+      websql: 'Web SQL',
+    };
+    const locations = usageData.usageBreakdown
+      .filter(usage => usage.usage)
+      .map(usage => storageTypeNames[usage.storageType] || '')
+      .filter(Boolean);
+    if (locations.length) {
+      // TODO(#11495): Use Intl.ListFormat with Node 12
+      return str_(
+        UIStrings.warningData,
+        {locations: locations.join(', '), locationCount: locations.length}
+      );
     }
   }
 
@@ -1549,3 +1594,4 @@ class Driver {
 }
 
 module.exports = Driver;
+module.exports.UIStrings = UIStrings;
