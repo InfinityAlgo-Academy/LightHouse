@@ -14,12 +14,9 @@ const Audit = require('./audit.js');
 const JsBundles = require('../computed/js-bundles.js');
 const UnusedJavaScriptSummary = require('../computed/unused-javascript-summary.js');
 const ModuleDuplication = require('../computed/module-duplication.js');
-const NetworkRecords = require('../computed/network-records.js');
-const ResourceSummary = require('../computed/resource-summary.js');
 
 /**
- * A collection of root node containers, grouped by type.
- * @typedef {Record<string, RootNodeContainer[]>} TreemapData
+ * @typedef {RootNodeContainer[]} TreemapData
  */
 
 /**
@@ -151,13 +148,13 @@ class TreemapDataAudit extends Audit {
   }
 
   /**
-   * Returns a root node container where the first level of nodes are script URLs.
+   * Returns root node containers where the first level of nodes are script URLs.
    * If a script has a source map, that node will be set by prepareTreemapNodes.
    * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<RootNodeContainer[]>}
    */
-  static async makeJavaScriptRootNodes(artifacts, context) {
+  static async makeRootNodes(artifacts, context) {
     /** @type {RootNodeContainer[]} */
     const rootNodeContainers = [];
 
@@ -244,66 +241,13 @@ class TreemapDataAudit extends Audit {
   }
 
   /**
-   * Returns root node where the first level is network resource type,
-   * followed by the leaf nodes which are are all network requests. Data
-   * contained is the resourceBytes.
-   * @param {LH.Artifacts} artifacts
-   * @param {LH.Audit.Context} context
-   * @return {Promise<RootNodeContainer>}
-   */
-  static async makeResourceSummaryRootNode(artifacts, context) {
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
-
-    const totalCount = networkRecords.length;
-    let totalSize = 0;
-
-    /** @type {Node[]} */
-    const resourceNodes = [];
-    for (const networkRecord of networkRecords) {
-      const resourceType = ResourceSummary.determineResourceType(networkRecord);
-
-      let resourceNode = resourceNodes.find(child => child.name === resourceType);
-      if (!resourceNode) {
-        resourceNode = {
-          name: resourceType,
-          resourceBytes: 0,
-          children: [],
-        };
-        resourceNodes.push(resourceNode);
-      }
-
-      totalSize += networkRecord.resourceSize;
-      resourceNode.resourceBytes += networkRecord.resourceSize;
-
-      resourceNode.children = resourceNode.children || [];
-      resourceNode.children.push({
-        name: networkRecord.url,
-        resourceBytes: networkRecord.resourceSize,
-      });
-    }
-
-    return {
-      name: 'Resource Summary',
-      node: {
-        name: `${totalCount} requests`,
-        resourceBytes: totalSize,
-        children: resourceNodes,
-      },
-    };
-  }
-
-  /**
    * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
     /** @type {TreemapData} */
-    const treemapData = {
-      scripts: await TreemapDataAudit.makeJavaScriptRootNodes(artifacts, context),
-      resources: [await TreemapDataAudit.makeResourceSummaryRootNode(artifacts, context)],
-    };
+    const treemapData = await TreemapDataAudit.makeRootNodes(artifacts, context);
 
     // TODO: when out of experimental should make a new detail type.
     /** @type {LH.Audit.Details.DebugData} */

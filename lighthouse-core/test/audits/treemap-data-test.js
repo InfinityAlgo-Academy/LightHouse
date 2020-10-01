@@ -55,12 +55,8 @@ describe('TreemapData audit', () => {
       treemapData = results.details.treemapData;
     });
 
-    it('has multiple root node types', () => {
-      expect(Object.keys(treemapData)).toEqual(['scripts', 'resources']);
-    });
-
-    it('has root nodes for scripts', () => {
-      expect(treemapData.scripts.find(s => s.name === 'https://sqoosh.app/no-map-or-usage.js'))
+    it('has root nodes', () => {
+      expect(treemapData.find(s => s.name === 'https://sqoosh.app/no-map-or-usage.js'))
         .toMatchInlineSnapshot(`
         Object {
           "name": "https://sqoosh.app/no-map-or-usage.js",
@@ -71,45 +67,8 @@ describe('TreemapData audit', () => {
         }
       `);
 
-      expect(JSON.stringify(treemapData.scripts).length).toMatchInlineSnapshot(`6621`);
-      expect(treemapData.scripts).toMatchSnapshot();
-    });
-
-    it('has root node for network resources', () => {
-      expect(treemapData.resources).toHaveLength(1);
-      const networkRequestsRootNode = treemapData.resources[0];
-
-      const scriptsNode = (networkRequestsRootNode.node.children || [])[0];
-      expect(scriptsNode.name).toBe('script');
-      expect(scriptsNode.children || []).toHaveLength(2);
-
-      expect(treemapData.resources).toMatchInlineSnapshot(`
-        Array [
-          Object {
-            "name": "Resource Summary",
-            "node": Object {
-              "children": Array [
-                Object {
-                  "children": Array [
-                    Object {
-                      "name": "https://squoosh.app/main-app.js",
-                      "resourceBytes": 83748,
-                    },
-                    Object {
-                      "name": "https://sqoosh.app/no-map-or-usage.js",
-                      "resourceBytes": 5,
-                    },
-                  ],
-                  "name": "script",
-                  "resourceBytes": 83753,
-                },
-              ],
-              "name": "2 requests",
-              "resourceBytes": 83753,
-            },
-          },
-        ]
-      `);
+      expect(JSON.stringify(treemapData).length).toMatchInlineSnapshot(`6621`);
+      expect(treemapData).toMatchSnapshot();
     });
   });
 
