@@ -5,16 +5,11 @@
  */
 'use strict';
 
-/* global document, window, getComputedStyle, getElementsInDocument, Node, getNodeDetails */
+/* global document, window, getComputedStyle, getElementsInDocument, Node, getNodeDetails, getRectCenterPoint */
 
 const Gatherer = require('../gatherer.js');
 const pageFunctions = require('../../../lib/page-functions.js');
-const {
-  rectContains,
-  getRectArea,
-  getRectCenterPoint,
-  getLargestRect,
-} = require('../../../lib/rect-helpers.js');
+const RectHelpers = require('../../../lib/rect-helpers.js');
 
 const TARGET_SELECTORS = [
   'button',
@@ -257,6 +252,7 @@ function gatherTapTargets(tapTargetsSelector) {
     visibleClientRects = visibleClientRects.filter(rect => {
       // Just checking the center can cause false failures for large partially hidden tap targets,
       // but that should be a rare edge case
+      // @ts-expect-error - put into scope via stringification
       const rectCenterPoint = getRectCenterPoint(rect);
       return elementCenterIsAtZAxisTop(tapTargetElement, rectCenterPoint);
     });
@@ -298,10 +294,7 @@ class TapTargets extends Gatherer {
       ${getClientRects.toString()};
       ${hasTextNodeSiblingsFormingTextBlock.toString()};
       ${elementIsInTextBlock.toString()};
-      ${getRectArea.toString()};
-      ${getLargestRect.toString()};
-      ${getRectCenterPoint.toString()};
-      ${rectContains.toString()};
+      ${RectHelpers.getRectCenterPoint.toString()};
       ${pageFunctions.getNodeDetailsString};
       ${gatherTapTargets.toString()};
 

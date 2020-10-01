@@ -105,9 +105,10 @@ class GatherRunner {
   /**
    * @param {Driver} driver
    * @param {{requestedUrl: string, settings: LH.Config.Settings}} options
+   * @param {(string | LH.IcuMessage)[]} LighthouseRunWarnings
    * @return {Promise<void>}
    */
-  static async setupDriver(driver, options) {
+  static async setupDriver(driver, options, LighthouseRunWarnings) {
     const status = {msg: 'Initializing…', id: 'lh:gather:setupDriver'};
     log.time(status);
     const resetStorage = !options.settings.disableStorageReset;
@@ -119,7 +120,13 @@ class GatherRunner {
     await driver.registerPerformanceObserver();
     await driver.dismissJavaScriptDialogs();
     await driver.registerRequestIdleCallbackWrap(options.settings);
-    if (resetStorage) await driver.clearDataForOrigin(options.requestedUrl);
+    if (resetStorage) {
+      const warning = await driver.getImportantStorageWarning(options.requestedUrl);
+      if (warning) {
+        LighthouseRunWarnings.push(warning);
+      }
+      await driver.clearDataForOrigin(options.requestedUrl);
+    }
     log.timeEnd(status);
   }
 
@@ -654,7 +661,7 @@ class GatherRunner {
       const baseArtifacts = await GatherRunner.initializeBaseArtifacts(options);
       baseArtifacts.BenchmarkIndex = await options.driver.getBenchmarkIndex();
 
-      await GatherRunner.setupDriver(driver, options);
+      await GatherRunner.setupDriver(driver, options, baseArtifacts.LighthouseRunWarnings);
 
       let isFirstPass = true;
       for (const passConfig of passConfigs) {

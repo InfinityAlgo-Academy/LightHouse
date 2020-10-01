@@ -82,8 +82,6 @@ declare global {
       ScriptElements: Array<Artifacts.ScriptElement>;
       /** The dimensions and devicePixelRatio of the loaded viewport. */
       ViewportDimensions: Artifacts.ViewportDimensions;
-      /** All the form elements in the page and formless inputs. */
-      FormElements: Artifacts.Form[];
     }
 
     /**
@@ -112,6 +110,8 @@ declare global {
       Fonts: Artifacts.Font[];
       /** Information on poorly sized font usage and the text affected by it. */
       FontSize: Artifacts.FontSize;
+      /** All the form elements in the page and formless inputs. */
+      FormElements: Artifacts.Form[];
       /** Screenshot of the entire page (rather than just the above the fold content). */
       FullPageScreenshot: Artifacts.FullPageScreenshot | null;
       /** Information about event listeners registered on the global object. */

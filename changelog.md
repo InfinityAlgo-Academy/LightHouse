@@ -1,3 +1,122 @@
+ <a name="6.4.0"></a>
+# 6.4.0 (2020-09-30)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v6.3.0...v6.4.0)
+
+We expect this release to ship in the DevTools of [Chrome 88](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## New Contributors
+
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+
+- Denis Seleznev @hcodes
+- Irfan Maulana @mazipan
+- James Garbutt @43081j
+- Matt Hobbs @Nooshu
+- Mohammed J. Razem @moerazem
+- Pujitha.E @pujitha7
+- Quentin @qwright10
+- andreizet @andreizet
+
+## Notable Changes
+
+* large-javascript-libraries: move to experimental ([#11484](https://github.com/GoogleChrome/lighthouse/pull/11484))
+* driver: don't clear indexedb, websql, or localstorage before run ([#11438](https://github.com/GoogleChrome/lighthouse/pull/11438))
+
+## New Audits
+
+* unsized-images reland ([#11340](https://github.com/GoogleChrome/lighthouse/pull/11340)): This audit confirms users' images are explicitly sized; ultimately preventing layout shift and improving CLS.
+
+## Core
+
+* tracehouse: add CPU trace profiler model ([#11072](https://github.com/GoogleChrome/lighthouse/pull/11072))
+* stack-packs: add Drupal pack ([#10522](https://github.com/GoogleChrome/lighthouse/pull/10522))
+* stack-packs: move to lighthouse-stack-packs npm package ([#11370](https://github.com/GoogleChrome/lighthouse/pull/11370))
+* axe: use our html snippet rather than axe's ([#11362](https://github.com/GoogleChrome/lighthouse/pull/11362))
+* benchmarkindex: add workaround for Intel microcode fixes ([#11483](https://github.com/GoogleChrome/lighthouse/pull/11483))
+* config: correct typo on throttling profile name ([#11355](https://github.com/GoogleChrome/lighthouse/pull/11355))
+* image-elements: do not set untrusted natural dimensions ([#11457](https://github.com/GoogleChrome/lighthouse/pull/11457))
+* installable-manifest: expose app manifest url ([#11330](https://github.com/GoogleChrome/lighthouse/pull/11330))
+* is-on-https: add missing space in description ([#11466](https://github.com/GoogleChrome/lighthouse/pull/11466))
+* is-on-https: remove <M84 codepaths ([#11373](https://github.com/GoogleChrome/lighthouse/pull/11373))
+* js-usage: normalize url key ([#11302](https://github.com/GoogleChrome/lighthouse/pull/11302))
+* password-inputs-can-be-pasted-into: add devtoolsNodePath ([#11416](https://github.com/GoogleChrome/lighthouse/pull/11416))
+* normalize node information in gathering ([#11405](https://github.com/GoogleChrome/lighthouse/pull/11405))
+* traverse shadow hosts in getNodePath ([#10956](https://github.com/GoogleChrome/lighthouse/pull/10956))
+* minification-estimator: minify nested template literals in JavaScript ([#11395](https://github.com/GoogleChrome/lighthouse/pull/11395))
+* expose service worker url on service worker audit ([#11329](https://github.com/GoogleChrome/lighthouse/pull/11329))
+* preconnect: ignore unimportant origins ([#11306](https://github.com/GoogleChrome/lighthouse/pull/11306))
+* autocomplete: add chrome suggestions, invalid warning ([#11342](https://github.com/GoogleChrome/lighthouse/pull/11342))
+
+## Report
+
+* let fireworks eligibility ignore PWA category ([#11200](https://github.com/GoogleChrome/lighthouse/pull/11200))
+* csv: add overall category scores ([#11404](https://github.com/GoogleChrome/lighthouse/pull/11404))
+* normalize -0 to 0 ([#11353](https://github.com/GoogleChrome/lighthouse/pull/11353))
+* set min-width on code table column ([#11359](https://github.com/GoogleChrome/lighthouse/pull/11359))
+
+## Deps
+
+* lighthouse-stack-packs: update ([#11492](https://github.com/GoogleChrome/lighthouse/pull/11492))
+* update third-party-web ([#11469](https://github.com/GoogleChrome/lighthouse/pull/11469))
+* chrome-launcher to v0.13.4 ([#11434](https://github.com/GoogleChrome/lighthouse/pull/11434))
+* update transitive lodash ([#11448](https://github.com/GoogleChrome/lighthouse/pull/11448))
+* inquirer: upgrade to 7.3.3 ([#11441](https://github.com/GoogleChrome/lighthouse/pull/11441))
+* snyk: update snyk snapshot ([#11347](https://github.com/GoogleChrome/lighthouse/pull/11347))
+
+## Clients
+
+* devtools: update report-generator.js to match DevTools changes ([#11411](https://github.com/GoogleChrome/lighthouse/pull/11411))
+* lr: enable uses-http2, add protocol override header ([#11439](https://github.com/GoogleChrome/lighthouse/pull/11439))
+
+## I18n
+
+* import ([#11494](https://github.com/GoogleChrome/lighthouse/pull/11494))
+* remove incorrect aliases ([#11487](https://github.com/GoogleChrome/lighthouse/pull/11487))
+* use placeholders more for html terms ([#11406](https://github.com/GoogleChrome/lighthouse/pull/11406))
+* use IcuMessage objects instead of string IDs ([#10630](https://github.com/GoogleChrome/lighthouse/pull/10630))
+* code-escape <link> in preconnect and preload ([#11401](https://github.com/GoogleChrome/lighthouse/pull/11401))
+* accept array of locales in lookupLocale ([#11349](https://github.com/GoogleChrome/lighthouse/pull/11349))
+* add more translator strings to font-size ([#11338](https://github.com/GoogleChrome/lighthouse/pull/11338))
+
+## Docs
+
+* auth: add setCookie example ([#11473](https://github.com/GoogleChrome/lighthouse/pull/11473))
+* variability: expand on lighthouse-ci usage ([#11377](https://github.com/GoogleChrome/lighthouse/pull/11377))
+* remove PageSpeed Green from integrations ([#11390](https://github.com/GoogleChrome/lighthouse/pull/11390))
+* add microlink to integrations ([#11048](https://github.com/GoogleChrome/lighthouse/pull/11048))
+* releasing: align 2 days before branch. update managers ([#11333](https://github.com/GoogleChrome/lighthouse/pull/11333))
+* add CPU throttling guide ([#11325](https://github.com/GoogleChrome/lighthouse/pull/11325))
+
+## Tests
+
+* page-functions: add test for getNodePath ([#11433](https://github.com/GoogleChrome/lighthouse/pull/11433))
+* check for dependencies when setting up blink tools ([#11437](https://github.com/GoogleChrome/lighthouse/pull/11437))
+* hash more files for devtools test cache ([#11417](https://github.com/GoogleChrome/lighthouse/pull/11417))
+* smoke: fix preconnect flake w/ a non-locally installed font ([#11425](https://github.com/GoogleChrome/lighthouse/pull/11425))
+* add markdown link checker ([#11358](https://github.com/GoogleChrome/lighthouse/pull/11358))
+* webtests: test pub ads plugin ([#11364](https://github.com/GoogleChrome/lighthouse/pull/11364))
+* rebaseline webtests ([#11351](https://github.com/GoogleChrome/lighthouse/pull/11351))
+* devtools: fail on unset/unbound env variable ([#11331](https://github.com/GoogleChrome/lighthouse/pull/11331))
+
+## Misc
+
+* build: fix mangling for tap-targets gatherer ([#11463](https://github.com/GoogleChrome/lighthouse/pull/11463))
+* script for analyzing results from gcp data collection ([#11296](https://github.com/GoogleChrome/lighthouse/pull/11296))
+* make FormElements not a public artifact ([#11476](https://github.com/GoogleChrome/lighthouse/pull/11476))
+* yarn open-devtools ([#11445](https://github.com/GoogleChrome/lighthouse/pull/11445))
+* build: use terser on inline assets ([#11461](https://github.com/GoogleChrome/lighthouse/pull/11461))
+* tweak typescript jsdoc for list format ([#11447](https://github.com/GoogleChrome/lighthouse/pull/11447))
+* build: minify bundles with terser ([#9605](https://github.com/GoogleChrome/lighthouse/pull/9605))
+* add score shapes to legend ([#11440](https://github.com/GoogleChrome/lighthouse/pull/11440))
+* axe: rename axe types ([#11432](https://github.com/GoogleChrome/lighthouse/pull/11432))
+* update stack packs, remove duplicated stack pack files ([#11396](https://github.com/GoogleChrome/lighthouse/pull/11396))
+* build: fix devtools tests by making empty type files ([#11418](https://github.com/GoogleChrome/lighthouse/pull/11418))
+* hide locale files by default in PRs ([#11363](https://github.com/GoogleChrome/lighthouse/pull/11363))
+* fix typos in jsdoc types ([#11367](https://github.com/GoogleChrome/lighthouse/pull/11367))
+* build: include publisher ads plugin in lightrider bundle ([#11366](https://github.com/GoogleChrome/lighthouse/pull/11366))
+* flatten new service-worker audit details ([#11361](https://github.com/GoogleChrome/lighthouse/pull/11361))
+* fix run-web-tests.sh ([#11346](https://github.com/GoogleChrome/lighthouse/pull/11346))
+
 <a name="6.3.0"></a>
 # 6.3.0 (2020-08-26)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v6.2.0...v6.3.0)

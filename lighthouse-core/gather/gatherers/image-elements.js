@@ -57,6 +57,8 @@ function getHTMLImages(allElements) {
 
   return allImageElements.map(element => {
     const computedStyle = window.getComputedStyle(element);
+    const isPicture = !!element.parentElement && element.parentElement.tagName === 'PICTURE';
+    const canTrustNaturalDimensions = !isPicture && !element.srcset;
     return {
       // currentSrc used over src to get the url as determined by the browser
       // after taking into account srcset/media/sizes/etc.
@@ -65,18 +67,18 @@ function getHTMLImages(allElements) {
       displayedWidth: element.width,
       displayedHeight: element.height,
       clientRect: getClientRect(element),
-      naturalWidth: element.naturalWidth,
-      naturalHeight: element.naturalHeight,
+      naturalWidth: canTrustNaturalDimensions ? element.naturalWidth : 0,
+      naturalHeight: canTrustNaturalDimensions ? element.naturalHeight : 0,
       attributeWidth: element.getAttribute('width') || '',
       attributeHeight: element.getAttribute('height') || '',
       cssWidth: undefined, // this will get overwritten below
       cssHeight: undefined, // this will get overwritten below
       cssComputedPosition: getPosition(element, computedStyle),
       isCss: false,
+      isPicture,
       // @ts-expect-error: loading attribute not yet added to HTMLImageElement definition.
       loading: element.loading,
       resourceSize: 0, // this will get overwritten below
-      isPicture: !!element.parentElement && element.parentElement.tagName === 'PICTURE',
       usesObjectFit: ['cover', 'contain', 'scale-down', 'none'].includes(
         computedStyle.getPropertyValue('object-fit')
       ),
@@ -175,7 +177,7 @@ function determineNaturalSize(url) {
 }
 
 /**
- * @param {LH.Crdp.CSS.CSSStyle} [style]
+ * @param {LH.Crdp.CSS.CSSStyle|undefined} style
  * @param {string} property
  * @return {string | undefined}
  */
@@ -191,7 +193,7 @@ function findSizeDeclaration(style, property) {
 /**
  * Finds the most specific directly matched CSS font-size rule from the list.
  *
- * @param {Array<LH.Crdp.CSS.RuleMatch>} [matchedCSSRules]
+ * @param {Array<LH.Crdp.CSS.RuleMatch>|undefined} matchedCSSRules
  * @param {string} property
  * @returns {string | undefined}
  */
@@ -346,7 +348,6 @@ class ImageElements extends Gatherer {
       // or it's not in the top 50 largest images.
       if (
         (element.isPicture || element.isCss || element.srcset) &&
-        networkRecord &&
         top50Images.includes(networkRecord)
       ) {
         element = await this.fetchElementWithSizeInformation(driver, element);

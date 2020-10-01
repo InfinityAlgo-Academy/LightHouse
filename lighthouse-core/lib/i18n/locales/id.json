@@ -384,31 +384,31 @@
     "message": "Memberikan `apple-touch-icon` yang valid"
   },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
-    "message": "Autocomplete Current Value"
+    "message": "Current Value"
   },
   "lighthouse-core/audits/autocomplete.js | columnSuggestions": {
-    "message": "Autocomplete Suggested Token"
+    "message": "Suggested Token"
   },
   "lighthouse-core/audits/autocomplete.js | description": {
-    "message": "Pelengkapan otomatis membantu pengguna mengirim formulir dengan lebih cepat. Untuk mempermudah pengguna, sebaiknya aktifkan pelengkapan otomatis dengan menyetel atribut `autocomplete` ke nilai yang valid. [Pelajari lebih lanjut](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)"
+    "message": "`autocomplete` helps users submit forms quicker. To reduce user effort, consider enabling by setting the `autocomplete` attribute to a valid value. [Learn more](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)"
   },
   "lighthouse-core/audits/autocomplete.js | failureTitle": {
-    "message": "Elemen input tidak memiliki atribut yang benar untuk pelengkapan otomatis"
+    "message": "`<input>` elements do not have correct `autocomplete` attributes"
   },
   "lighthouse-core/audits/autocomplete.js | manualReview": {
-    "message": "Requires manual review"
+    "message": "Memerlukan tinjauan manual"
   },
   "lighthouse-core/audits/autocomplete.js | reviewOrder": {
-    "message": "Review order of tokens"
+    "message": "Tinjau urutan token"
   },
   "lighthouse-core/audits/autocomplete.js | title": {
-    "message": "Elemen input menggunakan pelengkapan otomatis"
+    "message": "`<input>` elements correctly use `autocomplete`"
   },
   "lighthouse-core/audits/autocomplete.js | warningInvalid": {
-    "message": "Autocomplete token(s): \"{token}\" is invalid in {snippet}"
+    "message": "`autocomplete` token(s): \"{token}\" is invalid in {snippet}"
   },
   "lighthouse-core/audits/autocomplete.js | warningOrder": {
-    "message": "Review order of tokens: \"{tokens}\" in {snippet}"
+    "message": "Tinjau urutan token: \"{tokens}\" di {snippet}"
   },
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
     "message": "Ekstensi Chrome berpengaruh negatif terhadap performa pemuatan halaman ini. Coba audit halaman dalam mode samaran atau dari profil Chrome tanpa ekstensi."
@@ -585,7 +585,7 @@
     "message": "Menghindari Cache Aplikasi"
   },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
-    "message": "Diperlukan deklarasi encoding karakter. Tindakan ini dapat dilakukan dengan tag <meta> pada 1024 byte pertama HTML atau di header respons HTTP Jenis Konten. [Pelajari lebih lanjut](https://web.dev/charset/)."
+    "message": "A character encoding declaration is required. It can be done with a `<meta>` tag in the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more](https://web.dev/charset/)."
   },
   "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
     "message": "Deklarasi charset tidak ada atau terlambat muncul di HTML"
@@ -834,7 +834,7 @@
     "message": "Resolusi Permintaan"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
-    "message": "Semua situs harus dilindungi dengan HTTPS, termasuk situs-situs yang tidak menangani data sensitif. Ini termasuk menghindari [konten campuran](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), tempat beberapa resource dimuat melalui HTTP meskipun permintaan awal dilayani melalui HTTPS. HTTPS mencegah penyusup merusak atau mendengarkan komunikasi secara pasif antara aplikasi dan pengguna, serta merupakan prasyarat untuk HTTP/2 dan banyak API platform web baru. [Pelajari lebih lanjut](https://web.dev/is-on-https/)."
+    "message": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. This includes avoiding [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), where some resources are loaded over HTTP despite the initial request being served over HTTPS. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more](https://web.dev/is-on-https/)."
   },
   "lighthouse-core/audits/is-on-https.js | displayValue": {
     "message": "{itemCount,plural, =1{1 permintaan tidak aman ditemukan}other{# permintaan tidak aman ditemukan}}"
@@ -1122,16 +1122,16 @@
     "message": "Link dapat di-crawl"
   },
   "lighthouse-core/audits/seo/font-size.js | additionalIllegibleText": {
-    "message": "Add'l illegible text"
+    "message": "Teks tambahan yang tidak terbaca"
   },
   "lighthouse-core/audits/seo/font-size.js | columnFontSize": {
-    "message": "Font Size"
+    "message": "Ukuran Font"
   },
   "lighthouse-core/audits/seo/font-size.js | columnPercentPageText": {
-    "message": "% of Page Text"
+    "message": "% Teks Halaman"
   },
   "lighthouse-core/audits/seo/font-size.js | columnSelector": {
-    "message": "Selector"
+    "message": "Pemilih"
   },
   "lighthouse-core/audits/seo/font-size.js | description": {
     "message": "Ukuran font di bawah 12 piksel terlalu kecil untuk dapat dibaca dan memaksa pengunjung seluler “mencubit untuk memperbesar\" agar dapat membacanya. Usahakan untuk menampilkan >60% teks halaman dalam ukuran ≥12 piksel. [Pelajari lebih lanjut](https://web.dev/font-size/)."
@@ -1146,7 +1146,7 @@
     "message": "Dokumen tidak menggunakan ukuran font yang terbaca"
   },
   "lighthouse-core/audits/seo/font-size.js | legibleText": {
-    "message": "Legible text"
+    "message": "Teks yang dapat dibaca"
   },
   "lighthouse-core/audits/seo/font-size.js | title": {
     "message": "Dokumen menggunakan ukuran font yang terbaca"
@@ -1347,7 +1347,7 @@
     "message": "Anggaran waktu"
   },
   "lighthouse-core/audits/unsized-images.js | description": {
-    "message": "Set an explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+    "message": "Setel lebar dan tinggi yang jelas pada elemen gambar untuk mengurangi pergeseran tata letak dan memperbaiki CLS. [Pelajari lebih lanjut](https://web.dev/optimize-cls/#images-without-dimensions)"
   },
   "lighthouse-core/audits/unsized-images.js | failureTitle": {
     "message": "Elemen gambar tidak memiliki `width` dan `height` yang jelas"
@@ -1368,7 +1368,7 @@
     "message": "Tanda dan ukuran Waktu Pengguna"
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | crossoriginWarning": {
-    "message": "Sebuah <link> prakoneksi ditemukan untuk {securityOrigin}, tetapi tidak digunakan oleh browser. Pastikan Anda menggunakan atribut `crossorigin` dengan tepat."
+    "message": "A `<link rel=preconnect>` was found for \"{securityOrigin}\" but was not used by the browser. Check that you are using the `crossorigin` attribute properly."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | description": {
     "message": "Sebaiknya tambahkan petunjuk resource `preconnect` atau `dns-prefetch` guna membuat sambungan lebih awal ke asal pihak ketiga yang penting. [Pelajari lebih lanjut](https://web.dev/uses-rel-preconnect/)."
@@ -1377,13 +1377,13 @@
     "message": "Sambungkan terlebih dahulu ke nama domain yang diperlukan"
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
-    "message": "Ditemukan lebih dari 2 link prakoneksi. Link prakoneksi sebaiknya tidak sering digunakan dan hanya untuk asal yang paling penting."
+    "message": "More than 2 `<link rel=preconnect>` connections were found. These should be used sparingly and only to the most important origins."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | unusedWarning": {
-    "message": "A preconnect <link> was found for \"{securityOrigin}\" but was not used by the browser. Only preconnect to important origins that the page will certainly request."
+    "message": "A `<link rel=preconnect>` was found for \"{securityOrigin}\" but was not used by the browser. Only use `preconnect` for important origins that the page will certainly request."
   },
   "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
-    "message": "Sebuah <link> pramuat ditemukan untuk {preloadURL}, tetapi tidak digunakan oleh browser. Pastikan Anda menggunakan atribut `crossorigin` dengan tepat."
+    "message": "A preload `<link>` was found for \"{preloadURL}\" but was not used by the browser. Check that you are using the `crossorigin` attribute properly."
   },
   "lighthouse-core/audits/uses-rel-preload.js | description": {
     "message": "Sebaiknya gunakan `<link rel=preload>` untuk memprioritaskan pengambilan resource yang saat ini diminta selama pemuatan halaman. [Pelajari lebih lanjut](https://web.dev/uses-rel-preload/)."
@@ -1863,7 +1863,7 @@
     "message": "Tidak ada emulasi"
   },
   "lighthouse-core/report/html/renderer/util.js | runtimeSettingsAxeVersion": {
-    "message": "Axe version"
+    "message": "Versi Axe"
   },
   "lighthouse-core/report/html/renderer/util.js | runtimeSettingsBenchmark": {
     "message": "Daya CPU/Memori"
@@ -1923,34 +1923,34 @@
     "message": "Peringatan: "
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
-    "message": "Untuk konten animasi, gunakan [amp-anim](https://amp.dev/documentation/components/amp-anim/) untuk meminimalkan penggunaan CPU saat konten tetap berjalan di balik layar."
+    "message": "For animated content, use [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) to minimize CPU usage when the content is offscreen."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | offscreen-images": {
-    "message": "Pastikan Anda menggunakan tag `amp-img` yang valid untuk gambar yang secara otomatis dimuat dengan lambat di luar area pandang pertama. [Pelajari lebih lanjut](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
+    "message": "Ensure that you are using [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) for images to automatically lazy-load. [Learn more](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | render-blocking-resources": {
     "message": "Gunakan alat semacam [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) untuk [merender sistem server tata letak AMP](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | unminified-css": {
-    "message": "Pelajari [dokumentasi AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) untuk memastikan semua gaya Anda didukung."
+    "message": "Refer to the [AMP documentation](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) to ensure all styles are supported."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | uses-responsive-images": {
-    "message": "Elemen `amp-img` mendukung atribut `srcset` untuk menentukan aset image yang akan digunakan berdasarkan ukuran layar.  [Pelajari lebih lanjut](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
+    "message": "The [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) component supports the [`srcset`](https://web.dev/use-srcset-to-automatically-choose-the-right-image/) attribute to specify which image assets to use based on the screen size. [Learn more](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | uses-webp-images": {
-    "message": "Pertimbangkan untuk menampilkan semua komponen `amp-img` Anda dalam format WebP saat menentukan fallback yang tepat untuk browser lain. [Pelajari lebih lanjut](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+    "message": "Consider displaying all [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) components in WebP formats while specifying an appropriate fallback for other browsers. [Learn more](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
   },
   "node_modules/lighthouse-stack-packs/packs/angular.js | dom-size": {
     "message": "Pertimbangkan untuk menggunakan scroll virtual dengan Component Dev Kit (CDK) jika daftar yang sangat besar sedang dirender. [Pelajari lebih lanjut](https://web.dev/virtualize-lists-with-angular-cdk/)."
   },
   "node_modules/lighthouse-stack-packs/packs/angular.js | total-byte-weight": {
-    "message": "Terapkan [pemisahan kode tingkat rute](https://web.dev/route-level-code-splitting-in-angular/) untuk mengecilkan ukuran paket JavaScript Anda. Selain itu, pertimbangkan untuk menyimpan aset ke cache terlebih dahulu menggunakan [pekerja layanan Angular](https://web.dev/precaching-with-the-angular-service-worker/)."
+    "message": "Apply [route-level code splitting](https://web.dev/route-level-code-splitting-in-angular/) to minimize the size of your JavaScript bundles. Also, consider precaching assets with the [Angular service worker](https://web.dev/precaching-with-the-angular-service-worker/)."
   },
   "node_modules/lighthouse-stack-packs/packs/angular.js | unminified-warning": {
     "message": "Jika Anda menggunakan Angular CLI, pastikan bahwa build dibuat dalam mode produksi. [Pelajari lebih lanjut](https://angular.io/guide/deployment#enable-runtime-production-mode)."
   },
   "node_modules/lighthouse-stack-packs/packs/angular.js | unused-javascript": {
-    "message": "Jika Anda menggunakan Angular CLI, sertakan peta sumber dalam build produksi untuk memeriksa paket Anda. [Pelajari lebih lanjut](https://angular.io/guide/deployment#inspect-the-bundles)."
+    "message": "If you are using Angular CLI, include source maps in your production build to inspect your bundles. [Learn more](https://angular.io/guide/deployment#inspect-the-bundles)."
   },
   "node_modules/lighthouse-stack-packs/packs/angular.js | uses-rel-preload": {
     "message": "Pramuat rute terlebih dahulu untuk mempercepat navigasi. [Pelajari lebih lanjut](https://web.dev/route-preloading-in-angular/)."
@@ -1959,91 +1959,91 @@
     "message": "Pertimbangkan untuk menggunakan utilitas `BreakpointObserver` dalam Component Dev Kit (CDK) guna mengelola titik henti image sementara. [Pelajari lebih lanjut](https://material.angular.io/cdk/layout/overview)."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | efficient-animated-content": {
-    "message": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video."
+    "message": "Sebaiknya upload GIF ke layanan yang akan menyediakannya untuk disematkan sebagai video HTML5."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | font-display": {
-    "message": "Specify `@font-display` when defining custom fonts in your theme."
+    "message": "Sebutkan `@font-display` saat menentukan font khusus di tema Anda."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | offscreen-images": {
-    "message": "Install [a Drupal module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A67&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=%22lazy+load%22&solrsort=iss_project_release_usage+desc&op=Search) that can leverage JavaScript or [Intersection Observer API](https://developers.google.com/web/updates/2016/04/intersectionobserver) lazy loading of images. Such modules provide the ability to defer any offscreen images to improve performance."
+    "message": "Install [a Drupal module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A67&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=%22lazy+load%22&solrsort=iss_project_release_usage+desc&op=Search) that can lazy load images. Such modules provide the ability to defer any offscreen images to improve performance."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
-    "message": "Consider using a module to inline critical CSS and JavaScipt, or potentially load assets asynchronously via JavaScript such as the [Advanced CSS/JS Aggregation](https://www.drupal.org/project/advagg) module. Beware that optimizations provided by this module may break your site, so you will likely need to make code changes."
+    "message": "Consider using a module to inline critical CSS and JavaScript, or potentially load assets asynchronously via JavaScript such as the [Advanced CSS/JS Aggregation](https://www.drupal.org/project/advagg) module. Beware that optimizations provided by this module may break your site, so you will likely need to make code changes."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | time-to-first-byte": {
-    "message": "Themes, modules, and server specifications all contribute to server response time. Consider finding a more optimized theme, carefully selecting an optimization module, and/or upgrading your server. Your hosting servers should make use of PHP opcode caching, memory-caching to reduce database query times such as Redis or Memcached, as well as optimized application logic to prepare pages faster."
+    "message": "Semua spesifikasi tema, modul, dan server berkontribusi pada waktu respons server. Sebaiknya cari tema yang lebih optimal, pilih modul pengoptimalan dengan hati-hati, dan/atau upgrade server Anda. Server hosting Anda harus memanfaatkan cache opcode dan cache memori PHP untuk mengurangi waktu kueri database, seperti Redis atau Memcached, serta logika aplikasi yang dioptimalkan guna menyiapkan halaman dengan lebih cepat."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
-    "message": "Consider using [Responsive Image Styles](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) to reduce the size of images loaded on your page. If you are using Views to show multiple content items on a page, consider implementing pagination to limit the number of content items shown on a given page."
+    "message": "Sebaiknya gunakan [Responsive Image Styles](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) untuk mengurangi ukuran gambar yang dimuat di halaman Anda. Jika Anda menggunakan Views untuk menampilkan beberapa item konten di halaman, sebaiknya implementasikan penomoran halaman guna membatasi jumlah item konten yang ditampilkan di halaman tersebut."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unminified-css": {
-    "message": "Ensure you have enabled \"Aggregate CSS files\" in the \"Administration » Configuration » Development\" page. You can also configure more advanced aggregation options through [additional modules](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=css+aggregation&solrsort=iss_project_release_usage+desc&op=Search) to speed up your site by concatenating, minifying, and compressing your CSS styles."
+    "message": "Pastikan Anda mengaktifkan \"Aggregate CSS files\" di halaman \"Administration » Configuration » Development\". Anda juga dapat mengonfigurasi opsi agregasi lanjutan lainnya melalui [modul tambahan](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=css+aggregation&solrsort=iss_project_release_usage+desc&op=Search) untuk mempercepat situs dengan menyambungkan, meminifikasi, dan mengompresi gaya CSS Anda."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unminified-javascript": {
-    "message": "Ensure you have enabled \"Aggregate JavaScript files\" in the \"Administration » Configuration » Development\" page. You can also configure more advanced aggregation options through [additional modules](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=javascript+aggregation&solrsort=iss_project_release_usage+desc&op=Search) to speed up your site by concatenating, minifying, and compressing your JavaScript assets."
+    "message": "Pastikan Anda mengaktifkan \"Aggregate JavaScript files\" di halaman \"Administration » Configuration » Development\". Anda juga dapat mengonfigurasi opsi agregasi lanjutan lainnya melalui [modul tambahan](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=javascript+aggregation&solrsort=iss_project_release_usage+desc&op=Search) untuk mempercepat situs dengan menyambungkan, meminifikasi, dan mengompresi aset JavaScript Anda."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unused-css-rules": {
-    "message": "Consider removing unused CSS rules and only attach the needed Drupal libraries to the relevant page or component in a page. See the [Drupal documentation link](https://www.drupal.org/docs/8/creating-custom-modules/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-module#library) for details. To identify attached libraries that are adding extraneous CSS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/module responsible from the URL of the stylesheet when CSS aggregation is disabled in your Drupal site. Look out for themes/modules that have many stylesheets in the list which have a lot of red in code coverage. A theme/module should only enqueue a stylesheet if it is actually used on the page."
+    "message": "Sebaiknya hapus aturan CSS yang tidak digunakan dan hanya lampirkan library Drupal yang diperlukan ke halaman atau komponen yang relevan di halaman. Buka [Link dokumentasi Drupal](https://www.drupal.org/docs/8/creating-custom-modules/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-module#library) untuk mengetahui detailnya. Untuk mengidentifikasi library yang dilampirkan yang menambahkan CSS tidak relevan, coba jalankan [cakupan kode](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) di Chrome DevTools. Anda dapat mengidentifikasi tema/modul yang bertanggung jawab dari URL stylesheet saat agregasi CSS dinonaktifkan di situs Drupal Anda. Cari tema/modul dengan banyak stylesheet dalam daftar yang memiliki banyak warna merah dalam cakupan kode. Tema/modul sebaiknya hanya menambahkan stylesheet ke antrean jika memang benar digunakan di halaman."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unused-javascript": {
-    "message": "Consider removing unused JavaScipt assets and only attach the needed Drupal libraries to the relevant page or component in a page. See the [Drupal documentation link](https://www.drupal.org/docs/8/creating-custom-modules/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-module#library) for details. To identify attached libraries that are adding extraneous JavaScript, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/module responsible from the URL of the script when JavaScript aggregation is disabled in your Drupal site. Look out for themes/modules that have many scripts in the list which have a lot of red in code coverage. A theme/module should only enqueue a script if it is actually used on the page."
+    "message": "Consider removing unused JavaScript assets and only attach the needed Drupal libraries to the relevant page or component in a page. See the [Drupal documentation link](https://www.drupal.org/docs/8/creating-custom-modules/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-module#library) for details. To identify attached libraries that are adding extraneous JavaScript, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/module responsible from the URL of the script when JavaScript aggregation is disabled in your Drupal site. Look out for themes/modules that have many scripts in the list which have a lot of red in code coverage. A theme/module should only enqueue a script if it is actually used on the page."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-long-cache-ttl": {
-    "message": "Set the \"Browser and proxy cache maximum age\" in the \"Administration » Configuration » Development\" page. Read about [Drupal cache and optimizing for performance](https://www.drupal.org/docs/7/managing-site-performance-and-scalability/caching-to-improve-performance/caching-overview#s-drupal-performance-resources)."
+    "message": "Setel \"Browser and proxy cache maximum age\" di halaman \"Administration » Configuration » Development\". Baca [Cache Drupal dan mengoptimalkan performa](https://www.drupal.org/docs/7/managing-site-performance-and-scalability/caching-to-improve-performance/caching-overview#s-drupal-performance-resources)."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-optimized-images": {
-    "message": "Consider using [a module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=optimize+images&solrsort=iss_project_release_usage+desc&op=Search) that automatically optimizes and reduces the size of images uploaded through the site while retaining quality. Also, ensure you are using the native [Responsive Image Styles](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) provided from Drupal (available in Drupal 8 and above) for all images rendered on the site."
+    "message": "Sebaiknya gunakan [modul](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=optimize+images&solrsort=iss_project_release_usage+desc&op=Search) yang otomatis mengoptimalkan dan mengurangi ukuran gambar yang diupload melalui situs dengan tetap mempertahankan kualitas. Selain itu, pastikan Anda menggunakan [Responsive Image Styles](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) native yang disediakan oleh Drupal (tersedia di Drupal 8 dan yang lebih tinggi) untuk semua gambar yang dirender di halaman."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-rel-preconnect": {
-    "message": "Preconnect or dns-prefetch resource hints can be added by installing and configuring [a module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=dns-prefetch&solrsort=iss_project_release_usage+desc&op=Search) that provides facilities for user agent resource hints."
+    "message": "Petunjuk resource preconnect atau dns-prefetch dapat ditambahkan dengan menginstal dan mengonfigurasi [modul](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=dns-prefetch&solrsort=iss_project_release_usage+desc&op=Search) yang memberikan fasilitas untuk petunjuk resource agen pengguna."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-responsive-images": {
-    "message": "Ensure that you are using the native [Responsive Image Styles](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) provided from Drupal (available in Drupal 8 and above). Use the Responsive Image Styles when rendering image fields through view modes, views, or images uploaded through the WYSIWYG editor."
+    "message": "Pastikan Anda menggunakan [Responsive Image Styles](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) native yang disediakan oleh Drupal (tersedia di Drupal 8 dan yang lebih tinggi). Gunakan Responsive Image Styles saat merender kolom gambar melalui mode tampilan, tampilan, atau gambar yang diupload melalui editor WYSIWYG."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-webp-images": {
-    "message": "Consider installing and configuring [a module to leverage WebP image formats](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search) in your site. Such modules would automatically generate a WebP version of your uploaded images to optimize loading times."
+    "message": "Consider installing and configuring [a module to leverage WebP image formats](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search) in your site. Such modules automatically generate a WebP version of your uploaded images to optimize loading times."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
-    "message": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video."
+    "message": "Sebaiknya upload GIF ke layanan yang akan menyediakannya untuk disematkan sebagai video HTML5."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | offscreen-images": {
-    "message": "Install a [lazy-load Joomla plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading) that provides the ability to defer any offscreen images, or switch to a template that provides that functionality. Starting with Joomla 4.0 the core is shipping an dedicated lazyloading plugin please enable the \"Content - Lazy Loading Images\" plugin. Also consider using [an AMP plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=amp)."
+    "message": "Install a [lazy-load Joomla plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading) that provides the ability to defer any offscreen images, or switch to a template that provides that functionality. Starting with Joomla 4.0, a dedicated lazy-loading plugin can be enabled by using the \"Content - Lazy Loading Images\" plugin. Also consider using [an AMP plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=amp)."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | render-blocking-resources": {
-    "message": "There are a number of Joomla plugins that can help you [inline critical assets](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) or [defer less important resources](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance). Beware that optimizations provided by these plugins may break features of your templates or plugins, so you will need to test these thoroughly."
+    "message": "Terdapat sejumlah plugin di Joomla yang dapat membantu Anda [menyejajarkan aset penting](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) atau [menunda resource yang kurang penting](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance). Harap berhati-hati karena pengoptimalan yang disediakan oleh plugin ini dapat merusak fitur template atau plugin, sehingga Anda akan perlu mengujinya secara menyeluruh."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | server-response-time": {
-    "message": "Templates, extensions, and server specifications all contribute to server response time. Consider finding a more optimized template, carefully selecting an optimization extension, and/or upgrading your server."
+    "message": "Semua spesifikasi template, ekstensi, dan server berkontribusi pada waktu respons server. Sebaiknya cari template yang lebih optimal, pilih ekstensi pengoptimalan dengan hati-hati, dan/atau upgrade server Anda."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | total-byte-weight": {
-    "message": "Consider showing excerpts in your article categories (e.g. via the read more link), reducing the number of articles shown on a given page, breaking your long posts into multiple pages, or using a plugin to lazy-load comments."
+    "message": "Sebaiknya tampilkan kutipan dalam kategori artikel (misalnya melalui link baca selengkapnya), kurangi jumlah artikel yang ditampilkan pada halaman yang ada, bagi postingan panjang menjadi beberapa halaman, atau gunakan plugin untuk memuat komentar dengan lambat."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unminified-css": {
-    "message": "A number of [Joomla extensions](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) can speed up your site by concatenating, minifying, and compressing your css styles. There are also templates that provide this functionality."
+    "message": "Sejumlah [ekstensi Joomla](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) dapat mempercepat situs Anda dengan menyambungkan, meminifikasi, dan mengompresi gaya CSS. Ada juga template yang memberikan fungsi ini."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unminified-javascript": {
-    "message": "A number of [Joomla extensions](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) can speed up your site by concatenating, minifying, and compressing your scripts. There are also templates that provide this functionality."
+    "message": "Sejumlah [ekstensi Joomla](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) dapat mempercepat situs Anda dengan menyambungkan, meminifikasi, dan mengompresi skrip. Ada juga template yang memberikan fungsi ini."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unused-css-rules": {
-    "message": "Consider reducing, or switching, the number of [Joomla extensions](https://extensions.joomla.org/) loading unused CSS in your page. To identify extensions that are adding extraneous CSS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/plugin responsible from the URL of the stylesheet. Look out for plugins that have many stylesheets in the list which have a lot of red in code coverage. A plugin should only enqueue a stylesheet if it is actually used on the page."
+    "message": "Sebaiknya kurangi atau ubah jumlah [ekstensi Joomla](https://extensions.joomla.org/) yang memuat CSS yang tidak digunakan di halaman Anda. Untuk mengidentifikasi ekstensi yang menambahkan CSS tidak relevan, coba jalankan [cakupan kode](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) di Chrome DevTools. Anda dapat mengidentifikasi tema/plugin yang bertanggung jawab dari URL stylesheet. Cari plugin yang memiliki banyak stylesheet dalam daftar yang memiliki banyak warna merah dalam cakupan kode. Plugin sebaiknya hanya menambahkan stylesheet ke antrean jika memang benar digunakan di halaman."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unused-javascript": {
-    "message": "Consider reducing, or switching, the number of [Joomla extensions](https://extensions.joomla.org/) loading unused JavaScript in your page. To identify plugins that are adding extraneous JS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the extension responsible from the URL of the script. Look out for extensions that have many scripts in the list which have a lot of red in code coverage. An extension should only enqueue a script if it is actually used on the page."
+    "message": "Sebaiknya kurangi atau ubah jumlah [ekstensi Joomla](https://extensions.joomla.org/) yang memuat JavaScript yang tidak digunakan di halaman Anda. Untuk mengidentifikasi plugin yang menambahkan JS tidak relevan, coba jalankan [cakupan kode](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) di Chrome DevTools. Anda dapat mengidentifikasi ekstensi yang bertanggung jawab dari URL skrip. Cari ekstensi dengan banyak skrip dalam daftar yang memiliki banyak warna merah dalam cakupan kode. Ekstensi sebaiknya hanya menambahkan skrip ke antrean jika memang benar digunakan di halaman."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-long-cache-ttl": {
-    "message": "Read about [Browser Caching in Joomla](https://docs.joomla.org/Cache)."
+    "message": "Baca [Cache Browser di Joomla](https://docs.joomla.org/Cache)."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-optimized-images": {
-    "message": "Consider using an [image optimization plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) that compresses your images while retaining quality."
+    "message": "Sebaiknya gunakan [plugin pengoptimalan gambar](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) yang mengompresi gambar Anda dengan tetap mempertahankan kualitas."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-responsive-images": {
-    "message": "Consider using a [responsive images plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=responsive%20images) to use responsive images in your content."
+    "message": "Sebaiknya gunakan [plugin gambar responsif](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=responsive%20images) untuk menggunakan gambar yang responsif pada konten Anda."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-text-compression": {
-    "message": "You can enable text compression by enabling Gzip Page Compression in Joomla (System > Global configuration > Server)."
+    "message": "Anda dapat mengaktifkan kompresi teks dengan mengaktifkan Gzip Page Compression di Joomla (System > Global configuration > Server)."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-webp-images": {
-    "message": "Consider using a [plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) or service that will automatically convert your uploaded images to the optimal formats."
+    "message": "Sebaiknya gunakan [plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) atau layanan yang otomatis mengonversi gambar yang diupload ke format optimal."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | critical-request-chains": {
     "message": "Jika Anda tidak memaketkan aset JavaScript, pertimbangkan untuk menggunakan [baler](https://github.com/magento/baler)."
@@ -2064,7 +2064,7 @@
     "message": "Aktifkan opsi \"Minifikasi File CSS\" di setelan Developer toko Anda. [Pelajari lebih lanjut](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-javascript": {
-    "message": "Use [Terser](https://www.npmjs.com/package/terser) to minify all JavaScript assets from static content deployment, and disable the built-in minification feature."
+    "message": "Gunakan [Terser](https://www.npmjs.com/package/terser) untuk meminifikasi semua aset JavaScript dari deployment konten statis, dan nonaktifkan fitur minifikasi bawaan."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unused-javascript": {
     "message": "Nonaktifkan [paket JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) bawaan Magento."
@@ -2082,7 +2082,7 @@
     "message": "Pertimbangkan untuk menelusuri [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) guna menemukan berbagai ekstensi pihak ketiga untuk memanfaatkan format gambar terbaru."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | dom-size": {
-    "message": "Consider using a “windowing” library like `react-window` to minimize the number of DOM nodes created if you are rendering many repeated elements on the page. [Learn more](https://web.dev/virtualize-long-lists-react-window/). Also, minimize unnecessary re-renders using [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent), or [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) and [skip effects](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) only until certain dependencies have changed if you are using the Effect hook to improve runtime performance."
+    "message": "Consider using a “windowing” library like `react-window` to minimize the number of DOM nodes created if you are rendering many repeated elements on the page. [Learn more](https://web.dev/virtualize-long-lists-react-window/). Also, minimize unnecessary re-renders using [`shouldComponentUpdate`](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [`PureComponent`](https://reactjs.org/docs/react-api.html#reactpurecomponent), or [`React.memo`](https://reactjs.org/docs/react-api.html#reactmemo) and [skip effects](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) only until certain dependencies have changed if you are using the `Effect` hook to improve runtime performance."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "Jika Anda menggunakan React Router, minimalkan penggunaan komponen `<Redirect>` untuk [navigasi rute](https://reacttraining.com/react-router/web/api/Redirect)."
@@ -2091,10 +2091,10 @@
     "message": "Jika Anda merender komponen React pada sistem server, pertimbangkan untuk menggunakan `renderToNodeStream()` atau `renderToStaticNodeStream()` agar klien dapat menerima dan mengisi beberapa bagian markup yang berbeda, bukan sekaligus. [Pelajari lebih lanjut](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
-    "message": "Jika sistem build meminifikasi file CSS secara otomatis, pastikan bahwa Anda menerapkan build produksi aplikasi Anda. Anda dapat memeriksanya dengan ekstensi React Developer Tools. [Pelajari lebih lanjut](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+    "message": "If your build system minifies CSS files automatically, ensure that you are deploying the production build of your application. You can check this with the React Developer Tools extension. [Learn more](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-javascript": {
-    "message": "Jika sistem build meminifikasi file JS secara otomatis, pastikan bahwa Anda menerapkan build produksi aplikasi Anda. Anda dapat memeriksanya dengan ekstensi React Developer Tools. [Pelajari lebih lanjut](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+    "message": "If your build system minifies JS files automatically, ensure that you are deploying the production build of your application. You can check this with the React Developer Tools extension. [Learn more](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
     "message": "Jika Anda tidak melakukan rendering sistem server, [pisahkan paket JavaScript Anda](https://web.dev/code-splitting-suspense/) dengan `React.lazy()`. Atau, pisahkan kode menggunakan library pihak ketiga seperti [komponen yang dapat dimuat](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
@@ -2103,7 +2103,7 @@
     "message": "Gunakan React DevTools Profiler, yang memanfaatkan Profiler API untuk mengukur performa rendering komponen Anda. [Pelajari lebih lanjut.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient-animated-content": {
-    "message": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video."
+    "message": "Sebaiknya upload GIF ke layanan yang akan menyediakannya untuk disematkan sebagai video HTML5."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen-images": {
     "message": "Instal [plugin pemuatan lambat di WordPress ](https://wordpress.org/plugins/search/lazy+load/) yang menyediakan kemampuan untuk menunda pemuatan gambar di bagian halaman yang belum ditampilkan, atau beralihlah ke tema yang menyediakan fungsi tersebut. Sebaiknya juga gunakan [plugin AMP](https://wordpress.org/plugins/amp/)."
@@ -2142,6 +2142,6 @@
     "message": "Anda dapat mengaktifkan kompresi teks di konfigurasi server web."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-webp-images": {
-    "message": "Consider using a [plugin](https://wordpress.org/plugins/search/convert+webp/) or service that will automatically convert your uploaded images to the optimal formats."
+    "message": "Sebaiknya gunakan [plugin](https://wordpress.org/plugins/search/convert+webp/) atau layanan yang otomatis mengonversi gambar yang diupload ke format optimal."
   }
 }
