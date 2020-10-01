@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2020 Google Inc. All Rights Reserved.
+ * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -78,6 +78,8 @@ class TreemapDataAudit extends Audit {
       };
     }
 
+    const rootNode = newNode(sourceRoot);
+
     /**
      * Given a slash-delimited path, traverse the Node structure and increment
      * the data provided for each node in the chain. Creates nodes as needed.
@@ -85,9 +87,10 @@ class TreemapDataAudit extends Audit {
      *     and continue with "to", and so on.
      * @param {string} source
      * @param {SourceData} data
-     * @param {Node} node
      */
-    function addNode(source, data, node) {
+    function addAllNodesInSourcePath(source, data) {
+      let node = rootNode;
+
       // Strip off the shared root.
       const sourcePathSegments = source.replace(sourceRoot, '').split(/\/+/);
       sourcePathSegments.forEach((sourcePathSegment, i) => {
@@ -104,18 +107,18 @@ class TreemapDataAudit extends Audit {
         // Now that we've found or created the next node in the path, apply the data.
         node.resourceBytes += data.resourceBytes;
         if (data.unusedBytes) node.unusedBytes = (node.unusedBytes || 0) + data.unusedBytes;
+        
+        // Leaf node might have duplication data.
         if (data.duplicate !== undefined && isLastSegment) {
           node.duplicate = data.duplicate;
         }
       });
     }
 
-    const rootNode = newNode(sourceRoot);
-
     // For every source file, apply the data to all components
     // of the source path, creating nodes as necessary.
     for (const [source, data] of Object.entries(sourcesData)) {
-      addNode(source || `<unmapped>`, data, rootNode);
+      addAllNodesInSourcePath(source || `<unmapped>`, data);
 
       // Apply the data to the rootNode.
       rootNode.resourceBytes += data.resourceBytes;
@@ -126,7 +129,7 @@ class TreemapDataAudit extends Audit {
      * Collapse nodes that have only one child.
      * @param {Node} node
      */
-    function collapse(node) {
+    function collapseAll(node) {
       while (node.children && node.children.length === 1) {
         node.name += '/' + node.children[0].name;
         node.children = node.children[0].children;
@@ -134,11 +137,11 @@ class TreemapDataAudit extends Audit {
 
       if (node.children) {
         for (const child of node.children) {
-          collapse(child);
+          collapseAll(child);
         }
       }
     }
-    collapse(rootNode);
+    collapseAll(rootNode);
 
     // TODO(cjamcl): Should this structure be flattened for space savings?
     // Like DOM Snapshot.
@@ -157,9 +160,6 @@ class TreemapDataAudit extends Audit {
   static async makeJavaScriptRootNodes(artifacts, context) {
     /** @type {RootNode[]} */
     const rootNodes = [];
-
-    const bundles = await JsBundles.request(artifacts, context);
-    const duplication = await ModuleDuplication.request(artifacts, context);
 
     let inlineScriptLength = 0;
     for (const scriptElement of artifacts.ScriptElements) {
@@ -180,6 +180,9 @@ class TreemapDataAudit extends Audit {
         },
       });
     }
+
+    const bundles = await JsBundles.request(artifacts, context);
+    const duplicationByPath = await ModuleDuplication.request(artifacts, context);
 
     for (const scriptElement of artifacts.ScriptElements) {
       if (!scriptElement.src) continue;
@@ -219,7 +222,7 @@ class TreemapDataAudit extends Audit {
           };
 
           const key = ModuleDuplication.normalizeSource(source);
-          if (duplication.has(key)) sourceData.duplicate = key;
+          if (duplicationByPath.has(key)) sourceData.duplicate = key;
 
           sourcesData[source] = sourceData;
         }
@@ -252,25 +255,25 @@ class TreemapDataAudit extends Audit {
     let totalSize = 0;
 
     /** @type {Node[]} */
-    const children = [];
+    const resourceNodes = [];
     for (const networkRecord of networkRecords) {
       const resourceType = ResourceSummary.determineResourceType(networkRecord);
 
-      let child = children.find(child => child.name === resourceType);
-      if (!child) {
-        child = {
+      let resourceNode = resourceNodes.find(child => child.name === resourceType);
+      if (!resourceNode) {
+        resourceNode = {
           name: resourceType,
           resourceBytes: 0,
           children: [],
         };
-        children.push(child);
+        resourceNodes.push(resourceNode);
       }
 
       totalSize += networkRecord.resourceSize;
-      child.resourceBytes += networkRecord.resourceSize;
+      resourceNode.resourceBytes += networkRecord.resourceSize;
 
-      child.children = child.children || [];
-      child.children.push({
+      resourceNode.children = resourceNode.children || [];
+      resourceNode.children.push({
         name: networkRecord.url,
         resourceBytes: networkRecord.resourceSize,
       });
@@ -281,7 +284,7 @@ class TreemapDataAudit extends Audit {
       node: {
         name: `${totalCount} requests`,
         resourceBytes: totalSize,
-        children,
+        children: resourceNodes,
       },
     };
   }

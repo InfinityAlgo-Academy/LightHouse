@@ -38,7 +38,7 @@ expect.extend({
     // done for asymmetric matchers anyways.
     const thisObj = (this && this.utils) ? this :
         {isNot: false, promise: ''};
-    // @ts-ignore
+    // @ts-expect-error
     return toBeCloseTo.call(thisObj, ...args);
   },
 });
