@@ -18,13 +18,13 @@ const NetworkRecords = require('../computed/network-records.js');
 const ResourceSummary = require('../computed/resource-summary.js');
 
 /**
- * A collection of root nodes, grouped by type.
- * @typedef {Record<string, RootNode[]>} TreemapData
+ * A collection of root node containers, grouped by type.
+ * @typedef {Record<string, RootNodeContainer[]>} TreemapData
  */
 
 /**
  * Ex: https://gist.github.com/connorjclark/0ef1099ae994c075e36d65fecb4d26a7
- * @typedef RootNode
+ * @typedef RootNodeContainer
  * @property {string} name Arbitrary name identifier. Usually a script url.
  * @property {Node} node
  */
@@ -78,7 +78,7 @@ class TreemapDataAudit extends Audit {
       };
     }
 
-    const rootNode = newNode(sourceRoot);
+    const topNode = newNode(sourceRoot);
 
     /**
      * Given a slash-delimited path, traverse the Node structure and increment
@@ -89,11 +89,11 @@ class TreemapDataAudit extends Audit {
      * @param {SourceData} data
      */
     function addAllNodesInSourcePath(source, data) {
-      let node = rootNode;
+      let node = topNode;
 
-      // Apply the data to the rootNode.
-      rootNode.resourceBytes += data.resourceBytes;
-      if (data.unusedBytes) rootNode.unusedBytes = (rootNode.unusedBytes || 0) + data.unusedBytes;
+      // Apply the data to the topNode.
+      topNode.resourceBytes += data.resourceBytes;
+      if (data.unusedBytes) topNode.unusedBytes = (topNode.unusedBytes || 0) + data.unusedBytes;
 
       // Strip off the shared root.
       const sourcePathSegments = source.replace(sourceRoot, '').split(/\/+/);
@@ -112,8 +112,8 @@ class TreemapDataAudit extends Audit {
         node.resourceBytes += data.resourceBytes;
         if (data.unusedBytes) node.unusedBytes = (node.unusedBytes || 0) + data.unusedBytes;
 
-        // Leaf node might have duplication data.
-        if (data.duplicate !== undefined && isLastSegment) {
+        // Only leaf nodes might have duplication data.
+        if (isLastSegment && data.duplicate !== undefined) {
           node.duplicate = data.duplicate;
         }
       });
@@ -141,25 +141,25 @@ class TreemapDataAudit extends Audit {
         }
       }
     }
-    collapseAll(rootNode);
+    collapseAll(topNode);
 
     // TODO(cjamcl): Should this structure be flattened for space savings?
     // Like DOM Snapshot.
     // Less JSON (no super nested children, and no repeated property names).
 
-    return rootNode;
+    return topNode;
   }
 
   /**
-   * Returns a root node where the first level of nodes are script URLs.
+   * Returns a root node container where the first level of nodes are script URLs.
    * If a script has a source map, that node will be set by prepareTreemapNodes.
    * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
-   * @return {Promise<RootNode[]>}
+   * @return {Promise<RootNodeContainer[]>}
    */
   static async makeJavaScriptRootNodes(artifacts, context) {
-    /** @type {RootNode[]} */
-    const rootNodes = [];
+    /** @type {RootNodeContainer[]} */
+    const rootNodeContainers = [];
 
     let inlineScriptLength = 0;
     for (const scriptElement of artifacts.ScriptElements) {
@@ -171,7 +171,7 @@ class TreemapDataAudit extends Audit {
     }
     if (inlineScriptLength) {
       const name = artifacts.URL.finalUrl;
-      rootNodes.push({
+      rootNodeContainers.push({
         name,
         node: {
           name,
@@ -190,7 +190,7 @@ class TreemapDataAudit extends Audit {
       const bundle = bundles.find(bundle => scriptElement.src === bundle.script.src);
       const scriptCoverages = artifacts.JsUsage[scriptElement.src];
       if (!bundle || !scriptCoverages) {
-        rootNodes.push({
+        rootNodeContainers.push({
           name,
           node: {
             name,
@@ -234,13 +234,13 @@ class TreemapDataAudit extends Audit {
         };
       }
 
-      rootNodes.push({
+      rootNodeContainers.push({
         name,
         node,
       });
     }
 
-    return rootNodes;
+    return rootNodeContainers;
   }
 
   /**
@@ -249,7 +249,7 @@ class TreemapDataAudit extends Audit {
    * contained is the resourceBytes.
    * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
-   * @return {Promise<RootNode>}
+   * @return {Promise<RootNodeContainer>}
    */
   static async makeResourceSummaryRootNode(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
