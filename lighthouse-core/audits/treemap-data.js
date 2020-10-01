@@ -91,6 +91,10 @@ class TreemapDataAudit extends Audit {
     function addAllNodesInSourcePath(source, data) {
       let node = rootNode;
 
+      // Apply the data to the rootNode.
+      rootNode.resourceBytes += data.resourceBytes;
+      if (data.unusedBytes) rootNode.unusedBytes = (rootNode.unusedBytes || 0) + data.unusedBytes;
+
       // Strip off the shared root.
       const sourcePathSegments = source.replace(sourceRoot, '').split(/\/+/);
       sourcePathSegments.forEach((sourcePathSegment, i) => {
@@ -107,7 +111,7 @@ class TreemapDataAudit extends Audit {
         // Now that we've found or created the next node in the path, apply the data.
         node.resourceBytes += data.resourceBytes;
         if (data.unusedBytes) node.unusedBytes = (node.unusedBytes || 0) + data.unusedBytes;
-        
+
         // Leaf node might have duplication data.
         if (data.duplicate !== undefined && isLastSegment) {
           node.duplicate = data.duplicate;
@@ -119,10 +123,6 @@ class TreemapDataAudit extends Audit {
     // of the source path, creating nodes as necessary.
     for (const [source, data] of Object.entries(sourcesData)) {
       addAllNodesInSourcePath(source || `<unmapped>`, data);
-
-      // Apply the data to the rootNode.
-      rootNode.resourceBytes += data.resourceBytes;
-      if (data.unusedBytes) rootNode.unusedBytes = (rootNode.unusedBytes || 0) + data.unusedBytes;
     }
 
     /**
@@ -176,7 +176,6 @@ class TreemapDataAudit extends Audit {
         node: {
           name,
           resourceBytes: inlineScriptLength,
-          unusedBytes: 0,
         },
       });
     }
@@ -204,14 +203,11 @@ class TreemapDataAudit extends Audit {
       const unusedJavascriptSummary = await UnusedJavaScriptSummary.request(
         {url: scriptElement.src, scriptCoverages, bundle}, context);
 
+      /** @type {Node} */
       let node;
-      if (!unusedJavascriptSummary.sourcesWastedBytes) {
-        node = {
-          name,
-          resourceBytes: unusedJavascriptSummary.totalBytes,
-          unusedBytes: unusedJavascriptSummary.wastedBytes,
-        };
-      } else {
+      if (unusedJavascriptSummary.sourcesWastedBytes) {
+        // Create nodes for each module in a bundle.
+
         /** @type {Record<string, SourceData>} */
         const sourcesData = {};
         for (const source of Object.keys(bundle.sizes.files)) {
@@ -228,6 +224,14 @@ class TreemapDataAudit extends Audit {
         }
 
         node = this.prepareTreemapNodes(bundle.rawMap.sourceRoot || '', sourcesData);
+      } else {
+        // There was no source map for this script, so we can only produce a single node.
+
+        node = {
+          name,
+          resourceBytes: unusedJavascriptSummary.totalBytes,
+          unusedBytes: unusedJavascriptSummary.wastedBytes,
+        };
       }
 
       rootNodes.push({
