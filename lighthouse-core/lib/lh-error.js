@@ -59,6 +59,11 @@ const UIStrings = {
    * @example {Network.enable} protocolMethod
    * */
   protocolTimeout: 'Waiting for DevTools protocol response has exceeded the allotted time. (Method: {protocolMethod})',
+  /**
+   * @description Error message explaining that Chrome has stopped responding to protocol messages.
+   * @example {Network.enable} protocolMethod
+   * */
+  chromeNotResponding: 'Waiting for DevTools protocol response has exceeded the allotted time. (Method: {protocolMethod})',
   /** Error message explaining that the requested page could not be resolved by the DNS server. */
   dnsFailure: 'DNS servers could not resolve the provided domain.',
   /** Error message explaining that Lighthouse couldn't complete because the page has stopped responding to its instructions. */
@@ -360,11 +365,20 @@ const ERRORS = {
     message: UIStrings.urlInvalid,
   },
 
-  /* Protocol timeout failures
+  /* Protocol timeout failures for a single specific command.
+   * Most instances of this error are recoverable.
    * Requires an additional `protocolMethod` field for translation.
    */
   PROTOCOL_TIMEOUT: {
     code: 'PROTOCOL_TIMEOUT',
+    message: UIStrings.protocolTimeout,
+    lhrRuntimeError: true,
+  },
+  /* Protocol timeout failures that mean Chrome has hung and there's nothing Lighthouse can do to recover.
+   * Requires an additional `protocolMethod` field for translation.
+   */
+  CHROME_NOT_RESPONDING: {
+    code: 'CHROME_NOT_RESPONDING',
     message: UIStrings.protocolTimeout,
     lhrRuntimeError: true,
   },

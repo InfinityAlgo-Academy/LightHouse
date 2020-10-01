@@ -45,7 +45,7 @@ class Fetcher {
     if (this._enabled) return;
 
     this._enabled = true;
-    await this.driver.sendCommand('Fetch.enable', {
+    await this.driver.sendVoidCommand('Fetch.enable', {
       patterns: [{requestStage: 'Request'}, {requestStage: 'Response'}],
     });
     await this.driver.on('Fetch.requestPaused', this._onRequestPaused);
@@ -56,7 +56,7 @@ class Fetcher {
 
     this._enabled = false;
     await this.driver.off('Fetch.requestPaused', this._onRequestPaused);
-    await this.driver.sendCommand('Fetch.disable');
+    await this.driver.sendVoidCommand('Fetch.disable');
     this._onRequestPausedHandlers.clear();
   }
 

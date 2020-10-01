@@ -24,9 +24,9 @@ class CSSUsage extends Gatherer {
     const onStylesheetAdded = sheet => stylesheets.push(sheet);
     driver.on('CSS.styleSheetAdded', onStylesheetAdded);
 
-    await driver.sendCommand('DOM.enable');
-    await driver.sendCommand('CSS.enable');
-    await driver.sendCommand('CSS.startRuleUsageTracking');
+    await driver.sendVoidCommand('DOM.enable');
+    await driver.sendVoidCommand('CSS.enable');
+    await driver.sendVoidCommand('CSS.startRuleUsageTracking');
     await driver.evaluateAsync('getComputedStyle(document.body)');
     driver.off('CSS.styleSheetAdded', onStylesheetAdded);
 
@@ -43,8 +43,8 @@ class CSSUsage extends Gatherer {
     const styleSheetInfo = await Promise.all(promises);
 
     const ruleUsageResponse = await driver.sendCommand('CSS.stopRuleUsageTracking');
-    await driver.sendCommand('CSS.disable');
-    await driver.sendCommand('DOM.disable');
+    await driver.sendVoidCommand('CSS.disable');
+    await driver.sendVoidCommand('DOM.disable');
 
     const dedupedStylesheets = new Map(styleSheetInfo.map(sheet => {
       return /** @type {[string, LH.Artifacts.CSSStyleSheetInfo]} */ ([sheet.content, sheet]);

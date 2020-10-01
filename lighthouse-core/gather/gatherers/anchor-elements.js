@@ -104,10 +104,10 @@ class AnchorElements extends Gatherer {
 
     /** @type {LH.Artifacts['AnchorElements']} */
     const anchors = await driver.evaluateAsync(expression, {useIsolation: true});
-    await driver.sendCommand('DOM.enable');
+    await driver.sendVoidCommand('DOM.enable');
 
     // DOM.getDocument is necessary for pushNodesByBackendIdsToFrontend to properly retrieve nodeIds if the `DOM` domain was enabled before this gatherer, invoke it to be safe.
-    await driver.sendCommand('DOM.getDocument', {depth: -1, pierce: true});
+    await driver.sendVoidCommand('DOM.getDocument', {depth: -1, pierce: true});
     const anchorsWithEventListeners = anchors.map(async anchor => {
       const listeners = await getEventListeners(driver, anchor.devtoolsNodePath);
 
@@ -118,7 +118,7 @@ class AnchorElements extends Gatherer {
     });
 
     const result = await Promise.all(anchorsWithEventListeners);
-    await driver.sendCommand('DOM.disable');
+    await driver.sendVoidCommand('DOM.disable');
     return result;
   }
 }

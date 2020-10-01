@@ -33,8 +33,8 @@ class ConsoleMessages extends Gatherer {
   async beforePass(passContext) {
     const driver = passContext.driver;
     driver.on('Log.entryAdded', this._onConsoleEntryAdded);
-    await driver.sendCommand('Log.enable');
-    await driver.sendCommand('Log.startViolationsReport', {
+    await driver.sendVoidCommand('Log.enable');
+    await driver.sendVoidCommand('Log.startViolationsReport', {
       config: [{name: 'discouragedAPIUse', threshold: -1}],
     });
   }
@@ -44,9 +44,9 @@ class ConsoleMessages extends Gatherer {
    * @return {Promise<LH.Artifacts['ConsoleMessages']>}
    */
   async afterPass(passContext) {
-    await passContext.driver.sendCommand('Log.stopViolationsReport');
+    await passContext.driver.sendVoidCommand('Log.stopViolationsReport');
     await passContext.driver.off('Log.entryAdded', this._onConsoleEntryAdded);
-    await passContext.driver.sendCommand('Log.disable');
+    await passContext.driver.sendVoidCommand('Log.disable');
     return this._logEntries;
   }
 }

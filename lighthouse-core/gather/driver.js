@@ -397,6 +397,28 @@ class Driver {
   }
 
   /**
+   * Version of sendCommand that tolerates PROTOCOL_TIMEOUTs if the browser is still
+   * responding and the caller didn't need to use the return value.
+   * @template {keyof LH.CrdpCommands} C
+   * @param {C} method
+   * @param {LH.CrdpCommands[C]['paramsType']} params
+   * @return {Promise<void>}
+   */
+  async sendVoidCommand(method, ...params) {
+    try {
+      await this.sendCommandToSession(method, undefined, ...params);
+    } catch (err) {
+      if (err.code !== LHError.errors.PROTOCOL_TIMEOUT.code) throw err;
+      if (typeof err.protocolMethod !== 'string') throw err;
+
+      const isHung = await this.isPageHung();
+      if (!isHung) return;
+
+      throw new LHError(LHError.errors.CHROME_NOT_RESPONDING, {protocolMethod: err.protocolMethod});
+    }
+  }
+
+  /**
    * Call protocol methods.
    * @private
    * @template {keyof LH.CrdpCommands} C
@@ -999,8 +1021,8 @@ class Driver {
         log.warn('Driver', 'Timed out waiting for page load. Checking if page is hung...');
         if (await this.isPageHung()) {
           log.warn('Driver', 'Page appears to be hung, killing JavaScript...');
-          await this.sendCommand('Emulation.setScriptExecutionDisabled', {value: true});
-          await this.sendCommand('Runtime.terminateExecution');
+          await this.sendVoidCommand('Emulation.setScriptExecutionDisabled', {value: true});
+          await this.sendVoidCommand('Runtime.terminateExecution');
           throw new LHError(LHError.errors.PAGE_HUNG);
         }
 
@@ -1036,7 +1058,7 @@ class Driver {
     // Reset back to empty
     this._monitoredUrlNavigations = [];
 
-    return this.sendCommand('Network.enable');
+    return this.sendVoidCommand('Network.enable');
   }
 
   /**
@@ -1117,16 +1139,16 @@ class Driver {
     await this._clearIsolatedContextId();
 
     // Enable auto-attaching to subtargets so we receive iframe information
-    await this.sendCommand('Target.setAutoAttach', {
+    await this.sendVoidCommand('Target.setAutoAttach', {
       flatten: true,
       autoAttach: true,
       // Pause targets on startup so we don't miss anything
       waitForDebuggerOnStart: true,
     });
 
-    await this.sendCommand('Page.enable');
-    await this.sendCommand('Page.setLifecycleEventsEnabled', {enabled: true});
-    await this.sendCommand('Emulation.setScriptExecutionDisabled', {value: disableJS});
+    await this.sendVoidCommand('Page.enable');
+    await this.sendVoidCommand('Page.setLifecycleEventsEnabled', {enabled: true});
+    await this.sendVoidCommand('Emulation.setScriptExecutionDisabled', {value: disableJS});
     // No timeout needed for Page.navigate. See https://github.com/GoogleChrome/lighthouse/pull/6413.
     const waitforPageNavigateCmd = this._innerSendCommand('Page.navigate', undefined, {url});
 
@@ -1310,7 +1332,7 @@ class Driver {
     }
 
     // Enable Page domain to wait for Page.loadEventFired
-    return this.sendCommand('Page.enable')
+    return this.sendVoidCommand('Page.enable')
       .then(_ => this.sendCommand('Tracing.start', {
         categories: uniqueCategories.join(','),
         options: 'sampling-frequency=10000', // 1000 is default and too slow.
@@ -1374,9 +1396,9 @@ class Driver {
    * @return {Promise<void>}
    */
   async enableAsyncStacks() {
-    await this.sendCommand('Debugger.enable');
-    await this.sendCommand('Debugger.setSkipAllPauses', {skip: true});
-    await this.sendCommand('Debugger.setAsyncCallStackDepth', {maxDepth: 8});
+    await this.sendVoidCommand('Debugger.enable');
+    await this.sendVoidCommand('Debugger.setSkipAllPauses', {skip: true});
+    await this.sendVoidCommand('Debugger.setAsyncCallStackDepth', {maxDepth: 8});
   }
 
   /**
@@ -1413,7 +1435,7 @@ class Driver {
    * @return {Promise<void>}
    */
   async goOffline() {
-    await this.sendCommand('Network.enable');
+    await this.sendVoidCommand('Network.enable');
     await emulation.goOffline(this);
     this.online = false;
   }
@@ -1437,10 +1459,10 @@ class Driver {
     log.time(status);
 
     // Wipe entire disk cache
-    await this.sendCommand('Network.clearBrowserCache');
+    await this.sendVoidCommand('Network.clearBrowserCache');
     // Toggle 'Disable Cache' to evict the memory cache
-    await this.sendCommand('Network.setCacheDisabled', {cacheDisabled: true});
-    await this.sendCommand('Network.setCacheDisabled', {cacheDisabled: false});
+    await this.sendVoidCommand('Network.setCacheDisabled', {cacheDisabled: true});
+    await this.sendVoidCommand('Network.setCacheDisabled', {cacheDisabled: false});
 
     log.timeEnd(status);
   }
@@ -1482,7 +1504,7 @@ class Driver {
     this.setNextProtocolTimeout(5000);
 
     try {
-      await this.sendCommand('Storage.clearDataForOrigin', {
+      await this.sendVoidCommand('Storage.clearDataForOrigin', {
         origin: origin,
         storageTypes: typesToClear,
       });
@@ -1565,7 +1587,7 @@ class Driver {
    * @return {Promise<void>}
    */
   blockUrlPatterns(urls) {
-    return this.sendCommand('Network.setBlockedURLs', {urls})
+    return this.sendVoidCommand('Network.setBlockedURLs', {urls})
       .catch(err => {
         // TODO(COMPAT): remove this handler once m59 hits stable
         if (!/wasn't found/.test(err.message)) {
@@ -1589,7 +1611,7 @@ class Driver {
       }).catch(err => log.warn('Driver', err));
     });
 
-    await this.sendCommand('Page.enable');
+    await this.sendVoidCommand('Page.enable');
   }
 }
 
