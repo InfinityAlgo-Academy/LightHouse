@@ -5,15 +5,15 @@
  */
 'use strict';
 
-const TreemapData_ = require('../../audits/treemap-data.js');
+const ScriptTreemapData_ = require('../../audits/script-treemap-data.js');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 const {loadSourceMapAndUsageFixture, makeParamsOptional} = require('../test-utils.js');
 
 /* eslint-env jest */
 
-const TreemapData = {
-  audit: makeParamsOptional(TreemapData_.audit),
-  prepareTreemapNodes: makeParamsOptional(TreemapData_.prepareTreemapNodes),
+const ScriptTreemapData = {
+  audit: makeParamsOptional(ScriptTreemapData_.audit),
+  prepareTreemapNodes: makeParamsOptional(ScriptTreemapData_.prepareTreemapNodes),
 };
 
 /**
@@ -25,9 +25,9 @@ function generateRecord(url, resourceSize, resourceType) {
   return {url, resourceSize, resourceType};
 }
 
-describe('TreemapData audit', () => {
+describe('ScriptTreemapData audit', () => {
   describe('squoosh fixture', () => {
-    /** @type {import('../../audits/treemap-data.js').TreemapData} */
+    /** @type {import('../../audits/script-treemap-data.js').TreemapData} */
     let treemapData;
     beforeAll(async () => {
       const context = {computedCache: new Map()};
@@ -49,7 +49,7 @@ describe('TreemapData audit', () => {
         SourceMaps: [{scriptUrl: scriptUrl, map}],
         ScriptElements: [{src: scriptUrl, content}, noSourceMapScript],
       };
-      const results = await TreemapData.audit(artifacts, context);
+      const results = await ScriptTreemapData.audit(artifacts, context);
 
       // @ts-expect-error: Debug data.
       treemapData = results.details.treemapData;
@@ -74,7 +74,7 @@ describe('TreemapData audit', () => {
 
   describe('.prepareTreemapNodes', () => {
     it('uses node data when available', () => {
-      const rootNode = TreemapData.prepareTreemapNodes('', {
+      const rootNode = ScriptTreemapData.prepareTreemapNodes('', {
         'a.js': {resourceBytes: 100},
         'b.js': {resourceBytes: 100, duplicate: 'blah'},
         'c.js': {resourceBytes: 100, unusedBytes: 50},
@@ -105,7 +105,7 @@ describe('TreemapData audit', () => {
     });
 
     it('creates directory node when multiple leaf nodes', () => {
-      const rootNode = TreemapData.prepareTreemapNodes('', {
+      const rootNode = ScriptTreemapData.prepareTreemapNodes('', {
         'folder/a.js': {resourceBytes: 100},
         'folder/b.js': {resourceBytes: 100},
       });
@@ -128,7 +128,7 @@ describe('TreemapData audit', () => {
     });
 
     it('flattens directory node when single leaf nodes', () => {
-      const rootNode = TreemapData.prepareTreemapNodes('', {
+      const rootNode = ScriptTreemapData.prepareTreemapNodes('', {
         'root/folder1/a.js': {resourceBytes: 100},
         'root/folder2/b.js': {resourceBytes: 100},
       });
@@ -157,7 +157,7 @@ describe('TreemapData audit', () => {
         'some/prefix/main.js': {resourceBytes: 100, unusedBytes: 50},
         'not/some/prefix/a.js': {resourceBytes: 101, unusedBytes: 51},
       };
-      const rootNode = TreemapData.prepareTreemapNodes('some/prefix', sourcesData);
+      const rootNode = ScriptTreemapData.prepareTreemapNodes('some/prefix', sourcesData);
       expect(rootNode).toMatchObject(
          {
            'children': [
@@ -195,7 +195,7 @@ describe('TreemapData audit', () => {
         'lib/folder/b.js': {resourceBytes: 101},
         'lib/c.js': {resourceBytes: 100, unusedBytes: 25},
       };
-      const rootNode = TreemapData.prepareTreemapNodes('', sourcesData);
+      const rootNode = ScriptTreemapData.prepareTreemapNodes('', sourcesData);
       expect(rootNode).toMatchObject(
          {
            'children': [
@@ -236,7 +236,7 @@ describe('TreemapData audit', () => {
         'lib/node_modules/dep/b.js': {resourceBytes: 101, duplicate: 'dep/b.js'},
         'node_modules/dep/b.js': {resourceBytes: 100, unusedBytes: 25, duplicate: 'dep/b.js'},
       };
-      const rootNode = TreemapData.prepareTreemapNodes('', sourcesData);
+      const rootNode = ScriptTreemapData.prepareTreemapNodes('', sourcesData);
       expect(rootNode).toMatchObject(
          {
            'children': [

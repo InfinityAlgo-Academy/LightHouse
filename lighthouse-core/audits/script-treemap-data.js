@@ -39,15 +39,15 @@ const ModuleDuplication = require('../computed/module-duplication.js');
  * @typedef {Omit<Node, 'name'|'children'>} SourceData
  */
 
-class TreemapDataAudit extends Audit {
+class ScriptTreemapDataAudit extends Audit {
   /**
    * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
-      id: 'treemap-data',
+      id: 'script-treemap-data',
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
-      title: 'Treemap Data',
+      title: 'Script Treemap Data',
       description: 'Used for treemap app',
       requiredArtifacts:
         ['traces', 'devtoolsLogs', 'SourceMaps', 'ScriptElements', 'JsUsage', 'URL'],
@@ -247,7 +247,7 @@ class TreemapDataAudit extends Audit {
    */
   static async audit(artifacts, context) {
     /** @type {TreemapData} */
-    const treemapData = await TreemapDataAudit.makeRootNodes(artifacts, context);
+    const treemapData = await ScriptTreemapDataAudit.makeRootNodes(artifacts, context);
 
     // TODO: when out of experimental should make a new detail type.
     /** @type {LH.Audit.Details.DebugData} */
@@ -263,4 +263,4 @@ class TreemapDataAudit extends Audit {
   }
 }
 
-module.exports = TreemapDataAudit;
+module.exports = ScriptTreemapDataAudit;

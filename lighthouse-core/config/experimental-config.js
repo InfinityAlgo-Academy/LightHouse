@@ -17,7 +17,7 @@ const config = {
     'autocomplete',
     'full-page-screenshot',
     'large-javascript-libraries',
-    'treemap-data',
+    'script-treemap-data',
   ],
   passes: [{
     passName: 'defaultPass',
