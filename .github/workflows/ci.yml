@@ -29,8 +29,6 @@ jobs:
     - run: sudo apt-get install xvfb
     - name: yarn test-clients
       run: xvfb-run --auto-servernum yarn test-clients
-    - name: yarn test-bundle
-      run: xvfb-run --auto-servernum yarn test-bundle
     - name: yarn test-docs
       run: xvfb-run --auto-servernum yarn test-docs
     - name: yarn test-viewer
@@ -172,3 +170,23 @@ jobs:
 
     - name: Run smoke tests
       run: yarn smoke --debug -j=1 --retries=2 dbw oopif offline lantern metrics
+
+  smoke-bundle:
+    runs-on: ubuntu-latest
+    name: smoke_bundle
+
+    steps:
+    - name: git clone
+      uses: actions/checkout@v2
+
+    - name: Use Node.js 10.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.x
+
+    - run: yarn --frozen-lockfile
+    - run: yarn build-devtools
+
+    - run: sudo apt-get install xvfb
+    - name: yarn test-bundle
+      run: xvfb-run --auto-servernum yarn test-bundle
