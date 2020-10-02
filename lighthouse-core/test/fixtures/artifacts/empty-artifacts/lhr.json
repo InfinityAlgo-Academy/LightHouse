@@ -1,0 +1,142 @@
+{
+  "environment": {
+    "credits": {}
+  },
+  "lighthouseVersion": "6.4.0",
+  "requestedUrl": "https://example.com/",
+  "finalUrl": "https://example.com/",
+  "runWarnings": [
+    "Really important audit warning!"
+  ],
+  "audits": {
+    "test-audit": {
+      "id": "test-audit",
+      "title": "A test audit",
+      "description": "An audit for testing",
+      "score": 1,
+      "scoreDisplayMode": "binary"
+    }
+  },
+  "configSettings": {
+    "output": "json",
+    "maxWaitForFcp": 30000,
+    "maxWaitForLoad": 45000,
+    "throttlingMethod": "simulate",
+    "throttling": {
+      "rttMs": 150,
+      "throughputKbps": 1638.4,
+      "requestLatencyMs": 562.5,
+      "downloadThroughputKbps": 1474.5600000000002,
+      "uploadThroughputKbps": 675,
+      "cpuSlowdownMultiplier": 4
+    },
+    "auditMode": "/Users/cjamcl/src/lighthouse/lighthouse-core/test/fixtures/artifacts/empty-artifacts/",
+    "gatherMode": false,
+    "disableStorageReset": false,
+    "emulatedFormFactor": "mobile",
+    "internalDisableDeviceScreenEmulation": false,
+    "channel": "node",
+    "budgets": null,
+    "locale": "en",
+    "blockedUrlPatterns": null,
+    "additionalTraceCategories": null,
+    "extraHeaders": null,
+    "precomputedLanternData": null,
+    "onlyAudits": null,
+    "onlyCategories": null,
+    "skipAudits": null
+  },
+  "categories": {},
+  "timing": {
+    "entries": [
+      {
+        "startTime": 714.61,
+        "name": "lh:init:config",
+        "duration": 0.59,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 714.65,
+        "name": "lh:config:requireAudits",
+        "duration": 0.54,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 715.2,
+        "name": "lh:runner:run",
+        "duration": 0.29,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 715.36,
+        "name": "lh:runner:auditing",
+        "duration": 0.12,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 715.37,
+        "name": "lh:audit:test-audit",
+        "duration": 0.09,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 715.48,
+        "name": "lh:runner:generate",
+        "duration": 0.02,
+        "entryType": "measure"
+      }
+    ],
+    "total": 0.29
+  },
+  "i18n": {
+    "rendererFormattedStrings": {
+      "auditGroupExpandTooltip": "Show audits",
+      "calculatorLink": "See calculator.",
+      "crcInitialNavigation": "Initial Navigation",
+      "crcLongestDurationLabel": "Maximum critical path latency:",
+      "dropdownCopyJSON": "Copy JSON",
+      "dropdownDarkTheme": "Toggle Dark Theme",
+      "dropdownPrintExpanded": "Print Expanded",
+      "dropdownPrintSummary": "Print Summary",
+      "dropdownSaveGist": "Save as Gist",
+      "dropdownSaveHTML": "Save as HTML",
+      "dropdownSaveJSON": "Save as JSON",
+      "dropdownViewer": "Open in Viewer",
+      "errorLabel": "Error!",
+      "errorMissingAuditInfo": "Report error: no audit information",
+      "footerIssue": "File an issue",
+      "labDataTitle": "Lab Data",
+      "lsPerformanceCategoryDescription": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) analysis of the current page on an emulated mobile network. Values are estimated and may vary.",
+      "manualAuditsGroupTitle": "Additional items to manually check",
+      "notApplicableAuditsGroupTitle": "Not applicable",
+      "opportunityResourceColumnLabel": "Opportunity",
+      "opportunitySavingsColumnLabel": "Estimated Savings",
+      "passedAuditsGroupTitle": "Passed audits",
+      "runtimeDesktopEmulation": "Emulated Desktop",
+      "runtimeMobileEmulation": "Emulated Moto G4",
+      "runtimeNoEmulation": "No emulation",
+      "runtimeSettingsAxeVersion": "Axe version",
+      "runtimeSettingsBenchmark": "CPU/Memory Power",
+      "runtimeSettingsChannel": "Channel",
+      "runtimeSettingsCPUThrottling": "CPU throttling",
+      "runtimeSettingsDevice": "Device",
+      "runtimeSettingsFetchTime": "Fetch Time",
+      "runtimeSettingsNetworkThrottling": "Network throttling",
+      "runtimeSettingsTitle": "Runtime Settings",
+      "runtimeSettingsUA": "User agent (host)",
+      "runtimeSettingsUANetwork": "User agent (network)",
+      "runtimeSettingsUrl": "URL",
+      "runtimeUnknown": "Unknown",
+      "snippetCollapseButtonLabel": "Collapse snippet",
+      "snippetExpandButtonLabel": "Expand snippet",
+      "thirdPartyResourcesLabel": "Show 3rd-party resources",
+      "throttlingProvided": "Provided by environment",
+      "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:",
+      "varianceDisclaimer": "Values are estimated and may vary. The [performance score is calculated](https://web.dev/performance-scoring/) directly from these metrics.",
+      "warningAuditsGroupTitle": "Passed audits but with warnings",
+      "warningHeader": "Warnings: "
+    },
+    "icuMessagePaths": {}
+  },
+  "stackPacks": []
+}
