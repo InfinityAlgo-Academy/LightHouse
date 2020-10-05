@@ -57,13 +57,6 @@ const expectations = [
         },
         {
           type: null,
-          src: 'http://localhost:10200/byte-efficiency/delay-complete.js?delay=8000',
-          async: true,
-          defer: false,
-          source: 'body',
-        },
-        {
-          type: null,
           src: null,
           async: false,
           defer: false,
@@ -78,7 +71,33 @@ const expectations = [
           source: 'body',
           content: /Unused block #1/,
         },
+        {
+          type: null,
+          src: 'http://localhost:10200/byte-efficiency/delay-complete.js?delay=8000',
+          async: true,
+          defer: false,
+          source: 'body',
+        },
       ],
+      JsUsage: {
+        // ScriptParsedEvent.embedderName wasn't added to the protocol until M86,
+        // and `some-custom-url.js` won't show without it.
+        // https://chromiumdash.appspot.com/commit/52ed57138d0b83e8afd9de25e60655c6ace7527c
+        '_minChromiumMilestone': 86,
+        'http://localhost:10200/byte-efficiency/tester.html': [
+          {url: 'http://localhost:10200/byte-efficiency/tester.html'},
+          {url: 'http://localhost:10200/byte-efficiency/tester.html'},
+          {url: 'http://localhost:10200/byte-efficiency/tester.html'},
+          {url: 'http://localhost:10200/byte-efficiency/tester.html'},
+          {url: '/some-custom-url.js'},
+        ],
+        'http://localhost:10200/byte-efficiency/script.js': [
+          {url: 'http://localhost:10200/byte-efficiency/script.js'},
+        ],
+        'http://localhost:10200/byte-efficiency/bundle.js': [
+          {url: 'http://localhost:10200/byte-efficiency/bundle.js'},
+        ],
+      },
     },
     lhr: {
       requestedUrl: 'http://localhost:10200/byte-efficiency/tester.html',
@@ -116,7 +135,7 @@ const expectations = [
               },
               {
                 url: 'inline: \n  function unusedFunction() {\n    // Un...',
-                wastedBytes: '6581 +/- 100',
+                wastedBytes: '6700 +/- 100',
                 wastedPercent: '99.6 +/- 0.1',
               },
               {
@@ -142,12 +161,15 @@ const expectations = [
           },
         },
         'unused-javascript': {
+          // ScriptParsedEvent.embedderName wasn't added to the protocol until M86.
+          // https://chromiumdash.appspot.com/commit/52ed57138d0b83e8afd9de25e60655c6ace7527c
+          _minChromiumMilestone: 86,
           score: '<1',
           details: {
             // the specific ms value here is not meaningful for this smoketest
             // *some* savings should be reported
             overallSavingsMs: '>0',
-            overallSavingsBytes: '>=25000',
+            overallSavingsBytes: '35000 +/- 1000',
             items: [
               {
                 url: 'http://localhost:10200/byte-efficiency/script.js',

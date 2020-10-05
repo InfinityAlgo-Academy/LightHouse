@@ -36,6 +36,7 @@ cd /tmp/lighthouse-local-test
 
 npm init -y
 npm install "$LH_PRISTINE_ROOT/lighthouse-$VERSION.tgz"
+cd node_modules/lighthouse/lighthouse-cli/test/ && npm install lodash.clonedeep && cd ../../../../
 npm explore lighthouse -- npm run smoke -- --retries=3
 npm explore lighthouse -- npm run fast -- http://example.com
 

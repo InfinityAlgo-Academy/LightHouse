@@ -7,6 +7,7 @@
 /**
  * @fileoverview This audit checks a page for any large JS libraries with smaller alternatives.
  * These libraries can be replaced with functionally equivalent, smaller ones.
+ * @see https://docs.google.com/document/d/1TgKO3cWqMpcS4dn0xbjDG5fyuqgVvYYoXg--knaxJnM
  */
 
 'use strict';

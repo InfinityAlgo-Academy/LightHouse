@@ -270,7 +270,7 @@ class RenderBlockingResources extends Audit {
   static async audit(artifacts, context) {
     const {results, wastedMs} = await RenderBlockingResources.computeResults(artifacts, context);
 
-    let displayValue = '';
+    let displayValue;
     if (results.length > 0) {
       displayValue = str_(i18n.UIStrings.displayValueMsSavings, {wastedMs});
     }

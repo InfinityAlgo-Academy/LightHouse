@@ -103,6 +103,9 @@ class EmulationDriver extends Driver {
   registerRequestIdleCallbackWrap() {
     return Promise.resolve();
   }
+  getImportantStorageWarning() {
+    return Promise.resolve(undefined);
+  }
 }
 
 const fakeDriver = require('./fake-driver.js');
@@ -407,6 +410,7 @@ describe('GatherRunner', function() {
       clearDataForOrigin: createCheck('calledClearStorage'),
       blockUrlPatterns: asyncFunc,
       setExtraHTTPHeaders: asyncFunc,
+      getImportantStorageWarning: asyncFunc,
     };
 
     return GatherRunner.setupDriver(driver, {settings: {}}).then(_ => {
@@ -1795,6 +1799,7 @@ describe('GatherRunner', function() {
         name: {value: 'App', raw: 'App'},
         start_url: {value: passContext.url, raw: undefined},
       });
+      expect(result && result.url).toMatch(MANIFEST_URL);
     });
   });
 });

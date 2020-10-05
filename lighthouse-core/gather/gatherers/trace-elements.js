@@ -5,6 +5,8 @@
  */
 'use strict';
 
+/* global getNodeDetails */
+
 /**
  * @fileoverview
  * This gatherer identifies elements that contribrute to metrics in the trace (LCP, CLS, etc.).
@@ -15,6 +17,7 @@ const Gatherer = require('./gatherer.js');
 const pageFunctions = require('../../lib/page-functions.js');
 const TraceProcessor = require('../../lib/tracehouse/trace-processor.js');
 const RectHelpers = require('../../lib/rect-helpers.js');
+const Sentry = require('../../lib/sentry.js');
 
 /** @typedef {{nodeId: number, score?: number, animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[]}} TraceElementData */
 
@@ -26,18 +29,8 @@ function getNodeDetailsData() {
   const elem = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement; // eslint-disable-line no-undef
   let traceElement;
   if (elem) {
-    traceElement = {
-      // @ts-expect-error - put into scope via stringification
-      devtoolsNodePath: getNodePath(elem), // eslint-disable-line no-undef
-      // @ts-expect-error - put into scope via stringification
-      selector: getNodeSelector(elem), // eslint-disable-line no-undef
-      // @ts-expect-error - put into scope via stringification
-      nodeLabel: getNodeLabel(elem), // eslint-disable-line no-undef
-      // @ts-expect-error - put into scope via stringification
-      snippet: getOuterHTMLSnippet(elem), // eslint-disable-line no-undef
-      // @ts-expect-error - put into scope via stringification
-      boundingRect: getBoundingClientRect(elem), // eslint-disable-line no-undef
-    };
+    // @ts-expect-error - getNodeDetails put into scope via stringification
+    traceElement = getNodeDetails(elem);
   }
   return traceElement;
 }
@@ -113,6 +106,10 @@ class TraceElements extends Gatherer {
       return animationName;
     } catch (err) {
       // Animation name is not mission critical information and can be evicted, so don't throw fatally if we can't find it.
+      Sentry.captureException(err, {
+        tags: {gatherer: TraceElements.name},
+        level: 'error',
+      });
       return undefined;
     }
   }
@@ -212,7 +209,7 @@ class TraceElements extends Gatherer {
       animationPairs.set(local, pair);
     }
 
-    /** @type Map<number, Set<{animationId: string, failureReasonsMask?: number, unsupportedProperties?: string[]}>> */
+    /** @type {Map<number, Set<{animationId: string, failureReasonsMask?: number, unsupportedProperties?: string[]}>>} */
     const elementAnimations = new Map();
     for (const {begin, status} of animationPairs.values()) {
       const nodeId = this.getNodeIDFromTraceEvent(begin);
@@ -225,7 +222,7 @@ class TraceElements extends Gatherer {
       elementAnimations.set(nodeId, animationIds);
     }
 
-    /** @type Array<TraceElementData> */
+    /** @type {Array<TraceElementData>} */
     const animatedElementData = [];
     for (const [nodeId, animationIds] of elementAnimations) {
       const animations = [];
@@ -264,7 +261,7 @@ class TraceElements extends Gatherer {
     const animatedElementData =
       await TraceElements.getAnimatedElements(passContext, mainThreadEvents);
 
-    /** @type Map<string, TraceElementData[]> */
+    /** @type {Map<string, TraceElementData[]>} */
     const backendNodeDataMap = new Map([
       ['largest-contentful-paint', lcpNodeId ? [{nodeId: lcpNodeId}] : []],
       ['layout-shift', clsNodeData],
@@ -275,22 +272,27 @@ class TraceElements extends Gatherer {
     for (const [traceEventType, backendNodeData] of backendNodeDataMap) {
       for (let i = 0; i < backendNodeData.length; i++) {
         const backendNodeId = backendNodeData[i].nodeId;
-        const objectId = await driver.resolveNodeIdToObjectId(backendNodeId);
-        if (!objectId) continue;
-        const response = await driver.sendCommand('Runtime.callFunctionOn', {
-          objectId,
-          functionDeclaration: `function () {
-            ${getNodeDetailsData.toString()};
-            ${pageFunctions.getNodePathString};
-            ${pageFunctions.getNodeSelectorString};
-            ${pageFunctions.getNodeLabelString};
-            ${pageFunctions.getOuterHTMLSnippetString};
-            ${pageFunctions.getBoundingClientRectString};
-            return getNodeDetailsData.call(this);
-          }`,
-          returnByValue: true,
-          awaitPromise: true,
-        });
+        let response;
+        try {
+          const objectId = await driver.resolveNodeIdToObjectId(backendNodeId);
+          if (!objectId) continue;
+          response = await driver.sendCommand('Runtime.callFunctionOn', {
+            objectId,
+            functionDeclaration: `function () {
+              ${getNodeDetailsData.toString()};
+              ${pageFunctions.getNodeDetailsString};
+              return getNodeDetailsData.call(this);
+            }`,
+            returnByValue: true,
+            awaitPromise: true,
+          });
+        } catch (err) {
+          Sentry.captureException(err, {
+            tags: {gatherer: this.name},
+            level: 'error',
+          });
+          continue;
+        }
 
         if (response && response.result && response.result.value) {
           traceElements.push({

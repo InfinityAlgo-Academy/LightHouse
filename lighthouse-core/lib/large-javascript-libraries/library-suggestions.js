@@ -7,7 +7,6 @@
 /**
  * @fileoverview This file contains a mapping of large JavaScript libraries to smaller alternatives.
  * These suggestions have been cherry-picked from BundlePhobia's open-source list of recommendations which can be found here (https://github.com/pastelsky/bundlephobia/blob/b244a53bc55af067bb0edfa3ace867c87fec17e7/server/middlewares/similar-packages/fixtures.js).
- * Googlers: see here (https://docs.google.com/document/d/1TgKO3cWqMpcS4dn0xbjDG5fyuqgVvYYoXg--knaxJnM/edit?usp=sharing).
  */
 
 'use strict';

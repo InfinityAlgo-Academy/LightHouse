@@ -42,7 +42,7 @@ do
 
     if [[ "$EXTRA_ARG" == "--kill" ]]; then
       printf "Killing $instance...\n"
-      gcloud --project="$CLOUDSDK_CORE_PROJECT" compute instances delete "$instance" --zone="$ZONE"
+      gcloud -q --project="$CLOUDSDK_CORE_PROJECT" compute instances delete "$instance" --zone="$ZONE"
       printf "done!\n"
     fi
   else

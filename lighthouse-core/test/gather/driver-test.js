@@ -478,7 +478,11 @@ describe('.gotoURL', () => {
 
     /** @param {LH.Crdp.Page.Frame} frame */
     const navigate = frame => driver._eventEmitter.emit('Page.frameNavigated', {frame});
-    const baseFrame = {id: 'ABC', loaderId: '', securityOrigin: '', mimeType: 'text/html'};
+    const baseFrame = {
+      id: 'ABC', loaderId: '', securityOrigin: '', mimeType: 'text/html', domainAndRegistry: '',
+      secureContextType: /** @type {'Secure'} */ ('Secure'),
+      crossOriginIsolatedContextType: /** @type {'Isolated'} */ ('Isolated'),
+    };
     navigate({...baseFrame, url: 'http://example.com'});
     navigate({...baseFrame, url: 'https://example.com'});
     navigate({...baseFrame, url: 'https://www.example.com'});
@@ -906,6 +910,64 @@ describe('.goOnline', () => {
       downloadThroughput: 0,
       uploadThroughput: 0,
     });
+  });
+});
+
+describe('.clearDataForOrigin', () => {
+  it('only clears data from certain locations', async () => {
+    let foundStorageTypes;
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('Storage.clearDataForOrigin', ({storageTypes}) => {
+        foundStorageTypes = storageTypes;
+      });
+    await driver.clearDataForOrigin('https://example.com');
+    // Should not see cookies, websql, indexeddb, or local_storage.
+    // Cookies are not cleared to preserve login.
+    // websql, indexeddb, and local_storage are not cleared to preserve important user data.
+    expect(foundStorageTypes).toMatchInlineSnapshot(
+      `"appcache,file_systems,shader_cache,service_workers,cache_storage"`
+    );
+  });
+});
+
+describe('.getImportantDataWarning', () => {
+  it('properly returns warning', async () => {
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('Storage.getUsageAndQuota', {usageBreakdown: [
+        {storageType: 'local_storage', usage: 5},
+        {storageType: 'indexeddb', usage: 5},
+        {storageType: 'websql', usage: 0},
+        {storageType: 'appcache', usage: 5},
+        {storageType: 'cookies', usage: 5},
+        {storageType: 'file_systems', usage: 5},
+        {storageType: 'shader_cache', usage: 5},
+        {storageType: 'service_workers', usage: 5},
+        {storageType: 'cache_storage', usage: 0},
+      ]});
+    const warning = await driver.getImportantStorageWarning('https://example.com');
+    expect(warning).toBeDisplayString(
+      'There may be stored data affecting loading performance in ' +
+      'these locations: Local Storage, IndexedDB. ' +
+      'Audit this page in an incognito window to prevent those resources ' +
+      'from affecting your scores.'
+    );
+  });
+
+  it('only warn for certain locations', async () => {
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('Storage.getUsageAndQuota', {usageBreakdown: [
+        {storageType: 'local_storage', usage: 0},
+        {storageType: 'indexeddb', usage: 0},
+        {storageType: 'websql', usage: 0},
+        {storageType: 'appcache', usage: 5},
+        {storageType: 'cookies', usage: 5},
+        {storageType: 'file_systems', usage: 5},
+        {storageType: 'shader_cache', usage: 5},
+        {storageType: 'service_workers', usage: 5},
+        {storageType: 'cache_storage', usage: 5},
+      ]});
+    const warning = await driver.getImportantStorageWarning('https://example.com');
+    expect(warning).toBeUndefined();
   });
 });
 

@@ -5,28 +5,44 @@
  */
 'use strict';
 
+/**
+ * @fileoverview Audit which reports all animations that failed to composite along
+ * with the failure reasons. Failure reasons are only reported if they are actionable.
+ * https://docs.google.com/document/d/1XKcJP2CKmNKfOcDsVvliAQ-e1H9C1nf2H-pzTdyafAA/edit?usp=sharing
+ */
+
 const Audit = require('./audit.js');
 const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
   /** Title of a diagnostic LH audit that provides details on animations that are not composited. */
   title: 'Avoid non-composited animations',
-  /** Description of a diagnostic LH audit that shows the user animations that are not composited. */
-  description: 'Animations which are not composited can be janky and contribute to CLS. ' +
-    '[Learn more](https://developers.google.com/web/fundamentals/performance/rendering/stick-to-compositor-only-properties-and-manage-layer-count)',
+  /** Description of a diagnostic LH audit that shows the user animations that are not composited. Janky means frames may be skipped and the animation will look bad. Acceptable alternatives here might be 'poor', or 'slow'. */
+  description: 'Animations which are not composited can be janky and increase CLS. ' +
+    '[Learn more](https://web.dev/non-composited-animations)',
   /** [ICU Syntax] Label identifying the number of animated elements that are not composited. */
   displayValue: `{itemCount, plural,
   =1 {# animated element found}
   other {# animated elements found}
   }`,
   /**
-   * @description [ICU Syntax] Name of a compositor failure reason where the CSS property being animated is not supported on the compositor.
+   * @description [ICU Syntax] Descriptive reason for why a user-provided animation failed to be optimized by the browser due to the animated CSS property not being supported on the compositor. Shown in a table with a list of other potential failure reasons.
    * @example {height, width} properties
    */
   unsupportedCSSProperty: `{propertyCount, plural,
     =1 {Unsupported CSS Property: {properties}}
     other {Unsupported CSS Properties: {properties}}
   }`,
+  /** Descriptive reason for why a user-provided animation failed to be optimized by the browser due to a `transform` property being dependent on the size of the element itself. Shown in a table with a list of other potential failure reasons.  */
+  transformDependsBoxSize: 'Transform-related property depends on box size',
+  /** Descriptive reason for why a user-provided animation failed to be optimized by the browser due to a `filter` property possibly moving pixels. Shown in a table with a list of other potential failure reasons.  */
+  filterMayMovePixels: 'Filter-related property may move pixels',
+  /** Descriptive reason for why a user-provided animation failed to be optimized by the browser due to an effect having a composite mode which is not `replace`. Shown in a table with a list of other potential failure reasons.  */
+  nonReplaceCompositeMode: 'Effect has composite mode other than "replace"',
+  /** Descriptive reason for why a user-provided animation failed to be optimized by the browser due to another animation on the same target being incompatible. Shown in a table with a list of other potential failure reasons.  */
+  incompatibleAnimations: 'Target has another animation which is incompatible',
+  /** Descriptive reason for why a user-provided animation failed to be optimized by the browser due to an effect having unsupported timing parameters. Shown in a table with a list of other potential failure reasons.  */
+  unsupportedTimingParameters: 'Effect has unsupported timing parameters',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -41,6 +57,26 @@ const ACTIONABLE_FAILURE_REASONS = [
     flag: 1 << 13,
     text: UIStrings.unsupportedCSSProperty,
   },
+  {
+    flag: 1 << 11,
+    text: UIStrings.transformDependsBoxSize,
+  },
+  {
+    flag: 1 << 12,
+    text: UIStrings.filterMayMovePixels,
+  },
+  {
+    flag: 1 << 4,
+    text: UIStrings.nonReplaceCompositeMode,
+  },
+  {
+    flag: 1 << 6,
+    text: UIStrings.incompatibleAnimations,
+  },
+  {
+    flag: 1 << 3,
+    text: UIStrings.unsupportedTimingParameters,
+  },
 ];
 
 /**
@@ -49,7 +85,7 @@ const ACTIONABLE_FAILURE_REASONS = [
  * We can check if a specific bit is true in the failure coding using bitwise and '&' with the flag.
  * @param {number} failureCode
  * @param {string[]} unsupportedProperties
- * @return {string[]}
+ * @return {LH.IcuMessage[]}
  */
 function getActionableFailureReasons(failureCode, unsupportedProperties) {
   return ACTIONABLE_FAILURE_REASONS

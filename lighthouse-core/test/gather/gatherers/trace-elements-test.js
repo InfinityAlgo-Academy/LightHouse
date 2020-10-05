@@ -649,4 +649,87 @@ describe('Trace Elements gatherer - Animated Elements', () => {
       },
     ]);
   });
+
+  it('properly handles exceptions', async () => {
+    const animationNodeData = {
+      traceEventType: 'animation',
+      devtoolsNodePath: '1,HTML,1,BODY,1,DIV',
+      selector: 'body > div#animated',
+      nodeLabel: 'div',
+      snippet: '<div id="animated">',
+      boundingRect: {
+        top: 60,
+        bottom: 200,
+        left: 60,
+        right: 100,
+        width: 40,
+        height: 140,
+      },
+    };
+    const LCPNodeData = {
+      traceEventType: 'largest-contentful-paint',
+      devtoolsNodePath: '1,HTML,1,BODY,1,DIV',
+      selector: 'body > div#lcp',
+      nodeLabel: 'div',
+      snippet: '<div id="lcp">',
+      boundingRect: {
+        top: 70,
+        bottom: 200,
+        left: 70,
+        right: 100,
+        width: 30,
+        height: 130,
+      },
+    };
+    const connectionStub = new Connection();
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('DOM.resolveNode', {object: {objectId: 1}})
+      .mockResponse('Runtime.callFunctionOn', {result: {value: LCPNodeData}})
+      // Animation 1
+      .mockResponse('Animation.resolveAnimation', () => {
+        throw Error();
+      })
+      .mockResponse('DOM.resolveNode', () => {
+        throw Error();
+      })
+      // Animation 2
+      .mockResponse('Animation.resolveAnimation', {remoteObject: {objectId: 4}})
+      .mockResponse('Runtime.getProperties', {result: [{
+        name: 'animationName',
+        value: {type: 'string', value: 'example'},
+      }]})
+      .mockResponse('DOM.resolveNode', {object: {objectId: 5}})
+      .mockResponse('Runtime.callFunctionOn', {result: {value: animationNodeData}});
+    const driver = new Driver(connectionStub);
+
+    const trace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
+    trace.traceEvents.push(makeAnimationTraceEvent('0x363db876c8', 'b', {id: '1', nodeId: 5}));
+    trace.traceEvents.push(makeAnimationTraceEvent('0x363db876c8', 'n', {
+      compositeFailed: 8192,
+      unsupportedProperties: ['height'],
+    }));
+    trace.traceEvents.push(makeAnimationTraceEvent('0x363db876c9', 'b', {id: '2', nodeId: 6}));
+    trace.traceEvents.push(makeAnimationTraceEvent('0x363db876c9', 'n', {
+      compositeFailed: 8192,
+      unsupportedProperties: ['color'],
+    }));
+    trace.traceEvents.push(makeLCPTraceEvent(7));
+
+    const gatherer = new TraceElementsGatherer();
+    const result = await gatherer.afterPass({driver}, {trace});
+
+    expect(result).toEqual([
+      {
+        ...LCPNodeData,
+        nodeId: 7,
+      },
+      {
+        ...animationNodeData,
+        animations: [
+          {name: 'example', failureReasonsMask: 8192, unsupportedProperties: ['color']},
+        ],
+        nodeId: 6,
+      },
+    ]);
+  });
 });
