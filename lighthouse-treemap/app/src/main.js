@@ -65,16 +65,22 @@ class TreemapViewer {
    */
   constructor(options, el) {
     const treemapDebugData = /** @type {LH.Audit.Details.DebugData} */ (
-      options.lhr.audits['treemap-data'].details);
+      options.lhr.audits['script-treemap-data'].details);
     if (!treemapDebugData || !treemapDebugData.treemapData) throw new Error('missing treemap-data');
-    /** @type {import('../../../lighthouse-core/audits/treemap-data').TreemapData} */
-    const treemapData = treemapDebugData.treemapData;
+    /** @type {import('../../../lighthouse-core/audits/script-treemap-data').TreemapData} */
+    const scriptTreemapData = treemapDebugData.treemapData;
 
     /** @type {WeakMap<Treemap.Node, Treemap.RootNode>} */
     this.nodeToRootNodeMap = new WeakMap();
 
     /** @type {WeakMap<Treemap.Node, string[]>} */
     this.nodeToPathMap = new WeakMap();
+
+    const treemapData = {
+      scripts: scriptTreemapData,
+    };
+
+    // TODO: add resource summary root node.
 
     for (const rootNodes of Object.values(treemapData)) {
       for (const rootNode of rootNodes) {
@@ -193,7 +199,7 @@ class TreemapViewer {
       delete node.dom;
 
       // @ts-ignore: webtreemap uses `size` to partition the treemap.
-      node.size = node[mode.partitionBy || 'resourceBytes'];
+      node.size = node[mode.partitionBy || 'resourceBytes'] || 0;
     });
     webtreemap.sort(this.currentRootNode);
 

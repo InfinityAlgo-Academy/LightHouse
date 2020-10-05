@@ -475,7 +475,7 @@ class ReportUIFeatures {
       case 'open-treemap': {
         // WIP test code :)
         const treemapDebugData = /** @type {LH.Audit.Details.DebugData} */ (
-          this.json.audits['treemap-data'].details);
+          this.json.audits['script-treemap-data'].details);
         if (!treemapDebugData) return;
 
         const windowName = `treemap-${this.json.requestedUrl}`;
@@ -682,17 +682,17 @@ class ReportUIFeatures {
     if (!this.json.audits['treemap-data']) return;
     if (!this.json.audits['treemap-data'].details) return;
     const treemapDebugData = /** @type {LH.Audit.Details.DebugData} */ (
-      this.json.audits['treemap-data'].details);
+      this.json.audits['script-treemap-data'].details);
     if (!treemapDebugData) return;
 
-    /** @type {import('../../../audits/treemap-data').TreemapData} */
-    const treemapData = treemapDebugData.treemapData;
+    /** @type {import('../../../audits/script-treemap-data').TreemapData} */
+    const scriptTreemapData = treemapDebugData.treemapData;
 
     for (const urlEl of this._dom.findAll('.lh-text__url', this._document)) {
       const anchorEl = /** @type {HTMLAnchorElement=} */ (urlEl.querySelector('a'));
       if (!anchorEl) continue;
       // TODO: does this still work?
-      const rootNode = treemapData.scripts.find(rootNode => rootNode.name === anchorEl.href);
+      const rootNode = scriptTreemapData.find(rootNode => rootNode.name === anchorEl.href);
       if (!rootNode) continue;
 
       const externalButton = this._dom.createElement('span', 'lh-external-viz');
