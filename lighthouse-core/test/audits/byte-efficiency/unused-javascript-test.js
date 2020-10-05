@@ -8,18 +8,9 @@
 const assert = require('assert').strict;
 const UnusedJavaScript = require('../../../audits/byte-efficiency/unused-javascript.js');
 const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
-const {loadSourceMapFixture} = require('../../test-utils.js');
+const {loadSourceMapAndUsageFixture} = require('../../test-utils.js');
 
 /* eslint-env jest */
-
-/**
- * @param {string} name
- */
-function load(name) {
-  const data = loadSourceMapFixture(name);
-  if (!data.usage) throw new Error('exepcted usage');
-  return {...data, usage: data.usage};
-}
 
 /**
  * @param {string} url
@@ -112,7 +103,7 @@ describe('UnusedJavaScript audit', () => {
         bundleSourceUnusedThreshold: 100,
       },
     };
-    const {map, content, usage} = load('squoosh');
+    const {map, content, usage} = loadSourceMapAndUsageFixture('squoosh');
     const url = 'https://squoosh.app/main-app.js';
     const networkRecords = [generateRecord(url, content.length, 'Script')];
     const artifacts = {

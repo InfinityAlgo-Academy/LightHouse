@@ -16,8 +16,8 @@ const config = {
   audits: [
     'autocomplete',
     'full-page-screenshot',
-    'treemap-data',
     'large-javascript-libraries',
+    'script-treemap-data',
   ],
   passes: [{
     passName: 'defaultPass',

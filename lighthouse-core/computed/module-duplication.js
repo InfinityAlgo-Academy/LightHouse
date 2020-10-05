@@ -15,7 +15,7 @@ class ModuleDuplication {
   /**
    * @param {string} source
    */
-  static _normalizeSource(source) {
+  static normalizeSource(source) {
     // Trim trailing question mark - b/c webpack.
     source = source.replace(/\?$/, '');
 
@@ -101,7 +101,7 @@ class ModuleDuplication {
         const sourceKey = (rawMap.sourceRoot || '') + rawMap.sources[i];
         const sourceSize = sizes.files[sourceKey];
         sourceDataArray.push({
-          source: ModuleDuplication._normalizeSource(rawMap.sources[i]),
+          source: ModuleDuplication.normalizeSource(rawMap.sources[i]),
           resourceSize: sourceSize,
         });
       }

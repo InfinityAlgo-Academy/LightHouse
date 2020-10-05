@@ -6,16 +6,11 @@
 'use strict';
 
 /* eslint-env jest */
-function load(name) {
-  const mapJson = fs.readFileSync(`${__dirname}/../fixtures/source-maps/${name}.js.map`, 'utf-8');
-  const content = fs.readFileSync(`${__dirname}/../fixtures/source-maps/${name}.js`, 'utf-8');
-  return {map: JSON.parse(mapJson), content};
-}
 
+const {loadSourceMapFixture} = require('../test-utils.js');
 const ValidSourceMaps = require('../../audits/valid-source-maps.js');
-const fs = require('fs');
-const largeBundle = load('coursehero-bundle-1');
-const smallBundle = load('coursehero-bundle-2');
+const largeBundle = loadSourceMapFixture('coursehero-bundle-1');
+const smallBundle = loadSourceMapFixture('coursehero-bundle-2');
 const LARGE_JS_BYTE_THRESHOLD = 500 * 1024;
 
 if (largeBundle.content.length < LARGE_JS_BYTE_THRESHOLD) {
@@ -111,8 +106,8 @@ describe('Valid source maps audit', () => {
   });
 
   it('discovers missing source map contents while passing', async () => {
-    const bundleNormal = load('squoosh');
-    const bundleWithMissingContent = load('squoosh');
+    const bundleNormal = loadSourceMapFixture('squoosh');
+    const bundleWithMissingContent = loadSourceMapFixture('squoosh');
     delete bundleWithMissingContent.map.sourcesContent[0];
 
     const artifacts = {
@@ -142,7 +137,7 @@ describe('Valid source maps audit', () => {
   });
 
   it('discovers missing source map contents while failing', async () => {
-    const bundleWithMissingContent = load('squoosh');
+    const bundleWithMissingContent = loadSourceMapFixture('squoosh');
     delete bundleWithMissingContent.map.sourcesContent[0];
 
     const artifacts = {
