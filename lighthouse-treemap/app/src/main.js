@@ -95,8 +95,8 @@ class TreemapViewer {
 
     this.mode = options.mode;
     this.treemapData = treemapData;
-    /** @type {Treemap.Node | null} */
-    this.currentRootNode = null;
+    /** @type {Treemap.Node} */
+    this.currentRootNode;
     this.documentUrl = options.lhr.requestedUrl;
     this.el = el;
     this.getHue = Util.stableHasher(Util.COLOR_HUES);
@@ -164,7 +164,6 @@ class TreemapViewer {
         if (rootNode.node.children) {
           return {
             name: rootNode.name,
-            // idHash: rootNode.node.idHash,
             children: [rootNode.node],
             resourceBytes: rootNode.node.resourceBytes,
             unusedBytes: rootNode.node.unusedBytes,
@@ -191,9 +190,7 @@ class TreemapViewer {
       this.currentRootNode = rootNode.node;
       createViewModes([rootNode], mode);
       this.createTable([rootNode]);
-    }
-
-    if (!this.currentRootNode ) {
+    } else {
       throw new Error('invalid mode selector');
     }
 
@@ -332,9 +329,11 @@ class TreemapViewer {
         if (!shouldHighlight) backgroundColor = 'white';
       }
 
-      if (node.dom) {
-        node.dom.style.backgroundColor = backgroundColor;
-        node.dom.style.color = color;
+      // @ts-ignore: webtreemap will add a dom node property to every node.
+      const dom =/** @type {HTMLElement} */ (node.dom);
+      if (dom) {
+        dom.style.backgroundColor = backgroundColor;
+        dom.style.color = color;
       }
     });
   }

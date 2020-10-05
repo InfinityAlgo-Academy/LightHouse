@@ -120,8 +120,9 @@ git push --follow-tags
 # Publish to npm.
 npm publish
 
-# Publish viewer.
+# Publish viewer and treemap.
 yarn deploy-viewer
+yarn deploy-treemap
 ```
 
 ### Extensions
