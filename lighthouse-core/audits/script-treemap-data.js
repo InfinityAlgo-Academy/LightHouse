@@ -31,7 +31,7 @@ const ModuleDuplication = require('../computed/module-duplication.js');
  * @property {string} name Arbitrary name identifier. Usually a path component from a source map.
  * @property {number} resourceBytes
  * @property {number=} unusedBytes
- * @property {string=} duplicate If present, this module is a duplicate. String is normalized source path. See ModuleDuplication.normalizeSource
+ * @property {string=} duplicatedNormalizedModuleName If present, this module is a duplicate. String is normalized source path. See ModuleDuplication.normalizeSource
  * @property {Node[]=} children
  */
 
@@ -110,8 +110,8 @@ class ScriptTreemapDataAudit extends Audit {
         if (data.unusedBytes) node.unusedBytes = (node.unusedBytes || 0) + data.unusedBytes;
 
         // Only leaf nodes might have duplication data.
-        if (isLastSegment && data.duplicate !== undefined) {
-          node.duplicate = data.duplicate;
+        if (isLastSegment && data.duplicatedNormalizedModuleName !== undefined) {
+          node.duplicatedNormalizedModuleName = data.duplicatedNormalizedModuleName;
         }
       });
     }
@@ -139,10 +139,6 @@ class ScriptTreemapDataAudit extends Audit {
       }
     }
     collapseAll(topNode);
-
-    // TODO(cjamcl): Should this structure be flattened for space savings?
-    // Like DOM Snapshot.
-    // Less JSON (no super nested children, and no repeated property names).
 
     return topNode;
   }
@@ -215,7 +211,7 @@ class ScriptTreemapDataAudit extends Audit {
           };
 
           const key = ModuleDuplication.normalizeSource(source);
-          if (duplicationByPath.has(key)) sourceData.duplicate = key;
+          if (duplicationByPath.has(key)) sourceData.duplicatedNormalizedModuleName = key;
 
           sourcesData[source] = sourceData;
         }
