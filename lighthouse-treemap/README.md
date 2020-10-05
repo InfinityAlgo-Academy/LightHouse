@@ -1,4 +1,4 @@
-# Lighthouse Treemap
+# Lighthouse Treemap Viewer
 
 ## Development
 
