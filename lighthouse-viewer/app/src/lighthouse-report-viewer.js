@@ -213,6 +213,12 @@ class LighthouseReportViewer {
 
       const features = new ViewerUIFeatures(dom, saveCallback);
       features.initFeatures(json);
+
+      // No UI for treemap yet. For now, must run this command in console.
+      // @ts-ignore
+      globalThis._tmpFeatures = features;
+      const command = '_tmpFeatures._openTreemap();';
+      console.log(`For treemap viewer, run: ${command}`);
     } catch (e) {
       logger.error(`Error rendering report: ${e.message}`);
       dom.resetTemplates(); // TODO(bckenny): hack

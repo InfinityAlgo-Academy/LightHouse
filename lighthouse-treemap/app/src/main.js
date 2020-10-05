@@ -66,16 +66,20 @@ class TreemapViewer {
   constructor(options, el) {
     const treemapDebugData = /** @type {LH.Audit.Details.DebugData} */ (
       options.lhr.audits['script-treemap-data'].details);
-    if (!treemapDebugData || !treemapDebugData.treemapData) throw new Error('missing treemap-data');
+    if (!treemapDebugData || !treemapDebugData.treemapData) {
+      throw new Error('missing script-treemap-data');
+    }
+
     /** @type {import('../../../lighthouse-core/audits/script-treemap-data').TreemapData} */
     const scriptTreemapData = treemapDebugData.treemapData;
 
-    /** @type {WeakMap<Treemap.Node, Treemap.RootNode>} */
+    /** @type {WeakMap<Treemap.Node, Treemap.RootNodeContainer>} */
     this.nodeToRootNodeMap = new WeakMap();
 
     /** @type {WeakMap<Treemap.Node, string[]>} */
     this.nodeToPathMap = new WeakMap();
 
+    /** @type {{[rootNodeGroup: string]: Treemap.RootNodeContainer[]}} */
     const treemapData = {
       scripts: scriptTreemapData,
     };
@@ -151,7 +155,7 @@ class TreemapViewer {
     const partitionBySelectorEl = Util.find('.partition-selector');
     partitionBySelectorEl.value = mode.partitionBy;
 
-    if (mode.selector.type === 'group') {
+    if (mode.selector.type === 'group' && mode.selector.value in this.treemapData) {
       const rootNodes = this.treemapData[mode.selector.value];
 
       const children = rootNodes.map(rootNode => {
@@ -187,7 +191,9 @@ class TreemapViewer {
       this.currentRootNode = rootNode.node;
       createViewModes([rootNode], mode);
       this.createTable([rootNode]);
-    } else {
+    }
+
+    if (!this.currentRootNode ) {
       throw new Error('invalid mode selector');
     }
 
@@ -395,7 +401,7 @@ class TreemapViewer {
   }
 
   /**
-   * @param {Treemap.RootNode[]} rootNodes
+   * @param {Treemap.RootNodeContainer[]} rootNodes
    */
   createTable(rootNodes) {
     const gridPanelEl = Util.find('.panel--datagrid');
@@ -474,7 +480,7 @@ class TreemapViewer {
 }
 
 /**
- * @param {Treemap.RootNode[]} rootNodes
+ * @param {Treemap.RootNodeContainer[]} rootNodes
  * @param {Treemap.Mode} currentMode
  */
 function createViewModes(rootNodes, currentMode) {
@@ -582,9 +588,9 @@ function createViewModes(rootNodes, currentMode) {
 
       dfs(rootNode.node, (node, path) => {
         if (node.children) return; // Only consider leaf nodes.
-        if (!node.duplicate) return;
-        if (duplicateIdsSeen.has(node.duplicate)) return;
-        duplicateIdsSeen.add(node.duplicate);
+        if (!node.duplicatedNormalizedModuleName) return;
+        if (duplicateIdsSeen.has(node.duplicatedNormalizedModuleName)) return;
+        duplicateIdsSeen.add(node.duplicatedNormalizedModuleName);
 
         bytes += node.resourceBytes;
         highlightNodePaths.push(path);

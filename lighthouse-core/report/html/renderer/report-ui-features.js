@@ -472,23 +472,6 @@ class ReportUIFeatures {
         this._toggleDarkTheme();
         break;
       }
-      case 'open-treemap': {
-        // WIP test code :)
-        const treemapDebugData = /** @type {LH.Audit.Details.DebugData} */ (
-          this.json.audits['script-treemap-data'].details);
-        if (!treemapDebugData) return;
-
-        const windowName = `treemap-${this.json.requestedUrl}`;
-        // TODO: type as Treemap.Options
-        const data = {
-          lhr: this.json,
-          mode: {
-            selector: {type: 'group', value: 'scripts', viewId: 'all'},
-          },
-        };
-        ReportUIFeatures.openTabAndSendData(data, TREEMAP_URL, windowName);
-        break;
-      }
     }
 
     this._dropDown.close();
@@ -496,6 +479,22 @@ class ReportUIFeatures {
 
   _print() {
     self.print();
+  }
+
+  _openTreemap() {
+    const treemapDebugData = /** @type {LH.Audit.Details.DebugData} */ (
+      this.json.audits['script-treemap-data'].details);
+    if (!treemapDebugData) return;
+
+    const windowName = `treemap-${this.json.requestedUrl}`;
+    /** @type {Treemap.Options} */
+    const data = {
+      lhr: this.json,
+      mode: {
+        selector: {type: 'group', value: 'scripts', viewId: 'all'},
+      },
+    };
+    ReportUIFeatures.openTabAndSendData(data, TREEMAP_URL, windowName);
   }
 
   /**

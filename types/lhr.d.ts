@@ -5,6 +5,7 @@
  */
 
 import LHError = require('../lighthouse-core/lib/lh-error.js');
+import '../lighthouse-treemap/types/treemap';
 
 declare global {
   module LH {

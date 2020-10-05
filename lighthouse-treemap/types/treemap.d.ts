@@ -1,7 +1,7 @@
 // import _Util2 = require('webtreemap-cdt'); // TODO: types.
 import _Util = require('../app/src/util.js');
-import {RootNode as _RootNode} from '../../lighthouse-core/audits/treemap-data';
-import {Node as _Node} from '../../lighthouse-core/audits/treemap-data';
+import {RootNodeContainer as _RootNodeContainer} from '../../lighthouse-core/audits/script-treemap-data';
+import {Node as _Node} from '../../lighthouse-core/audits/script-treemap-data';
 import '../../types/lhr';
 import '../../types/audit';
 import '../../types/audit-details';
@@ -25,7 +25,7 @@ declare global {
       viewId: 'all' | 'unused-js' | 'large-js' | 'duplicate-js';
     }
 
-    type RootNode = _RootNode;
+    type RootNodeContainer = _RootNodeContainer;
     type Node = _Node;
   }
 
