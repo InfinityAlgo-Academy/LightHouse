@@ -76,7 +76,7 @@ describe('ScriptTreemapData audit', () => {
     it('uses node data when available', () => {
       const rootNode = ScriptTreemapData.prepareTreemapNodes('', {
         'a.js': {resourceBytes: 100},
-        'b.js': {resourceBytes: 100, duplicate: 'blah'},
+        'b.js': {resourceBytes: 100, duplicatedNormalizedModuleName: 'blah'},
         'c.js': {resourceBytes: 100, unusedBytes: 50},
       });
       expect(rootNode).toMatchObject(
@@ -87,7 +87,7 @@ describe('ScriptTreemapData audit', () => {
                'resourceBytes': 100,
              },
              {
-               'duplicate': 'blah',
+               'duplicatedNormalizedModuleName': 'blah',
                'name': 'b.js',
                'resourceBytes': 100,
              },
@@ -230,11 +230,13 @@ describe('ScriptTreemapData audit', () => {
 
     it('nodes have duplicates data', () => {
       const sourcesData = {
+        /* eslint-disable max-len */
         'lib/folder/a.js': {resourceBytes: 100, unusedBytes: 50},
-        'lib/node_modules/dep/a.js': {resourceBytes: 101, duplicate: 'dep/a.js'},
-        'node_modules/dep/a.js': {resourceBytes: 100, unusedBytes: 25, duplicate: 'dep/a.js'},
-        'lib/node_modules/dep/b.js': {resourceBytes: 101, duplicate: 'dep/b.js'},
-        'node_modules/dep/b.js': {resourceBytes: 100, unusedBytes: 25, duplicate: 'dep/b.js'},
+        'lib/node_modules/dep/a.js': {resourceBytes: 101, duplicatedNormalizedModuleName: 'dep/a.js'},
+        'node_modules/dep/a.js': {resourceBytes: 100, unusedBytes: 25, duplicatedNormalizedModuleName: 'dep/a.js'},
+        'lib/node_modules/dep/b.js': {resourceBytes: 101, duplicatedNormalizedModuleName: 'dep/b.js'},
+        'node_modules/dep/b.js': {resourceBytes: 100, unusedBytes: 25, duplicatedNormalizedModuleName: 'dep/b.js'},
+        /* eslint-enable max-len */
       };
       const rootNode = ScriptTreemapData.prepareTreemapNodes('', sourcesData);
       expect(rootNode).toMatchObject(
@@ -251,12 +253,12 @@ describe('ScriptTreemapData audit', () => {
                  {
                    'children': [
                      {
-                       'duplicate': 'dep/a.js',
+                       'duplicatedNormalizedModuleName': 'dep/a.js',
                        'name': 'a.js',
                        'resourceBytes': 101,
                      },
                      {
-                       'duplicate': 'dep/b.js',
+                       'duplicatedNormalizedModuleName': 'dep/b.js',
                        'name': 'b.js',
                        'resourceBytes': 101,
                      },
@@ -272,13 +274,13 @@ describe('ScriptTreemapData audit', () => {
              {
                'children': [
                  {
-                   'duplicate': 'dep/a.js',
+                   'duplicatedNormalizedModuleName': 'dep/a.js',
                    'name': 'a.js',
                    'resourceBytes': 100,
                    'unusedBytes': 25,
                  },
                  {
-                   'duplicate': 'dep/b.js',
+                   'duplicatedNormalizedModuleName': 'dep/b.js',
                    'name': 'b.js',
                    'resourceBytes': 100,
                    'unusedBytes': 25,
