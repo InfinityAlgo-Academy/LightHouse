@@ -1,6 +1,6 @@
 {
   "name": "lighthouse",
-  "version": "6.4.0",
+  "version": "6.4.1",
   "description": "Automated auditing, performance metrics, and best practices for the web.",
   "main": "./lighthouse-core/index.js",
   "bin": {
@@ -29,7 +29,7 @@
     "debug": "node --inspect-brk ./lighthouse-cli/index.js",
     "start": "node ./lighthouse-cli/index.js",
     "test": "yarn diff:sample-json && yarn lint --quiet && yarn unit && yarn type-check",
-    "test-bundle": "yarn smoke --runner bundle -j=1 --retries=2 dbw byte a11y",
+    "test-bundle": "yarn smoke --runner bundle -j=1 --retries=2 --invert-match forms",
     "test-clients": "jest \"clients/\"",
     "test-viewer": "yarn unit-viewer && jest lighthouse-viewer/test/viewer-test-pptr.js",
     "test-lantern": "bash lighthouse-core/scripts/test-lantern.sh",
@@ -107,6 +107,7 @@
     "@types/update-notifier": "^4.1.0",
     "@types/ws": "^4.0.1",
     "@types/yargs": "^8.0.2",
+    "@types/yargs-parser": "^15.0.0",
     "@wardpeet/brfs": "2.1.0-0",
     "angular": "^1.7.4",
     "archiver": "^3.0.0",

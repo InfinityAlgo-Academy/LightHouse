@@ -27,6 +27,8 @@ describe('Runner', () => {
   /** @type {jest.Mock} */
   let saveArtifactsSpy;
   /** @type {jest.Mock} */
+  let saveLhrSpy;
+  /** @type {jest.Mock} */
   let loadArtifactsSpy;
   /** @type {jest.Mock} */
   let gatherRunnerRunSpy;
@@ -35,6 +37,7 @@ describe('Runner', () => {
 
   beforeEach(() => {
     saveArtifactsSpy = jest.spyOn(assetSaver, 'saveArtifacts');
+    saveLhrSpy = jest.spyOn(assetSaver, 'saveLhr');
     loadArtifactsSpy = jest.spyOn(assetSaver, 'loadArtifacts');
     gatherRunnerRunSpy = jest.spyOn(GatherRunner, 'run');
     runAuditSpy = jest.spyOn(Runner, '_runAudit');
@@ -42,6 +45,7 @@ describe('Runner', () => {
 
   afterEach(() => {
     saveArtifactsSpy.mockRestore();
+    saveLhrSpy.mockRestore();
     loadArtifactsSpy.mockRestore();
     gatherRunnerRunSpy.mockRestore();
     runAuditSpy.mockRestore();
@@ -82,6 +86,7 @@ describe('Runner', () => {
 
         expect(gatherRunnerRunSpy).toHaveBeenCalled();
         expect(runAuditSpy).not.toHaveBeenCalled();
+        expect(saveLhrSpy).not.toHaveBeenCalled();
 
         assert.ok(fs.existsSync(resolvedPath));
         assert.ok(fs.existsSync(`${resolvedPath}/artifacts.json`));
@@ -95,6 +100,7 @@ describe('Runner', () => {
         expect(loadArtifactsSpy).toHaveBeenCalled();
         expect(gatherRunnerRunSpy).not.toHaveBeenCalled();
         expect(saveArtifactsSpy).not.toHaveBeenCalled();
+        expect(saveLhrSpy).toHaveBeenCalled();
         expect(runAuditSpy).toHaveBeenCalled();
       });
     });
@@ -143,6 +149,7 @@ describe('Runner', () => {
         expect(loadArtifactsSpy).not.toHaveBeenCalled();
         expect(gatherRunnerRunSpy).toHaveBeenCalled();
         expect(saveArtifactsSpy).toHaveBeenCalled();
+        expect(saveLhrSpy).toHaveBeenCalled();
         expect(runAuditSpy).toHaveBeenCalled();
       });
     });
@@ -153,6 +160,7 @@ describe('Runner', () => {
         expect(loadArtifactsSpy).not.toHaveBeenCalled();
         expect(gatherRunnerRunSpy).toHaveBeenCalled();
         expect(saveArtifactsSpy).not.toHaveBeenCalled();
+        expect(saveLhrSpy).not.toHaveBeenCalled();
         expect(runAuditSpy).toHaveBeenCalled();
       });
     });

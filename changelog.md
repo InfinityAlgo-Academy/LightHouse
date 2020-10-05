@@ -1,4 +1,29 @@
- <a name="6.4.0"></a>
+<a name="6.4.1"></a>
+# 6.4.1 (2020-10-02)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v6.4.0...v6.4.1)
+
+This is a minor release to fix an issue in the npm package where v6.4.0 was published with a lot of unncessary files.
+
+## New Contributors
+
+Thanks to our new contributor 👽🐷🐰🐯🐻! 
+
+- Csaba Palfi @csabapalfi
+
+## Core
+
+* prevent attribute truncation side-effects ([#11503](https://github.com/GoogleChrome/lighthouse/pull/11503))
+* save lhr on -A ([#11509](https://github.com/GoogleChrome/lighthouse/pull/11509))
+
+## Tests
+
+* run every smoke test (except forms) for bundle ([#11493](https://github.com/GoogleChrome/lighthouse/pull/11493))
+
+## Misc
+
+* add chromium webtests to npmignore ([#11512](https://github.com/GoogleChrome/lighthouse/pull/11512))
+
+<a name="6.4.0"></a>
 # 6.4.0 (2020-09-30)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v6.3.0...v6.4.0)
 

@@ -41,6 +41,8 @@ function createMockDriver({contentSize, screenSize, screenshotData}) {
       if (method === 'Page.getLayoutMetrics') {
         return {
           contentSize,
+          // See comment within _takeScreenshot() implementation
+          layoutViewport: {clientWidth: contentSize.width, clientHeight: contentSize.height},
         };
       }
       if (method === 'Page.captureScreenshot') {
@@ -275,5 +277,6 @@ describe('Full-page screenshot gatherer', () => {
     );
 
     expect(result).toBeNull();
+    expect(passContext.LighthouseRunWarnings[0]).toMatch('Full page screenshot is too big');
   });
 });

@@ -47,8 +47,6 @@ We follow [semver](https://semver.org/) versioning semantics (`vMajor.Minor.Patc
 
 ## Release Process
 
-Note: You'll wanna be on a Linux machine, since the Lightrider step will require that.
-
 ### On the scheduled release date
 
 Before starting, you should announce to the LH eng channel that you are releasing,
@@ -57,53 +55,35 @@ and that no new PRs should be merged until you are done.
 ```sh
 # Run the tests.
 bash ./lighthouse-core/scripts/release/test.sh
-# Change into the newly-created pristine folder.
-cd ../lighthouse-pristine
 ```
 
 Confirm DevTools integration will work:
 ```sh
-# Checkout the DevTools Frontend code.
-# See: https://chromium.googlesource.com/devtools/devtools-frontend/+/HEAD/docs/workflows.md
+# Change into the newly-created pristine folder.
+cd ../lighthouse-pristine
 
-# Roll to DevTools Frontend folder.
-# If at ~/src/devtools/devtools-frontend, the command to run is:
-yarn devtools ~/src/devtools/devtools-frontend
+yarn test-devtools
 
-# Build DevTools Frontend.
-cd ~/src/devtools/devtools-frontend
-gclient sync && autoninja -C out/Default
-
-# Verify things work in DevTools.
-# Mac:
-"/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary" --custom-devtools-frontend=file://$HOME/src/devtools/devtools-frontend/out/Default/resources/inspector
-
-# Verify that the Lighthouse panel still works. Consider the new features that have been added.
-# If anything is wrong, stop releasing, investigate, land a fix and start over.
-
-# (TODO: when this is a required check in CI, can remove from release steps)
-# Run webtests.
-DEVTOOLS_PATH=~/src/devtools/devtools-frontend yarn test-devtools
+# Do some manual testing on a number of sites.
+yarn open-devtools
 
 # Done with DevTools for now, will open a CL later.
+
+# Leave pristine folder.
+cd ../lighthouse
 ```
 
-Confirm Lightrider integration will work:
-```sh
-# See the internal README for updating Lighthouse.
+### Lightrider
 
-# Test things out locally, if happy, deploy to canary and see how the graphs react. 20 minutes should be enough time.
+Confirm Lightrider integration will work.
 
-# Do the stuff in "Test LR changes in Canary".
-# go/lightrider-doc#test-lr-changes-in-canary
+1. See the internal README for updating Lighthouse: go/lightrider-doc
+1. Roll to the canary feed in a workspace
+1. Run the tests
+1. Update/fix any failing tests
+1. All good: Hold on submitting a CL until after cutting a release
 
-# Verify that Lightrider works properly, and is generating reports fully. Consider the new features that have been added.
-# Note: if the changes include proto changes make sure that the API has those new fields.
-# If anything is wrong, stop releasing, investigate, land a fix and start over.
-
-# For bonus points, add some tests covering new features. Either a new test, or an extra
-# assertion in an existing test.
-```
+### Open the PR
 
 Now that the integrations are confirmed to work, go back to `lighthouse` folder.
 
@@ -111,14 +91,17 @@ Now that the integrations are confirmed to work, go back to `lighthouse` folder.
 # Prepare the commit, replace x.x.x with the desired version
 bash ./lighthouse-core/scripts/release/prepare-commit.sh x.x.x
 
-# Fix-up the CHANGELOG.
-
 # Rebaseline DevTools tests one more time (only version number should change).
 yarn update:test-devtools
+```
 
-# Open PR with title `vx.x.x` and await merge...
-echo "It's been merged! 🎉"
+1. Edit changelog.md before opening the PR
+1. Open the PR with title `vx.x.x`
+1. Hold until approved and merged
 
+### Cut the release
+
+```sh
 # One last test (this script uses origin/master, so we also get the commit with the new changelog - that commit should be HEAD).
 bash ./lighthouse-core/scripts/release/test.sh
 # Package everything for publishing
@@ -139,7 +122,13 @@ npm publish
 
 # Publish viewer.
 yarn deploy-viewer
+```
 
+### Extensions
+
+If the extensions changed, publish them.
+
+```sh
 # Publish the extensions (if it changed).
 open https://chrome.google.com/webstore/developer/edit/blipmdconlkpinefehnmjammfjpmpbjk
 cd dist/extension-package/
@@ -162,10 +151,6 @@ echo "Complete the _Release publicity_ tasks documented above"
 
 ### Chromium CL
 
-If this is a branching week, wait until _after_ the branch point email, then land the CL.
-
-Otherwise, you can land it immediately.
-
 ```sh
 git checkout vx.x.x # Checkout the specific version.
 yarn build-devtools
@@ -173,10 +158,6 @@ yarn devtools ~/src/devtools/devtools-frontend
 
 cd ~/src/devtools/devtools-frontend
 git new-branch rls
-git commit -am "[Lighthouse] Roll Lighthouse x.x.x\n\nBug: 772558"
-git cl upload --bypass-hooks
+git commit -am "[Lighthouse] Roll Lighthouse x.x.x"
+git cl upload -b 772558
 ```
-
-### The following Monday
-
-Evaluate LR staging, if all looks good, promote to production!
