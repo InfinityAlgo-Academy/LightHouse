@@ -201,7 +201,7 @@ class ScriptTreemapDataAudit extends Audit {
 
       /** @type {Node} */
       let node;
-      if (unusedJavascriptSummary.sourcesWastedBytes) {
+      if (unusedJavascriptSummary.sourcesWastedBytes && !('errorMessage' in bundle.sizes)) {
         // Create nodes for each module in a bundle.
 
         /** @type {Record<string, SourceData>} */
