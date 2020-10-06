@@ -7,19 +7,13 @@
 
 /* eslint-env jest */
 
-const fs = require('fs');
 const ModuleDuplication = require('../../computed/module-duplication.js');
-
-function load(name) {
-  const mapJson = fs.readFileSync(`${__dirname}/../fixtures/source-maps/${name}.js.map`, 'utf-8');
-  const content = fs.readFileSync(`${__dirname}/../fixtures/source-maps/${name}.js`, 'utf-8');
-  return {map: JSON.parse(mapJson), content};
-}
+const {loadSourceMapFixture} = require('../test-utils.js');
 
 describe('ModuleDuplication computed artifact', () => {
   it('works (simple)', async () => {
     const context = {computedCache: new Map()};
-    const {map, content} = load('foo.min');
+    const {map, content} = loadSourceMapFixture('foo.min');
     const artifacts = {
       SourceMaps: [
         {scriptUrl: 'https://example.com/foo1.min.js', map},
@@ -36,8 +30,8 @@ describe('ModuleDuplication computed artifact', () => {
 
   it('works (complex)', async () => {
     const context = {computedCache: new Map()};
-    const bundleData1 = load('coursehero-bundle-1');
-    const bundleData2 = load('coursehero-bundle-2');
+    const bundleData1 = loadSourceMapFixture('coursehero-bundle-1');
+    const bundleData2 = loadSourceMapFixture('coursehero-bundle-2');
     const artifacts = {
       SourceMaps: [
         {scriptUrl: 'https://example.com/coursehero-bundle-1.js', map: bundleData1.map},
@@ -215,7 +209,7 @@ describe('ModuleDuplication computed artifact', () => {
     `);
   });
 
-  it('_normalizeSource', () => {
+  it('normalizeSource', () => {
     const testCases = [
       ['test.js', 'test.js'],
       ['node_modules/othermodule.js', 'node_modules/othermodule.js'],
@@ -227,7 +221,7 @@ describe('ModuleDuplication computed artifact', () => {
       ['webpack.js?', 'webpack.js'],
     ];
     for (const [input, expected] of testCases) {
-      expect(ModuleDuplication._normalizeSource(input)).toBe(expected);
+      expect(ModuleDuplication.normalizeSource(input)).toBe(expected);
     }
   });
 
