@@ -218,6 +218,31 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       filmstripEl && timelineEl.appendChild(filmstripEl);
     }
 
+    // External buttons.
+    const buttonsData = [
+      {text: 'web.dev', app: 'web.dev', url: 'https://web.dev/tags/lighthouse/'},
+      {text: 'Score Calculator', app: 'calculator', url: 'https://web.dev/tags/lighthouse/'},
+      {text: 'Treemap Viewer', app: 'treemap', url: 'https://web.dev/tags/lighthouse/'},
+    ];
+    const buttonsEl = this.dom.createChildOf(element, 'div', 'lh-buttons');
+    for (const data of buttonsData) {
+      const buttonTmpl = this.dom.cloneTemplate('#tmpl-lh-button', this.templateContext);
+      const buttonEl = this.dom.find('.lh-button', buttonTmpl);
+      buttonEl.setAttribute('data-app', data.app);
+      buttonEl.setAttribute('data-url', data.url);
+      this.dom.find('.lh-button__text', buttonEl).textContent = data.text;
+      buttonsEl.appendChild(buttonEl);
+    }
+    buttonsEl.addEventListener('click', (e) => {
+      const clickedButton = /** @type {HTMLElement} */ (e.target).closest('.lh-button');
+      if (!clickedButton) return;
+
+      const url = clickedButton.getAttribute('data-url');
+      if (!url) return;
+
+      window.open(url, '_blank');
+    });
+
     // Budgets
     /** @type {Array<Element>} */
     const budgetTableEls = [];
