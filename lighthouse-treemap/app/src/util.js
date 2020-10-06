@@ -14,6 +14,47 @@ const MB = KB * KB;
 
 class Util {
   /**
+   * @param {Treemap.Node} node
+   * @param {(node: Treemap.Node, path: string[]) => void} fn
+   * @param {string[]=} path
+   */
+  static dfs(node, fn, path) {
+    if (!path) path = [];
+    path.push(node.name);
+
+    fn(node, path);
+    if (!node.children) return;
+
+    for (const child of node.children) {
+      Util.dfs(child, fn, [...path]);
+    }
+  }
+
+  /**
+   * @param {string[]} path1
+   * @param {string[]} path2
+   */
+  static pathsAreEqual(path1, path2) {
+    if (path1.length !== path2.length) return false;
+    for (let i = 0; i < path1.length; i++) {
+      if (path1[i] !== path2[i]) return false;
+    }
+    return true;
+  }
+
+  /**
+   * @param {string[]} maybeSubpath
+   * @param {string[]} path
+   */
+  static pathIsSubpath(maybeSubpath, path) {
+    if (maybeSubpath.length > path.length) return false;
+    for (let i = 0; i < maybeSubpath.length; i++) {
+      if (maybeSubpath[i] !== path[i]) return false;
+    }
+    return true;
+  }
+
+  /**
    * @param {string} string
    * @param {number} length
    */

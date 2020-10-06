@@ -19,47 +19,6 @@ let treemapViewer;
 
 // TODO: applyMutations option?
 
-/**
- * @param {Treemap.Node} node
- * @param {(node: Treemap.Node, path: string[]) => void} fn
- * @param {string[]=} path
- */
-function dfs(node, fn, path) {
-  if (!path) path = [];
-  path.push(node.name);
-
-  fn(node, path);
-  if (!node.children) return;
-
-  for (const child of node.children) {
-    dfs(child, fn, [...path]);
-  }
-}
-
-/**
- * @param {string[]} path1
- * @param {string[]} path2
- */
-function pathsAreEqual(path1, path2) {
-  if (path1.length !== path2.length) return false;
-  for (let i = 0; i < path1.length; i++) {
-    if (path1[i] !== path2[i]) return false;
-  }
-  return true;
-}
-
-/**
- * @param {string[]} maybeSubpath
- * @param {string[]} path
- */
-function pathIsSubpath(maybeSubpath, path) {
-  if (maybeSubpath.length > path.length) return false;
-  for (let i = 0; i < maybeSubpath.length; i++) {
-    if (maybeSubpath[i] !== path[i]) return false;
-  }
-  return true;
-}
-
 class TreemapViewer {
   /**
    * @param {Treemap.Options} options
@@ -90,8 +49,8 @@ class TreemapViewer {
 
     for (const rootNodes of Object.values(treemapData)) {
       for (const rootNode of rootNodes) {
-        dfs(rootNode.node, node => this.nodeToRootNodeMap.set(node, rootNode));
-        dfs(rootNode.node, (node, path) => this.nodeToPathMap.set(node, path));
+        Util.dfs(rootNode.node, node => this.nodeToRootNodeMap.set(node, rootNode));
+        Util.dfs(rootNode.node, (node, path) => this.nodeToPathMap.set(node, path));
       }
     }
 
@@ -154,8 +113,9 @@ class TreemapViewer {
     if (!this.mode.partitionBy) this.mode.partitionBy = 'resourceBytes';
 
     // Update options view.
-    const partitionBySelectorEl = Util.find('.partition-selector');
-    partitionBySelectorEl.value = mode.partitionBy;
+    const partitionBySelectorEl = /** @type {HTMLSelectElement} */ (
+      Util.find('.partition-selector'));
+    partitionBySelectorEl.value = this.mode.partitionBy;
 
     if (mode.selector.type === 'group' && mode.selector.value in this.treemapData) {
       const rootNodes = this.treemapData[mode.selector.value];
@@ -196,7 +156,7 @@ class TreemapViewer {
       throw new Error('invalid mode selector');
     }
 
-    dfs(this.currentRootNode, node => {
+    Util.dfs(this.currentRootNode, node => {
       // @ts-ignore: webtreemap will store `dom` on the data to speed up operations.
       // However, when we change the underlying data representation, we need to delete
       // all the cached DOM elements. Otherwise, the rendering will be incorrect when,
@@ -215,6 +175,7 @@ class TreemapViewer {
   render() {
     // If particular nodes are highlighted we want to hide nodes that aren't in the highlighted
     // nodes paths.
+    // TODO: this actually doesn't work well. seems if any node is hidden, all its siblings are hidden too :(
     let showNode;
     if (this.mode.highlightNodePaths && this.mode.selector.viewId === 'duplicate-js') {
       /** @param {Treemap.Node} node */
@@ -225,7 +186,8 @@ class TreemapViewer {
         const path = this.nodeToPathMap.get(node);
         if (!path) return true;
 
-        return this.mode.highlightNodePaths.some(p => pathIsSubpath(path, p));
+        // console.log(path, this.mode.highlightNodePaths.some(p => Util.pathIsSubpath(path, p)));
+        return this.mode.highlightNodePaths.some(p => Util.pathIsSubpath(path, p));
       };
     }
 
@@ -269,7 +231,7 @@ class TreemapViewer {
     }).join(' • ');
     // legacy ---
 
-    dfs(node, node => {
+    Util.dfs(node, node => {
       // const {bytes, wastedBytes, executionTime} = node;
       // TODO: this is from pauls code
       // node.id += ` • ${Number.bytesToString(bytes)} • ${Common.UIString('%.1f\xa0%%', bytes / total * 100)}`;
@@ -305,7 +267,7 @@ class TreemapViewer {
   }
 
   updateColors() {
-    dfs(this.currentRootNode, node => {
+    Util.dfs(this.currentRootNode, node => {
       // Color a root node and all children the same color.
       const rootNode = this.nodeToRootNodeMap.get(node);
       const hueKey = rootNode ? rootNode.name : node.name;
@@ -327,7 +289,7 @@ class TreemapViewer {
       if (this.mode.highlightNodePaths) {
         const path = this.nodeToPathMap.get(node);
         const shouldHighlight = path && this.mode.highlightNodePaths
-          .some(pathToHighlight => pathsAreEqual(pathToHighlight, path));
+          .some(pathToHighlight => Util.pathsAreEqual(pathToHighlight, path));
         if (!shouldHighlight) backgroundColor = 'white';
       }
 
@@ -415,7 +377,7 @@ class TreemapViewer {
       const node = rootNode.node;
       // if (node.children) node = node.children[0];
 
-      dfs(node, (node, path) => {
+      Util.dfs(node, (node, path) => {
         if (node.children) return;
 
         if (node.resourceBytes) maxSize = Math.max(maxSize, node.resourceBytes);
@@ -524,7 +486,7 @@ function createViewModes(rootNodes, currentMode) {
   {
     let bytes = 0;
     for (const rootNode of rootNodes) {
-      dfs(rootNode.node, node => {
+      Util.dfs(rootNode.node, node => {
         if (node.children) return; // Only consider leaf nodes.
 
         bytes += node.resourceBytes;
@@ -540,7 +502,7 @@ function createViewModes(rootNodes, currentMode) {
     /** @type {Array<string[]>} */
     const highlightNodeNames = [];
     for (const rootNode of rootNodes) {
-      dfs(rootNode.node, (node, path) => {
+      Util.dfs(rootNode.node, (node, path) => {
         if (node.children) return; // Only consider leaf nodes.
         if (!node.unusedBytes || node.unusedBytes < 50 * 1024) return;
 
@@ -563,7 +525,7 @@ function createViewModes(rootNodes, currentMode) {
     for (const rootNode of rootNodes) {
       if (!rootNode.node.children) continue; // Only consider bundles.
 
-      dfs(rootNode.node, (node, path) => {
+      Util.dfs(rootNode.node, (node, path) => {
         if (node.children) return; // Only consider leaf nodes.
         if (node.resourceBytes < 200 * 1024) return;
 
@@ -587,7 +549,7 @@ function createViewModes(rootNodes, currentMode) {
     for (const rootNode of rootNodes) {
       if (!rootNode.node.children) continue; // Only consider bundles.
 
-      dfs(rootNode.node, (node, path) => {
+      Util.dfs(rootNode.node, (node, path) => {
         if (node.children) return; // Only consider leaf nodes.
         if (!node.duplicatedNormalizedModuleName) return;
         if (duplicateIdsSeen.has(node.duplicatedNormalizedModuleName)) return;
