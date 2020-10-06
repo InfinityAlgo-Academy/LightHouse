@@ -88,6 +88,7 @@ async function main() {
     SourceMaps: [{scriptUrl: '', map: bundleMap}],
   };
   const bundles = await JsBundles.compute_(artifacts);
+  if ('errorMessage' in bundles[0].sizes) throw new Error(bundles[0].sizes.errorMessage);
   const bundleFileSizes = bundles[0].sizes.files;
 
   const allModules = Object.keys(bundleFileSizes).filter(s => s.startsWith('node_modules'));
