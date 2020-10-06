@@ -292,9 +292,7 @@ describe('JsBundles computed artifact', () => {
             "sourceURL": "src/foo.js",
           },
           "sizes": Object {
-            "files": Object {},
-            "totalBytes": 13,
-            "unmappedBytes": 13,
+            "errorMessage": "compiled.js.map mapping for last column out of bounds: 1:14",
           },
         }
       `);
@@ -314,9 +312,7 @@ describe('JsBundles computed artifact', () => {
             "sourceURL": "src/foo.js",
           },
           "sizes": Object {
-            "files": Object {},
-            "totalBytes": 0,
-            "unmappedBytes": 0,
+            "errorMessage": "compiled.js.map mapping for column out of bounds: 1:1",
           },
         }
       `);
@@ -343,6 +339,47 @@ describe('JsBundles computed artifact', () => {
             },
             "totalBytes": 718,
             "unmappedBytes": 36,
+          },
+        }
+      `);
+    });
+
+    it('emits error when column out of bounds', async () => {
+      const newMappings = map.mappings.split(',');
+      expect(newMappings[1]).toBe('SAAAA');
+      // Make the column offset very big, force out of bounds.
+      // See https://www.mattzeunert.com/2016/02/14/how-do-source-maps-work.html
+      newMappings[1] = 'kD' + 'AAAA';
+      map.mappings = newMappings.join(',');
+      expect(await test()).toMatchInlineSnapshot(`
+        Object {
+          "entry": SourceMapEntry {
+            "columnNumber": 642,
+            "lastColumnNumber": 651,
+            "lineNumber": 0,
+            "name": undefined,
+            "sourceColumnNumber": 18,
+            "sourceLineNumber": 1,
+            "sourceURL": "src/foo.js",
+          },
+          "sizes": Object {
+            "errorMessage": "compiled.js.map mapping for last column out of bounds: 1:685",
+          },
+        }
+      `);
+    });
+
+    it('emits error when line out of bounds', async () => {
+      const newMappings = map.mappings.split(',');
+      expect(newMappings[1]).toBe('SAAAA');
+      // Make the line offset very big, force out of bounds.
+      // See https://sourcemaps.info/spec.html#:~:text=broken%20down%20as%20follows
+      map.mappings = ';'.repeat(10) + map.mappings;
+      expect(await test()).toMatchInlineSnapshot(`
+        Object {
+          "entry": null,
+          "sizes": Object {
+            "errorMessage": "compiled.js.map mapping for line out of bounds: 11",
           },
         }
       `);

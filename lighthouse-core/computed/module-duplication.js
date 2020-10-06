@@ -91,6 +91,8 @@ class ModuleDuplication {
 
     // Determine size of each `sources` entry.
     for (const {rawMap, sizes} of bundles) {
+      if ('errorMessage' in sizes) continue;
+
       /** @type {SourceData[]} */
       const sourceDataArray = [];
       sourceDatasMap.set(rawMap, sourceDataArray);
