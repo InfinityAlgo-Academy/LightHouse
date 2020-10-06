@@ -21,7 +21,8 @@ const lhLocales = glob
 //
 // 1. Validate the locales we store are canonical and not an alias
 //
-const aliasExceptions = ['zh-HK', 'zh-TW']; // TC pipeline still uses these codes rather than the CLDR's preferred `zh-Hant-HK`, `zh-Hant-TW`
+const aliasExceptions = ['zh-HK', 'zh-TW', 'no']; // TC pipeline still uses these codes rather than the CLDR's preferred `zh-Hant-HK`, `zh-Hant-TW`, `nb`
+// See also https://github.com/unicode-cldr/cldr-core/blob/master/supplemental/likelySubtags.json
 
 for (const localeCode of lhLocales) {
   if (Object.keys(cldrAliases).includes(localeCode) && !aliasExceptions.includes(localeCode)) {

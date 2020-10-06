@@ -27,22 +27,17 @@ describe('lookup', () => {
     expect(lookup(['de'], undefined)).toEqual(undefined);
   });
 
-
-  // 'nb': require('./locales/nb.json'), // Alias of 'no'
-  // 'no': require('./locales/nb.json'),
-
-
   it('handles all aliases previously explicitly defined', () => {
     const previousAliasToCanonicalMap = {
       // TODO en mapping
       // en: 'en-US',
 
       // TODO engb mapping
-      // 'en-AU': 'en-GB',
-      // 'en-IE': 'en-GB',
-      // 'en-SG': 'en-GB',
-      // 'en-ZA': 'en-GB',
-      // 'en-IN': 'en-GB',
+      'en-AU': 'en-GB',
+      'en-IE': 'en-GB',
+      'en-SG': 'en-GB',
+      'en-ZA': 'en-GB',
+      'en-IN': 'en-GB',
 
       // bs: 'hr',  This was a mistake. Bosnian and croatian are both distinct.
       'es-AR': 'es-419',
