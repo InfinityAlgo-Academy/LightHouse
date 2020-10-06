@@ -37,7 +37,7 @@ describe('Runner', () => {
 
   beforeEach(() => {
     saveArtifactsSpy = jest.spyOn(assetSaver, 'saveArtifacts');
-    saveLhrSpy = jest.spyOn(assetSaver, 'saveLhr');
+    saveLhrSpy = jest.spyOn(assetSaver, 'saveLhr').mockImplementation(() => {});
     loadArtifactsSpy = jest.spyOn(assetSaver, 'loadArtifacts');
     gatherRunnerRunSpy = jest.spyOn(GatherRunner, 'run');
     runAuditSpy = jest.spyOn(Runner, '_runAudit');
@@ -100,7 +100,7 @@ describe('Runner', () => {
         expect(loadArtifactsSpy).toHaveBeenCalled();
         expect(gatherRunnerRunSpy).not.toHaveBeenCalled();
         expect(saveArtifactsSpy).not.toHaveBeenCalled();
-        expect(saveLhrSpy).toHaveBeenCalled();
+        expect(saveLhrSpy).not.toHaveBeenCalled();
         expect(runAuditSpy).toHaveBeenCalled();
       });
     });
@@ -142,7 +142,7 @@ describe('Runner', () => {
       assert.strictEqual(lhr.runtimeError, undefined);
     });
 
-    it('-GA is a normal run but it saves artifacts to disk', () => {
+    it('-GA is a normal run but it saves artifacts and LHR to disk', () => {
       const settings = {auditMode: artifactsPath, gatherMode: artifactsPath};
       const opts = {url, config: generateConfig(settings), driverMock};
       return Runner.run(null, opts).then(_ => {
