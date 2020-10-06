@@ -326,7 +326,7 @@ declare global {
           files: Record<string, number>;
           unmappedBytes: number;
           totalBytes: number;
-        };
+        } | {errorMessage: string};
       }
 
       /** @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#Attributes */

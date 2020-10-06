@@ -95,7 +95,7 @@ class ScriptTreemapDataAudit extends Audit {
       // Strip off the shared root.
       const sourcePathSegments = source.replace(sourceRoot, '').split(/\/+/);
       sourcePathSegments.forEach((sourcePathSegment, i) => {
-        const isLastSegment = i === sourcePathSegments.length - 1;
+        const isLeaf = i === sourcePathSegments.length - 1;
 
         let child = node.children && node.children.find(child => child.name === sourcePathSegment);
         if (!child) {
@@ -110,7 +110,7 @@ class ScriptTreemapDataAudit extends Audit {
         if (data.unusedBytes) node.unusedBytes = (node.unusedBytes || 0) + data.unusedBytes;
 
         // Only leaf nodes might have duplication data.
-        if (isLastSegment && data.duplicatedNormalizedModuleName !== undefined) {
+        if (isLeaf && data.duplicatedNormalizedModuleName !== undefined) {
           node.duplicatedNormalizedModuleName = data.duplicatedNormalizedModuleName;
         }
       });
@@ -119,7 +119,7 @@ class ScriptTreemapDataAudit extends Audit {
     // For every source file, apply the data to all components
     // of the source path, creating nodes as necessary.
     for (const [source, data] of Object.entries(sourcesData)) {
-      addAllNodesInSourcePath(source || `<unmapped>`, data);
+      addAllNodesInSourcePath(source, data);
     }
 
     /**
@@ -148,7 +148,7 @@ class ScriptTreemapDataAudit extends Audit {
    * If a script has a source map, that node will be set by prepareTreemapNodes.
    * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
-   * @return {Promise<RootNodeContainer[]>}
+   * @return {Promise<TreemapData>}
    */
   static async makeRootNodes(artifacts, context) {
     /** @type {RootNodeContainer[]} */
@@ -183,6 +183,9 @@ class ScriptTreemapDataAudit extends Audit {
       const bundle = bundles.find(bundle => scriptElement.src === bundle.script.src);
       const scriptCoverages = artifacts.JsUsage[scriptElement.src];
       if (!bundle || !scriptCoverages) {
+        // No bundle or coverage information, so simply make a single node
+        // detailing how big the script is.
+
         rootNodeContainers.push({
           name,
           node: {
@@ -198,7 +201,7 @@ class ScriptTreemapDataAudit extends Audit {
 
       /** @type {Node} */
       let node;
-      if (unusedJavascriptSummary.sourcesWastedBytes) {
+      if (unusedJavascriptSummary.sourcesWastedBytes && !('errorMessage' in bundle.sizes)) {
         // Create nodes for each module in a bundle.
 
         /** @type {Record<string, SourceData>} */
@@ -242,7 +245,6 @@ class ScriptTreemapDataAudit extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    /** @type {TreemapData} */
     const treemapData = await ScriptTreemapDataAudit.makeRootNodes(artifacts, context);
 
     // TODO: when out of experimental should make a new detail type.
