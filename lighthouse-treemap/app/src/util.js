@@ -5,6 +5,8 @@
  */
 'use strict';
 
+/* eslint-env browser */
+
 /** @typedef {HTMLElementTagNameMap & {[id: string]: HTMLElement}} HTMLElementByTagName */
 
 const KB = 1024;
@@ -173,27 +175,29 @@ class Util {
     const max = Math.max(r, g, b);
     const min = Math.min(r, g, b);
     const c = max - min;
-    let hue;
-    if (c == 0) {
+    let hue = 0;
+    let segment;
+    let shift;
+    if (c === 0) {
       hue = 0;
     } else {
       switch (max) {
         case r:
-          var segment = (g - b) / c;
-          var shift = 0 / 60; // R° / (360° / hex sides)
+          segment = (g - b) / c;
+          shift = 0 / 60; // R° / (360° / hex sides)
           if (segment < 0) { // hue > 180, full rotation
             shift = 360 / 60; // R° / (360° / hex sides)
           }
           hue = segment + shift;
           break;
         case g:
-          var segment = (b - r) / c;
-          var shift = 120 / 60; // G° / (360° / hex sides)
+          segment = (b - r) / c;
+          shift = 120 / 60; // G° / (360° / hex sides)
           hue = segment + shift;
           break;
         case b:
-          var segment = (r - g) / c;
-          var shift = 240 / 60; // B° / (360° / hex sides)
+          segment = (r - g) / c;
+          shift = 240 / 60; // B° / (360° / hex sides)
           hue = segment + shift;
           break;
       }

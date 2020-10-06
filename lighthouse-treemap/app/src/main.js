@@ -5,6 +5,10 @@
  */
 'use strict';
 
+/* eslint-env browser */
+
+/* globals webtreemap Tabulator Util */
+
 /** @type {TreemapViewer} */
 let treemapViewer;
 
@@ -14,8 +18,6 @@ let treemapViewer;
 // if (id.startsWith(origin)) id = id.replace(origin, '/');
 
 // TODO: applyMutations option?
-
-// TODO: unused bytes of inline scripts?
 
 /**
  * @param {Treemap.Node} node
@@ -96,7 +98,7 @@ class TreemapViewer {
     this.mode = options.mode;
     this.treemapData = treemapData;
     /** @type {Treemap.Node} */
-    this.currentRootNode;
+    this.currentRootNode; // eslint-disable-line no-unused-expressions
     this.documentUrl = options.lhr.requestedUrl;
     this.el = el;
     this.getHue = Util.stableHasher(Util.COLOR_HUES);
@@ -138,7 +140,7 @@ class TreemapViewer {
 
     window.addEventListener('mouseout', (e) => {
       if (!(e.target instanceof HTMLElement)) return;
-      const nodeEl = e.target.closest('.webtreemap-node'); Util.COLOR_HUES;
+      const nodeEl = e.target.closest('.webtreemap-node');
       if (!nodeEl) return;
       nodeEl.classList.remove('webtreemap-node--hover');
     });
@@ -470,9 +472,9 @@ class TreemapViewer {
 
   toggleTable() {
     const mainEl = Util.find('main');
-    mainEl.addEventListener('animationstart', () => {
-      console.log('Animation started');
-    });
+    // mainEl.addEventListener('animationstart', () => {
+    //   console.log('Animation started');
+    // });
     mainEl.classList.toggle('lh-main__show-table');
     this.render();
   }
@@ -623,6 +625,7 @@ function init(options) {
     window.ga('send', 'event', 'report', 'open in viewer');
   }
 
+  // eslint-disable-next-line no-console
   console.log({options});
 }
 

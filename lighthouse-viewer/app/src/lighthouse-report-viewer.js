@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* global DOM, ViewerUIFeatures, ReportRenderer, DragAndDrop, GithubApi, PSIApi, logger, idbKeyval */
+/* global globalThis, DOM, ViewerUIFeatures, ReportRenderer, DragAndDrop, GithubApi, PSIApi, logger, idbKeyval */
 
 /** @typedef {import('./psi-api').PSIParams} PSIParams */
 
@@ -218,6 +218,7 @@ class LighthouseReportViewer {
       // @ts-ignore
       globalThis._tmpFeatures = features;
       const command = '_tmpFeatures._openTreemap();';
+      // eslint-disable-next-line no-console
       console.log(`For treemap viewer, run: ${command}`);
     } catch (e) {
       logger.error(`Error rendering report: ${e.message}`);
