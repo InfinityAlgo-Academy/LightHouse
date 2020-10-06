@@ -5,11 +5,11 @@
  */
 'use strict';
 
+/* eslint-env jest */
+
 const ScriptTreemapData_ = require('../../audits/script-treemap-data.js');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 const {loadSourceMapAndUsageFixture, makeParamsOptional} = require('../test-utils.js');
-
-/* eslint-env jest */
 
 const ScriptTreemapData = {
   audit: makeParamsOptional(ScriptTreemapData_.audit),
@@ -81,25 +81,25 @@ describe('ScriptTreemapData audit', () => {
       });
       expect(rootNode).toMatchObject(
          {
-           'children': [
+           children: [
              {
-               'name': 'a.js',
-               'resourceBytes': 100,
+               name: 'a.js',
+               resourceBytes: 100,
              },
              {
-               'duplicatedNormalizedModuleName': 'blah',
-               'name': 'b.js',
-               'resourceBytes': 100,
+               duplicatedNormalizedModuleName: 'blah',
+               name: 'b.js',
+               resourceBytes: 100,
              },
              {
-               'name': 'c.js',
-               'resourceBytes': 100,
-               'unusedBytes': 50,
+               name: 'c.js',
+               resourceBytes: 100,
+               unusedBytes: 50,
              },
            ],
-           'name': '',
-           'resourceBytes': 300,
-           'unusedBytes': 50,
+           name: '',
+           resourceBytes: 300,
+           unusedBytes: 50,
          }
       );
     });
@@ -111,18 +111,18 @@ describe('ScriptTreemapData audit', () => {
       });
       expect(rootNode).toMatchObject(
        {
-         'children': [
+         children: [
            {
-             'name': 'a.js',
-             'resourceBytes': 100,
+             name: 'a.js',
+             resourceBytes: 100,
            },
            {
-             'name': 'b.js',
-             'resourceBytes': 100,
+             name: 'b.js',
+             resourceBytes: 100,
            },
          ],
-         'name': '/folder',
-         'resourceBytes': 200,
+         name: '/folder',
+         resourceBytes: 200,
        }
       );
     });
@@ -134,20 +134,20 @@ describe('ScriptTreemapData audit', () => {
       });
       expect(rootNode).toMatchObject(
          {
-           'children': [
+           children: [
              {
-               'children': undefined,
-               'name': 'folder1/a.js',
-               'resourceBytes': 100,
+               children: undefined,
+               name: 'folder1/a.js',
+               resourceBytes: 100,
              },
              {
-               'children': undefined,
-               'name': 'folder2/b.js',
-               'resourceBytes': 100,
+               children: undefined,
+               name: 'folder2/b.js',
+               resourceBytes: 100,
              },
            ],
-           'name': '/root',
-           'resourceBytes': 200,
+           name: '/root',
+           resourceBytes: 200,
          }
       );
     });
@@ -160,23 +160,23 @@ describe('ScriptTreemapData audit', () => {
       const rootNode = ScriptTreemapData.prepareTreemapNodes('some/prefix', sourcesData);
       expect(rootNode).toMatchObject(
          {
-           'children': [
+           children: [
              {
-               'children': undefined,
-               'name': '/main.js',
-               'resourceBytes': 100,
-               'unusedBytes': 50,
+               children: undefined,
+               name: '/main.js',
+               resourceBytes: 100,
+               unusedBytes: 50,
              },
              {
-               'children': undefined,
-               'name': 'not/a.js',
-               'resourceBytes': 101,
-               'unusedBytes': 51,
+               children: undefined,
+               name: 'not/a.js',
+               resourceBytes: 101,
+               unusedBytes: 51,
              },
            ],
-           'name': 'some/prefix',
-           'resourceBytes': 201,
-           'unusedBytes': 101,
+           name: 'some/prefix',
+           resourceBytes: 201,
+           unusedBytes: 101,
          }
       );
 
@@ -198,32 +198,32 @@ describe('ScriptTreemapData audit', () => {
       const rootNode = ScriptTreemapData.prepareTreemapNodes('', sourcesData);
       expect(rootNode).toMatchObject(
          {
-           'children': [
+           children: [
              {
-               'children': [
+               children: [
                  {
-                   'name': 'a.js',
-                   'resourceBytes': 100,
-                   'unusedBytes': 50,
+                   name: 'a.js',
+                   resourceBytes: 100,
+                   unusedBytes: 50,
                  },
                  {
-                   'name': 'b.js',
-                   'resourceBytes': 101,
+                   name: 'b.js',
+                   resourceBytes: 101,
                  },
                ],
-               'name': 'folder',
-               'resourceBytes': 201,
-               'unusedBytes': 50,
+               name: 'folder',
+               resourceBytes: 201,
+               unusedBytes: 50,
              },
              {
-               'name': 'c.js',
-               'resourceBytes': 100,
-               'unusedBytes': 25,
+               name: 'c.js',
+               resourceBytes: 100,
+               unusedBytes: 25,
              },
            ],
-           'name': '/lib',
-           'resourceBytes': 301,
-           'unusedBytes': 75,
+           name: '/lib',
+           resourceBytes: 301,
+           unusedBytes: 75,
          }
       );
     });
@@ -241,59 +241,59 @@ describe('ScriptTreemapData audit', () => {
       const rootNode = ScriptTreemapData.prepareTreemapNodes('', sourcesData);
       expect(rootNode).toMatchObject(
          {
-           'children': [
+           children: [
              {
-               'children': [
+               children: [
                  {
-                   'children': undefined,
-                   'name': 'folder/a.js',
-                   'resourceBytes': 100,
-                   'unusedBytes': 50,
+                   children: undefined,
+                   name: 'folder/a.js',
+                   resourceBytes: 100,
+                   unusedBytes: 50,
                  },
                  {
-                   'children': [
+                   children: [
                      {
-                       'duplicatedNormalizedModuleName': 'dep/a.js',
-                       'name': 'a.js',
-                       'resourceBytes': 101,
+                       duplicatedNormalizedModuleName: 'dep/a.js',
+                       name: 'a.js',
+                       resourceBytes: 101,
                      },
                      {
-                       'duplicatedNormalizedModuleName': 'dep/b.js',
-                       'name': 'b.js',
-                       'resourceBytes': 101,
+                       duplicatedNormalizedModuleName: 'dep/b.js',
+                       name: 'b.js',
+                       resourceBytes: 101,
                      },
                    ],
-                   'name': 'node_modules/dep',
-                   'resourceBytes': 202,
+                   name: 'node_modules/dep',
+                   resourceBytes: 202,
                  },
                ],
-               'name': 'lib',
-               'resourceBytes': 302,
-               'unusedBytes': 50,
+               name: 'lib',
+               resourceBytes: 302,
+               unusedBytes: 50,
              },
              {
-               'children': [
+               children: [
                  {
-                   'duplicatedNormalizedModuleName': 'dep/a.js',
-                   'name': 'a.js',
-                   'resourceBytes': 100,
-                   'unusedBytes': 25,
+                   duplicatedNormalizedModuleName: 'dep/a.js',
+                   name: 'a.js',
+                   resourceBytes: 100,
+                   unusedBytes: 25,
                  },
                  {
-                   'duplicatedNormalizedModuleName': 'dep/b.js',
-                   'name': 'b.js',
-                   'resourceBytes': 100,
-                   'unusedBytes': 25,
+                   duplicatedNormalizedModuleName: 'dep/b.js',
+                   name: 'b.js',
+                   resourceBytes: 100,
+                   unusedBytes: 25,
                  },
                ],
-               'name': 'node_modules/dep',
-               'resourceBytes': 200,
-               'unusedBytes': 50,
+               name: 'node_modules/dep',
+               resourceBytes: 200,
+               unusedBytes: 50,
              },
            ],
-           'name': '',
-           'resourceBytes': 502,
-           'unusedBytes': 100,
+           name: '',
+           resourceBytes: 502,
+           unusedBytes: 100,
          }
       );
     });
