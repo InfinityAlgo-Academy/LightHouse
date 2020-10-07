@@ -8,7 +8,6 @@
 /* eslint-env jest */
 
 const FullPageScreenshotGatherer = require('../../../gather/gatherers/full-page-screenshot.js');
-const MAX_SCREENSHOT_HEIGHT = 16384;
 
 /**
  * @param {{contentSize: {width: number, height: number}, screenSize: {width?: number, height?: number, dpr: number}, screenshotData: string[]}}
@@ -18,9 +17,6 @@ function createMockDriver({contentSize, screenSize, screenshotData}) {
     evaluateAsync: async function(code) {
       if (code === 'window.innerWidth') {
         return contentSize.width;
-      }
-      if (code === 'window.devicePixelRatio') {
-        return screenSize ? screenSize.dpr : 1;
       }
       if (code.includes('document.documentElement.clientWidth')) {
         return {
@@ -131,7 +127,7 @@ describe('Full-page screenshot gatherer', () => {
       'Emulation.setDeviceMetricsOverride',
       expect.objectContaining({
         mobile: true,
-        deviceScaleFactor: 2,
+        deviceScaleFactor: 1,
         height: 1500,
         width: 500,
         screenHeight: 1500,
@@ -195,9 +191,6 @@ describe('Full-page screenshot gatherer', () => {
         width: 412,
         height: 15000,
       },
-      screenSize: {
-        dpr: 2,
-      },
       screenshotData: [
         new Array(3 * 1024 * 1024).join('a'),
         new Array(1 * 1024 * 1024).join('a'),
@@ -216,15 +209,15 @@ describe('Full-page screenshot gatherer', () => {
     expect(driver.sendCommand).toHaveBeenCalledWith(
       'Emulation.setDeviceMetricsOverride',
       expect.objectContaining({
-        deviceScaleFactor: 2,
-        height: Math.floor(MAX_SCREENSHOT_HEIGHT / 2),
-        screenHeight: Math.floor(MAX_SCREENSHOT_HEIGHT / 2),
+        deviceScaleFactor: 1,
+        height: Math.floor(15000),
+        screenHeight: Math.floor(15000),
       })
     );
     expect(driver.sendCommand).toHaveBeenCalledWith(
       'Emulation.setDeviceMetricsOverride',
       expect.objectContaining({
-        deviceScaleFactor: 2,
+        deviceScaleFactor: 1,
         height: 5000,
         screenHeight: 5000,
       })
@@ -262,15 +255,15 @@ describe('Full-page screenshot gatherer', () => {
     expect(driver.sendCommand).toHaveBeenCalledWith(
       'Emulation.setDeviceMetricsOverride',
       expect.objectContaining({
-        deviceScaleFactor: 3,
-        height: Math.floor(MAX_SCREENSHOT_HEIGHT / 3),
-        screenHeight: Math.floor(MAX_SCREENSHOT_HEIGHT / 3),
+        deviceScaleFactor: 1,
+        height: Math.floor(15000),
+        screenHeight: Math.floor(15000),
       })
     );
     expect(driver.sendCommand).toHaveBeenCalledWith(
       'Emulation.setDeviceMetricsOverride',
       expect.objectContaining({
-        deviceScaleFactor: 3,
+        deviceScaleFactor: 1,
         height: 5000,
         screenHeight: 5000,
       })
