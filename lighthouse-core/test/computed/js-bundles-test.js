@@ -6,14 +6,8 @@
 'use strict';
 
 /* eslint-env jest */
-const fs = require('fs');
 const JsBundles = require('../../computed/js-bundles.js');
-
-function load(name) {
-  const mapJson = fs.readFileSync(`${__dirname}/../fixtures/source-maps/${name}.js.map`, 'utf-8');
-  const content = fs.readFileSync(`${__dirname}/../fixtures/source-maps/${name}.js`, 'utf-8');
-  return {map: JSON.parse(mapJson), content};
-}
+const {loadSourceMapFixture} = require('../test-utils.js');
 
 describe('JsBundles computed artifact', () => {
   it('collates script element and source map', async () => {
@@ -34,7 +28,7 @@ describe('JsBundles computed artifact', () => {
   it('works (simple map)', async () => {
     // This map is from source-map-explorer.
     // https://github.com/danvk/source-map-explorer/tree/4b95f6e7dfe0058d791dcec2107fee43a1ebf02e/tests
-    const {map, content} = load('foo.min');
+    const {map, content} = loadSourceMapFixture('foo.min');
     const artifacts = {
       SourceMaps: [{scriptUrl: 'https://example.com/foo.min.js', map}],
       ScriptElements: [{src: 'https://example.com/foo.min.js', content}],
@@ -80,7 +74,7 @@ describe('JsBundles computed artifact', () => {
   it('works (simple map) (null source)', async () => {
     // This map is from source-map-explorer.
     // https://github.com/danvk/source-map-explorer/tree/4b95f6e7dfe0058d791dcec2107fee43a1ebf02e/tests
-    const {map, content} = load('foo.min');
+    const {map, content} = loadSourceMapFixture('foo.min');
     map.sources[1] = null;
     const artifacts = {
       SourceMaps: [{scriptUrl: 'https://example.com/foo.min.js', map}],
@@ -123,7 +117,7 @@ describe('JsBundles computed artifact', () => {
   });
 
   it('works (complex map)', async () => {
-    const {map, content} = load('squoosh');
+    const {map, content} = loadSourceMapFixture('squoosh');
     const artifacts = {
       SourceMaps: [{scriptUrl: 'https://squoosh.app/main-app.js', map}],
       ScriptElements: [{src: 'https://squoosh.app/main-app.js', content}],
@@ -240,7 +234,7 @@ describe('JsBundles computed artifact', () => {
     let content;
 
     beforeEach(() => {
-      data = load('foo.min');
+      data = loadSourceMapFixture('foo.min');
       map = data.map;
       content = data.content;
     });

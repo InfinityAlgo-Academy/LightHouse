@@ -124,12 +124,12 @@ async function saveArtifacts(artifacts, basePath) {
 }
 
 /**
- * Save LHR to file located at basePath/lhr.json.
+ * Save LHR to file located at basePath/lhr.report.json.
  * @param {LH.Result} lhr
  * @param {string} basePath
  */
 function saveLhr(lhr, basePath) {
-  fs.writeFileSync(`${basePath}/lhr.json`, JSON.stringify(lhr, null, 2));
+  fs.writeFileSync(`${basePath}/lhr.report.json`, JSON.stringify(lhr, null, 2));
 }
 
 /**
