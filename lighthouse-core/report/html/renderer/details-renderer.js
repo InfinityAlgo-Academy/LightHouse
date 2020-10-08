@@ -533,7 +533,7 @@ class DetailsRenderer {
       item.boundingRect,
       maxThumbnailSize
     );
-    element.prepend(elementScreenshot);
+    if (elementScreenshot) element.prepend(elementScreenshot);
 
     return element;
   }
