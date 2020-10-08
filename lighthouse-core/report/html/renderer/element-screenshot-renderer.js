@@ -18,6 +18,18 @@
 /** @typedef {{width: number, height: number}} Size */
 
 /**
+ * @param {LH.Audit.Details.FullPageScreenshot} fullPageScreenshot
+ * @param {LH.Artifacts.Rect} rect
+ * @return {boolean}
+ */
+function screenshotContainsRect(fullPageScreenshot, rect) {
+  return rect.top >= 0 &&
+    rect.right <= fullPageScreenshot.width &&
+    rect.bottom <= fullPageScreenshot.height &&
+    rect.left >= 0;
+}
+
+/**
  * @param {number} value
  * @param {number} min
  * @param {number} max
@@ -153,13 +165,16 @@ class ElementScreenshotRenderer {
         top: Number(el.dataset['rectTop']),
         bottom: Number(el.dataset['rectTop']) + Number(el.dataset['rectHeight']),
       };
-      overlay.appendChild(ElementScreenshotRenderer.render(
+      const screenshotElement = ElementScreenshotRenderer.render(
         dom,
         templateContext,
         fullPageScreenshot,
         elementRectSC,
         maxLightboxSize
-      ));
+      );
+      if (!screenshotElement) return;
+
+      overlay.appendChild(screenshotElement);
       overlay.addEventListener('click', () => {
         overlay.remove();
       });
@@ -188,14 +203,19 @@ class ElementScreenshotRenderer {
   /**
    * Renders an element with surrounding context from the full page screenshot.
    * Used to render both the thumbnail preview in details tables and the full-page screenshot in the lightbox.
+   * Returns null if element rect is outside screenshot bounds.
    * @param {DOM} dom
    * @param {ParentNode} templateContext
    * @param {LH.Audit.Details.FullPageScreenshot} fullPageScreenshot
    * @param {LH.Artifacts.Rect} elementRectSC Region of screenshot to highlight.
    * @param {Size} maxRenderSizeDC e.g. maxThumbnailSize or maxLightboxSize.
-   * @return {Element}
+   * @return {Element|null}
    */
   static render(dom, templateContext, fullPageScreenshot, elementRectSC, maxRenderSizeDC) {
+    if (!screenshotContainsRect(fullPageScreenshot, elementRectSC)) {
+      return null;
+    }
+
     const tmpl = dom.cloneTemplate('#tmpl-lh-element-screenshot', templateContext);
     const containerEl = dom.find('.lh-element-screenshot', tmpl);
 

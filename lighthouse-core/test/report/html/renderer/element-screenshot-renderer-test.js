@@ -21,6 +21,18 @@ const TEMPLATE_FILE = fs.readFileSync(
   'utf8'
 );
 
+/**
+ * @param {{left: number, top: number, width: number, height:number}} opts
+ * @returns {LH.Artifacts.Rect}
+ */
+function makeRect(opts) {
+  return {
+    ...opts,
+    right: opts.left + opts.width,
+    bottom: opts.top + opts.height,
+  };
+}
+
 describe('ElementScreenshotRenderer', () => {
   let dom;
 
@@ -43,12 +55,12 @@ describe('ElementScreenshotRenderer', () => {
       width: 1000,
       height: 1000,
     };
-    const elementRectSC = {
+    const elementRectSC = makeRect({
       left: 50,
       top: 50,
       width: 200,
       height: 300,
-    };
+    });
     const renderContainerSizeDC = {
       width: 500,
       height: 500,
@@ -79,6 +91,30 @@ describe('ElementScreenshotRenderer', () => {
         "
     `);
     /* eslint-enable max-len */
+  });
+
+  it('returns null if element is out of bounds', () => {
+    const fullPageScreenshot = {
+      width: 1000,
+      height: 1000,
+    };
+    const elementRectSC = makeRect({
+      left: 50,
+      top: 5000,
+      width: 200,
+      height: 300,
+    });
+    const renderContainerSizeDC = {
+      width: 500,
+      height: 500,
+    };
+    expect(ElementScreenshotRenderer.render(
+      dom,
+      dom.document(),
+      fullPageScreenshot,
+      elementRectSC,
+      renderContainerSizeDC
+    )).toBe(null);
   });
 
   describe('getScreenshotPositions', () => {
