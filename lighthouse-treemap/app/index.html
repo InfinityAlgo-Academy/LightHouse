@@ -19,11 +19,72 @@ Unless required by applicable law or agreed to in writing, software distributed 
 </head>
 
 <body>
-  <main class="lh-main">
+  <main class="lh-main lh-vars">
     <div class="panel panel--settings">
       <header>
         <div class="lh-header--section">
-          <!-- TODO: Logo -->
+          <!-- Lighthouse logo. Stolen from templates.html -->
+          <style>
+            .lh-vars {
+              --topbar-background-color: var(--color-gray-100);
+              --topbar-height: 32px;
+              --topbar-logo-size: 24px;
+              --topbar-padding: 0 8px;
+            }
+
+            .lh-topbar {
+              position: sticky;
+              top: 0;
+              left: 0;
+              right: 0;
+              z-index: 1000;
+              display: flex;
+              align-items: center;
+              height: var(--topbar-height);
+              background-color: var(--topbar-background-color);
+              padding: var(--topbar-padding);
+            }
+
+            .lh-topbar__logo {
+              width: var(--topbar-logo-size);
+              height: var(--topbar-logo-size);
+              user-select: none;
+              flex: none;
+            }
+            .lh-topbar__logo .shape {
+              fill: var(--report-text-color);
+            }
+          </style>
+          <svg class="lh-topbar__logo" viewBox="0 0 24 24">
+            <defs>
+              <linearGradient x1="57.456%" y1="13.086%" x2="18.259%" y2="72.322%" id="lh-topbar__logo--a">
+                <stop stop-color="#262626" stop-opacity=".1" offset="0%"/>
+                <stop stop-color="#262626" stop-opacity="0" offset="100%"/>
+              </linearGradient>
+              <linearGradient x1="100%" y1="50%" x2="0%" y2="50%" id="lh-topbar__logo--b">
+                <stop stop-color="#262626" stop-opacity=".1" offset="0%"/>
+                <stop stop-color="#262626" stop-opacity="0" offset="100%"/>
+              </linearGradient>
+              <linearGradient x1="58.764%" y1="65.756%" x2="36.939%" y2="50.14%" id="lh-topbar__logo--c">
+                <stop stop-color="#262626" stop-opacity=".1" offset="0%"/>
+                <stop stop-color="#262626" stop-opacity="0" offset="100%"/>
+              </linearGradient>
+              <linearGradient x1="41.635%" y1="20.358%" x2="72.863%" y2="85.424%" id="lh-topbar__logo--d">
+                <stop stop-color="#FFF" stop-opacity=".1" offset="0%"/>
+                <stop stop-color="#FFF" stop-opacity="0" offset="100%"/>
+              </linearGradient>
+            </defs>
+            <g fill="none" fill-rule="evenodd">
+              <path d="M12 3l4.125 2.625v3.75H18v2.25h-1.688l1.5 9.375H6.188l1.5-9.375H6v-2.25h1.875V5.648L12 3zm2.201 9.938L9.54 14.633 9 18.028l5.625-2.062-.424-3.028zM12.005 5.67l-1.88 1.207v2.498h3.75V6.86l-1.87-1.19z" fill="#F44B21"/>
+              <path fill="#FFF" d="M14.201 12.938L9.54 14.633 9 18.028l5.625-2.062z"/>
+              <path d="M6 18c-2.042 0-3.95-.01-5.813 0l1.5-9.375h4.326L6 18z" fill="url(#lh-topbar__logo--a)" fill-rule="nonzero" transform="translate(6 3)"/>
+              <path fill="#FFF176" fill-rule="nonzero" d="M13.875 9.375v-2.56l-1.87-1.19-1.88 1.207v2.543z"/>
+              <path fill="url(#lh-topbar__logo--b)" fill-rule="nonzero" d="M0 6.375h6v2.25H0z" transform="translate(6 3)"/>
+              <path fill="url(#lh-topbar__logo--c)" fill-rule="nonzero" d="M6 6.375H1.875v-3.75L6 0z" transform="translate(6 3)"/>
+              <path fill="url(#lh-topbar__logo--d)" fill-rule="nonzero" d="M6 0l4.125 2.625v3.75H12v2.25h-1.688l1.5 9.375H.188l1.5-9.375H0v-2.25h1.875V2.648z" transform="translate(6 3)"/>
+            </g>
+          </svg>
+
           <span class="lh-header--title">Lighthouse Treemap</span>
           <div>
             <select class="bundle-selector"></select>
@@ -39,7 +100,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
         <div class="lh-header--section">
           <span class="lh-header--url-and-size">
-            <span class="lh-header--url">https://www.example.com</span> * <span class="lh-header--size"></span>10MB</span>
+            <span class="lh-header--url"></span> • <span class="lh-header--size"></span></span>
           </span>
           <div class="panel panel--modals">
             <!-- View modes go here -->

@@ -67,15 +67,69 @@ class TreemapViewer {
     this.initListeners();
   }
 
-  /**
-   * @param {string} id
-   */
-  findRootNode(id) {
-    for (const rootNodes of Object.values(this.treemapData)) {
+  createHeader() {
+    Util.find('.lh-header--url').textContent = this.documentUrl;
+    Util.find('.lh-header--size').textContent =
+      Util.formatBytes(this.createRootNodeForGroup('scripts').resourceBytes);
+
+    const bundleSelectorEl = /** @type {HTMLSelectElement} */ (Util.find('.bundle-selector'));
+    bundleSelectorEl.innerHTML = ''; // Clear just in case document was saved with Ctrl+S.
+
+    const partitionBySelectorEl = /** @type {HTMLSelectElement} */ (
+      Util.find('.partition-selector'));
+    const toggleTableBtn = Util.find('.lh-button--toggle-table');
+
+    /**
+     * @param {string} value
+     * @param {string} text
+     */
+    function makeOption(value, text) {
+      const optionEl = Util.createChildOf(bundleSelectorEl, 'option');
+      optionEl.value = value;
+      optionEl.innerText = text;
+    }
+
+    function onChange() {
+      let selectorValue = bundleSelectorEl.value;
+      let selectorType = /** @type {Treemap.DataSelector['type']} */ ('rootNodeId');
+      if (selectorValue.startsWith('group:')) {
+        selectorValue = selectorValue.replace('group:', '');
+        selectorType = 'group';
+      }
+
+      treemapViewer.show({
+        ...treemapViewer.mode,
+        selector: {
+          type: selectorType,
+          value: selectorValue,
+          viewId: treemapViewer.mode.selector.viewId,
+        },
+        partitionBy: partitionBySelectorEl.value,
+      });
+    }
+
+    for (const [group, rootNodes] of Object.entries(this.treemapData)) {
+      const aggregateNodes = rootNodes.length > 1 && group !== 'misc';
+
+      if (aggregateNodes) {
+        makeOption('group:' + group, `All ${group}`);
+      }
+
       for (const rootNode of rootNodes) {
-        if (rootNode.name === id) return rootNode;
+        if (!rootNode.node.children) continue; // Only add bundles.
+        const title = (aggregateNodes ? '- ' : '') + Util.elide(rootNode.name, 80);
+        makeOption(rootNode.name, title);
       }
     }
+
+    if (this.mode.selector.type === 'group') {
+      bundleSelectorEl.value = 'group:' + this.mode.selector.value;
+    } else {
+      bundleSelectorEl.value = this.mode.selector.value;
+    }
+    bundleSelectorEl.addEventListener('change', onChange);
+    partitionBySelectorEl.addEventListener('change', onChange);
+    toggleTableBtn.addEventListener('click', () => treemapViewer.toggleTable());
   }
 
   initListeners() {
@@ -106,6 +160,48 @@ class TreemapViewer {
   }
 
   /**
+   * @param {string} id
+   */
+  findRootNode(id) {
+    for (const rootNodes of Object.values(this.treemapData)) {
+      for (const rootNode of rootNodes) {
+        if (rootNode.name === id) return rootNode;
+      }
+    }
+  }
+
+  /**
+   * @param {string} group
+   */
+  createRootNodeForGroup(group) {
+    const rootNodes = this.treemapData[group];
+
+    const children = rootNodes.map(rootNode => {
+      // TODO: keep?
+      // Wrap with the name of the rootNode. Only for bundles.
+      if (group === 'scripts' && rootNode.node.children) {
+        return {
+          name: rootNode.name,
+          children: [rootNode.node],
+          resourceBytes: rootNode.node.resourceBytes,
+          unusedBytes: rootNode.node.unusedBytes,
+          executionTime: rootNode.node.executionTime,
+        };
+      }
+
+      return rootNode.node;
+    });
+
+    return {
+      name: this.documentUrl,
+      resourceBytes: children.reduce((acc, cur) => cur.resourceBytes + acc, 0),
+      unusedBytes: children.reduce((acc, cur) => (cur.unusedBytes || 0) + acc, 0),
+      executionTime: children.reduce((acc, cur) => (cur.executionTime || 0) + acc, 0),
+      children,
+    };
+  }
+
+  /**
    * @param {Treemap.Mode} mode
    */
   show(mode) {
@@ -118,31 +214,9 @@ class TreemapViewer {
     partitionBySelectorEl.value = this.mode.partitionBy;
 
     if (mode.selector.type === 'group' && mode.selector.value in this.treemapData) {
-      const rootNodes = this.treemapData[mode.selector.value];
-
-      const children = rootNodes.map(rootNode => {
-        // TODO: keep?
-        // Wrap with the name of the rootNode. Only for bundles.
-        if (rootNode.node.children) {
-          return {
-            name: rootNode.name,
-            children: [rootNode.node],
-            resourceBytes: rootNode.node.resourceBytes,
-            unusedBytes: rootNode.node.unusedBytes,
-            executionTime: rootNode.node.executionTime,
-          };
-        }
-
-        return rootNode.node;
-      });
-
-      this.currentRootNode = {
-        name: this.documentUrl,
-        resourceBytes: children.reduce((acc, cur) => cur.resourceBytes + acc, 0),
-        unusedBytes: children.reduce((acc, cur) => (cur.unusedBytes || 0) + acc, 0),
-        executionTime: children.reduce((acc, cur) => (cur.executionTime || 0) + acc, 0),
-        children,
-      };
+      const group = mode.selector.value;
+      this.currentRootNode = this.createRootNodeForGroup(group);
+      const rootNodes = this.treemapData[group];
       createViewModes(rootNodes, mode);
       this.createTable(rootNodes);
     } else if (mode.selector.type === 'rootNodeId') {
@@ -300,67 +374,6 @@ class TreemapViewer {
         dom.style.color = color;
       }
     });
-  }
-
-  createHeader() {
-    const bundleSelectorEl = /** @type {HTMLSelectElement} */ (Util.find('.bundle-selector'));
-    bundleSelectorEl.innerHTML = ''; // Clear just in case document was saved with Ctrl+S.
-
-    const partitionBySelectorEl = /** @type {HTMLSelectElement} */ (
-      Util.find('.partition-selector'));
-    const toggleTableBtn = Util.find('.lh-button--toggle-table');
-
-    /**
-     * @param {string} value
-     * @param {string} text
-     */
-    function makeOption(value, text) {
-      const optionEl = Util.createChildOf(bundleSelectorEl, 'option');
-      optionEl.value = value;
-      optionEl.innerText = text;
-    }
-
-    function onChange() {
-      let selectorValue = bundleSelectorEl.value;
-      let selectorType = /** @type {Treemap.DataSelector['type']} */ ('rootNodeId');
-      if (selectorValue.startsWith('group:')) {
-        selectorValue = selectorValue.replace('group:', '');
-        selectorType = 'group';
-      }
-
-      treemapViewer.show({
-        ...treemapViewer.mode,
-        selector: {
-          type: selectorType,
-          value: selectorValue,
-          viewId: treemapViewer.mode.selector.viewId,
-        },
-        partitionBy: partitionBySelectorEl.value,
-      });
-    }
-
-    for (const [group, rootNodes] of Object.entries(this.treemapData)) {
-      const aggregateNodes = rootNodes.length > 1 && group !== 'misc';
-
-      if (aggregateNodes) {
-        makeOption('group:' + group, `All ${group}`);
-      }
-
-      for (const rootNode of rootNodes) {
-        if (!rootNode.node.children) continue; // Only add bundles.
-        const title = (aggregateNodes ? '- ' : '') + Util.elide(rootNode.name, 80);
-        makeOption(rootNode.name, title);
-      }
-    }
-
-    if (this.mode.selector.type === 'group') {
-      bundleSelectorEl.value = 'group:' + this.mode.selector.value;
-    } else {
-      bundleSelectorEl.value = this.mode.selector.value;
-    }
-    bundleSelectorEl.addEventListener('change', onChange);
-    partitionBySelectorEl.addEventListener('change', onChange);
-    toggleTableBtn.addEventListener('click', () => treemapViewer.toggleTable());
   }
 
   /**
