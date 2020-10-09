@@ -267,12 +267,16 @@ class TreemapViewer {
 
     webtreemap.render(this.el, this.currentRootNode, {
       padding: [18, 3, 3, 3],
+      spacing: 10,
       caption: node => this.makeCaption(node),
       // showChildren: node => node.children && node.children.some(c => c.resourceBytes > 1000 * 100),
       // showNode: node => node.resourceBytes > 100 * 100,
       showNode,
       // lowerBound: 0.2,
     });
+
+    Util.find('.webtreemap-node').classList.add('webtreemap-node--root');
+
     this.updateColors();
   }
 

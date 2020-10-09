@@ -31,6 +31,7 @@ declare global {
 
   interface WebTreeMapOptions {
     padding: [number, number, number, number];
+    spacing: number;
     caption(node: Treemap.Node): string;
     showNode?(node: Treemap.Node): boolean;
   }
