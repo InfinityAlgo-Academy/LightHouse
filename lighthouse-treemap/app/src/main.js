@@ -251,19 +251,19 @@ class TreemapViewer {
     // nodes paths.
     // TODO: this actually doesn't work well. seems if any node is hidden, all its siblings are hidden too :(
     let showNode;
-    if (this.mode.highlightNodePaths && this.mode.selector.viewId === 'duplicate-js') {
-      /** @param {Treemap.Node} node */
-      showNode = node => {
-        // Never happens.
-        if (!this.mode.highlightNodePaths) return false;
+    // if (this.mode.highlightNodePaths && this.mode.selector.viewId === 'duplicate-js') {
+    //   /** @param {Treemap.Node} node */
+    //   showNode = node => {
+    //     // Never happens.
+    //     if (!this.mode.highlightNodePaths) return false;
 
-        const path = this.nodeToPathMap.get(node);
-        if (!path) return true;
+    //     const path = this.nodeToPathMap.get(node);
+    //     if (!path) return true;
 
-        // console.log(path, this.mode.highlightNodePaths.some(p => Util.pathIsSubpath(path, p)));
-        return this.mode.highlightNodePaths.some(p => Util.pathIsSubpath(path, p));
-      };
-    }
+    //     // console.log(path, this.mode.highlightNodePaths.some(p => Util.pathIsSubpath(path, p)));
+    //     return this.mode.highlightNodePaths.some(p => Util.pathIsSubpath(path, p));
+    //   };
+    // }
 
     webtreemap.render(this.el, this.currentRootNode, {
       padding: [18, 3, 3, 3],
@@ -503,8 +503,6 @@ function createViewModes(rootNodes, currentMode) {
     });
   }
 
-  // TODO: Sort by savings?
-
   {
     let bytes = 0;
     for (const rootNode of rootNodes) {
@@ -572,7 +570,8 @@ function createViewModes(rootNodes, currentMode) {
       if (!rootNode.node.children) continue; // Only consider bundles.
 
       Util.dfs(rootNode.node, (node, path) => {
-        if (node.children) return; // Only consider leaf nodes.
+        if (path.join('').includes('katex')) console.log(path);
+        if (node.children && node.children.length) return; // Only consider leaf nodes.
         if (!node.duplicatedNormalizedModuleName) return;
         if (duplicateIdsSeen.has(node.duplicatedNormalizedModuleName)) return;
         duplicateIdsSeen.add(node.duplicatedNormalizedModuleName);
