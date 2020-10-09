@@ -688,8 +688,8 @@
             "displayedSize": "480 x 318",
             "actualSize": "480 x 318",
             "actualPixels": 152640,
-            "expectedSize": "1260 x 835",
-            "expectedPixels": 1052100
+            "expectedSize": "960 x 636",
+            "expectedPixels": 610560
           }
         ]
       }
