@@ -71,6 +71,7 @@
     "diff:sample-json": "yarn i18n:checks && bash lighthouse-core/scripts/assert-golden-lhr-unchanged.sh",
     "computeBenchmarkIndex": "./lighthouse-core/scripts/benchmark.js",
     "minify-latest-run": "./lighthouse-core/scripts/lantern/minify-trace.js ./latest-run/defaultPass.trace.json ./latest-run/defaultPass.trace.min.json && ./lighthouse-core/scripts/lantern/minify-devtoolslog.js ./latest-run/defaultPass.devtoolslog.json ./latest-run/defaultPass.devtoolslog.min.json",
+    "save-latest-run": "./lighthouse-core/scripts/save-latest-run.sh",
     "compile-proto": "protoc --python_out=./ ./proto/lighthouse-result.proto && mv ./proto/*_pb2.py ./proto/scripts || (echo \"❌ Install protobuf ≥ 3.7.1 to compile the proto file.\" && false)",
     "build-proto-roundtrip": "mkdir -p .tmp && cross-env PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION_VERSION=2 python proto/scripts/json_roundtrip_via_proto.py",
     "static-server": "node lighthouse-cli/test/fixtures/static-server.js"
