@@ -465,14 +465,19 @@ function createViewModes(rootNodes, currentMode) {
 
   /**
    * @param {Treemap.DataSelector['viewId']} viewId
-   * @param {string} name
+   * @param {string} label
+   * @param {number} bytes
    * @param {Partial<Treemap.Mode>} modeOptions
    */
-  function makeViewMode(viewId, name, modeOptions) {
+  function makeViewMode(viewId, label, bytes, modeOptions) {
     const isCurrentView = viewId === currentMode.selector.viewId;
     const viewModeEl = Util.createChildOf(viewModesPanel, 'div', 'view-mode');
     if (isCurrentView) viewModeEl.classList.add('view-mode--active');
-    viewModeEl.innerText = name;
+
+    Util.createChildOf(viewModeEl, 'span').textContent = label;
+    Util.createChildOf(viewModeEl, 'span', 'lh-text-dim').textContent =
+      ` (${Util.formatBytes(bytes)})`;
+
     viewModeEl.addEventListener('click', () => {
       /** @type {Treemap.Mode} */
       const newMode = {
@@ -505,7 +510,7 @@ function createViewModes(rootNodes, currentMode) {
         bytes += node.resourceBytes;
       });
     }
-    makeViewMode('all', `All (${Util.formatBytes(bytes)})`, {
+    makeViewMode('all', 'All', bytes, {
       partitionBy: 'resourceBytes',
     });
   }
@@ -524,7 +529,7 @@ function createViewModes(rootNodes, currentMode) {
       });
     }
     if (bytes) {
-      makeViewMode('unused-js', `Unused JS (${Util.formatBytes(bytes)})`, {
+      makeViewMode('unused-js', 'Unused JS', bytes, {
         partitionBy: 'unusedBytes',
         highlightNodePaths: highlightNodeNames,
       });
@@ -547,7 +552,7 @@ function createViewModes(rootNodes, currentMode) {
       });
     }
     if (bytes) {
-      makeViewMode('large-js', `Large Modules (${Util.formatBytes(bytes)})`, {
+      makeViewMode('large-js', 'Large Modules', bytes, {
         partitionBy: 'resourceBytes',
         highlightNodePaths,
       });
@@ -573,7 +578,7 @@ function createViewModes(rootNodes, currentMode) {
       });
     }
     if (bytes) {
-      makeViewMode('duplicate-js', `Duplicate Modules (${Util.formatBytes(bytes)})`, {
+      makeViewMode('duplicate-js', 'Duplicate Modules', bytes, {
         partitionBy: 'resourceBytes',
         highlightNodePaths,
       });

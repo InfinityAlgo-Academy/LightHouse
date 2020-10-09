@@ -12,6 +12,10 @@ body {
   flex-direction: column;
 }
 
+.lh-text-dim {
+  color: grey;
+}
+
 .lh-main {
   display: grid;
   height: 100vh;
@@ -29,15 +33,13 @@ body {
 .lh-header--section {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .lh-header--title {
   width: 50%;
 }
-.lh-header--url-and-size {
-  color: grey;
-}
 .lh-header--url {
-  color: black;
+  font-weight: bold;
 }
 
 .panel--modals {
@@ -60,6 +62,14 @@ body {
   border: solid 1px blue;
   padding: 5px;
   font-size: 16px;
+}
+.view-mode:first-child {
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+.view-mode:last-child {
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
 }
 .view-mode--active {
   background-color: lightblue;
