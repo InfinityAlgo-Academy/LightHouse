@@ -34,12 +34,17 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 20px;
 }
 .lh-header--title {
-  width: 50%;
+  /* width: 50%; */
 }
 .lh-header--url {
   font-weight: bold;
+}
+
+.lh-controls {
+  max-width: 50%;
 }
 
 .panel--modals {
