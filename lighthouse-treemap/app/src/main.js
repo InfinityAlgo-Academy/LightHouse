@@ -307,41 +307,6 @@ class TreemapViewer {
         return section.calculate(node);
       }
     }).join(' • ');
-    // legacy ---
-
-    Util.dfs(node, node => {
-      // const {bytes, wastedBytes, executionTime} = node;
-      // TODO: this is from pauls code
-      // node.id += ` • ${Number.bytesToString(bytes)} • ${Common.UIString('%.1f\xa0%%', bytes / total * 100)}`;
-
-      node.name = sections.map(section => {
-        // Only print the label for the root node.
-        if (node === this.currentRootNode && section.label) {
-          return `${section.label}: ${section.calculate(node)}`;
-        } else {
-          return section.calculate(node);
-        }
-      }).join(' • ');
-
-      // const title = Util.elide(node.originalId, 60);
-      // const value = node[this.mode.partitionBy];
-      // const unit = this.mode.partitionBy === 'executionTime' ? 'time' : 'bytes';
-      // // node.id = `${Util.elide(node.originalId, 60)} • ${Util.formatBytes(bytes)} • ${Math.round(bytes / total * 100)}%`;
-      // node.id = `${title} • ${Util.format(value, unit)} ${this.mode.partitionBy} (${Math.round(value / total * 100)}%)`;
-
-
-      // if (this.mode.partitionBy === 'bytes') {
-      //   const total = this.currentRootNode.bytes;
-      //   node.id = `${Util.elide(node.originalId, 60)} • ${Util.formatBytes(bytes)} • ${Math.round(bytes / total * 100)}%`;
-      // } else if (this.mode.partitionBy === 'wastedBytes') {
-      //   // node.id = `${Util.elide(node.originalId, 60)} • ${Util.formatBytes(wastedBytes)} wasted • ${Math.round((1 - wastedBytes / bytes) * 100)}% usage`;
-      //   node.id = `${Util.elide(node.originalId, 60)} • ${Util.formatBytes(wastedBytes)} wasted • ${Math.round(wastedBytes / this.currentRootNode.wastedBytes * 100)}%`;
-      // } else if (this.mode.partitionBy === 'executionTime' && executionTime !== undefined) {
-      //   node.id = `${Util.elide(node.originalId, 60)} • ${Math.round(executionTime)} ms • ${Math.round(executionTime / this.currentRootNode.executionTime * 100)}%`;
-      // } else {
-      //   node.id = Util.elide(node.originalId, 60);
-      // }
-    });
   }
 
   updateColors() {
