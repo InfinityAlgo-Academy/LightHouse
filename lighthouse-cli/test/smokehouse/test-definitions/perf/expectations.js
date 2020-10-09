@@ -72,7 +72,7 @@ module.exports = [
           details: {
             items: [
               {resourceType: 'total', requestCount: 10, transferSize: '168000±1000'},
-              {resourceType: 'font', requestCount: 2, transferSize: '80000±1000'},
+              {resourceType: 'font', requestCount: 2, transferSize: '81000±1000'},
               {resourceType: 'script', requestCount: 3, transferSize: '55000±1000'},
               {resourceType: 'image', requestCount: 2, transferSize: '28000±1000'},
               {resourceType: 'document', requestCount: 1, transferSize: '2200±100'},

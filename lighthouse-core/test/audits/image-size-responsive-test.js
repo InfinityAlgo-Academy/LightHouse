@@ -319,12 +319,20 @@ describe('Images: size audit', () => {
       });
     });
 
-    describe('DPR = 2.625', () => {
+    describe('DPR = higher than 2', () => {
       testImage('is an icon with right size', {
         score: 1,
         clientSize: [64, 64],
         naturalSize: [128, 128],
         devicePixelRatio: 2.625,
+
+      });
+
+      testImage('is an icon with right size', {
+        score: 1,
+        clientSize: [64, 64],
+        naturalSize: [128, 128],
+        devicePixelRatio: 3,
       });
 
       testImage('is an icon with an invalid size', {
@@ -339,6 +347,13 @@ describe('Images: size audit', () => {
         clientSize: [65, 65],
         naturalSize: [98, 98],
         devicePixelRatio: 2.625,
+      });
+
+      testImage('has right size', {
+        score: 1,
+        clientSize: [65, 65],
+        naturalSize: [98, 98],
+        devicePixelRatio: 3,
       });
 
       testImage('has an invalid size', {
@@ -424,6 +439,6 @@ describe('Images: size audit', () => {
       },
     });
     assert.equal(result.details.items.length, 1);
-    assert.equal(result.details.items[0].expectedSize, '217 x 109');
+    assert.equal(result.details.items[0].expectedSize, '160 x 80');
   });
 });
