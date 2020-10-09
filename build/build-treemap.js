@@ -145,7 +145,7 @@ async function deploy() {
  */
 async function run() {
   // Clean and build.
-  // rimraf.sync(distDir);
+  rimraf.sync(distDir);
   await Promise.all([
     compileJs(),
     html(),

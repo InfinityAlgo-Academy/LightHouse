@@ -535,7 +535,6 @@ function createViewModes(rootNodes, currentMode) {
       if (!rootNode.node.children) continue; // Only consider bundles.
 
       Util.dfs(rootNode.node, (node, path) => {
-        if (path.join('').includes('katex')) console.log(path);
         if (node.children && node.children.length) return; // Only consider leaf nodes.
         if (!node.duplicatedNormalizedModuleName) return;
         if (duplicateIdsSeen.has(node.duplicatedNormalizedModuleName)) return;
