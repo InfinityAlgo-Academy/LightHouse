@@ -145,10 +145,10 @@ class NetworkRequest {
   }
 
   /**
-   * @param {NetworkRequest} initiator
+   * @param {NetworkRequest} initiatorRequest
    */
-  setInitiatorRequest(initiator) {
-    this.initiatorRequest = initiator;
+  setInitiatorRequest(initiatorRequest) {
+    this.initiatorRequest = initiatorRequest;
   }
 
   /**

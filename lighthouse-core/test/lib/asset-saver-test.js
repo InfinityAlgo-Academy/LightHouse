@@ -168,7 +168,7 @@ describe('asset-saver helper', () => {
       assert.strictEqual(artifacts.LighthouseRunWarnings.length, 2);
       assert.strictEqual(artifacts.URL.requestedUrl, 'https://www.reddit.com/r/nba');
       assert.strictEqual(artifacts.devtoolsLogs.defaultPass.length, 555);
-      assert.strictEqual(artifacts.traces.defaultPass.traceEvents.length, 12);
+      assert.strictEqual(artifacts.traces.defaultPass.traceEvents.length, 13);
     });
   });
 

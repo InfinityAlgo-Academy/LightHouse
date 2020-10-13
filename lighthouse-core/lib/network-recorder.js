@@ -333,7 +333,7 @@ class NetworkRecorder extends EventEmitter {
    * @return {NetworkRequest|null}
    * @private
    */
-  static _chooseInitiator(record, recordsByURL) {
+  static _chooseInitiatorRequest(record, recordsByURL) {
     if (record.redirectSource) {
       return record.redirectSource;
     }
@@ -393,11 +393,11 @@ class NetworkRecorder extends EventEmitter {
       recordsByURL.set(record.url, records);
     }
 
-    // set the initiator and redirects array
+    // set the initiatorRequest and redirects array
     for (const record of records) {
-      const initiator = NetworkRecorder._chooseInitiator(record, recordsByURL);
-      if (initiator) {
-        record.setInitiatorRequest(initiator);
+      const initiatorRequest = NetworkRecorder._chooseInitiatorRequest(record, recordsByURL);
+      if (initiatorRequest) {
+        record.setInitiatorRequest(initiatorRequest);
       }
 
       let finalRecord = record;

@@ -46,7 +46,7 @@ function headersArrayToHeadersDict(headersArray = []) {
  * @return {LH.Protocol.RawEventMessage}
  */
 function getRequestWillBeSentEvent(networkRecord, index) {
-  let initiator;
+  let initiator = {type: 'other'};
   if (networkRecord.initiator) {
     initiator = {...networkRecord.initiator};
   }
@@ -65,7 +65,7 @@ function getRequestWillBeSentEvent(networkRecord, index) {
       },
       timestamp: networkRecord.redirectResponseTimestamp || networkRecord.startTime || 0,
       wallTime: 0,
-      initiator: initiator || {type: 'other'},
+      initiator,
       type: networkRecord.resourceType || 'Document',
       frameId: networkRecord.frameId || `${idBase}.1`,
       redirectResponse: networkRecord.redirectResponse,

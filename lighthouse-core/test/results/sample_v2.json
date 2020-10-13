@@ -5587,6 +5587,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:PageDependencyGraph",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:redirects",
         "duration": 100,
         "entryType": "measure"
@@ -5606,12 +5612,6 @@
       {
         "startTime": 0,
         "name": "lh:computed:LanternFirstContentfulPaint",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:PageDependencyGraph",
         "duration": 100,
         "entryType": "measure"
       },
