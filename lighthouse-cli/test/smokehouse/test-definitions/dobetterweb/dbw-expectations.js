@@ -401,11 +401,11 @@ const expectations = [
           numericValue: 148,
           details: {
             items: [
-              {statistic: 'Total DOM Elements', value: '148'},
-              {statistic: 'Maximum DOM Depth', value: '4'},
+              {statistic: 'Total DOM Elements', value: 148},
+              {statistic: 'Maximum DOM Depth', value: 4},
               {
                 statistic: 'Maximum Child Elements',
-                value: '100',
+                value: 100,
                 element: {value: '<div id="shadow-root-container">'},
               },
             ],

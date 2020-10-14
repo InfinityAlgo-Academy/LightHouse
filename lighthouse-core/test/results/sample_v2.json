@@ -3626,7 +3626,7 @@
           {
             "statistic": "Total DOM Elements",
             "element": "",
-            "value": "31"
+            "value": 31
           },
           {
             "statistic": "Maximum DOM Depth",
@@ -3634,7 +3634,7 @@
               "type": "code",
               "value": "<h2>"
             },
-            "value": "3"
+            "value": 3
           },
           {
             "statistic": "Maximum Child Elements",
@@ -3642,7 +3642,7 @@
               "type": "code",
               "value": "<body>"
             },
-            "value": "29"
+            "value": 29
           }
         ]
       }
