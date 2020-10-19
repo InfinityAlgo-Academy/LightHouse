@@ -26,6 +26,7 @@ for (const auditId of allAuditIdsWithDescs) {
     continue;
   }
 
+  // We found the doc file. Read it in
   const filePath = potentialWebDevFiles[0];
   let docSource = fs.readFileSync(filePath, 'utf-8');
 
@@ -38,18 +39,21 @@ for (const auditId of allAuditIdsWithDescs) {
     continue;
   }
 
-  // It has a SP section, so replace that
+  // It has an existing SP section, so replace it
   if (hasSPSection) {
     docSource = docSource.replace(/\n## Stack-specific guidance[\S\s]*?## Resources/m, `
 ${sectionMd}
 
 ## Resources`);
   } else {
-    // Add a new section
+    // Add a new SP section above Resources
+    const oldDocSource = docSource;
     docSource = docSource.replace(/\n## Resources/, `
 ${sectionMd}
 
 ## Resources`);
+    // Ensure we actually made a change (and that Resources exists..)
+    console.assert(oldDocSource !== docSource, 'they match oddly..' + filePath);
   }
 
   // Save the modified string back
