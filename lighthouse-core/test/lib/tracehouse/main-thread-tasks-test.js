@@ -805,14 +805,41 @@ describe('Main Thread Tasks', () => {
 
   for (const invalidEvents of invalidEventSets) {
     it('should throw on invalid task input', () => {
+      const traceEvents = [...boilerplateTrace, ...invalidEvents];
+      traceEvents.forEach(evt => Object.assign(evt, {cat: 'devtools.timeline'}));
+      expect(() => run({traceEvents})).toThrow();
+    });
+  }
+
+  describe('printTaskTreeToDebugString', () => {
+    it('should print a nice-looking task tree', () => {
       const traceEvents = [
         ...boilerplateTrace,
-        ...invalidEvents,
+        {ph: 'X', name: 'TaskA', pid, tid, ts: baseTs, dur: 100e3, args},
+        {ph: 'B', name: 'TaskB', pid, tid, ts: baseTs + 5e3, args},
+        {ph: 'X', name: 'TaskC', pid, tid, ts: baseTs + 10e3, dur: 30e3, args},
+        {ph: 'E', name: 'TaskB', pid, tid, ts: baseTs + 55e3, args},
+        {ph: 'X', name: 'TaskD', pid, tid, ts: baseTs + 60e3, dur: 30e3, args},
       ];
 
       traceEvents.forEach(evt => Object.assign(evt, {cat: 'devtools.timeline'}));
 
-      expect(() => run({traceEvents})).toThrow();
+      const tasks = run({traceEvents});
+      const taskTreeAsString = MainThreadTasks.printTaskTreeToDebugString(tasks, {printWidth: 50});
+      expect(taskTreeAsString).toMatchInlineSnapshot(`
+        "Trace Duration: 100ms
+        Range: [0, 100]
+        █ = 2.00ms
+
+        █████████████████████████A█████████████████████████
+          ████████████B█████████████  ███████D████████    
+             ███████C████████                             
+
+        A = TaskA
+        B = TaskB
+        C = TaskC
+        D = TaskD"
+      `);
     });
-  }
+  });
 });

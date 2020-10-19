@@ -44,10 +44,106 @@ describe('CPU Profiler Model', () => {
     };
   });
 
-  describe('#createStartEndEvents', () => {
+  describe('#_findEffectiveTimestamp', () => {
+    it('should default to the latest possible timestamp when no task data available', () => {
+      const result = CpuProfilerModel._findEffectiveTimestamp({
+        earliestPossibleTimestamp: 0,
+        latestPossibleTimestamp: 1000,
+        knownTasksByStartTime: [],
+        knownTaskStartTimeIndex: 0,
+        knownTasksByEndTime: [],
+        knownTaskEndTimeIndex: 0,
+      });
+
+      expect(result).toEqual({timestamp: 1000, lastStartTimeIndex: 0, lastEndTimeIndex: 0});
+    });
+
+    it('should use the latest possible timestamp when tasks fully include range', () => {
+      const tasks = [{startTime: 500, endTime: 2500}];
+      const result = CpuProfilerModel._findEffectiveTimestamp({
+        earliestPossibleTimestamp: 1000,
+        latestPossibleTimestamp: 2000,
+        knownTasksByStartTime: tasks,
+        knownTaskStartTimeIndex: 0,
+        knownTasksByEndTime: tasks,
+        knownTaskEndTimeIndex: 0,
+      });
+
+      expect(result).toEqual({timestamp: 2000, lastStartTimeIndex: 1, lastEndTimeIndex: 0});
+    });
+
+    it('should use the latest possible timestamp when tasks are fully contained in range', () => {
+      const tasks = [{startTime: 250, endTime: 750}];
+      const result = CpuProfilerModel._findEffectiveTimestamp({
+        earliestPossibleTimestamp: 0,
+        latestPossibleTimestamp: 1000,
+        knownTasksByStartTime: tasks,
+        knownTaskStartTimeIndex: 0,
+        knownTasksByEndTime: tasks,
+        knownTaskEndTimeIndex: 0,
+      });
+
+      expect(result).toEqual({timestamp: 1000, lastStartTimeIndex: 1, lastEndTimeIndex: 1});
+    });
+
+    it('should use earliest of the start task timestamps when tasks started in range', () => {
+      const tasks = [{startTime: 250, endTime: 2000}];
+      const result = CpuProfilerModel._findEffectiveTimestamp({
+        earliestPossibleTimestamp: 0,
+        latestPossibleTimestamp: 1000,
+        knownTasksByStartTime: tasks,
+        knownTaskStartTimeIndex: 0,
+        knownTasksByEndTime: tasks,
+        knownTaskEndTimeIndex: 0,
+      });
+
+      expect(result).toEqual({timestamp: 250, lastStartTimeIndex: 1, lastEndTimeIndex: 0});
+    });
+
+    it('should use latest of the end task timestamps when tasks ended in range', () => {
+      const tasks = [{startTime: 250, endTime: 1500}];
+      const result = CpuProfilerModel._findEffectiveTimestamp({
+        earliestPossibleTimestamp: 1000,
+        latestPossibleTimestamp: 2000,
+        knownTasksByStartTime: tasks,
+        knownTaskStartTimeIndex: 0,
+        knownTasksByEndTime: tasks,
+        knownTaskEndTimeIndex: 0,
+      });
+
+      expect(result).toEqual({timestamp: 1500, lastStartTimeIndex: 1, lastEndTimeIndex: 1});
+    });
+
+    it('should handle multiple tasks', () => {
+      const tasks = [
+        {startTime: 250, endTime: 1500},
+        {startTime: 500, endTime: 1400},
+        {startTime: 1100, endTime: 1200},
+        {startTime: 1700, endTime: 1800},
+        {startTime: 1900, endTime: 2200},
+        {startTime: 1925, endTime: 1975},
+      ];
+
+      // TODO: eventually, this should split the start and end effective timestamps.
+      // For now it assumes both are the same timestamp which forces this to choose the latest option.
+      // Eventually the endTimestamp should be 1500 and the startTimestamp should be 1900.
+      const result = CpuProfilerModel._findEffectiveTimestamp({
+        earliestPossibleTimestamp: 1000,
+        latestPossibleTimestamp: 2000,
+        knownTasksByStartTime: tasks,
+        knownTaskStartTimeIndex: 0,
+        knownTasksByEndTime: tasks.slice().sort((a, b) => a.endTime - b.endTime),
+        knownTaskEndTimeIndex: 0,
+      });
+
+      expect(result).toEqual({timestamp: 1900, lastStartTimeIndex: 6, lastEndTimeIndex: 5});
+    });
+  });
+
+  describe('#synthesizeTraceEvents', () => {
     it('should create events in order', () => {
-      const ts = x => 9e6 + x;
-      const events = CpuProfilerModel.createStartEndEvents(profile);
+      const ts = x => profile.startTime + x;
+      const events = CpuProfilerModel.synthesizeTraceEvents(profile);
 
       expect(events).toMatchObject([
         {ph: 'B', ts: ts(10e3), args: {data: {callFrame: {functionName: '(root)'}}}},
@@ -65,9 +161,43 @@ describe('CPU Profiler Model', () => {
       ]);
     });
 
+    it('should create events while aware of other tasks', () => {
+      const ts = x => profile.startTime + x;
+
+      // With the sampling profiler we know that Baz and Foo ended *sometime between* 17e3 and 18e3.
+      // We want to make sure when additional task information is present, we refine the end time.
+      const tasks = [
+        // The RunTask at the toplevel, should move start time of Foo to 8.0e3 and end time to 17.5e3
+        {startTime: ts(8.0e3), endTime: ts(17.5e3)},
+        // The EvaluateScript at the 2nd level, should not affect anything.
+        {startTime: ts(9.0e3), endTime: ts(17.4e3)},
+        // A small task inside Baz, should move the start time of Baz to 12.5e3.
+        {startTime: ts(12.5e3), endTime: ts(13.4e3)},
+        // A small task inside Foo, should move the end time of Bar to 15.7e3, start time of Baz to 16.8e3.
+        {startTime: ts(15.7e3), endTime: ts(16.8e3)},
+      ];
+
+      const events = CpuProfilerModel.synthesizeTraceEvents(profile, tasks);
+
+      expect(events).toMatchObject([
+        {ph: 'B', ts: ts(8.0e3), args: {data: {callFrame: {functionName: '(root)'}}}},
+        {ph: 'B', ts: ts(8.0e3), args: {data: {callFrame: {functionName: '(program)'}}}},
+        {ph: 'B', ts: ts(8.0e3), args: {data: {callFrame: {functionName: 'Foo'}}}},
+        {ph: 'B', ts: ts(12.0e3), args: {data: {callFrame: {functionName: 'Bar'}}}},
+        {ph: 'B', ts: ts(12.5e3), args: {data: {callFrame: {functionName: 'Baz'}}}},
+        {ph: 'E', ts: ts(13.4e3), args: {data: {callFrame: {functionName: 'Baz'}}}},
+        {ph: 'E', ts: ts(15.7e3), args: {data: {callFrame: {functionName: 'Bar'}}}},
+        {ph: 'B', ts: ts(16.8e3), args: {data: {callFrame: {functionName: 'Baz'}}}},
+        {ph: 'E', ts: ts(17.5e3), args: {data: {callFrame: {functionName: 'Baz'}}}},
+        {ph: 'E', ts: ts(17.5e3), args: {data: {callFrame: {functionName: 'Foo'}}}},
+        {ph: 'E', ts: ts(19.0e3), args: {data: {callFrame: {functionName: '(program)'}}}},
+        {ph: 'E', ts: ts(19.0e3), args: {data: {callFrame: {functionName: '(root)'}}}},
+      ]);
+    });
+
     it('should create main-thread-task parseable events', () => {
-      const ts = x => 9e6 + x;
-      const events = CpuProfilerModel.createStartEndEvents(profile);
+      const ts = x => profile.startTime + x;
+      const events = CpuProfilerModel.synthesizeTraceEvents(profile);
 
       const tasks = MainThreadTasks.getMainThreadTasks(events, [], ts(19e3));
       expect(tasks).toHaveLength(6);
@@ -83,24 +213,52 @@ describe('CPU Profiler Model', () => {
 
       const fooTask = tasks[0].children[0].children[0];
       expect(fooTask).toMatchObject({
+        startTime: 0,
+        endTime: 8,
         event: {args: {data: {callFrame: {functionName: 'Foo'}}}},
         children: [
           {
+            startTime: 2,
+            endTime: 6,
             event: {args: {data: {callFrame: {functionName: 'Bar'}}}},
             children: [{event: {args: {data: {callFrame: {functionName: 'Baz'}}}}}],
           },
           {
+            startTime: 7,
+            endTime: 8,
             event: {args: {data: {callFrame: {functionName: 'Baz'}}}},
             children: [],
           },
         ],
       });
+
+      const visualization = MainThreadTasks.printTaskTreeToDebugString(tasks, {
+        printWidth: 80,
+      }).replace(/ +\n/g, '\n');
+      expect(visualization).toMatchInlineSnapshot(`
+        "Trace Duration: 9ms
+        Range: [0, 9]
+        █ = 0.11ms
+
+        ████████████████████████████████████████A████████████████████████████████████████
+        ████████████████████████████████████████B████████████████████████████████████████
+        ███████████████████████████████████C████████████████████████████████████
+                         ██████████████████D██████████████████        ████F█████
+                                  ████E█████
+
+        A = FunctionCall-SynthesizedByProfilerModel
+        B = FunctionCall-SynthesizedByProfilerModel
+        C = FunctionCall-SynthesizedByProfilerModel
+        D = FunctionCall-SynthesizedByProfilerModel
+        E = FunctionCall-SynthesizedByProfilerModel
+        F = FunctionCall-SynthesizedByProfilerModel"
+      `);
     });
 
     it('should work on a real trace', () => {
       const {processEvents} = TraceProcessor.computeTraceOfTab(profilerTrace);
       const profiles = CpuProfileModel.collectProfileEvents(processEvents);
-      const events = CpuProfileModel.createStartEndEvents(profiles[0]);
+      const events = CpuProfileModel.synthesizeTraceEvents(profiles[0]);
       expect(events).toHaveLength(230);
       const lastTs = events[events.length - 1].length;
       const tasks = MainThreadTasks.getMainThreadTasks(events, [], lastTs);

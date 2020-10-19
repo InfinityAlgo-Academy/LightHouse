@@ -598,6 +598,85 @@ class MainThreadTasks {
 
     return tasks;
   }
+
+  /**
+   * Prints an artistic rendering of the task tree for easier debugability.
+   *
+   * @param {TaskNode[]} tasks
+   * @param {{printWidth?: number, startTime?: number, endTime?: number, taskLabelFn?: (node: TaskNode) => string}} options
+   * @return {string}
+   */
+  static printTaskTreeToDebugString(tasks, options = {}) {
+    const traceEndMs = Math.max(...tasks.map(t => t.endTime), 0);
+    const {
+      printWidth = 100,
+      startTime = 0,
+      endTime = traceEndMs,
+      taskLabelFn = node => node.event.name,
+    } = options;
+
+    /** @param {TaskNode} task */
+    function computeTaskDepth(task) {
+      let depth = 0;
+      for (; task.parent; task = task.parent) depth++;
+      return depth;
+    }
+
+    const traceRange = endTime - startTime;
+    const characterInMs = traceRange / printWidth;
+
+    /** @type {Map<TaskNode, {id: string, task: TaskNode}>} */
+    const taskLegend = new Map();
+
+    /** @type {Map<number, TaskNode[]>} */
+    const tasksByDepth = new Map();
+    for (const task of tasks) {
+      if (task.startTime > endTime || task.endTime < startTime) continue;
+
+      const depth = computeTaskDepth(task);
+      const tasksAtDepth = tasksByDepth.get(depth) || [];
+      tasksAtDepth.push(task);
+      tasksByDepth.set(depth, tasksAtDepth);
+
+      // Create a user-friendly ID for new tasks using a capital letter.
+      // 65 is the ASCII code for 'A' and there are 26 letters in the english alphabet.
+      const id = String.fromCharCode(65 + (taskLegend.size % 26));
+      taskLegend.set(task, {id, task});
+    }
+
+    const debugStringLines = [
+      `Trace Duration: ${traceEndMs.toFixed(0)}ms`,
+      `Range: [${startTime}, ${endTime}]`,
+      `█ = ${characterInMs.toFixed(2)}ms`,
+      '',
+    ];
+
+    const increasingDepth = Array.from(tasksByDepth.entries()).sort((a, b) => a[0] - b[0]);
+    for (const [, tasks] of increasingDepth) {
+      const taskRow = Array.from({length: printWidth}).map(() => ' ');
+
+      for (const task of tasks) {
+        const taskStart = Math.max(task.startTime, startTime);
+        const taskEnd = Math.min(task.endTime, endTime);
+
+        const {id} = taskLegend.get(task) || {id: '?'};
+        const startIndex = Math.floor(taskStart / characterInMs);
+        const endIndex = Math.floor(taskEnd / characterInMs);
+        const idIndex = Math.floor((startIndex + endIndex) / 2);
+        for (let i = startIndex; i <= endIndex; i++) taskRow[i] = '█';
+        for (let i = 0; i < id.length; i++) taskRow[idIndex] = id;
+      }
+
+      debugStringLines.push(taskRow.join(''));
+    }
+
+    debugStringLines.push('');
+    for (const {id, task} of taskLegend.values()) {
+      debugStringLines.push(`${id} = ${taskLabelFn(task)}`);
+    }
+
+    return debugStringLines.join('\n');
+  }
 }
 
 module.exports = MainThreadTasks;
