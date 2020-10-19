@@ -6,32 +6,15 @@ const fs = require('fs');
 const glob = require('glob').sync;
 
 const joined = path.join(path.dirname(packs), 'packs', '*.js');
-
 const packsByStack = glob(joined).map(file => require(file));
 const allAuditIdsWithDescs = new Set(packsByStack.map(pack => Object.keys(pack.UIStrings)).flat());
-
-// JK. if you want to rename this, just replace-all.
-// const sectionTitle = 'Stack-specific guidance';
 
 for (const auditId of allAuditIdsWithDescs) {
   // look up data
   const packsWithData = packsByStack.filter(pack => !!pack.UIStrings[auditId]);
 
   // construct markdown
-  const packDataMd = packsWithData.map(pack => {
-    return `### ${pack.title}
-
-${pack.UIStrings[auditId]}
-`;
-  });
-
-  const sectionMd = `
-## Stack-specific guidance
-
-If you use any of these CMS's, libraries or frameworks, consider the following suggestions:
-
-${packDataMd.join('\n')}
-`.trim();
+  const sectionMd = constructMarkdown(packsWithData, auditId);
 
   // get web.dev doc file
   const potentialWebDevFiles = glob(`../web.dev/src/site/content/en/lighthouse-*/${auditId}/index.md`);
@@ -42,7 +25,6 @@ ${packDataMd.join('\n')}
     console.error('Found multiple web.dev doc files for', auditId);
     continue;
   }
-
 
   const filePath = potentialWebDevFiles[0];
   let docSource = fs.readFileSync(filePath, 'utf-8');
@@ -63,7 +45,7 @@ ${sectionMd}
 
 ## Resources`);
   } else {
-    // Add it
+    // Add a new section
     docSource = docSource.replace(/\n## Resources/, `
 ${sectionMd}
 
@@ -74,3 +56,23 @@ ${sectionMd}
   fs.writeFileSync(filePath, docSource, 'utf-8');
   console.log('successfully wrote doc for ', auditId);
 }
+
+
+function constructMarkdown(packsWithData, auditId) {
+  const packDataMd = packsWithData.map(pack => {
+    return `### ${pack.title}
+
+${pack.UIStrings[auditId]}
+`;
+  });
+
+  const sectionMd = `
+## Stack-specific guidance
+
+If you use any of these CMS's, libraries or frameworks, consider the following suggestions:
+
+${packDataMd.join('\n')}
+`.trim();
+  return sectionMd;
+}
+
