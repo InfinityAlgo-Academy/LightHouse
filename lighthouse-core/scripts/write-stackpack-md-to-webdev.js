@@ -22,7 +22,6 @@ for (const auditId of allAuditIdsWithDescs) {
     return `### ${pack.title}
 
 ${pack.UIStrings[auditId]}
-
 `;
   });
 
@@ -32,10 +31,10 @@ ${pack.UIStrings[auditId]}
 If you use any of these CMS's, libraries or frameworks, consider the following suggestions:
 
 ${packDataMd.join('\n')}
-`;
+`.trim();
 
   // get web.dev doc file
-  const potentialWebDevFiles = glob(`../web.dev/src/site/content/en/*/${auditId}/index.md`);
+  const potentialWebDevFiles = glob(`../web.dev/src/site/content/en/lighthouse-*/${auditId}/index.md`);
   if (potentialWebDevFiles.length === 0) {
     console.log('Could not find web.dev doc file for ', auditId);
     continue;
@@ -57,12 +56,14 @@ ${packDataMd.join('\n')}
     continue;
   }
 
+  // It has a SP section, so replace that
   if (hasSPSection) {
     docSource = docSource.replace(/\n## Stack-specific guidance[\S\s]*?## Resources/m, `
 ${sectionMd}
 
 ## Resources`);
   } else {
+    // Add it
     docSource = docSource.replace(/\n## Resources/, `
 ${sectionMd}
 
