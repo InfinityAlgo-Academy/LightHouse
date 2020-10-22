@@ -40,7 +40,7 @@ Object {
   "observedTimeOrigin": 0,
   "observedTimeOriginTs": 713037023064,
   "observedTraceEnd": 7416,
-  "observedTraceEndTs": 713044438781,
+  "observedTraceEndTs": 713044439102,
   "speedIndex": 3681,
   "speedIndexTs": undefined,
   "totalBlockingTime": 1167,

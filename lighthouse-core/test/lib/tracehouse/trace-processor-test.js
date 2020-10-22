@@ -253,6 +253,13 @@ describe('TraceProcessor', () => {
     });
   });
 
+  describe('computeTraceEnd', () => {
+    it('computes the last timestamp within the bounds of the trace', () => {
+      const events = [{ts: 1000}, {ts: 999, dur: 1001}];
+      expect(TraceProcessor.computeTraceEnd(events, {ts: 0})).toEqual({timestamp: 2000, timing: 2});
+    });
+  });
+
   describe('computeTraceOfTab', () => {
     it('gathers the events from the tab\'s process', () => {
       const trace = TraceProcessor.computeTraceOfTab(lateTracingStartedTrace);
@@ -283,7 +290,34 @@ describe('TraceProcessor', () => {
       assert.equal(Math.round(trace.timestamps.firstPaint), 29343620997);
       assert.equal(Math.round(trace.timestamps.firstContentfulPaint), 29343621005);
       assert.equal(Math.round(trace.timestamps.firstMeaningfulPaint), 29344070867);
-      assert.equal(Math.round(trace.timestamps.traceEnd), 29344190223);
+      assert.equal(Math.round(trace.timestamps.traceEnd), 29344190232);
+    });
+
+    describe('timeOriginDeterminationMethod', () => {
+      it('supports lastNavigationStart', () => {
+        const trace = TraceProcessor.computeTraceOfTab(lcpTrace);
+        expect(trace.timings).toMatchObject({
+          largestContentfulPaint: 1121.711,
+          load: 2159.007,
+          traceEnd: 7416.038,
+        });
+
+        expect(trace.timestamps.timeOrigin).toEqual(713037023064);
+      });
+
+      it('supports firstResourceSendRequest', () => {
+        const trace = TraceProcessor.computeTraceOfTab(lcpTrace, {
+          timeOriginDeterminationMethod: 'firstResourceSendRequest',
+        });
+
+        expect(trace.timings).toMatchObject({
+          largestContentfulPaint: 812.683,
+          load: 1849.979,
+          traceEnd: 7107.01,
+        });
+
+        expect(trace.timestamps.timeOrigin).toEqual(713037332092);
+      });
     });
 
     describe('finds correct FMP', () => {
@@ -602,6 +636,17 @@ Object {
     it('throws on traces missing a navigationStart', () => {
       expect(() => TraceProcessor.computeTraceOfTab(noNavStartTrace))
         .toThrowError('navigationStart');
+    });
+
+    it('throws on traces missing a ResourceSendRequest', () => {
+      const traceWithoutResourceSend = {
+        traceEvents: pwaTrace.filter(e => e.name !== 'ResourceSendRequest'),
+      };
+
+      expect(() => TraceProcessor.computeTraceOfTab(traceWithoutResourceSend, {
+        timeOriginDeterminationMethod: 'firstResourceSendRequest',
+      }))
+        .toThrowError('ResourceSendRequest');
     });
 
     it('does not throw on traces missing an FCP', () => {
