@@ -384,6 +384,7 @@ declare global {
             parentRule?: {origin: Crdp.CSS.StyleSheetOrigin, selectors: {text: string}[]};
             styleSheetId?: string;
             stylesheet?: Crdp.CSS.CSSStyleSheetHeader;
+            cssProperties?: Array<Crdp.CSS.CSSProperty>;
           }
         }>
       }

@@ -177,14 +177,14 @@ function determineNaturalSize(url) {
 }
 
 /**
- * @param {LH.Crdp.CSS.CSSStyle|undefined} style
+ * @param {Partial<Pick<LH.Crdp.CSS.CSSStyle, 'cssProperties'>>|undefined} rule
  * @param {string} property
  * @return {string | undefined}
  */
-function findSizeDeclaration(style, property) {
-  if (!style) return;
+function findSizeDeclaration(rule, property) {
+  if (!rule || !rule.cssProperties) return;
 
-  const definedProp = style.cssProperties.find(({name}) => name === property);
+  const definedProp = rule.cssProperties.find(({name}) => name === property);
   if (!definedProp) return;
 
   return definedProp.value;
@@ -203,8 +203,7 @@ function findMostSpecificCSSRule(matchedCSSRules, property) {
   const rule = FontSize.findMostSpecificMatchedCSSRule(matchedCSSRules, isDeclarationofInterest);
   if (!rule) return;
 
-  // @ts-expect-error style is guaranteed to exist if a rule exists
-  return findSizeDeclaration(rule.style, property);
+  return findSizeDeclaration(rule, property);
 }
 
 /**
@@ -291,9 +290,12 @@ class ImageElements extends Gatherer {
   async afterPass(passContext, loadData) {
     const driver = passContext.driver;
     const indexedNetworkRecords = loadData.networkRecords.reduce((map, record) => {
+      // An image response in newer formats is sometimes incorrectly marked as "application/octet-stream",
+      // so respect the extension too.
+      const isImage = /^image/.test(record.mimeType) || /\.(avif|webp)$/i.test(record.url);
       // The network record is only valid for size information if it finished with a successful status
-      // code that indicates a complete resource response.
-      if (/^image/.test(record.mimeType) && record.finished && record.statusCode === 200) {
+      // code that indicates a complete image response.
+      if (isImage && record.finished && record.statusCode === 200) {
         map[record.url] = record;
       }
 
