@@ -1058,6 +1058,12 @@
   "lighthouse-core/audits/preload-fonts.js | title": {
     "message": "Fonts with `font-display: optional` are preloaded"
   },
+  "lighthouse-core/audits/preload-lcp-image.js | description": {
+    "message": "Preload the image used by the LCP element in order to improve your LCP time. [Learn more](https://web.dev/optimize-lcp/#preload-important-resources)."
+  },
+  "lighthouse-core/audits/preload-lcp-image.js | title": {
+    "message": "Preload Largest Contentful Paint image"
+  },
   "lighthouse-core/audits/redirects-http.js | description": {
     "message": "If you've already set up HTTPS, make sure that you redirect all HTTP traffic to HTTPS in order to enable secure web features for all your users. [Learn more](https://web.dev/redirects-http/)."
   },
