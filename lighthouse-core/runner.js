@@ -26,11 +26,11 @@ const LHError = require('./lib/lh-error.js');
 
 class Runner {
   /**
-   * @param {Connection} connection
+   * @param {() => Promise<LH.Artifacts>} gatherArtifacts
    * @param {{config: Config, url?: string, driverMock?: Driver}} runOpts
    * @return {Promise<LH.RunnerResult|undefined>}
    */
-  static async run(connection, runOpts) {
+  static async run(gatherArtifacts, runOpts) {
     const settings = runOpts.config.settings;
     try {
       const runnerStatus = {msg: 'Runner setup', id: 'lh:runner:run'};
@@ -78,7 +78,7 @@ class Runner {
           throw new LHError(LHError.errors.INVALID_URL);
         }
 
-        artifacts = await Runner._gatherArtifactsFromBrowser(requestedUrl, runOpts, connection);
+        artifacts = await gatherArtifacts();
         // -G means save these to ./latest-run, etc.
         if (settings.gatherMode) {
           const path = Runner._getDataSavePath(settings);
