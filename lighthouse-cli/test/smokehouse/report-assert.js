@@ -168,8 +168,9 @@ function pruneExpectations(localConsole, lhr, expected) {
    * @param {*} obj
    */
   function failsChromeVersionCheck(obj) {
-    if (!obj._minChromiumMilestone) return false;
-    return actualChromeVersion < obj._minChromiumMilestone;
+    if (obj._minChromiumMilestone && actualChromeVersion < obj._minChromiumMilestone) return true;
+    if (obj._maxChromiumMilestone && actualChromeVersion > obj._maxChromiumMilestone) return true;
+    return false;
   }
 
   /**
@@ -194,6 +195,7 @@ function pruneExpectations(localConsole, lhr, expected) {
       }
     }
     delete obj._minChromiumMilestone;
+    delete obj._maxChromiumMilestone;
   }
 
   const cloned = cloneDeep(expected);
