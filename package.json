@@ -68,6 +68,7 @@
     "update:test-devtools": "bash lighthouse-core/test/chromium-web-tests/test-locally.sh --reset-results",
     "test-devtools": "bash lighthouse-core/test/chromium-web-tests/test-locally.sh",
     "open-devtools": "bash lighthouse-core/scripts/open-devtools.sh",
+    "run-devtools": "bash lighthouse-core/test/chromium-web-tests/test-page-devtools.sh",
     "diff:sample-json": "yarn i18n:checks && bash lighthouse-core/scripts/assert-golden-lhr-unchanged.sh",
     "computeBenchmarkIndex": "./lighthouse-core/scripts/benchmark.js",
     "minify-latest-run": "./lighthouse-core/scripts/lantern/minify-trace.js ./latest-run/defaultPass.trace.json ./latest-run/defaultPass.trace.min.json && ./lighthouse-core/scripts/lantern/minify-devtoolslog.js ./latest-run/defaultPass.devtoolslog.json ./latest-run/defaultPass.devtoolslog.min.json",

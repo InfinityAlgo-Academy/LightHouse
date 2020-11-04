@@ -6,19 +6,19 @@
 # Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 ##
 
-set -u
+set -euo pipefail
 
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-export LH_ROOT="$SCRIPT_DIR/../../.."
+roll_devtools() {
+  # Roll devtools. Besides giving DevTools the latest lighthouse source files,
+  # this also copies over the webtests.
+  cd "$LH_ROOT"
+  yarn devtools "$DEVTOOLS_PATH"
+  cd -
+}
 
-bash "$SCRIPT_DIR/roll-devtools.sh" || exit 1
-bash "$SCRIPT_DIR/web-test-server.sh" http/tests/devtools/lighthouse $*
-status=$?
-
-if [ ! $status -eq 0 ]; then
-  # Print failure diffs to stdout.
-  find "$LH_ROOT/.tmp/layout-test-results/retry_3" -name '*-diff.txt' -exec cat {} \;
-  echo "❌❌❌ webtests failed. to rebaseline run: yarn update:test-devtools ❌❌❌"
-fi
-
-exit $status
+# Setup inspector-sources.
+cd "$DEVTOOLS_PATH"
+git --no-pager log -1
+roll_devtools
+autoninja -C out/Default # Build devtools resources.
+cd -
