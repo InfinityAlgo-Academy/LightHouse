@@ -438,6 +438,7 @@ class Driver {
   }
 
   /**
+   * Note: Prefer `evaluate` instead.
    * Evaluate an expression in the context of the current page. If useIsolation is true, the expression
    * will be evaluated in a content script that has access to the page's DOM but whose JavaScript state
    * is completely separate.
@@ -483,34 +484,6 @@ class Driver {
       });
     }
     return this.evaluateAsync(expressionOrMainFn, options);
-  }
-
-  /**
-   * Evaluate an expression in the context of the current page. If useIsolation is true, the expression
-   * will be evaluated in a content script that has access to the page's DOM but whose JavaScript state
-   * is completely separate.
-   * Returns a promise that resolves on the expression's value.
-   * @param {string} expression
-   * @param {{useIsolation?: boolean}} options
-   * @return {Promise<*>}
-   */
-  async _evaluate(expression, options) {
-    const contextId =
-      options.useIsolation ? await this._getOrCreateIsolatedContextId() : undefined;
-
-    try {
-      // `await` is not redundant here because we want to `catch` the async errors
-      return await this._evaluateInContext(expression, contextId);
-    } catch (err) {
-      // If we were using isolation and the context disappeared on us, retry one more time.
-      if (contextId && err.message.includes('Cannot find context')) {
-        this._clearIsolatedContextId();
-        const freshContextId = await this._getOrCreateIsolatedContextId();
-        return this._evaluateInContext(expression, freshContextId);
-      }
-
-      throw err;
-    }
   }
 
   /**
