@@ -37,7 +37,7 @@ class CSPEvaluator extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: [],
+      requiredArtifacts: ['Csp'],
     };
   }
 
@@ -47,14 +47,7 @@ class CSPEvaluator extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const rawCsp = `
-script-src 'strict-dynamic' 'nonce-rAnd0m123' 'unsafe-inline' http: https:;
-object-src 'none';
-base-uri 'none';
-require-trusted-types-for 'script';
-report-uri https://csp.example.com;
-    `;
-    const parser = new csp.CspParser(rawCsp);
+    const parser = new csp.CspParser(artifacts.Csp);
     const evaluator = new csp.CspEvaluator(parser.csp, csp.Version.CSP3);
     const results = evaluator.evaluate();
     /** @type {LH.Audit.Details.Table['headings']} */

@@ -150,6 +150,7 @@ declare global {
       TapTargets: Artifacts.TapTarget[];
       /** Elements associated with metrics (ie: Largest Contentful Paint element). */
       TraceElements: Artifacts.TraceElement[];
+      Csp: string;
     }
 
     module Artifacts {
