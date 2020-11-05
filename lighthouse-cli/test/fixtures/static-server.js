@@ -158,7 +158,7 @@ class Server {
       return;
     }
 
-    if (filePath.startsWith('/dist/viewer')) {
+    if (filePath.startsWith('/dist/gh-pages/viewer')) {
       // Rewrite lighthouse-viewer paths to point to that location.
       absoluteFilePath = path.join(__dirname, '/../../../', filePath);
     }
