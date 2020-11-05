@@ -8,15 +8,17 @@
 const Gatherer = require('./gatherer.js');
 const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
 const NetworkRequest = require('../../lib/network-request.js');
-const {getElementsInDocument, getNodePath} = require('../../lib/page-functions.js');
-const pageFunctions = require('../../lib/page-functions.js');
+const {getElementsInDocument, getNodeDetailsString} = require('../../lib/page-functions.js');
+
+/* global getNodeDetails */
 
 /**
  * @return {LH.Artifacts['ScriptElements']}
  */
 /* istanbul ignore next */
-function collectScriptElements() {
-  const scripts = getElementsInDocument('script');
+function collectAllScriptElements() {
+  /** @type {HTMLScriptElement[]} */
+  const scripts = getElementsInDocument('script'); // eslint-disable-line no-undef
 
   return scripts.map(script => {
     return {
@@ -26,7 +28,8 @@ function collectScriptElements() {
       async: script.async,
       defer: script.defer,
       source: /** @type {'head'|'body'} */ (script.closest('head') ? 'head' : 'body'),
-      devtoolsNodePath: getNodePath(script),
+      // @ts-expect-error - getNodeDetails put into scope via stringification
+      ...getNodeDetails(script),
       content: script.src ? null : script.text,
       requestId: null,
     };
@@ -67,11 +70,11 @@ class ScriptElements extends Gatherer {
     const driver = passContext.driver;
     const mainResource = NetworkAnalyzer.findMainDocument(loadData.networkRecords, passContext.url);
 
-    const scripts = await driver.evaluate(collectScriptElements, {
+    const scripts = await driver.evaluate(collectAllScriptElements, {
       useIsolation: true,
       deps: [
+        getNodeDetailsString,
         getElementsInDocument,
-        pageFunctions.getNodePath,
       ],
     });
 
@@ -104,6 +107,10 @@ class ScriptElements extends Gatherer {
       } else {
         scripts.push({
           devtoolsNodePath: '',
+          snippet: '',
+          selector: '',
+          nodeLabel: '',
+          boundingRect: null,
           type: null,
           src: record.url,
           id: null,

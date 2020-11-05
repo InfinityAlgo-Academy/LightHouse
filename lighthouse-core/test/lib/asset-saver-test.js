@@ -45,11 +45,14 @@ describe('asset-saver helper', () => {
       return assetSaver.saveAssets(artifacts, dbwResults.audits, process.cwd() + '/the_file');
     });
 
-    it('trace file saved to disk with only trace events', () => {
+    it('trace file saved to disk with trace events and extra fakeEvents', () => {
       const traceFilename = 'the_file-0.trace.json';
       const traceFileContents = fs.readFileSync(traceFilename, 'utf8');
-      const traceEventsFromDisk = JSON.parse(traceFileContents).traceEvents;
-      assertTraceEventsEqual(traceEventsFromDisk, traceEvents);
+      const traceEventsOnDisk = JSON.parse(traceFileContents).traceEvents;
+      const traceEventsWithoutExtrasOnDisk = traceEventsOnDisk.slice(0, traceEvents.length);
+      const traceEventsFake = traceEventsOnDisk.slice(traceEvents.length);
+      assertTraceEventsEqual(traceEventsWithoutExtrasOnDisk, traceEvents);
+      assert.equal(traceEventsFake.length, 20);
       fs.unlinkSync(traceFilename);
     });
 
@@ -73,8 +76,8 @@ describe('asset-saver helper', () => {
       const beforeCount = countEvents(dbwTrace);
       return assetSaver.prepareAssets(mockArtifacts, dbwResults.audits).then(preparedAssets => {
         const afterCount = countEvents(preparedAssets[0].traceData);
-        const metricsSansNavStart = Metrics.metricsDefinitions.length - 1;
-        assert.equal(afterCount, beforeCount + (2 * metricsSansNavStart), 'unexpected event count');
+        const metricsMinusTimeOrigin = Metrics.metricsDefinitions.length - 1;
+        assert.equal(afterCount, beforeCount + (2 * metricsMinusTimeOrigin));
       });
     });
   });
@@ -165,7 +168,7 @@ describe('asset-saver helper', () => {
       assert.strictEqual(artifacts.LighthouseRunWarnings.length, 2);
       assert.strictEqual(artifacts.URL.requestedUrl, 'https://www.reddit.com/r/nba');
       assert.strictEqual(artifacts.devtoolsLogs.defaultPass.length, 555);
-      assert.strictEqual(artifacts.traces.defaultPass.traceEvents.length, 12);
+      assert.strictEqual(artifacts.traces.defaultPass.traceEvents.length, 13);
     });
   });
 

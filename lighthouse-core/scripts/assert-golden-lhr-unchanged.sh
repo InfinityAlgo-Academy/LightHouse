@@ -9,7 +9,12 @@
 pwd="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 lhroot_path="$pwd/../.."
 lh_tmp_path="$lhroot_path/.tmp"
+lh_tmp_artifacts_path="$lh_tmp_path/artifacts"
+lh_src_artifacts_path="$lhroot_path/lighthouse-core/test/results/artifacts"
+
 mkdir -p "$lh_tmp_path"
+rm -rf "$lh_tmp_artifacts_path"
+cp -R "$lh_src_artifacts_path" "$lh_tmp_artifacts_path"
 
 purple='\033[1;35m'
 red='\033[1;31m'
@@ -28,7 +33,7 @@ trap teardown EXIT
 
 colorText "Generating a fresh LHR..." "$purple"
 set -x
-node "$lhroot_path/lighthouse-cli" -A="$lhroot_path/lighthouse-core/test/results/artifacts" --config-path="$lhroot_path/lighthouse-core/test/results/sample-config.js" --quiet --output=json --output-path="$freshLHRPath"
+node "$lhroot_path/lighthouse-cli" -A="$lh_tmp_artifacts_path" --config-path="$lhroot_path/lighthouse-core/test/results/sample-config.js" --quiet --output=json --output-path="$freshLHRPath"
 set +x
 
 # remove timing from both

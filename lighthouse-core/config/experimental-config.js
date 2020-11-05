@@ -14,16 +14,32 @@
 const config = {
   extends: 'lighthouse:default',
   audits: [
-    'byte-efficiency/duplicated-javascript',
-    'byte-efficiency/legacy-javascript',
+    'autocomplete',
+    'full-page-screenshot',
+    'large-javascript-libraries',
+    'script-treemap-data',
+    'preload-lcp-image',
   ],
+  passes: [{
+    passName: 'defaultPass',
+    gatherers: [
+      'full-page-screenshot',
+    ],
+  }],
   categories: {
     // @ts-ignore: `title` is required in CategoryJson. setting to the same value as the default
     // config is awkward - easier to omit the property here. Will defer to default config.
     'performance': {
       auditRefs: [
-        {id: 'duplicated-javascript', weight: 0, group: 'load-opportunities'},
-        {id: 'legacy-javascript', weight: 0, group: 'load-opportunities'},
+        {id: 'large-javascript-libraries', weight: 0, group: 'diagnostics'},
+        {id: 'preload-lcp-image', weight: 0, group: 'load-opportunities'},
+      ],
+    },
+    // @ts-ignore: `title` is required in CategoryJson. setting to the same value as the default
+    // config is awkward - easier to omit the property here. Will defer to default config.
+    'best-practices': {
+      auditRefs: [
+        {id: 'autocomplete', weight: 0, group: 'best-practices-ux'},
       ],
     },
   },

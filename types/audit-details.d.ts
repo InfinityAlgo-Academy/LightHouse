@@ -13,6 +13,7 @@ declare global {
       Details.List |
       Details.Opportunity |
       Details.Screenshot |
+      Details.FullPageScreenshot |
       Details.Table;
 
     // Details namespace.
@@ -61,6 +62,17 @@ declare global {
         data: string;
       }
 
+      /**
+       * A screenshot of the entire page, including width and height information.
+       * Used for element screenshots.
+       */
+      export interface FullPageScreenshot {
+        type: 'full-page-screenshot';
+        data: string;
+        width: number;
+        height: number;
+      }
+
       export interface Table {
         type: 'table';
         headings: TableColumnHeading[];
@@ -91,7 +103,7 @@ declare global {
       type ItemValueType = 'bytes' | 'code' | 'link' | 'ms' | 'multi' | 'node' | 'source-location' | 'numeric' | 'text' | 'thumbnail' | 'timespanMs' | 'url';
 
       /** Possible types of values found within table items. */
-      type ItemValue = string | number | boolean | DebugData | NodeValue | SourceLocationValue | LinkValue | UrlValue | CodeValue | TableSubItems;
+      type ItemValue = string | number | boolean | DebugData | NodeValue | SourceLocationValue | LinkValue | UrlValue | CodeValue | NumericValue | IcuMessage | TableSubItems;
 
       // TODO: drop TableColumnHeading, rename OpportunityColumnHeading to TableColumnHeading and
       // use that for all table-like audit details.
@@ -105,7 +117,7 @@ declare global {
          */
         key: string|null;
         /** Readable text label of the field. */
-        text: string;
+        text: IcuMessage | string;
         /**
          * The data format of the column of values being described. Usually
          * those values will be primitives rendered as this type, but the values
@@ -137,7 +149,7 @@ declare global {
          */
         key: string|null;
         /** Readable text label of the field. */
-        label: string;
+        label: IcuMessage | string;
         /**
          * The data format of the column of values being described. Usually
          * those values will be primitives rendered as this type, but the values
@@ -171,7 +183,7 @@ declare global {
        */
       export interface CodeValue {
         type: 'code';
-        value: string;
+        value: IcuMessage | string;
       }
 
       /**
@@ -193,6 +205,7 @@ declare global {
         type: 'node';
         path?: string;
         selector?: string;
+        boundingRect?: Artifacts.Rect;
         /** An HTML snippet used to identify the node. */
         snippet?: string;
         /** A human-friendly text descriptor that's used to identify the node more quickly. */
@@ -252,6 +265,16 @@ declare global {
         generalMessages: {
           message: string
         }[];
+      }
+
+      /**
+       * A value used within a details object, intended to be displayed as a ms timing
+       * or a numeric value based on the metric name.
+       */
+      export interface NumericValue {
+        type: 'numeric',
+        value: number,
+        granularity?: number,
       }
     }
   }

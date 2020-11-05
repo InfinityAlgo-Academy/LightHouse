@@ -22,7 +22,7 @@ const expectations = [
       }, {
         id: 'wordpress',
       }],
-      MainDocumentContent: /^<!doctype html>.*DoBetterWeb Mega Tester.*aggressive-promise-polyfill.*<\/html>\n$/s,
+      MainDocumentContent: /^<!doctype html>.*DoBetterWeb Mega Tester.*aggressive-promise-polyfill.*<\/html>[\r\n]*$/s,
       LinkElements: [
         {
           rel: 'stylesheet',
@@ -197,6 +197,12 @@ const expectations = [
           },
         },
       ],
+      GlobalListeners: [{
+        type: 'unload',
+        scriptId: /^\d+$/,
+        lineNumber: '>300',
+        columnNumber: '>30',
+      }],
     },
     lhr: {
       requestedUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
@@ -248,14 +254,6 @@ const expectations = [
                 resolution: 'Allowed',
               },
             ],
-          },
-        },
-        'uses-http2': {
-          score: 0,
-          details: {
-            items: {
-              length: '>15',
-            },
           },
         },
         'external-anchors-use-rel-noopener': {
@@ -400,17 +398,31 @@ const expectations = [
         },
         'dom-size': {
           score: 1,
-          numericValue: 147,
+          numericValue: 148,
           details: {
             items: [
-              {statistic: 'Total DOM Elements', value: '147'},
-              {statistic: 'Maximum DOM Depth', value: '4'},
+              {statistic: 'Total DOM Elements', value: 148},
+              {statistic: 'Maximum DOM Depth', value: 4},
               {
                 statistic: 'Maximum Child Elements',
-                value: '100',
+                value: 100,
                 element: {value: '<div id="shadow-root-container">'},
               },
             ],
+          },
+        },
+        'no-unload-listeners': {
+          score: 0,
+          details: {
+            items: [{
+              source: {
+                type: 'source-location',
+                url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+                urlProvider: 'network',
+                line: '>300',
+                column: '>30',
+              },
+            }],
           },
         },
       },
@@ -419,13 +431,11 @@ const expectations = [
   {
     artifacts: {
       InspectorIssues: {
-        // Mixed Content issues weren't added to the protocol until M84.
-        // https://chromiumdash.appspot.com/commit/52ed57138d0b83e8afd9de25e60655c6ace7527c
-        _minChromiumMilestone: 84,
         mixedContent: [
           {
+            _minChromiumMilestone: 88, // We went from Warning to AutoUpgrade in https://chromium-review.googlesource.com/c/chromium/src/+/2480817
             resourceType: 'Image',
-            resolutionStatus: 'MixedContentWarning',
+            resolutionStatus: 'MixedContentAutomaticallyUpgraded',
             insecureURL: 'http://www.mixedcontentexamples.com/Content/Test/steveholt.jpg',
             mainResourceURL: 'https://www.mixedcontentexamples.com/Test/NonSecureImage',
             request: {

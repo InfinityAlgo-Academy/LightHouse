@@ -33,6 +33,8 @@ writeFile('report.js', htmlReportAssets.REPORT_JAVASCRIPT);
 writeFile('report.css', htmlReportAssets.REPORT_CSS);
 writeFile('template.html', htmlReportAssets.REPORT_TEMPLATE);
 writeFile('templates.html', htmlReportAssets.REPORT_TEMPLATES);
+writeFile('report.d.ts', 'export {}');
+writeFile('report-generator.d.ts', 'export {}');
 
 const pathToReportAssets = require.resolve('../clients/devtools-report-assets.js');
 browserify(generatorFilename, {standalone: 'Lighthouse.ReportGenerator'})

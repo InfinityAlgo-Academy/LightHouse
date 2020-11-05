@@ -152,4 +152,12 @@ describe('SEO: Crawlable anchors audit', () => {
       assert.equal(auditResult, 1, `'${onclickVariation}' should pass the audit`);
     }
   });
+
+  it('handles window.open in an onclick attribute and mailto: in a href attribute', () => {
+    assert.equal(
+        runAudit({rawHref: 'mailto:name@example.com', onclick: 'window.open()'}),
+        1,
+        'window.open in an onclick and mailto: in a href is a pass'
+    );
+  });
 });

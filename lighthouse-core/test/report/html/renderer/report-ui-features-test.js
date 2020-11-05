@@ -16,6 +16,9 @@ const DOM = require('../../../../report/html/renderer/dom.js');
 const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
 const ReportUIFeatures = require('../../../../report/html/renderer/report-ui-features.js');
 const CategoryRenderer = require('../../../../report/html/renderer/category-renderer.js');
+const ElementScreenshotRenderer =
+  require('../../../../report/html/renderer/element-screenshot-renderer.js');
+const RectHelpers = require('../../../../../lighthouse-core/lib/rect-helpers.js');
 const CriticalRequestChainRenderer = require(
     '../../../../report/html/renderer/crc-details-renderer.js');
 const ReportRenderer = require('../../../../report/html/renderer/report-renderer.js');
@@ -51,6 +54,8 @@ describe('ReportUIFeatures', () => {
     global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
     global.DetailsRenderer = DetailsRenderer;
     global.CategoryRenderer = CategoryRenderer;
+    global.ElementScreenshotRenderer = ElementScreenshotRenderer;
+    global.RectHelpers = RectHelpers;
 
     // lazy loaded because they depend on CategoryRenderer to be available globally
     global.PerformanceCategoryRenderer =
@@ -101,6 +106,8 @@ describe('ReportUIFeatures', () => {
     global.CriticalRequestChainRenderer = undefined;
     global.DetailsRenderer = undefined;
     global.CategoryRenderer = undefined;
+    global.ElementScreenshotRenderer = undefined;
+    global.RectHelpers = undefined;
     global.PerformanceCategoryRenderer = undefined;
     global.PwaCategoryRenderer = undefined;
     global.window = undefined;
@@ -263,23 +270,23 @@ describe('ReportUIFeatures', () => {
         }
 
         const initialExpected = [
-          '/script1.js(www.cdn.com)24 KiB8.8 KiB',
-          '10 KiB0 KiB',
-          '20 KiB0 KiB',
-          '/script2.js(www.example.com)24 KiB8.8 KiB',
-          '30 KiB0 KiB',
-          '40 KiB0 KiB',
-          '/script3.js(www.notexample.com)24 KiB8.8 KiB',
-          '50 KiB0 KiB',
-          '60 KiB0 KiB',
+          '/script1.js(www.cdn.com)24.0 KiB8.8 KiB',
+          '10.0 KiB0.0 KiB',
+          '20.0 KiB0.0 KiB',
+          '/script2.js(www.example.com)24.0 KiB8.8 KiB',
+          '30.0 KiB0.0 KiB',
+          '40.0 KiB0.0 KiB',
+          '/script3.js(www.notexample.com)24.0 KiB8.8 KiB',
+          '50.0 KiB0.0 KiB',
+          '60.0 KiB0.0 KiB',
         ];
 
         expect(getRowIdentifiers()).toEqual(initialExpected);
         filterCheckbox.click();
         expect(getRowIdentifiers()).toEqual([
-          '/script2.js(www.example.com)24 KiB8.8 KiB',
-          '30 KiB0 KiB',
-          '40 KiB0 KiB',
+          '/script2.js(www.example.com)24.0 KiB8.8 KiB',
+          '30.0 KiB0.0 KiB',
+          '40.0 KiB0.0 KiB',
         ]);
         filterCheckbox.click();
         expect(getRowIdentifiers()).toEqual(initialExpected);
@@ -323,6 +330,17 @@ describe('ReportUIFeatures', () => {
       Object.values(lhr.categories).forEach(element => {
         element.score = 1;
       });
+      const container = render(lhr);
+      assert.ok(container.querySelector('.score100'), 'has fireworks treatment');
+    });
+
+    it('should show fireworks for all 100s except PWA', () => {
+      const lhr = JSON.parse(JSON.stringify(sampleResults));
+      Object.values(lhr.categories).forEach(element => {
+        element.score = 1;
+      });
+      lhr.categories.pwa.score = 0;
+
       const container = render(lhr);
       assert.ok(container.querySelector('.score100'), 'has fireworks treatment');
     });

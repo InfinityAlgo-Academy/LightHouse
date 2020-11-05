@@ -188,6 +188,14 @@ class Server {
     }
 
     function sendRedirect(url) {
+      // Redirects can only contain ASCII characters.
+      if (url.split('').some(char => char.charCodeAt(0) > 256)) {
+        response.writeHead(500);
+        response.write(`Invalid redirect URL: ${url}`);
+        response.end();
+        return;
+      }
+
       const headers = {
         Location: url,
       };

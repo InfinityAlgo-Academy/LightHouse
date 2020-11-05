@@ -63,7 +63,7 @@ function createDecomposedPromise() {
     resolve = r1;
     reject = r2;
   });
-  // @ts-ignore: Ignore 'unused' error.
+  // @ts-expect-error: Ignore 'unused' error.
   return {promise, resolve, reject};
 }
 
@@ -138,13 +138,13 @@ let driver;
 let connectionStub;
 
 beforeEach(() => {
-  // @ts-ignore - connectionStub has a mocked version of sendCommand implemented in each test
+  // @ts-expect-error - connectionStub has a mocked version of sendCommand implemented in each test
   connectionStub = new Connection();
-  // @ts-ignore
+  // @ts-expect-error
   connectionStub.sendCommand = cmd => {
     throw new Error(`${cmd} not implemented`);
   };
-  // @ts-ignore - driver has a mocked version of on/once implemented in each test
+  // @ts-expect-error - driver has a mocked version of on/once implemented in each test
   driver = new Driver(connectionStub);
 });
 
@@ -205,7 +205,7 @@ describe('.getRequestContent', () => {
   it('throws if getRequestContent takes too long', async () => {
     const mockTimeout = 5000;
     const driverTimeout = 1000;
-    // @ts-ignore
+    // @ts-expect-error
     connectionStub.sendCommand = jest.fn()
       .mockImplementation(() => new Promise(r => setTimeout(r, mockTimeout)));
 
@@ -308,7 +308,7 @@ describe('.evaluateAsync', () => {
 describe('.sendCommand', () => {
   it('.sendCommand timesout when commands take too long', async () => {
     const mockTimeout = 5000;
-    // @ts-ignore
+    // @ts-expect-error
     connectionStub.sendCommand = jest.fn()
       .mockImplementation(() => new Promise(r => setTimeout(r, mockTimeout)));
 
@@ -478,7 +478,11 @@ describe('.gotoURL', () => {
 
     /** @param {LH.Crdp.Page.Frame} frame */
     const navigate = frame => driver._eventEmitter.emit('Page.frameNavigated', {frame});
-    const baseFrame = {id: 'ABC', loaderId: '', securityOrigin: '', mimeType: 'text/html'};
+    const baseFrame = {
+      id: 'ABC', loaderId: '', securityOrigin: '', mimeType: 'text/html', domainAndRegistry: '',
+      secureContextType: /** @type {'Secure'} */ ('Secure'),
+      crossOriginIsolatedContextType: /** @type {'Isolated'} */ ('Isolated'),
+    };
     navigate({...baseFrame, url: 'http://example.com'});
     navigate({...baseFrame, url: 'https://example.com'});
     navigate({...baseFrame, url: 'https://www.example.com'});
@@ -529,7 +533,7 @@ describe('.gotoURL', () => {
         driver._waitForNetworkIdle = createMockWaitForFn();
         driver._waitForCPUIdle = createMockWaitForFn();
 
-        // @ts-ignore - dynamic property access, tests will definitely fail if the property were to change
+        // @ts-expect-error - dynamic property access, tests will definitely fail if the property were to change
         const waitForResult = driver[`_waitFor${name}`];
         const otherWaitForResults = [
           driver._waitForFcp,
@@ -909,6 +913,64 @@ describe('.goOnline', () => {
   });
 });
 
+describe('.clearDataForOrigin', () => {
+  it('only clears data from certain locations', async () => {
+    let foundStorageTypes;
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('Storage.clearDataForOrigin', ({storageTypes}) => {
+        foundStorageTypes = storageTypes;
+      });
+    await driver.clearDataForOrigin('https://example.com');
+    // Should not see cookies, websql, indexeddb, or local_storage.
+    // Cookies are not cleared to preserve login.
+    // websql, indexeddb, and local_storage are not cleared to preserve important user data.
+    expect(foundStorageTypes).toMatchInlineSnapshot(
+      `"appcache,file_systems,shader_cache,service_workers,cache_storage"`
+    );
+  });
+});
+
+describe('.getImportantDataWarning', () => {
+  it('properly returns warning', async () => {
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('Storage.getUsageAndQuota', {usageBreakdown: [
+        {storageType: 'local_storage', usage: 5},
+        {storageType: 'indexeddb', usage: 5},
+        {storageType: 'websql', usage: 0},
+        {storageType: 'appcache', usage: 5},
+        {storageType: 'cookies', usage: 5},
+        {storageType: 'file_systems', usage: 5},
+        {storageType: 'shader_cache', usage: 5},
+        {storageType: 'service_workers', usage: 5},
+        {storageType: 'cache_storage', usage: 0},
+      ]});
+    const warning = await driver.getImportantStorageWarning('https://example.com');
+    expect(warning).toBeDisplayString(
+      'There may be stored data affecting loading performance in ' +
+      'these locations: Local Storage, IndexedDB. ' +
+      'Audit this page in an incognito window to prevent those resources ' +
+      'from affecting your scores.'
+    );
+  });
+
+  it('only warn for certain locations', async () => {
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('Storage.getUsageAndQuota', {usageBreakdown: [
+        {storageType: 'local_storage', usage: 0},
+        {storageType: 'indexeddb', usage: 0},
+        {storageType: 'websql', usage: 0},
+        {storageType: 'appcache', usage: 5},
+        {storageType: 'cookies', usage: 5},
+        {storageType: 'file_systems', usage: 5},
+        {storageType: 'shader_cache', usage: 5},
+        {storageType: 'service_workers', usage: 5},
+        {storageType: 'cache_storage', usage: 5},
+      ]});
+    const warning = await driver.getImportantStorageWarning('https://example.com');
+    expect(warning).toBeUndefined();
+  });
+});
+
 describe('Domain.enable/disable State', () => {
   it('dedupes (simple)', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
@@ -974,7 +1036,7 @@ describe('Multi-target management', () => {
 
     driver._eventEmitter.emit('Target.attachedToTarget', {
       sessionId: '123',
-      // @ts-ignore: Ignore partial targetInfo.
+      // @ts-expect-error: Ignore partial targetInfo.
       targetInfo: {type: 'iframe'},
     });
     await flushAllTimersAndMicrotasks();
@@ -992,7 +1054,7 @@ describe('Multi-target management', () => {
 
     driver._eventEmitter.emit('Target.attachedToTarget', {
       sessionId: 'SW1',
-      // @ts-ignore: Ignore partial targetInfo.
+      // @ts-expect-error: Ignore partial targetInfo.
       targetInfo: {type: 'service_worker'},
     });
     await flushAllTimersAndMicrotasks();

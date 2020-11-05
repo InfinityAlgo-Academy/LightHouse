@@ -11,10 +11,10 @@
  * lighthouse-core/report/html/html-report-assets.js in Devtools.
  */
 
-/* global Runtime */
+/* global globalThis */
 
-// @ts-ignore: Runtime.cachedResources exists in Devtools. https://source.chromium.org/chromium/chromium/src/+/master:third_party/devtools-frontend/src/front_end/root/Runtime.js;l=1169
-const cachedResources = Runtime.cachedResources;
+// @ts-expect-error: globalThis.EXPORTED_CACHED_RESOURCES_ONLY_FOR_LIGHTHOUSE exists in Devtools. https://source.chromium.org/chromium/chromium/src/+/master:third_party/devtools-frontend/src/front_end/root/Runtime.js;l=1247-1250;drc=c4e2fefe3327aa9fe5f4398a1baddb8726c230d5
+const cachedResources = globalThis.EXPORTED_CACHED_RESOURCES_ONLY_FOR_LIGHTHOUSE;
 
 // Getters are necessary because the DevTools bundling processes
 // resources after this module is resolved. These properties are not
@@ -22,15 +22,15 @@ const cachedResources = Runtime.cachedResources;
 // is going to be OK.
 module.exports = {
   get REPORT_CSS() {
-    return cachedResources['third_party/lighthouse/report-assets/report.css'];
+    return cachedResources.get('third_party/lighthouse/report-assets/report.css');
   },
   get REPORT_JAVASCRIPT() {
-    return cachedResources['third_party/lighthouse/report-assets/report.js'];
+    return cachedResources.get('third_party/lighthouse/report-assets/report.js');
   },
   get REPORT_TEMPLATE() {
-    return cachedResources['third_party/lighthouse/report-assets/template.html'];
+    return cachedResources.get('third_party/lighthouse/report-assets/template.html');
   },
   get REPORT_TEMPLATES() {
-    return cachedResources['third_party/lighthouse/report-assets/templates.html'];
+    return cachedResources.get('third_party/lighthouse/report-assets/templates.html');
   },
 };

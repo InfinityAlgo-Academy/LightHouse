@@ -8,7 +8,9 @@
 /* eslint-env jest */
 
 const CriticalRequestChains = require('../../audits/critical-request-chains.js');
+const redditDevtoolsLog = require('../fixtures/artifacts/perflog/defaultPass.devtoolslog.json');
 const assert = require('assert').strict;
+const createTestTrace = require('../create-test-trace.js');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
 const FAILING_CHAIN_RECORDS = [
@@ -65,10 +67,14 @@ const PASSING_CHAIN_RECORDS_2 = [
 const EMPTY_CHAIN_RECORDS = [];
 
 const mockArtifacts = (chainNetworkRecords) => {
+  const trace = createTestTrace({topLevelTasks: [{ts: 0}]});
   const devtoolsLog = networkRecordsToDevtoolsLog(chainNetworkRecords);
   const finalUrl = chainNetworkRecords[0] ? chainNetworkRecords[0].url : 'https://example.com';
 
   return {
+    traces: {
+      [CriticalRequestChains.DEFAULT_PASS]: trace,
+    },
     devtoolsLogs: {
       [CriticalRequestChains.DEFAULT_PASS]: devtoolsLog,
     },
@@ -94,6 +100,20 @@ describe('Performance: critical-request-chains audit', () => {
       assert.equal(output.details.longestChain.duration, 1000);
       assert.equal(output.displayValue, '');
       assert.equal(output.score, 1);
+    });
+  });
+
+  it('calculates the correct chain result for a real devtools log', () => {
+    const artifacts = {
+      traces: {defaultPass: createTestTrace({topLevelTasks: [{ts: 0}]})},
+      devtoolsLogs: {defaultPass: redditDevtoolsLog},
+      URL: {finalUrl: 'https://www.reddit.com/r/nba'},
+    };
+    const context = {computedCache: new Map()};
+    return CriticalRequestChains.audit(artifacts, context).then(output => {
+      expect(output.details.longestChain.duration).toBeCloseTo(656.491);
+      expect(output.details.longestChain.transferSize).toEqual(2468);
+      expect(output).toHaveProperty('score', 0);
     });
   });
 

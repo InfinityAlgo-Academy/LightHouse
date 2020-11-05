@@ -166,7 +166,7 @@ class LighthouseError extends Error {
     // Unexpected errors won't be LHErrors, but we want them serialized as well.
     if (err instanceof Error) {
       const {message, stack} = err;
-      // @ts-ignore - code can be helpful for e.g. node errors, so preserve it if it's present.
+      // @ts-expect-error - code can be helpful for e.g. node errors, so preserve it if it's present.
       const code = err.code;
       return {
         sentinel: ERROR_SENTINEL,
@@ -239,6 +239,11 @@ const ERRORS = {
   // Trace parsing errors
   NO_TRACING_STARTED: {
     code: 'NO_TRACING_STARTED',
+    message: UIStrings.badTraceRecording,
+    lhrRuntimeError: true,
+  },
+  NO_RESOURCE_REQUEST: {
+    code: 'NO_RESOURCE_REQUEST',
     message: UIStrings.badTraceRecording,
     lhrRuntimeError: true,
   },

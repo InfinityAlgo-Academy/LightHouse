@@ -83,11 +83,12 @@ async function main() {
   const bundleMap = JSON.parse(fs.readFileSync(bundlePath + '.map', 'utf-8'));
   /** @type {Pick<LH.Artifacts, 'ScriptElements'|'SourceMaps'>} */
   const artifacts = {
-    // @ts-ignore don't need most properties on ScriptElement.
+    // @ts-expect-error don't need most properties on ScriptElement.
     ScriptElements: [{requestId: '', src: '', content: bundleContents}],
     SourceMaps: [{scriptUrl: '', map: bundleMap}],
   };
   const bundles = await JsBundles.compute_(artifacts);
+  if ('errorMessage' in bundles[0].sizes) throw new Error(bundles[0].sizes.errorMessage);
   const bundleFileSizes = bundles[0].sizes.files;
 
   const allModules = Object.keys(bundleFileSizes).filter(s => s.startsWith('node_modules'));

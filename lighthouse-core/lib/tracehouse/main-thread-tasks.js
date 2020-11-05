@@ -107,7 +107,7 @@ class MainThreadTasks {
 
       // We're right where we need to be, point the timerId to our `currentTask`
       /** @type {string} */
-      // @ts-ignore - timerId exists on `TimerInstall` events.
+      // @ts-expect-error - timerId exists on `TimerInstall` events.
       const timerId = nextTimerInstallEvent.args.data.timerId;
       priorTaskData.timers.set(timerId, currentTask);
     }
@@ -451,7 +451,7 @@ class MainThreadTasks {
         break;
       case 'TimerFire': {
         /** @type {string} */
-        // @ts-ignore - timerId exists when name is TimerFire
+        // @ts-expect-error - timerId exists when name is TimerFire
         const timerId = task.event.args.data.timerId;
         const timerInstallerTaskNode = priorTaskData.timers.get(timerId);
         if (!timerInstallerTaskNode) break;
@@ -590,13 +590,92 @@ class MainThreadTasks {
       task.duration /= 1000;
       task.selfTime /= 1000;
 
-      // sanity check that we have selfTime which captures all other timing data
+      // Check that we have selfTime which captures all other timing data.
       if (!Number.isFinite(task.selfTime)) {
         throw new Error('Invalid task timing data');
       }
     }
 
     return tasks;
+  }
+
+  /**
+   * Prints an artistic rendering of the task tree for easier debugability.
+   *
+   * @param {TaskNode[]} tasks
+   * @param {{printWidth?: number, startTime?: number, endTime?: number, taskLabelFn?: (node: TaskNode) => string}} options
+   * @return {string}
+   */
+  static printTaskTreeToDebugString(tasks, options = {}) {
+    const traceEndMs = Math.max(...tasks.map(t => t.endTime), 0);
+    const {
+      printWidth = 100,
+      startTime = 0,
+      endTime = traceEndMs,
+      taskLabelFn = node => node.event.name,
+    } = options;
+
+    /** @param {TaskNode} task */
+    function computeTaskDepth(task) {
+      let depth = 0;
+      for (; task.parent; task = task.parent) depth++;
+      return depth;
+    }
+
+    const traceRange = endTime - startTime;
+    const characterInMs = traceRange / printWidth;
+
+    /** @type {Map<TaskNode, {id: string, task: TaskNode}>} */
+    const taskLegend = new Map();
+
+    /** @type {Map<number, TaskNode[]>} */
+    const tasksByDepth = new Map();
+    for (const task of tasks) {
+      if (task.startTime > endTime || task.endTime < startTime) continue;
+
+      const depth = computeTaskDepth(task);
+      const tasksAtDepth = tasksByDepth.get(depth) || [];
+      tasksAtDepth.push(task);
+      tasksByDepth.set(depth, tasksAtDepth);
+
+      // Create a user-friendly ID for new tasks using a capital letter.
+      // 65 is the ASCII code for 'A' and there are 26 letters in the english alphabet.
+      const id = String.fromCharCode(65 + (taskLegend.size % 26));
+      taskLegend.set(task, {id, task});
+    }
+
+    const debugStringLines = [
+      `Trace Duration: ${traceEndMs.toFixed(0)}ms`,
+      `Range: [${startTime}, ${endTime}]`,
+      `█ = ${characterInMs.toFixed(2)}ms`,
+      '',
+    ];
+
+    const increasingDepth = Array.from(tasksByDepth.entries()).sort((a, b) => a[0] - b[0]);
+    for (const [, tasks] of increasingDepth) {
+      const taskRow = Array.from({length: printWidth}).map(() => ' ');
+
+      for (const task of tasks) {
+        const taskStart = Math.max(task.startTime, startTime);
+        const taskEnd = Math.min(task.endTime, endTime);
+
+        const {id} = taskLegend.get(task) || {id: '?'};
+        const startIndex = Math.floor(taskStart / characterInMs);
+        const endIndex = Math.floor(taskEnd / characterInMs);
+        const idIndex = Math.floor((startIndex + endIndex) / 2);
+        for (let i = startIndex; i <= endIndex; i++) taskRow[i] = '█';
+        for (let i = 0; i < id.length; i++) taskRow[idIndex] = id;
+      }
+
+      debugStringLines.push(taskRow.join(''));
+    }
+
+    debugStringLines.push('');
+    for (const {id, task} of taskLegend.values()) {
+      debugStringLines.push(`${id} = ${taskLabelFn(task)}`);
+    }
+
+    return debugStringLines.join('\n');
   }
 }
 

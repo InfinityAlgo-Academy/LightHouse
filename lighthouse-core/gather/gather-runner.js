@@ -105,9 +105,10 @@ class GatherRunner {
   /**
    * @param {Driver} driver
    * @param {{requestedUrl: string, settings: LH.Config.Settings}} options
+   * @param {(string | LH.IcuMessage)[]} LighthouseRunWarnings
    * @return {Promise<void>}
    */
-  static async setupDriver(driver, options) {
+  static async setupDriver(driver, options, LighthouseRunWarnings) {
     const status = {msg: 'Initializing…', id: 'lh:gather:setupDriver'};
     log.time(status);
     const resetStorage = !options.settings.disableStorageReset;
@@ -119,7 +120,13 @@ class GatherRunner {
     await driver.registerPerformanceObserver();
     await driver.dismissJavaScriptDialogs();
     await driver.registerRequestIdleCallbackWrap(options.settings);
-    if (resetStorage) await driver.clearDataForOrigin(options.requestedUrl);
+    if (resetStorage) {
+      const warning = await driver.getImportantStorageWarning(options.requestedUrl);
+      if (warning) {
+        LighthouseRunWarnings.push(warning);
+      }
+      await driver.clearDataForOrigin(options.requestedUrl);
+    }
     log.timeEnd(status);
   }
 
@@ -477,7 +484,7 @@ class GatherRunner {
         // Take the last defined pass result as artifact. If none are defined, the undefined check below handles it.
         const definedResults = phaseResults.filter(element => element !== undefined);
         const artifact = definedResults[definedResults.length - 1];
-        // @ts-ignore tsc can't yet express that gathererName is only a single type in each iteration, not a union of types.
+        // @ts-expect-error tsc can't yet express that gathererName is only a single type in each iteration, not a union of types.
         gathererArtifacts[gathererName] = artifact;
       } catch (err) {
         // Return error to runner to handle turning it into an error audit.
@@ -545,7 +552,7 @@ class GatherRunner {
     // error strings were returned. Convert the values we care about to the new error id format.
     if (!errors) {
       /** @type {string[]} */
-      // @ts-ignore - Support older protocol data.
+      // @ts-expect-error - Support older protocol data.
       const m81StyleErrors = response.errors || [];
       errors = m81StyleErrors.map(error => {
         const englishErrorToErrorId = {
@@ -599,7 +606,7 @@ class GatherRunner {
       !!entry.params.request.headers['User-Agent']
     );
     if (userAgentEntry) {
-      // @ts-ignore - guaranteed to exist by the find above
+      // @ts-expect-error - guaranteed to exist by the find above
       baseArtifacts.NetworkUserAgent = userAgentEntry.params.request.headers['User-Agent'];
     }
   }
@@ -654,7 +661,7 @@ class GatherRunner {
       const baseArtifacts = await GatherRunner.initializeBaseArtifacts(options);
       baseArtifacts.BenchmarkIndex = await options.driver.getBenchmarkIndex();
 
-      await GatherRunner.setupDriver(driver, options);
+      await GatherRunner.setupDriver(driver, options, baseArtifacts.LighthouseRunWarnings);
 
       let isFirstPass = true;
       for (const passConfig of passConfigs) {

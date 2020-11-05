@@ -5,16 +5,11 @@
  */
 'use strict';
 
-/* global document, window, getComputedStyle, getElementsInDocument, Node, getNodePath, getNodeSelector, getNodeLabel */
+/* global document, window, getComputedStyle, getElementsInDocument, Node, getNodeDetails, getRectCenterPoint */
 
 const Gatherer = require('../gatherer.js');
 const pageFunctions = require('../../../lib/page-functions.js');
-const {
-  rectContains,
-  getRectArea,
-  getRectCenterPoint,
-  getLargestRect,
-} = require('../../../lib/rect-helpers.js');
+const RectHelpers = require('../../../lib/rect-helpers.js');
 
 const TARGET_SELECTORS = [
   'button',
@@ -143,19 +138,6 @@ function elementIsInTextBlock(element) {
 }
 
 /**
- * @param {string} str
- * @param {number} maxLength
- * @return {string}
- */
-/* istanbul ignore next */
-function truncate(str, maxLength) {
-  if (str.length <= maxLength) {
-    return str;
-  }
-  return str.slice(0, maxLength - 1) + '…';
-}
-
-/**
  * @param {Element} el
  * @param {{x: number, y: number}} elCenterPoint
  */
@@ -215,7 +197,7 @@ function gatherTapTargets(tapTargetsSelector) {
   window.scrollTo(0, 0);
 
   /** @type {HTMLElement[]} */
-  // @ts-ignore - getElementsInDocument put into scope via stringification
+  // @ts-expect-error - getElementsInDocument put into scope via stringification
   const tapTargetElements = getElementsInDocument(tapTargetsSelector);
 
   /** @type {{
@@ -270,6 +252,7 @@ function gatherTapTargets(tapTargetsSelector) {
     visibleClientRects = visibleClientRects.filter(rect => {
       // Just checking the center can cause false failures for large partially hidden tap targets,
       // but that should be a rare edge case
+      // @ts-expect-error - put into scope via stringification
       const rectCenterPoint = getRectCenterPoint(rect);
       return elementCenterIsAtZAxisTop(tapTargetElement, rectCenterPoint);
     });
@@ -285,14 +268,9 @@ function gatherTapTargets(tapTargetsSelector) {
   for (const {tapTargetElement, visibleClientRects} of tapTargetsWithVisibleClientRects) {
     targets.push({
       clientRects: visibleClientRects,
-      snippet: truncate(tapTargetElement.outerHTML, 300),
-      // @ts-ignore - getNodePath put into scope via stringification
-      path: getNodePath(tapTargetElement),
-      // @ts-ignore - getNodeSelector put into scope via stringification
-      selector: getNodeSelector(tapTargetElement),
-      // @ts-ignore - getNodeLabel put into scope via stringification
-      nodeLabel: getNodeLabel(tapTargetElement),
       href: /** @type {HTMLAnchorElement} */(tapTargetElement)['href'] || '',
+      // @ts-expect-error - getNodeDetails put into scope via stringification
+      ...getNodeDetails(tapTargetElement),
     });
   }
 
@@ -311,19 +289,16 @@ class TapTargets extends Gatherer {
       args: [tapTargetsSelector],
       useIsolation: true,
       deps: [
+        pageFunctions.getNodeDetailsString,
         pageFunctions.getElementsInDocument,
         disableFixedAndStickyElementPointerEvents,
         elementIsVisible,
         elementHasAncestorTapTarget,
         elementCenterIsAtZAxisTop,
-        truncate,
         getClientRects,
         hasTextNodeSiblingsFormingTextBlock,
         elementIsInTextBlock,
-        getRectArea,
-        getLargestRect,
-        getRectCenterPoint,
-        rectContains,
+        RectHelpers.getRectCenterPoint,
         pageFunctions.getNodePath,
         pageFunctions.getNodeSelector,
         pageFunctions.getNodeLabel,

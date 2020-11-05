@@ -28,11 +28,16 @@ async function rerender(iterations) {
 setTimeout(() => {
   const imgEl = document.createElement('img');
   imgEl.src = '../dobetterweb/lighthouse-480x318.jpg';
-  const textEl = document.createElement('span');
+  const textEl = document.createElement('div');
   textEl.textContent = 'Sorry!';
+  textEl.style.height = '18px' // this height can be flaky so we set it manually
   const top = document.getElementById('late-content');
-  top.appendChild(imgEl);
-  top.appendChild(textEl);
+
+  // Use shadow DOM to verify devtoolsNodePath resolves through it
+  const shadowRoot = top.attachShadow({mode: 'open'});
+  const sectionEl = document.createElement('section');
+  sectionEl.append(imgEl, textEl);
+  shadowRoot.append(sectionEl);
 
   // layout-shift-elements: ensure we can handle missing shift elements
   if (window.location.href.includes('?missing')) {

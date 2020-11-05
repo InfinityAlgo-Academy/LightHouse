@@ -46,7 +46,7 @@ function headersArrayToHeadersDict(headersArray = []) {
  * @return {LH.Protocol.RawEventMessage}
  */
 function getRequestWillBeSentEvent(networkRecord, index) {
-  let initiator;
+  let initiator = {type: 'other'};
   if (networkRecord.initiator) {
     initiator = {...networkRecord.initiator};
   }
@@ -63,12 +63,25 @@ function getRequestWillBeSentEvent(networkRecord, index) {
         initialPriority: networkRecord.priority || 'Low',
         isLinkPreload: networkRecord.isLinkPreload,
       },
-      timestamp: networkRecord.startTime || 0,
+      timestamp: networkRecord.redirectResponseTimestamp || networkRecord.startTime || 0,
       wallTime: 0,
-      initiator: initiator || {type: 'other'},
+      initiator,
       type: networkRecord.resourceType || 'Document',
       frameId: networkRecord.frameId || `${idBase}.1`,
       redirectResponse: networkRecord.redirectResponse,
+    },
+  };
+}
+
+/**
+ * @param {Partial<NetworkRequest>} networkRecord
+ * @return {LH.Protocol.RawEventMessage}
+ */
+function getRequestServedFromCacheEvent(networkRecord, index) {
+  return {
+    method: 'Network.requestServedFromCache',
+    params: {
+      requestId: getBaseRequestId(networkRecord) || `${idBase}.${index}`,
     },
   };
 }
@@ -97,11 +110,11 @@ function getResponseReceivedEvent(networkRecord, index) {
         url: networkRecord.url || exampleUrl,
         status: networkRecord.statusCode || 200,
         headers,
-        mimeType: networkRecord.mimeType || 'text/html',
+        mimeType: typeof networkRecord.mimeType === 'string' ? networkRecord.mimeType : 'text/html',
         connectionReused: networkRecord.connectionReused || false,
         connectionId: networkRecord.connectionId || 140,
-        fromDiskCache: networkRecord.fromDiskCache || undefined,
-        fromServiceWorker: networkRecord.fetchedViaServiceWorker || undefined,
+        fromDiskCache: networkRecord.fromDiskCache || false,
+        fromServiceWorker: networkRecord.fetchedViaServiceWorker || false,
         encodedDataLength: networkRecord.transferSize || 0,
         timing,
         protocol: networkRecord.protocol || 'http/1.1',
@@ -177,7 +190,11 @@ function addRedirectResponseIfNeeded(networkRecords, record) {
   // populate `redirectResponse` with original's data, more or less.
   const originalResponse = getResponseReceivedEvent(originalRecord).params.response;
   originalResponse.status = originalRecord.statusCode || 302;
-  return Object.assign({}, record, {redirectResponse: originalResponse});
+  return {
+    ...record,
+    redirectResponseTimestamp: originalRecord.endTime,
+    redirectResponse: originalResponse,
+  };
 }
 
 /**
@@ -199,6 +216,10 @@ function networkRecordsToDevtoolsLog(networkRecords, options = {}) {
     if (willBeRedirected(networkRecords, networkRecord)) {
       // If record is going to redirect, only issue the first event.
       return;
+    }
+
+    if (networkRecord.fromMemoryCache) {
+      devtoolsLog.push(getRequestServedFromCacheEvent(networkRecord, index));
     }
 
     devtoolsLog.push(getResponseReceivedEvent(networkRecord, index));

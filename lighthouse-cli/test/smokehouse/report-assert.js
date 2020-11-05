@@ -168,8 +168,9 @@ function pruneExpectations(localConsole, lhr, expected) {
    * @param {*} obj
    */
   function failsChromeVersionCheck(obj) {
-    if (!obj._minChromiumMilestone) return false;
-    return actualChromeVersion < obj._minChromiumMilestone;
+    if (obj._minChromiumMilestone && actualChromeVersion < obj._minChromiumMilestone) return true;
+    if (obj._maxChromiumMilestone && actualChromeVersion > obj._maxChromiumMilestone) return true;
+    return false;
   }
 
   /**
@@ -194,6 +195,7 @@ function pruneExpectations(localConsole, lhr, expected) {
       }
     }
     delete obj._minChromiumMilestone;
+    delete obj._maxChromiumMilestone;
   }
 
   const cloned = cloneDeep(expected);
@@ -223,13 +225,14 @@ function collateResults(localConsole, actual, expected) {
   if (expected.artifacts) {
     const expectedArtifacts = expected.artifacts;
     const artifactNames = /** @type {(keyof LH.Artifacts)[]} */ (Object.keys(expectedArtifacts));
+    const actualArtifacts = actual.artifacts || {};
     artifactAssertions = artifactNames.map(artifactName => {
-      const actualResult = (actual.artifacts || {})[artifactName];
-      if (!actualResult) {
+      if (!(artifactName in actualArtifacts)) {
         localConsole.log(log.redify('Error: ') +
           `Config run did not generate artifact ${artifactName}`);
       }
 
+      const actualResult = actualArtifacts[artifactName];
       const expectedResult = expectedArtifacts[artifactName];
       return makeComparison(artifactName + ' artifact', actualResult, expectedResult);
     });
@@ -276,9 +279,9 @@ function isPlainObject(obj) {
  * @param {Comparison} assertion
  */
 function reportAssertion(localConsole, assertion) {
-  // @ts-ignore - this doesn't exist now but could one day, so try not to break the future
+  // @ts-expect-error - this doesn't exist now but could one day, so try not to break the future
   const _toJSON = RegExp.prototype.toJSON;
-  // @ts-ignore
+  // @ts-expect-error
   // eslint-disable-next-line no-extend-native
   RegExp.prototype.toJSON = RegExp.prototype.toString;
 
@@ -311,7 +314,7 @@ function reportAssertion(localConsole, assertion) {
     }
   }
 
-  // @ts-ignore
+  // @ts-expect-error
   // eslint-disable-next-line no-extend-native
   RegExp.prototype.toJSON = _toJSON;
 }

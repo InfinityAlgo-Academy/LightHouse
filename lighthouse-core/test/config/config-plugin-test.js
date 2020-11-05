@@ -7,6 +7,7 @@
 
 const assert = require('assert').strict;
 const ConfigPlugin = require('../../config/config-plugin.js');
+const i18n = require('../../lib/i18n/i18n.js');
 
 /* eslint-env jest */
 
@@ -62,6 +63,46 @@ describe('ConfigPlugin', () => {
 
     assert.throws(() => ConfigPlugin.parsePlugin(pluginClone, nicePluginName),
       /^Error: lighthouse-plugin-nice-plugin has unrecognized properties: \[extraProperty\]$/);
+  });
+
+  it('accepts a plugin using IcuMessages for strings', () => {
+    // Create some local-only UIStrings for the test.
+    const UIStrings = {
+      title: 'this is a title',
+      description: 'this is a description',
+    };
+    const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+
+    const localizedPlugin = {
+      groups: {
+        group: {
+          title: str_(UIStrings.title),
+          description: str_(UIStrings.description),
+        },
+      },
+      category: {
+        title: str_(UIStrings.title),
+        description: str_(UIStrings.description),
+        manualDescription: str_(UIStrings.description),
+        auditRefs: [{id: 'installable-manifest', weight: 220, group: 'group'}],
+      },
+    };
+    const pluginJson = ConfigPlugin.parsePlugin(localizedPlugin, 'lighthouse-plugin-localized');
+    expect(pluginJson).toMatchObject({
+      groups: {
+        'lighthouse-plugin-localized-group': {
+          title: expect.toBeDisplayString(UIStrings.title),
+          description: expect.toBeDisplayString(UIStrings.description),
+        },
+      },
+      categories: {
+        'lighthouse-plugin-localized': {
+          title: expect.toBeDisplayString(UIStrings.title),
+          description: expect.toBeDisplayString(UIStrings.description),
+          manualDescription: expect.toBeDisplayString(UIStrings.description),
+        },
+      },
+    });
   });
 
   it('deals only with the JSON roundtrip version of the passed-in object', () => {

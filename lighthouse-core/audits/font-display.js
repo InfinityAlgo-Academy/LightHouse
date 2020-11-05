@@ -54,9 +54,10 @@ class FontDisplay extends Audit {
 
   /**
    * @param {LH.Artifacts} artifacts
+   * @param {RegExp} passingFontDisplayRegex
    * @return {{passingURLs: Set<string>, failingURLs: Set<string>}}
    */
-  static findFontDisplayDeclarations(artifacts) {
+  static findFontDisplayDeclarations(artifacts, passingFontDisplayRegex) {
     /** @type {Set<string>} */
     const passingURLs = new Set();
     /** @type {Set<string>} */
@@ -78,12 +79,12 @@ class FontDisplay extends Audit {
         // followed either by a semicolon or the end of a block.
         const fontDisplayMatch = declaration.match(/font-display\s*:\s*(\w+)\s*(;|\})/);
         const rawFontDisplay = (fontDisplayMatch && fontDisplayMatch[1]) || '';
-        const hasPassingFontDisplay = PASSING_FONT_DISPLAY_REGEX.test(rawFontDisplay);
+        const hasPassingFontDisplay = passingFontDisplayRegex.test(rawFontDisplay);
         const targetURLSet = hasPassingFontDisplay ? passingURLs : failingURLs;
 
         // Finally convert the raw font URLs to the absolute URLs and add them to the set.
         const relativeURLs = rawFontURLs
-          // @ts-ignore - guaranteed to match from previous regex, pull URL group out
+          // @ts-expect-error - guaranteed to match from previous regex, pull URL group out
           .map(s => s.match(CSS_URL_REGEX)[1].trim())
           .map(s => {
             // remove any quotes surrounding the URL
@@ -114,7 +115,7 @@ class FontDisplay extends Audit {
   /**
    * Some pages load many fonts we can't check, so dedupe on origin.
    * @param {Array<string>} warningUrls
-   * @return {Array<string>}
+   * @return {Array<LH.IcuMessage>}
    */
   static getWarningsForFontUrls(warningUrls) {
     /** @type {Map<string, number>} */
@@ -141,7 +142,8 @@ class FontDisplay extends Audit {
   static async audit(artifacts, context) {
     const devtoolsLogs = artifacts.devtoolsLogs[this.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLogs, context);
-    const {passingURLs, failingURLs} = FontDisplay.findFontDisplayDeclarations(artifacts);
+    const {passingURLs, failingURLs} =
+      FontDisplay.findFontDisplayDeclarations(artifacts, PASSING_FONT_DISPLAY_REGEX);
     /** @type {Array<string>} */
     const warningURLs = [];
 

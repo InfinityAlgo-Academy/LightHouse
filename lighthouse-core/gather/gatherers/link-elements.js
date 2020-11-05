@@ -5,13 +5,13 @@
  */
 'use strict';
 
-const Gatherer = require('./gatherer.js');
-const URL = require('../../lib/url-shim.js').URL;
-const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
 const LinkHeader = require('http-link-header');
-const {getElementsInDocument} = require('../../lib/page-functions.js');
+const Gatherer = require('./gatherer.js');
+const {URL} = require('../../lib/url-shim.js');
+const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
+const {getElementsInDocument, getNodeDetailsString} = require('../../lib/page-functions.js');
 
-/* globals HTMLLinkElement */
+/* globals HTMLLinkElement getNodeDetails */
 
 /**
  * @fileoverview
@@ -48,7 +48,8 @@ function getCrossoriginFromHeader(value) {
  */
 /* istanbul ignore next */
 function getLinkElementsInDOM() {
-  const browserElements = getElementsInDocument('link');
+  /** @type {Array<HTMLOrSVGElement>} */
+  const browserElements = getElementsInDocument('link'); // eslint-disable-line no-undef
   /** @type {LH.Artifacts['LinkElements']} */
   const linkElements = [];
 
@@ -57,14 +58,19 @@ function getLinkElementsInDOM() {
     // https://github.com/GoogleChrome/lighthouse/issues/9764
     if (!(link instanceof HTMLLinkElement)) continue;
 
+    const hrefRaw = link.getAttribute('href') || '';
+    const source = link.closest('head') ? 'head' : 'body';
+
     linkElements.push({
       rel: link.rel,
       href: link.href,
-      hrefRaw: link.getAttribute('href') || '',
       hreflang: link.hreflang,
       as: link.as,
       crossOrigin: link.crossOrigin,
-      source: link.closest('head') ? 'head' : 'body',
+      hrefRaw,
+      source,
+      // @ts-expect-error - put into scope via stringification
+      ...getNodeDetails(link),
     });
   }
 
@@ -81,7 +87,10 @@ class LinkElements extends Gatherer {
     // the values like access from JavaScript does.
     return passContext.driver.evaluate(getLinkElementsInDOM, {
       useIsolation: true,
-      deps: [getElementsInDocument],
+      deps: [
+        getNodeDetailsString,
+        getElementsInDocument,
+      ],
     });
   }
 
@@ -110,6 +119,11 @@ class LinkElements extends Gatherer {
           as: link.as || '',
           crossOrigin: getCrossoriginFromHeader(link.crossorigin),
           source: 'headers',
+          devtoolsNodePath: '',
+          selector: '',
+          nodeLabel: '',
+          boundingRect: null,
+          snippet: '',
         });
       }
     }
