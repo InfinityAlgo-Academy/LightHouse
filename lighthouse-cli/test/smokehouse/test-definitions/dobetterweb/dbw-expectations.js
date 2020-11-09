@@ -406,7 +406,7 @@ const expectations = [
               {
                 statistic: 'Maximum Child Elements',
                 value: 100,
-                element: {value: '<div id="shadow-root-container">'},
+                node: {snippet: '<div id="shadow-root-container">'},
               },
             ],
           },

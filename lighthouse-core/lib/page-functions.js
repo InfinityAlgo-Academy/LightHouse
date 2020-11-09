@@ -377,7 +377,6 @@ function getNodeLabel(node) {
     }
     return str.slice(0, maxLength - 1) + '…';
   }
-
   const tagName = node.tagName.toLowerCase();
   // html and body content is too broad to be useful, since they contain all page content
   if (tagName !== 'html' && tagName !== 'body') {
@@ -453,12 +452,13 @@ const getNodeDetailsString = `function getNodeDetails(elem) {
   ${getBoundingClientRect.toString()};
   ${getOuterHTMLSnippet.toString()};
   ${getNodeLabel.toString()};
+  const htmlElem = elem instanceof ShadowRoot ? elem.host : elem;
   return {
     devtoolsNodePath: getNodePath(elem),
-    selector: getNodeSelector(elem),
-    boundingRect: getBoundingClientRect(elem),
+    selector: getNodeSelector(htmlElem),
+    boundingRect: getBoundingClientRect(htmlElem),
     snippet: getOuterHTMLSnippet(elem),
-    nodeLabel: getNodeLabel(elem),
+    nodeLabel: getNodeLabel(htmlElem),
   };
 }`;
 

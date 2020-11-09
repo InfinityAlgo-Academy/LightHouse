@@ -2395,24 +2395,36 @@
   "AppCacheManifest": "clock.appcache",
   "DOMStats": {
     "depth": {
-      "max": 3,
-      "pathToElement": [
-        "html",
-        "body",
-        "div",
-        "h2"
-      ],
-      "snippet": "<h2>"
+      "max": 4,
+      "devtoolsNodePath": "3,HTML,1,BODY,7,DIV,3,svg,0,title",
+      "selector": "body > div > svg.social-facebook > title#social-facebook-5",
+      "boundingRect": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "width": 0,
+        "height": 0
+      },
+      "snippet": "<title id=\"social-facebook-5\">",
+      "nodeLabel": "title"
     },
     "width": {
-      "max": 29,
-      "pathToElement": [
-        "html",
-        "body"
-      ],
-      "snippet": "<body>"
+      "max": 100,
+      "devtoolsNodePath": "3,HTML,1,BODY,4,DIV,a,#document-fragment",
+      "selector": "body > div#shadow-root-container",
+      "boundingRect": {
+        "top": 316,
+        "bottom": 316,
+        "left": 8,
+        "right": 352,
+        "width": 344,
+        "height": 0
+      },
+      "snippet": "<div id=\"shadow-root-container\">",
+      "nodeLabel": "div"
     },
-    "totalBodyElements": 31
+    "totalBodyElements": 148
   },
   "Stacks": [
     {
