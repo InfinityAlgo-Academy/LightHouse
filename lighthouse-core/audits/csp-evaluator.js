@@ -47,13 +47,24 @@ class CSPEvaluator extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
+    const rawCsp = artifacts.Csp;
+    if (!rawCsp) {
+      return {
+        score: 0,
+        notApplicable: false,
+        displayValue: 'Does not have CSP',
+      };
+    }
     const parser = new csp.CspParser(artifacts.Csp);
     const evaluator = new csp.CspEvaluator(parser.csp, csp.Version.CSP3);
-    const results = evaluator.evaluate();
+    const results = [{description: rawCsp}, ...evaluator.evaluate()];
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'description', itemType: 'text', text: str_(i18n.UIStrings.columnName)},
+      {key: 'directive', itemType: 'code', text: 'Directive'},
+      {key: 'value', itemType: 'code', text: 'Value'},
+      {key: 'description', itemType: 'text', text: 'Description'},
+      {key: 'severity', itemType: 'text', text: 'Severity'},
       /* eslint-enable max-len */
     ];
     const details = Audit.makeTableDetails(headings, results);
