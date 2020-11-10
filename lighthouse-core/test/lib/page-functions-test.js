@@ -13,11 +13,12 @@ const pageFunctions = require('../../lib/page-functions.js');
 /* eslint-env jest */
 
 describe('createEvalCode', () => {
-  it('iffe basic', () => {
+  it('iife basic', () => {
     function mainFn() {
       return true;
     }
     const code = pageFunctions.createEvalCode(mainFn, {
+      args: [],
       mode: 'iife',
     });
     expect(code).toMatchInlineSnapshot(`
@@ -32,7 +33,7 @@ describe('createEvalCode', () => {
     expect(eval(code)).toEqual(true);
   });
 
-  it('iffe complex', () => {
+  it('iife complex', () => {
     function mainFn({a, b}, passThru) {
       return {a: abs(a), b: square(b), passThru};
     }
@@ -94,6 +95,7 @@ describe('createEvalCode', () => {
             return mainFn.call(this, 1,2);
           }"
     `);
+    expect(eval(`(${code})()`)).toEqual(3);
   });
 });
 
