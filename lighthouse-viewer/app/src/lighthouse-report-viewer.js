@@ -178,6 +178,10 @@ class LighthouseReportViewer {
     if ('lhr' in json) {
       json = /** @type {LH.RunnerResult} */ (json).lhr;
     }
+    // Allow users to drop in PSI's json
+    if ('lighthouseResult' in json) {
+      json = /** @type {{lighthouseResult: LH.Result}} */ (json).lighthouseResult;
+    }
 
     // Install as global for easier debugging
     // @ts-expect-error
