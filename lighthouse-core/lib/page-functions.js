@@ -21,7 +21,7 @@
  * value. `deps` are functions that must be defined for `mainFn` to work.
  */
 function createEvalCode(mainFn, {mode, args, deps} = {}) {
-  const argsSerialized = args.map(arg => JSON.stringify(arg)).join(',');
+  const argsSerialized = args ? args.map(arg => JSON.stringify(arg)).join(',') : '';
   const depsSerialized = deps ? deps.join('\n') : '';
 
   if (!mode || mode === 'iife') {

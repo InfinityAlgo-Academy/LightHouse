@@ -6,10 +6,13 @@
 'use strict';
 
 const Gatherer = require('./gatherer.js');
-const {getElementsInDocument} = require('../../lib/page-functions.js');
+const pageFunctions = require('../../lib/page-functions.js');
+
+/* global getElementsInDocument */
 
 /* istanbul ignore next */
 function collectMetaElements() {
+  // @ts-expect-error - getElementsInDocument put into scope via stringification
   const metas = /** @type {HTMLMetaElement[]} */ (getElementsInDocument('head meta'));
   return metas.map(meta => {
     /** @param {string} name */
@@ -40,7 +43,7 @@ class MetaElements extends Gatherer {
     // the values like access from JavaScript does.
     return driver.evaluate(collectMetaElements, {
       useIsolation: true,
-      deps: [getElementsInDocument],
+      deps: [pageFunctions.getElementsInDocument],
     });
   }
 }

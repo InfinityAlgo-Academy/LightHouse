@@ -445,7 +445,7 @@ class Driver {
    * Returns a promise that resolves on the expression's value.
    * @template T
    * @param {string} expression
-   * @param {{useIsolation?: boolean, args?: T[], deps?: Array<Function|string>}=} options
+   * @param {{useIsolation?: boolean}=} options
    * @return {Promise<*>}
    */
   async evaluateAsync(expression, options = {}) {

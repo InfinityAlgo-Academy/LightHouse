@@ -18,7 +18,6 @@ describe('createEvalCode', () => {
       return true;
     }
     const code = pageFunctions.createEvalCode(mainFn, {
-      args: [],
       mode: 'iife',
     });
     expect(code).toMatchInlineSnapshot(`
