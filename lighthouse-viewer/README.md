@@ -8,8 +8,10 @@ Run the following in the root folder of a Lighthouse checkout:
 
 * `yarn`
 * `yarn build-viewer`
+* `yarn serve-gh-pages`
+* `open http://localhost:8000/viewer/`
 
-This compiles and minifies `app/src/main.js`. Results are written to `dist/viewer/`.
+This compiles and minifies `app/src/main.js`. Results are written to `dist/gh-pages/viewer/`.
 
 ## Deploy
 

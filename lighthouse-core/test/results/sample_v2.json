@@ -3600,9 +3600,9 @@
       "description": "A large DOM will increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://web.dev/dom-size/).",
       "score": 1,
       "scoreDisplayMode": "numeric",
-      "numericValue": 31,
+      "numericValue": 148,
       "numericUnit": "element",
-      "displayValue": "31 elements",
+      "displayValue": "148 elements",
       "details": {
         "type": "table",
         "headings": [
@@ -3612,8 +3612,8 @@
             "text": "Statistic"
           },
           {
-            "key": "element",
-            "itemType": "code",
+            "key": "node",
+            "itemType": "node",
             "text": "Element"
           },
           {
@@ -3625,24 +3625,29 @@
         "items": [
           {
             "statistic": "Total DOM Elements",
-            "element": "",
-            "value": 31
+            "value": 148
           },
           {
+            "node": {
+              "type": "node",
+              "path": "3,HTML,1,BODY,7,DIV,3,svg,0,title",
+              "snippet": "<title id=\"social-facebook-5\">",
+              "selector": "body > div > svg.social-facebook > title#social-facebook-5",
+              "nodeLabel": "title"
+            },
             "statistic": "Maximum DOM Depth",
-            "element": {
-              "type": "code",
-              "value": "<h2>"
-            },
-            "value": 3
+            "value": 4
           },
           {
-            "statistic": "Maximum Child Elements",
-            "element": {
-              "type": "code",
-              "value": "<body>"
+            "node": {
+              "type": "node",
+              "path": "3,HTML,1,BODY,4,DIV,a,#document-fragment",
+              "snippet": "<div id=\"shadow-root-container\">",
+              "selector": "body > div#shadow-root-container",
+              "nodeLabel": "div"
             },
-            "value": 29
+            "statistic": "Maximum Child Elements",
+            "value": 100
           }
         ]
       }
@@ -7671,7 +7676,7 @@
       "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": [
         {
           "values": {
-            "itemCount": 31
+            "itemCount": 148
           },
           "path": "audits[dom-size].displayValue"
         }

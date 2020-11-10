@@ -14,7 +14,7 @@ const puppeteer = require('../../node_modules/puppeteer/index.js');
 
 const {server} = require('../../lighthouse-cli/test/fixtures/static-server.js');
 const portNumber = 10200;
-const viewerUrl = `http://localhost:${portNumber}/dist/viewer/index.html`;
+const viewerUrl = `http://localhost:${portNumber}/dist/gh-pages/viewer/index.html`;
 const sampleLhr = __dirname + '/../../lighthouse-core/test/results/sample_v2.json';
 
 const defaultConfig =
