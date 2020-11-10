@@ -8,7 +8,7 @@
 const Gatherer = require('./gatherer.js');
 const pageFunctions = require('../../lib/page-functions.js');
 
-/* global getElementsInDocument */
+/* globals getElementsInDocument */
 
 /* istanbul ignore next */
 function collectMetaElements() {

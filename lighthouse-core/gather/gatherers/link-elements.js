@@ -9,7 +9,7 @@ const LinkHeader = require('http-link-header');
 const Gatherer = require('./gatherer.js');
 const {URL} = require('../../lib/url-shim.js');
 const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
-const {getElementsInDocument, getNodeDetailsString} = require('../../lib/page-functions.js');
+const pageFunctions = require('../../lib/page-functions.js');
 
 /* globals HTMLLinkElement getNodeDetails */
 
@@ -49,6 +49,7 @@ function getCrossoriginFromHeader(value) {
 /* istanbul ignore next */
 function getLinkElementsInDOM() {
   /** @type {Array<HTMLOrSVGElement>} */
+  // @ts-expect-error - getElementsInDocument put into scope via stringification
   const browserElements = getElementsInDocument('link'); // eslint-disable-line no-undef
   /** @type {LH.Artifacts['LinkElements']} */
   const linkElements = [];
@@ -88,8 +89,8 @@ class LinkElements extends Gatherer {
     return passContext.driver.evaluate(getLinkElementsInDOM, {
       useIsolation: true,
       deps: [
-        getNodeDetailsString,
-        getElementsInDocument,
+        pageFunctions.getNodeDetailsString,
+        pageFunctions.getElementsInDocument,
       ],
     });
   }
