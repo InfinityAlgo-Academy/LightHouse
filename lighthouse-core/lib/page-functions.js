@@ -90,6 +90,7 @@ function registerPerformanceObserverInPage() {
 
 /**
  * Used by _waitForCPUIdle and executed in the context of the page, returns time since last long task.
+ * @return {number}
  */
 /* istanbul ignore next */
 function checkTimeSinceLastLongTask() {
@@ -498,7 +499,7 @@ module.exports = {
   createEvalCode,
   wrapRuntimeEvalErrorInBrowserString: wrapRuntimeEvalErrorInBrowser.toString(),
   registerPerformanceObserverInPageString: registerPerformanceObserverInPage.toString(),
-  checkTimeSinceLastLongTaskString: checkTimeSinceLastLongTask.toString(),
+  checkTimeSinceLastLongTask,
   getElementsInDocument,
   getElementsInDocumentString: getElementsInDocument.toString(),
   getOuterHTMLSnippetString: getOuterHTMLSnippet.toString(),

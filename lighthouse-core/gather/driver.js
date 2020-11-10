@@ -853,7 +853,6 @@ class Driver {
     let lastTimeout;
     let canceled = false;
 
-    const checkForQuietExpression = `(${pageFunctions.checkTimeSinceLastLongTaskString})()`;
     /**
      * @param {Driver} driver
      * @param {() => void} resolve
@@ -861,7 +860,7 @@ class Driver {
      */
     async function checkForQuiet(driver, resolve) {
       if (canceled) return;
-      const timeSinceLongTask = await driver.evaluateAsync(checkForQuietExpression);
+      const timeSinceLongTask = await driver.evaluate(pageFunctions.checkTimeSinceLastLongTask);
       if (canceled) return;
 
       if (typeof timeSinceLongTask === 'number') {
