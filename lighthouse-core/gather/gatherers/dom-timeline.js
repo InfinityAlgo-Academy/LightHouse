@@ -14,30 +14,26 @@ const TraceProcessor = require('../../lib/tracehouse/trace-processor.js');
 
 
 function setupObserver() {
-  // @ts-expect-error ___observedIframes does not exist on window by default
-  window.___observedIframes = [];
+  // @ts-expect-error TS doesn't know PerformanceTimeline types
+  window.___timeAlignTs = performance.mark('lh_timealign').startTime;
+  
+  // @ts-expect-error ___domTimestamps does not exist on window by default
+  window.___domTimestamps = [];
   // @ts-expect-error ___observer does not exist on window by default
   window.___observer = new MutationObserver((records) => {
-    performance.mark('lh_timealign');
     for (const record of records) {
       if (record.type !== 'childList') return;
       const addedNodes = Array.from(record.addedNodes || []);
       if (!addedNodes || !addedNodes.some(node => node.nodeName === 'IFRAME')) return;
       for (const node of addedNodes) {
         if (node.nodeName !== 'IFRAME') continue;
-        const currTime = performance.now();
         // TODO: verify that Iframe src is of an ad network / ignore non-ad iframes
-        //performance.mark('lh_timealign');
-        //const markPageTs = performance.getEntriesByName('lh_timealign');
-        //performance.clearMarks()
-        //const temp = markPageTs[0].startTime;
         // Working with nodes, getNodeDetails uses elements, similar work in trace-elements.js
         // TODO: does this change things?
         const elem = node.nodeType === node.ELEMENT_NODE ? node : node.parentElement; 
-        // @ts-expect-error ___observedIframes does not exist on window by default
-        window.___observedIframes.push({
-          time: currTime,
-          currTime,
+        // @ts-expect-error ___domTimestamps does not exist on window by default
+        window.___domTimestamps.push({
+          currTime: performance.now(),
           element: elem,
           // @ts-ignore
           ...getNodeDetails(node),
@@ -51,13 +47,17 @@ function setupObserver() {
 }
 
 /**
- * //@return {Array<LH.Artifacts.DOMTimestamp>}
+ * @return {{domTimestamps: Array<LH.Artifacts.DOMTimestamp>, timeAlignTs: number}}
  */
-function getDOMTimestamps() {
+function getDomDetails() {
   // @ts-expect-error ___observer does not exist on window by default
   window.___observer.disconnect();
-  // @ts-expect-error ___observedIframes does not exist on window by default
-  return window.___observedIframes;
+  return {
+    // @ts-expect-error ___domTimestamps does not exist on window by default
+    domTimestamps: window.___domTimestamps, 
+    // @ts-expect-error ___timeAlignTs does not exist on window by default
+    timeAlignTs: window.___timeAlignTs,
+  };
 }
 
 class DOMTimeline extends Gatherer {
@@ -87,17 +87,13 @@ class DOMTimeline extends Gatherer {
 
     const layoutEvents =
       TraceProcessor.computeTraceOfTab(loadData.trace).layoutShiftTimelineEvents;
-      // TODO: In microseconds! convert to ms
-      const originEvt =
-      TraceProcessor.computeTraceOfTab(loadData.trace).timestamps.timeOrigin/1000;
 
     const expression = `(() => {
-      return (${getDOMTimestamps.toString()})();
+      return (${getDomDetails.toString()})();
     })()`;
 
-    const timestamps = await driver.evaluateAsync(expression);
-
-    return {timestamps, layoutEvents, originEvt};
+    const {domTimestamps, timeAlignTs} = await driver.evaluateAsync(expression);
+    return {domTimestamps, layoutEvents, timeAlignTs};
   }
 }
 
