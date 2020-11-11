@@ -18,33 +18,25 @@ function setupObserver() {
   window.___observedIframes = [];
   // @ts-expect-error ___observer does not exist on window by default
   window.___observer = new MutationObserver((records) => {
-    const currTime = performance.now();
-    // performance.mark('lh_timealign');
-    // const markPageTs = performance.getEntriesByName('lh_timealign');
-    // performance.clearMarks()
-    // const temp = markPageTs[0].startTime;
-    //const temp2 = markPageTs[0].duration;
+    performance.mark('lh_timealign');
     for (const record of records) {
       if (record.type !== 'childList') return;
       const addedNodes = Array.from(record.addedNodes || []);
       if (!addedNodes || !addedNodes.some(node => node.nodeName === 'IFRAME')) return;
       for (const node of addedNodes) {
         if (node.nodeName !== 'IFRAME') continue;
+        const currTime = performance.now();
         // TODO: verify that Iframe src is of an ad network / ignore non-ad iframes
         //performance.mark('lh_timealign');
         //const markPageTs = performance.getEntriesByName('lh_timealign');
         //performance.clearMarks()
         //const temp = markPageTs[0].startTime;
-        performance.mark('lh_timealign');
-        const markPageTs = performance.getEntriesByName('lh_timealign');
-        performance.clearMarks()
-        const temp = markPageTs[0].startTime;
         // Working with nodes, getNodeDetails uses elements, similar work in trace-elements.js
         // TODO: does this change things?
         const elem = node.nodeType === node.ELEMENT_NODE ? node : node.parentElement; 
         // @ts-expect-error ___observedIframes does not exist on window by default
         window.___observedIframes.push({
-          time: temp,
+          time: currTime,
           currTime,
           element: elem,
           // @ts-ignore
@@ -95,6 +87,9 @@ class DOMTimeline extends Gatherer {
 
     const layoutEvents =
       TraceProcessor.computeTraceOfTab(loadData.trace).layoutShiftTimelineEvents;
+      // TODO: In microseconds! convert to ms
+      const originEvt =
+      TraceProcessor.computeTraceOfTab(loadData.trace).timestamps.timeOrigin/1000;
 
     const expression = `(() => {
       return (${getDOMTimestamps.toString()})();
@@ -102,7 +97,7 @@ class DOMTimeline extends Gatherer {
 
     const timestamps = await driver.evaluateAsync(expression);
 
-    return {timestamps, layoutEvents};
+    return {timestamps, layoutEvents, originEvt};
   }
 }
 

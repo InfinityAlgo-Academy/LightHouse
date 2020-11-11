@@ -92,10 +92,10 @@ class PreloadFontsAudit extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const {timestamps, layoutEvents} = artifacts.DOMTimeline;
+    const {timestamps, layoutEvents, originEvt} = artifacts.DOMTimeline;
     const windows = getLayoutShiftWindows(layoutEvents);
     //console.log("timestamps: ", timestamps, " ", timestamps.length);
-    //console.log("window stamps: ", windows, " ", windows.length);
+    console.log("window stamps: ", windows, " ", windows.length);
     console.log("number of iframe timestamps: ", timestamps.length);
     console.log("number of CLS windows: ", windows.length);
     //console.log("iframes: ", timestamps);
@@ -110,6 +110,10 @@ class PreloadFontsAudit extends Audit {
       console.log("getting user timings?? ", userTimings.length);
       // can we assume that timing in client will always be <= timing on trace ?
       // are assuming that first item in userTimings / smallest will be the one we want
+      // Based on Tab start
+      console.log("start of observer: ", userTimings[0].startTime);
+      // Based on system start
+      console.log("origin evt time: ", originEvt);
       timingNormalization = (userTimings[0].startTime - timestamps[0].time);
       //console.log("user timings: ", userTimings[0].startTime, ", timestamps: ", timestamps[0].time);
       //console.log("end user timings: ", userTimings[userTimings.length -1].startTime, ", end timestamps: ", timestamps[timestamps.length-1].time);

@@ -175,6 +175,9 @@ Object {
       "path": "valid-source-maps",
     },
     Object {
+      "path": "injected-iframes",
+    },
+    Object {
       "path": "manual/pwa-cross-browser",
     },
     Object {
@@ -1034,6 +1037,16 @@ Object {
           "weight": 0,
         },
         Object {
+          "group": "diagnostics",
+          "id": "large-javascript-libraries",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "injected-iframes",
+          "weight": 0,
+        },
+        Object {
           "id": "network-requests",
           "weight": 0,
         },
@@ -1341,6 +1354,9 @@ Object {
         },
         Object {
           "path": "console-messages",
+        },
+        Object {
+          "path": "dom-timeline",
         },
         Object {
           "path": "anchor-elements",
