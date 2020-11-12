@@ -27,7 +27,7 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
  */
 function getLayoutShiftWindows(layoutEvents) {
   /**@type {Array<LH.Artifacts.DOMWindow>} */
-  const windows = [];
+  const shiftWindows = [];
   // filter layout events to SSR, ULTs, layoutshifts 
   // then just look at timing
 
@@ -59,7 +59,7 @@ function getLayoutShiftWindows(layoutEvents) {
               // shift is within ULT
               if (layoutShiftStart >= ULTStart && layoutShiftStart <= ULTEnd) {
                 // If the iframe injection is somewhere between this - yes
-                windows.push({start: SSRStart, end: ULTEnd});
+                shiftWindows.push({start: SSRStart, end: ULTEnd});
               }
             }
           }
@@ -67,7 +67,7 @@ function getLayoutShiftWindows(layoutEvents) {
       }
     }
   }
-  return windows;
+  return shiftWindows;
 }
 
 class PreloadFontsAudit extends Audit {
@@ -92,40 +92,46 @@ class PreloadFontsAudit extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const {timestamps, layoutEvents, originEvt} = artifacts.DOMTimeline;
-    const windows = getLayoutShiftWindows(layoutEvents);
+    const {domTimestamps, layoutEvents} = artifacts.DOMTimeline;
+    const timeAlignClientTs = artifacts.DOMTimeline.timeAlignTs
+    const shiftWindows = getLayoutShiftWindows(layoutEvents);
     //console.log("timestamps: ", timestamps, " ", timestamps.length);
-    console.log("window stamps: ", windows, " ", windows.length);
-    console.log("number of iframe timestamps: ", timestamps.length);
-    console.log("number of CLS windows: ", windows.length);
-    //console.log("iframes: ", timestamps);
+    console.log("window stamps: ", shiftWindows, " ", shiftWindows.length);
+    console.log("number of iframe timestamps: ", domTimestamps.length);
+    console.log("number of CLS windows: ", shiftWindows.length);
+    //console.log("iframes: ", domTimestamps);
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     let iframeResults = new Map();
     // console.log(" trace: ", trace);
+
+    // Difference of getTiming-normalized trace event time to clientside perf.now time
     let timingNormalization = 0;
-    // TODO: await this?
-    /** might not need this */
-    ComputedUserTimings.request(trace, context).then(computedUserTimings => {
-      const userTimings = computedUserTimings.filter(timing => timing.name === 'lh_timealign');
-      console.log("getting user timings?? ", userTimings.length);
+
+    timingNormalization = await ComputedUserTimings.request(trace, context).then(computedUserTimings => {
+      const timeAlignTimings = computedUserTimings.filter(timing => timing.name === 'lh_timealign');
+      console.log("getting user timings?? ", timeAlignTimings.length);
+      // TODO: handle if we have 0 timeAlignTimings
+
+      // timeAlignNormalizedTraceTs have already been baselined against trace's timeOrigin and converted to milliseconds (see computed/user-timings)
+      //   This adjustment is identical to traceprocessor's getTiming
+      // whereas timeAlignClientTs times are clientside perf.now timestamps
+      const timeAlignNormalizedTraceTs = timeAlignTimings[0].startTime;
       // can we assume that timing in client will always be <= timing on trace ?
-      // are assuming that first item in userTimings / smallest will be the one we want
-      // Based on Tab start
-      console.log("start of observer: ", userTimings[0].startTime);
-      // Based on system start
-      console.log("origin evt time: ", originEvt);
-      timingNormalization = (userTimings[0].startTime - timestamps[0].time);
-      //console.log("user timings: ", userTimings[0].startTime, ", timestamps: ", timestamps[0].time);
-      //console.log("end user timings: ", userTimings[userTimings.length -1].startTime, ", end timestamps: ", timestamps[timestamps.length-1].time);
-      //console.log("how many userTimings? ", userTimings.length, " how many timestamps: ", timestamps.length);
+      // are assuming that first item in timeAlignTimings / smallest will be the one we want
+      console.log({timeAlignNormalizedTraceTs, timeAlignClientTs});
+      timingNormalization = (timeAlignNormalizedTraceTs - timeAlignClientTs);
+      return timingNormalization;
     });
     
     const results = [];
-    for (const timestamp of timestamps) {
+    for (const timestamp of domTimestamps) {
       //const time = timestamp.time + timingNormalization;
       //console.log("is node type element node? ", typeof timestamp.element);
-      const time = timestamp.time;
-      for (const window of windows) {
+      const clientTs = timestamp.currTime;
+
+      // time is a NormalizedTraceTs, as described above.
+      const time = clientTs + timingNormalization;
+      for (const window of shiftWindows) {
         // if iframe timestamp is within a CLS window timeframe, it is considered to contribute to CLS
         if (time > window.start && time < window.end) {
           // Make sure an iframe is only added once to results
@@ -158,7 +164,7 @@ class PreloadFontsAudit extends Audit {
     return {
       score: results.length > 0 ? 0 : 1,
       details: Audit.makeTableDetails(headings, results),
-      notApplicable: timestamps.length === 0,
+      notApplicable: domTimestamps.length === 0,
     };
   }
 }

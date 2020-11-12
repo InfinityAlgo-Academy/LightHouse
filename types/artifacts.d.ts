@@ -212,7 +212,7 @@ declare global {
       }
 
       export interface DOMTimestamp {
-        time: number;
+        currTime: number;
         element: Element;
         /** Path that uniquely identifies the node in the DOM */
         devtoolsNodePath: string;

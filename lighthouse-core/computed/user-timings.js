@@ -69,6 +69,7 @@ class UserTimings {
 
     // baseline the timestamps against the timeOrigin, and translate to milliseconds
     userTimings.forEach(ut => {
+      // TODO: use traceprocessor's getTiming (somehow) instead
       ut.startTime = (ut.startTime - traceOfTab.timeOriginEvt.ts) / 1000;
       if (!ut.isMark) {
         ut.endTime = (ut.endTime - traceOfTab.timeOriginEvt.ts) / 1000;
