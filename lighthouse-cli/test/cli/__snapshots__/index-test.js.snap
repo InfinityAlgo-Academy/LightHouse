@@ -175,6 +175,9 @@ Object {
       "path": "valid-source-maps",
     },
     Object {
+      "path": "preload-lcp-image",
+    },
+    Object {
       "path": "manual/pwa-cross-browser",
     },
     Object {
@@ -936,6 +939,11 @@ Object {
         Object {
           "group": "load-opportunities",
           "id": "legacy-javascript",
+          "weight": 0,
+        },
+        Object {
+          "group": "load-opportunities",
+          "id": "preload-lcp-image",
           "weight": 0,
         },
         Object {

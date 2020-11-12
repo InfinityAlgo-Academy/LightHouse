@@ -2071,6 +2071,22 @@
         "items": []
       }
     },
+    "preload-lcp-image": {
+      "id": "preload-lcp-image",
+      "title": "Preload Largest Contentful Paint image",
+      "description": "Preload the image used by the LCP element in order to improve your LCP time. [Learn more](https://web.dev/optimize-lcp/#preload-important-resources).",
+      "score": 1,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 0,
+      "numericUnit": "millisecond",
+      "displayValue": "",
+      "details": {
+        "type": "opportunity",
+        "headings": [],
+        "items": [],
+        "overallSavingsMs": 0
+      }
+    },
     "pwa-cross-browser": {
       "id": "pwa-cross-browser",
       "title": "Site works cross-browser",
@@ -4573,6 +4589,11 @@
           "group": "load-opportunities"
         },
         {
+          "id": "preload-lcp-image",
+          "weight": 0,
+          "group": "load-opportunities"
+        },
+        {
           "id": "total-byte-weight",
           "weight": 0,
           "group": "diagnostics"
@@ -5869,6 +5890,24 @@
       {
         "startTime": 0,
         "name": "lh:audit:valid-source-maps",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:preload-lcp-image",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:LanternLargestContentfulPaint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:LanternFirstContentfulPaint",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7223,6 +7262,12 @@
       ],
       "lighthouse-core/audits/valid-source-maps.js | description": [
         "audits[valid-source-maps].description"
+      ],
+      "lighthouse-core/audits/preload-lcp-image.js | title": [
+        "audits[preload-lcp-image].title"
+      ],
+      "lighthouse-core/audits/preload-lcp-image.js | description": [
+        "audits[preload-lcp-image].description"
       ],
       "lighthouse-core/audits/manual/pwa-cross-browser.js | title": [
         "audits[pwa-cross-browser].title"
