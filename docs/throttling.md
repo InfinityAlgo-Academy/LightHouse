@@ -10,7 +10,9 @@ This is the standard recommendation for mobile throttling:
 - Throughput: 1.6Mbps down / 750 Kbps up.
 - Packet loss: none.
 
-These exact figures are used as [Lighthouse's throttling default](https://github.com/GoogleChrome/lighthouse/blob/8f500e00243e07ef0a80b39334bedcc8ddc8d3d0/lighthouse-core/config/constants.js#L19-L26) and represent roughly the bottom 25% of 4G connections and top 25% of 3G connections (In Lighthouse it is sometimes called "Slow 4G" used to be labeled as "Fast 3G"). This preset is identical to the [WebPageTest's "Mobile 3G - Fast"](https://github.com/WPO-Foundation/webpagetest/blob/master/www/settings/connectivity.ini.sample) and, due to a lower latency, slightly faster for some pages than the [WebPageTest "4G" preset](https://github.com/WPO-Foundation/webpagetest/blob/master/www/settings/connectivity.ini.sample).
+These exact figures are [defined in the Lighthouse configuration](https://github.com/GoogleChrome/lighthouse/blob/v6.4.1/lighthouse-core/config/constants.js#L22-L29) and used as [Lighthouse's throttling default](https://github.com/GoogleChrome/lighthouse/blob/v6.4.1/lighthouse-core/config/constants.js#L59).
+They represent roughly the bottom 25% of 4G connections and top 25% of 3G connections (in Lighthouse this configuration is currently called "Slow 4G" but used to be labeled as "Fast 3G").
+This preset is identical to the [WebPageTest's "Mobile 3G - Fast"](https://github.com/WPO-Foundation/webpagetest/blob/master/www/settings/connectivity.ini.sample) and, due to a lower latency, slightly faster for some pages than the [WebPageTest "4G" preset](https://github.com/WPO-Foundation/webpagetest/blob/master/www/settings/connectivity.ini.sample).
 
 ## Types of network throttling
 
