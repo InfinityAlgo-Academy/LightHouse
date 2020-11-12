@@ -105,7 +105,7 @@ declare global {
       /** Information on the size of all DOM nodes in the page and the most extreme members. */
       DOMStats: Artifacts.DOMStats;
       /** Timestamps of injected iframes into the DOM & layout shift timing windows according to the trace. */
-      DOMTimeline: {domTimestamps: Artifacts.DOMTimestamp[], layoutEvents: LH.Artifacts.TraceOfTab['layoutShiftTimelineEvents'], timeAlignTs: number};
+      DOMTimeline: {domTimestamps: Artifacts.DOMTimestamp[], timeAlignTs: number};
       /** Relevant attributes and child properties of all <object>s, <embed>s and <applet>s in the page. */
       EmbeddedContent: Artifacts.EmbeddedContentInfo[];
       /** Information for font faces used in the page. */
@@ -648,8 +648,6 @@ declare global {
         fmpFellBack: boolean;
         /** Whether LCP was invalidated without a new candidate. */
         lcpInvalidated: boolean;
-        /** A timeline of UpdateLayerTree & LayoutShift events. */
-        layoutShiftTimelineEvents: Array<{event: TraceEvent, timing: number, duration: number}>
       }
 
       /** Information on a tech stack (e.g. a JS library) used by the page. */

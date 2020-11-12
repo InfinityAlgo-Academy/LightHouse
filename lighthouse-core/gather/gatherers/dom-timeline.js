@@ -73,7 +73,6 @@ class DOMTimeline extends Gatherer {
     return passContext.driver.evaluateScriptOnNewDocument(expression);
   }
 
-
   /**
    * @param {LH.Gatherer.PassContext} passContext
    * @param {LH.Gatherer.LoadData} loadData
@@ -85,15 +84,12 @@ class DOMTimeline extends Gatherer {
       throw new Error('Trace is missing!');
     }
 
-    const layoutEvents =
-      TraceProcessor.computeTraceOfTab(loadData.trace).layoutShiftTimelineEvents;
-
     const expression = `(() => {
       return (${getDomDetails.toString()})();
     })()`;
 
     const {domTimestamps, timeAlignTs} = await driver.evaluateAsync(expression);
-    return {domTimestamps, layoutEvents, timeAlignTs};
+    return {domTimestamps, timeAlignTs};
   }
 }
 

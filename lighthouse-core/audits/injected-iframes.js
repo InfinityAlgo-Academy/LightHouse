@@ -9,56 +9,59 @@
 const Audit = require('./audit.js');
 const i18n = require('./../lib/i18n/i18n.js');
 const ComputedUserTimings = require('../computed/user-timings.js');
+const TraceProcessor = require('../lib/tracehouse/trace-processor.js');
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides a potential cause of CLS. This descriptive title is shown to users when no iframe is injected in a time window before a LayoutShift event. */
-  title: 'Injected Iframes likely didn\'t contribute to CLS',
+  title: 'Injected iframes likely didn\'t contribute to CLS',
   /** Title of a Lighthouse audit that provides a potential cause of CLS. This descriptive title is shown to users when an iframe is injected in a time window before a LayoutShift event. */
-  failureTitle: 'Injected Iframes potentially contributed to CLS',
+  failureTitle: 'Injected iframes potentially contributed to CLS',
+  /** Label for a column in a data table; entries will be the timestamp in milliseconds an event occurs. */
+  columnTimestamp: 'Timestamp',
+  /** Label for audit identifying the number of iframes likely affecting the page. */
+  displayValue: `{itemCount, plural,
+    =1 {1 iframe}
+    other {# iframes}
+    }`,
   /** Description of a Lighthouse audit that tells the user potential causes of CLS. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  description: 'Injecting an Iframe with a correctly sized container can reduce layout shifting and improve CLS. [Learn More](https://web.dev/optimize-cls/#ads-embeds-and-iframes-without-dimensions)',
+  description: 'Injecting an iframe with a correctly sized container can reduce layout shifting and improve CLS. [Learn More](https://web.dev/optimize-cls/#ads-embeds-and-iframes-without-dimensions)',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 /**
- * @param {LH.Artifacts.TraceOfTab['layoutShiftTimelineEvents']} layoutEvents
+ * LayoutShift timing windows are determined by trace events. We consider a timing window to be 
+ * between a ScheduleStyleRecalculation event and the end of its possibly corresponding UpdateLayerTree event.
+ * We assume that an UpdateLayerTree event belongs to a ScheduleStyleRecalculation event if it occurs within
+ * 20ms. This window is then determined to be a "layoutShiftWindow", if a LayoutShift event occurs
+ * within a time frame of this UpdateLayerTree event.
+ * @param {{ event: LH.TraceEvent; timing: any; duration: number; }[]} layoutEvents
  * @return {Array<LH.Artifacts.DOMWindow>}
  */
 function getLayoutShiftWindows(layoutEvents) {
   /**@type {Array<LH.Artifacts.DOMWindow>} */
   const shiftWindows = [];
-  // filter layout events to SSR, ULTs, layoutshifts 
-  // then just look at timing
 
   // TODO: use a map for this ?
   for (let i = 0; i < layoutEvents.length; i++) {
     const event = layoutEvents[i].event;
     const SSRStart = layoutEvents[i].timing;
     const SSREnd = SSRStart + layoutEvents[i].duration;
-    // layout shift hapens under ULT
-    // all timeline, reverse
-    // look for 
     // look for a ScheduleStyleRecalculation
     if (event.name === 'ScheduleStyleRecalculation') {
       // look for a ULT within this limit, assume that a ULT belongs to a SSR if occurs within 20ms
       const limit = SSRStart +  20;
-      // look for ULT
       for (let j = i+1; j < layoutEvents.length; j++) {
         const ULTStart = layoutEvents[j].timing;
         const ULTEnd = ULTStart + layoutEvents[j].duration;
         if (layoutEvents[j].event.name === 'UpdateLayerTree' && ULTStart >= SSRStart && ULTStart < limit) {
           // Look for ULT's layout shift if any
           for(let k = j+1; k < layoutEvents.length; k++) {
-            // if there is a layout shift within an update layer tree, it causes CLS - keep track
+            // If there is a layout shift within an update layer tree, it may cause a layout shift.
             if (layoutEvents[k].event.name === 'LayoutShift') {
-              //console.log("FOUND A LAYOUTSHIFT");
               const layoutShiftStart = layoutEvents[k].timing;
               const layoutShiftEnd = layoutShiftStart + layoutEvents[k].duration;
-              // layout shift doesn't have a duration - NaN
-              // shift is within ULT
               if (layoutShiftStart >= ULTStart && layoutShiftStart <= ULTEnd) {
-                // If the iframe injection is somewhere between this - yes
                 shiftWindows.push({start: SSRStart, end: ULTEnd});
               }
             }
@@ -68,6 +71,25 @@ function getLayoutShiftWindows(layoutEvents) {
     }
   }
   return shiftWindows;
+}
+
+/**
+   * @param {LH.Trace} trace
+   * @return {{ event: LH.TraceEvent; timing: any; duration: number; }[]}
+   */
+function getLayoutShiftTimelineEvents(trace) {
+  const timeOriginEvt = TraceProcessor.computeTraceOfTab(trace).timeOriginEvt;
+  /** @param {number} ts */
+  const getTiming = (ts) => (ts - timeOriginEvt.ts) / 1000;
+
+  const mainThreadEvents = TraceProcessor.computeTraceOfTab(trace).mainThreadEvents;
+  var layoutShiftTimelineEvents = mainThreadEvents
+      .filter(evt => (evt.cat === 'devtools.timeline' && (evt.name === 'UpdateLayerTree')
+        || evt.name === 'LayoutShift' || evt.name === 'ScheduleStyleRecalculation'))
+      .map(evt => {
+        return {event: evt, timing: getTiming(evt.ts), duration: evt.dur};
+    });
+  return layoutShiftTimelineEvents;
 }
 
 class PreloadFontsAudit extends Audit {
@@ -84,23 +106,25 @@ class PreloadFontsAudit extends Audit {
     };
   }
 
-  
-
   /**
    * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const {domTimestamps, layoutEvents} = artifacts.DOMTimeline;
+    const trace = artifacts.traces[Audit.DEFAULT_PASS];
+    const domTimestamps = artifacts.DOMTimeline.domTimestamps;
     const timeAlignClientTs = artifacts.DOMTimeline.timeAlignTs
-    const shiftWindows = getLayoutShiftWindows(layoutEvents);
+    const layoutShiftTimelineEvents = getLayoutShiftTimelineEvents(trace);
+    const shiftWindows = getLayoutShiftWindows(layoutShiftTimelineEvents);
+
+
     //console.log("timestamps: ", timestamps, " ", timestamps.length);
     console.log("window stamps: ", shiftWindows, " ", shiftWindows.length);
     console.log("number of iframe timestamps: ", domTimestamps.length);
     console.log("number of CLS windows: ", shiftWindows.length);
     //console.log("iframes: ", domTimestamps);
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
+    
     let iframeResults = new Map();
     // console.log(" trace: ", trace);
 
@@ -147,6 +171,7 @@ class PreloadFontsAudit extends Audit {
                 nodeLabel: timestamp.nodeLabel,
                 snippet: timestamp.snippet,
               }),
+              timestamp: time,
             });
           }
         }
@@ -159,10 +184,12 @@ class PreloadFontsAudit extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'node', itemType: 'node', text: str_(i18n.UIStrings.columnElement)},
+      {key: 'timestamp', itemType: 'ms', text: str_(UIStrings.columnTimestamp)},
     ];
 
     return {
       score: results.length > 0 ? 0 : 1,
+      displayValue: str_(UIStrings.displayValue, {itemCount: results.length}),
       details: Audit.makeTableDetails(headings, results),
       notApplicable: domTimestamps.length === 0,
     };
