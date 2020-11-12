@@ -164,7 +164,6 @@ const defaultConfig = {
       'trace-elements',
       'inspector-issues',
       'source-maps',
-      'csp',
     ],
   },
   {

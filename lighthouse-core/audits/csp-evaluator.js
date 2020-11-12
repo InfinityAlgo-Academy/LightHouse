@@ -6,6 +6,7 @@
 'use strict';
 
 const Audit = require('./audit.js');
+const MainResource = require('../computed/main-resource.js');
 const i18n = require('../lib/i18n/i18n.js');
 const csp = require('../../evaluator_binary.js');
 
@@ -17,16 +18,6 @@ const UIStrings = {
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
-/**
- * @fileoverview
- * Audits if a manifest contains at least one icon that is maskable
- *
- * Requirements:
- *    * manifest is not empty
- *    * manifest has valid icons
- *    * at least one of the icons has a purpose of 'maskable'
- */
-
 class CSPEvaluator extends Audit {
   /**
    * @return {LH.Audit.Meta}
@@ -37,7 +28,7 @@ class CSPEvaluator extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['Csp'],
+      requiredArtifacts: ['devtoolsLogs', 'URL'],
     };
   }
 
@@ -47,17 +38,19 @@ class CSPEvaluator extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const rawCsp = artifacts.Csp;
-    if (!rawCsp) {
+    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
+    const cspHeader = mainResource.responseHeaders.find(h => h.name === 'content-security-policy');
+    if (!cspHeader) {
       return {
         score: 0,
         notApplicable: false,
         displayValue: 'Does not have CSP',
       };
     }
-    const parser = new csp.CspParser(artifacts.Csp);
+    const parser = new csp.CspParser(cspHeader.value);
     const evaluator = new csp.CspEvaluator(parser.csp, csp.Version.CSP3);
-    const results = [{description: rawCsp}, ...evaluator.evaluate()];
+    const results = [{description: cspHeader.value}, ...evaluator.evaluate()];
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
