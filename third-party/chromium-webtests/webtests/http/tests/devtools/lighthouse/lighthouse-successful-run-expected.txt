@@ -371,14 +371,14 @@ Auditing: Latency of first ad render
 Computing artifact: AdRenderTime
 Computing artifact: LanternAdRenderTime
 Auditing: GPT and bids loaded in parallel
-Auditing: GPT tag is loaded from recommended host
+Auditing: GPT tag is loaded from an official source
 Auditing: Ad tag is loaded over HTTPS
 Auditing: Ad scripts are loaded statically
 Auditing: Header bidding is parallelized
 Auditing: Tag load time
 Computing artifact: TagLoadTime
 Computing artifact: LanternTagLoadTime
-Auditing: Ad density in initial viewport is within recommended range
+Auditing: Ad density is within recommended range
 Auditing: Cumulative ad shift
 Generating results...
 
@@ -487,7 +487,7 @@ list: notApplicable
 listitem: notApplicable
 load-fast-enough-for-pwa: flaky
 loads-ad-tag-over-https: notApplicable
-loads-gpt-from-sgdn: notApplicable
+loads-gpt-from-official-source: notApplicable
 logical-tab-order: manual
 long-tasks: flaky
 main-thread-tasks: informative
