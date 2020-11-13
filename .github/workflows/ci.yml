@@ -79,7 +79,9 @@ jobs:
         node-version: 10.x
 
     - name: Set up protoc
-      uses: arduino/setup-protoc@7ad700d
+      # TODO: switch back to arduino/setup-protoc after the pagination fix lands:
+      # https://github.com/arduino/setup-protoc/pull/9
+      uses: solo-io/setup-protoc@1f5d8b5
       with:
         version: '3.7.1'
         repo-token: ${{ secrets.GITHUB_TOKEN }}
