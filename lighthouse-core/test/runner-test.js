@@ -5,6 +5,8 @@
  */
 'use strict';
 
+jest.mock('../lib/stack-collector.js', () => () => Promise.resolve([]));
+
 const Runner = require('../runner.js');
 const GatherRunner = require('../gather/gather-runner.js');
 const driverMock = require('./gather/fake-driver.js');
@@ -20,8 +22,6 @@ const LHError = require('../lib/lh-error.js');
 const i18n = require('../lib/i18n/i18n.js');
 
 /* eslint-env jest */
-
-jest.mock('../lib/stack-collector.js', () => () => Promise.resolve([]));
 
 describe('Runner', () => {
   const defaultGatherFn = opts => Runner._gatherArtifactsFromBrowser(
