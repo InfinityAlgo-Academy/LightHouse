@@ -38,6 +38,7 @@ script:
   - yarn smoke:cicoverage
   - yarn test-clients
   - yarn test-viewer
+  - yarn test-treemap
   - yarn test-lantern
   - yarn test-bundle
   - yarn i18n:checks
