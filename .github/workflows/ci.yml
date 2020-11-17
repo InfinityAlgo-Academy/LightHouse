@@ -81,9 +81,7 @@ jobs:
         node-version: 10.x
 
     - name: Set up protoc
-      # TODO: switch back to arduino/setup-protoc after the pagination fix lands:
-      # https://github.com/arduino/setup-protoc/pull/9
-      uses: solo-io/setup-protoc@1f5d8b5
+      uses: arduino/setup-protoc@64c0c85
       with:
         version: '3.7.1'
         repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -145,7 +143,7 @@ jobs:
 
     - name: Define ToT chrome path
       if: matrix.chrome-channel == 'ToT'
-      run: echo "::set-env name=CHROME_PATH::/home/runner/chrome-linux-tot/chrome"
+      run: echo "CHROME_PATH=/home/runner/chrome-linux-tot/chrome" >> $GITHUB_ENV
 
     # Chrome Stable is already installed by default.
     - name: Install Chrome ToT
