@@ -203,7 +203,8 @@ class InstallableManifest extends Audit {
           case 'manifest-missing-suitable-icon':
             if (item.errorArguments.length !== 1 ||
               item.errorArguments[0].name !== 'minimum-icon-size-in-pixels') {
-              // TODO: What do we do about these console logs?
+              // TODO: What do we do about these devtools console logs?
+              /* eslint no-console: ["error", { allow: ["error"] }] */
               console.error('Installability error does not have the correct errorArguments');
               break;
             }
@@ -216,7 +217,8 @@ class InstallableManifest extends Audit {
           case 'no-acceptable-icon':
             if (item.errorArguments.length !== 1 ||
               item.errorArguments[0].name !== 'minimum-icon-size-in-pixels') {
-              // TODO: What do we do about these console logs?
+              // TODO: What do we do about these devtools console logs?
+              /* eslint no-console: ["error", { allow: ["error"] }] */
               console.error('Installability error does not have the correct errorArguments');
               break;
             }
