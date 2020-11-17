@@ -159,8 +159,8 @@ class PreloadFontsAudit extends Audit {
         // if iframe timestamp is within a CLS window timeframe, it is considered to contribute to CLS
         if (time > window.start && time < window.end) {
           // Make sure an iframe is only added once to results
-          const ad = "id=\"aswift_";
-          if (!iframeResults.has(timestamp.devtoolsNodePath) && timestamp.snippet.includes(ad)){
+          // const ad = "id=\"aswift_"; - to filter ads from https://github.com/monofrio/stylish_ad_removal
+          if (!iframeResults.has(timestamp.devtoolsNodePath)){
             iframeResults.set(timestamp.devtoolsNodePath, timestamp.snippet);
             //console.log("time in range, with normalization: ", time);
             results.push({
