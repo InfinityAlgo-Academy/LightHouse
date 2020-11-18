@@ -6,6 +6,7 @@
 'use strict';
 
 const Fetcher = require('./fetcher.js');
+const ExecutionContext = require('./driver/execution-context.js');
 const NetworkRecorder = require('../lib/network-recorder.js');
 const emulation = require('../lib/emulation.js');
 const LHElement = require('../lib/lh-element.js');
@@ -58,6 +59,9 @@ const DEFAULT_PROTOCOL_TIMEOUT = 30000;
  * @typedef {LH.Protocol.StrictEventEmitter<LH.CrdpEvents>} CrdpEventEmitter
  */
 
+/**
+ * @implements {LH.Gatherer.FRTransitionalDriver}
+ */
 class Driver {
   /**
    * @param {Connection} connection
@@ -74,8 +78,6 @@ class Driver {
     this.online = true;
     /** @type {Map<string, number>} */
     this._domainEnabledCounts = new Map();
-    /** @type {number|undefined} */
-    this._isolatedExecutionContextId = undefined;
 
     /**
      * Used for monitoring network status events during gotoURL.
@@ -102,15 +104,6 @@ class Driver {
       this._handleTargetAttached(event).catch(this._handleEventError);
     });
 
-    // We use isolated execution contexts for `evaluateAsync` that can be destroyed through navigation
-    // and other page actions. Cleanup our relevant bookkeeping as we see those events.
-    this.on('Runtime.executionContextDestroyed', event => {
-      if (event.executionContextId === this._isolatedExecutionContextId) {
-        this._clearIsolatedContextId();
-      }
-    });
-
-    this.on('Page.frameNavigated', () => this._clearIsolatedContextId());
     this.on('Page.frameNavigated', evt => this._monitoredUrlNavigations.push(evt.frame));
 
     connection.on('protocolevent', this._handleProtocolEvent.bind(this));
@@ -123,6 +116,8 @@ class Driver {
 
     /** @type {Fetcher} */
     this.fetcher = new Fetcher(this);
+
+    this._executionContext = new ExecutionContext(this);
   }
 
   static get traceCategories() {
@@ -294,6 +289,20 @@ class Driver {
   }
 
   /**
+   * @return {boolean}
+   */
+  hasNextProtocolTimeout() {
+    return this._nextProtocolTimeout !== DEFAULT_PROTOCOL_TIMEOUT;
+  }
+
+  /**
+   * @return {number}
+   */
+  getNextProtocolTimeout() {
+    return this._nextProtocolTimeout;
+  }
+
+  /**
    * timeout is used for the next call to 'sendCommand'.
    * NOTE: This can eventually be replaced when TypeScript
    * resolves https://github.com/Microsoft/TypeScript/issues/5453.
@@ -438,88 +447,12 @@ class Driver {
   }
 
   /**
-   * Evaluate an expression in the context of the current page. If useIsolation is true, the expression
-   * will be evaluated in a content script that has access to the page's DOM but whose JavaScript state
-   * is completely separate.
-   * Returns a promise that resolves on the expression's value.
    * @param {string} expression
    * @param {{useIsolation?: boolean}=} options
    * @return {Promise<*>}
    */
-  async evaluateAsync(expression, options = {}) {
-    const contextId = options.useIsolation ? await this._getOrCreateIsolatedContextId() : undefined;
-
-    try {
-      // `await` is not redundant here because we want to `catch` the async errors
-      return await this._evaluateInContext(expression, contextId);
-    } catch (err) {
-      // If we were using isolation and the context disappeared on us, retry one more time.
-      if (contextId && err.message.includes('Cannot find context')) {
-        this._clearIsolatedContextId();
-        const freshContextId = await this._getOrCreateIsolatedContextId();
-        return this._evaluateInContext(expression, freshContextId);
-      }
-
-      throw err;
-    }
-  }
-
-  /**
-   * Evaluate an expression in the given execution context; an undefined contextId implies the main
-   * page without isolation.
-   * @param {string} expression
-   * @param {number|undefined} contextId
-   * @return {Promise<*>}
-   */
-  async _evaluateInContext(expression, contextId) {
-    // Use a higher than default timeout if the user hasn't specified a specific timeout.
-    // Otherwise, use whatever was requested.
-    const timeout = this._nextProtocolTimeout === DEFAULT_PROTOCOL_TIMEOUT ?
-      60000 : this._nextProtocolTimeout;
-    const evaluationParams = {
-      // We need to explicitly wrap the raw expression for several purposes:
-      // 1. Ensure that the expression will be a native Promise and not a polyfill/non-Promise.
-      // 2. Ensure that errors in the expression are captured by the Promise.
-      // 3. Ensure that errors captured in the Promise are converted into plain-old JS Objects
-      //    so that they can be serialized properly b/c JSON.stringify(new Error('foo')) === '{}'
-      expression: `(function wrapInNativePromise() {
-        const __nativePromise = window.__nativePromise || Promise;
-        const URL = window.__nativeURL || window.URL;
-        return new __nativePromise(function (resolve) {
-          return __nativePromise.resolve()
-            .then(_ => ${expression})
-            .catch(${pageFunctions.wrapRuntimeEvalErrorInBrowserString})
-            .then(resolve);
-        });
-      }())`,
-      includeCommandLineAPI: true,
-      awaitPromise: true,
-      returnByValue: true,
-      timeout,
-      contextId,
-    };
-
-    this.setNextProtocolTimeout(timeout);
-    const response = await this.sendCommand('Runtime.evaluate', evaluationParams);
-    if (response.exceptionDetails) {
-      // An error occurred before we could even create a Promise, should be *very* rare.
-      // Also occurs when the expression is not valid JavaScript.
-      const errorMessage = response.exceptionDetails.exception ?
-        response.exceptionDetails.exception.description :
-        response.exceptionDetails.text;
-      return Promise.reject(new Error(`Evaluation exception: ${errorMessage}`));
-    }
-    // Protocol should always return a 'result' object, but it is sometimes undefined.  See #6026.
-    if (response.result === undefined) {
-      return Promise.reject(
-        new Error('Runtime.evaluate response did not contain a "result" object'));
-    }
-    const value = response.result.value;
-    if (value && value.__failedInBrowser) {
-      return Promise.reject(Object.assign(new Error(), value));
-    } else {
-      return value;
-    }
+  evaluateAsync(expression, options) {
+    return this._executionContext.evaluateAsync(expression, options);
   }
 
   /**
@@ -1065,33 +998,6 @@ class Driver {
   }
 
   /**
-   * Returns the cached isolated execution context ID or creates a new execution context for the main
-   * frame. The cached execution context is cleared on every gotoURL invocation, so a new one will
-   * always be created on the first call on a new page.
-   * @return {Promise<number>}
-   */
-  async _getOrCreateIsolatedContextId() {
-    if (typeof this._isolatedExecutionContextId === 'number') {
-      return this._isolatedExecutionContextId;
-    }
-
-    const resourceTreeResponse = await this.sendCommand('Page.getResourceTree');
-    const mainFrameId = resourceTreeResponse.frameTree.frame.id;
-
-    const isolatedWorldResponse = await this.sendCommand('Page.createIsolatedWorld', {
-      frameId: mainFrameId,
-      worldName: 'lighthouse_isolated_context',
-    });
-
-    this._isolatedExecutionContextId = isolatedWorldResponse.executionContextId;
-    return isolatedWorldResponse.executionContextId;
-  }
-
-  _clearIsolatedContextId() {
-    this._isolatedExecutionContextId = undefined;
-  }
-
-  /**
    * Navigate to the given URL. Direct use of this method isn't advised: if
    * the current page is already at the given URL, navigation will not occur and
    * so the returned promise will only resolve after the MAX_WAIT_FOR_FULLY_LOADED
@@ -1114,7 +1020,7 @@ class Driver {
     }
 
     await this._beginNetworkStatusMonitoring(url);
-    await this._clearIsolatedContextId();
+    await this._executionContext.clearContextId();
 
     // Enable auto-attaching to subtargets so we receive iframe information
     await this.sendCommand('Target.setAutoAttach', {
