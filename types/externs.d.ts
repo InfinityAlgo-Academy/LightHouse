@@ -270,6 +270,11 @@ declare global {
           timeDeltas?: TraceCpuProfile['timeDeltas'];
           cpuProfile?: TraceCpuProfile;
           callFrame?: Required<TraceCpuProfile>['nodes'][0]['callFrame']
+          /** Marker for each synthetic CPU profiler event for the range of _potential_ ts values. */
+          _syntheticProfilerRange?: {
+            earliestPossibleTimestamp: number
+            latestPossibleTimestamp: number
+          }
           stackTrace?: {
             url: string
           }[];
