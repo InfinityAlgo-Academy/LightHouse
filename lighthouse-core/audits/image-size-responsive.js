@@ -77,13 +77,13 @@ function isCandidate(image) {
   if (image.isCss) {
     return false;
   }
-  if (image.usesObjectFit) {
+  if (image.ObjectFit) {
     return false;
   }
-  if (image.usesPixelArtScaling) {
+  if (image.PixelArtScaling) {
     return false;
   }
-  if (image.usesSrcSetDensityDescriptor) {
+  if (image.SrcSetDensityDescriptor) {
     return false;
   }
   return true;

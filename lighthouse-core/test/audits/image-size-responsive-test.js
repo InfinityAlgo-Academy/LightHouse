@@ -112,7 +112,7 @@ describe('Images: size audit', () => {
     clientSize: [100, 100],
     naturalSize: [5, 5],
     props: {
-      usesObjectFit: true,
+      ObjectFit: 'cover',
     },
   });
 
@@ -121,7 +121,7 @@ describe('Images: size audit', () => {
     clientSize: [100, 100],
     naturalSize: [5, 5],
     props: {
-      usesPixelArtScaling: true,
+      PixelArtScaling: 'pixelated',
     },
   });
 
@@ -130,7 +130,7 @@ describe('Images: size audit', () => {
     clientSize: [100, 100],
     naturalSize: [5, 5],
     props: {
-      usesSrcSetDensityDescriptor: true,
+      SrcSetDensityDescriptor: ' 1x',
     },
   });
 

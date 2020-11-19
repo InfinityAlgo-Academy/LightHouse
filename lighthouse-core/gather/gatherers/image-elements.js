@@ -79,15 +79,15 @@ function getHTMLImages(allElements) {
       // @ts-expect-error: loading attribute not yet added to HTMLImageElement definition.
       loading: element.loading,
       resourceSize: 0, // this will get overwritten below
-      usesObjectFit: ['cover', 'contain', 'scale-down', 'none'].includes(
+      ObjectFit: ['cover', 'contain', 'scale-down', 'none'].includes(
         computedStyle.getPropertyValue('object-fit')
-      ),
-      usesPixelArtScaling: ['pixelated', 'crisp-edges'].includes(
+      ) ? computedStyle.getPropertyValue('object-fit') : '',
+      PixelArtScaling: ['pixelated', 'crisp-edges'].includes(
         computedStyle.getPropertyValue('image-rendering')
-      ),
+      ) ? computedStyle.getPropertyValue('image-rendering') : '',
       isInShadowDOM: element.getRootNode() instanceof ShadowRoot,
       // https://html.spec.whatwg.org/multipage/images.html#pixel-density-descriptor
-      usesSrcSetDensityDescriptor: / \d+(\.\d+)?x/.test(element.srcset),
+      SrcSetDensityDescriptor: / \d+(\.\d+)?x/.test(element.srcset) ? element.srcset : '',
       // @ts-expect-error - getNodeDetails put into scope via stringification
       ...getNodeDetails(element),
     };
@@ -133,11 +133,11 @@ function getCSSImages(allElements) {
       isCss: true,
       isPicture: false,
       isInShadowDOM: element.getRootNode() instanceof ShadowRoot,
-      usesObjectFit: false,
-      usesPixelArtScaling: ['pixelated', 'crisp-edges'].includes(
+      ObjectFit: '',
+      PixelArtScaling: ['pixelated', 'crisp-edges'].includes(
         style.getPropertyValue('image-rendering')
-      ),
-      usesSrcSetDensityDescriptor: false,
+      ) ? style.getPropertyValue('image-rendering') : '',
+      SrcSetDensityDescriptor: '',
       resourceSize: 0, // this will get overwritten below
       // @ts-expect-error - getNodeDetails put into scope via stringification
       ...getNodeDetails(element),
