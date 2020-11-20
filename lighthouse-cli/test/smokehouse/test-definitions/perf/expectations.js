@@ -284,8 +284,8 @@ module.exports = [
   },
   {
     lhr: {
-      requestedUrl: 'http://localhost:10200/perf/trace-elements.html?missing',
-      finalUrl: 'http://localhost:10200/perf/trace-elements.html?missing',
+      requestedUrl: 'http://localhost:10200/perf/trace-elements.html?evicted',
+      finalUrl: 'http://localhost:10200/perf/trace-elements.html?evicted',
       audits: {
         'largest-contentful-paint-element': {
           score: null,
