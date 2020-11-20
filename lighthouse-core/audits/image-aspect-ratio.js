@@ -101,8 +101,8 @@ class ImageAspectRatio extends Audit {
       return !image.isCss &&
         image.mimeType &&
         image.mimeType !== 'image/svg+xml' &&
-        image.naturalHeight > 5 &&
-        image.naturalWidth > 5 &&
+        image.naturalHeight && image.naturalHeight > 5 &&
+        image.naturalWidth && image.naturalWidth > 5 &&
         image.displayedWidth &&
         image.displayedHeight &&
         !image.ObjectFit;

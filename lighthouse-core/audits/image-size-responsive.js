@@ -97,7 +97,8 @@ function isCandidate(image) {
 function imageHasRightSize(image, DPR) {
   const [expectedWidth, expectedHeight] =
       allowedImageSize(image.displayedWidth, image.displayedHeight, DPR);
-  return image.naturalWidth >= expectedWidth && image.naturalHeight >= expectedHeight;
+  return !!image.naturalWidth && image.naturalWidth >= expectedWidth &&
+         !!image.naturalHeight && image.naturalHeight >= expectedHeight;
 }
 
 /**
@@ -113,7 +114,8 @@ function getResult(image, DPR) {
     elidedUrl: URL.elideDataURI(image.src),
     displayedSize: `${image.displayedWidth} x ${image.displayedHeight}`,
     actualSize: `${image.naturalWidth} x ${image.naturalHeight}`,
-    actualPixels: image.naturalWidth * image.naturalHeight,
+    // eslint-disable-next-line max-len
+    actualPixels: image.naturalWidth && image.naturalHeight ? image.naturalWidth * image.naturalHeight : 0,
     expectedSize: `${expectedWidth} x ${expectedHeight}`,
     expectedPixels: expectedWidth * expectedHeight,
   };

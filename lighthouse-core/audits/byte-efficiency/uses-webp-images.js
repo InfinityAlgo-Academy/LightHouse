@@ -54,7 +54,8 @@ class UsesWebPImages extends ByteEfficiencyAudit {
    * @return {number}
    */
   static estimateWebPSizeFromDimensions(imageElement) {
-    const totalPixels = imageElement.naturalWidth * imageElement.naturalHeight;
+    // eslint-disable-line max-len
+    const totalPixels = imageElement.naturalWidth && imageElement.naturalHeight ? imageElement.naturalWidth * imageElement.naturalHeight : 0;
     // See uses-optimized-images for the rationale behind our 2 byte-per-pixel baseline and
     // JPEG compression ratio of 8:1.
     // WebP usually gives ~20% additional savings on top of that, so we will use 10:1.

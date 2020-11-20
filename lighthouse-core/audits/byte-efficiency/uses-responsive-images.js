@@ -64,7 +64,8 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
     if (!usedPixels) {
       const viewportWidth = ViewportDimensions.innerWidth;
       const viewportHeight = ViewportDimensions.innerHeight * 2;
-      const imageAspectRatio = image.naturalWidth / image.naturalHeight;
+      // eslint-disable-line max-len
+      const imageAspectRatio = image.naturalWidth && image.naturalHeight ? image.naturalWidth / image.naturalHeight : 0;
       const viewportAspectRatio = viewportWidth / viewportHeight;
       let usedViewportWidth = viewportWidth;
       let usedViewportHeight = viewportHeight;
@@ -79,7 +80,8 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
     }
 
     const url = URL.elideDataURI(image.src);
-    const actualPixels = image.naturalWidth * image.naturalHeight;
+    // eslint-disable-line max-len
+    const actualPixels = image.naturalWidth && image.naturalHeight ? image.naturalWidth * image.naturalHeight : 0;
     const wastedRatio = 1 - (usedPixels / actualPixels);
     const totalBytes = image.resourceSize;
     const wastedBytes = Math.round(totalBytes * wastedRatio);
