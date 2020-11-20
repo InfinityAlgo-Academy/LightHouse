@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "స్క్రోలింగ్ పనితీరును మెరుగుపరచడానికి పాసివ్ లిజనర్‌లను వినియోగిస్తుంది"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "వివరణ"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "కన్సోల్‌లో లాగ్ చేయబడిన ఎర్రర్‌లు పరిష్కారం కాని సమస్యలను సూచిస్తాయి. నెట్‌వర్క్ అభ్యర్థన వైఫల్యాలు, ఇతర బ్రౌజర్ ఇబ్బందుల వలన అవి ఏర్పడి ఉంటాయి. [మరింత తెలుసుకోండి](https://web.dev/errors-in-console/)"
   },

@@ -319,6 +319,7 @@ const defaultConfig = {
     'dobetterweb/dom-size',
     'dobetterweb/external-anchors-use-rel-noopener',
     'dobetterweb/geolocation-on-start',
+    'dobetterweb/has-inspector-issues',
     'dobetterweb/no-document-write',
     'dobetterweb/no-vulnerable-libraries',
     'dobetterweb/js-libraries',
@@ -574,6 +575,7 @@ const defaultConfig = {
         {id: 'deprecations', weight: 1, group: 'best-practices-general'},
         {id: 'errors-in-console', weight: 1, group: 'best-practices-general'},
         {id: 'valid-source-maps', weight: 0, group: 'best-practices-general'},
+        {id: 'has-inspector-issues', weight: 1, group: 'best-practices-general'},
       ],
     },
     'seo': {

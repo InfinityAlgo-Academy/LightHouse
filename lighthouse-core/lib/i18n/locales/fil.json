@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "Gumagamit ng mga passive na listener para pahusayin ang performance sa pag-scroll"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "Paglalarawan"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "Nagsasaad ng mga hindi naresolbang problema ang mga error na naka-log sa console. Puwedeng manggaling ang mga ito sa mga hindi nagawang kahilingan sa network at iba pang alalahanin sa browser. [Matuto pa](https://web.dev/errors-in-console/)"
   },

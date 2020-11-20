@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "Користите пасивне обрађиваче да бисте побољшали учинак померања"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "Опис"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "Грешке евидентиране у конзоли указују на нерешене проблеме. Оне су резултат неуспелих мрежних захтева и других проблема у вези са прегледачем. [Сазнајте више](https://web.dev/errors-in-console/)"
   },

@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "Používa pasívne prijímače na zlepšenie posúvania"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "Popis"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "Chyby zapísané do denníka konzoly označujú nevyriešené problémy. Môžu pochádzať zo zlyhaní žiadostí siete a ďalších problémov prehliadača. [Ďalšie informácie](https://web.dev/errors-in-console/)"
   },

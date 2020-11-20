@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "Folosește ascultători pasivi pentru a îmbunătăți performanța la derulare"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "Descriere"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "Erorile înregistrate pe consolă indică probleme nerezolvate Acestea pot fi provocate de erorile de solicitare din rețea și de alte probleme ale browserului. [Află mai multe](https://web.dev/errors-in-console/)"
   },

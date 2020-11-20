@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "Tiek izmantoti pasīvie klausītāji, lai uzlabotu ritināšanas veiktspēju"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "Apraksts"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "Konsolē reģistrētās kļūdas norāda uz neatrisinātām problēmām. Tās var rasties no tīkla pieprasījuma kļūmēm un citām pārlūkprogrammas problēmām. [Uzzināt vairāk](https://web.dev/errors-in-console/)"
   },

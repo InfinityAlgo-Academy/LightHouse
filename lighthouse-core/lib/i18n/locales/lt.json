@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "Naudojamos pasyvios apdorojimo priemonės siekiant pagerinti slinkimo našumą"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "Aprašas"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "Pulte užregistruotos klaidos nurodo, kad esama neišspręstų problemų. Jos galėjo kilti nepavykus pateikti tinklo užklausų arba dėl kitų naršyklės problemų. [Sužinokite daugiau](https://web.dev/errors-in-console/)"
   },

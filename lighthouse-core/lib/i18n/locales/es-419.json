@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "Usa objetos de escucha pasivos para mejorar el rendimiento del desplazamiento"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "Descripción"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "Los errores registrados en la consola indican la existencia de problemas no resueltos. Es posible que se deban a problemas con solicitudes de red y otros relativos al navegador. [Obtén más información](https://web.dev/errors-in-console/)."
   },

@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "ใช้ Listener แบบแพสซีฟเพื่อปรับปรุงประสิทธิภาพการเลื่อน"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "รายละเอียด"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "ข้อผิดพลาดที่บันทึกลงในคอนโซลแสดงให้เห็นถึงปัญหาที่ไม่ได้รับการแก้ไข ข้อผิดพลาดอาจมาจากคำขอเครือข่ายที่ไม่สำเร็จ และปัญหาอื่นๆ เกี่ยวกับเบราว์เซอร์ [ดูข้อมูลเพิ่มเติม](https://web.dev/errors-in-console/)"
   },

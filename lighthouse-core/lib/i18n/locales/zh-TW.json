@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "使用被動事件監聽器來提升捲動效能"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "說明"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "如果主控台有錯誤記錄，表示系統有問題尚待解決，例如網路要求錯誤和其他瀏覽器問題。[瞭解詳情](https://web.dev/errors-in-console/)"
   },

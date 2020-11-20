@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "Käyttää passiivisia seuraimia vieritystoiminnan parantamiseen"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "Kuvaus"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "Konsoliin kirjatut virheet viittaavat ratkaisemattomiin ongelmiin. Ne voivat johtua epäonnistuneista verkkopyynnöistä ja muista selainongelmista. [Lue lisää](https://web.dev/errors-in-console/)."
   },

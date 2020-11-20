@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "நகர்த்துதல் செயல்திறனை மேம்படுத்துவதற்காக பேசிவ் லிசனர்களைப் பயன்படுத்துகின்றன"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "விளக்கம்"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "கன்சோலில் பதிவுசெய்யப்பட்ட பிழைகள் தீர்க்கப்படாத சிக்கல்களைக் குறிக்கின்றன. அவை நெட்வொர்க் கோரிக்கை பிழைகளினாலும் வேறு உலாவி சிக்கல்களினாலும் ஏற்பட்டிருக்கும். [மேலும் அறிக](https://web.dev/errors-in-console/)"
   },

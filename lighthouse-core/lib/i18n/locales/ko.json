@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "스크롤 성능 개선에 패시브 리스너 사용"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "설명"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "콘솔에 로그된 오류는 해결되지 않은 문제를 의미합니다. 네트워크 요청 실패를 비롯한 기타 브라우저 문제로 인해 발생할 수 있습니다. [자세히 알아보기](https://web.dev/errors-in-console/)"
   },

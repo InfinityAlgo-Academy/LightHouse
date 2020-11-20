@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "スクロール パフォーマンスを高める受動的なリスナーが使用されています"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "説明"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "コンソールに記録されたエラーは未解決の問題を表します。これらはネットワーク リクエストの失敗や他のブラウザの問題が原因で表示される可能性があります。[詳細](https://web.dev/errors-in-console/)"
   },

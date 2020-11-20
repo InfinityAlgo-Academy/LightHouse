@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "Anvender passive hændelsesfunktioner til at forbedre rulning"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "Beskrivelse"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "Fejl, der er logført i konsollen, angiver uløste problemer. De kan stamme fra mislykkede netværksanmodninger og andre browserproblemer. [Få flere oplysninger](https://web.dev/errors-in-console/)"
   },

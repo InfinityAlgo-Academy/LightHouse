@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "Kaydırma performansını artırmak için pasif işleyicileri kullanıyor"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "Açıklama"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "Konsola kaydedilen hatalar çözülmemiş problemleri belirtir Bunlar, ağ istek hatalarından ve diğer tarayıcı sorunlarından gelebilir. [Daha fazla bilgi](https://web.dev/errors-in-console/)"
   },

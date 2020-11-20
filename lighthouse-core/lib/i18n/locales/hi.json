@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "पैसिव श्रोताओं की मदद से स्क्रोल परफ़ॉर्मेंस बेहतर की जाती है"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "ब्यौरा"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "कंसोल में लॉग की गई गड़बड़ियां उन मुश्किलों की तरफ़ इशारा करती हैं जिनका समाधान किया जाना अभी बाकी है. ये गड़बड़ियां, नेटवर्क अनुरोधों के काम न करने और ब्राउज़र से जुड़ी दूसरी वजहों से हो सकती हैं. [ज़्यादा जानें](https://web.dev/errors-in-console/)"
   },

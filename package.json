@@ -131,7 +131,7 @@
     "cross-env": "^7.0.2",
     "csv-validator": "^0.0.3",
     "cz-customizable": "^5.2.0",
-    "devtools-protocol": "0.0.801017",
+    "devtools-protocol": "0.0.805376",
     "eslint": "^4.19.1",
     "eslint-config-google": "^0.9.1",
     "eslint-plugin-local-rules": "0.1.0",

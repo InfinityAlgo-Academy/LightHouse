@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "Uporablja pasivne poslušalce za izboljšanje delovanja pomikanja"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "Opis"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "Napake, zabeležene v konzoli, označujejo nerazrešene težave. Te so lahko posledica neuspešnih omrežnih zahtev in drugih težav z brskalnikom. [Več o tem](https://web.dev/errors-in-console/)"
   },

@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "يتم استخدام أدوات معالجة الحدث السلبية لتحسين أداء التمرير"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "الوصف"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "تشير الأخطاء التي تم تسجيلها في وحدة التحكّم إلى مشاكل لم يتم حلها. قد تنتج هذه المشاكل من إخفاقات طلب الشبكة ومشاكل أخرى تتعلق بالمتصفّح. [مزيد من المعلومات](https://web.dev/errors-in-console/)"
   },

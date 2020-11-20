@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "Gebruikt passieve listeners voor de verbetering van de scrollprestaties"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "Beschrijving"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "Fouten die op de console worden geregistreerd, geven aan dat er onopgeloste problemen zijn. Ze kunnen afkomstig zijn van niet-uitgevoerde netwerkverzoeken en andere problemen met de browser. [Meer informatie](https://web.dev/errors-in-console/)"
   },

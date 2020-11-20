@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "Χρησιμοποιεί παθητικές λειτουργίες επεξεργασίας συμβάντων για τη βελτίωση της απόδοσης κύλισης"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "Περιγραφή"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "Τα σφάλματα που έχουν καταγραφεί στην κονσόλα υποδεικνύουν ότι υπάρχουν προβλήματα τα οποία δεν έχουν επιλυθεί. Μπορεί να σχετίζονται με σφάλματα αιτημάτων δικτύου ή με άλλα ζητήματα του προγράμματος περιήγησης. [Μάθετε περισσότερα](https://web.dev/errors-in-console/)"
   },

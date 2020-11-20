@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "Passiva lyssnare används för att förbättra rullningsprestanda"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "Beskrivning"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "Fel som loggats i konsolen indikerar olösta problem. De kan bero på fel i nätverksförfrågningar och andra webbläsarproblem. [Läs mer](https://web.dev/errors-in-console/)"
   },

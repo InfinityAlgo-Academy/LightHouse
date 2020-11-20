@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "使用被动式监听器来提高滚动性能"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "说明"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "控制台中记录的错误表明有未解决的问题。导致这些错误的可能原因是网络请求失败和其他浏览器问题。[了解详情](https://web.dev/errors-in-console/)"
   },

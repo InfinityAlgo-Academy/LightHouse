@@ -403,6 +403,9 @@ Object {
       "path": "dobetterweb/geolocation-on-start",
     },
     Object {
+      "path": "dobetterweb/has-inspector-issues",
+    },
+    Object {
       "path": "dobetterweb/no-document-write",
     },
     Object {
@@ -799,6 +802,11 @@ Object {
           "group": "best-practices-general",
           "id": "valid-source-maps",
           "weight": 0,
+        },
+        Object {
+          "group": "best-practices-general",
+          "id": "has-inspector-issues",
+          "weight": 1,
         },
       ],
       "title": "Best Practices",

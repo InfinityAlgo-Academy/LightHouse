@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "Utiliza listeners passivos para melhorar o desempenho de rolagem"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "Descrição"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "Os erros registrados no console indicam problemas não resolvidos. Eles podem ocorrer devido a falhas de solicitação de rede e outras questões relacionadas ao navegador. [Saiba mais](https://web.dev/errors-in-console/)"
   },

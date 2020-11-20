@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "Sử dụng trình nghe bị động để cải thiện hiệu suất cuộn"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "Nội dung mô tả"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "Các lỗi được ghi vào bảng điều khiển là những sự cố chưa giải quyết. Những sự cố này có thể do lỗi yêu cầu mạng và các vấn đề khác của trình duyệt gây ra. [Tìm hiểu thêm](https://web.dev/errors-in-console/)"
   },

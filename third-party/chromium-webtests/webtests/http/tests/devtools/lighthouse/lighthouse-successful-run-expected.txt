@@ -332,6 +332,7 @@ Auditing: Properly defines charset
 Auditing: Avoids an excessive DOM size
 Auditing: Links to cross-origin destinations are safe
 Auditing: Avoids requesting the geolocation permission on page load
+Auditing: No issues in the `Issues` panel in Chrome Devtools
 Auditing: Avoids `document.write()`
 Auditing: Avoids front-end JavaScript libraries with known security vulnerabilities
 Auditing: Detected JavaScript libraries
@@ -460,6 +461,7 @@ form-field-multiple-labels: notApplicable
 frame-title: notApplicable
 geolocation-on-start: pass
 gpt-bids-parallel: notApplicable
+has-inspector-issues: pass
 heading-order: notApplicable
 hreflang: pass
 html-has-lang: fail

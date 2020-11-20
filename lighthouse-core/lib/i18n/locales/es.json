@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "Usa listeners pasivos para mejorar el desplazamiento"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "Descripción"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "Los errores registrados en la consola indican que hay problemas sin resolver. Pueden proceder de solicitudes fallidas de la red y otros errores del navegador. [Más información](https://web.dev/errors-in-console/)"
   },

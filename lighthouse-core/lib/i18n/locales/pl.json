@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "Używa detektorów pasywnych do poprawy działania przewijania"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "Opis"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "Błędy zarejestrowane w konsoli wskazują na nierozwiązane problemy. Mogą być spowodowane nieudanymi żądaniami sieciowymi i innymi problemami w przeglądarce. [Więcej informacji](https://web.dev/errors-in-console/)"
   },

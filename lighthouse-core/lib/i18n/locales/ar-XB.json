@@ -752,9 +752,6 @@
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "‏‮Uses‬‏ ‏‮passive‬‏ ‏‮listeners‬‏ ‏‮to‬‏ ‏‮improve‬‏ ‏‮scrolling‬‏ ‏‮performance‬‏"
   },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "‏‮Description‬‏"
-  },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "‏‮Errors‬‏ ‏‮logged‬‏ ‏‮to‬‏ ‏‮the‬‏ ‏‮console‬‏ ‏‮indicate‬‏ ‏‮unresolved‬‏ ‏‮problems‬‏. ‏‮They‬‏ ‏‮can‬‏ ‏‮come‬‏ ‏‮from‬‏ ‏‮network‬‏ ‏‮request‬‏ ‏‮failures‬‏ ‏‮and‬‏ ‏‮other‬‏ ‏‮browser‬‏ ‏‮concerns‬‏. [‏‮Learn‬‏ ‏‮more‬‏](https://web.dev/errors-in-console/)"
   },
