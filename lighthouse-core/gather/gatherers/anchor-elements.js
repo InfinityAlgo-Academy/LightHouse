@@ -43,8 +43,6 @@ function collectAnchorElements() {
   const anchorElements = getElementsInDocument('a'); // eslint-disable-line no-undef
 
   return anchorElements.map(node => {
-    // @ts-expect-error - getNodeDetails put into scope via stringification
-    const nodeInfo = getNodeDetails(node);
     if (node instanceof HTMLAnchorElement) {
       return {
         href: node.href,
@@ -55,7 +53,8 @@ function collectAnchorElements() {
         text: node.innerText, // we don't want to return hidden text, so use innerText
         rel: node.rel,
         target: node.target,
-        ...nodeInfo,
+        // @ts-expect-error - getNodeDetails put into scope via stringification
+        node: getNodeDetails(node),
       };
     }
 
@@ -67,7 +66,8 @@ function collectAnchorElements() {
       text: node.textContent || '',
       rel: '',
       target: node.target.baseVal || '',
-      ...nodeInfo,
+      // @ts-expect-error - getNodeDetails put into scope via stringification
+      node: getNodeDetails(node),
     };
   });
 }
@@ -109,7 +109,7 @@ class AnchorElements extends Gatherer {
     // DOM.getDocument is necessary for pushNodesByBackendIdsToFrontend to properly retrieve nodeIds if the `DOM` domain was enabled before this gatherer, invoke it to be safe.
     await driver.sendCommand('DOM.getDocument', {depth: -1, pierce: true});
     const anchorsWithEventListeners = anchors.map(async anchor => {
-      const listeners = await getEventListeners(driver, anchor.devtoolsNodePath);
+      const listeners = await getEventListeners(driver, anchor.node.devtoolsNodePath);
 
       return {
         ...anchor,

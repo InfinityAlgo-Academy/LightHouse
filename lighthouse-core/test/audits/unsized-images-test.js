@@ -10,8 +10,8 @@ const UnsizedImagesAudit = require('../../audits/unsized-images.js');
 /* eslint-env jest */
 
 function generateImage(props, src = 'https://google.com/logo.png', isCss = false,
-  isInShadowDOM = false, cssComputedPosition = 'static') {
-  const image = {src, isCss, isInShadowDOM, cssComputedPosition};
+  isInShadowDOM = false, cssComputedPosition = 'static', node = {}) {
+  const image = {src, isCss, isInShadowDOM, cssComputedPosition, node};
   Object.assign(image, props);
   return image;
 }

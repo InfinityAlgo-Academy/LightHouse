@@ -31,13 +31,15 @@ describe('Performance: preload-lcp audit', () => {
       TraceElements: [
         {
           traceEventType: 'largest-contentful-paint',
-          devtoolsNodePath: '1,HTML,1,BODY,3,DIV,2,IMG',
+          node: {
+            devtoolsNodePath: '1,HTML,1,BODY,3,DIV,2,IMG'},
         },
       ],
       ImageElements: [
         {
           src: imageUrl,
-          devtoolsNodePath: '1,HTML,1,BODY,3,DIV,2,IMG',
+          node: {
+            devtoolsNodePath: '1,HTML,1,BODY,3,DIV,2,IMG'},
         },
       ],
     };
