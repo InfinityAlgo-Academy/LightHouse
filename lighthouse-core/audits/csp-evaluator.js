@@ -13,11 +13,14 @@ const csp = require('../../evaluator_binary.js');
 const UIStrings = {
   title: 'CSP secures page from XSS attacks',
   failureTitle: 'CSP does not completely secure page from XSS attacks',
-  description: 'A Content Security Policy (CSP) can significantly reduce the risk of XSS attacks. '
-    + '[Learn more](https://developers.google.com/web/fundamentals/security/csp)',
-  metaTagWarning: 'This page has a CSP defined in a meta tag. ' +
-    'We recommend putting your CSP in the HTTP header.',
-  noCsp: 'Does not have CSP',
+  description: 'A strong Content Security Policy (CSP) can significantly ' +
+    'reduce the risk of XSS attacks. ' +
+    '[Learn more](https://developers.google.com/web/fundamentals/security/csp)',
+  metaTagWarning: 'The page contains a CSP defined in a meta tag. ' +
+    'It is not recommended to use a CSP this way, ' +
+    'please define the CSP in an HTTP header instead. ' +
+    'Lighthouse will ignore any CSP defined in a meta tag.',
+  noCsp: 'Does not have a CSP',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
