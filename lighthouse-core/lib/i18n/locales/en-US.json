@@ -1760,6 +1760,9 @@
   "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": {
     "message": "Required {artifactName} gatherer did not run."
   },
+  "lighthouse-core/lib/lh-error.js | noFcp": {
+    "message": "The page did not paint any content. Please ensure you keep the browser window in the foreground during the load and try again. ({errorCode})"
+  },
   "lighthouse-core/lib/lh-error.js | notHtml": {
     "message": "The page provided is not HTML (served as MIME type {mimeType})."
   },
