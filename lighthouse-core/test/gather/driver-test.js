@@ -12,7 +12,6 @@ const {protocolGetVersionResponse} = require('./fake-driver.js');
 const {
   createMockSendCommandFn,
   createMockOnceFn,
-  createDecomposedPromise,
   makePromiseInspectable,
   flushAllTimersAndMicrotasks,
 } = require('../test-utils.js');
@@ -21,32 +20,11 @@ const {
 
 jest.useFakeTimers();
 
-function createMockWaitForFn() {
-  const {promise, resolve, reject} = createDecomposedPromise();
-
-  const mockCancelFn = jest.fn();
-  const mockFn = jest.fn().mockReturnValue({promise, cancel: mockCancelFn});
-
-  return Object.assign(mockFn, {
-    mockResolve: resolve,
-    /** @param {Error=} err */
-    mockReject(err) {
-      reject(err || new Error('Rejected'));
-    },
-    getMockCancelFn() {
-      return mockCancelFn;
-    },
-  });
-}
 
 /**
  * @typedef DriverMockMethods
  * @property {ReturnType<typeof createMockOnceFn>} on
  * @property {ReturnType<typeof createMockOnceFn>} once
- * @property {ReturnType<typeof createMockWaitForFn>} _waitForFcp
- * @property {ReturnType<typeof createMockWaitForFn>} _waitForLoadEvent
- * @property {ReturnType<typeof createMockWaitForFn>} _waitForNetworkIdle
- * @property {ReturnType<typeof createMockWaitForFn>} _waitForCPUIdle
  * @property {(...args: RecursivePartial<Parameters<Driver['gotoURL']>>) => ReturnType<Driver['gotoURL']>} gotoURL
  * @property {(...args: RecursivePartial<Parameters<Driver['goOnline']>>) => ReturnType<Driver['goOnline']>} goOnline
 */
@@ -388,192 +366,6 @@ describe('.gotoURL', () => {
 
       await loadPromise;
     });
-  });
-
-  describe('when waitForLoad', () => {
-    const url = 'https://example.com';
-
-    ['Fcp', 'LoadEvent', 'NetworkIdle', 'CPUIdle'].forEach(name => {
-      it(`should wait for ${name}`, async () => {
-        driver._waitForFcp = createMockWaitForFn();
-        driver._waitForLoadEvent = createMockWaitForFn();
-        driver._waitForNetworkIdle = createMockWaitForFn();
-        driver._waitForCPUIdle = createMockWaitForFn();
-
-        // @ts-expect-error - dynamic property access, tests will definitely fail if the property were to change
-        const waitForResult = driver[`_waitFor${name}`];
-        const otherWaitForResults = [
-          driver._waitForFcp,
-          driver._waitForLoadEvent,
-          driver._waitForNetworkIdle,
-          driver._waitForCPUIdle,
-        ].filter(l => l !== waitForResult);
-
-        const loadPromise = makePromiseInspectable(driver.gotoURL(url, {
-          waitForFcp: true,
-          waitForLoad: true,
-        }));
-
-        // shouldn't finish all on its own
-        await flushAllTimersAndMicrotasks();
-        expect(loadPromise).not.toBeDone(`Did not wait for anything (${name})`);
-
-        // shouldn't resolve after all the other listeners
-        otherWaitForResults.forEach(result => result.mockResolve());
-        await flushAllTimersAndMicrotasks();
-        expect(loadPromise).not.toBeDone(`Did not wait for ${name}`);
-
-        waitForResult.mockResolve();
-        await flushAllTimersAndMicrotasks();
-        expect(loadPromise).toBeDone(`Did not resolve on ${name}`);
-        expect(await loadPromise).toMatchObject({timedOut: false});
-      });
-    });
-
-    it('should wait for CPU Idle *after* network idle', async () => {
-      driver._waitForLoadEvent = createMockWaitForFn();
-      driver._waitForNetworkIdle = createMockWaitForFn();
-      driver._waitForCPUIdle = createMockWaitForFn();
-
-      const loadPromise = makePromiseInspectable(driver.gotoURL(url, {
-        waitForLoad: true,
-      }));
-
-      // shouldn't finish all on its own
-      await flushAllTimersAndMicrotasks();
-      expect(loadPromise).not.toBeDone(`Did not wait for anything`);
-      expect(driver._waitForLoadEvent).toHaveBeenCalled();
-      expect(driver._waitForNetworkIdle).toHaveBeenCalled();
-      expect(driver._waitForCPUIdle).not.toHaveBeenCalled();
-
-      // should have been called now
-      driver._waitForLoadEvent.mockResolve();
-      driver._waitForNetworkIdle.mockResolve();
-      await flushAllTimersAndMicrotasks();
-      expect(driver._waitForCPUIdle).toHaveBeenCalled();
-      expect(loadPromise).not.toBeDone(`Did not wait for CPU idle`);
-
-      driver._waitForCPUIdle.mockResolve();
-      await flushAllTimersAndMicrotasks();
-      expect(loadPromise).toBeDone(`Did not resolve on CPU idle`);
-      expect(await loadPromise).toMatchObject({timedOut: false});
-    });
-
-    it('should timeout when not resolved fast enough', async () => {
-      driver._waitForLoadEvent = createMockWaitForFn();
-      driver._waitForNetworkIdle = createMockWaitForFn();
-      driver._waitForCPUIdle = createMockWaitForFn();
-
-      const loadPromise = makePromiseInspectable(driver.gotoURL(url, {
-        waitForLoad: true,
-        passContext: {
-          passConfig: {},
-          settings: {
-            maxWaitForLoad: 60000,
-          },
-        },
-      }));
-
-      // Resolve load and network to make sure we install CPU
-      driver._waitForLoadEvent.mockResolve();
-      driver._waitForNetworkIdle.mockResolve();
-      await flushAllTimersAndMicrotasks();
-      expect(loadPromise).not.toBeDone(`Did not wait for CPU idle`);
-
-      jest.advanceTimersByTime(60001);
-      await flushAllTimersAndMicrotasks();
-      expect(loadPromise).toBeDone(`Did not wait for timeout`);
-      // Check that we cancelled all our listeners
-      expect(driver._waitForLoadEvent.getMockCancelFn()).toHaveBeenCalled();
-      expect(driver._waitForNetworkIdle.getMockCancelFn()).toHaveBeenCalled();
-      expect(driver._waitForCPUIdle.getMockCancelFn()).toHaveBeenCalled();
-      expect(await loadPromise).toMatchObject({timedOut: true});
-    });
-
-    it('should cleanup listeners even when waits reject', async () => {
-      driver._waitForLoadEvent = createMockWaitForFn();
-
-      const loadPromise = makePromiseInspectable(driver.gotoURL(url, {waitForLoad: true}));
-
-      driver._waitForLoadEvent.mockReject();
-      await flushAllTimersAndMicrotasks();
-      expect(loadPromise).toBeDone('Did not reject load promise when load rejected');
-      await expect(loadPromise).rejects.toBeTruthy();
-      // Make sure we still cleaned up our listeners
-      expect(driver._waitForLoadEvent.getMockCancelFn()).toHaveBeenCalled();
-    });
-  });
-});
-
-describe('._waitForFcp', () => {
-  it('should not resolve until FCP fires', async () => {
-    driver.on = driver.once = createMockOnceFn();
-
-    const waitPromise = makePromiseInspectable(driver._waitForFcp(0, 60 * 1000).promise);
-    const listener = driver.on.findListener('Page.lifecycleEvent');
-
-    await flushAllTimersAndMicrotasks();
-    expect(waitPromise).not.toBeDone('Resolved without FCP');
-
-    listener({name: 'domContentLoaded'});
-    await flushAllTimersAndMicrotasks();
-    expect(waitPromise).not.toBeDone('Resolved on wrong event');
-
-    listener({name: 'firstContentfulPaint'});
-    await flushAllTimersAndMicrotasks();
-    expect(waitPromise).toBeDone('Did not resolve with FCP');
-    await waitPromise;
-  });
-
-  it('should wait for pauseAfterFcpMs after FCP', async () => {
-    driver.on = driver.once = createMockOnceFn();
-
-    const waitPromise = makePromiseInspectable(driver._waitForFcp(5000, 60 * 1000).promise);
-    const listener = driver.on.findListener('Page.lifecycleEvent');
-
-    await flushAllTimersAndMicrotasks();
-    expect(waitPromise).not.toBeDone('Resolved without FCP');
-
-    listener({name: 'firstContentfulPaint'});
-    await flushAllTimersAndMicrotasks();
-    expect(waitPromise).not.toBeDone('Did not wait for pauseAfterFcpMs');
-
-    jest.advanceTimersByTime(5001);
-    await flushAllTimersAndMicrotasks();
-    expect(waitPromise).toBeDone('Did not resolve after pauseAfterFcpMs');
-
-    await waitPromise;
-  });
-
-  it('should timeout', async () => {
-    driver.on = driver.once = createMockOnceFn();
-
-    const waitPromise = makePromiseInspectable(driver._waitForFcp(0, 5000).promise);
-
-    await flushAllTimersAndMicrotasks();
-    expect(waitPromise).not.toBeDone('Resolved before timeout');
-
-    jest.advanceTimersByTime(5001);
-    await flushAllTimersAndMicrotasks();
-    expect(waitPromise).toBeDone('Did not resolve after timeout');
-    await expect(waitPromise).rejects.toMatchObject({code: 'NO_FCP'});
-  });
-
-  it('should be cancellable', async () => {
-    driver.on = driver.once = createMockOnceFn();
-    driver.off = jest.fn();
-
-    const {promise: rawPromise, cancel} = driver._waitForFcp(0, 5000);
-    const waitPromise = makePromiseInspectable(rawPromise);
-
-    await flushAllTimersAndMicrotasks();
-    expect(waitPromise).not.toBeDone('Resolved before timeout');
-
-    cancel();
-    await flushAllTimersAndMicrotasks();
-    expect(waitPromise).toBeDone('Did not cancel promise');
-    expect(driver.off).toHaveBeenCalled();
-    await expect(waitPromise).rejects.toMatchObject({message: 'Wait for FCP canceled'});
   });
 });
 
