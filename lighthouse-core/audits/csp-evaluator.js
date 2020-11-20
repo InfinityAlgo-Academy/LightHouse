@@ -11,9 +11,13 @@ const i18n = require('../lib/i18n/i18n.js');
 const csp = require('../../evaluator_binary.js');
 
 const UIStrings = {
-  title: 'CSP Evaluator',
-  failureTitle: 'Bad CSP',
-  description: 'CSP Evaluator',
+  title: 'CSP secures page from XSS attacks',
+  failureTitle: 'CSP does not completely secure page from XSS attacks',
+  description: 'A Content Security Policy (CSP) can significantly reduce the risk of XSS attacks. '
+    + '[Learn more](https://developers.google.com/web/fundamentals/security/csp)',
+  metaTagWarning: 'This page has a CSP defined in a meta tag. ' +
+    'We recommend putting your CSP in the HTTP header.',
+  noCsp: 'Does not have CSP',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -28,7 +32,7 @@ class CSPEvaluator extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['devtoolsLogs', 'URL'],
+      requiredArtifacts: ['devtoolsLogs', 'MetaElements', 'URL'],
     };
   }
 
@@ -40,17 +44,28 @@ class CSPEvaluator extends Audit {
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
-    const cspHeader = mainResource.responseHeaders.find(h => h.name === 'content-security-policy');
+
+    // CSP defined in meta tag is not recommended, warn if a CSP is defined this way.
+    const hasCspMetaTags = !!artifacts.MetaElements.find(m => {
+      return m.httpEquiv && m.httpEquiv.toLowerCase() === 'content-security-policy';
+    });
+    const warnings = hasCspMetaTags ? [UIStrings.metaTagWarning] : [];
+
+    const cspHeader = mainResource.responseHeaders.find(h => {
+      return h.name.toLowerCase() === 'content-security-policy';
+    });
     if (!cspHeader) {
       return {
+        warnings,
         score: 0,
         notApplicable: false,
-        displayValue: 'Does not have CSP',
+        displayValue: UIStrings.noCsp,
       };
     }
     const parser = new csp.CspParser(cspHeader.value);
     const evaluator = new csp.CspEvaluator(parser.csp, csp.Version.CSP3);
-    const results = [{description: cspHeader.value}, ...evaluator.evaluate()];
+    const findings = evaluator.evaluate();
+    const results = [{description: cspHeader.value}, ...findings];
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
@@ -62,7 +77,8 @@ class CSPEvaluator extends Audit {
     ];
     const details = Audit.makeTableDetails(headings, results);
     return {
-      score: 0,
+      warnings,
+      score: findings.find(f => f.severity < 100) ? 0 : 1,
       notApplicable: false,
       details,
     };
