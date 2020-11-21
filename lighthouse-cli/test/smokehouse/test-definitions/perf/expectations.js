@@ -172,49 +172,43 @@ module.exports = [
       TraceElements: [
         {
           traceEventType: 'largest-contentful-paint',
-          node: {
-            nodeLabel: 'img',
-            snippet: '<img src="../dobetterweb/lighthouse-480x318.jpg">',
-            boundingRect: {
-              top: 108,
-              bottom: 426,
-              left: 8,
-              right: 488,
-              width: 480,
-              height: 318,
-            },
+          nodeLabel: 'img',
+          snippet: '<img src="../dobetterweb/lighthouse-480x318.jpg">',
+          boundingRect: {
+            top: 108,
+            bottom: 426,
+            left: 8,
+            right: 488,
+            width: 480,
+            height: 318,
           },
         },
         {
           traceEventType: 'layout-shift',
-          node: {
-            selector: 'body > h1',
-            nodeLabel: 'Please don\'t move me',
-            snippet: '<h1>',
-            boundingRect: {
-              top: 465,
-              bottom: 502,
-              left: 8,
-              right: 352,
-              width: 344,
-              height: 37,
-            },
+          selector: 'body > h1',
+          nodeLabel: 'Please don\'t move me',
+          snippet: '<h1>',
+          boundingRect: {
+            top: 465,
+            bottom: 502,
+            left: 8,
+            right: 352,
+            width: 344,
+            height: 37,
           },
           score: '0.058 +/- 0.01',
         },
         {
           traceEventType: 'layout-shift',
-          node: {
-            nodeLabel: 'Sorry!',
-            snippet: '<div style="height: 18px;">',
-            boundingRect: {
-              top: 426,
-              bottom: 444,
-              left: 8,
-              right: 352,
-              width: 344,
-              height: 18,
-            },
+          nodeLabel: 'Sorry!',
+          snippet: '<div style="height: 18px;">',
+          boundingRect: {
+            top: 426,
+            bottom: 444,
+            left: 8,
+            right: 352,
+            width: 344,
+            height: 18,
           },
           score: '0.026 +/- 0.01',
         },
@@ -224,18 +218,16 @@ module.exports = [
           // https://chromiumdash.appspot.com/commit/995baabedf9e70d16deafc4bc37a2b215a9b8ec9
           _minChromiumMilestone: 86,
           traceEventType: 'animation',
-          node: {
-            selector: 'body > div#animate-me',
-            nodeLabel: 'div',
-            snippet: '<div id="animate-me">',
-            boundingRect: {
-              top: 8,
-              bottom: 108,
-              left: 8,
-              right: 108,
-              width: 100,
-              height: 100,
-            },
+          selector: 'body > div#animate-me',
+          nodeLabel: 'div',
+          snippet: '<div id="animate-me">',
+          boundingRect: {
+            top: 8,
+            bottom: 108,
+            left: 8,
+            right: 108,
+            width: 100,
+            height: 100,
           },
           animations: [
             {

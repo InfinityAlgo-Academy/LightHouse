@@ -45,11 +45,11 @@ class LayoutShiftElements extends Audit {
       return {
         node: /** @type {LH.Audit.Details.NodeValue} */ ({
           type: 'node',
-          path: element.node.devtoolsNodePath,
-          selector: element.node.selector,
-          nodeLabel: element.node.nodeLabel,
-          snippet: element.node.snippet,
-          boundingRect: element.node.boundingRect,
+          path: element.devtoolsNodePath,
+          selector: element.selector,
+          nodeLabel: element.nodeLabel,
+          snippet: element.snippet,
+          boundingRect: element.boundingRect,
         }),
         score: element.score,
       };

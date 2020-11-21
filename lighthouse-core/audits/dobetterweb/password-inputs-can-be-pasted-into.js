@@ -47,8 +47,8 @@ class PasswordInputsCanBePastedIntoAudit extends Audit {
       items.push({
         node: /** @type {LH.Audit.Details.NodeValue} */ ({
           type: 'node',
-          snippet: input.node.snippet,
-          path: input.node.devtoolsNodePath,
+          snippet: input.snippet,
+          path: input.devtoolsNodePath,
         }),
       });
     });

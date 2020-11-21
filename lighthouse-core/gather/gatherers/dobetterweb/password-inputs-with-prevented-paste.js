@@ -22,10 +22,10 @@ function findPasswordInputsWithPreventedPaste() {
         new ClipboardEvent('paste', {cancelable: true})
       )
     )
-    .map(passwordInput => ({
+    .map(passwordInput => (
       // @ts-expect-error - getNodeDetails put into scope via stringification
-      node: getNodeDetails(passwordInput),
-    }));
+      getNodeDetails(passwordInput)
+    ));
 }
 
 class PasswordInputsWithPreventedPaste extends Gatherer {

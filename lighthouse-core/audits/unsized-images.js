@@ -100,10 +100,10 @@ class UnsizedImages extends Audit {
         url,
         node: /** @type {LH.Audit.Details.NodeValue} */ ({
           type: 'node',
-          path: image.node.devtoolsNodePath,
-          selector: image.node.selector,
-          nodeLabel: image.node.nodeLabel,
-          snippet: image.node.snippet,
+          path: image.devtoolsNodePath,
+          selector: image.selector,
+          nodeLabel: image.nodeLabel,
+          snippet: image.snippet,
         }),
       });
     }

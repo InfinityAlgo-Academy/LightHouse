@@ -71,7 +71,7 @@ function getLinkElementsInDOM() {
       hrefRaw,
       source,
       // @ts-expect-error - put into scope via stringification
-      node: getNodeDetails(link),
+      ...getNodeDetails(link),
     });
   }
 
@@ -120,7 +120,11 @@ class LinkElements extends Gatherer {
           as: link.as || '',
           crossOrigin: getCrossoriginFromHeader(link.crossorigin),
           source: 'headers',
-          node: null,
+          devtoolsNodePath: '',
+          selector: '',
+          nodeLabel: '',
+          boundingRect: null,
+          snippet: '',
         });
       }
     }

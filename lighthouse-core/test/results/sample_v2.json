@@ -638,8 +638,8 @@
         ],
         "items": [
           {
-            "url": "http://localhost:59630/dobetterweb/lighthouse-480x318.jpg?iar1",
-            "displayedAspectRatio": "120 x 15\n        (8.00)",
+            "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
+            "displayedAspectRatio": "480 x 57\n        (8.42)",
             "actualAspectRatio": "480 x 318\n        (1.51)",
             "doRatiosMatch": false
           }
@@ -683,22 +683,13 @@
         ],
         "items": [
           {
-            "url": "http://localhost:59630/dobetterweb/lighthouse-480x318.jpg?isr1",
-            "elidedUrl": "http://localhost:59630/dobetterweb/lighthouse-480x318.jpg?isr1",
-            "displayedSize": "4800 x 3180",
+            "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
+            "elidedUrl": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
+            "displayedSize": "480 x 318",
             "actualSize": "480 x 318",
             "actualPixels": 152640,
-            "expectedSize": "9600 x 6360",
-            "expectedPixels": 61056000
-          },
-          {
-            "url": "http://localhost:59630/dobetterweb/lighthouse-rotating.gif",
-            "elidedUrl": "http://localhost:59630/dobetterweb/lighthouse-rotating.gif",
-            "displayedSize": "811 x 462",
-            "actualSize": "811 x 462",
-            "actualPixels": 374682,
-            "expectedSize": "1622 x 924",
-            "expectedPixels": 1498728
+            "expectedSize": "960 x 636",
+            "expectedPixels": 610560
           }
         ]
       }
@@ -1824,18 +1815,10 @@
           {
             "node": {
               "type": "node",
-              "path": "3,HTML,1,BODY,14,IMG",
-              "selector": "body > img",
-              "nodeLabel": "img",
-              "snippet": "<img src=\"lighthouse-480x318.jpg?iar2\" width=\"120\" height=\"80\">",
-              "boundingRect": {
-                "top": 574,
-                "bottom": 654,
-                "left": 132,
-                "right": 252,
-                "width": 120,
-                "height": 80
-              }
+              "path": "1,HTML,1,BODY,0,DIV,1,P",
+              "selector": "body > div > p",
+              "nodeLabel": "This domain is for use in illustrative examples in documents. You may use this …",
+              "snippet": "<p class=\"paragraph\">"
             }
           }
         ]
@@ -1846,11 +1829,61 @@
       "title": "Avoid large layout shifts",
       "description": "These DOM elements contribute most to the CLS of the page.",
       "score": null,
-      "scoreDisplayMode": "notApplicable",
+      "scoreDisplayMode": "informative",
+      "displayValue": "4 elements found",
       "details": {
         "type": "table",
-        "headings": [],
-        "items": []
+        "headings": [
+          {
+            "key": "node",
+            "itemType": "node",
+            "text": "Element"
+          },
+          {
+            "key": "score",
+            "itemType": "numeric",
+            "granularity": 0.001,
+            "text": "CLS Contribution"
+          }
+        ],
+        "items": [
+          {
+            "node": {
+              "type": "node",
+              "path": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,3,H5",
+              "selector": "div.blog-index > article > div.entry-content > h5",
+              "nodeLabel": "Debugging Node.js with Chrome DevTools",
+              "snippet": "<h5>"
+            }
+          },
+          {
+            "node": {
+              "type": "node",
+              "path": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,4,P",
+              "selector": "div.blog-index > article > div.entry-content > p",
+              "nodeLabel": "The canonical guide to using the Chrome DevTools UI for debugging Node.js. It d…",
+              "snippet": "<p>"
+            }
+          },
+          {
+            "node": {
+              "type": "node",
+              "path": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,5,HR",
+              "selector": "div.blog-index > article > div.entry-content > hr",
+              "nodeLabel": "hr",
+              "snippet": "<hr>"
+            }
+          },
+          {
+            "node": {
+              "type": "node",
+              "path": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,6,P",
+              "selector": "div.blog-index > article > div.entry-content > p",
+              "nodeLabel": "Aside from that, I’ve been busy working on Lighthouse, performance metrics, too…",
+              "snippet": "<p>"
+            }
+          }
+        ]
       }
     },
     "long-tasks": {
@@ -1938,11 +1971,57 @@
       "title": "Avoid non-composited animations",
       "description": "Animations which are not composited can be janky and increase CLS. [Learn more](https://web.dev/non-composited-animations)",
       "score": null,
-      "scoreDisplayMode": "notApplicable",
+      "scoreDisplayMode": "informative",
+      "displayValue": "1 animated element found",
       "details": {
         "type": "table",
-        "headings": [],
-        "items": []
+        "headings": [
+          {
+            "key": "node",
+            "itemType": "node",
+            "subItemsHeading": {
+              "key": "failureReason",
+              "itemType": "text"
+            },
+            "text": "Element"
+          },
+          {
+            "key": null,
+            "itemType": "text",
+            "subItemsHeading": {
+              "key": "animation",
+              "itemType": "text"
+            },
+            "text": "Name"
+          }
+        ],
+        "items": [
+          {
+            "node": {
+              "type": "node",
+              "path": "1,HTML,1,BODY,0,DIV",
+              "selector": "body > div#animated-boi",
+              "nodeLabel": "div",
+              "snippet": "<div id=\"animated-boi\">"
+            },
+            "subItems": {
+              "type": "subitems",
+              "items": [
+                {
+                  "failureReason": "Unsupported CSS Property: width"
+                },
+                {
+                  "failureReason": "Unsupported CSS Properties: height, left",
+                  "animation": "alpha"
+                },
+                {
+                  "failureReason": "Unsupported CSS Property: background-color",
+                  "animation": "beta"
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     "unsized-images": {
@@ -1972,23 +2051,9 @@
         ],
         "items": [
           {
-            "url": "blob:http://localhost:59630/cc4ae030-c90e-4262-89ff-972ab9c96e63",
+            "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
             "node": {
-              "type": "node",
-              "path": "3,HTML,1,BODY,63,IMG",
-              "selector": "body > img",
-              "nodeLabel": "img",
-              "snippet": "<img src=\"blob:http://localhost:59630/cc4ae030-c90e-4262-89ff-972ab9c96e63\">"
-            }
-          },
-          {
-            "url": "filesystem:http://localhost:59630/temporary/empty-0.46322750891973685.png",
-            "node": {
-              "type": "node",
-              "path": "3,HTML,1,BODY,72,IMG",
-              "selector": "body > img",
-              "nodeLabel": "img",
-              "snippet": "<img src=\"filesystem:http://localhost:59630/temporary/empty-0.46322750891973685.png\">"
+              "type": "node"
             }
           }
         ]
@@ -2526,7 +2591,7 @@
               "type": "node",
               "selector": "body > img",
               "path": "3,HTML,1,BODY,63,IMG",
-              "snippet": "<img src=\"blob:http://localhost:60346/6baf256a-2246-4dbd-981f-08e3ca2a6c05\">",
+              "snippet": "<img src=\"blob:http://localhost:53943/75859e89-fbad-4471-b196-9304adbb874a\">",
               "boundingRect": {
                 "top": 1295,
                 "bottom": 1311,
@@ -2544,7 +2609,7 @@
               "type": "node",
               "selector": "body > img",
               "path": "3,HTML,1,BODY,72,IMG",
-              "snippet": "<img src=\"filesystem:http://localhost:60346/temporary/empty-0.659104978422832.png\">",
+              "snippet": "<img src=\"filesystem:http://localhost:53943/temporary/empty-0.34660357368794004.png\">",
               "boundingRect": {
                 "top": 1317,
                 "bottom": 1333,
@@ -3220,18 +3285,41 @@
       "id": "unminified-javascript",
       "title": "Minify JavaScript",
       "description": "Minifying JavaScript files can reduce payload sizes and script parse time. [Learn more](https://web.dev/unminified-javascript/).",
-      "score": 1,
+      "score": 0.88,
       "scoreDisplayMode": "numeric",
-      "numericValue": 0,
+      "numericValue": 150,
       "numericUnit": "millisecond",
-      "displayValue": "",
+      "displayValue": "Potential savings of 30 KiB",
       "warnings": [],
       "details": {
         "type": "opportunity",
-        "headings": [],
-        "items": [],
-        "overallSavingsMs": 0,
-        "overallSavingsBytes": 0
+        "headings": [
+          {
+            "key": "url",
+            "valueType": "url",
+            "label": "URL"
+          },
+          {
+            "key": "totalBytes",
+            "valueType": "bytes",
+            "label": "Transfer Size"
+          },
+          {
+            "key": "wastedBytes",
+            "valueType": "bytes",
+            "label": "Potential Savings"
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:10200/zone.js",
+            "totalBytes": 71654,
+            "wastedBytes": 30470,
+            "wastedPercent": 42.52388078488413
+          }
+        ],
+        "overallSavingsMs": 150,
+        "overallSavingsBytes": 30470
       }
     },
     "unused-css-rules": {
@@ -3385,54 +3473,14 @@
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
       "numericUnit": "millisecond",
-      "displayValue": "Potential savings of 49 KiB",
+      "displayValue": "",
       "warnings": [],
       "details": {
         "type": "opportunity",
-        "headings": [
-          {
-            "key": "url",
-            "valueType": "thumbnail",
-            "label": ""
-          },
-          {
-            "key": "url",
-            "valueType": "url",
-            "label": "URL"
-          },
-          {
-            "key": "totalBytes",
-            "valueType": "bytes",
-            "label": "Resource Size"
-          },
-          {
-            "key": "wastedBytes",
-            "valueType": "bytes",
-            "label": "Potential Savings"
-          }
-        ],
-        "items": [
-          {
-            "url": "http://localhost:59630/dobetterweb/lighthouse-480x318.jpg?iar1",
-            "totalBytes": 24620,
-            "wastedBytes": 22619,
-            "wastedPercent": 91.87426297169812
-          },
-          {
-            "url": "http://localhost:59630/dobetterweb/lighthouse-480x318.jpg?iar2",
-            "totalBytes": 24620,
-            "wastedBytes": 13950,
-            "wastedPercent": 56.66273584905661
-          },
-          {
-            "url": "http://localhost:59630/dobetterweb/lighthouse-480x318.jpg?isr2",
-            "totalBytes": 24620,
-            "wastedBytes": 13950,
-            "wastedPercent": 56.66273584905661
-          }
-        ],
+        "headings": [],
+        "items": [],
         "overallSavingsMs": 0,
-        "overallSavingsBytes": 50519
+        "overallSavingsBytes": 0
       }
     },
     "efficient-animated-content": {
@@ -3477,13 +3525,67 @@
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
       "numericUnit": "millisecond",
-      "displayValue": "",
+      "displayValue": "Potential savings of 21 KiB",
       "details": {
         "type": "opportunity",
-        "headings": [],
-        "items": [],
+        "headings": [
+          {
+            "key": "url",
+            "valueType": "url",
+            "subItemsHeading": {
+              "key": "location",
+              "valueType": "source-location"
+            },
+            "label": "URL"
+          },
+          {
+            "key": null,
+            "valueType": "code",
+            "subItemsHeading": {
+              "key": "signal"
+            },
+            "label": ""
+          },
+          {
+            "key": "wastedBytes",
+            "valueType": "bytes",
+            "label": "Potential Savings"
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:10200/zone.js",
+            "wastedBytes": 21205,
+            "subItems": {
+              "type": "subitems",
+              "items": [
+                {
+                  "signal": "Object.defineProperty",
+                  "location": {
+                    "type": "source-location",
+                    "url": "http://localhost:10200/zone.js",
+                    "line": 1290,
+                    "column": 4,
+                    "urlProvider": "network"
+                  }
+                },
+                {
+                  "signal": "Object.defineProperties",
+                  "location": {
+                    "type": "source-location",
+                    "url": "http://localhost:10200/zone.js",
+                    "line": 1300,
+                    "column": 4,
+                    "urlProvider": "network"
+                  }
+                }
+              ]
+            },
+            "totalBytes": 0
+          }
+        ],
         "overallSavingsMs": 0,
-        "overallSavingsBytes": 0
+        "overallSavingsBytes": 21205
       }
     },
     "appcache-manifest": {
@@ -3632,7 +3734,7 @@
               "nodeLabel": "internal link is ok",
               "snippet": "<a href=\"./doesnotexist\" target=\"_blank\">"
             },
-            "href": "http://localhost:59847/dobetterweb/doesnotexist",
+            "href": "http://localhost:53522/dobetterweb/doesnotexist",
             "target": "_blank",
             "rel": "",
             "outerHTML": "<a href=\"./doesnotexist\" target=\"_blank\">"
@@ -3851,15 +3953,13 @@
           {
             "node": {
               "type": "node",
-              "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">",
-              "path": "3,HTML,1,BODY,58,INPUT"
+              "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">"
             }
           },
           {
             "node": {
               "type": "node",
-              "snippet": "<input type=\"password\" onpaste=\"return false;\">",
-              "path": "3,HTML,1,BODY,62,INPUT"
+              "snippet": "<input type=\"password\" onpaste=\"return false;\">"
             }
           }
         ]
@@ -4146,40 +4246,40 @@
           {
             "tapTarget": {
               "type": "node",
-              "snippet": "<button class=\"small-button\">",
-              "path": "3,HTML,1,BODY,27,BUTTON",
+              "snippet": "<button class=\"small-button\">Do something</button>",
+              "path": "3,HTML,1,BODY,17,BUTTON",
               "selector": "body > button.small-button",
               "boundingRect": {
                 "left": 8,
                 "right": 208,
-                "top": 1123.8125,
-                "bottom": 1144.8125,
+                "top": 1268.8125,
+                "bottom": 1286.8125,
                 "width": 200,
-                "height": 21
+                "height": 18
               },
               "nodeLabel": "Do something"
             },
             "overlappingTarget": {
               "type": "node",
-              "snippet": "<button class=\"small-button\">",
-              "path": "3,HTML,1,BODY,28,BUTTON",
+              "snippet": "<button class=\"small-button\">Do something else</button>",
+              "path": "3,HTML,1,BODY,18,BUTTON",
               "selector": "body > button.small-button",
               "boundingRect": {
                 "left": 8,
                 "right": 208,
-                "top": 1144.8125,
-                "bottom": 1165.8125,
+                "top": 1286.8125,
+                "bottom": 1304.8125,
                 "width": 200,
-                "height": 21
+                "height": 18
               },
               "nodeLabel": "Do something else"
             },
-            "tapTargetScore": 1008,
-            "overlappingTargetScore": 648,
-            "overlapScoreRatio": 0.6428571428571429,
-            "size": "200x21",
+            "tapTargetScore": 864,
+            "overlappingTargetScore": 720,
+            "overlapScoreRatio": 0.8333333333333334,
+            "size": "200x18",
             "width": 200,
-            "height": 21
+            "height": 18
           }
         ]
       }
@@ -6702,9 +6802,10 @@
         "audits[uses-long-cache-ttl].details.headings[0].text",
         "audits[total-byte-weight].details.headings[0].text",
         "audits[render-blocking-resources].details.headings[0].label",
+        "audits[unminified-javascript].details.headings[0].label",
         "audits[uses-webp-images].details.headings[1].label",
         "audits[uses-text-compression].details.headings[0].label",
-        "audits[uses-responsive-images].details.headings[1].label",
+        "audits[legacy-javascript].details.headings[0].label",
         "audits[geolocation-on-start].details.headings[0].text",
         "audits[no-document-write].details.headings[0].text",
         "audits[notification-on-start].details.headings[0].text",
@@ -6941,6 +7042,7 @@
         "audits[uses-long-cache-ttl].details.headings[2].text",
         "audits[total-byte-weight].details.headings[1].text",
         "audits[render-blocking-resources].details.headings[1].label",
+        "audits[unminified-javascript].details.headings[1].label",
         "audits[uses-text-compression].details.headings[1].label"
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": [
@@ -7068,10 +7170,18 @@
             "nodeCount": 1
           },
           "path": "audits[largest-contentful-paint-element].displayValue"
+        },
+        {
+          "values": {
+            "nodeCount": 4
+          },
+          "path": "audits[layout-shift-elements].displayValue"
         }
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnElement": [
         "audits[largest-contentful-paint-element].details.headings[0].text",
+        "audits[layout-shift-elements].details.headings[0].text",
+        "audits[non-composited-animations].details.headings[0].text",
         "audits[dom-size].details.headings[1].text"
       ],
       "lighthouse-core/audits/layout-shift-elements.js | title": [
@@ -7079,6 +7189,9 @@
       ],
       "lighthouse-core/audits/layout-shift-elements.js | description": [
         "audits[layout-shift-elements].description"
+      ],
+      "lighthouse-core/audits/layout-shift-elements.js | columnContribution": [
+        "audits[layout-shift-elements].details.headings[1].text"
       ],
       "lighthouse-core/audits/long-tasks.js | title": [
         "audits[long-tasks].title"
@@ -7111,6 +7224,41 @@
       ],
       "lighthouse-core/audits/non-composited-animations.js | description": [
         "audits[non-composited-animations].description"
+      ],
+      "lighthouse-core/audits/non-composited-animations.js | displayValue": [
+        {
+          "values": {
+            "itemCount": 1
+          },
+          "path": "audits[non-composited-animations].displayValue"
+        }
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnName": [
+        "audits[non-composited-animations].details.headings[1].text",
+        "audits[js-libraries].details.headings[0].text"
+      ],
+      "lighthouse-core/audits/non-composited-animations.js | unsupportedCSSProperty": [
+        {
+          "values": {
+            "propertyCount": 1,
+            "properties": "width"
+          },
+          "path": "audits[non-composited-animations].details.items[0].subItems.items[0].failureReason"
+        },
+        {
+          "values": {
+            "propertyCount": 2,
+            "properties": "height, left"
+          },
+          "path": "audits[non-composited-animations].details.items[0].subItems.items[1].failureReason"
+        },
+        {
+          "values": {
+            "propertyCount": 1,
+            "properties": "background-color"
+          },
+          "path": "audits[non-composited-animations].details.items[0].subItems.items[2].failureReason"
+        }
       ],
       "lighthouse-core/audits/unsized-images.js | failureTitle": [
         "audits[unsized-images].title"
@@ -7457,9 +7605,10 @@
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": [
         "audits[render-blocking-resources].details.headings[2].label",
+        "audits[unminified-javascript].details.headings[2].label",
         "audits[uses-webp-images].details.headings[3].label",
         "audits[uses-text-compression].details.headings[2].label",
-        "audits[uses-responsive-images].details.headings[3].label"
+        "audits[legacy-javascript].details.headings[2].label"
       ],
       "lighthouse-core/audits/byte-efficiency/unminified-css.js | title": [
         "audits[unminified-css].title"
@@ -7472,6 +7621,32 @@
       ],
       "lighthouse-core/audits/byte-efficiency/unminified-javascript.js | description": [
         "audits[unminified-javascript].description"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": [
+        {
+          "values": {
+            "wastedBytes": 30470
+          },
+          "path": "audits[unminified-javascript].displayValue"
+        },
+        {
+          "values": {
+            "wastedBytes": 9028
+          },
+          "path": "audits[uses-webp-images].displayValue"
+        },
+        {
+          "values": {
+            "wastedBytes": 64646
+          },
+          "path": "audits[uses-text-compression].displayValue"
+        },
+        {
+          "values": {
+            "wastedBytes": 21205
+          },
+          "path": "audits[legacy-javascript].displayValue"
+        }
       ],
       "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": [
         "audits[unused-css-rules].title"
@@ -7491,29 +7666,8 @@
       "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | description": [
         "audits[uses-webp-images].description"
       ],
-      "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": [
-        {
-          "values": {
-            "wastedBytes": 9028
-          },
-          "path": "audits[uses-webp-images].displayValue"
-        },
-        {
-          "values": {
-            "wastedBytes": 64646
-          },
-          "path": "audits[uses-text-compression].displayValue"
-        },
-        {
-          "values": {
-            "wastedBytes": 50519
-          },
-          "path": "audits[uses-responsive-images].displayValue"
-        }
-      ],
       "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": [
-        "audits[uses-webp-images].details.headings[2].label",
-        "audits[uses-responsive-images].details.headings[2].label"
+        "audits[uses-webp-images].details.headings[2].label"
       ],
       "lighthouse-core/audits/byte-efficiency/uses-optimized-images.js | title": [
         "audits[uses-optimized-images].title"
@@ -7678,9 +7832,6 @@
       ],
       "lighthouse-core/audits/dobetterweb/js-libraries.js | description": [
         "audits[js-libraries].description"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | columnName": [
-        "audits[js-libraries].details.headings[0].text"
       ],
       "lighthouse-core/audits/dobetterweb/js-libraries.js | columnVersion": [
         "audits[js-libraries].details.headings[1].text"

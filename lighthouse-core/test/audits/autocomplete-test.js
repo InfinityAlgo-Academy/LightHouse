@@ -25,9 +25,8 @@ describe('Best Practices: autocomplete audit', () => {
                 attribute: null,
                 prediction: 'HTML_TYPE_CREDIT_CARD_NAME_FULL',
               },
-              node: {
-                nodeLabel: 'input',
-                snippet: '<input type="text" name="name_cc">'},
+              nodeLabel: 'input',
+              snippet: '<input type="text" name="name_cc">',
             },
             {
               id: '',
@@ -38,9 +37,8 @@ describe('Best Practices: autocomplete audit', () => {
                 attribute: null,
                 prediction: 'HTML_TYPE_CREDIT_CARD_NUMBER',
               },
-              node: {
-                nodeLabel: 'input',
-                snippet: '<input type="text" name="CCNo">'},
+              nodeLabel: 'input',
+              snippet: '<input type="text" name="CCNo">',
             },
           ],
           labels: [],
@@ -86,9 +84,8 @@ describe('Best Practices: autocomplete audit', () => {
                 attribute: 'namez',
                 prediction: 'UNKNOWN_TYPE',
               },
-              node: {
-                nodeLabel: 'input',
-                snippet: '<input type="text" name="name_cc" autocomplete="namez">'},
+              nodeLabel: 'input',
+              snippet: '<input type="text" name="name_cc" autocomplete="namez">',
             },
             {
               id: '',
@@ -99,9 +96,8 @@ describe('Best Practices: autocomplete audit', () => {
                 attribute: 'ccc-num',
                 prediction: 'HTML_TYPE_CREDIT_CARD_NUMBER',
               },
-              node: {
-                nodeLabel: 'input',
-                snippet: '<input type="text" name="CCNo" autocomplete="ccc-num">'},
+              nodeLabel: 'input',
+              snippet: '<input type="text" name="CCNo" autocomplete="ccc-num">',
             },
           ],
           labels: [],
@@ -146,10 +142,9 @@ describe('Best Practices: autocomplete audit', () => {
                 attribute: 'section-red shipping cc-name',
                 prediction: 'UNKNOWN_TYPE',
               },
-              node: {
-                nodeLabel: 'textarea',
-                // eslint-disable-next-line max-len
-                snippet: '<textarea type="text" name="name_cc" autocomplete="section-red shipping cc-name">'},
+              nodeLabel: 'textarea',
+              // eslint-disable-next-line max-len
+              snippet: '<textarea type="text" name="name_cc" autocomplete="section-red shipping cc-name">',
             },
             {
               id: '',
@@ -172,10 +167,9 @@ describe('Best Practices: autocomplete audit', () => {
                 attribute: 'section-red shipping mobile tel',
                 prediction: 'HTML_TYPE_TEL',
               },
-              node: {
-                nodeLabel: 'input',
-                // eslint-disable-next-line max-len
-                snippet: '<input name="mobile-number" autocomplete="section-red shipping mobile tel">'},
+              nodeLabel: 'input',
+              // eslint-disable-next-line max-len
+              snippet: '<input name="mobile-number" autocomplete="section-red shipping mobile tel">',
             },
           ],
           labels: [],
@@ -200,9 +194,8 @@ describe('Best Practices: autocomplete audit', () => {
                 attribute: null,
                 prediction: 'UNKNOWN_TYPE',
               },
-              node: {
-                nodeLabel: 'textarea',
-                snippet: '<textarea type="text" name="edge_case">'},
+              nodeLabel: 'textarea',
+              snippet: '<textarea type="text" name="edge_case">',
             },
             {
               id: '',
@@ -213,9 +206,8 @@ describe('Best Practices: autocomplete audit', () => {
                 attribute: null,
                 prediction: 'UNKNOWN_TYPE',
               },
-              node: {
-                nodeLabel: 'input',
-                snippet: '<input type="text" name="random">'},
+              nodeLabel: 'input',
+              snippet: '<input type="text" name="random">',
             },
           ],
           labels: [],
@@ -241,10 +233,8 @@ describe('Best Practices: autocomplete audit', () => {
                 prediction: 'HTML_TYPE_CREDIT_CARD_NAME_FULL',
               },
               autofillPredict: 'HTML_TYPE_CREDIT_CARD_NAME_FULL',
-              node: {
-                nodeLabel: 'textarea',
-                // eslint-disable-next-line max-len
-                snippet: '<textarea type="text" name="name_cc2" autocomplete="sectio-red cc-name">'},
+              nodeLabel: 'textarea',
+              snippet: '<textarea type="text" name="name_cc2" autocomplete="sectio-red cc-name">',
             },
             {
               id: '',
@@ -255,9 +245,8 @@ describe('Best Practices: autocomplete audit', () => {
                 attribute: 'shippin name',
                 prediction: 'NAME_FULL',
               },
-              node: {
-                nodeLabel: 'input',
-                snippet: '<input type="text" name="CCNo2" autocomplete="shippin name">'},
+              nodeLabel: 'input',
+              snippet: '<input type="text" name="CCNo2" autocomplete="shippin name">',
             },
           ],
           labels: [],
@@ -282,10 +271,9 @@ describe('Best Practices: autocomplete audit', () => {
                 attribute: 'shipping section-red cc-name',
                 prediction: 'HTML_TYPE_CREDIT_CARD_NAME_FULL',
               },
-              node: {
-                nodeLabel: 'textarea',
-                // eslint-disable-next-line max-len
-                snippet: '<textarea type="text" name="name_cc2" autocomplete="shipping section-red cc-name">'},
+              nodeLabel: 'textarea',
+              // eslint-disable-next-line max-len
+              snippet: '<textarea type="text" name="name_cc2" autocomplete="shipping section-red cc-name">',
             },
             {
               id: '',
@@ -296,10 +284,9 @@ describe('Best Practices: autocomplete audit', () => {
                 attribute: 'shipping section-red mobile tel',
                 prediction: 'HTML_TYPE_TEL',
               },
-              node: {
-                nodeLabel: 'input',
-                // eslint-disable-next-line max-len
-                snippet: '<input type="text" name="CCNo2" autocomplete="shipping section-red mobile tel">'},
+              nodeLabel: 'input',
+              // eslint-disable-next-line max-len
+              snippet: '<input type="text" name="CCNo2" autocomplete="shipping section-red mobile tel">',
             },
           ],
           labels: [],
@@ -347,9 +334,8 @@ describe('Best Practices: autocomplete audit', () => {
                 attribute: 'namez',
                 prediction: 'UNKNOWN_TYPE',
               },
-              node: {
-                nodeLabel: 'input',
-                snippet: '<input type="text" name="name_cc" autocomplete="namez">'},
+              nodeLabel: 'input',
+              snippet: '<input type="text" name="name_cc" autocomplete="namez">',
             },
             {
               id: '',
@@ -360,9 +346,8 @@ describe('Best Practices: autocomplete audit', () => {
                 attribute: 'ccc-num',
                 prediction: 'HTML_TYPE_CREDIT_CARD_NUMBER',
               },
-              node: {
-                nodeLabel: 'input',
-                snippet: '<input type="text" name="CCNo" autocomplete="ccc-num">'},
+              nodeLabel: 'input',
+              snippet: '<input type="text" name="CCNo" autocomplete="ccc-num">',
             },
           ],
           labels: [],
@@ -393,10 +378,9 @@ describe('Best Practices: autocomplete audit', () => {
                 attribute: 'shipping section-red cc-name',
                 prediction: 'HTML_TYPE_CREDIT_CARD_NAME_FULL',
               },
-              node: {
-                nodeLabel: 'textarea',
-                // eslint-disable-next-line max-len
-                snippet: '<textarea type="text" name="name_cc2" autocomplete="shipping section-red cc-name">'},
+              nodeLabel: 'textarea',
+              // eslint-disable-next-line max-len
+              snippet: '<textarea type="text" name="name_cc2" autocomplete="shipping section-red cc-name">',
             },
             {
               id: '',
@@ -407,10 +391,9 @@ describe('Best Practices: autocomplete audit', () => {
                 attribute: 'shipping section-red mobile tel',
                 prediction: 'HTML_TYPE_TEL',
               },
-              node: {
-                nodeLabel: 'input',
-                // eslint-disable-next-line max-len
-                snippet: '<input type="text" name="CCNo2" autocomplete="shipping section-red mobile tel">'},
+              nodeLabel: 'input',
+              // eslint-disable-next-line max-len
+              snippet: '<input type="text" name="CCNo2" autocomplete="shipping section-red mobile tel">',
             },
           ],
           labels: [],
@@ -443,9 +426,8 @@ describe('Autocomplete Audit: Check Attribute Validity', () => {
         attribute: '',
         prediction: '',
       },
-      node: {
-        nodeLabel: '',
-        snippet: ''},
+      nodeLabel: '',
+      snippet: '',
     };
     const output = Autocomplete.checkAttributeValidity(input);
     const expectedOutput = {hasValidTokens: false};
@@ -462,9 +444,8 @@ describe('Autocomplete Audit: Check Attribute Validity', () => {
         attribute: 'section-foo name',
         prediction: '',
       },
-      node: {
-        nodeLabel: '',
-        snippet: ''},
+      nodeLabel: '',
+      snippet: '',
     };
     const output = Autocomplete.checkAttributeValidity(input);
     const expectedOutput = {hasValidTokens: true, isValidOrder: true};
@@ -481,9 +462,8 @@ describe('Autocomplete Audit: Check Attribute Validity', () => {
         attribute: 'shipping mobile tel',
         prediction: '',
       },
-      node: {
-        nodeLabel: '',
-        snippet: ''},
+      nodeLabel: '',
+      snippet: '',
     };
     const output = Autocomplete.checkAttributeValidity(input);
     const expectedOutput = {hasValidTokens: true, isValidOrder: true};
@@ -501,9 +481,8 @@ describe('Autocomplete Audit: Check Attribute Validity', () => {
         attribute: 'mobile shipping tel',
         prediction: '',
       },
-      node: {
-        nodeLabel: '',
-        snippet: ''},
+      nodeLabel: '',
+      snippet: '',
     };
     const output = Autocomplete.checkAttributeValidity(input);
     const expectedOutput = {hasValidTokens: true, isValidOrder: false};
@@ -520,9 +499,8 @@ describe('Autocomplete Audit: Check Attribute Validity', () => {
         attribute: 'invalid-token',
         prediction: '',
       },
-      node: {
-        nodeLabel: '',
-        snippet: ''},
+      nodeLabel: '',
+      snippet: '',
     };
     const output = Autocomplete.checkAttributeValidity(input);
     const expectedOutput = {hasValidTokens: false};

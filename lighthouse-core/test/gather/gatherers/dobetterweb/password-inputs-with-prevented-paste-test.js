@@ -24,9 +24,7 @@ describe('PasswordInputsWithPreventedPaste gatherer', () => {
           evaluateAsync() {
             return Promise.resolve([
               {
-                node: {
-                  snippet: '<input type="password" onpaste="return false"/>',
-                },
+                snippet: '<input type="password" onpaste="return false"/>',
               },
             ]);
           },
@@ -34,7 +32,7 @@ describe('PasswordInputsWithPreventedPaste gatherer', () => {
       })
       .then(artifact => {
         assert.ok(typeof artifact === 'object');
-        assert.ok(artifact[0].node.snippet.length > 0);
+        assert.ok(artifact[0].snippet.length > 0);
       });
   });
 });

@@ -174,11 +174,10 @@ declare global {
         id: string;
         impact: string;
         tags: Array<string>;
-        nodes: Array<{
+        nodes: Array<NodeDetails & {
           html: string;
           target: Array<string>;
           failureSummary?: string;
-          node: NodeDetails;
         }>;
         // When rules error they set these properties
         // https://github.com/dequelabs/axe-core/blob/eeff122c2de11dd690fbad0e50ba2fdb244b50e8/lib/core/base/audit.js#L684-L693
@@ -219,11 +218,9 @@ declare global {
         params: {name: string; value: string}[];
       }
 
-      export interface IFrameElement {
+      export interface IFrameElement extends NodeDetails {
         /** The `id` attribute of the iframe. */
         id: string,
-        /** Details for node in DOM for the iframe element */
-        node: NodeDetails,
         /** The `src` attribute of the iframe. */
         src: string,
         /** The iframe's ClientRect. @see https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect */
@@ -240,7 +237,7 @@ declare global {
       }
 
       /** @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#Attributes */
-      export interface LinkElement {
+      export interface LinkElement extends NodeDetails {
         /** The `rel` attribute of the link, normalized to lower case. @see https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types */
         rel: 'alternate'|'canonical'|'dns-prefetch'|'preconnect'|'preload'|'stylesheet'|string;
         /** The `href` attribute of the link or `null` if it was invalid in the header. */
@@ -255,20 +252,17 @@ declare global {
         crossOrigin: string | null
         /** Where the link was found, either in the DOM or in the headers of the main document */
         source: 'head'|'body'|'headers'
-        node: NodeDetails | null
       }
 
-      export interface PasswordInputsWithPreventedPaste {node: NodeDetails}
+      export interface PasswordInputsWithPreventedPaste extends NodeDetails {}
 
-      export interface ScriptElement {
+      export interface ScriptElement extends NodeDetails {
         type: string | null
         src: string | null
         /** The `id` property of the script element; null if it had no `id` or if `source` is 'network'. */
         id: string | null
         async: boolean
         defer: boolean
-        /** Details for node in DOM for the script element */
-        node: NodeDetails | null
         /** Where the script was discovered, either in the head, the body, or network records. */
         source: 'head'|'body'|'network'
         /** The content of the inline script or the network record with the matching URL, null if the script had a src and no network record could be found. */
@@ -336,7 +330,7 @@ declare global {
       }
 
       /** @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#Attributes */
-      export interface AnchorElement {
+      export interface AnchorElement extends NodeDetails {
         rel: string
         /** The computed href property: https://www.w3.org/TR/DOM-Level-2-HTML/html.html#ID-88517319, use `rawHref` for the exact attribute value */
         href: string
@@ -346,7 +340,6 @@ declare global {
         text: string
         role: string
         target: string
-        node: NodeDetails
         onclick: string
         listeners?: Array<{
           type: Crdp.DOMDebugger.EventListener['type']
@@ -403,7 +396,7 @@ declare global {
         errors: Crdp.Page.InstallabilityError[];
       }
 
-      export interface ImageElement {
+      export interface ImageElement extends NodeDetails {
         src: string;
         /** The srcset attribute value. @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/srcset */
         srcset: string;
@@ -451,8 +444,6 @@ declare global {
         usesSrcSetDensityDescriptor: boolean;
         /** The size of the underlying image file in bytes. 0 if the file could not be identified. */
         resourceSize: number;
-        /** Details for node in DOM for the image element */
-        node: NodeDetails;
         /** The MIME type of the underlying image file. */
         mimeType?: string;
         /** The loading attribute of the image. */
@@ -500,16 +491,14 @@ declare global {
         left: number;
       }
 
-      export interface TapTarget {
-        node: NodeDetails;
+      export interface TapTarget extends NodeDetails {
         href: string;
         clientRects: Rect[];
       }
 
-      export interface TraceElement {
+      export interface TraceElement extends NodeDetails {
         traceEventType: 'largest-contentful-paint'|'layout-shift'|'animation';
         score?: number;
-        node: NodeDetails;
         nodeId?: number;
         animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[];
       }
@@ -717,12 +706,11 @@ declare global {
 
       export interface Form {
         /** If attributes is missing that means this is a formless set of elements. */
-        attributes?: {
+        attributes?: NodeDetails & {
           id: string;
           name: string;
           autocomplete: string;
         };
-        node: NodeDetails | null;
         inputs: Array<FormInput>;
         labels: Array<FormLabel>;
       }
@@ -737,13 +725,15 @@ declare global {
           attribute: string | null;
           prediction: string | null;
         }
-        node: NodeDetails;
+        nodeLabel: string;
+        snippet: string;
       }
 
       /** Attributes collected for every label element in the labels array from the forms interface */
       export interface FormLabel {
         for: string;
-        node: NodeDetails;
+        nodeLabel: string;
+        snippet: string;
       }
 
       /** Information about an event listener registered on the global object. */

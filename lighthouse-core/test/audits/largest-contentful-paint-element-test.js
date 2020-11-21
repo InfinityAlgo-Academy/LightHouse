@@ -14,12 +14,10 @@ describe('Performance: largest-contentful-paint-element audit', () => {
     const artifacts = {
       TraceElements: [{
         traceEventType: 'largest-contentful-paint',
-        node: {
-          devtoolsNodePath: '1,HTML,3,BODY,5,DIV,0,HEADER',
-          selector: 'div.l-header > div.chorus-emc__content',
-          nodeLabel: 'My Test Label',
-          snippet: '<h1 class="test-class">',
-        },
+        devtoolsNodePath: '1,HTML,3,BODY,5,DIV,0,HEADER',
+        selector: 'div.l-header > div.chorus-emc__content',
+        nodeLabel: 'My Test Label',
+        snippet: '<h1 class="test-class">',
       }],
     };
 

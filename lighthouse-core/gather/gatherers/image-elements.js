@@ -89,7 +89,7 @@ function getHTMLImages(allElements) {
       // https://html.spec.whatwg.org/multipage/images.html#pixel-density-descriptor
       usesSrcSetDensityDescriptor: / \d+(\.\d+)?x/.test(element.srcset),
       // @ts-expect-error - getNodeDetails put into scope via stringification
-      node: getNodeDetails(element),
+      ...getNodeDetails(element),
     };
   });
 }
@@ -140,7 +140,7 @@ function getCSSImages(allElements) {
       usesSrcSetDensityDescriptor: false,
       resourceSize: 0, // this will get overwritten below
       // @ts-expect-error - getNodeDetails put into scope via stringification
-      node: getNodeDetails(element),
+      ...getNodeDetails(element),
     });
   }
 
@@ -342,7 +342,7 @@ class ImageElements extends Gatherer {
       element.resourceSize = Math.min(resourceSize, transferSize);
 
       if (!element.isInShadowDOM && !element.isCss) {
-        await this.fetchSourceRules(driver, element.node.devtoolsNodePath, element);
+        await this.fetchSourceRules(driver, element.devtoolsNodePath, element);
       }
       // Images within `picture` behave strangely and natural size information isn't accurate,
       // CSS images have no natural size information at all. Try to get the actual size if we can.

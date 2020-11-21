@@ -18,98 +18,62 @@ function headersParam(headers) {
 
 const expectedGatheredTapTargets = [
   {
-    node: {
-      snippet: /large-link-at-bottom-of-page/,
-    },
+    snippet: /large-link-at-bottom-of-page/,
   },
   {
-    node: {
-      snippet: /visible-target/,
-    },
+    snippet: /visible-target/,
   },
   {
-    node: {
-      snippet: /target-with-client-rect-outside-scroll-container/,
-    },
+    snippet: /target-with-client-rect-outside-scroll-container/,
   },
   {
-    node: {
-      snippet: /link-containing-large-inline-block-element/,
-    },
+    snippet: /link-containing-large-inline-block-element/,
   },
   {
-    node: {
-      snippet: /link-next-to-link-containing-large-inline-block-element/,
-    },
+    snippet: /link-next-to-link-containing-large-inline-block-element/,
   },
   {
-    node: {
-      snippet: /tap-target-containing-other-tap-targets/,
-    },
+    snippet: /tap-target-containing-other-tap-targets/,
   },
   {
-    node: {
-      snippet: /child-client-rect-hidden-by-overflow-hidden/,
-    },
+    snippet: /child-client-rect-hidden-by-overflow-hidden/,
   },
   {
-    node: {
-      snippet: /tap-target-next-to-child-client-rect-hidden-by-overflow-hidden/,
-    },
+    snippet: /tap-target-next-to-child-client-rect-hidden-by-overflow-hidden/,
   },
   {
-    node: {
-      snippet: /child-client-rect-overlapping-other-target/,
-    },
+    snippet: /child-client-rect-overlapping-other-target/,
     shouldFail: true,
   },
   {
-    node: {
-      snippet: /tap-target-overlapped-by-other-targets-position-absolute-child-rect/,
-    },
+    snippet: /tap-target-overlapped-by-other-targets-position-absolute-child-rect/,
     shouldFail: true,
   },
   {
-    node: {
-      snippet: /position-absolute-tap-target-fully-contained-in-other-target/,
-    },
+    snippet: /position-absolute-tap-target-fully-contained-in-other-target/,
   },
   {
-    node: {
-      snippet: /tap-target-fully-containing-position-absolute-target/,
-    },
+    snippet: /tap-target-fully-containing-position-absolute-target/,
   },
   {
-    node: {
-      snippet: /too-small-failing-tap-target/,
-    },
+    snippet: /too-small-failing-tap-target/,
     shouldFail: true,
   },
   {
-    node: {
-      snippet: /large-enough-tap-target-next-to-too-small-tap-target/,
-    },
+    snippet: /large-enough-tap-target-next-to-too-small-tap-target/,
   },
   {
-    node: {
-      snippet: /zero-width-tap-target-with-overflowing-child-content/,
-    },
+    snippet: /zero-width-tap-target-with-overflowing-child-content/,
     shouldFail: true,
   },
   {
-    node: {
-      snippet: /passing-tap-target-next-to-zero-width-target/,
-    },
+    snippet: /passing-tap-target-next-to-zero-width-target/,
   },
   {
-    node: {
-      snippet: /links-with-same-link-target-1/,
-    },
+    snippet: /links-with-same-link-target-1/,
   },
   {
-    node: {
-      snippet: /links-with-same-link-target-2/,
-    },
+    snippet: /links-with-same-link-target-2/,
   },
 ];
 
@@ -459,7 +423,7 @@ const expectations = [
       },
     },
     artifacts: {
-      TapTargets: expectedGatheredTapTargets.map(({node}) => ({node})),
+      TapTargets: expectedGatheredTapTargets.map(({snippet}) => ({snippet})),
     },
   },
 ];

@@ -82,17 +82,13 @@ describe('External anchors use rel="noopener"', () => {
           href: 'https://example.com/test',
           target: '_blank',
           rel: 'nofollow',
-          node: {
-            devtoolsNodePath: 'devtools',
-          },
+          devtoolsNodePath: 'devtools',
         },
         {
           href: 'https://example.com/test1',
           target: '_blank',
           rel: '',
-          node: {
-            devtoolsNodePath: 'nodepath',
-          },
+          devtoolsNodePath: 'nodepath',
         },
       ],
       URL: {finalUrl: URL},
@@ -107,7 +103,7 @@ describe('External anchors use rel="noopener"', () => {
 
   it('fails when links have no href attribute', () => {
     const auditResult = ExternalAnchorsAudit.audit({
-      AnchorElements: [{href: '', target: '_blank', rel: '', node: {}}],
+      AnchorElements: [{href: '', target: '_blank', rel: ''}],
       URL: {finalUrl: URL},
     });
     assert.equal(auditResult.score, 0);
@@ -116,13 +112,12 @@ describe('External anchors use rel="noopener"', () => {
   });
 
   it('fails when links have href attribute starting with a protocol', () => {
-    const node = {};
     const auditResult = ExternalAnchorsAudit.audit({
       AnchorElements: [
-        {href: 'http://', target: '_blank', rel: '', node},
-        {href: 'http:', target: '_blank', rel: '', node},
-        {href: 'https://', target: '_blank', rel: '', node},
-        {href: 'https:', target: '_blank', rel: '', node},
+        {href: 'http://', target: '_blank', rel: ''},
+        {href: 'http:', target: '_blank', rel: ''},
+        {href: 'https://', target: '_blank', rel: ''},
+        {href: 'https:', target: '_blank', rel: ''},
       ],
       URL: {finalUrl: URL},
     });

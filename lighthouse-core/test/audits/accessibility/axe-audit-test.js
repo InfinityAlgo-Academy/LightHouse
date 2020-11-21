@@ -26,7 +26,7 @@ describe('Accessibility: axe-audit', () => {
         Accessibility: {
           violations: [{
             id: 'fake-aria-fail',
-            nodes: [],
+            nodes: [{}],
             help: 'http://example.com/',
           }],
         },
@@ -128,19 +128,13 @@ describe('Accessibility: axe-audit', () => {
         Accessibility: {
           incomplete: [{
             id: 'fake-axe-failure-case',
-            nodes: [{
-              html: '<input id="multi-label-form-element" />',
-              node: {},
-            }],
+            nodes: [{html: '<input id="multi-label-form-element" />'}],
             help: 'http://example.com/',
           }],
           // TODO: remove: axe-core v3.3.0 backwards-compatibility test
           violations: [{
             id: 'fake-axe-failure-case',
-            nodes: [{
-              html: '<input id="multi-label-form-element" />',
-              node: {},
-            }],
+            nodes: [{html: '<input id="multi-label-form-element" />'}],
             help: 'http://example.com/',
           }],
         },
@@ -192,12 +186,7 @@ describe('Accessibility: axe-audit', () => {
         violations: [
           {
             id: 'fake-axe-snippet-case',
-            nodes: [{
-              html: '<input id="axes-source" />',
-              node: {
-                snippet: '<input id="snippet"/>',
-              },
-            }],
+            nodes: [{html: '<input id="axes-source" />', snippet: '<input id="snippet"/>'}],
             help: 'http://example.com/',
           },
         ],
