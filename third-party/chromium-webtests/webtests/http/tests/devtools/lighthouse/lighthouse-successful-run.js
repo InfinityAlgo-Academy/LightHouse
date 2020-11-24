@@ -79,8 +79,9 @@
   });
 
   const resultsElement = LighthouseTestRunner.getResultsElement();
-  const auditElements = resultsElement.querySelectorAll('.lh-audit');
+  const auditElements = [...resultsElement.querySelectorAll('.lh-audit')];
   TestRunner.addResult(`\n# of .lh-audit divs: ${auditElements.length}`);
+  TestRunner.addResult(`\n.lh-audit divs:\n${auditElements.map(e => e.id).join('\n')}`);
 
   TestRunner.completeTest();
 })();
