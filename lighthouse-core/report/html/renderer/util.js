@@ -81,6 +81,7 @@ class Util {
         // into 'debugdata' (LHR ≥5.0).
         // @ts-expect-error tsc rightly flags that these values shouldn't occur.
         if (audit.details.type === undefined || audit.details.type === 'diagnostic') {
+          // @ts-expect-error details is of type never.
           audit.details.type = 'debugdata';
         }
 

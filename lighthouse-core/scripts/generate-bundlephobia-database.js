@@ -19,8 +19,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const getPackageVersionList = require('bundle-phobia-cli').fetchPackageStats.getPackageVersionList;
-const fetchPackageStats = require('bundle-phobia-cli').fetchPackageStats.fetchPackageStats;
+const {getPackageVersionList, fetchPackageStats} = require('bundle-phobia-cli').fetchPackageStats;
 const databasePath = path.join(__dirname,
   '../lib/large-javascript-libraries/bundlephobia-database.json');
 

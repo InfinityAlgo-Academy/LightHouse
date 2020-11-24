@@ -98,6 +98,9 @@ class GhPagesApp {
     });
   }
 
+  /**
+   * @return {Promise<void>}
+   */
   deploy() {
     return new Promise((resolve, reject) => {
       ghPages.publish(this.distDir, {

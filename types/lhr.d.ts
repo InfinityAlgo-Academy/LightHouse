@@ -53,7 +53,7 @@ declare global {
       /** Execution timings for the Lighthouse run */
       timing: Result.Timing;
       /** The record of all formatted string locations in the LHR and their corresponding source values. */
-      i18n: {rendererFormattedStrings: I18NRendererStrings, icuMessagePaths: IcuMessagePaths};
+      i18n: {rendererFormattedStrings: I18NRendererStrings, icuMessagePaths?: IcuMessagePaths};
       /** An array containing the result of all stack packs. */
       stackPacks?: Result.StackPack[];
     }

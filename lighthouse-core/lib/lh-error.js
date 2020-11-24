@@ -132,9 +132,10 @@ class LighthouseError extends Error {
    */
   static fromProtocolMessage(method, protocolError) {
     // extract all errors with a regex pattern to match against.
-    const protocolErrors = Object.values(LighthouseError.errors).filter(e => e.pattern);
     // if we find one, use the friendly LighthouseError definition
-    const matchedErrorDefinition = protocolErrors.find(e => e.pattern.test(protocolError.message));
+    const matchedErrorDefinition = Object.values(LighthouseError.errors)
+      .filter(e => e.pattern)
+      .find(e => e.pattern && e.pattern.test(protocolError.message));
     if (matchedErrorDefinition) {
       return new LighthouseError(matchedErrorDefinition);
     }
