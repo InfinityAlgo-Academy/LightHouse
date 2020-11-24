@@ -31,7 +31,6 @@ class FullPageScreenshot extends Gatherer {
   async _takeScreenshot(passContext, maxScreenshotHeight) {
     const driver = passContext.driver;
     const metrics = await driver.sendCommand('Page.getLayoutMetrics');
-    const deviceScaleFactor = await driver.evaluateAsync('window.devicePixelRatio');
 
     // Width should match emulated width, without considering content overhang.
     // Both layoutViewport and visualViewport capture this. visualViewport accounts
@@ -45,13 +44,9 @@ class FullPageScreenshot extends Gatherer {
     await driver.sendCommand('Emulation.setDeviceMetricsOverride', {
       mobile: passContext.baseArtifacts.TestedAsMobileDevice,
       height,
-      screenHeight: height,
       width,
-      screenWidth: width,
-      deviceScaleFactor,
+      deviceScaleFactor: 1,
       scale: 1,
-      positionX: 0,
-      positionY: 0,
       screenOrientation: {angle: 0, type: 'portraitPrimary'},
     });
 
@@ -77,9 +72,7 @@ class FullPageScreenshot extends Gatherer {
    * @return {Promise<LH.Artifacts.FullPageScreenshot | null>}
    */
   async afterPass_(passContext) {
-    const deviceScaleFactor = await passContext.driver.evaluateAsync('window.devicePixelRatio');
-    const maxScreenshotHeight = Math.floor(MAX_SCREENSHOT_HEIGHT / deviceScaleFactor);
-    let screenshot = await this._takeScreenshot(passContext, maxScreenshotHeight);
+    let screenshot = await this._takeScreenshot(passContext, MAX_SCREENSHOT_HEIGHT);
 
     if (screenshot.data.length > MAX_DATA_URL_SIZE) {
       // Hitting the data URL size limit is rare, it only happens for pages on tall
@@ -126,8 +119,6 @@ class FullPageScreenshot extends Gatherer {
           return {
             width: document.documentElement.clientWidth,
             height: document.documentElement.clientHeight,
-            screenWidth: window.screen.width,
-            screenHeight: window.screen.height,
             screenOrientation: {
               type: window.screen.orientation.type,
               angle: window.screen.orientation.angle,

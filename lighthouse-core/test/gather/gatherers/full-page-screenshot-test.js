@@ -8,7 +8,6 @@
 /* eslint-env jest */
 
 const FullPageScreenshotGatherer = require('../../../gather/gatherers/full-page-screenshot.js');
-const MAX_SCREENSHOT_HEIGHT = 16384;
 
 /**
  * @param {{contentSize: {width: number, height: number}, screenSize: {width?: number, height?: number, dpr: number}, screenshotData: string[]}}
@@ -18,9 +17,6 @@ function createMockDriver({contentSize, screenSize, screenshotData}) {
     evaluateAsync: async function(code) {
       if (code === 'window.innerWidth') {
         return contentSize.width;
-      }
-      if (code === 'window.devicePixelRatio') {
-        return screenSize ? screenSize.dpr : 1;
       }
       if (code.includes('document.documentElement.clientWidth')) {
         return {
@@ -131,11 +127,9 @@ describe('Full-page screenshot gatherer', () => {
       'Emulation.setDeviceMetricsOverride',
       expect.objectContaining({
         mobile: true,
-        deviceScaleFactor: 2,
+        deviceScaleFactor: 1,
         height: 1500,
         width: 500,
-        screenHeight: 1500,
-        screenWidth: 500,
       })
     );
 
@@ -147,8 +141,6 @@ describe('Full-page screenshot gatherer', () => {
         deviceScaleFactor: 2,
         height: 500,
         width: 500,
-        screenHeight: 500,
-        screenWidth: 500,
         screenOrientation: {
           type: 'landscapePrimary',
           angle: 30,
@@ -183,17 +175,18 @@ describe('Full-page screenshot gatherer', () => {
       expect.objectContaining({
         deviceScaleFactor: 1,
         height: FullPageScreenshotGatherer.MAX_SCREENSHOT_HEIGHT,
-        screenHeight: FullPageScreenshotGatherer.MAX_SCREENSHOT_HEIGHT,
       })
     );
   });
 
   it('captures a smaller screenshot if the captured data URL is too large', async () => {
     const fpsGatherer = new FullPageScreenshotGatherer();
+    const pageContentHeight = 15000;
+
     const driver = createMockDriver({
       contentSize: {
         width: 412,
-        height: 15000,
+        height: pageContentHeight,
       },
       screenSize: {
         dpr: 2,
@@ -216,17 +209,15 @@ describe('Full-page screenshot gatherer', () => {
     expect(driver.sendCommand).toHaveBeenCalledWith(
       'Emulation.setDeviceMetricsOverride',
       expect.objectContaining({
-        deviceScaleFactor: 2,
-        height: Math.floor(MAX_SCREENSHOT_HEIGHT / 2),
-        screenHeight: Math.floor(MAX_SCREENSHOT_HEIGHT / 2),
+        deviceScaleFactor: 1,
+        height: pageContentHeight,
       })
     );
     expect(driver.sendCommand).toHaveBeenCalledWith(
       'Emulation.setDeviceMetricsOverride',
       expect.objectContaining({
-        deviceScaleFactor: 2,
+        deviceScaleFactor: 1,
         height: 5000,
-        screenHeight: 5000,
       })
     );
 
@@ -235,10 +226,12 @@ describe('Full-page screenshot gatherer', () => {
 
   it('returns null if the captured data URL is way too large', async () => {
     const fpsGatherer = new FullPageScreenshotGatherer();
+    const pageContentHeight = 15000;
+
     const driver = createMockDriver({
       contentSize: {
         width: 412,
-        height: 15000,
+        height: pageContentHeight,
       },
       screenSize: {
         dpr: 3,
@@ -259,20 +252,20 @@ describe('Full-page screenshot gatherer', () => {
 
     const result = await fpsGatherer.afterPass(passContext);
 
+    // first attempt
     expect(driver.sendCommand).toHaveBeenCalledWith(
       'Emulation.setDeviceMetricsOverride',
       expect.objectContaining({
-        deviceScaleFactor: 3,
-        height: Math.floor(MAX_SCREENSHOT_HEIGHT / 3),
-        screenHeight: Math.floor(MAX_SCREENSHOT_HEIGHT / 3),
+        deviceScaleFactor: 1,
+        height: pageContentHeight,
       })
     );
+    // second attempt
     expect(driver.sendCommand).toHaveBeenCalledWith(
       'Emulation.setDeviceMetricsOverride',
       expect.objectContaining({
-        deviceScaleFactor: 3,
+        deviceScaleFactor: 1,
         height: 5000,
-        screenHeight: 5000,
       })
     );
 
