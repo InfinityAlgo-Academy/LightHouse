@@ -43,7 +43,7 @@ class IssuesPanelEntries extends Audit {
    */
   static get meta() {
     return {
-      id: 'has-inspector-issues',
+      id: 'inspector-issues',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),

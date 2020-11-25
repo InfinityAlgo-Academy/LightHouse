@@ -665,22 +665,22 @@
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | title": {
     "message": "Avoids requesting the geolocation permission on page load"
   },
-  "lighthouse-core/audits/dobetterweb/has-inspector-issues.js | columnIssueType": {
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | columnIssueType": {
     "message": "Issue type"
   },
-  "lighthouse-core/audits/dobetterweb/has-inspector-issues.js | description": {
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | description": {
     "message": "Issues logged to the `Issues` panel in Chrome Devtools indicate unresolved problems. They can come from network request failures, insufficient security controls, and other browser concerns. Open up the Issues panel in Chrome DevTools for more details on each issue."
   },
-  "lighthouse-core/audits/dobetterweb/has-inspector-issues.js | failureTitle": {
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | failureTitle": {
     "message": "Issues were logged in the `Issues` panel in Chrome Devtools"
   },
-  "lighthouse-core/audits/dobetterweb/has-inspector-issues.js | issueTypeBlockedByResponse": {
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | issueTypeBlockedByResponse": {
     "message": "Blocked by cross-origin policy"
   },
-  "lighthouse-core/audits/dobetterweb/has-inspector-issues.js | issueTypeHeavyAds": {
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | issueTypeHeavyAds": {
     "message": "Heavy resource usage by ads"
   },
-  "lighthouse-core/audits/dobetterweb/has-inspector-issues.js | title": {
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | title": {
     "message": "No issues in the `Issues` panel in Chrome Devtools"
   },
   "lighthouse-core/audits/dobetterweb/js-libraries.js | columnVersion": {

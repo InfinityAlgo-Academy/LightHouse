@@ -461,7 +461,6 @@ form-field-multiple-labels: notApplicable
 frame-title: notApplicable
 geolocation-on-start: pass
 gpt-bids-parallel: notApplicable
-has-inspector-issues: pass
 heading-order: notApplicable
 hreflang: pass
 html-has-lang: fail
@@ -471,6 +470,7 @@ image-alt: notApplicable
 image-aspect-ratio: pass
 image-size-responsive: pass
 input-image-alt: notApplicable
+inspector-issues: pass
 installable-manifest: fail
 interactive: flaky
 interactive-element-affordance: manual
@@ -676,7 +676,7 @@ js-libraries
 deprecations
 errors-in-console
 valid-source-maps
-has-inspector-issues
+inspector-issues
 preload-fonts
 viewport
 font-size

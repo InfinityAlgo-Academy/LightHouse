@@ -6,7 +6,7 @@
 'use strict';
 
 const InspectorIssuesAudit =
-  require('../../../audits/dobetterweb/has-inspector-issues.js');
+  require('../../../audits/dobetterweb/inspector-issues.js');
 
 /* eslint-env jest */
 

@@ -665,22 +665,22 @@
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | title": {
     "message": "Âv́ôíd̂ś r̂éq̂úêśt̂ín̂ǵ t̂h́ê ǵêól̂óĉát̂íôń p̂ér̂ḿîśŝíôń ôń p̂áĝé l̂óâd́"
   },
-  "lighthouse-core/audits/dobetterweb/has-inspector-issues.js | columnIssueType": {
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | columnIssueType": {
     "message": "Îśŝúê t́ŷṕê"
   },
-  "lighthouse-core/audits/dobetterweb/has-inspector-issues.js | description": {
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | description": {
     "message": "Îśŝúêś l̂óĝǵêd́ t̂ó t̂h́ê `Issues` ṕâńêĺ îń Ĉh́r̂óm̂é D̂év̂t́ôól̂ś îńd̂íĉát̂é ûńr̂éŝól̂v́êd́ p̂ŕôb́l̂ém̂ś. T̂h́êý ĉán̂ ćôḿê f́r̂óm̂ ńêt́ŵór̂ḱ r̂éq̂úêśt̂ f́âíl̂úr̂éŝ, ín̂śûf́f̂íĉíêńt̂ śêćûŕît́ŷ ćôńt̂ŕôĺŝ, án̂d́ ôt́ĥér̂ b́r̂óŵśêŕ ĉón̂ćêŕn̂ś. Ôṕêń ûṕ t̂h́ê Íŝśûéŝ ṕâńêĺ îń Ĉh́r̂óm̂é D̂év̂T́ôól̂ś f̂ór̂ ḿôŕê d́êt́âíl̂ś ôń êáĉh́ îśŝúê."
   },
-  "lighthouse-core/audits/dobetterweb/has-inspector-issues.js | failureTitle": {
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | failureTitle": {
     "message": "Îśŝúêś ŵér̂é l̂óĝǵêd́ îń t̂h́ê `Issues` ṕâńêĺ îń Ĉh́r̂óm̂é D̂év̂t́ôól̂ś"
   },
-  "lighthouse-core/audits/dobetterweb/has-inspector-issues.js | issueTypeBlockedByResponse": {
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | issueTypeBlockedByResponse": {
     "message": "B̂ĺôćk̂éd̂ b́ŷ ćr̂óŝś-ôŕîǵîń p̂ól̂íĉý"
   },
-  "lighthouse-core/audits/dobetterweb/has-inspector-issues.js | issueTypeHeavyAds": {
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | issueTypeHeavyAds": {
     "message": "Ĥéâv́ŷ ŕêśôúr̂ćê úŝáĝé b̂ý âd́ŝ"
   },
-  "lighthouse-core/audits/dobetterweb/has-inspector-issues.js | title": {
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | title": {
     "message": "N̂ó îśŝúêś îń t̂h́ê `Issues` ṕâńêĺ îń Ĉh́r̂óm̂é D̂év̂t́ôól̂ś"
   },
   "lighthouse-core/audits/dobetterweb/js-libraries.js | columnVersion": {

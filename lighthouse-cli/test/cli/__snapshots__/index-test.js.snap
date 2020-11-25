@@ -403,7 +403,7 @@ Object {
       "path": "dobetterweb/geolocation-on-start",
     },
     Object {
-      "path": "dobetterweb/has-inspector-issues",
+      "path": "dobetterweb/inspector-issues",
     },
     Object {
       "path": "dobetterweb/no-document-write",
@@ -805,7 +805,7 @@ Object {
         },
         Object {
           "group": "best-practices-general",
-          "id": "has-inspector-issues",
+          "id": "inspector-issues",
           "weight": 1,
         },
       ],
