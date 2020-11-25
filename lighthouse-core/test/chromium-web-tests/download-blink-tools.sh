@@ -34,8 +34,6 @@ if [ -e "$VERSIONED_DIR" ]; then
   echo "cached blink tools found"
 else
   mkdir -p "$VERSIONED_DIR/third_party/blink/tools"
-  rm "$BLINK_TOOLS_PATH/latest" || true
-  ln -s "$VERSIONED_DIR" "$BLINK_TOOLS_PATH/latest"
 
   wget "https://chromium.googlesource.com/chromium/src/+archive/$commit_chromium/third_party/blink/tools.tar.gz" --no-check-certificate -q -O blinktools.tar.gz
   tar -xf blinktools.tar.gz -C "$VERSIONED_DIR/third_party/blink/tools"

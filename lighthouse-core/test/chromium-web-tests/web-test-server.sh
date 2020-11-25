@@ -12,12 +12,16 @@ set -euo pipefail
 latest_content_shell_dir=$(ls -t "$LH_ROOT/.tmp/chromium-web-tests/content-shells/" | head -n1)
 export latest_content_shell="$LH_ROOT/.tmp/chromium-web-tests/content-shells/$latest_content_shell_dir"
 
+latest_blink_tools_dir=$(ls -t "$LH_ROOT/.tmp/chromium-web-tests/blink_tools/" | head -n1)
+export latest_blink_tools="$LH_ROOT/.tmp/chromium-web-tests/blink_tools/$latest_blink_tools_dir"
+
 # Run a very basic server on port 8000. Only thing we need is:
 #   - /devtools -> the layout tests for devtools frontend
 #   - /inspector-sources -> the inspector resources from the content shell
 #   - CORS (Access-Control-Allow-Origin header)
 
-ln -s "$DEVTOOLS_PATH/out/Default/resources/inspector" "$DEVTOOLS_PATH/test/webtests/http/tests/inspector-sources"
+# rm "$DEVTOOLS_PATH/test/webtests/http/tests/inspector-sources"
+ln -s "$DEVTOOLS_PATH/out/Default/resources/inspector" "$DEVTOOLS_PATH/test/webtests/http/tests/inspector-sources" || true
 
 # Kill background jobs when script ends.
 cleanup() {
@@ -42,15 +46,17 @@ echo "Server is up"
 rm -rf "$latest_content_shell/out/Release/layout-test-results"
 
 # Add typ to python path. The regular method assumes there is a Chromium checkout.
-export PYTHONPATH="${PYTHONPATH:-}:$BLINK_TOOLS_PATH/latest/third_party/typ"
+export PYTHONPATH="${PYTHONPATH:-}:$latest_blink_tools/third_party/typ"
 
 # Don't quit if the python command fails.
 set +e
 # Print the python command.
 set -x
 
+export FONTCONFIG_PATH=/etc/fonts
+
 python \
-  "$BLINK_TOOLS_PATH/latest/third_party/blink/tools/run_web_tests.py" \
+  "$latest_blink_tools/third_party/blink/tools/run_web_tests.py" \
   --layout-tests-directory="$DEVTOOLS_PATH/test/webtests" \
   --build-directory="$latest_content_shell/out" \
   $*
