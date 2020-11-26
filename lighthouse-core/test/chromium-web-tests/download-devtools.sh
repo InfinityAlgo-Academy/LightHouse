@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -euxo pipefail
 
 ##
 # @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
@@ -10,21 +10,21 @@ set -euo pipefail
 
 if [ -d "$DEVTOOLS_PATH" ]
 then
-  echo "Directory $DEVTOOLS_PATH already exists."
+  echo "Directory $DEVTOOLS_PATH already exists. Updating checkout"
   cd "$DEVTOOLS_PATH"
-  exit 0
+  set -x
+  git checkout -- .
+  git pull
+else
+  echo "Downloading DevTools frontend at $DEVTOOLS_PATH"
+  set -x
+  mkdir -p `dirname $DEVTOOLS_PATH`
+  cd `dirname $DEVTOOLS_PATH`
+  fetch --nohooks --no-history devtools-frontend
+  cd devtools-frontend
+  gn gen out/Default
 fi
 
-echo "Downloading DevTools frontend at $DEVTOOLS_PATH"
-mkdir -p `dirname $DEVTOOLS_PATH`
-cd `dirname $DEVTOOLS_PATH`
-
-set -x
-
-fetch --nohooks --no-history devtools-frontend
-cd devtools-frontend
-
 gclient sync
-gn gen out/Default
 
 set +x
