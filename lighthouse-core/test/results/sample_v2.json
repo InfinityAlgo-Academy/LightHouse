@@ -1442,6 +1442,7 @@
             "totalBlockingTime": 117,
             "maxPotentialFID": 123,
             "cumulativeLayoutShift": 0.42,
+            "cumulativeLayoutShiftAllFrames": 0,
             "observedTimeOrigin": 0,
             "observedTimeOriginTs": 185603319912,
             "observedNavigationStart": 0,
@@ -1461,6 +1462,7 @@
             "observedDomContentLoaded": 4901,
             "observedDomContentLoadedTs": 185608220734,
             "observedCumulativeLayoutShift": 0.42,
+            "observedCumulativeLayoutShiftAllFrames": 0,
             "observedFirstVisualChange": 3969,
             "observedFirstVisualChangeTs": 185607288912,
             "observedLastVisualChange": 4791,
@@ -5831,6 +5833,12 @@
       {
         "startTime": 0,
         "name": "lh:computed:LargestContentfulPaintAllFrames",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:CumulativeLayoutShiftAllFrames",
         "duration": 100,
         "entryType": "measure"
       },

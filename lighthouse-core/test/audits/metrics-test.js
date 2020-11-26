@@ -14,8 +14,8 @@ const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.
 const lcpTrace = require('../fixtures/traces/lcp-m78.json');
 const lcpDevtoolsLog = require('../fixtures/traces/lcp-m78.devtools.log.json');
 
-const lcpAllFramesTrace = require('../fixtures/traces/lcp-all-frames-m89.json');
-const lcpAllFramesDevtoolsLog = require('../fixtures/traces/lcp-all-frames-m89.devtools.log.json');
+const metricsAllFramesTrace = require('../fixtures/traces/frame-metrics-m89.json');
+const metricsAllFramesDevtoolsLog = require('../fixtures/traces/frame-metrics-m89.devtools.log.json'); // eslint-disable-line max-len
 
 const artifactsTrace = require('../results/artifacts/defaultPass.trace.json');
 const artifactsDevtoolsLog = require('../results/artifacts/defaultPass.devtoolslog.json');
@@ -71,10 +71,10 @@ describe('Performance: metrics', () => {
   it('evaluates valid input (with lcp from all frames) correctly', async () => {
     const artifacts = {
       traces: {
-        [MetricsAudit.DEFAULT_PASS]: lcpAllFramesTrace,
+        [MetricsAudit.DEFAULT_PASS]: metricsAllFramesTrace,
       },
       devtoolsLogs: {
-        [MetricsAudit.DEFAULT_PASS]: lcpAllFramesDevtoolsLog,
+        [MetricsAudit.DEFAULT_PASS]: metricsAllFramesDevtoolsLog,
       },
     };
 
@@ -97,6 +97,24 @@ describe('Performance: metrics', () => {
     const {details} = await MetricsAudit.audit(artifacts, context);
     expect(details.items[0].cumulativeLayoutShift).toMatchInlineSnapshot(`0.42`);
     expect(details.items[0].observedCumulativeLayoutShift).toMatchInlineSnapshot(`0.42`);
+  });
+
+  it('evaluates valid input (with CLS from all frames) correctly', async () => {
+    const artifacts = {
+      traces: {
+        [MetricsAudit.DEFAULT_PASS]: metricsAllFramesTrace,
+      },
+      devtoolsLogs: {
+        [MetricsAudit.DEFAULT_PASS]: metricsAllFramesDevtoolsLog,
+      },
+    };
+
+    const context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
+    const {details} = await MetricsAudit.audit(artifacts, context);
+    expect(details.items[0].cumulativeLayoutShift).toBeCloseTo(0.0011);
+    expect(details.items[0].observedCumulativeLayoutShift).toBeCloseTo(0.0011);
+    expect(details.items[0].cumulativeLayoutShiftAllFrames).toBeCloseTo(0.54);
+    expect(details.items[0].observedCumulativeLayoutShiftAllFrames).toBeCloseTo(0.54);
   });
 
   it('does not fail the entire audit when TTI errors', async () => {

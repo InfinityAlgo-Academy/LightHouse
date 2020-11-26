@@ -14,6 +14,7 @@ const LargestContentfulPaintAllFrames = require('./largest-contentful-paint-all-
 const FirstCPUIdle = require('./first-cpu-idle.js');
 const Interactive = require('./interactive.js');
 const CumulativeLayoutShift = require('./cumulative-layout-shift.js');
+const CumulativeLayoutShiftAllFrames = require('./cumulative-layout-shift-all-frames.js');
 const SpeedIndex = require('./speed-index.js');
 const EstimatedInputLatency = require('./estimated-input-latency.js');
 const MaxPotentialFID = require('./max-potential-fid.js');
@@ -49,6 +50,7 @@ class TimingSummary {
     const firstCPUIdle = await requestOrUndefined(FirstCPUIdle, metricComputationData);
     const interactive = await requestOrUndefined(Interactive, metricComputationData);
     const cumulativeLayoutShift = await requestOrUndefined(CumulativeLayoutShift, trace);
+    const cumulativeLayoutShiftAllFrames = await requestOrUndefined(CumulativeLayoutShiftAllFrames, trace); // eslint-disable-line max-len
     const maxPotentialFID = await requestOrUndefined(MaxPotentialFID, metricComputationData);
     const speedIndex = await requestOrUndefined(SpeedIndex, metricComputationData);
     const estimatedInputLatency = await EstimatedInputLatency.request(metricComputationData, context); // eslint-disable-line max-len
@@ -57,6 +59,8 @@ class TimingSummary {
     const cumulativeLayoutShiftValue = cumulativeLayoutShift &&
       cumulativeLayoutShift.value !== null ?
       cumulativeLayoutShift.value : undefined;
+    const cumulativeLayoutShiftAllFramesValue = cumulativeLayoutShiftAllFrames ?
+      cumulativeLayoutShiftAllFrames.value : undefined;
 
     /** @type {LH.Artifacts.TimingSummary} */
     const metrics = {
@@ -80,6 +84,7 @@ class TimingSummary {
       totalBlockingTime: totalBlockingTime.timing,
       maxPotentialFID: maxPotentialFID && maxPotentialFID.timing,
       cumulativeLayoutShift: cumulativeLayoutShiftValue,
+      cumulativeLayoutShiftAllFrames: cumulativeLayoutShiftAllFramesValue,
 
       // Include all timestamps of interest from trace of tab
       observedTimeOrigin: traceOfTab.timings.timeOrigin,
@@ -105,6 +110,7 @@ class TimingSummary {
       observedDomContentLoaded: traceOfTab.timings.domContentLoaded,
       observedDomContentLoadedTs: traceOfTab.timestamps.domContentLoaded,
       observedCumulativeLayoutShift: cumulativeLayoutShiftValue,
+      observedCumulativeLayoutShiftAllFrames: cumulativeLayoutShiftAllFramesValue,
 
       // Include some visual metrics from speedline
       observedFirstVisualChange: speedline.first,

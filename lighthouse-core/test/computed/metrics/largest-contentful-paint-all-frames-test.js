@@ -8,8 +8,8 @@
 const assert = require('assert').strict;
 
 const LargestContentfulPaintAllFrames = require('../../../computed/metrics/largest-contentful-paint-all-frames.js'); // eslint-disable-line max-len
-const traceAllFrames = require('../../fixtures/traces/lcp-all-frames-m89.json');
-const devtoolsLogAllFrames = require('../../fixtures/traces/lcp-all-frames-m89.devtools.log.json');
+const traceAllFrames = require('../../fixtures/traces/frame-metrics-m89.json');
+const devtoolsLogAllFrames = require('../../fixtures/traces/frame-metrics-m89.devtools.log.json');
 const traceMainFrame = require('../../fixtures/traces/lcp-m78.json');
 const devtoolsLogMainFrame = require('../../fixtures/traces/lcp-m78.devtools.log.json');
 const invalidTrace = require('../../fixtures/traces/progressive-app-m60.json');
@@ -32,8 +32,8 @@ describe('Metrics: LCP from all frames', () => {
     const context = {settings, computedCache: new Map()};
     const result = await LargestContentfulPaintAllFrames.request({trace: traceAllFrames, devtoolsLog: devtoolsLogAllFrames, settings}, context); // eslint-disable-line max-len
 
-    assert.equal(Math.round(result.timing), 2258);
-    assert.equal(result.timestamp, 10240528038);
+    assert.equal(Math.round(result.timing), 5948);
+    assert.equal(result.timestamp, 46139690898);
   });
 
   it('should fail to compute an observed value for old trace', async () => {
