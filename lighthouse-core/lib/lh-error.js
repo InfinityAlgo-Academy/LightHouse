@@ -276,6 +276,10 @@ const ERRORS = {
     code: 'NO_LCP',
     message: UIStrings.badTraceRecording,
   },
+  NO_LCP_ALL_FRAMES: {
+    code: 'NO_LCP_ALL_FRAMES',
+    message: UIStrings.badTraceRecording,
+  },
   UNSUPPORTED_OLD_CHROME: {
     code: 'UNSUPPORTED_OLD_CHROME',
     message: UIStrings.oldChromeDoesNotSupportFeature,

@@ -5830,6 +5830,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:LargestContentfulPaintAllFrames",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:offline-start-url",
         "duration": 100,
         "entryType": "measure"

@@ -14,6 +14,9 @@ const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.
 const lcpTrace = require('../fixtures/traces/lcp-m78.json');
 const lcpDevtoolsLog = require('../fixtures/traces/lcp-m78.devtools.log.json');
 
+const lcpAllFramesTrace = require('../fixtures/traces/lcp-all-frames-m89.json');
+const lcpAllFramesDevtoolsLog = require('../fixtures/traces/lcp-all-frames-m89.devtools.log.json');
+
 const artifactsTrace = require('../results/artifacts/defaultPass.trace.json');
 const artifactsDevtoolsLog = require('../results/artifacts/defaultPass.devtoolslog.json');
 
@@ -61,6 +64,21 @@ describe('Performance: metrics', () => {
     };
 
     const context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
+    const result = await MetricsAudit.audit(artifacts, context);
+    expect(result.details.items[0]).toMatchSnapshot();
+  });
+
+  it('evaluates valid input (with lcp from all frames) correctly', async () => {
+    const artifacts = {
+      traces: {
+        [MetricsAudit.DEFAULT_PASS]: lcpAllFramesTrace,
+      },
+      devtoolsLogs: {
+        [MetricsAudit.DEFAULT_PASS]: lcpAllFramesDevtoolsLog,
+      },
+    };
+
+    const context = {settings: {throttlingMethod: 'provided'}, computedCache: new Map()};
     const result = await MetricsAudit.audit(artifacts, context);
     expect(result.details.items[0]).toMatchSnapshot();
   });
