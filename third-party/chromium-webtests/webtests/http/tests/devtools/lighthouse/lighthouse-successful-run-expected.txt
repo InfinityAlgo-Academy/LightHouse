@@ -119,6 +119,9 @@ Gathering: Accessibility
 Gathering: TraceElements
 Gathering: InspectorIssues
 Gathering: SourceMaps
+Populate base artifacts
+Get webapp manifest
+Collect stacks
 Running offlinePass pass
 Resetting state with about:blank
 Setting up network for the pass trace
