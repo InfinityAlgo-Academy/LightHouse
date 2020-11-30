@@ -106,6 +106,7 @@ class Driver {
     });
 
     this.on('Page.frameNavigated', evt => this._monitoredUrlNavigations.push(evt.frame));
+    this.on('Debugger.paused', () => this.sendCommand('Debugger.resume'));
 
     connection.on('protocolevent', this._handleProtocolEvent.bind(this));
 
