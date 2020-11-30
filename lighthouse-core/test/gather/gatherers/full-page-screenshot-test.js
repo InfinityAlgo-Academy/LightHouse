@@ -50,7 +50,7 @@ function createMockDriver({contentSize, screenSize, screenshotData}) {
   };
 }
 
-describe('Full-page screenshot gatherer', () => {
+describe('FullPageScreenshot gatherer', () => {
   it('captures a full-page screenshot', async () => {
     const fpsGatherer = new FullPageScreenshotGatherer();
     const driver = createMockDriver({
@@ -69,9 +69,12 @@ describe('Full-page screenshot gatherer', () => {
 
     const artifact = await fpsGatherer.afterPass(passContext);
     expect(artifact).toEqual({
-      data: 'data:image/jpeg;base64,abc',
-      height: 2000,
-      width: 412,
+      screenshot: {
+        data: 'data:image/jpeg;base64,abc',
+        height: 2000,
+        width: 412,
+      },
+      nodes: {},
     });
   });
 

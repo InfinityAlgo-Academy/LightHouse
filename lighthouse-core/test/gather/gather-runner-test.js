@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 
-jest.mock('../../lib/stack-collector.js', () => () => Promise.resolve([]));
+require('../test-utils.js').makeMocksForGatherRunner();
 
 const Gatherer = require('../../gather/gatherers/gatherer.js');
 const GatherRunner_ = require('../../gather/gather-runner.js');

@@ -85,6 +85,7 @@ class ExecutionContext {
       expression: `(function wrapInNativePromise() {
         const __nativePromise = window.__nativePromise || Promise;
         const URL = window.__nativeURL || window.URL;
+        window.__lighthouseExecutionContextId = ${contextId};
         return new __nativePromise(function (resolve) {
           return __nativePromise.resolve()
             .then(_ => ${expression})

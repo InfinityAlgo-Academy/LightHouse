@@ -5,7 +5,10 @@
  */
 'use strict';
 
+/* globals window getBoundingClientRect */
+
 const Gatherer = require('./gatherer.js');
+const pageFunctions = require('../../lib/page-functions.js');
 
 // JPEG quality setting
 // Exploration and examples of reports using different quality settings: https://docs.google.com/document/d/1ZSffucIca9XDW2eEwfoevrk-OTl7WQFeMf0CgeJAA8M/edit#
@@ -23,7 +26,7 @@ function snakeCaseToCamelCase(str) {
 class FullPageScreenshot extends Gatherer {
   /**
    * @param {LH.Gatherer.PassContext} passContext
-   * @return {Promise<LH.Artifacts.FullPageScreenshot>}
+   * @return {Promise<LH.Artifacts.FullPageScreenshot['screenshot']>}
    */
   async _takeScreenshot(passContext) {
     const driver = passContext.driver;
@@ -65,6 +68,46 @@ class FullPageScreenshot extends Gatherer {
   }
 
   /**
+   * Gatherers can collect details about DOM nodes, including their position on the page.
+   * Layout shifts occuring after a gatherer runs can cause these positions to be incorrect,
+   * resulting in a poor experience for element screenshots.
+   * `getNodeDetails` maintains a collection of DOM objects in the page, which we can iterate
+   * to re-collect the bounding client rectangle.
+   * @see pageFunctions.getNodeDetails
+   * @param {LH.Gatherer.PassContext} passContext
+   * @return {Promise<LH.Artifacts.FullPageScreenshot['nodes']>}
+   */
+  async _resolveNodes(passContext) {
+    function resolveNodes() {
+      /** @type {LH.Artifacts.FullPageScreenshot['nodes']} */
+      const nodes = {};
+      if (!window.__lighthouseNodesDontTouchOrAllVarianceGoesAway) return nodes;
+
+      const lhIdToElements = window.__lighthouseNodesDontTouchOrAllVarianceGoesAway;
+      for (const [node, id] of lhIdToElements.entries()) {
+        // @ts-expect-error - getBoundingClientRect put into scope via stringification
+        const rect = getBoundingClientRect(node);
+        if (rect.width || rect.height) nodes[id] = rect;
+      }
+
+      return nodes;
+    }
+    const expression = `(function () {
+      ${pageFunctions.getBoundingClientRectString};
+      return (${resolveNodes.toString()}());
+    })()`;
+
+    // Collect nodes with the page context (`useIsolation: false`) and with our own, reused
+    // context (useIsolation: false). Gatherers use both modes when collecting node details,
+    // so we must do the same here too.
+    const pageContextResult =
+      await passContext.driver.evaluateAsync(expression, {useIsolation: false});
+    const isolatedContextResult =
+      await passContext.driver.evaluateAsync(expression, {useIsolation: true});
+    return {...pageContextResult, ...isolatedContextResult};
+  }
+
+  /**
    * @param {LH.Gatherer.PassContext} passContext
    * @return {Promise<LH.Artifacts['FullPageScreenshot']>}
    */
@@ -77,8 +120,10 @@ class FullPageScreenshot extends Gatherer {
       !passContext.settings.internalDisableDeviceScreenEmulation;
 
     try {
-      const screenshot = await this._takeScreenshot(passContext);
-      return screenshot;
+      return {
+        screenshot: await this._takeScreenshot(passContext),
+        nodes: await this._resolveNodes(passContext),
+      };
     } finally {
       // Revert resized page.
       if (lighthouseControlsEmulation) {

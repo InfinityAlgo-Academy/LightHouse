@@ -446,20 +446,55 @@ function wrapRequestIdleCallback(cpuSlowdownMultiplier) {
   };
 }
 
-const getNodeDetailsString = `function getNodeDetails(elem) {
+/**
+ * @param {HTMLElement} element
+ */
+function getNodeDetailsImpl(element) {
+  // This bookkeeping is for the FullPageScreenshot gatherer.
+  if (!window.__lighthouseNodesDontTouchOrAllVarianceGoesAway) {
+    window.__lighthouseNodesDontTouchOrAllVarianceGoesAway = new Map();
+  }
+
+  // Create an id that will be unique across all execution contexts.
+  // The id could be any arbitrary string, the exact value is not important.
+  // For example, tagName is added only because it might be useful for debugging.
+  // But execution id and map size are added to ensure uniqueness.
+  // We also dedupe this id so that details collected for an element within the same
+  // pass and execution context will share the same id. Not technically important, but
+  // cuts down on some duplication.
+  let lhId = window.__lighthouseNodesDontTouchOrAllVarianceGoesAway.get(element);
+  if (!lhId) {
+    lhId = [
+      window.__lighthouseExecutionContextId !== undefined ?
+        window.__lighthouseExecutionContextId :
+        'page',
+      window.__lighthouseNodesDontTouchOrAllVarianceGoesAway.size,
+      element.tagName,
+    ].join('-');
+    window.__lighthouseNodesDontTouchOrAllVarianceGoesAway.set(element, lhId);
+  }
+
+  const htmlElement = element instanceof ShadowRoot ? element.host : element;
+  const details = {
+    lhId,
+    devtoolsNodePath: getNodePath(element),
+    selector: getNodeSelector(htmlElement),
+    boundingRect: getBoundingClientRect(htmlElement),
+    snippet: getOuterHTMLSnippet(element),
+    nodeLabel: getNodeLabel(htmlElement),
+  };
+
+  return details;
+}
+
+const getNodeDetailsString = `function getNodeDetails(element) {
   ${getNodePath.toString()};
   ${getNodeSelector.toString()};
   ${getBoundingClientRect.toString()};
   ${getOuterHTMLSnippet.toString()};
   ${getNodeLabel.toString()};
-  const htmlElem = elem instanceof ShadowRoot ? elem.host : elem;
-  return {
-    devtoolsNodePath: getNodePath(elem),
-    selector: getNodeSelector(htmlElem),
-    boundingRect: getBoundingClientRect(htmlElem),
-    snippet: getOuterHTMLSnippet(elem),
-    nodeLabel: getNodeLabel(htmlElem),
-  };
+  ${getNodeDetailsImpl.toString()};
+  return getNodeDetailsImpl(element);
 }`;
 
 module.exports = {

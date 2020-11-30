@@ -5,7 +5,7 @@
  */
 'use strict';
 
-jest.mock('../lib/stack-collector.js', () => () => Promise.resolve([]));
+require('./test-utils.js').makeMocksForGatherRunner();
 
 const Runner = require('../runner.js');
 const GatherRunner = require('../gather/gather-runner.js');

@@ -322,4 +322,10 @@ declare global {
       webSocketDebuggerUrl: string;
     }
   }
+
+  interface Window {
+    /** Used by FullPageScreenshot gatherer. */
+    __lighthouseNodesDontTouchOrAllVarianceGoesAway: Map<HTMLElement, string>;
+    __lighthouseExecutionContextId?: number;
+  }
 }

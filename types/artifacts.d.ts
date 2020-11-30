@@ -158,6 +158,7 @@ declare global {
       export type MetaElement = LH.Artifacts['MetaElements'][0];
 
       export interface NodeDetails {
+        lhId?: string,
         devtoolsNodePath: string,
         selector: string,
         boundingRect: Rect | null,
@@ -656,10 +657,13 @@ declare global {
       }
 
       export interface FullPageScreenshot {
-        /** Base64 image data URL. */
-        data: string;
-        width: number;
-        height: number;
+        screenshot: {
+          /** Base64 image data URL. */
+          data: string;
+          width: number;
+          height: number;
+        };
+        nodes: Record<string, Rect>;
       }
 
       export interface TimingSummary {
