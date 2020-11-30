@@ -4475,7 +4475,11 @@
         {
           "id": "largest-contentful-paint",
           "weight": 25,
-          "group": "metrics"
+          "group": "metrics",
+          "relevantAudits": [
+            "largest-contentful-paint-element",
+            "preload-lcp-image"
+          ]
         },
         {
           "id": "interactive",
@@ -4485,12 +4489,21 @@
         {
           "id": "total-blocking-time",
           "weight": 25,
-          "group": "metrics"
+          "group": "metrics",
+          "relevantAudits": [
+            "long-tasks",
+            "third-party-summary"
+          ]
         },
         {
           "id": "cumulative-layout-shift",
           "weight": 5,
-          "group": "metrics"
+          "group": "metrics",
+          "relevantAudits": [
+            "layout-shift-elements",
+            "non-composited-animations",
+            "unsized-images"
+          ]
         },
         {
           "id": "first-cpu-idle",
