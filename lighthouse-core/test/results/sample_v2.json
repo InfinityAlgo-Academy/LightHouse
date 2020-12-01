@@ -4476,6 +4476,7 @@
           "id": "largest-contentful-paint",
           "weight": 25,
           "group": "metrics",
+          "acronym": "LCP",
           "relevantAudits": [
             "largest-contentful-paint-element",
             "preload-lcp-image"
@@ -4490,6 +4491,7 @@
           "id": "total-blocking-time",
           "weight": 25,
           "group": "metrics",
+          "acronym": "TBT",
           "relevantAudits": [
             "long-tasks",
             "third-party-summary"
@@ -4499,6 +4501,7 @@
           "id": "cumulative-layout-shift",
           "weight": 5,
           "group": "metrics",
+          "acronym": "CLS",
           "relevantAudits": [
             "layout-shift-elements",
             "non-composited-animations",
