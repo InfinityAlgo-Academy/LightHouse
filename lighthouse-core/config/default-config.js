@@ -429,10 +429,19 @@ const defaultConfig = {
       auditRefs: [
         {id: 'first-contentful-paint', weight: 15, group: 'metrics'},
         {id: 'speed-index', weight: 15, group: 'metrics'},
-        {id: 'largest-contentful-paint', weight: 25, group: 'metrics', acronym: 'LCP', relevantAudits: ['largest-contentful-paint-element', 'preload-lcp-image']},
+        {id: 'largest-contentful-paint', weight: 25, group: 'metrics', acronym: 'LCP', relevantAudits: [
+          'largest-contentful-paint-element', 'preload-lcp-image',
+          'server-response-time', 'render-blocking-resources', 'critical-request-chains',
+        ]},
         {id: 'interactive', weight: 15, group: 'metrics'},
-        {id: 'total-blocking-time', weight: 25, group: 'metrics', acronym: 'TBT', relevantAudits: ['long-tasks', 'third-party-summary']},
-        {id: 'cumulative-layout-shift', weight: 5, group: 'metrics', acronym: 'CLS', relevantAudits: ['layout-shift-elements', 'non-composited-animations', 'unsized-images']},
+        {id: 'total-blocking-time', weight: 25, group: 'metrics', acronym: 'TBT', relevantAudits: [
+          'long-tasks', 'third-party-summary',
+          'bootup-time', 'mainthread-work-breakdown',
+        ]},
+        {id: 'cumulative-layout-shift', weight: 5, group: 'metrics', acronym: 'CLS', relevantAudits: [
+          'layout-shift-elements', 'non-composited-animations', 'unsized-images',
+          'preload-fonts', // actually in BP, rather than perf
+        ]},
         // intentionally left out of metrics group so they won't be displayed
         {id: 'first-cpu-idle', weight: 0},
         {id: 'max-potential-fid', weight: 0},

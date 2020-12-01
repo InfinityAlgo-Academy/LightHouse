@@ -77,7 +77,7 @@ declare global {
         weight: number;
         group?: string;
         relevantAudits?: string[];
-        acronym: string;
+        acronym?: string;
       }
 
       export interface Settings extends Required<SharedFlagsSettings> {
