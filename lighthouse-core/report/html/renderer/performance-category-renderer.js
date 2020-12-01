@@ -249,7 +249,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     if (opportunityAudits.length) {
       // Scale the sparklines relative to savings, minimum 2s to not overstate small savings
       const minimumScale = 2000;
-      const wastedMsValues = opportunityAudits.map(audit => this._getWastedMs(audit));
+      const wastedMsValues = opportunityAudits.map(audit => audit.group === 'load-opportunities' && this._getWastedMs(audit));
       const maxWaste = Math.max(...wastedMsValues);
       const scale = Math.max(Math.ceil(maxWaste / 1000) * 1000, minimumScale);
       const groupEl = this.renderAuditGroup(groups['load-opportunities']);
