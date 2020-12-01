@@ -313,6 +313,8 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     filterableMetrics.unshift({ acronym: 'All' });
     // thx https://codepen.io/surjithctly/pen/weEJvX
     const filterBarEl = this.dom.createElement('div', 'lh-filterbar');
+    const filterBarSummaryEl = this.dom.createChildOf(filterBarEl, 'span', 'lh-filterbar__summary');
+    filterBarSummaryEl.textContent = 'Filter by metric impact: ';
     const labelSelectors = [];
     const auditSelectors = [];
     for (const metric of filterableMetrics) {
@@ -350,7 +352,8 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       }
 
       .lh-filterbar__radio:checked:not(#metric-All) ~ .lh-audit-group--diagnostics .lh-audit,
-      .lh-filterbar__radio:checked:not(#metric-All) ~ .lh-audit-group--load-opportunities .lh-audit{
+      .lh-filterbar__radio:checked:not(#metric-All) ~ .lh-audit-group--load-opportunities .lh-audit,
+      .lh-filterbar__radio:checked:not(#metric-All) ~ .lh-audit-group.lh-clump--passed .lh-audit {
         display: none;
       }
 

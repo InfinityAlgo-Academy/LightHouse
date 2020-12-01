@@ -539,8 +539,12 @@
 }
 
 
+.lh-filterbar {
+  text-align: right;
+  margin-top: var(--default-padding);
+}
 
-label.lh-filterbar__label {
+.lh-filterbar__label {
   background-color: var(--metrics-toggle-background-color);
   border-radius: 5px;
   align-items: center;
