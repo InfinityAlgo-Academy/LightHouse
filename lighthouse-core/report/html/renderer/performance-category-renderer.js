@@ -244,6 +244,13 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
         .filter(audit => audit.group === 'load-opportunities' && !Util.showAsPassed(audit.result))
         .sort((auditA, auditB) => this._getWastedMs(auditB) - this._getWastedMs(auditA));
 
+
+    const filterableMetrics = metricAudits.filter(a => !!a.relevantAudits);
+    // todo, only add if there are opps & diags rendered.
+    if (filterableMetrics.length) {
+      this.renderMetricAuditFilter(filterableMetrics, element);
+    }
+
     if (opportunityAudits.length) {
       // Scale the sparklines relative to savings, minimum 2s to not overstate small savings
       const minimumScale = 2000;
@@ -295,6 +302,64 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     const passedElem = this.renderClump('passed', clumpOpts);
     element.appendChild(passedElem);
     return element;
+  }
+
+  /**
+   * Render the control to filter the opps & diags by metric
+   * @param {LH.ReportResult.AuditRef[]} filterableMetrics
+   * @param {HTMLDivElement} element
+   */
+  renderMetricAuditFilter(filterableMetrics, element) {
+    filterableMetrics.unshift({ acronym: 'All' });
+    // thx https://codepen.io/surjithctly/pen/weEJvX
+    const filterBarEl = this.dom.createElement('div', 'lh-filterbar');
+    const labelSelectors = [];
+    const auditSelectors = [];
+    for (const metric of filterableMetrics) {
+      // appended into `element` for sweet ~ selectors to work
+      const elemId = `metric-${metric.acronym}`;
+      const radioEl = this.dom.createChildOf(element, 'input', 'lh-filterbar__radio', {
+        type: 'radio',
+        name: 'metricsfilter',
+        id: elemId,
+        hidden: 'true',
+      });
+      const labelEl = this.dom.createChildOf(filterBarEl, 'label', 'lh-filterbar__label', {
+        for: elemId,
+      });
+      labelEl.textContent = metric.acronym;
+      if (metric.acronym === 'All') {
+        radioEl.checked = true;
+      }
+      // Dynamically write some CSS, so the runtime filtering is CSS-only
+      labelSelectors.push(`.lh-filterbar__radio#${elemId}:checked ~ .lh-filterbar > .lh-filterbar__label[for="${elemId}"]`);
+      if (metric.relevantAudits) {
+        /* Generate some CSS selectors like this:
+          #metric-CLS:checked ~ .lh-audit-group > #layout-shift-elements,
+          #metric-CLS:checked ~ .lh-audit-group > #non-composited-animations,
+          #metric-CLS:checked ~ .lh-audit-group > #unsized-images
+        */
+        auditSelectors.push(metric.relevantAudits.map(auditId => `#${elemId}:checked ~ .lh-audit-group > #${auditId}`).join(',\n'));
+      }
+    }
+
+    const styleEl = this.dom.createChildOf(filterBarEl, 'style');
+    styleEl.textContent = `${labelSelectors.join(',\n')} {
+        background: var(--color-blue-A700);
+        color: var(--color-white);
+      }
+
+      .lh-filterbar__radio:checked:not(#metric-All) ~ .lh-audit-group--diagnostics .lh-audit,
+      .lh-filterbar__radio:checked:not(#metric-All) ~ .lh-audit-group--load-opportunities .lh-audit{
+        display: none;
+      }
+
+      ${auditSelectors.join(',\n')} {
+        display: block;
+      }
+      /*# sourceURL=filterbar.css */
+    `;
+    element.append(filterBarEl);
   }
 }
 
