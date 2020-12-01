@@ -7,6 +7,7 @@
 
 const Audit = require('./audit.js');
 const i18n = require('../lib/i18n/i18n.js');
+const LCP = require('./metrics/largest-contentful-paint.js');
 
 const UIStrings = {
   /** Descriptive title of a diagnostic audit that provides the element that was determined to be the Largest Contentful Paint. */
@@ -27,16 +28,17 @@ class LargestContentfulPaintElement extends Audit {
       id: 'largest-contentful-paint-element',
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
-      requiredArtifacts: ['traces', 'TraceElements'],
+      scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
+      requiredArtifacts: ['TraceElements', 'HostUserAgent', 'traces', 'devtoolsLogs', 'TestedAsMobileDevice'],
     };
   }
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {LH.Audit.Product}
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts) {
+  static async audit(artifacts, context) {
     const lcpElement = artifacts.TraceElements
       .find(element => element.traceEventType === 'largest-contentful-paint');
     const lcpElementDetails = [];
@@ -64,8 +66,9 @@ class LargestContentfulPaintElement extends Audit {
     const displayValue = str_(i18n.UIStrings.displayValueElementsFound,
       {nodeCount: lcpElementDetails.length});
 
+    const lcpProduct = await LCP.audit(artifacts, context);
     return {
-      score: 1,
+      score: lcpProduct.score,
       notApplicable: lcpElementDetails.length === 0,
       displayValue,
       details,

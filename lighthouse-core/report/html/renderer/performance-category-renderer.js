@@ -239,15 +239,9 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       element.appendChild(budgetsGroupEl);
     }
 
-    // Opportunities
-    const opportunityAudits = category.auditRefs
-        .filter(audit => audit.group === 'load-opportunities' && !Util.showAsPassed(audit.result))
-        .sort((auditA, auditB) => this._getWastedMs(auditB) - this._getWastedMs(auditA));
-
-
-    // Diagnostics
-    const diagnosticAudits = category.auditRefs
-        .filter(audit => audit.group === 'diagnostics' && !Util.showAsPassed(audit.result))
+    // Opportunities AND diagnostics
+    const uberOppsAudits = category.auditRefs
+        .filter(audit => (audit.group === 'load-opportunities' || audit.group === 'diagnostics') && !Util.showAsPassed(audit.result))
         .sort((a, b) => {
           const scoreA = a.result.scoreDisplayMode === 'informative' ? 100 : Number(a.result.score);
           const scoreB = b.result.scoreDisplayMode === 'informative' ? 100 : Number(b.result.score);
@@ -260,10 +254,10 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       this.renderMetricAuditFilter(filterableMetrics, element);
     }
 
-    if (opportunityAudits.length) {
+    if (uberOppsAudits.length) {
       // Scale the sparklines relative to savings, minimum 2s to not overstate small savings
       const minimumScale = 2000;
-      const wastedMsValues = opportunityAudits.map(audit => this._getWastedMs(audit));
+      const wastedMsValues = uberOppsAudits.map(audit => audit.group === 'load-opportunities' && this._getWastedMs(audit));
       const maxWaste = Math.max(...wastedMsValues);
       const scale = Math.max(Math.ceil(maxWaste / 1000) * 1000, minimumScale);
       const groupEl = this.renderAuditGroup(groups['load-opportunities']);
@@ -276,10 +270,10 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
       const headerEl = this.dom.find('.lh-load-opportunity__header', tmpl);
       groupEl.appendChild(headerEl);
-      opportunityAudits.forEach(item => groupEl.appendChild(this._renderOpportunity(item, scale)));
-
-      diagnosticAudits.forEach(item => groupEl.appendChild(this.renderAudit(item)));
-
+      uberOppsAudits.forEach(item => groupEl.appendChild(item.group === 'load-opportunities'
+        ? this._renderOpportunity(item, scale)
+        : this.renderAudit(item)
+      ));
 
       groupEl.classList.add('lh-audit-group--load-opportunities');
       element.appendChild(groupEl);

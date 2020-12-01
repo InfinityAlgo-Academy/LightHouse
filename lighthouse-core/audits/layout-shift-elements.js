@@ -7,6 +7,7 @@
 
 const Audit = require('./audit.js');
 const i18n = require('../lib/i18n/i18n.js');
+const CLS = require('./metrics/cumulative-layout-shift.js');
 
 const UIStrings = {
   /** Descriptive title of a diagnostic audit that provides up to the top five elements contributing to Cumulative Layout Shift. */
@@ -28,16 +29,17 @@ class LayoutShiftElements extends Audit {
       id: 'layout-shift-elements',
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
+      scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['traces', 'TraceElements'],
     };
   }
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {LH.Audit.Product}
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts) {
+  static async audit(artifacts, context) {
     const clsElements = artifacts.TraceElements
       .filter(element => element.traceEventType === 'layout-shift');
 
@@ -70,8 +72,10 @@ class LayoutShiftElements extends Audit {
         {nodeCount: clsElementData.length});
     }
 
+    const clsProduct = await CLS.audit(artifacts, context);
+
     return {
-      score: 1,
+      score: clsProduct.score,
       notApplicable: details.items.length === 0,
       displayValue,
       details,
