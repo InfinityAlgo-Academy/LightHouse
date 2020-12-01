@@ -245,6 +245,15 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
         .sort((auditA, auditB) => this._getWastedMs(auditB) - this._getWastedMs(auditA));
 
 
+    // Diagnostics
+    const diagnosticAudits = category.auditRefs
+        .filter(audit => audit.group === 'diagnostics' && !Util.showAsPassed(audit.result))
+        .sort((a, b) => {
+          const scoreA = a.result.scoreDisplayMode === 'informative' ? 100 : Number(a.result.score);
+          const scoreB = b.result.scoreDisplayMode === 'informative' ? 100 : Number(b.result.score);
+          return scoreA - scoreB;
+        });
+
     const filterableMetrics = metricAudits.filter(a => !!a.relevantAudits);
     // todo, only add if there are opps & diags rendered.
     if (filterableMetrics.length) {
@@ -268,25 +277,15 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       const headerEl = this.dom.find('.lh-load-opportunity__header', tmpl);
       groupEl.appendChild(headerEl);
       opportunityAudits.forEach(item => groupEl.appendChild(this._renderOpportunity(item, scale)));
+
+      diagnosticAudits.forEach(item => groupEl.appendChild(this.renderAudit(item)));
+
+
       groupEl.classList.add('lh-audit-group--load-opportunities');
       element.appendChild(groupEl);
     }
 
-    // Diagnostics
-    const diagnosticAudits = category.auditRefs
-        .filter(audit => audit.group === 'diagnostics' && !Util.showAsPassed(audit.result))
-        .sort((a, b) => {
-          const scoreA = a.result.scoreDisplayMode === 'informative' ? 100 : Number(a.result.score);
-          const scoreB = b.result.scoreDisplayMode === 'informative' ? 100 : Number(b.result.score);
-          return scoreA - scoreB;
-        });
 
-    if (diagnosticAudits.length) {
-      const groupEl = this.renderAuditGroup(groups['diagnostics']);
-      diagnosticAudits.forEach(item => groupEl.appendChild(this.renderAudit(item)));
-      groupEl.classList.add('lh-audit-group--diagnostics');
-      element.appendChild(groupEl);
-    }
 
     // Passed audits
     const passedAudits = category.auditRefs
