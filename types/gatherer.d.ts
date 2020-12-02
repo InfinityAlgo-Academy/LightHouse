@@ -39,7 +39,6 @@ declare global {
       disableJavaScript?: boolean;
       passConfig: Config.Pass
       settings: Config.Settings;
-      options?: object;
       /** Gatherers can push to this array to add top-level warnings to the LHR. */
       LighthouseRunWarnings: Array<string | IcuMessage>;
       baseArtifacts: BaseArtifacts;
