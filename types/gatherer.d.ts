@@ -23,7 +23,8 @@ declare global {
     }
 
     /** The limited driver interface shared between pre and post Fraggle Rock Lighthouse. */
-    export interface FRTransitionalDriver extends FRProtocolSession {
+    export interface FRTransitionalDriver {
+      defaultSession: FRProtocolSession;
       evaluateAsync(expression: string, options?: {useIsolation?: boolean}): Promise<any>;
     }
 

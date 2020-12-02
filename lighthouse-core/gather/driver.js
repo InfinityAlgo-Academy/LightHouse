@@ -120,6 +120,9 @@ class Driver {
   // eslint-disable-next-line no-invalid-this
   _executionContext = new ExecutionContext(this);
 
+  // eslint-disable-next-line no-invalid-this
+  defaultSession = this;
+
   /**
    * @param {Connection} connection
    */
