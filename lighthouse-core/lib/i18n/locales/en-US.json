@@ -1334,8 +1334,32 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Sets a theme color for the address bar."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "Main-Thread Blocking Time"
+  "lighthouse-core/audits/third-party-facades.js | categoryCustomerSuccess": {
+    "message": "{productName} (Customer Success)"
+  },
+  "lighthouse-core/audits/third-party-facades.js | categoryMarketing": {
+    "message": "{productName} (Marketing)"
+  },
+  "lighthouse-core/audits/third-party-facades.js | categorySocial": {
+    "message": "{productName} (Social)"
+  },
+  "lighthouse-core/audits/third-party-facades.js | categoryVideo": {
+    "message": "{productName} (Video)"
+  },
+  "lighthouse-core/audits/third-party-facades.js | columnProduct": {
+    "message": "Product"
+  },
+  "lighthouse-core/audits/third-party-facades.js | description": {
+    "message": "Some third-party embeds can be lazy loaded. Consider replacing them with a facade until they are required. [Learn more](https://web.dev/third-party-facades/)."
+  },
+  "lighthouse-core/audits/third-party-facades.js | displayValue": {
+    "message": "{itemCount, plural,\n  =1 {# facade alternative available}\n  other {# facade alternatives available}\n  }"
+  },
+  "lighthouse-core/audits/third-party-facades.js | failureTitle": {
+    "message": "Some third-party resources can be lazy loaded with a facade"
+  },
+  "lighthouse-core/audits/third-party-facades.js | title": {
+    "message": "Lazy load third-party resources with facades"
   },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Third-Party"
@@ -1348,9 +1372,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "Reduce the impact of third-party code"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "Other resources"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Minimize third-party usage"
@@ -1628,6 +1649,9 @@
   "lighthouse-core/gather/gather-runner.js | warningTimeout": {
     "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnBlockingTime": {
+    "message": "Main-Thread Blocking Time"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Cache TTL"
   },
@@ -1732,6 +1756,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | otherResourcesLabel": {
+    "message": "Other resources"
   },
   "lighthouse-core/lib/i18n/i18n.js | otherResourceType": {
     "message": "Other"

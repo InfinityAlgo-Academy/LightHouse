@@ -359,4 +359,31 @@ module.exports = [
       },
     },
   },
+  {
+    lhr: {
+      requestedUrl: 'http://localhost:10200/perf/third-party.html',
+      finalUrl: 'http://localhost:10200/perf/third-party.html',
+      audits: {
+        'third-party-facades': {
+          score: 0,
+          displayValue: '1 facade alternative available',
+          details: {
+            items: [
+              {
+                product: 'YouTube Embedded Player (Video)',
+                blockingTime: 0,
+                transferSize: '651128 +/- 100000',
+                subItems: {
+                  type: 'subitems',
+                  items: {
+                    length: '>5', // We don't care exactly how many it has, just ensure we surface the subresources.
+                  },
+                },
+              },
+            ],
+          },
+        },
+      },
+    },
+  },
 ];

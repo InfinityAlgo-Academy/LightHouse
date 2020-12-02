@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "‏‮Sets‬‏ ‏‮a‬‏ ‏‮theme‬‏ ‏‮color‬‏ ‏‮for‬‏ ‏‮the‬‏ ‏‮address‬‏ ‏‮bar‬‏."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "‏‮Main‬‏-‏‮Thread‬‏ ‏‮Blocking‬‏ ‏‮Time‬‏"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "‏‮Third‬‏-‏‮Party‬‏"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "‏‮Reduce‬‏ ‏‮the‬‏ ‏‮impact‬‏ ‏‮of‬‏ ‏‮third‬‏-‏‮party‬‏ ‏‮code‬‏"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "‏‮Other‬‏ ‏‮resources‬‏"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "‏‮Minimize‬‏ ‏‮third‬‏-‏‮party‬‏ ‏‮usage‬‏"

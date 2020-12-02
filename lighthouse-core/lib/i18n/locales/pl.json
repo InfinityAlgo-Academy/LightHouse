@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Ustawia motyw kolorystyczny paska adresu."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "Czas blokowania głównego wątku"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Dostawca zewnętrzny"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "Ogranicz wpływ kodu spoza witryny"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "Inne zasoby"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Minimalizacja wykorzystania kodu zewnętrznego"

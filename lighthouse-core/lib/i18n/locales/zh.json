@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "为地址栏设置主题背景颜色。"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "主线程拦截时间"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "第三方"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "降低第三方代码的影响"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "其他资源"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "尽量减少第三方使用"

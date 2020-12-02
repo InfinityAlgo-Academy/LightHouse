@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Nustatoma adreso juostos temos spalva."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "Pagrindinės grupės blokavimo laikas"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Trečioji šalis"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "Sumažina trečiosios šalies kodo poveikį"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "Kiti ištekliai"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Trečiųjų šalių kodo naudojimo sumažinimas"

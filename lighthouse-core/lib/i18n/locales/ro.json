@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Setează o culoare tematică pentru bara de adrese."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "Timpul de blocare a firului principal"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Terță parte"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "Redu impactul codului de la terți"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "Alte resurse"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Minimalizează folosirea terțelor părți"
