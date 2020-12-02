@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Legt eine Designfarbe für die Adressleiste fest."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "Dauer der Blockierung des Hauptthreads"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Drittanbieter"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "Die Auswirkungen von Drittanbieter-Code minimieren"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "Weitere Ressourcen"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Drittanbieternutzung minimieren"

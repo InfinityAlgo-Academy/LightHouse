@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Anger ett färgtema för adressfältet."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "Tidsåtgång för blockering av huvudtråd"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Tredje part"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "Minska påverkan från tredjepartskod"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "Övriga resurser"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Minimera användning av tredjepartskod"

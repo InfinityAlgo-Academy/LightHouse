@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Asettaa osoitepalkin teemavärin"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "Pääsäikeen estoaika"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Kolmas osapuoli"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "Vähennä kolmannen osapuolen koodin vaikutusta"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "Muut resurssit"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Minimoi kolmannen osapuolen käyttö"

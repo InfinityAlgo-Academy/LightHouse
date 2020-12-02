@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "주소 표시줄의 테마 색상을 설정함"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "기본 스레드 차단 시간"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "타사"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "타사 코드의 영향을 줄임"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "기타 리소스"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "타사 사용량 최소화"

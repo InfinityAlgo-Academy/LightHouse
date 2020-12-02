@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "מגדיר צבע עיצוב עבור סרגל הכתובות."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "משך החסימה של התהליכון הראשי"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "צד שלישי"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "עליך להפחית את השפעת הקוד של צד שלישי"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "משאבים אחרים"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "צמצום השימוש בצדדים שלישיים"

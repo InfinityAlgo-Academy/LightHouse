@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Sets a theme colour for the address bar."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "Main-thread blocking time"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Third-party"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "Reduce the impact of third-party code"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "Other resources"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Minimise third-party usage"

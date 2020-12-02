@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Nagtatakda ng kulay ng tema para sa address bar."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "Oras ng Pag-block ng Pangunahing Thread"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Third-Party"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "Bawasan ang epekto ng code ng third party"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "Iba pang resource"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Bawasan ang paggamit ng third-party"

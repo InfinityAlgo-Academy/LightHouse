@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Змінює колір адресного рядка відповідно до теми."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "Час блокування основного ланцюжка"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Сторонні розробники"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "Зменште вплив стороннього коду"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "Інші ресурси"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Зменште використання стороннього коду"

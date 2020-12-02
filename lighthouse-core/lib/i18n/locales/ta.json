@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "முகவரிப் பட்டிக்கான தீம் வண்ணத்தை அமைக்கும்."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "முக்கியத் தொடரிழையில் தடுப்பதற்குச் செலவிட்ட நேரம்"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "மூன்றாம் தரப்பு"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "மூன்றாம் தரப்புக் குறியீட்டின் பாதிப்பைக் குறைக்கவும்"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "இதர மூலங்கள்"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "மூன்றாம் தரப்பு உபயோகத்தைக் குறைத்தல்"

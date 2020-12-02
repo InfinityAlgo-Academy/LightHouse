@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Une couleur de thème est configurée pour la barre d'adresse."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "Durée de blocage du thread principal"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Tiers"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "Réduire l'impact du code tiers"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "Autres ressources"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Réduire au maximum l'utilisation de code tiers"
