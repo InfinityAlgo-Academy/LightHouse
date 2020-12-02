@@ -68,7 +68,7 @@ async function browserifyFile(entryPath, distPath) {
     .transform('@wardpeet/brfs', {
       readFileSyncTransform: minifyFileTransform,
       global: true,
-      parserOpts: {ecmaVersion: 10},
+      parserOpts: {ecmaVersion: 12},
     })
     // Strip everything out of package.json includes except for the version.
     .transform('package-json-versionify');
@@ -141,12 +141,13 @@ async function browserifyFile(entryPath, distPath) {
  * Minify a javascript file, in place.
  * @param {string} filePath
  */
-function minifyScript(filePath) {
-  const result = terser.minify(fs.readFileSync(filePath, 'utf-8'), {
+async function minifyScript(filePath) {
+  const code = fs.readFileSync(filePath, 'utf-8');
+  const result = await terser.minify(code, {
+    ecma: 2019,
     output: {
       comments: /^!/,
-      // @ts-expect-error - terser types are whack-a-doodle wrong.
-      max_line_len: /** @type {boolean} */ (1000),
+      max_line_len: 1000,
     },
     // The config relies on class names for gatherers.
     keep_classnames: true,
@@ -157,9 +158,6 @@ function minifyScript(filePath) {
       url: path.basename(`${filePath}.map`),
     },
   });
-  if (result.error) {
-    throw result.error;
-  }
 
   // Add the banner and modify globals for DevTools if necessary.
   if (isDevtools(filePath) && result.code) {
@@ -187,7 +185,7 @@ function minifyScript(filePath) {
  */
 async function build(entryPath, distPath) {
   await browserifyFile(entryPath, distPath);
-  minifyScript(distPath);
+  await minifyScript(distPath);
 }
 
 /**
