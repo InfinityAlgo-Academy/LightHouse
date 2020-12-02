@@ -260,11 +260,11 @@ class AutocompleteAudit extends Audit {
           continue;
         }
         failingFormsData.push({
-          node: /** @type {LH.Audit.Details.NodeValue} */ ({
-            type: 'node',
+          node: {
+            type: /** @type {'node'} */ ('node'),
             snippet: input.snippet,
             nodeLabel: input.nodeLabel,
-          }),
+          },
           suggestion: suggestion,
           current: input.autocomplete.attribute,
         });

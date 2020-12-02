@@ -69,13 +69,13 @@ class ExternalAnchorsUseRelNoopenerAudit extends Audit {
       })
       .map(anchor => {
         return {
-          node: /** @type {LH.Audit.Details.NodeValue} */  ({
-            type: 'node',
+          node: {
+            type: /** @type {'node'} */ ('node'),
             path: anchor.devtoolsNodePath || '',
             selector: anchor.selector || '',
             nodeLabel: anchor.nodeLabel || '',
             snippet: anchor.snippet || '',
-          }),
+          },
           href: anchor.href || 'Unknown',
           target: anchor.target || '',
           rel: anchor.rel || '',

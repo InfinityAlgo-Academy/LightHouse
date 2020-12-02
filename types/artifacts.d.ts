@@ -161,7 +161,7 @@ declare global {
         lhId?: string,
         devtoolsNodePath: string,
         selector: string,
-        boundingRect: Rect | null,
+        boundingRect?: Rect,
         snippet: string,
         nodeLabel: string,
       }
