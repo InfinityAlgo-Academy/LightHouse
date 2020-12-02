@@ -1742,7 +1742,7 @@ describe('GatherRunner', function() {
       };
     });
 
-    it('should return the response from the protocol, if in >=M82 format', async () => {
+    it('should return the response from the protocol', async () => {
       connectionStub.sendCommand
         .mockResponse('Page.getInstallabilityErrors', {
           installabilityErrors: [{errorId: 'no-icon-available', errorArguments: []}],
