@@ -42,15 +42,15 @@ class LargestContentfulPaintElement extends Audit {
     const lcpElementDetails = [];
     if (lcpElement) {
       lcpElementDetails.push({
-        node: /** @type {LH.Audit.Details.NodeValue} */ ({
-          type: 'node',
+        node: {
+          type: /** @type {'node'} */ ('node'),
           lhId: lcpElement.lhId,
           path: lcpElement.devtoolsNodePath,
           selector: lcpElement.selector,
           nodeLabel: lcpElement.nodeLabel,
           snippet: lcpElement.snippet,
           boundingRect: lcpElement.boundingRect,
-        }),
+        },
       });
     }
 

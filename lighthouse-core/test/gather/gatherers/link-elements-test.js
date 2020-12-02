@@ -26,7 +26,6 @@ describe('Link Elements gatherer', () => {
       devtoolsNodePath: '',
       nodeLabel: '',
       snippet: '',
-      boundingRect: null,
       selector: '',
       ...overrides,
     };
