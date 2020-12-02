@@ -57,9 +57,7 @@ module.exports = [
           scoreDisplayMode: 'notApplicable',
         },
         'installable-manifest': {
-          score: 0,
-          explanation: 'Failures: No manifest was fetched.',
-          details: {items: [{isParseFailure: true}]},
+          score: 1,
         },
         'splash-screen': {
           score: 0,
@@ -146,7 +144,7 @@ module.exports = [
         },
         'installable-manifest': {
           score: 0,
-          explanation: 'Failures: Manifest icon failed to be fetched.',
+          details: {items: [{value: 'Downloaded icon was empty or corrupted'}]},
         },
         'splash-screen': {
           score: 0,

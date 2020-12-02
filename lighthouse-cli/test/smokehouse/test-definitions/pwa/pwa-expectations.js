@@ -44,7 +44,7 @@ const expectations = [
         },
         'installable-manifest': {
           score: 1,
-          details: {items: [pwaDetailsExpectations]},
+          details: {items: [], debugData: {items: {manifestUrl: 'https://airhorner.com/manifest.json'}}},
         },
         'splash-screen': {
           score: 1,
@@ -108,7 +108,7 @@ const expectations = [
         // Ignore speed test; just verify that it ran.
         },
         'installable-manifest': {
-          score: 0,
+          score: 1,
         },
         'splash-screen': {
           score: 0,
