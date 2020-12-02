@@ -13,7 +13,7 @@ const i18n = require('../lib/i18n/i18n.js');
  * https://source.chromium.org/chromium/chromium/src/+/master:third_party/devtools-frontend/src/front_end/resources/AppManifestView.js?q=-f:%5Cbout%5C%2F%20-f:%5Cbtest%5C%2F%20-f:web_tests%20%20symbol:getInstallabilityErrorMessages&ss=chromium%2Fchromium%2Fsrc
  *
  */
-const devtoolsChecks = [
+const devtoolsMessages = [
   {
     errorId: 'not-in-main-frame',
     message: 'Page is not loaded in the main frame',
@@ -155,41 +155,7 @@ class InstallableManifest extends Audit {
     };
   }
 
-  /**
-   * @param {LH.Artifacts.ManifestValues} manifestValues
-   * @return {Array<string>}
-   */
-  static assessManifest(manifestValues) {
-    if (manifestValues.isParseFailure && manifestValues.parseFailureReason) {
-      return [manifestValues.parseFailureReason];
-    }
 
-    /** @type {Array<string>} */
-    const failures = [];
-    const bannerCheckIds = [
-      'hasName',
-      // Technically shortname isn't required (if name is defined):
-      //   https://cs.chromium.org/chromium/src/chrome/browser/installable/installable_manager.cc?type=cs&q=IsManifestValidForWebApp+f:cc+-f:test&sq=package:chromium&l=473
-      // Despite this, we think it's better to require it anyway.
-      // short_name is preferred for the homescreen icon, but a longer name can be used in
-      // the splash screen and app title. Given the different usecases, we'd like to make it clearer
-      // that the developer has two possible strings to work with.
-      'hasShortName',
-      'hasStartUrl',
-      'hasPWADisplayValue',
-      'hasIconsAtLeast144px',
-      'fetchesIcon',
-    ];
-    manifestValues.allChecks
-      .filter(item => bannerCheckIds.includes(item.id))
-      .forEach(item => {
-        if (!item.passing) {
-          failures.push(item.failureText);
-        }
-      });
-
-    return failures;
-  }
   /**
    * @param {LH.Artifacts} artifacts
    * @return {Array<string>}
@@ -209,7 +175,7 @@ class InstallableManifest extends Audit {
               break;
             }
             // 'manifest-missing-suitable-icon' update.
-            devtoolsChecks[7].message = `Manifest does not contain a suitable icon - PNG, 
+            devtoolsMessages[7].message = `Manifest does not contain a suitable icon - PNG, 
                     SVG or WebP format of at least ${item.errorArguments[0].value}px 
                     is required, the sizes attribute must be set, and the purpose attribute, 
                     if set, must include "any" or "maskable".`;
@@ -223,25 +189,25 @@ class InstallableManifest extends Audit {
               break;
             }
             // 'no-acceptable-icon' update.
-            devtoolsChecks[9].message = `No supplied icon is at least ${
+            devtoolsMessages[9].message = `No supplied icon is at least ${
               item.errorArguments[0].value}px square in PNG, SVG or WebP format`;
             break;
         }
       }
       );
     /** @type Array<string>*/
-    const checksFound = [];
+    const errorMessages = [];
     installabilityErrors
         .filter(err => {
-          const checkFound = devtoolsChecks.find(check => check.errorId === err.errorId);
+          const checkFound = devtoolsMessages.find(check => check.errorId === err.errorId);
           if (checkFound) {
-            checksFound.push(checkFound.message);
+            errorMessages.push(checkFound.message);
           } else {
-            checksFound.push(`Installability error id '${err.errorId}' is not recognized`);
+            errorMessages.push(`Installability error id '${err.errorId}' is not recognized`);
           }
         });
 
-    return checksFound;
+    return errorMessages;
   }
 
   // @return {Promise<{failures: Array<string>, manifestUrl: string | null}>}
@@ -268,21 +234,6 @@ class InstallableManifest extends Audit {
       const val = {value: item};
       errorMessages.push(val);
     });
-
-    // TODO: Chrome doesn't trigger the short name check, it has different logic, come back to it.
-    // Work around - check if manifestValues triggers it, and add to errors.
-    /*
-    if (result.manifestValues && result.manifestValues.allChecks) {
-      result.manifestValues.allChecks.forEach(check => {
-        items[check.id] = check.passing;
-        if (check.id == 'hasShortName' && !check.passing) {
-          // if short name error exists, add to errors
-          result.failures.push(check.failureText);
-          errorMessages.push({value: check.failureText});
-        }
-      });
-    }
-    */
 
     // Include the detailed pass/fail checklist as a diagnostic.
     /** @type {LH.Audit.Details.DebugData} */
