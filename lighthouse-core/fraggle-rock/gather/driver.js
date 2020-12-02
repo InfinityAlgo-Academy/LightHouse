@@ -55,6 +55,17 @@ class Driver {
     if (!this._executionContext) throw new Error('Driver not connected to page');
     return this._executionContext.evaluateAsync(expression, options);
   }
+
+  /**
+   * @template {any[]} T, R
+   * @param {((...args: T) => R)} mainFn
+   * @param {{args: T, useIsolation?: boolean, deps?: Array<Function|string>}} options
+   * @return {FlattenedPromise<R>}
+   */
+  async evaluate(mainFn, options) {
+    if (!this._executionContext) throw new Error('Driver not connected to page');
+    return this._executionContext.evaluate(mainFn, options);
+  }
 }
 
 module.exports = Driver;
