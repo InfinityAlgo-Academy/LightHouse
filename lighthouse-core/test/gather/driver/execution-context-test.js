@@ -171,3 +171,132 @@ describe('.evaluateAsync', () => {
     expect(value).toEqual('mocked value');
   });
 });
+
+describe('.evaluate', () => {
+  /** @type {LH.Gatherer.FRProtocolSession} */
+  let sessionMock;
+  /** @type {ExecutionContext} */
+  let executionContext;
+
+  beforeEach(() => {
+    sessionMock = createMockSession();
+    sessionMock.on = jest.fn();
+    executionContext = new ExecutionContext(sessionMock);
+  });
+
+  it('transforms parameters into an expression given to Runtime.evaluate', async () => {
+    const mockFn = sessionMock.sendCommand = createMockSendCommandFn()
+      .mockResponse('Runtime.evaluate', {result: {value: 1}});
+
+    /** @param {number} value */
+    function main(value) {
+      return value;
+    }
+    const value = await executionContext.evaluate(main, {args: [1]});
+    expect(value).toEqual(1);
+
+    const {expression} = mockFn.findInvocation('Runtime.evaluate');
+    const expected = `
+(function wrapInNativePromise() {
+        const __nativePromise = globalThis.__nativePromise || Promise;
+        const URL = globalThis.__nativeURL || globalThis.URL;
+        globalThis.__lighthouseExecutionContextId = undefined;
+        return new __nativePromise(function (resolve) {
+          return __nativePromise.resolve()
+            .then(_ => (() => {
+      
+      function main(value) {
+      return value;
+    }
+      return main(1);
+    })())
+            .catch(function wrapRuntimeEvalErrorInBrowser(err) {
+  err = err || new Error();
+  const fallbackMessage = typeof err === 'string' ? err : 'unknown error';
+
+  return {
+    __failedInBrowser: true,
+    name: err.name || 'Error',
+    message: err.message || fallbackMessage,
+    stack: err.stack || (new Error()).stack,
+  };
+})
+            .then(resolve);
+        });
+      }())`.trim();
+    expect(expression).toBe(expected);
+    expect(await eval(expression)).toBe(1);
+  });
+
+  it('transforms parameters into an expression (basic)', async () => {
+    // Mock so the argument can be intercepted, and the generated code
+    // can be evaluated without the error catching code.
+    const mockFn = executionContext._evaluateInContext = jest.fn()
+      .mockImplementation(() => Promise.resolve());
+
+    /** @param {number} value */
+    function mainFn(value) {
+      return value;
+    }
+    /** @type {number} */
+    const value = await executionContext.evaluate(mainFn, {args: [1]}); // eslint-disable-line no-unused-vars
+
+    const code = mockFn.mock.calls[0][0];
+    expect(code).toBe(`(() => {
+      
+      function mainFn(value) {
+      return value;
+    }
+      return mainFn(1);
+    })()`);
+    expect(eval(code)).toEqual(1);
+  });
+
+  it('transforms parameters into an expression (complex)', async () => {
+    // Mock so the argument can be intercepted, and the generated code
+    // can be evaluated without the error catching code.
+    const mockFn = executionContext._evaluateInContext = jest.fn()
+      .mockImplementation(() => Promise.resolve());
+
+    /**
+     * @param {{a: number, b: number}} _
+     * @param {any} passThru
+     */
+    function mainFn({a, b}, passThru) {
+      return {a: abs(a), b: square(b), passThru};
+    }
+    /**
+     * @param {number} val
+     */
+    function abs(val) {
+      return Math.abs(val);
+    }
+    /**
+     * @param {number} val
+     */
+    function square(val) {
+      return val * val;
+    }
+
+    /** @type {{a: number, b: number, passThru: any}} */
+    const value = await executionContext.evaluate(mainFn, { // eslint-disable-line no-unused-vars
+      args: [{a: -5, b: 10}, 'hello'],
+      deps: [abs, square],
+    });
+
+    const code = mockFn.mock.calls[0][0];
+    expect(code).toEqual(`(() => {
+      function abs(val) {
+      return Math.abs(val);
+    }
+function square(val) {
+      return val * val;
+    }
+      function mainFn({a, b}, passThru) {
+      return {a: abs(a), b: square(b), passThru};
+    }
+      return mainFn({"a":-5,"b":10},"hello");
+    })()`);
+    expect(eval(code)).toEqual({a: 5, b: 100, passThru: 'hello'});
+  });
+});

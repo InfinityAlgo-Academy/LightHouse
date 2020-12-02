@@ -472,6 +472,22 @@ class Driver {
   }
 
   /**
+   * Evaluate a function in the context of the current page.
+   * If `useIsolation` is true, the function will be evaluated in a content script that has
+   * access to the page's DOM but whose JavaScript state is completely separate.
+   * Returns a promise that resolves on a value of `mainFn`'s return type.
+   * @template {any[]} T, R
+   * @param {((...args: T) => R)} mainFn The main function to call.
+   * @param {{args: T, useIsolation?: boolean, deps?: Array<Function|string>}} options `args` should
+   *   match the args of `mainFn`, and can be any serializable value. `deps` are functions that must be
+   *   defined for `mainFn` to work.
+   * @return {Promise<R>}
+   */
+  async evaluate(mainFn, options) {
+    return this._executionContext.evaluate(mainFn, options);
+  }
+
+  /**
    * @return {Promise<{url: string, data: string}|null>}
    */
   async getAppManifest() {

@@ -6,11 +6,20 @@
 // @ts-nocheck
 'use strict';
 
-/* global window document Node ShadowRoot */
-
 /**
+ * @fileoverview
  * Helper functions that are passed by `toString()` by Driver to be evaluated in target page.
+ *
+ * Important: this module should only be imported like this:
+ *     const pageFunctions = require('...');
+ * Never like this:
+ *     const {justWhatINeed} = require('...');
+ * Otherwise, minification will mangle the variable names and break usage.
  */
+
+/** @typedef {HTMLElementTagNameMap & {[id: string]: HTMLElement}} HTMLElementByTagName */
+
+/* global window document Node ShadowRoot */
 
 /**
  * The `exceptionDetails` provided by the debugger protocol does not contain the useful
@@ -78,9 +87,10 @@ function checkTimeSinceLastLongTask() {
 }
 
 /**
- * @param {string=} selector Optional simple CSS selector to filter nodes on.
+ * @template {string} T
+ * @param {T} selector Optional simple CSS selector to filter nodes on.
  *     Combinators are not supported.
- * @return {Array<HTMLElement>}
+ * @return {Array<HTMLElementByTagName[T]>}
  */
 /* istanbul ignore next */
 function getElementsInDocument(selector) {
@@ -501,6 +511,7 @@ module.exports = {
   wrapRuntimeEvalErrorInBrowserString: wrapRuntimeEvalErrorInBrowser.toString(),
   registerPerformanceObserverInPageString: registerPerformanceObserverInPage.toString(),
   checkTimeSinceLastLongTaskString: checkTimeSinceLastLongTask.toString(),
+  getElementsInDocument,
   getElementsInDocumentString: getElementsInDocument.toString(),
   getOuterHTMLSnippetString: getOuterHTMLSnippet.toString(),
   getOuterHTMLSnippet: getOuterHTMLSnippet,
