@@ -18,6 +18,7 @@ const pageFunctions = require('../../lib/page-functions.js');
 /* istanbul ignore next */
 function collectAllScriptElements() {
   /** @type {HTMLScriptElement[]} */
+  // @ts-expect-error - getElementsInDocument put into scope via stringification
   const scripts = getElementsInDocument('script'); // eslint-disable-line no-undef
 
   return scripts.map(script => {

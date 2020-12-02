@@ -509,7 +509,6 @@ const getNodeDetailsString = `function getNodeDetails(element) {
 }`;
 
 module.exports = {
-  createEvalCode,
   wrapRuntimeEvalErrorInBrowserString: wrapRuntimeEvalErrorInBrowser.toString(),
   registerPerformanceObserverInPageString: registerPerformanceObserverInPage.toString(),
   checkTimeSinceLastLongTask,

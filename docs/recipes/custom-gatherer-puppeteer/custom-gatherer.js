@@ -33,13 +33,13 @@ class CustomGatherer extends Gatherer {
       el.type = 'number';
       document.body.append(el);
     }
-    await driver.evaluate(`(${makeInput})()`);
+    await driver.evaluateAsync(`(${makeInput})()`);
     await new Promise(resolve => setTimeout(resolve, 100));
 
     // Prove that `driver` (Lighthouse) and `page` (Puppeteer) are talking to the same page.
-    await driver.evaluate(`document.querySelector('input').value = '1'`);
+    await driver.evaluateAsync(`document.querySelector('input').value = '1'`);
     await page.type('input', '23', {delay: 300});
-    const value = await driver.evaluate(`document.querySelector('input').value`);
+    const value = await driver.evaluateAsync(`document.querySelector('input').value`);
     if (value !== '123') throw new Error('huh?');
 
     // No need to close the browser or page. Puppeteer doesn't own either of them.

@@ -471,7 +471,6 @@ class Driver {
    * will be evaluated in a content script that has access to the page's DOM but whose JavaScript state
    * is completely separate.
    * Returns a promise that resolves on the expression's value.
-   * @template T
    * @param {string} expression
    * @param {{useIsolation?: boolean}=} options
    * @return {Promise<*>}
