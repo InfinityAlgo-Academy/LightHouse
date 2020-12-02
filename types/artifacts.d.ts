@@ -158,6 +158,7 @@ declare global {
       export type MetaElement = LH.Artifacts['MetaElements'][0];
 
       export interface NodeDetails {
+        lhId?: string,
         devtoolsNodePath: string,
         selector: string,
         boundingRect: Rect | null,
@@ -513,6 +514,10 @@ declare global {
 
       export interface InspectorIssues {
         mixedContent: Crdp.Audits.MixedContentIssueDetails[];
+        sameSiteCookies: Crdp.Audits.SameSiteCookieIssueDetails[];
+        blockedByResponse: Crdp.Audits.BlockedByResponseIssueDetails[];
+        heavyAds: Crdp.Audits.HeavyAdIssueDetails[];
+        contentSecurityPolicy: Crdp.Audits.ContentSecurityPolicyIssueDetails[];
       }
 
       // Computed artifact types below.
@@ -593,6 +598,7 @@ declare global {
         firstContentfulPaint: number;
         firstMeaningfulPaint?: number;
         largestContentfulPaint?: number;
+        largestContentfulPaintAllFrames?: number;
         traceEnd: number;
         load?: number;
         domContentLoaded?: number;
@@ -621,6 +627,8 @@ declare global {
         firstMeaningfulPaintEvt?: TraceEvent;
         /** The trace event marking largestContentfulPaint, if it was found. */
         largestContentfulPaintEvt?: TraceEvent;
+        /** The trace event marking largestContentfulPaint from all frames, if it was found. */
+        largestContentfulPaintAllFramesEvt?: TraceEvent;
         /** The trace event marking loadEventEnd, if it was found. */
         loadEvt?: TraceEvent;
         /** The trace event marking domContentLoadedEventEnd, if it was found. */
@@ -649,10 +657,13 @@ declare global {
       }
 
       export interface FullPageScreenshot {
-        /** Base64 image data URL. */
-        data: string;
-        width: number;
-        height: number;
+        screenshot: {
+          /** Base64 image data URL. */
+          data: string;
+          width: number;
+          height: number;
+        };
+        nodes: Record<string, Rect>;
       }
 
       export interface TimingSummary {
@@ -662,6 +673,8 @@ declare global {
         firstMeaningfulPaintTs: number | undefined;
         largestContentfulPaint: number | undefined;
         largestContentfulPaintTs: number | undefined;
+        largestContentfulPaintAllFrames: number | undefined;
+        largestContentfulPaintAllFramesTs: number | undefined;
         firstCPUIdle: number | undefined;
         firstCPUIdleTs: number | undefined;
         interactive: number | undefined;
@@ -672,12 +685,14 @@ declare global {
         estimatedInputLatencyTs: number | undefined;
         maxPotentialFID: number | undefined;
         cumulativeLayoutShift: number | undefined;
+        cumulativeLayoutShiftAllFrames: number | undefined;
         totalBlockingTime: number;
         observedTimeOrigin: number;
         observedTimeOriginTs: number;
         observedNavigationStart: number;
         observedNavigationStartTs: number;
         observedCumulativeLayoutShift: number | undefined;
+        observedCumulativeLayoutShiftAllFrames: number | undefined;
         observedFirstPaint: number | undefined;
         observedFirstPaintTs: number | undefined;
         observedFirstContentfulPaint: number;
@@ -686,6 +701,8 @@ declare global {
         observedFirstMeaningfulPaintTs: number | undefined;
         observedLargestContentfulPaint: number | undefined;
         observedLargestContentfulPaintTs: number | undefined;
+        observedLargestContentfulPaintAllFrames: number | undefined;
+        observedLargestContentfulPaintAllFramesTs: number | undefined;
         observedTraceEnd: number | undefined;
         observedTraceEndTs: number | undefined;
         observedLoad: number | undefined;

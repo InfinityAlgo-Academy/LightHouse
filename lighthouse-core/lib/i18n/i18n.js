@@ -90,6 +90,8 @@ const UIStrings = {
   columnDuration: 'Duration',
   /** Label for a column in a data table; entries will be a representation of a DOM element that did not meet certain suggestions. */
   columnFailingElem: 'Failing Elements',
+  /** Label for a column in a data table; entries will be a description of the table item. */
+  columnDescription: 'Description',
   /** Label for a row in a data table; entries will be the total number and byte size of all resources loaded by a web page. */
   totalResourceType: 'Total',
   /** Label for a row in a data table; entries will be the total number and byte size of all 'Document' resources loaded by a web page. */

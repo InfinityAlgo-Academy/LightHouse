@@ -143,11 +143,12 @@ class Simulator {
 
   /**
    * @param {Node} node
-   * @return {NodeTimingIntermediate}
+   * @return {Required<NodeTimingIntermediate>}
    */
   _getTimingData(node) {
     const timingData = this._nodeTimings.get(node);
     if (!timingData) throw new Error(`Unable to get timing data for node ${node.id}`);
+    // @ts-expect-error - Allow consumers to assume all values are defined.
     return timingData;
   }
 
@@ -405,7 +406,8 @@ class Simulator {
   _computeFinalNodeTimings() {
     /** @type {Array<[Node, LH.Gatherer.Simulation.NodeTiming]>} */
     const nodeTimingEntries = [];
-    for (const [node, timing] of this._nodeTimings) {
+    for (const node of this._nodeTimings.keys()) {
+      const timing = this._getTimingData(node);
       nodeTimingEntries.push([node, {
         startTime: timing.startTime,
         endTime: timing.endTime,

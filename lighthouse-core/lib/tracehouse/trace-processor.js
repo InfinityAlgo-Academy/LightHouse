@@ -477,6 +477,39 @@ class TraceProcessor {
     evt.name === SCHEDULABLE_TASK_TITLE_ALT3;
   }
 
+  /**
+   * @param {{candidateEventName: string, invalidateEventName: string, events: LH.TraceEvent[], timeOriginEvt: LH.TraceEvent}} options
+   * @return {{lcp: LH.TraceEvent | undefined, invalidated: boolean}}
+   */
+  static computeValidLCP(options) {
+    const {
+      candidateEventName,
+      invalidateEventName,
+      events,
+      timeOriginEvt,
+    } = options;
+
+    let lcp;
+    let invalidated = false;
+    // Iterate the events backwards.
+    for (let i = events.length - 1; i >= 0; i--) {
+      const e = events[i];
+      // If the event's timestamp is before the time origin, stop.
+      if (e.ts <= timeOriginEvt.ts) break;
+      // If the last lcp event in the trace is 'Invalidate', there is inconclusive data to determine LCP.
+      if (e.name === invalidateEventName) {
+        invalidated = true;
+        break;
+      }
+      // If not an lcp 'Candidate', keep iterating.
+      if (e.name !== candidateEventName) continue;
+      // Found the last LCP candidate in the trace, let's use it.
+      lcp = e;
+      break;
+    }
+
+    return {lcp, invalidated};
+  }
 
   /**
    * Finds key trace events, identifies main process/thread, and returns timings of trace events
@@ -512,6 +545,14 @@ class TraceProcessor {
     // Compute the key frame timings for the main frame.
     const frameTimings = this.computeKeyTimingsForFrame(frameEvents, {timeOriginEvt});
 
+    // Compute LCP for all frames.
+    const lcpAllFramesEvt = this.computeValidLCP({
+      candidateEventName: 'NavStartToLargestContentfulPaint::Candidate::AllFrames::UKM',
+      invalidateEventName: 'NavStartToLargestContentfulPaint::Invalidate::AllFrames::UKM',
+      events: keyEvents,
+      timeOriginEvt,
+    }).lcp;
+
     // Subset all trace events to just our tab's process (incl threads other than main)
     // stable-sort events to keep them correctly nested.
     const processEvents = TraceProcessor
@@ -530,6 +571,8 @@ class TraceProcessor {
     // Ensure our traceEnd reflects all page activity.
     const traceEnd = this.computeTraceEnd(trace.traceEvents, timeOriginEvt);
 
+    /** @param {number|undefined} ts */
+    const maybeGetTiming = (ts) => ts === undefined ? undefined : (ts - timeOriginEvt.ts) / 1000;
     // This could be much more concise with object spread, but the consensus is that explicitness is
     // preferred over brevity here.
     return {
@@ -543,6 +586,7 @@ class TraceProcessor {
         firstContentfulPaint: frameTimings.timings.firstContentfulPaint,
         firstMeaningfulPaint: frameTimings.timings.firstMeaningfulPaint,
         largestContentfulPaint: frameTimings.timings.largestContentfulPaint,
+        largestContentfulPaintAllFrames: maybeGetTiming(lcpAllFramesEvt && lcpAllFramesEvt.ts),
         traceEnd: traceEnd.timing,
         load: frameTimings.timings.load,
         domContentLoaded: frameTimings.timings.domContentLoaded,
@@ -553,6 +597,7 @@ class TraceProcessor {
         firstContentfulPaint: frameTimings.timestamps.firstContentfulPaint,
         firstMeaningfulPaint: frameTimings.timestamps.firstMeaningfulPaint,
         largestContentfulPaint: frameTimings.timestamps.largestContentfulPaint,
+        largestContentfulPaintAllFrames: lcpAllFramesEvt && lcpAllFramesEvt.ts,
         traceEnd: traceEnd.timestamp,
         load: frameTimings.timestamps.load,
         domContentLoaded: frameTimings.timestamps.domContentLoaded,
@@ -562,6 +607,7 @@ class TraceProcessor {
       firstContentfulPaintEvt: frameTimings.firstContentfulPaintEvt,
       firstMeaningfulPaintEvt: frameTimings.firstMeaningfulPaintEvt,
       largestContentfulPaintEvt: frameTimings.largestContentfulPaintEvt,
+      largestContentfulPaintAllFramesEvt: lcpAllFramesEvt,
       loadEvt: frameTimings.loadEvt,
       domContentLoadedEvt: frameTimings.domContentLoadedEvt,
       fmpFellBack: frameTimings.fmpFellBack,
@@ -670,24 +716,12 @@ class TraceProcessor {
     // LCP comes from the latest `largestContentfulPaint::Candidate`, but it can be invalidated
     // by a `largestContentfulPaint::Invalidate` event. In the case that the last candidate is
     // invalidated, the value will be undefined.
-    let largestContentfulPaint;
-    let lcpInvalidated = false;
-    // Iterate the events backwards.
-    for (let i = frameEvents.length - 1; i >= 0; i--) {
-      const e = frameEvents[i];
-      // If the event's timestamp is before the time origin, stop.
-      if (e.ts <= timeOriginEvt.ts) break;
-      // If the last lcp event in the trace is 'Invalidate', there is inconclusive data to determine LCP.
-      if (e.name === 'largestContentfulPaint::Invalidate') {
-        lcpInvalidated = true;
-        break;
-      }
-      // If not an lcp 'Candidate', keep iterating.
-      if (e.name !== 'largestContentfulPaint::Candidate') continue;
-      // Found the last LCP candidate in the trace, let's use it.
-      largestContentfulPaint = e;
-      break;
-    }
+    const lcpResult = this.computeValidLCP({
+      candidateEventName: 'largestContentfulPaint::Candidate',
+      invalidateEventName: 'largestContentfulPaint::Invalidate',
+      events: frameEvents,
+      timeOriginEvt,
+    });
 
     const load = frameEvents.find(e => e.name === 'loadEventEnd' && e.ts > timeOriginEvt.ts);
     const domContentLoaded = frameEvents.find(
@@ -702,7 +736,7 @@ class TraceProcessor {
       firstPaint: getTimestamp(firstPaint),
       firstContentfulPaint: getTimestamp(firstContentfulPaint),
       firstMeaningfulPaint: getTimestamp(firstMeaningfulPaint),
-      largestContentfulPaint: getTimestamp(largestContentfulPaint),
+      largestContentfulPaint: getTimestamp(lcpResult.lcp),
       load: getTimestamp(load),
       domContentLoaded: getTimestamp(domContentLoaded),
     };
@@ -727,11 +761,11 @@ class TraceProcessor {
       firstPaintEvt: firstPaint,
       firstContentfulPaintEvt: firstContentfulPaint,
       firstMeaningfulPaintEvt: firstMeaningfulPaint,
-      largestContentfulPaintEvt: largestContentfulPaint,
+      largestContentfulPaintEvt: lcpResult.lcp,
       loadEvt: load,
       domContentLoadedEvt: domContentLoaded,
       fmpFellBack,
-      lcpInvalidated,
+      lcpInvalidated: lcpResult.invalidated,
     };
   }
 }

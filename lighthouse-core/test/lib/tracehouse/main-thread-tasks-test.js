@@ -108,6 +108,7 @@ describe('Main Thread Tasks', () => {
 
       children: [taskC],
       event: traceEvents[4],
+      endEvent: traceEvents[6],
       startTime: 5,
       endTime: 55,
       duration: 50,
@@ -202,11 +203,13 @@ describe('Main Thread Tasks', () => {
     const baseTs = 1241250325;
     const url = s => ({args: {data: {url: s}}});
     const xhr = (s, readyState, stackTrace) => ({
-      args: {data: {
-        url: s,
-        readyState,
-        stackTrace: stackTrace && stackTrace.map(url => ({url})),
-      }},
+      args: {
+        data: {
+          url: s,
+          readyState,
+          stackTrace: stackTrace && stackTrace.map(url => ({url})),
+        },
+      },
     });
 
     /*
@@ -222,7 +225,13 @@ describe('Main Thread Tasks', () => {
       {ph: 'X', name: 'EvaluateScript', ts: baseTs + 10e3, dur: 30e3, ...url('urlA')},
       {ph: 'X', name: 'XHRReadyStateChange', ts: baseTs + 15e3, dur: 15e3, ...xhr('urlXHR', 1)},
       {ph: 'X', name: 'TaskB', ts: baseTs + 80e3, dur: 20e3},
-      {ph: 'X', name: 'XHRReadyStateChange', ts: baseTs + 85e3, dur: 15e3, ...xhr('urlXHR', 4, ['urlC'])}, // eslint-disable-line max-len
+      {
+        ph: 'X',
+        name: 'XHRReadyStateChange',
+        ts: baseTs + 85e3,
+        dur: 15e3,
+        ...xhr('urlXHR', 4, ['urlC']),
+      }, // eslint-disable-line max-len
       {ph: 'X', name: 'TaskC', ts: baseTs + 89e3, dur: 4e3},
     ];
 
@@ -261,7 +270,15 @@ describe('Main Thread Tasks', () => {
       {ph: 'X', name: 'TaskA', pid, tid, ts: baseTs, dur: 30e3},
       {ph: 'X', name: 'Paint', pid, tid, ts: baseTs + 10e3, dur: 10e3, ...frame('A')},
       {ph: 'X', name: 'TaskB', pid, tid, ts: baseTs + 50e3, dur: 20e3},
-      {ph: 'X', name: 'EvaluateScript', pid, tid, ts: baseTs + 51e3, dur: 15e3, ...stackTrace('B', ['urlB'])}, // eslint-disable-line max-len
+      {
+        ph: 'X',
+        name: 'EvaluateScript',
+        pid,
+        tid,
+        ts: baseTs + 51e3,
+        dur: 15e3,
+        ...stackTrace('B', ['urlB']),
+      }, // eslint-disable-line max-len
       {ph: 'X', name: 'TaskC', pid, tid, ts: baseTs + 90e3, dur: 5e3},
       {ph: 'X', name: 'Layout', pid, tid, ts: baseTs + 90e3, dur: 4e3, ...frame('B')},
     ];
@@ -345,7 +362,7 @@ describe('Main Thread Tasks', () => {
     const taskA = tasks.find(task => task.event.name === 'TaskA');
     const taskB = tasks.find(task => task.event.name === 'TaskB');
     const taskC = tasks.find(task => task.event.name === 'TaskC');
-    expect(taskA).toEqual({
+    expect(taskA).toMatchObject({
       parent: undefined,
       attributableURLs: [],
 
@@ -359,7 +376,7 @@ describe('Main Thread Tasks', () => {
       unbounded: true,
     });
 
-    expect(taskB).toEqual({
+    expect(taskB).toMatchObject({
       parent: taskA,
       attributableURLs: [],
 
@@ -496,6 +513,7 @@ describe('Main Thread Tasks', () => {
 
         children: [],
         event: traceEvents.find(event => event.name === 'TaskB'),
+        endEvent: traceEvents.find(event => event.ph === 'E' && event.name === 'TaskB'),
         startTime: 0,
         endTime: 50,
         duration: 50,
@@ -528,7 +546,8 @@ describe('Main Thread Tasks', () => {
         attributableURLs: [],
 
         children: [],
-        event: traceEvents.find(event => event.name === 'TaskA'),
+        event: traceEvents.find(evt => evt.ph === 'B' && evt.name === 'TaskA'),
+        endEvent: traceEvents.find(evt => evt.ph === 'E' && evt.name === 'TaskA'),
         startTime: 0,
         endTime: 100,
         duration: 100,
@@ -541,7 +560,8 @@ describe('Main Thread Tasks', () => {
         attributableURLs: [],
 
         children: [],
-        event: traceEvents.find(event => event.name === 'TaskB' && event.ph === 'B'),
+        event: traceEvents.find(event => event.ph === 'B' && event.name === 'TaskB'),
+        endEvent: traceEvents.find(event => event.ph === 'E' && event.name === 'TaskB'),
         startTime: 100,
         endTime: 100,
         duration: 0,
@@ -576,6 +596,7 @@ describe('Main Thread Tasks', () => {
 
         children: [tasks[1]],
         event: traceEvents.find(event => event.name === 'SameName' && event.ts === baseTs),
+        endEvent: traceEvents.find(evt => evt.name === 'SameName' && evt.ts === baseTs + 100e3),
         startTime: 0,
         endTime: 100,
         duration: 100,
@@ -589,6 +610,7 @@ describe('Main Thread Tasks', () => {
 
         children: [],
         event: traceEvents.find(event => event.ts === baseTs + 25e3),
+        endEvent: traceEvents.find(evt => evt.name === 'SameName' && evt.ts === baseTs + 75e3),
         startTime: 25,
         endTime: 75,
         duration: 50,
@@ -624,6 +646,7 @@ describe('Main Thread Tasks', () => {
 
         children: [taskB],
         event: traceEvents.find(event => event.name === 'TaskA'),
+        endEvent: traceEvents.find(evt => evt.ph === 'E' && evt.name === 'TaskA'),
         startTime: 0,
         endTime: 100,
         duration: 100,
@@ -636,7 +659,8 @@ describe('Main Thread Tasks', () => {
         attributableURLs: [],
 
         children: [],
-        event: traceEvents.find(event => event.name === 'TaskB' && event.ph === 'B'),
+        event: traceEvents.find(evt => evt.ph === 'B' && evt.name === 'TaskB'),
+        endEvent: traceEvents.find(evt => evt.ph === 'E' && evt.name === 'TaskB'),
         startTime: 25,
         endTime: 100,
         duration: 75,
@@ -665,13 +689,14 @@ describe('Main Thread Tasks', () => {
 
     const tasks = run({traceEvents});
     const [taskA, taskB] = tasks;
-    expect(tasks).toEqual([
+    expect(tasks).toMatchObject([
       {
         parent: undefined,
         attributableURLs: [],
 
         children: [taskB],
-        event: traceEvents.find(event => event.name === 'TaskA'),
+        event: traceEvents.find(evt => evt.ph === 'B' && evt.name === 'TaskA'),
+        endEvent: traceEvents.find(evt => evt.ph === 'E' && evt.name === 'TaskA'),
         startTime: 0,
         endTime: 100,
         duration: 100,
@@ -722,7 +747,8 @@ describe('Main Thread Tasks', () => {
         attributableURLs: [],
 
         children: [taskB],
-        event: traceEvents.find(event => event.name === 'TaskA'),
+        event: traceEvents.find(evt => evt.ph === 'B' && evt.name === 'TaskA'),
+        endEvent: traceEvents.find(evt => evt.ph === 'E' && evt.name === 'TaskA'),
         startTime: 0,
         endTime: 100,
         duration: 100,
@@ -735,7 +761,8 @@ describe('Main Thread Tasks', () => {
         attributableURLs: [],
 
         children: [taskC],
-        event: traceEvents.find(event => event.name === 'TaskB' && event.ph === 'B'),
+        event: traceEvents.find(evt => evt.ph === 'B' && evt.name === 'TaskB'),
+        endEvent: traceEvents.find(evt => evt.ph === 'E' && evt.name === 'TaskB'),
         startTime: 25,
         endTime: 90,
         duration: 65,
@@ -748,7 +775,8 @@ describe('Main Thread Tasks', () => {
         attributableURLs: [],
 
         children: [],
-        event: traceEvents.find(event => event.name === 'TaskC' && event.ph === 'B'),
+        event: traceEvents.find(evt => evt.ph === 'B' && evt.name === 'TaskC'),
+        endEvent: traceEvents.find(evt => evt.ph === 'E' && evt.name === 'TaskC'),
         startTime: 25,
         endTime: 60,
         duration: 35,

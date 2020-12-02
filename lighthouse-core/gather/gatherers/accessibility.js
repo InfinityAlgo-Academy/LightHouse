@@ -94,7 +94,7 @@ function runA11yChecks() {
 
 class Accessibility extends Gatherer {
   /**
-   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.FRTransitionalContext} passContext
    * @return {Promise<LH.Artifacts.Accessibility>}
    */
   afterPass(passContext) {

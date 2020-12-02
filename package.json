@@ -1,6 +1,6 @@
 {
   "name": "lighthouse",
-  "version": "6.4.1",
+  "version": "6.5.0",
   "description": "Automated auditing, performance metrics, and best practices for the web.",
   "main": "./lighthouse-core/index.js",
   "bin": {
@@ -8,12 +8,12 @@
     "chrome-debug": "./lighthouse-core/scripts/manual-chrome-launcher.js"
   },
   "engines": {
-    "node": ">=10.13"
+    "node": ">=12.13.0"
   },
   "scripts": {
     "build-all": "npm-run-posix-or-windows build-all:task",
-    "build-all:task": "yarn build-cdt-lib && yarn build-devtools && (yarn build-extension & yarn build-lr & yarn build-viewer & yarn build-smokehouse-bundle & wait) && yarn build-pack",
-    "build-all:task:windows": "yarn build-cdt-lib && yarn build-extension && yarn build-devtools && yarn build-lr && yarn build-viewer && yarn build-smokehouse-bundle",
+    "build-all:task": "yarn build-cdt-lib && yarn build-devtools && (yarn build-extension & yarn build-lr & yarn build-viewer & yarn build-treemap & yarn build-smokehouse-bundle & wait) && yarn build-pack",
+    "build-all:task:windows": "yarn build-cdt-lib && yarn build-extension && yarn build-devtools && yarn build-lr && yarn build-viewer && yarn build-treemap && yarn build-smokehouse-bundle",
     "build-cdt-lib": "node ./build/build-cdt-lib.js",
     "build-extension": "yarn build-extension-chrome && yarn build-extension-firefox",
     "build-extension-chrome": "node ./build/build-extension.js chrome",
@@ -22,6 +22,7 @@
     "build-smokehouse-bundle": "node ./build/build-smokehouse-bundle.js",
     "build-lr": "node ./build/build-lightrider-bundles.js",
     "build-pack": "bash build/build-pack.sh",
+    "build-treemap": "node ./build/build-treemap.js",
     "build-viewer": "node ./build/build-viewer.js",
     "clean": "rimraf dist proto/scripts/*.json proto/scripts/*_pb2.* proto/scripts/*_pb.* proto/scripts/__pycache__ proto/scripts/*.pyc *.report.html *.report.dom.html *.report.json *.devtoolslog.json *.trace.json lighthouse-core/lib/i18n/locales/*.ctc.json || true",
     "lint": "[ \"$CI\" = true ] && eslint --quiet -f codeframe . || eslint .",
@@ -32,6 +33,7 @@
     "test-bundle": "yarn smoke --runner bundle -j=1 --retries=2 --invert-match forms",
     "test-clients": "jest \"clients/\"",
     "test-viewer": "yarn unit-viewer && jest lighthouse-viewer/test/viewer-test-pptr.js",
+    "test-treemap": "jest lighthouse-treemap/test/treemap-test-pptr.js",
     "test-lantern": "bash lighthouse-core/scripts/test-lantern.sh",
     "test-legacy-javascript": "bash lighthouse-core/scripts/test-legacy-javascript.sh",
     "test-docs": "yarn --cwd docs/recipes/auth && jest docs/recipes/integration-test && yarn --cwd docs/recipes/custom-gatherer-puppeteer test",
@@ -54,12 +56,13 @@
     "devtools": "bash lighthouse-core/scripts/roll-to-devtools.sh",
     "chrome": "node lighthouse-core/scripts/manual-chrome-launcher.js",
     "fast": "yarn start --emulated-form-factor=none --throttlingMethod=provided",
+    "deploy-treemap": "yarn build-treemap --deploy",
     "deploy-viewer": "yarn build-viewer --deploy",
-    "now-build": "node lighthouse-core/scripts/build-report-for-autodeployment.js && yarn build-viewer && cp -r dist/gh-pages dist/now/gh-pages",
+    "now-build": "node lighthouse-core/scripts/build-report-for-autodeployment.js && yarn build-viewer && yarn build-treemap && cp -r dist/gh-pages dist/now/gh-pages",
     "dogfood-lhci": "./lighthouse-core/scripts/dogfood-lhci.sh",
     "timing-trace": "node lighthouse-core/scripts/generate-timing-trace.js",
     "changelog": "conventional-changelog --config ./build/changelog-generator/index.js --infile changelog.md --same-file",
-    "type-check": "tsc -p . && tsc -p lighthouse-viewer/",
+    "type-check": "tsc -p . && tsc -p lighthouse-viewer/ && tsc -p lighthouse-treemap/",
     "i18n:checks": "./lighthouse-core/scripts/i18n/assert-strings-collected.sh",
     "i18n:collect-strings": "node lighthouse-core/scripts/i18n/collect-strings.js",
     "update:lantern-master": "node lighthouse-core/scripts/lantern/update-master-lantern-values.js",
@@ -76,7 +79,10 @@
     "compile-proto": "protoc --python_out=./ ./proto/lighthouse-result.proto && mv ./proto/*_pb2.py ./proto/scripts || (echo \"❌ Install protobuf ≥ 3.7.1 to compile the proto file.\" && false)",
     "build-proto-roundtrip": "mkdir -p .tmp && cross-env PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION_VERSION=2 python proto/scripts/json_roundtrip_via_proto.py",
     "static-server": "node lighthouse-cli/test/fixtures/static-server.js",
-    "serve-gh-pages": "cd dist/gh-pages && python -m SimpleHTTPServer"
+    "serve-dist": "cd dist && python -m SimpleHTTPServer",
+    "serve-gh-pages": "cd dist/gh-pages && python -m SimpleHTTPServer",
+    "serve-treemap": "yarn serve-gh-pages",
+    "serve-viewer": "yarn serve-gh-pages"
   },
   "devDependencies": {
     "@build-tracker/cli": "^1.0.0-beta.15",
@@ -110,7 +116,8 @@
     "@types/ws": "^4.0.1",
     "@types/yargs": "^8.0.2",
     "@types/yargs-parser": "^15.0.0",
-    "@wardpeet/brfs": "2.1.0-0",
+    "@typescript-eslint/parser": "^4.7.0",
+    "@wardpeet/brfs": "2.1.0",
     "angular": "^1.7.4",
     "archiver": "^3.0.0",
     "browserify": "^16.2.3",
@@ -124,8 +131,7 @@
     "cpy": "^7.0.1",
     "cross-env": "^7.0.2",
     "csv-validator": "^0.0.3",
-    "cz-customizable": "^5.2.0",
-    "devtools-protocol": "0.0.801017",
+    "devtools-protocol": "0.0.805376",
     "eslint": "^4.19.1",
     "eslint-config-google": "^0.9.1",
     "eslint-plugin-local-rules": "0.1.0",
@@ -137,7 +143,7 @@
     "isomorphic-fetch": "^2.2.1",
     "jest": "^24.9.0",
     "jsdom": "^12.2.0",
-    "lighthouse-plugin-publisher-ads": "^1.2.0",
+    "lighthouse-plugin-publisher-ads": "^1.3.0",
     "lodash.clonedeep": "^4.5.0",
     "npm-run-posix-or-windows": "^2.0.2",
     "nyc": "^13.3.0",
@@ -145,8 +151,9 @@
     "prettier": "^1.14.3",
     "pretty-json-stringify": "^0.0.2",
     "puppeteer": "^1.19.0",
-    "terser": "^4.2.0",
-    "typescript": "3.9.7"
+    "terser": "^5.3.8",
+    "typescript": "4.1.2",
+    "webtreemap-cdt": "^3.0.1"
   },
   "dependencies": {
     "axe-core": "3.5.5",
@@ -160,11 +167,11 @@
     "intl-messageformat": "^4.4.0",
     "intl-pluralrules": "^1.0.3",
     "jpeg-js": "^0.4.1",
-    "js-library-detector": "^5.9.0",
+    "js-library-detector": "^6.4.0",
     "jsonld": "^1.5.0",
     "jsonlint-mod": "^1.7.5",
     "lighthouse-logger": "^1.2.0",
-    "lighthouse-stack-packs": "^1.2.1",
+    "lighthouse-stack-packs": "^1.3.0",
     "lodash.get": "^4.4.2",
     "lodash.isequal": "^4.5.0",
     "lodash.set": "^4.3.2",
@@ -211,13 +218,5 @@
       "**/scripts/"
     ]
   },
-  "homepage": "https://github.com/GoogleChrome/lighthouse#readme",
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-customizable"
-    },
-    "cz-customizable": {
-      "config": "./.cz-config.js"
-    }
-  }
+  "homepage": "https://github.com/GoogleChrome/lighthouse#readme"
 }

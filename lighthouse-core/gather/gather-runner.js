@@ -551,6 +551,11 @@ class GatherRunner {
    * @return {Promise<LH.Artifacts.InstallabilityErrors>}
    */
   static async getInstallabilityErrors(passContext) {
+    const status = {
+      msg: 'Get webapp installability errors',
+      id: 'lh:gather:getInstallabilityErrors',
+    };
+    log.time(status);
     const response =
       await passContext.driver.sendCommand('Page.getInstallabilityErrors');
 
@@ -575,6 +580,7 @@ class GatherRunner {
       }).filter(error => error.errorId);
     }
 
+    log.timeEnd(status);
     return {errors};
   }
 
@@ -585,6 +591,8 @@ class GatherRunner {
    * @param {LH.Gatherer.PassContext} passContext
    */
   static async populateBaseArtifacts(passContext) {
+    const status = {msg: 'Populate base artifacts', id: 'lh:gather:populateBaseArtifacts'};
+    log.time(status);
     const baseArtifacts = passContext.baseArtifacts;
 
     // Copy redirected URL to artifact.
@@ -616,6 +624,8 @@ class GatherRunner {
       // @ts-expect-error - guaranteed to exist by the find above
       baseArtifacts.NetworkUserAgent = userAgentEntry.params.request.headers['User-Agent'];
     }
+
+    log.timeEnd(status);
   }
 
   /**
@@ -643,9 +653,13 @@ class GatherRunner {
    * @return {Promise<LH.Artifacts.Manifest|null>}
    */
   static async getWebAppManifest(passContext) {
+    const status = {msg: 'Get webapp manifest', id: 'lh:gather:getWebAppManifest'};
+    log.time(status);
     const response = await passContext.driver.getAppManifest();
     if (!response) return null;
-    return manifestParser(response.data, response.url, passContext.url);
+    const manifest = manifestParser(response.data, response.url, passContext.url);
+    log.timeEnd(status);
+    return manifest;
   }
 
   /**

@@ -178,6 +178,10 @@ class LighthouseReportViewer {
     if ('lhr' in json) {
       json = /** @type {LH.RunnerResult} */ (json).lhr;
     }
+    // Allow users to drop in PSI's json
+    if ('lighthouseResult' in json) {
+      json = /** @type {{lighthouseResult: LH.Result}} */ (json).lighthouseResult;
+    }
 
     // Install as global for easier debugging
     // @ts-expect-error
@@ -400,8 +404,8 @@ class LighthouseReportViewer {
    */
   _listenForMessages() {
     window.addEventListener('message', e => {
-      if (e.source === self.opener && e.data.lhresults) {
-        this._replaceReportHtml(e.data.lhresults);
+      if (e.source === self.opener && (e.data.lhr || e.data.lhresults)) {
+        this._replaceReportHtml(e.data.lhr || e.data.lhresults);
 
         if (self.opener && !self.opener.closed) {
           self.opener.postMessage({rendered: true}, '*');

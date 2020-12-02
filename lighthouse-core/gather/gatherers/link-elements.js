@@ -87,6 +87,7 @@ class LinkElements extends Gatherer {
     // We'll use evaluateAsync because the `node.getAttribute` method doesn't actually normalize
     // the values like access from JavaScript does.
     return passContext.driver.evaluate(getLinkElementsInDOM, {
+      args: [],
       useIsolation: true,
       deps: [
         pageFunctions.getNodeDetailsString,

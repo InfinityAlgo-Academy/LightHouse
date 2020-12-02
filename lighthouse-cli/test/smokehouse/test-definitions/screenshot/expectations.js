@@ -12,9 +12,42 @@ const expectations = [
   {
     artifacts: {
       FullPageScreenshot: {
-        width: '>1000',
-        height: '>1000',
-        data: /data:image\/jpeg;base64,.{10000,}$/,
+        screenshot: {
+          width: '>1000',
+          height: '>1000',
+          data: /data:image\/jpeg;base64,.{10000,}$/,
+        },
+        nodes: {
+          'page-0-BODY': {
+            top: 8,
+            bottom: 1008,
+            left: 8,
+            right: 1008,
+            width: 1000,
+            height: 1000,
+          },
+          // The following 2 are the same element (from different JS contexts). This element
+          // starts with height ~18 and grows over time. See screenshot.html.
+          'page-1-P': {
+            top: 8,
+            left: 8,
+            height: '>40',
+          },
+          '5-1-P': {
+            top: 8,
+            left: 8,
+            height: '>40',
+          },
+          '5-2-BODY': {
+            top: 8,
+            bottom: 1008,
+            left: 8,
+            right: 1008,
+            width: 1000,
+            height: 1000,
+          },
+          '5-3-HTML': {},
+        },
       },
     },
     lhr: {

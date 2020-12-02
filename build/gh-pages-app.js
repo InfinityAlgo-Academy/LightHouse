@@ -89,7 +89,7 @@ class GhPagesApp {
     const css = this._compileCss();
     safeWriteFile(`${this.distDir}/styles/bundled.css`, css);
 
-    const bundledJs = this._compileJs();
+    const bundledJs = await this._compileJs();
     safeWriteFile(`${this.distDir}/src/bundled.js`, bundledJs);
 
     await cpy(this.opts.assets.map(asset => asset.path), this.distDir, {
@@ -98,6 +98,9 @@ class GhPagesApp {
     });
   }
 
+  /**
+   * @return {Promise<void>}
+   */
   deploy() {
     return new Promise((resolve, reject) => {
       ghPages.publish(this.distDir, {
@@ -144,7 +147,7 @@ class GhPagesApp {
     return this._resolveSourcesList(this.opts.stylesheets).join('\n');
   }
 
-  _compileJs() {
+  async _compileJs() {
     // Current Lighthouse version as a global variable.
     const versionJs = `window.LH_CURRENT_VERSION = '${lighthousePackage.version}';`;
 
@@ -156,9 +159,9 @@ class GhPagesApp {
     const options = {
       output: {preamble: license}, // Insert license at top.
     };
-    const uglified = terser.minify(contents, options);
-    if (uglified.error || !uglified.code) {
-      throw uglified.error;
+    const uglified = await terser.minify(contents, options);
+    if (!uglified.code) {
+      throw new Error('terser returned no result');
     }
 
     return uglified.code;

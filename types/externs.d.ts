@@ -270,6 +270,11 @@ declare global {
           timeDeltas?: TraceCpuProfile['timeDeltas'];
           cpuProfile?: TraceCpuProfile;
           callFrame?: Required<TraceCpuProfile>['nodes'][0]['callFrame']
+          /** Marker for each synthetic CPU profiler event for the range of _potential_ ts values. */
+          _syntheticProfilerRange?: {
+            earliestPossibleTimestamp: number
+            latestPossibleTimestamp: number
+          }
           stackTrace?: {
             url: string
           }[];
@@ -316,5 +321,11 @@ declare global {
       url: string;
       webSocketDebuggerUrl: string;
     }
+  }
+
+  interface Window {
+    /** Used by FullPageScreenshot gatherer. */
+    __lighthouseNodesDontTouchOrAllVarianceGoesAway: Map<HTMLElement, string>;
+    __lighthouseExecutionContextId?: number;
   }
 }

@@ -42,6 +42,7 @@ describe('lighthouse-stack-packs dep', () => {
         "amp",
         "magento",
         "joomla",
+        "octobercms",
       ]
     `);
   });
@@ -160,6 +161,25 @@ describe('lighthouse-stack-packs dep', () => {
             "uses-text-compression",
             "uses-responsive-images",
             "server-response-time",
+          ],
+        },
+        Object {
+          "id": "octobercms",
+          "keys": Array [
+            "unused-css-rules",
+            "uses-webp-images",
+            "offscreen-images",
+            "total-byte-weight",
+            "render-blocking-resources",
+            "unminified-css",
+            "unminified-javascript",
+            "efficient-animated-content",
+            "unused-javascript",
+            "uses-long-cache-ttl",
+            "uses-optimized-images",
+            "uses-text-compression",
+            "uses-responsive-images",
+            "time-to-first-byte",
           ],
         },
       ]

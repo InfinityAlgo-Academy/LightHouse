@@ -42,6 +42,7 @@ class MetaElements extends Gatherer {
     // We'll use evaluateAsync because the `node.getAttribute` method doesn't actually normalize
     // the values like access from JavaScript does.
     return driver.evaluate(collectMetaElements, {
+      args: [],
       useIsolation: true,
       deps: [pageFunctions.getElementsInDocument],
     });

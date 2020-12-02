@@ -51,6 +51,10 @@ const stackPacksToInclude = [
     packId: 'magento',
     requiredStacks: ['js:magento'],
   },
+  {
+    packId: 'octobercms',
+    requiredStacks: ['js:octobercms'],
+  },
 ];
 
 /**

@@ -5,6 +5,8 @@
  */
 'use strict';
 
+require('./test-utils.js').makeMocksForGatherRunner();
+
 const Runner = require('../runner.js');
 const GatherRunner = require('../gather/gather-runner.js');
 const driverMock = require('./gather/fake-driver.js');
@@ -20,8 +22,6 @@ const LHError = require('../lib/lh-error.js');
 const i18n = require('../lib/i18n/i18n.js');
 
 /* eslint-env jest */
-
-jest.mock('../lib/stack-collector.js', () => () => Promise.resolve([]));
 
 describe('Runner', () => {
   const defaultGatherFn = opts => Runner._gatherArtifactsFromBrowser(
@@ -786,7 +786,7 @@ describe('Runner', () => {
 
       // And it bubbled up to the runtimeError.
       expect(lhr.runtimeError.code).toEqual(NO_FCP.code);
-      expect(lhr.runtimeError.message).toBeDisplayString(/Something .*\(NO_FCP\)/);
+      expect(lhr.runtimeError.message).toBeDisplayString(/did not paint any content.*\(NO_FCP\)/);
     });
 
     it('includes a pageLoadError runtimeError over any gatherer runtimeErrors', async () => {

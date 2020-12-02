@@ -6,42 +6,20 @@
 // @ts-nocheck
 'use strict';
 
+/**
+ * @fileoverview
+ * Helper functions that are passed by `toString()` by Driver to be evaluated in target page.
+ *
+ * Important: this module should only be imported like this:
+ *     const pageFunctions = require('...');
+ * Never like this:
+ *     const {justWhatINeed} = require('...');
+ * Otherwise, minification will mangle the variable names and break usage.
+ */
+
 /** @typedef {HTMLElementTagNameMap & {[id: string]: HTMLElement}} HTMLElementByTagName */
 
 /* global window document Node ShadowRoot */
-
-/**
- * Creates valid JavaScript code given functions, strings of valid code, and arguments.
- * @template T, R
- * @param {(...args: T[]) => R} mainFn The main function to call. It's return value will be the return value
- * of `createEvalCode`, wrapped in a Promise.
- * @param {{mode?: 'iife'|'function', args?: T[], deps?: Array<Function|string>}} _ Set mode to `iife` to
- * create a self-executing function expression, set to `function` to create just a function
- * declaration statement. Args should match the args of `mainFn`, and can be any serializable
- * value. `deps` are functions that must be defined for `mainFn` to work.
- */
-function createEvalCode(mainFn, {mode, args, deps} = {}) {
-  const argsSerialized = args ? args.map(arg => JSON.stringify(arg)).join(',') : '';
-  const depsSerialized = deps ? deps.join('\n') : '';
-
-  if (!mode || mode === 'iife') {
-    return `(() => {
-      ${depsSerialized}
-      ${mainFn}
-      return ${mainFn.name}(${argsSerialized});
-    })()`;
-  } else {
-    return `function () {
-      ${depsSerialized}
-      ${mainFn}
-      return ${mainFn.name}.call(this, ${argsSerialized});
-    }`;
-  }
-}
-
-/**
- * Helper functions that are passed by `toString()` by Driver to be evaluated in target page.
- */
 
 /**
  * The `exceptionDetails` provided by the debugger protocol does not contain the useful
@@ -479,20 +457,55 @@ function wrapRequestIdleCallback(cpuSlowdownMultiplier) {
   };
 }
 
-const getNodeDetailsString = `function getNodeDetails(elem) {
+/**
+ * @param {HTMLElement} element
+ */
+function getNodeDetailsImpl(element) {
+  // This bookkeeping is for the FullPageScreenshot gatherer.
+  if (!window.__lighthouseNodesDontTouchOrAllVarianceGoesAway) {
+    window.__lighthouseNodesDontTouchOrAllVarianceGoesAway = new Map();
+  }
+
+  // Create an id that will be unique across all execution contexts.
+  // The id could be any arbitrary string, the exact value is not important.
+  // For example, tagName is added only because it might be useful for debugging.
+  // But execution id and map size are added to ensure uniqueness.
+  // We also dedupe this id so that details collected for an element within the same
+  // pass and execution context will share the same id. Not technically important, but
+  // cuts down on some duplication.
+  let lhId = window.__lighthouseNodesDontTouchOrAllVarianceGoesAway.get(element);
+  if (!lhId) {
+    lhId = [
+      window.__lighthouseExecutionContextId !== undefined ?
+        window.__lighthouseExecutionContextId :
+        'page',
+      window.__lighthouseNodesDontTouchOrAllVarianceGoesAway.size,
+      element.tagName,
+    ].join('-');
+    window.__lighthouseNodesDontTouchOrAllVarianceGoesAway.set(element, lhId);
+  }
+
+  const htmlElement = element instanceof ShadowRoot ? element.host : element;
+  const details = {
+    lhId,
+    devtoolsNodePath: getNodePath(element),
+    selector: getNodeSelector(htmlElement),
+    boundingRect: getBoundingClientRect(htmlElement),
+    snippet: getOuterHTMLSnippet(element),
+    nodeLabel: getNodeLabel(htmlElement),
+  };
+
+  return details;
+}
+
+const getNodeDetailsString = `function getNodeDetails(element) {
   ${getNodePath.toString()};
   ${getNodeSelector.toString()};
   ${getBoundingClientRect.toString()};
   ${getOuterHTMLSnippet.toString()};
   ${getNodeLabel.toString()};
-  const htmlElem = elem instanceof ShadowRoot ? elem.host : elem;
-  return {
-    devtoolsNodePath: getNodePath(elem),
-    selector: getNodeSelector(htmlElem),
-    boundingRect: getBoundingClientRect(htmlElem),
-    snippet: getOuterHTMLSnippet(elem),
-    nodeLabel: getNodeLabel(htmlElem),
-  };
+  ${getNodeDetailsImpl.toString()};
+  return getNodeDetailsImpl(element);
 }`;
 
 module.exports = {

@@ -18,7 +18,6 @@ const config = {
     'full-page-screenshot',
     'large-javascript-libraries',
     'script-treemap-data',
-    'preload-lcp-image',
   ],
   passes: [{
     passName: 'defaultPass',
@@ -32,7 +31,6 @@ const config = {
     'performance': {
       auditRefs: [
         {id: 'large-javascript-libraries', weight: 0, group: 'diagnostics'},
-        {id: 'preload-lcp-image', weight: 0, group: 'load-opportunities'},
       ],
     },
     // @ts-ignore: `title` is required in CategoryJson. setting to the same value as the default

@@ -1,3 +1,109 @@
+<a name="6.5.0"></a>
+# 6.5.0 (2020-11-30)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v6.4.1...v6.5.0)
+
+We expect this release to ship in the DevTools of [Chrome 89](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## New Contributors
+
+Thanks to our new contributors 👽🐷🐰🐯🐻!
+
+- Ashley Claymore @acutmore
+- Brad Frost @bradfrosty
+- Daniel Arthur Gallagher @DanArthurGallagher
+- Stephen @stephenyu
+- Vladimir Makhaev @vmakhaev
+
+## New Audits
+
+* preload an image if it is the LCP element ([#11486](https://github.com/GoogleChrome/lighthouse/pull/11486))
+* issues logged in the Devtools Issues panel ([#11409](https://github.com/GoogleChrome/lighthouse/pull/11409), [#11710](https://github.com/GoogleChrome/lighthouse/pull/11710))
+
+## Core
+
+* metrics: support CLS for all frames ([#11713](https://github.com/GoogleChrome/lighthouse/pull/11713))
+* metrics: support LCP in all frames for devtools throttling ([#11701](https://github.com/GoogleChrome/lighthouse/pull/11701))
+* stacks: update to support october cms and joomla ([#11729](https://github.com/GoogleChrome/lighthouse/pull/11729))
+* artifacts: encapsulate node details in an object ([#11474](https://github.com/GoogleChrome/lighthouse/pull/11474))
+* critical-requests: refactor to use lantern graph ([#11533](https://github.com/GoogleChrome/lighthouse/pull/11533))
+* hidpr-images: never recommend more than 2x ([#11518](https://github.com/GoogleChrome/lighthouse/pull/11518))
+* driver: resume on debugger statements ([#11727](https://github.com/GoogleChrome/lighthouse/pull/11727))
+* is-crawlable: always ignore mailto anchors ([#11554](https://github.com/GoogleChrome/lighthouse/pull/11554))
+* error: add dedicated error string for NO_FCP ([#11579](https://github.com/GoogleChrome/lighthouse/pull/11579))
+* dom-size: remove formatNumber ([#11563](https://github.com/GoogleChrome/lighthouse/pull/11563))
+* gather-runner: use final document when reporting non-HTML error ([#11620](https://github.com/GoogleChrome/lighthouse/pull/11620))
+* preload-lcp-image: properly calculate the potential savings ([#11612](https://github.com/GoogleChrome/lighthouse/pull/11612))
+* tracehouse: improve CPU profiler timing refinement ([#11608](https://github.com/GoogleChrome/lighthouse/pull/11608))
+* add devtools path to DOMStats ([#11578](https://github.com/GoogleChrome/lighthouse/pull/11578))
+* tracehouse: split timeOrigin determination out of computeTraceOfTab ([#11253](https://github.com/GoogleChrome/lighthouse/pull/11253))
+* tracehouse: use tasks to improve profiler timing data ([#11446](https://github.com/GoogleChrome/lighthouse/pull/11446))
+* unsized-images: respect CSS rules from stylesheets ([#11590](https://github.com/GoogleChrome/lighthouse/pull/11590))
+* runner: abstract gather phase out of runner ([#11623](https://github.com/GoogleChrome/lighthouse/pull/11623))
+* driver: extract waitFor methods ([#11685](https://github.com/GoogleChrome/lighthouse/pull/11685))
+* driver: extract evaluateAsync logic for FR driver ([#11633](https://github.com/GoogleChrome/lighthouse/pull/11633))
+* lantern: traverse generator method ([#11636](https://github.com/GoogleChrome/lighthouse/pull/11636))
+* js-bundles: return error object when sizes cannot be determined ([#10449](https://github.com/GoogleChrome/lighthouse/pull/10449))
+* add timing instrumentation for base artifacts ([#11672](https://github.com/GoogleChrome/lighthouse/pull/11672))
+
+## Experimental
+
+* full-page-screenshot: resolve node rects during emulation ([#11536](https://github.com/GoogleChrome/lighthouse/pull/11536))
+* full-page-screenshot: drop max datauri size constraints ([#11689](https://github.com/GoogleChrome/lighthouse/pull/11689))
+* full-page-screenshot: use dpr 1 ([#11688](https://github.com/GoogleChrome/lighthouse/pull/11688))
+* full-page-screenshot: use layoutViewport width ([#11402](https://github.com/GoogleChrome/lighthouse/pull/11402))
+* do not show element screenshot if out of bounds ([#11538](https://github.com/GoogleChrome/lighthouse/pull/11538))
+* add script-treemap-data to experimental ([#11271](https://github.com/GoogleChrome/lighthouse/pull/11271))
+* treemap: initialize app structure ([#11635](https://github.com/GoogleChrome/lighthouse/pull/11635))
+* treemap opener, ?dev for localhost viewer and treemap ([#11667](https://github.com/GoogleChrome/lighthouse/pull/11667))
+
+## Deps
+
+* remove cz-customizable as local dep ([#11719](https://github.com/GoogleChrome/lighthouse/pull/11719))
+* update to typescript 4.1.2 ([#11690](https://github.com/GoogleChrome/lighthouse/pull/11690))
+* bump various dependencies to quiet security alerts ([#11693](https://github.com/GoogleChrome/lighthouse/pull/11693))
+* update brfs to fix build in node 15 ([#11676](https://github.com/GoogleChrome/lighthouse/pull/11676))
+* upgrade lighthouse-plugin-publisher-ads to 1.3.0 ([#11660](https://github.com/GoogleChrome/lighthouse/pull/11660))
+* add @types/yargs-parser ([#11517](https://github.com/GoogleChrome/lighthouse/pull/11517))
+
+## Clients
+
+* viewer: extract the LHR from PSI json ([#11650](https://github.com/GoogleChrome/lighthouse/pull/11650))
+
+## I18n
+
+* format bytes with consistent fractional width ([#11489](https://github.com/GoogleChrome/lighthouse/pull/11489))
+* import ([#11715](https://github.com/GoogleChrome/lighthouse/pull/11715))
+
+## Docs
+
+* readme: add Apdex to integrations ([#11655](https://github.com/GoogleChrome/lighthouse/pull/11655))
+* update throttling reference ([#11645](https://github.com/GoogleChrome/lighthouse/pull/11645))
+* configuration: update description of `extends` property ([#11488](https://github.com/GoogleChrome/lighthouse/pull/11488))
+* releasing: update release process ([#11502](https://github.com/GoogleChrome/lighthouse/pull/11502))
+
+## Tests
+
+* rebaseline devtools test, print each .lh-audit id ([#11702](https://github.com/GoogleChrome/lighthouse/pull/11702))
+* smoke: attempt to fix cls-elements flake ([#11426](https://github.com/GoogleChrome/lighthouse/pull/11426))
+* update github actions to use env files ([#11674](https://github.com/GoogleChrome/lighthouse/pull/11674))
+* remove unnecessary jest babel transform ([#11664](https://github.com/GoogleChrome/lighthouse/pull/11664))
+* use setup-protoc bugfix branch ([#11665](https://github.com/GoogleChrome/lighthouse/pull/11665))
+* update static content shell version ([#11634](https://github.com/GoogleChrome/lighthouse/pull/11634))
+* limit LCP element audit to m87 and earlier ([#11625](https://github.com/GoogleChrome/lighthouse/pull/11625))
+* update MixedContent test to match ToT ([#11584](https://github.com/GoogleChrome/lighthouse/pull/11584))
+* add devtools test for important data warning ([#11544](https://github.com/GoogleChrome/lighthouse/pull/11544))
+* reset smoke transferSize expectations to reality ([#11534](https://github.com/GoogleChrome/lighthouse/pull/11534))
+* add tests for networkRecordsToDevtoolsLog ([#11523](https://github.com/GoogleChrome/lighthouse/pull/11523))
+* mock saveLhr and assert no unit test source changes ([#11519](https://github.com/GoogleChrome/lighthouse/pull/11519))
+
+## Misc
+
+* build: give build-tracker a shared git history on PRs ([#11449](https://github.com/GoogleChrome/lighthouse/pull/11449))
+* build: refactor viewer bundler into reusable GhPagesApp ([#11564](https://github.com/GoogleChrome/lighthouse/pull/11564))
+* add script to automatically test lighthouse on a page from devtools ([#11539](https://github.com/GoogleChrome/lighthouse/pull/11539))
+* add save latest run script ([#11516](https://github.com/GoogleChrome/lighthouse/pull/11516))
+* remove compile-against-devtools.sh ([#11520](https://github.com/GoogleChrome/lighthouse/pull/11520))
+
 <a name="6.4.1"></a>
 # 6.4.1 (2020-10-02)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v6.4.0...v6.4.1)

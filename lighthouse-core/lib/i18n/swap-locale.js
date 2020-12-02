@@ -54,6 +54,8 @@ function swapLocale(lhr, requestedLocale) {
   const {icuMessagePaths} = lhr.i18n;
   const missingIcuMessageIds = [];
 
+  if (!icuMessagePaths) throw new Error('missing icuMessagePaths');
+
   for (const [i18nId, icuMessagePath] of Object.entries(icuMessagePaths)) {
     for (const instance of icuMessagePath) {
       // The path that _formatPathAsString() generated.

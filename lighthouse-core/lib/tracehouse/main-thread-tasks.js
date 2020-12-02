@@ -29,6 +29,7 @@ const {taskGroups, taskNameToGroup} = require('./task-groups.js');
 /**
  * @typedef TaskNode
  * @prop {LH.TraceEvent} event
+ * @prop {LH.TraceEvent|undefined} endEvent
  * @prop {TaskNode[]} children
  * @prop {TaskNode|undefined} parent
  * @prop {boolean} unbounded Indicates that the task had an endTime that was inferred rather than specified in the trace. i.e. in the source trace this task was unbounded.
@@ -45,7 +46,7 @@ const {taskGroups, taskNameToGroup} = require('./task-groups.js');
 class MainThreadTasks {
   /**
    * @param {LH.TraceEvent} event
-   * @param {Pick<LH.TraceEvent, 'ph'|'ts'>} [endEvent]
+   * @param {LH.TraceEvent} [endEvent]
    * @return {TaskNode}
    */
   static _createNewTaskNode(event, endEvent) {
@@ -60,6 +61,7 @@ class MainThreadTasks {
 
     const newTask = {
       event,
+      endEvent,
       startTime,
       endTime,
       duration: endTime - startTime,
@@ -181,13 +183,13 @@ class MainThreadTasks {
         break;
       }
 
-      /** @type {Pick<LH.TraceEvent, 'ph'|'ts'>} */
+      /** @type {LH.TraceEvent} */
       let taskEndEvent;
       let unbounded = false;
       if (matchedEventIndex === -1) {
         // If we couldn't find an end event, we'll assume it's the end of the trace.
         // If this creates invalid parent/child relationships it will be caught in the next step.
-        taskEndEvent = {ph: 'E', ts: traceEndTs};
+        taskEndEvent = {...taskStartEvent, ph: 'E', ts: traceEndTs};
         unbounded = true;
       } else if (matchedEventIndex === taskEndEventsReverseQueue.length - 1) {
         // Use .pop() in the common case where the immediately next event is needed.
@@ -309,14 +311,17 @@ class MainThreadTasks {
             // When we fall into this error, it's usually because of one of two reasons.
             //    - There was slop in the opposite direction (child started 1ms before parent),
             //      the child was assumed to be parent instead, and another task already started.
-            //    - The child timestamp ended more than 1ms after tha parent.
+            //    - The child timestamp ended more than 1ms after the parent.
+            //      Two unrelated tasks where the first hangs over the second by >1ms is also this case.
             // These have more complicated fixes, so handling separately https://github.com/GoogleChrome/lighthouse/pull/9491#discussion_r327331204.
             /** @type {any} */
             const error = new Error('Fatal trace logic error - child cannot end after parent');
             error.timeDelta = timeDelta;
             error.nextTaskEvent = nextTask.event;
+            error.nextTaskEndEvent = nextTask.endEvent;
             error.nextTaskEndTime = nextTask.endTime;
             error.currentTaskEvent = currentTask.event;
+            error.currentTaskEndEvent = currentTask.endEvent;
             error.currentTaskEndTime = currentTask.endTime;
             throw error;
           }

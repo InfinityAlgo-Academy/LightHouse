@@ -117,8 +117,8 @@ function evaluateAndPrintAccuracy(metric, lanternMetric) {
     )}`.padEnd(30),
   ];
 
-  allEvaluations.push(...actualAccuracy.evaluations);
-  baselineEvaluations.push(...baselineAccuracy.evaluations);
+  if (actualAccuracy.evaluations) allEvaluations.push(...actualAccuracy.evaluations);
+  if (baselineAccuracy.evaluations) baselineEvaluations.push(...baselineAccuracy.evaluations);
 
   if (lanternMetric.includes('roughEstimate')) {
     console.log(...strings);

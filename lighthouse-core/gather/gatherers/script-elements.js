@@ -8,7 +8,7 @@
 const Gatherer = require('./gatherer.js');
 const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
 const NetworkRequest = require('../../lib/network-request.js');
-const {getElementsInDocument, getNodeDetailsString} = require('../../lib/page-functions.js');
+const pageFunctions = require('../../lib/page-functions.js');
 
 /* global getNodeDetails */
 
@@ -71,10 +71,11 @@ class ScriptElements extends Gatherer {
     const mainResource = NetworkAnalyzer.findMainDocument(loadData.networkRecords, passContext.url);
 
     const scripts = await driver.evaluate(collectAllScriptElements, {
+      args: [],
       useIsolation: true,
       deps: [
-        getNodeDetailsString,
-        getElementsInDocument,
+        pageFunctions.getNodeDetailsString,
+        pageFunctions.getElementsInDocument,
       ],
     });
 

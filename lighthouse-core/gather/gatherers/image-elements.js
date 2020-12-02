@@ -76,7 +76,6 @@ function getHTMLImages(allElements) {
       cssComputedPosition: getPosition(element, computedStyle),
       isCss: false,
       isPicture,
-      // @ts-expect-error: loading attribute not yet added to HTMLImageElement definition.
       loading: element.loading,
       resourceSize: 0, // this will get overwritten below
       usesObjectFit: ['cover', 'contain', 'scale-down', 'none'].includes(
