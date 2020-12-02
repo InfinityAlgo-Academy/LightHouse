@@ -8,7 +8,7 @@
  * @fileoverview Audits a page to ensure charset it configured properly.
  * It must be defined within the first 1024 bytes of the HTML document, defined in the HTTP header, or the document source must start with a BOM.
  *
- * @see: https://github.com/GoogleChrome/lighthouse/issues/10023
+ * @see https://github.com/GoogleChrome/lighthouse/issues/10023
  */
 'use strict';
 

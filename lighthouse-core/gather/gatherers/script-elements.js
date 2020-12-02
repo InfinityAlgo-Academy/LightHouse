@@ -8,7 +8,6 @@
 const Gatherer = require('./gatherer.js');
 const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
 const NetworkRequest = require('../../lib/network-request.js');
-const getElementsInDocumentString = require('../../lib/page-functions.js').getElementsInDocumentString; // eslint-disable-line max-len
 const pageFunctions = require('../../lib/page-functions.js');
 
 /* global getNodeDetails */
@@ -72,12 +71,14 @@ class ScriptElements extends Gatherer {
     const driver = passContext.driver;
     const mainResource = NetworkAnalyzer.findMainDocument(loadData.networkRecords, passContext.url);
 
-    /** @type {LH.Artifacts['ScriptElements']} */
-    const scripts = await driver.evaluateAsync(`(() => {
-      ${getElementsInDocumentString}
-      ${pageFunctions.getNodeDetailsString};
-      return (${collectAllScriptElements.toString()})();
-    })()`, {useIsolation: true});
+    const scripts = await driver.evaluate(collectAllScriptElements, {
+      args: [],
+      useIsolation: true,
+      deps: [
+        pageFunctions.getNodeDetailsString,
+        pageFunctions.getElementsInDocument,
+      ],
+    });
 
     for (const script of scripts) {
       if (script.content) script.requestId = mainResource.requestId;

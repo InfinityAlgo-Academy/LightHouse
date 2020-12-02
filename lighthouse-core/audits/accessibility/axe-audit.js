@@ -77,6 +77,7 @@ class AxeAudit extends Audit {
       items = rule.nodes.map(node => ({
         node: /** @type {LH.Audit.Details.NodeValue} */ ({
           type: 'node',
+          lhId: node.lhId,
           selector: node.selector,
           path: node.devtoolsNodePath,
           snippet: node.snippet,

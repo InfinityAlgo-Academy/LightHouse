@@ -225,20 +225,21 @@ class GatherRunner {
 
   /**
    * Returns an error if we try to load a non-HTML page.
-   * @param {LH.Artifacts.NetworkRequest|undefined} mainRecord
+   * Expects a network request with all redirects resolved, otherwise the MIME type may be incorrect.
+   * @param {LH.Artifacts.NetworkRequest|undefined} finalRecord
    * @return {LH.LighthouseError|undefined}
    */
-  static getNonHtmlError(mainRecord) {
+  static getNonHtmlError(finalRecord) {
     // MIME types are case-insenstive but Chrome normalizes MIME types to be lowercase.
     const HTML_MIME_TYPE = 'text/html';
 
     // If we never requested a document, there's no doctype error, let other cases handle it.
-    if (!mainRecord) return undefined;
+    if (!finalRecord) return undefined;
 
     // mimeType is determined by the browser, we assume Chrome is determining mimeType correctly,
     // independently of 'Content-Type' response headers, and always sending mimeType if well-formed.
-    if (HTML_MIME_TYPE !== mainRecord.mimeType) {
-      return new LHError(LHError.errors.NOT_HTML, {mimeType: mainRecord.mimeType});
+    if (HTML_MIME_TYPE !== finalRecord.mimeType) {
+      return new LHError(LHError.errors.NOT_HTML, {mimeType: finalRecord.mimeType});
     }
     return undefined;
   }
@@ -259,9 +260,15 @@ class GatherRunner {
       mainRecord = NetworkAnalyzer.findMainDocument(networkRecords, passContext.url);
     } catch (_) {}
 
+    // MIME Type is only set on the final redirected document request. Use this for the HTML check instead of root.
+    let finalRecord;
+    if (mainRecord) {
+      finalRecord = NetworkAnalyzer.resolveRedirects(mainRecord);
+    }
+
     const networkError = GatherRunner.getNetworkError(mainRecord);
     const interstitialError = GatherRunner.getInterstitialError(mainRecord, networkRecords);
-    const nonHtmlError = GatherRunner.getNonHtmlError(mainRecord);
+    const nonHtmlError = GatherRunner.getNonHtmlError(finalRecord);
 
     // Check to see if we need to ignore the page load failure.
     // e.g. When the driver is offline, the load will fail without page offline support.
@@ -544,6 +551,11 @@ class GatherRunner {
    * @return {Promise<LH.Artifacts.InstallabilityErrors>}
    */
   static async getInstallabilityErrors(passContext) {
+    const status = {
+      msg: 'Get webapp installability errors',
+      id: 'lh:gather:getInstallabilityErrors',
+    };
+    log.time(status);
     const response =
       await passContext.driver.sendCommand('Page.getInstallabilityErrors');
     const errors = response.installabilityErrors;
@@ -557,6 +569,8 @@ class GatherRunner {
    * @param {LH.Gatherer.PassContext} passContext
    */
   static async populateBaseArtifacts(passContext) {
+    const status = {msg: 'Populate base artifacts', id: 'lh:gather:populateBaseArtifacts'};
+    log.time(status);
     const baseArtifacts = passContext.baseArtifacts;
 
     // Copy redirected URL to artifact.
@@ -588,6 +602,8 @@ class GatherRunner {
       // @ts-expect-error - guaranteed to exist by the find above
       baseArtifacts.NetworkUserAgent = userAgentEntry.params.request.headers['User-Agent'];
     }
+
+    log.timeEnd(status);
   }
 
   /**
@@ -615,9 +631,13 @@ class GatherRunner {
    * @return {Promise<LH.Artifacts.Manifest|null>}
    */
   static async getWebAppManifest(passContext) {
+    const status = {msg: 'Get webapp manifest', id: 'lh:gather:getWebAppManifest'};
+    log.time(status);
     const response = await passContext.driver.getAppManifest();
     if (!response) return null;
-    return manifestParser(response.data, response.url, passContext.url);
+    const manifest = manifestParser(response.data, response.url, passContext.url);
+    log.timeEnd(status);
+    return manifest;
   }
 
   /**

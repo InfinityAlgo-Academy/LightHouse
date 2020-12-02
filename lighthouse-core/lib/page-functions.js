@@ -6,11 +6,20 @@
 // @ts-nocheck
 'use strict';
 
-/* global window document Node ShadowRoot */
-
 /**
+ * @fileoverview
  * Helper functions that are passed by `toString()` by Driver to be evaluated in target page.
+ *
+ * Important: this module should only be imported like this:
+ *     const pageFunctions = require('...');
+ * Never like this:
+ *     const {justWhatINeed} = require('...');
+ * Otherwise, minification will mangle the variable names and break usage.
  */
+
+/** @typedef {HTMLElementTagNameMap & {[id: string]: HTMLElement}} HTMLElementByTagName */
+
+/* global window document Node ShadowRoot */
 
 /**
  * The `exceptionDetails` provided by the debugger protocol does not contain the useful
@@ -78,9 +87,10 @@ function checkTimeSinceLastLongTask() {
 }
 
 /**
- * @param {string=} selector Optional simple CSS selector to filter nodes on.
+ * @template {string} T
+ * @param {T} selector Optional simple CSS selector to filter nodes on.
  *     Combinators are not supported.
- * @return {Array<HTMLElement>}
+ * @return {Array<HTMLElementByTagName[T]>}
  */
 /* istanbul ignore next */
 function getElementsInDocument(selector) {
@@ -377,7 +387,6 @@ function getNodeLabel(node) {
     }
     return str.slice(0, maxLength - 1) + '…';
   }
-
   const tagName = node.tagName.toLowerCase();
   // html and body content is too broad to be useful, since they contain all page content
   if (tagName !== 'html' && tagName !== 'body') {
@@ -398,7 +407,7 @@ function getNodeLabel(node) {
 
 /**
  * @param {HTMLElement} element
- * @param {LH.Artifacts.Rect}
+ * @return {LH.Artifacts.Rect}
  */
 /* istanbul ignore next */
 function getBoundingClientRect(element) {
@@ -447,25 +456,62 @@ function wrapRequestIdleCallback(cpuSlowdownMultiplier) {
   };
 }
 
-const getNodeDetailsString = `function getNodeDetails(elem) {
+/**
+ * @param {HTMLElement} element
+ */
+function getNodeDetailsImpl(element) {
+  // This bookkeeping is for the FullPageScreenshot gatherer.
+  if (!window.__lighthouseNodesDontTouchOrAllVarianceGoesAway) {
+    window.__lighthouseNodesDontTouchOrAllVarianceGoesAway = new Map();
+  }
+
+  // Create an id that will be unique across all execution contexts.
+  // The id could be any arbitrary string, the exact value is not important.
+  // For example, tagName is added only because it might be useful for debugging.
+  // But execution id and map size are added to ensure uniqueness.
+  // We also dedupe this id so that details collected for an element within the same
+  // pass and execution context will share the same id. Not technically important, but
+  // cuts down on some duplication.
+  let lhId = window.__lighthouseNodesDontTouchOrAllVarianceGoesAway.get(element);
+  if (!lhId) {
+    lhId = [
+      window.__lighthouseExecutionContextId !== undefined ?
+        window.__lighthouseExecutionContextId :
+        'page',
+      window.__lighthouseNodesDontTouchOrAllVarianceGoesAway.size,
+      element.tagName,
+    ].join('-');
+    window.__lighthouseNodesDontTouchOrAllVarianceGoesAway.set(element, lhId);
+  }
+
+  const htmlElement = element instanceof ShadowRoot ? element.host : element;
+  const details = {
+    lhId,
+    devtoolsNodePath: getNodePath(element),
+    selector: getNodeSelector(htmlElement),
+    boundingRect: getBoundingClientRect(htmlElement),
+    snippet: getOuterHTMLSnippet(element),
+    nodeLabel: getNodeLabel(htmlElement),
+  };
+
+  return details;
+}
+
+const getNodeDetailsString = `function getNodeDetails(element) {
   ${getNodePath.toString()};
   ${getNodeSelector.toString()};
   ${getBoundingClientRect.toString()};
   ${getOuterHTMLSnippet.toString()};
   ${getNodeLabel.toString()};
-  return {
-    devtoolsNodePath: getNodePath(elem),
-    selector: getNodeSelector(elem),
-    boundingRect: getBoundingClientRect(elem),
-    snippet: getOuterHTMLSnippet(elem),
-    nodeLabel: getNodeLabel(elem),
-  };
+  ${getNodeDetailsImpl.toString()};
+  return getNodeDetailsImpl(element);
 }`;
 
 module.exports = {
   wrapRuntimeEvalErrorInBrowserString: wrapRuntimeEvalErrorInBrowser.toString(),
   registerPerformanceObserverInPageString: registerPerformanceObserverInPage.toString(),
   checkTimeSinceLastLongTaskString: checkTimeSinceLastLongTask.toString(),
+  getElementsInDocument,
   getElementsInDocumentString: getElementsInDocument.toString(),
   getOuterHTMLSnippetString: getOuterHTMLSnippet.toString(),
   getOuterHTMLSnippet: getOuterHTMLSnippet,

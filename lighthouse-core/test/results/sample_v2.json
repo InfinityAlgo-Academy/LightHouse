@@ -8,7 +8,7 @@
       "axe-core": "3.5.5"
     }
   },
-  "lighthouseVersion": "6.4.1",
+  "lighthouseVersion": "6.5.0",
   "fetchTime": "2018-03-13T00:55:45.840Z",
   "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "finalUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
@@ -1442,6 +1442,7 @@
             "totalBlockingTime": 117,
             "maxPotentialFID": 123,
             "cumulativeLayoutShift": 0.42,
+            "cumulativeLayoutShiftAllFrames": 0,
             "observedTimeOrigin": 0,
             "observedTimeOriginTs": 185603319912,
             "observedNavigationStart": 0,
@@ -1461,6 +1462,7 @@
             "observedDomContentLoaded": 4901,
             "observedDomContentLoadedTs": 185608220734,
             "observedCumulativeLayoutShift": 0.42,
+            "observedCumulativeLayoutShiftAllFrames": 0,
             "observedFirstVisualChange": 3969,
             "observedFirstVisualChangeTs": 185607288912,
             "observedLastVisualChange": 4791,
@@ -2069,6 +2071,22 @@
         "type": "table",
         "headings": [],
         "items": []
+      }
+    },
+    "preload-lcp-image": {
+      "id": "preload-lcp-image",
+      "title": "Preload Largest Contentful Paint image",
+      "description": "Preload the image used by the LCP element in order to improve your LCP time. [Learn more](https://web.dev/optimize-lcp/#preload-important-resources).",
+      "score": 1,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 0,
+      "numericUnit": "millisecond",
+      "displayValue": "",
+      "details": {
+        "type": "opportunity",
+        "headings": [],
+        "items": [],
+        "overallSavingsMs": 0
       }
     },
     "pwa-cross-browser": {
@@ -3600,9 +3618,9 @@
       "description": "A large DOM will increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://web.dev/dom-size/).",
       "score": 1,
       "scoreDisplayMode": "numeric",
-      "numericValue": 31,
+      "numericValue": 148,
       "numericUnit": "element",
-      "displayValue": "31 elements",
+      "displayValue": "148 elements",
       "details": {
         "type": "table",
         "headings": [
@@ -3612,8 +3630,8 @@
             "text": "Statistic"
           },
           {
-            "key": "element",
-            "itemType": "code",
+            "key": "node",
+            "itemType": "node",
             "text": "Element"
           },
           {
@@ -3625,24 +3643,29 @@
         "items": [
           {
             "statistic": "Total DOM Elements",
-            "element": "",
-            "value": 31
+            "value": 148
           },
           {
+            "node": {
+              "type": "node",
+              "path": "3,HTML,1,BODY,7,DIV,3,svg,0,title",
+              "snippet": "<title id=\"social-facebook-5\">",
+              "selector": "body > div > svg.social-facebook > title#social-facebook-5",
+              "nodeLabel": "title"
+            },
             "statistic": "Maximum DOM Depth",
-            "element": {
-              "type": "code",
-              "value": "<h2>"
-            },
-            "value": 3
+            "value": 4
           },
           {
-            "statistic": "Maximum Child Elements",
-            "element": {
-              "type": "code",
-              "value": "<body>"
+            "node": {
+              "type": "node",
+              "path": "3,HTML,1,BODY,4,DIV,a,#document-fragment",
+              "snippet": "<div id=\"shadow-root-container\">",
+              "selector": "body > div#shadow-root-container",
+              "nodeLabel": "div"
             },
-            "value": 29
+            "statistic": "Maximum Child Elements",
+            "value": 100
           }
         ]
       }
@@ -3752,6 +3775,14 @@
           }
         ]
       }
+    },
+    "inspector-issues": {
+      "id": "inspector-issues",
+      "title": "No issues in the `Issues` panel in Chrome Devtools",
+      "description": "Issues logged to the `Issues` panel in Chrome Devtools indicate unresolved problems. They can come from network request failures, insufficient security controls, and other browser concerns. Open up the Issues panel in Chrome DevTools for more details on each issue.",
+      "score": null,
+      "scoreDisplayMode": "error",
+      "errorMessage": "Cannot read property 'length' of undefined"
     },
     "no-document-write": {
       "id": "no-document-write",
@@ -4568,6 +4599,11 @@
           "group": "load-opportunities"
         },
         {
+          "id": "preload-lcp-image",
+          "weight": 0,
+          "group": "load-opportunities"
+        },
+        {
           "id": "total-byte-weight",
           "weight": 0,
           "group": "diagnostics"
@@ -5039,10 +5075,15 @@
           "id": "valid-source-maps",
           "weight": 0,
           "group": "best-practices-general"
+        },
+        {
+          "id": "inspector-issues",
+          "weight": 1,
+          "group": "best-practices-general"
         }
       ],
       "id": "best-practices",
-      "score": 0.07
+      "score": null
     },
     "seo": {
       "title": "SEO",
@@ -5791,6 +5832,18 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:LargestContentfulPaintAllFrames",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:CumulativeLayoutShiftAllFrames",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:offline-start-url",
         "duration": 100,
         "entryType": "measure"
@@ -5864,6 +5917,24 @@
       {
         "startTime": 0,
         "name": "lh:audit:valid-source-maps",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:preload-lcp-image",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:LanternLargestContentfulPaint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:LanternFirstContentfulPaint",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6355,6 +6426,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:inspector-issues",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:no-document-write",
         "duration": 100,
         "entryType": "measure"
@@ -6749,7 +6826,7 @@
         "audits[uses-http2].details.headings[0].label",
         "audits[uses-passive-event-listeners].details.headings[0].text"
       ],
-      "lighthouse-core/audits/errors-in-console.js | columnDesc": [
+      "lighthouse-core/lib/i18n/i18n.js | columnDescription": [
         "audits[errors-in-console].details.headings[1].text"
       ],
       "lighthouse-core/audits/server-response-time.js | title": [
@@ -7219,6 +7296,12 @@
       "lighthouse-core/audits/valid-source-maps.js | description": [
         "audits[valid-source-maps].description"
       ],
+      "lighthouse-core/audits/preload-lcp-image.js | title": [
+        "audits[preload-lcp-image].title"
+      ],
+      "lighthouse-core/audits/preload-lcp-image.js | description": [
+        "audits[preload-lcp-image].description"
+      ],
       "lighthouse-core/audits/manual/pwa-cross-browser.js | title": [
         "audits[pwa-cross-browser].title"
       ],
@@ -7671,7 +7754,7 @@
       "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": [
         {
           "values": {
-            "itemCount": 31
+            "itemCount": 148
           },
           "path": "audits[dom-size].displayValue"
         }
@@ -7719,6 +7802,12 @@
         "audits[no-document-write].details.headings[1].text",
         "audits[notification-on-start].details.headings[1].text",
         "audits[uses-passive-event-listeners].details.headings[1].text"
+      ],
+      "lighthouse-core/audits/dobetterweb/inspector-issues.js | title": [
+        "audits[inspector-issues].title"
+      ],
+      "lighthouse-core/audits/dobetterweb/inspector-issues.js | description": [
+        "audits[inspector-issues].description"
       ],
       "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": [
         "audits[no-document-write].title"

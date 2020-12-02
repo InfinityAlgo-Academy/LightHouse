@@ -20,6 +20,7 @@ const noFCPtrace = require('../../fixtures/traces/airhorner_no_fcp.json');
 const noNavStartTrace = require('../../fixtures/traces/no_navstart_event.json');
 const backgroundTabTrace = require('../../fixtures/traces/backgrounded-tab-missing-paints.json');
 const lcpTrace = require('../../fixtures/traces/lcp-m78.json');
+const lcpAllFramesTrace = require('../../fixtures/traces/frame-metrics-m89.json');
 
 /* eslint-env jest */
 
@@ -253,6 +254,13 @@ describe('TraceProcessor', () => {
     });
   });
 
+  describe('computeTraceEnd', () => {
+    it('computes the last timestamp within the bounds of the trace', () => {
+      const events = [{ts: 1000}, {ts: 999, dur: 1001}];
+      expect(TraceProcessor.computeTraceEnd(events, {ts: 0})).toEqual({timestamp: 2000, timing: 2});
+    });
+  });
+
   describe('computeTraceOfTab', () => {
     it('gathers the events from the tab\'s process', () => {
       const trace = TraceProcessor.computeTraceOfTab(lateTracingStartedTrace);
@@ -283,7 +291,34 @@ describe('TraceProcessor', () => {
       assert.equal(Math.round(trace.timestamps.firstPaint), 29343620997);
       assert.equal(Math.round(trace.timestamps.firstContentfulPaint), 29343621005);
       assert.equal(Math.round(trace.timestamps.firstMeaningfulPaint), 29344070867);
-      assert.equal(Math.round(trace.timestamps.traceEnd), 29344190223);
+      assert.equal(Math.round(trace.timestamps.traceEnd), 29344190232);
+    });
+
+    describe('timeOriginDeterminationMethod', () => {
+      it('supports lastNavigationStart', () => {
+        const trace = TraceProcessor.computeTraceOfTab(lcpTrace);
+        expect(trace.timings).toMatchObject({
+          largestContentfulPaint: 1121.711,
+          load: 2159.007,
+          traceEnd: 7416.038,
+        });
+
+        expect(trace.timestamps.timeOrigin).toEqual(713037023064);
+      });
+
+      it('supports firstResourceSendRequest', () => {
+        const trace = TraceProcessor.computeTraceOfTab(lcpTrace, {
+          timeOriginDeterminationMethod: 'firstResourceSendRequest',
+        });
+
+        expect(trace.timings).toMatchObject({
+          largestContentfulPaint: 812.683,
+          load: 1849.979,
+          traceEnd: 7107.01,
+        });
+
+        expect(trace.timestamps.timeOrigin).toEqual(713037332092);
+      });
     });
 
     describe('finds correct FMP', () => {
@@ -397,6 +432,78 @@ Object {
         );
         const trace = TraceProcessor.computeTraceOfTab(testTrace);
         assert.equal(trace.largestContentfulPaintEvt, undefined);
+        assert.ok(!trace.lcpInvalidated);
+      });
+    });
+
+    describe('finds correct LCP from all frames', () => {
+      it('in a trace', () => {
+        const trace = TraceProcessor.computeTraceOfTab(lcpAllFramesTrace);
+        expect({
+          'firstContentfulPaintEvt.ts': trace.firstContentfulPaintEvt.ts,
+          'largestContentfulPaintEvt.ts': trace.largestContentfulPaintEvt.ts,
+          'mainFrameIds.frameId': trace.mainFrameIds.frameId,
+          'timeOriginEvt.ts': trace.timeOriginEvt.ts,
+          'timestamps.firstContentfulPaint': trace.timestamps.firstContentfulPaint,
+          'timestamps.largestContentfulPaint': trace.timestamps.largestContentfulPaint,
+          'timestamps.largestContentfulPaintAllFrames': trace.timestamps.largestContentfulPaintAllFrames, // eslint-disable-line max-len
+          'timings.firstContentfulPaint': trace.timings.firstContentfulPaint,
+          'timings.largestContentfulPaint': trace.timings.largestContentfulPaint,
+          'timings.largestContentfulPaintAllFrames': trace.timings.largestContentfulPaintAllFrames,
+        }).toMatchInlineSnapshot(`
+          Object {
+            "firstContentfulPaintEvt.ts": 46134430620,
+            "largestContentfulPaintEvt.ts": 46134430620,
+            "mainFrameIds.frameId": "949C93159575C8C6CE08E7898C0B8E4D",
+            "timeOriginEvt.ts": 46133742490,
+            "timestamps.firstContentfulPaint": 46134430620,
+            "timestamps.largestContentfulPaint": 46134430620,
+            "timestamps.largestContentfulPaintAllFrames": 46139690898,
+            "timings.firstContentfulPaint": 688.13,
+            "timings.largestContentfulPaint": 688.13,
+            "timings.largestContentfulPaintAllFrames": 5948.408,
+          }
+        `);
+      });
+
+      it('ignores main frame LCP events', () => {
+        const testTrace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
+        const frame = testTrace.traceEvents[0].args.frame;
+        const args = {frame};
+        const cat = 'loading,rail,devtools.timeline';
+        testTrace.traceEvents.push(
+          /* eslint-disable max-len */
+          {name: 'largestContentfulPaint::Candidate', cat, args, ts: 1000, duration: 10},
+          {name: 'NavStartToLargestContentfulPaint::Candidate::AllFrames::UKM', cat, args, ts: 1100, duration: 10},
+          {name: 'NavStartToLargestContentfulPaint::Invalidate::AllFrames::UKM', cat, args, ts: 1200, duration: 10},
+          {name: 'largestContentfulPaint::Invalidate', cat, args, ts: 1300, duration: 10},
+          {name: 'largestContentfulPaint::Candidate', cat, args, ts: 1400, duration: 10},
+          {name: 'NavStartToLargestContentfulPaint::Candidate::AllFrames::UKM', cat, args, ts: 1500, duration: 10}
+          /* eslint-enable max-len */
+        );
+        const trace = TraceProcessor.computeTraceOfTab(testTrace);
+        assert.equal(trace.timestamps.largestContentfulPaint, 1400);
+        assert.equal(trace.timestamps.largestContentfulPaintAllFrames, 1500);
+        assert.ok(!trace.lcpInvalidated);
+      });
+
+      it('invalidates even if main frame LCP is available', () => {
+        const testTrace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
+        const frame = testTrace.traceEvents[0].args.frame;
+        const args = {frame};
+        const cat = 'loading,rail,devtools.timeline';
+        testTrace.traceEvents.push(
+          /* eslint-disable max-len */
+          {name: 'largestContentfulPaint::Candidate', cat, args, ts: 1000, duration: 10},
+          {name: 'NavStartToLargestContentfulPaint::Candidate::AllFrames::UKM', cat, args, ts: 1100, duration: 10},
+          {name: 'NavStartToLargestContentfulPaint::Invalidate::AllFrames::UKM', cat, args, ts: 1200, duration: 10},
+          {name: 'largestContentfulPaint::Invalidate', cat, args, ts: 1300, duration: 10},
+          {name: 'largestContentfulPaint::Candidate', cat, args, ts: 1400, duration: 10}
+          /* eslint-enable max-len */
+        );
+        const trace = TraceProcessor.computeTraceOfTab(testTrace);
+        assert.equal(trace.timestamps.largestContentfulPaint, 1400);
+        assert.equal(trace.timestamps.largestContentfulPaintAllFrames, undefined);
         assert.ok(!trace.lcpInvalidated);
       });
     });
@@ -602,6 +709,17 @@ Object {
     it('throws on traces missing a navigationStart', () => {
       expect(() => TraceProcessor.computeTraceOfTab(noNavStartTrace))
         .toThrowError('navigationStart');
+    });
+
+    it('throws on traces missing a ResourceSendRequest', () => {
+      const traceWithoutResourceSend = {
+        traceEvents: pwaTrace.filter(e => e.name !== 'ResourceSendRequest'),
+      };
+
+      expect(() => TraceProcessor.computeTraceOfTab(traceWithoutResourceSend, {
+        timeOriginDeterminationMethod: 'firstResourceSendRequest',
+      }))
+        .toThrowError('ResourceSendRequest');
     });
 
     it('does not throw on traces missing an FCP', () => {

@@ -31,20 +31,23 @@ function minifyFileTransform(file) {
       code += chunk.toString();
       next();
     },
-    final(next) {
-      const result = terser.minify(code);
-      if (result.error) {
-        throw result.error;
-      }
+    async final(next) {
+      try {
+        const result = await terser.minify(code, {ecma: 2019});
 
-      if (result.code) {
-        const saved = code.length - result.code.length;
+        if (result.code) {
+          const saved = code.length - result.code.length;
+          // eslint-disable-next-line no-console
+          console.log(`minifying ${file} saved ${saved / 1000} KB`);
+          this.push(result.code);
+        }
+
+        next();
+      } catch (err) {
         // eslint-disable-next-line no-console
-        console.log(`minifying ${file} saved ${saved / 1000} KB`);
-        this.push(result.code);
+        console.error(err);
+        process.exit(1);
       }
-
-      next();
     },
   });
 }

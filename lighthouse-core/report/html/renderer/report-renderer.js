@@ -203,13 +203,15 @@ class ReportRenderer {
 
     const fullPageScreenshot =
       report.audits['full-page-screenshot'] && report.audits['full-page-screenshot'].details &&
-      report.audits['full-page-screenshot'].details.type === 'full-page-screenshot' ?
-      report.audits['full-page-screenshot'].details : undefined;
+      report.audits['full-page-screenshot'].details.type === 'full-page-screenshot' &&
+      report.audits['full-page-screenshot'].details.fullPageScreenshot ?
+      report.audits['full-page-screenshot'].details.fullPageScreenshot : undefined;
     const detailsRenderer = new DetailsRenderer(this._dom, {
       fullPageScreenshot,
     });
     const fullPageScreenshotStyleEl = fullPageScreenshot &&
-      ElementScreenshotRenderer.createBackgroundImageStyle(this._dom, fullPageScreenshot);
+      ElementScreenshotRenderer.createBackgroundImageStyle(
+        this._dom, fullPageScreenshot.screenshot);
 
     const categoryRenderer = new CategoryRenderer(this._dom, detailsRenderer);
     categoryRenderer.setTemplateContext(this._templateContext);

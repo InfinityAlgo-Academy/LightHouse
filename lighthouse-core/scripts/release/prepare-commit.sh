@@ -50,10 +50,7 @@ yarn update:sample-json
 yarn changelog
 
 # Add new contributors to changelog
-git --no-pager shortlog -s -e -n "v2.3.0..v${OLD_VERSION}" | cut -f 2 | sort > auto_contribs_prior_to_last
-git --no-pager shortlog -s -e -n "v${OLD_VERSION}..HEAD" | cut -f 2 | sort > auto_contribs_since_last
-NEW_CONTRIBUTORS=$(comm -13 auto_contribs_prior_to_last auto_contribs_since_last)
-rm auto_contribs_prior_to_last auto_contribs_since_last
+NEW_CONTRIBUTORS=$(node lighthouse-core/scripts/print-contributors.js v${OLD_VERSION} HEAD)
 
 set +x
 

@@ -741,7 +741,7 @@ class Config {
 
   /**
    * @param {string} path
-   * @param {{}=} options
+   * @param {{}|undefined} options
    * @param {Array<string>} coreAuditList
    * @param {string=} configDir
    * @return {LH.Config.GathererDefn}

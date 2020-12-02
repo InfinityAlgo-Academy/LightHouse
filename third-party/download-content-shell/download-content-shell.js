@@ -70,7 +70,7 @@ function findMostRecentChromiumCommit() {
   // const commitPosition = commitMessage.match(/Cr-Commit-Position: refs\/heads\/master@\{#([0-9]+)\}/)[1];
   // return commitPosition;
   // TODO: make this dynamic.
-  return '791033';
+  return '822569';
 }
 
 function deleteOldContentShells() {

@@ -48,6 +48,7 @@ const traceEventsToAlwaysKeep = new Set([
   // Needed for CPU profiler task attribution
   'Profile',
   'ProfileChunk',
+  'LayoutShift',
 ]);
 
 const traceEventsToKeepInToplevelTask = new Set([

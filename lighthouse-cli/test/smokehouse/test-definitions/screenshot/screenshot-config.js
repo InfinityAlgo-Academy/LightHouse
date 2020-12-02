@@ -11,7 +11,6 @@ const experimentalConfig = require('../../../../../lighthouse-core/config/experi
 module.exports = {
   ...experimentalConfig,
   settings: {
-    onlyAudits: ['full-page-screenshot'],
     emulatedFormFactor: 'desktop',
   },
 };

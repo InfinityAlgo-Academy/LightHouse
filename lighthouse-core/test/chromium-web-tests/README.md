@@ -44,6 +44,15 @@ To run the devtools webtests, `run_web_tests.py` requires the inspector resource
 
 `run_web_tests.py` normally serves these files by mounting the Chromium build folder for the DevTools output to the path `/inspector-sources` [1](https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink/tools/blinkpy/web_tests/port/base.py;l=1280;drc=e8e4dcd1d1684251c33cda9b9fc93d7ea808e4bd) [2](https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink/tools/blinkpy/web_tests/servers/apache_http.py;l=118;drc=32408e19204a7ffceebfe774d7e99f2041cf4338). Instead, we fetch the DevTools frontend, roll Lighthouse, build it, then copy the build output to the `inspector-sources` at the root of our `npx http-server` web server.
 
+## Testing Lighthouse from DevTools
+
+`run_web_tests.py` is used to automatically test Lighthouse from DevTools.
+
+```sh
+# Runs Lighthouse from DevTools. Outputs results to ./latest-run/devtools-lhr.json.
+yarn run-devtools http://example.com
+```
+
 ## TODO
 
 * Keep LighthouseTestRunner here too.

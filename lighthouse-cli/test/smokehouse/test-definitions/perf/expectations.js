@@ -76,7 +76,7 @@ module.exports = [
               {resourceType: 'script', requestCount: 3, transferSize: '55000±1000'},
               {resourceType: 'image', requestCount: 2, transferSize: '28000±1000'},
               {resourceType: 'document', requestCount: 1, transferSize: '2200±100'},
-              {resourceType: 'other', requestCount: 1, transferSize: '1000±50'},
+              {resourceType: 'other', requestCount: 1, transferSize: '1030±100'},
               {resourceType: 'stylesheet', requestCount: 1, transferSize: '450±100'},
               {resourceType: 'media', requestCount: 0, transferSize: 0},
               {resourceType: 'third-party', requestCount: 0, transferSize: 0},
@@ -284,12 +284,17 @@ module.exports = [
   },
   {
     lhr: {
-      requestedUrl: 'http://localhost:10200/perf/trace-elements.html?missing',
-      finalUrl: 'http://localhost:10200/perf/trace-elements.html?missing',
+      requestedUrl: 'http://localhost:10200/perf/trace-elements.html?evicted',
+      finalUrl: 'http://localhost:10200/perf/trace-elements.html?evicted',
       audits: {
         'largest-contentful-paint-element': {
           score: null,
+          scoreDisplayMode: /(notApplicable|informative)/,
           details: {
+            // LCP in m88 was changed to allow selection of removed nodes.
+            // When this happens we aren't able to identify the LCP element anymore.
+            // https://chromiumdash.appspot.com/commit/a5484e6310a38223fde757b6f094a673ce032cc0
+            _maxChromiumMilestone: 87,
             items: [
               {
                 node: {

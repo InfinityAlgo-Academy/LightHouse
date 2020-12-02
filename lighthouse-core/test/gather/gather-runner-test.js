@@ -7,6 +7,8 @@
 
 /* eslint-env jest */
 
+require('../test-utils.js').makeMocksForGatherRunner();
+
 const Gatherer = require('../../gather/gatherers/gatherer.js');
 const GatherRunner_ = require('../../gather/gather-runner.js');
 const assert = require('assert').strict;
@@ -19,8 +21,6 @@ const Driver = require('../../gather/driver.js');
 const Connection = require('../../gather/connections/connection.js');
 const {createMockSendCommandFn} = require('./mock-commands.js');
 const {makeParamsOptional} = require('../test-utils.js');
-
-jest.mock('../../lib/stack-collector.js', () => () => Promise.resolve([]));
 
 const GatherRunner = {
   afterPass: makeParamsOptional(GatherRunner_.afterPass),
@@ -1198,6 +1198,24 @@ describe('GatherRunner', function() {
       expect(error).toBeUndefined();
     });
 
+    it('passes when the page redirects to MIME type text/html', () => {
+      const passContext = {
+        url: 'http://the-page.com',
+        passConfig: {loadFailureMode: LoadFailureMode.fatal},
+      };
+      const mainRecord = new NetworkRequest();
+      const finalRecord = new NetworkRequest();
+      const loadData = {networkRecords: [mainRecord]};
+
+      mainRecord.url = passContext.url;
+      mainRecord.redirectDestination = finalRecord;
+      finalRecord.url = 'http://the-redirected-page.com';
+      finalRecord.mimeType = 'text/html';
+
+      const error = GatherRunner.getPageLoadError(passContext, loadData, undefined);
+      expect(error).toBeUndefined();
+    });
+
     it('fails with interstitial error first', () => {
       const passContext = {
         url: 'http://the-page.com',
@@ -1274,6 +1292,23 @@ describe('GatherRunner', function() {
 
       const error = getAndExpectError(passContext, loadData, navigationError);
       expect(error.message).toEqual('NAVIGATION_ERROR');
+    });
+
+    it('fails with non-HTML when redirect is not HTML', () => {
+      const passContext = {
+        url: 'http://the-page.com',
+        passConfig: {loadFailureMode: LoadFailureMode.fatal},
+      };
+      const mainRecord = new NetworkRequest();
+      const finalRecord = new NetworkRequest();
+      const loadData = {networkRecords: [mainRecord]};
+
+      mainRecord.url = passContext.url;
+      mainRecord.redirectDestination = finalRecord;
+      finalRecord.url = 'http://the-redirected-page.com';
+
+      const error = getAndExpectError(passContext, loadData, navigationError);
+      expect(error.message).toEqual('NOT_HTML');
     });
   });
 

@@ -29,8 +29,16 @@
  *    - `mockResponse` which pushes protocol message responses for consumption
  *    - `findInvocation` which asserts that `sendCommand` was invoked with the given command and
  *      returns the protocol message argument.
+ *
+ * There are two variants of sendCommand, one that expects a sessionId as the second positional
+ * argument (legacy Lighthouse `Connection.sendCommand`) and one that does not (Fraggle Rock
+ * `ProtocolSession.sendCommand`).
+ *
+ * @param {{useSessionId: boolean}} [options]
  */
-function createMockSendCommandFn() {
+function createMockSendCommandFn(options) {
+  const {useSessionId = true} = options || {};
+
   /**
    * Typescript fails to equate template type `C` here with `C` when pushing to this array.
    * Instead of sprinkling a couple ts-ignores, make `command` be any, but leave `C` for just
@@ -47,6 +55,12 @@ function createMockSendCommandFn() {
      * @param {LH.CrdpCommands[C]['paramsType']} args
      */
     (command, sessionId, ...args) => {
+      if (!useSessionId) {
+        // @ts-expect-error - If sessionId isn't used, it *is* args.
+        args = [sessionId, ...args];
+        sessionId = undefined;
+      }
+
       const indexOfResponse = mockResponses
         .findIndex(entry => entry.command === command && entry.sessionId === sessionId);
       if (indexOfResponse === -1) throw new Error(`${command} unimplemented`);
@@ -85,8 +99,13 @@ function createMockSendCommandFn() {
      * @param {string=} sessionId
      */
     findInvocation(command, sessionId) {
-      expect(mockFn).toHaveBeenCalledWith(command, sessionId, expect.anything());
-      return mockFn.mock.calls.find(call => call[0] === command && call[1] === sessionId)[2];
+      const expectedArgs = useSessionId ?
+        [command, sessionId, expect.anything()] :
+        [command, expect.anything()];
+      expect(mockFn).toHaveBeenCalledWith(...expectedArgs);
+      return mockFn.mock.calls.find(
+        call => call[0] === command && (!useSessionId || call[1] === sessionId)
+      )[useSessionId ? 2 : 1];
     },
   });
 

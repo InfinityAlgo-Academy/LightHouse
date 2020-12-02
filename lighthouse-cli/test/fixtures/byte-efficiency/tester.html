@@ -52,6 +52,11 @@ setTimeout(() => {
     top: 0;
     left: 0;
   }
+
+  .stylesheet-sizing {
+    width: 160px;
+    height: 110px;
+  }
 </style>
 <script src="script.js" type="application/javascript"></script>
 <script src="bundle.js"></script>
@@ -133,6 +138,14 @@ setTimeout(() => {
   <!-- PASS(offscreen): image is onscreen -->
   <!-- FAIL(unsized-images): invalid CSS sizing -->
   <img style="width: auto; height: auto;" src="lighthouse-320x212-poor.jpg?cssauto">
+
+  <!-- PASS(optimized): image is JPEG optimized -->
+  <!-- PASS(webp): image has insigificant WebP savings -->
+  <!-- PASS(responsive): image is used at full size -->
+  <!-- PASS(responsive-inverse): image does not account for DPR 2.625 -->
+  <!-- PASS(offscreen): image is lazily loaded -->
+  <!-- PASS(unsized-images): CSS sizing from stylesheet, not inline -->
+  <img class="stylesheet-sizing" src="lighthouse-320x212-poor.jpg?stylesheet-sizing" loading="lazy">
 
   <!-- PASS(optimized): image is JPEG optimized -->
   <!-- PASS(webp): image is WebP savings -->
