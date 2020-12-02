@@ -10,15 +10,15 @@
 const collectStacks = require('../../lib/stack-collector.js');
 
 describe('stack collector', () => {
-  /** @type {{driver: {evaluateAsync: jest.Mock}}} */
+  /** @type {{driver: {evaluate: jest.Mock}}} */
   let passContext;
 
   beforeEach(() => {
-    passContext = {driver: {evaluateAsync: jest.fn()}};
+    passContext = {driver: {evaluate: jest.fn()}};
   });
 
   it('returns the detected stacks', async () => {
-    passContext.driver.evaluateAsync.mockResolvedValue([
+    passContext.driver.evaluate.mockResolvedValue([
       {id: 'jquery', name: 'jQuery', version: '2.1.0', npm: 'jquery'},
       {id: 'angular', name: 'Angular', version: '', npm: ''},
       {id: 'magento', name: 'Magento', version: 2},

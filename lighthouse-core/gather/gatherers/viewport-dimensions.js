@@ -34,9 +34,10 @@ class ViewportDimensions extends Gatherer {
   async afterPass(passContext) {
     const driver = passContext.driver;
 
-    /** @type {LH.Artifacts.ViewportDimensions} */
-    const dimensions = await driver.evaluateAsync(`(${getViewportDimensions.toString()}())`,
-      {useIsolation: true});
+    const dimensions = await driver.evaluate(getViewportDimensions, {
+      args: [],
+      useIsolation: true,
+    });
 
     const allNumeric = Object.values(dimensions).every(Number.isFinite);
     if (!allNumeric) {

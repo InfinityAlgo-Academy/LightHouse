@@ -34,12 +34,10 @@ class PasswordInputsWithPreventedPaste extends Gatherer {
    * @return {Promise<LH.Artifacts['PasswordInputsWithPreventedPaste']>}
    */
   afterPass(passContext) {
-    const expression = `(() => {
-      ${pageFunctions.getNodeDetailsString};
-      return (${findPasswordInputsWithPreventedPaste.toString()}());
-    })()`;
-
-    return passContext.driver.evaluateAsync(expression);
+    return passContext.driver.evaluate(findPasswordInputsWithPreventedPaste, {
+      args: [],
+      deps: [pageFunctions.getNodeDetailsString],
+    });
   }
 }
 

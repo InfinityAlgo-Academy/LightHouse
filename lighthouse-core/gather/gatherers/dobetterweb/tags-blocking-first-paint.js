@@ -42,7 +42,7 @@ function installMediaListener() {
 }
 
 /**
- * @return {Promise<{tagName: string, url: string, src: string, href: string, rel: string, media: string, disabled: boolean, mediaChanges: {href: string, media: string, msSinceHTMLEnd: number, matches: boolean}}>}
+ * @return {Promise<Array<{tagName: string, url: string, src: string, href: string, rel: string, media: string, disabled: boolean, mediaChanges: {href: string, media: string, msSinceHTMLEnd: number, matches: boolean}}>>}
  */
 /* istanbul ignore next */
 function collectTagsThatBlockFirstPaint() {
@@ -132,12 +132,11 @@ class TagsBlockingFirstPaint extends Gatherer {
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    */
   static findBlockingTags(driver, networkRecords) {
-    const scriptSrc = `(${collectTagsThatBlockFirstPaint.toString()}())`;
     const firstRequestEndTime = networkRecords.reduce(
       (min, record) => Math.min(min, record.endTime),
       Infinity
     );
-    return driver.evaluateAsync(scriptSrc).then(tags => {
+    return driver.evaluate(collectTagsThatBlockFirstPaint, {args: []}).then(tags => {
       const requests = TagsBlockingFirstPaint._filteredAndIndexedByUrl(networkRecords);
 
       return tags.reduce((prev, tag) => {

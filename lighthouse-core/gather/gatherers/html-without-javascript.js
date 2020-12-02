@@ -40,8 +40,7 @@ class HTMLWithoutJavaScript extends Gatherer {
     // Reset the JS disable.
     passContext.disableJavaScript = false;
 
-    const expression = `(${getBodyText.toString()}())`;
-    const {bodyText, hasNoScript} = await passContext.driver.evaluateAsync(expression);
+    const {bodyText, hasNoScript} = await passContext.driver.evaluate(getBodyText, {args: []});
     if (typeof bodyText !== 'string') {
       throw new Error('document body innerText returned by protocol was not a string');
     }

@@ -92,18 +92,23 @@ class FullPageScreenshot extends Gatherer {
 
       return nodes;
     }
-    const expression = `(function () {
-      ${pageFunctions.getBoundingClientRectString};
-      return (${resolveNodes.toString()}());
-    })()`;
+
+    /**
+     * @param {boolean} useIsolation
+     */
+    function evaluateInPage(useIsolation) {
+      return passContext.driver.evaluate(resolveNodes, {
+        args: [],
+        useIsolation,
+        deps: [pageFunctions.getBoundingClientRectString],
+      });
+    }
 
     // Collect nodes with the page context (`useIsolation: false`) and with our own, reused
-    // context (useIsolation: false). Gatherers use both modes when collecting node details,
+    // context (`useIsolation: false`). Gatherers use both modes when collecting node details,
     // so we must do the same here too.
-    const pageContextResult =
-      await passContext.driver.evaluateAsync(expression, {useIsolation: false});
-    const isolatedContextResult =
-      await passContext.driver.evaluateAsync(expression, {useIsolation: true});
+    const pageContextResult = await evaluateInPage(false);
+    const isolatedContextResult = await evaluateInPage(true);
     return {...pageContextResult, ...isolatedContextResult};
   }
 

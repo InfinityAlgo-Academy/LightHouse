@@ -489,7 +489,7 @@ class Driver {
    * @param {{args: T, useIsolation?: boolean, deps?: Array<Function|string>}} options `args` should
    *   match the args of `mainFn`, and can be any serializable value. `deps` are functions that must be
    *   defined for `mainFn` to work.
-   * @return {Promise<R>}
+   * @return {FlattenedPromise<R>}
    */
   async evaluate(mainFn, options) {
     return this._executionContext.evaluate(mainFn, options);
