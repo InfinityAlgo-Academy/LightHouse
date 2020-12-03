@@ -7,112 +7,7 @@
 
 const Audit = require('./audit.js');
 const i18n = require('../lib/i18n/i18n.js');
-
-/**
- * Devtools' App Manifest installability requirements.
- * https://source.chromium.org/chromium/chromium/src/+/master:third_party/devtools-frontend/src/front_end/resources/AppManifestView.js?q=-f:%5Cbout%5C%2F%20-f:%5Cbtest%5C%2F%20-f:web_tests%20%20symbol:getInstallabilityErrorMessages&ss=chromium%2Fchromium%2Fsrc
- *
- */
-const devtoolsMessages = [
-  {
-    errorId: 'not-in-main-frame',
-    message: 'Page is not loaded in the main frame',
-  },
-  {
-    errorId: 'not-from-secure-origin',
-    message: 'Page is not served from a secure origin',
-  },
-  {
-    errorId: 'no-manifest',
-    message: 'Page has no manifest <link> URL',
-  },
-  {
-    errorId: 'start-url-not-valid',
-    message: `Manifest start URL is not valid`,
-  },
-  {
-    errorId: 'manifest-missing-name-or-short-name',
-    message: `Manifest does not contain a 'name' or 'short_name' field`,
-  },
-  {
-    errorId: 'manifest-display-not-supported',
-    message: `Manifest 'display' property must be one of 'standalone', 
-                'fullscreen', or 'minimal-ui'`,
-  },
-  {
-    errorId: 'manifest-empty',
-    message: `Manifest could not be fetched, is empty, or could not be parsed`,
-  },
-  {
-    errorId: 'manifest-missing-suitable-icon',
-    message: '', // Updated later.
-  },
-  {
-    errorId: 'no-matching-service-worker',
-    message: `No matching service worker detected. You may need to reload the page, 
-                or check that the scope of the service worker for the current page 
-                encloses the scope and start URL from the manifest.`,
-  },
-  {
-    errorId: 'no-acceptable-icon',
-    message: '', // Updated later.
-  },
-  {
-    errorId: 'cannot-download-icon',
-    message: `Downloaded icon was empty or corrupted`,
-  },
-  {
-    errorId: 'no-icon-available',
-    message: `Downloaded icon was empty or corrupted`,
-  },
-  {
-    errorId: 'platform-not-supported-on-android',
-    message: `The specified application platform is not supported on Android`,
-  },
-  {
-    errorId: 'no-id-specified',
-    message: `No Play store ID provided`,
-  },
-  {
-    errorId: 'ids-do-not-match',
-    message: `The Play Store app URL and Play Store ID do not match`,
-  },
-  {
-    errorId: 'already-installed',
-    message: `The app is already installed`,
-  },
-  {
-    errorId: 'url-not-supported-for-webapk',
-    message: `A URL in the manifest contains a username, password, or port`,
-  },
-  {
-    errorId: 'in-incognito',
-    message: `Page is loaded in an incognito window`,
-  },
-  {
-    errorId: 'not-offline-capable',
-    // TODO: edit this message to make it more actionable for LH users
-    message: `Page does not work offline`,
-  },
-  {
-    errorId: 'no-url-for-service-worker',
-    message: `Could not check service worker without a 'start_url' field in the manifest`,
-  },
-  {
-    errorId: 'prefer-related-applications',
-    message: `Manifest specifies prefer_related_applications: true`,
-  },
-  {
-    errorId: 'prefer-related-applications-only-beta-stable',
-    message: `prefer_related_applications is only supported on Chrome Beta and Stable channe 
-                on Android.`,
-  },
-  {
-    errorId: 'manifest-display-override-not-supported',
-    message: `Manifest contains 'display_override' field, and the first supported display 
-                mode must be one of 'standalone', 'fulcreen', or 'minimal-ui`,
-  },
-];
+const installabilityErrorMsgStrings = require('../lib/installability-error-msgs.js');
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on if a website is installable as an application. This descriptive title is shown to users when a webapp is installable. */
@@ -123,11 +18,20 @@ const UIStrings = {
   description: 'Browsers can proactively prompt users to add your app to their homescreen, ' +
     'which can lead to higher engagement. ' +
     '[Learn more](https://web.dev/installable-manifest/).',
+  /** @description Table column header for the observed value of the Installability Error statistic. */
   columnValue: 'Installability Error',
+  /**
+   * @description [ICU Syntax] Label for an audit identifying the number of installability errors found in the page.
+  */
   displayValue: `{itemCount, plural,
     =1 {1 error}
     other {# errors}
     }`,
+  /**
+   * @description TODO
+   * @example {platform-not-supported-on-android} errorId
+   */  
+  noErrorId: `Installability error id '{errorId}'`,
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -158,81 +62,54 @@ class InstallableManifest extends Audit {
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {Array<string>}
+   * @return {Array<LH.IcuMessage>}
    */
   static getInstallabilityErrors(artifacts) {
     const installabilityErrors = artifacts.InstallabilityErrors.errors;
-    // Error messages based on installability errors found.
-    installabilityErrors
-      .forEach(item => {
-        switch (item.errorId) {
-          case 'manifest-missing-suitable-icon':
-            if (item.errorArguments.length !== 1 ||
-              item.errorArguments[0].name !== 'minimum-icon-size-in-pixels') {
-              // TODO: What do we do about these devtools console logs?
-              /* eslint no-console: ["error", { allow: ["error"] }] */
-              console.error('Installability error does not have the correct errorArguments');
-              break;
-            }
-            // 'manifest-missing-suitable-icon' update.
-            devtoolsMessages[7].message = `Manifest does not contain a suitable icon - PNG, 
-                    SVG or WebP format of at least ${item.errorArguments[0].value}px 
-                    is required, the sizes attribute must be set, and the purpose attribute, 
-                    if set, must include "any" or "maskable".`;
-            break;
-          case 'no-acceptable-icon':
-            if (item.errorArguments.length !== 1 ||
-              item.errorArguments[0].name !== 'minimum-icon-size-in-pixels') {
-              // TODO: What do we do about these devtools console logs?
-              /* eslint no-console: ["error", { allow: ["error"] }] */
-              console.error('Installability error does not have the correct errorArguments');
-              break;
-            }
-            // 'no-acceptable-icon' update.
-            devtoolsMessages[9].message = `No supplied icon is at least ${
-              item.errorArguments[0].value}px square in PNG, SVG or WebP format`;
-            break;
-        }
-      }
-      );
-    /** @type Array<string>*/
+
     const errorMessages = [];
-    installabilityErrors
-        .filter(err => {
-          const checkFound = devtoolsMessages.find(check => check.errorId === err.errorId);
-          if (checkFound) {
-            errorMessages.push(checkFound.message);
-          } else {
-            errorMessages.push(`Installability error id '${err.errorId}' is not recognized`);
-          }
-        });
+    for (const err of installabilityErrors) {
+      // @ts-expect-error errorIds from protocol should match up against the strings dict
+      const matchingString = installabilityErrorMsgStrings.UIStrings[err.errorId];
+      // We only expect a `minimum-icon-size-in-pixels` errorArg[0] for two errorIds, currently.
+      const value0 = err.errorArguments && err.errorArguments.length && err.errorArguments[0].value;
+
+      if (matchingString && value0) {
+        errorMessages.push(str_(matchingString, {value0}));
+      } else if (matchingString) {
+        errorMessages.push(str_(matchingString));
+      } else {
+        errorMessages.push(str_(UIStrings.noErrorId));
+      }
+    }
 
     return errorMessages;
   }
 
-  // @return {Promise<{failures: Array<string>, manifestUrl: string | null}>}
   /**
    * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    *
    */
-  static async audit(artifacts) {
-    /** @type {Array<string>} */
-    const errors = InstallableManifest.getInstallabilityErrors(artifacts);
+  static async audit(artifacts, context) {
+    const i18nErrors = InstallableManifest.getInstallabilityErrors(artifacts);
+
+    // TODO(paulirish): not sure this belongs here...
+    // const formattedErrors = i18nErrors.map(err => i18n.getFormatted(err, context.settings.locale));
+
     const manifestUrl = artifacts.WebAppManifest ? artifacts.WebAppManifest.url : null;
-    const result = {failures: [...errors], manifestUrl};
+    const result = {failures: [...i18nErrors], manifestUrl};
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'value', itemType: 'text', text: str_(UIStrings.columnValue)},
+      {key: 'errorMessage', itemType: 'text', text: str_(UIStrings.columnValue)},
     ];
 
     // Errors for report table.
     /** @type {LH.Audit.Details.Table['items']} */
-    const errorMessages = [];
-    errors.forEach(item => {
-      const val = {value: item};
-      errorMessages.push(val);
+    const errorMessages = i18nErrors.map(errorMessage => {
+      return {errorMessage};
     });
 
     // Include the detailed pass/fail checklist as a diagnostic.
@@ -243,7 +120,7 @@ class InstallableManifest extends Audit {
       items: result,
     };
 
-    if (errors.length > 0) {
+    if (i18nErrors.length > 0) {
       return {
         score: 0,
         numericValue: errorMessages.length,

@@ -827,11 +827,20 @@
   "lighthouse-core/audits/image-size-responsive.js | title": {
     "message": "Serves images with appropriate resolution"
   },
+  "lighthouse-core/audits/installable-manifest.js | columnValue": {
+    "message": "Installability Error"
+  },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://web.dev/installable-manifest/)."
   },
+  "lighthouse-core/audits/installable-manifest.js | displayValue": {
+    "message": "{itemCount, plural,\n    =1 {1 error}\n    other {# errors}\n    }"
+  },
   "lighthouse-core/audits/installable-manifest.js | failureTitle": {
     "message": "Web app manifest does not meet the installability requirements"
+  },
+  "lighthouse-core/audits/installable-manifest.js | noErrorId": {
+    "message": "Installability error id '{errorId}'"
   },
   "lighthouse-core/audits/installable-manifest.js | title": {
     "message": "Web app manifest meets the installability requirements"
@@ -1757,6 +1766,75 @@
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Total"
   },
+  "lighthouse-core/lib/installability-error-msgs.js | already-installed": {
+    "message": "The app is already installed"
+  },
+  "lighthouse-core/lib/installability-error-msgs.js | cannot-download-icon": {
+    "message": "Downloaded icon was empty or corrupted"
+  },
+  "lighthouse-core/lib/installability-error-msgs.js | ids-do-not-match": {
+    "message": "The Play Store app URL and Play Store ID do not match"
+  },
+  "lighthouse-core/lib/installability-error-msgs.js | in-incognito": {
+    "message": "Page is loaded in an incognito window"
+  },
+  "lighthouse-core/lib/installability-error-msgs.js | manifest-display-not-supported": {
+    "message": "Manifest 'display' property must be one of 'standalone', 'fullscreen', or 'minimal-ui'"
+  },
+  "lighthouse-core/lib/installability-error-msgs.js | manifest-display-override-not-supported": {
+    "message": "Manifest contains 'display_override' field, and the first supported display \n                mode must be one of 'standalone', 'fulcreen', or 'minimal-ui"
+  },
+  "lighthouse-core/lib/installability-error-msgs.js | manifest-empty": {
+    "message": "Manifest could not be fetched, is empty, or could not be parsed"
+  },
+  "lighthouse-core/lib/installability-error-msgs.js | manifest-missing-name-or-short-name": {
+    "message": "Manifest does not contain a 'name' or 'short_name' field"
+  },
+  "lighthouse-core/lib/installability-error-msgs.js | manifest-missing-suitable-icon": {
+    "message": "Manifest does not contain a suitable icon - PNG, \n                    SVG or WebP format of at least {value0} px \n                    is required, the sizes attribute must be set, and the purpose attribute, \n                    if set, must include \"any\" or \"maskable\"."
+  },
+  "lighthouse-core/lib/installability-error-msgs.js | no-acceptable-icon": {
+    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format"
+  },
+  "lighthouse-core/lib/installability-error-msgs.js | no-icon-available": {
+    "message": "Downloaded icon was empty or corrupted"
+  },
+  "lighthouse-core/lib/installability-error-msgs.js | no-id-specified": {
+    "message": "No Play store ID provided"
+  },
+  "lighthouse-core/lib/installability-error-msgs.js | no-manifest": {
+    "message": "Page has no manifest <link> URL"
+  },
+  "lighthouse-core/lib/installability-error-msgs.js | no-matching-service-worker": {
+    "message": "No matching service worker detected. You may need to reload the page, \n    or check that the scope of the service worker for the current page \n    encloses the scope and start URL from the manifest."
+  },
+  "lighthouse-core/lib/installability-error-msgs.js | no-url-for-service-worker": {
+    "message": "Could not check service worker without a 'start_url' field in the manifest"
+  },
+  "lighthouse-core/lib/installability-error-msgs.js | not-from-secure-origin": {
+    "message": "Page is not served from a secure origin"
+  },
+  "lighthouse-core/lib/installability-error-msgs.js | not-in-main-frame": {
+    "message": "Page is not loaded in the main frame"
+  },
+  "lighthouse-core/lib/installability-error-msgs.js | not-offline-capable": {
+    "message": "Page does not work offline"
+  },
+  "lighthouse-core/lib/installability-error-msgs.js | platform-not-supported-on-android": {
+    "message": "The specified application platform is not supported on Android"
+  },
+  "lighthouse-core/lib/installability-error-msgs.js | prefer-related-applications": {
+    "message": "Manifest specifies prefer_related_applications: true"
+  },
+  "lighthouse-core/lib/installability-error-msgs.js | prefer-related-applications-only-beta-stable": {
+    "message": "prefer_related_applications is only supported on Chrome Beta and Stable channe \n                on Android."
+  },
+  "lighthouse-core/lib/installability-error-msgs.js | start-url-not-valid": {
+    "message": "Manifest start URL is not valid"
+  },
+  "lighthouse-core/lib/installability-error-msgs.js | url-not-supported-for-webapk": {
+    "message": "A URL in the manifest contains a username, password, or port"
+  },
   "lighthouse-core/lib/lh-error.js | badTraceRecording": {
     "message": "Something went wrong with recording the trace over your page load. Please run Lighthouse again. ({errorCode})"
   },
@@ -2111,50 +2189,8 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | uses-webp-images": {
     "message": "Consider searching the [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) for a variety of third-party extensions to leverage newer image formats."
   },
-  "node_modules/lighthouse-stack-packs/packs/october.js | efficient-animated-content": {
-    "message": "[Replace animated GIFs with video](https://web.dev/replace-gifs-with-videos/) for faster web page loads and consider using modern file formats such as [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) or [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder) to improve compression efficiency by greater than 30% over the current state-of-the-art video codec, VP9."
-  },
-  "node_modules/lighthouse-stack-packs/packs/october.js | offscreen-images": {
-    "message": "Consider installing an [image lazy loading plugin](https://octobercms.com/plugins?search=lazy) that provides the ability to defer any offscreen images, or switch to a theme that provides that functionality. Also consider using [the AMP plugin](https://octobercms.com/plugins?search=Accelerated+Mobile+Pages)."
-  },
-  "node_modules/lighthouse-stack-packs/packs/october.js | render-blocking-resources": {
-    "message": "There are many plugins that help [inline critical assets](https://octobercms.com/plugins?search=css). These plugins may break other plugins, so you should test thoroughly."
-  },
-  "node_modules/lighthouse-stack-packs/packs/october.js | time-to-first-byte": {
-    "message": "Themes, plugins and server specifications all contribute to the server response time. Consider finding a more optimized theme, carefully selecting an optimization plugin and/or upgrade the server. October CMS also allows developers to use [`Queues`](https://octobercms.com/docs/services/queues) to defer the processing of a time consuming task, such as sending an e-mail. This drastically speeds up web requests."
-  },
-  "node_modules/lighthouse-stack-packs/packs/october.js | total-byte-weight": {
-    "message": "Consider showing excerpts in the post lists (e.g. using a `show more` button), reducing the number of posts shown on a given web page, breaking long posts into multiple web pages, or using a plugin to lazy-load comments."
-  },
-  "node_modules/lighthouse-stack-packs/packs/october.js | unminified-css": {
-    "message": "There are many [plugins](https://octobercms.com/plugins?search=css) that can speed up a website by concatenating, minifying and compressing the styles. Using a build process to do this minification up-front can speed up development."
-  },
-  "node_modules/lighthouse-stack-packs/packs/october.js | unminified-javascript": {
-    "message": "There are many [plugins](https://octobercms.com/plugins?search=javascript) that can speed up a website by concatenating, minifying and compressing the scripts. Using a build process to do this minification up-front can speed up development."
-  },
-  "node_modules/lighthouse-stack-packs/packs/october.js | unused-css-rules": {
-    "message": "Consider reviewing the [plugins](https://octobercms.com/plugins) loading unused CSS on the website. To identify plugins that add unnecessary CSS, run [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. Identify the theme/plugin responsible from the stylesheet URL. Look for plugins with many stylesheets with lots of red in code coverage. A plugin should only add a stylesheet if it is actually used on the web page."
-  },
-  "node_modules/lighthouse-stack-packs/packs/october.js | unused-javascript": {
-    "message": "Consider reviewing the [plugins](https://octobercms.com/plugins?search=javascript) that load unused JavaScript in the web page. To identify plugins that add unnecessary JavaScript, run [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. Identify the theme/plugin responsible from the URL of the script. Look for plugins with many scripts with lots of red in code coverage. A plugin should only add a script if it is actually used on the web page."
-  },
-  "node_modules/lighthouse-stack-packs/packs/october.js | uses-long-cache-ttl": {
-    "message": "Read about [preventing unnecessary network requests with the HTTP Cache](https://web.dev/http-cache/#caching-checklist). There are many [plugins](https://octobercms.com/plugins?search=Caching) that can be used to speed up caching."
-  },
-  "node_modules/lighthouse-stack-packs/packs/october.js | uses-optimized-images": {
-    "message": "Consider using an [image optimization plugin](https://octobercms.com/plugins?search=image) to compresses images while retaining the quality."
-  },
-  "node_modules/lighthouse-stack-packs/packs/october.js | uses-responsive-images": {
-    "message": "Upload images directly in the media manager to ensure the required image sizes are available. Consider using the [resize filter](https://octobercms.com/docs/markup/filter-resize) or an [image resizing plugin](https://octobercms.com/plugins?search=image) to ensure the optimal image sizes are used."
-  },
-  "node_modules/lighthouse-stack-packs/packs/october.js | uses-text-compression": {
-    "message": "Enable text compression in the web server configuration."
-  },
-  "node_modules/lighthouse-stack-packs/packs/october.js | uses-webp-images": {
-    "message": "Consider using a [plugin](https://octobercms.com/plugins?search=image) or service that will automatically convert the uploaded images to the optimal formats. [WebP lossless images](https://developers.google.com/speed/webp) are 26% smaller in size compared to PNGs and 25-34% smaller than comparable JPEG images at the equivalent SSIM quality index. Another next-gen image format to consider is [AVIF](https://jakearchibald.com/2020/avif-has-landed/)."
-  },
   "node_modules/lighthouse-stack-packs/packs/react.js | dom-size": {
-    "message": "Consider using a \"windowing\" library like `react-window` to minimize the number of DOM nodes created if you are rendering many repeated elements on the page. [Learn more](https://web.dev/virtualize-long-lists-react-window/). Also, minimize unnecessary re-renders using [`shouldComponentUpdate`](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [`PureComponent`](https://reactjs.org/docs/react-api.html#reactpurecomponent), or [`React.memo`](https://reactjs.org/docs/react-api.html#reactmemo) and [skip effects](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) only until certain dependencies have changed if you are using the `Effect` hook to improve runtime performance."
+    "message": "Consider using a “windowing” library like `react-window` to minimize the number of DOM nodes created if you are rendering many repeated elements on the page. [Learn more](https://web.dev/virtualize-long-lists-react-window/). Also, minimize unnecessary re-renders using [`shouldComponentUpdate`](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [`PureComponent`](https://reactjs.org/docs/react-api.html#reactpurecomponent), or [`React.memo`](https://reactjs.org/docs/react-api.html#reactmemo) and [skip effects](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) only until certain dependencies have changed if you are using the `Effect` hook to improve runtime performance."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "If you are using React Router, minimize usage of the `<Redirect>` component for [route navigations](https://reacttraining.com/react-router/web/api/Redirect)."

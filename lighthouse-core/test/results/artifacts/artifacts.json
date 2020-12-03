@@ -559,7 +559,20 @@
   },
   "WebAppManifest": null,
   "InstallabilityErrors": {
-    "errors": []
+    "errors": [
+      {
+        "errorId": "start-url-not-valid",
+        "errorArguments": []
+      },
+      {
+        "errorId": "manifest-display-not-supported",
+        "errorArguments": []
+      },
+      {
+        "errorId": "no-matching-service-worker",
+        "errorArguments": []
+      }
+    ]
   },
   "MetaElements": [
     {

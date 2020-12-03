@@ -521,24 +521,11 @@
     },
     "installable-manifest": {
       "id": "installable-manifest",
-      "title": "Web app manifest does not meet the installability requirements",
+      "title": "Web app manifest meets the installability requirements",
       "description": "Browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://web.dev/installable-manifest/).",
-      "score": 0,
-      "scoreDisplayMode": "binary",
-      "explanation": "Failures: No manifest was fetched.",
-      "details": {
-        "type": "debugdata",
-        "items": [
-          {
-            "failures": [
-              "No manifest was fetched"
-            ],
-            "manifestUrl": null,
-            "isParseFailure": true,
-            "parseFailureReason": "No manifest was fetched"
-          }
-        ]
-      }
+      "score": null,
+      "scoreDisplayMode": "error",
+      "errorMessage": "Could not locate: Manifest start URL is not valid"
     },
     "apple-touch-icon": {
       "id": "apple-touch-icon",
@@ -5257,7 +5244,7 @@
         }
       ],
       "id": "pwa",
-      "score": 0.39
+      "score": null
     }
   },
   "categoryGroups": {
@@ -5671,12 +5658,6 @@
       {
         "startTime": 0,
         "name": "lh:audit:installable-manifest",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:ManifestValues",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6889,7 +6870,7 @@
       "lighthouse-core/audits/redirects.js | description": [
         "audits.redirects.description"
       ],
-      "lighthouse-core/audits/installable-manifest.js | failureTitle": [
+      "lighthouse-core/audits/installable-manifest.js | title": [
         "audits[installable-manifest].title"
       ],
       "lighthouse-core/audits/installable-manifest.js | description": [
