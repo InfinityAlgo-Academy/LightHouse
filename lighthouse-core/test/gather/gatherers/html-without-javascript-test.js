@@ -28,8 +28,8 @@ describe('HTML without JavaScript gatherer', () => {
     const opts = {
       disableJavaScript: true,
       driver: {
-        evaluateAsync() {
-          return Promise.resolve({bodyText: 'Hello!'});
+        async evaluate() {
+          return {bodyText: 'Hello!'};
         },
       },
     };
@@ -45,8 +45,8 @@ describe('HTML without JavaScript gatherer', () => {
     const hasNoScript = true;
     return htmlWithoutJavaScriptGather.afterPass({
       driver: {
-        evaluateAsync() {
-          return Promise.resolve({bodyText, hasNoScript});
+        async evaluate() {
+          return {bodyText, hasNoScript};
         },
       },
     }).then(artifact => {
@@ -57,8 +57,8 @@ describe('HTML without JavaScript gatherer', () => {
   it('throws an error when driver returns a non-string', () => {
     return htmlWithoutJavaScriptGather.afterPass({
       driver: {
-        evaluateAsync() {
-          return Promise.resolve(null);
+        async evaluate() {
+          return null;
         },
       },
     }).then(

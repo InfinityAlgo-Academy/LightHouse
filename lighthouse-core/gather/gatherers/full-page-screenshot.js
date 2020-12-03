@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* globals window getBoundingClientRect */
+/* globals window document getBoundingClientRect */
 
 const Gatherer = require('./gatherer.js');
 const pageFunctions = require('../../lib/page-functions.js');
@@ -141,20 +141,25 @@ class FullPageScreenshot extends Gatherer {
         // in the LH runner api, which for ex. puppeteer consumers would setup puppeteer emulation,
         // and then just call that to reset?
         // https://github.com/GoogleChrome/lighthouse/issues/11122
-        const observedDeviceMetrics = await driver.evaluateAsync(`(function() {
+
+        const observedDeviceMetrics = await driver.evaluate(function getObservedDeviceMetrics() {
+          // Convert the Web API's snake case (landscape-primary) to camel case (landscapePrimary).
+          const screenOrientationType = /** @type {LH.Crdp.Emulation.ScreenOrientationType} */ (
+            snakeCaseToCamelCase(window.screen.orientation.type));
           return {
             width: document.documentElement.clientWidth,
             height: document.documentElement.clientHeight,
             screenOrientation: {
-              type: window.screen.orientation.type,
+              type: screenOrientationType,
               angle: window.screen.orientation.angle,
             },
             deviceScaleFactor: window.devicePixelRatio,
           };
-        })()`, {useIsolation: true});
-        // Convert the Web API's snake case (landscape-primary) to camel case (landscapePrimary).
-        observedDeviceMetrics.screenOrientation.type =
-          snakeCaseToCamelCase(observedDeviceMetrics.screenOrientation.type);
+        }, {
+          args: [],
+          useIsolation: true,
+          deps: [snakeCaseToCamelCase],
+        });
         await driver.sendCommand('Emulation.setDeviceMetricsOverride', {
           mobile: passContext.baseArtifacts.TestedAsMobileDevice, // could easily be wrong
           ...observedDeviceMetrics,
