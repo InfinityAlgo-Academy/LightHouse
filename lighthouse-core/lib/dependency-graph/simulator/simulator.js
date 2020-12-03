@@ -80,8 +80,9 @@ class Simulator {
     /** @type {Record<number, Set<Node>>} */
     this._nodes = {};
     this._dns = new DNSCache({rtt: this._rtt});
+    /** @type {ConnectionPool} */
     // @ts-expect-error
-    this._connectionPool = /** @type {ConnectionPool} */ (null);
+    this._connectionPool = null;
 
     if (!Number.isFinite(this._rtt)) throw new Error(`Invalid rtt ${this._rtt}`);
     if (!Number.isFinite(this._throughput)) throw new Error(`Invalid rtt ${this._throughput}`);

@@ -149,11 +149,10 @@ class UsesRelPreloadAudit extends Audit {
     modifiedGraph.traverse(node => {
       if (node.type !== 'network') return;
 
-      const networkNode = /** @type {LH.Gatherer.Simulation.GraphNetworkNode} */ (node);
       if (node.isMainDocument()) {
-        mainDocumentNode = networkNode;
-      } else if (networkNode.record && urls.has(networkNode.record.url)) {
-        nodesToPreload.push(networkNode);
+        mainDocumentNode = node;
+      } else if (node.record && urls.has(node.record.url)) {
+        nodesToPreload.push(node);
       }
     });
 

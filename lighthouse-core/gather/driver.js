@@ -680,7 +680,8 @@ class Driver {
     const waitForFcp = options.waitForFcp || false;
     const waitForNavigated = options.waitForNavigated || false;
     const waitForLoad = options.waitForLoad || false;
-    const passContext = /** @type {Partial<LH.Gatherer.PassContext>} */ (options.passContext || {});
+    /** @type {Partial<LH.Gatherer.PassContext>} */
+    const passContext = options.passContext || {};
     const disableJS = passContext.disableJavaScript || false;
 
     if (waitForNavigated && (waitForFcp || waitForLoad)) {
@@ -709,7 +710,8 @@ class Driver {
       await waitForFrameNavigated(this).promise;
     } else if (waitForLoad) {
       const networkMonitor = this._networkStatusMonitor;
-      const passConfig = /** @type {Partial<LH.Config.Pass>} */ (passContext.passConfig || {});
+      /** @type {Partial<LH.Config.Pass>} */
+      const passConfig = passContext.passConfig || {};
 
       /* eslint-disable max-len */
       let {pauseAfterFcpMs, pauseAfterLoadMs, networkQuietThresholdMs, cpuQuietThresholdMs} = passConfig;

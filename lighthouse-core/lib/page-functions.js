@@ -369,7 +369,7 @@ function isPositionFixed(element) {
  * Generate a human-readable label for the given element, based on end-user facing
  * strings like the innerText or alt attribute.
  * Falls back to the tagName if no useful label is found.
- * @param {HTMLElement} node
+ * @param {Element} node
  * @return {string|null}
  */
 /* istanbul ignore next */
@@ -398,7 +398,7 @@ function getNodeLabel(node) {
       // E.g. if an a tag contains an image but no text we want the image alt/aria-label attribute.
       const nodeToUseForLabel = node.querySelector('[alt], [aria-label]');
       if (nodeToUseForLabel) {
-        return getNodeLabel(/** @type {HTMLElement} */ (nodeToUseForLabel));
+        return getNodeLabel(nodeToUseForLabel);
       }
     }
   }
