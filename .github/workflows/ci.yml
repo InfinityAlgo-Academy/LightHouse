@@ -17,10 +17,10 @@ jobs:
     - name: git clone
       uses: actions/checkout@v2
 
-    - name: Use Node.js 10.x
+    - name: Use Node.js 12.x
       uses: actions/setup-node@v1
       with:
-        node-version: 10.x
+        node-version: 12.x
 
     - run: yarn --frozen-lockfile
     - run: yarn build-all
@@ -75,10 +75,10 @@ jobs:
     - name: git clone
       uses: actions/checkout@v2
 
-    - name: Use Node.js 10.x
+    - name: Use Node.js 12.x
       uses: actions/setup-node@v1
       with:
-        node-version: 10.x
+        node-version: 12.x
 
     - name: Set up protoc
       uses: arduino/setup-protoc@64c0c85
@@ -136,10 +136,10 @@ jobs:
     - name: git clone
       uses: actions/checkout@v2
 
-    - name: Use Node.js 10.x
+    - name: Use Node.js 12.x
       uses: actions/setup-node@v1
       with:
-        node-version: 10.x
+        node-version: 12.x
 
     - name: Define ToT chrome path
       if: matrix.chrome-channel == 'ToT'
@@ -169,10 +169,10 @@ jobs:
     - name: git clone
       uses: actions/checkout@v2
 
-    - name: Use Node.js 10.x
+    - name: Use Node.js 12.x
       uses: actions/setup-node@v1
       with:
-        node-version: 10.x
+        node-version: 12.x
 
     - run: yarn --frozen-lockfile
 
@@ -187,10 +187,10 @@ jobs:
     - name: git clone
       uses: actions/checkout@v2
 
-    - name: Use Node.js 10.x
+    - name: Use Node.js 12.x
       uses: actions/setup-node@v1
       with:
-        node-version: 10.x
+        node-version: 12.x
 
     - run: yarn --frozen-lockfile
     - run: yarn build-devtools

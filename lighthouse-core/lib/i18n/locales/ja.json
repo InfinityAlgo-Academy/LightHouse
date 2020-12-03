@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "アドレスバーにテーマの色が設定されています。"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "メインスレッドのブロック時間"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "第三者"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "第三者コードの影響を抑えてください"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "その他のリソース"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "第三者の使用の最小化"

@@ -244,6 +244,7 @@ Computing artifact: ResourceSummary
 Auditing: Timing budget
 Auditing: Keep request counts low and transfer sizes small
 Auditing: Minimize third-party usage
+Auditing: Lazy load third-party resources with facades
 Auditing: Largest Contentful Paint element
 Auditing: Avoid large layout shifts
 Auditing: Avoid long main-thread tasks
@@ -543,6 +544,7 @@ tap-targets: fail
 td-headers-attr: notApplicable
 th-has-data-cells: notApplicable
 themed-omnibox: fail
+third-party-facades: notApplicable
 third-party-summary: notApplicable
 timing-budget: ERROR Chrome didn't collect any screenshots during the page load. Please make sure there is content visible on the page, and then try re-running Lighthouse. (NO_SCREENSHOTS)
 total-blocking-time: numeric
@@ -573,7 +575,7 @@ visual-order-follows-dom: manual
 without-javascript: pass
 works-offline: fail
 
-# of .lh-audit divs: 157
+# of .lh-audit divs: 158
 
 .lh-audit divs:
 resource-summary
@@ -606,6 +608,7 @@ bootup-time
 mainthread-work-breakdown
 font-display
 third-party-summary
+third-party-facades
 layout-shift-elements
 uses-passive-event-listeners
 no-document-write

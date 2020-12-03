@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Foi definida uma cor de tema para a barra de endereços."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "Tempo de bloqueio da linha de execução principal"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Terceiros"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "Reduza o impacto de códigos de terceiros"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "Outros recursos"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Reduzir o uso de terceiros"

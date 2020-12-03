@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "ضبط لون تصميم لشريط العناوين"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "وقت حظر سلسلة المحادثات الأساسية"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "الجهة الخارجية"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "تقليل تأثير رمز الجهة الخارجية"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "موارد أخرى"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "تقليل استخدام الرموز التابعة لجهات خارجية"

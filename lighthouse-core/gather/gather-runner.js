@@ -382,8 +382,6 @@ class GatherRunner {
 
     for (const gathererDefn of passContext.passConfig.gatherers) {
       const gatherer = gathererDefn.instance;
-      // Abuse the passContext to pass through gatherer options
-      passContext.options = gathererDefn.options || {};
       const status = {
         msg: `Gathering setup: ${gatherer.name}`,
         id: `lh:gather:beforePass:${gatherer.name}`,
@@ -412,8 +410,6 @@ class GatherRunner {
 
     for (const gathererDefn of gatherers) {
       const gatherer = gathererDefn.instance;
-      // Abuse the passContext to pass through gatherer options
-      passContext.options = gathererDefn.options || {};
       const status = {
         msg: `Gathering in-page: ${gatherer.name}`,
         id: `lh:gather:pass:${gatherer.name}`,
@@ -457,8 +453,6 @@ class GatherRunner {
       };
       log.time(status);
 
-      // Add gatherer options to the passContext.
-      passContext.options = gathererDefn.options || {};
       const artifactPromise = Promise.resolve()
         .then(_ => gatherer.afterPass(passContext, loadData));
 

@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Lapa iestata adreses joslas motīva krāsu."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "Galvenā pavediena bloķēšanas laiks"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Trešā puse"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "Samaziniet trešo pušu koda ietekmi"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "Citi resursi"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Samaziniet trešās puses koda lietojumu"

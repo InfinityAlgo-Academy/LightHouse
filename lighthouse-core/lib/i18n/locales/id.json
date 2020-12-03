@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Menyetel warna tema untuk kolom URL."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "Waktu Pemblokiran Thread Utama"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Pihak Ketiga"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "Kurangi dampak kode pihak ketiga"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "Resource lainnya"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Meminimalkan penggunaan pihak ketiga"

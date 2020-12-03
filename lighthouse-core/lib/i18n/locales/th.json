@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "กำหนดสีธีมของแถบที่อยู่"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "เวลาในการบล็อกเทรดหลัก"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "บุคคลที่สาม"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "ลดผลกระทบจากโค้ดของบุคคลที่สาม"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "ทรัพยากรอื่นๆ"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "ลดการใช้ของบุคคลที่สาม"

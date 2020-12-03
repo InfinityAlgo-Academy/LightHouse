@@ -90,7 +90,6 @@ declare global {
         implementation?: typeof Gatherer;
         instance: InstanceType<typeof Gatherer>;
         path?: string;
-        options: {};
       }
 
       export interface AuditDefn {

@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Nastavuje barvu motivu adresního řádku."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "Doba blokování hlavního podprocesu"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Třetí strana"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "Snižte vliv kódu třetích stran"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "Jiné zdroje"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Minimalizujte používání kódu od třetích stran"
