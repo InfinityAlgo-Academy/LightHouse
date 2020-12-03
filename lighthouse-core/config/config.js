@@ -435,7 +435,7 @@ class Config {
       assertValidPluginName(configJSON, pluginName);
 
       // TODO: refactor and delete `global.isDevtools`.
-      const pluginPath = global.isDevtools ?
+      const pluginPath = global.isDevtools || global.isLightrider ?
         pluginName :
         resolveModule(pluginName, configDir, 'plugin');
       const rawPluginJson = require(pluginPath);
