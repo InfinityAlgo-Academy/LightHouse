@@ -57,7 +57,8 @@ module.exports = [
           scoreDisplayMode: 'notApplicable',
         },
         'installable-manifest': {
-          score: 1,
+          score: 0,
+          details: {items: [{errorMessage: "No manifest was fetched"}]},
         },
         'splash-screen': {
           score: 0,

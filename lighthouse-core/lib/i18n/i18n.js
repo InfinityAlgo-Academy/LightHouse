@@ -377,7 +377,6 @@ function createIcuMessageFn(filename, fileStrings) {
   const getIcuMessageFn = (message, values) => {
     const keyname = Object.keys(mergedStrings).find(key => mergedStrings[key] === message);
 
-    
     if (!keyname) throw new Error(`Could not locate: ${message}`);
 
     const filenameToLookup = keyname in fileStrings ? filename : __filename;

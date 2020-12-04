@@ -42,7 +42,6 @@ describe('PWA: webapp install banner audit', () => {
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
         const items = result.details.items;
-        console.log(items[0].errorMessage.formattedDefault);
         assert.ok(items[0].errorMessage.formattedDefault.includes('no manifest'));
       });
     });
@@ -131,7 +130,6 @@ describe('PWA: webapp install banner audit', () => {
 
     it('fails if page had no icons in the manifest', () => {
       const artifacts = generateMockArtifacts();
-      // TODO: is this the right errorId for this test?
       artifacts.InstallabilityErrors.errors.push({errorId: 'no-icon-available'});
       artifacts.WebAppManifest.value.icons.value = [];
       const context = generateMockAuditContext();
@@ -158,7 +156,6 @@ describe('PWA: webapp install banner audit', () => {
 
   it('fails if icons were present, but no valid PNG present', () => {
     const artifacts = generateMockArtifacts(manifestDirtyJpgSrc);
-    // TODO: Does this make sense??
     artifacts.InstallabilityErrors.errors.push({errorId: 'manifest-missing-suitable-icon',
       errorArguments: [{name: 'minimum-icon-size-in-pixels', value: '144'}]});
     const context = generateMockAuditContext();

@@ -521,14 +521,24 @@
     },
     "installable-manifest": {
       "id": "installable-manifest",
-      "title": "Web app manifest meets the installability requirements",
+      "title": "Web app manifest and service worker meet the installability requirements",
       "description": "Browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://web.dev/installable-manifest/).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "details": {
         "type": "table",
-        "headings": [],
-        "items": [],
+        "headings": [
+          {
+            "key": "errorMessage",
+            "itemType": "text",
+            "text": "Installability Error"
+          }
+        ],
+        "items": [
+          {
+            "errorMessage": "No manifest was fetched"
+          }
+        ],
         "debugData": {
           "type": "debugdata",
           "manifestUrl": null
@@ -5671,6 +5681,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:ManifestValues",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:apple-touch-icon",
         "duration": 100,
         "entryType": "measure"
@@ -6883,6 +6899,9 @@
       ],
       "lighthouse-core/audits/installable-manifest.js | description": [
         "audits[installable-manifest].description"
+      ],
+      "lighthouse-core/audits/installable-manifest.js | columnValue": [
+        "audits[installable-manifest].details.headings[0].text"
       ],
       "lighthouse-core/audits/apple-touch-icon.js | failureTitle": [
         "audits[apple-touch-icon].title"

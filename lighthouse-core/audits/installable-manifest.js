@@ -7,13 +7,13 @@
 
 const Audit = require('./audit.js');
 const i18n = require('../lib/i18n/i18n.js');
+const ManifestValues = require('../computed/manifest-values.js');
 
 const UIStrings = {
-  // TODO: remove manifest, say manifest & service worker instead of just manifest
   /** Title of a Lighthouse audit that provides detail on if a website is installable as an application. This descriptive title is shown to users when a webapp is installable. */
-  title: 'Web app manifest meets the installability requirements',
+ title: 'Web app manifest and service worker meet the installability requirements',
   /** Title of a Lighthouse audit that provides detail on if a website is installable as an application. This descriptive title is shown to users when a webapp is not installable. */
-  failureTitle: 'Web app manifest does not meet the installability requirements',
+  failureTitle: 'Web app manifest or service worker do not meet the installability requirements',
   /** Description of a Lighthouse audit that tells the user why installability is important for webapps. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Browsers can proactively prompt users to add your app to their homescreen, ' +
     'which can lead to higher engagement. ' +
@@ -28,35 +28,37 @@ const UIStrings = {
     other {# errors}
     }`,
   /**
-   * @description TODO
+   * @description Error message describing a DevTools error id that was found and has not been identified by this audit.
    * @example {platform-not-supported-on-android} errorId
-   */  
-  noErrorId: `Installability error id '{errorId}'`,
+   */
+  'noErrorId': `Installability error id '{errorId}'`,
   /** Error message explaining that the page is not loaded in the frame.  */
   'not-in-main-frame': 'Page is not loaded in the main frame',
   /** Error message explaining that the page is served from a secure origin. */
   'not-from-secure-origin': 'Page is not served from a secure origin',
-    /** Error message explaining that the page has no manifest URL. */
-    'no-manifest': 'Page has no manifest <link> URL',
-    /** Error message explaining that the provided manifest URL is invalid. */
-    'start-url-not-valid': `Manifest start URL is not valid`,
-    /** Error message explaining that the provided manifest does not contain a name or short_name field. */
-    'manifest-missing-name-or-short-name': `Manifest does not contain a 'name' or 'short_name' field`,
-    /** Error message explaining that the manifest display property must be one of 'standalone', 'fullscreen', or 'minimal-ui'. */
-    'manifest-display-not-supported': `Manifest 'display' property must be one of 'standalone', 'fullscreen', or 'minimal-ui'`,
-    /** Error message explaining that the manifest could not be fetched, might be empty, or could not be parsed. */
-    'manifest-empty': `Manifest could not be fetched, is empty, or could not be parsed`,
-    /** Error message explaining that no matching service worker was detected, 
+  /** Error message explaining that the page has no manifest URL. */
+  'no-manifest': 'Page has no manifest <link> URL',
+  /** Error message explaining that the provided manifest URL is invalid. */
+  'start-url-not-valid': `Manifest start URL is not valid`,
+  /** Error message explaining that the provided manifest does not contain a name or short_name field. */
+  'manifest-missing-name-or-short-name': `Manifest does not contain a 'name' or 'short_name' field`,
+  /** Error message explaining that the manifest display property must be one of 'standalone', 'fullscreen', or 'minimal-ui'. */
+  // eslint-disable-next-line max-len
+  'manifest-display-not-supported': `Manifest 'display' property must be one of 'standalone', 'fullscreen', or 'minimal-ui'`,
+  /** Error message explaining that the manifest could not be fetched, might be empty, or could not be parsed. */
+  'manifest-empty': `Manifest could not be fetched, is empty, or could not be parsed`,
+  /** Error message explaining that no matching service worker was detected,
    * and provides a suggestion to reload the page or check whether the scope of the service worker
    * for the current page encloses the scope and start URL from the manifest. */
-    'no-matching-service-worker': `No matching service worker detected. You may need to reload the page, 
+  // eslint-disable-next-line max-len
+  'no-matching-service-worker': `No matching service worker detected. You may need to reload the page, 
     or check that the scope of the service worker for the current page 
     encloses the scope and start URL from the manifest.`,
   /**
   * @description Error message explaining that the manifest does not contain a suitable icon.
   * @example {192} value0
-  */  
-    'manifest-missing-suitable-icon': `Manifest does not contain a suitable icon - PNG, 
+  */
+  'manifest-missing-suitable-icon': `Manifest does not contain a suitable icon - PNG, 
                     SVG or WebP format of at least {value0}\xa0px 
                     is required, the sizes attribute must be set, and the purpose attribute, 
                     if set, must include "any" or "maskable".`,
@@ -64,53 +66,61 @@ const UIStrings = {
   /**
   * @description Error message explaining that the manifest does not supply an icon of the correct format.
   * @example {192} value0
-  */  
-    'no-acceptable-icon': `No supplied icon is at least {value0}\xa0px square in PNG, SVG or WebP format`,
+  */
+  // eslint-disable-next-line max-len
+  'no-acceptable-icon': `No supplied icon is at least {value0}\xa0px square in PNG, SVG or WebP format`,
 
-    /** Error message explaining that the downloaded icon was empty or corrupt. */
-    'cannot-download-icon': `Downloaded icon was empty or corrupted`,
-    /** Error message explaining that the downloaded icon was empty or corrupt. */
-    'no-icon-available': `Downloaded icon was empty or corrupted`,
-    /** Error message explaining that the specified application platform is not supported on Android. */
-    'platform-not-supported-on-android': `The specified application platform is not supported on Android`,
-    /** Error message explaining that a Play store ID was not provided. */
-    'no-id-specified': `No Play store ID provided`,
-    /** Error message explaining that the Play Store app URL and Play Store ID do not match. */
-    'ids-do-not-match': `The Play Store app URL and Play Store ID do not match`,
-    /** Error message explaining that the app is already installed. */
-    'already-installed': `The app is already installed`,
-    /** Error message explaining that a URL in the manifest contains a username, password, or port. */
-    'url-not-supported-for-webapk': `A URL in the manifest contains a username, password, or port`,
-    /** Error message explaining that the page is loaded in an incognito window. */
-    'in-incognito': `Page is loaded in an incognito window`,
-    // TODO: perhaps edit this message to make it more actionable for LH users
-    /** Error message explaining that the page does not work offline. */
-    'not-offline-capable': `Page does not work offline`,
-    /** Error message explaining that service worker could not be checked without a start_url. */
-    'no-url-for-service-worker': `Could not check service worker without a 'start_url' field in the manifest`,
-    /**Error message explaining that the manifest specifies prefer_related_applications: true. */
-    'prefer-related-applications': `Manifest specifies prefer_related_applications: true`,
-    /** Error message explaining that prefer_related_applications is only supported on Chrome Beta and Stable channe 
+  /** Error message explaining that the downloaded icon was empty or corrupt. */
+  'cannot-download-icon': `Downloaded icon was empty or corrupted`,
+  /** Error message explaining that the downloaded icon was empty or corrupt. */
+  'no-icon-available': `Downloaded icon was empty or corrupted`,
+  /** Error message explaining that the specified application platform is not supported on Android. */
+  // eslint-disable-next-line max-len
+  'platform-not-supported-on-android': `The specified application platform is not supported on Android`,
+  /** Error message explaining that a Play store ID was not provided. */
+  'no-id-specified': `No Play store ID provided`,
+  /** Error message explaining that the Play Store app URL and Play Store ID do not match. */
+  'ids-do-not-match': `The Play Store app URL and Play Store ID do not match`,
+  /** Error message explaining that the app is already installed. */
+  'already-installed': `The app is already installed`,
+  /** Error message explaining that a URL in the manifest contains a username, password, or port. */
+  'url-not-supported-for-webapk': `A URL in the manifest contains a username, password, or port`,
+  /** Error message explaining that the page is loaded in an incognito window. */
+  'in-incognito': `Page is loaded in an incognito window`,
+  // TODO: perhaps edit this message to make it more actionable for LH users
+  /** Error message explaining that the page does not work offline. */
+  'not-offline-capable': `Page does not work offline`,
+  /** Error message explaining that service worker could not be checked without a start_url. */
+  // eslint-disable-next-line max-len
+  'no-url-for-service-worker': `Could not check service worker without a 'start_url' field in the manifest`,
+  /** Error message explaining that the manifest specifies prefer_related_applications: true. */
+  'prefer-related-applications': `Manifest specifies prefer_related_applications: true`,
+  /** Error message explaining that prefer_related_applications is only supported on Chrome Beta and Stable channe
                on Android. */
-    'prefer-related-applications-only-beta-stable': `prefer_related_applications is only supported on Chrome Beta and Stable channe 
+  // eslint-disable-next-line max-len
+  'prefer-related-applications-only-beta-stable': `prefer_related_applications is only supported on Chrome Beta and Stable channe 
                 on Android.`,
-    /** Error message explaining that the manifest contains 'display_override' field, and the first supported display 
+  /** Error message explaining that the manifest contains 'display_override' field, and the first supported display
                mode must be one of 'standalone', 'fulcreen', or 'minimal-ui. */
-    'manifest-display-override-not-supported': `Manifest contains 'display_override' field, and the first supported display 
+  // eslint-disable-next-line max-len
+  'manifest-display-override-not-supported': `Manifest contains 'display_override' field, and the first supported display 
                 mode must be one of 'standalone', 'fulcreen', or 'minimal-ui`,
-     /** Error message explaining that the web manifest's URL changed while the manifest was being downloaded by the browser. */
-    'manifest-location-changed': `Manifest URL changed while the manifest was being fetched.`,
+  /** Error message explaining that the web manifest's URL changed while the manifest was being downloaded by the browser. */
+  'manifest-location-changed': `Manifest URL changed while the manifest was being fetched.`,
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 /**
  * @fileoverview
- * Audits if the page's web app manifest qualifies for triggering a beforeinstallprompt event.
+ * Audits if the page's web app manifest and service worker qualify for triggering a beforeinstallprompt event.
  * https://github.com/GoogleChrome/lighthouse/issues/23#issuecomment-270453303
  *
  * Requirements based on Chrome Devtools' installability requirements.
- *
+ * Origin of logging: 
+ * https://source.chromium.org/chromium/chromium/src/+/master:chrome/browser/installable/installable_logging.cc
+ * DevTools InstallabilityError implementation: 
+ * https://source.chromium.org/search?q=getInstallabilityErrorMessages&ss=chromium%2Fchromium%2Fsrc:third_party%2Fdevtools-frontend%2Fsrc%2Ffront_end%2Fresources%2F
  */
 
 class InstallableManifest extends Audit {
@@ -133,11 +143,21 @@ class InstallableManifest extends Audit {
    */
   static getInstallabilityErrors(artifacts) {
     const installabilityErrors = artifacts.InstallabilityErrors.errors;
-
     const errorMessages = [];
+
+    // Filter out errorId 'in-incognito' since Lighthouse users are recommended to use incognito to test.
+    installabilityErrors.filter(err => err.errorId !== 'in-incognito');
+
     for (const err of installabilityErrors) {
-      // @ts-expect-error errorIds from protocol should match up against the strings dict
-      const matchingString = UIStrings[err.errorId];
+      var matchingString;
+      try {
+        // @ts-expect-error errorIds from protocol should match up against the strings dict
+        matchingString = UIStrings[err.errorId];
+      } catch {
+        errorMessages.push(str_(UIStrings.noErrorId, {errorId: err.errorId}));
+        continue
+      }
+
       // We only expect a `minimum-icon-size-in-pixels` errorArg[0] for two errorIds, currently.
       const value0 = err.errorArguments && err.errorArguments.length && err.errorArguments[0].value;
 
@@ -145,9 +165,7 @@ class InstallableManifest extends Audit {
         errorMessages.push(str_(matchingString, {value0}));
       } else if (matchingString) {
         errorMessages.push(str_(matchingString));
-      } else {
-        errorMessages.push(str_(UIStrings.noErrorId));
-      }
+      } 
     }
 
     return errorMessages;
@@ -160,10 +178,8 @@ class InstallableManifest extends Audit {
    *
    */
   static async audit(artifacts, context) {
+    const manifestValues = await ManifestValues.request(artifacts, context);
     const i18nErrors = InstallableManifest.getInstallabilityErrors(artifacts);
-
-    // TODO(paulirish): not sure this belongs here...
-    // const formattedErrors = i18nErrors.map(err => i18n.getFormatted(err, context.settings.locale));
 
     const manifestUrl = artifacts.WebAppManifest ? artifacts.WebAppManifest.url : null;
 
@@ -177,6 +193,8 @@ class InstallableManifest extends Audit {
     const errorMessages = i18nErrors.map(errorMessage => {
       return {errorMessage};
     });
+    /** DevTools InstallabilityErrors does not emit an error unless there is a manifest, so include manifestValues's error */
+    if (manifestValues.isParseFailure) errorMessages.push({errorMessage: manifestValues.parseFailureReason})
 
     // Include the detailed pass/fail checklist as a diagnostic.
     /** @type {LH.Audit.Details.DebugData} */
@@ -185,7 +203,7 @@ class InstallableManifest extends Audit {
       manifestUrl,
     };
 
-    if (i18nErrors.length > 0) {
+    if (errorMessages.length > 0) {
       return {
         score: 0,
         numericValue: errorMessages.length,
