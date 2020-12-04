@@ -315,7 +315,7 @@ class ReportUIFeatures {
       this.json.audits['full-page-screenshot'] &&
       this.json.audits['full-page-screenshot'].details &&
       this.json.audits['full-page-screenshot'].details.type === 'full-page-screenshot' &&
-      this.json.audits['full-page-screenshot'].details.fullPageScreenshot;
+      this.json.audits['full-page-screenshot'].details;
     if (!fullPageScreenshot) return;
 
     ElementScreenshotRenderer.installOverlayFeature(
