@@ -827,6 +827,12 @@
   "lighthouse-core/audits/image-size-responsive.js | title": {
     "message": "Serves images with appropriate resolution"
   },
+  "lighthouse-core/audits/installable-manifest.js | already-installed": {
+    "message": "The app is already installed"
+  },
+  "lighthouse-core/audits/installable-manifest.js | cannot-download-icon": {
+    "message": "Downloaded icon was empty or corrupted"
+  },
   "lighthouse-core/audits/installable-manifest.js | columnValue": {
     "message": "Installability Error"
   },
@@ -839,11 +845,74 @@
   "lighthouse-core/audits/installable-manifest.js | failureTitle": {
     "message": "Web app manifest does not meet the installability requirements"
   },
+  "lighthouse-core/audits/installable-manifest.js | ids-do-not-match": {
+    "message": "The Play Store app URL and Play Store ID do not match"
+  },
+  "lighthouse-core/audits/installable-manifest.js | in-incognito": {
+    "message": "Page is loaded in an incognito window"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-display-not-supported": {
+    "message": "Manifest 'display' property must be one of 'standalone', 'fullscreen', or 'minimal-ui'"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-display-override-not-supported": {
+    "message": "Manifest contains 'display_override' field, and the first supported display \n                 mode must be one of 'standalone', 'fulcreen', or 'minimal-ui"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-empty": {
+    "message": "Manifest could not be fetched, is empty, or could not be parsed"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-missing-name-or-short-name": {
+    "message": "Manifest does not contain a 'name' or 'short_name' field"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
+    "message": "Manifest does not contain a suitable icon - PNG, \n                     SVG or WebP format of at least {value0} px \n                     is required, the sizes attribute must be set, and the purpose attribute, \n                     if set, must include \"any\" or \"maskable\"."
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
+    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format"
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
+    "message": "Downloaded icon was empty or corrupted"
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-id-specified": {
+    "message": "No Play store ID provided"
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-manifest": {
+    "message": "Page has no manifest <link> URL"
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-matching-service-worker": {
+    "message": "No matching service worker detected. You may need to reload the page, \n     or check that the scope of the service worker for the current page \n     encloses the scope and start URL from the manifest."
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-url-for-service-worker": {
+    "message": "Could not check service worker without a 'start_url' field in the manifest"
+  },
   "lighthouse-core/audits/installable-manifest.js | noErrorId": {
     "message": "Installability error id '{errorId}'"
   },
+  "lighthouse-core/audits/installable-manifest.js | not-from-secure-origin": {
+    "message": "Page is not served from a secure origin"
+  },
+  "lighthouse-core/audits/installable-manifest.js | not-in-main-frame": {
+    "message": "Page is not loaded in the main frame"
+  },
+  "lighthouse-core/audits/installable-manifest.js | not-offline-capable": {
+    "message": "Page does not work offline"
+  },
+  "lighthouse-core/audits/installable-manifest.js | platform-not-supported-on-android": {
+    "message": "The specified application platform is not supported on Android"
+  },
+  "lighthouse-core/audits/installable-manifest.js | prefer-related-applications": {
+    "message": "Manifest specifies prefer_related_applications: true"
+  },
+  "lighthouse-core/audits/installable-manifest.js | prefer-related-applications-only-beta-stable": {
+    "message": "prefer_related_applications is only supported on Chrome Beta and Stable channe \n                 on Android."
+  },
+  "lighthouse-core/audits/installable-manifest.js | start-url-not-valid": {
+    "message": "Manifest start URL is not valid"
+  },
   "lighthouse-core/audits/installable-manifest.js | title": {
     "message": "Web app manifest meets the installability requirements"
+  },
+  "lighthouse-core/audits/installable-manifest.js | url-not-supported-for-webapk": {
+    "message": "A URL in the manifest contains a username, password, or port"
   },
   "lighthouse-core/audits/is-on-https.js | allowed": {
     "message": "Allowed"
@@ -1765,75 +1834,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Total"
-  },
-  "lighthouse-core/lib/installability-error-msgs.js | already-installed": {
-    "message": "The app is already installed"
-  },
-  "lighthouse-core/lib/installability-error-msgs.js | cannot-download-icon": {
-    "message": "Downloaded icon was empty or corrupted"
-  },
-  "lighthouse-core/lib/installability-error-msgs.js | ids-do-not-match": {
-    "message": "The Play Store app URL and Play Store ID do not match"
-  },
-  "lighthouse-core/lib/installability-error-msgs.js | in-incognito": {
-    "message": "Page is loaded in an incognito window"
-  },
-  "lighthouse-core/lib/installability-error-msgs.js | manifest-display-not-supported": {
-    "message": "Manifest 'display' property must be one of 'standalone', 'fullscreen', or 'minimal-ui'"
-  },
-  "lighthouse-core/lib/installability-error-msgs.js | manifest-display-override-not-supported": {
-    "message": "Manifest contains 'display_override' field, and the first supported display \n                mode must be one of 'standalone', 'fulcreen', or 'minimal-ui"
-  },
-  "lighthouse-core/lib/installability-error-msgs.js | manifest-empty": {
-    "message": "Manifest could not be fetched, is empty, or could not be parsed"
-  },
-  "lighthouse-core/lib/installability-error-msgs.js | manifest-missing-name-or-short-name": {
-    "message": "Manifest does not contain a 'name' or 'short_name' field"
-  },
-  "lighthouse-core/lib/installability-error-msgs.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, \n                    SVG or WebP format of at least {value0} px \n                    is required, the sizes attribute must be set, and the purpose attribute, \n                    if set, must include \"any\" or \"maskable\"."
-  },
-  "lighthouse-core/lib/installability-error-msgs.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format"
-  },
-  "lighthouse-core/lib/installability-error-msgs.js | no-icon-available": {
-    "message": "Downloaded icon was empty or corrupted"
-  },
-  "lighthouse-core/lib/installability-error-msgs.js | no-id-specified": {
-    "message": "No Play store ID provided"
-  },
-  "lighthouse-core/lib/installability-error-msgs.js | no-manifest": {
-    "message": "Page has no manifest <link> URL"
-  },
-  "lighthouse-core/lib/installability-error-msgs.js | no-matching-service-worker": {
-    "message": "No matching service worker detected. You may need to reload the page, \n    or check that the scope of the service worker for the current page \n    encloses the scope and start URL from the manifest."
-  },
-  "lighthouse-core/lib/installability-error-msgs.js | no-url-for-service-worker": {
-    "message": "Could not check service worker without a 'start_url' field in the manifest"
-  },
-  "lighthouse-core/lib/installability-error-msgs.js | not-from-secure-origin": {
-    "message": "Page is not served from a secure origin"
-  },
-  "lighthouse-core/lib/installability-error-msgs.js | not-in-main-frame": {
-    "message": "Page is not loaded in the main frame"
-  },
-  "lighthouse-core/lib/installability-error-msgs.js | not-offline-capable": {
-    "message": "Page does not work offline"
-  },
-  "lighthouse-core/lib/installability-error-msgs.js | platform-not-supported-on-android": {
-    "message": "The specified application platform is not supported on Android"
-  },
-  "lighthouse-core/lib/installability-error-msgs.js | prefer-related-applications": {
-    "message": "Manifest specifies prefer_related_applications: true"
-  },
-  "lighthouse-core/lib/installability-error-msgs.js | prefer-related-applications-only-beta-stable": {
-    "message": "prefer_related_applications is only supported on Chrome Beta and Stable channe \n                on Android."
-  },
-  "lighthouse-core/lib/installability-error-msgs.js | start-url-not-valid": {
-    "message": "Manifest start URL is not valid"
-  },
-  "lighthouse-core/lib/installability-error-msgs.js | url-not-supported-for-webapk": {
-    "message": "A URL in the manifest contains a username, password, or port"
   },
   "lighthouse-core/lib/lh-error.js | badTraceRecording": {
     "message": "Something went wrong with recording the trace over your page load. Please run Lighthouse again. ({errorCode})"

@@ -521,11 +521,38 @@
     },
     "installable-manifest": {
       "id": "installable-manifest",
-      "title": "Web app manifest meets the installability requirements",
+      "title": "Web app manifest does not meet the installability requirements",
       "description": "Browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://web.dev/installable-manifest/).",
-      "score": null,
-      "scoreDisplayMode": "error",
-      "errorMessage": "Could not locate: Manifest start URL is not valid"
+      "score": 0,
+      "scoreDisplayMode": "binary",
+      "numericValue": 3,
+      "numericUnit": "element",
+      "displayValue": "3 errors",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "errorMessage",
+            "itemType": "text",
+            "text": "Installability Error"
+          }
+        ],
+        "items": [
+          {
+            "errorMessage": "Manifest start URL is not valid"
+          },
+          {
+            "errorMessage": "Manifest 'display' property must be one of 'standalone', 'fullscreen', or 'minimal-ui'"
+          },
+          {
+            "errorMessage": "No matching service worker detected. You may need to reload the page, \n     or check that the scope of the service worker for the current page \n     encloses the scope and start URL from the manifest."
+          }
+        ],
+        "debugData": {
+          "type": "debugdata",
+          "manifestUrl": "https://fake.com/fakemanifest.json"
+        }
+      }
     },
     "apple-touch-icon": {
       "id": "apple-touch-icon",
@@ -541,16 +568,16 @@
       "description": "A themed splash screen ensures a high-quality experience when users launch your app from their homescreens. [Learn more](https://web.dev/splash-screen/).",
       "score": 0,
       "scoreDisplayMode": "binary",
-      "explanation": "Failures: No manifest was fetched.",
+      "explanation": "Failures: Manifest failed to parse as valid JSON.",
       "details": {
         "type": "debugdata",
         "items": [
           {
             "failures": [
-              "No manifest was fetched"
+              "Manifest failed to parse as valid JSON"
             ],
             "isParseFailure": true,
-            "parseFailureReason": "No manifest was fetched"
+            "parseFailureReason": "Manifest failed to parse as valid JSON"
           }
         ]
       }
@@ -561,18 +588,18 @@
       "description": "The browser address bar can be themed to match your site. [Learn more](https://web.dev/themed-omnibox/).",
       "score": 0,
       "scoreDisplayMode": "binary",
-      "explanation": "Failures: No manifest was fetched,\nNo `<meta name=\"theme-color\">` tag found.",
+      "explanation": "Failures: Manifest failed to parse as valid JSON,\nNo `<meta name=\"theme-color\">` tag found.",
       "details": {
         "type": "debugdata",
         "items": [
           {
             "failures": [
-              "No manifest was fetched",
+              "Manifest failed to parse as valid JSON",
               "No `<meta name=\"theme-color\">` tag found"
             ],
             "themeColor": null,
             "isParseFailure": true,
-            "parseFailureReason": "No manifest was fetched"
+            "parseFailureReason": "Manifest failed to parse as valid JSON"
           }
         ]
       }
@@ -583,7 +610,7 @@
       "description": "A maskable icon ensures that the image fills the entire shape without being letterboxed when installing the app on a device. [Learn more](https://web.dev/maskable-icon-audit/).",
       "score": 0,
       "scoreDisplayMode": "binary",
-      "explanation": "No manifest was fetched"
+      "explanation": "Manifest failed to parse as valid JSON"
     },
     "content-width": {
       "id": "content-width",
@@ -5244,7 +5271,7 @@
         }
       ],
       "id": "pwa",
-      "score": null
+      "score": 0.39
     }
   },
   "categoryGroups": {
@@ -6870,11 +6897,31 @@
       "lighthouse-core/audits/redirects.js | description": [
         "audits.redirects.description"
       ],
-      "lighthouse-core/audits/installable-manifest.js | title": [
+      "lighthouse-core/audits/installable-manifest.js | failureTitle": [
         "audits[installable-manifest].title"
       ],
       "lighthouse-core/audits/installable-manifest.js | description": [
         "audits[installable-manifest].description"
+      ],
+      "lighthouse-core/audits/installable-manifest.js | displayValue": [
+        {
+          "values": {
+            "itemCount": 3
+          },
+          "path": "audits[installable-manifest].displayValue"
+        }
+      ],
+      "lighthouse-core/audits/installable-manifest.js | columnValue": [
+        "audits[installable-manifest].details.headings[0].text"
+      ],
+      "lighthouse-core/audits/installable-manifest.js | start-url-not-valid": [
+        "audits[installable-manifest].details.items[0].errorMessage"
+      ],
+      "lighthouse-core/audits/installable-manifest.js | manifest-display-not-supported": [
+        "audits[installable-manifest].details.items[1].errorMessage"
+      ],
+      "lighthouse-core/audits/installable-manifest.js | no-matching-service-worker": [
+        "audits[installable-manifest].details.items[2].errorMessage"
       ],
       "lighthouse-core/audits/apple-touch-icon.js | failureTitle": [
         "audits[apple-touch-icon].title"

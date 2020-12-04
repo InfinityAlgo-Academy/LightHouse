@@ -7,7 +7,6 @@
 
 const Audit = require('./audit.js');
 const i18n = require('../lib/i18n/i18n.js');
-const installabilityErrorMsgStrings = require('../lib/installability-error-msgs.js');
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on if a website is installable as an application. This descriptive title is shown to users when a webapp is installable. */
@@ -32,6 +31,117 @@ const UIStrings = {
    * @example {platform-not-supported-on-android} errorId
    */  
   noErrorId: `Installability error id '{errorId}'`,
+
+    /**
+     * @description Error message explaining that the page is not loaded in the frame.
+     */
+     'not-in-main-frame': 'Page is not loaded in the main frame',
+     /**
+     * @description Error message explaining that the page is served from a secure origin.
+     */
+     'not-from-secure-origin': 'Page is not served from a secure origin',
+     /**
+     * @description Error message explaining that the page has no manifest URL.
+     */
+     'no-manifest': 'Page has no manifest <link> URL',
+     /**
+     * @description Error message explaining that the provided manifest URL is invalid.
+     */
+     'start-url-not-valid': `Manifest start URL is not valid`,
+     /**
+     * @description Error message explaining that the provided manifest does not contain a name or short_name field.
+     */
+     'manifest-missing-name-or-short-name': `Manifest does not contain a 'name' or 'short_name' field`,
+     /**
+     * @description Error message explaining that the manifest display property must be one of 'standalone', 'fullscreen', or 'minimal-ui'.
+     */
+     'manifest-display-not-supported': `Manifest 'display' property must be one of 'standalone', 'fullscreen', or 'minimal-ui'`,
+     /**
+     * @description Error message explaining that the manifest could not be fetched, might be empty, or could not be parsed.
+     */
+     'manifest-empty': `Manifest could not be fetched, is empty, or could not be parsed`,
+     /**
+     * @description Error message explaining that no matching service worker was detected, 
+     * and provides a suggestion to reload the page or check whether the scope of the service worker
+     * for the current page encloses the scope and start URL from the manifest.
+     */
+     'no-matching-service-worker': `No matching service worker detected. You may need to reload the page, 
+     or check that the scope of the service worker for the current page 
+     encloses the scope and start URL from the manifest.`,
+ 
+ 
+   /**
+    * @description Error message explaining that the manifest does not contain a suitable icon.
+    * @example {192} value0
+    */  
+     'manifest-missing-suitable-icon': `Manifest does not contain a suitable icon - PNG, 
+                     SVG or WebP format of at least {value0}\xa0px 
+                     is required, the sizes attribute must be set, and the purpose attribute, 
+                     if set, must include "any" or "maskable".`,
+ 
+   /**
+    * @description Error message explaining that the manifest does not supply an icon of the correct format.
+    * @example {192} value0
+    */  
+     'no-acceptable-icon': `No supplied icon is at least {value0}\xa0px square in PNG, SVG or WebP format`,
+ 
+     /**
+     * @description Error message explaining that the downloaded icon was empty or corrupt.
+     */
+     'cannot-download-icon': `Downloaded icon was empty or corrupted`,
+     /**
+     * @description Error message explaining that the downloaded icon was empty or corrupt.
+     */
+     'no-icon-available': `Downloaded icon was empty or corrupted`,
+     /**
+     * @description Error message explaining that the specified application platform is not supported on Android.
+     */
+     'platform-not-supported-on-android': `The specified application platform is not supported on Android`,
+     /**
+     * @description Error message explaining that a Play store ID was not provided.
+     */
+     'no-id-specified': `No Play store ID provided`,
+     /**
+     * @description Error message explaining that the Play Store app URL and Play Store ID do not match.
+     */
+     'ids-do-not-match': `The Play Store app URL and Play Store ID do not match`,
+     /**
+     * @description Error message explaining that the app is already installed.
+     */
+     'already-installed': `The app is already installed`,
+     /**
+     * @description Error message explaining that a URL in the manifest contains a username, password, or port.
+     */
+     'url-not-supported-for-webapk': `A URL in the manifest contains a username, password, or port`,
+     /**
+     * @description Error message explaining that the page is loaded in an incognito window.
+     */
+     'in-incognito': `Page is loaded in an incognito window`,
+     // TODO: perhaps edit this message to make it more actionable for LH users
+     /**
+     * @description Error message explaining that the page does not work offline.
+     */
+     'not-offline-capable': `Page does not work offline`,
+     /**
+     * @description Error message explaining that service worker could not be checked without a start_url.
+     */
+     'no-url-for-service-worker': `Could not check service worker without a 'start_url' field in the manifest`,
+     /**
+     * @description Error message explaining that the manifest specifies prefer_related_applications: true.
+     */
+     'prefer-related-applications': `Manifest specifies prefer_related_applications: true`,
+     /**
+     * @description Error message explaining that prefer_related_applications is only supported on Chrome Beta and Stable channe 
+                 on Android.
+     */
+     'prefer-related-applications-only-beta-stable': `prefer_related_applications is only supported on Chrome Beta and Stable channe 
+                 on Android.`,
+     /**
+     * @description Error message explaining that the manifest contains 'display_override' field, and the first supported display 
+                 mode must be one of 'standalone', 'fulcreen', or 'minimal-ui.
+     */
+     'manifest-display-override-not-supported': `Manifest contains 'display_override' field, and the first supported display 
+                 mode must be one of 'standalone', 'fulcreen', or 'minimal-ui`,
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -59,7 +169,6 @@ class InstallableManifest extends Audit {
     };
   }
 
-
   /**
    * @param {LH.Artifacts} artifacts
    * @return {Array<LH.IcuMessage>}
@@ -70,7 +179,7 @@ class InstallableManifest extends Audit {
     const errorMessages = [];
     for (const err of installabilityErrors) {
       // @ts-expect-error errorIds from protocol should match up against the strings dict
-      const matchingString = installabilityErrorMsgStrings.UIStrings[err.errorId];
+      const matchingString = UIStrings[err.errorId];
       // We only expect a `minimum-icon-size-in-pixels` errorArg[0] for two errorIds, currently.
       const value0 = err.errorArguments && err.errorArguments.length && err.errorArguments[0].value;
 
@@ -99,7 +208,6 @@ class InstallableManifest extends Audit {
     // const formattedErrors = i18nErrors.map(err => i18n.getFormatted(err, context.settings.locale));
 
     const manifestUrl = artifacts.WebAppManifest ? artifacts.WebAppManifest.url : null;
-    const result = {failures: [...i18nErrors], manifestUrl};
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
@@ -116,8 +224,7 @@ class InstallableManifest extends Audit {
     /** @type {LH.Audit.Details.DebugData} */
     const debugData = {
       type: 'debugdata',
-      // TODO: Consider not nesting detailsItem under `items`.
-      items: result,
+      manifestUrl,
     };
 
     if (i18nErrors.length > 0) {

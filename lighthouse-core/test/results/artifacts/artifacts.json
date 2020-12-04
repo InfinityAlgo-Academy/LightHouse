@@ -557,7 +557,7 @@
     "outerHeight": 660,
     "devicePixelRatio": 2.625
   },
-  "WebAppManifest": null,
+  "WebAppManifest": {"url": "https://fake.com/fakemanifest.json"},
   "InstallabilityErrors": {
     "errors": [
       {
