@@ -545,7 +545,7 @@
             "errorMessage": "Manifest 'display' property must be one of 'standalone', 'fullscreen', or 'minimal-ui'"
           },
           {
-            "errorMessage": "No matching service worker detected. You may need to reload the page, \n     or check that the scope of the service worker for the current page \n     encloses the scope and start URL from the manifest."
+            "errorMessage": "No matching service worker detected. You may need to reload the page, \n    or check that the scope of the service worker for the current page \n    encloses the scope and start URL from the manifest."
           }
         ],
         "debugData": {

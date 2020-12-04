@@ -855,16 +855,19 @@
     "message": "Manifest 'display' property must be one of 'standalone', 'fullscreen', or 'minimal-ui'"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-display-override-not-supported": {
-    "message": "Manifest contains 'display_override' field, and the first supported display \n                 mode must be one of 'standalone', 'fulcreen', or 'minimal-ui"
+    "message": "Manifest contains 'display_override' field, and the first supported display \n                mode must be one of 'standalone', 'fulcreen', or 'minimal-ui"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-empty": {
     "message": "Manifest could not be fetched, is empty, or could not be parsed"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-location-changed": {
+    "message": "Manifest URL changed while the manifest was being fetched."
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-name-or-short-name": {
     "message": "Manifest does not contain a 'name' or 'short_name' field"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, \n                     SVG or WebP format of at least {value0} px \n                     is required, the sizes attribute must be set, and the purpose attribute, \n                     if set, must include \"any\" or \"maskable\"."
+    "message": "Manifest does not contain a suitable icon - PNG, \n                    SVG or WebP format of at least {value0} px \n                    is required, the sizes attribute must be set, and the purpose attribute, \n                    if set, must include \"any\" or \"maskable\"."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
     "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format"
@@ -879,7 +882,7 @@
     "message": "Page has no manifest <link> URL"
   },
   "lighthouse-core/audits/installable-manifest.js | no-matching-service-worker": {
-    "message": "No matching service worker detected. You may need to reload the page, \n     or check that the scope of the service worker for the current page \n     encloses the scope and start URL from the manifest."
+    "message": "No matching service worker detected. You may need to reload the page, \n    or check that the scope of the service worker for the current page \n    encloses the scope and start URL from the manifest."
   },
   "lighthouse-core/audits/installable-manifest.js | no-url-for-service-worker": {
     "message": "Could not check service worker without a 'start_url' field in the manifest"
@@ -903,7 +906,7 @@
     "message": "Manifest specifies prefer_related_applications: true"
   },
   "lighthouse-core/audits/installable-manifest.js | prefer-related-applications-only-beta-stable": {
-    "message": "prefer_related_applications is only supported on Chrome Beta and Stable channe \n                 on Android."
+    "message": "prefer_related_applications is only supported on Chrome Beta and Stable channe \n                on Android."
   },
   "lighthouse-core/audits/installable-manifest.js | start-url-not-valid": {
     "message": "Manifest start URL is not valid"

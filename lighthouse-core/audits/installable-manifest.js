@@ -98,6 +98,8 @@ const UIStrings = {
                mode must be one of 'standalone', 'fulcreen', or 'minimal-ui. */
     'manifest-display-override-not-supported': `Manifest contains 'display_override' field, and the first supported display 
                 mode must be one of 'standalone', 'fulcreen', or 'minimal-ui`,
+     /** Error message explaining that the web manifest's URL changed while the manifest was being downloaded by the browser. */
+    'manifest-location-changed': `Manifest URL changed while the manifest was being fetched.`,
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
