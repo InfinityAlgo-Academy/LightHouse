@@ -557,22 +557,9 @@
     "outerHeight": 660,
     "devicePixelRatio": 2.625
   },
-  "WebAppManifest": {"url": "https://fake.com/fakemanifest.json"},
+  "WebAppManifest": null,
   "InstallabilityErrors": {
-    "errors": [
-      {
-        "errorId": "start-url-not-valid",
-        "errorArguments": []
-      },
-      {
-        "errorId": "manifest-display-not-supported",
-        "errorArguments": []
-      },
-      {
-        "errorId": "no-matching-service-worker",
-        "errorArguments": []
-      }
-    ]
+    "errors": []
   },
   "MetaElements": [
     {

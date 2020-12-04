@@ -24,7 +24,7 @@ async function update(artifactName) {
 
   const oldArtifacts = assetSaver.loadArtifacts(artifactPath);
 
-  const url = `https://www.chrome.com`;
+  const url = `http://localhost:${port}/dobetterweb/dbw_tester.html`;
   const rawFlags = [
     `--gather-mode=${artifactPath}`,
     url,
