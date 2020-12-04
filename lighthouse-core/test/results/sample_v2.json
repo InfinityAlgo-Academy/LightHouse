@@ -521,10 +521,13 @@
     },
     "installable-manifest": {
       "id": "installable-manifest",
-      "title": "Web app manifest and service worker meet the installability requirements",
+      "title": "Web app manifest or service worker do not meet the installability requirements",
       "description": "Browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://web.dev/installable-manifest/).",
-      "score": 1,
+      "score": 0,
       "scoreDisplayMode": "binary",
+      "numericValue": 1,
+      "numericUnit": "element",
+      "displayValue": "1 error",
       "details": {
         "type": "table",
         "headings": [
@@ -5262,7 +5265,7 @@
         }
       ],
       "id": "pwa",
-      "score": 0.46
+      "score": 0.39
     }
   },
   "categoryGroups": {
@@ -6894,11 +6897,19 @@
       "lighthouse-core/audits/redirects.js | description": [
         "audits.redirects.description"
       ],
-      "lighthouse-core/audits/installable-manifest.js | title": [
+      "lighthouse-core/audits/installable-manifest.js | failureTitle": [
         "audits[installable-manifest].title"
       ],
       "lighthouse-core/audits/installable-manifest.js | description": [
         "audits[installable-manifest].description"
+      ],
+      "lighthouse-core/audits/installable-manifest.js | displayValue": [
+        {
+          "values": {
+            "itemCount": 1
+          },
+          "path": "audits[installable-manifest].displayValue"
+        }
       ],
       "lighthouse-core/audits/installable-manifest.js | columnValue": [
         "audits[installable-manifest].details.headings[0].text"
