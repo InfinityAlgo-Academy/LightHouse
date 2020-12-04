@@ -378,9 +378,7 @@ function createIcuMessageFn(filename, fileStrings) {
     const keyname = Object.keys(mergedStrings).find(key => mergedStrings[key] === message);
 
     
-    if (!keyname) {
-      console.trace("blaj");
-      throw new Error(`Could not locate: ${message}`)};
+    if (!keyname) throw new Error(`Could not locate: ${message}`);
 
     const filenameToLookup = keyname in fileStrings ? filename : __filename;
     const unixStyleFilename = path.relative(LH_ROOT, filenameToLookup).replace(/\\/g, '/');

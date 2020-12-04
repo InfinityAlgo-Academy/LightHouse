@@ -9,6 +9,7 @@ const Audit = require('./audit.js');
 const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
+  // TODO: remove manifest, say manifest & service worker instead of just manifest
   /** Title of a Lighthouse audit that provides detail on if a website is installable as an application. This descriptive title is shown to users when a webapp is installable. */
   title: 'Web app manifest meets the installability requirements',
   /** Title of a Lighthouse audit that provides detail on if a website is installable as an application. This descriptive title is shown to users when a webapp is not installable. */

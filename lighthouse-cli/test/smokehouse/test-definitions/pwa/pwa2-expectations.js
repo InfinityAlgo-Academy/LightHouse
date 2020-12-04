@@ -47,7 +47,7 @@ module.exports = [
         },
         'installable-manifest': {
           score: 1,
-          details: {items: [], debugData: {items: {manifestUrl: 'https://jakearchibald.github.io/svgomg/manifest.json'}}},
+          details: {items: [], debugData: {manifestUrl: 'https://jakearchibald.github.io/svgomg/manifest.json'}},
         },
         'splash-screen': {
           score: 1,
@@ -115,7 +115,7 @@ module.exports = [
         },
         'installable-manifest': {
           score: 1,
-          details: {items: [], debugData: {items: {manifestUrl: 'https://caltrainschedule.io/manifest.json'}}},
+          details: {items: [], debugData: {manifestUrl: 'https://caltrainschedule.io/manifest.json'}},
         },
         'splash-screen': {
           score: 1,

@@ -144,7 +144,7 @@ module.exports = [
         },
         'installable-manifest': {
           score: 0,
-          details: {items: [{value: 'Downloaded icon was empty or corrupted'}]},
+          details: {items: [{errorMessage: 'Downloaded icon was empty or corrupted'}]},
         },
         'splash-screen': {
           score: 0,

@@ -47,7 +47,7 @@ module.exports = [
         },
         'installable-manifest': {
           score: 1,
-          details: {items: [], debugData: {items: {manifestUrl: 'https://connorjclark.github.io/pwa.rocks/pwa.webmanifest'}}},
+          details: {items: [], debugData: {manifestUrl: 'https://connorjclark.github.io/pwa.rocks/pwa.webmanifest'}},
         },
         'splash-screen': {
           score: 0,

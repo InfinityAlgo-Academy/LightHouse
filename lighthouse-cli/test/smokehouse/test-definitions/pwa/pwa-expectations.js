@@ -44,7 +44,7 @@ const expectations = [
         },
         'installable-manifest': {
           score: 1,
-          details: {items: [], debugData: {items: {manifestUrl: 'https://airhorner.com/manifest.json'}}},
+          details: {items: [], debugData: {manifestUrl: 'https://airhorner.com/manifest.json'}},
         },
         'splash-screen': {
           score: 1,
