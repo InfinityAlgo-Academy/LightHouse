@@ -17,7 +17,7 @@ const UIStrings = {
   description: 'Browsers can proactively prompt users to add your app to their homescreen, ' +
     'which can lead to higher engagement. ' +
     '[Learn more](https://web.dev/installable-manifest/).',
-  /** @description Table column header for the observed value of the Installability Error statistic. */
+  /** Description Table column header for the observed value of the Installability Error statistic. */
   columnValue: 'Installability Error',
   /**
    * @description [ICU Syntax] Label for an audit identifying the number of installability errors found in the page.
@@ -31,117 +31,72 @@ const UIStrings = {
    * @example {platform-not-supported-on-android} errorId
    */  
   noErrorId: `Installability error id '{errorId}'`,
+  /** Error message explaining that the page is not loaded in the frame.  */
+  'not-in-main-frame': 'Page is not loaded in the main frame',
+  /** Error message explaining that the page is served from a secure origin. */
+  'not-from-secure-origin': 'Page is not served from a secure origin',
+    /** Error message explaining that the page has no manifest URL. */
+    'no-manifest': 'Page has no manifest <link> URL',
+    /** Error message explaining that the provided manifest URL is invalid. */
+    'start-url-not-valid': `Manifest start URL is not valid`,
+    /** Error message explaining that the provided manifest does not contain a name or short_name field. */
+    'manifest-missing-name-or-short-name': `Manifest does not contain a 'name' or 'short_name' field`,
+    /** Error message explaining that the manifest display property must be one of 'standalone', 'fullscreen', or 'minimal-ui'. */
+    'manifest-display-not-supported': `Manifest 'display' property must be one of 'standalone', 'fullscreen', or 'minimal-ui'`,
+    /** Error message explaining that the manifest could not be fetched, might be empty, or could not be parsed. */
+    'manifest-empty': `Manifest could not be fetched, is empty, or could not be parsed`,
+    /** Error message explaining that no matching service worker was detected, 
+   * and provides a suggestion to reload the page or check whether the scope of the service worker
+   * for the current page encloses the scope and start URL from the manifest. */
+    'no-matching-service-worker': `No matching service worker detected. You may need to reload the page, 
+    or check that the scope of the service worker for the current page 
+    encloses the scope and start URL from the manifest.`,
+  /**
+  * @description Error message explaining that the manifest does not contain a suitable icon.
+  * @example {192} value0
+  */  
+    'manifest-missing-suitable-icon': `Manifest does not contain a suitable icon - PNG, 
+                    SVG or WebP format of at least {value0}\xa0px 
+                    is required, the sizes attribute must be set, and the purpose attribute, 
+                    if set, must include "any" or "maskable".`,
 
-    /**
-     * @description Error message explaining that the page is not loaded in the frame.
-     */
-     'not-in-main-frame': 'Page is not loaded in the main frame',
-     /**
-     * @description Error message explaining that the page is served from a secure origin.
-     */
-     'not-from-secure-origin': 'Page is not served from a secure origin',
-     /**
-     * @description Error message explaining that the page has no manifest URL.
-     */
-     'no-manifest': 'Page has no manifest <link> URL',
-     /**
-     * @description Error message explaining that the provided manifest URL is invalid.
-     */
-     'start-url-not-valid': `Manifest start URL is not valid`,
-     /**
-     * @description Error message explaining that the provided manifest does not contain a name or short_name field.
-     */
-     'manifest-missing-name-or-short-name': `Manifest does not contain a 'name' or 'short_name' field`,
-     /**
-     * @description Error message explaining that the manifest display property must be one of 'standalone', 'fullscreen', or 'minimal-ui'.
-     */
-     'manifest-display-not-supported': `Manifest 'display' property must be one of 'standalone', 'fullscreen', or 'minimal-ui'`,
-     /**
-     * @description Error message explaining that the manifest could not be fetched, might be empty, or could not be parsed.
-     */
-     'manifest-empty': `Manifest could not be fetched, is empty, or could not be parsed`,
-     /**
-     * @description Error message explaining that no matching service worker was detected, 
-     * and provides a suggestion to reload the page or check whether the scope of the service worker
-     * for the current page encloses the scope and start URL from the manifest.
-     */
-     'no-matching-service-worker': `No matching service worker detected. You may need to reload the page, 
-     or check that the scope of the service worker for the current page 
-     encloses the scope and start URL from the manifest.`,
- 
- 
-   /**
-    * @description Error message explaining that the manifest does not contain a suitable icon.
-    * @example {192} value0
-    */  
-     'manifest-missing-suitable-icon': `Manifest does not contain a suitable icon - PNG, 
-                     SVG or WebP format of at least {value0}\xa0px 
-                     is required, the sizes attribute must be set, and the purpose attribute, 
-                     if set, must include "any" or "maskable".`,
- 
-   /**
-    * @description Error message explaining that the manifest does not supply an icon of the correct format.
-    * @example {192} value0
-    */  
-     'no-acceptable-icon': `No supplied icon is at least {value0}\xa0px square in PNG, SVG or WebP format`,
- 
-     /**
-     * @description Error message explaining that the downloaded icon was empty or corrupt.
-     */
-     'cannot-download-icon': `Downloaded icon was empty or corrupted`,
-     /**
-     * @description Error message explaining that the downloaded icon was empty or corrupt.
-     */
-     'no-icon-available': `Downloaded icon was empty or corrupted`,
-     /**
-     * @description Error message explaining that the specified application platform is not supported on Android.
-     */
-     'platform-not-supported-on-android': `The specified application platform is not supported on Android`,
-     /**
-     * @description Error message explaining that a Play store ID was not provided.
-     */
-     'no-id-specified': `No Play store ID provided`,
-     /**
-     * @description Error message explaining that the Play Store app URL and Play Store ID do not match.
-     */
-     'ids-do-not-match': `The Play Store app URL and Play Store ID do not match`,
-     /**
-     * @description Error message explaining that the app is already installed.
-     */
-     'already-installed': `The app is already installed`,
-     /**
-     * @description Error message explaining that a URL in the manifest contains a username, password, or port.
-     */
-     'url-not-supported-for-webapk': `A URL in the manifest contains a username, password, or port`,
-     /**
-     * @description Error message explaining that the page is loaded in an incognito window.
-     */
-     'in-incognito': `Page is loaded in an incognito window`,
-     // TODO: perhaps edit this message to make it more actionable for LH users
-     /**
-     * @description Error message explaining that the page does not work offline.
-     */
-     'not-offline-capable': `Page does not work offline`,
-     /**
-     * @description Error message explaining that service worker could not be checked without a start_url.
-     */
-     'no-url-for-service-worker': `Could not check service worker without a 'start_url' field in the manifest`,
-     /**
-     * @description Error message explaining that the manifest specifies prefer_related_applications: true.
-     */
-     'prefer-related-applications': `Manifest specifies prefer_related_applications: true`,
-     /**
-     * @description Error message explaining that prefer_related_applications is only supported on Chrome Beta and Stable channe 
-                 on Android.
-     */
-     'prefer-related-applications-only-beta-stable': `prefer_related_applications is only supported on Chrome Beta and Stable channe 
-                 on Android.`,
-     /**
-     * @description Error message explaining that the manifest contains 'display_override' field, and the first supported display 
-                 mode must be one of 'standalone', 'fulcreen', or 'minimal-ui.
-     */
-     'manifest-display-override-not-supported': `Manifest contains 'display_override' field, and the first supported display 
-                 mode must be one of 'standalone', 'fulcreen', or 'minimal-ui`,
+  /**
+  * @description Error message explaining that the manifest does not supply an icon of the correct format.
+  * @example {192} value0
+  */  
+    'no-acceptable-icon': `No supplied icon is at least {value0}\xa0px square in PNG, SVG or WebP format`,
+
+    /** Error message explaining that the downloaded icon was empty or corrupt. */
+    'cannot-download-icon': `Downloaded icon was empty or corrupted`,
+    /** Error message explaining that the downloaded icon was empty or corrupt. */
+    'no-icon-available': `Downloaded icon was empty or corrupted`,
+    /** Error message explaining that the specified application platform is not supported on Android. */
+    'platform-not-supported-on-android': `The specified application platform is not supported on Android`,
+    /** Error message explaining that a Play store ID was not provided. */
+    'no-id-specified': `No Play store ID provided`,
+    /** Error message explaining that the Play Store app URL and Play Store ID do not match. */
+    'ids-do-not-match': `The Play Store app URL and Play Store ID do not match`,
+    /** Error message explaining that the app is already installed. */
+    'already-installed': `The app is already installed`,
+    /** Error message explaining that a URL in the manifest contains a username, password, or port. */
+    'url-not-supported-for-webapk': `A URL in the manifest contains a username, password, or port`,
+    /** Error message explaining that the page is loaded in an incognito window. */
+    'in-incognito': `Page is loaded in an incognito window`,
+    // TODO: perhaps edit this message to make it more actionable for LH users
+    /** Error message explaining that the page does not work offline. */
+    'not-offline-capable': `Page does not work offline`,
+    /** Error message explaining that service worker could not be checked without a start_url. */
+    'no-url-for-service-worker': `Could not check service worker without a 'start_url' field in the manifest`,
+    /**Error message explaining that the manifest specifies prefer_related_applications: true. */
+    'prefer-related-applications': `Manifest specifies prefer_related_applications: true`,
+    /** Error message explaining that prefer_related_applications is only supported on Chrome Beta and Stable channe 
+               on Android. */
+    'prefer-related-applications-only-beta-stable': `prefer_related_applications is only supported on Chrome Beta and Stable channe 
+                on Android.`,
+    /** Error message explaining that the manifest contains 'display_override' field, and the first supported display 
+               mode must be one of 'standalone', 'fulcreen', or 'minimal-ui. */
+    'manifest-display-override-not-supported': `Manifest contains 'display_override' field, and the first supported display 
+                mode must be one of 'standalone', 'fulcreen', or 'minimal-ui`,
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
