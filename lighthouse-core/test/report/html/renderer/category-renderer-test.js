@@ -393,9 +393,6 @@ describe('CategoryRenderer', () => {
       const failedAudits = elem.querySelectorAll('.lh-clump--failed .lh-audit');
       const warningAudits = elem.querySelectorAll('.lh-clump--warning .lh-audit');
       const manualAudits = elem.querySelectorAll('.lh-clump--manual .lh-audit');
-      // TODO: ADRIANA
-      console.log(passedAudits)
-      console.log(passedAudits.length);
       assert.equal(passedAudits.length, 2);
       assert.equal(failedAudits.length, 10);
       assert.equal(warningAudits.length, 2);

@@ -11,19 +11,19 @@ const ManifestValues = require('../computed/manifest-values.js');
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on if a website is installable as an application. This descriptive title is shown to users when a webapp is installable. */
- title: 'Web app manifest and service worker meet the installability requirements',
+  'title': 'Web app manifest and service worker meet the installability requirements',
   /** Title of a Lighthouse audit that provides detail on if a website is installable as an application. This descriptive title is shown to users when a webapp is not installable. */
-  failureTitle: 'Web app manifest or service worker do not meet the installability requirements',
+  'failureTitle': 'Web app manifest or service worker do not meet the installability requirements',
   /** Description of a Lighthouse audit that tells the user why installability is important for webapps. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  description: 'Browsers can proactively prompt users to add your app to their homescreen, ' +
+  'description': 'Browsers can proactively prompt users to add your app to their homescreen, ' +
     'which can lead to higher engagement. ' +
     '[Learn more](https://web.dev/installable-manifest/).',
   /** Description Table column header for the observed value of the Installability Error statistic. */
-  columnValue: 'Installability Error',
+  'columnValue': 'Installability Error',
   /**
    * @description [ICU Syntax] Label for an audit identifying the number of installability errors found in the page.
   */
-  displayValue: `{itemCount, plural,
+  'displayValue': `{itemCount, plural,
     =1 {1 error}
     other {# errors}
     }`,
@@ -117,9 +117,9 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
  * https://github.com/GoogleChrome/lighthouse/issues/23#issuecomment-270453303
  *
  * Requirements based on Chrome Devtools' installability requirements.
- * Origin of logging: 
+ * Origin of logging:
  * https://source.chromium.org/chromium/chromium/src/+/master:chrome/browser/installable/installable_logging.cc
- * DevTools InstallabilityError implementation: 
+ * DevTools InstallabilityError implementation:
  * https://source.chromium.org/search?q=getInstallabilityErrorMessages&ss=chromium%2Fchromium%2Fsrc:third_party%2Fdevtools-frontend%2Fsrc%2Ffront_end%2Fresources%2F
  */
 
@@ -149,13 +149,13 @@ class InstallableManifest extends Audit {
     installabilityErrors.filter(err => err.errorId !== 'in-incognito');
 
     for (const err of installabilityErrors) {
-      var matchingString;
+      let matchingString;
       try {
         // @ts-expect-error errorIds from protocol should match up against the strings dict
         matchingString = UIStrings[err.errorId];
       } catch {
         errorMessages.push(str_(UIStrings.noErrorId, {errorId: err.errorId}));
-        continue
+        continue;
       }
 
       // We only expect a `minimum-icon-size-in-pixels` errorArg[0] for two errorIds, currently.
@@ -165,7 +165,7 @@ class InstallableManifest extends Audit {
         errorMessages.push(str_(matchingString, {value0}));
       } else if (matchingString) {
         errorMessages.push(str_(matchingString));
-      } 
+      }
     }
 
     return errorMessages;
@@ -194,7 +194,8 @@ class InstallableManifest extends Audit {
       return {errorMessage};
     });
     /** DevTools InstallabilityErrors does not emit an error unless there is a manifest, so include manifestValues's error */
-    if (manifestValues.isParseFailure) errorMessages.push({errorMessage: manifestValues.parseFailureReason})
+    // eslint-disable-next-line max-len
+    if (manifestValues.isParseFailure) errorMessages.push({errorMessage: manifestValues.parseFailureReason});
 
     // Include the detailed pass/fail checklist as a diagnostic.
     /** @type {LH.Audit.Details.DebugData} */

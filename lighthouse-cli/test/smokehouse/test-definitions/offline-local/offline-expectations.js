@@ -58,7 +58,7 @@ module.exports = [
         },
         'installable-manifest': {
           score: 0,
-          details: {items: [{errorMessage: "No manifest was fetched"}]},
+          details: {items: [{errorMessage: 'No manifest was fetched'}]},
         },
         'splash-screen': {
           score: 0,
