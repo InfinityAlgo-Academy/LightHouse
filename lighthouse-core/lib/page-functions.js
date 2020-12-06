@@ -385,7 +385,9 @@ function getNodeLabel(node) {
     if (str.length <= maxLength) {
       return str;
     }
-    return str.slice(0, maxLength - 1) + '…';
+    // Take advantage of string iterator multi-byte character awareness.
+    // Regular `.slice` will ignore unicode character boundaries and lead to malformed text.
+    return Array.from(str).slice(0, maxLength - 1).join('') + '…';
   }
   const tagName = node.tagName.toLowerCase();
   // html and body content is too broad to be useful, since they contain all page content
