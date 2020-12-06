@@ -299,7 +299,7 @@ class Runner {
       msg: `Auditing: ${i18n.getFormatted(audit.meta.title, 'en-US')}`,
       id: `lh:audit:${audit.meta.id}`,
     };
-    log.time(status);
+    log.time(status, 'verbose');
 
     let auditResult;
     try {

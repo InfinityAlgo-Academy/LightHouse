@@ -299,7 +299,7 @@ class GatherRunner {
    */
   static async setupPassNetwork(passContext) {
     const status = {msg: 'Setting up network for the pass trace', id: `lh:gather:setupPassNetwork`};
-    log.time(status);
+    log.time(status, 'verbose');
 
     const passConfig = passContext.passConfig;
     await passContext.driver.setThrottling(passContext.settings, passConfig);
@@ -323,7 +323,7 @@ class GatherRunner {
    */
   static async beginRecording(passContext) {
     const status = {msg: 'Beginning devtoolsLog and trace', id: 'lh:gather:beginRecording'};
-    log.time(status);
+    log.time(status, 'verbose');
 
     const {driver, passConfig, settings} = passContext;
 
@@ -414,7 +414,7 @@ class GatherRunner {
         msg: `Gathering in-page: ${gatherer.name}`,
         id: `lh:gather:pass:${gatherer.name}`,
       };
-      log.time(status);
+      log.time(status, 'verbose');
       const artifactPromise = Promise.resolve().then(_ => gatherer.pass(passContext));
 
       const gathererResult = gathererResults[gatherer.name] || [];
@@ -451,7 +451,7 @@ class GatherRunner {
         msg: `Gathering: ${gatherer.name}`,
         id: `lh:gather:afterPass:${gatherer.name}`,
       };
-      log.time(status);
+      log.time(status, 'verbose');
 
       const artifactPromise = Promise.resolve()
         .then(_ => gatherer.afterPass(passContext, loadData));
