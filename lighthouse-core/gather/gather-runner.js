@@ -753,7 +753,6 @@ class GatherRunner {
     const status = {
       msg: `Running ${passContext.passConfig.passName} pass`,
       id: `lh:gather:runPass-${passContext.passConfig.passName}`,
-      args: [passContext.passConfig.gatherers.map(g => g.instance.name).join(', ')],
     };
     log.time(status);
 
