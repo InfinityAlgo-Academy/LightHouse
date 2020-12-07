@@ -443,8 +443,6 @@ declare global {
          *  See https://html.spec.whatwg.org/multipage/images.html#pixel-density-descriptor
          */
         usesSrcSetDensityDescriptor: boolean;
-        /** The size of the underlying image file in bytes. 0 if the file could not be identified. */
-        resourceSize: number;
         /** The MIME type of the underlying image file. */
         mimeType?: string;
         /** The loading attribute of the image. */

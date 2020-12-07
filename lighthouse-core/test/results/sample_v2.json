@@ -638,8 +638,8 @@
         ],
         "items": [
           {
-            "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
-            "displayedAspectRatio": "480 x 57\n        (8.42)",
+            "url": "http://localhost:64707/dobetterweb/lighthouse-480x318.jpg?iar1",
+            "displayedAspectRatio": "120 x 15\n        (8.00)",
             "actualAspectRatio": "480 x 318\n        (1.51)",
             "doRatiosMatch": false
           }
@@ -683,13 +683,22 @@
         ],
         "items": [
           {
-            "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
-            "elidedUrl": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
-            "displayedSize": "480 x 318",
+            "url": "http://localhost:64707/dobetterweb/lighthouse-480x318.jpg?isr1",
+            "elidedUrl": "http://localhost:64707/dobetterweb/lighthouse-480x318.jpg?isr1",
+            "displayedSize": "4800 x 3180",
             "actualSize": "480 x 318",
             "actualPixels": 152640,
-            "expectedSize": "960 x 636",
-            "expectedPixels": 610560
+            "expectedSize": "9600 x 6360",
+            "expectedPixels": 61056000
+          },
+          {
+            "url": "http://localhost:64707/dobetterweb/lighthouse-rotating.gif",
+            "elidedUrl": "http://localhost:64707/dobetterweb/lighthouse-rotating.gif",
+            "displayedSize": "811 x 462",
+            "actualSize": "811 x 462",
+            "actualPixels": 374682,
+            "expectedSize": "1622 x 924",
+            "expectedPixels": 1498728
           }
         ]
       }
@@ -2060,9 +2069,23 @@
         ],
         "items": [
           {
-            "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
+            "url": "blob:http://localhost:64707/803723f3-114a-4dbd-ad67-c44f8174ef58",
             "node": {
-              "type": "node"
+              "type": "node",
+              "path": "3,HTML,1,BODY,63,IMG",
+              "selector": "body > img",
+              "nodeLabel": "img",
+              "snippet": "<img src=\"blob:http://localhost:64707/803723f3-114a-4dbd-ad67-c44f8174ef58\">"
+            }
+          },
+          {
+            "url": "filesystem:http://localhost:64707/temporary/empty-0.4587600445763731.png",
+            "node": {
+              "type": "node",
+              "path": "3,HTML,1,BODY,72,IMG",
+              "selector": "body > img",
+              "nodeLabel": "img",
+              "snippet": "<img src=\"filesystem:http://localhost:64707/temporary/empty-0.4587600445763731.png\">"
             }
           }
         ]
