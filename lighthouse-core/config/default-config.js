@@ -613,7 +613,6 @@ const defaultConfig = {
         {id: 'works-offline', weight: 5, group: 'pwa-fast-reliable'},
         {id: 'offline-start-url', weight: 1, group: 'pwa-fast-reliable'},
         // Installable
-        {id: 'is-on-https', weight: 2, group: 'pwa-installable'},
         {id: 'service-worker', weight: 1, group: 'pwa-installable'},
         {id: 'installable-manifest', weight: 2, group: 'pwa-installable'},
         // PWA Optimized
