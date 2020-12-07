@@ -203,9 +203,8 @@ class ReportRenderer {
 
     const fullPageScreenshot =
       report.audits['full-page-screenshot'] && report.audits['full-page-screenshot'].details &&
-      report.audits['full-page-screenshot'].details.type === 'full-page-screenshot' &&
-      report.audits['full-page-screenshot'].details.fullPageScreenshot ?
-      report.audits['full-page-screenshot'].details.fullPageScreenshot : undefined;
+      report.audits['full-page-screenshot'].details.type === 'full-page-screenshot' ?
+      report.audits['full-page-screenshot'].details : undefined;
     const detailsRenderer = new DetailsRenderer(this._dom, {
       fullPageScreenshot,
     });

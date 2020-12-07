@@ -28,7 +28,7 @@ function collectAllScriptElements() {
       id: script.id || null,
       async: script.async,
       defer: script.defer,
-      source: /** @type {'head'|'body'} */ (script.closest('head') ? 'head' : 'body'),
+      source: script.closest('head') ? 'head' : 'body',
       // @ts-expect-error - getNodeDetails put into scope via stringification
       ...getNodeDetails(script),
       content: script.src ? null : script.text,
@@ -112,7 +112,6 @@ class ScriptElements extends Gatherer {
           snippet: '',
           selector: '',
           nodeLabel: '',
-          boundingRect: null,
           type: null,
           src: record.url,
           id: null,

@@ -107,8 +107,11 @@ function saveSummary(summary) {
  * @return {LH.Artifacts.TimingSummary|undefined}
  */
 function getMetrics(lhr) {
-  const metricsDetails = /** @type {LH.Audit.Details.DebugData=} */ (lhr.audits['metrics'].details);
-  if (!metricsDetails || !metricsDetails.items || !metricsDetails.items[0]) return;
+  const metricsDetails = lhr.audits['metrics'].details;
+  if (!metricsDetails || metricsDetails.type !== 'debugdata' ||
+      !metricsDetails.items || !metricsDetails.items[0]) {
+    return;
+  }
   /** @type {LH.Artifacts.TimingSummary} */
   const metrics = JSON.parse(JSON.stringify(metricsDetails.items[0]));
 

@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Imposta un colore tema per la barra degli indirizzi."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "Durata blocco thread principale"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Terza parte"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "Riduci l'impatto del codice di terze parti"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "Altre risorse"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Riduci al minimo l'utilizzo di codice di terze parti"

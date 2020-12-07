@@ -67,7 +67,7 @@ async function begin() {
   if (cliFlags.configPath) {
     // Resolve the config file path relative to where cli was called.
     cliFlags.configPath = path.resolve(process.cwd(), cliFlags.configPath);
-    configJson = /** @type {LH.Config.Json} */ (require(cliFlags.configPath));
+    configJson = require(cliFlags.configPath);
   } else if (cliFlags.preset) {
     configJson = require(`../lighthouse-core/config/${cliFlags.preset}-config.js`);
   }

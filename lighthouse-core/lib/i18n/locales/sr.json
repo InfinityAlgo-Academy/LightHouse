@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Подешава боју теме за траку за адресу."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "Период блокирања главне нити"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Независни добављач"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "Смањите утицај кода независног добављача"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "Остали ресурси"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Смањите коришћење садржаја треће стране"

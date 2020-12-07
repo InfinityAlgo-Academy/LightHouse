@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "'पता बार' के लिए थीम का रंग सेट करता है."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "मुख्य थ्रेड ब्लॉक होने का समय"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "तीसरा पक्ष"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "तीसरे पक्ष के कोड का असर कम करें"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "अन्य संसाधन"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "तीसरे पक्ष के इस्तेमाल को कम करें"

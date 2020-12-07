@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Nastavi barvo teme za naslovno vrstico."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "Čas blokiranja glavne niti"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Drugi ponudniki"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "Zmanjšanje vpliva kode drugega ponudnika"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "Drugi viri"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Zmanjšajte uporabo komponent drugih ponudnikov"

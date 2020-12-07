@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "చిరునామా బార్ కోసం థీమ్ రంగు సెట్ చేయబడింది."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "ప్రధాన థ్రెడ్ బ్లాక్ చేయబడే సమయం"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "మూడవ పక్షం"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "మూడవ పక్షం కోడ్ ప్రభావాన్ని తగ్గించండి"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "ఇతర రిసోర్స్‌లు"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "మూడవ పక్ష వినియోగాన్ని కనీస స్థాయికి తగ్గించండి"

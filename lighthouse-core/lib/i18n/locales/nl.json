@@ -1316,9 +1316,6 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Hiermee wordt een themakleur voor de adresbalk ingesteld."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "Tijd dat primaire thread is geblokkeerd"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Derden"
   },
@@ -1330,9 +1327,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "De impact van code van derden beperken"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "Andere bronnen"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Gebruik door derden minimaliseren"

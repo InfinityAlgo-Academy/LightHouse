@@ -228,8 +228,9 @@ class ReportUIFeatures {
   _setupThirdPartyFilter() {
     // Some audits should not display the third party filter option.
     const thirdPartyFilterAuditExclusions = [
-      // This audit deals explicitly with third party resources.
+      // These audits deal explicitly with third party resources.
       'uses-rel-preconnect',
+      'third-party-facades',
     ];
     // Some audits should hide third party by default.
     const thirdPartyFilterAuditHideByDefault = [
@@ -314,7 +315,7 @@ class ReportUIFeatures {
       this.json.audits['full-page-screenshot'] &&
       this.json.audits['full-page-screenshot'].details &&
       this.json.audits['full-page-screenshot'].details.type === 'full-page-screenshot' &&
-      this.json.audits['full-page-screenshot'].details.fullPageScreenshot;
+      this.json.audits['full-page-screenshot'].details;
     if (!fullPageScreenshot) return;
 
     ElementScreenshotRenderer.installOverlayFeature(
@@ -593,10 +594,9 @@ class ReportUIFeatures {
     if ('onbeforeprint' in self) {
       self.addEventListener('afterprint', this.collapseAllDetails);
     } else {
-      const win = /** @type {Window} */ (self);
       // Note: FF implements both window.onbeforeprint and media listeners. However,
       // it doesn't matchMedia doesn't fire when matching 'print'.
-      win.matchMedia('print').addListener(mql => {
+      self.matchMedia('print').addListener(mql => {
         if (mql.matches) {
           this.expandAllDetails();
         } else {

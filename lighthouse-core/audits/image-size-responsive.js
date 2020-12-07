@@ -167,7 +167,8 @@ function expectedImageSize(displayedWidth, displayedHeight, DPR) {
  */
 function deduplicateResultsByUrl(results) {
   results.sort((a, b) => a.url === b.url ? 0 : (a.url < b. url ? -1 : 1));
-  const deduplicated = /** @type {Result[]} */ ([]);
+  /** @type {Result[]} */
+  const deduplicated = [];
   for (const r of results) {
     const previousResult = deduplicated[deduplicated.length - 1];
     if (previousResult && previousResult.url === r.url) {

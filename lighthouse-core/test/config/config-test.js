@@ -64,6 +64,11 @@ describe('Config', () => {
         super();
         this.secret = secretVal;
       }
+
+      get name() {
+        // Use unique artifact name per instance so gatherers aren't deduplicated.
+        return `MyGatherer${this.secret}`;
+      }
     }
     const myGatherer1 = new MyGatherer(1729);
     const myGatherer2 = new MyGatherer(6);
@@ -1206,11 +1211,10 @@ describe('Config', () => {
   });
 
   describe('#requireGatherers', () => {
-    it('should merge gatherers', () => {
+    it('should deduplicate gatherers', () => {
       const gatherers = [
         'viewport-dimensions',
-        {path: 'viewport-dimensions', options: {x: 1}},
-        {path: 'viewport-dimensions', options: {y: 1}},
+        {path: 'viewport-dimensions'},
       ];
 
       const merged = Config.requireGatherers([{gatherers}]);
@@ -1218,7 +1222,7 @@ describe('Config', () => {
       const mergedJson = JSON.parse(JSON.stringify(merged));
 
       assert.deepEqual(mergedJson[0].gatherers,
-        [{path: 'viewport-dimensions', options: {x: 1, y: 1}, instance: {}}]);
+        [{path: 'viewport-dimensions', instance: {}}]);
     });
 
     function loadGatherer(gathererEntry) {
@@ -1325,16 +1329,14 @@ describe('Config', () => {
   });
 
   describe('#getPrintString', () => {
-    it('doesn\'t include empty gatherer/audit options in output', () => {
-      const gOpt = 'gathererOption';
+    it('doesn\'t include empty audit options in output', () => {
       const aOpt = 'auditOption';
       const configJson = {
         extends: 'lighthouse:default',
         passes: [{
           passName: 'defaultPass',
           gatherers: [
-            // `options` merged into default `script-elements` gatherer.
-            {path: 'script-elements', options: {gOpt}},
+            {path: 'script-elements'},
           ],
         }],
         audits: [
@@ -1347,19 +1349,8 @@ describe('Config', () => {
       const printedConfig = JSON.parse(printed);
 
       // Check that options weren't completely eliminated.
-      const scriptsGatherer = printedConfig.passes[0].gatherers
-        .find(g => g.path === 'script-elements');
-      assert.strictEqual(scriptsGatherer.options.gOpt, gOpt);
       const metricsAudit = printedConfig.audits.find(a => a.path === 'metrics');
       assert.strictEqual(metricsAudit.options.aOpt, aOpt);
-
-      for (const pass of printedConfig.passes) {
-        for (const gatherer of pass.gatherers) {
-          if (gatherer.options) {
-            assert.ok(Object.keys(gatherer.options).length > 0);
-          }
-        }
-      }
 
       for (const audit of printedConfig.audits) {
         if (audit.options) {

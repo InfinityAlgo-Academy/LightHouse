@@ -1805,6 +1805,13 @@
         }
       }
     },
+    "third-party-facades": {
+      "id": "third-party-facades",
+      "title": "Lazy load third-party resources with facades",
+      "description": "Some third-party embeds can be lazy loaded. Consider replacing them with a facade until they are required. [Learn more](https://web.dev/third-party-facades/).",
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
+    },
     "largest-contentful-paint-element": {
       "id": "largest-contentful-paint-element",
       "title": "Largest Contentful Paint element",
@@ -4672,6 +4679,11 @@
           "group": "diagnostics"
         },
         {
+          "id": "third-party-facades",
+          "weight": 0,
+          "group": "diagnostics"
+        },
+        {
           "id": "largest-contentful-paint-element",
           "weight": 0,
           "group": "diagnostics"
@@ -5883,6 +5895,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:third-party-summary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:third-party-facades",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7188,8 +7206,14 @@
       "lighthouse-core/audits/third-party-summary.js | columnThirdParty": [
         "audits[third-party-summary].details.headings[0].text"
       ],
-      "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": [
+      "lighthouse-core/lib/i18n/i18n.js | columnBlockingTime": [
         "audits[third-party-summary].details.headings[2].text"
+      ],
+      "lighthouse-core/audits/third-party-facades.js | title": [
+        "audits[third-party-facades].title"
+      ],
+      "lighthouse-core/audits/third-party-facades.js | description": [
+        "audits[third-party-facades].description"
       ],
       "lighthouse-core/audits/largest-contentful-paint-element.js | title": [
         "audits[largest-contentful-paint-element].title"
