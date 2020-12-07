@@ -323,6 +323,29 @@ describe('DependencyGraph/Simulator', () => {
       assert.equal(resultB.timeInMs, 950 + 800);
     });
 
+    it('should maximize throughput with H2', () => {
+      const simulator = new Simulator({serverResponseTimeByOrigin});
+      const connectionDefaults = {protocol: 'h2', connectionId: '1'};
+      const nodeA = new NetworkNode(request({startTime: 0, endTime: 1, ...connectionDefaults}));
+      const nodeB = new NetworkNode(request({startTime: 1, endTime: 2, ...connectionDefaults}));
+      const nodeC = new NetworkNode(request({startTime: 2, endTime: 3, ...connectionDefaults}));
+      const nodeD = new NetworkNode(request({startTime: 3, endTime: 4, ...connectionDefaults}));
+
+      nodeA.addDependent(nodeB);
+      nodeB.addDependent(nodeC);
+      nodeB.addDependent(nodeD);
+
+      // Run two simulations:
+      //  - The first with C & D in parallel.
+      //  - The second with C & D in series.
+      // Under HTTP/2 simulation these should be equivalent, but definitely parallel
+      // shouldn't be slower.
+      const resultA = simulator.simulate(nodeA, {flexibleOrdering: true});
+      nodeC.addDependent(nodeD);
+      const resultB = simulator.simulate(nodeA, {flexibleOrdering: true});
+      expect(resultA.timeInMs).toBeLessThanOrEqual(resultB.timeInMs);
+    });
+
     it('should throw (not hang) on graphs with cycles', () => {
       const rootNode = new NetworkNode(request({}));
       const depNode = new NetworkNode(request({}));

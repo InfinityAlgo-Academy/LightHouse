@@ -4001,9 +4001,9 @@
       "id": "uses-http2",
       "title": "Use HTTP/2",
       "description": "HTTP/2 offers many benefits over HTTP/1.1, including binary headers, multiplexing, and server push. [Learn more](https://web.dev/uses-http2/).",
-      "score": 0.41,
+      "score": 0.34,
       "scoreDisplayMode": "binary",
-      "numericValue": 1550,
+      "numericValue": 2130,
       "numericUnit": "millisecond",
       "displayValue": "15 requests not served via HTTP/2",
       "details": {
@@ -4082,7 +4082,7 @@
             "url": "http://localhost:10200/favicon.ico"
           }
         ],
-        "overallSavingsMs": 1550
+        "overallSavingsMs": 2130
       }
     },
     "uses-passive-event-listeners": {
