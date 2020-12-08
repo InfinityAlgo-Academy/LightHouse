@@ -145,11 +145,12 @@ class InstallableManifest extends Audit {
     const installabilityErrors = artifacts.InstallabilityErrors.errors;
     const errorMessages = [];
 
-    // Filter out errorId 'in-incognito' since Lighthouse users are recommended to use incognito to test.
-    installabilityErrors.filter(err => err.errorId !== 'in-incognito');
-
     for (const err of installabilityErrors) {
       let matchingString;
+
+      // Filter out errorId 'in-incognito' since Lighthouse recommends incognito.
+      if (err.errorId === 'in-incognito') continue;
+
       try {
         // @ts-expect-error errorIds from protocol should match up against the strings dict
         matchingString = UIStrings[err.errorId];
