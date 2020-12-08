@@ -163,7 +163,7 @@ exports[`Performance: metrics evaluates valid input correctly 1`] = `
 Object {
   "cumulativeLayoutShift": 0,
   "cumulativeLayoutShiftAllFrames": 0,
-  "estimatedInputLatency": 78,
+  "estimatedInputLatency": 81,
   "estimatedInputLatencyTs": undefined,
   "firstCPUIdle": 3351,
   "firstCPUIdleTs": undefined,
@@ -208,6 +208,6 @@ Object {
   "observedTraceEndTs": 225426711887,
   "speedIndex": 1676,
   "speedIndexTs": undefined,
-  "totalBlockingTime": 726,
+  "totalBlockingTime": 777,
 }
 `;
