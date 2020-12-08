@@ -553,26 +553,7 @@ class GatherRunner {
     const response =
       await passContext.driver.sendCommand('Page.getInstallabilityErrors');
 
-    let errors = response.installabilityErrors;
-    // COMPAT: Before M82, `getInstallabilityErrors` was not localized and just english
-    // error strings were returned. Convert the values we care about to the new error id format.
-    if (!errors) {
-      /** @type {string[]} */
-      // @ts-expect-error - Support older protocol data.
-      const m81StyleErrors = response.errors || [];
-      errors = m81StyleErrors.map(error => {
-        const englishErrorToErrorId = {
-          'Could not download a required icon from the manifest': 'cannot-download-icon',
-          'Downloaded icon was empty or corrupted': 'no-icon-available',
-        };
-        for (const [englishError, errorId] of Object.entries(englishErrorToErrorId)) {
-          if (error.includes(englishError)) {
-            return {errorId, errorArguments: []};
-          }
-        }
-        return {errorId: '', errorArguments: []};
-      }).filter(error => error.errorId);
-    }
+    const errors = response.installabilityErrors;
 
     log.timeEnd(status);
     return {errors};
