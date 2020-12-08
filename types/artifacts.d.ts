@@ -439,17 +439,10 @@ declare global {
         isPicture: boolean;
         /** Flags whether this element was contained within a ShadowRoot */
         isInShadowDOM: boolean;
-        /** Flags whether this element was sized using a non-default `object-fit` CSS property. */
-        usesObjectFit: boolean;
-        /** Flags whether this element was rendered using a pixel art scaling method.
-         *  See https://developer.mozilla.org/en-US/docs/Games/Techniques/Crisp_pixel_art_look for
-         *  details.
-         */
-        usesPixelArtScaling: boolean;
-        /** Flags whether the image has a srcset with density descriptors.
-         *  See https://html.spec.whatwg.org/multipage/images.html#pixel-density-descriptor
-         */
-        usesSrcSetDensityDescriptor: boolean;
+        /** `object-fit` CSS property. */
+        cssComputedObjectFit: string;
+        /** `image-rendering` propertry. */
+        cssComputedImageRendering: string;
         /** The MIME type of the underlying image file. */
         mimeType?: string;
         /** Details for node in DOM for the image element */
