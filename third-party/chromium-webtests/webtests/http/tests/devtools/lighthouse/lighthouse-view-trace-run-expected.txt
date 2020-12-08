@@ -50,7 +50,6 @@ resource-summary
 screenshot-thumbnails
 server-response-time
 speed-index
-third-party-facades
 third-party-summary
 timing-budget
 total-blocking-time
