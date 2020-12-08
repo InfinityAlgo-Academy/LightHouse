@@ -11,9 +11,14 @@ const assert = require('assert').strict;
 /* eslint-env jest */
 
 function generateImage(clientSize, naturalSize, props, src = 'https://google.com/logo.png') {
-  const image = {src, mimeType: 'image/png'};
-  Object.assign(image, clientSize, naturalSize, props);
-  return image;
+  return {
+    src,
+    mimeType: 'image/png',
+    cssComputedObjectFit: 'fill',
+    ...clientSize,
+    ...naturalSize,
+    ...props,
+  };
 }
 
 describe('Images: aspect-ratio audit', () => {
@@ -54,7 +59,6 @@ describe('Images: aspect-ratio audit', () => {
     naturalSize: [200, 200],
     props: {
       isCss: false,
-      usesObjectFit: false,
     },
   });
 
@@ -64,7 +68,6 @@ describe('Images: aspect-ratio audit', () => {
     naturalSize: [200, 200],
     props: {
       isCss: true,
-      usesObjectFit: false,
     },
   });
 
@@ -74,7 +77,6 @@ describe('Images: aspect-ratio audit', () => {
     naturalSize: [200, 200],
     props: {
       isCss: false,
-      usesObjectFit: false,
     },
   });
 
@@ -84,7 +86,7 @@ describe('Images: aspect-ratio audit', () => {
     naturalSize: [800, 500],
     props: {
       isCss: false,
-      usesObjectFit: true,
+      cssComputedObjectFit: 'cover',
     },
   });
 
@@ -94,17 +96,14 @@ describe('Images: aspect-ratio audit', () => {
     naturalSize: [800, 500],
     props: {
       isCss: false,
-      usesObjectFit: false,
     },
   });
-
   testImage('is smaller than natural aspect ratio', {
     score: 0,
     clientSize: [200, 200],
     naturalSize: [400, 300],
     props: {
       isCss: false,
-      usesObjectFit: false,
     },
   });
 
@@ -114,7 +113,6 @@ describe('Images: aspect-ratio audit', () => {
     naturalSize: [800, 69],
     props: {
       isCss: false,
-      usesObjectFit: false,
     },
   });
 
@@ -124,7 +122,6 @@ describe('Images: aspect-ratio audit', () => {
     naturalSize: [300, 300],
     props: {
       isCss: false,
-      usesObjectFit: false,
     },
   });
 
@@ -134,7 +131,6 @@ describe('Images: aspect-ratio audit', () => {
     naturalSize: [100, 100],
     props: {
       isCss: false,
-      usesObjectFit: false,
     },
   });
 
@@ -144,7 +140,6 @@ describe('Images: aspect-ratio audit', () => {
     naturalSize: [1, 1],
     props: {
       isCss: false,
-      usesObjectFit: false,
     },
   });
 
@@ -157,7 +152,6 @@ describe('Images: aspect-ratio audit', () => {
           {
             mimeType: 'image/svg+xml',
             isCss: false,
-            usesObjectFit: false,
           }
         ),
       ],

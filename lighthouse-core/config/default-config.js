@@ -164,6 +164,7 @@ const defaultConfig = {
       'trace-elements',
       'inspector-issues',
       'source-maps',
+      'full-page-screenshot',
     ],
   },
   {
@@ -245,6 +246,7 @@ const defaultConfig = {
     'unsized-images',
     'valid-source-maps',
     'preload-lcp-image',
+    'full-page-screenshot',
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',
     'manual/pwa-each-page-has-url',

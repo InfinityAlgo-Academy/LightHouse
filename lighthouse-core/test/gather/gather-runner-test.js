@@ -33,6 +33,7 @@ const GatherRunner = {
   getNonHtmlError: makeParamsOptional(GatherRunner_.getNonHtmlError),
   getPageLoadError: makeParamsOptional(GatherRunner_.getPageLoadError),
   getWebAppManifest: makeParamsOptional(GatherRunner_.getWebAppManifest),
+  getSlowHostCpuWarning: makeParamsOptional(GatherRunner_.getSlowHostCpuWarning),
   initializeBaseArtifacts: makeParamsOptional(GatherRunner_.initializeBaseArtifacts),
   loadPage: makeParamsOptional(GatherRunner_.loadPage),
   run: makeParamsOptional(GatherRunner_.run),
@@ -1728,6 +1729,54 @@ describe('GatherRunner', function() {
       expect(result).toEqual({
         errors: [{errorId: 'no-icon-available', errorArguments: []}],
       });
+    });
+  });
+
+  describe('.getSlowHostCpuWarning', () => {
+    /** @type {RecursivePartial<LH.Gatherer.PassContext>} */
+    let passContext;
+
+    beforeEach(() => {
+      passContext = {
+        settings: {
+          channel: 'cli',
+          throttlingMethod: 'simulate',
+          throttling: {cpuSlowdownMultiplier: 4},
+        },
+        baseArtifacts: {
+          BenchmarkIndex: 500,
+        },
+      };
+    });
+
+    it('should add a warning when benchmarkindex is low', () => {
+      expect(GatherRunner.getSlowHostCpuWarning(passContext))
+        .toBeDisplayString(/appears to have a slower CPU/);
+    });
+
+    it('should ignore non-cli channels', () => {
+      Object.assign(passContext.settings, {channel: 'devtools'});
+      expect(GatherRunner.getSlowHostCpuWarning(passContext)).toBe(undefined);
+
+      Object.assign(passContext.settings, {channel: 'wpt'});
+      expect(GatherRunner.getSlowHostCpuWarning(passContext)).toBe(undefined);
+
+      Object.assign(passContext.settings, {channel: 'psi'});
+      expect(GatherRunner.getSlowHostCpuWarning(passContext)).toBe(undefined);
+    });
+
+    it('should ignore non-default throttling settings', () => {
+      Object.assign(passContext.settings, {throttling: {cpuSlowdownMultiplier: 2}});
+      expect(GatherRunner.getSlowHostCpuWarning(passContext)).toBe(undefined);
+
+      Object.assign(passContext.settings, {throttlingMethod: 'provided'});
+      Object.assign(passContext.settings, {throttling: {cpuSlowdownMultiplier: 4}});
+      expect(GatherRunner.getSlowHostCpuWarning(passContext)).toBe(undefined);
+    });
+
+    it('should ignore high benchmarkindex values', () => {
+      Object.assign(passContext.baseArtifacts, {BenchmarkIndex: 1500});
+      expect(GatherRunner.getSlowHostCpuWarning(passContext)).toBe(undefined);
     });
   });
 

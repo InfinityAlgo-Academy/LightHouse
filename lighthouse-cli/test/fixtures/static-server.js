@@ -133,13 +133,13 @@ class Server {
       }
 
       response.writeHead(statusCode, headers);
+      const encoding = charset === 'UTF-8' ? 'utf-8' : 'binary';
 
       // Delay the response
       if (delay > 0) {
-        return setTimeout(finishResponse, delay, data);
+        return setTimeout(finishResponse, delay, data, encoding);
       }
 
-      const encoding = charset === 'UTF-8' ? 'utf-8' : 'binary';
       finishResponse(data, encoding);
     };
 
