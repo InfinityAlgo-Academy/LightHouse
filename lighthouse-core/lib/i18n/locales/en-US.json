@@ -837,7 +837,7 @@
     "message": "Installability Error"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
-    "message": "Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications.With proper Service Worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://web.dev/installable-manifest/)."
+    "message": "Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. With proper Service Worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://web.dev/installable-manifest/)."
   },
   "lighthouse-core/audits/installable-manifest.js | displayValue": {
     "message": "{itemCount, plural,\n    =1 {1 error}\n    other {# errors}\n    }"
