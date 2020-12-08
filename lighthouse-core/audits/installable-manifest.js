@@ -166,6 +166,8 @@ class InstallableManifest extends Audit {
         errorMessages.push(str_(matchingString, {value0}));
       } else if (matchingString) {
         errorMessages.push(str_(matchingString));
+      } else if (matchingString === undefined) {
+        errorMessages.push(str_(UIStrings.noErrorId, {errorId: err.errorId}));
       }
     }
 
