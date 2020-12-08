@@ -15,9 +15,10 @@ const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on if a website is installable as an application. This descriptive title is shown to users when a webapp is not installable. */
   'failureTitle': 'Web app manifest or service worker do not meet the installability requirements',
   /** Description of a Lighthouse audit that tells the user why installability is important for webapps. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  'description': 'Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications.' +
-    'With proper Service Worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, ' +
-    'which can lead to higher engagement. ' +
+  'description': 'Service worker is the technology that enables your app to use many Progressive ' +
+    'Web App features, such as offline, add to homescreen, and push notifications. ' +
+    'With proper Service Worker and manifest implementations, browsers can proactively prompt ' +
+    'users to add your app to their homescreen, which can lead to higher engagement. ' +
     '[Learn more](https://web.dev/installable-manifest/).',
   /** Description Table column header for the observed value of the Installability Error statistic. */
   'columnValue': 'Installability Error',
@@ -146,11 +147,12 @@ class InstallableManifest extends Audit {
     const installabilityErrors = artifacts.InstallabilityErrors.errors;
     const errorMessages = [];
 
-    // Filter out errorId 'in-incognito' since Lighthouse users are recommended to use incognito to test.
-    installabilityErrors.filter(err => err.errorId !== 'in-incognito');
-
     for (const err of installabilityErrors) {
       let matchingString;
+
+      // Filter out errorId 'in-incognito' since Lighthouse recommends incognito.
+      if (err.errorId === 'in-incognito') continue;
+
       try {
         // @ts-expect-error errorIds from protocol should match up against the strings dict
         matchingString = UIStrings[err.errorId];
@@ -166,6 +168,8 @@ class InstallableManifest extends Audit {
         errorMessages.push(str_(matchingString, {value0}));
       } else if (matchingString) {
         errorMessages.push(str_(matchingString));
+      } else if (matchingString === undefined) {
+        errorMessages.push(str_(UIStrings.noErrorId, {errorId: err.errorId}));
       }
     }
 

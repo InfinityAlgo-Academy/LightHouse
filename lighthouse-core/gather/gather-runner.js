@@ -552,7 +552,10 @@ class GatherRunner {
     log.time(status);
     const response =
       await passContext.driver.sendCommand('Page.getInstallabilityErrors');
+
     const errors = response.installabilityErrors;
+
+    log.timeEnd(status);
     return {errors};
   }
 

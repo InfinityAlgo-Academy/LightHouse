@@ -71,6 +71,7 @@ describe('DependencyGraph/Simulator/ConnectionPool', () => {
       const pool = new ConnectionPool([recordA], simulationOptions({rtt, throughput}));
       const connection = pool._connectionsByOrigin.get('http://example.com')[0];
       assert.ok(connection.isH2(), 'should have set HTTP/2');
+      assert.equal(pool._connectionsByOrigin.get('http://example.com').length, 1);
     });
 
     it('should set origin-specific RTT properly', () => {
