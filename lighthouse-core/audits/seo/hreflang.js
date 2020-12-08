@@ -121,9 +121,9 @@ class Hreflang extends Audit {
         source = {
           type: 'node',
           snippet: `<link rel="alternate" hreflang="${link.hreflang}" href="${link.hrefRaw}" />`,
-          path: link.devtoolsNodePath || '',
-          selector: link.selector || '',
-          nodeLabel: link.nodeLabel || '',
+          path: link.node !== null ? link.node.devtoolsNodePath : '',
+          selector: link.node !== null ? link.node.selector : '',
+          nodeLabel: link.node !== null ? link.node.nodeLabel : '',
         };
       } else if (link.source === 'headers') {
         source = `Link: <${link.hrefRaw}>; rel="alternate"; hreflang="${link.hreflang}"`;

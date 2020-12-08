@@ -29,10 +29,10 @@ function collectAllScriptElements() {
       async: script.async,
       defer: script.defer,
       source: script.closest('head') ? 'head' : 'body',
-      // @ts-expect-error - getNodeDetails put into scope via stringification
-      ...getNodeDetails(script),
       content: script.src ? null : script.text,
       requestId: null,
+      // @ts-expect-error - getNodeDetails put into scope via stringification
+      node: getNodeDetails(script),
     };
   });
 }
@@ -108,10 +108,6 @@ class ScriptElements extends Gatherer {
         matchedScriptElement.content = content;
       } else {
         scripts.push({
-          devtoolsNodePath: '',
-          snippet: '',
-          selector: '',
-          nodeLabel: '',
           type: null,
           src: record.url,
           id: null,
@@ -120,10 +116,10 @@ class ScriptElements extends Gatherer {
           source: 'network',
           requestId: record.requestId,
           content,
+          node: null,
         });
       }
     }
-
     return scripts;
   }
 }

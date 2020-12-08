@@ -61,7 +61,7 @@ function runA11yChecks() {
       // @ts-expect-error
       result.nodes.forEach(node => {
         // @ts-expect-error - getNodeDetails put into scope via stringification
-        Object.assign(node, getNodeDetails(node.element));
+        node.node = getNodeDetails(node.element);
         // avoid circular JSON concerns
         node.element = node.any = node.all = node.none = undefined;
       });

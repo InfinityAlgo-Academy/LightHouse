@@ -1836,7 +1836,15 @@
               "path": "1,HTML,1,BODY,0,DIV,1,P",
               "selector": "body > div > p",
               "nodeLabel": "This domain is for use in illustrative examples in documents. You may use this …",
-              "snippet": "<p class=\"paragraph\">"
+              "snippet": "<p class=\"paragraph\">",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 654,
+                "left": 132,
+                "right": 252,
+                "width": 120,
+                "height": 80
+              }
             }
           }
         ]
@@ -3985,13 +3993,15 @@
           {
             "node": {
               "type": "node",
-              "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">"
+              "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">",
+              "path": "3,HTML,1,BODY,58,INPUT"
             }
           },
           {
             "node": {
               "type": "node",
-              "snippet": "<input type=\"password\" onpaste=\"return false;\">"
+              "snippet": "<input type=\"password\" onpaste=\"return false;\">",
+              "path": "3,HTML,1,BODY,62,INPUT"
             }
           }
         ]

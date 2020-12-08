@@ -47,8 +47,8 @@ class PasswordInputsCanBePastedIntoAudit extends Audit {
       items.push({
         node: {
           type: /** @type {'node'} */ ('node'),
-          snippet: input.snippet,
-          path: input.devtoolsNodePath,
+          snippet: input.node.snippet,
+          path: input.node.devtoolsNodePath,
         },
       });
     });

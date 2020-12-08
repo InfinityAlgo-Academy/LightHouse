@@ -31,7 +31,7 @@ describe('Accessibility: aria-roles audit', () => {
       Accessibility: {
         violations: [{
           id: 'aria-roles',
-          nodes: [{}],
+          nodes: [],
           help: 'http://example.com/',
         }],
       },

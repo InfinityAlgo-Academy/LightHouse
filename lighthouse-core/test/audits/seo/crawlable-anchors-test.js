@@ -16,6 +16,13 @@ function runAudit({
   onclick = '',
   name = '',
   listeners = onclick.trim().length ? [{type: 'click'}] : [],
+  node = {
+    snippet: '',
+    devtoolsNodePath: '',
+    nodeSelector: '',
+    boundingRect: null,
+    selector: '',
+  },
 }) {
   const {score} = CrawlableAnchorsAudit.audit({
     AnchorElements: [{
@@ -24,6 +31,7 @@ function runAudit({
       listeners,
       onclick,
       role,
+      node,
     }],
   });
 
