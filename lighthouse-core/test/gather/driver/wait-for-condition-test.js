@@ -35,6 +35,23 @@ function createMockWaitForFn() {
   });
 }
 
+function createMockMultipleInvocationWaitForFn() {
+  /** @type {Array<{arguments: Array<*>, mockResolve(): void, mockReject(): void}>} */
+  const calls = [];
+  const mockCancelFn = jest.fn();
+  const mockFn = jest.fn().mockImplementation((...args) => {
+    const {promise, resolve, reject} = createDecomposedPromise();
+    calls.push({
+      arguments: args,
+      mockResolve: () => resolve(),
+      mockReject: () => reject(new Error('Rejected')),
+    });
+    return {promise, cancel: mockCancelFn};
+  });
+
+  return Object.assign(mockFn, {waitForCalls: calls});
+}
+
 describe('waitForFullyLoaded()', () => {
   let session;
   let networkMonitor;
@@ -123,6 +140,39 @@ describe('waitForFullyLoaded()', () => {
     options._waitForTestOverrides.waitForCPUIdle.mockResolve();
     await flushAllTimersAndMicrotasks();
     expect(loadPromise).toBeDone(`Did not resolve on CPU idle`);
+    expect(await loadPromise).toMatchObject({timedOut: false});
+  });
+
+  it('should wait for multiple types of network idle', async () => {
+    const mockWaitForNetworkIdle = createMockMultipleInvocationWaitForFn();
+    options._waitForTestOverrides.waitForNetworkIdle = mockWaitForNetworkIdle;
+    options._waitForTestOverrides.waitForLoadEvent = createMockWaitForFn();
+    options._waitForTestOverrides.waitForCPUIdle = createMockWaitForFn();
+
+    const loadPromise = makePromiseInspectable(wait.waitForFullyLoaded(
+      session,
+      networkMonitor,
+      options
+    ));
+
+    // shouldn't finish all on its own
+    await flushAllTimersAndMicrotasks();
+    expect(loadPromise).not.toBeDone(`Did not wait for anything`);
+    expect(options._waitForTestOverrides.waitForLoadEvent).toHaveBeenCalled();
+    expect(options._waitForTestOverrides.waitForNetworkIdle).toHaveBeenCalledTimes(2);
+    expect(options._waitForTestOverrides.waitForCPUIdle).not.toHaveBeenCalled();
+
+    // should have been called now
+    options._waitForTestOverrides.waitForLoadEvent.mockResolve();
+    options._waitForTestOverrides.waitForCPUIdle.mockResolve();
+    expect(mockWaitForNetworkIdle.waitForCalls).toHaveLength(2);
+    mockWaitForNetworkIdle.waitForCalls[0].mockResolve();
+    await flushAllTimersAndMicrotasks();
+    expect(loadPromise).not.toBeDone(`Did not wait for second network idle`);
+
+    mockWaitForNetworkIdle.waitForCalls[1].mockResolve();
+    await flushAllTimersAndMicrotasks();
+    expect(loadPromise).toBeDone(`Did not resolve on both network idles`);
     expect(await loadPromise).toMatchObject({timedOut: false});
   });
 
