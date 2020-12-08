@@ -423,6 +423,9 @@ const defaultConfig = {
     'best-practices-general': {
       title: str_(UIStrings.bestPracticesGeneralGroupTitle),
     },
+    'hidden': {
+      title: "This is where the hidden group title belongs.",
+    }
   },
   categories: {
     'performance': {
@@ -609,11 +612,11 @@ const defaultConfig = {
       manualDescription: str_(UIStrings.pwaCategoryManualDescription),
       auditRefs: [
         // Fast and Reliable
-        {id: 'load-fast-enough-for-pwa', weight: 7, group: 'pwa-fast-reliable'},
-        {id: 'works-offline', weight: 5, group: 'pwa-fast-reliable'},
-        {id: 'offline-start-url', weight: 1, group: 'pwa-fast-reliable'},
+        {id: 'load-fast-enough-for-pwa', weight: 7, group: 'hidden'},
+        {id: 'works-offline', weight: 5, group: 'hidden'},
+        {id: 'offline-start-url', weight: 1, group: 'hidden'},
         // Installable
-        {id: 'service-worker', weight: 1, group: 'pwa-installable'},
+        {id: 'service-worker', weight: 1, group: 'hidden'},
         {id: 'installable-manifest', weight: 2, group: 'pwa-installable'},
         // PWA Optimized
         {id: 'redirects-http', weight: 2, group: 'pwa-optimized'},

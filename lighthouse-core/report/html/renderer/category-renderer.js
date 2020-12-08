@@ -224,6 +224,7 @@ class CategoryRenderer {
 
     // Add audits without a group first so they will appear first.
     const notAGroup = 'NotAGroup';
+    const hiddenGroup = 'hidden';
     grouped.set(notAGroup, []);
 
     for (const auditRef of auditRefs) {
@@ -237,10 +238,13 @@ class CategoryRenderer {
     const auditElements = [];
 
     for (const [groupId, groupAuditRefs] of grouped) {
-      if (groupId === notAGroup) {
+      if (groupId === notAGroup || groupId === hiddenGroup) {
         // Push not-grouped audits individually.
         for (const auditRef of groupAuditRefs) {
-          auditElements.push(this.renderAudit(auditRef));
+          // Do not render audit if it is in the 'hidden' group.
+          if (auditRef.group !== 'hidden') {
+            auditElements.push(this.renderAudit(auditRef));
+          }
         }
         continue;
       }
