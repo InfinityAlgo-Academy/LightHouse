@@ -51,6 +51,21 @@ declare global {
       trace?: Trace;
     }
 
+    type PhaseResult_ = void|LH.GathererArtifacts[keyof LH.GathererArtifacts]
+    export type PhaseResult = PhaseResult_ | Promise<PhaseResult_>
+
+    export interface GathererInstance {
+      name: keyof LH.GathererArtifacts;
+      beforePass(context: LH.Gatherer.PassContext): PhaseResult;
+      pass(context: LH.Gatherer.PassContext): PhaseResult;
+      afterPass(context: LH.Gatherer.PassContext, loadData: LH.Gatherer.LoadData): PhaseResult;
+    }
+
+    export interface FRGathererInstance {
+      name: keyof LH.GathererArtifacts;
+      afterPass(context: FRTransitionalContext): PhaseResult;
+    }
+
     namespace Simulation {
       export type GraphNode = import('../lighthouse-core/lib/dependency-graph/base-node').Node;
       export type GraphNetworkNode = _NetworkNode;

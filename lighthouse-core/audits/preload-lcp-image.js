@@ -90,7 +90,7 @@ class PreloadLCPImageAudit extends Audit {
     if (!lcpElement) return undefined;
 
     const lcpImageElement = imageElements.find(elem => {
-      return elem.devtoolsNodePath === lcpElement.devtoolsNodePath;
+      return elem.node.devtoolsNodePath === lcpElement.node.devtoolsNodePath;
     });
 
     if (!lcpImageElement) return undefined;

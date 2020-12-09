@@ -249,12 +249,12 @@ function targetToTableNode(target) {
 
   return {
     type: 'node',
-    lhId: target.lhId,
-    snippet: target.snippet,
-    path: target.devtoolsNodePath,
-    selector: target.selector,
+    lhId: target.node.lhId,
+    snippet: target.node.snippet,
+    path: target.node.devtoolsNodePath,
+    selector: target.node.selector,
     boundingRect,
-    nodeLabel: target.nodeLabel,
+    nodeLabel: target.node.nodeLabel,
   };
 }
 

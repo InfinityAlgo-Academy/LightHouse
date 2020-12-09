@@ -45,7 +45,9 @@ function getBorderlineTapTargets(options = {}) {
   }
 
   const mainTapTarget = {
-    snippet: '<main></main>',
+    node: {
+      snippet: '<main></main>',
+    },
     clientRects: [
       makeClientRects({
         x: 0,
@@ -54,7 +56,9 @@ function getBorderlineTapTargets(options = {}) {
     ],
   };
   const tapTargetBelow = {
-    snippet: '<below></below>',
+    node: {
+      snippet: '<below></below>',
+    },
     clientRects: [
       makeClientRects({
         x: 0,
@@ -63,7 +67,9 @@ function getBorderlineTapTargets(options = {}) {
     ],
   };
   const tapTargetToTheRight = {
-    snippet: '<right></right>',
+    node: {
+      snippet: '<right></right>',
+    },
     clientRects: [
       makeClientRects({
         x: mainTapTarget.clientRects[0].left + TapTargetsAudit.FINGER_SIZE_PX,

@@ -31,7 +31,7 @@ describe('Accessibility: frame-title audit', () => {
       Accessibility: {
         violations: [{
           id: 'frame-title',
-          nodes: [{}],
+          nodes: [],
           help: 'http://example.com/',
         }],
       },

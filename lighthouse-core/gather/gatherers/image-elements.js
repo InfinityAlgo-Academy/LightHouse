@@ -76,17 +76,11 @@ function getHTMLImages(allElements) {
       isCss: false,
       isPicture,
       loading: element.loading,
-      usesObjectFit: ['cover', 'contain', 'scale-down', 'none'].includes(
-        computedStyle.getPropertyValue('object-fit')
-      ),
-      usesPixelArtScaling: ['pixelated', 'crisp-edges'].includes(
-        computedStyle.getPropertyValue('image-rendering')
-      ),
+      cssComputedObjectFit: computedStyle.getPropertyValue('object-fit'),
+      cssComputedImageRendering: computedStyle.getPropertyValue('image-rendering'),
       isInShadowDOM: element.getRootNode() instanceof ShadowRoot,
-      // https://html.spec.whatwg.org/multipage/images.html#pixel-density-descriptor
-      usesSrcSetDensityDescriptor: / \d+(\.\d+)?x/.test(element.srcset),
       // @ts-expect-error - getNodeDetails put into scope via stringification
-      ...getNodeDetails(element),
+      node: getNodeDetails(element),
     };
   });
 }
@@ -130,13 +124,10 @@ function getCSSImages(allElements) {
       isCss: true,
       isPicture: false,
       isInShadowDOM: element.getRootNode() instanceof ShadowRoot,
-      usesObjectFit: false,
-      usesPixelArtScaling: ['pixelated', 'crisp-edges'].includes(
-        style.getPropertyValue('image-rendering')
-      ),
-      usesSrcSetDensityDescriptor: false,
+      cssComputedObjectFit: '',
+      cssComputedImageRendering: style.getPropertyValue('image-rendering'),
       // @ts-expect-error - getNodeDetails put into scope via stringification
-      ...getNodeDetails(element),
+      node: getNodeDetails(element),
     });
   }
 
@@ -331,7 +322,7 @@ class ImageElements extends Gatherer {
       element.mimeType = networkRecord.mimeType;
 
       if (!element.isInShadowDOM && !element.isCss) {
-        await this.fetchSourceRules(driver, element.devtoolsNodePath, element);
+        await this.fetchSourceRules(driver, element.node.devtoolsNodePath, element);
       }
       // Images within `picture` behave strangely and natural size information isn't accurate,
       // CSS images have no natural size information at all. Try to get the actual size if we can.

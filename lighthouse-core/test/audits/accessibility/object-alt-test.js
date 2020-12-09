@@ -31,7 +31,7 @@ describe('Accessibility: object-alt audit', () => {
       Accessibility: {
         violations: [{
           id: 'object-alt',
-          nodes: [{}],
+          nodes: [],
           help: 'http://example.com/',
         }],
       },

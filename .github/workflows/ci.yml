@@ -50,6 +50,9 @@ jobs:
     # buildtracker needs history and a common merge commit.
     - name: Fixup git history (for buildtracker)
       run: bash $GITHUB_WORKSPACE/.github/scripts/git-get-shared-history.sh
+      env:
+        # https://buildtracker.dev/docs/guides/github-actions#configuration
+        BT_API_AUTH_TOKEN: ${{ secrets.BT_API_AUTH_TOKEN }}
     - name: Store in buildtracker
       # TODO(paulirish): Don't allow this to fail the build. https://github.com/paularmstrong/build-tracker/issues/200
       run: yarn bt-cli upload-build || true

@@ -31,7 +31,7 @@ describe('Accessibility: meta-viewport audit', () => {
       Accessibility: {
         violations: [{
           id: 'meta-viewport',
-          nodes: [{}],
+          nodes: [],
           help: 'http://example.com/',
         }],
       },
