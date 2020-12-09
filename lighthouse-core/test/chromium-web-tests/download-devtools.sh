@@ -19,7 +19,7 @@ then
   # Update to keep current
   git reset --hard
   git clean -fd
-  git pull -ff-only -f origin master
+  git pull --ff-only -f origin master
   gclient sync --delete_unversioned_trees --reset
 
   exit 0
