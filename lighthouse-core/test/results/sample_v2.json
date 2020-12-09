@@ -527,19 +527,19 @@
       "scoreDisplayMode": "binary",
       "numericValue": 1,
       "numericUnit": "element",
-      "displayValue": "1 error",
+      "displayValue": "1 reason",
       "details": {
         "type": "table",
         "headings": [
           {
-            "key": "errorMessage",
+            "key": "reason",
             "itemType": "text",
-            "text": "Installability Error"
+            "text": "Failure reason"
           }
         ],
         "items": [
           {
-            "errorMessage": "No manifest was fetched"
+            "reason": "No manifest was fetched"
           }
         ],
         "debugData": {

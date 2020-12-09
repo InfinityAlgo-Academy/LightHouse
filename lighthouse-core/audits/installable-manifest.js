@@ -20,20 +20,20 @@ const UIStrings = {
     'With proper Service Worker and manifest implementations, browsers can proactively prompt ' +
     'users to add your app to their homescreen, which can lead to higher engagement. ' +
     '[Learn more](https://web.dev/installable-manifest/).',
-  /** Description Table column header for the observed value of the Installability Error statistic. */
-  'columnValue': 'Installability Error',
+  /** Description Table column header for the observed value of the Installability failure reason statistic. */
+  'columnValue': 'Failure reason',
   /**
    * @description [ICU Syntax] Label for an audit identifying the number of installability errors found in the page.
   */
   'displayValue': `{itemCount, plural,
-    =1 {1 error}
-    other {# errors}
+    =1 {1 reason}
+    other {# reasons}
     }`,
   /**
    * @description Error message describing a DevTools error id that was found and has not been identified by this audit.
    * @example {platform-not-supported-on-android} errorId
    */
-  'noErrorId': `Installability error id '{errorId}'`,
+  'noErrorId': `Installability error id '{errorId}' is not recognized.`,
   /** Error message explaining that the page is not loaded in the frame.  */
   'not-in-main-frame': 'Page is not loaded in the main frame',
   /** Error message explaining that the page is served from a secure origin. */
@@ -141,11 +141,12 @@ class InstallableManifest extends Audit {
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {Array<LH.IcuMessage>}
+   * @return {Array<LH.IcuMessage | string>}
    */
   static getInstallabilityErrors(artifacts) {
     const installabilityErrors = artifacts.InstallabilityErrors.errors;
     const errorMessages = [];
+    const errorArgumentsRegex = /{([^}]+)}/g;
 
     for (const err of installabilityErrors) {
       let matchingString;
@@ -157,19 +158,36 @@ class InstallableManifest extends Audit {
         // @ts-expect-error errorIds from protocol should match up against the strings dict
         matchingString = UIStrings[err.errorId];
       } catch {
+        // UIStrings doesn't have a message covered for the provided errorId.
         errorMessages.push(str_(UIStrings.noErrorId, {errorId: err.errorId}));
         continue;
       }
 
-      // We only expect a `minimum-icon-size-in-pixels` errorArg[0] for two errorIds, currently.
+      if (matchingString === undefined) {
+        errorMessages.push(str_(UIStrings.noErrorId, {errorId: err.errorId}));
+        continue;
+      }
+
+      // Get the arguments of the installability error message.
+      const UIStringArguments = matchingString.match(errorArgumentsRegex) || [];
+
+      /**
+       * If there is an argument value, get it.
+       * We only expect a `minimum-icon-size-in-pixels` errorArg[0] for two errorIds, currently.
+       */
       const value0 = err.errorArguments && err.errorArguments.length && err.errorArguments[0].value;
 
-      if (matchingString && value0) {
+      if (matchingString && err.errorArguments.length !== UIStringArguments.length) {
+        // Matching string, but have the incorrect number of arguments for the message.
+        const argsReceived = err.errorArguments.join(', ');
+        const msg = err.errorArguments.length > UIStringArguments.length ?
+          ' has unexpected arguments {' + argsReceived + '}' :
+          ' does not have the expected number of arguments.';
+        errorMessages.push(msg);
+      } else if (matchingString && value0) {
         errorMessages.push(str_(matchingString, {value0}));
       } else if (matchingString) {
         errorMessages.push(str_(matchingString));
-      } else if (matchingString === undefined) {
-        errorMessages.push(str_(UIStrings.noErrorId, {errorId: err.errorId}));
       }
     }
 
@@ -190,17 +208,19 @@ class InstallableManifest extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'errorMessage', itemType: 'text', text: str_(UIStrings.columnValue)},
+      {key: 'reason', itemType: 'text', text: str_(UIStrings.columnValue)},
     ];
 
     // Errors for report table.
     /** @type {LH.Audit.Details.Table['items']} */
-    const errorMessages = i18nErrors.map(errorMessage => {
-      return {errorMessage};
+    const errorReasons = i18nErrors.map(reason => {
+      return {reason};
     });
     /** DevTools InstallabilityErrors does not emit an error unless there is a manifest, so include manifestValues's error */
-    // eslint-disable-next-line max-len
-    if (manifestValues.isParseFailure) errorMessages.push({errorMessage: manifestValues.parseFailureReason});
+    if (manifestValues.isParseFailure) {
+      errorReasons.push({
+        reason: manifestValues.parseFailureReason});
+    }
 
     // Include the detailed pass/fail checklist as a diagnostic.
     /** @type {LH.Audit.Details.DebugData} */
@@ -209,16 +229,16 @@ class InstallableManifest extends Audit {
       manifestUrl,
     };
 
-    if (errorMessages.length > 0) {
+    if (errorReasons.length > 0) {
       return {
         score: 0,
-        numericValue: errorMessages.length,
+        numericValue: errorReasons.length,
         numericUnit: 'element',
-        displayValue: str_(UIStrings.displayValue, {itemCount: errorMessages.length}),
-        details: {...Audit.makeTableDetails(headings, errorMessages), debugData},
+        displayValue: str_(UIStrings.displayValue, {itemCount: errorReasons.length}),
+        details: {...Audit.makeTableDetails(headings, errorReasons), debugData},
       };
     }
-    return {score: 1, details: {...Audit.makeTableDetails(headings, errorMessages), debugData}};
+    return {score: 1, details: {...Audit.makeTableDetails(headings, errorReasons), debugData}};
   }
 }
 

@@ -834,13 +834,13 @@
     "message": "D̂óŵńl̂óâd́êd́ îćôń ŵáŝ ém̂ṕt̂ý ôŕ ĉór̂ŕûṕt̂éd̂"
   },
   "lighthouse-core/audits/installable-manifest.js | columnValue": {
-    "message": "Îńŝt́âĺl̂áb̂íl̂ít̂ý Êŕr̂ór̂"
+    "message": "F̂áîĺûŕê ŕêáŝón̂"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
     "message": "Ŝér̂v́îćê ẃôŕk̂ér̂ íŝ t́ĥé t̂éĉh́n̂ól̂óĝý t̂h́ât́ êńâb́l̂éŝ ýôúr̂ áp̂ṕ t̂ó ûśê ḿâńŷ Ṕr̂óĝŕêśŝív̂é Ŵéb̂ Áp̂ṕ f̂éât́ûŕêś, ŝúĉh́ âś ôf́f̂ĺîńê, ád̂d́ t̂ó ĥóm̂éŝćr̂éêń, âńd̂ ṕûśĥ ńôt́îf́îćât́îón̂ś. Ŵít̂h́ p̂ŕôṕêŕ Ŝér̂v́îćê Ẃôŕk̂ér̂ án̂d́ m̂án̂íf̂éŝt́ îḿp̂ĺêḿêńt̂át̂íôńŝ, b́r̂óŵśêŕŝ ćâń p̂ŕôáĉt́îv́êĺŷ ṕr̂óm̂ṕt̂ úŝér̂ś t̂ó âd́d̂ ýôúr̂ áp̂ṕ t̂ó t̂h́êír̂ h́ôḿêśĉŕêén̂, ẃĥíĉh́ ĉán̂ ĺêád̂ t́ô h́îǵĥér̂ én̂ǵâǵêḿêńt̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/installable-manifest/)."
   },
   "lighthouse-core/audits/installable-manifest.js | displayValue": {
-    "message": "{itemCount, plural,\n    =1 {1 êŕr̂ór̂}\n    other {# ér̂ŕôŕŝ}\n    }"
+    "message": "{itemCount, plural,\n    =1 {1 r̂éâśôń}\n    other {# r̂éâśôńŝ}\n    }"
   },
   "lighthouse-core/audits/installable-manifest.js | failureTitle": {
     "message": "Ŵéb̂ áp̂ṕ m̂án̂íf̂éŝt́ ôŕ ŝér̂v́îćê ẃôŕk̂ér̂ d́ô ńôt́ m̂éêt́ t̂h́ê ín̂śt̂ál̂ĺâb́îĺît́ŷ ŕêq́ûír̂ém̂én̂t́ŝ"
@@ -888,7 +888,7 @@
     "message": "Ĉóûĺd̂ ńôt́ ĉh́êćk̂ śêŕv̂íĉé ŵór̂ḱêŕ ŵít̂h́ôút̂ á 'ŝt́âŕt̂_úr̂ĺ' f̂íêĺd̂ ín̂ t́ĥé m̂án̂íf̂éŝt́"
   },
   "lighthouse-core/audits/installable-manifest.js | noErrorId": {
-    "message": "Îńŝt́âĺl̂áb̂íl̂ít̂ý êŕr̂ór̂ íd̂ '{errorId}'"
+    "message": "Îńŝt́âĺl̂áb̂íl̂ít̂ý êŕr̂ór̂ íd̂ '{errorId}' íŝ ńôt́ r̂éĉóĝńîźêd́."
   },
   "lighthouse-core/audits/installable-manifest.js | not-from-secure-origin": {
     "message": "P̂áĝé îś n̂ót̂ śêŕv̂éd̂ f́r̂óm̂ á ŝéĉúr̂é ôŕîǵîń"

@@ -35,7 +35,7 @@ describe('PWA: webapp install banner audit', () => {
   describe('basics', () => {
     it('fails if page had no manifest', () => {
       const artifacts = generateMockArtifacts();
-      artifacts.InstallabilityErrors.errors.push({errorId: 'no-manifest'});
+      artifacts.InstallabilityErrors.errors.push({errorId: 'no-manifest', errorArguments: []});
       artifacts.WebAppManifest = null;
       const context = generateMockAuditContext();
 
@@ -59,7 +59,7 @@ describe('PWA: webapp install banner audit', () => {
 
     it('fails with a non-parsable manifest', () => {
       const artifacts = generateMockArtifacts('{,:}');
-      artifacts.InstallabilityErrors.errors.push({errorId: 'manifest-empty'});
+      artifacts.InstallabilityErrors.errors.push({errorId: 'manifest-empty', errorArguments: []});
       const context = generateMockAuditContext();
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
@@ -70,7 +70,7 @@ describe('PWA: webapp install banner audit', () => {
 
     it('fails when an empty manifest is present', () => {
       const artifacts = generateMockArtifacts('{}');
-      artifacts.InstallabilityErrors.errors.push({errorId: 'manifest-empty'});
+      artifacts.InstallabilityErrors.errors.push({errorId: 'manifest-empty', errorArguments: []});
       const context = generateMockAuditContext();
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
@@ -91,7 +91,8 @@ describe('PWA: webapp install banner audit', () => {
   describe('one-off-failures', () => {
     it('fails when a manifest contains no start_url', () => {
       const artifacts = generateMockArtifacts();
-      artifacts.InstallabilityErrors.errors.push({errorId: 'no-url-for-service-worker'});
+      artifacts.InstallabilityErrors.errors.push({errorId: 'no-url-for-service-worker',
+        errorArguments: []});
       artifacts.WebAppManifest.value.start_url.value = undefined;
       const context = generateMockAuditContext();
 
@@ -104,7 +105,8 @@ describe('PWA: webapp install banner audit', () => {
 
     it('fails when a manifest contains no short_name', () => {
       const artifacts = generateMockArtifacts();
-      artifacts.InstallabilityErrors.errors.push({errorId: 'manifest-missing-name-or-short-name'});
+      artifacts.InstallabilityErrors.errors.push({errorId: 'manifest-missing-name-or-short-name',
+        errorArguments: []});
       artifacts.WebAppManifest.value.short_name.value = undefined;
       const context = generateMockAuditContext();
 
@@ -117,7 +119,8 @@ describe('PWA: webapp install banner audit', () => {
 
     it('fails when a manifest contains no name', () => {
       const artifacts = generateMockArtifacts();
-      artifacts.InstallabilityErrors.errors.push({errorId: 'manifest-missing-name-or-short-name'});
+      artifacts.InstallabilityErrors.errors.push({errorId: 'manifest-missing-name-or-short-name',
+        errorArguments: []});
       artifacts.WebAppManifest.value.name.value = undefined;
       const context = generateMockAuditContext();
 
@@ -130,7 +133,8 @@ describe('PWA: webapp install banner audit', () => {
 
     it('fails if page had no icons in the manifest', () => {
       const artifacts = generateMockArtifacts();
-      artifacts.InstallabilityErrors.errors.push({errorId: 'no-icon-available'});
+      artifacts.InstallabilityErrors.errors.push({errorId: 'no-icon-available',
+        errorArguments: []});
       artifacts.WebAppManifest.value.icons.value = [];
       const context = generateMockAuditContext();
 
@@ -143,13 +147,39 @@ describe('PWA: webapp install banner audit', () => {
 
     it('fails if page had no fetchable icons in the manifest', () => {
       const artifacts = generateMockArtifacts();
-      artifacts.InstallabilityErrors.errors.push({errorId: 'no-icon-available'});
+      artifacts.InstallabilityErrors.errors.push({errorId: 'no-icon-available',
+        errorArguments: []});
       const context = generateMockAuditContext();
 
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
         const items = result.details.items;
         assert.ok(items[0].errorMessage.formattedDefault.includes('icon was empty or corrupted'));
+      });
+    });
+
+    it('fails when InstallabilityError contains the incorrect number of errorArguments', () => {
+      const artifacts = generateMockArtifacts();
+      artifacts.InstallabilityErrors.errors.push({errorId: 'manifest-missing-suitable-icon',
+        errorArguments: []});
+      const context = generateMockAuditContext();
+
+      return InstallableManifestAudit.audit(artifacts, context).then(result => {
+        assert.strictEqual(result.score, 0);
+        const items = result.details.items;
+        assert.ok(items[0].errorMessage.includes('number of arguments'));
+      });
+    });
+
+    it('fails when we receive an unknown InstallabilityError id', () => {
+      const artifacts = generateMockArtifacts();
+      artifacts.InstallabilityErrors.errors.push({errorId: 'new-error-id', errorArguments: []});
+      const context = generateMockAuditContext();
+
+      return InstallableManifestAudit.audit(artifacts, context).then(result => {
+        assert.strictEqual(result.score, 0);
+        const items = result.details.items;
+        assert.ok(items[0].errorMessage.formattedDefault.includes('is not recognized'));
       });
     });
   });
