@@ -576,60 +576,6 @@ works-offline: fail
 # of .lh-audit divs: 157
 
 .lh-audit divs:
-<<<<<<< HEAD
-=======
-resource-summary
-largest-contentful-paint-element
-long-tasks
-render-blocking-resources
-uses-responsive-images
-offscreen-images
-unminified-css
-unminified-javascript
-unused-css-rules
-unused-javascript
-uses-optimized-images
-uses-webp-images
-uses-text-compression
-uses-rel-preconnect
-server-response-time
-redirects
-uses-rel-preload
-uses-http2
-efficient-animated-content
-duplicated-javascript
-legacy-javascript
-preload-lcp-image
-total-byte-weight
-uses-long-cache-ttl
-dom-size
-critical-request-chains
-user-timings
-bootup-time
-mainthread-work-breakdown
-font-display
-third-party-summary
-third-party-facades
-layout-shift-elements
-uses-passive-event-listeners
-no-document-write
-non-composited-animations
-unsized-images
-document-title
-html-has-lang
-logical-tab-order
-focusable-controls
-interactive-element-affordance
-managed-focus
-focus-traps
-custom-controls-labels
-custom-controls-roles
-visual-order-follows-dom
-offscreen-content-hidden
-use-landmarks
-aria-hidden-body
-color-contrast
->>>>>>> origin/master
 accesskeys
 ad-blocking-tasks
 ad-render-blocking-resources
@@ -715,7 +661,6 @@ link-name
 link-text
 list
 listitem
-load-fast-enough-for-pwa
 loads-ad-tag-over-https
 loads-gpt-from-official-source
 logical-tab-order
@@ -783,32 +728,6 @@ valid-source-maps
 video-caption
 video-description
 viewport
-<<<<<<< HEAD
-=======
-font-size
-tap-targets
-document-title
-meta-description
-structured-data
-http-status-code
-link-text
-crawlable-anchors
-is-crawlable
-hreflang
-plugins
-robots-txt
-image-alt
-canonical
-works-offline
-offline-start-url
-is-on-https
-service-worker
-installable-manifest
-redirects-http
-splash-screen
-themed-omnibox
-content-width
->>>>>>> origin/master
 viewport
 viewport-ad-density
 visual-order-follows-dom
