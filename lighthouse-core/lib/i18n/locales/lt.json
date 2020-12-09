@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Venkite didelių išdėstymo poslinkių"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Spartus puslapių įkėlimas mobiliojo ryšio tinkle užtikrina gerą mobiliųjų įrenginių naudotojų patirtį. [Sužinokite daugiau](https://web.dev/load-fast-enough-for-pwa/)."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Laikas iki sąveikos – {timeInMs, number, seconds} sek."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Laikas iki sąveikos imituojamame mobiliojo ryšio tinkle – {timeInMs, number, seconds} sek."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Puslapis įkeliamas per lėtai ir nėra interaktyvus 10 sekundžių. Peržiūrėkite galimybes ir diagnostiką skiltyje „Našumas“, kad sužinotumėte, kaip pagerinti situaciją."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "Puslapis įkeliamas nepakankamai sparčiai mobiliojo ryšio tinkluose"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "Puslapis įkeliamas pakankamai sparčiai mobiliojo ryšio tinkluose"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Sudaromas ilgiausių pagrindinės grupės užduočių sąrašas, naudingas siekiant nustatyti, kas labiausiai prisideda prie įvesties delsos. [Sužinokite daugiau](https://web.dev/long-tasks-devtools/)"
   },

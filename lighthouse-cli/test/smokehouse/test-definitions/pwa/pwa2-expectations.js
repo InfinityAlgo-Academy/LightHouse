@@ -42,9 +42,6 @@ module.exports = [
         'without-javascript': {
           score: 1,
         },
-        'load-fast-enough-for-pwa': {
-        // Ignore speed test; just verify that it ran.
-        },
         'installable-manifest': {
           score: 0,
           details: {items: [jakeExpectations]},
@@ -110,9 +107,6 @@ module.exports = [
         },
         'without-javascript': {
           score: 1,
-        },
-        'load-fast-enough-for-pwa': {
-        // Ignore speed test; just verify that it ran.
         },
         'installable-manifest': {
           score: 1,

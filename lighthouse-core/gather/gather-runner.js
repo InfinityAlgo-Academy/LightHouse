@@ -49,12 +49,11 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 /** @typedef {import('../gather/driver.js')} Driver */
 
-/** @typedef {import('./gatherers/gatherer.js').PhaseResult} PhaseResult */
 /**
  * Each entry in each gatherer result array is the output of a gatherer phase:
  * `beforePass`, `pass`, and `afterPass`. Flattened into an `LH.Artifacts` in
  * `collectArtifacts`.
- * @typedef {Record<keyof LH.GathererArtifacts, Array<PhaseResult|Promise<PhaseResult>>>} GathererResults
+ * @typedef {Record<keyof LH.GathererArtifacts, Array<LH.Gatherer.PhaseResult>>} GathererResults
  */
 /** @typedef {Array<[keyof GathererResults, GathererResults[keyof GathererResults]]>} GathererResultsEntries */
 

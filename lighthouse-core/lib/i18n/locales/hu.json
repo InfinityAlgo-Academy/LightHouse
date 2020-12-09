@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Az elrendezés nagy mértékű mozgásának elkerülése"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "A mobilhálózatokon is gyors oldalbetöltés jobb mobilos felhasználói élményt jelent. [További információ](https://web.dev/load-fast-enough-for-pwa/)."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "{timeInMs, number, seconds} mp az interaktívvá válásig"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Interaktívvá válás szimulált mobilhálózaton: {timeInMs, number, seconds} mp"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Az oldal túl lassan töltődik be, és nem válik interaktívvá tíz másodpercen belül. A probléma elhárításához tekintse meg a „Teljesítmény” szakaszban lévő lehetőségeket és diagnosztikákat."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "Az oldalbetöltés nem elég gyors mobilhálózatokon"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "Az oldalbetöltés kellően gyors mobilhálózatokon"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "A fő szál leghosszabb feladatait listázza. Hasznos az interakciótól számított késéshez legnagyobb mértékben hozzájáruló elemek azonosításához. [További információ](https://web.dev/long-tasks-devtools/)."
   },

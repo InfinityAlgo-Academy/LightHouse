@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Αποφύγετε τις μεγάλες μετατοπίσεις διάταξης"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Η γρήγορη φόρτωση των σελίδων μέσω ενός δικτύου κινητής τηλεφωνίας διασφαλίζει μια καλή εμπειρία για τους χρήστες κινητών. [Μάθετε περισσότερα](https://web.dev/load-fast-enough-for-pwa/)."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Διαδραστική σε {timeInMs, number, seconds} δ."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Διαδραστική σε προσομοιωμένο δίκτυο κινητής τηλεφωνίας σε {timeInMs, number, seconds} δ."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Η σελίδα σας φορτώνεται πολύ αργά και δεν μπορείτε να αλληλεπιδράσετε μαζί της εντός 10 δευτερολέπτων. Δείτε τις ευκαιρίες και τα διαγνωστικά στοιχεία στην ενότητα Απόδοση για να μάθετε πώς μπορείτε να βελτιώσετε την απόδοση."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "Η φόρτωση σελίδας δεν είναι αρκετά γρήγορη σε δίκτυα κινητής τηλεφωνίας"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "Η φόρτωση σελίδας είναι αρκετά γρήγορη σε δίκτυα κινητής τηλεφωνίας"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Παραθέτει τις μεγαλύτερες εργασίες στο κύριο νήμα, κάτι που είναι χρήσιμο για τον εντοπισμό των συνεισφερόντων που συμβάλλουν περισσότερο στην καθυστέρηση εισόδου. [Μάθετε περισσότερα](https://web.dev/long-tasks-devtools/)"
   },

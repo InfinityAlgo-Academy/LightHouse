@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "பெரிய தளவமைப்பு ஷிஃப்ட்களைத் தவிர்த்தல்"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "மொபைல் நெட்வொர்க்கில் பக்கம் வேகமாக ஏற்றப்பட்டால் அது மொபைல் பயனர்களுக்கு சிறந்த அனுபவத்தை வழங்கும். [மேலும் அறிக](https://web.dev/load-fast-enough-for-pwa/)."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "பக்கம் பதிலளிக்க எடுத்துக்கொண்ட நேரம்: {timeInMs, number, seconds} வி."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "மாதிரி மொபைல் நெட்வொர்க்கில் {timeInMs, number, seconds} வினாடிகளில் பதிலளிக்கிறது"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "உங்கள் பக்கம் மிகவும் மெதுவாக ஏற்றப்படுவதால் 10 நொடிகளுக்குள் விரைவாகப் பதிலளிக்கவில்லை. எவ்வாறு மேம்படுத்துவது என்பதைத் தெரிந்து கொள்ள \"செயல்திறன்\" பிரிவில் உள்ள 'வாய்ப்புகள் மற்றும் பிழை கண்டறிதல்' என்பதைப் பார்க்கவும்."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "மொபைல் நெட்வொர்க்குகளில் பக்கம் போதுமான வேகத்தில் ஏற்றப்படவில்லை"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "மொபைல் நெட்வொர்க்குகளில் பக்கம் போதுமான வேகத்தில் ஏற்றப்படுகிறது"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "முக்கியத் தொடரிழையில் உள்ள பணிகளில், இருப்பதிலேயே நீளமானவற்றைப் பட்டியலிடுகிறது. உள்ளீட்டுத் தாமதத்திற்கு அதிகமாகப் பங்களிப்பவற்றை அடையாளம் காண இது உதவுகிறது. [மேலும் அறிக](https://web.dev/long-tasks-devtools/)"
   },

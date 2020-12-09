@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Unikaj dużych przesunięć układu"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Szybkie wczytywanie stron przez sieć komórkową zapewnia dobre wrażenia użytkowników telefonów. [Więcej informacji](https://web.dev/load-fast-enough-for-pwa/)"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Interaktywna po {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Interaktywna w symulowanej sieci komórkowej po {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Strona wczytuje się zbyt wolno i nie jest interaktywna w ciągu 10 sekund. Zapoznaj się z możliwościami usprawnień i diagnostyką w sekcji „Wydajność”, by dowiedzieć się, co możesz poprawić."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "Wczytywanie strony przez sieć komórkową nie jest dostatecznie szybkie"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "Wczytywanie strony przez sieć komórkową jest dostatecznie szybkie"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Pokazuje najdłuższe zadania na liście w wątku głównym. Służy do rozpoznawania czynników, które mają największy wpływ na opóźnienia działania. [Więcej informacji](https://web.dev/long-tasks-devtools/)"
   },

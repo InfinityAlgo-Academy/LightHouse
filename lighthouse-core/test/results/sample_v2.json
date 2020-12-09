@@ -110,15 +110,6 @@
       "numericUnit": "millisecond",
       "displayValue": "4.0 s"
     },
-    "load-fast-enough-for-pwa": {
-      "id": "load-fast-enough-for-pwa",
-      "title": "Page load is fast enough on mobile networks",
-      "description": "A fast page load over a cellular network ensures a good mobile user experience. [Learn more](https://web.dev/load-fast-enough-for-pwa/).",
-      "score": 1,
-      "scoreDisplayMode": "binary",
-      "numericValue": 4927.278,
-      "numericUnit": "millisecond"
-    },
     "speed-index": {
       "id": "speed-index",
       "title": "Speed Index",
@@ -5235,11 +5226,6 @@
       "manualDescription": "These checks are required by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually.",
       "auditRefs": [
         {
-          "id": "load-fast-enough-for-pwa",
-          "weight": 7,
-          "group": "pwa-fast-reliable"
-        },
-        {
           "id": "works-offline",
           "weight": 5,
           "group": "pwa-fast-reliable"
@@ -5318,7 +5304,7 @@
         }
       ],
       "id": "pwa",
-      "score": 0.39
+      "score": 0.19
     }
   },
   "categoryGroups": {
@@ -5527,18 +5513,6 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:load-fast-enough-for-pwa",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:Interactive",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:audit:speed-index",
         "duration": 100,
         "entryType": "measure"
@@ -5558,6 +5532,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:screenshot-thumbnails",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:Interactive",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6797,12 +6777,6 @@
       ],
       "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": [
         "audits[first-meaningful-paint].description"
-      ],
-      "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": [
-        "audits[load-fast-enough-for-pwa].title"
-      ],
-      "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": [
-        "audits[load-fast-enough-for-pwa].description"
       ],
       "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": [
         "audits[speed-index].title"

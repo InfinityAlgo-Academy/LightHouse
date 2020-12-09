@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Evită schimbările majore ale aspectului"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "O încărcare rapidă a paginii într-o rețea celulară asigură o experiență bună a utilizatorului pe mobil. [Află mai multe](https://web.dev/load-fast-enough-for-pwa/)."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Interactiv la {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Interactivă pe rețeaua mobilă simulată la {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Pagina se încarcă prea lent și nu este interactivă în 10 secunde. Analizează oportunitățile și diagnosticele din secțiunea „Performanță” ca să afli cum s-o îmbunătățești."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "Încărcarea paginii nu este suficient de rapidă în rețele mobile"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "Încărcarea paginii este suficient de rapidă în rețele mobile"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Afișează cele mai îndelungate activități din firul principal, ceea ce este util pentru identificarea elementelor care contribuie cel mai mult la întârziere. [Află mai multe](https://web.dev/long-tasks-devtools/)"
   },

@@ -178,9 +178,6 @@ Computing artifact: LanternLargestContentfulPaint
 Auditing: First Meaningful Paint
 Computing artifact: FirstMeaningfulPaint
 Computing artifact: LanternFirstMeaningfulPaint
-Auditing: Page load is fast enough on mobile networks
-Computing artifact: Interactive
-Computing artifact: LanternInteractive
 Auditing: Speed Index
 Computing artifact: SpeedIndex
 Computing artifact: LanternSpeedIndex
@@ -194,6 +191,7 @@ Computing artifact: LanternEstimatedInputLatency
 Auditing: Total Blocking Time
 Computing artifact: TotalBlockingTime
 Computing artifact: LanternTotalBlockingTime
+Computing artifact: LanternInteractive
 Auditing: Max Potential First Input Delay
 Computing artifact: MaxPotentialFID
 Computing artifact: LanternMaxPotentialFID
@@ -206,6 +204,7 @@ Auditing: First CPU Idle
 Computing artifact: FirstCPUIdle
 Computing artifact: LanternFirstCPUIdle
 Auditing: Time to Interactive
+Computing artifact: Interactive
 Auditing: User Timing marks and measures
 Computing artifact: UserTimings
 Auditing: Avoid chaining critical requests
@@ -491,7 +490,6 @@ link-name: notApplicable
 link-text: pass
 list: notApplicable
 listitem: notApplicable
-load-fast-enough-for-pwa: flaky
 loads-ad-tag-over-https: notApplicable
 loads-gpt-from-official-source: notApplicable
 logical-tab-order: manual
@@ -575,9 +573,63 @@ visual-order-follows-dom: manual
 without-javascript: pass
 works-offline: fail
 
-# of .lh-audit divs: 158
+# of .lh-audit divs: 157
 
 .lh-audit divs:
+<<<<<<< HEAD
+=======
+resource-summary
+largest-contentful-paint-element
+long-tasks
+render-blocking-resources
+uses-responsive-images
+offscreen-images
+unminified-css
+unminified-javascript
+unused-css-rules
+unused-javascript
+uses-optimized-images
+uses-webp-images
+uses-text-compression
+uses-rel-preconnect
+server-response-time
+redirects
+uses-rel-preload
+uses-http2
+efficient-animated-content
+duplicated-javascript
+legacy-javascript
+preload-lcp-image
+total-byte-weight
+uses-long-cache-ttl
+dom-size
+critical-request-chains
+user-timings
+bootup-time
+mainthread-work-breakdown
+font-display
+third-party-summary
+third-party-facades
+layout-shift-elements
+uses-passive-event-listeners
+no-document-write
+non-composited-animations
+unsized-images
+document-title
+html-has-lang
+logical-tab-order
+focusable-controls
+interactive-element-affordance
+managed-focus
+focus-traps
+custom-controls-labels
+custom-controls-roles
+visual-order-follows-dom
+offscreen-content-hidden
+use-landmarks
+aria-hidden-body
+color-contrast
+>>>>>>> origin/master
 accesskeys
 ad-blocking-tasks
 ad-render-blocking-resources
@@ -731,6 +783,32 @@ valid-source-maps
 video-caption
 video-description
 viewport
+<<<<<<< HEAD
+=======
+font-size
+tap-targets
+document-title
+meta-description
+structured-data
+http-status-code
+link-text
+crawlable-anchors
+is-crawlable
+hreflang
+plugins
+robots-txt
+image-alt
+canonical
+works-offline
+offline-start-url
+is-on-https
+service-worker
+installable-manifest
+redirects-http
+splash-screen
+themed-omnibox
+content-width
+>>>>>>> origin/master
 viewport
 viewport-ad-density
 visual-order-follows-dom

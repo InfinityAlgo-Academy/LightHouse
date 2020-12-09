@@ -92,6 +92,9 @@ function runA11yChecks() {
   });
 }
 
+/**
+ * @implements {LH.Gatherer.FRGathererInstance}
+ */
 class Accessibility extends Gatherer {
   /**
    * @param {LH.Gatherer.FRTransitionalContext} passContext
