@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Hindari peralihan tata letak berukuran besar"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Pemuatan halaman yang cepat melalui jaringan seluler menjamin pengalaman pengguna seluler yang baik. [Pelajari lebih lanjut](https://web.dev/load-fast-enough-for-pwa/)."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Interaktif di {timeInMs, number, seconds} dtk"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Interaktif di jaringan seluler tersimulasi pada {timeInMs, number, seconds} dtk"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Pemuatan halaman terlalu lambat dan tidak interaktif selama 10 detik. Lihat peluang dan diagnostik dalam bagian \"Performa\" untuk mempelajari cara meningkatkan kecepatan pemuatan."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "Pemuatan halaman tidak cukup cepat pada jaringan seluler"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "Pemuatan halaman cukup cepat pada jaringan seluler"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Mencantumkan tugas yang berjalan paling lama di thread utama, berguna untuk mengidentifikasi kontributor utama penundaan input. [Pelajari lebih lanjut](https://web.dev/long-tasks-devtools/)"
   },

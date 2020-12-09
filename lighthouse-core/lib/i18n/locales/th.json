@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "หลีกเลี่ยงการเลื่อนเลย์เอาต์ขนาดใหญ่"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "การโหลดหน้าเว็บที่รวดเร็วผ่านเครือข่ายมือถือช่วยให้มั่นใจว่าผู้ใช้ได้รับประสบการณ์การใช้งานที่ดีในอุปกรณ์เคลื่อนที่ [ดูข้อมูลเพิ่มเติม](https://web.dev/load-fast-enough-for-pwa/)"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "โต้ตอบที่ {timeInMs, number, seconds} วินาที"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "มีการโต้ตอบในเครือข่ายมือถือจำลองที่ {timeInMs, number, seconds} วินาที"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "หน้าเว็บโหลดช้าเกินไปและไม่มีการโต้ตอบภายใน 10 วินาที ไปที่โอกาสและการวินิจฉัยในส่วน \"ประสิทธิภาพ\" เพื่อดูวิธีปรับปรุง"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "การโหลดหน้าเว็บไม่เร็วพอเมื่อใช้เครือข่ายมือถือ"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "การโหลดหน้าเว็บเร็วพอเมื่อใช้เครือข่ายมือถือ"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "ระบุงานที่ใช้เวลานานที่สุดในเทรดหลัก เหมาะสำหรับการระบุปัจจัยที่แย่ที่สุดที่ทำให้อินพุตล่าช้า [ดูข้อมูลเพิ่มเติม](https://web.dev/long-tasks-devtools/)"
   },

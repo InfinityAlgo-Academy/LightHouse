@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Izogibajte se velikim pomikom postavitve"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Hitro nalaganje strani prek mobilnega omrežja zagotavlja dobro uporabniško izkušnjo pri uporabi mobilnih naprav. [Več o tem](https://web.dev/load-fast-enough-for-pwa/)."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Interaktivno ob {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Interaktivno v simuliranem mobilnem omrežju ob {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Stran se nalaga prepočasi in ni interaktivna v 10 sekundah. Oglejte si priložnosti in diagnostiko v razdelku »Delovanje«, če želite izvedeti, kako do izboljšanja."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "Nalaganje strani ni dovolj hitro v mobilnih omrežjih"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "Nalaganje strani je dovolj hitro v mobilnih omrežjih"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Navede najdaljša opravila v glavni niti, kar je koristno za prepoznavanje elementov, ki največ prispevajo k zakasnitvi vnosa. [Več o tem](https://web.dev/long-tasks-devtools/)"
   },

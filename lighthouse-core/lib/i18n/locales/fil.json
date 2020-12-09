@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Iwasan ang malalaking pagbabago ng layout"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Kapag mabilis ang pag-load ng page sa cellular network, nagkakaroon ng magandang karanasan ng user sa mobile. [Matuto pa](https://web.dev/load-fast-enough-for-pwa/)."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Interactive sa {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Interactive sa naka-simulate na mobile network sa loob ng {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Masyadong mabagal mag-load ang iyong page at hindi ito interactive sa loob ng 10 segundo. Tingnan ang mga pagkakataon at diagnostic sa seksyong \"Performance\" para malaman kung paano magpahusay."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "Hindi sapat ang bilis ng pag-load ng page sa mga mobile network"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "Sapat ang bilis ng pag-load ng page sa mga mobile network"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Naglilista ng mga pinakamatagal na gawain sa pangunahing thread, na kapaki-pakinabang para sa pagtukoy ng mga pinakanakakapagpatagal ng input delay. [Matuto pa](https://web.dev/long-tasks-devtools/)"
   },

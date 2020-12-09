@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Nepoužívajte veľké posuny rozloženia"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Rýchle načítanie stránky cez mobilnú sieť zaisťuje dobrý dojem používateľov mobilných zariadení. [Ďalšie informácie](https://web.dev/load-fast-enough-for-pwa/)"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Interaktívna po {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Interaktívna v simulovanej mobilnej sieti v čase {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Vaša stránka sa načítava príliš pomaly a nie je interaktívna do desiatich sekúnd. Prezrite si príležitosti a diagnostiku v sekcii Výkonnosť a zistite, ako ju zlepšiť."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "Načítanie stránky nie je dostatočne rýchle v mobilných sieťach"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "Načítanie stránky je dostatočne rýchle v mobilných sieťach"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Sú tu uvedené najdlhšie úlohy hlavného vlákna slúžiace na identifikáciu faktorov, ktoré najväčšou mierou prispievajú k oneskoreniu vstupu. [Ďalšie informácie](https://web.dev/long-tasks-devtools/)"
   },

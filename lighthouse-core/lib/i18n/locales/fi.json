@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Vältä suuria asettelun muutoksia"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Nopea sivun lataus mobiiliverkon kautta varmistaa hyvän mobiilikäyttökokemuksen. [Lue lisää](https://web.dev/load-fast-enough-for-pwa/)."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Interaktiivinen: {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Interaktiivinen simuloidussa mobiiliverkossa: {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Sivu latautuu liian hitaasti eikä ole interaktiivinen 10 sekunnin sisällä. Katso mahdollisuuksia ja diagnostiikkatietoja Tehokkuus-osiosta sivujen kehittämiseksi."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "Sivu ei lataudu tarpeeksi nopeasti mobiiliverkoissa"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "Sivu latautuu tarpeeksi nopeasti mobiiliverkoissa"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Näyttää pääsäikeen pitkäkestoisimmat tehtävät, mistä on apua syöttöviiveen pahimpien aiheuttajien tunnistamisessa. [Lue lisää](https://web.dev/long-tasks-devtools/)"
   },
