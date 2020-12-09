@@ -42,7 +42,7 @@ describe('PWA: webapp install banner audit', () => {
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
         const items = result.details.items;
-        assert.ok(items[0].errorMessage.formattedDefault.includes('no manifest'));
+        assert.ok(items[0].reason.formattedDefault.includes('no manifest'));
       });
     });
 
@@ -64,7 +64,7 @@ describe('PWA: webapp install banner audit', () => {
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
         const items = result.details.items;
-        assert.ok(items[0].errorMessage.formattedDefault.includes('is empty'));
+        assert.ok(items[0].reason.formattedDefault.includes('is empty'));
       });
     });
 
@@ -75,7 +75,7 @@ describe('PWA: webapp install banner audit', () => {
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
         const items = result.details.items;
-        assert.ok(items[0].errorMessage.formattedDefault.includes('is empty'));
+        assert.ok(items[0].reason.formattedDefault.includes('is empty'));
       });
     });
 
@@ -99,7 +99,7 @@ describe('PWA: webapp install banner audit', () => {
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
         const items = result.details.items;
-        assert.ok(items[0].errorMessage.formattedDefault.includes('without a \'start_url\''));
+        assert.ok(items[0].reason.formattedDefault.includes('without a \'start_url\''));
       });
     });
 
@@ -113,7 +113,7 @@ describe('PWA: webapp install banner audit', () => {
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
         const items = result.details.items;
-        assert.ok(items[0].errorMessage.formattedDefault.includes('does not contain a \'name\''));
+        assert.ok(items[0].reason.formattedDefault.includes('does not contain a \'name\''));
       });
     });
 
@@ -127,7 +127,7 @@ describe('PWA: webapp install banner audit', () => {
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
         const items = result.details.items;
-        assert.ok(items[0].errorMessage.formattedDefault.includes('does not contain a \'name\''));
+        assert.ok(items[0].reason.formattedDefault.includes('does not contain a \'name\''));
       });
     });
 
@@ -141,7 +141,7 @@ describe('PWA: webapp install banner audit', () => {
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
         const items = result.details.items;
-        assert.ok(items[0].errorMessage.formattedDefault.includes('icon was empty or corrupted'));
+        assert.ok(items[0].reason.formattedDefault.includes('icon was empty or corrupted'));
       });
     });
 
@@ -154,7 +154,7 @@ describe('PWA: webapp install banner audit', () => {
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
         const items = result.details.items;
-        assert.ok(items[0].errorMessage.formattedDefault.includes('icon was empty or corrupted'));
+        assert.ok(items[0].reason.formattedDefault.includes('icon was empty or corrupted'));
       });
     });
 
@@ -167,7 +167,7 @@ describe('PWA: webapp install banner audit', () => {
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
         const items = result.details.items;
-        assert.ok(items[0].errorMessage.includes('number of arguments'));
+        assert.ok(items[0].reason.includes('number of arguments'));
       });
     });
 
@@ -179,7 +179,7 @@ describe('PWA: webapp install banner audit', () => {
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
         const items = result.details.items;
-        assert.ok(items[0].errorMessage.formattedDefault.includes('is not recognized'));
+        assert.ok(items[0].reason.formattedDefault.includes('is not recognized'));
       });
     });
   });
@@ -193,7 +193,7 @@ describe('PWA: webapp install banner audit', () => {
     return InstallableManifestAudit.audit(artifacts, context).then(result => {
       assert.strictEqual(result.score, 0);
       const items = result.details.items;
-      assert.ok(items[0].errorMessage.formattedDefault.includes('PNG'));
+      assert.ok(items[0].reason.formattedDefault.includes('PNG'));
     });
   });
 });
