@@ -16,7 +16,6 @@
     'metrics',
     'screenshot-thumbnails',
     // misc trace-based audits
-    'load-fast-enough-for-pwa',
     'long-tasks',
     'user-timings',
     'bootup-time',

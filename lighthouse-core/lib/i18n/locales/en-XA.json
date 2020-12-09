@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "[Åvöîð ļåŕĝé ļåýöûţ šĥîƒţš one two three four five six]"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "[Å ƒåšţ þåĝé ļöåð övéŕ å çéļļûļåŕ ñéţŵöŕķ éñšûŕéš å ĝööð möбîļé ûšéŕ éxþéŕîéñçé. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/load-fast-enough-for-pwa/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen]"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "[Îñţéŕåçţîvé åţ ᐅ{timeInMs, number, seconds}ᐊ š one two three four five]"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "[Îñţéŕåçţîvé öñ šîmûļåţéð möбîļé ñéţŵöŕķ åţ ᐅ{timeInMs, number, seconds}ᐊ š one two three four five six seven eight nine ten]"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "[Ýöûŕ þåĝé ļöåðš ţöö šļöŵļý åñð îš ñöţ îñţéŕåçţîvé ŵîţĥîñ 10 šéçöñðš. Ļööķ åţ ţĥé öþþöŕţûñîţîéš åñð ðîåĝñöšţîçš îñ ţĥé \"Þéŕƒöŕmåñçé\" šéçţîöñ ţö ļéåŕñ ĥöŵ ţö îmþŕövé. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree]"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "[Þåĝé ļöåð îš ñöţ ƒåšţ éñöûĝĥ öñ möбîļé ñéţŵöŕķš one two three four five six seven eight nine ten]"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "[Þåĝé ļöåð îš ƒåšţ éñöûĝĥ öñ möбîļé ñéţŵöŕķš one two three four five six seven eight nine]"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "[Ļîšţš ţĥé ļöñĝéšţ ţåšķš öñ ţĥé måîñ ţĥŕéåð, ûšéƒûļ ƒöŕ îðéñţîƒýîñĝ ŵöŕšţ çöñţŕîбûţöŕš ţö îñþûţ ðéļåý. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/long-tasks-devtools/)ᐊ one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen]"
   },

@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "避免大幅度的版面配置轉移"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "如果網頁在流動網絡中能快速載入，可為流動裝置使用者提供良好的使用體驗。[瞭解詳情](https://web.dev/load-fast-enough-for-pwa/)。"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "在 {timeInMs, number, seconds} 秒開始互動"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "在 {timeInMs, number, seconds} 秒時於模擬流動網絡上開始互動"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "您的網頁載入速度太慢，無法在 10 秒內與使用者互動。請參閱「效能」部分的優化建議和診斷，瞭解如何改善載入速度。"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "網頁在流動網絡中的載入速度不夠快"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "網頁在流動網絡中的載入速度夠快"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "列出主要執行緒上執行時間最長的工作，有助辨識導致輸入延遲的主因。[瞭解詳情](https://web.dev/long-tasks-devtools/)"
   },

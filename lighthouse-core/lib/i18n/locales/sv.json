@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Undvik större layoutförskjutningar"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Snabb sidinläsning i mobila nätverk ger en bra upplevelse för mobila användare. [Läs mer](https://web.dev/load-fast-enough-for-pwa/)."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Interaktiv vid {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Interaktiv i simulerade mobilnätverk på {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Sidan läses in för långsamt och är inte interaktiv inom tio sekunder. Ta en titt på möjligheter och diagnostik i avsnittet Prestanda för att se hur du kan förbättra sidan."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "Sidor läses inte in tillräckligt snabbt i mobila nätverk"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "Sidan läses in tillräckligt snabbt i mobila nätverk"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Visar de uppgifter i huvudtråden som har körts under längst tid, vilket kan ringa in de viktigaste flaskhalsarna som fördröjer inmatningen. [Läs mer](https://web.dev/long-tasks-devtools/)"
   },

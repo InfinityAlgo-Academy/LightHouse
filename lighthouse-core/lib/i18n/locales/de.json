@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Umfangreiche Layoutverschiebungen vermeiden"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Ein schneller Seitenaufbau über ein Mobilfunknetz sorgt dafür, dass die Seite für Nutzer auf Mobilgeräten angenehm zu bedienen ist. [Weitere Informationen.](https://web.dev/load-fast-enough-for-pwa/)"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Interaktiv nach {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Im simulierten Mobilfunknetz interaktiv nach {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Ihre Seite lädt zu langsam und es dauert länger als 10 Sekunden, bis sie interaktiv ist. Im Abschnitt \"Leistung\" finden Sie Empfehlungen und Fehlerberichte, die Ihnen helfen können, Ihre Seite zu optimieren."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "Seitenaufbau in Mobilfunknetzen ist nicht schnell genug"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "Seitenaufbau in Mobilfunknetzen ist schnell genug"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Listet die längsten Aufgaben im Hauptthread auf, was nützlich ist, um die Hauptursachen für Eingabeverzögerungen zu identifizieren. [Weitere Informationen](https://web.dev/long-tasks-devtools/)"
   },

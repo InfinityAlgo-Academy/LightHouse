@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "बड़े लेआउट शिफ़्ट से बचें"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "सेल्युलर नेटवर्क पर तेज़ी से पेज लोड होने की सुविधा से मोबाइल इस्तेमाल करने वालों को अच्छा अनुभव मिलता है. [ज़्यादा जानें](https://web.dev/load-fast-enough-for-pwa/)."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "इंटरैक्शन {timeInMs, number, seconds} से. में शुरू हुआ"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "{timeInMs, number, seconds} से. में सिम्युलेट किए गए मोबाइल नेटवर्क पर इंटरैक्शन शुरू हुआ"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "आपका पेज बहुत धीरे लोड होता है और 10 सेकंड में इंटरैक्टिव नहीं होता है. सुधार करने के तरीके जानने के लिए \"परफ़ॉर्मेंस\" सेक्शन में अवसरों पर नज़र डालें और गड़बड़ी की जानकारी लें."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "मोबाइल नेटवर्क पर पेज लोड होने की गति ज़रूरत के मुताबिक तेज़ नहीं है"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "मोबाइल नेटवर्क पर पेज लोड होने की गति ज़रूरत के मुताबिक तेज़ है"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "यह मुख्य थ्रेड पर सबसे लंबे टास्क की सूची बनाता है. इससे इनपुट डिले के लिए, सबसे खराब योगदान देने वालों की पहचान करने में मदद मिलती है. [ज़्यादा जानें](https://web.dev/long-tasks-devtools/)"
   },

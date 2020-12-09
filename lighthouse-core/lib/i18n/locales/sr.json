@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Избегавајте велике промене распореда"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Брзо учитавање странице преко мобилне мреже обезбеђује добар доживљај корисницима мобилних уређаја. [Сазнајте више](https://web.dev/load-fast-enough-for-pwa/)."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Интерактивно за {timeInMs, number, seconds} сек"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Интерактивна на симулираној мобилној мрежи за {timeInMs, number, seconds} сек"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Страница се преспоро учитава и не постаје интерактивна у року од 10 секунди. Погледајте прилике и дијагностику у одељку „Учинак“ да бисте сазнали како да побољшате учинак странице."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "Учитавање странице није довољно брзо на мобилним мрежама"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "Учитавање странице је довољно брзо на мобилним мрежама"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Наводи најдуже задатке у главној нити, што је корисно за идентификовање оних који највише доприносе кашњењу приказа. [Сазнајте више](https://web.dev/long-tasks-devtools/)"
   },

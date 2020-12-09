@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "レイアウトが大きく変わらないようにする"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "モバイル ネットワークでのページ読み込みを速くすることで、優れたモバイル ユーザー エクスペリエンスが実現されます。[詳細](https://web.dev/load-fast-enough-for-pwa/)"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "操作可能になるまでの時間: {timeInMs, number, seconds} 秒"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "モバイル ネットワークのシミュレーションで操作可能になるまでの時間: {timeInMs, number, seconds} 秒"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "ページの読み込みが遅すぎます。応答に 10 秒以上かかっています。改善方法については、[パフォーマンス] に表示される最適化案と診断結果をご確認ください。"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "ページ読み込みはモバイル ネットワークで十分な速度で実行されません"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "ページ読み込みはモバイル ネットワークで十分な速度で実行されます"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "メインスレッドで長時間実行されているタスクを表示します。入力の遅延に最も影響しているタスクを特定する際に役立ちます。[詳細](https://web.dev/long-tasks-devtools/)"
   },

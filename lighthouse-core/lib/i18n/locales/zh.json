@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "请避免出现大幅度的布局偏移"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "如果网页在移动网络中的加载速度较快，则可确保良好的移动用户体验。[了解详情](https://web.dev/load-fast-enough-for-pwa/)。"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "页面交互需要 {timeInMs, number, seconds} 秒"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "在模拟移动网络上需要 {timeInMs, number, seconds} 秒才能支持交互"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "您的网页加载速度过慢，在 10 秒钟内一直未进行互动。要了解如何改进，请查看“性能”部分中的优化建议和诊断结果。"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "页面在移动网络上的加载速度不够快"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "页面在移动网络上的加载速度足够快"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "列出了主线程中运行时间最长的任务，有助于识别出导致输入延迟的最主要原因。[了解详情](https://web.dev/long-tasks-devtools/)"
   },

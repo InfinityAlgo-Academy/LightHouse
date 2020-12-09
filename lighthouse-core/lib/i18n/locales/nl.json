@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Grote indelingsverschuivingen vermijden"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Een pagina snel laden via een mobiel netwerk zorgt voor een goede mobiele gebruikerservaring. [Meer informatie](https://web.dev/load-fast-enough-for-pwa/)"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Interactief na {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Interactief op gesimuleerd mobiel netwerk binnen {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Je pagina wordt te langzaam geladen en is niet binnen tien seconden interactief. Bekijk de mogelijkheden en diagnostische gegevens in het gedeelte Prestaties voor meer informatie over verbeteringen."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "De pagina wordt niet snel genoeg geladen via mobiele netwerken"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "De pagina wordt snel genoeg geladen via mobiele netwerken"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Vermeldt de langste taken in de primaire thread (dit is handig om de bijdragers te identificeren die zorgen voor de meeste invoervertraging). [Meer informatie](https://web.dev/long-tasks-devtools/)"
   },

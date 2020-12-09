@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Zajistěte, aby nedocházelo k velkým změnám rozvržení"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Rychlé načítání stránky přes mobilní síť zajišťuje dobrý dojem pro uživatele mobilních zařízení. [Další informace](https://web.dev/load-fast-enough-for-pwa/)"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Interaktivní za {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "V simulované mobilní síti je stránka interaktivní za {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Vaše stránka se načítá příliš pomalu a neumožňuje interakci do 10 sekund. Podívejte se na příležitosti a diagnostiku v sekci Výkon, abyste zjistili, jak stránku vylepšit."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "Stránka se v mobilních sítích nenačítá dostatečně rychle"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "Stránka se v mobilních sítích načítá dostatečně rychle"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Vypíše nejdelší úlohy v hlavním podprocesu, což umožňuje zjistit, co nejvíce přispívá k prodlevě vstupu. [Další informace](https://web.dev/long-tasks-devtools/)"
   },
