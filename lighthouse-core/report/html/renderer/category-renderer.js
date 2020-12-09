@@ -230,21 +230,21 @@ class CategoryRenderer {
     for (const auditRef of auditRefs) {
       const groupId = auditRef.group || notAGroup;
       const groupAuditRefs = grouped.get(groupId) || [];
-      groupAuditRefs.push(auditRef);
-      grouped.set(groupId, groupAuditRefs);
+      // Do not render audit if it is in the 'hidden' group.
+      if (groupId !== hiddenGroup) {
+        groupAuditRefs.push(auditRef);
+        grouped.set(groupId, groupAuditRefs);
+      }
     }
 
     /** @type {Array<Element>} */
     const auditElements = [];
 
     for (const [groupId, groupAuditRefs] of grouped) {
-      if (groupId === notAGroup || groupId === hiddenGroup) {
+      if (groupId === notAGroup) {
         // Push not-grouped audits individually.
         for (const auditRef of groupAuditRefs) {
-          // Do not render audit if it is in the 'hidden' group.
-          if (auditRef.group !== 'hidden') {
-            auditElements.push(this.renderAudit(auditRef));
-          }
+          auditElements.push(this.renderAudit(auditRef));
         }
         continue;
       }

@@ -1640,6 +1640,9 @@
   "lighthouse-core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "First Paint Improvements"
   },
+  "lighthouse-core/config/default-config.js | hiddenGroupTitle": {
+    "message": "Hidden Audits"
+  },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupDescription": {
     "message": "These suggestions can help your page load faster. They don't [directly affect](https://web.dev/performance-scoring/) the Performance score."
   },
