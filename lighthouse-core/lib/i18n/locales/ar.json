@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "تجنُّب متغيّرات التصميم الكبيرة"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "إنّ تحميل الصفحات بشكل سريع عبر شبكة الجوّال يضمن توفير تجربة استخدام عالية الجودة. [مزيد من المعلومات](https://web.dev/load-fast-enough-for-pwa/)"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "الوقت التفاعلي {timeInMs, number, seconds} ثانية"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "الوقت التفاعلي على شبكة الجوّال التي تمت محاكاتها لمدة {timeInMs, number, seconds}  ثانية"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "تحميل الصفحة بطيء جدًا وليس تفاعليًا خلال 10 ثوانٍ. يُرجى الاطّلاع على الفرص وبيانات التشخيص في قسم \"الأداء\" للتعرُّف على طريقة التحسين."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "تحميل الصفحة على شبكات الجوّال ليس سريعًا بشكلٍ كافٍ"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "تحميل الصفحة سريع بشكلٍ كافٍ في شبكات الجوّال"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "يتم إدراج أطول المهام في سلسلة المحادثات الرئيسية، ما يساعد في تحديد أكثر الأشخاص الذين يسببون تأخير في عملية الإدخال. [مزيد من المعلومات](https://web.dev/long-tasks-devtools/)"
   },

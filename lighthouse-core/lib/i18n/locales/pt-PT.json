@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Evite mudanças de esquemas grandes"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Um rápido carregamento da página numa rede móvel assegura uma boa experiência do utilizador móvel. [Saiba mais](https://web.dev/load-fast-enough-for-pwa/)."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Interativa em {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Interativa numa rede móvel simulada em {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "A sua página é carregada muito lentamente e não fica interativa após 10 segundos. Veja as oportunidades e os diagnósticos na secção \"Desempenho\" para saber como melhorar."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "O carregamento da página não é suficientemente rápido em redes móveis"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "O carregamento da página é suficientemente rápido em redes móveis"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Lista as tarefas mais longas na thread principal, o que é útil para identificar o que mais contribui para o atraso de entrada. [Saiba mais](https://web.dev/long-tasks-devtools/)"
   },

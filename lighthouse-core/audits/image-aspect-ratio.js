@@ -87,7 +87,6 @@ class ImageAspectRatio extends Audit {
    */
   static audit(artifacts) {
     const images = artifacts.ImageElements;
-
     /** @type {LH.IcuMessage[]} */
     const warnings = [];
     /** @type {Array<{url: string, displayedAspectRatio: string, actualAspectRatio: string, doRatiosMatch: boolean}>} */
@@ -96,7 +95,7 @@ class ImageAspectRatio extends Audit {
       // - filter out css background images since we don't have a reliable way to tell if it's a
       //   sprite sheet, repeated for effect, etc
       // - filter out images that don't have following properties:
-      //   networkRecord, width, height, images that use `object-fit`: `cover` or `contain`
+      //   networkRecord, width, height, `object-fit` property
       // - filter all svgs as they have no natural dimensions to audit
       return !image.isCss &&
         image.mimeType &&
@@ -105,7 +104,7 @@ class ImageAspectRatio extends Audit {
         image.naturalWidth > 5 &&
         image.displayedWidth &&
         image.displayedHeight &&
-        !image.usesObjectFit;
+        image.cssComputedObjectFit === 'fill';
     }).forEach(image => {
       const wellDefinedImage = /** @type {WellDefinedImage} */ (image);
       const processed = ImageAspectRatio.computeAspectRatios(wellDefinedImage);

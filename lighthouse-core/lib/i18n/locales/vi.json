@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Tránh các thay đổi lớn về bố cục"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Tốc độ tải trang nhanh trên mạng di động giúp mang đến trải nghiệm tích cực cho người dùng thiết bị di động. [Tìm hiểu thêm](https://web.dev/load-fast-enough-for-pwa/)."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Tương tác ở giây thứ {timeInMs, number, seconds}"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Tương tác trên mạng di động mô phỏng ở giây thứ {timeInMs, number, seconds}"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Trang của bạn tải quá chậm và không tương tác trong vòng 10 giây. Hãy xem các lựa chọn tối ưu hóa và thông tin chẩn đoán trong phần \"Hiệu suất\" để tìm hiểu cách cải thiện."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "Tốc độ tải trang không đủ nhanh trên mạng di động"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "Tốc độ tải trang đủ nhanh trên mạng di động"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Liệt kê những việc cần nhiều thời gian thực hiện nhất trong chuỗi chính. Thông tin này khá hữu ích trong việc xác định những thành phần có thời gian phản hồi tương tác chậm nhất. [Tìm hiểu thêm](https://web.dev/long-tasks-devtools/)"
   },

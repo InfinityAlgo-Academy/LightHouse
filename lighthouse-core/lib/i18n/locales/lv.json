@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Centieties novērst lielas izkārtojuma nobīdes"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Ātra lapas ielāde, izmantojot mobilo datu tīklu, nodrošina labu pieredzi mobilo ierīču lietotājiem. [Uzziniet vairāk](https://web.dev/load-fast-enough-for-pwa/)."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Interaktīvais laiks: {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Interaktīvs simulētā mobilajā tīklā {timeInMs, number, seconds} sekunžu laikā"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Lapas ielāde ir pārāk lēna — laiks līdz interaktivitātei pārsniedz 10 sekundes. Lai uzzinātu, kā uzlabot situāciju, skatiet sadaļā “Veiktspēja” norādītās iespējas un diagnostiku."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "Lapas ielāde nav pietiekami ātra mobilajos tīklos"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "Lapas ielāde ir pietiekami ātra mobilajos tīklos"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Šeit ir norādīti galvenā pavediena uzdevumi ar visilgāko izpildes laiku, lai palīdzētu noteikt, kuri uzdevumi visvairāk palielina ievades aizkavi. [Uzzināt vairāk](https://web.dev/long-tasks-devtools/)"
   },

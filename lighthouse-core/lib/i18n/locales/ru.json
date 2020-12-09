@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Устраните большие смещения макета"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Если страницы будут быстро загружаться по мобильной сети, сайтом станет удобно пользоваться на телефоне или планшете. [Подробнее…](https://web.dev/load-fast-enough-for-pwa/)"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Станица интерактивна через {timeInMs, number, seconds} сек."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Страница интерактивна в эмулированной мобильной сети через {timeInMs, number, seconds} сек."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Ваша страница загружается слишком долго и неактивна в течение первых 10 секунд. Для улучшения ее работы изучите возможности оптимизации и диагностические данные в разделе \"Производительность\"."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "Страницы загружаются через мобильную сеть недостаточно быстро"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "Страницы загружаются через мобильную сеть достаточно быстро"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Для основного потока создается список самых длительных задач. Это позволяет выявлять главные факторы, которые приводят к задержкам после ввода. [Подробнее…](https://web.dev/long-tasks-devtools/)"
   },

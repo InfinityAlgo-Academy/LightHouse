@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Избягвайте големи промени в оформлението"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Бързото зареждане на страниците през мобилни мрежи осигурява добра практическа работа за потребителите на мобилни устройства. [Научете повече](https://web.dev/load-fast-enough-for-pwa/)."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Интерактивна след {timeInMs, number, seconds} сек"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Интерактивност при симулирана мобилна мрежа след {timeInMs, number, seconds} сек"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Страницата се зарежда прекалено бавно и не е интерактивна в рамките на 10 секунди. За да научите как да я подобрите, разгледайте възможностите и диагностичните данни в секцията „Ефективност“."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "Страницата не се зарежда достатъчно бързо през мобилни мрежи"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "Страницата се зарежда достатъчно бързо през мобилни мрежи"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Посочва най-продължителните задачи в основната нишка и ви помага да идентифицирате главните причинители на забавяне при взаимодействие. [Научете повече](https://web.dev/long-tasks-devtools/)"
   },

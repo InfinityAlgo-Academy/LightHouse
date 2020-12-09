@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "יש להימנע משינויים משמעותיים בפריסה"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "כשהדף נטען במהירות ברשת סלולרית, חוויית המשתמש איכותית. [מידע נוסף](https://web.dev/load-fast-enough-for-pwa/)."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "פעילות מלאה תוך {timeInMs, number, seconds} שנ'"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "הזמן עד לפעילות מלאה בהדמיית רשת סלולרית הוא {timeInMs, number, seconds} שניות"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "הדף שלך נטען לאט מדי ולא מגיע לפעילות מלאה תוך 10 שניות. כדי ללמוד כיצד לבצע שיפורים, מומלץ לעיין בהזדמנויות ובניתוחים שמופיעים בקטע \"ביצועים\"."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "טעינת הדף לא מהירה מספיק ברשתות סלולריות"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "טעינת הדף ברשתות סלולריות מהירה מספיק"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "מציין את המשימות הארוכות ביותר בתהליכון הראשי. מסייע לזהות את המשימות שמאטות את הקלט במידה הרבה ביותר. [מידע נוסף](https://web.dev/long-tasks-devtools/)"
   },

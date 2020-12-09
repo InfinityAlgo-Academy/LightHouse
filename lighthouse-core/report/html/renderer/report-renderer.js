@@ -149,7 +149,7 @@ class ReportRenderer {
     const warnings = this._dom.find('ul', container);
     for (const warningString of report.runWarnings) {
       const warning = warnings.appendChild(this._dom.createElement('li'));
-      warning.textContent = warningString;
+      warning.appendChild(this._dom.convertMarkdownLinkSnippets(warningString));
     }
 
     return container;

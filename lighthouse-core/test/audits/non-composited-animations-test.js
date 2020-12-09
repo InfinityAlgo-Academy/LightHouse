@@ -15,11 +15,13 @@ describe('Non-composited animations audit', () => {
       TraceElements: [
         {
           traceEventType: 'animation',
-          devtoolsNodePath: '1,HTML,1,BODY,1,DIV',
-          selector: 'body > div#animated-boi',
-          nodeLabel: 'div',
-          snippet: '<div id="animated-boi">',
           nodeId: 4,
+          node: {
+            devtoolsNodePath: '1,HTML,1,BODY,1,DIV',
+            selector: 'body > div#animated-boi',
+            nodeLabel: 'div',
+            snippet: '<div id="animated-boi">',
+          },
           animations: [
             {failureReasonsMask: 8192, unsupportedProperties: ['height', 'width']},
             {name: 'alpha', failureReasonsMask: 8192, unsupportedProperties: ['color']},
@@ -62,11 +64,13 @@ describe('Non-composited animations audit', () => {
       TraceElements: [
         {
           traceEventType: 'animation',
-          devtoolsNodePath: '1,HTML,1,BODY,1,DIV',
-          selector: 'body > div#animated-1',
-          nodeLabel: 'div',
-          snippet: '<div id="animated-1">',
           nodeId: 4,
+          node: {
+            devtoolsNodePath: '1,HTML,1,BODY,1,DIV',
+            selector: 'body > div#animated-1',
+            nodeLabel: 'div',
+            snippet: '<div id="animated-1">',
+          },
           animations: [
             {failureReasonsMask: 8192, unsupportedProperties: ['height']},
             {failureReasonsMask: 8192, unsupportedProperties: ['height']},
@@ -74,11 +78,13 @@ describe('Non-composited animations audit', () => {
         },
         {
           traceEventType: 'animation',
-          devtoolsNodePath: '1,HTML,1,BODY,2,DIV',
-          selector: 'body > div#animated-2',
-          nodeLabel: 'div',
-          snippet: '<div id="animated-2">',
           nodeId: 5,
+          node: {
+            devtoolsNodePath: '1,HTML,1,BODY,2,DIV',
+            selector: 'body > div#animated-2',
+            nodeLabel: 'div',
+            snippet: '<div id="animated-2">',
+          },
           animations: [
             {failureReasonsMask: 8192, unsupportedProperties: ['height']},
           ],
@@ -122,11 +128,13 @@ describe('Non-composited animations audit', () => {
       TraceElements: [
         {
           traceEventType: 'animation',
-          devtoolsNodePath: '1,HTML,1,BODY,1,DIV',
-          selector: 'body > div#animated-boi',
-          nodeLabel: 'div',
-          snippet: '<div id="animated-boi">',
           nodeId: 4,
+          node: {
+            devtoolsNodePath: '1,HTML,1,BODY,1,DIV',
+            selector: 'body > div#animated-boi',
+            nodeLabel: 'div',
+            snippet: '<div id="animated-boi">',
+          },
           animations: [
             {failureReasonsMask: 0, unsupportedProperties: []},
             {name: 'alpha', failureReasonsMask: 0, unsupportedProperties: []},
@@ -147,11 +155,13 @@ describe('Non-composited animations audit', () => {
       TraceElements: [
         {
           traceEventType: 'animation',
-          devtoolsNodePath: '1,HTML,1,BODY,1,DIV',
-          selector: 'body > div#animated-boi',
-          nodeLabel: 'div',
-          snippet: '<div id="animated-boi">',
           nodeId: 4,
+          node: {
+            devtoolsNodePath: '1,HTML,1,BODY,1,DIV',
+            selector: 'body > div#animated-boi',
+            nodeLabel: 'div',
+            snippet: '<div id="animated-boi">',
+          },
           animations: [
             {name: 'alpha', failureReasonsMask: 4, unsupportedProperties: []}, // kInvalidAnimationOrEffect
           ],
@@ -171,11 +181,13 @@ describe('Non-composited animations audit', () => {
       TraceElements: [
         {
           traceEventType: 'animation',
-          devtoolsNodePath: '1,HTML,1,BODY,1,DIV',
-          selector: 'body > div#animated',
-          nodeLabel: 'div',
-          snippet: '<div id="animated">',
           nodeId: 4,
+          node: {
+            devtoolsNodePath: '1,HTML,1,BODY,1,DIV',
+            selector: 'body > div#animated',
+            nodeLabel: 'div',
+            snippet: '<div id="animated">',
+          },
           animations: [
             {failureReasonsMask: 0b11100001011000, unsupportedProperties: ['height']},
           ],

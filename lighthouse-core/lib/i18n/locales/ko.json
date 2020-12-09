@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "대규모 레이아웃 변경 피하기"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "셀룰러 네트워크에서 페이지 로드가 빠르면 우수한 모바일 사용자 환경을 제공할 수 있습니다. [자세히 알아보기](https://web.dev/load-fast-enough-for-pwa/)"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "페이지와 상호작용할 수 있게 될 때까지 걸린 시간: {timeInMs, number, seconds}초"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "시뮬레이션된 모바일 네트워크에서 페이지와 상호작용할 수 있게 될 때까지 걸린 시간: {timeInMs, number, seconds}초"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "페이지가 너무 느리게 로드되므로 10초 이내에 사용할 수 없습니다. '성능' 섹션에서 추천 내용과 진단을 확인해 개선 방안을 알아보세요."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "모바일 네트워크에서 페이지 로딩이 충분히 빠르지 않음"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "모바일 네트워크에서 페이지 로드가 충분히 빠름"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "기본 스레드의 가장 긴 작업을 열거합니다. 입력 지연을 가장 많이 유발하는 작업을 찾을 때 용이합니다. [자세히 알아보기](https://web.dev/long-tasks-devtools/)"
   },

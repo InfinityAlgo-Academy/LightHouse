@@ -31,9 +31,6 @@ Object {
       "path": "metrics/first-meaningful-paint",
     },
     Object {
-      "path": "load-fast-enough-for-pwa",
-    },
-    Object {
       "path": "metrics/speed-index",
     },
     Object {
@@ -179,6 +176,9 @@ Object {
     },
     Object {
       "path": "preload-lcp-image",
+    },
+    Object {
+      "path": "full-page-screenshot",
     },
     Object {
       "path": "manual/pwa-cross-browser",
@@ -1096,11 +1096,6 @@ Object {
       "auditRefs": Array [
         Object {
           "group": "pwa-fast-reliable",
-          "id": "load-fast-enough-for-pwa",
-          "weight": 7,
-        },
-        Object {
-          "group": "pwa-fast-reliable",
           "id": "works-offline",
           "weight": 5,
         },
@@ -1437,6 +1432,9 @@ Object {
         },
         Object {
           "path": "source-maps",
+        },
+        Object {
+          "path": "full-page-screenshot",
         },
       ],
       "loadFailureMode": "fatal",

@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Evita els canvis de disseny importants"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Carregar les pàgines ràpidament mitjançant una xarxa mòbil garanteix una experiència satisfactòria per als usuaris de mòbils. [Obtén més informació](https://web.dev/load-fast-enough-for-pwa/)."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Ha tardat {timeInMs, number, seconds} segons a fer-se interactiva"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Ha tardat {timeInMs, number, seconds} segons a fer-se interactiva a la xarxa mòbil"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "La pàgina es carrega massa lentament i no es torna interactiva al cap de 10 segons. Consulta les seccions Oportunitats i Diagnòstic de la categoria Rendiment per obtenir informació sobre com es pot millorar."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "La pàgina no es carrega amb prou rapidesa a les xarxes mòbils"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "La pàgina es carrega amb prou rapidesa a les xarxes mòbils"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Enumera les tasques més llargues del fil principal, cosa que resulta útil per identificar què contribueix més al retard de les interaccions. [Més informació](https://web.dev/long-tasks-devtools/)"
   },

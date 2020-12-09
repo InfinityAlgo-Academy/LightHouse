@@ -31,7 +31,7 @@ describe('Accessibility: document-title audit', () => {
       Accessibility: {
         violations: [{
           id: 'document-title',
-          nodes: [{}],
+          nodes: [],
           help: 'http://example.com/',
         }],
       },

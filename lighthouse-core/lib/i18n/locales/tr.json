@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Büyük düzen kaymalarından kaçının"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Sayfaların hücresel ağ üzerinden hızlı bir şekilde yüklenmesi, mobil cihaz kullanıcılarının iyi bir deneyim yaşamalarını sağlar. [Daha fazla bilgi](https://web.dev/load-fast-enough-for-pwa/)."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Etkileşimli hale gelme süresi: {timeInMs, number, seconds} sn."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Sayfanın simüle mobil ağda etkileşime hazır hale gelmesi {timeInMs, number, seconds} sn. sürdü"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Sayfanız çok yavaş yükleniyor ve etkileşimli hale gelmesi 10 saniyeyi geçiyor. Nasıl iyileştireceğinizi öğrenmek için \"Performans\" bölümünde fırsatlara ve teşhise bakın."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "Sayfalar mobil ağlarda yeterince hızlı yüklenmiyor"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "Sayfalar mobil ağlarda yeterince hızlı yükleniyor"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Ana ileti dizisindeki en uzun görevleri listeler; giriş gecikmesine en çok katkıda bulunanları belirlemekte faydalıdır. [Daha fazla bilgi](https://web.dev/long-tasks-devtools/)"
   },

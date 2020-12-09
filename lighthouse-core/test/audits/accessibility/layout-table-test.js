@@ -31,7 +31,7 @@ describe('Accessibility: layout-table audit', () => {
       Accessibility: {
         violations: [{
           id: 'layout-table',
-          nodes: [{}],
+          nodes: [],
           help: 'http://example.com/',
         }],
       },

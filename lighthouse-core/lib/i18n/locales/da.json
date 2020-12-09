@@ -878,24 +878,6 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Undgå store layoutskift"
   },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Hurtig sideindlæsning via mobilnetværk sikrer en god oplevelse for mobilbrugere. [Få flere oplysninger](https://web.dev/load-fast-enough-for-pwa/)."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Interaktiv efter {timeInMs, number, seconds} sek."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Interaktiv på simuleret mobilnetværk efter {timeInMs, number, seconds} sek."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Din side indlæser for langsomt og bliver ikke interaktiv inden for 10 sekunder. Se mulighederne og diagnostik i sektionen \"Effektivitet\" for at finde ud af, hvordan du forbedrer den."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "Sideindlæsning er ikke hurtig nok på mobilnetværk"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "Sideindlæsning er hurtig nok på mobilnetværk"
-  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Angiver lange  opgaver i hovedtråden, hvilket er nyttigt til at identificere de  bidragydere, der forårsager mest forsinkelse. [Få flere oplysninger](https://web.dev/long-tasks-devtools/)"
   },

@@ -31,7 +31,7 @@ describe('Accessibility: video-caption audit', () => {
       Accessibility: {
         violations: [{
           id: 'video-caption',
-          nodes: [{}],
+          nodes: [],
           help: 'http://example.com/',
         }],
       },

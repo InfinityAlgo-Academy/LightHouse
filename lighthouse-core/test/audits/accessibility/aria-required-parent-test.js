@@ -31,7 +31,7 @@ describe('Accessibility: aria-required-parent audit', () => {
       Accessibility: {
         violations: [{
           id: 'aria-required-parent',
-          nodes: [{}],
+          nodes: [],
           help: 'http://example.com/',
         }],
       },
