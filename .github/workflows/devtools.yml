@@ -24,7 +24,6 @@ jobs:
       with:
         path: lighthouse
 
-    # Caches last ~week, so CI will refresh these dependencies that often.
     - name: Cache depot tools, devtools, blink tools and content shell
       uses: actions/cache@v2
       with:
