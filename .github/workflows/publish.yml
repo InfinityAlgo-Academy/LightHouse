@@ -13,7 +13,6 @@ jobs:
         with:
           node-version: 12.x
       - run: yarn --frozen-lockfile
-        working-directory: ${{ github.workspace }}/lighthouse
 
       - run: bash $GITHUB_WORKSPACE/.github/scripts/bump-nightly-version.sh
       - run: npm publish --tag next
