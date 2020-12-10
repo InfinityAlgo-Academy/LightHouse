@@ -2049,7 +2049,7 @@
     "message": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | offscreen-images": {
-    "message": "Install a [lazy-load Joomla plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading) that provides the ability to defer any offscreen images, or switch to a template that provides that functionality. Starting with Joomla 4.0, a dedicated lazy-loading plugin can be enabled by using the \"Content - Lazy Loading Images\" plugin. Also consider using [an AMP plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=amp)."
+    "message": "Install a [lazy-load Joomla plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading) that provides the ability to defer any offscreen images, or switch to a template that provides that functionality. Starting with Joomla 4.0, all new images will [automatically](https://github.com/joomla/joomla-cms/pull/30748) get the `loading` attribute from the core."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | render-blocking-resources": {
     "message": "There are a number of Joomla plugins that can help you [inline critical assets](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) or [defer less important resources](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance). Beware that optimizations provided by these plugins may break features of your templates or plugins, so you will need to test these thoroughly."
@@ -2123,46 +2123,46 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | uses-webp-images": {
     "message": "Consider searching the [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) for a variety of third-party extensions to leverage newer image formats."
   },
-  "node_modules/lighthouse-stack-packs/packs/october.js | efficient-animated-content": {
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "[Replace animated GIFs with video](https://web.dev/replace-gifs-with-videos/) for faster web page loads and consider using modern file formats such as [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) or [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder) to improve compression efficiency by greater than 30% over the current state-of-the-art video codec, VP9."
   },
-  "node_modules/lighthouse-stack-packs/packs/october.js | offscreen-images": {
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | offscreen-images": {
     "message": "Consider installing an [image lazy loading plugin](https://octobercms.com/plugins?search=lazy) that provides the ability to defer any offscreen images, or switch to a theme that provides that functionality. Also consider using [the AMP plugin](https://octobercms.com/plugins?search=Accelerated+Mobile+Pages)."
   },
-  "node_modules/lighthouse-stack-packs/packs/october.js | render-blocking-resources": {
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | render-blocking-resources": {
     "message": "There are many plugins that help [inline critical assets](https://octobercms.com/plugins?search=css). These plugins may break other plugins, so you should test thoroughly."
   },
-  "node_modules/lighthouse-stack-packs/packs/october.js | time-to-first-byte": {
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | time-to-first-byte": {
     "message": "Themes, plugins and server specifications all contribute to the server response time. Consider finding a more optimized theme, carefully selecting an optimization plugin and/or upgrade the server. October CMS also allows developers to use [`Queues`](https://octobercms.com/docs/services/queues) to defer the processing of a time consuming task, such as sending an e-mail. This drastically speeds up web requests."
   },
-  "node_modules/lighthouse-stack-packs/packs/october.js | total-byte-weight": {
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | total-byte-weight": {
     "message": "Consider showing excerpts in the post lists (e.g. using a `show more` button), reducing the number of posts shown on a given web page, breaking long posts into multiple web pages, or using a plugin to lazy-load comments."
   },
-  "node_modules/lighthouse-stack-packs/packs/october.js | unminified-css": {
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unminified-css": {
     "message": "There are many [plugins](https://octobercms.com/plugins?search=css) that can speed up a website by concatenating, minifying and compressing the styles. Using a build process to do this minification up-front can speed up development."
   },
-  "node_modules/lighthouse-stack-packs/packs/october.js | unminified-javascript": {
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unminified-javascript": {
     "message": "There are many [plugins](https://octobercms.com/plugins?search=javascript) that can speed up a website by concatenating, minifying and compressing the scripts. Using a build process to do this minification up-front can speed up development."
   },
-  "node_modules/lighthouse-stack-packs/packs/october.js | unused-css-rules": {
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unused-css-rules": {
     "message": "Consider reviewing the [plugins](https://octobercms.com/plugins) loading unused CSS on the website. To identify plugins that add unnecessary CSS, run [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. Identify the theme/plugin responsible from the stylesheet URL. Look for plugins with many stylesheets with lots of red in code coverage. A plugin should only add a stylesheet if it is actually used on the web page."
   },
-  "node_modules/lighthouse-stack-packs/packs/october.js | unused-javascript": {
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unused-javascript": {
     "message": "Consider reviewing the [plugins](https://octobercms.com/plugins?search=javascript) that load unused JavaScript in the web page. To identify plugins that add unnecessary JavaScript, run [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. Identify the theme/plugin responsible from the URL of the script. Look for plugins with many scripts with lots of red in code coverage. A plugin should only add a script if it is actually used on the web page."
   },
-  "node_modules/lighthouse-stack-packs/packs/october.js | uses-long-cache-ttl": {
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-long-cache-ttl": {
     "message": "Read about [preventing unnecessary network requests with the HTTP Cache](https://web.dev/http-cache/#caching-checklist). There are many [plugins](https://octobercms.com/plugins?search=Caching) that can be used to speed up caching."
   },
-  "node_modules/lighthouse-stack-packs/packs/october.js | uses-optimized-images": {
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-optimized-images": {
     "message": "Consider using an [image optimization plugin](https://octobercms.com/plugins?search=image) to compresses images while retaining the quality."
   },
-  "node_modules/lighthouse-stack-packs/packs/october.js | uses-responsive-images": {
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-responsive-images": {
     "message": "Upload images directly in the media manager to ensure the required image sizes are available. Consider using the [resize filter](https://octobercms.com/docs/markup/filter-resize) or an [image resizing plugin](https://octobercms.com/plugins?search=image) to ensure the optimal image sizes are used."
   },
-  "node_modules/lighthouse-stack-packs/packs/october.js | uses-text-compression": {
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-text-compression": {
     "message": "Enable text compression in the web server configuration."
   },
-  "node_modules/lighthouse-stack-packs/packs/october.js | uses-webp-images": {
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-webp-images": {
     "message": "Consider using a [plugin](https://octobercms.com/plugins?search=image) or service that will automatically convert the uploaded images to the optimal formats. [WebP lossless images](https://developers.google.com/speed/webp) are 26% smaller in size compared to PNGs and 25-34% smaller than comparable JPEG images at the equivalent SSIM quality index. Another next-gen image format to consider is [AVIF](https://jakearchibald.com/2020/avif-has-landed/)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | dom-size": {

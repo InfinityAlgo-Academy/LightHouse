@@ -18,15 +18,11 @@ function getAuditIds() {
 }
 
 describe('stack-packs lib', () => {
-  it('packs without detectors', () => {
+  it('there are no packs without detectors', () => {
     const result = lighthouseStackPacksDep
       .filter(p => !stackPacksLib.stackPacksToInclude.find(p2 => p2.packId === p.id))
       .map(p => p.id);
-    expect(result).toMatchInlineSnapshot(`
-      Array [
-        "joomla",
-      ]
-    `);
+    expect(result).toEqual([]);
   });
 });
 
