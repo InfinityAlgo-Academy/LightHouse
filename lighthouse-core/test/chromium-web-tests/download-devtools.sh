@@ -16,11 +16,14 @@ then
   git status
   git --no-pager log -1
   
-  # Update to keep current
-  git reset --hard
-  git clean -fd
-  git pull --ff-only -f origin master
-  gclient sync --delete_unversioned_trees --reset
+  # Update to keep current.
+  # Don't update in CI-defer to the weekly cache invalidation.
+  if ! [[ "$CI" ]]; then
+    git reset --hard
+    git clean -fd
+    git pull --ff-only -f origin master
+    gclient sync --delete_unversioned_trees --reset
+  fi
 
   exit 0
 fi
