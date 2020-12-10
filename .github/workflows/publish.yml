@@ -12,9 +12,14 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12.x
+          registry-url: https://registry.npmjs.org/
       - run: yarn --frozen-lockfile
 
-      - run: bash $GITHUB_WORKSPACE/.github/scripts/bump-nightly-version.sh
-      - run: npm publish --tag next
+      - name: Publish to npm
+        run: |
+          npm whoami
+          bash $GITHUB_WORKSPACE/.github/scripts/bump-nightly-version.sh
+          npm publish --tag next
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          CI: true
