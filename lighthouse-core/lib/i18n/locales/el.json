@@ -788,9 +788,6 @@
   "lighthouse-core/audits/image-aspect-ratio.js | title": {
     "message": "Προβάλλει τις εικόνες με τον σωστό λόγο διαστάσεων"
   },
-  "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
-    "message": "Μη έγκυρες πληροφορίες διαστάσεων εικόνας {url}"
-  },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
     "message": "Πραγματικό μέγεθος"
   },

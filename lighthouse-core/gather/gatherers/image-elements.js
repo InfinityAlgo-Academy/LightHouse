@@ -66,8 +66,8 @@ function getHTMLImages(allElements) {
       displayedWidth: element.width,
       displayedHeight: element.height,
       clientRect: getClientRect(element),
-      naturalWidth: canTrustNaturalDimensions ? element.naturalWidth : 0,
-      naturalHeight: canTrustNaturalDimensions ? element.naturalHeight : 0,
+      naturalWidth: canTrustNaturalDimensions ? element.naturalWidth : undefined,
+      naturalHeight: canTrustNaturalDimensions ? element.naturalHeight : undefined,
       attributeWidth: element.getAttribute('width') || '',
       attributeHeight: element.getAttribute('height') || '',
       cssWidth: undefined, // this will get overwritten below
@@ -113,9 +113,6 @@ function getCSSImages(allElements) {
       displayedWidth: element.clientWidth,
       displayedHeight: element.clientHeight,
       clientRect: getClientRect(element),
-      // CSS Images do not expose natural size, we'll determine the size later
-      naturalWidth: 0,
-      naturalHeight: 0,
       attributeWidth: '',
       attributeHeight: '',
       cssWidth: undefined,

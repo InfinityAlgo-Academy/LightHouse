@@ -788,9 +788,6 @@
   "lighthouse-core/audits/image-aspect-ratio.js | title": {
     "message": "正しいアスペクト比の画像が表示されています"
   },
-  "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
-    "message": "画像サイズに関する情報（{url}）が正しくありません"
-  },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
     "message": "実サイズ"
   },

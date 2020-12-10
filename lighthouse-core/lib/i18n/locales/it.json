@@ -788,9 +788,6 @@
   "lighthouse-core/audits/image-aspect-ratio.js | title": {
     "message": "Visualizza immagini con proporzioni corrette"
   },
-  "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
-    "message": "Informazioni sulle dimensioni dell'immagine {url} non valide"
-  },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
     "message": "Dimensioni effettive"
   },

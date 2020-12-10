@@ -806,9 +806,6 @@
   "lighthouse-core/audits/image-aspect-ratio.js | title": {
     "message": "D̂íŝṕl̂áŷś îḿâǵêś ŵít̂h́ ĉór̂ŕêćt̂ áŝṕêćt̂ ŕât́îó"
   },
-  "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
-    "message": "Îńv̂ál̂íd̂ ím̂áĝé ŝíẑín̂ǵ îńf̂ór̂ḿât́îón̂ {url}"
-  },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
     "message": "Âćt̂úâĺ ŝíẑé"
   },

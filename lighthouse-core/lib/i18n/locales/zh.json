@@ -788,9 +788,6 @@
   "lighthouse-core/audits/image-aspect-ratio.js | title": {
     "message": "显示的图像宽高比正确"
   },
-  "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
-    "message": "无效的图片大小信息 {url}"
-  },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
     "message": "实际大小"
   },

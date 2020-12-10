@@ -788,9 +788,6 @@
   "lighthouse-core/audits/image-aspect-ratio.js | title": {
     "message": "சரியான தோற்ற விகிதத்துடன் படங்களைக் காட்டுகிறது"
   },
-  "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
-    "message": "பட அளவு குறித்த தகவல் செல்லாதது {url}"
-  },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
     "message": "உண்மையான அளவு"
   },

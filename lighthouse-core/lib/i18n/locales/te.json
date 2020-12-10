@@ -788,9 +788,6 @@
   "lighthouse-core/audits/image-aspect-ratio.js | title": {
     "message": "సరైన ఆకార నిష్పత్తితో చిత్రాలను ప్రదర్శిస్తుంది"
   },
-  "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
-    "message": "చెల్లుబాటు కాని చిత్ర పరిమాణ సమాచారం {url}"
-  },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
     "message": "అసలు సైజ్"
   },

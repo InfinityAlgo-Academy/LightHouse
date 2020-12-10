@@ -199,7 +199,6 @@ describe('Page uses responsive images', () => {
     );
 
     assert.equal(auditResult.items.length, 0);
-    assert.equal(auditResult.warnings.length, 1);
   });
 
   it('de-dupes images', () => {

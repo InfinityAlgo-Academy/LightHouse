@@ -788,9 +788,6 @@
   "lighthouse-core/audits/image-aspect-ratio.js | title": {
     "message": "Menampilkan gambar dengan rasio tinggi lebar yang benar"
   },
-  "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
-    "message": "Informasi ukuran gambar {url} tidak valid"
-  },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
     "message": "Ukuran sebenarnya"
   },

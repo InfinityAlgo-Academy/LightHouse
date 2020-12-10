@@ -74,7 +74,7 @@ function isCandidate(image) {
   if (image.displayedWidth <= 1 || image.displayedHeight <= 1) {
     return false;
   }
-  if (image.naturalWidth === 0 || image.naturalHeight === 0) {
+  if (!image.naturalWidth || !image.naturalHeight) {
     return false;
   }
   if (image.mimeType === 'image/svg+xml') {
@@ -98,7 +98,17 @@ function isCandidate(image) {
 }
 
 /**
+ * Type check to ensure that the ImageElement has natural dimensions.
+ *
  * @param {LH.Artifacts.ImageElement} image
+ * @return {image is LH.Artifacts.ImageElement & {naturalWidth: number, naturalHeight: number}}
+ */
+function imageHasNaturalDimensions(image) {
+  return image.naturalHeight !== undefined && image.naturalWidth !== undefined;
+}
+
+/**
+ * @param {LH.Artifacts.ImageElement & {naturalHeight: number, naturalWidth: number}} image
  * @param {number} DPR
  * @return {boolean}
  */
@@ -109,7 +119,7 @@ function imageHasRightSize(image, DPR) {
 }
 
 /**
- * @param {LH.Artifacts.ImageElement} image
+ * @param {LH.Artifacts.ImageElement & {naturalWidth: number, naturalHeight: number}} image
  * @param {number} DPR
  * @return {Result}
  */
@@ -222,9 +232,11 @@ class ImageSizeResponsive extends Audit {
    */
   static audit(artifacts) {
     const DPR = artifacts.ViewportDimensions.devicePixelRatio;
+
     const results = Array
       .from(artifacts.ImageElements)
       .filter(isCandidate)
+      .filter(imageHasNaturalDimensions)
       .filter(image => !imageHasRightSize(image, DPR))
       .filter(image => isVisible(image.clientRect, artifacts.ViewportDimensions))
       .map(image => getResult(image, DPR));

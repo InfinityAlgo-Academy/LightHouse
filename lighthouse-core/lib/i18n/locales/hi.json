@@ -788,9 +788,6 @@
   "lighthouse-core/audits/image-aspect-ratio.js | title": {
     "message": "चौड़ाई-ऊंचाई के सही अनुपात वाली इमेज दिखाता है"
   },
-  "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
-    "message": "इमेज के आकार की जानकारी गलत है {url}"
-  },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
     "message": "इमेज का असल साइज़"
   },

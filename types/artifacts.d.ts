@@ -413,9 +413,9 @@ declare global {
         /** The displayed height of the image, uses img.height when available falling back to clientHeight. See https://codepen.io/patrickhulce/pen/PXvQbM for examples. */
         displayedHeight: number;
         /** The natural width of the underlying image, uses img.naturalWidth. See https://codepen.io/patrickhulce/pen/PXvQbM for examples. */
-        naturalWidth: number;
+        naturalWidth?: number;
         /** The natural height of the underlying image, uses img.naturalHeight. See https://codepen.io/patrickhulce/pen/PXvQbM for examples. */
-        naturalHeight: number;
+        naturalHeight?: number;
         /** The raw width attribute of the image element. CSS images will be set to the empty string. */
         attributeWidth: string;
         /** The raw height attribute of the image element. CSS images will be set to the empty string. */

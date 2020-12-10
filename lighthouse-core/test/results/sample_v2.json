@@ -602,7 +602,6 @@
       "description": "Image display dimensions should match natural aspect ratio. [Learn more](https://web.dev/image-aspect-ratio/).",
       "score": 0,
       "scoreDisplayMode": "binary",
-      "warnings": [],
       "details": {
         "type": "table",
         "headings": [
@@ -3521,7 +3520,6 @@
       "numericValue": 0,
       "numericUnit": "millisecond",
       "displayValue": "",
-      "warnings": [],
       "details": {
         "type": "opportunity",
         "headings": [],

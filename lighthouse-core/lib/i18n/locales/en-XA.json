@@ -788,9 +788,6 @@
   "lighthouse-core/audits/image-aspect-ratio.js | title": {
     "message": "[Ðîšþļåýš îmåĝéš ŵîţĥ çöŕŕéçţ åšþéçţ ŕåţîö one two three four five six seven eight nine]"
   },
-  "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
-    "message": "[Îñvåļîð îmåĝé šîžîñĝ îñƒöŕmåţîöñ ᐅ{url}ᐊ one two three four five six seven eight]"
-  },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
     "message": "[Åçţûåļ šîžé one two]"
   },

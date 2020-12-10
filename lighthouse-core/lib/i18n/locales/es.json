@@ -788,9 +788,6 @@
   "lighthouse-core/audits/image-aspect-ratio.js | title": {
     "message": "Muestra imágenes con la relación de aspecto adecuada"
   },
-  "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
-    "message": "La información del tamaño de la imagen no es válida ({url})"
-  },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
     "message": "Tamaño real"
   },
