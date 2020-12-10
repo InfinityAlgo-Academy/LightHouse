@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -euxo pipefail
 
 ##
 # @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
@@ -18,7 +18,7 @@ then
   
   # Update to keep current.
   # Don't update in CI-defer to the weekly cache invalidation.
-  if ! [[ "$CI" ]]; then
+  if [ -n "${CI:-}" ]; then
     git reset --hard
     git clean -fd
     git pull --ff-only -f origin master
