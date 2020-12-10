@@ -340,6 +340,8 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[Apdex](https://apdex.co)** - Apdex is a website performance service. The main features are historical Lighthouse report visualizations, mobile/desktop options, alerts, uptime monitoring, and more. There are flexible paid plans and a 30-day free trial.
 
+* **[Websu](https://websu.io)** - Websu is an open source project to provide Lighthouse-as-a-Service through a simple HTTP REST API. The main features are ability to host and deploy in your own environment and historical Lighthouse report summaries.
+
 ## Lighthouse Integrations in non-Web Perf services
 
 * **[PageWatch](https://pagewatch.dev/)** — PageWatch is a tool to find problem pages on your website.  It provides insights into spelling errors, layout issues, slow pages (powered by Lighthouse) and more.  PageWatch is offered via free and paid plans.
