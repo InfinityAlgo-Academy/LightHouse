@@ -16,6 +16,12 @@ jobs:
     steps:
     - name: git clone
       uses: actions/checkout@v2
+      with:
+        fetch-depth: 100
+    - run: bash lighthouse-core/scripts/github-actions-commit-range.sh
+      env:
+        GITHUB_CONTEXT_PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        GITHUB_CONTEXT_BASE_SHA: ${{ github.event.before }}
 
     - name: Use Node.js 12.x
       uses: actions/setup-node@v1
