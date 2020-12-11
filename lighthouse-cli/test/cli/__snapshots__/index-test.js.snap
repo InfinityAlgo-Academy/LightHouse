@@ -1463,7 +1463,6 @@ Object {
     Object {
       "blankPage": "about:blank",
       "blockedUrlPatterns": Array [
-        "*.css",
         "*.jpg",
         "*.jpeg",
         "*.png",
