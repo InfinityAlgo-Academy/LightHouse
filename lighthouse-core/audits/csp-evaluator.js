@@ -8,7 +8,7 @@
 const Audit = require('./audit.js');
 const MainResource = require('../computed/main-resource.js');
 const i18n = require('../lib/i18n/i18n.js');
-const csp = require('../../evaluator_binary.js');
+const {evaluateRawCsp} = require('../lib/csp-evaluator.js');
 
 const UIStrings = {
   title: 'CSP secures page from XSS attacks',
@@ -65,9 +65,7 @@ class CSPEvaluator extends Audit {
         displayValue: UIStrings.noCsp,
       };
     }
-    const parser = new csp.CspParser(cspHeader.value);
-    const evaluator = new csp.CspEvaluator(parser.csp, csp.Version.CSP3);
-    const findings = evaluator.evaluate();
+    const findings = evaluateRawCsp(cspHeader.value);
     const results = [{description: cspHeader.value}, ...findings];
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
