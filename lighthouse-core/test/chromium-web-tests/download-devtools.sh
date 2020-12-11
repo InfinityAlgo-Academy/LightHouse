@@ -15,10 +15,10 @@ then
 
   git status
   git --no-pager log -1
-  
+
   # Update to keep current.
   # Don't update in CI-defer to the weekly cache invalidation.
-  if [ -n "${CI:-}" ]; then
+  if [ -z "${CI:-}" ]; then
     git reset --hard
     git clean -fd
     git pull --ff-only -f origin master
