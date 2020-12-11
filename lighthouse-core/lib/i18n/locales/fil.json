@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "May tag na `<meta name=\"viewport\">` na may `width` o `initial-scale`"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Dapat magpakita ng ilang content ang iyong app kapag naka-disable ang JavaScript, kahit isang babala lang sa user na kinakailangan ang JavaScript para magamit ang app. [Matuto pa](https://web.dev/without-javascript/)."
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "Dapat mag-render ng ilang content ang nilalaman ng page kung hindi available ang mga script nito."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "Hindi nagbibigay ng fallback na content kapag hindi available ang JavaScript"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Naglalaman ng ilang content kapag hindi available ang JavaScript"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "Kung bumubuo ka ng Progressive Web App, pag-isipang gumamit ng service worker para gumana ang iyong app offline. [Matuto pa](https://web.dev/works-offline/)."
   },

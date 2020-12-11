@@ -1442,18 +1442,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Ĥáŝ á `<meta name=\"viewport\">` t̂áĝ ẃît́ĥ `width` ór̂ `initial-scale`"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Ŷóûŕ âṕp̂ śĥóûĺd̂ d́îśp̂ĺâý ŝóm̂é ĉón̂t́êńt̂ ẃĥén̂ J́âv́âŚĉŕîṕt̂ íŝ d́îśâb́l̂éd̂, év̂én̂ íf̂ ít̂'ś ĵúŝt́ â ẃâŕn̂ín̂ǵ t̂ó t̂h́ê úŝér̂ t́ĥát̂ J́âv́âŚĉŕîṕt̂ íŝ ŕêq́ûír̂éd̂ t́ô úŝé t̂h́ê áp̂ṕ. [L̂éâŕn̂ ḿôŕê](https://web.dev/without-javascript/)."
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "T̂h́ê ṕâǵê b́ôd́ŷ śĥóûĺd̂ ŕêńd̂ér̂ śôḿê ćôńt̂én̂t́ îf́ ît́ŝ śĉŕîṕt̂ś âŕê ńôt́ âv́âíl̂áb̂ĺê."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "D̂óêś n̂ót̂ ṕr̂óv̂íd̂é f̂ál̂ĺb̂áĉḱ ĉón̂t́êńt̂ ẃĥén̂ J́âv́âŚĉŕîṕt̂ íŝ ńôt́ âv́âíl̂áb̂ĺê"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Ĉón̂t́âín̂ś ŝóm̂é ĉón̂t́êńt̂ ẃĥén̂ J́âv́âŚĉŕîṕt̂ íŝ ńôt́ âv́âíl̂áb̂ĺê"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "Îf́ ŷóû'ŕê b́ûíl̂d́îńĝ á P̂ŕôǵr̂éŝśîv́ê Ẃêb́ Âṕp̂, ćôńŝíd̂ér̂ úŝín̂ǵ â śêŕv̂íĉé ŵór̂ḱêŕ ŝó t̂h́ât́ ŷóûŕ âṕp̂ ćâń ŵór̂ḱ ôf́f̂ĺîńê. [Ĺêár̂ń m̂ór̂é](https://web.dev/works-offline/)."
   },

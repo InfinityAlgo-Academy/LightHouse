@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Има ознаку `<meta name=\"viewport\">` са ознаком `width` или `initial-scale`"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Апликација треба да приказује неки садржај када је JavaScript онемогућен, чак и ако је то само упозорење кориснику да је JavaScript обавезан за коришћење апликације. [Сазнајте више](https://web.dev/without-javascript/)."
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "Тело странице треба да приказује неки садржај ако јој скрипте нису доступне."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "Не пружа резервни садржај када JavaScript није доступан"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Има неки садржај када JavaScript није доступан"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "Ако правите прогресивну веб-апликацију, размислите о томе да користите сервисер како би апликација могла да ради офлајн. [Сазнајте више](https://web.dev/works-offline/)."
   },

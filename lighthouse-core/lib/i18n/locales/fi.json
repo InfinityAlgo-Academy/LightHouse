@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "`<meta name=\"viewport\">` ‑tagi, jossa `width` tai `initial-scale`, löytyy"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Sovelluksen tulee näyttää jotakin sisältöä, vaikka JavaScript ei ole toiminnassa. Näytä käyttäjälle vähintään varoitus, että JavaScript on pakollinen sovelluksen käyttöä varten. [Lue lisää](https://web.dev/without-javascript/)."
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "Sivun runko-osan pitäisi renderöidä sisältöä, vaikka sen skriptit eivät ole saatavilla."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "Ei palauta varasisältöä, kun JavaScript ei ole käytettävissä"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Palauttaa sisältöä, vaikka JavaScript ei ole käytettävissä"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "Jos kehität progressiivista web-sovellusta, harkitse service workerin käyttöä tukemaan sovelluksen toimintaa offline-tilassa. [Lue lisää](https://web.dev/works-offline/)."
   },

@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "`width` または `initial-scale` を指定した `<meta name=\"viewport\">` タグがあります"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "JavaScript が無効になっている場合でも、アプリではなんらかのコンテンツを表示する必要があります。「アプリの使用には JavaScript が必要」という旨の警告を表示するだけでもかまいません。[詳細](https://web.dev/without-javascript/)"
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "スクリプトを利用できない場合でも、ページの本文にはなんらかのコンテンツを表示する必要があります。"
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "JavaScript を利用できない場合の代替コンテンツが提供されていません"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "JavaScript を利用できない場合のコンテンツが含まれています"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "プログレッシブ ウェブアプリを作成している場合は、アプリがオフラインでも動作するように、Service Worker の使用を検討してください。[詳細](https://web.dev/works-offline/)"
   },

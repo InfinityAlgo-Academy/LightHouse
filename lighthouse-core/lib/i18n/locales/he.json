@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "יש תג `<meta name=\"viewport\">` עם `width` או `initial-scale`"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "האפליקציה שלך צריכה להציג תוכן כלשהו כשה-JavaScript מושבת, גם אם זו רק אזהרה למשתמש שנדרש JavaScript כדי להשתמש באפליקציה. [מידע נוסף](https://web.dev/without-javascript/)."
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "אם הסקריפטים של גוף הדף לא זמינים, הוא צריך לעבד תוכן כלשהו."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "לא מספק תוכן חלופי כש-JavaScript לא זמין"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "מכיל תוכן כלשהו כש-JavaScript לא זמין"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "אם בונים Progressive Web App, מומלץ לשקול להשתמש בקובץ שירות (service worker) כדי שהאפליקציה תוכל לעבוד במצב לא מקוון. [מידע נוסף](https://web.dev/works-offline/)."
   },

@@ -36,9 +36,6 @@ const expectations = [
         'viewport': {
           score: 1,
         },
-        'without-javascript': {
-          score: 1,
-        },
         'installable-manifest': {
           score: 1,
           details: {items: [pwaDetailsExpectations]},
@@ -96,9 +93,6 @@ const expectations = [
           score: 0,
         },
         'viewport': {
-          score: 1,
-        },
-        'without-javascript': {
           score: 1,
         },
         'installable-manifest': {

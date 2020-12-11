@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Ir tags `<meta name=\"viewport\">` ar `width` vai `initial-scale`"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Ja JavaScript ir atspējots, lietotnē jāparāda zināms saturs — kaut vai tikai brīdinājums, ka lietotnes izmantošanai nepieciešams JavaScript. [Uzziniet vairāk](https://web.dev/without-javascript/)."
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "Ja lapas skripti nav pieejami, lapas pamattekstā jātiek vismaz daļēji attēlotam saturam."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "Ja JavaScript nav pieejams, netiek sniegts atkāpšanās saturs"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Ja JavaScript nav pieejams, lapas saturs zināmā mērā tiek parādīts"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "Ja izstrādājat progresīvo tīmekļa lietotni, apsveriet iespēju izmantot pakalpojumu skriptu, lai lietotne varētu darboties bezsaistē. [Uzziniet vairāk](https://web.dev/works-offline/)."
   },

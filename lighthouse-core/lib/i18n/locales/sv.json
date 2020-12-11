@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Har en `<meta name=\"viewport\">`-tagg med `width` eller `initial-scale`"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Appen ska visa innehåll när JavaScript är inaktiverat, även om det bara är en varning till användaren om att JavaScript krävs för att använda appen. [Läs mer](https://web.dev/without-javascript/)."
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "Någon form av innehåll ska renderas för sidans brödtext om dess skript inte är tillgängliga."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "Visar inte reservinnehåll när JavaScript inte är tillgängligt"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Visar innehåll när JavaScript inte är tillgängligt"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "Om du skapar en progressiv webbapp rekommenderar vi att du använder en tjänstefunktion så att appen kan användas offline. [Läs mer](https://web.dev/works-offline/)."
   },

@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "`width` அல்லது `initial-scale` உடன் `<meta name=\"viewport\">` குறிச்சொல் அமைக்கப்பட்டுள்ளது"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "JavaScript முடக்கத்தில் உள்ள போது சில உள்ளடக்கத்தை உங்கள் ஆப்ஸ் காட்ட வேண்டும். அது ஆப்ஸைப் பயன்படுத்த JavaScript தேவை என்ற எச்சரிக்கைச் செய்தியாக இருந்தாலும் பரவாயில்லை. [மேலும் அறிக](https://web.dev/without-javascript/)."
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "ஸ்கிரிப்ட்கள் இல்லாத போது பக்கம் சில உள்ளடக்கத்தை ரெண்டர் செய்ய வேண்டும்."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "JavaScript முடக்கத்தில் உள்ள போது ஃபால்பேக் உள்ளடக்கத்தை வழங்காது"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "JavaScript முடக்கத்தில் உள்ள போது சில உள்ளடக்கம் காட்டப்படும்"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "நவீன இணைய ஆப்ஸை உருவாக்குகிறீர்கள் எனில் ஆஃப்லைனில் உங்கள் ஆப்ஸ் செயல்படும் வகையில் சேவைச் செயலாக்கியைப் பயன்படுத்தும்படி பரிந்துரைக்கிறோம். [மேலும் அறிக](https://web.dev/works-offline/)."
   },

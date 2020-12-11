@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Té una etiqueta `<meta name=\"viewport\">` amb l'atribut `width` o `initial-scale`"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "L'aplicació ha de mostrar algun tipus de contingut quan JavaScript estigui desactivat, encara que només sigui per avisar l'usuari que es requereix JavaScript per utilitzar l'aplicació. [Obtén més informació](https://web.dev/without-javascript/)."
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "El cos de la pàgina ha de renderitzar algun tipus de contingut si els scripts no estan disponibles."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "No proporciona contingut alternatiu quan JavaScript no està disponible"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Inclou algun tipus de contingut quan JavaScript no està disponible"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "Si vols crear una aplicació web progressiva, considera la possibilitat d'utilitzar un Service Worker perquè l'aplicació funcioni sense connexió. [Obtén més informació](https://web.dev/works-offline/)."
   },

@@ -20,7 +20,6 @@ module.exports = {
       'service-worker',
       'works-offline',
       'viewport',
-      'without-javascript',
       'user-timings',
       'critical-request-chains',
       'render-blocking-resources',

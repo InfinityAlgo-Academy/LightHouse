@@ -39,9 +39,6 @@ module.exports = [
         'viewport': {
           score: 1,
         },
-        'without-javascript': {
-          score: 1,
-        },
         'installable-manifest': {
           score: 1,
           details: {items: [pwaRocksExpectations]},

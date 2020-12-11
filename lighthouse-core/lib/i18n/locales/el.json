@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Έχει ετικέτα `<meta name=\"viewport\">` με `width` ή `initial-scale`"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Η εφαρμογή σας θα πρέπει να εμφανίζει κάποιο περιεχόμενο όταν η JavaScript είναι απενεργοποιημένη, ακόμη και αν είναι απλώς μια προειδοποίηση που ενημερώνει τον χρήστη ότι η JavaScript είναι απαραίτητη για τη χρήση της εφαρμογής. [Μάθετε περισσότερα](https://web.dev/without-javascript/)."
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "Το σώμα της σελίδας θα πρέπει να αποδίδει κάποιο περιεχόμενο αν τα σενάριά του δεν είναι διαθέσιμα."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "Δεν παρέχει εναλλακτικό περιεχόμενο όταν η JavaScript δεν είναι διαθέσιμη"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Περιλαμβάνει κάποιο περιεχόμενο όταν η JavaScript δεν είναι διαθέσιμη"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "Εάν δημιουργείτε μια προηγμένη εφαρμογή ιστού, εξετάστε το ενδεχόμενο χρήσης ενός service worker ώστε η εφαρμογή σας να μπορεί να λειτουργεί εκτός σύνδεσης. [Μάθετε περισσότερα](https://web.dev/works-offline/)."
   },

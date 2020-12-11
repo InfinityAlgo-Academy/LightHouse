@@ -73,13 +73,6 @@
       "scoreDisplayMode": "binary",
       "warnings": []
     },
-    "without-javascript": {
-      "id": "without-javascript",
-      "title": "Contains some content when JavaScript is not available",
-      "description": "Your app should display some content when JavaScript is disabled, even if it's just a warning to the user that JavaScript is required to use the app. [Learn more](https://web.dev/without-javascript/).",
-      "score": 1,
-      "scoreDisplayMode": "binary"
-    },
     "first-contentful-paint": {
       "id": "first-contentful-paint",
       "title": "First Contentful Paint",
@@ -5274,11 +5267,6 @@
           "group": "pwa-optimized"
         },
         {
-          "id": "without-javascript",
-          "weight": 1,
-          "group": "pwa-optimized"
-        },
-        {
           "id": "apple-touch-icon",
           "weight": 1,
           "group": "pwa-optimized"
@@ -5302,7 +5290,7 @@
         }
       ],
       "id": "pwa",
-      "score": 0.19
+      "score": 0.15
     }
   },
   "categoryGroups": {
@@ -5458,12 +5446,6 @@
       {
         "startTime": 0,
         "name": "lh:computed:ViewportMeta",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:audit:without-javascript",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6699,12 +6681,6 @@
       ],
       "lighthouse-core/audits/viewport.js | description": [
         "audits.viewport.description"
-      ],
-      "lighthouse-core/audits/without-javascript.js | title": [
-        "audits[without-javascript].title"
-      ],
-      "lighthouse-core/audits/without-javascript.js | description": [
-        "audits[without-javascript].description"
       ],
       "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": [
         "audits[first-contentful-paint].title",

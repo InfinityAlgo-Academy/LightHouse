@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Une balise `<meta name=\"viewport\">` ayant l'attribut `width` ou `initial-scale` est configurée"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Nous vous recommandons d'afficher du contenu même lorsque JavaScript est indisponible. Il peut s'agir d'un simple avertissement informant l'utilisateur que JavaScript est requis pour utiliser votre application. [Découvrez-en davantage](https://web.dev/without-javascript/)."
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "Il est recommandé d'afficher du contenu dans le corps de la page lorsque les scripts sont indisponibles."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "Aucun contenu de remplacement ne s'affiche lorsque JavaScript est indisponible"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Du contenu s'affiche lorsque JavaScript est indisponible"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "Si vous développez une progressive web app, envisagez d'utiliser un service worker afin que votre application soit accessible hors connexion. [Découvrez-en davantage](https://web.dev/works-offline/)."
   },

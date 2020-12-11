@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Obsahuje značku `<meta name=\"viewport\">` s atributem `width` nebo `initial-scale`"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Vaše aplikace by měla zobrazovat nějaký obsah, i v případě, že bude JavaScript zakázaný, i kdyby to mělo být jen upozornění pro uživatele, že k použití aplikace je potřeba JavaScript. [Další informace](https://web.dev/without-javascript/)"
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "Pokud nejsou k dispozici skripty stránky, v hlavní části stránky by se měl vykreslit nějaký obsah."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "Neposkytuje záložní obsah, když není k dispozici JavaScript"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Obsahuje určitý obsah, když není k dispozici JavaScript"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "Pokud vytváříte progresivní webovou aplikaci, doporučujeme použít soubor service worker, aby aplikace fungovala i offline. [Další informace](https://web.dev/works-offline/)"
   },

@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Van `width` vagy `initial-scale` beállítással rendelkező `<meta name=\"viewport\">` címkéje"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Az alkalmazásnak akkor is meg kellene jelenítenie valamilyen tartalmat, ha a JavaScript le van tiltva. Ez akár egy figyelmeztetés is lehet, mely szerint JavaScript szükséges az alkalmazás használatához. [További információ](https://web.dev/without-javascript/)."
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "Az oldal törzsében meg kellene jelennie valamilyen tartalomnak, ha a szkriptek nem használhatók."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "Nem biztosít tartalék tartalmat, ha a JavaScript nem használható"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Vannak benne tartalmak akkor is, amikor a JavaScript nem használható"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "Ha progresszív webes alkalmazást készít, fontolja meg szolgáltató munkatárs használatát, így alkalmazása offline állapotban is működni fog. [További információ](https://web.dev/works-offline/)."
   },

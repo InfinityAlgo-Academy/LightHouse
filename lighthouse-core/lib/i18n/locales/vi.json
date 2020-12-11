@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Có thẻ `<meta name=\"viewport\">` có `width` hoặc `initial-scale`"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Ứng dụng của bạn phải hiển thị một số nội dung khi JavaScript bị tắt, ngay cả khi đó chỉ là một cảnh báo cho người dùng biết phải có JavaScript mới dùng được ứng dụng. [Tìm hiểu thêm](https://web.dev/without-javascript/)."
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "Phần nội dung trang phải hiển thị một số nội dung nếu không có sẵn tập lệnh."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "Không cung cấp nội dung dự phòng khi JavaScript không có sẵn"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Chứa một số nội dung khi JavaScript không có sẵn"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "Nếu bạn đang tạo một Ứng dụng web tiến bộ, hãy cân nhắc dùng trình chạy dịch vụ để ứng dụng có thể hoạt động khi không có mạng. [Tìm hiểu thêm](https://web.dev/works-offline/)"
   },

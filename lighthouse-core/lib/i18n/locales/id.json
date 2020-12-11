@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Memiliki tag `<meta name=\"viewport\">` dengan `width` atau `initial-scale`"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Aplikasi Anda harus menampilkan beberapa konten saat JavaScript nonaktif, meskipun hanya berupa peringatan kepada pengguna bahwa JavaScript diperlukan untuk menggunakan aplikasi. [Pelajari lebih lanjut](https://web.dev/without-javascript/)."
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "Isi halaman harus merender beberapa konten jika skripnya tidak tersedia."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "Tidak menyediakan konten pengganti saat JavaScript tidak tersedia"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Berisi beberapa konten saat JavaScript tidak tersedia"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "Jika Anda membuat build Progressive Web App, pertimbangkan untuk menggunakan pekerja layanan agar aplikasi dapat berfungsi secara offline. [Pelajari lebih lanjut](https://web.dev/works-offline/)."
   },

@@ -145,16 +145,13 @@ Resetting state with about:blank
 Setting up network for the pass trace
 Running beforePass methods
 Gathering setup: HTTPRedirect
-Gathering setup: HTMLWithoutJavaScript
 Beginning devtoolsLog and trace
 Loading page & waiting for onload
 Running pass methods
 Gathering in-page: HTTPRedirect
-Gathering in-page: HTMLWithoutJavaScript
 Gathering devtoolsLog & network records
 Running afterPass methods
 Gathering: HTTPRedirect
-Gathering: HTMLWithoutJavaScript
 Disconnecting from browser...
 Analyzing and running audits...
 Auditing: Uses HTTPS
@@ -164,7 +161,6 @@ Auditing: Registers a service worker that controls page and `start_url`
 Auditing: Current page responds with a 200 when offline
 Auditing: Has a `<meta name="viewport">` tag with `width` or `initial-scale`
 Computing artifact: ViewportMeta
-Auditing: Contains some content when JavaScript is not available
 Auditing: First Contentful Paint
 Computing artifact: FirstContentfulPaint
 Computing artifact: TraceOfTab
@@ -570,10 +566,9 @@ video-description: notApplicable
 viewport: fail
 viewport-ad-density: notApplicable
 visual-order-follows-dom: manual
-without-javascript: pass
 works-offline: fail
 
-# of .lh-audit divs: 157
+# of .lh-audit divs: 156
 
 .lh-audit divs:
 accesskeys
@@ -731,6 +726,5 @@ viewport
 viewport
 viewport-ad-density
 visual-order-follows-dom
-without-javascript
 works-offline
 

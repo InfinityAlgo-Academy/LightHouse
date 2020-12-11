@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Zawiera tag `<meta name=\"viewport\">` z elementem `width` lub `initial-scale`"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Aplikacja powinna wyświetlać jakieś treści, jeśli JavaScript jest wyłączony. Wystarczy nawet ostrzeżenie, że JavaScript jest wymagany do korzystania z aplikacji. [Więcej informacji](https://web.dev/without-javascript/)"
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "Główna część strony powinna renderować jakieś treści, kiedy jej skrypty są niedostępne"
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "Nie zawiera treści zastępczych na wypadek niedostępności JavaScriptu"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Zawiera jakieś treści na wypadek niedostępności JavaScriptu"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "Jeśli tworzysz progresywną aplikację internetową, rozważ użycie skryptu service worker, który pozwoli na działanie aplikacji w trybie offline. [Więcej informacji](https://web.dev/works-offline/)"
   },

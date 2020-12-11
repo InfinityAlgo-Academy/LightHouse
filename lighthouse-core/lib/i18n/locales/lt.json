@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Yra žyma `<meta name=\"viewport\">` su `width` arba `initial-scale`"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Kai „JavaScript“ išjungta, jūsų programoje turėtų būti rodoma turinio, net jei tai tik įspėjimas naudotojui, kad „JavaScript“ būtina norint naudoti programą. [Sužinokite daugiau](https://web.dev/without-javascript/)"
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "Puslapio pagrindinėje dalyje turi būti pateikta turinio, jei scenarijus nepasiekiamas."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "Atsarginis turinys neteikiamas, kai „JavaScript“ nepasiekiama"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Yra turinio, kai „JavaScript“ nepasiekiama"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "Jei kuriate laipsniškąją žiniatinklio programą, apsvarstykite galimybę naudoti pagalbinį „JavaScript“ failą, kad programa veiktų neprisijungus. [Sužinokite daugiau](https://web.dev/works-offline/)"
   },

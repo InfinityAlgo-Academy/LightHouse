@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "تضمين علامة `<meta name=\"viewport\">` مع `width` أو `initial-scale`"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "يجب أن يعرض تطبيقك بعض المحتوى عند إيقاف JavaScript، حتى في حال كان مجرد تحذير للمستخدم يشير إلى ضرورة وجود JavaScript لاستخدام التطبيق. [مزيد من المعلومات](https://web.dev/without-javascript/)"
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "يجب أن يعرض نص الصفحة بعض المحتوى في حالة عدم توفر النصوص البرمجية."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "عدم تقديم المحتوى الاحتياطي عند عدم توفر JavaScript"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "تضمين بعض المحتوى عند عدم توفّر JavaScript"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "في حال كنت تنشئ \"تطبيق ويب تقدّمي\"، يمكنك استخدام مشغّل الخدمات حتى يتمكّن التطبيق من العمل بلا اتصال بالإنترنت. [مزيد من المعلومات](https://web.dev/works-offline/)"
   },

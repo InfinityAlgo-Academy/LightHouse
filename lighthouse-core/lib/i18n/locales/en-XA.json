@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "[Ĥåš å ᐅ`<meta name=\"viewport\">`ᐊ ţåĝ ŵîţĥ ᐅ`width`ᐊ öŕ ᐅ`initial-scale`ᐊ one two three four five six seven]"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "[Ýöûŕ åþþ šĥöûļð ðîšþļåý šömé çöñţéñţ ŵĥéñ ĴåvåŠçŕîþţ îš ðîšåбļéð, évéñ îƒ îţ'š ĵûšţ å ŵåŕñîñĝ ţö ţĥé ûšéŕ ţĥåţ ĴåvåŠçŕîþţ îš ŕéqûîŕéð ţö ûšé ţĥé åþþ. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/without-javascript/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour]"
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "[Ţĥé þåĝé бöðý šĥöûļð ŕéñðéŕ šömé çöñţéñţ îƒ îţš šçŕîþţš åŕé ñöţ åvåîļåбļé. one two three four five six seven eight nine ten eleven twelve thirteen fourteen]"
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "[Ðöéš ñöţ þŕövîðé ƒåļļбåçķ çöñţéñţ ŵĥéñ ĴåvåŠçŕîþţ îš ñöţ åvåîļåбļé one two three four five six seven eight nine ten eleven twelve thirteen]"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "[Çöñţåîñš šömé çöñţéñţ ŵĥéñ ĴåvåŠçŕîþţ îš ñöţ åvåîļåбļé one two three four five six seven eight nine ten eleven]"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "[Îƒ ýöû'ŕé бûîļðîñĝ å Þŕöĝŕéššîvé Ŵéб Åþþ, çöñšîðéŕ ûšîñĝ å šéŕvîçé ŵöŕķéŕ šö ţĥåţ ýöûŕ åþþ çåñ ŵöŕķ öƒƒļîñé. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/works-offline/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty]"
   },

@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Are o etichetă `<meta name=\"viewport\">` cu `width` sau `initial-scale`"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Aplicația ta trebuie să afișeze o parte de conținut când JavaScript este dezactivat, chiar dacă este doar o atenționare pentru utilizator că JavaScript este obligatoriu pentru a folosi aplicația. [Află mai multe](https://web.dev/without-javascript/)."
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "Corpul paginii trebuie să redea o parte de conținut dacă scripturile sale nu sunt disponibile."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "Nu oferă conținut alternativ când JavaScript nu este disponibil"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Include o parte de conținut când JavaScript nu este disponibil"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "Dacă creezi o aplicație web progresivă, poți folosi un service worker pentru ca aplicația să poată funcționa offline. [Află mai multe](https://web.dev/works-offline/)."
   },

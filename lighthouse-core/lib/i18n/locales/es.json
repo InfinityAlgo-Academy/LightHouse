@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Contiene una etiqueta `<meta name=\"viewport\">` con `width` o `initial-scale`"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Tu aplicación debería mostrar algún contenido cuando JavaScript esté inhabilitado, aunque solo sea un aviso para informar al usuario de que es necesario activar JavaScript para usar la aplicación. [Más información](https://web.dev/without-javascript/)"
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "El cuerpo de la página debería renderizar parte del contenido aunque sus secuencias de comandos no estén disponibles."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "No ofrece contenido de reserva cuando JavaScript está inhabilitado"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Muestra parte del contenido cuando JavaScript está inhabilitado"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "Si estás creando una aplicación web progresiva, puedes usar un service worker para que funcione sin conexión. [Más información](https://web.dev/works-offline/)"
   },

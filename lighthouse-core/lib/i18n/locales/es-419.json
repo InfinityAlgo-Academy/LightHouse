@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Tiene una etiqueta `<meta name=\"viewport\">` con `width` o `initial-scale`"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Tu app debe mostrar algún contenido cuando JavaScript está inhabilitado, aunque solo sea un aviso para informar al usuario que se necesita JavaScript para usar la app. [Obtén más información](https://web.dev/without-javascript/)."
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "El cuerpo de la página debe renderizar parte del contenido aunque sus secuencias de comandos no estén disponibles."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "No se incluye contenido alternativo cuando no está disponible JavaScript"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Se incluye parte del contenido cuando no está disponible JavaScript"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "Si estás creando una app web progresiva, puedes usar un service worker para que la app funcione sin conexión. [Obtén más información](https://web.dev/works-offline/)."
   },

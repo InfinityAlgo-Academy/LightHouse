@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Присутствует метатег `<meta name=\"viewport\">` со свойством `width` или `initial-scale`"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "В приложении должен отображаться контент, даже если JavaScript отключен. Достаточно уведомления, что для работы приложения необходим JavaScript. [Подробнее…](https://web.dev/without-javascript/)"
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "Даже при недоступности скриптов в теле страницы должен отображаться контент."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "Не предоставляет резервный контент при недоступности JavaScript"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Содержит некоторый контент при недоступности JavaScript"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "При создании современного веб-приложения используйте Service Worker, чтобы оно продолжало работу в офлайн-режиме. [Подробнее…](https://web.dev/works-offline/)"
   },

@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "具備包含 `width` 或 `initial-scale` 的 `<meta name=\"viewport\">` 標記"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "當 JavaScript 停用時，你的應用程式應該要顯示一些內容，即使只是向使用者顯示「必須啟用 JavaScript 才能使用此應用程式」這類警告訊息也可以。[瞭解詳情](https://web.dev/without-javascript/)。"
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "即使網頁的指令碼無法使用，網頁內文仍應顯示一些內容。"
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "當 JavaScript 無法使用時不提供備用內容"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "當 JavaScript 無法使用時包含一些內容"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "如果你正在建構漸進式網頁應用程式，請考慮使用 Service Worker，讓你的應用程式可以離線運作。[瞭解詳情](https://web.dev/works-offline/)。"
   },

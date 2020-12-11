@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "`width` veya `initial-scale` değerleri olan bir `<meta name=\"viewport\">` etiketi var"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Uygulamanız, JavaScript devre dışı bırakıldığında bazı içerikler görüntülemelidir. Bu içerik, kullanıcıya uygulamayı kullanmak için JavaScript gerektiğini belirten bir uyarı bile olabilir. [Daha fazla bilgi](https://web.dev/without-javascript/)."
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "Komut dosyaları kullanılamıyorsa sayfa gövdesi bazı içerikler oluşturmalıdır."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "JavaScript kullanılamadığında ikame içerik sağlamıyor"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "JavaScript kullanılamadığında bazı içerikler bulundurur"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "Progresif Web Uygulaması oluşturuyorsanız uygulamanızın çevrimdışı da çalışabilmesi için hizmet çalışanı kullanmayı düşünün. [Daha fazla bilgi](https://web.dev/works-offline/)."
   },

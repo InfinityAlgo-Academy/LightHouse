@@ -116,8 +116,6 @@ declare global {
       FullPageScreenshot: Artifacts.FullPageScreenshot | null;
       /** Information about event listeners registered on the global object. */
       GlobalListeners: Array<Artifacts.GlobalListener>;
-      /** The page's document body innerText if loaded with JavaScript disabled. */
-      HTMLWithoutJavaScript: {bodyText: string, hasNoScript: boolean};
       /** Whether the page ended up on an HTTPS page after attempting to load the HTTP version. */
       HTTPRedirect: {value: boolean};
       /** The issues surfaced in the devtools Issues panel */

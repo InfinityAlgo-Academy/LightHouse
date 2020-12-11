@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Има маркер `<meta name=\"viewport\">` с атрибут `width` или `initial-scale`"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Когато JavaScript е деактивиран, в приложението ви трябва да се показва някакво съдържание, дори да е само предупреждение към потребителя, че за използване на приложението се изисква JavaScript. [Научете повече](https://web.dev/without-javascript/)."
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "В основната част на страницата трябва да се изобразява съдържание, ако скриптовете ѝ не могат да бъдат заредени."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "Не предоставя резервно съдържание, когато JavaScript не е налице"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Показва се част от съдържанието, когато JavaScript не е налице"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "Ако създавате прогресивно уеб приложение (PWA), добре е да използвате service worker, за да може то да работи офлайн. [Научете повече](https://web.dev/works-offline/)."
   },

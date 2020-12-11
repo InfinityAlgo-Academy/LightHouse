@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "มีแท็ก `<meta name=\"viewport\">` ที่มี `width` หรือ `initial-scale`"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "แอปควรแสดงเนื้อหาบางอย่างเมื่อมีการปิดใช้ JavaScript แม้จะเป็นเพียงการเตือนผู้ใช้ว่าการใช้แอปจำเป็นต้องใช้ JavaScript [ดูข้อมูลเพิ่มเติม](https://web.dev/without-javascript/)"
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "ส่วนเนื้อหาในหน้าควรแสดงเนื้อหาบางอย่างถ้าสคริปต์ในหน้าไม่พร้อมใช้งาน"
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "ไม่แสดงเนื้อหาทางเลือกเมื่อ JavaScript ไม่พร้อมใช้งาน"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "มีเนื้อหาบางอย่างแสดงขึ้นเมื่อ JavaScript ไม่พร้อมใช้งาน"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "หากคุณกำลังสร้าง Progressive Web App ให้พิจารณาใช้ Service Worker เพื่อให้แอปทำงานแบบออฟไลน์ได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/works-offline/)"
   },

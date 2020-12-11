@@ -1397,18 +1397,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "'`width`' లేదా '`initial-scale`'తో '`<meta name=\"viewport\">`' ట్యాగ్‌ను కలిగి ఉంది"
   },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "'JavaScript' నిలిపివేయబడినప్పుడు, దాని గురించి తెలియజేసే ఏదైనా సమాచారం, అంటే యాప్‌ను ఉపయోగించాలంటే 'JavaScript' కలిగి ఉండాలని వినియోగదారుకు తెలియజేసే హెచ్చరిక లాంటి ఏదొక కంటెంట్ మీ యాప్‌లో ప్రదర్శించబడాలి. [మరింత తెలుసుకోండి](https://web.dev/without-javascript/)."
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "పేజీ విషయాంశంలో స్క్రిప్ట్‌లు ఏవైనా అందుబాటులో లేనప్పుడు, కొంత కంటెంట్‌ను రెండర్ చేయాలి."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "JavaScript అందుబాటులో లేనప్పుడు ప్రత్యామ్నాయ కంటెంట్‌ను అందించలేదు"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "JavaScript అందుబాటులో లేనప్పుడు, దాని గురించి తెలియజేసే కొంత కంటెంట్‌ను కలిగి ఉంది"
-  },
   "lighthouse-core/audits/works-offline.js | description": {
     "message": "మీరు ప్రోగ్రెసివ్ వెబ్ యాప్‌ను రూపొందిస్తున్నట్లయితే, సర్వీస్ వర్కర్‌ను ఉపయోగించడం పరిగణనలోకి తీసుకోండి. దీని వలన ఆఫ్‌లైన్‌లో కూడా మీ యాప్ పని చేయగలదు. [మరింత తెలుసుకోండి](https://web.dev/works-offline/)."
   },
