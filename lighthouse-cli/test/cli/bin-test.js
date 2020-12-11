@@ -7,14 +7,14 @@
 
 /* eslint-env jest */
 
-const bin = require('../../bin.js');
-
 jest.mock('../../run.js', () => ({runLighthouse: jest.fn()}));
 jest.mock('../../cli-flags.js', () => ({getFlags: jest.fn()}));
 jest.mock('../../sentry-prompt.js', () => ({askPermission: jest.fn()}));
 jest.mock('../../../lighthouse-core/lib/sentry.js', () => ({init: jest.fn()}));
 jest.mock('lighthouse-logger', () => ({setLevel: jest.fn()}));
 jest.mock('update-notifier', () => () => ({notify: () => {}}));
+
+const bin = require('../../bin.js');
 
 /** @type {jest.Mock} */
 let getCLIFlagsFn;

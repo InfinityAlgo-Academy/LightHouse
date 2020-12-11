@@ -22,12 +22,12 @@ describe('Metrics: TotalBlockingTime', () => {
       optimistic: Math.round(result.optimisticEstimate.timeInMs),
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
     }).toMatchInlineSnapshot(`
-Object {
-  "optimistic": 676,
-  "pessimistic": 777,
-  "timing": 726,
-}
-`);
+      Object {
+        "optimistic": 777,
+        "pessimistic": 777,
+        "timing": 777,
+      }
+    `);
   });
 
   it('should compute an observed value', async () => {
@@ -94,42 +94,54 @@ Object {
       const fcpTimeMs = 1000;
       const interactiveTimeMs = 2000;
 
-      expect(TotalBlockingTime.calculateSumOfBlockingTime(
-        [{start: 1951, end: 2100, duration: 149}],
-        fcpTimeMs,
-        interactiveTimeMs
-      )).toBe(0); // Duration after clipping is 49, which is < 50.
-      expect(TotalBlockingTime.calculateSumOfBlockingTime(
-        [{start: 1950, end: 2100, duration: 150}],
-        fcpTimeMs,
-        interactiveTimeMs
-      )).toBe(0); // Duration after clipping is 50, so time after 50ms is 0ms.
-      expect(TotalBlockingTime.calculateSumOfBlockingTime(
-        [{start: 1949, end: 2100, duration: 151}],
-        fcpTimeMs,
-        interactiveTimeMs
-      )).toBe(1); // Duration after clipping is 51, so time after 50ms is 1ms.
+      expect(
+        TotalBlockingTime.calculateSumOfBlockingTime(
+          [{start: 1951, end: 2100, duration: 149}],
+          fcpTimeMs,
+          interactiveTimeMs
+        )
+      ).toBe(0); // Duration after clipping is 49, which is < 50.
+      expect(
+        TotalBlockingTime.calculateSumOfBlockingTime(
+          [{start: 1950, end: 2100, duration: 150}],
+          fcpTimeMs,
+          interactiveTimeMs
+        )
+      ).toBe(0); // Duration after clipping is 50, so time after 50ms is 0ms.
+      expect(
+        TotalBlockingTime.calculateSumOfBlockingTime(
+          [{start: 1949, end: 2100, duration: 151}],
+          fcpTimeMs,
+          interactiveTimeMs
+        )
+      ).toBe(1); // Duration after clipping is 51, so time after 50ms is 1ms.
     });
 
     it('clips properly if FCP falls in the middle of a task', () => {
       const fcpTimeMs = 1000;
       const interactiveTimeMs = 2000;
 
-      expect(TotalBlockingTime.calculateSumOfBlockingTime(
-        [{start: 900, end: 1049, duration: 149}],
-        fcpTimeMs,
-        interactiveTimeMs
-      )).toBe(0); // Duration after clipping is 49, which is < 50.
-      expect(TotalBlockingTime.calculateSumOfBlockingTime(
-        [{start: 900, end: 1050, duration: 150}],
-        fcpTimeMs,
-        interactiveTimeMs
-      )).toBe(0); // Duration after clipping is 50, so time after 50ms is 0ms.
-      expect(TotalBlockingTime.calculateSumOfBlockingTime(
-        [{start: 900, end: 1051, duration: 151}],
-        fcpTimeMs,
-        interactiveTimeMs
-      )).toBe(1); // Duration after clipping is 51, so time after 50ms is 1ms.
+      expect(
+        TotalBlockingTime.calculateSumOfBlockingTime(
+          [{start: 900, end: 1049, duration: 149}],
+          fcpTimeMs,
+          interactiveTimeMs
+        )
+      ).toBe(0); // Duration after clipping is 49, which is < 50.
+      expect(
+        TotalBlockingTime.calculateSumOfBlockingTime(
+          [{start: 900, end: 1050, duration: 150}],
+          fcpTimeMs,
+          interactiveTimeMs
+        )
+      ).toBe(0); // Duration after clipping is 50, so time after 50ms is 0ms.
+      expect(
+        TotalBlockingTime.calculateSumOfBlockingTime(
+          [{start: 900, end: 1051, duration: 151}],
+          fcpTimeMs,
+          interactiveTimeMs
+        )
+      ).toBe(1); // Duration after clipping is 51, so time after 50ms is 1ms.
     });
 
     // This can happen in the lantern metric case, where we use the optimistic

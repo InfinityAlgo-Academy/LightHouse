@@ -87,7 +87,7 @@ class DOMSize extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'statistic', itemType: 'text', text: str_(UIStrings.columnStatistic)},
-      {key: 'element', itemType: 'code', text: str_(i18n.UIStrings.columnElement)},
+      {key: 'node', itemType: 'node', text: str_(i18n.UIStrings.columnElement)},
       {key: 'value', itemType: 'numeric', text: str_(UIStrings.columnValue)},
     ];
 
@@ -95,23 +95,28 @@ class DOMSize extends Audit {
     const items = [
       {
         statistic: str_(UIStrings.statisticDOMElements),
-        element: '',
         value: stats.totalBodyElements,
       },
       {
-        statistic: str_(UIStrings.statisticDOMDepth),
-        element: {
-          type: 'code',
-          value: stats.depth.snippet,
+        node: {
+          type: /** @type {'node'} */ ('node'),
+          path: stats.depth.devtoolsNodePath,
+          snippet: stats.depth.snippet,
+          selector: stats.depth.selector,
+          nodeLabel: stats.depth.nodeLabel,
         },
+        statistic: str_(UIStrings.statisticDOMDepth),
         value: stats.depth.max,
       },
       {
-        statistic: str_(UIStrings.statisticDOMWidth),
-        element: {
-          type: 'code',
-          value: stats.width.snippet,
+        node: {
+          type: /** @type {'node'} */ ('node'),
+          path: stats.width.devtoolsNodePath,
+          snippet: stats.width.snippet,
+          selector: stats.width.selector,
+          nodeLabel: stats.width.nodeLabel,
         },
+        statistic: str_(UIStrings.statisticDOMWidth),
         value: stats.width.max,
       },
     ];

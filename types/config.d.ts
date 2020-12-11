@@ -4,8 +4,11 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import Gatherer = require('../lighthouse-core/gather/gatherers/gatherer.js');
 import Audit = require('../lighthouse-core/audits/audit.js');
+
+interface ClassOf<T> {
+  new (): T;
+}
 
 declare global {
   module LH {
@@ -41,12 +44,13 @@ declare global {
         path: string;
         options?: {};
       } | {
-        implementation: typeof Gatherer;
+        implementation: ClassOf<Gatherer.GathererInstance>;
         options?: {};
       } | {
-        instance: InstanceType<typeof Gatherer>;
+        instance: Gatherer.GathererInstance;
         options?: {};
-      } | Gatherer | typeof Gatherer | string;
+      } | Gatherer.GathererInstance | ClassOf<Gatherer.GathererInstance> | string;
+
 
       export interface CategoryJson {
         title: string | IcuMessage;
@@ -87,10 +91,9 @@ declare global {
       }
 
       export interface GathererDefn {
-        implementation?: typeof Gatherer;
-        instance: InstanceType<typeof Gatherer>;
+        implementation?: ClassOf<Gatherer.GathererInstance>;
+        instance: Gatherer.GathererInstance;
         path?: string;
-        options: {};
       }
 
       export interface AuditDefn {
@@ -126,4 +129,4 @@ declare global {
 }
 
 // empty export to keep file a module
-export {}
+export {};

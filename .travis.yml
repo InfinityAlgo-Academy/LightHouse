@@ -5,9 +5,7 @@ branches:
   - master
 matrix:
   include:
-    - node_js: "10"
     - node_js: "12"
-      if: head_branch IS blank AND branch = master
 cache:
   yarn: true
   directories:
@@ -38,6 +36,7 @@ script:
   - yarn smoke:cicoverage
   - yarn test-clients
   - yarn test-viewer
+  - yarn test-treemap
   - yarn test-lantern
   - yarn test-bundle
   - yarn i18n:checks

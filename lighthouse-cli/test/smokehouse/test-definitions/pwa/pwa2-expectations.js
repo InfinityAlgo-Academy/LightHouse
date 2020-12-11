@@ -23,9 +23,7 @@ module.exports = [
           score: 1,
         },
         'redirects-http': {
-        // Note: relies on JS redirect.
-        // see https://github.com/GoogleChrome/lighthouse/issues/2383
-          score: 0,
+          score: 1,
         },
         'service-worker': {
           score: 1,
@@ -38,12 +36,6 @@ module.exports = [
         },
         'viewport': {
           score: 1,
-        },
-        'without-javascript': {
-          score: 1,
-        },
-        'load-fast-enough-for-pwa': {
-        // Ignore speed test; just verify that it ran.
         },
         'installable-manifest': {
           score: 0,
@@ -107,12 +99,6 @@ module.exports = [
         },
         'viewport': {
           score: 1,
-        },
-        'without-javascript': {
-          score: 1,
-        },
-        'load-fast-enough-for-pwa': {
-        // Ignore speed test; just verify that it ran.
         },
         'installable-manifest': {
           score: 1,

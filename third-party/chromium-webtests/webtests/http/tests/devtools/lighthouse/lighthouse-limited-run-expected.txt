@@ -17,7 +17,6 @@ apple-touch-icon
 content-width
 installable-manifest
 is-on-https
-load-fast-enough-for-pwa
 maskable-icon
 offline-start-url
 pwa-cross-browser
@@ -28,6 +27,5 @@ service-worker
 splash-screen
 themed-omnibox
 viewport
-without-javascript
 works-offline
 

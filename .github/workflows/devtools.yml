@@ -11,20 +11,19 @@ jobs:
 
     steps:
     - name: Set $DEPOT_TOOLS_PATH
-      run: echo ::set-env name=DEPOT_TOOLS_PATH::$GITHUB_WORKSPACE/depot-tools
+      run: echo "DEPOT_TOOLS_PATH=$GITHUB_WORKSPACE/depot-tools" >> $GITHUB_ENV
     - name: Set $DEVTOOLS_PATH
-      run: echo ::set-env name=DEVTOOLS_PATH::$GITHUB_WORKSPACE/devtools-frontend
+      run: echo "DEVTOOLS_PATH=$GITHUB_WORKSPACE/devtools-frontend" >> $GITHUB_ENV
     - name: Set $BLINK_TOOLS_PATH
-      run: echo ::set-env name=BLINK_TOOLS_PATH::$GITHUB_WORKSPACE/blink_tools
+      run: echo "BLINK_TOOLS_PATH=$GITHUB_WORKSPACE/blink_tools" >> $GITHUB_ENV
     - name: Set $PATH
-      run: echo ::set-env name=PATH::$DEPOT_TOOLS_PATH:$PATH
+      run: echo "$DEPOT_TOOLS_PATH" >> $GITHUB_PATH
 
     - name: git clone
       uses: actions/checkout@v2
       with:
         path: lighthouse
 
-    # Caches last ~week, so CI will refresh these dependencies that often.
     - name: Cache depot tools, devtools, blink tools and content shell
       uses: actions/cache@v2
       with:
@@ -33,12 +32,13 @@ jobs:
           ${{ env.DEVTOOLS_PATH }}
           ${{ env.BLINK_TOOLS_PATH }}
           ${{ github.workspace }}/lighthouse/.tmp/chromium-web-tests/content-shells
-        key: ${{ runner.os }}-${{ hashFiles('lighthouse/.github/workflows/devtools.yml', 'lighthouse/lighthouse-core/test/chromium-web-tests/*', 'lighthouse/clients/devtools-entry.js', 'lighthouse/clients/devtools-report-assets.js', 'lighthouse/build/build-bundle.js', 'lighthouse/build/build-dt-report-resources.js') }}
+        # The number is how many times this hash key was manually updated to break the cache.
+        key: ${{ runner.os }}-0-${{ hashFiles('third-party/chromium-webtests/webtests/http/tests/devtools/lighthouse/*.js', 'lighthouse/.github/workflows/devtools.yml', 'lighthouse/lighthouse-core/test/chromium-web-tests/*', 'lighthouse/clients/devtools-entry.js', 'lighthouse/clients/devtools-report-assets.js', 'lighthouse/build/build-bundle.js', 'lighthouse/build/build-dt-report-resources.js') }}
 
-    - name: Use Node.js 10.x
+    - name: Use Node.js 12.x
       uses: actions/setup-node@v1
       with:
-        node-version: 10.x
+        node-version: 12.x
 
     - run: yarn --frozen-lockfile
       working-directory: ${{ github.workspace }}/lighthouse

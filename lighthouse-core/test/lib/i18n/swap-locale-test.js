@@ -12,7 +12,8 @@ const lhr = require('../../results/sample_v2.json');
 /* eslint-env jest */
 describe('swap-locale', () => {
   it('does not mutate the original lhr', () => {
-    const lhrClone = /** @type {LH.Result} */ (JSON.parse(JSON.stringify(lhr)));
+    /** @type {LH.Result} */
+    const lhrClone = JSON.parse(JSON.stringify(lhr));
 
     const lhrPt = swapLocale(lhr, 'pt').lhr;
     expect(lhrPt).not.toStrictEqual(lhr);
@@ -20,7 +21,8 @@ describe('swap-locale', () => {
   });
 
   it('can change golden LHR english strings into german', () => {
-    const lhrEn = /** @type {LH.Result} */ (JSON.parse(JSON.stringify(lhr)));
+    /** @type {LH.Result} */
+    const lhrEn = JSON.parse(JSON.stringify(lhr));
     const lhrDe = swapLocale(lhrEn, 'de').lhr;
 
     // Basic replacement
@@ -28,8 +30,8 @@ describe('swap-locale', () => {
     expect(lhrDe.audits.plugins.title).toEqual('Dokument verwendet keine Plug-ins');
 
     // With ICU string argument values
-    expect(lhrEn.audits['dom-size'].displayValue).toEqual('31 elements');
-    expect(lhrDe.audits['dom-size'].displayValue).toEqual('31 Elemente');
+    expect(lhrEn.audits['dom-size'].displayValue).toEqual('148 elements');
+    expect(lhrDe.audits['dom-size'].displayValue).toEqual('148 Elemente');
 
     // Renderer formatted strings
     expect(lhrEn.i18n.rendererFormattedStrings.labDataTitle).toEqual('Lab Data');
@@ -43,7 +45,8 @@ describe('swap-locale', () => {
   });
 
   it('can roundtrip back to english correctly', () => {
-    const lhrEn = /** @type {LH.Result} */ (JSON.parse(JSON.stringify(lhr)));
+    /** @type {LH.Result} */
+    const lhrEn = JSON.parse(JSON.stringify(lhr));
 
     // via Spanish
     const lhrEnEsRT = swapLocale(swapLocale(lhrEn, 'es').lhr, 'en-US').lhr;

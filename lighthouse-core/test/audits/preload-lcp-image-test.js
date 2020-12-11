@@ -31,13 +31,15 @@ describe('Performance: preload-lcp audit', () => {
       TraceElements: [
         {
           traceEventType: 'largest-contentful-paint',
-          devtoolsNodePath: '1,HTML,1,BODY,3,DIV,2,IMG',
+          node: {
+            devtoolsNodePath: '1,HTML,1,BODY,3,DIV,2,IMG'},
         },
       ],
       ImageElements: [
         {
           src: imageUrl,
-          devtoolsNodePath: '1,HTML,1,BODY,3,DIV,2,IMG',
+          node: {
+            devtoolsNodePath: '1,HTML,1,BODY,3,DIV,2,IMG'},
         },
       ],
     };
@@ -89,7 +91,40 @@ describe('Performance: preload-lcp audit', () => {
     ];
   };
 
-  it('should suggest preloading a lcp image', async () => {
+  it('shouldn\'t be applicable if lcp image is not found', async () => {
+    const networkRecords = mockNetworkRecords();
+    const artifacts = mockArtifacts(networkRecords, mainDocumentNodeUrl, imageUrl);
+    artifacts.ImageElements = [];
+    const context = {settings: {}, computedCache: new Map()};
+    const results = await PreloadLCPImage.audit(artifacts, context);
+    expect(results.score).toEqual(1);
+    expect(results.details.overallSavingsMs).toEqual(0);
+    expect(results.details.items).toHaveLength(0);
+  });
+
+  it('shouldn\'t be applicable if the lcp is already preloaded', async () => {
+    const networkRecords = mockNetworkRecords();
+    networkRecords[3].isLinkPreload = true;
+    const artifacts = mockArtifacts(networkRecords, mainDocumentNodeUrl, imageUrl);
+    const context = {settings: {}, computedCache: new Map()};
+    const results = await PreloadLCPImage.audit(artifacts, context);
+    expect(results.score).toEqual(1);
+    expect(results.details.overallSavingsMs).toEqual(0);
+    expect(results.details.items).toHaveLength(0);
+  });
+
+  it('shouldn\'t be applicable if the lcp request is not from over the network', async () => {
+    const networkRecords = mockNetworkRecords();
+    networkRecords[3].protocol = 'data';
+    const artifacts = mockArtifacts(networkRecords, mainDocumentNodeUrl, imageUrl);
+    const context = {settings: {}, computedCache: new Map()};
+    const results = await PreloadLCPImage.audit(artifacts, context);
+    expect(results.score).toEqual(1);
+    expect(results.details.overallSavingsMs).toEqual(0);
+    expect(results.details.items).toHaveLength(0);
+  });
+
+  it('should suggest preloading a lcp image if all criteria is met', async () => {
     const networkRecords = mockNetworkRecords();
     const artifacts = mockArtifacts(networkRecords, mainDocumentNodeUrl, imageUrl);
     const context = {settings: {}, computedCache: new Map()};
@@ -100,36 +135,27 @@ describe('Performance: preload-lcp audit', () => {
     expect(results.details.items[0].wastedMs).toEqual(180);
   });
 
-  it('shouldn\'t be applicable if lcp image is not found', async () => {
+  it('should suggest preloading when LCP is waiting on the image', async () => {
     const networkRecords = mockNetworkRecords();
+    networkRecords[3].transferSize = 5 * 1000 * 1000;
     const artifacts = mockArtifacts(networkRecords, mainDocumentNodeUrl, imageUrl);
-    artifacts.ImageElements = [];
     const context = {settings: {}, computedCache: new Map()};
     const results = await PreloadLCPImage.audit(artifacts, context);
-    expect(results.score).toEqual(1);
-    expect(results.notApplicable).toBeTruthy();
-    expect(results.details).toBeUndefined();
+    expect(results.numericValue).toEqual(30);
+    expect(results.details.overallSavingsMs).toEqual(30);
+    expect(results.details.items[0].url).toEqual(imageUrl);
+    expect(results.details.items[0].wastedMs).toEqual(30);
   });
 
-  it('shouldn\'t be applicable if the lcp is already preloaded', async () => {
+  it('should suggest preloading when LCP is waiting on a dependency', async () => {
     const networkRecords = mockNetworkRecords();
-    networkRecords[3].isLinkPreload = true;
+    networkRecords[2].transferSize = 2 * 1000 * 1000;
     const artifacts = mockArtifacts(networkRecords, mainDocumentNodeUrl, imageUrl);
     const context = {settings: {}, computedCache: new Map()};
     const results = await PreloadLCPImage.audit(artifacts, context);
-    expect(results.score).toEqual(1);
-    expect(results.notApplicable).toBeTruthy();
-    expect(results.details).toBeUndefined();
-  });
-
-  it('shouldn\'t be applicable if the lcp request is not from over the network', async () => {
-    const networkRecords = mockNetworkRecords();
-    networkRecords[3].protocol = 'data';
-    const artifacts = mockArtifacts(networkRecords, mainDocumentNodeUrl, imageUrl);
-    const context = {settings: {}, computedCache: new Map()};
-    const results = await PreloadLCPImage.audit(artifacts, context);
-    expect(results.score).toEqual(1);
-    expect(results.notApplicable).toBeTruthy();
-    expect(results.details).toBeUndefined();
+    expect(results.numericValue).toEqual(30);
+    expect(results.details.overallSavingsMs).toEqual(30);
+    expect(results.details.items[0].url).toEqual(imageUrl);
+    expect(results.details.items[0].wastedMs).toEqual(30);
   });
 });

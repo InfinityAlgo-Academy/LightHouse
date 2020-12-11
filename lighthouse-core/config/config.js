@@ -16,7 +16,7 @@ const path = require('path');
 const Runner = require('../runner.js');
 const ConfigPlugin = require('./config-plugin.js');
 const Budget = require('./budget.js');
-const {requireAudits, mergeOptionsOfItems, resolveModule} = require('./config-helpers.js');
+const {requireAudits, resolveModule} = require('./config-helpers.js');
 
 /** @typedef {typeof import('../gather/gatherers/gatherer.js')} GathererConstructor */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
@@ -109,10 +109,10 @@ function assertValidCategories(categories, audits, groups) {
     return;
   }
 
-  const auditsKeyedById = new Map((audits || []).map(audit =>
-    /** @type {[string, LH.Config.AuditDefn]} */
-    ([audit.implementation.meta.id, audit])
-  ));
+  /** @type {Map<string, LH.Config.AuditDefn>} */
+  const auditsKeyedById = new Map((audits || []).map(audit => {
+    return [audit.implementation.meta.id, audit];
+  }));
 
   Object.keys(categories).forEach(categoryId => {
     categories[categoryId].auditRefs.forEach((auditRef, index) => {
@@ -374,10 +374,6 @@ class Config {
           gathererDefn.implementation = undefined;
           // @ts-expect-error Breaking the Config.GathererDefn type.
           gathererDefn.instance = undefined;
-          if (Object.keys(gathererDefn.options).length === 0) {
-            // @ts-expect-error Breaking the Config.GathererDefn type.
-            gathererDefn.options = undefined;
-          }
         }
       }
     }
@@ -439,7 +435,7 @@ class Config {
       assertValidPluginName(configJSON, pluginName);
 
       // TODO: refactor and delete `global.isDevtools`.
-      const pluginPath = global.isDevtools ?
+      const pluginPath = global.isDevtools || global.isLightrider ?
         pluginName :
         resolveModule(pluginName, configDir, 'plugin');
       const rawPluginJson = require(pluginPath);
@@ -741,12 +737,11 @@ class Config {
 
   /**
    * @param {string} path
-   * @param {{}=} options
    * @param {Array<string>} coreAuditList
    * @param {string=} configDir
    * @return {LH.Config.GathererDefn}
    */
-  static requireGathererFromPath(path, options, coreAuditList, configDir) {
+  static requireGathererFromPath(path, coreAuditList, configDir) {
     const coreGatherer = coreAuditList.find(a => a === `${path}.js`);
 
     let requirePath = `../gather/gatherers/${path}`;
@@ -761,7 +756,6 @@ class Config {
       instance: new GathererClass(),
       implementation: GathererClass,
       path,
-      options: options || {},
     };
   }
 
@@ -788,7 +782,6 @@ class Config {
             instance: gathererDefn.instance,
             implementation: gathererDefn.implementation,
             path: gathererDefn.path,
-            options: gathererDefn.options || {},
           };
         } else if (gathererDefn.implementation) {
           const GathererClass = gathererDefn.implementation;
@@ -796,21 +789,22 @@ class Config {
             instance: new GathererClass(),
             implementation: gathererDefn.implementation,
             path: gathererDefn.path,
-            options: gathererDefn.options || {},
           };
         } else if (gathererDefn.path) {
           const path = gathererDefn.path;
-          const options = gathererDefn.options;
-          return Config.requireGathererFromPath(path, options, coreList, configDir);
+          return Config.requireGathererFromPath(path, coreList, configDir);
         } else {
           throw new Error('Invalid expanded Gatherer: ' + JSON.stringify(gathererDefn));
         }
       });
 
-      const mergedDefns = mergeOptionsOfItems(gathererDefns);
-      mergedDefns.forEach(gatherer => assertValidGatherer(gatherer.instance, gatherer.path));
+      // De-dupe gatherers by artifact name because artifact IDs must be unique at runtime.
+      const uniqueDefns = Array.from(
+        new Map(gathererDefns.map(defn => [defn.instance.name, defn])).values()
+      );
+      uniqueDefns.forEach(gatherer => assertValidGatherer(gatherer.instance, gatherer.path));
 
-      return Object.assign(pass, {gatherers: mergedDefns});
+      return Object.assign(pass, {gatherers: uniqueDefns});
     });
     log.timeEnd(status);
     return fullPasses;

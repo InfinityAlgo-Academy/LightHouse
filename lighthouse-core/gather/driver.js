@@ -6,6 +6,8 @@
 'use strict';
 
 const Fetcher = require('./fetcher.js');
+const ExecutionContext = require('./driver/execution-context.js');
+const {waitForFullyLoaded, waitForFrameNavigated} = require('./driver/wait-for-condition.js');
 const NetworkRecorder = require('../lib/network-recorder.js');
 const emulation = require('../lib/emulation.js');
 const LHElement = require('../lib/lh-element.js');
@@ -58,71 +60,83 @@ const DEFAULT_PROTOCOL_TIMEOUT = 30000;
  * @typedef {LH.Protocol.StrictEventEmitter<LH.CrdpEvents>} CrdpEventEmitter
  */
 
+/**
+ * @implements {LH.Gatherer.FRTransitionalDriver}
+ */
 class Driver {
+  /** @private */
+  _traceCategories = Driver.traceCategories;
+
+  /**
+   * @pri_vate (This should be private, but that makes our tests harder).
+   * An event emitter that enforces mapping between Crdp event names and payload types.
+   */
+  _eventEmitter = /** @type {CrdpEventEmitter} */ (new EventEmitter());
+
+  /**
+   * @private
+   * Used to save network and lifecycle protocol traffic. Just Page and Network are needed.
+   */
+  _devtoolsLog = new DevtoolsLog(/^(Page|Network)\./);
+
+  /**
+   * @private
+   * @type {Map<string, number>}
+   */
+  _domainEnabledCounts = new Map();
+
+  /**
+   * Used for monitoring network status events during gotoURL.
+   * @type {?NetworkRecorder}
+   * @private
+   */
+  _networkStatusMonitor = null;
+
+  /**
+   * Used for monitoring url redirects during gotoURL.
+   * @type {?string}
+   * @private
+   */
+  _monitoredUrl = null;
+
+  /**
+   * Used for monitoring frame navigations during gotoURL.
+   * @type {Array<LH.Crdp.Page.Frame>}
+   * @private
+   */
+  _monitoredUrlNavigations = [];
+
+  /**
+   * @type {number}
+   * @private
+   */
+  _nextProtocolTimeout = DEFAULT_PROTOCOL_TIMEOUT;
+
+  online = true;
+
+  // eslint-disable-next-line no-invalid-this
+  fetcher = new Fetcher(this);
+
+  // eslint-disable-next-line no-invalid-this
+  _executionContext = new ExecutionContext(this);
+
+  // eslint-disable-next-line no-invalid-this
+  defaultSession = this;
+
   /**
    * @param {Connection} connection
    */
   constructor(connection) {
-    this._traceCategories = Driver.traceCategories;
-    /**
-     * An event emitter that enforces mapping between Crdp event names and payload types.
-     */
-    this._eventEmitter = /** @type {CrdpEventEmitter} */ (new EventEmitter());
     this._connection = connection;
-    // Used to save network and lifecycle protocol traffic. Just Page and Network are needed.
-    this._devtoolsLog = new DevtoolsLog(/^(Page|Network)\./);
-    this.online = true;
-    /** @type {Map<string, number>} */
-    this._domainEnabledCounts = new Map();
-    /** @type {number|undefined} */
-    this._isolatedExecutionContextId = undefined;
-
-    /**
-     * Used for monitoring network status events during gotoURL.
-     * @type {?NetworkRecorder}
-     * @private
-     */
-    this._networkStatusMonitor = null;
-
-    /**
-     * Used for monitoring url redirects during gotoURL.
-     * @type {?string}
-     * @private
-     */
-    this._monitoredUrl = null;
-
-    /**
-     * Used for monitoring frame navigations during gotoURL.
-     * @type {Array<LH.Crdp.Page.Frame>}
-     * @private
-     */
-    this._monitoredUrlNavigations = [];
 
     this.on('Target.attachedToTarget', event => {
       this._handleTargetAttached(event).catch(this._handleEventError);
     });
 
-    // We use isolated execution contexts for `evaluateAsync` that can be destroyed through navigation
-    // and other page actions. Cleanup our relevant bookkeeping as we see those events.
-    this.on('Runtime.executionContextDestroyed', event => {
-      if (event.executionContextId === this._isolatedExecutionContextId) {
-        this._clearIsolatedContextId();
-      }
-    });
-
-    this.on('Page.frameNavigated', () => this._clearIsolatedContextId());
     this.on('Page.frameNavigated', evt => this._monitoredUrlNavigations.push(evt.frame));
+    this.on('Debugger.paused', () => this.sendCommand('Debugger.resume'));
 
     connection.on('protocolevent', this._handleProtocolEvent.bind(this));
-
-    /**
-     * @type {number}
-     * @private
-     */
-    this._nextProtocolTimeout = DEFAULT_PROTOCOL_TIMEOUT;
-
-    /** @type {Fetcher} */
-    this.fetcher = new Fetcher(this);
   }
 
   static get traceCategories() {
@@ -294,6 +308,20 @@ class Driver {
   }
 
   /**
+   * @return {boolean}
+   */
+  hasNextProtocolTimeout() {
+    return this._nextProtocolTimeout !== DEFAULT_PROTOCOL_TIMEOUT;
+  }
+
+  /**
+   * @return {number}
+   */
+  getNextProtocolTimeout() {
+    return this._nextProtocolTimeout;
+  }
+
+  /**
    * timeout is used for the next call to 'sendCommand'.
    * NOTE: This can eventually be replaced when TypeScript
    * resolves https://github.com/Microsoft/TypeScript/issues/5453.
@@ -438,88 +466,28 @@ class Driver {
   }
 
   /**
-   * Evaluate an expression in the context of the current page. If useIsolation is true, the expression
-   * will be evaluated in a content script that has access to the page's DOM but whose JavaScript state
-   * is completely separate.
-   * Returns a promise that resolves on the expression's value.
    * @param {string} expression
    * @param {{useIsolation?: boolean}=} options
    * @return {Promise<*>}
    */
-  async evaluateAsync(expression, options = {}) {
-    const contextId = options.useIsolation ? await this._getOrCreateIsolatedContextId() : undefined;
-
-    try {
-      // `await` is not redundant here because we want to `catch` the async errors
-      return await this._evaluateInContext(expression, contextId);
-    } catch (err) {
-      // If we were using isolation and the context disappeared on us, retry one more time.
-      if (contextId && err.message.includes('Cannot find context')) {
-        this._clearIsolatedContextId();
-        const freshContextId = await this._getOrCreateIsolatedContextId();
-        return this._evaluateInContext(expression, freshContextId);
-      }
-
-      throw err;
-    }
+  evaluateAsync(expression, options) {
+    return this._executionContext.evaluateAsync(expression, options);
   }
 
   /**
-   * Evaluate an expression in the given execution context; an undefined contextId implies the main
-   * page without isolation.
-   * @param {string} expression
-   * @param {number|undefined} contextId
-   * @return {Promise<*>}
+   * Evaluate a function in the context of the current page.
+   * If `useIsolation` is true, the function will be evaluated in a content script that has
+   * access to the page's DOM but whose JavaScript state is completely separate.
+   * Returns a promise that resolves on a value of `mainFn`'s return type.
+   * @template {any[]} T, R
+   * @param {((...args: T) => R)} mainFn The main function to call.
+   * @param {{args: T, useIsolation?: boolean, deps?: Array<Function|string>}} options `args` should
+   *   match the args of `mainFn`, and can be any serializable value. `deps` are functions that must be
+   *   defined for `mainFn` to work.
+   * @return {Promise<R>}
    */
-  async _evaluateInContext(expression, contextId) {
-    // Use a higher than default timeout if the user hasn't specified a specific timeout.
-    // Otherwise, use whatever was requested.
-    const timeout = this._nextProtocolTimeout === DEFAULT_PROTOCOL_TIMEOUT ?
-      60000 : this._nextProtocolTimeout;
-    const evaluationParams = {
-      // We need to explicitly wrap the raw expression for several purposes:
-      // 1. Ensure that the expression will be a native Promise and not a polyfill/non-Promise.
-      // 2. Ensure that errors in the expression are captured by the Promise.
-      // 3. Ensure that errors captured in the Promise are converted into plain-old JS Objects
-      //    so that they can be serialized properly b/c JSON.stringify(new Error('foo')) === '{}'
-      expression: `(function wrapInNativePromise() {
-        const __nativePromise = window.__nativePromise || Promise;
-        const URL = window.__nativeURL || window.URL;
-        return new __nativePromise(function (resolve) {
-          return __nativePromise.resolve()
-            .then(_ => ${expression})
-            .catch(${pageFunctions.wrapRuntimeEvalErrorInBrowserString})
-            .then(resolve);
-        });
-      }())`,
-      includeCommandLineAPI: true,
-      awaitPromise: true,
-      returnByValue: true,
-      timeout,
-      contextId,
-    };
-
-    this.setNextProtocolTimeout(timeout);
-    const response = await this.sendCommand('Runtime.evaluate', evaluationParams);
-    if (response.exceptionDetails) {
-      // An error occurred before we could even create a Promise, should be *very* rare.
-      // Also occurs when the expression is not valid JavaScript.
-      const errorMessage = response.exceptionDetails.exception ?
-        response.exceptionDetails.exception.description :
-        response.exceptionDetails.text;
-      return Promise.reject(new Error(`Evaluation exception: ${errorMessage}`));
-    }
-    // Protocol should always return a 'result' object, but it is sometimes undefined.  See #6026.
-    if (response.result === undefined) {
-      return Promise.reject(
-        new Error('Runtime.evaluate response did not contain a "result" object'));
-    }
-    const value = response.result.value;
-    if (value && value.__failedInBrowser) {
-      return Promise.reject(Object.assign(new Error(), value));
-    } else {
-      return value;
-    }
+  async evaluate(mainFn, options) {
+    return this._executionContext.evaluate(mainFn, options);
   }
 
   /**
@@ -657,373 +625,6 @@ class Driver {
   }
 
   /**
-   * Returns a promise that resolves immediately.
-   * Used for placeholder conditions that we don't want to start waiting for just yet, but still want
-   * to satisfy the same interface.
-   * @return {{promise: Promise<void>, cancel: function(): void}}
-   */
-  _waitForNothing() {
-    return {promise: Promise.resolve(), cancel() {}};
-  }
-
-  /**
-   * Returns a promise that resolve when a frame has been navigated.
-   * Used for detecting that our about:blank reset has been completed.
-   */
-  _waitForFrameNavigated() {
-    return new Promise(resolve => {
-      this.once('Page.frameNavigated', resolve);
-    });
-  }
-
-  /**
-   * Returns a promise that resolve when a frame has a FCP.
-   * @param {number} pauseAfterFcpMs
-   * @param {number} maxWaitForFcpMs
-   * @return {{promise: Promise<void>, cancel: function(): void}}
-   */
-  _waitForFcp(pauseAfterFcpMs, maxWaitForFcpMs) {
-    /** @type {(() => void)} */
-    let cancel = () => {
-      throw new Error('_waitForFcp.cancel() called before it was defined');
-    };
-
-    const promise = new Promise((resolve, reject) => {
-      const maxWaitTimeout = setTimeout(() => {
-        reject(new LHError(LHError.errors.NO_FCP));
-      }, maxWaitForFcpMs);
-      /** @type {NodeJS.Timeout|undefined} */
-      let loadTimeout;
-
-      /** @param {LH.Crdp.Page.LifecycleEventEvent} e */
-      const lifecycleListener = e => {
-        if (e.name === 'firstContentfulPaint') {
-          loadTimeout = setTimeout(() => {
-            resolve();
-            cancel();
-          }, pauseAfterFcpMs);
-        }
-      };
-
-      this.on('Page.lifecycleEvent', lifecycleListener);
-
-      let canceled = false;
-      cancel = () => {
-        if (canceled) return;
-        canceled = true;
-        this.off('Page.lifecycleEvent', lifecycleListener);
-        maxWaitTimeout && clearTimeout(maxWaitTimeout);
-        loadTimeout && clearTimeout(loadTimeout);
-        reject(new Error('Wait for FCP canceled'));
-      };
-    });
-
-    return {
-      promise,
-      cancel,
-    };
-  }
-
-  /**
-   * Returns a promise that resolves when the network has been idle (after DCL) for
-   * `networkQuietThresholdMs` ms and a method to cancel internal network listeners/timeout.
-   * @param {number} networkQuietThresholdMs
-   * @return {{promise: Promise<void>, cancel: function(): void}}
-   * @private
-   */
-  _waitForNetworkIdle(networkQuietThresholdMs) {
-    let hasDCLFired = false;
-    /** @type {NodeJS.Timer|undefined} */
-    let idleTimeout;
-    /** @type {(() => void)} */
-    let cancel = () => {
-      throw new Error('_waitForNetworkIdle.cancel() called before it was defined');
-    };
-
-    // Check here for _networkStatusMonitor to satisfy type checker. Any further race condition
-    // will be caught at runtime on calls to it.
-    if (!this._networkStatusMonitor) {
-      throw new Error('Driver._waitForNetworkIdle called with no networkStatusMonitor');
-    }
-    const networkStatusMonitor = this._networkStatusMonitor;
-
-    const promise = new Promise((resolve, reject) => {
-      const onIdle = () => {
-        // eslint-disable-next-line no-use-before-define
-        networkStatusMonitor.once('network-2-busy', onBusy);
-        idleTimeout = setTimeout(_ => {
-          cancel();
-          resolve();
-        }, networkQuietThresholdMs);
-      };
-
-      const onBusy = () => {
-        networkStatusMonitor.once('network-2-idle', onIdle);
-        idleTimeout && clearTimeout(idleTimeout);
-      };
-
-      const domContentLoadedListener = () => {
-        hasDCLFired = true;
-        if (networkStatusMonitor.is2Idle()) {
-          onIdle();
-        } else {
-          onBusy();
-        }
-      };
-
-      // We frequently need to debug why LH is still waiting for the page.
-      // This listener is added to all network events to verbosely log what URLs we're waiting on.
-      const logStatus = () => {
-        if (!hasDCLFired) {
-          log.verbose('Driver', 'Waiting on DomContentLoaded');
-          return;
-        }
-
-        const inflightRecords = networkStatusMonitor.getInflightRecords();
-        // If there are more than 20 inflight requests, load is still in full swing.
-        // Wait until it calms down a bit to be a little less spammy.
-        if (inflightRecords.length < 20) {
-          for (const record of inflightRecords) {
-            log.verbose('Driver', `Waiting on ${record.url.slice(0, 120)} to finish`);
-          }
-        }
-      };
-
-      networkStatusMonitor.on('requeststarted', logStatus);
-      networkStatusMonitor.on('requestloaded', logStatus);
-      networkStatusMonitor.on('network-2-busy', logStatus);
-
-      this.once('Page.domContentEventFired', domContentLoadedListener);
-      let canceled = false;
-      cancel = () => {
-        if (canceled) return;
-        canceled = true;
-        idleTimeout && clearTimeout(idleTimeout);
-        this.off('Page.domContentEventFired', domContentLoadedListener);
-        networkStatusMonitor.removeListener('network-2-busy', onBusy);
-        networkStatusMonitor.removeListener('network-2-idle', onIdle);
-        networkStatusMonitor.removeListener('requeststarted', logStatus);
-        networkStatusMonitor.removeListener('requestloaded', logStatus);
-        networkStatusMonitor.removeListener('network-2-busy', logStatus);
-      };
-    });
-
-    return {
-      promise,
-      cancel,
-    };
-  }
-
-  /**
-   * Resolves when there have been no long tasks for at least waitForCPUQuiet ms.
-   * @param {number} waitForCPUQuiet
-   * @return {{promise: Promise<void>, cancel: function(): void}}
-   */
-  _waitForCPUIdle(waitForCPUQuiet) {
-    if (!waitForCPUQuiet) {
-      return {
-        promise: Promise.resolve(),
-        cancel: () => undefined,
-      };
-    }
-
-    /** @type {NodeJS.Timer|undefined} */
-    let lastTimeout;
-    let canceled = false;
-
-    const checkForQuietExpression = `(${pageFunctions.checkTimeSinceLastLongTaskString})()`;
-    /**
-     * @param {Driver} driver
-     * @param {() => void} resolve
-     * @return {Promise<void>}
-     */
-    async function checkForQuiet(driver, resolve) {
-      if (canceled) return;
-      const timeSinceLongTask = await driver.evaluateAsync(checkForQuietExpression);
-      if (canceled) return;
-
-      if (typeof timeSinceLongTask === 'number') {
-        if (timeSinceLongTask >= waitForCPUQuiet) {
-          log.verbose('Driver', `CPU has been idle for ${timeSinceLongTask} ms`);
-          resolve();
-        } else {
-          log.verbose('Driver', `CPU has been idle for ${timeSinceLongTask} ms`);
-          const timeToWait = waitForCPUQuiet - timeSinceLongTask;
-          lastTimeout = setTimeout(() => checkForQuiet(driver, resolve), timeToWait);
-        }
-      }
-    }
-
-    /** @type {(() => void)} */
-    let cancel = () => {
-      throw new Error('_waitForCPUIdle.cancel() called before it was defined');
-    };
-    const promise = new Promise((resolve, reject) => {
-      checkForQuiet(this, resolve).catch(reject);
-      cancel = () => {
-        if (canceled) return;
-        canceled = true;
-        if (lastTimeout) clearTimeout(lastTimeout);
-        reject(new Error('Wait for CPU idle canceled'));
-      };
-    });
-
-    return {
-      promise,
-      cancel,
-    };
-  }
-
-  /**
-   * Return a promise that resolves `pauseAfterLoadMs` after the load event
-   * fires and a method to cancel internal listeners and timeout.
-   * @param {number} pauseAfterLoadMs
-   * @return {{promise: Promise<void>, cancel: function(): void}}
-   * @private
-   */
-  _waitForLoadEvent(pauseAfterLoadMs) {
-    /** @type {(() => void)} */
-    let cancel = () => {
-      throw new Error('_waitForLoadEvent.cancel() called before it was defined');
-    };
-
-    const promise = new Promise((resolve, reject) => {
-      /** @type {NodeJS.Timer|undefined} */
-      let loadTimeout;
-      const loadListener = function() {
-        loadTimeout = setTimeout(resolve, pauseAfterLoadMs);
-      };
-      this.once('Page.loadEventFired', loadListener);
-
-      let canceled = false;
-      cancel = () => {
-        if (canceled) return;
-        canceled = true;
-        this.off('Page.loadEventFired', loadListener);
-        loadTimeout && clearTimeout(loadTimeout);
-      };
-    });
-
-    return {
-      promise,
-      cancel,
-    };
-  }
-
-  /**
-   * Returns whether the page appears to be hung.
-   * @return {Promise<boolean>}
-   */
-  async isPageHung() {
-    try {
-      this.setNextProtocolTimeout(1000);
-      await this.sendCommand('Runtime.evaluate', {
-        expression: '"ping"',
-        returnByValue: true,
-        timeout: 1000,
-      });
-
-      return false;
-    } catch (err) {
-      return true;
-    }
-  }
-
-  /**
-   * Returns a promise that resolves when:
-   * - All of the following conditions have been met:
-   *    - page has no security issues
-   *    - pauseAfterLoadMs milliseconds have passed since the load event.
-   *    - networkQuietThresholdMs milliseconds have passed since the last network request that exceeded
-   *      2 inflight requests (network-2-quiet has been reached).
-   *    - cpuQuietThresholdMs have passed since the last long task after network-2-quiet.
-   * - maxWaitForLoadedMs milliseconds have passed.
-   * See https://github.com/GoogleChrome/lighthouse/issues/627 for more.
-   * @param {number} pauseAfterFcpMs
-   * @param {number} pauseAfterLoadMs
-   * @param {number} networkQuietThresholdMs
-   * @param {number} cpuQuietThresholdMs
-   * @param {number} maxWaitForLoadedMs
-   * @param {number=} maxWaitForFcpMs
-   * @return {Promise<{timedOut: boolean}>}
-   * @private
-   */
-  async _waitForFullyLoaded(pauseAfterFcpMs, pauseAfterLoadMs, networkQuietThresholdMs,
-      cpuQuietThresholdMs, maxWaitForLoadedMs, maxWaitForFcpMs) {
-    /** @type {NodeJS.Timer|undefined} */
-    let maxTimeoutHandle;
-
-    // Listener for FCP. Resolves pauseAfterFcpMs ms after first FCP event.
-    const waitForFcp = maxWaitForFcpMs ?
-      this._waitForFcp(pauseAfterFcpMs, maxWaitForFcpMs) :
-      this._waitForNothing();
-    // Listener for onload. Resolves pauseAfterLoadMs ms after load.
-    const waitForLoadEvent = this._waitForLoadEvent(pauseAfterLoadMs);
-    // Network listener. Resolves when the network has been idle for networkQuietThresholdMs.
-    const waitForNetworkIdle = this._waitForNetworkIdle(networkQuietThresholdMs);
-    // CPU listener. Resolves when the CPU has been idle for cpuQuietThresholdMs after network idle.
-    let waitForCPUIdle = this._waitForNothing();
-
-    // Wait for all initial load promises. Resolves on cleanup function the clears load
-    // timeout timer.
-    /** @type {Promise<() => Promise<{timedOut: boolean}>>} */
-    const loadPromise = Promise.all([
-      waitForFcp.promise,
-      waitForLoadEvent.promise,
-      waitForNetworkIdle.promise,
-    ]).then(() => {
-      waitForCPUIdle = this._waitForCPUIdle(cpuQuietThresholdMs);
-      return waitForCPUIdle.promise;
-    }).then(() => {
-      /** @return {Promise<{timedOut: boolean}>} */
-      const cleanupFn = async function() {
-        log.verbose('Driver', 'loadEventFired and network considered idle');
-        return {timedOut: false};
-      };
-
-      return cleanupFn;
-    }).catch(err => {
-      // Throw the error in the cleanupFn so we still cleanup all our handlers.
-      return function() {
-        throw err;
-      };
-    });
-
-    // Last resort timeout. Resolves maxWaitForLoadedMs ms from now on
-    // cleanup function that removes loadEvent and network idle listeners.
-    /** @type {Promise<() => Promise<{timedOut: boolean}>>} */
-    const maxTimeoutPromise = new Promise((resolve, reject) => {
-      maxTimeoutHandle = setTimeout(resolve, maxWaitForLoadedMs);
-    }).then(_ => {
-      return async () => {
-        log.warn('Driver', 'Timed out waiting for page load. Checking if page is hung...');
-        if (await this.isPageHung()) {
-          log.warn('Driver', 'Page appears to be hung, killing JavaScript...');
-          await this.sendCommand('Emulation.setScriptExecutionDisabled', {value: true});
-          await this.sendCommand('Runtime.terminateExecution');
-          throw new LHError(LHError.errors.PAGE_HUNG);
-        }
-
-        return {timedOut: true};
-      };
-    });
-
-    // Wait for load or timeout and run the cleanup function the winner returns.
-    const cleanupFn = await Promise.race([
-      loadPromise,
-      maxTimeoutPromise,
-    ]);
-
-    maxTimeoutHandle && clearTimeout(maxTimeoutHandle);
-    waitForFcp.cancel();
-    waitForLoadEvent.cancel();
-    waitForNetworkIdle.cancel();
-    waitForCPUIdle.cancel();
-
-    return cleanupFn();
-  }
-
-  /**
    * Set up listener for network quiet events and reset the monitored navigation events.
    * @param {string} startingUrl
    * @return {Promise<void>}
@@ -1065,33 +666,6 @@ class Driver {
   }
 
   /**
-   * Returns the cached isolated execution context ID or creates a new execution context for the main
-   * frame. The cached execution context is cleared on every gotoURL invocation, so a new one will
-   * always be created on the first call on a new page.
-   * @return {Promise<number>}
-   */
-  async _getOrCreateIsolatedContextId() {
-    if (typeof this._isolatedExecutionContextId === 'number') {
-      return this._isolatedExecutionContextId;
-    }
-
-    const resourceTreeResponse = await this.sendCommand('Page.getResourceTree');
-    const mainFrameId = resourceTreeResponse.frameTree.frame.id;
-
-    const isolatedWorldResponse = await this.sendCommand('Page.createIsolatedWorld', {
-      frameId: mainFrameId,
-      worldName: 'lighthouse_isolated_context',
-    });
-
-    this._isolatedExecutionContextId = isolatedWorldResponse.executionContextId;
-    return isolatedWorldResponse.executionContextId;
-  }
-
-  _clearIsolatedContextId() {
-    this._isolatedExecutionContextId = undefined;
-  }
-
-  /**
    * Navigate to the given URL. Direct use of this method isn't advised: if
    * the current page is already at the given URL, navigation will not occur and
    * so the returned promise will only resolve after the MAX_WAIT_FOR_FULLY_LOADED
@@ -1106,15 +680,15 @@ class Driver {
     const waitForFcp = options.waitForFcp || false;
     const waitForNavigated = options.waitForNavigated || false;
     const waitForLoad = options.waitForLoad || false;
-    const passContext = /** @type {Partial<LH.Gatherer.PassContext>} */ (options.passContext || {});
-    const disableJS = passContext.disableJavaScript || false;
+    /** @type {Partial<LH.Gatherer.PassContext>} */
+    const passContext = options.passContext || {};
 
     if (waitForNavigated && (waitForFcp || waitForLoad)) {
       throw new Error('Cannot use both waitForNavigated and another event, pick just one');
     }
 
     await this._beginNetworkStatusMonitoring(url);
-    await this._clearIsolatedContextId();
+    await this._executionContext.clearContextId();
 
     // Enable auto-attaching to subtargets so we receive iframe information
     await this.sendCommand('Target.setAutoAttach', {
@@ -1126,15 +700,16 @@ class Driver {
 
     await this.sendCommand('Page.enable');
     await this.sendCommand('Page.setLifecycleEventsEnabled', {enabled: true});
-    await this.sendCommand('Emulation.setScriptExecutionDisabled', {value: disableJS});
     // No timeout needed for Page.navigate. See https://github.com/GoogleChrome/lighthouse/pull/6413.
     const waitforPageNavigateCmd = this._innerSendCommand('Page.navigate', undefined, {url});
 
     let timedOut = false;
     if (waitForNavigated) {
-      await this._waitForFrameNavigated();
+      await waitForFrameNavigated(this).promise;
     } else if (waitForLoad) {
-      const passConfig = /** @type {Partial<LH.Config.Pass>} */ (passContext.passConfig || {});
+      const networkMonitor = this._networkStatusMonitor;
+      /** @type {Partial<LH.Config.Pass>} */
+      const passConfig = passContext.passConfig || {};
 
       /* eslint-disable max-len */
       let {pauseAfterFcpMs, pauseAfterLoadMs, networkQuietThresholdMs, cpuQuietThresholdMs} = passConfig;
@@ -1147,11 +722,13 @@ class Driver {
       if (typeof cpuQuietThresholdMs !== 'number') cpuQuietThresholdMs = DEFAULT_CPU_QUIET_THRESHOLD;
       if (typeof maxWaitMs !== 'number') maxWaitMs = constants.defaultSettings.maxWaitForLoad;
       if (typeof maxFCPMs !== 'number') maxFCPMs = constants.defaultSettings.maxWaitForFcp;
+      if (!networkMonitor) throw new Error('Failed to instantiate networkStatusMonitor');
       /* eslint-enable max-len */
 
       if (!waitForFcp) maxFCPMs = undefined;
-      const loadResult = await this._waitForFullyLoaded(pauseAfterFcpMs, pauseAfterLoadMs,
-        networkQuietThresholdMs, cpuQuietThresholdMs, maxWaitMs, maxFCPMs);
+      const waitOptions = {pauseAfterFcpMs, pauseAfterLoadMs, networkQuietThresholdMs,
+        cpuQuietThresholdMs, maxWaitForLoadedMs: maxWaitMs, maxWaitForFcpMs: maxFCPMs};
+      const loadResult = await waitForFullyLoaded(this, networkMonitor, waitOptions);
       timedOut = loadResult.timedOut;
     }
 

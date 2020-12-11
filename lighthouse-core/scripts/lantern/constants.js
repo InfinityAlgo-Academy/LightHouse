@@ -33,7 +33,7 @@ const path = require('path');
 
 /**
  * @typedef EstimateEvaluationSummary
- * @property {LanternEvaluation[]} evaluations
+ * @property {LanternEvaluation[]} [evaluations]
  * @property {number} p50
  * @property {number} p90
  * @property {number} p95
@@ -113,7 +113,10 @@ module.exports = {
    * @return {(LanternEvaluation & LanternSiteDefinition)|null}
    */
   evaluateSite(site, expectedMetrics, actualMetrics, metric, lanternMetric) {
-    const expected = Math.round(expectedMetrics[metric]);
+    const expectedRaw = expectedMetrics[metric];
+    if (expectedRaw === undefined) return null;
+
+    const expected = Math.round(expectedRaw);
     if (expected === 0) return null;
 
     const actual = Math.round(actualMetrics[lanternMetric]);
@@ -135,7 +138,7 @@ module.exports = {
    * @param {LanternSiteDefinition[]} entries
    * @param {keyof TargetMetrics} metric
    * @param {keyof LanternMetrics} lanternMetric
-   * @param {'lantern'|'baseline'} [lanternOrBaseline]
+   * @param {'lantern'|'baseline'} lanternOrBaseline
    * @return {EstimateEvaluationSummary}
    */
   evaluateAccuracy(entries, metric, lanternMetric, lanternOrBaseline = 'lantern') {
@@ -143,10 +146,13 @@ module.exports = {
 
     const percentErrors = [];
     for (const entry of entries) {
+      const actualMetrics = entry[lanternOrBaseline];
+      if (!actualMetrics) throw new Error(`No metrics for ${metric} ${lanternMetric} ${lanternOrBaseline}`);
+
       const evaluation = this.evaluateSite(
         entry,
         entry.wpt3g,
-        entry[lanternOrBaseline],
+        actualMetrics,
         metric,
         lanternMetric
       );

@@ -16,11 +16,17 @@ jobs:
     steps:
     - name: git clone
       uses: actions/checkout@v2
+      with:
+        fetch-depth: 100
+    - run: bash lighthouse-core/scripts/github-actions-commit-range.sh
+      env:
+        GITHUB_CONTEXT_PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        GITHUB_CONTEXT_BASE_SHA: ${{ github.event.before }}
 
-    - name: Use Node.js 10.x
+    - name: Use Node.js 12.x
       uses: actions/setup-node@v1
       with:
-        node-version: 10.x
+        node-version: 12.x
 
     - run: yarn --frozen-lockfile
     - run: yarn build-all
@@ -33,6 +39,8 @@ jobs:
       run: xvfb-run --auto-servernum yarn test-docs
     - name: yarn test-viewer
       run: xvfb-run --auto-servernum yarn test-viewer
+    - name: yarn test-treemap
+      run: xvfb-run --auto-servernum yarn test-treemap
 
     - run: yarn diff:sample-json
     - run: yarn type-check
@@ -45,9 +53,12 @@ jobs:
     # Fail if any changes were written to any source files or generated untracked files (ex, from: build/build-cdt-lib.js).
     - run: git add -A && git diff --cached --exit-code
 
-    # buildtracker runs `git merge-base HEAD origin/master` which needs more history than depth=1. https://github.com/paularmstrong/build-tracker/issues/106
-    - name: Deepen git fetch (for buildtracker)
-      run: git fetch --deepen=100
+    # buildtracker needs history and a common merge commit.
+    - name: Fixup git history (for buildtracker)
+      run: bash $GITHUB_WORKSPACE/.github/scripts/git-get-shared-history.sh
+      env:
+        # https://buildtracker.dev/docs/guides/github-actions#configuration
+        BT_API_AUTH_TOKEN: ${{ secrets.BT_API_AUTH_TOKEN }}
     - name: Store in buildtracker
       # TODO(paulirish): Don't allow this to fail the build. https://github.com/paularmstrong/build-tracker/issues/200
       run: yarn bt-cli upload-build || true
@@ -73,13 +84,13 @@ jobs:
     - name: git clone
       uses: actions/checkout@v2
 
-    - name: Use Node.js 10.x
+    - name: Use Node.js 12.x
       uses: actions/setup-node@v1
       with:
-        node-version: 10.x
+        node-version: 12.x
 
     - name: Set up protoc
-      uses: arduino/setup-protoc@7ad700d
+      uses: arduino/setup-protoc@64c0c85
       with:
         version: '3.7.1'
         repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -134,14 +145,14 @@ jobs:
     - name: git clone
       uses: actions/checkout@v2
 
-    - name: Use Node.js 10.x
+    - name: Use Node.js 12.x
       uses: actions/setup-node@v1
       with:
-        node-version: 10.x
+        node-version: 12.x
 
     - name: Define ToT chrome path
       if: matrix.chrome-channel == 'ToT'
-      run: echo "::set-env name=CHROME_PATH::/home/runner/chrome-linux-tot/chrome"
+      run: echo "CHROME_PATH=/home/runner/chrome-linux-tot/chrome" >> $GITHUB_ENV
 
     # Chrome Stable is already installed by default.
     - name: Install Chrome ToT
@@ -167,10 +178,10 @@ jobs:
     - name: git clone
       uses: actions/checkout@v2
 
-    - name: Use Node.js 10.x
+    - name: Use Node.js 12.x
       uses: actions/setup-node@v1
       with:
-        node-version: 10.x
+        node-version: 12.x
 
     - run: yarn --frozen-lockfile
 
@@ -185,10 +196,10 @@ jobs:
     - name: git clone
       uses: actions/checkout@v2
 
-    - name: Use Node.js 10.x
+    - name: Use Node.js 12.x
       uses: actions/setup-node@v1
       with:
-        node-version: 10.x
+        node-version: 12.x
 
     - run: yarn --frozen-lockfile
     - run: yarn build-devtools

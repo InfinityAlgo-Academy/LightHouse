@@ -40,7 +40,7 @@ function buildReportGenerator() {
     .transform('@wardpeet/brfs', {
       readFileSyncTransform: minifyFileTransform,
       global: true,
-      parserOpts: {ecmaVersion: 10},
+      parserOpts: {ecmaVersion: 12},
     })
     .bundle((err, src) => {
       if (err) throw err;

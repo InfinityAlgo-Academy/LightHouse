@@ -211,6 +211,116 @@ describe('network recorder', function() {
     ]);
   });
 
+  describe('networkstatus', () => {
+    let devtoolsLog;
+    /** @type {NetworkRecorder} */
+    let recorder;
+    let statusLog;
+
+    beforeEach(() => {
+      statusLog = [];
+      recorder = new NetworkRecorder();
+      recorder.on('networkbusy', () => statusLog.push('networkbusy'));
+      recorder.on('networkidle', () => statusLog.push('networkidle'));
+      recorder.on('network-2-busy', () => statusLog.push('network-2-busy'));
+      recorder.on('network-2-idle', () => statusLog.push('network-2-idle'));
+      recorder.on('network-critical-busy', () => statusLog.push('network-critical-busy'));
+      recorder.on('network-critical-idle', () => statusLog.push('network-critical-idle'));
+      const log = networkRecordsToDevtoolsLog([
+        {url: 'http://example.com', priority: 'VeryHigh'},
+        {url: 'http://example.com/xhr', priority: 'High'},
+        {url: 'http://example.com/css', priority: 'VeryHigh'},
+        {url: 'http://example.com/offscreen', priority: 'Low'},
+      ]);
+
+      const startEvents = log.filter(m => m.method === 'Network.requestWillBeSent');
+      const restEvents = log.filter(m => !startEvents.includes(m));
+      devtoolsLog = [...startEvents, ...restEvents];
+    });
+
+    it('should emit the cycle of events', () => {
+      for (const message of devtoolsLog) recorder.dispatch(message);
+
+      expect(statusLog).toEqual([
+        // First request starts.
+        'networkbusy',
+        'network-2-idle',
+        'network-critical-busy',
+        // Second request starts.
+        'networkbusy',
+        'network-2-idle',
+        'network-critical-busy',
+        // Third request starts.
+        'networkbusy',
+        'network-2-busy',
+        'network-critical-busy',
+        // Fourth request starts.
+        'networkbusy',
+        'network-2-busy',
+        'network-critical-busy',
+        // First request finishes.
+        'networkbusy',
+        'network-2-busy',
+        'network-critical-busy',
+        // Second request finishes.
+        'networkbusy',
+        'network-2-idle',
+        'network-critical-busy',
+        // Third request finishes (leaving 1 Low-pri).
+        'networkbusy',
+        'network-2-idle',
+        'network-critical-idle',
+        // Fourth request finishes.
+        'networkidle',
+        'network-2-idle',
+        'network-critical-idle',
+      ]);
+    });
+
+    it('should capture quiet state in getters', () => {
+      expect(recorder.isIdle()).toBe(true);
+      expect(recorder.is2Idle()).toBe(true);
+      expect(recorder.isCriticalIdle()).toBe(true);
+    });
+
+    it('should capture single high-pri request state in getters', () => {
+      const startMessage = devtoolsLog.find(event => event.method === 'Network.requestWillBeSent');
+      recorder.dispatch(startMessage);
+      expect(recorder.isIdle()).toBe(false);
+      expect(recorder.is2Idle()).toBe(true);
+      expect(recorder.isCriticalIdle()).toBe(false);
+    });
+
+    it('should capture single low-pri request state in getters', () => {
+      const startMessage = devtoolsLog.find(event => event.method === 'Network.requestWillBeSent');
+      startMessage.params.request.initialPriority = 'Low';
+      recorder.dispatch(startMessage);
+      expect(recorder.isIdle()).toBe(false);
+      expect(recorder.is2Idle()).toBe(true);
+      expect(recorder.isCriticalIdle()).toBe(true);
+    });
+
+    it('should capture multiple request state in getters', () => {
+      const messages = devtoolsLog.filter(event => event.method === 'Network.requestWillBeSent');
+      for (const message of messages) recorder.dispatch(message);
+      expect(recorder.isIdle()).toBe(false);
+      expect(recorder.is2Idle()).toBe(false);
+      expect(recorder.isCriticalIdle()).toBe(false);
+    });
+
+    it('should capture multiple low-pri request state in getters', () => {
+      const messages = devtoolsLog.filter(event => event.method === 'Network.requestWillBeSent');
+      for (const message of messages) {
+        message.params.request.initialPriority = 'Low';
+        recorder.dispatch(message);
+      }
+
+      expect(recorder.isIdle()).toBe(false);
+      expect(recorder.is2Idle()).toBe(false);
+      expect(recorder.isCriticalIdle()).toBe(true);
+    });
+  });
+
   describe('#findNetworkQuietPeriods', () => {
     function record(data) {
       const url = data.url || 'https://example.com';

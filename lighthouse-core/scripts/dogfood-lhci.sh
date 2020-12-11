@@ -9,8 +9,9 @@ if [[ -z "$LHCI_CANARY_SERVER_TOKEN" ]]; then
   exit 0;
 fi
 
-if [[ "$TRAVIS_NODE_VERSION" != "10" ]]; then
-  echo "Not running dogfood script on node versions other than 10";
+NODE_VERSION=$(node --version)
+if [[ "$NODE_VERSION" != "v12"* ]]; then
+  echo "Not running dogfood script on node versions other than 12";
   exit 0;
 fi
 
@@ -21,7 +22,8 @@ LH_ROOT_DIR="$SCRIPT_DIR/../.."
 # Testing lhci takes time and the server ain't massive, we'll only run the tests if we touched files that affect the report.
 CHANGED_FILES=""
 if [[ "$CI" ]]; then
-  CHANGED_FILES=$(git --no-pager diff --name-only "$TRAVIS_COMMIT_RANGE")
+  if [[ -z "$GITHUB_ACTIONS_COMMIT_RANGE" ]]; then echo "No commit range available!" && exit 1 ; fi
+  CHANGED_FILES=$(git --no-pager diff --name-only "$GITHUB_ACTIONS_COMMIT_RANGE")
 else
   CHANGED_FILES=$(git --no-pager diff --name-only master)
 fi

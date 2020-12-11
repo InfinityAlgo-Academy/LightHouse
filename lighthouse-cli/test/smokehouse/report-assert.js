@@ -168,8 +168,9 @@ function pruneExpectations(localConsole, lhr, expected) {
    * @param {*} obj
    */
   function failsChromeVersionCheck(obj) {
-    if (!obj._minChromiumMilestone) return false;
-    return actualChromeVersion < obj._minChromiumMilestone;
+    if (obj._minChromiumMilestone && actualChromeVersion < obj._minChromiumMilestone) return true;
+    if (obj._maxChromiumMilestone && actualChromeVersion > obj._maxChromiumMilestone) return true;
+    return false;
   }
 
   /**
@@ -194,6 +195,7 @@ function pruneExpectations(localConsole, lhr, expected) {
       }
     }
     delete obj._minChromiumMilestone;
+    delete obj._maxChromiumMilestone;
   }
 
   const cloned = cloneDeep(expected);
@@ -214,8 +216,11 @@ function collateResults(localConsole, actual, expected) {
   const runtimeErrorAssertion = makeComparison('runtimeError', actual.lhr.runtimeError,
       expected.lhr.runtimeError);
 
-  // Same for warnings.
-  const runWarningsAssertion = makeComparison('runWarnings', actual.lhr.runWarnings,
+  // Same for warnings, exclude the slow CPU warning which is flaky and differs between CI machines.
+  const warnings = actual.lhr.runWarnings
+    .filter(warning => !warning.includes('loaded too slowly'))
+    .filter(warning => !warning.includes('a slower CPU'));
+  const runWarningsAssertion = makeComparison('runWarnings', warnings,
       expected.lhr.runWarnings || []);
 
   /** @type {Comparison[]} */

@@ -32,7 +32,7 @@ const URL_PREFIXES = ['http://', 'https://', 'data:'];
 class DetailsRenderer {
   /**
    * @param {DOM} dom
-   * @param {{fullPageScreenshot?: LH.Audit.Details.FullPageScreenshot}} [options]
+   * @param {{fullPageScreenshot?: LH.Artifacts.FullPageScreenshot}} [options]
    */
   constructor(dom, options = {}) {
     this._dom = dom;
@@ -521,16 +521,18 @@ class DetailsRenderer {
     if (item.selector) element.setAttribute('data-selector', item.selector);
     if (item.snippet) element.setAttribute('data-snippet', item.snippet);
 
-    if (!item.boundingRect || !this._fullPageScreenshot) {
-      return element;
-    }
+    if (!this._fullPageScreenshot) return element;
+
+    const rect =
+      (item.lhId ? this._fullPageScreenshot.nodes[item.lhId] : null) || item.boundingRect;
+    if (!rect) return element;
 
     const maxThumbnailSize = {width: 147, height: 100};
     const elementScreenshot = ElementScreenshotRenderer.render(
       this._dom,
       this._templateContext,
-      this._fullPageScreenshot,
-      item.boundingRect,
+      this._fullPageScreenshot.screenshot,
+      rect,
       maxThumbnailSize
     );
     if (elementScreenshot) element.prepend(elementScreenshot);

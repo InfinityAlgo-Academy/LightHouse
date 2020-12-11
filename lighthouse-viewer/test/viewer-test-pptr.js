@@ -14,7 +14,7 @@ const puppeteer = require('../../node_modules/puppeteer/index.js');
 
 const {server} = require('../../lighthouse-cli/test/fixtures/static-server.js');
 const portNumber = 10200;
-const viewerUrl = `http://localhost:${portNumber}/dist/viewer/index.html`;
+const viewerUrl = `http://localhost:${portNumber}/dist/gh-pages/viewer/index.html`;
 const sampleLhr = __dirname + '/../../lighthouse-core/test/results/sample_v2.json';
 
 const defaultConfig =
@@ -27,7 +27,9 @@ describe('Lighthouse Viewer', () => {
   // eslint-disable-next-line no-console
   console.log('\n✨ Be sure to have recently run this: yarn build-viewer');
 
+  /** @type {import('puppeteer').Browser} */
   let browser;
+  /** @type {import('puppeteer').Page} */
   let viewerPage;
   const pageErrors = [];
 
@@ -56,8 +58,8 @@ describe('Lighthouse Viewer', () => {
       });
   }
 
-  beforeAll(async function() {
-    server.listen(portNumber, 'localhost');
+  beforeAll(async () => {
+    await server.listen(portNumber, 'localhost');
 
     // start puppeteer
     browser = await puppeteer.launch({

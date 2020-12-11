@@ -2,11 +2,11 @@
 
 exports[`Byte efficiency base audit should allow overriding of computeWasteWithTTIGraph 1`] = `
 Object {
-  "default": 1330,
-  "justTTI": 800,
+  "default": 560,
+  "justTTI": 504,
 }
 `;
 
-exports[`Byte efficiency base audit should create load simulator with the specified settings 1`] = `1330`;
+exports[`Byte efficiency base audit should create load simulator with the specified settings 1`] = `960`;
 
-exports[`Byte efficiency base audit should create load simulator with the specified settings 2`] = `22520`;
+exports[`Byte efficiency base audit should create load simulator with the specified settings 2`] = `21500`;

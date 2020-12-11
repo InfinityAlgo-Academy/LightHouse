@@ -16,8 +16,8 @@ describe('DOMSize audit', () => {
   const artifact = {
     DOMStats: {
       totalBodyElements: numElements,
-      depth: {max: 1, pathToElement: ['html', 'body', 'div', 'span']},
-      width: {max: 2, pathToElement: ['html', 'body']},
+      depth: {max: 1},
+      width: {max: 2},
     },
   };
   const context = {options, settings: {locale: 'en'}};

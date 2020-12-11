@@ -26,11 +26,11 @@ const LHError = require('./lib/lh-error.js');
 
 class Runner {
   /**
-   * @param {Connection} connection
+   * @param {(runnerData: {requestedUrl: string, config: Config, driverMock?: Driver}) => Promise<LH.Artifacts>} gatherFn
    * @param {{config: Config, url?: string, driverMock?: Driver}} runOpts
    * @return {Promise<LH.RunnerResult|undefined>}
    */
-  static async run(connection, runOpts) {
+  static async run(gatherFn, runOpts) {
     const settings = runOpts.config.settings;
     try {
       const runnerStatus = {msg: 'Runner setup', id: 'lh:runner:run'};
@@ -78,7 +78,12 @@ class Runner {
           throw new LHError(LHError.errors.INVALID_URL);
         }
 
-        artifacts = await Runner._gatherArtifactsFromBrowser(requestedUrl, runOpts, connection);
+        artifacts = await gatherFn({
+          requestedUrl,
+          config: runOpts.config,
+          driverMock: runOpts.driverMock,
+        });
+
         // -G means save these to ./latest-run, etc.
         if (settings.gatherMode) {
           const path = Runner._getDataSavePath(settings);
@@ -195,14 +200,14 @@ class Runner {
     // Truncate timestamps to hundredths of a millisecond saves ~4KB. No need for microsecond
     // resolution.
     .map(entry => {
-      return /** @type {PerformanceEntry} */ ({
+      return {
         // Don't spread entry because browser PerformanceEntries can't be spread.
         // https://github.com/GoogleChrome/lighthouse/issues/8638
         startTime: parseFloat(entry.startTime.toFixed(2)),
         name: entry.name,
         duration: parseFloat(entry.duration.toFixed(2)),
         entryType: entry.entryType,
-      });
+      };
     });
     const runnerEntry = timingEntries.find(e => e.name === 'lh:runner:run');
     return {entries: timingEntries, total: runnerEntry && runnerEntry.duration || 0};

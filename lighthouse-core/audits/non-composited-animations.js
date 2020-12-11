@@ -137,10 +137,10 @@ class NonCompositedAnimations extends Audit {
       /** @type LH.Audit.Details.NodeValue */
       const node = {
         type: 'node',
-        path: element.devtoolsNodePath,
-        selector: element.selector,
-        nodeLabel: element.nodeLabel,
-        snippet: element.snippet,
+        path: element.node.devtoolsNodePath,
+        selector: element.node.selector,
+        nodeLabel: element.node.nodeLabel,
+        snippet: element.node.snippet,
       };
 
       const animations = element.animations || [];

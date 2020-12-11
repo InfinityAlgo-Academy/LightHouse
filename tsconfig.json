@@ -2,7 +2,7 @@
   "compilerOptions": {
     "noEmit": true,
     "module": "commonjs",
-    "target": "ES2017",
+    "target": "ES2019",
     "allowJs": true,
     "checkJs": true,
     "strict": true,
@@ -31,6 +31,10 @@
   "files": [
     // Opt-in to typechecking for some core tests.
     "lighthouse-core/test/scripts/lantern/constants-test.js",
+    "lighthouse-core/test/gather/driver/execution-context-test.js",
+    "lighthouse-core/test/fraggle-rock/gather/session-test.js",
+    "lighthouse-core/test/fraggle-rock/gather/driver-test.js",
+    "lighthouse-core/test/fraggle-rock/api-test-pptr.js",
     "lighthouse-core/test/gather/driver-test.js",
     "lighthouse-core/test/gather/gather-runner-test.js",
     "lighthouse-core/test/audits/script-treemap-data-test.js"

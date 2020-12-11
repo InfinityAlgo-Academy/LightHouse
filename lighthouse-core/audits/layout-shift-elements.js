@@ -29,7 +29,7 @@ class LayoutShiftElements extends Audit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
-      requiredArtifacts: ['TraceElements'],
+      requiredArtifacts: ['traces', 'TraceElements'],
     };
   }
 
@@ -43,14 +43,15 @@ class LayoutShiftElements extends Audit {
 
     const clsElementData = clsElements.map(element => {
       return {
-        node: /** @type {LH.Audit.Details.NodeValue} */ ({
-          type: 'node',
-          path: element.devtoolsNodePath,
-          selector: element.selector,
-          nodeLabel: element.nodeLabel,
-          snippet: element.snippet,
-          boundingRect: element.boundingRect,
-        }),
+        node: {
+          type: /** @type {'node'} */ ('node'),
+          lhId: element.node.lhId,
+          path: element.node.devtoolsNodePath,
+          selector: element.node.selector,
+          nodeLabel: element.node.nodeLabel,
+          snippet: element.node.snippet,
+          boundingRect: element.node.boundingRect,
+        },
         score: element.score,
       };
     });

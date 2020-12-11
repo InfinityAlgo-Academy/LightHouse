@@ -90,7 +90,7 @@ class PreloadLCPImageAudit extends Audit {
     if (!lcpElement) return undefined;
 
     const lcpImageElement = imageElements.find(elem => {
-      return elem.devtoolsNodePath === lcpElement.devtoolsNodePath;
+      return elem.node.devtoolsNodePath === lcpElement.node.devtoolsNodePath;
     });
 
     if (!lcpImageElement) return undefined;
@@ -104,16 +104,82 @@ class PreloadLCPImageAudit extends Audit {
 
   /**
    * Computes the estimated effect of preloading the LCP image.
-   * @param {LH.Gatherer.Simulation.GraphNetworkNode} lcpNode
+   * @param {LH.Gatherer.Simulation.GraphNetworkNode|undefined} lcpNode
    * @param {LH.Gatherer.Simulation.GraphNode} graph
    * @param {LH.Gatherer.Simulation.Simulator} simulator
    * @return {{wastedMs: number, results: Array<{url: string, wastedMs: number}>}}
    */
   static computeWasteWithGraph(lcpNode, graph, simulator) {
-    const simulation = simulator.simulate(graph, {flexibleOrdering: true});
-    // For now, we are simply using the duration of the LCP image request as the wastedMS value
-    const lcpTiming = simulation.nodeTimings.get(lcpNode);
-    const wastedMs = lcpTiming && lcpTiming.duration || 0;
+    if (!lcpNode) {
+      return {
+        wastedMs: 0,
+        results: [],
+      };
+    }
+
+    const modifiedGraph = graph.cloneWithRelationships();
+
+    // Store the IDs of the LCP Node's dependencies for later
+    /** @type {Set<string>} */
+    const dependenciesIds = new Set();
+    for (const node of lcpNode.getDependencies()) {
+      dependenciesIds.add(node.id);
+    }
+
+    /** @type {LH.Gatherer.Simulation.GraphNode|null} */
+    let modifiedLCPNode = null;
+    /** @type {LH.Gatherer.Simulation.GraphNode|null} */
+    let mainDocumentNode = null;
+
+    for (const {node} of modifiedGraph.traverseGenerator()) {
+      if (node.type !== 'network') continue;
+
+      if (node.isMainDocument()) {
+        mainDocumentNode = node;
+      } else if (node.id === lcpNode.id) {
+        modifiedLCPNode = node;
+      }
+    }
+
+    if (!mainDocumentNode) {
+      // Should always find the main document node
+      throw new Error('Could not find main document node');
+    }
+
+    if (!modifiedLCPNode) {
+      // Should always find the LCP node as well or else this function wouldn't have been called
+      throw new Error('Could not find the LCP node');
+    }
+
+    // Preload will request the resource as soon as its discovered in the main document.
+    // Reflect this change in the dependencies in our modified graph.
+    modifiedLCPNode.removeAllDependencies();
+    modifiedLCPNode.addDependency(mainDocumentNode);
+
+    const simulationBeforeChanges = simulator.simulate(graph, {flexibleOrdering: true});
+    const simulationAfterChanges = simulator.simulate(modifiedGraph, {flexibleOrdering: true});
+    const lcpTimingsBefore = simulationBeforeChanges.nodeTimings.get(lcpNode);
+    if (!lcpTimingsBefore) throw new Error('Impossible - node timings should never be undefined');
+    const lcpTimingsAfter = simulationAfterChanges.nodeTimings.get(modifiedLCPNode);
+    if (!lcpTimingsAfter) throw new Error('Impossible - node timings should never be undefined');
+    /** @type {Map<String, LH.Gatherer.Simulation.GraphNode>} */
+    const modifiedNodesById = Array.from(simulationAfterChanges.nodeTimings.keys())
+      .reduce((map, node) => map.set(node.id, node), new Map());
+
+    // Even with preload, the image can't be painted before it's even inserted into the DOM.
+    // New LCP time will be the max of image download and image in DOM (endTime of its deps).
+    let maxDependencyEndTime = 0;
+    for (const nodeId of Array.from(dependenciesIds)) {
+      const node = modifiedNodesById.get(nodeId);
+      if (!node) throw new Error('Impossible - node should never be undefined');
+      const timings = simulationAfterChanges.nodeTimings.get(node);
+      const endTime = timings && timings.endTime || 0;
+      maxDependencyEndTime = Math.max(maxDependencyEndTime, endTime);
+    }
+
+    const wastedMs = lcpTimingsBefore.endTime -
+      Math.max(lcpTimingsAfter.endTime, maxDependencyEndTime);
+
     return {
       wastedMs,
       results: [{
@@ -145,18 +211,13 @@ class PreloadLCPImageAudit extends Audit {
     const graph = lanternLCP.pessimisticGraph;
     // eslint-disable-next-line max-len
     const lcpNode = PreloadLCPImageAudit.getLCPNodeToPreload(mainResource, graph, lcpElement, artifacts.ImageElements);
-    if (!lcpNode) {
-      return {
-        score: 1,
-        notApplicable: true,
-      };
-    }
 
     const {results, wastedMs} =
       PreloadLCPImageAudit.computeWasteWithGraph(lcpNode, graph, simulator);
 
     /** @type {LH.Audit.Details.Opportunity['headings']} */
     const headings = [
+      {key: 'url', valueType: 'thumbnail', label: ''},
       {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
       {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnWastedMs)},
     ];

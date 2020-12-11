@@ -61,8 +61,8 @@ describe('Metrics: Speed Index', () => {
     }).toMatchInlineSnapshot(`
       Object {
         "optimistic": 575,
-        "pessimistic": 563,
-        "timing": 599,
+        "pessimistic": 633,
+        "timing": 635,
       }
     `);
   });

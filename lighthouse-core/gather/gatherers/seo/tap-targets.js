@@ -33,7 +33,7 @@ const tapTargetsSelector = TARGET_SELECTORS.join(',');
 
 /**
  * @param {HTMLElement} element
- * @returns {boolean}
+ * @return {boolean}
  */
 /* istanbul ignore next */
 function elementIsVisible(element) {
@@ -42,7 +42,7 @@ function elementIsVisible(element) {
 
 /**
  * @param {Element} element
- * @returns {LH.Artifacts.Rect[]}
+ * @return {LH.Artifacts.Rect[]}
  */
 /* istanbul ignore next */
 function getClientRects(element) {
@@ -65,7 +65,7 @@ function getClientRects(element) {
 /**
  * @param {Element} element
  * @param {string} tapTargetsSelector
- * @returns {boolean}
+ * @return {boolean}
  */
 /* istanbul ignore next */
 function elementHasAncestorTapTarget(element, tapTargetsSelector) {
@@ -119,7 +119,7 @@ function hasTextNodeSiblingsFormingTextBlock(element) {
  * Makes a reasonable guess, but for example gets it wrong if the element is surrounded by other
  * HTML elements instead of direct text nodes.
  * @param {Element} element
- * @returns {boolean}
+ * @return {boolean}
  */
 /* istanbul ignore next */
 function elementIsInTextBlock(element) {
@@ -160,7 +160,7 @@ function elementCenterIsAtZAxisTop(el, elCenterPoint) {
 /**
  * Finds all position sticky/absolute elements on the page and adds a class
  * that disables pointer events on them.
- * @returns {() => void} - undo function to re-enable pointer events
+ * @return {() => void} - undo function to re-enable pointer events
  */
 /* istanbul ignore next */
 function disableFixedAndStickyElementPointerEvents() {
@@ -186,7 +186,7 @@ function disableFixedAndStickyElementPointerEvents() {
 
 /**
  * @param {string} tapTargetsSelector
- * @returns {LH.Artifacts.TapTarget[]}
+ * @return {LH.Artifacts.TapTarget[]}
  */
 /* istanbul ignore next */
 function gatherTapTargets(tapTargetsSelector) {
@@ -270,7 +270,7 @@ function gatherTapTargets(tapTargetsSelector) {
       clientRects: visibleClientRects,
       href: /** @type {HTMLAnchorElement} */(tapTargetElement)['href'] || '',
       // @ts-expect-error - getNodeDetails put into scope via stringification
-      ...getNodeDetails(tapTargetElement),
+      node: getNodeDetails(tapTargetElement),
     });
   }
 
@@ -285,23 +285,25 @@ class TapTargets extends Gatherer {
    * @return {Promise<LH.Artifacts.TapTarget[]>} All visible tap targets with their positions and sizes
    */
   afterPass(passContext) {
-    const expression = `(function() {
-      ${pageFunctions.getElementsInDocumentString};
-      ${disableFixedAndStickyElementPointerEvents.toString()};
-      ${elementIsVisible.toString()};
-      ${elementHasAncestorTapTarget.toString()};
-      ${elementCenterIsAtZAxisTop.toString()}
-      ${getClientRects.toString()};
-      ${hasTextNodeSiblingsFormingTextBlock.toString()};
-      ${elementIsInTextBlock.toString()};
-      ${RectHelpers.getRectCenterPoint.toString()};
-      ${pageFunctions.getNodeDetailsString};
-      ${gatherTapTargets.toString()};
-
-      return gatherTapTargets("${tapTargetsSelector}");
-    })()`;
-
-    return passContext.driver.evaluateAsync(expression, {useIsolation: true});
+    return passContext.driver.evaluate(gatherTapTargets, {
+      args: [tapTargetsSelector],
+      useIsolation: true,
+      deps: [
+        pageFunctions.getNodeDetailsString,
+        pageFunctions.getElementsInDocument,
+        disableFixedAndStickyElementPointerEvents,
+        elementIsVisible,
+        elementHasAncestorTapTarget,
+        elementCenterIsAtZAxisTop,
+        getClientRects,
+        hasTextNodeSiblingsFormingTextBlock,
+        elementIsInTextBlock,
+        RectHelpers.getRectCenterPoint,
+        pageFunctions.getNodePath,
+        pageFunctions.getNodeSelector,
+        pageFunctions.getNodeLabel,
+      ],
+    });
   }
 }
 

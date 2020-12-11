@@ -1,7 +1,6 @@
-# Lighthouse  [![GitHub Actions Status Badge](https://github.com/GoogleChrome/lighthouse/workflows/💡🏠/badge.svg)](https://github.com/GoogleChrome/lighthouse/actions) [![Linux Build Status](https://img.shields.io/travis/GoogleChrome/lighthouse/master.svg)](https://travis-ci.org/GoogleChrome/lighthouse) [![Coverage Status](https://img.shields.io/coveralls/GoogleChrome/lighthouse/master.svg)](https://coveralls.io/github/GoogleChrome/lighthouse?branch=master) [![NPM lighthouse package](https://img.shields.io/npm/v/lighthouse.svg)](https://npmjs.org/package/lighthouse)
+# Lighthouse  [![GitHub Actions Status Badge](https://github.com/GoogleChrome/lighthouse/workflows/💡🏠/badge.svg)](https://github.com/GoogleChrome/lighthouse/actions) [![Linux Build Status](https://img.shields.io/travis/GoogleChrome/lighthouse/master.svg)](https://travis-ci.org/GoogleChrome/lighthouse) [![Coverage Status](https://img.shields.io/coveralls/GoogleChrome/lighthouse/master.svg)](https://coveralls.io/github/GoogleChrome/lighthouse?branch=master) [![Build tracker for Lighthouse](https://img.shields.io/badge/buildtracker-ok-blue)](https://lh-build-tracker.herokuapp.com/) [![NPM lighthouse package](https://img.shields.io/npm/v/lighthouse.svg)](https://npmjs.org/package/lighthouse)
 
 > Lighthouse analyzes web apps and web pages, collecting modern performance metrics and insights on developer best practices.
-
 
 - Using Lighthouse
   - [Using Lighthouse in Chrome DevTools](#using-lighthouse-in-chrome-devtools)
@@ -52,7 +51,7 @@ The Chrome extension was available prior to Lighthouse being available in Chrome
 
 The Node CLI provides the most flexibility in how Lighthouse runs can be configured and reported. Users who want more advanced usage, or want to run Lighthouse in an automated fashion should use the Node CLI.
 
-_Lighthouse requires Node 10 LTS (10.13) or later._
+_Lighthouse requires Node 12 LTS (12.x) or later._
 
 **Installation**:
 
@@ -338,6 +337,10 @@ This section details services that have integrated Lighthouse data. If you're wo
 * **[Speedrank](https://speedrank.app)** - Speedrank monitors the performance of your website in the background. It displays Lighthouse reports over time and delivers recommendations for improvement. Speedrank is a paid product with 14-day-trial.
 
 * **[Foo](https://www.foo.software/lighthouse)** - Lighthouse-as-a-service offering free and premium plans. Provides monitoring and historical reporting of Lighthouse audits with CircleCI, GitHub, and other integrations. Features include Slack notifications, PR comment reporting and more.
+
+* **[Apdex](https://apdex.co)** - Apdex is a website performance service. The main features are historical Lighthouse report visualizations, mobile/desktop options, alerts, uptime monitoring, and more. There are flexible paid plans and a 30-day free trial.
+
+* **[Websu](https://websu.io)** - Websu is an open source project to provide Lighthouse-as-a-Service through a simple HTTP REST API. The main features are ability to host and deploy in your own environment and historical Lighthouse report summaries.
 
 ## Lighthouse Integrations in non-Web Perf services
 

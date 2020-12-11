@@ -80,11 +80,9 @@ describe('Render blocking resources audit', () => {
         'url': 'https://fonts.googleapis.com/css?family=Fira+Sans+Condensed%3A400%2C400i%2C600%2C600i&subset=latin%2Clatin-ext&display=swap',
         'wastedMs': 440,
       },
-      {
-        'totalBytes': 621,
-        'url': 'https://fonts.googleapis.com/css?family=Montserrat',
-        'wastedMs': 440,
-      },
+      // Due to internal H2 simulation details, parallel HTTP/2 requests are pipelined which makes
+      // it look like Montserrat starts after Fira Sans finishes. It would be preferred
+      // if eventual simulation improvements list Montserrat here as well.
     ]);
   });
 

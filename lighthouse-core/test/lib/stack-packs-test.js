@@ -18,15 +18,11 @@ function getAuditIds() {
 }
 
 describe('stack-packs lib', () => {
-  it('packs without detectors', () => {
+  it('there are no packs without detectors', () => {
     const result = lighthouseStackPacksDep
       .filter(p => !stackPacksLib.stackPacksToInclude.find(p2 => p2.packId === p.id))
       .map(p => p.id);
-    expect(result).toMatchInlineSnapshot(`
-      Array [
-        "joomla",
-      ]
-    `);
+    expect(result).toEqual([]);
   });
 });
 
@@ -42,6 +38,7 @@ describe('lighthouse-stack-packs dep', () => {
         "amp",
         "magento",
         "joomla",
+        "octobercms",
       ]
     `);
   });
@@ -160,6 +157,25 @@ describe('lighthouse-stack-packs dep', () => {
             "uses-text-compression",
             "uses-responsive-images",
             "server-response-time",
+          ],
+        },
+        Object {
+          "id": "octobercms",
+          "keys": Array [
+            "unused-css-rules",
+            "uses-webp-images",
+            "offscreen-images",
+            "total-byte-weight",
+            "render-blocking-resources",
+            "unminified-css",
+            "unminified-javascript",
+            "efficient-animated-content",
+            "unused-javascript",
+            "uses-long-cache-ttl",
+            "uses-optimized-images",
+            "uses-text-compression",
+            "uses-responsive-images",
+            "time-to-first-byte",
           ],
         },
       ]

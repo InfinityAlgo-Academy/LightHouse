@@ -394,7 +394,7 @@ describe('CategoryRenderer', () => {
       const warningAudits = elem.querySelectorAll('.lh-clump--warning .lh-audit');
       const manualAudits = elem.querySelectorAll('.lh-clump--manual .lh-audit');
 
-      assert.equal(passedAudits.length, 2);
+      assert.equal(passedAudits.length, 0);
       assert.equal(failedAudits.length, 10);
       assert.equal(warningAudits.length, 2);
       assert.equal(manualAudits.length, 3);
@@ -409,13 +409,14 @@ describe('CategoryRenderer', () => {
       const failedAudits = elem.querySelectorAll('.lh-clump--failed .lh-audit');
 
       assert.equal(passedAudits.length, 0);
-      assert.equal(failedAudits.length, 14);
+      assert.equal(failedAudits.length, 12);
     });
 
     it('expands warning audit group', () => {
       const category = sampleResults.categories.pwa;
       const categoryClone = JSON.parse(JSON.stringify(category));
-      categoryClone.auditRefs[0].result.warnings = ['Some warning'];
+      const failingAudit = categoryClone.auditRefs.find(ref => ref.id === 'content-width');
+      failingAudit.result.warnings = ['Some warning'];
 
       const auditDOM = renderer.render(categoryClone, sampleResults.categoryGroups);
       const warningClumpEl = auditDOM.querySelector('.lh-clump--warning');

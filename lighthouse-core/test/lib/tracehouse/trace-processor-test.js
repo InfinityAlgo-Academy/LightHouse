@@ -20,6 +20,7 @@ const noFCPtrace = require('../../fixtures/traces/airhorner_no_fcp.json');
 const noNavStartTrace = require('../../fixtures/traces/no_navstart_event.json');
 const backgroundTabTrace = require('../../fixtures/traces/backgrounded-tab-missing-paints.json');
 const lcpTrace = require('../../fixtures/traces/lcp-m78.json');
+const lcpAllFramesTrace = require('../../fixtures/traces/frame-metrics-m89.json');
 
 /* eslint-env jest */
 
@@ -431,6 +432,78 @@ Object {
         );
         const trace = TraceProcessor.computeTraceOfTab(testTrace);
         assert.equal(trace.largestContentfulPaintEvt, undefined);
+        assert.ok(!trace.lcpInvalidated);
+      });
+    });
+
+    describe('finds correct LCP from all frames', () => {
+      it('in a trace', () => {
+        const trace = TraceProcessor.computeTraceOfTab(lcpAllFramesTrace);
+        expect({
+          'firstContentfulPaintEvt.ts': trace.firstContentfulPaintEvt.ts,
+          'largestContentfulPaintEvt.ts': trace.largestContentfulPaintEvt.ts,
+          'mainFrameIds.frameId': trace.mainFrameIds.frameId,
+          'timeOriginEvt.ts': trace.timeOriginEvt.ts,
+          'timestamps.firstContentfulPaint': trace.timestamps.firstContentfulPaint,
+          'timestamps.largestContentfulPaint': trace.timestamps.largestContentfulPaint,
+          'timestamps.largestContentfulPaintAllFrames': trace.timestamps.largestContentfulPaintAllFrames, // eslint-disable-line max-len
+          'timings.firstContentfulPaint': trace.timings.firstContentfulPaint,
+          'timings.largestContentfulPaint': trace.timings.largestContentfulPaint,
+          'timings.largestContentfulPaintAllFrames': trace.timings.largestContentfulPaintAllFrames,
+        }).toMatchInlineSnapshot(`
+          Object {
+            "firstContentfulPaintEvt.ts": 46134430620,
+            "largestContentfulPaintEvt.ts": 46134430620,
+            "mainFrameIds.frameId": "949C93159575C8C6CE08E7898C0B8E4D",
+            "timeOriginEvt.ts": 46133742490,
+            "timestamps.firstContentfulPaint": 46134430620,
+            "timestamps.largestContentfulPaint": 46134430620,
+            "timestamps.largestContentfulPaintAllFrames": 46139690898,
+            "timings.firstContentfulPaint": 688.13,
+            "timings.largestContentfulPaint": 688.13,
+            "timings.largestContentfulPaintAllFrames": 5948.408,
+          }
+        `);
+      });
+
+      it('ignores main frame LCP events', () => {
+        const testTrace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
+        const frame = testTrace.traceEvents[0].args.frame;
+        const args = {frame};
+        const cat = 'loading,rail,devtools.timeline';
+        testTrace.traceEvents.push(
+          /* eslint-disable max-len */
+          {name: 'largestContentfulPaint::Candidate', cat, args, ts: 1000, duration: 10},
+          {name: 'NavStartToLargestContentfulPaint::Candidate::AllFrames::UKM', cat, args, ts: 1100, duration: 10},
+          {name: 'NavStartToLargestContentfulPaint::Invalidate::AllFrames::UKM', cat, args, ts: 1200, duration: 10},
+          {name: 'largestContentfulPaint::Invalidate', cat, args, ts: 1300, duration: 10},
+          {name: 'largestContentfulPaint::Candidate', cat, args, ts: 1400, duration: 10},
+          {name: 'NavStartToLargestContentfulPaint::Candidate::AllFrames::UKM', cat, args, ts: 1500, duration: 10}
+          /* eslint-enable max-len */
+        );
+        const trace = TraceProcessor.computeTraceOfTab(testTrace);
+        assert.equal(trace.timestamps.largestContentfulPaint, 1400);
+        assert.equal(trace.timestamps.largestContentfulPaintAllFrames, 1500);
+        assert.ok(!trace.lcpInvalidated);
+      });
+
+      it('invalidates even if main frame LCP is available', () => {
+        const testTrace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
+        const frame = testTrace.traceEvents[0].args.frame;
+        const args = {frame};
+        const cat = 'loading,rail,devtools.timeline';
+        testTrace.traceEvents.push(
+          /* eslint-disable max-len */
+          {name: 'largestContentfulPaint::Candidate', cat, args, ts: 1000, duration: 10},
+          {name: 'NavStartToLargestContentfulPaint::Candidate::AllFrames::UKM', cat, args, ts: 1100, duration: 10},
+          {name: 'NavStartToLargestContentfulPaint::Invalidate::AllFrames::UKM', cat, args, ts: 1200, duration: 10},
+          {name: 'largestContentfulPaint::Invalidate', cat, args, ts: 1300, duration: 10},
+          {name: 'largestContentfulPaint::Candidate', cat, args, ts: 1400, duration: 10}
+          /* eslint-enable max-len */
+        );
+        const trace = TraceProcessor.computeTraceOfTab(testTrace);
+        assert.equal(trace.timestamps.largestContentfulPaint, 1400);
+        assert.equal(trace.timestamps.largestContentfulPaintAllFrames, undefined);
         assert.ok(!trace.lcpInvalidated);
       });
     });

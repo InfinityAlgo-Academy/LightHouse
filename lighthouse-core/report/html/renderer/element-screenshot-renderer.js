@@ -18,15 +18,15 @@
 /** @typedef {{width: number, height: number}} Size */
 
 /**
- * @param {LH.Audit.Details.FullPageScreenshot} fullPageScreenshot
+ * @param {LH.Artifacts.FullPageScreenshot['screenshot']} screenshot
  * @param {LH.Artifacts.Rect} rect
  * @return {boolean}
  */
-function screenshotContainsRect(fullPageScreenshot, rect) {
-  return rect.top >= 0 &&
-    rect.right <= fullPageScreenshot.width &&
-    rect.bottom <= fullPageScreenshot.height &&
-    rect.left >= 0;
+function screenshotOverlapsRect(screenshot, rect) {
+  return rect.left <= screenshot.width &&
+    0 <= rect.right &&
+    rect.top <= screenshot.height &&
+    0 <= rect.bottom;
 }
 
 /**
@@ -120,14 +120,14 @@ class ElementScreenshotRenderer {
   /**
    * Called externally and must be injected to the report in order to use this renderer.
    * @param {DOM} dom
-   * @param {LH.Audit.Details.FullPageScreenshot} fullPageScreenshot
+   * @param {LH.Artifacts.FullPageScreenshot['screenshot']} screenshot
    */
-  static createBackgroundImageStyle(dom, fullPageScreenshot) {
+  static createBackgroundImageStyle(dom, screenshot) {
     const styleEl = dom.createElement('style');
     styleEl.id = 'full-page-screenshot-style';
     styleEl.textContent = `
       .lh-element-screenshot__image {
-        background-image: url(${fullPageScreenshot.data})
+        background-image: url(${screenshot.data})
       }`;
     return styleEl;
   }
@@ -136,7 +136,7 @@ class ElementScreenshotRenderer {
    * Installs the lightbox elements and wires up click listeners to all .lh-element-screenshot elements.
    * @param {DOM} dom
    * @param {ParentNode} templateContext
-   * @param {LH.Audit.Details.FullPageScreenshot} fullPageScreenshot
+   * @param {LH.Artifacts.FullPageScreenshot} fullPageScreenshot
    */
   static installOverlayFeature(dom, templateContext, fullPageScreenshot) {
     const reportEl = dom.find('.lh-report', dom.document());
@@ -168,7 +168,7 @@ class ElementScreenshotRenderer {
       const screenshotElement = ElementScreenshotRenderer.render(
         dom,
         templateContext,
-        fullPageScreenshot,
+        fullPageScreenshot.screenshot,
         elementRectSC,
         maxLightboxSize
       );
@@ -206,13 +206,13 @@ class ElementScreenshotRenderer {
    * Returns null if element rect is outside screenshot bounds.
    * @param {DOM} dom
    * @param {ParentNode} templateContext
-   * @param {LH.Audit.Details.FullPageScreenshot} fullPageScreenshot
+   * @param {LH.Artifacts.FullPageScreenshot['screenshot']} screenshot
    * @param {LH.Artifacts.Rect} elementRectSC Region of screenshot to highlight.
    * @param {Size} maxRenderSizeDC e.g. maxThumbnailSize or maxLightboxSize.
    * @return {Element|null}
    */
-  static render(dom, templateContext, fullPageScreenshot, elementRectSC, maxRenderSizeDC) {
-    if (!screenshotContainsRect(fullPageScreenshot, elementRectSC)) {
+  static render(dom, templateContext, screenshot, elementRectSC, maxRenderSizeDC) {
+    if (!screenshotOverlapsRect(screenshot, elementRectSC)) {
       return null;
     }
 
@@ -232,7 +232,7 @@ class ElementScreenshotRenderer {
       width: maxRenderSizeDC.width / zoomFactor,
       height: maxRenderSizeDC.height / zoomFactor,
     };
-    elementPreviewSizeSC.width = Math.min(fullPageScreenshot.width, elementPreviewSizeSC.width);
+    elementPreviewSizeSC.width = Math.min(screenshot.width, elementPreviewSizeSC.width);
     /* This preview size is either the size of the thumbnail or size of the Lightbox */
     const elementPreviewSizeDC = {
       width: elementPreviewSizeSC.width * zoomFactor,
@@ -242,7 +242,7 @@ class ElementScreenshotRenderer {
     const positions = ElementScreenshotRenderer.getScreenshotPositions(
       elementRectSC,
       elementPreviewSizeSC,
-      {width: fullPageScreenshot.width, height: fullPageScreenshot.height}
+      {width: screenshot.width, height: screenshot.height}
     );
 
     const contentEl = dom.find('.lh-element-screenshot__content', containerEl);
@@ -255,7 +255,7 @@ class ElementScreenshotRenderer {
     imageEl.style.backgroundPositionY = -(positions.screenshot.top * zoomFactor) + 'px';
     imageEl.style.backgroundPositionX = -(positions.screenshot.left * zoomFactor) + 'px';
     imageEl.style.backgroundSize =
-      `${fullPageScreenshot.width * zoomFactor}px ${fullPageScreenshot.height * zoomFactor}px`;
+      `${screenshot.width * zoomFactor}px ${screenshot.height * zoomFactor}px`;
 
     const markerEl = dom.find('.lh-element-screenshot__element-marker', containerEl);
     markerEl.style.width = elementRectSC.width * zoomFactor + 'px';

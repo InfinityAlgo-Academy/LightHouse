@@ -92,7 +92,7 @@ Now that the integrations are confirmed to work, go back to `lighthouse` folder.
 bash ./lighthouse-core/scripts/release/prepare-commit.sh x.x.x
 
 # Rebaseline DevTools tests one more time (only version number should change).
-yarn update:test-devtools
+yarn build-devtools && yarn update:test-devtools
 ```
 
 1. Edit changelog.md before opening the PR
@@ -120,8 +120,9 @@ git push --follow-tags
 # Publish to npm.
 npm publish
 
-# Publish viewer.
+# Publish viewer and treemap.
 yarn deploy-viewer
+yarn deploy-treemap
 ```
 
 ### Extensions

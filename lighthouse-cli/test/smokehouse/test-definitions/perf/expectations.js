@@ -172,43 +172,49 @@ module.exports = [
       TraceElements: [
         {
           traceEventType: 'largest-contentful-paint',
-          nodeLabel: 'img',
-          snippet: '<img src="../dobetterweb/lighthouse-480x318.jpg">',
-          boundingRect: {
-            top: 108,
-            bottom: 426,
-            left: 8,
-            right: 488,
-            width: 480,
-            height: 318,
+          node: {
+            nodeLabel: 'img',
+            snippet: '<img src="../dobetterweb/lighthouse-480x318.jpg">',
+            boundingRect: {
+              top: 108,
+              bottom: 426,
+              left: 8,
+              right: 488,
+              width: 480,
+              height: 318,
+            },
           },
         },
         {
           traceEventType: 'layout-shift',
-          selector: 'body > h1',
-          nodeLabel: 'Please don\'t move me',
-          snippet: '<h1>',
-          boundingRect: {
-            top: 465,
-            bottom: 502,
-            left: 8,
-            right: 352,
-            width: 344,
-            height: 37,
+          node: {
+            selector: 'body > h1',
+            nodeLabel: 'Please don\'t move me',
+            snippet: '<h1>',
+            boundingRect: {
+              top: 465,
+              bottom: 502,
+              left: 8,
+              right: 352,
+              width: 344,
+              height: 37,
+            },
           },
           score: '0.058 +/- 0.01',
         },
         {
           traceEventType: 'layout-shift',
-          nodeLabel: 'Sorry!',
-          snippet: '<div style="height: 18px;">',
-          boundingRect: {
-            top: 426,
-            bottom: 444,
-            left: 8,
-            right: 352,
-            width: 344,
-            height: 18,
+          node: {
+            nodeLabel: 'Sorry!',
+            snippet: '<div style="height: 18px;">',
+            boundingRect: {
+              top: 426,
+              bottom: 444,
+              left: 8,
+              right: 352,
+              width: 344,
+              height: 18,
+            },
           },
           score: '0.026 +/- 0.01',
         },
@@ -218,21 +224,26 @@ module.exports = [
           // https://chromiumdash.appspot.com/commit/995baabedf9e70d16deafc4bc37a2b215a9b8ec9
           _minChromiumMilestone: 86,
           traceEventType: 'animation',
-          selector: 'body > div#animate-me',
-          nodeLabel: 'div',
-          snippet: '<div id="animate-me">',
-          boundingRect: {
-            top: 8,
-            bottom: 108,
-            left: 8,
-            right: 108,
-            width: 100,
-            height: 100,
+          node: {
+            selector: 'body > div#animate-me',
+            nodeLabel: 'div',
+            snippet: '<div id="animate-me">',
+            boundingRect: {
+              top: 8,
+              bottom: 108,
+              left: 8,
+              right: 108,
+              width: 100,
+              height: 100,
+            },
           },
           animations: [
             {
               name: 'anim',
-              failureReasonsMask: 8224,
+              // The animation reliably gets kUnsupportedCSSProperty (1 << 13) === 8192.
+              // Sometimes it also gets kTargetHasInvalidCompositingState (1 << 5) == 32. Together they sum to 8224.
+              // Both are fine for our purposes.
+              failureReasonsMask: '8192 +/- 32',
               unsupportedProperties: ['background-color'],
             },
           ],
@@ -284,12 +295,17 @@ module.exports = [
   },
   {
     lhr: {
-      requestedUrl: 'http://localhost:10200/perf/trace-elements.html?missing',
-      finalUrl: 'http://localhost:10200/perf/trace-elements.html?missing',
+      requestedUrl: 'http://localhost:10200/perf/trace-elements.html?evicted',
+      finalUrl: 'http://localhost:10200/perf/trace-elements.html?evicted',
       audits: {
         'largest-contentful-paint-element': {
           score: null,
+          scoreDisplayMode: /(notApplicable|informative)/,
           details: {
+            // LCP in m88 was changed to allow selection of removed nodes.
+            // When this happens we aren't able to identify the LCP element anymore.
+            // https://chromiumdash.appspot.com/commit/a5484e6310a38223fde757b6f094a673ce032cc0
+            _maxChromiumMilestone: 87,
             items: [
               {
                 node: {
@@ -346,6 +362,33 @@ module.exports = [
                       animation: 'beta',
                     },
                   ],
+                },
+              },
+            ],
+          },
+        },
+      },
+    },
+  },
+  {
+    lhr: {
+      requestedUrl: 'http://localhost:10200/perf/third-party.html',
+      finalUrl: 'http://localhost:10200/perf/third-party.html',
+      audits: {
+        'third-party-facades': {
+          score: 0,
+          displayValue: '1 facade alternative available',
+          details: {
+            items: [
+              {
+                product: 'YouTube Embedded Player (Video)',
+                blockingTime: 0,
+                transferSize: '>400000', // Transfer size is imprecise.
+                subItems: {
+                  type: 'subitems',
+                  items: {
+                    length: '>5', // We don't care exactly how many it has, just ensure we surface the subresources.
+                  },
                 },
               },
             ],

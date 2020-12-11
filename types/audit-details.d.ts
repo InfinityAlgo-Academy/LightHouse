@@ -63,14 +63,12 @@ declare global {
       }
 
       /**
-       * A screenshot of the entire page, including width and height information.
-       * Used for element screenshots.
+       * A screenshot of the entire page, including width and height information,
+       * and the locations of interesting nodes.
+       * Used by element screenshots renderer.
        */
-      export interface FullPageScreenshot {
+      export interface FullPageScreenshot extends LH.Artifacts.FullPageScreenshot {
         type: 'full-page-screenshot';
-        data: string;
-        width: number;
-        height: number;
       }
 
       export interface Table {
@@ -203,6 +201,8 @@ declare global {
        */
       export interface NodeValue {
         type: 'node';
+        /** Unique identifier. */
+        lhId?: string;
         path?: string;
         selector?: string;
         boundingRect?: Artifacts.Rect;

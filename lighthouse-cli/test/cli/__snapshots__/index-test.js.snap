@@ -19,9 +19,6 @@ Object {
       "path": "viewport",
     },
     Object {
-      "path": "without-javascript",
-    },
-    Object {
       "path": "metrics/first-contentful-paint",
     },
     Object {
@@ -29,9 +26,6 @@ Object {
     },
     Object {
       "path": "metrics/first-meaningful-paint",
-    },
-    Object {
-      "path": "load-fast-enough-for-pwa",
     },
     Object {
       "path": "metrics/speed-index",
@@ -154,6 +148,9 @@ Object {
       "path": "third-party-summary",
     },
     Object {
+      "path": "third-party-facades",
+    },
+    Object {
       "path": "largest-contentful-paint-element",
     },
     Object {
@@ -173,6 +170,12 @@ Object {
     },
     Object {
       "path": "valid-source-maps",
+    },
+    Object {
+      "path": "preload-lcp-image",
+    },
+    Object {
+      "path": "full-page-screenshot",
     },
     Object {
       "path": "manual/pwa-cross-browser",
@@ -398,6 +401,9 @@ Object {
     },
     Object {
       "path": "dobetterweb/geolocation-on-start",
+    },
+    Object {
+      "path": "dobetterweb/inspector-issues",
     },
     Object {
       "path": "dobetterweb/no-document-write",
@@ -797,6 +803,11 @@ Object {
           "id": "valid-source-maps",
           "weight": 0,
         },
+        Object {
+          "group": "best-practices-general",
+          "id": "inspector-issues",
+          "weight": 1,
+        },
       ],
       "title": "Best Practices",
     },
@@ -939,6 +950,11 @@ Object {
           "weight": 0,
         },
         Object {
+          "group": "load-opportunities",
+          "id": "preload-lcp-image",
+          "weight": 0,
+        },
+        Object {
           "group": "diagnostics",
           "id": "total-byte-weight",
           "weight": 0,
@@ -996,6 +1012,11 @@ Object {
         Object {
           "group": "diagnostics",
           "id": "third-party-summary",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "third-party-facades",
           "weight": 0,
         },
         Object {
@@ -1072,11 +1093,6 @@ Object {
       "auditRefs": Array [
         Object {
           "group": "pwa-fast-reliable",
-          "id": "load-fast-enough-for-pwa",
-          "weight": 7,
-        },
-        Object {
-          "group": "pwa-fast-reliable",
           "id": "works-offline",
           "weight": 5,
         },
@@ -1124,11 +1140,6 @@ Object {
           "group": "pwa-optimized",
           "id": "viewport",
           "weight": 2,
-        },
-        Object {
-          "group": "pwa-optimized",
-          "id": "without-javascript",
-          "weight": 1,
         },
         Object {
           "group": "pwa-optimized",
@@ -1414,6 +1425,9 @@ Object {
         Object {
           "path": "source-maps",
         },
+        Object {
+          "path": "full-page-screenshot",
+        },
       ],
       "loadFailureMode": "fatal",
       "networkQuietThresholdMs": 1000,
@@ -1449,7 +1463,6 @@ Object {
     Object {
       "blankPage": "about:blank",
       "blockedUrlPatterns": Array [
-        "*.css",
         "*.jpg",
         "*.jpeg",
         "*.png",
@@ -1463,9 +1476,6 @@ Object {
       "gatherers": Array [
         Object {
           "path": "http-redirect",
-        },
-        Object {
-          "path": "html-without-javascript",
         },
       ],
       "loadFailureMode": "warn",
