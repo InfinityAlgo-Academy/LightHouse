@@ -432,24 +432,6 @@
                   "transferSize": 821
                 }
               },
-              "75994.10": {
-                "request": {
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-                  "startTime": 185603.965303,
-                  "endTime": 185605.113307,
-                  "responseReceivedTime": 185605.104776,
-                  "transferSize": 1703
-                }
-              },
-              "75994.11": {
-                "request": {
-                  "url": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
-                  "startTime": 185603.96675,
-                  "endTime": 185604.557407,
-                  "responseReceivedTime": 185604.556719,
-                  "transferSize": 144
-                }
-              },
               "75994.21": {
                 "request": {
                   "url": "http://localhost:10200/zone.js",
@@ -475,6 +457,24 @@
                   "endTime": 185607.285454,
                   "responseReceivedTime": 185606.82147599998,
                   "transferSize": 821
+                }
+              },
+              "75994.10": {
+                "request": {
+                  "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+                  "startTime": 185603.965303,
+                  "endTime": 185605.113307,
+                  "responseReceivedTime": 185605.104776,
+                  "transferSize": 1703
+                }
+              },
+              "75994.11": {
+                "request": {
+                  "url": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
+                  "startTime": 185603.96675,
+                  "endTime": 185604.557407,
+                  "responseReceivedTime": 185604.556719,
+                  "transferSize": 144
                 }
               }
             }

@@ -44,8 +44,8 @@ describe('Resources are fetched over http/2', () => {
     // make sure we flag all the rest
     expect(result.details.items).toHaveLength(60);
     // make sure we report savings
-    expect(result.numericValue).toMatchInlineSnapshot(`1310`);
-    expect(result.details.overallSavingsMs).toMatchInlineSnapshot(`1310`);
+    expect(result.numericValue).toMatchInlineSnapshot(`1340`);
+    expect(result.details.overallSavingsMs).toMatchInlineSnapshot(`1340`);
     // make sure we have a failing score
     expect(result.score).toBeLessThan(0.5);
   });
@@ -70,7 +70,7 @@ describe('Resources are fetched over http/2', () => {
     expect(urls).not.toContain(records[30].url);
     expect(result.details.items).toHaveLength(30);
     // make sure we report less savings
-    expect(result.numericValue).toMatchInlineSnapshot(`850`);
-    expect(result.details.overallSavingsMs).toMatchInlineSnapshot(`850`);
+    expect(result.numericValue).toMatchInlineSnapshot(`500`);
+    expect(result.details.overallSavingsMs).toMatchInlineSnapshot(`500`);
   });
 });
