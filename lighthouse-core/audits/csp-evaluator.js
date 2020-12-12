@@ -10,6 +10,8 @@ const MainResource = require('../computed/main-resource.js');
 const i18n = require('../lib/i18n/i18n.js');
 const {evaluateRawCsp} = require('../lib/csp-evaluator.js');
 
+/** @typedef {import('../lib/csp-evaluator.js').Finding} Finding */
+
 const UIStrings = {
   title: 'CSP secures page from XSS attacks',
   failureTitle: 'CSP does not completely secure page from XSS attacks',
@@ -25,6 +27,18 @@ const UIStrings = {
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
+/** @type {Record<number, string>} */
+const SEVERITIES = {
+  10: 'High',
+  20: 'Syntax',
+  30: 'Medium',
+  40: 'Possible High',
+  45: 'Strict CSP',
+  50: 'Possible Medium',
+  60: 'Info',
+  100: 'None',
+};
+
 class CSPEvaluator extends Audit {
   /**
    * @return {LH.Audit.Meta}
@@ -37,6 +51,44 @@ class CSPEvaluator extends Audit {
       description: str_(UIStrings.description),
       requiredArtifacts: ['devtoolsLogs', 'MetaElements', 'URL'],
     };
+  }
+
+  /**
+   * @param {Array<Finding>} findings
+   * @return {LH.Audit.Details.TableItem[]}
+   */
+  static constructResults(findings) {
+    const findingsByDirective = findings
+      .sort((a, b) => a.severity - b.severity)
+      .reduce((findingsByDirective, f) => {
+        const directiveFindings = findingsByDirective[f.directive] || [];
+        directiveFindings.push(f);
+        findingsByDirective[f.directive] = directiveFindings;
+        return findingsByDirective;
+      }, /** @type {Record<string, Array<Finding>>} */ ({}));
+
+    /** @type {LH.Audit.Details.TableItem[]} */
+    const results = [];
+    for (const [directive, findings] of Object.entries(findingsByDirective)) {
+      const noValueIndex = findings.findIndex(f => !f.value);
+      const description
+        = noValueIndex !== -1 ? findings.splice(noValueIndex, 1)[0].description : '';
+      const minSeverity = findings.reduce((min, f) => Math.min(min, f.severity), 100);
+      results.push({
+        directive,
+        severity: SEVERITIES[minSeverity],
+        description,
+        subItems: {
+          type: 'subitems',
+          items: findings
+            .filter(f => f.value)
+            .map(f => {
+              return {...f, severity: SEVERITIES[f.severity]};
+            }),
+        },
+      });
+    }
+    return results;
   }
 
   /**
@@ -66,14 +118,13 @@ class CSPEvaluator extends Audit {
       };
     }
     const findings = evaluateRawCsp(cspHeader.value);
-    const results = [{description: cspHeader.value}, ...findings];
+    const results = this.constructResults(findings);
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'directive', itemType: 'code', text: 'Directive'},
-      {key: 'value', itemType: 'code', text: 'Value'},
-      {key: 'description', itemType: 'text', text: 'Description'},
-      {key: 'severity', itemType: 'text', text: 'Severity'},
+      {key: 'directive', itemType: 'code', subItemsHeading: {key: 'value', itemType: 'code'}, text: 'Directive'},
+      {key: 'severity', itemType: 'text', subItemsHeading: {key: 'severity'}, text: 'Severity'},
+      {key: 'description', itemType: 'text', subItemsHeading: {key: 'description'}, text: 'Description'},
       /* eslint-enable max-len */
     ];
     const details = Audit.makeTableDetails(headings, results);
