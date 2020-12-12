@@ -1348,9 +1348,6 @@ Object {
           "path": "viewport-dimensions",
         },
         Object {
-          "path": "runtime-exceptions",
-        },
-        Object {
           "path": "console-messages",
         },
         Object {

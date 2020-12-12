@@ -138,7 +138,6 @@ const defaultConfig = {
       'css-usage',
       'js-usage',
       'viewport-dimensions',
-      'runtime-exceptions',
       'console-messages',
       'anchor-elements',
       'image-elements',

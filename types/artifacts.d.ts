@@ -64,8 +64,8 @@ declare global {
      * on a major version bump.
      */
     export interface PublicGathererArtifacts {
-      /** Console deprecation and intervention warnings logged by Chrome during page load. */
-      ConsoleMessages: Crdp.Log.EntryAddedEvent[];
+      /** ConsoleMessages deprecation and intervention warnings, console API calls, and exceptions logged by Chrome during page load. */
+      ConsoleMessages: Artifacts.ConsoleMessage[];
       /** All the iframe elements in the page.*/
       IFrameElements: Artifacts.IFrameElement[];
       /** The contents of the main HTML document network resource. */
@@ -76,8 +76,6 @@ declare global {
       LinkElements: Artifacts.LinkElement[];
       /** The values of the <meta> elements in the head. */
       MetaElements: Array<{name?: string, content?: string, property?: string, httpEquiv?: string, charset?: string}>;
-      /** Set of exceptions thrown during page load. */
-      RuntimeExceptions: Crdp.Runtime.ExceptionThrownEvent[];
       /** Information on all script elements in the page. Also contains the content of all requested scripts and the networkRecord requestId that contained their content. Note, HTML documents will have one entry per script tag, all with the same requestId. */
       ScriptElements: Array<Artifacts.ScriptElement>;
       /** The dimensions and devicePixelRatio of the loaded viewport. */
@@ -759,6 +757,57 @@ declare global {
         /** Column number in the script (0-based). */
         columnNumber: number;
       }
+
+      /** Describes a generic console message. */
+      interface BaseConsoleMessage {
+        /**
+         * The text printed to the console, as shown on the browser console.
+         *
+         * For console API calls, all values are formatted into the text. Primitive values and
+         * function will be printed as-is while objects will be formatted as if the object were
+         * passed to String(). For example, a div will be formatted as "[object HTMLDivElement]".
+         *
+         * For exceptions the text will be the same as err.message at runtime.
+         */
+        text: string;
+        /** Time of the console log in milliseconds since epoch. */
+        timestamp: number;
+        /** The stack trace of the log/exception, if known. */
+        stackTrace?: Crdp.Runtime.StackTrace;
+        /** The URL of the log/exception, if known. */
+        url?: string;
+        /** Line number in the script (0-based), if known. */
+        lineNumber?: number;
+        /** Column number in the script (0-based), if known. */
+        columnNumber?: number;
+      }
+
+      /** Describes a console message logged by a script using the console API. */
+      interface ConsoleAPICall extends BaseConsoleMessage {
+        eventType: 'consoleAPI';
+        /** The console API invoked. Only the following console API calls are gathered. */
+        source: 'console.warn' | 'console.error';
+        /** Corresponds to the API call. */
+        level: 'warning' | 'error';
+      }
+
+      interface ConsoleException extends BaseConsoleMessage {
+        eventType: 'exception';
+        source: 'exception';
+        level: 'error';
+      }
+
+      /**
+       * Describes a report logged to the console by the browser regarding interventions,
+       * deprecations, violations, and more.
+       */
+      interface ConsoleProtocolLog extends BaseConsoleMessage {
+        source: Crdp.Log.LogEntry['source'],
+        level: Crdp.Log.LogEntry['level'],
+        eventType: 'protocolLog';
+      }
+
+      export type ConsoleMessage = ConsoleAPICall | ConsoleException | ConsoleProtocolLog;
     }
   }
 }

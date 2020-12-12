@@ -717,650 +717,455 @@
       "property": "og:description"
     }
   ],
-  "RuntimeExceptions": [
-    {
-      "timestamp": 1519974785784.3982,
-      "exceptionDetails": {
-        "exceptionId": 1,
-        "text": "Uncaught",
-        "lineNumber": 41,
-        "columnNumber": 37,
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-        "stackTrace": {
-          "callFrames": [
-            {
-              "functionName": "",
-              "scriptId": "27",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 41,
-              "columnNumber": 37
-            }
-          ]
-        },
-        "exception": {
-          "type": "object",
-          "subtype": "error",
-          "className": "Error",
-          "description": "Error: An error\n    at http://localhost:10200/dobetterweb/dbw_tester.html:42:38",
-          "objectId": "{\"injectedScriptId\":3,\"id\":1}",
-          "preview": {
-            "type": "object",
-            "subtype": "error",
-            "description": "Error: An error\n    at http://localhost:10200/dobetterweb/dbw_tester.html:42:38",
-            "overflow": false,
-            "properties": [
-              {
-                "name": "stack",
-                "type": "string",
-                "value": "Error: An error\n    at http://localhost:10200/dobetterweb/dbw_tester.html:42:38"
-              },
-              {
-                "name": "message",
-                "type": "string",
-                "value": "An error"
-              }
-            ]
-          }
-        },
-        "executionContextId": 3
-      }
-    }
-  ],
   "ConsoleMessages": [
     {
-      "entry": {
-        "source": "other",
-        "level": "info",
-        "text": "Creating Application Cache with manifest http://localhost:10200/dobetterweb/clock.appcache",
-        "timestamp": 1519974783582.92,
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
-      }
+      "eventType": "protocolLog",
+      "source": "deprecation",
+      "level": "warning",
+      "text": "Application Cache API manifest selection is deprecated and will be removed in M85, around August 2020. See https://www.chromestatus.com/features/6192449487634432 for more details.",
+      "timestamp": 1607553416382.3718,
+      "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+      "lineNumber": 8
     },
     {
-      "entry": {
-        "source": "other",
-        "level": "info",
-        "text": "Application Cache Checking event",
-        "timestamp": 1519974783583.04,
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
-      }
+      "eventType": "protocolLog",
+      "source": "rendering",
+      "level": "warning",
+      "text": "HTML Imports is deprecated and has now been removed as of M80. See https://www.chromestatus.com/features/5144752345317376 and https://developers.google.com/web/updates/2019/07/web-components-time-to-upgrade for more details.",
+      "timestamp": 1607553416397.66,
+      "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+      "lineNumber": 37
     },
     {
-      "entry": {
-        "source": "other",
-        "level": "error",
-        "text": "Application Cache Error event: Manifest fetch failed (404) http://localhost:10200/dobetterweb/clock.appcache",
-        "timestamp": 1519974783584.01,
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
-      }
+      "eventType": "protocolLog",
+      "source": "rendering",
+      "level": "warning",
+      "text": "HTML Imports is deprecated and has now been removed as of M80. See https://www.chromestatus.com/features/5144752345317376 and https://developers.google.com/web/updates/2019/07/web-components-time-to-upgrade for more details.",
+      "timestamp": 1607553416398.7441,
+      "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+      "lineNumber": 38
     },
     {
-      "entry": {
-        "source": "network",
-        "level": "error",
-        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-        "timestamp": 1519974784134.15,
-        "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
-        "networkRequestId": "75994.4"
-      }
+      "eventType": "protocolLog",
+      "source": "other",
+      "level": "info",
+      "text": "Creating Application Cache with manifest http://localhost:56620/dobetterweb/clock.appcache",
+      "timestamp": 1607553416401.031,
+      "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
     },
     {
-      "entry": {
-        "source": "violation",
-        "level": "verbose",
-        "text": "Added synchronous DOM mutation listener to a 'DOMNodeInserted' event. Consider using MutationObserver to make the page more responsive.",
-        "timestamp": 1519974785778.68,
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-        "lineNumber": 19,
-        "stackTrace": {
-          "callFrames": [
-            {
-              "functionName": "",
-              "scriptId": "25",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-              "lineNumber": 19,
-              "columnNumber": 11
-            },
-            {
-              "functionName": "",
-              "scriptId": "25",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-              "lineNumber": 39,
-              "columnNumber": 2
-            }
-          ]
-        }
-      }
+      "eventType": "protocolLog",
+      "source": "other",
+      "level": "info",
+      "text": "Application Cache Checking event",
+      "timestamp": 1607553416403.637,
+      "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
     },
     {
-      "entry": {
-        "source": "violation",
-        "level": "verbose",
-        "text": "Added non-passive event listener to a scroll-blocking 'wheel' event. Consider marking event handler as 'passive' to make the page more responsive. See https://www.chromestatus.com/feature/5745543795965952",
-        "timestamp": 1519974785779.5,
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-        "lineNumber": 26,
-        "stackTrace": {
-          "callFrames": [
-            {
-              "functionName": "",
-              "scriptId": "25",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-              "lineNumber": 26,
-              "columnNumber": 11
-            },
-            {
-              "functionName": "",
-              "scriptId": "25",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-              "lineNumber": 39,
-              "columnNumber": 2
-            }
-          ]
-        }
-      }
+      "eventType": "protocolLog",
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "timestamp": 1607553416961.176,
+      "url": "http://localhost:56620/dobetterweb/unknown404.css?delay=200"
     },
     {
-      "entry": {
-        "source": "violation",
-        "level": "verbose",
-        "text": "Avoid using document.write().",
-        "timestamp": 1519974785808.58,
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-        "lineNumber": 178,
-        "stackTrace": {
-          "callFrames": [
-            {
-              "functionName": "documentWriteTest",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 178,
-              "columnNumber": 11
-            },
-            {
-              "functionName": "",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 339,
-              "columnNumber": 2
-            }
-          ]
-        }
-      }
+      "eventType": "protocolLog",
+      "source": "other",
+      "level": "error",
+      "text": "Application Cache Error event: Manifest fetch failed (404) http://localhost:56620/dobetterweb/clock.appcache",
+      "timestamp": 1607553418293.846,
+      "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
     },
     {
-      "entry": {
-        "source": "violation",
-        "level": "verbose",
-        "text": "Avoid using document.write().",
-        "timestamp": 1519974785809.4,
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-        "lineNumber": 179,
-        "stackTrace": {
-          "callFrames": [
-            {
-              "functionName": "documentWriteTest",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 179,
-              "columnNumber": 11
-            },
-            {
-              "functionName": "",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 339,
-              "columnNumber": 2
-            }
-          ]
-        }
-      }
-    },
-    {
-      "entry": {
-        "source": "violation",
-        "level": "verbose",
-        "text": "Avoid using document.write().",
-        "timestamp": 1519974785810.25,
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-        "lineNumber": 180,
-        "stackTrace": {
-          "callFrames": [
-            {
-              "functionName": "documentWriteTest",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 180,
-              "columnNumber": 11
-            },
-            {
-              "functionName": "",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 339,
-              "columnNumber": 2
-            }
-          ]
-        }
-      }
-    },
-    {
-      "entry": {
-        "source": "violation",
-        "level": "verbose",
-        "text": "Added synchronous DOM mutation listener to a 'DOMNodeInserted' event. Consider using MutationObserver to make the page more responsive.",
-        "timestamp": 1519974785833.18,
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-        "lineNumber": 189,
-        "stackTrace": {
-          "callFrames": [
-            {
-              "functionName": "mutationEvenTest",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 189,
-              "columnNumber": 11
-            },
-            {
-              "functionName": "",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 343,
-              "columnNumber": 2
-            }
-          ]
-        }
-      }
-    },
-    {
-      "entry": {
-        "source": "violation",
-        "level": "verbose",
-        "text": "Added synchronous DOM mutation listener to a 'DOMNodeRemoved' event. Consider using MutationObserver to make the page more responsive.",
-        "timestamp": 1519974785834.23,
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-        "lineNumber": 194,
-        "stackTrace": {
-          "callFrames": [
-            {
-              "functionName": "mutationEvenTest",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 194,
-              "columnNumber": 11
-            },
-            {
-              "functionName": "",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 343,
-              "columnNumber": 2
-            }
-          ]
-        }
-      }
-    },
-    {
-      "entry": {
-        "source": "violation",
-        "level": "verbose",
-        "text": "Added synchronous DOM mutation listener to a 'DOMNodeInserted' event. Consider using MutationObserver to make the page more responsive.",
-        "timestamp": 1519974785835,
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-        "lineNumber": 199,
-        "stackTrace": {
-          "callFrames": [
-            {
-              "functionName": "mutationEvenTest",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 199,
-              "columnNumber": 16
-            },
-            {
-              "functionName": "",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 343,
-              "columnNumber": 2
-            }
-          ]
-        }
-      }
-    },
-    {
-      "entry": {
-        "source": "violation",
-        "level": "verbose",
-        "text": "Added synchronous DOM mutation listener to a 'DOMNodeInserted' event. Consider using MutationObserver to make the page more responsive.",
-        "timestamp": 1519974785835.68,
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-        "lineNumber": 205,
-        "stackTrace": {
-          "callFrames": [
-            {
-              "functionName": "mutationEvenTest",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 205,
-              "columnNumber": 5
-            },
-            {
-              "functionName": "",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 343,
-              "columnNumber": 2
-            }
-          ]
-        }
-      }
-    },
-    {
-      "entry": {
-        "source": "violation",
-        "level": "verbose",
-        "text": "Added synchronous DOM mutation listener to a 'DOMNodeInserted' event. Consider using MutationObserver to make the page more responsive.",
-        "timestamp": 1519974785835.79,
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-        "lineNumber": 210,
-        "stackTrace": {
-          "callFrames": [
-            {
-              "functionName": "mutationEvenTest",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 210,
-              "columnNumber": 9
-            },
-            {
-              "functionName": "",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 343,
-              "columnNumber": 2
-            }
-          ]
-        }
-      }
-    },
-    {
-      "entry": {
-        "source": "violation",
-        "level": "verbose",
-        "text": "Added non-passive event listener to a scroll-blocking 'wheel' event. Consider marking event handler as 'passive' to make the page more responsive. See https://www.chromestatus.com/feature/5745543795965952",
-        "timestamp": 1519974785837.14,
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-        "lineNumber": 222,
-        "stackTrace": {
-          "callFrames": [
-            {
-              "functionName": "passiveEventsListenerTest",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 222,
-              "columnNumber": 9
-            },
-            {
-              "functionName": "",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 344,
-              "columnNumber": 2
-            }
-          ]
-        }
-      }
-    },
-    {
-      "entry": {
-        "source": "violation",
-        "level": "verbose",
-        "text": "Added non-passive event listener to a scroll-blocking 'touchmove' event. Consider marking event handler as 'passive' to make the page more responsive. See https://www.chromestatus.com/feature/5745543795965952",
-        "timestamp": 1519974785837.83,
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-        "lineNumber": 248,
-        "stackTrace": {
-          "callFrames": [
-            {
-              "functionName": "passiveEventsListenerTest",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 248,
-              "columnNumber": 5
-            },
-            {
-              "functionName": "",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 344,
-              "columnNumber": 2
-            }
-          ]
-        }
-      }
-    },
-    {
-      "entry": {
-        "source": "violation",
-        "level": "verbose",
-        "text": "Only request geolocation information in response to a user gesture.",
-        "timestamp": 1519974785839.5,
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-        "lineNumber": 277,
-        "stackTrace": {
-          "callFrames": [
-            {
-              "functionName": "geolocationOnStartTest",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 277,
-              "columnNumber": 24
-            },
-            {
-              "functionName": "",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 345,
-              "columnNumber": 2
-            }
-          ]
-        }
-      }
-    },
-    {
-      "entry": {
-        "source": "violation",
-        "level": "verbose",
-        "text": "Only request geolocation information in response to a user gesture.",
-        "timestamp": 1519974785840.8,
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-        "lineNumber": 281,
-        "stackTrace": {
-          "callFrames": [
-            {
-              "functionName": "geolocationOnStartTest",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 281,
-              "columnNumber": 40
-            },
-            {
-              "functionName": "",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 345,
-              "columnNumber": 2
-            }
-          ]
-        }
-      }
-    },
-    {
-      "entry": {
-        "source": "violation",
-        "level": "verbose",
-        "text": "Only request notification permission in response to a user gesture.",
-        "timestamp": 1519974785841.72,
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-        "lineNumber": 287,
-        "stackTrace": {
-          "callFrames": [
-            {
-              "functionName": "notificationOnStartTest",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 287,
-              "columnNumber": 15
-            },
-            {
-              "functionName": "",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 346,
-              "columnNumber": 2
-            }
-          ]
-        }
-      }
-    },
-    {
-      "entry": {
-        "source": "deprecation",
-        "level": "warning",
-        "text": "Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/.",
-        "timestamp": 1519974785983.8,
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-        "lineNumber": 322,
-        "stackTrace": {
-          "callFrames": [
-            {
-              "functionName": "deprecationsTest",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 322,
-              "columnNumber": 6
-            },
-            {
-              "functionName": "",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 350,
-              "columnNumber": 2
-            }
-          ]
-        }
-      }
-    },
-    {
-      "entry": {
-        "source": "deprecation",
-        "level": "warning",
-        "text": "'window.webkitStorageInfo' is deprecated. Please use 'navigator.webkitTemporaryStorage' or 'navigator.webkitPersistentStorage' instead.",
-        "timestamp": 1519974786695.2,
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-        "lineNumber": 325,
-        "stackTrace": {
-          "callFrames": [
-            {
-              "functionName": "deprecationsTest",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 325,
-              "columnNumber": 9
-            },
-            {
-              "functionName": "",
-              "scriptId": "29",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "lineNumber": 350,
-              "columnNumber": 2
-            }
-          ]
-        }
-      }
-    },
-    {
-      "entry": {
-        "source": "deprecation",
-        "level": "warning",
-        "text": "/deep/ combinator is no longer supported in CSS dynamic profile.It is now effectively no-op, acting as if it were a descendant combinator. /deep/ combinator will be removed, and will be invalid at M65. You should remove it. See https://www.chromestatus.com/features/4964279606312960 for more details.",
-        "timestamp": 1519974786759.16
-      }
-    },
-    {
-      "entry": {
-        "source": "recommendation",
-        "level": "verbose",
-        "text": "[DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o",
-        "timestamp": 1519974787841.2,
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-        "args": [
+      "eventType": "protocolLog",
+      "source": "deprecation",
+      "level": "warning",
+      "text": "'window.webkitStorageInfo' is deprecated. Please use 'navigator.webkitTemporaryStorage' or 'navigator.webkitPersistentStorage' instead.",
+      "stackTrace": {
+        "callFrames": [
           {
-            "type": "object",
-            "subtype": "node",
-            "className": "HTMLInputElement",
-            "description": "input",
-            "objectId": "{\"injectedScriptId\":3,\"id\":2}"
+            "functionName": "",
+            "scriptId": "14",
+            "url": "http://localhost:56620/dobetterweb/dbw_tester.js",
+            "lineNumber": 13,
+            "columnNumber": 9
+          },
+          {
+            "functionName": "",
+            "scriptId": "14",
+            "url": "http://localhost:56620/dobetterweb/dbw_tester.js",
+            "lineNumber": 16,
+            "columnNumber": 2
           }
         ]
-      }
+      },
+      "timestamp": 1607553418610.9011,
+      "url": "http://localhost:56620/dobetterweb/dbw_tester.js",
+      "lineNumber": 13
     },
     {
-      "entry": {
-        "source": "recommendation",
-        "level": "verbose",
-        "text": "[DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o",
-        "timestamp": 1519974787842.33,
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-        "args": [
+      "eventType": "exception",
+      "source": "exception",
+      "level": "error",
+      "text": "Error: A distinctive error\n    at http://localhost:56620/dobetterweb/dbw_tester.html:58:54",
+      "stackTrace": {
+        "callFrames": [
           {
-            "type": "object",
-            "subtype": "node",
-            "className": "HTMLInputElement",
-            "description": "input",
-            "objectId": "{\"injectedScriptId\":3,\"id\":3}"
+            "functionName": "",
+            "scriptId": "16",
+            "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+            "lineNumber": 57,
+            "columnNumber": 53
           }
         ]
-      }
+      },
+      "timestamp": 1607553418613.646,
+      "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+      "lineNumber": 57,
+      "columnNumber": 53
     },
     {
-      "entry": {
-        "source": "recommendation",
-        "level": "verbose",
-        "text": "[DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o",
-        "timestamp": 1519974787843.06,
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-        "args": [
+      "eventType": "exception",
+      "source": "exception",
+      "level": "error",
+      "text": "Error: An ignored error\n    at http://localhost:56620/dobetterweb/dbw_tester.html:61:38",
+      "stackTrace": {
+        "callFrames": [
           {
-            "type": "object",
-            "subtype": "node",
-            "className": "HTMLInputElement",
-            "description": "input",
-            "objectId": "{\"injectedScriptId\":3,\"id\":4}"
+            "functionName": "",
+            "scriptId": "17",
+            "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+            "lineNumber": 60,
+            "columnNumber": 37
           }
         ]
-      }
+      },
+      "timestamp": 1607553418615.6199,
+      "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+      "lineNumber": 60,
+      "columnNumber": 37
     },
     {
-      "entry": {
-        "source": "network",
-        "level": "error",
-        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-        "timestamp": 1519974788458.45,
-        "url": "http://localhost:10200/favicon.ico",
-        "networkRequestId": "75994.33"
-      }
+      "eventType": "protocolLog",
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "timestamp": 1607553423097.062,
+      "url": "http://localhost:56620/dobetterweb/fcp-delayer.js?delay=5000"
     },
     {
-      "entry": {
-        "source": "network",
-        "level": "error",
-        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-        "timestamp": 1519974793726.83,
-        "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
-        "networkRequestId": "75994.36"
-      }
+      "eventType": "protocolLog",
+      "source": "violation",
+      "level": "verbose",
+      "text": "Avoid using document.write(). https://developers.google.com/web/updates/2016/08/removing-document-write",
+      "stackTrace": {
+        "callFrames": [
+          {
+            "functionName": "documentWriteTest",
+            "scriptId": "23",
+            "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+            "lineNumber": 269,
+            "columnNumber": 11
+          },
+          {
+            "functionName": "",
+            "scriptId": "23",
+            "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+            "lineNumber": 394,
+            "columnNumber": 2
+          }
+        ]
+      },
+      "timestamp": 1607553423315.5798,
+      "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+      "lineNumber": 269
+    },
+    {
+      "eventType": "protocolLog",
+      "source": "violation",
+      "level": "verbose",
+      "text": "Avoid using document.write(). https://developers.google.com/web/updates/2016/08/removing-document-write",
+      "stackTrace": {
+        "callFrames": [
+          {
+            "functionName": "documentWriteTest",
+            "scriptId": "23",
+            "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+            "lineNumber": 270,
+            "columnNumber": 11
+          },
+          {
+            "functionName": "",
+            "scriptId": "23",
+            "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+            "lineNumber": 394,
+            "columnNumber": 2
+          }
+        ]
+      },
+      "timestamp": 1607553423317.417,
+      "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+      "lineNumber": 270
+    },
+    {
+      "eventType": "protocolLog",
+      "source": "violation",
+      "level": "verbose",
+      "text": "Avoid using document.write(). https://developers.google.com/web/updates/2016/08/removing-document-write",
+      "stackTrace": {
+        "callFrames": [
+          {
+            "functionName": "documentWriteTest",
+            "scriptId": "23",
+            "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+            "lineNumber": 271,
+            "columnNumber": 11
+          },
+          {
+            "functionName": "",
+            "scriptId": "23",
+            "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+            "lineNumber": 394,
+            "columnNumber": 2
+          }
+        ]
+      },
+      "timestamp": 1607553423317.817,
+      "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+      "lineNumber": 271
+    },
+    {
+      "eventType": "consoleAPI",
+      "source": "console.warn",
+      "level": "warning",
+      "text": "Timer 'arg2' already exists",
+      "stackTrace": {
+        "callFrames": [
+          {
+            "functionName": "consoleTimeTest",
+            "scriptId": "23",
+            "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+            "lineNumber": 260,
+            "columnNumber": 12
+          },
+          {
+            "functionName": "",
+            "scriptId": "23",
+            "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+            "lineNumber": 396,
+            "columnNumber": 2
+          }
+        ]
+      },
+      "timestamp": 1607553423321.635,
+      "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+      "lineNumber": 260,
+      "columnNumber": 12
+    },
+    {
+      "eventType": "protocolLog",
+      "source": "violation",
+      "level": "verbose",
+      "text": "Added non-passive event listener to a scroll-blocking 'touchmove' event. Consider marking event handler as 'passive' to make the page more responsive. See https://www.chromestatus.com/feature/5745543795965952",
+      "stackTrace": {
+        "callFrames": [
+          {
+            "functionName": "passiveEventsListenerTest",
+            "scriptId": "23",
+            "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+            "lineNumber": 302,
+            "columnNumber": 5
+          },
+          {
+            "functionName": "",
+            "scriptId": "23",
+            "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+            "lineNumber": 397,
+            "columnNumber": 2
+          }
+        ]
+      },
+      "timestamp": 1607553423339.645,
+      "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+      "lineNumber": 302
+    },
+    {
+      "eventType": "protocolLog",
+      "source": "violation",
+      "level": "verbose",
+      "text": "Only request geolocation information in response to a user gesture.",
+      "stackTrace": {
+        "callFrames": [
+          {
+            "functionName": "geolocationOnStartTest",
+            "scriptId": "23",
+            "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+            "lineNumber": 331,
+            "columnNumber": 24
+          },
+          {
+            "functionName": "",
+            "scriptId": "23",
+            "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+            "lineNumber": 398,
+            "columnNumber": 2
+          }
+        ]
+      },
+      "timestamp": 1607553423346.242,
+      "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+      "lineNumber": 331
+    },
+    {
+      "eventType": "protocolLog",
+      "source": "violation",
+      "level": "verbose",
+      "text": "Only request geolocation information in response to a user gesture.",
+      "stackTrace": {
+        "callFrames": [
+          {
+            "functionName": "geolocationOnStartTest",
+            "scriptId": "23",
+            "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+            "lineNumber": 335,
+            "columnNumber": 40
+          },
+          {
+            "functionName": "",
+            "scriptId": "23",
+            "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+            "lineNumber": 398,
+            "columnNumber": 2
+          }
+        ]
+      },
+      "timestamp": 1607553423349.061,
+      "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+      "lineNumber": 335
+    },
+    {
+      "eventType": "protocolLog",
+      "source": "violation",
+      "level": "verbose",
+      "text": "Only request notification permission in response to a user gesture.",
+      "stackTrace": {
+        "callFrames": [
+          {
+            "functionName": "notificationOnStartTest",
+            "scriptId": "23",
+            "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+            "lineNumber": 341,
+            "columnNumber": 15
+          },
+          {
+            "functionName": "",
+            "scriptId": "23",
+            "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+            "lineNumber": 399,
+            "columnNumber": 2
+          }
+        ]
+      },
+      "timestamp": 1607553423352.7751,
+      "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+      "lineNumber": 341
+    },
+    {
+      "eventType": "protocolLog",
+      "source": "deprecation",
+      "level": "warning",
+      "text": "Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/.",
+      "stackTrace": {
+        "callFrames": [
+          {
+            "functionName": "deprecationsTest",
+            "scriptId": "23",
+            "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+            "lineNumber": 371,
+            "columnNumber": 6
+          },
+          {
+            "functionName": "",
+            "scriptId": "23",
+            "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+            "lineNumber": 403,
+            "columnNumber": 2
+          }
+        ]
+      },
+      "timestamp": 1607553423368.14,
+      "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+      "lineNumber": 371
+    },
+    {
+      "eventType": "protocolLog",
+      "source": "deprecation",
+      "level": "warning",
+      "text": "/deep/ combinator is no longer supported in CSS dynamic profile. It is now effectively no-op, acting as if it were a descendant combinator. /deep/ combinator will be removed, and will be invalid at M65. You should remove it. See https://www.chromestatus.com/features/4964279606312960 for more details.",
+      "timestamp": 1607553424345.382,
+      "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+    },
+    {
+      "eventType": "consoleAPI",
+      "source": "console.error",
+      "level": "error",
+      "text": "Error! Error!",
+      "stackTrace": {
+        "callFrames": [
+          {
+            "functionName": "",
+            "scriptId": "46",
+            "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+            "lineNumber": 474,
+            "columnNumber": 10
+          }
+        ]
+      },
+      "timestamp": 1607553424476.799,
+      "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+      "lineNumber": 474,
+      "columnNumber": 10
+    },
+    {
+      "eventType": "protocolLog",
+      "source": "recommendation",
+      "level": "verbose",
+      "text": "[DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o",
+      "timestamp": 1607553424484.2788,
+      "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+    },
+    {
+      "eventType": "protocolLog",
+      "source": "recommendation",
+      "level": "verbose",
+      "text": "[DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o",
+      "timestamp": 1607553424484.4028,
+      "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+    },
+    {
+      "eventType": "protocolLog",
+      "source": "recommendation",
+      "level": "verbose",
+      "text": "[DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o",
+      "timestamp": 1607553424484.47,
+      "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+    },
+    {
+      "eventType": "protocolLog",
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "timestamp": 1607553429740.8171,
+      "url": "http://localhost:56620/favicon.ico"
+    },
+    {
+      "eventType": "protocolLog",
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "timestamp": 1607553435609.589,
+      "url": "http://localhost:56620/dobetterweb/unknown404.css?delay=200"
     }
   ],
   "ImageElements": [
