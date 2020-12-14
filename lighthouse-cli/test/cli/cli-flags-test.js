@@ -73,4 +73,25 @@ describe('CLI bin', function() {
     ]);
     expect(flags.blockedUrlPatterns).toEqual(['.*x,y\\.png']);
   });
+
+  describe('extraHeaders', () => {
+    it('should convert extra headers to object', async () => {
+      const flags = getFlags([
+        'http://www.example.com',
+        '--extra-headers="{"foo": "bar"}"',
+      ].join(' '));
+
+      expect(flags).toHaveProperty('extraHeaders', {foo: 'bar'});
+    });
+
+    it('should read extra headers from file', async () => {
+      const headersFile = require.resolve('../fixtures/extra-headers/valid.json');
+      const flags = getFlags([
+        'http://www.example.com',
+        `--extra-headers=${headersFile}`,
+      ].join(' '));
+
+      expect(flags).toHaveProperty('extraHeaders', require(headersFile));
+    });
+  });
 });

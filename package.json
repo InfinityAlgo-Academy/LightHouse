@@ -114,7 +114,7 @@
     "@types/semver": "^5.5.0",
     "@types/update-notifier": "^4.1.0",
     "@types/ws": "^4.0.1",
-    "@types/yargs": "^8.0.2",
+    "@types/yargs": "^15.0.11",
     "@types/yargs-parser": "^15.0.0",
     "@typescript-eslint/parser": "^4.7.0",
     "@wardpeet/brfs": "2.1.0",
@@ -188,8 +188,8 @@
     "third-party-web": "^0.12.2",
     "update-notifier": "^4.1.0",
     "ws": "3.3.2",
-    "yargs": "3.32.0",
-    "yargs-parser": "^18.1.3"
+    "yargs": "^16.1.1",
+    "yargs-parser": "^20.2.4"
   },
   "repository": "GoogleChrome/lighthouse",
   "keywords": [

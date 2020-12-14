@@ -102,21 +102,6 @@ async function begin() {
         ' Please use "--emulated-form-factor=none" instead.');
   }
 
-  if (typeof cliFlags.extraHeaders === 'string') {
-    // TODO: LH.Flags.extraHeaders is sometimes actually a string at this point, but needs to be
-    // copied over to LH.Settings.extraHeaders, which is LH.Crdp.Network.Headers. Force
-    // the conversion here, but long term either the CLI flag or the setting should have
-    // a different name.
-    /** @type {string} */
-    let extraHeadersStr = cliFlags.extraHeaders;
-    // If not a JSON object, assume it's a path to a JSON file.
-    if (extraHeadersStr.substr(0, 1) !== '{') {
-      extraHeadersStr = fs.readFileSync(extraHeadersStr, 'utf-8');
-    }
-
-    cliFlags.extraHeaders = JSON.parse(extraHeadersStr);
-  }
-
   if (cliFlags.precomputedLanternDataPath) {
     const lanternDataStr = fs.readFileSync(cliFlags.precomputedLanternDataPath, 'utf8');
     /** @type {LH.PrecomputedLanternData} */
