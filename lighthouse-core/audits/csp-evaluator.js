@@ -13,8 +13,8 @@ const {evaluateRawCsp} = require('../lib/csp-evaluator.js');
 /** @typedef {import('../lib/csp-evaluator.js').Finding} Finding */
 
 const UIStrings = {
-  title: 'CSP secures page from XSS attacks',
-  failureTitle: 'CSP does not completely secure page from XSS attacks',
+  title: 'CSP is robust against XSS attacks',
+  failureTitle: 'CSP is not robust against XSS attacks',
   description: 'A strong Content Security Policy (CSP) can significantly ' +
     'reduce the risk of XSS attacks. ' +
     '[Learn more](https://developers.google.com/web/fundamentals/security/csp)',
@@ -70,19 +70,25 @@ class CSPEvaluator extends Audit {
     /** @type {LH.Audit.Details.TableItem[]} */
     const results = [];
     for (const [directive, findings] of Object.entries(findingsByDirective)) {
+      // Lower numbers correspond to higher severities. Use highest severity finding (lowest number).
+      const minSeverity = findings.reduce((min, f) => Math.min(min, f.severity), 100);
+      const severity = SEVERITIES[minSeverity];
+
+      // A finding with undefined value applies to the whole directive.
       const noValueIndex = findings.findIndex(f => !f.value);
       const description
-        = noValueIndex !== -1 ? findings.splice(noValueIndex, 1)[0].description : '';
-      const minSeverity = findings.reduce((min, f) => Math.min(min, f.severity), 100);
+        = noValueIndex !== -1 ? findings.splice(noValueIndex, 1)[0].description : undefined;
+
       results.push({
         directive,
-        severity: SEVERITIES[minSeverity],
+        severity,
         description,
         subItems: {
           type: 'subitems',
           items: findings
             .filter(f => f.value)
             .map(f => {
+              // Replace severity number with descriptive text.
               return {...f, severity: SEVERITIES[f.severity]};
             }),
         },
@@ -101,9 +107,9 @@ class CSPEvaluator extends Audit {
     const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
 
     // CSP defined in meta tag is not recommended, warn if a CSP is defined this way.
-    const hasCspMetaTags = !!artifacts.MetaElements.find(m => {
+    const hasCspMetaTags = Boolean(artifacts.MetaElements.find(m => {
       return m.httpEquiv && m.httpEquiv.toLowerCase() === 'content-security-policy';
-    });
+    }));
     const warnings = hasCspMetaTags ? [UIStrings.metaTagWarning] : [];
 
     const cspHeader = mainResource.responseHeaders.find(h => {

@@ -20,6 +20,7 @@ const csp_ = require('../../optimized_binary-bundle.js');
 const Parser = csp_.module.getInternal_('google3.javascript.security.csp.csp_evaluator.parser').CspParser;
 const Evaluator = csp_.module.getInternal_('google3.javascript.security.csp.csp_evaluator.evaluator').CspEvaluator;
 const Version = csp_.module.getInternal_('google3.javascript.security.csp.csp_evaluator.csp').Version;
+const strictCSPChecks = csp_.module.getInternal_('google3.javascript.security.csp.csp_evaluator.checks.strictcsp_checks');
 /* eslint-enable max-len */
 
 /**
@@ -29,7 +30,7 @@ const Version = csp_.module.getInternal_('google3.javascript.security.csp.csp_ev
 function evaluateRawCsp(rawCsp) {
   const parser = new Parser(rawCsp);
   const evaluator = new Evaluator(parser.csp, Version.CSP3);
-  return evaluator.evaluate();
+  return evaluator.evaluate(Object.values(strictCSPChecks));
 }
 
 module.exports = {evaluateRawCsp};
