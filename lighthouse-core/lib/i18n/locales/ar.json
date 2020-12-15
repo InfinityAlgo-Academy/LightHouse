@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "احتواء عناصر النموذج على التصنيفات المرتبطة"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "يجب ألا يشتمل الجدول المُستخدم لأغراض التنسيق على عناصر البيانات، مثل عناصر الشرح أو سمة الملخّص، لأن ذلك يمكن أن ينشئ تجربة محيرة لمستخدمي برامج قراءة الشاشة. [مزيد من المعلومات](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "لا تتجنّب عناصر `<table>` للعرض التقديمي استخدام `<th>` أو `<caption>` أو السمة `[summary]`."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "تتجنّب عناصر `<table>` للعرض التقديمي استخدام `<th>` أو `<caption>` أو السمة `[summary]`."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "إنّ نص الرابط (والنص البديل للصور، عند استخدامه كروابط) الذي يُعد مميّزًا وفريدًا وقابلاً للتركيز يحسّن تجربة التنقل لمستخدمي برامج قراءة الشاشة. [مزيد من المعلومات](https://web.dev/link-name/)"
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "العناصر `<video>` تحتوي على عنصر `<track>` مع `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "توفّر الأوصاف الصوتية معلومات ذات صلة للفيديوهات التي لا يمكن إجراء الحوار بها، مثل تعبيرات الوجه وأجواء الإضاءة. [مزيد من المعلومات](https://web.dev/video-description/)"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "عناصر `<video>` لا تحتوي على عنصر `<track>` مع `[kind=\"description\"]`."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "العناصر `<video>` تحتوي على عنصر `<track>` مع `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "للحصول على المظهر المثالي على نظام التشغيل iOS عند إضافة المستخدمين تطبيق ويب تقدّمي إلى الشاشة الرئيسية، يمكنك تحديد `apple-touch-icon`. يجب أن تشير هذه السمة إلى مربع غير شفاف بتنسيق PNG مقاسه 192 بكسل (أو 180 بكسل). [مزيد من المعلومات](https://web.dev/apple-touch-icon/)"

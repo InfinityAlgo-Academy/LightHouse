@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "A formátumelemekhez megfelelő címkék vannak társítva"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Az elrendezési célokat szolgáló táblázat ne tartalmazzon adatelemeket (pl. „th” vagy „caption” elemet, illetve „summary” attribútumot), mert zavarók lehetnek a képernyőolvasót használó személyek számára. [További információ](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "A prezentációs `<table>` elemek nem kerülik a(z) `<th>`, a(z) `<caption>` vagy a(z) `[summary]` attribútum használatát."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "A prezentációs `<table>` elemek kerülik a(z) `<th>`, a(z) `<caption>` vagy a(z) `[summary]` attribútum használatát."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "A felismerhető, egyedi és fókuszálható linkszövegek (és linkként használt képek alternatív szövegei) jobb navigációs élményt biztosítanak a képernyőolvasóra hagyatkozó felhasználók számára. [További információ](https://web.dev/link-name/)."
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "A(z) `<video>` elemekhez `[kind=\"captions\"]` tartalmú `<track>` elem tartozik"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Az audiokommentárok olyan fontos információkat nyújtanak a videókhoz, amelyek a párbeszédekből nem derülnek ki (ilyen például az arckifejezések és a jelenetek leírása). [További információ](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "A(z) `<video>` elemekhez nem tartozik `[kind=\"description\"]` tartalmú `<track>` elem."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "A(z) `<video>` elemekhez `[kind=\"description\"]` tartalmú `<track>` elem tartozik"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "Ha azt szeretné, hogy a megjelenés ideális legyen iOS rendszeren, amikor a felhasználók progresszív webes alkalmazást adnak hozzá a kezdőképernyőhöz, határozzon meg egy `apple-touch-icon` elemet. Az ikonnak 192 képpont (vagy 180 képpont) méretű, nem átlátszó, négyzetes PNG-re kell mutatnia. [További információ](https://web.dev/apple-touch-icon/)."

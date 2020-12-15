@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Los elementos de formulario tienen etiquetas asociadas"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Las tablas que se usen con fines de diseño no deben incluir elementos de datos (como ordinales, leyendas o atributos de resumen), dado que estos pueden confundir a los usuarios de lectores de pantalla. [Obtén más información](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "Los elementos `<table>` de presentación no evitan el uso de `<th>`, `<caption>` ni del atributo `[summary]`."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "Los elementos `<table>` de presentación evitan el uso de `<th>`, `<caption>` o del atributo `[summary]`."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Usar textos de vínculo (y textos alternativos para las imágenes, si estas se usan como vínculos) que sean reconocibles y únicos, y que se puedan seleccionar mejora la experiencia de navegación de los usuarios de lectores de pantalla. [Obtén más información](https://web.dev/link-name/)."
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Los elementos `<video>` contienen un elemento `<track>` con `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Las descripciones de audio incluidas en los videos proporcionan información relevante que no surge de los diálogos, como la relativa a expresiones faciales y escenografía. [Obtén más información](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "Los elementos `<video>` no contienen un elemento `<track>` con `[kind=\"description\"]`."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "Los elementos `<video>` contienen un elemento `<track>` con `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "Para que el aspecto en iOS sea perfecto cuando los usuarios agreguen una app web progresiva a la pantalla principal, define un atributo `apple-touch-icon`. El atributo debe apuntar a un archivo PNG cuadrado de 192 px (o 180 px) que no sea transparente. [Obtén más información](https://web.dev/apple-touch-icon/)."

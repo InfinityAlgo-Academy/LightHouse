@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "フォームの要素にラベルが関連付けられています"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "レイアウト目的で表を使用している場合は、th 要素、caption 要素、summary 属性などのデータ要素を含めないでください。スクリーン リーダーを操作しにくくなる可能性があります。[詳細](https://web.dev/layout-table/)"
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "レイアウト用の `<table>` 要素で、`<th>`、`<caption>`、または `[summary]` 属性が使用されています。"
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "レイアウト用の `<table>` 要素で、`<th>`、`<caption>`、または `[summary]` 属性は使用されていません。"
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "識別可能、フォーカス可能な一意のリンクテキスト（および画像をリンクとして使用している場合はその代替テキスト）を使用すると、スクリーン リーダーでのナビゲーションの操作性が向上します。[詳細](https://web.dev/link-name/)"
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>` 要素に `[kind=\"captions\"]` が指定された `<track>` 要素が含まれています"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "音声による説明を使用すると、顔の表情や場面といった、会話で伝えることのできない動画の関連情報を提供できます。[詳細](https://web.dev/video-description/)"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "`<video>` 要素に、`[kind=\"description\"]` が指定された `<track>` 要素が含まれていません。"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "`<video>` 要素に `[kind=\"description\"]` が指定された `<track>` 要素が含まれています"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "ユーザーがプログレッシブ ウェブアプリを iOS のホーム画面に追加したとき、アプリが希望どおりのデザインで表示されるようにするには、`apple-touch-icon` を定義します。参照先は不透明な 192 ピクセル（または 180 ピクセル）の正方形の PNG 画像とする必要があります。[詳細](https://web.dev/apple-touch-icon/)"

@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Form öğelerinin ilişkili etiketleri var"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Düzen amaçlı kullanılan bir tablonun, veri öğeleri (ör. th veya başlık öğeleri ya da özet özelliği) içermemesi gerekir. Zira bu durum, ekran okuyucu kullanıcılarının kafa karıştırıcı bir deneyim yaşamalarına neden olabilir. [Daha fazla bilgi](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "Sunu amaçlı `<table>` öğeleri `<th>`, `<caption>` veya `[summary]` özelliğini kullanmaktan kaçınmıyor."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "Sunum amaçlı `<table>` öğeleri `<th>`, `<caption>` veya `[summary]` özelliğini kullanmaktan kaçınıyor."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Ayırt edilebilir, benzersiz ve odaklanılabilir bağlantı metni (ve bağlantı olarak kullanıldığında resimler için alternatif metin), ekran okuyucu kullanıcılarına daha iyi bir gezinme deneyimi sunar. [Daha fazla bilgi](https://web.dev/link-name/)."
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>` öğelerinde `[kind=\"captions\"]`içeren bir `<track>` öğesi bulunuyor"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Sesli açıklamalar, videolarla ilgili olarak diyaloğun sağlayamayacağı bilgiler (ör. yüz ifadeleri ve sahneler) sağlar. [Daha fazla bilgi](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "`<video>` öğelerinde `[kind=\"description\"]` içeren bir `<track>` öğesi bulunmuyor."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "`<video>` öğelerinde `[kind=\"description\"]`içeren bir `<track>` öğesi bulunuyor"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "Kullanıcılar ana ekranlarına progresif web uygulaması eklerinde iOS'ta ideal görünüm için bir `apple-touch-icon` öğesi tanımlayın. Tanım, saydam olmayan bir 192 piksel (veya 180 piksel) kare PNG'ye götürmelidir. [Daha Fazla Bilgi](https://web.dev/apple-touch-icon/)."

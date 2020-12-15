@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "फ़ॉर्म एलिमेंट में सहभागी लेबल हैं"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "लेआउट के लिए इस्तेमाल की जाने वाली टेबल में th या कैप्शन वाले एलिमेंट जैसे, डेटा एलिमेंट या सारांश विशेषता शामिल नहीं होनी चाहिए, क्योंकि इससे स्क्रीन रीडर उपयोगकर्ताओं को उलझन हो सकती हैं. [ज़्यादा जानें](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "प्रज़ेंटेशन के लिए इस्तेमाल होने वाले `<table>`एलिमेंट में `<th>`, `<caption>` या `[summary]` विशेषता का इस्तेमाल होता है."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "प्रज़ेंटेशन के लिए इस्तेमाल होने वाले `<table>`एलिमेंट में `<th>`, `<caption>` या `[summary]` विशेषता का इस्तेमाल नहीं होता."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "जो लिंक टेक्स्ट (और इमेज के लिए इस्तेमाल किया वैकल्पिक टेक्स्ट) समझने लायक, सबसे अलग, और फ़ोकस करने लायक है, उससे स्क्रीन रीडर उपयोगकर्ताओं का नेविगेशन अनुभव बेहतर बनता है. [ज़्यादा जानें](https://web.dev/link-name/)."
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>` एलिमेंट में `[kind=\"captions\"]` वाला एक `<track>` एलिमेंट है"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "ऑडियो के ब्यौरे में वीडियो से जुड़ी काम की ऐसी जानकारी दी जाती है जो बातचीत से नहीं दी जा सकती. जैसे, चेहरे के हावभाव और सीन. [ज़्यादा जानें](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "`<video>` एलिमेंट में `[kind=\"description\"]` वाला कोई `<track>` एलिमेंट नहीं है."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "`<video>` एलिमेंट में `[kind=\"description\"]` वाला एक `<track>` एलिमेंट है"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "उपयोगकर्ता जब होम स्क्रीन पर प्रगतिशील वेब ऐप्लिकेशन जोड़ें, तो iOS पर वह अच्छे से नज़र आए, इसके लिए `apple-touch-icon` तय करें. यह ज़रूरी है कि यह आइकॉन किसी ऐसे 192px (या 180px) के वर्गाकार PNG की तरफ़ इशारा करे जिसके आर-पार न देखा जा सके. [ज़्यादा जानें](https://web.dev/apple-touch-icon/)."

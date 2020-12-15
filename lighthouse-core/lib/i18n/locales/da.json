@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Formularelementerne har tilknyttede etiketter"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "En tabel, der bruges til layoutformål, bør ikke indeholde dataelementer som f.eks. th- eller tekstelementer eller oversigtsattributten, da dette kan forvirre brugere af skærmlæsere. [Få flere oplysninger](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "`<table>`-præsentationselementerne undgår ikke at bruge `<th>`, `<caption>` eller attributten `[summary]`."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "`<table>`-præsentationselementerne undgår at bruge `<th>`, `<caption>` eller attributten `[summary]`."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Linktekst (og alternativ tekst til billeder, når de bruges som links), der er skelnelig, unik og fokuserbar, gør det nemmere for brugere af skærmlæsere at finde rundt. [Få flere oplysninger](https://web.dev/link-name/)."
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>`-elementerne indeholder et `<track>`-element med `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Lydbeskrivelser giver relevante oplysninger om videoer, som ikke fremgår af dialogen, f.eks. ansigtsudtryk og scener. [Få flere oplysninger](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "`<video>`-elementerne indeholder ikke et `<track>`-element med `[kind=\"description\"]`."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "`<video>`-elementerne indeholder et `<track>`-element med `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "Angiv et `apple-touch-icon` for at optimere iOS-brugerfladen, når brugere føjer en progressiv app til startskærmen. Det skal føre til en ikke-transparent firkantet PNG på 192 px (eller 180 px). [Få flere oplysninger](https://web.dev/apple-touch-icon/)."

@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Les éléments de formulaire sont associés à des libellés"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Un tableau utilisé pour la mise en page ne doit pas inclure d'éléments de données tels que les éléments \"th\" ou \"caption\", ou encore l'attribut \"summary\", car cela peut perturber l'expérience des utilisateurs de lecteurs d'écran. [En savoir plus](https://web.dev/layout-table/)"
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "Les éléments `<table>` de présentation n'évitent pas d'utiliser `<th>`, `<caption>` ni l'attribut `[summary]`."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "Les éléments `<table>` de présentation ne font pas appel aux éléments `<th>` et `<caption>`, ni à l'attribut `[summary]`."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Rédigez du texte visible et unique pour les liens (et pour le texte de substitution des images, si vous vous en servez dans des liens), afin que les utilisateurs de lecteurs d'écran puissent facilement positionner le curseur dessus et bénéficient d'une meilleure expérience de navigation. [En savoir plus](https://web.dev/link-name/)"
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Les éléments `<video>` contiennent un élément `<track>` possédant l'attribut `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Les descriptions audio fournissent des informations pertinentes qui ne sont pas comprises dans le dialogue des vidéos, comme les expressions faciales et les scènes. [En savoir plus](https://web.dev/video-description/)"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "Les éléments `<video>` ne contiennent pas d'élément `<track>` possédant l'attribut `[kind=\"description\"]`."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "Les éléments `<video>` contiennent un élément `<track>` possédant l'attribut `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "Définissez un attribut `apple-touch-icon` afin d'optimiser l'affichage de votre progressive web app sur l'écran d'accueil des appareils iOS. Il doit mener vers une image PNG carrée opaque de 180 ou 192 pixels. [Découvrez-en davantage](https://web.dev/apple-touch-icon/)."

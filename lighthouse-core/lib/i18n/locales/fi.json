@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Lomake-elementeillä on niihin liittyvät tunnisteet"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Asettelua varten luodussa taulukossa ei pitäisi olla dataelementtejä, kuten taulukoiden otsikko ‑elementtejä, tekstityselementtejä tai yhteenvetomääritteitä, koska ne voivat tehdä näytönlukuohjelman käytöstä sekavaa. [Lue lisää](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "Esittelyyn tarkoitetut `<table>`-elementit eivät vältä `<th>`-,`<caption>`- tai `[summary]`-määritteen käyttöä"
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "Esittelyyn tarkoitetut `<table>`-elementit välttävät `<th>`-,`<caption>`- tai `[summary]`-määritteiden käyttöä"
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Linkkiteksti (ja vaihtoehtoinen teksti kuvia varten, kun niitä käytetään linkkeinä), joka on erottuva, yksilöllinen ja tarkennettavissa, parantaa näytönlukuohjelmaa käyttävien navigointikokemusta. [Lue lisää](https://web.dev/link-name/)."
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>`-elementit sisältävät `<track>`-elementin, jossa on `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Äänikuvaukset antavat videoista oleellista tietoa (esimerkiksi ilmeistä ja tapahtumapaikoista), jota ei saa keskustelusta. [Lue lisää](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "`<video>`-elementit eivät sisällä `<track>`-elementtiä, jossa on `[kind=\"description\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "`<video>`-elementit sisältävät `<track>`-elementin, jossa on `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "Määritä `apple-touch-icon`, jotta iOS-näkyvyys on paras mahdollinen, kun käyttäjä lisää progressiivisen web-sovelluksen aloitusnäytölle. Sen on viitattava läpinäkymättömään neliön muotoiseen (192 px tai 180 px) PNG-tiedostoon. [Lue lisää](https://web.dev/apple-touch-icon/)."

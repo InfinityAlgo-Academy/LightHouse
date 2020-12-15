@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Z elementami formularzy są powiązane etykiety"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Tabela używana do tworzenia układu graficznego nie powinna zawierać elementów danych, takich jak elementy th czy caption albo atrybut summary, ponieważ mogą one utrudniać korzystanie z czytnika ekranu. [Więcej informacji](https://web.dev/layout-table/)"
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "W prezentacyjnych elementach `<table>` są używane elementy `<th>` lub `<caption>` albo atrybut `[summary]`."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "W prezentacyjnych elementach `<table>` nie są używane elementy `<th>` i `<caption>` ani atrybut `[summary]`."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Tekst linków (i tekst zastępczy obrazów używanych jako linki), który jest charakterystyczny, unikalny i możliwy do wybrania, ułatwia nawigację użytkownikom czytników ekranu. [Więcej informacji](https://web.dev/link-name/)"
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Elementy `<video>` zawierają element `<track>` z atrybutem `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Audiodeskrypcja dostarcza ważnych informacji, których nie ma w dialogach – na przykład o wyrazie twarzy i scenerii. [Więcej informacji](https://web.dev/video-description/)"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "Elementy `<video>` nie zawierają elementu `<track>` z atrybutem `[kind=\"description\"]`."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "Elementy `<video>` zawierają element `<track>` z atrybutem `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "Zdefiniuj element `apple-touch-icon`, by Twoja progresywna aplikacja internetowa wyglądała idealnie na iOS, gdy użytkownicy dodadzą ją do ekranu głównego. Element musi wskazywać kwadratowy obraz PNG o rozmiarze 192 (lub 180) pikseli bez przezroczystości. [Więcej informacji](https://web.dev/apple-touch-icon/)"

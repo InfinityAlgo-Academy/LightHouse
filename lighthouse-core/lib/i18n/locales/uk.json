@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Елементи форми мають пов’язані мітки"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Таблиця, яка використовується як макет, не повинна містити елементів даних, як-от елементів th або caption чи атрибут summary, оскільки це може спантеличити користувачів програм зчитування з екрана. [Докладніше](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "Презентаційні елементи `<table>` використовують атрибути `<th>`, `<caption>` або `[summary]`."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "Презентаційні елементи `<table>` не використовують атрибути `<th>`, `<caption>` або `[summary]`."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Унікальний і доступний для виділення текст посилання (а також альтернативний текст для зображень, коли вони використовуються як посилання), який можна розпізнати, покращує навігацію для користувачів програм зчитування з екрана. [Докладніше](https://web.dev/link-name/)."
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Елементи `<video>` містять елемент `<track>` з атрибутом `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Звукові описи надають важливу інформацію про відео (як-от міміка й оточення), яку не можуть забезпечити діалоги. [Докладніше](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "Елементи `<video>` не містять елемент `<track>` з атрибутом `[kind=\"description\"]`."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "Елементи `<video>` містять елемент `<track>` з атрибутом `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "Налаштуйте параметр `apple-touch-icon` для ідеального вигляду на пристроях iOS, коли користувачі додають прогресивний веб-додаток на головний екран. Цей параметр має вказувати на непрозоре квадратне зображення PNG розміром 192 пікс. (або 180 пікс.). [Докладніше](https://web.dev/apple-touch-icon/)."

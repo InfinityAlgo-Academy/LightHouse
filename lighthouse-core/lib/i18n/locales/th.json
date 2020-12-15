@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "องค์ประกอบฟอร์มมีป้ายกำกับที่เชื่อมโยงอยู่"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "ตารางที่ใช้สำหรับการออกแบบต้องไม่มีองค์ประกอบข้อมูล เช่น องค์ประกอบ th หรือคำอธิบายภาพ หรือแอตทริบิวต์สรุป เพราะอาจสร้างความสับสนระหว่างการใช้งานของผู้ใช้โปรแกรมอ่านหน้าจอ [ดูข้อมูลเพิ่มเติม](https://web.dev/layout-table/)"
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "องค์ประกอบ `<table>` สำหรับการนำเสนอไม่หลีกเลี่ยงการใช้ `<th>`, `<caption>` หรือแอตทริบิวต์ `[summary]`"
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "องค์ประกอบ `<table>` สำหรับการนำเสนอหลีกเลี่ยงการใช้ `<th>`, `<caption>` หรือแอตทริบิวต์ `[summary]`"
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "ข้อความลิงก์ (และข้อความสำรองสำหรับรูปภาพเมื่อใช้เป็นลิงก์) ที่แยกแยะได้ ไม่ซ้ำกัน และโฟกัสได้ ช่วยปรับปรุงประสบการณ์การไปยังส่วนต่างๆ สำหรับผู้ใช้โปรแกรมอ่านหน้าจอ [ดูข้อมูลเพิ่มเติม](https://web.dev/link-name/)"
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "องค์ประกอบ `<video>` มีองค์ประกอบ `<track>` ที่มี `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "คำอธิบายเสียงให้ข้อมูลเกี่ยวข้องสำหรับวิดีโอที่สื่อสารผ่านบทพูดไม่ได้ เช่น สีหน้าและฉากต่างๆ [ดูข้อมูลเพิ่มเติม](https://web.dev/video-description/)"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "องค์ประกอบ `<video>` ไม่มีองค์ประกอบ `<track>` ที่มี `[kind=\"description\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "องค์ประกอบ `<video>` มีองค์ประกอบ `<track>` ที่มี `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "ให้ระบุ `apple-touch-icon` เพื่อให้ปรากฏใน iOS ได้อย่างดีที่สุดเมื่อผู้ใช้เพิ่ม Progressive Web App ลงในหน้าจอหลัก โดยต้องชี้ไปที่สี่เหลี่ยมจตุรัสแบบไม่โปร่งใสขนาด 192 พิกเซล (หรือ 180 พิกเซล) รูปแบบ PNG [ดูข้อมูลเพิ่มเติม](https://web.dev/apple-touch-icon/)"

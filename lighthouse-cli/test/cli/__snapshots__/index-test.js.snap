@@ -187,6 +187,9 @@ Object {
       "path": "accessibility/aria-allowed-attr",
     },
     Object {
+      "path": "accessibility/aria-command-name",
+    },
+    Object {
       "path": "accessibility/aria-hidden-body",
     },
     Object {
@@ -194,6 +197,12 @@ Object {
     },
     Object {
       "path": "accessibility/aria-input-field-name",
+    },
+    Object {
+      "path": "accessibility/aria-meter-name",
+    },
+    Object {
+      "path": "accessibility/aria-progressbar-name",
     },
     Object {
       "path": "accessibility/aria-required-attr",
@@ -209,6 +218,12 @@ Object {
     },
     Object {
       "path": "accessibility/aria-toggle-field-name",
+    },
+    Object {
+      "path": "accessibility/aria-tooltip-name",
+    },
+    Object {
+      "path": "accessibility/aria-treeitem-name",
     },
     Object {
       "path": "accessibility/aria-valid-attr-value",
@@ -265,9 +280,6 @@ Object {
       "path": "accessibility/label",
     },
     Object {
-      "path": "accessibility/layout-table",
-    },
-    Object {
       "path": "accessibility/link-name",
     },
     Object {
@@ -299,9 +311,6 @@ Object {
     },
     Object {
       "path": "accessibility/video-caption",
-    },
-    Object {
-      "path": "accessibility/video-description",
     },
     Object {
       "path": "accessibility/manual/custom-controls-labels",
@@ -472,6 +481,11 @@ Object {
         },
         Object {
           "group": "a11y-aria",
+          "id": "aria-command-name",
+          "weight": 3,
+        },
+        Object {
+          "group": "a11y-aria",
           "id": "aria-hidden-body",
           "weight": 10,
         },
@@ -483,6 +497,16 @@ Object {
         Object {
           "group": "a11y-aria",
           "id": "aria-input-field-name",
+          "weight": 3,
+        },
+        Object {
+          "group": "a11y-aria",
+          "id": "aria-meter-name",
+          "weight": 3,
+        },
+        Object {
+          "group": "a11y-aria",
+          "id": "aria-progressbar-name",
           "weight": 3,
         },
         Object {
@@ -508,6 +532,16 @@ Object {
         Object {
           "group": "a11y-aria",
           "id": "aria-toggle-field-name",
+          "weight": 3,
+        },
+        Object {
+          "group": "a11y-aria",
+          "id": "aria-tooltip-name",
+          "weight": 3,
+        },
+        Object {
+          "group": "a11y-aria",
+          "id": "aria-treeitem-name",
           "weight": 3,
         },
         Object {
@@ -601,11 +635,6 @@ Object {
           "weight": 10,
         },
         Object {
-          "group": "a11y-tables-lists",
-          "id": "layout-table",
-          "weight": 3,
-        },
-        Object {
           "group": "a11y-names-labels",
           "id": "link-name",
           "weight": 3,
@@ -658,11 +687,6 @@ Object {
         Object {
           "group": "a11y-audio-video",
           "id": "video-caption",
-          "weight": 10,
-        },
-        Object {
-          "group": "a11y-audio-video",
-          "id": "video-description",
           "weight": 10,
         },
         Object {

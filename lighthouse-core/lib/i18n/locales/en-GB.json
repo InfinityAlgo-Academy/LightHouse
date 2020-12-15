@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Form elements have associated labels"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "A table being used for layout purposes should not include data elements, such as the caption elements or the summary attribute, because this can create a confusing experience for screen reader users. [Learn more](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "Presentational `<table>` elements do not avoid using `<th>`, `<caption>` or the `[summary]` attribute."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "Presentational `<table>` elements avoid using `<th>`, `<caption>` or the `[summary]` attribute."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Link text (and alternative text for images, when used as links) that is discernible, unique and focusable improves the navigation experience for screen reader users. [Learn more](https://web.dev/link-name/)."
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>` elements contain a `<track>` element with `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Audio descriptions provide relevant information for videos that dialogue cannot, such as facial expressions and scenes. [Learn more](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "`<video>` elements do not contain a `<track>` element with `[kind=\"description\"]`."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "`<video>` elements contain a `<track>` element with `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "For ideal appearance on iOS when users add a progressive web app to the home screen, define an `apple-touch-icon`. It must point to a non-transparent 192px (or 180px) square PNG. [Learn More](https://web.dev/apple-touch-icon/)."

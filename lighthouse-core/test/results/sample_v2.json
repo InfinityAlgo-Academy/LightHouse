@@ -2190,6 +2190,18 @@
         "items": []
       }
     },
+    "aria-command-name": {
+      "id": "aria-command-name",
+      "title": "`button`, `link`, and `menuitem` elements have accessible names",
+      "description": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/).",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
+    },
     "aria-hidden-body": {
       "id": "aria-hidden-body",
       "title": "`[aria-hidden=\"true\"]` is not present on the document `<body>`",
@@ -2212,9 +2224,33 @@
     "aria-input-field-name": {
       "id": "aria-input-field-name",
       "title": "ARIA input fields have accessible names",
-      "description": "When an input field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-input-field-name/).",
+      "description": "When an input field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
+    },
+    "aria-meter-name": {
+      "id": "aria-meter-name",
+      "title": "ARIA `meter` elements have accessible names",
+      "description": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/).",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
+    },
+    "aria-progressbar-name": {
+      "id": "aria-progressbar-name",
+      "title": "ARIA `progressbar` elements have accessible names",
+      "description": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/).",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
     },
     "aria-required-attr": {
       "id": "aria-required-attr",
@@ -2267,9 +2303,33 @@
     "aria-toggle-field-name": {
       "id": "aria-toggle-field-name",
       "title": "ARIA toggle fields have accessible names",
-      "description": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-toggle-field-name/).",
+      "description": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
+    },
+    "aria-tooltip-name": {
+      "id": "aria-tooltip-name",
+      "title": "ARIA `tooltip` elements have accessible names",
+      "description": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/).",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
+    },
+    "aria-treeitem-name": {
+      "id": "aria-treeitem-name",
+      "title": "ARIA `treeitem` elements have accessible names",
+      "description": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/).",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
     },
     "aria-valid-attr-value": {
       "id": "aria-valid-attr-value",
@@ -2791,13 +2851,6 @@
         }
       }
     },
-    "layout-table": {
-      "id": "layout-table",
-      "title": "Presentational `<table>` elements avoid using `<th>`, `<caption>` or the `[summary]` attribute.",
-      "description": "A table being used for layout purposes should not include data elements, such as the th or caption elements or the summary attribute, because this can create a confusing experience for screen reader users. [Learn more](https://web.dev/layout-table/).",
-      "score": null,
-      "scoreDisplayMode": "notApplicable"
-    },
     "link-name": {
       "id": "link-name",
       "title": "Links do not have a discernible name",
@@ -2996,13 +3049,6 @@
       "id": "video-caption",
       "title": "`<video>` elements contain a `<track>` element with `[kind=\"captions\"]`",
       "description": "When a video provides a caption it is easier for deaf and hearing impaired users to access its information. [Learn more](https://web.dev/video-caption/).",
-      "score": null,
-      "scoreDisplayMode": "notApplicable"
-    },
-    "video-description": {
-      "id": "video-description",
-      "title": "`<video>` elements contain a `<track>` element with `[kind=\"description\"]`",
-      "description": "Audio descriptions provide relevant information for videos that dialogue cannot, such as facial expressions and scenes. [Learn more](https://web.dev/video-description/).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
@@ -4809,6 +4855,11 @@
           "group": "a11y-aria"
         },
         {
+          "id": "aria-command-name",
+          "weight": 3,
+          "group": "a11y-aria"
+        },
+        {
           "id": "aria-hidden-body",
           "weight": 10,
           "group": "a11y-aria"
@@ -4821,6 +4872,16 @@
         {
           "id": "aria-input-field-name",
           "weight": 0,
+          "group": "a11y-aria"
+        },
+        {
+          "id": "aria-meter-name",
+          "weight": 3,
+          "group": "a11y-aria"
+        },
+        {
+          "id": "aria-progressbar-name",
+          "weight": 3,
           "group": "a11y-aria"
         },
         {
@@ -4846,6 +4907,16 @@
         {
           "id": "aria-toggle-field-name",
           "weight": 0,
+          "group": "a11y-aria"
+        },
+        {
+          "id": "aria-tooltip-name",
+          "weight": 3,
+          "group": "a11y-aria"
+        },
+        {
+          "id": "aria-treeitem-name",
+          "weight": 3,
           "group": "a11y-aria"
         },
         {
@@ -4939,11 +5010,6 @@
           "group": "a11y-names-labels"
         },
         {
-          "id": "layout-table",
-          "weight": 0,
-          "group": "a11y-tables-lists"
-        },
-        {
           "id": "link-name",
           "weight": 3,
           "group": "a11y-names-labels"
@@ -4999,11 +5065,6 @@
           "group": "a11y-audio-video"
         },
         {
-          "id": "video-description",
-          "weight": 0,
-          "group": "a11y-audio-video"
-        },
-        {
           "id": "logical-tab-order",
           "weight": 0
         },
@@ -5045,7 +5106,7 @@
         }
       ],
       "id": "accessibility",
-      "score": 0.79
+      "score": 0.81
     },
     "best-practices": {
       "title": "Best Practices",
@@ -5989,6 +6050,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:aria-command-name",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:aria-hidden-body",
         "duration": 100,
         "entryType": "measure"
@@ -6002,6 +6069,18 @@
       {
         "startTime": 0,
         "name": "lh:audit:aria-input-field-name",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:aria-meter-name",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:aria-progressbar-name",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6032,6 +6111,18 @@
       {
         "startTime": 0,
         "name": "lh:audit:aria-toggle-field-name",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:aria-tooltip-name",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:aria-treeitem-name",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6145,12 +6236,6 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:layout-table",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:audit:link-name",
         "duration": 100,
         "entryType": "measure"
@@ -6212,12 +6297,6 @@
       {
         "startTime": 0,
         "name": "lh:audit:video-caption",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:audit:video-description",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7344,6 +7423,12 @@
       "lighthouse-core/audits/accessibility/aria-allowed-attr.js | description": [
         "audits[aria-allowed-attr].description"
       ],
+      "lighthouse-core/audits/accessibility/aria-command-name.js | title": [
+        "audits[aria-command-name].title"
+      ],
+      "lighthouse-core/audits/accessibility/aria-command-name.js | description": [
+        "audits[aria-command-name].description"
+      ],
       "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": [
         "audits[aria-hidden-body].title"
       ],
@@ -7361,6 +7446,18 @@
       ],
       "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": [
         "audits[aria-input-field-name].description"
+      ],
+      "lighthouse-core/audits/accessibility/aria-meter-name.js | title": [
+        "audits[aria-meter-name].title"
+      ],
+      "lighthouse-core/audits/accessibility/aria-meter-name.js | description": [
+        "audits[aria-meter-name].description"
+      ],
+      "lighthouse-core/audits/accessibility/aria-progressbar-name.js | title": [
+        "audits[aria-progressbar-name].title"
+      ],
+      "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": [
+        "audits[aria-progressbar-name].description"
       ],
       "lighthouse-core/audits/accessibility/aria-required-attr.js | title": [
         "audits[aria-required-attr].title"
@@ -7391,6 +7488,18 @@
       ],
       "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": [
         "audits[aria-toggle-field-name].description"
+      ],
+      "lighthouse-core/audits/accessibility/aria-tooltip-name.js | title": [
+        "audits[aria-tooltip-name].title"
+      ],
+      "lighthouse-core/audits/accessibility/aria-tooltip-name.js | description": [
+        "audits[aria-tooltip-name].description"
+      ],
+      "lighthouse-core/audits/accessibility/aria-treeitem-name.js | title": [
+        "audits[aria-treeitem-name].title"
+      ],
+      "lighthouse-core/audits/accessibility/aria-treeitem-name.js | description": [
+        "audits[aria-treeitem-name].description"
       ],
       "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | title": [
         "audits[aria-valid-attr-value].title"
@@ -7500,12 +7609,6 @@
       "lighthouse-core/audits/accessibility/label.js | description": [
         "audits.label.description"
       ],
-      "lighthouse-core/audits/accessibility/layout-table.js | title": [
-        "audits[layout-table].title"
-      ],
-      "lighthouse-core/audits/accessibility/layout-table.js | description": [
-        "audits[layout-table].description"
-      ],
       "lighthouse-core/audits/accessibility/link-name.js | failureTitle": [
         "audits[link-name].title"
       ],
@@ -7571,12 +7674,6 @@
       ],
       "lighthouse-core/audits/accessibility/video-caption.js | description": [
         "audits[video-caption].description"
-      ],
-      "lighthouse-core/audits/accessibility/video-description.js | title": [
-        "audits[video-description].title"
-      ],
-      "lighthouse-core/audits/accessibility/video-description.js | description": [
-        "audits[video-description].description"
       ],
       "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | failureTitle": [
         "audits[uses-long-cache-ttl].title"

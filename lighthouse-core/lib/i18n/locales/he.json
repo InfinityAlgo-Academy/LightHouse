@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "לרכיבי טופס יש תוויות המשויכות אליהם"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "טבלה המשמשת לקביעת פריסה אינה יכולה לכלול רכיבי נתונים, כמו הרכיב th, הרכיב ‏caption או המאפיין summary, כי הם עשויים ליצור חוויה מבלבלת עבור משתמשים הנעזרים בקורא מסך. [מידע נוסף](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "ברכיבי `<table>` להצגה, אין הימנעות משימוש ב-`<th>`, ב-`<caption>` או במאפיין `[summary]`."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "רכיבי `<table>` להצגה לא מכילים `<th>`, `<caption>` או את המאפיין `[summary]`."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "כשהטקסט של הקישור מובן וייחודי ואפשר להתמקד בו, משתמשים שנעזרים בקורא מסך נהנים מחוויית ניווט משופרת. מצב זה נכון גם לגבי טקסט חלופי של תמונות כשנעשה בהן שימוש כקישורים. [מידע נוסף](https://web.dev/link-name/)."
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "רכיבי `<video>` מכילים רכיב `<track>` עם `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "בסרטונים, תיאורים קוליים מספקים מידע רלוונטי שאי אפשר להבין מהדיאלוג. למשל, הבעות פנים ונופים. [מידע נוסף](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "יש רכיבי `<video>` שלא מכילים רכיב `<track>` עם `[kind=\"description\"]`."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "רכיבי `<video>` מכילים רכיב `<track>` עם `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "כדי שהדף יוצג למשתמשים באופן אידיאלי ב-iOS לאחר הוספת Progressive Web App למסך הבית, מומלץ להגדיר `apple-touch-icon`. המאפיין חייב להפנות לתמונת PNG לא שקופה בפורמט ריבוע בגודל 192 פיקסלים (או 180 פיקסלים). [מידע נוסף](https://web.dev/apple-touch-icon/)."

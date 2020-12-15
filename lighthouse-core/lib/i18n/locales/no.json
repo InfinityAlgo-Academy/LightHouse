@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Skjemaelementene har tilknyttede etiketter"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Tabeller som brukes til layoutformål, skal ikke inneholde dataelementer, som th-elementer, caption-elementer eller summary-attributtet, da disse kan skape en forvirrende opplevelse for brukere av skjermlesere. [Finn ut mer](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "Presentasjonsmessige `<table>`-elementer unngår ikke å bruke `<th>`, `<caption>` eller `[summary]`-attributtet."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "Presentasjonsmessige `<table>`-elementer unngår å bruke `<th>`, `<caption>` og `[summary]`-attributtet."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Når du bruker linktekst (og alternativ tekst for bilder som brukes som linker) som er tydelig, unik og mulig å sette fokus på, blir navigeringsopplevelsen bedre for brukere av skjermlesere. [Finn ut mer](https://web.dev/link-name/)."
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>`-elementer inneholder et `<track>`-element med `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Lydbeskrivelser gir relevant videoinformasjon som dialog ikke kan formidle, for eksempel ansiktsuttrykk og scener. [Finn ut mer](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "`<video>`-elementer mangler et `<track>`-element med `[kind=\"description\"]`."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "`<video>`-elementer inneholder et `<track>`-element med `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "For å oppnå det ideelle utseendet på iOS når brukere legger til progressive nettprogrammer på startskjermen, definer et `apple-touch-icon`. Det må peke til et ugjennomsiktig, kvadratisk PNG-bilde med sidelengde på 192 (eller 180) piksler. [Finn ut mer](https://web.dev/apple-touch-icon/)."

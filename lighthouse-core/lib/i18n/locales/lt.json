@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Formos elementuose yra atitinkamų etikečių"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Lentelėje, kuri naudojama išdėstymo tikslais, neturėtų būti duomenų elementų, pvz., elementų „th“ ar „caption“ arba atributo „summary“, nes taip ekrano skaitytuvų naudotojams gali būti teikiama trikdanti patirtis. [Sužinokite daugiau](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "Pristatomuose elementuose „`<table>`“ nevengiama naudoti atributų „`<th>`“, „`<caption>`“ arba „`[summary]`“."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "Pristatomuose elementuose „`<table>`“ vengiama naudoti atributus „`<th>`“, „`<caption>`“ ar „`[summary]`“."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Aiškus ir unikalus nuorodos tekstas (ir alternatyvusis vaizdų tekstas, kai jie naudojami kaip nuorodos), į kurį lengva sutelkti dėmesį, pagerina naršymo patirtį ekrano skaitytuvų naudotojams. [Sužinokite daugiau](https://web.dev/link-name/)."
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Elementuose „`<video>`“ yra elementas „`<track>`“ su atributu „`[kind=\"captions\"]`“"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Garso įrašų aprašai teikia reikiamą informaciją apie vaizdo įrašus, kurios negalima pateikti dialoge, pvz., susijusios su veido išraiškomis ir scenomis. [Sužinokite daugiau](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "Elementuose „`<video>`“ nėra elemento „`<track>`“ su atributu „`[kind=\"description\"]`“."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "Elementuose „`<video>`“ yra elementas „`<track>`“ su atributu „`[kind=\"description\"]`“"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "Kad būtų tinkamai rodoma sistemoje „iOS“, kai naudotojai prideda laipsniškąją žiniatinklio programą prie pagrindinio ekrano, nurodykite `apple-touch-icon`. Ji turi nukreipti į neskaidrų 192 tšk. (arba 180 tšk.) kvadratinį PNG failą. [Sužinokite daugiau](https://web.dev/apple-touch-icon/)"

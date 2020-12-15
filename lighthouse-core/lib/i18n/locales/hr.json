@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Elementi oblika imaju povezane oznake"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Tablica koja se upotrebljava u svrhe izgleda ne smije sadržavati elemente podataka kao što su elementi th ili opis ili atribut sažetka jer to može zbuniti korisnike čitača zaslona. [Saznajte više](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "Prezentacijski elementi za `<table>` ne izbjegavaju upotrebu atributa `<th>`, `<caption>` ili `[summary]`."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "Prezentacijski elementi za `<table>` izbjegavaju upotrebu `<th>`, `<caption>` ili atributa `[summary]`."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Tekst veze (i zamjenski tekst za slike kada se upotrebljava kao veze) koji je prepoznatljiv, jedinstven i može se fokusirati omogućuje lakše kretanje korisnicima čitača zaslona. [Saznajte više](https://web.dev/link-name/)."
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Elementi `<video>` sadržavaju element `<track>` s `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Audioopisi pružaju relevantne informacije za videozapise koje dijaloški okviri ne mogu pružiti, primjerice izraze lica i scene. [Saznajte više](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "Elementi `<video>` ne sadrže element `<track>` s `[kind=\"description\"]`."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "Elementi `<video>` sadržavaju element `<track>` s `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "Za idealan izgled na iOS-u kad korisnici na početni zaslon dodaju progresivnu web-aplikaciju definirajte `apple-touch-icon`. Mora ukazivati na neprozirni kvadratni PNG od 192 px (ili 180 px). [Saznajte više](https://web.dev/apple-touch-icon/)."

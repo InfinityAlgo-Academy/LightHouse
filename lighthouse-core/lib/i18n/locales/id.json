@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Elemen formulir memiliki label yang terkait"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Tabel yang digunakan untuk tujuan tata letak sebaiknya tidak mencakup elemen data, seperti elemen th atau teks atau atribut ringkasan karena hal ini dapat menyebabkan pengalaman yang membingungkan bagi pengguna pembaca layar. [Pelajari lebih lanjut](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "Elemen `<table>` presentasional tidak menghindari penggunaan atribut `<th>`, `<caption>`, atau `[summary]`."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "Elemen `<table>` yang bersifat presentasional menghindari penggunaan atribut `<th>`, `<caption>`, atau `[summary]`."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Teks link (dan teks alternatif untuk gambar, saat digunakan sebagai link) yang mudah dilihat, unik, dan dapat difokuskan menyempurnakan pengalaman navigasi bagi pengguna pembaca layar. [Pelajari lebih lanjut](https://web.dev/link-name/)."
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Elemen `<video>` memuat elemen `<track>` dengan `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Deskripsi audio memberikan informasi yang relevan untuk video yang tidak dapat diberikan melalui dialog, seperti ekspresi wajah dan adegan. [Pelajari lebih lanjut](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "Elemen `<video>` tidak memuat elemen `<track>` dengan `[kind=\"description\"]`."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "Elemen `<video>` memuat elemen `<track>` dengan `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "Untuk tampilan ideal pada iOS saat pengguna menambahkan progressive web app ke layar utama, tentukan `apple-touch-icon`. Ikon harus mengarah ke PNG persegi 192 piksel (atau 180 piksel) yang tidak transparan. [Pelajari Lebih Lanjut](https://web.dev/apple-touch-icon/)."

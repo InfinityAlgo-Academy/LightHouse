@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Elementele formularului au etichete asociate"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Un tabel care este folosit pentru aspect nu ar trebui să includă elemente de date, precum elementele th sau de subtitrare sau atributul rezumat, deoarece poate crea confuzie pentru utilizatorii cititoarelor de ecran. [Află mai multe](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "Elementele `<table>` de prezentare nu evită folosirea `<th>`, `<caption>` sau a atributului `[summary]`."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "Elementele `<table>` de prezentare evită să folosească `<th>`, `<caption>` sau atributul `[summary]`."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Textul linkurilor (și textul alternativ pentru imagini, când sunt folosite ca linkuri) care se poate distinge, unic și pe care se poate focaliza, îmbunătățește navigarea pentru utilizatorii de cititoare de ecran. [Află mai multe](https://web.dev/link-name/)."
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Elementele `<video>` conțin un element `<track>` cu `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Descrierile audio oferă informații relevante pentru videoclipuri pe care dialogul nu le poate oferi, precum scene și expresii faciale. [Află mai multe](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "Elementele `<video>` nu conțin un element `<track>` cu `[kind=\"description\"]`."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "Elementele `<video>` conțin un element `<track>` cu `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "Pentru un aspect ideal în iOS atunci când utilizatorii adaugă o aplicație web progresivă în ecranul de pornire, definește o `apple-touch-icon`. Aceasta trebuie să indice spre un PNG pătrat netransparent, de 192 px (sau 180 px). [Află mai multe](https://web.dev/apple-touch-icon/)."

@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "K prvkom formulára sú priradené štítky"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Tabuľka používaná na vytvorenie rozloženia by nemala obsahovať údajové prvky, ako sú prvky th a caption, prípadne atribút summary, pretože by ste tým mohli zmiasť používateľov čítačiek obrazovky. [Ďalšie informácie](https://web.dev/layout-table/)"
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "Prezentačné prvky `<table>` nepoužívajú atribút `<th>`, `<caption>` alebo `[summary]`."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "Prezentačné prvky `<table>` nepoužívajú atribút `<th>`, `<caption>` ani `[summary]`."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Rozpoznateľný, jedinečný a zamerateľný text odkazu (a alternatívny text pre obrázky, ktoré sa používajú ako odkazy) zlepšuje navigáciu pomocou čítačky obrazovky. [Ďalšie informácie](https://web.dev/link-name/)"
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Prvky `<video>` obsahujú prvok `<track>` s titulkami `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Zvukové popisy pridávajú k videám relevantné informácie, napríklad o výrazoch tváre a scénach, ktoré dialógy neposkytujú. [Ďalšie informácie](https://web.dev/video-description/)"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "Prvky `<video>` neobsahujú prvok `<track>` s titulkami `[kind=\"description\"]`."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "Prvky `<video>` obsahujú prvok `<track>` s titulkami `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "Ak chcete zaistiť ideálny vzhľad progresívnej webovej aplikácie v systéme iOS, keď si ju používateľ pridá na plochu, definujte vlastnosť `apple-touch-icon`. Musí odkazovať na nepriehľadný obrázok PNG s veľkosťou 192 × 192 px (alebo 180 × 180 px). [Ďalšie informácie](https://web.dev/apple-touch-icon/)"

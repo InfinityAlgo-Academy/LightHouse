@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "படிவ உறுப்புகளுக்கு, தொடர்புடைய லேபிள்கள் உள்ளன"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "தளவமைப்புக்காகப் பயன்படுத்தப்படும் அட்டவணையில் th, தலைப்பு உறுப்புகள், சுருக்கவிவரப் பண்புக்கூறு போன்ற தரவு உறுப்புகளை சேர்க்கக் கூடாது, ஏனெனில் இது ஸ்க்ரீன் ரீடர் பயனர்களுக்குக் குழப்பத்தை ஏற்படுத்தும். [மேலும் அறிக](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "`<th>`, `<caption>` அல்லது `[summary]` பண்புக்கூறைப் பயன்படுத்துவதை விளக்க `<table>` உறுப்புகள் தவிர்க்கவில்லை."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "`<th>`, `<caption>` அல்லது `[summary]` பண்புக்கூறைப் பயன்படுத்துவதை விளக்க `<table>` உறுப்புகள் தவிர்க்கும்."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "தெளிவான, தனித்துவமான, மையப்படுத்தக்கூடிய இணைப்பு உரை (மற்றும் இணைப்புகளாகப் பயன்படுத்தப்படும் படங்களுக்கான மாற்று உரை) ஸ்க்ரீன் ரீடர் பயனர்களுக்கான வழிகாட்டும் அனுபவத்தை மேம்படுத்தும். [மேலும் அறிக](https://web.dev/link-name/)."
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>` உறுப்புகளில் `[kind=\"captions\"]`ஐக் கொண்டுள்ள`<track>` உறுப்பு உள்ளது"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "வீடியோக்களில் வசனங்களால் வெளிப்படுத்த முடியாத முக பாவனைகள், காட்சிகள் போன்றவற்றுக்கான தொடர்புடைய தகவல்களை ஆடியோ விளக்கங்கள் வழங்கும். [மேலும் அறிக](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "`<video>` உறுப்புகளில் `[kind=\"description\"]` உள்ள `<track>` உறுப்பு இல்லை."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "`<video>` உறுப்புகளில் `[kind=\"description\"]`ஐக் கொண்டுள்ள`<track>` உறுப்பு உள்ளது"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "முகப்புத் திரையில் நவீன இணைய ஆப்ஸை பயனர்கள் சேர்க்கும் போது iOSஸில் சிறப்பாகத் தோன்ற `apple-touch-icon` ஒன்றை வரையறுக்கவும். அது ஒளிபுகுத்தன்மையற்ற 192 பிகசல் (அல்லது 180 பிக்சல்) அளவுள்ள கட்ட வடிவத்திலான PNGயைக் காட்ட வேண்டும். [மேலும் அறிக](https://web.dev/apple-touch-icon/)."

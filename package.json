@@ -156,7 +156,7 @@
     "webtreemap-cdt": "^3.0.1"
   },
   "dependencies": {
-    "axe-core": "3.5.5",
+    "axe-core": "4.1.1",
     "chrome-launcher": "^0.13.4",
     "configstore": "^5.0.1",
     "cssstyle": "1.2.1",

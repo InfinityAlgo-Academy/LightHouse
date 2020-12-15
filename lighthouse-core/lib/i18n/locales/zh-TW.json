@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "表單元素具有相關聯的標籤"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "用於版面配置的表格不應包含資料元素 (例如 th、字幕元素或摘要屬性)，否則可能會對螢幕閱讀器使用者造成混淆。[瞭解詳情](https://web.dev/layout-table/)。"
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "表示性元素 `<table>` 未避免使用 `<th>`、`<caption>` 元素或 `[summary]` 屬性。"
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "表示性元素 `<table>` 並未使用 `<th>`、`<caption>` 或 `[summary]` 屬性。"
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "使用可辨別、未重複且可聚焦的連結文字 (以及連結圖片的替代文字)，有助於改善螢幕閱讀器使用者的瀏覽體驗。[瞭解詳情](https://web.dev/link-name/)。"
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>` 元素包含帶有 `[kind=\"captions\"]` 的 `<track>` 元素"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "音訊說明可為影片提供對話功能無法提供的相關資訊，例如面部表情和場景。[瞭解詳情](https://web.dev/video-description/)。"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "`<video>` 元素不含任何帶有 `[kind=\"description\"]` 的 `<track>` 元素。"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "`<video>` 元素包含帶有 `[kind=\"description\"]` 的 `<track>` 元素"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "請定義「`apple-touch-icon`」，這樣一來，當 iOS 使用者將漸進式網頁應用程式新增到主螢幕時，系統才會顯示正確圖示。apple-touch-icon 必須指向大小為 192 像素 (或 180 像素) 的不透明正方形 PNG。[瞭解詳情](https://web.dev/apple-touch-icon/)。"

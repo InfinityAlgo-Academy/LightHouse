@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Элементам формы присвоены соответствующие ярлыки"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "В таблице, используемой в качестве основы дизайна веб-страницы, не должны содержаться элементы данных, например th, caption или атрибут summary, так как они могут создать трудности для тех, кто использует программы чтения с экрана. [Подробнее…](https://web.dev/layout-table/)"
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "В элементах `<table>` с атрибутом role=\"presentation\" используются элементы `<th>` и `<caption>` или атрибут `[summary]`"
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "В элементах `<table>` с атрибутом role=\"presentation\" не используются элементы `<th>` и `<caption>` или атрибут `[summary]`"
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Текст ссылок (как и альтернативный текст для изображений, используемых в качестве ссылок) должен быть уникальным, фокусируемым и доступным для программ чтения с экрана. [Подробнее…](https://web.dev/link-name/)"
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Элементы `<video>` содержат элемент `<track>` с атрибутом `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Благодаря звуковым описаниям к видео слабовидящие пользователи могут узнавать, что происходит на экране в сценах без аудиосопровождения. [Подробнее…](https://web.dev/video-description/)"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "Элементы `<video>` не содержат элемент `<track>` с атрибутом `[kind=\"description\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "Элементы `<video>` содержат элемент `<track>` с атрибутом `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "Чтобы современное веб-приложение лучше смотрелось на главном экране iOS, задайте значение для атрибута `apple-touch-icon`. Он должен указывать на непрозрачное квадратное PNG-изображение со стороной 192 или 180 пикселей. [Подробнее…](https://web.dev/apple-touch-icon/)"

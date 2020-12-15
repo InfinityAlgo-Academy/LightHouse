@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Els elements de formulari tenen etiquetes associades"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Una taula que s'utilitza per al disseny no pot incloure elements de dades, com ara un superíndex, elements de subtítols o l'atribut de resum, ja que es pot crear una experiència confusa per als usuaris de lectors de pantalla. [Obtén més informació](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "Els elements `<table>` per a presentacions no eviten utilitzar `<th>`, `<caption>` ni l'atribut `[summary]`."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "Els elements `<table>` per a presentacions eviten utilitzar `<th>`, `<caption>` o l'atribut `[summary]`."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Si el text dels enllaços (així com el text alternatiu per a les imatges, quan s'utilitzen com a enllaços) és discernible, únic i permet que s'hi posi el focus, millora l'experiència de navegació dels usuaris de lectors de pantalla. [Obtén més informació](https://web.dev/link-name/)."
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Els elements `<video>` contenen un element `<track>` amb `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Les audiodescripcions proporcionen informació rellevant dels vídeos que els diàlegs no poden oferir, com ara les expressions facials i les escenes. [Obtén més informació](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "Els elements `<video>` no contenen cap element `<track>` amb `[kind=\"description\"]`."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "Els elements `<video>` contenen un element `<track>` amb `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "Perquè l'aspecte a iOS sigui l'ideal quan els usuaris afegeixin una aplicació web progressiva a la pantalla d'inici, defineix un atribut `apple-touch-icon`. Ha de dirigir a una imatge PNG quadrada de 192 píxels o de 180 píxels que no sigui transparent. [Obtén més informació](https://web.dev/apple-touch-icon/)."

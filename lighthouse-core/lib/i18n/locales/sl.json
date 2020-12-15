@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Elementi obrazcev imajo povezane oznake"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Tabela, ki se uporablja za namene postavitve, ne sme vsebovati podatkovnih elementov, na primer elementov »th« oziroma podnapisov ali atributa povzetka, ker lahko to privede do zavajajoče izkušnje za uporabnike bralnikov zaslona. [Več o tem](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "Elementi predstavitvene razpredelnice `<table>` se ne izogibajo uporabi atributa `<th>`, `<caption>` ali `[summary]`."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "Elementi predstavitvene razpredelnice `<table>` se izogibajo uporabi atributa `<th>`, `<caption>` ali `[summary]`."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Besedilo za povezavo (in nadomestno besedilo za slike, kadar so uporabljene kot povezave), ki je prepoznavno in edinstveno ter ga je mogoče izbrati, uporabnikom bralnikov zaslona zagotavlja boljšo izkušnjo pomikanja. [Več o tem](https://web.dev/link-name/)."
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Elementi `<video>` vsebujejo element `<track>` s podnapisi `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Zvočni opisi zagotavljajo pomembne informacije glede videoposnetkov, ki jih sam dialog ne more, na primer opisujejo obrazne izraze in prizore. [Več o tem](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "Elementi `<video>` ne vsebujejo elementa `<track>` z opisom `[kind=\"description\"]`."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "Elementi `<video>` vsebujejo element `<track>` s podnapisi `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "Za idealen prikaz v iOSu, ko uporabniki dodajo moderno spletno aplikacijo na začetni zaslon, določite to: `apple-touch-icon`. Kazati mora na neprosojno kvadratno datoteko PNG velikosti 192 (ali 180) slikovnih pik. [Več o tem](https://web.dev/apple-touch-icon/)."
