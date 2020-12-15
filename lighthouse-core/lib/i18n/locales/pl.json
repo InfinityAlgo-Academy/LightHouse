@@ -1001,21 +1001,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Efekt ma nieobsługiwane parametry czasowe"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Skrypt service worker pozwala aplikacji działać stabilnie w nieprzewidywalnych warunkach sieciowych. [Więcej informacji](https://web.dev/offline-start-url/)"
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "Błąd wczytywania {url} w skrypcie service worker, kod stanu: {statusCode}"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "`start_url` nie wyświetla błędu 200, kiedy jest offline"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "`start_url` wyświetla błąd 200, kiedy jest offline"
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Narzędziu Lighthouse nie udało się odczytać elementu `start_url` z pliku manifestu. Dlatego uznano, że `start_url` to URL dokumentu. Komunikat o błędzie: „{manifestWarning}”."
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "Liczba ani rozmiar żądań sieciowych nie mogą przekraczać wartości określonych przez podany budżet wydajności. [Więcej informacji](https://developers.google.com/web/tools/lighthouse/audits/budgets)"
   },
@@ -1397,18 +1382,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Zawiera tag `<meta name=\"viewport\">` z elementem `width` lub `initial-scale`"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Jeśli tworzysz progresywną aplikację internetową, rozważ użycie skryptu service worker, który pozwoli na działanie aplikacji w trybie offline. [Więcej informacji](https://web.dev/works-offline/)"
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "Strona nie wyświetla błędu 200, kiedy jest offline"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "Bieżąca strona wyświetla błąd 200, kiedy jest offline"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "Strona może nie wczytywać się offline, ponieważ testowy URL ({requested}) został przekierowany pod adres „{final}”. Przetestuj drugi URL bezpośrednio."
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "To są możliwości lepszego wykorzystania atrybutów ARIA w Twojej aplikacji, by była ona wygodniejsza dla użytkowników technologii wspomagających, takich jak czytniki ekranu."
   },
@@ -1525,9 +1498,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Progresywna aplikacja internetowa"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "Szybka i niezawodna"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Możliwa do zainstalowania"

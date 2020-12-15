@@ -1001,21 +1001,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "เอฟเฟกต์มีพารามิเตอร์การจับเวลาที่ไม่รองรับ"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Service Worker ช่วยให้เว็บแอปของคุณเชื่อถือได้ในสภาวะของเครือข่ายที่คาดการณ์ไม่ได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/offline-start-url/)"
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "การโหลดที่ผิดพลาดของ {url} ใน Service Worker ได้รหัสสถานะ {statusCode}"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "`start_url` ไม่ตอบสนองด้วยรหัส 200 เมื่อออฟไลน์"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "`start_url` ตอบสนองด้วยรหัส 200 เมื่อออฟไลน์"
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Lighthouse อ่าน `start_url` จากไฟล์ Manifest ไม่ได้ ด้วยเหตุนี้ ระบบจึงสันนิษฐานว่า `start_url` เป็น URL ของเอกสาร ข้อความแสดงข้อผิดพลาด: \"{manifestWarning}\""
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "ควบคุมให้จำนวนและขนาดของคำขอเครือข่ายอยู่ภายในเป้าหมายที่กำหนดตามงบประมาณประสิทธิภาพที่ให้มา [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/budgets)"
   },
@@ -1397,18 +1382,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "มีแท็ก `<meta name=\"viewport\">` ที่มี `width` หรือ `initial-scale`"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "หากคุณกำลังสร้าง Progressive Web App ให้พิจารณาใช้ Service Worker เพื่อให้แอปทำงานแบบออฟไลน์ได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/works-offline/)"
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "หน้าปัจจุบันไม่ตอบสนองด้วยรหัส 200 เมื่อออฟไลน์"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "หน้าปัจจุบันตอบสนองด้วยรหัส 200 เมื่อออฟไลน์"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "หน้านี้อาจไม่โหลดขึ้นขณะออฟไลน์เนื่องจาก URL ทดสอบของคุณ ({requested}) มีการเปลี่ยนเส้นทางไปยัง \"{final}\" ลองทดสอบ URL ที่ 2 โดยตรง"
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "นี่เป็นโอกาสปรับปรุงการใช้งาน ARIA ในแอปพลิเคชันของคุณ ซึ่งอาจช่วยให้ผู้ใช้ได้รับประสบการณ์การใช้งานเทคโนโลยีอำนวยความสะดวก เช่น โปรแกรมอ่านหน้าจอ ที่ดียิ่งขึ้น"
   },
@@ -1525,9 +1498,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Progressive Web App"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "ทำงานเร็วและวางใจได้"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "ติดตั้งได้"

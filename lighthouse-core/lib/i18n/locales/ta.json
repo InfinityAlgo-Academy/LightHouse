@@ -1001,21 +1001,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "ஆதரிக்கப்படாத நேர அளவுருக்களை எஃபெக்ட் கொண்டுள்ளது"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "கணிக்க முடியாத நெட்வொர்க் சூழல்களிலும் சேவைச் செயலாக்கி உங்கள் இணைய ஆப்ஸை நம்பகமானதாக மாற்றும். [மேலும் அறிக](https://web.dev/offline-start-url/)."
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "Service Workerரில் {url} ஐ ஏற்ற முடியவில்லை, {statusCode} எனும் நிலைக் குறியீடு கிடைத்துள்ளது"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "ஆஃப்லைனில் உள்ள போது 200 என்ற HTTP நிலைக் குறியீட்டுடன் `start_url` விரைவாகப் பதிலளிக்கவில்லை"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "ஆஃப்லைனில் உள்ள போது 200 என்ற HTTP நிலைக் குறியீட்டுடன் `start_url` விரைவாகப் பதிலளிக்கும்"
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "மெனிஃபெஸ்ட்டில் இருந்து `start_url`ஐ Lighthouseஸால் படிக்க முடியவில்லை. இதனால் `start_url` இந்த ஆவணத்தின் URL ஆகக் கருதப்பட்டது. பிழைச் செய்தி: '{manifestWarning}'."
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "நெட்வொர்க் கோரிக்கைகளின் அளவையும் எண்ணிக்கையையும் செயல்திறன் பட்ஜெட் அமைத்துள்ள இலக்கீடுகளுக்குள் வைத்திருக்கவும். [மேலும் அறிக](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
@@ -1397,18 +1382,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "`width` அல்லது `initial-scale` உடன் `<meta name=\"viewport\">` குறிச்சொல் அமைக்கப்பட்டுள்ளது"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "நவீன இணைய ஆப்ஸை உருவாக்குகிறீர்கள் எனில் ஆஃப்லைனில் உங்கள் ஆப்ஸ் செயல்படும் வகையில் சேவைச் செயலாக்கியைப் பயன்படுத்தும்படி பரிந்துரைக்கிறோம். [மேலும் அறிக](https://web.dev/works-offline/)."
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "ஆஃப்லைனில் உள்ள போது 200 என்ற HTTP நிலைக் குறியீட்டுடன் தற்போதைய பக்கம் விரைவாகப் பதிலளிக்கவில்லை"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "ஆஃப்லைனில் உள்ள போது 200 என்ற HTTP நிலைக் குறியீட்டுடன் தற்போதைய பக்கம் விரைவாகப் பதிலளிக்கும்"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "\"{final}\"க்கு உங்களின் சோதனை URL ({requested}) திசைதிருப்பப்பட்டதால் இந்தப் பக்கத்தை ஆஃப்லைனில் ஏற்ற முடியாமல் போகக்கூடும். இரண்டாவது URLஐ நேரடியாகச் சோதித்துப் பார்க்கவும்."
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "இந்த வாய்ப்புகள் உங்கள் ஆப்ஸில் உள்ள ARIAயின் ஆப்ஸை மேம்படுத்தும், இது ஸ்க்ரீன் ரீடர் போன்ற உதவிகரமான தொழில்நுட்பத்தைப் பயன்படுத்தும் பயனர்களின் அனுபவத்தை மேம்படுத்தக்கூடும்."
   },
@@ -1525,9 +1498,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "நவீன இணைய ஆப்ஸ்"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "விரைவானது, நம்பகமானது"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "நிறுவக்கூடியவை"

@@ -113,8 +113,6 @@ const UIStrings = {
   bestPracticesBrowserCompatGroupTitle: 'Browser Compatibility',
   /** Title of the General group of the Best Practices category. Within this section are the audits that don't belong to a specific group but are of general interest. */
   bestPracticesGeneralGroupTitle: 'General',
-  /** Title of the Fast and Reliable section of the web app category. Within this section are audits that check if the web site loaded quickly and can reliably load even if the internet connection is very slow or goes offline. */
-  pwaFastReliableGroupTitle: 'Fast and reliable',
   /** Title of the Installable section of the web app category. Within this section are audits that check if Chrome supports installing the web site as an app on their device. */
   pwaInstallableGroupTitle: 'Installable',
   /** Title of the "PWA Optimized" section of the web app category. Within this section are audits that check if the developer has taken advantage of features to make their web page more enjoyable and engaging for the user. */
@@ -171,8 +169,6 @@ const defaultConfig = {
     loadFailureMode: 'ignore',
     gatherers: [
       'service-worker',
-      'offline',
-      'start-url',
     ],
   },
   {
@@ -189,7 +185,6 @@ const defaultConfig = {
     'is-on-https',
     'redirects-http',
     'service-worker',
-    'works-offline',
     'viewport',
     'metrics/first-contentful-paint',
     'metrics/largest-contentful-paint',
@@ -229,7 +224,6 @@ const defaultConfig = {
     'network-server-latency',
     'main-thread-tasks',
     'metrics',
-    'offline-start-url',
     'performance-budget',
     'timing-budget',
     'resource-summary',
@@ -356,9 +350,6 @@ const defaultConfig = {
     'diagnostics': {
       title: str_(UIStrings.diagnosticsGroupTitle),
       description: str_(UIStrings.diagnosticsGroupDescription),
-    },
-    'pwa-fast-reliable': {
-      title: str_(UIStrings.pwaFastReliableGroupTitle),
     },
     'pwa-installable': {
       title: str_(UIStrings.pwaInstallableGroupTitle),
@@ -607,9 +598,6 @@ const defaultConfig = {
       description: str_(UIStrings.pwaCategoryDescription),
       manualDescription: str_(UIStrings.pwaCategoryManualDescription),
       auditRefs: [
-        // Fast and Reliable
-        {id: 'works-offline', weight: 5, group: 'pwa-fast-reliable'},
-        {id: 'offline-start-url', weight: 1, group: 'pwa-fast-reliable'},
         // Installable
         {id: 'installable-manifest', weight: 2, group: 'pwa-installable'},
         // PWA Optimized

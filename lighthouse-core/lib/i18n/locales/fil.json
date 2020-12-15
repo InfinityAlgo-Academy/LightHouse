@@ -1001,21 +1001,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "May mga hindi sinusuportahang parameter ng timing ang effect"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Ine-enable ng isang service worker ang iyong web app para maging maaasahan sa mga pabagu-bagong kundisyon ng network. [Matuto pa](https://web.dev/offline-start-url/)."
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "Nagkaroon ng error sa pag-load ng {url} sa Service Worker, nakakuha ng status code na {statusCode}"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "Hindi tumutugon ang `start_url` gamit ang 200 kapag offline"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "Tumutugon ang `start_url` gamit ang 200 kapag offline"
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Hindi mabasa ng Lighthouse ang `start_url` na galing sa manifest. Dahil dito, ipinagpapalagay na `start_url` ang URL ng dokumento. Mensahe ng error: '{manifestWarning}.'"
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "Panatilihin ang dami at laki ng mga kahilingan sa network sa ilalim ng mga target na itinakda ng ibinigay na badyet sa performance. [Matuto pa](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
@@ -1397,18 +1382,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "May tag na `<meta name=\"viewport\">` na may `width` o `initial-scale`"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Kung bumubuo ka ng Progressive Web App, pag-isipang gumamit ng service worker para gumana ang iyong app offline. [Matuto pa](https://web.dev/works-offline/)."
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "Hindi tumutugon ang kasalukuyang page gamit ang 200 kapag offline"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "Tumutugon ang kasalukuyang page gamit ang 200 kapag offline"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "Puwedeng hindi naglo-load ang page offline dahil na-redirect ang iyong pansubok na URL ({requested}) sa \"{final}\". Subukang suriin ang pangalawang URL nang direkta."
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Mga pagkakataon ito na pahusayin ang paggamit ng ARIA sa iyong application na maaaring mapahusay ang karanasan para sa mga user ng nakakatulong na teknolohiya, tulad ng screen reader."
   },
@@ -1525,9 +1498,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Progressive Web App"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "Mabilis at maaasahan"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Nai-install"

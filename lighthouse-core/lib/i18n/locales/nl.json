@@ -1001,21 +1001,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Effect heeft niet-ondersteunde tijdparameters"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Met een service worker kan je web-app betrouwbaar functioneren bij onvoorspelbare netwerkomstandigheden. [Meer informatie](https://web.dev/offline-start-url/)"
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "Fout bij laden van {url} in Service Worker, statuscode {statusCode} is ontvangen"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "`start_url` retourneert geen 200-statuscode wanneer de pagina offline is"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "`start_url` retourneert een 200-statuscode wanneer de pagina offline is"
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Lighthouse kan de `start_url` in het manifest niet lezen. Daarom is aangenomen dat de `start_url` de URL van het document is. Foutmelding: '{manifestWarning}'."
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "Houd de hoeveelheid en grootte van netwerkverzoeken onder de door het verstrekte prestatiebudget ingestelde doelen. [Meer informatie](https://developers.google.com/web/tools/lighthouse/audits/budgets)"
   },
@@ -1397,18 +1382,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Bevat een `<meta name=\"viewport\">`-tag met `width` of `initial-scale`"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Als je een progressive web-app bouwt, kun je overwegen een service worker te gebruiken zodat je app offline kan worden gebruikt. [Meer informatie](https://web.dev/works-offline/)"
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "De huidige pagina retourneert geen 200-statuscode wanneer de pagina offline is"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "De huidige pagina retourneert een 200-statuscode wanneer de pagina offline is"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "De pagina wordt mogelijk niet geladen omdat je test-URL ({requested}) is omgeleid naar '{final}'. Test de tweede URL rechtstreeks."
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Dit zijn suggesties om het gebruik van ARIA in je app te verbeteren, wat kan leiden tot betere functionaliteit voor gebruikers van hulptechnologie, zoals een schermlezer."
   },
@@ -1525,9 +1498,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Progressive web-app"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "Snel en betrouwbaar"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Installeerbaar"

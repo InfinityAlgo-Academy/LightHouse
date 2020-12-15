@@ -1103,21 +1103,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Êf́f̂éĉt́ ĥáŝ ún̂śûṕp̂ór̂t́êd́ t̂ím̂ín̂ǵ p̂ár̂ám̂ét̂ér̂ś"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Â śêŕv̂íĉé ŵór̂ḱêŕ êńâb́l̂éŝ ýôúr̂ ẃêb́ âṕp̂ t́ô b́ê ŕêĺîáb̂ĺê ín̂ ún̂ṕr̂éd̂íĉt́âb́l̂é n̂ét̂ẃôŕk̂ ćôńd̂ít̂íôńŝ. [Ĺêár̂ń m̂ór̂é](https://web.dev/offline-start-url/)."
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "Êŕr̂ór̂ ĺôád̂ín̂ǵ {url} îń Ŝér̂v́îćê Ẃôŕk̂ér̂, ǵôt́ ŝt́ât́ûś ĉód̂é {statusCode}"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "`start_url` d̂óêś n̂ót̂ ŕêśp̂ón̂d́ ŵít̂h́ â 200 ẃĥén̂ óf̂f́l̂ín̂é"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "`start_url` r̂éŝṕôńd̂ś ŵít̂h́ â 200 ẃĥén̂ óf̂f́l̂ín̂é"
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "L̂íĝh́t̂h́ôúŝé ĉóûĺd̂ń't̂ ŕêád̂ t́ĥé `start_url` f̂ŕôḿ t̂h́ê ḿâńîf́êśt̂. Áŝ á r̂éŝúl̂t́, t̂h́ê `start_url` ẃâś âśŝúm̂éd̂ t́ô b́ê t́ĥé d̂óĉúm̂én̂t́'ŝ ÚR̂Ĺ. Êŕr̂ór̂ ḿêśŝáĝé: '{manifestWarning}'."
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "K̂éêṕ t̂h́ê q́ûán̂t́ît́ŷ án̂d́ ŝíẑé ôf́ n̂ét̂ẃôŕk̂ ŕêq́ûéŝt́ŝ ún̂d́êŕ t̂h́ê t́âŕĝét̂ś ŝét̂ b́ŷ t́ĥé p̂ŕôv́îd́êd́ p̂ér̂f́ôŕm̂án̂ćê b́ûd́ĝét̂. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
@@ -1526,18 +1511,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Ĥáŝ á `<meta name=\"viewport\">` t̂áĝ ẃît́ĥ `width` ór̂ `initial-scale`"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Îf́ ŷóû'ŕê b́ûíl̂d́îńĝ á P̂ŕôǵr̂éŝśîv́ê Ẃêb́ Âṕp̂, ćôńŝíd̂ér̂ úŝín̂ǵ â śêŕv̂íĉé ŵór̂ḱêŕ ŝó t̂h́ât́ ŷóûŕ âṕp̂ ćâń ŵór̂ḱ ôf́f̂ĺîńê. [Ĺêár̂ń m̂ór̂é](https://web.dev/works-offline/)."
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "Ĉúr̂ŕêńt̂ ṕâǵê d́ôéŝ ńôt́ r̂éŝṕôńd̂ ẃît́ĥ á 200 ŵh́êń ôf́f̂ĺîńê"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "Ĉúr̂ŕêńt̂ ṕâǵê ŕêśp̂ón̂d́ŝ ẃît́ĥ á 200 ŵh́êń ôf́f̂ĺîńê"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "T̂h́ê ṕâǵê ḿâý n̂ót̂ b́ê ĺôád̂ín̂ǵ ôf́f̂ĺîńê b́êćâúŝé ŷóûŕ t̂éŝt́ ÛŔL̂ ({requested}) ẃâś r̂éd̂ír̂éĉt́êd́ t̂ó \"{final}\". T̂ŕŷ t́êśt̂ín̂ǵ t̂h́ê śêćôńd̂ ÚR̂Ĺ d̂ír̂éĉt́l̂ý."
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "T̂h́êśê ár̂é ôṕp̂ór̂t́ûńît́îéŝ t́ô ím̂ṕr̂óv̂é t̂h́ê úŝáĝé ôf́ ÂŔÎÁ îń ŷóûŕ âṕp̂ĺîćât́îón̂ ẃĥíĉh́ m̂áŷ én̂h́âńĉé t̂h́ê éx̂ṕêŕîén̂ćê f́ôŕ ûśêŕŝ óf̂ áŝśîśt̂ív̂é t̂éĉh́n̂ól̂óĝý, l̂ík̂é â śĉŕêén̂ ŕêád̂ér̂."
   },
@@ -1654,9 +1627,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "P̂ŕôǵr̂éŝśîv́ê Ẃêb́ Âṕp̂"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "F̂áŝt́ âńd̂ ŕêĺîáb̂ĺê"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Îńŝt́âĺl̂áb̂ĺê"

@@ -1001,21 +1001,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Το εφέ έχει μη υποστηριζόμενες παραμέτρους χρονισμού."
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Ένα service worker επιτρέπει στην εφαρμογή ιστού σας να είναι πιο αξιόπιστη όταν εκτελείται σε απρόβλεπτες συνθήκες δικτύου. [Μάθετε περισσότερα](https://web.dev/offline-start-url/)."
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "Σφάλμα κατά τη φόρτωση του {url} στο Service Worker. Ελήφθη ο κωδικός σφάλματος {statusCode}"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "Το `start_url` δεν αποκρίνεται με κωδικό 200 όταν είναι εκτός σύνδεσης"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "Το `start_url` αποκρίνεται με κωδικό 200 όταν είναι εκτός σύνδεσης"
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Το Lighthouse δεν μπόρεσε να διαβάσει το `start_url` από το μανιφέστο. Επομένως, το `start_url` θεωρήθηκε ότι είναι το URL του εγγράφου. Μήνυμα σφάλματος: '{manifestWarning}'."
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "Διατηρήστε την ποσότητα και το μέγεθος των αιτημάτων δικτύου εντός των στόχων που ορίζονται από τον παρεχόμενο προϋπολογισμό απόδοσης. [Μάθετε περισσότερα](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
@@ -1397,18 +1382,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Έχει ετικέτα `<meta name=\"viewport\">` με `width` ή `initial-scale`"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Εάν δημιουργείτε μια προηγμένη εφαρμογή ιστού, εξετάστε το ενδεχόμενο χρήσης ενός service worker ώστε η εφαρμογή σας να μπορεί να λειτουργεί εκτός σύνδεσης. [Μάθετε περισσότερα](https://web.dev/works-offline/)."
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "Η τρέχουσα σελίδα δεν αποκρίνεται με κωδικό 200 όταν είναι εκτός σύνδεσης"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "Η τρέχουσα σελίδα αποκρίνεται με κωδικό 200 όταν είναι εκτός σύνδεσης"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "Αυτή η σελίδα μπορεί να μην φορτώνεται εκτός σύνδεσης επειδή το URL δοκιμής σας ({requested}) ανακατευθύνθηκε στο \"{final}\". Προσπαθήστε να δοκιμάσετε απευθείας το δεύτερο URL."
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Αυτές είναι ευκαιρίες να βελτιώσετε τη χρήση των ARIA στην εφαρμογή σας, κάνοντας καλύτερη την εμπειρία χρήστη σε τεχνολογίες υποβοήθησης, όπως στον αναγνώστη οθόνης."
   },
@@ -1525,9 +1498,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Προηγμένη εφαρμογή ιστού"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "Γρήγορος και αξιόπιστος"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Δυνατότητα εγκατάστασης"

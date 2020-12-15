@@ -1001,21 +1001,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Efek memiliki parameter waktu yang tidak didukung"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Pekerja layanan memungkinkan aplikasi web dapat diandalkan dalam kondisi jaringan yang tidak terduga. [Pelajari lebih lanjut](https://web.dev/offline-start-url/)."
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "Error saat memuat {url} di Pekerja Layanan, mendapatkan kode status {statusCode}"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "`start_url` tidak merespons dengan kode 200 saat offline"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "`start_url` merespons dengan kode 200 saat offline"
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Lighthouse tidak dapat membaca `start_url` dari manifes tersebut. Oleh karena itu, `start_url` dianggap sebagai URL dokumen. Pesan error: '{manifestWarning}'."
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "Pertahankan jumlah dan ukuran permintaan jaringan di bawah target yang ditetapkan oleh anggaran performa yang disediakan. [Pelajari lebih lanjut](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
@@ -1397,18 +1382,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Memiliki tag `<meta name=\"viewport\">` dengan `width` atau `initial-scale`"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Jika Anda membuat build Progressive Web App, pertimbangkan untuk menggunakan pekerja layanan agar aplikasi dapat berfungsi secara offline. [Pelajari lebih lanjut](https://web.dev/works-offline/)."
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "Halaman saat ini tidak merespons dengan kode 200 saat offline"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "Halaman saat ini merespons dengan kode 200 saat offline"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "Halaman tersebut mungkin tidak dimuat secara offline karena URL uji Anda ({requested}) tidak dialihkan ke \"{final}\". Coba uji URL kedua secara langsung."
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Ini adalah peluang untuk meningkatkan penggunaan ARIA pada aplikasi Anda, yang dapat meningkatkan pengalaman bagi pengguna teknologi asistif, seperti pembaca layar."
   },
@@ -1525,9 +1498,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Progressive Web App"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "Cepat dan dapat diandalkan"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Dapat Diinstal"

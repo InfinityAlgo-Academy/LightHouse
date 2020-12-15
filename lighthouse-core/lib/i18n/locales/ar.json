@@ -1001,21 +1001,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "يحتوي \"التأثير\" على مَعلَمات توقيت غير متوافقة"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "يمكّن مشغّل الخدمات تطبيق الويب من أن يصبح موثوقًا به في ظروف الشبكة التي لا يمكن التنبؤ بها. [مزيد من المعلومات](https://web.dev/offline-start-url/)"
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "خطأ أثناء تحميل {url} في مشغّل الخدمات، واستخدام رمز الحالة {statusCode}"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "`start_url` لا تستجيب باستخدام رمز 200 عند عدم الاتصال بالإنترنت"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "`start_url` يستجيب باستخدام رمز 200 عند عدم الاتصال بالإنترنت"
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "تعذّر على Lighthouse قراءة `start_url` من البيان. ونتيجة لذلك، كان من المفترض أن يكون `start_url` هو عنوان URL للمستند. رسالة خطأ: '{manifestWarning}'."
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "يمكنك الحفاظ على كمية طلبات الشبكة وحجمها ضمن الاستهدافات المحدّدة في ميزانية الأداء المقدّمة. [مزيد من المعلومات](https://developers.google.com/web/tools/lighthouse/audits/budgets)"
   },
@@ -1397,18 +1382,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "تضمين علامة `<meta name=\"viewport\">` مع `width` أو `initial-scale`"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "في حال كنت تنشئ \"تطبيق ويب تقدّمي\"، يمكنك استخدام مشغّل الخدمات حتى يتمكّن التطبيق من العمل بلا اتصال بالإنترنت. [مزيد من المعلومات](https://web.dev/works-offline/)"
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "الصفحة الحالية لا تستجيب باستخدام رمز 200 عند عدم الاتصال بالإنترنت"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "الصفحة الحالية تستجيب باستخدام رمز 200 عند عدم الاتصال بالإنترنت"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "قد لا يتم تحميل الصفحة بلا اتصال بالإنترنت لأنه تمت إعادة توجيه عنوان URL للاختبار ({requested}) إلى \"{final}\". ويمكنك محاولة اختبار عنوان URL الثاني مباشرة."
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "هذه هي فرص لتحسين استخدام ARIA في تطبيقك، ما قد يحسّن تجربة مستخدمي التكنولوجيا المساعدة، مثل قارئ الشاشة."
   },
@@ -1525,9 +1498,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "تطبيق الويب التقدّمي"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "سريع وموثوق"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "القسم القابل للتثبيت"

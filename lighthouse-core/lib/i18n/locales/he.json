@@ -1001,21 +1001,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "האפקט כולל פרמטרים של תזמון שאינם נתמכים"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "קובץ שירות (service worker) מאפשר לאפליקציית האינטרנט שלך להיות אמינה יותר בתנאי רשת לא צפויים. [מידע נוסף](https://web.dev/offline-start-url/)."
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "אירעה שגיאה בטעינה של {url} בקובץ השירות (Service Worker). קוד השגיאה: {statusCode}"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "`start_url` לא מגיב בסטטוס 200 כשהוא במצב לא מקוון"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "`start_url` מגיב בסטטוס 200 כשהוא במצב לא מקוון"
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "מערכת Lighthouse לא הצליחה לקרוא את `start_url` מהמניפסט. כתוצאה מכך, התבצעה הנחה ש-`start_url` היא כתובת ה-URL של המסמך. הודעת שגיאה: '{manifestWarning}'."
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "הכמות והגודל של בקשות ברשת צריכים להיות מתחת ליעדים שהוגדרו בתקציב הביצועים הרלוונטי. [מידע נוסף](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
@@ -1397,18 +1382,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "יש תג `<meta name=\"viewport\">` עם `width` או `initial-scale`"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "אם בונים Progressive Web App, מומלץ לשקול להשתמש בקובץ שירות (service worker) כדי שהאפליקציה תוכל לעבוד במצב לא מקוון. [מידע נוסף](https://web.dev/works-offline/)."
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "דף זה לא מגיב בסטטוס 200 כשהוא במצב לא מקוון"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "דף זה מגיב בסטטוס 200 כשהוא במצב לא מקוון"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "ייתכן שהדף לא נטען באופן לא מקוון בגלל שכתובת ה-URL לבדיקה ({requested}) הופנתה אל \"{final}\". מומלץ לבדוק את כתובת ה-URL השנייה באופן ישיר."
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "אלו הזדמנויות לשיפור השימוש ב-ARIA באפליקציה, והן יכולות לשפר את החוויה של משתמשים שנעזרים בטכנולוגיות לנגישות, כמו קוראי מסך."
   },
@@ -1525,9 +1498,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Progressive Web App"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "מהיר ואמין"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "ניתן להתקנה"

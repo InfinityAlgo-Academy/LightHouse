@@ -124,19 +124,13 @@ Resetting state with about:blank
 Setting up network for the pass trace
 Running beforePass methods
 Gathering setup: ServiceWorker
-Gathering setup: Offline
-Gathering setup: StartUrl
 Beginning devtoolsLog and trace
 Loading page & waiting for onload
 Running pass methods
 Gathering in-page: ServiceWorker
-Gathering in-page: Offline
-Gathering in-page: StartUrl
 Gathering devtoolsLog & network records
 Running afterPass methods
 Gathering: ServiceWorker
-Gathering: Offline
-Gathering: StartUrl
 Running redirectPass pass
 Resetting state with about:blank
 Setting up network for the pass trace
@@ -155,7 +149,6 @@ Auditing: Uses HTTPS
 Computing artifact: NetworkRecords
 Auditing: Redirects HTTP traffic to HTTPS
 Auditing: Registers a service worker that controls page and `start_url`
-Auditing: Current page responds with a 200 when offline
 Auditing: Has a `<meta name="viewport">` tag with `width` or `initial-scale`
 Computing artifact: ViewportMeta
 Auditing: First Contentful Paint
@@ -230,7 +223,6 @@ Auditing: Server Backend Latencies
 Auditing: Tasks
 Auditing: Metrics
 Computing artifact: TimingSummary
-Auditing: `start_url` responds with a 200 when offline
 Auditing: Performance budget
 Computing artifact: ResourceSummary
 Auditing: Timing budget
@@ -505,7 +497,6 @@ no-vulnerable-libraries: pass
 non-composited-animations: notApplicable
 notification-on-start: pass
 object-alt: notApplicable
-offline-start-url: fail
 offscreen-content-hidden: manual
 offscreen-images: flaky
 password-inputs-can-be-pasted-into: pass
@@ -563,9 +554,8 @@ video-description: notApplicable
 viewport: fail
 viewport-ad-density: notApplicable
 visual-order-follows-dom: manual
-works-offline: fail
 
-# of .lh-audit divs: 155
+# of .lh-audit divs: 153
 
 .lh-audit divs:
 accesskeys
@@ -668,7 +658,6 @@ no-vulnerable-libraries
 non-composited-animations
 notification-on-start
 object-alt
-offline-start-url
 offscreen-content-hidden
 offscreen-images
 password-inputs-can-be-pasted-into
@@ -722,5 +711,4 @@ viewport
 viewport
 viewport-ad-density
 visual-order-follows-dom
-works-offline
 

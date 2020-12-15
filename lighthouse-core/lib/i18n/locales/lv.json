@@ -1001,21 +1001,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Efektam ir norādīti neatbalstīti laika parametri"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Izmantojot pakalpojumu skriptu, varat nodrošināt uzticamu tīmekļa lietotnes darbību neparedzamos tīkla apstākļos. [Uzziniet vairāk](https://web.dev/offline-start-url/)."
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "Ielādējot {url} pakalpojumu skriptā, radās kļūda. Statusa kods: {statusCode}."
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "`start_url` bezsaistē nereaģē ar statusa kodu 200"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "`start_url` bezsaistē reaģē ar statusa kodu 200"
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Rīkā Lighthouse neizdevās no manifesta nolasīt `start_url`. Tāpēc tika pieņemts, ka `start_url` ir dokumenta URL. Kļūdas ziņojums: “{manifestWarning}”."
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "Saglabājiet tīkla pieprasījumu daudzumu un lielumu zem mērķiem, kas noteikti sniegtajā izpildes budžetā. [Uzziniet vairāk](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
@@ -1397,18 +1382,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Ir tags `<meta name=\"viewport\">` ar `width` vai `initial-scale`"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Ja izstrādājat progresīvo tīmekļa lietotni, apsveriet iespēju izmantot pakalpojumu skriptu, lai lietotne varētu darboties bezsaistē. [Uzziniet vairāk](https://web.dev/works-offline/)."
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "Pašreizējā lapa bezsaistē nereaģē ar statusa kodu 200"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "Pašreizējā lapa bezsaistē reaģē ar statusa kodu 200"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "Iespējams, lapa bezsaistē netiek ielādēta, jo tika veikta novirzīšana no jūsu testa URL ({requested}) uz \"{final}\". Mēģiniet tieši testēt otro URL."
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Šie ieteikumi ļauj uzlabot ARIA lietojumu jūsu lietojumprogrammā. Tādējādi varat uzlabot pieredzi lietotājiem, kuri izmanto palīgtehnoloģijas, piemēram, ekrāna lasītājus."
   },
@@ -1525,9 +1498,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Progresīvā tīmekļa lietotne"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "Ātrums un uzticamība"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Instalēšana"

@@ -1001,21 +1001,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Effekten har tidsparametrar som inte stöds"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Med en tjänstefunktion kan appen användas under oförutsägbara nätverksförhållanden. [Läs mer](https://web.dev/offline-start-url/)."
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "Ett fel uppstod när {url} skulle läsas in i Service Worker. Statuskoden {statusCode} returnerades"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "HTTP-statuskoden 200 visas inte när `start_url` är offline"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "HTTP-statuskoden 200 visas när `start_url` är offline."
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Lighthouse kunde inte läsa `start_url` i manifestet. Därför antogs det att `start_url` var dokumentets webbadress. Felmeddelande: {manifestWarning}."
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "Håll antal och storlek för nätverksbegäranden under de mål som anges i den angivna prestandabudgeten. [Läs mer](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
@@ -1397,18 +1382,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Har en `<meta name=\"viewport\">`-tagg med `width` eller `initial-scale`"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Om du skapar en progressiv webbapp rekommenderar vi att du använder en tjänstefunktion så att appen kan användas offline. [Läs mer](https://web.dev/works-offline/)."
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "HTTP-statuskoden 200 visas inte för den aktuella sidan när den är offline"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "HTTP-statuskoden 200 visas för den aktuella sidan när den är offline"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "Sidan kanske inte läses in offline eftersom testwebbadressen ({requested}) omdirigerades till {final}. Testa den andra webbadressen direkt i stället."
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Det här är förslag på hur ARIA kan förbättras i appen så att den fungerar bättre för den som använder skärmläsare eller andra hjälpmedel."
   },
@@ -1525,9 +1498,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Progressiv webbapp"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "Snabb och pålitlig"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Kan installeras"

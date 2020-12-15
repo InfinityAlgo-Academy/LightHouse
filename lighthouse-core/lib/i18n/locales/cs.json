@@ -1001,21 +1001,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Efekt má nepodporované parametry časování"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Soubor service worker vaší webové aplikaci umožňuje, aby byla spolehlivá i za nepředvídatelného stavu sítě. [Další informace](https://web.dev/offline-start-url/)"
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "Při načítání adresy {url} v Service Workeru došlo k chybě. Stavový kód: {statusCode}"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "V režimu offline `start_url` nereaguje stavovým kódem 200"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "V režimu offline `start_url` reaguje stavovým kódem 200"
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Nástroji Lighthouse se v manifestu nepodařilo přečíst atribut `start_url`. Proto se předpokládá, že adresou URL dokumentu je `start_url`. Chybová zpráva: {manifestWarning}"
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "Udržujte množství a velikost síťových požadavků pod cílovými hodnotami, které udává poskytnutý rozpočet výkonu. [Další informace](https://developers.google.com/web/tools/lighthouse/audits/budgets)"
   },
@@ -1397,18 +1382,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Obsahuje značku `<meta name=\"viewport\">` s atributem `width` nebo `initial-scale`"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Pokud vytváříte progresivní webovou aplikaci, doporučujeme použít soubor service worker, aby aplikace fungovala i offline. [Další informace](https://web.dev/works-offline/)"
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "Stávající stránka nereaguje stavovým kódem 200, když je offline"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "Stávající stránka reaguje stavovým kódem 200, když je offline"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "Stránka se v režimu offline nemusí načíst, protože testovací adresa URL ({requested}) byla přesměrována na adresu „{final}“. Zkuste druhou adresu otestovat přímo."
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Toto jsou příležitosti ke zlepšení používání specifikace ARIA ve vaší aplikaci, které mohou zlepšit prostředí pro uživatele asistenčních technologií, jako jsou čtečky obrazovek."
   },
@@ -1525,9 +1498,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Progresivní webová aplikace"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "Rychlé a spolehlivé"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Instalovatelné"

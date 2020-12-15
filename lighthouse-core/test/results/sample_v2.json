@@ -57,14 +57,6 @@
       "score": 0,
       "scoreDisplayMode": "binary"
     },
-    "works-offline": {
-      "id": "works-offline",
-      "title": "Current page does not respond with a 200 when offline",
-      "description": "If you're building a Progressive Web App, consider using a service worker so that your app can work offline. [Learn more](https://web.dev/works-offline/).",
-      "score": 0,
-      "scoreDisplayMode": "binary",
-      "warnings": []
-    },
     "viewport": {
       "id": "viewport",
       "title": "Has a `<meta name=\"viewport\">` tag with `width` or `initial-scale`",
@@ -1508,15 +1500,6 @@
           }
         ]
       }
-    },
-    "offline-start-url": {
-      "id": "offline-start-url",
-      "title": "`start_url` does not respond with a 200 when offline",
-      "description": "A service worker enables your web app to be reliable in unpredictable network conditions. [Learn more](https://web.dev/offline-start-url/).",
-      "score": 0,
-      "scoreDisplayMode": "binary",
-      "explanation": "No usable web app manifest found on page.",
-      "warnings": []
     },
     "performance-budget": {
       "id": "performance-budget",
@@ -5250,16 +5233,6 @@
       "manualDescription": "These checks are required by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually.",
       "auditRefs": [
         {
-          "id": "works-offline",
-          "weight": 5,
-          "group": "pwa-fast-reliable"
-        },
-        {
-          "id": "offline-start-url",
-          "weight": 1,
-          "group": "pwa-fast-reliable"
-        },
-        {
           "id": "installable-manifest",
           "weight": 2,
           "group": "pwa-installable"
@@ -5318,7 +5291,7 @@
         }
       ],
       "id": "pwa",
-      "score": 0.17
+      "score": 0.25
     }
   },
   "categoryGroups": {
@@ -5336,9 +5309,6 @@
     "diagnostics": {
       "title": "Diagnostics",
       "description": "More information about the performance of your application. These numbers don't [directly affect](https://web.dev/performance-scoring/) the Performance score."
-    },
-    "pwa-fast-reliable": {
-      "title": "Fast and reliable"
     },
     "pwa-installable": {
       "title": "Installable"
@@ -5456,12 +5426,6 @@
       {
         "startTime": 0,
         "name": "lh:audit:service-worker",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:audit:works-offline",
         "duration": 100,
         "entryType": "measure"
       },
@@ -5888,12 +5852,6 @@
       {
         "startTime": 0,
         "name": "lh:computed:CumulativeLayoutShiftAllFrames",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:audit:offline-start-url",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6698,12 +6656,6 @@
       "lighthouse-core/audits/service-worker.js | description": [
         "audits[service-worker].description"
       ],
-      "lighthouse-core/audits/works-offline.js | failureTitle": [
-        "audits[works-offline].title"
-      ],
-      "lighthouse-core/audits/works-offline.js | description": [
-        "audits[works-offline].description"
-      ],
       "lighthouse-core/audits/viewport.js | title": [
         "audits.viewport.title"
       ],
@@ -7088,12 +7040,6 @@
       ],
       "lighthouse-core/audits/network-server-latency.js | description": [
         "audits[network-server-latency].description"
-      ],
-      "lighthouse-core/audits/offline-start-url.js | failureTitle": [
-        "audits[offline-start-url].title"
-      ],
-      "lighthouse-core/audits/offline-start-url.js | description": [
-        "audits[offline-start-url].description"
       ],
       "lighthouse-core/audits/performance-budget.js | title": [
         "audits[performance-budget].title"
@@ -8119,9 +8065,6 @@
       ],
       "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": [
         "categoryGroups.diagnostics.description"
-      ],
-      "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": [
-        "categoryGroups[pwa-fast-reliable].title"
       ],
       "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": [
         "categoryGroups[pwa-installable].title"

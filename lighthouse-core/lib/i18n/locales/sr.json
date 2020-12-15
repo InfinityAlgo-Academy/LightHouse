@@ -1001,21 +1001,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Ефекат има неподржане параметре времена"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Сервисер омогућава да веб-апликација буде поуздана у непредвидивим условима мреже. [Сазнајте више](https://web.dev/offline-start-url/)."
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "Грешка при учитавању URL-а {url} у сервисеру, пронађен је кôд статуса {statusCode}"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "`start_url` не одговара кодом 200 када је офлајн"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "`start_url` одговара кодом 200 када је офлајн"
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Lighthouse није успео да прочита `start_url` из манифеста. Као последица тога, претпоставили смо да је `start_url` URL документа. Порука о грешци: „{manifestWarning}“."
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "Захтеве за количину и величину мреже одржавајте испод граница одређених циљевима за учинак. [Сазнајте више](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
@@ -1397,18 +1382,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Има ознаку `<meta name=\"viewport\">` са ознаком `width` или `initial-scale`"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Ако правите прогресивну веб-апликацију, размислите о томе да користите сервисер како би апликација могла да ради офлајн. [Сазнајте више](https://web.dev/works-offline/)."
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "Актуелна страница не одговара кодом 200 када је офлајн"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "Актуелна страница одговара кодом 200 када је офлајн"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "Страница се можда не учитава офлајн зато што је пробни URL ({requested}) преусмерен на „{final}“. Пробајте директно да тестирате други URL."
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "То су прилике да побољшате коришћење ARIA улога у апликацији, чиме може да побољша доживљај корисника технологије за помоћ особама са инвалидитетом, као што је читач екрана."
   },
@@ -1525,9 +1498,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Прогресивна веб-апликација"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "Брзо и поуздано"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Може да се инсталира"

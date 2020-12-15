@@ -1001,21 +1001,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "L'effetto ha parametri di timing non supportati"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Un service worker rende la tua applicazione web affidabile in condizioni di rete imprevedibili. [Ulteriori informazioni](https://web.dev/offline-start-url/)."
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "Errore durante il caricamento di {url} in Service Worker; ricevuto il codice di stato {statusCode}"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "`start_url` non risponde con un codice 200 quando è offline"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "`start_url` risponde con un codice 200 quando è offline"
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Impossibile leggere `start_url` dal file manifest in Lighthouse. Di conseguenza si presume che `start_url` sia l'URL del documento. Messaggio di errore: \"{manifestWarning}\"."
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "Mantieni la quantità e le dimensioni delle richieste di rete al di sotto dei target impostati tramite il budget per le prestazioni fornito. [Ulteriori informazioni](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
@@ -1397,18 +1382,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Ha un tag `<meta name=\"viewport\">` con `width` o `initial-scale`"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Se devi creare un'app web progressiva, potresti usare un service worker per far funzionare la tua app offline. [Ulteriori informazioni](https://web.dev/works-offline/)."
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "La pagina attuale non risponde con un codice 200 quando è offline"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "La pagina attuale risponde con un codice 200 quando è offline"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "La pagina potrebbe non essere caricata offline perché l'URL di prova ({requested}) è stato reindirizzato a \"{final}\". Prova a testare direttamente il secondo URL."
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Si tratta di opportunità per facilitare l'uso di ARIA nella tua applicazione e migliorare l'esperienza per gli utenti di tecnologie per la disabilità, come uno screen reader."
   },
@@ -1525,9 +1498,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "App web progressiva"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "Veloce e affidabile"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Installabile"

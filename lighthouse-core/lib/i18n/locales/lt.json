@@ -1001,21 +1001,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Efekto laiko parametrai nepalaikomi"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Pagalbinis „JavaScript“ failas įgalina žiniatinklio programą veikti patikimai nenuspėjamomis tinklo sąlygomis. [Sužinokite daugiau](https://web.dev/offline-start-url/)"
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "Įkeliant {url} įvyko klaida pagalbiniame „JavaScript“ faile, (gautas būsenos kodas: {statusCode})"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "Kai neprisijungta prie interneto, `start_url` neatsako rodydamas klaidos kodą 200."
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "Kai neprisijungta prie interneto, `start_url` atsako rodydamas klaidos kodą 200."
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "„Lighthouse“ nepavyko nuskaityti `start_url` iš aprašo. Dėl to `start_url` buvo laikomas dokumento URL. Klaidos pranešimas: „{manifestWarning}“."
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "Tinklo užklausų kiekis ir dydis neturi viršyti tikslinių verčių, nustatytų našumo biudžete. [Sužinokite daugiau](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
@@ -1397,18 +1382,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Yra žyma `<meta name=\"viewport\">` su `width` arba `initial-scale`"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Jei kuriate laipsniškąją žiniatinklio programą, apsvarstykite galimybę naudoti pagalbinį „JavaScript“ failą, kad programa veiktų neprisijungus. [Sužinokite daugiau](https://web.dev/works-offline/)"
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "Kai neprisijungta prie interneto, dabartinis puslapis neatsako rodydamas klaidos kodą 200."
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "Kai neprisijungta prie interneto, dabartinis puslapis atsako rodydamas klaidos kodą 200."
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "Puslapis gali būti neįkeliamas neprisijungus, nes bandomasis URL ({requested}) peradresavo į {final}. Išbandykite antrąjį URL tiesiogiai."
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Tai yra galimybės, skirtos pagerinti ARIA naudojimą programoje. Jos gali pagerinti pagalbinių technologijų, pvz., ekrano skaitytuvų, naudotojų patirtį."
   },
@@ -1525,9 +1498,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Laipsniškoji žiniatinklio programa"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "Sparčios ir patikimos"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Galima įdiegti"

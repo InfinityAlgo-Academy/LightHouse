@@ -1001,21 +1001,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "效果包含不支援的時間參數"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Service Worker 可讓你的網頁應用程式即使在連線不穩定時依然維持正常運作。[瞭解詳情](https://web.dev/offline-start-url/)。"
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "在 Service Worker 中載入 {url} 時發生錯誤，狀態碼為 {statusCode}"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "`start_url` 在離線時不會傳回狀態碼 200 的回應"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "`start_url` 在離線時會傳回狀態碼 200 的回應"
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Lighthouse 無法從資訊清單中讀取 `start_url`，因此將 `start_url` 假設為文件的網址。錯誤訊息：「{manifestWarning}」。"
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "讓網路要求的數量和大小低於使用者根據效能預算所設定的目標。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/budgets)。"
   },
@@ -1397,18 +1382,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "具備包含 `width` 或 `initial-scale` 的 `<meta name=\"viewport\">` 標記"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "如果你正在建構漸進式網頁應用程式，請考慮使用 Service Worker，讓你的應用程式可以離線運作。[瞭解詳情](https://web.dev/works-offline/)。"
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "目前的網頁在離線時不會傳回狀態碼 200 的回應"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "目前的網頁在離線時會傳回狀態碼 200 的回應"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "由於你的測試網址 ({requested}) 重新導向到「{final}」，因此這個頁面可能無法在離線時載入。請試著直接測試第二個網址。"
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "這些稽核建議可協助改善 ARIA 在應用程式中的使用情形，進而讓輔助技術 (例如螢幕閱讀器) 的使用體驗更上一層樓。"
   },
@@ -1525,9 +1498,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "漸進式網頁應用程式"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "快速穩定"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "可安裝"

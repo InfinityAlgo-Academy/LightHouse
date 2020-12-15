@@ -1001,21 +1001,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Effekt hat nicht unterstützte Timingparameter"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Mithilfe eines Service Workers kann Ihre Web-App auch bei schlechten Netzwerkbedingungen zuverlässig funktionieren. [Weitere Informationen.](https://web.dev/offline-start-url/)"
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "Fehler beim Laden von {url} in Service Worker, Statuscode {statusCode} erhalten"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "`start_url` reagiert im Offlinemodus nicht mit dem HTTP-Statuscode 200"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "`start_url` reagiert im Offlinemodus mit dem HTTP-Status 200"
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Lighthouse konnte die `start_url` nicht im Manifest abrufen. Daher wurde angenommen, dass es sich bei der `start_url` um die URL des Dokuments handelt. Fehlermeldung: \"{manifestWarning}\"."
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "Die Anzahl und Größe der Netzwerkanfragen sollten unter den Zielvorgaben des Leistungsbudgets liegen. [Weitere Informationen.](https://developers.google.com/web/tools/lighthouse/audits/budgets)"
   },
@@ -1397,18 +1382,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Hat ein `<meta name=\"viewport\">`-Tag mit `width` oder `initial-scale`"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Wenn Sie eine progressive Web-App entwickeln, sollten Sie einen Service Worker verwenden, damit Ihre App auch offline funktioniert. [Weitere Informationen.](https://web.dev/works-offline/)"
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "Aktuelle Seite reagiert im Offlinemodus nicht mit dem HTTP-Statuscode 200"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "Aktuelle Seite reagiert im Offlinemodus mit dem HTTP-Statuscode 200"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "Die Seite lädt im Offlinemodus möglicherweise nicht, weil Ihre Test-URL ({requested}) auf \"{final}\" weitergeleitet wurde. Versuchen Sie, die zweite URL direkt zu testen."
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Anhand dieser Möglichkeiten können Sie die Nutzung von ARIA in Ihrer Anwendung verbessern, wovon Nutzer von Hilfstechnologien wie Screenreadern unter Umständen profitieren."
   },
@@ -1525,9 +1498,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Progressive Web-App"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "Schnell und zuverlässig"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Installierbar"

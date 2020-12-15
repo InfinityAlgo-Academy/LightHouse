@@ -1001,21 +1001,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Ефект містить непідтримувані параметри хронометражу"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Синтаксис Service Worker забезпечує надійність вашого веб-додатка в разі непередбачуваних умов у мережі. [Докладніше](https://web.dev/offline-start-url/)."
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "Не вдалося завантажити {url} у синтаксис Service Worker, код статусу – {statusCode}"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "`start_url` не надсилає код 200 у режимі офлайн"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "`start_url` надсилає код 200 у режимі офлайн"
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Lighthouse не може прочитати `start_url` з маніфесту. Через це `start_url` вважається URL-адресою документа. Повідомлення про помилку: \"{manifestWarning}\"."
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "Стежте, щоб кількість і розмір мережевих запитів не перевищували цільових значень, указаних у бюджеті ефективності. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
@@ -1397,18 +1382,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Має тег `<meta name=\"viewport\">` з атрибутами `width` або `initial-scale`"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Якщо ви створюєте прогресивний веб-додаток, можете скористатися синтаксисом Service Worker, щоб додаток працював офлайн. [Докладніше](https://web.dev/works-offline/)."
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "Поточна сторінка не надсилає код 200 у режимі офлайн"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "Поточна сторінка надсилає код 200 у режимі офлайн"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "Ця сторінка може не завантажуватись офлайн, оскільки тестову URL-адресу ({requested}) було переспрямовано на {final}. Спробуйте перевірити другу URL-адресу напряму."
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Ці рекомендації допоможуть покращити використання ролей ARIA у вашому додатку, що може позитивно вплинути на взаємодію для користувачів допоміжних технологій, як-от програм зчитування з екрана."
   },
@@ -1525,9 +1498,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Прогресивний веб-додаток"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "Швидкість і надійність"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Можна встановити"
