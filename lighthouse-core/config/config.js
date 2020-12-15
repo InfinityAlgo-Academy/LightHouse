@@ -325,6 +325,9 @@ class Config {
 
     // Extend the default config if specified
     if (configJSON.extends) {
+      if (configJSON.extends !== 'lighthouse:default') {
+        throw new Error('`lighthouse:default` is the only valid extension method.');
+      }
       configJSON = Config.extendConfigJSON(deepCloneConfigJson(defaultConfig), configJSON);
     }
 

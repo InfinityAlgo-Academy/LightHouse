@@ -620,7 +620,7 @@ describe('Config', () => {
     const saveWarning = evt => warnings.push(evt);
     log.events.addListener('warning', saveWarning);
     const config = new Config({
-      extends: true,
+      extends: 'lighthouse:default',
       settings: {
         onlyCategories: ['accessibility'],
       },
@@ -638,7 +638,7 @@ describe('Config', () => {
     const saveWarning = evt => warnings.push(evt);
     log.events.addListener('warning', saveWarning);
     const config = new Config({
-      extends: true,
+      extends: 'lighthouse:default',
       settings: {
         onlyCategories: ['performance', 'pwa'],
       },
@@ -655,7 +655,7 @@ describe('Config', () => {
 
   it('filters works with extension', () => {
     const config = new Config({
-      extends: true,
+      extends: 'lighthouse:default',
       settings: {
         onlyCategories: ['performance'],
         onlyAudits: ['is-on-https'],
@@ -672,7 +672,7 @@ describe('Config', () => {
     const saveWarning = evt => warnings.push(evt);
     log.events.addListener('warning', saveWarning);
     const config = new Config({
-      extends: true,
+      extends: 'lighthouse:default',
       settings: {
         onlyCategories: ['performance', 'missing-category'],
         onlyAudits: ['first-cpu-idle', 'missing-audit'],
@@ -687,7 +687,7 @@ describe('Config', () => {
   it('throws for invalid use of skipAudits and onlyAudits', () => {
     assert.throws(() => {
       new Config({
-        extends: true,
+        extends: 'lighthouse:default',
         settings: {
           onlyAudits: ['first-meaningful-paint'],
           skipAudits: ['first-meaningful-paint'],
@@ -697,20 +697,15 @@ describe('Config', () => {
   });
 
   it('cleans up flags for settings', () => {
-    const config = new Config({extends: true}, {nonsense: 1, foo: 2, throttlingMethod: 'provided'});
+    const config = new Config({extends: 'lighthouse:default'},
+      {nonsense: 1, foo: 2, throttlingMethod: 'provided'});
     assert.equal(config.settings.throttlingMethod, 'provided');
     assert.ok(config.settings.nonsense === undefined, 'did not cleanup settings');
   });
 
   it('allows overriding of array-typed settings', () => {
-    const config = new Config({extends: true}, {output: ['html']});
+    const config = new Config({extends: 'lighthouse:default'}, {output: ['html']});
     assert.deepStrictEqual(config.settings.output, ['html']);
-  });
-
-  it('does not throw on "lighthouse:full"', () => {
-    const config = new Config({extends: 'lighthouse:full'}, {output: ['html', 'json']});
-    assert.deepStrictEqual(config.settings.throttlingMethod, 'simulate');
-    assert.deepStrictEqual(config.settings.output, ['html', 'json']);
   });
 
   it('extends the config', () => {
@@ -781,6 +776,14 @@ describe('Config', () => {
     assert.equal(config.passes[0].pauseAfterLoadMs, 10001);
     assert.equal(config.passes[0].cpuQuietThresholdMs, 10002);
     assert.equal(config.passes[0].networkQuietThresholdMs, 10003);
+  });
+
+  it('only supports `lighthouse:default` extension', () => {
+    const createConfig = extendsValue => new Config({extends: extendsValue});
+
+    expect(() => createConfig(true)).toThrowError(/default` is the only valid extension/);
+    expect(() => createConfig('lighthouse')).toThrowError(/default` is the only valid/);
+    expect(() => createConfig('lighthouse:full')).toThrowError(/default` is the only valid/);
   });
 
   it('merges settings with correct priority', () => {
@@ -897,9 +900,9 @@ describe('Config', () => {
         devtoolsLogs: {defaultPass: 'path/to/devtools/log'},
       };
       const configA = {};
-      const configB = {extends: true, artifacts};
+      const configB = {extends: 'lighthouse:default', artifacts};
       const merged = Config.extendConfigJSON(configA, configB);
-      assert.equal(merged.extends, true);
+      assert.equal(merged.extends, 'lighthouse:default');
       assert.equal(merged.artifacts, configB.artifacts);
     });
   });
