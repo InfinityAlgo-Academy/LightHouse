@@ -226,7 +226,7 @@ module.exports = [
           traceEventType: 'animation',
           node: {
             selector: 'body > div#animate-me',
-            nodeLabel: 'div',
+            nodeLabel: 'This is changing font size',
             snippet: '<div id="animate-me">',
             boundingRect: {
               top: 8,
@@ -240,11 +240,8 @@ module.exports = [
           animations: [
             {
               name: 'anim',
-              // The animation reliably gets kUnsupportedCSSProperty (1 << 13) === 8192.
-              // Sometimes it also gets kTargetHasInvalidCompositingState (1 << 5) == 32. Together they sum to 8224.
-              // Both are fine for our purposes.
-              failureReasonsMask: '8192 +/- 32',
-              unsupportedProperties: ['background-color'],
+              failureReasonsMask: 8224,
+              unsupportedProperties: ['font-size'],
             },
           ],
         },
@@ -344,7 +341,7 @@ module.exports = [
                   type: 'node',
                   path: '2,HTML,1,BODY,1,DIV',
                   selector: 'body > div#animated-boi',
-                  nodeLabel: 'div',
+                  nodeLabel: 'This is changing font size',
                   snippet: '<div id="animated-boi">',
                 },
                 subItems: {
@@ -358,7 +355,7 @@ module.exports = [
                       animation: 'alpha',
                     },
                     {
-                      failureReason: 'Unsupported CSS Property: background-color',
+                      failureReason: 'Unsupported CSS Property: font-size',
                       animation: 'beta',
                     },
                   ],
