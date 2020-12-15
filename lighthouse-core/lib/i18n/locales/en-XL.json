@@ -753,7 +753,7 @@
     "message": "P̂ŕôt́ôćôĺ"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | description": {
-    "message": "ĤT́T̂Ṕ/2 ôf́f̂ér̂ś m̂án̂ý b̂én̂éf̂ít̂ś ôv́êŕ ĤT́T̂Ṕ/1.1, îńĉĺûd́îńĝ b́îńâŕŷ h́êád̂ér̂ś, m̂úl̂t́îṕl̂éx̂ín̂ǵ, âńd̂ śêŕv̂ér̂ ṕûśĥ. [Ĺêár̂ń m̂ór̂é](https://web.dev/uses-http2/)."
+    "message": "ĤT́T̂Ṕ/2 ôf́f̂ér̂ś m̂án̂ý b̂én̂éf̂ít̂ś ôv́êŕ ĤT́T̂Ṕ/1.1, îńĉĺûd́îńĝ b́îńâŕŷ h́êád̂ér̂ś âńd̂ ḿûĺt̂íp̂ĺêx́îńĝ. [Ĺêár̂ń m̂ór̂é](https://web.dev/uses-http2/)."
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount, plural,\n    =1 {1 r̂éq̂úêśt̂ ńôt́ ŝér̂v́êd́ v̂íâ H́T̂T́P̂/2}\n    other {# ŕêq́ûéŝt́ŝ ńôt́ ŝér̂v́êd́ v̂íâ H́T̂T́P̂/2}\n    }"

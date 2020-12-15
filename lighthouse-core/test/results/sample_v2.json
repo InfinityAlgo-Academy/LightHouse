@@ -4032,7 +4032,7 @@
     "uses-http2": {
       "id": "uses-http2",
       "title": "Use HTTP/2",
-      "description": "HTTP/2 offers many benefits over HTTP/1.1, including binary headers, multiplexing, and server push. [Learn more](https://web.dev/uses-http2/).",
+      "description": "HTTP/2 offers many benefits over HTTP/1.1, including binary headers and multiplexing. [Learn more](https://web.dev/uses-http2/).",
       "score": 0.34,
       "scoreDisplayMode": "binary",
       "numericValue": 2130,
