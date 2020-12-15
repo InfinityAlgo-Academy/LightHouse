@@ -21,9 +21,6 @@ module.exports = [
       requestedUrl: 'https://connorjclark.github.io/pwa.rocks/',
       finalUrl: 'https://connorjclark.github.io/pwa.rocks/',
       audits: {
-        'is-on-https': {
-          score: 1,
-        },
         'redirects-http': {
           score: 1,
         },

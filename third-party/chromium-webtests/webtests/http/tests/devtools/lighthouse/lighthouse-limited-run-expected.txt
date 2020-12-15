@@ -16,7 +16,6 @@ Generate report: enabled visible
 apple-touch-icon
 content-width
 installable-manifest
-is-on-https
 maskable-icon
 offline-start-url
 pwa-cross-browser

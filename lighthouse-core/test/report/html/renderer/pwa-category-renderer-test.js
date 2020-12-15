@@ -61,7 +61,6 @@ describe('PwaCategoryRenderer', () => {
 
     const nonManualAudits = category.auditRefs
       .filter(audit => audit.result.scoreDisplayMode !== 'manual');
-
     assert.strictEqual(regularAuditElements.length, nonManualAudits.length);
   });
 

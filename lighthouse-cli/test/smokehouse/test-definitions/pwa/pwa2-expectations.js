@@ -19,9 +19,6 @@ module.exports = [
       requestedUrl: 'https://jakearchibald.github.io/svgomg/',
       finalUrl: 'https://jakearchibald.github.io/svgomg/',
       audits: {
-        'is-on-https': {
-          score: 1,
-        },
         'redirects-http': {
           score: 1,
         },
@@ -82,9 +79,6 @@ module.exports = [
       requestedUrl: 'https://caltrainschedule.io/',
       finalUrl: 'https://caltrainschedule.io/',
       audits: {
-        'is-on-https': {
-          score: 1,
-        },
         'redirects-http': {
           score: 1,
         },

@@ -1175,7 +1175,7 @@ describe('Config', () => {
         extends: 'lighthouse:default',
         settings: {
           onlyCategories: ['pwa'],
-          onlyAudits: ['is-on-https'],
+          onlyAudits: ['apple-touch-icon'],
         },
       };
       const config = new Config(extended);

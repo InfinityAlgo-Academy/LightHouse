@@ -565,7 +565,7 @@ viewport-ad-density: notApplicable
 visual-order-follows-dom: manual
 works-offline: fail
 
-# of .lh-audit divs: 156
+# of .lh-audit divs: 155
 
 .lh-audit divs:
 accesskeys
@@ -641,7 +641,6 @@ inspector-issues
 installable-manifest
 interactive-element-affordance
 is-crawlable
-is-on-https
 is-on-https
 js-libraries
 label

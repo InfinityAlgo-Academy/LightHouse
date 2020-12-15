@@ -5251,19 +5251,14 @@
           "group": "pwa-fast-reliable"
         },
         {
-          "id": "is-on-https",
+          "id": "installable-manifest",
           "weight": 2,
           "group": "pwa-installable"
         },
         {
           "id": "service-worker",
           "weight": 1,
-          "group": "pwa-installable"
-        },
-        {
-          "id": "installable-manifest",
-          "weight": 2,
-          "group": "pwa-installable"
+          "group": "pwa-optimized"
         },
         {
           "id": "redirects-http",
@@ -5314,7 +5309,7 @@
         }
       ],
       "id": "pwa",
-      "score": 0.15
+      "score": 0.17
     }
   },
   "categoryGroups": {
