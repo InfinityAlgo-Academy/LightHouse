@@ -35,12 +35,14 @@ describe('PWA: webapp install banner audit', () => {
   describe('basics', () => {
     it('fails if page had no manifest', () => {
       const artifacts = generateMockArtifacts();
+      artifacts.InstallabilityErrors.errors.push({errorId: 'no-manifest', errorArguments: []});
       artifacts.WebAppManifest = null;
       const context = generateMockAuditContext();
 
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
-        assert.ok(result.explanation.includes('No manifest was fetched'), result.explanation);
+        const items = result.details.items;
+        assert.ok(items[0].reason.formattedDefault.includes('no manifest'));
       });
     });
 
@@ -50,7 +52,8 @@ describe('PWA: webapp install banner audit', () => {
 
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(artifacts.WebAppManifest.url, EXAMPLE_MANIFEST_URL);
-        assert.strictEqual(result.details.items[0].manifestUrl, EXAMPLE_MANIFEST_URL);
+        const debugData = result.details.debugData;
+        assert.strictEqual(debugData.manifestUrl, EXAMPLE_MANIFEST_URL);
       });
     });
 
@@ -59,17 +62,19 @@ describe('PWA: webapp install banner audit', () => {
       const context = generateMockAuditContext();
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
-        assert.ok(result.explanation.includes('failed to parse as valid JSON'));
+        const items = result.details.items;
+        assert.ok(items[0].reason.includes('failed to parse as valid JSON'));
       });
     });
 
     it('fails when an empty manifest is present', () => {
       const artifacts = generateMockArtifacts('{}');
+      artifacts.InstallabilityErrors.errors.push({errorId: 'manifest-empty', errorArguments: []});
       const context = generateMockAuditContext();
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
-        assert.ok(result.explanation);
-        assert.strictEqual(result.details.items[0].failures.length, 5);
+        const items = result.details.items;
+        expect(items[0].reason).toBeDisplayString(/is empty/);
       });
     });
 
@@ -85,97 +90,133 @@ describe('PWA: webapp install banner audit', () => {
   describe('one-off-failures', () => {
     it('fails when a manifest contains no start_url', () => {
       const artifacts = generateMockArtifacts();
+      artifacts.InstallabilityErrors.errors.push({errorId: 'no-url-for-service-worker',
+        errorArguments: []});
       artifacts.WebAppManifest.value.start_url.value = undefined;
       const context = generateMockAuditContext();
 
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
-        assert.ok(result.explanation.includes('start_url'), result.explanation);
-
-        const details = result.details.items[0];
-        assert.strictEqual(details.failures.length, 1, details.failures);
-        assert.strictEqual(details.hasStartUrl, false);
-        assert.strictEqual(details.hasShortName, true);
+        const items = result.details.items;
+        expect(items[0].reason).toBeDisplayString(/without a 'start_url'/);
       });
     });
 
-    it('fails when a manifest contains no short_name', () => {
+    it('fails when a manifest contains no name or short_name', () => {
       const artifacts = generateMockArtifacts();
-      artifacts.WebAppManifest.value.short_name.value = undefined;
-      const context = generateMockAuditContext();
-
-      return InstallableManifestAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.score, 0);
-        assert.ok(result.explanation.includes('short_name'), result.explanation);
-
-        const details = result.details.items[0];
-        assert.strictEqual(details.failures.length, 1, details.failures);
-        assert.strictEqual(details.hasStartUrl, true);
-        assert.strictEqual(details.hasShortName, false);
-      });
-    });
-
-    it('fails when a manifest contains no name', () => {
-      const artifacts = generateMockArtifacts();
+      artifacts.InstallabilityErrors.errors.push({errorId: 'manifest-missing-name-or-short-name',
+        errorArguments: []});
       artifacts.WebAppManifest.value.name.value = undefined;
       const context = generateMockAuditContext();
 
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
-        assert.ok(result.explanation.includes('name'), result.explanation);
-
-        const details = result.details.items[0];
-        assert.strictEqual(details.failures.length, 1, details.failures);
-        assert.strictEqual(details.hasStartUrl, true);
-        assert.strictEqual(details.hasName, false);
+        const items = result.details.items;
+        expect(items[0].reason).toBeDisplayString(/does not contain a 'name'/);
       });
     });
 
     it('fails if page had no icons in the manifest', () => {
       const artifacts = generateMockArtifacts();
+      artifacts.InstallabilityErrors.errors.push({errorId: 'manifest-missing-suitable-icon',
+        errorArguments: [{name: 'minimum-icon-size-in-pixels', value: '144'}]});
       artifacts.WebAppManifest.value.icons.value = [];
       const context = generateMockAuditContext();
 
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
-        assert.ok(result.explanation.includes('PNG icon'), result.explanation);
-
-        const details = result.details.items[0];
-        assert.strictEqual(details.failures.length, 2, details.failures);
-        assert.strictEqual(details.hasStartUrl, true);
-        assert.strictEqual(details.hasIconsAtLeast144px, false);
+        const items = result.details.items;
+        expect(items[0].reason).toBeDisplayString(/does not contain a suitable icon/);
       });
     });
 
     it('fails if page had no fetchable icons in the manifest', () => {
       const artifacts = generateMockArtifacts();
-      artifacts.InstallabilityErrors.errors.push({errorId: 'no-icon-available'});
+      artifacts.InstallabilityErrors.errors.push({errorId: 'cannot-download-icon',
+        errorArguments: []});
       const context = generateMockAuditContext();
 
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
-        assert.ok(result.explanation.includes('failed to be fetched'), result.explanation);
+        const items = result.details.items;
+        expect(items[0].reason).toBeDisplayString(/icon was empty or corrupted/);
+      });
+    });
+  });
 
-        const details = result.details.items[0];
-        assert.strictEqual(details.failures.length, 1, details.failures);
-        assert.strictEqual(details.hasStartUrl, true);
-        assert.strictEqual(details.hasIconsAtLeast144px, true);
+  describe('installability error handling', () => {
+    it('fails when InstallabilityError doesnt have enough errorArguments', () => {
+      const artifacts = generateMockArtifacts();
+      artifacts.InstallabilityErrors.errors.push({errorId: 'manifest-missing-suitable-icon',
+        errorArguments: []});
+      const context = generateMockAuditContext();
+
+      return InstallableManifestAudit.audit(artifacts, context).then(result => {
+        assert.strictEqual(result.score, 0);
+        const items = result.details.items;
+        expect(items[0].reason).toBeDisplayString(/number of arguments/);
+      });
+    });
+
+    it('fails when InstallabilityError contains too many errorArguments', () => {
+      const artifacts = generateMockArtifacts();
+      artifacts.InstallabilityErrors.errors.push({errorId: 'manifest-missing-suitable-icon',
+        errorArguments: [{name: 'argument-1', value: '144'}, {name: 'argument-2', value: '144'}]});
+      const context = generateMockAuditContext();
+
+      return InstallableManifestAudit.audit(artifacts, context).then(result => {
+        assert.strictEqual(result.score, 0);
+        const items = result.details.items;
+        expect(items[0].reason).toBeDisplayString(/unexpected arguments/);
+      });
+    });
+
+    it('fails when we receive an unknown InstallabilityError id', () => {
+      const artifacts = generateMockArtifacts();
+      artifacts.InstallabilityErrors.errors.push({errorId: 'new-error-id', errorArguments: []});
+      const context = generateMockAuditContext();
+
+      return InstallableManifestAudit.audit(artifacts, context).then(result => {
+        assert.strictEqual(result.score, 0);
+        const items = result.details.items;
+        assert.ok(items[0].reason.formattedDefault.includes('is not recognized'));
+      });
+    });
+
+    it('ignores in-incognito InstallabilityError', () => {
+      const artifacts = generateMockArtifacts();
+      artifacts.InstallabilityErrors.errors.push({errorId: 'in-incognito', errorArguments: []});
+      const context = generateMockAuditContext();
+
+      return InstallableManifestAudit.audit(artifacts, context).then(result => {
+        assert.strictEqual(result.score, 1);
+      });
+    });
+  });
+
+  describe('warnings', () => {
+    it('presents a warning if a warn-not-offline-capable if present', () => {
+      const artifacts = generateMockArtifacts(manifestDirtyJpgSrc);
+      artifacts.InstallabilityErrors.errors.push({errorId: 'warn-not-offline-capable'});
+      const context = generateMockAuditContext();
+
+      return InstallableManifestAudit.audit(artifacts, context).then(result => {
+        expect(result.warnings).toHaveLength(1);
+        expect(result.warnings[0]).toBeDisplayString(/not work offline.*August 2021/);
       });
     });
   });
 
   it('fails if icons were present, but no valid PNG present', () => {
     const artifacts = generateMockArtifacts(manifestDirtyJpgSrc);
+    artifacts.InstallabilityErrors.errors.push({errorId: 'manifest-missing-suitable-icon',
+      errorArguments: [{name: 'minimum-icon-size-in-pixels', value: '144'}]});
     const context = generateMockAuditContext();
 
     return InstallableManifestAudit.audit(artifacts, context).then(result => {
       assert.strictEqual(result.score, 0);
-      assert.ok(result.explanation.includes('PNG icon'), result.explanation);
-
-      const details = result.details.items[0];
-      assert.strictEqual(details.failures.length, 1, details.failures);
-      assert.strictEqual(details.hasStartUrl, true);
-      assert.strictEqual(details.hasIconsAtLeast144px, false);
+      const items = result.details.items;
+      expect(items[0].reason).toBeDisplayString(/PNG/);
     });
   });
 });

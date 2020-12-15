@@ -203,7 +203,7 @@ Computing artifact: UserTimings
 Auditing: Avoid chaining critical requests
 Computing artifact: CriticalRequestChains
 Auditing: Avoid multiple page redirects
-Auditing: Web app manifest meets the installability requirements
+Auditing: Web app manifest and service worker meet the installability requirements
 Computing artifact: ManifestValues
 Auditing: Provides a valid `apple-touch-icon`
 Auditing: Configured for a custom splash screen

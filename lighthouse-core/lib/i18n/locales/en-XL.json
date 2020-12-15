@@ -824,14 +824,98 @@
   "lighthouse-core/audits/image-size-responsive.js | title": {
     "message": "Ŝér̂v́êś îḿâǵêś ŵít̂h́ âṕp̂ŕôṕr̂íât́ê ŕêśôĺût́îón̂"
   },
+  "lighthouse-core/audits/installable-manifest.js | already-installed": {
+    "message": "T̂h́ê áp̂ṕ îś âĺr̂éâd́ŷ ín̂śt̂ál̂ĺêd́"
+  },
+  "lighthouse-core/audits/installable-manifest.js | cannot-download-icon": {
+    "message": "D̂óŵńl̂óâd́êd́ îćôń ŵáŝ ém̂ṕt̂ý ôŕ ĉór̂ŕûṕt̂éd̂"
+  },
+  "lighthouse-core/audits/installable-manifest.js | columnValue": {
+    "message": "F̂áîĺûŕê ŕêáŝón̂"
+  },
   "lighthouse-core/audits/installable-manifest.js | description": {
-    "message": "B̂ŕôẃŝér̂ś ĉán̂ ṕr̂óâćt̂ív̂él̂ý p̂ŕôḿp̂t́ ûśêŕŝ t́ô ád̂d́ ŷóûŕ âṕp̂ t́ô t́ĥéîŕ ĥóm̂éŝćr̂éêń, ŵh́îćĥ ćâń l̂éâd́ t̂ó ĥíĝh́êŕ êńĝáĝém̂én̂t́. [L̂éâŕn̂ ḿôŕê](https://web.dev/installable-manifest/)."
+    "message": "Ŝér̂v́îćê ẃôŕk̂ér̂ íŝ t́ĥé t̂éĉh́n̂ól̂óĝý t̂h́ât́ êńâb́l̂éŝ ýôúr̂ áp̂ṕ t̂ó ûśê ḿâńŷ Ṕr̂óĝŕêśŝív̂é Ŵéb̂ Áp̂ṕ f̂éât́ûŕêś, ŝúĉh́ âś ôf́f̂ĺîńê, ád̂d́ t̂ó ĥóm̂éŝćr̂éêń, âńd̂ ṕûśĥ ńôt́îf́îćât́îón̂ś. Ŵít̂h́ p̂ŕôṕêŕ ŝér̂v́îćê ẃôŕk̂ér̂ án̂d́ m̂án̂íf̂éŝt́ îḿp̂ĺêḿêńt̂át̂íôńŝ, b́r̂óŵśêŕŝ ćâń p̂ŕôáĉt́îv́êĺŷ ṕr̂óm̂ṕt̂ úŝér̂ś t̂ó âd́d̂ ýôúr̂ áp̂ṕ t̂ó t̂h́êír̂ h́ôḿêśĉŕêén̂, ẃĥíĉh́ ĉán̂ ĺêád̂ t́ô h́îǵĥér̂ én̂ǵâǵêḿêńt̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/installable-manifest/)."
+  },
+  "lighthouse-core/audits/installable-manifest.js | displayValue": {
+    "message": "{itemCount, plural,\n    =1 {1 r̂éâśôń}\n    other {# r̂éâśôńŝ}\n    }"
   },
   "lighthouse-core/audits/installable-manifest.js | failureTitle": {
-    "message": "Ŵéb̂ áp̂ṕ m̂án̂íf̂éŝt́ d̂óêś n̂ót̂ ḿêét̂ t́ĥé îńŝt́âĺl̂áb̂íl̂ít̂ý r̂éq̂úîŕêḿêńt̂ś"
+    "message": "Ŵéb̂ áp̂ṕ m̂án̂íf̂éŝt́ ôŕ ŝér̂v́îćê ẃôŕk̂ér̂ d́ô ńôt́ m̂éêt́ t̂h́ê ín̂śt̂ál̂ĺâb́îĺît́ŷ ŕêq́ûír̂ém̂én̂t́ŝ"
+  },
+  "lighthouse-core/audits/installable-manifest.js | ids-do-not-match": {
+    "message": "T̂h́ê Ṕl̂áŷ Śt̂ór̂é âṕp̂ ÚR̂Ĺ âńd̂ Ṕl̂áŷ Śt̂ór̂é ÎD́ d̂ó n̂ót̂ ḿât́ĉh́"
+  },
+  "lighthouse-core/audits/installable-manifest.js | in-incognito": {
+    "message": "P̂áĝé îś l̂óâd́êd́ îń âń îńĉóĝńît́ô ẃîńd̂óŵ"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-display-not-supported": {
+    "message": "M̂án̂íf̂éŝt́ 'd̂íŝṕl̂áŷ' ṕr̂óp̂ér̂t́ŷ ḿûśt̂ b́ê ón̂é ôf́ 'ŝt́âńd̂ál̂ón̂é', 'f̂úl̂ĺŝćr̂éêń', ôŕ 'm̂ín̂ím̂ál̂-úî'"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-display-override-not-supported": {
+    "message": "M̂án̂íf̂éŝt́ ĉón̂t́âín̂ś 'd̂íŝṕl̂áŷ_óv̂ér̂ŕîd́ê' f́îél̂d́, âńd̂ t́ĥé f̂ír̂śt̂ śûṕp̂ór̂t́êd́ d̂íŝṕl̂áŷ ḿôd́ê ḿûśt̂ b́ê ón̂é ôf́ 'ŝt́âńd̂ál̂ón̂é', 'f̂úl̂ĺŝćr̂éêń', ôŕ 'm̂ín̂ím̂ál̂-úî'"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-empty": {
+    "message": "M̂án̂íf̂éŝt́ ĉóûĺd̂ ńôt́ b̂é f̂ét̂ćĥéd̂, íŝ ém̂ṕt̂ý, ôŕ ĉóûĺd̂ ńôt́ b̂é p̂ár̂śêd́"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-location-changed": {
+    "message": "M̂án̂íf̂éŝt́ ÛŔL̂ ćĥán̂ǵêd́ ŵh́îĺê t́ĥé m̂án̂íf̂éŝt́ ŵáŝ b́êín̂ǵ f̂ét̂ćĥéd̂."
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-missing-name-or-short-name": {
+    "message": "M̂án̂íf̂éŝt́ d̂óêś n̂ót̂ ćôńt̂áîń â 'ńâḿê' ór̂ 'śĥór̂t́_n̂ám̂é' f̂íêĺd̂"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
+    "message": "M̂án̂íf̂éŝt́ d̂óêś n̂ót̂ ćôńt̂áîń â śûít̂áb̂ĺê íĉón̂ - ṔN̂Ǵ, ŜV́Ĝ ór̂ Ẃêb́P̂ f́ôŕm̂át̂ óf̂ át̂ ĺêáŝt́ {value0} p̂x́ îś r̂éq̂úîŕêd́, t̂h́ê śîźêś ât́t̂ŕîb́ût́ê ḿûśt̂ b́ê śêt́, âńd̂ t́ĥé p̂úr̂ṕôśê át̂t́r̂íb̂út̂é, îf́ ŝét̂, ḿûśt̂ ín̂ćl̂úd̂é \"âńŷ\" ór̂ \"ḿâśk̂áb̂ĺê\"."
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
+    "message": "N̂ó ŝúp̂ṕl̂íêd́ îćôń îś ât́ l̂éâśt̂ {value0} ṕx̂ śq̂úâŕê ín̂ ṔN̂Ǵ, ŜV́Ĝ ór̂ Ẃêb́P̂ f́ôŕm̂át̂"
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
+    "message": "D̂óŵńl̂óâd́êd́ îćôń ŵáŝ ém̂ṕt̂ý ôŕ ĉór̂ŕûṕt̂éd̂"
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-id-specified": {
+    "message": "N̂ó P̂ĺâý ŝt́ôŕê ÍD̂ ṕr̂óv̂íd̂éd̂"
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-manifest": {
+    "message": "P̂áĝé ĥáŝ ńô ḿâńîf́êśt̂ <ĺîńk̂> ÚR̂Ĺ"
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-matching-service-worker": {
+    "message": "N̂ó m̂át̂ćĥín̂ǵ ŝér̂v́îćê ẃôŕk̂ér̂ d́êt́êćt̂éd̂. Ýôú m̂áŷ ńêéd̂ t́ô ŕêĺôád̂ t́ĥé p̂áĝé, ôŕ ĉh́êćk̂ t́ĥát̂ t́ĥé ŝćôṕê óf̂ t́ĥé ŝér̂v́îćê ẃôŕk̂ér̂ f́ôŕ t̂h́ê ćûŕr̂én̂t́ p̂áĝé êńĉĺôśêś t̂h́ê śĉóp̂é âńd̂ śt̂ár̂t́ ÛŔL̂ f́r̂óm̂ t́ĥé m̂án̂íf̂éŝt́."
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-url-for-service-worker": {
+    "message": "Ĉóûĺd̂ ńôt́ ĉh́êćk̂ śêŕv̂íĉé ŵór̂ḱêŕ ŵít̂h́ôút̂ á 'ŝt́âŕt̂_úr̂ĺ' f̂íêĺd̂ ín̂ t́ĥé m̂án̂íf̂éŝt́"
+  },
+  "lighthouse-core/audits/installable-manifest.js | noErrorId": {
+    "message": "Îńŝt́âĺl̂áb̂íl̂ít̂ý êŕr̂ór̂ íd̂ '{errorId}' íŝ ńôt́ r̂éĉóĝńîźêd́"
+  },
+  "lighthouse-core/audits/installable-manifest.js | not-from-secure-origin": {
+    "message": "P̂áĝé îś n̂ót̂ śêŕv̂éd̂ f́r̂óm̂ á ŝéĉúr̂é ôŕîǵîń"
+  },
+  "lighthouse-core/audits/installable-manifest.js | not-in-main-frame": {
+    "message": "P̂áĝé îś n̂ót̂ ĺôád̂éd̂ ín̂ t́ĥé m̂áîń f̂ŕâḿê"
+  },
+  "lighthouse-core/audits/installable-manifest.js | not-offline-capable": {
+    "message": "P̂áĝé d̂óêś n̂ót̂ ẃôŕk̂ óf̂f́l̂ín̂é"
+  },
+  "lighthouse-core/audits/installable-manifest.js | platform-not-supported-on-android": {
+    "message": "T̂h́ê śp̂éĉíf̂íêd́ âṕp̂ĺîćât́îón̂ ṕl̂át̂f́ôŕm̂ íŝ ńôt́ ŝúp̂ṕôŕt̂éd̂ ón̂ Án̂d́r̂óîd́"
+  },
+  "lighthouse-core/audits/installable-manifest.js | prefer-related-applications": {
+    "message": "M̂án̂íf̂éŝt́ ŝṕêćîf́îéŝ ṕr̂éf̂ér̂_ŕêĺât́êd́_âṕp̂ĺîćât́îón̂ś: t̂ŕûé"
+  },
+  "lighthouse-core/audits/installable-manifest.js | prefer-related-applications-only-beta-stable": {
+    "message": "p̂ŕêf́êŕ_r̂él̂át̂éd̂_áp̂ṕl̂íĉát̂íôńŝ íŝ ón̂ĺŷ śûṕp̂ór̂t́êd́ ôń Ĉh́r̂óm̂é B̂ét̂á âńd̂ Śt̂áb̂ĺê ćĥán̂ńêĺŝ ón̂ Án̂d́r̂óîd́."
+  },
+  "lighthouse-core/audits/installable-manifest.js | start-url-not-valid": {
+    "message": "M̂án̂íf̂éŝt́ ŝt́âŕt̂ ÚR̂Ĺ îś n̂ót̂ v́âĺîd́"
   },
   "lighthouse-core/audits/installable-manifest.js | title": {
-    "message": "Ŵéb̂ áp̂ṕ m̂án̂íf̂éŝt́ m̂éêt́ŝ t́ĥé îńŝt́âĺl̂áb̂íl̂ít̂ý r̂éq̂úîŕêḿêńt̂ś"
+    "message": "Ŵéb̂ áp̂ṕ m̂án̂íf̂éŝt́ âńd̂ śêŕv̂íĉé ŵór̂ḱêŕ m̂éêt́ t̂h́ê ín̂śt̂ál̂ĺâb́îĺît́ŷ ŕêq́ûír̂ém̂én̂t́ŝ"
+  },
+  "lighthouse-core/audits/installable-manifest.js | url-not-supported-for-webapk": {
+    "message": "Â ÚR̂Ĺ îń t̂h́ê ḿâńîf́êśt̂ ćôńt̂áîńŝ á ûśêŕn̂ám̂é, p̂áŝśŵór̂d́, ôŕ p̂ór̂t́"
+  },
+  "lighthouse-core/audits/installable-manifest.js | warn-not-offline-capable": {
+    "message": "P̂áĝé d̂óêś n̂ót̂ ẃôŕk̂ óf̂f́l̂ín̂é. T̂h́ê ṕâǵê ẃîĺl̂ ńôt́ b̂é r̂éĝár̂d́êd́ âś îńŝt́âĺl̂áb̂ĺê áf̂t́êŕ Ĉh́r̂óm̂é 93, ŝt́âb́l̂é r̂él̂éâśê Áûǵûśt̂ 2021."
   },
   "lighthouse-core/audits/is-on-https.js | allowed": {
     "message": "Âĺl̂óŵéd̂"

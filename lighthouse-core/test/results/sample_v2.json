@@ -520,23 +520,32 @@
     },
     "installable-manifest": {
       "id": "installable-manifest",
-      "title": "Web app manifest does not meet the installability requirements",
-      "description": "Browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://web.dev/installable-manifest/).",
+      "title": "Web app manifest or service worker do not meet the installability requirements",
+      "description": "Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. With proper service worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://web.dev/installable-manifest/).",
       "score": 0,
       "scoreDisplayMode": "binary",
-      "explanation": "Failures: No manifest was fetched.",
+      "numericValue": 1,
+      "numericUnit": "element",
+      "displayValue": "1 reason",
+      "warnings": [],
       "details": {
-        "type": "debugdata",
+        "type": "table",
+        "headings": [
+          {
+            "key": "reason",
+            "itemType": "text",
+            "text": "Failure reason"
+          }
+        ],
         "items": [
           {
-            "failures": [
-              "No manifest was fetched"
-            ],
-            "manifestUrl": null,
-            "isParseFailure": true,
-            "parseFailureReason": "No manifest was fetched"
+            "reason": "No manifest was fetched"
           }
-        ]
+        ],
+        "debugData": {
+          "type": "debugdata",
+          "manifestUrl": null
+        }
       }
     },
     "apple-touch-icon": {
@@ -6934,6 +6943,17 @@
       ],
       "lighthouse-core/audits/installable-manifest.js | description": [
         "audits[installable-manifest].description"
+      ],
+      "lighthouse-core/audits/installable-manifest.js | displayValue": [
+        {
+          "values": {
+            "itemCount": 1
+          },
+          "path": "audits[installable-manifest].displayValue"
+        }
+      ],
+      "lighthouse-core/audits/installable-manifest.js | columnValue": [
+        "audits[installable-manifest].details.headings[0].text"
       ],
       "lighthouse-core/audits/apple-touch-icon.js | failureTitle": [
         "audits[apple-touch-icon].title"

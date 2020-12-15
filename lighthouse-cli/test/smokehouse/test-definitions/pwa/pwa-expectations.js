@@ -35,7 +35,7 @@ const expectations = [
         },
         'installable-manifest': {
           score: 1,
-          details: {items: [pwaDetailsExpectations]},
+          details: {items: [], debugData: {manifestUrl: 'https://airhorner.com/manifest.json'}},
         },
         'splash-screen': {
           score: 1,
@@ -91,6 +91,7 @@ const expectations = [
         },
         'installable-manifest': {
           score: 0,
+          details: {items: [{reason: 'No manifest was fetched'}]},
         },
         'splash-screen': {
           score: 0,
