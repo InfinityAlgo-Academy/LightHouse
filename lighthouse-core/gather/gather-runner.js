@@ -556,6 +556,14 @@ class GatherRunner {
     const HostFormFactor = hostUserAgent.includes('Android') || hostUserAgent.includes('Mobile') ?
       'mobile' : 'desktop';
 
+    (function checkEmulationEnvironmentMismatches() {
+      if (options.settings.screenEmulation.disabled) {
+        if (HostFormFactor !== options.settings.formFactor) {
+          throw new Error(`Screen emulation is disabled, but the host environment (${HostFormFactor}) does not match the interpretation formFactor. (${options.settings.formFactor}). See https://github.com/GoogleChrome/lighthouse/blob/master/docs/emulation.md`); // eslint-disable-line max-len
+        }
+      }
+    })();
+
     return {
       fetchTime: (new Date()).toJSON(),
       LighthouseRunWarnings: [],

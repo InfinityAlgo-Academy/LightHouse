@@ -22,6 +22,7 @@ const Driver = require('../../gather/driver.js');
 const Connection = require('../../gather/connections/connection.js');
 const {createMockSendCommandFn} = require('./mock-commands.js');
 const {makeParamsOptional} = require('../test-utils.js');
+const fakeDriver = require('./fake-driver.js');
 
 const GatherRunner = {
   afterPass: makeParamsOptional(GatherRunner_.afterPass),
@@ -109,8 +110,6 @@ class EmulationDriver extends Driver {
     return Promise.resolve(undefined);
   }
 }
-
-const fakeDriver = require('./fake-driver.js');
 
 /** @type {EmulationDriver} */
 let driver;
@@ -390,9 +389,7 @@ describe('GatherRunner', function() {
       useThrottling: true,
       gatherers: [],
     };
-    const settings = {
-      disableStorageReset: false,
-    };
+    const settings = makeConfig({passes: [{passName: 'defaultPass'}]}).settings;
     const requestedUrl = 'https://example.com';
     const passContext = {
       driver,
@@ -1752,6 +1749,50 @@ describe('GatherRunner', function() {
         start_url: {value: passContext.url, raw: undefined},
       });
       expect(result && result.url).toMatch(MANIFEST_URL);
+    });
+  });
+
+  describe('host environment + settings mismatches', () => {
+    const errRegex = /host environment.*does not match/;
+
+    it('real mobile device + no screenEmulation + formFactor = desktop => throw', async () => {
+      const config = makeConfig({passes: [{passName: 'defaultPass'}]});
+
+      // Real mobile host UA
+      const realMobileResp = fakeDriver.protocolGetVersionResponse;
+      realMobileResp.userAgent = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/69.0.3464.0 Mobile Safari/537.36'; // eslint-disable-line max-len
+      connectionStub.sendCommand = createMockSendCommandFn()
+          .mockResponse('Browser.getVersion', realMobileResp);
+      // Config: disabled screenEmulation, desktop formFactor
+      config.settings.screenEmulation.disabled = true;
+      config.settings.formFactor = 'desktop';
+
+      const options = {
+        driver: fakeDriver,
+        requestedUrl: 'https://example.com',
+        settings: config.settings,
+      };
+      expect(GatherRunner.run(config.passes, options)).rejects.toThrow(errRegex);
+    });
+
+    it('desktop browser + no screenEmulation + formFactor = mobile => throw', async () => {
+      const config = makeConfig({passes: [{passName: 'defaultPass'}]});
+
+      // Desktop host UA
+      const desktopResp = fakeDriver.protocolGetVersionResponse;
+      desktopResp.userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'; // eslint-disable-line max-len
+      connectionStub.sendCommand = createMockSendCommandFn()
+          .mockResponse('Browser.getVersion', desktopResp);
+      // Config: disabled screenEmulation, mobile formFactor
+      config.settings.screenEmulation.disabled = true;
+      config.settings.formFactor = 'mobile';
+
+      const options = {
+        driver: fakeDriver,
+        requestedUrl: 'https://example.com',
+        settings: config.settings,
+      };
+      expect(GatherRunner.run(config.passes, options)).rejects.toThrow(errRegex);
     });
   });
 });

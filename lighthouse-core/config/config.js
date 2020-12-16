@@ -197,6 +197,7 @@ function assertValidSettings(settings) {
     // formFactor doesn't control emulation. So we don't want a mismatch:
     //   Bad mismatch A: user wants mobile emulation but scoring is configured for desktop
     //   Bad mismtach B: user wants everything desktop and set formFactor, but accidentally not screenEmulation
+    // The "real phone" usecase is excluded from this check as we expect `screenEmulation.disabled === true` there.
     if (settings.screenEmulation.mobile !== (settings.formFactor === 'mobile')) {
       throw new Error(`Screen emulation mobile setting (${settings.screenEmulation.mobile}) does not match formFactor setting (${settings.formFactor}). See https://github.com/GoogleChrome/lighthouse/blob/master/docs/emulation.md`);
     }
