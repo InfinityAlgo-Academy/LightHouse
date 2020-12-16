@@ -90,6 +90,8 @@ const UIStrings = {
 
   /** Error message explaining that the browser tab that Lighthouse is inspecting has crashed. */
   targetCrashed: 'Browser tab has unexpectedly crashed.',
+  /** Error message explaining that the connection to the browser tab has broken. */
+  targetDetached: 'Protocol connection to the browser tab has unexpectedly broken.',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -423,6 +425,14 @@ const ERRORS = {
   TARGET_CRASHED: {
     code: 'TARGET_CRASHED',
     message: UIStrings.targetCrashed,
+    lhrRuntimeError: true,
+  },
+
+  /** The protocol connection is broken. */
+  TARGET_DETACHED: {
+    code: 'TARGET_DETACHED',
+    message: UIStrings.targetDetached,
+    lhrRuntimeError: true,
   },
 
   // Hey! When adding a new error type, update lighthouse-result.proto too.
