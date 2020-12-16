@@ -149,7 +149,7 @@ class ElementScreenshotRenderer {
 
     /** @type {HTMLElement|null} */
     let overlay = null;
-    dom.document().addEventListener('click', e => {
+    containerEl.addEventListener('click', e => {
       if (overlay) {
         overlay.remove();
         overlay = null;
