@@ -230,7 +230,10 @@ class Runner {
       requestedUrl,
       settings: runnerOpts.config.settings,
     };
-    const artifacts = await GatherRunner.run(runnerOpts.config.passes, gatherOpts);
+    const artifacts = await Promise.race([
+      GatherRunner.run(runnerOpts.config.passes, gatherOpts),
+      GatherRunner.getGatherTerminatedPromise(driver),
+    ]);
     return artifacts;
   }
 

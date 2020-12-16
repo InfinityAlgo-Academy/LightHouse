@@ -116,6 +116,19 @@ class GatherRunner {
   }
 
   /**
+   * Reject if the CDP target we're connected to crashes
+   * @param {Driver} driver
+   * @return {Promise<void>}
+   */
+  static async getGatherTerminatedPromise(driver) {
+    return new Promise((_, reject) => {
+        const onSessionTerminate = data => reject(new LHError(LHError.errors.TARGET_CRASHED), {data});
+        driver.on('Inspector.targetCrashed', onSessionTerminate);
+        driver.on('Inspector.detached', onSessionTerminate);
+    });
+  }
+
+  /**
    * @param {Driver} driver
    * @param {{requestedUrl: string, settings: LH.Config.Settings}} options
    * @param {(string | LH.IcuMessage)[]} LighthouseRunWarnings

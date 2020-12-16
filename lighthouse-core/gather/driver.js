@@ -137,13 +137,6 @@ class Driver {
     this.on('Page.frameNavigated', evt => this._monitoredUrlNavigations.push(evt.frame));
     this.on('Debugger.paused', () => this.sendCommand('Debugger.resume'));
 
-    this.on('Inspector.detached', evt => console.error('insp detached', evt));
-    this.on('Inspector.targetCrashed', evt => {
-      throw new Error('TARGET CRASHED BOYS')
-    });
-    this.on('Target.targetCrashed', evt => console.error('targ crashed', evt));
-
-
     connection.on('protocolevent', this._handleProtocolEvent.bind(this));
   }
 
@@ -1052,7 +1045,7 @@ class Driver {
   async clearDataForOrigin(url) {
 
 
-    // await this.sendCommand('Page.crash');
+    await this.sendCommand('Page.crash');
 
     const origin = new URL(url).origin;
 
