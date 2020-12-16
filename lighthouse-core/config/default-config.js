@@ -175,8 +175,7 @@ const defaultConfig = {
     passName: 'redirectPass',
     loadFailureMode: 'warn',
     // Speed up the redirect pass by blocking stylesheets, fonts, and images
-    // TODO: restore blocked *.css when https://github.com/GoogleChrome/lighthouse/issues/11803 is resolved.
-    blockedUrlPatterns: ['*.jpg', '*.jpeg', '*.png', '*.gif', '*.svg', '*.ttf', '*.woff', '*.woff2'],
+    blockedUrlPatterns: ['*.css', '*.jpg', '*.jpeg', '*.png', '*.gif', '*.svg', '*.ttf', '*.woff', '*.woff2'],
     gatherers: [
       'http-redirect',
     ],
