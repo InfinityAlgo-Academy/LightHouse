@@ -122,14 +122,14 @@ class GatherRunner {
    */
   static async getGatherTerminatedPromise(driver) {
     return new Promise((_, reject) => {
-        driver.on('Inspector.targetCrashed', evt => {
-          reject(new LHError(LHError.errors.TARGET_CRASHED));
-        });
-        // In case of crash, detached fires after targetCrashed, so we'll exit with the crash code
-        // Detachment happens (in non-crash cases) when the browser tab is closed or unexpected connection failure.
-        driver.on('Inspector.detached', evt => {
-          reject(new LHError(LHError.errors.TARGET_DETACHED));
-        });
+      driver.on('Inspector.targetCrashed', _ => {
+        reject(new LHError(LHError.errors.TARGET_CRASHED));
+      });
+      // In case of crash, detached fires after targetCrashed, so we'll exit with the crash code
+      // Detachment happens (in non-crash cases) when the browser tab is closed or unexpected connection failure.
+      driver.on('Inspector.detached', _ => {
+        reject(new LHError(LHError.errors.TARGET_DETACHED));
+      });
     });
   }
 

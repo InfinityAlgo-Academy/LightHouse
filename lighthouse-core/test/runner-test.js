@@ -795,7 +795,7 @@ describe('Runner', () => {
 
 
     it('includes a crash runtimeError when there\'s a crash during gathering', async () => {
-      let connectionStub = new Connection();
+      const connectionStub = new Connection();
       connectionStub.connect = _ => Promise.resolve();
       // @ts-expect-error - driver has a mocked version of on/once implemented in each test
       const driver = new Driver(connectionStub);
@@ -809,7 +809,7 @@ describe('Runner', () => {
 
       const config = new Config(configJson);
       const runP = Runner.run(defaultGatherFn, {url: 'https://example.com/', config, driverMock: driver});
-      await expect(runP).rejects.toThrow(/TARGET_CRASHED/)
+      await expect(runP).rejects.toThrow(/TARGET_CRASHED/);
     });
 
     it('includes a pageLoadError runtimeError over any gatherer runtimeErrors', async () => {
