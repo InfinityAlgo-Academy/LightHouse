@@ -9,6 +9,7 @@ const Config = require('../../config/config.js');
 const assert = require('assert').strict;
 const path = require('path');
 const defaultConfig = require('../../config/default-config.js');
+const constants = require('../../config/constants.js');
 const log = require('lighthouse-logger');
 const Gatherer = require('../../gather/gatherers/gatherer.js');
 const Audit = require('../../audits/audit.js');
@@ -792,16 +793,19 @@ describe('Config', () => {
         extends: 'lighthouse:default',
         settings: {
           disableStorageReset: true,
-          emulatedFormFactor: 'mobile',
+          formFactor: 'desktop',
+          throttling: constants.throttling.desktopDense4G,
+          screenEmulation: constants.screenEmulationMetrics.desktop,
+          emulatedUserAgent: constants.userAgents.desktop,
         },
       },
-      {emulatedFormFactor: 'desktop'}
+      {formFactor: 'desktop'}
     );
 
     assert.ok(config, 'failed to generate config');
     assert.ok(typeof config.settings.maxWaitForLoad === 'number', 'missing setting from default');
     assert.ok(config.settings.disableStorageReset, 'missing setting from extension config');
-    assert.ok(config.settings.emulatedFormFactor === 'desktop', 'missing setting from flags');
+    assert.ok(config.settings.formFactor === 'desktop', 'missing setting from flags');
   });
 
   it('inherits default settings when undefined', () => {
@@ -829,6 +833,41 @@ describe('Config', () => {
       const flagsLocale = 'ar-XB';
       const config = new Config({settings: {locale: settingsLocale}}, {locale: flagsLocale});
       assert.strictEqual(config.settings.locale, flagsLocale);
+    });
+  });
+
+  describe('emulatedUserAgent', () => {
+    it('uses the default UA string when emulatedUserAgent is undefined', () => {
+      const config = new Config({});
+      expect(config.settings.emulatedUserAgent).toMatch(/^Mozilla\/5.*Chrome-Lighthouse$/);
+    });
+
+    it('uses the default UA string when emulatedUserAgent is true', () => {
+      const config = new Config({
+        settings: {
+          emulatedUserAgent: true,
+        },
+      });
+      expect(config.settings.emulatedUserAgent).toMatch(/^Mozilla\/5.*Chrome-Lighthouse$/);
+    });
+
+    it('does not use a UA string when emulatedUserAgent is false', () => {
+      const config = new Config({
+        settings: {
+          emulatedUserAgent: false,
+        },
+      });
+      expect(config.settings.emulatedUserAgent).toEqual(false);
+    });
+
+    it('uses the UA string provided if it is a string', () => {
+      const emulatedUserAgent = 'one weird trick to get a perfect LH score';
+      const config = new Config({
+        settings: {
+          emulatedUserAgent,
+        },
+      });
+      expect(config.settings.emulatedUserAgent).toEqual(emulatedUserAgent);
     });
   });
 

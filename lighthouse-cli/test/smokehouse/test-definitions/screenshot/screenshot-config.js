@@ -9,6 +9,13 @@
 module.exports = {
   extends: 'lighthouse:default',
   settings: {
-    emulatedFormFactor: 'desktop',
+    formFactor: 'desktop',
+    screenEmulation: {
+      width: 1024,
+      height: 768,
+      deviceScaleFactor: 1,
+      mobile: false,
+      disabled: false,
+    },
   },
 };

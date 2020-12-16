@@ -126,23 +126,18 @@ message LighthouseResult {
 
   // Message containing the configuration settings for the LH run
   message ConfigSettings {
+
     // The possible form factors an audit can be run in
-    enum EmulatedFormFactor {
-      // Unknown form factor.  This should not be used
+    enum EmulatedFormFactor { // Deprecated
       UNKNOWN_FORM_FACTOR = 0;
-
-      // Mobile form factor
       mobile = 1;
-
-      // Desktop form factor
       desktop = 2;
-
-      // No emulation used, uses system directly
-      none = 3;
+      none = 3  [deprecated = true];
     }
 
-    // The form factor used in the audit
-    EmulatedFormFactor emulated_form_factor = 1;
+
+    // The form factor emulation to apply. Do not use.
+    EmulatedFormFactor emulated_form_factor = 1 [deprecated = true];
 
     // The locale that was active during the audit
     string locale = 2;
@@ -154,6 +149,9 @@ message LighthouseResult {
     // How Lighthouse was run, e.g. from the Chrome extension or from the npm
     // module
     string channel = 4;
+
+    // How Lighthouse should interpret this run in regards to scoring performance metrics and skipping mobile-only tests in desktop.
+    EmulatedFormFactor form_factor = 5;
   }
 
   // The settings that were used to run this audit

@@ -2,7 +2,6 @@
   "LighthouseRunWarnings": [],
   "BenchmarkIndex": 1000,
   "HostFormFactor": "desktop",
-  "TestedAsMobileDevice": true,
   "HostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4232.0 Safari/537.36",
   "NetworkUserAgent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/66.0.3359.30 Mobile Safari/537.36",
   "fetchTime": "2018-03-13T00:55:45.840Z",
@@ -28,8 +27,15 @@
     "auditMode": false,
     "gatherMode": "lighthouse-core/test/results/artifacts",
     "disableStorageReset": false,
-    "emulatedFormFactor": "mobile",
-    "internalDisableDeviceScreenEmulation": false,
+    "formFactor": "mobile",
+    "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 7.0; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4143.7 Mobile Safari/537.36 Chrome-Lighthouse",
+    "screenEmulation": {
+      "deviceScaleFactor": 2.625,
+      "height": 640,
+      "mobile": true,
+      "width": 360,
+      "disabled": false
+    },
     "channel": "cli",
     "budgets": [
       {

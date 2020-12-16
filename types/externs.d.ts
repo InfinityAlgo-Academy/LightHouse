@@ -125,6 +125,19 @@ declare global {
 
     export type OutputMode = 'json' | 'html' | 'csv';
 
+    export type ScreenEmulationSettings = {
+      /** Overriding width value in pixels (minimum 0, maximum 10000000). 0 disables the override. */
+      width: number;
+      /** Overriding height value in pixels (minimum 0, maximum 10000000). 0 disables the override. */
+      height: number;
+      /** Overriding device scale factor value. 0 disables the override. */
+      deviceScaleFactor: number;
+      /** Whether to emulate mobile device. This includes viewport meta tag, overlay scrollbars, text autosizing and more. */
+      mobile: boolean;
+      /** Whether screen emulation is disabled. If true, the other emulation settings are ignored. */
+      disabled: boolean;
+    };
+
     /**
      * Options that are found in both the flags used by the Lighthouse module
      * interface and the Config's `settings` object.
@@ -148,10 +161,14 @@ declare global {
       gatherMode?: boolean | string;
       /** Flag indicating that the browser storage should not be reset for the audit. */
       disableStorageReset?: boolean;
-      /** How emulation (useragent, device screen metrics, touch) should be applied. `none` indicates Lighthouse should leave the host browser as-is. */
-      emulatedFormFactor?: 'mobile'|'desktop'|'none';
-      /** Dangerous setting only to be used by Lighthouse team. Disables the device metrics and touch emulation that emulatedFormFactor defines. Details in emulation.js */
-      internalDisableDeviceScreenEmulation?: boolean
+
+      /** How Lighthouse should interpret this run in regards to scoring performance metrics and skipping mobile-only tests in desktop. Must be set even if throttling/emulation is being applied outside of Lighthouse. */
+      formFactor?: 'mobile'|'desktop';
+      /** Screen emulation properties (width, height, dpr, mobile viewport) to apply or an object of `{disabled: true}` if Lighthouse should avoid applying screen emulation. If either emulation is applied outside of Lighthouse, or it's being run on a mobile device, it typically should be set to disabled. For desktop, we recommend applying consistent desktop screen emulation. */
+      screenEmulation?: Partial<ScreenEmulationSettings>;
+      /** User Agent string to apply, `false` to not change the host's UA string, or `true` to use Lighthouse's default UA string. */
+      emulatedUserAgent?: string | boolean;
+
       /** The method used to throttle the network. */
       throttlingMethod?: 'devtools'|'simulate'|'provided';
       /** The throttling config settings. */
@@ -210,7 +227,7 @@ declare global {
       /** Flag to print a list of all required trace categories. */
       listTraceCategories: boolean;
       /** A preset audit of selected audit categories to run. */
-      preset?: 'experimental'|'perf';
+      preset?: 'experimental'|'perf'|'desktop';
       /** A flag to enable logLevel 'verbose'. */
       verbose: boolean;
       /** A flag to enable logLevel 'silent'. */

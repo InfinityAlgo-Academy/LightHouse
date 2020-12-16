@@ -7,9 +7,27 @@
 const Audit = require('../../../audits/metrics/first-contentful-paint.js');
 const assert = require('assert').strict;
 const options = Audit.defaultOptions;
+const constants = require('../../../config/constants.js');
 
 const pwaTrace = require('../../fixtures/traces/progressive-app-m60.json');
 const pwaDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+
+/**
+ * @param {{
+ * {LH.SharedFlagsSettings['formFactor']} formFactor
+ * {LH.SharedFlagsSettings['throttlingMethod']} throttlingMethod
+ * }} param0
+ */
+const getFakeContext = ({formFactor, throttlingMethod}) => ({
+  options: options,
+  computedCache: new Map(),
+  settings: {
+    formFactor: formFactor,
+    throttlingMethod,
+    screenEmulation: constants.screenEmulationMetrics[formFactor],
+  },
+});
+
 
 /* eslint-env jest */
 
@@ -24,8 +42,8 @@ describe('Performance: first-contentful-paint audit', () => {
       },
     };
 
-    const settings = {throttlingMethod: 'provided'};
-    const result = await Audit.audit(artifacts, {settings, options, computedCache: new Map()});
+    const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
+    const result = await Audit.audit(artifacts, context);
     assert.equal(result.score, 1);
     assert.equal(result.numericValue, 498.87);
   });

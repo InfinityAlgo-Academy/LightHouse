@@ -32,8 +32,8 @@ function getFlags(manualArgv) {
           'lighthouse <url> --output=json --output-path=./report.json --save-assets',
           'Save trace, screenshots, and named JSON report.')
       .example(
-          'lighthouse <url> --emulated-form-factor=none --throttling-method=provided',
-          'Disable device emulation and all throttling')
+          'lighthouse <url> --screenEmulation.disabled --throttling-method=provided --no-emulated-user-agent',
+          'Disable emulation and all throttling')
       .example(
           'lighthouse <url> --chrome-flags="--window-size=412,660"',
           'Launch Chrome with a specific window size')
@@ -137,9 +137,18 @@ function getFlags(manualArgv) {
           default: 'localhost',
           describe: 'The hostname to use for the debugging protocol.',
         },
-        'emulated-form-factor': {
+        'form-factor': {
           type: 'string',
-          describe: 'Controls the emulated device form factor (mobile vs. desktop) if not disabled',
+          describe: 'Determines how performance metrics are scored and if mobile-only audits are skipped. For desktop, --preset=desktop instead.',
+        },
+        'screenEmulation': {
+          describe: 'Sets screen emulation parameters. See also --preset. Use --screenEmulation.disabled to disable. Otherwise set these 4 parameters individually: --screenEmulation.mobile --screenEmulation.width=360 --screenEmulation.height=640 --screenEmulation.deviceScaleFactor=2',
+          coerce: coerceScreenEmulation,
+        },
+        'emulatedUserAgent': {
+          type: 'string',
+          coerce: coerceOptionalStringBoolean,
+          describe: 'Sets useragent emulation',
         },
         'max-wait-for-load': {
           type: 'number',
@@ -185,7 +194,7 @@ function getFlags(manualArgv) {
       })
       .group([
         'save-assets', 'list-all-audits', 'list-trace-categories', 'print-config', 'additional-trace-categories',
-        'config-path', 'preset', 'chrome-flags', 'port', 'hostname', 'emulated-form-factor',
+        'config-path', 'preset', 'chrome-flags', 'port', 'hostname', 'form-factor', 'screenEmulation', 'emulatedUserAgent',
         'max-wait-for-load', 'enable-error-reporting', 'gather-mode', 'audit-mode',
         'only-audits', 'only-categories', 'skip-audits', 'budget-path',
       ], 'Configuration:')
@@ -278,9 +287,9 @@ function getFlags(manualArgv) {
       })
 
       // Choices added outside of `options()` and cast so tsc picks them up.
-      .choices('emulated-form-factor', /** @type {['mobile', 'desktop', 'none']} */ (['mobile', 'desktop', 'none']))
+      .choices('form-factor', /** @type {['mobile', 'desktop']} */ (['mobile', 'desktop']))
       .choices('throttling-method', /** @type {['devtools', 'provided', 'simulate']} */ (['devtools', 'provided', 'simulate']))
-      .choices('preset', /** @type {['perf', 'experimental']} */ (['perf', 'experimental']))
+      .choices('preset', /** @type {['perf', 'experimental', 'desktop']} */ (['perf', 'experimental', 'desktop']))
 
       .check(argv => {
         // Lighthouse doesn't need a URL if...
@@ -416,6 +425,48 @@ function coerceThrottling(value) {
   }
 
   return throttlingSettings;
+}
+
+/**
+ * Take yarg's unchecked object value and ensure it is a proper LH.screenEmulationSettings.
+ * @param {unknown} value
+ * @return {Partial<LH.ScreenEmulationSettings>}
+ */
+function coerceScreenEmulation(value) {
+  if (!isObjectOfUnknownValues(value)) {
+    throw new Error(`Invalid value: Argument 'screenEmulation' must be an object, specified per-property ('screenEmulation.width', 'screenEmulation.deviceScaleFactor', etc)`);
+  }
+
+  /** @type {Array<keyof LH.ScreenEmulationSettings>} */
+  const keys = ['width', 'height', 'deviceScaleFactor', 'mobile', 'disabled'];
+  /** @type {Partial<LH.ScreenEmulationSettings>} */
+  const screenEmulationSettings = {};
+
+  for (const key of keys) {
+    const possibleSetting = value[key];
+    switch (key) {
+      case 'width':
+      case 'height':
+      case 'deviceScaleFactor':
+        if (possibleSetting !== undefined && typeof possibleSetting !== 'number') {
+          throw new Error(`Invalid value: 'screenEmulation.${key}' must be a number`);
+        }
+        screenEmulationSettings[key] = possibleSetting;
+
+        break;
+      case 'mobile':
+      case 'disabled':
+        if (possibleSetting !== undefined && typeof possibleSetting !== 'boolean') {
+          throw new Error(`Invalid value: 'screenEmulation.${key}' must be a boolean`);
+        }
+        screenEmulationSettings[key] = possibleSetting;
+        break;
+      default:
+        throw new Error(`Unrecognized screenEmulation option: ${key}`);
+    }
+  }
+
+  return screenEmulationSettings;
 }
 
 module.exports = {

@@ -28,8 +28,6 @@ declare global {
       fetchTime: string;
       /** A set of warnings about unexpected things encountered while loading and testing the page. */
       LighthouseRunWarnings: Array<string | IcuMessage>;
-      /** Whether the page was loaded on either a real or emulated mobile device. */
-      TestedAsMobileDevice: boolean;
       /** Device which Chrome is running on. */
       HostFormFactor: 'desktop'|'mobile';
       /** The user agent string of the version of Chrome used. */

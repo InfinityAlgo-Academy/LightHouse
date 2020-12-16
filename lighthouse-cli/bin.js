@@ -96,12 +96,6 @@ async function begin() {
     cliFlags.outputPath = 'stdout';
   }
 
-  // @ts-expect-error - deprecation message for removed disableDeviceEmulation; can remove warning in v6.
-  if (cliFlags.disableDeviceEmulation) {
-    log.warn('config', 'The "--disable-device-emulation" has been removed in v5.' +
-        ' Please use "--emulated-form-factor=none" instead.');
-  }
-
   if (cliFlags.precomputedLanternDataPath) {
     const lanternDataStr = fs.readFileSync(cliFlags.precomputedLanternDataPath, 'utf8');
     /** @type {LH.PrecomputedLanternData} */

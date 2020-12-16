@@ -57,7 +57,7 @@ describe('Sentry', () => {
         url: 'http://example.com',
         flags: {
           enableErrorReporting: true,
-          emulatedFormFactor: 'desktop',
+          formFactor: 'desktop',
           throttlingMethod: 'devtools',
         },
         environmentData: {},
@@ -68,7 +68,7 @@ describe('Sentry', () => {
       expect(raven.mergeContext.mock.calls[0][0]).toEqual({
         extra: {
           url: 'http://example.com',
-          emulatedFormFactor: 'desktop',
+          formFactor: 'desktop',
           throttlingMethod: 'devtools',
         },
       });

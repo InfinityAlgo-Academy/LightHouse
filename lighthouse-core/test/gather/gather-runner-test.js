@@ -13,6 +13,7 @@ const Gatherer = require('../../gather/gatherers/gatherer.js');
 const GatherRunner_ = require('../../gather/gather-runner.js');
 const assert = require('assert').strict;
 const Config = require('../../config/config.js');
+const constants = require('../../config/constants.js');
 const unresolvedPerfLog = require('./../fixtures/unresolved-perflog.json');
 const NetworkRequest = require('../../lib/network-request.js');
 const LHError = require('../../lib/lh-error.js');
@@ -110,7 +111,6 @@ class EmulationDriver extends Driver {
 }
 
 const fakeDriver = require('./fake-driver.js');
-const fakeDriverUsingRealMobileDevice = fakeDriver.fakeDriverUsingRealMobileDevice;
 
 /** @type {EmulationDriver} */
 let driver;
@@ -233,58 +233,6 @@ describe('GatherRunner', function() {
     });
   });
 
-  describe('collects TestedAsMobileDevice as an artifact', () => {
-    const requestedUrl = 'https://example.com';
-
-    it('works when running on desktop device without emulation', async () => {
-      const driver = fakeDriver;
-      const config = makeConfig({
-        passes: [],
-        settings: {emulatedFormFactor: 'none', internalDisableDeviceScreenEmulation: false},
-      });
-      const options = {requestedUrl, driver, settings: config.settings};
-
-      const results = await GatherRunner.run(config.passes, options);
-      expect(results.TestedAsMobileDevice).toBe(false);
-    });
-
-    it('works when running on desktop device with mobile emulation', async () => {
-      const driver = fakeDriver;
-      const config = makeConfig({
-        passes: [],
-        settings: {emulatedFormFactor: 'mobile', internalDisableDeviceScreenEmulation: false},
-      });
-      const options = {requestedUrl, driver, settings: config.settings};
-
-      const results = await GatherRunner.run(config.passes, options);
-      expect(results.TestedAsMobileDevice).toBe(true);
-    });
-
-    it('works when running on mobile device without emulation', async () => {
-      const driver = fakeDriverUsingRealMobileDevice;
-      const config = makeConfig({
-        passes: [],
-        settings: {emulatedFormFactor: 'none', internalDisableDeviceScreenEmulation: false},
-      });
-      const options = {requestedUrl, driver, settings: config.settings};
-
-      const results = await GatherRunner.run(config.passes, options);
-      expect(results.TestedAsMobileDevice).toBe(true);
-    });
-
-    it('works when running on mobile device with desktop emulation', async () => {
-      const driver = fakeDriverUsingRealMobileDevice;
-      const config = makeConfig({
-        passes: [],
-        settings: {emulatedFormFactor: 'desktop', internalDisableDeviceScreenEmulation: false},
-      });
-      const options = {requestedUrl, driver, settings: config.settings};
-
-      const results = await GatherRunner.run(config.passes, options);
-      expect(results.TestedAsMobileDevice).toBe(false);
-    });
-  });
-
   describe('collects HostFormFactor as an artifact', () => {
     const requestedUrl = 'https://example.com';
 
@@ -322,14 +270,14 @@ describe('GatherRunner', function() {
     test('works when running on desktop device', DESKTOP_UA, 'desktop');
   });
 
+  /** @param {NonNullable<LH.SharedFlagsSettings['formFactor']>}formFactor */
+  const getSettings = formFactor => ({
+    formFactor: formFactor,
+    screenEmulation: constants.screenEmulationMetrics[formFactor],
+  });
+
   it('sets up the driver to begin emulation when all flags are undefined', async () => {
-    await GatherRunner.setupDriver(driver, {
-      settings: {
-        emulatedFormFactor: 'mobile',
-        throttlingMethod: 'provided',
-        internalDisableDeviceScreenEmulation: false,
-      },
-    });
+    await GatherRunner.setupDriver(driver, {settings: getSettings('mobile')});
 
     connectionStub.sendCommand.findInvocation('Emulation.setDeviceMetricsOverride');
     expect(connectionStub.sendCommand.findInvocation('Network.emulateNetworkConditions')).toEqual({
@@ -339,13 +287,7 @@ describe('GatherRunner', function() {
       connectionStub.sendCommand.findInvocation('Emulation.setCPUThrottlingRate')).toThrow();
   });
 
-  it('applies the correct emulation given a particular emulationFormFactor', async () => {
-    /** @param {'mobile'|'desktop'|'none'} formFactor */
-    const getSettings = formFactor => ({
-      emulatedFormFactor: formFactor,
-      internalDisableDeviceScreenEmulation: false,
-    });
-
+  it('applies the correct emulation given a particular formFactor', async () => {
     await GatherRunner.setupDriver(driver, {settings: getSettings('mobile')});
     expect(connectionStub.sendCommand.findInvocation('Emulation.setDeviceMetricsOverride'))
       .toMatchObject({mobile: true});
@@ -354,17 +296,13 @@ describe('GatherRunner', function() {
     await GatherRunner.setupDriver(driver, {settings: getSettings('desktop')});
     expect(connectionStub.sendCommand.findInvocation('Emulation.setDeviceMetricsOverride'))
       .toMatchObject({mobile: false});
-
-    resetDefaultMockResponses();
-    await GatherRunner.setupDriver(driver, {settings: getSettings('none')});
-    expect(() =>
-      connectionStub.sendCommand.findInvocation('Emulation.setDeviceMetricsOverride')).toThrow();
   });
 
   it('sets throttling according to settings', async () => {
     await GatherRunner.setupDriver(driver, {
       settings: {
-        emulatedFormFactor: 'mobile', internalDisableDeviceScreenEmulation: false,
+        formFactor: 'mobile',
+        screenEmulation: constants.screenEmulationMetrics.mobile,
         throttlingMethod: 'devtools',
         throttling: {
           requestLatencyMs: 100,
