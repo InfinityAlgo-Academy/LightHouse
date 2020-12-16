@@ -129,7 +129,6 @@ class Driver {
   constructor(connection) {
     this._connection = connection;
 
-
     this.on('Target.attachedToTarget', event => {
       this._handleTargetAttached(event).catch(this._handleEventError);
     });
@@ -942,10 +941,7 @@ class Driver {
    * @return {Promise<void>}
    */
   enableRuntimeEvents() {
-    this.sendCommand('Target.setDiscoverTargets', {discover: true});
     return this.sendCommand('Runtime.enable');
-
-
   }
 
   /**
@@ -1043,10 +1039,6 @@ class Driver {
    * @return {Promise<void>}
    */
   async clearDataForOrigin(url) {
-
-
-    await this.sendCommand('Page.crash');
-
     const origin = new URL(url).origin;
 
     // Clear some types of storage.

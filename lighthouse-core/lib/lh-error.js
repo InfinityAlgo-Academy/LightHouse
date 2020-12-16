@@ -89,7 +89,7 @@ const UIStrings = {
   oldChromeDoesNotSupportFeature: 'This version of Chrome is too old to support \'{featureName}\'. Use a newer version to see full results.',
 
   /** Error message explaining that the browser tab that Lighthouse is inspecting has crashed. */
-  targetCrashed: 'Browser tab has unexpectedly crashed. {data}',
+  targetCrashed: 'Browser tab has unexpectedly crashed.',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);

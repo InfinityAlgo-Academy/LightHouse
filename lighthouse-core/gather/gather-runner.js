@@ -116,15 +116,15 @@ class GatherRunner {
   }
 
   /**
-   * Reject if the CDP target we're connected to crashes
+   * Reject if the gathering terminates due to the CDP target crashing, etc
    * @param {Driver} driver
    * @return {Promise<void>}
    */
   static async getGatherTerminatedPromise(driver) {
     return new Promise((_, reject) => {
-        const onSessionTerminate = data => reject(new LHError(LHError.errors.TARGET_CRASHED), {data});
-        driver.on('Inspector.targetCrashed', onSessionTerminate);
-        driver.on('Inspector.detached', onSessionTerminate);
+        driver.on('Inspector.targetCrashed', evt => {
+          reject(new LHError(LHError.errors.TARGET_CRASHED));
+        });
     });
   }
 
