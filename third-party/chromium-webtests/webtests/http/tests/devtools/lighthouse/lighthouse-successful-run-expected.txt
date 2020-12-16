@@ -55,6 +55,7 @@ Gathering setup: Accessibility
 Gathering setup: TraceElements
 Gathering setup: InspectorIssues
 Gathering setup: SourceMaps
+Gathering setup: FullPageScreenshot
 Beginning devtoolsLog and trace
 Getting browser version
 Loading page & waiting for onload
@@ -86,6 +87,7 @@ Gathering in-page: Accessibility
 Gathering in-page: TraceElements
 Gathering in-page: InspectorIssues
 Gathering in-page: SourceMaps
+Gathering in-page: FullPageScreenshot
 Gathering trace
 Gathering devtoolsLog & network records
 Running afterPass methods
@@ -116,6 +118,7 @@ Gathering: Accessibility
 Gathering: TraceElements
 Gathering: InspectorIssues
 Gathering: SourceMaps
+Gathering: FullPageScreenshot
 Populate base artifacts
 Get webapp manifest
 Collect stacks
@@ -239,6 +242,7 @@ Auditing: Page has valid source maps
 Auditing: Preload Largest Contentful Paint image
 Computing artifact: LanternLargestContentfulPaint
 Computing artifact: LanternFirstContentfulPaint
+Auditing: Full-page screenshot
 Auditing: Site works cross-browser
 Auditing: Page transitions don't feel like they block on the network
 Auditing: Each page has a URL
@@ -454,6 +458,7 @@ font-display: pass
 font-size: fail
 form-field-multiple-labels: notApplicable
 frame-title: notApplicable
+full-page-screenshot: informative
 geolocation-on-start: pass
 gpt-bids-parallel: notApplicable
 heading-order: notApplicable

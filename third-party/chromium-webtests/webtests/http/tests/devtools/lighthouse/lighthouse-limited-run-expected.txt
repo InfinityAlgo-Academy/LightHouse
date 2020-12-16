@@ -15,6 +15,7 @@ Generate report: enabled visible
 =============== Audits run ===============
 apple-touch-icon
 content-width
+full-page-screenshot
 installable-manifest
 maskable-icon
 pwa-cross-browser
