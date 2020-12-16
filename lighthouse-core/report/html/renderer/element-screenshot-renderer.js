@@ -186,6 +186,7 @@ class ElementScreenshotRenderer {
         overlay.remove();
       });
 
+      // Must place after the topbar (but before `lh-container`).
       containerEl.insertBefore(overlay, topbarEl.nextElementSibling);
     });
   }
