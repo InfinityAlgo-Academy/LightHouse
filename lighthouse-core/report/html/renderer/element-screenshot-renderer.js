@@ -139,17 +139,24 @@ class ElementScreenshotRenderer {
    * @param {LH.Artifacts.FullPageScreenshot} fullPageScreenshot
    */
   static installOverlayFeature(dom, templateContext, fullPageScreenshot) {
-    const reportEl = dom.find('.lh-report', dom.document());
-    const screenshotOverlayClass = 'lh-feature-screenshot-overlay';
-    if (reportEl.classList.contains(screenshotOverlayClass)) return;
-    reportEl.classList.add(screenshotOverlayClass);
+    const topbarEl = dom.find('.lh-topbar', dom.document());
+    const containerEl = topbarEl.parentElement;
+    if (!containerEl) throw new Error('could not find parent element');
 
-    const maxLightboxSize = {
-      width: dom.document().documentElement.clientWidth,
-      height: dom.document().documentElement.clientHeight * 0.75,
-    };
+    const screenshotOverlayClass = 'lh-feature-screenshot-overlay';
+    if (containerEl.classList.contains(screenshotOverlayClass)) return;
+    containerEl.classList.add(screenshotOverlayClass);
 
     dom.document().addEventListener('click', e => {
+      const maxLightboxSize = {
+        width: dom.document().documentElement.clientWidth,
+        height: dom.document().documentElement.clientHeight * 0.75,
+      };
+      if (dom.isDevTools()) {
+        maxLightboxSize.width = containerEl.clientWidth;
+        maxLightboxSize.height = containerEl.clientHeight * 0.75;
+      }
+
       const target = /** @type {?HTMLElement} */ (e.target);
       if (!target) return;
       const el = /** @type {?HTMLElement} */ (target.closest('.lh-element-screenshot'));
@@ -175,11 +182,11 @@ class ElementScreenshotRenderer {
       if (!screenshotElement) return;
 
       overlay.appendChild(screenshotElement);
-      overlay.addEventListener('click', () => {
+      containerEl.addEventListener('click', () => {
         overlay.remove();
       });
 
-      reportEl.appendChild(overlay);
+      containerEl.insertBefore(overlay, topbarEl.nextElementSibling);
     });
   }
 
