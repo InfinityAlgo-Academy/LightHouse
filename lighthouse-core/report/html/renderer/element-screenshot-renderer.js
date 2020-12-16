@@ -148,6 +148,11 @@ class ElementScreenshotRenderer {
     containerEl.classList.add(screenshotOverlayClass);
 
     dom.document().addEventListener('click', e => {
+      const target = /** @type {?HTMLElement} */ (e.target);
+      if (!target) return;
+      const el = /** @type {?HTMLElement} */ (target.closest('.lh-element-screenshot'));
+      if (!el) return;
+
       const maxLightboxSize = {
         width: dom.document().documentElement.clientWidth,
         height: dom.document().documentElement.clientHeight * 0.75,
@@ -156,11 +161,6 @@ class ElementScreenshotRenderer {
         maxLightboxSize.width = containerEl.clientWidth;
         maxLightboxSize.height = containerEl.clientHeight * 0.75;
       }
-
-      const target = /** @type {?HTMLElement} */ (e.target);
-      if (!target) return;
-      const el = /** @type {?HTMLElement} */ (target.closest('.lh-element-screenshot'));
-      if (!el) return;
 
       const overlay = dom.createElement('div');
       overlay.classList.add('lh-element-screenshot__overlay');
