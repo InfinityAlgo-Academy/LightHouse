@@ -104,6 +104,7 @@
   --image-preview-size: 48px;
   --metric-toggle-lines-fill: #7F7F7F;
   --metrics-toggle-background-color: var(--color-gray-200);
+  --screenshot-overlay-background: rgba(0, 0, 0, 0.3);
   --plugin-badge-background-color: var(--color-white);
   --plugin-badge-size-big: calc(var(--gauge-circle-size-big) / 2.7);
   --plugin-badge-size: calc(var(--gauge-circle-size) / 2.7);
@@ -256,6 +257,7 @@
   --gauge-wrapper-width: 97px;
   --header-line-height: 20px;
   --header-padding: 16px 0 16px 0;
+  --screenshot-overlay-background: transparent;
   --plugin-icon-size: 75%;
   --pwa-icon-margin: 0 7px 0 -3px;
   --report-font-family-monospace: 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console', monospace;
@@ -1552,20 +1554,25 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1;
-  background: rgba(0, 0, 0, 0.7);
+  right: 0;
+  bottom: 0;
+  z-index: 2000; /* .lh-topbar is 1000 */
+  background: var(--screenshot-overlay-background);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: zoom-out;
 }
 
-.lh-feature-screenshot-overlay .lh-element-screenshot {
+.lh-element-screenshot__overlay .lh-element-screenshot {
+  margin-right: 0; /* clearing margin used in thumbnail case */
+  outline: 1px solid var(--color-gray-700);
+}
+
+.lh-screenshot-overlay--enabled .lh-element-screenshot {
   cursor: zoom-out;
 }
-.lh-feature-screenshot-overlay .lh-node .lh-element-screenshot {
+.lh-screenshot-overlay--enabled .lh-node .lh-element-screenshot {
   cursor: zoom-in;
 }
 
