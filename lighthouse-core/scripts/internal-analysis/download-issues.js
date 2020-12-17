@@ -22,7 +22,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const fetch = require('isomorphic-fetch');
+const fetch = require('node-fetch');
 
 const DAY_FILTER = 90;
 const HOUR_IN_MS = 60 * 60 * 1000;

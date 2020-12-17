@@ -18,6 +18,11 @@ set -euxo pipefail
 # - https://github.com/paularmstrong/build-tracker/issues/106
 # - https://github.com/paularmstrong/build-tracker/issues/200
 
+if [[ -z "$BT_API_AUTH_TOKEN" ]]; then
+  echo "Build tracker auth token not available, skipping git deepening."
+  exit 0
+fi
+
 # We can always use some more history
 git -c protocol.version=2 fetch --deepen=100
 echo "History is deepened."

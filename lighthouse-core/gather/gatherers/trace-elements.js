@@ -30,7 +30,7 @@ function getNodeDetailsData() {
   let traceElement;
   if (elem) {
     // @ts-expect-error - getNodeDetails put into scope via stringification
-    traceElement = getNodeDetails(elem);
+    traceElement = {node: getNodeDetails(elem)};
   }
   return traceElement;
 }

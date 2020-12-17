@@ -172,43 +172,49 @@ module.exports = [
       TraceElements: [
         {
           traceEventType: 'largest-contentful-paint',
-          nodeLabel: 'img',
-          snippet: '<img src="../dobetterweb/lighthouse-480x318.jpg">',
-          boundingRect: {
-            top: 108,
-            bottom: 426,
-            left: 8,
-            right: 488,
-            width: 480,
-            height: 318,
+          node: {
+            nodeLabel: 'img',
+            snippet: '<img src="../dobetterweb/lighthouse-480x318.jpg">',
+            boundingRect: {
+              top: 108,
+              bottom: 426,
+              left: 8,
+              right: 488,
+              width: 480,
+              height: 318,
+            },
           },
         },
         {
           traceEventType: 'layout-shift',
-          selector: 'body > h1',
-          nodeLabel: 'Please don\'t move me',
-          snippet: '<h1>',
-          boundingRect: {
-            top: 465,
-            bottom: 502,
-            left: 8,
-            right: 352,
-            width: 344,
-            height: 37,
+          node: {
+            selector: 'body > h1',
+            nodeLabel: 'Please don\'t move me',
+            snippet: '<h1>',
+            boundingRect: {
+              top: 465,
+              bottom: 502,
+              left: 8,
+              right: 352,
+              width: 344,
+              height: 37,
+            },
           },
           score: '0.058 +/- 0.01',
         },
         {
           traceEventType: 'layout-shift',
-          nodeLabel: 'Sorry!',
-          snippet: '<div style="height: 18px;">',
-          boundingRect: {
-            top: 426,
-            bottom: 444,
-            left: 8,
-            right: 352,
-            width: 344,
-            height: 18,
+          node: {
+            nodeLabel: 'Sorry!',
+            snippet: '<div style="height: 18px;">',
+            boundingRect: {
+              top: 426,
+              bottom: 444,
+              left: 8,
+              right: 352,
+              width: 344,
+              height: 18,
+            },
           },
           score: '0.026 +/- 0.01',
         },
@@ -218,22 +224,24 @@ module.exports = [
           // https://chromiumdash.appspot.com/commit/995baabedf9e70d16deafc4bc37a2b215a9b8ec9
           _minChromiumMilestone: 86,
           traceEventType: 'animation',
-          selector: 'body > div#animate-me',
-          nodeLabel: 'div',
-          snippet: '<div id="animate-me">',
-          boundingRect: {
-            top: 8,
-            bottom: 108,
-            left: 8,
-            right: 108,
-            width: 100,
-            height: 100,
+          node: {
+            selector: 'body > div#animate-me',
+            nodeLabel: 'This is changing font size',
+            snippet: '<div id="animate-me">',
+            boundingRect: {
+              top: 8,
+              bottom: 108,
+              left: 8,
+              right: 108,
+              width: 100,
+              height: 100,
+            },
           },
           animations: [
             {
               name: 'anim',
               failureReasonsMask: 8224,
-              unsupportedProperties: ['background-color'],
+              unsupportedProperties: ['font-size'],
             },
           ],
         },
@@ -333,7 +341,7 @@ module.exports = [
                   type: 'node',
                   path: '2,HTML,1,BODY,1,DIV',
                   selector: 'body > div#animated-boi',
-                  nodeLabel: 'div',
+                  nodeLabel: 'This is changing font size',
                   snippet: '<div id="animated-boi">',
                 },
                 subItems: {
@@ -347,7 +355,7 @@ module.exports = [
                       animation: 'alpha',
                     },
                     {
-                      failureReason: 'Unsupported CSS Property: background-color',
+                      failureReason: 'Unsupported CSS Property: font-size',
                       animation: 'beta',
                     },
                   ],
@@ -372,7 +380,7 @@ module.exports = [
               {
                 product: 'YouTube Embedded Player (Video)',
                 blockingTime: 0,
-                transferSize: '651128 +/- 100000',
+                transferSize: '>400000', // Transfer size is imprecise.
                 subItems: {
                   type: 'subitems',
                   items: {

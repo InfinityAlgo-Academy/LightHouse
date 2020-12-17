@@ -369,7 +369,7 @@ function isPositionFixed(element) {
  * Generate a human-readable label for the given element, based on end-user facing
  * strings like the innerText or alt attribute.
  * Falls back to the tagName if no useful label is found.
- * @param {HTMLElement} node
+ * @param {Element} node
  * @return {string|null}
  */
 /* istanbul ignore next */
@@ -385,7 +385,9 @@ function getNodeLabel(node) {
     if (str.length <= maxLength) {
       return str;
     }
-    return str.slice(0, maxLength - 1) + '…';
+    // Take advantage of string iterator multi-byte character awareness.
+    // Regular `.slice` will ignore unicode character boundaries and lead to malformed text.
+    return Array.from(str).slice(0, maxLength - 1).join('') + '…';
   }
   const tagName = node.tagName.toLowerCase();
   // html and body content is too broad to be useful, since they contain all page content
@@ -398,7 +400,7 @@ function getNodeLabel(node) {
       // E.g. if an a tag contains an image but no text we want the image alt/aria-label attribute.
       const nodeToUseForLabel = node.querySelector('[alt], [aria-label]');
       if (nodeToUseForLabel) {
-        return getNodeLabel(/** @type {HTMLElement} */ (nodeToUseForLabel));
+        return getNodeLabel(nodeToUseForLabel);
       }
     }
   }

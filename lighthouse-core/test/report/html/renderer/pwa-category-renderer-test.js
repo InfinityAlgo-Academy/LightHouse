@@ -61,7 +61,6 @@ describe('PwaCategoryRenderer', () => {
 
     const nonManualAudits = category.auditRefs
       .filter(audit => audit.result.scoreDisplayMode !== 'manual');
-
     assert.strictEqual(regularAuditElements.length, nonManualAudits.length);
   });
 
@@ -84,7 +83,7 @@ describe('PwaCategoryRenderer', () => {
 
   it('renders the audit groups', () => {
     const categoryGroupIds = new Set(category.auditRefs.filter(a => a.group).map(a => a.group));
-    assert.strictEqual(categoryGroupIds.size, 3); // Ensure there's something to test.
+    assert.strictEqual(categoryGroupIds.size, 2); // Ensure there's something to test.
 
     const categoryElem = pwaRenderer.render(category, sampleResults.categoryGroups);
 
@@ -117,8 +116,7 @@ describe('PwaCategoryRenderer', () => {
         auditRef.result.score = 0;
       }
 
-      const targetGroupId = groupIds[2];
-      assert.ok(targetGroupId);
+      const targetGroupId = 'pwa-optimized';
       const targetGroupTitle = sampleResults.categoryGroups[targetGroupId].title;
       const targetAuditRefs = auditRefs.filter(ref => ref.group === targetGroupId);
 
@@ -255,7 +253,7 @@ describe('PwaCategoryRenderer', () => {
     it('renders score gauges with unique ids for items in <defs>', () => {
       const gauge1 = pwaRenderer.renderScoreGauge(category, sampleResults.categoryGroups);
       const gauge1Ids = [...gauge1.querySelectorAll('defs [id]')].map(el => el.id);
-      assert.ok(gauge1Ids.length > 3);
+      assert.ok(gauge1Ids.length > 2);
 
       const gauge2 = pwaRenderer.renderScoreGauge(category, sampleResults.categoryGroups);
       const gauge2Ids = [...gauge2.querySelectorAll('defs [id]')].map(el => el.id);

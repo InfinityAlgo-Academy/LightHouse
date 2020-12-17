@@ -49,7 +49,8 @@ async function main() {
   const auditResults = await LegacyJavascript.audit(artifacts, {
     computedCache: new Map(),
     options: {},
-    settings: /** @type {any} */ ({}),
+    /** @type {any} */
+    settings: {},
   });
 
   const items =

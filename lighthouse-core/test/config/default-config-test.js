@@ -15,6 +15,7 @@ describe('Default Config', () => {
   it('only has opportunity audits that return opportunities details', async () => {
     const flags = {
       auditMode: __dirname + '/../results/artifacts/',
+      formFactor: 'mobile',
 
       // sample_v2 was run with these settings, so need to match them.
       throttlingMethod: 'devtools',

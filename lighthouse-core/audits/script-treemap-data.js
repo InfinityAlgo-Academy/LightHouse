@@ -166,9 +166,9 @@ class ScriptTreemapDataAudit extends Audit {
 
       const name = scriptElement.src;
       const bundle = bundles.find(bundle => scriptElement.src === bundle.script.src);
-      const scriptCoverages = artifacts.JsUsage[scriptElement.src];
-      if (!bundle || !scriptCoverages) {
-        // No bundle or coverage information, so simply make a single node
+      const scriptCoverages = artifacts.JsUsage[scriptElement.src] || [];
+      if (!bundle && scriptCoverages.length === 0) {
+        // No bundle and no coverage information, so simply make a single node
         // detailing how big the script is.
 
         rootNodeContainers.push({
@@ -186,7 +186,7 @@ class ScriptTreemapDataAudit extends Audit {
 
       /** @type {LH.Treemap.Node} */
       let node;
-      if (unusedJavascriptSummary.sourcesWastedBytes && !('errorMessage' in bundle.sizes)) {
+      if (bundle && !('errorMessage' in bundle.sizes)) {
         // Create nodes for each module in a bundle.
 
         /** @type {Record<string, SourceData>} */
@@ -195,10 +195,21 @@ class ScriptTreemapDataAudit extends Audit {
           /** @type {SourceData} */
           const sourceData = {
             resourceBytes: bundle.sizes.files[source],
-            unusedBytes: unusedJavascriptSummary.sourcesWastedBytes[source],
           };
 
-          const key = ModuleDuplication.normalizeSource(source);
+          if (unusedJavascriptSummary.sourcesWastedBytes) {
+            sourceData.unusedBytes = unusedJavascriptSummary.sourcesWastedBytes[source];
+          }
+
+          // ModuleDuplication uses keys without the source root prepended, but
+          // bundle.sizes uses keys with it prepended, so we remove the source root before
+          // using it with duplicationByPath.
+          let sourceWithoutSourceRoot = source;
+          if (bundle.rawMap.sourceRoot && source.startsWith(bundle.rawMap.sourceRoot)) {
+            sourceWithoutSourceRoot = source.replace(bundle.rawMap.sourceRoot, '');
+          }
+
+          const key = ModuleDuplication.normalizeSource(sourceWithoutSourceRoot);
           if (duplicationByPath.has(key)) sourceData.duplicatedNormalizedModuleName = key;
 
           sourcesData[source] = sourceData;
@@ -206,7 +217,7 @@ class ScriptTreemapDataAudit extends Audit {
 
         node = this.prepareTreemapNodes(bundle.rawMap.sourceRoot || '', sourcesData);
       } else {
-        // There was no source map for this script, so we can only produce a single node.
+        // No valid source map for this script, so we can only produce a single node.
 
         node = {
           name,

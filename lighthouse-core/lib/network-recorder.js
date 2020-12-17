@@ -11,7 +11,7 @@ const log = require('lighthouse-logger');
 
 const IGNORED_NETWORK_SCHEMES = ['data', 'ws'];
 
-/** @typedef {'requeststarted'|'requestloaded'|'network-2-idle'|'networkidle'|'networkbusy'|'network-2-busy'} NetworkRecorderEvent */
+/** @typedef {'requeststarted'|'requestloaded'|'network-2-idle'|'network-critical-idle'|'networkidle'|'networkbusy'|'network-critical-busy'|'network-2-busy'} NetworkRecorderEvent */
 
 class NetworkRecorder extends EventEmitter {
   /**
@@ -57,6 +57,13 @@ class NetworkRecorder extends EventEmitter {
     return this._isActiveIdlePeriod(0);
   }
 
+  isCriticalIdle() {
+    return this._isActiveIdlePeriod(
+      0,
+      request => request.priority === 'VeryHigh' || request.priority === 'High'
+    );
+  }
+
   is2Idle() {
     return this._isActiveIdlePeriod(2);
   }
@@ -65,14 +72,16 @@ class NetworkRecorder extends EventEmitter {
    * Returns whether the number of currently inflight requests is less than or
    * equal to the number of allowed concurrent requests.
    * @param {number} allowedRequests
+   * @param {(request: NetworkRequest) => boolean} [requestFilter]
    * @return {boolean}
    */
-  _isActiveIdlePeriod(allowedRequests) {
+  _isActiveIdlePeriod(allowedRequests, requestFilter) {
     let inflightRequests = 0;
 
     for (let i = 0; i < this._records.length; i++) {
       const record = this._records[i];
       if (record.finished) continue;
+      if (requestFilter && !requestFilter(record)) continue;
       if (IGNORED_NETWORK_SCHEMES.includes(record.parsedURL.scheme)) continue;
       inflightRequests++;
     }
@@ -83,20 +92,15 @@ class NetworkRecorder extends EventEmitter {
   _emitNetworkStatus() {
     const zeroQuiet = this.isIdle();
     const twoQuiet = this.is2Idle();
+    const criticalQuiet = this.isCriticalIdle();
 
-    if (twoQuiet && zeroQuiet) {
-      log.verbose('NetworkRecorder', 'network fully-quiet');
-      this.emit('network-2-idle');
-      this.emit('networkidle');
-    } else if (twoQuiet && !zeroQuiet) {
-      log.verbose('NetworkRecorder', 'network semi-quiet');
-      this.emit('network-2-idle');
-      this.emit('networkbusy');
-    } else {
-      log.verbose('NetworkRecorder', 'network busy');
-      this.emit('network-2-busy');
-      this.emit('networkbusy');
-    }
+    this.emit(zeroQuiet ? 'networkidle' : 'networkbusy');
+    this.emit(twoQuiet ? 'network-2-idle' : 'network-2-busy');
+    this.emit(criticalQuiet ? 'network-critical-idle' : 'network-critical-busy');
+
+    if (twoQuiet && zeroQuiet) log.verbose('NetworkRecorder', 'network fully-quiet');
+    else if (twoQuiet && !zeroQuiet) log.verbose('NetworkRecorder', 'network semi-quiet');
+    else log.verbose('NetworkRecorder', 'network busy');
   }
 
   /**

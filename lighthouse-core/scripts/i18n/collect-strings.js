@@ -631,7 +631,7 @@ if (require.main === module) {
 
   if (collisions > 0) {
     console.log(`MEANING COLLISION: ${collisions} string(s) have the same content.`);
-    assert.equal(collisions, 21, `The number of duplicate strings have changed, update this assertion if that is expected, or reword strings. Collisions: ${collisionStrings}`);
+    assert.equal(collisions, 32, `The number of duplicate strings have changed, update this assertion if that is expected, or reword strings. Collisions: ${collisionStrings.join('\n')}`);
   }
 
   writeStringsToCtcFiles('en-US', strings);

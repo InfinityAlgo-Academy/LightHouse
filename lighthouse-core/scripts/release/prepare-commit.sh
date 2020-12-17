@@ -18,12 +18,6 @@ fi
 OLD_VERSION=$(node -e "console.log(require('./package.json').version)")
 NEW_VERSION=$1
 BRANCH_NAME="bump_$NEW_VERSION"
-SEMVER_PATTERN="[0-9]*\.[0-9]*\.[0-9]*"
-
-if [[ $(echo "$NEW_VERSION" | sed 's/[0-9]*\.[0-9]*\.[0-9]*/SECRET_REPLACE/g') != "SECRET_REPLACE" ]]; then
- echo "Incorrect version format. Must be x.x.x"
- exit 1
-fi
 
 if [[ -n "$(git status --porcelain)" ]]; then
   echo "Repo has changes to the files! Commit or stash the changes to continue."

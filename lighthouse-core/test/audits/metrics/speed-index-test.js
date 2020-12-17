@@ -10,9 +10,27 @@
 const Audit = require('../../../audits/metrics/speed-index.js');
 const assert = require('assert').strict;
 const options = Audit.defaultOptions;
+const constants = require('../../../config/constants.js');
 
 const pwaTrace = require('../../fixtures/traces/progressive-app-m60.json');
 const pwaDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+
+/**
+ * @param {{
+ * {LH.SharedFlagsSettings['formFactor']} formFactor
+ * {LH.SharedFlagsSettings['throttlingMethod']} throttlingMethod
+ * }} param0
+ */
+const getFakeContext = ({formFactor, throttlingMethod}) => ({
+  options: options,
+  computedCache: new Map(),
+  settings: {
+    formFactor: formFactor,
+    throttlingMethod,
+    screenEmulation: constants.screenEmulationMetrics[formFactor],
+  },
+});
+
 
 describe('Performance: speed-index audit', () => {
   it('works on a real trace', () => {
@@ -21,8 +39,8 @@ describe('Performance: speed-index audit', () => {
       devtoolsLogs: {defaultPass: pwaDevtoolsLog},
     };
 
-    const settings = {throttlingMethod: 'provided'};
-    return Audit.audit(artifacts, {options, settings, computedCache: new Map()}).then(result => {
+    const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
+    return Audit.audit(artifacts, context).then(result => {
       assert.equal(result.score, 1);
       assert.equal(result.numericValue, 605);
     });

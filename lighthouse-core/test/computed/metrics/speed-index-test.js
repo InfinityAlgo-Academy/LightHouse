@@ -61,14 +61,14 @@ describe('Metrics: Speed Index', () => {
     }).toMatchInlineSnapshot(`
       Object {
         "optimistic": 575,
-        "pessimistic": 563,
-        "timing": 599,
+        "pessimistic": 633,
+        "timing": 635,
       }
     `);
   });
 
   it('should compute an observed value (desktop)', async () => {
-    const settings = {throttlingMethod: 'provided'};
+    const settings = {throttlingMethod: 'provided', formFactor: 'desktop'};
     const context = {settings, computedCache: new Map()};
     const result = await SpeedIndex.request({trace, devtoolsLog, settings}, context);
 
@@ -77,12 +77,9 @@ describe('Metrics: Speed Index', () => {
   });
 
   it('should compute an observed value (mobile)', async () => {
-    const settings = {throttlingMethod: 'provided'};
+    const settings = {throttlingMethod: 'provided', formFactor: 'mobile'};
     const context = {settings, computedCache: new Map()};
-    const result = await SpeedIndex.request(
-      {trace, devtoolsLog, settings, TestedAsMobileDevice: true},
-      context
-    );
+    const result = await SpeedIndex.request({trace, devtoolsLog, settings}, context);
 
     assert.equal(result.timing, 605);
     assert.equal(result.timestamp, 225414777015);

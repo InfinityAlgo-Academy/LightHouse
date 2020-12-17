@@ -107,9 +107,16 @@ describe('DOM', () => {
     });
 
     it('ignores links that do not start with http', () => {
-      const text = 'Sentence with [link](/local/path).';
-      const result = dom.convertMarkdownLinkSnippets(text);
-      assert.equal(result.innerHTML, text);
+      const snippets = [
+        'Sentence with [link](/local/path).',
+        'Sentence with [link](javascript:console.log("pwned")).',
+        'Sentence with [link](chrome://settings#give-my-your-password).',
+      ];
+
+      for (const text of snippets) {
+        const result = dom.convertMarkdownLinkSnippets(text);
+        assert.equal(result.innerHTML, text);
+      }
     });
 
     it('handles the case of [text]... [text](url)', () => {

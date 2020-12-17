@@ -116,6 +116,14 @@ describe('Page Functions', () => {
       assert.equal(pageFunctions.getNodeLabel(el).length, 80);
     });
 
+    it('Truncates long text containing unicode surrogate pairs', () => {
+      const el = dom.createElement('div');
+      // `getNodeLabel` truncates to 80 characters internally.
+      // We want to test a unicode character on the boundary.
+      el.innerText = Array(78).fill('a').join('') + '💡💡💡';
+      assert.equal(pageFunctions.getNodeLabel(el), Array(78).fill('a').join('') + '💡…');
+    });
+
     it('Uses tag name for html tags', () => {
       const el = dom.createElement('html');
       assert.equal(pageFunctions.getNodeLabel(el), 'html');

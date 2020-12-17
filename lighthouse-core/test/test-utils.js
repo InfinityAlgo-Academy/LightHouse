@@ -226,14 +226,6 @@ async function flushAllTimersAndMicrotasks(ms = 1000) {
  */
 function makeMocksForGatherRunner() {
   jest.mock('../lib/stack-collector.js', () => () => Promise.resolve([]));
-  jest.mock('../gather/gatherers/full-page-screenshot.js', () => {
-    return class {
-      constructor() {}
-      afterPass() {
-        return null;
-      }
-    };
-  });
 }
 
 module.exports = {

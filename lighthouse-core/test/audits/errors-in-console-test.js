@@ -10,11 +10,10 @@
 const ErrorLogsAudit = require('../../audits/errors-in-console.js');
 const assert = require('assert').strict;
 
-describe('Console error logs audit', () => {
+describe('ConsoleMessages error logs audit', () => {
   it('passes when no console messages were found', () => {
     const auditResult = ErrorLogsAudit.audit({
       ConsoleMessages: [],
-      RuntimeExceptions: [],
     }, {options: {}});
     assert.equal(auditResult.score, 1);
     assert.ok(!auditResult.displayValue, 0);
@@ -25,14 +24,11 @@ describe('Console error logs audit', () => {
     const auditResult = ErrorLogsAudit.audit({
       ConsoleMessages: [
         {
-          entry: {
-            level: 'info',
-            source: 'network',
-            text: 'This is a simple info msg',
-          },
+          level: 'info',
+          source: 'network',
+          text: 'This is a simple info msg',
         },
       ],
-      RuntimeExceptions: [],
     }, {options: {}});
     assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
@@ -42,24 +38,21 @@ describe('Console error logs audit', () => {
     const auditResult = ErrorLogsAudit.audit({
       ConsoleMessages: [
         {
-          entry: {
-            level: 'error',
-            source: 'network',
-            text: 'The server responded with a status of 404 (Not Found)',
-            url: 'http://www.example.com/favicon.ico',
-          },
+          level: 'error',
+          source: 'network',
+          text: 'The server responded with a status of 404 (Not Found)',
+          url: 'http://www.example.com/favicon.ico',
         }, {
-          entry: {
-            level: 'error',
-            source: 'network',
-            text: 'WebSocket connection failed: Unexpected response code: 500',
-            url: 'http://www.example.com/wsconnect.ws',
-          },
+          level: 'error',
+          source: 'network',
+          text: 'WebSocket connection failed: Unexpected response code: 500',
+          url: 'http://www.example.com/wsconnect.ws',
         },
-      ],
-      RuntimeExceptions: [{
-        'timestamp': 1506535813608.003,
-        'exceptionDetails': {
+        {
+          'timestamp': 1506535813608.003,
+          'source': 'exception',
+          'level': 'error',
+          'text': 'TypeError: Cannot read property \'msie\' of undefined',
           'url': 'http://example.com/fancybox.js',
           'stackTrace': {
             'callFrames': [
@@ -70,13 +63,8 @@ describe('Console error logs audit', () => {
               },
             ],
           },
-          'exception': {
-            'className': 'TypeError',
-            'description': 'TypeError: Cannot read property \'msie\' of undefined',
-          },
-          'executionContextId': 3,
         },
-      }],
+      ],
     }, {options: {}});
 
     assert.equal(auditResult.score, 0);
@@ -97,12 +85,9 @@ describe('Console error logs audit', () => {
     const auditResult = ErrorLogsAudit.audit({
       ConsoleMessages: [
         {
-          entry: {
-            level: 'error',
-          },
+          level: 'error',
         },
       ],
-      RuntimeExceptions: [],
     }, {options: {}});
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 1);
@@ -115,22 +100,20 @@ describe('Console error logs audit', () => {
   // Checks bug #4188
   it('handle the case when exception info is not present', () => {
     const auditResult = ErrorLogsAudit.audit({
-      ConsoleMessages: [],
-      RuntimeExceptions: [{
+      ConsoleMessages: [{
+        'source': 'exception',
+        'level': 'error',
         'timestamp': 1506535813608.003,
-        'exceptionDetails': {
-          'url': 'http://example.com/fancybox.js',
-          'text': 'TypeError: Cannot read property \'msie\' of undefined',
-          'stackTrace': {
-            'callFrames': [
-              {
-                'url': 'http://example.com/fancybox.js',
-                'lineNumber': 28,
-                'columnNumber': 20,
-              },
-            ],
-          },
-          'executionContextId': 3,
+        'url': 'http://example.com/fancybox.js',
+        'text': 'TypeError: Cannot read property \'msie\' of undefined',
+        'stackTrace': {
+          'callFrames': [
+            {
+              'url': 'http://example.com/fancybox.js',
+              'lineNumber': 28,
+              'columnNumber': 20,
+            },
+          ],
         },
       }],
     }, {options: {}});
@@ -147,14 +130,11 @@ describe('Console error logs audit', () => {
       const result = ErrorLogsAudit.audit({
         ConsoleMessages: [
           {
-            entry: {
-              level: 'error',
-              source: 'network',
-              text: 'This is a simple error msg',
-            },
+            level: 'error',
+            source: 'network',
+            text: 'This is a simple error msg',
           },
         ],
-        RuntimeExceptions: [],
       }, {options});
 
       expect(result.score).toBe(0);
@@ -166,12 +146,9 @@ describe('Console error logs audit', () => {
       const result = ErrorLogsAudit.audit({
         ConsoleMessages: [
           {
-            entry: {
-              level: 'error',
-            },
+            level: 'error',
           },
         ],
-        RuntimeExceptions: [],
       }, {options});
 
       expect(result.score).toBe(0);
@@ -183,12 +160,9 @@ describe('Console error logs audit', () => {
       const result = ErrorLogsAudit.audit({
         ConsoleMessages: [
           {
-            entry: {
-              level: 'error',
-            },
+            level: 'error',
           },
         ],
-        RuntimeExceptions: [],
       }, {options});
 
       expect(result.score).toBe(0);
@@ -200,14 +174,11 @@ describe('Console error logs audit', () => {
       const result = ErrorLogsAudit.audit({
         ConsoleMessages: [
           {
-            entry: {
-              level: 'error',
-              source: 'network',
-              text: 'This is a simple error msg',
-            },
+            level: 'error',
+            source: 'network',
+            text: 'This is a simple error msg',
           },
         ],
-        RuntimeExceptions: [],
       }, {options});
 
       expect(result.score).toBe(1);
@@ -219,14 +190,11 @@ describe('Console error logs audit', () => {
       const result = ErrorLogsAudit.audit({
         ConsoleMessages: [
           {
-            entry: {
-              level: 'error',
-              source: 'network',
-              text: 'This is a simple error msg',
-            },
+            level: 'error',
+            source: 'network',
+            text: 'This is a simple error msg',
           },
         ],
-        RuntimeExceptions: [],
       }, {options});
 
       expect(result.score).toBe(1);
@@ -236,19 +204,18 @@ describe('Console error logs audit', () => {
     it('filters exceptions with both regex and strings', () => {
       const options = {ignoredPatterns: [/s.mple/i, 'really']};
       const result = ErrorLogsAudit.audit({
-        ConsoleMessages: [],
-        RuntimeExceptions: [
+        ConsoleMessages: [
           {
-            exceptionDetails: {
-              url: 'http://example.com/url.js',
-              text: 'Simple Error: You messed up',
-            },
+            source: 'exception',
+            level: 'error',
+            url: 'http://example.com/url.js',
+            text: 'Simple Error: You messed up',
           },
           {
-            exceptionDetails: {
-              url: 'http://example.com/url.js',
-              text: 'Bad Error: You really messed up',
-            },
+            source: 'exception',
+            level: 'error',
+            url: 'http://example.com/url.js',
+            text: 'Bad Error: You really messed up',
           },
         ],
       }, {options});

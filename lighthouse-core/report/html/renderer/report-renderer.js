@@ -149,7 +149,7 @@ class ReportRenderer {
     const warnings = this._dom.find('ul', container);
     for (const warningString of report.runWarnings) {
       const warning = warnings.appendChild(this._dom.createElement('li'));
-      warning.textContent = warningString;
+      warning.appendChild(this._dom.convertMarkdownLinkSnippets(warningString));
     }
 
     return container;
@@ -203,9 +203,8 @@ class ReportRenderer {
 
     const fullPageScreenshot =
       report.audits['full-page-screenshot'] && report.audits['full-page-screenshot'].details &&
-      report.audits['full-page-screenshot'].details.type === 'full-page-screenshot' &&
-      report.audits['full-page-screenshot'].details.fullPageScreenshot ?
-      report.audits['full-page-screenshot'].details.fullPageScreenshot : undefined;
+      report.audits['full-page-screenshot'].details.type === 'full-page-screenshot' ?
+      report.audits['full-page-screenshot'].details : undefined;
     const detailsRenderer = new DetailsRenderer(this._dom, {
       fullPageScreenshot,
     });

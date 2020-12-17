@@ -34,7 +34,7 @@ describe('processing for proto', () => {
         },
         'gatherMode': false,
         'disableStorageReset': false,
-        'emulatedFormFactor': 'mobile',
+        'formFactor': 'mobile',
         'locale': 'en-US',
         'blockedUrlPatterns': null,
         'additionalTraceCategories': null,
@@ -46,7 +46,7 @@ describe('processing for proto', () => {
     };
     const expectation = {
       'configSettings': {
-        'emulatedFormFactor': 'mobile',
+        'formFactor': 'mobile',
         'locale': 'en-US',
         'onlyCategories': null,
       },

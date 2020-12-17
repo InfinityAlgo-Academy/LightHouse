@@ -13,7 +13,6 @@ const expectations = [
   {
     artifacts: {
       HostFormFactor: 'desktop',
-      TestedAsMobileDevice: true,
       Stacks: [{
         id: 'jquery',
       }, {
@@ -218,8 +217,13 @@ const expectations = [
                 url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
               },
               {
-                source: 'Runtime.exception',
+                source: 'exception',
                 description: /^Error: A distinctive error\s+at http:\/\/localhost:10200\/dobetterweb\/dbw_tester.html:\d+:\d+$/,
+                url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+              },
+              {
+                source: 'console.error',
+                description: 'Error! Error!',
                 url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
               },
               {
@@ -398,10 +402,10 @@ const expectations = [
         },
         'dom-size': {
           score: 1,
-          numericValue: 148,
+          numericValue: 149,
           details: {
             items: [
-              {statistic: 'Total DOM Elements', value: 148},
+              {statistic: 'Total DOM Elements', value: 149},
               {statistic: 'Maximum DOM Depth', value: 4},
               {
                 statistic: 'Maximum Child Elements',

@@ -38,14 +38,14 @@ describe('Metrics: TTI', () => {
       optimistic: Math.round(result.optimisticEstimate.timeInMs),
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
     }).toMatchSnapshot();
-    assert.equal(result.optimisticEstimate.nodeTimings.size, 19);
+    assert.equal(result.optimisticEstimate.nodeTimings.size, 20);
     assert.equal(result.pessimisticEstimate.nodeTimings.size, 80);
     assert.ok(result.optimisticGraph, 'should have created optimistic graph');
     assert.ok(result.pessimisticGraph, 'should have created pessimistic graph');
   });
 
   it('should compute an observed value (desktop)', async () => {
-    const settings = {throttlingMethod: 'provided'};
+    const settings = {throttlingMethod: 'provided', formFactor: 'desktop'};
     const context = {settings, computedCache: new Map()};
     const result = await Interactive.request({trace, devtoolsLog, settings}, context);
 
@@ -54,10 +54,9 @@ describe('Metrics: TTI', () => {
   });
 
   it('should compute an observed value (mobile)', async () => {
-    const settings = {throttlingMethod: 'provided'};
+    const settings = {throttlingMethod: 'provided', formFactor: 'mobile'};
     const context = {settings, computedCache: new Map()};
-    const result = await Interactive.request(
-      {trace, devtoolsLog, settings, TestedAsMobileDevice: true}, context);
+    const result = await Interactive.request({trace, devtoolsLog, settings}, context);
 
     assert.equal(Math.round(result.timing), 1582);
     assert.equal(result.timestamp, 225415754204);

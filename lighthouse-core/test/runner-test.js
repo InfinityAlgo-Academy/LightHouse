@@ -112,7 +112,8 @@ describe('Runner', () => {
     });
 
     it('-A throws if the settings change', async () => {
-      const settings = {auditMode: artifactsPath, emulatedFormFactor: 'desktop'};
+      // Change throttlingMethod from its default of 'simulate'
+      const settings = {auditMode: artifactsPath, throttlingMethod: 'provided'};
       const opts = {config: generateConfig(settings), driverMock};
       try {
         await Runner.run(defaultGatherFn, opts);
@@ -123,7 +124,7 @@ describe('Runner', () => {
     });
 
     it('-A throws if the URL changes', async () => {
-      const settings = {auditMode: artifactsPath, emulatedFormFactor: 'desktop'};
+      const settings = {auditMode: artifactsPath};
       const opts = {url: 'https://differenturl.com', config: generateConfig(settings), driverMock};
       try {
         await Runner.run(defaultGatherFn, opts);
@@ -412,7 +413,6 @@ describe('Runner', () => {
       const artifacts = {
         ...baseArtifacts,
         ViewportDimensions: new Error(errorMessage),
-        TestedAsMobileDevice: true,
       };
       const artifactsPath = '.tmp/test_artifacts';
       const resolvedPath = path.resolve(process.cwd(), artifactsPath);
@@ -424,7 +424,7 @@ describe('Runner', () => {
           auditMode: resolvedPath,
         },
         audits: [
-          // requires ViewportDimensions and TestedAsMobileDevice artifacts
+          // requires ViewportDimensions artifact
           'content-width',
         ],
       });

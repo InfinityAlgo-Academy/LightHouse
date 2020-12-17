@@ -8,21 +8,28 @@
 /* eslint-env jest */
 
 const TapTargetsAudit = require('../../../audits/seo/tap-targets.js');
+const constants = require('../../../config/constants.js');
 const assert = require('assert').strict;
 
-const getFakeContext = () => ({computedCache: new Map()});
+/** @param {LH.SharedFlagsSettings['formFactor']} formFactor */
+const getFakeContext = (formFactor = 'mobile') => ({
+  computedCache: new Map(),
+  settings: {
+    formFactor: formFactor,
+    screenEmulation: constants.screenEmulationMetrics[formFactor],
+  },
+});
 
 function auditTapTargets(tapTargets, {MetaElements = [{
   name: 'viewport',
   content: 'width=device-width',
-}], TestedAsMobileDevice = true} = {}) {
+}]} = {}, context = getFakeContext()) {
   const artifacts = {
     TapTargets: tapTargets,
     MetaElements,
-    TestedAsMobileDevice,
   };
 
-  return TapTargetsAudit.audit(artifacts, getFakeContext());
+  return TapTargetsAudit.audit(artifacts, context);
 }
 
 const tapTargetSize = 10;
@@ -45,7 +52,9 @@ function getBorderlineTapTargets(options = {}) {
   }
 
   const mainTapTarget = {
-    snippet: '<main></main>',
+    node: {
+      snippet: '<main></main>',
+    },
     clientRects: [
       makeClientRects({
         x: 0,
@@ -54,7 +63,9 @@ function getBorderlineTapTargets(options = {}) {
     ],
   };
   const tapTargetBelow = {
-    snippet: '<below></below>',
+    node: {
+      snippet: '<below></below>',
+    },
     clientRects: [
       makeClientRects({
         x: 0,
@@ -63,7 +74,9 @@ function getBorderlineTapTargets(options = {}) {
     ],
   };
   const tapTargetToTheRight = {
-    snippet: '<right></right>',
+    node: {
+      snippet: '<right></right>',
+    },
     clientRects: [
       makeClientRects({
         x: mainTapTarget.clientRects[0].left + TapTargetsAudit.FINGER_SIZE_PX,
@@ -213,9 +226,11 @@ describe('SEO: Tap targets audit', () => {
   });
 
   it('is not applicable on desktop', async () => {
+    const desktopContext = getFakeContext('desktop');
+
     const auditResult = await auditTapTargets(getBorderlineTapTargets({
       overlapSecondClientRect: true,
-    }), {TestedAsMobileDevice: false});
+    }), undefined, desktopContext);
     assert.equal(auditResult.score, 1);
     assert.equal(auditResult.notApplicable, true);
   });

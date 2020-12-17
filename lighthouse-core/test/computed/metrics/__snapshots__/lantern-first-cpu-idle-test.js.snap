@@ -2,8 +2,8 @@
 
 exports[`Metrics: Lantern TTFCPUI should compute predicted value 1`] = `
 Object {
-  "optimistic": 3351,
-  "pessimistic": 3502,
-  "timing": 3351,
+  "optimistic": 4313,
+  "pessimistic": 4383,
+  "timing": 4313,
 }
 `;

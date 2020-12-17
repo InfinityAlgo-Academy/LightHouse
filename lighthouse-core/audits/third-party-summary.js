@@ -217,15 +217,15 @@ class ThirdPartySummary extends Audit {
 
         return {
           ...stats,
-          entity: /** @type {LH.Audit.Details.LinkValue} */ ({
-            type: 'link',
+          entity: {
+            type: /** @type {'link'} */ ('link'),
             text: entity.name,
             url: entity.homepage || '',
-          }),
-          subItems: /** @type {LH.Audit.Details.TableSubItems} */ ({
-            type: 'subitems',
+          },
+          subItems: {
+            type: /** @type {'subitems'} */ ('subitems'),
             items: ThirdPartySummary.makeSubItems(entity, summaries, stats),
-          }),
+          },
         };
       })
       // Sort by blocking time first, then transfer size to break ties.

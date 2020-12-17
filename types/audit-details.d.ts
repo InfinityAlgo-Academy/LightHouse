@@ -63,12 +63,12 @@ declare global {
       }
 
       /**
-       * A screenshot of the entire page, including width and height information.
-       * Used for element screenshots.
+       * A screenshot of the entire page, including width and height information,
+       * and the locations of interesting nodes.
+       * Used by element screenshots renderer.
        */
-      export interface FullPageScreenshot {
+      export interface FullPageScreenshot extends LH.Artifacts.FullPageScreenshot {
         type: 'full-page-screenshot';
-        fullPageScreenshot: LH.Artifacts['FullPageScreenshot'];
       }
 
       export interface Table {
