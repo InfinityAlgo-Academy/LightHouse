@@ -85,13 +85,16 @@ class Log {
         debug.enable('-*');
         break;
       case 'verbose':
+        debug.enable('*, -*:debug');
+        break;
+      case 'debug':
         debug.enable('*');
         break;
       case 'error':
         debug.enable('-*, *:error');
         break;
       default:
-        debug.enable('*, -*:verbose');
+        debug.enable('*, -*:verbose, -*:debug');
     }
   }
 
