@@ -38,7 +38,7 @@ const Config = require('./config/config.js');
 async function lighthouse(url, flags = {}, configJSON, userConnection) {
   // set logging preferences, assume quiet
   flags.logLevel = flags.logLevel || 'error';
-  log.setLevel('debug');
+  log.setLevel(flags.logLevel);
 
   const config = generateConfig(configJSON, flags);
   const options = {url, config};

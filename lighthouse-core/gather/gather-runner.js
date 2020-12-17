@@ -492,7 +492,7 @@ class GatherRunner {
         msg: `Gathering: ${gatherer.name}`,
         id: `lh:gather:afterPass:${gatherer.name}`,
       };
-      log.time(status, 'verbose');
+      log.time(status, 'log');
 
       const artifactPromise = Promise.resolve()
         .then(_ => gatherer.afterPass(passContext, loadData));
