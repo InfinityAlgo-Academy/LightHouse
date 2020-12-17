@@ -60,7 +60,7 @@ class Connection {
     // Reify params since we need it as a property so can't just spread again.
     const params = paramArgs.length ? paramArgs[0] : undefined;
 
-    log.formatProtocol('method => browser', {method, params}, 'verbose');
+    log.formatProtocol('method => browser', {method, params}, 'debug');
     const id = ++this._lastCommandId;
     const message = JSON.stringify({id, sessionId, method, params});
     this.sendRawMessage(message);
@@ -126,7 +126,7 @@ class Connection {
         }
 
         log.formatProtocol('method <= browser OK',
-          {method: callback.method, params: object.result}, 'verbose');
+          {method: callback.method, params: object.result}, 'debug');
         return object.result;
       }));
     } else {
@@ -134,7 +134,7 @@ class Connection {
       // just log these occurrences.
       const error = object.error && object.error.message;
       log.formatProtocol(`disowned method <= browser ${error ? 'ERR' : 'OK'}`,
-          {method: 'UNKNOWN', params: error || object.result}, 'verbose');
+          {method: 'UNKNOWN', params: error || object.result}, 'debug');
     }
   }
 
