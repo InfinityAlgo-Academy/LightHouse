@@ -467,6 +467,8 @@ function getNodeDetailsImpl(element) {
     window.__lighthouseNodesDontTouchOrAllVarianceGoesAway = new Map();
   }
 
+  const htmlElement = element instanceof ShadowRoot ? element.host : element;
+
   // Create an id that will be unique across all execution contexts.
   // The id could be any arbitrary string, the exact value is not important.
   // For example, tagName is added only because it might be useful for debugging.
@@ -474,19 +476,18 @@ function getNodeDetailsImpl(element) {
   // We also dedupe this id so that details collected for an element within the same
   // pass and execution context will share the same id. Not technically important, but
   // cuts down on some duplication.
-  let lhId = window.__lighthouseNodesDontTouchOrAllVarianceGoesAway.get(element);
+  let lhId = window.__lighthouseNodesDontTouchOrAllVarianceGoesAway.get(htmlElement);
   if (!lhId) {
     lhId = [
       window.__lighthouseExecutionContextId !== undefined ?
         window.__lighthouseExecutionContextId :
         'page',
       window.__lighthouseNodesDontTouchOrAllVarianceGoesAway.size,
-      element.tagName,
+      htmlElement.tagName,
     ].join('-');
-    window.__lighthouseNodesDontTouchOrAllVarianceGoesAway.set(element, lhId);
+    window.__lighthouseNodesDontTouchOrAllVarianceGoesAway.set(htmlElement, lhId);
   }
 
-  const htmlElement = element instanceof ShadowRoot ? element.host : element;
   const details = {
     lhId,
     devtoolsNodePath: getNodePath(element),

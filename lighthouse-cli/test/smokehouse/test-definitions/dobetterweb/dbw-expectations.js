@@ -429,6 +429,30 @@ const expectations = [
             }],
           },
         },
+        'full-page-screenshot': {
+          score: null,
+          details: {
+            type: 'full-page-screenshot',
+            screenshot: {
+              width: 360,
+              // Allow for differences in platforms.
+              height: '3755±5',
+              data: /^data:image\/jpeg;.{500,}/,
+            },
+            nodes: {
+              'page-0-IMG': {
+                // Test that these are numbers and in the ballpark.
+                top: '650±50',
+                bottom: '650±50',
+                left: '10±10',
+                right: '120±20',
+                width: '120±20',
+                height: '20±20',
+              },
+              // And then many more nodes.
+            },
+          },
+        },
       },
     },
   },
