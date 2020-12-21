@@ -57,13 +57,6 @@
         "scoreDisplayMode": "binary",
         "warnings": []
       },
-      "without-javascript": {
-        "id": "without-javascript",
-        "title": "Contains some content when JavaScript is not available",
-        "description": "Your app should display some content when JavaScript is disabled, even if it's just a warning to the user that JavaScript is required to use the app. [Learn more](https://web.dev/without-javascript/).",
-        "score": 1,
-        "scoreDisplayMode": "binary"
-      },
       "first-contentful-paint": {
         "id": "first-contentful-paint",
         "title": "First Contentful Paint",
@@ -16864,8 +16857,7 @@
       "auditMode": true,
       "gatherMode": false,
       "disableStorageReset": false,
-      "emulatedFormFactor": "mobile",
-      "internalDisableDeviceScreenEmulation": false,
+      "formFactor": "mobile",
       "channel": "cli",
       "budgets": null,
       "locale": "en-US",
@@ -17648,11 +17640,6 @@
             "group": "pwa-optimized"
           },
           {
-            "id": "without-javascript",
-            "weight": 1,
-            "group": "pwa-optimized"
-          },
-          {
             "id": "apple-touch-icon",
             "weight": 1,
             "group": "pwa-optimized"
@@ -18364,12 +18351,6 @@
           "entryType": "measure"
         },
         {
-          "startTime": 21128.22,
-          "name": "lh:gather:beforePass:HTMLWithoutJavaScript",
-          "duration": 0.03,
-          "entryType": "measure"
-        },
-        {
           "startTime": 21128.27,
           "name": "lh:gather:beginRecording",
           "duration": 0.07,
@@ -18403,12 +18384,6 @@
           "startTime": 21936.91,
           "name": "lh:gather:afterPass:HTTPRedirect",
           "duration": 1.73,
-          "entryType": "measure"
-        },
-        {
-          "startTime": 21938.65,
-          "name": "lh:gather:afterPass:HTMLWithoutJavaScript",
-          "duration": 2.82,
           "entryType": "measure"
         },
         {
@@ -18487,12 +18462,6 @@
           "startTime": 1080.71,
           "name": "lh:computed:ViewportMeta",
           "duration": 0.64,
-          "entryType": "measure"
-        },
-        {
-          "startTime": 1085.47,
-          "name": "lh:audit:without-javascript",
-          "duration": 4.32,
           "entryType": "measure"
         },
         {
@@ -20022,12 +19991,6 @@
         ],
         "lighthouse-core/audits/viewport.js | description": [
           "audits.viewport.description"
-        ],
-        "lighthouse-core/audits/without-javascript.js | title": [
-          "audits[without-javascript].title"
-        ],
-        "lighthouse-core/audits/without-javascript.js | description": [
-          "audits[without-javascript].description"
         ],
         "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": [
           "audits[first-contentful-paint].title"

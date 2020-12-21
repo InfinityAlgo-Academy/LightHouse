@@ -10,12 +10,14 @@ const UsesResponsiveImagesAudit =
 const assert = require('assert').strict;
 
 /* eslint-env jest */
-function generateRecord(resourceSizeInKb, durationInMs, mimeType = 'image/png') {
+function generateRecord(resourceSizeInKb, durationInMs, url = 'https://google.com/logo.png', mimeType = 'image/png') {
   return {
     mimeType,
     resourceSize: resourceSizeInKb * 1024,
+    transferSize: resourceSizeInKb * 1024,
     endTime: durationInMs / 1000,
     responseReceivedTime: 0,
+    url,
   };
 }
 
@@ -26,32 +28,29 @@ function generateSize(width, height, prefix = 'displayed') {
   return size;
 }
 
-function generateImage(clientSize, naturalSize, networkRecord, src = 'https://google.com/logo.png') {
-  Object.assign(networkRecord || {}, {url: src});
-  const image = {src, ...networkRecord};
-  Object.assign(image, clientSize, naturalSize);
-  return image;
+function generateImage(clientSize, naturalSize, src = 'https://google.com/logo.png') {
+  return {src, ...clientSize, ...naturalSize};
 }
 
 describe('Page uses responsive images', () => {
   function testImage(condition, data) {
     const description = `identifies when an image is ${condition}`;
+    const artifacts = {
+      ViewportDimensions: {
+        innerWidth: 1000,
+        innerHeight: 1000,
+        devicePixelRatio: data.devicePixelRatio || 1,
+      },
+      ImageElements: [
+        generateImage(
+          generateSize(...data.clientSize),
+          generateSize(...data.naturalSize, 'natural')
+        ),
+      ],
+    };
     it(description, () => {
-      const result = UsesResponsiveImagesAudit.audit_({
-        ViewportDimensions: {
-          innerWidth: 1000,
-          innerHeight: 1000,
-          devicePixelRatio: data.devicePixelRatio || 1,
-        },
-        ImageElements: [
-          generateImage(
-            generateSize(...data.clientSize),
-            generateSize(...data.naturalSize, 'natural'),
-            generateRecord(data.sizeInKb, data.durationInMs || 200)
-          ),
-        ],
-      });
-
+      // eslint-disable-next-line max-len
+      const result = UsesResponsiveImagesAudit.audit_(artifacts, [generateRecord(data.sizeInKb, data.durationInMs || 200)]);
       assert.equal(result.items.length, data.listed ? 1 : 0);
       if (data.listed) {
         assert.equal(Math.round(result.items[0].wastedBytes / 1024), data.expectedWaste);
@@ -120,35 +119,37 @@ describe('Page uses responsive images', () => {
           null
         ),
       ],
-    });
+    },
+      []
+    );
 
     assert.equal(auditResult.items.length, 0);
   });
 
   it('identifies when images are not wasteful', () => {
+    const networkRecords = [generateRecord(100, 300, 'https://google.com/logo.png'), generateRecord(90, 500, 'https://google.com/logo2.png'), generateRecord(20, 100, 'data:image/jpeg;base64,foobar')];
     const auditResult = UsesResponsiveImagesAudit.audit_({
       ViewportDimensions: {innerWidth: 1000, innerHeight: 1000, devicePixelRatio: 2},
       ImageElements: [
         generateImage(
           generateSize(200, 200),
           generateSize(450, 450, 'natural'),
-          generateRecord(100, 300),
           'https://google.com/logo.png'
         ),
         generateImage(
           generateSize(100, 100),
           generateSize(210, 210, 'natural'),
-          generateRecord(90, 500),
           'https://google.com/logo2.png'
         ),
         generateImage(
           generateSize(100, 100),
           generateSize(80, 80, 'natural'),
-          generateRecord(20, 100),
           'data:image/jpeg;base64,foobar'
         ),
       ],
-    });
+    },
+      networkRecords
+    );
 
     assert.equal(auditResult.items.length, 2);
   });
@@ -156,29 +157,31 @@ describe('Page uses responsive images', () => {
   it('ignores vectors', () => {
     const urlA = 'https://google.com/logo.svg';
     const naturalSizeA = generateSize(450, 450, 'natural');
-    const recordA = generateRecord(100, 300, 'image/svg+xml');
-
+    const image =
+      {...generateImage(generateSize(10, 10), naturalSizeA, urlA), mimeType: 'image/svg+xml'};
     const auditResult = UsesResponsiveImagesAudit.audit_({
       ViewportDimensions: {innerWidth: 1000, innerHeight: 1000, devicePixelRatio: 1},
       ImageElements: [
-        generateImage(generateSize(10, 10), naturalSizeA, recordA, urlA),
+        image,
       ],
-    });
-
+    },
+      [generateRecord(100, 300, urlA, 'image/svg+xml')]
+    );
     assert.equal(auditResult.items.length, 0);
   });
 
   it('ignores CSS', () => {
     const urlA = 'https://google.com/logo.png';
     const naturalSizeA = generateSize(450, 450, 'natural');
-    const recordA = generateRecord(100, 300);
 
     const auditResult = UsesResponsiveImagesAudit.audit_({
       ViewportDimensions: {innerWidth: 1000, innerHeight: 1000, devicePixelRatio: 1},
       ImageElements: [
-        {...generateImage(generateSize(10, 10), naturalSizeA, recordA, urlA), isCss: true},
+        {...generateImage(generateSize(10, 10), naturalSizeA, urlA), isCss: true},
       ],
-    });
+    },
+      [generateRecord(100, 300, urlA)]
+    );
 
     assert.equal(auditResult.items.length, 0);
   });
@@ -186,37 +189,39 @@ describe('Page uses responsive images', () => {
   it('handles failure', () => {
     const urlA = 'https://google.com/logo.png';
     const naturalSizeA = generateSize(NaN, 450, 'natural');
-    const recordA = generateRecord(100, 300);
-
     const auditResult = UsesResponsiveImagesAudit.audit_({
       ViewportDimensions: {innerWidth: 1000, innerHeight: 1000, devicePixelRatio: 1},
       ImageElements: [
-        generateImage(generateSize(10, 10), naturalSizeA, recordA, urlA),
+        generateImage(generateSize(10, 10), naturalSizeA, urlA),
       ],
-    });
+    },
+      [generateRecord(100, 300, urlA)]
+    );
 
     assert.equal(auditResult.items.length, 0);
-    assert.equal(auditResult.warnings.length, 1);
   });
 
   it('de-dupes images', () => {
     const urlA = 'https://google.com/logo.png';
     const naturalSizeA = generateSize(450, 450, 'natural');
-    const recordA = generateRecord(100, 300);
+    const recordA = generateRecord(100, 300, urlA);
     const urlB = 'https://google.com/logoB.png';
     const naturalSizeB = generateSize(1000, 1000, 'natural');
-    const recordB = generateRecord(10, 20); // make it small to still test passing
+    const recordB = generateRecord(10, 20, urlB); // make it small to keep test passing
+    const networkRecords = [recordA, recordB];
 
     const auditResult = UsesResponsiveImagesAudit.audit_({
       ViewportDimensions: {innerWidth: 1000, innerHeight: 1000, devicePixelRatio: 1},
       ImageElements: [
-        generateImage(generateSize(10, 10), naturalSizeA, recordA, urlA),
-        generateImage(generateSize(450, 450), naturalSizeA, recordA, urlA),
-        generateImage(generateSize(30, 30), naturalSizeA, recordA, urlA),
-        generateImage(generateSize(500, 500), naturalSizeB, recordB, urlB),
-        generateImage(generateSize(100, 100), naturalSizeB, recordB, urlB),
+        generateImage(generateSize(10, 10), naturalSizeA, urlA),
+        generateImage(generateSize(450, 450), naturalSizeA, urlA),
+        generateImage(generateSize(30, 30), naturalSizeA, urlA),
+        generateImage(generateSize(500, 500), naturalSizeB, urlB),
+        generateImage(generateSize(100, 100), naturalSizeB, urlB),
       ],
-    });
+    },
+      networkRecords
+    );
 
     assert.equal(auditResult.items.length, 1);
     assert.equal(auditResult.items[0].wastedPercent, 75, 'correctly computes wastedPercent');

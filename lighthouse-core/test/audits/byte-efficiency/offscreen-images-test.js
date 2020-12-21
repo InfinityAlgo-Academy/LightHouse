@@ -23,6 +23,7 @@ function generateRecord({
     mimeType,
     startTime, // DevTools timestamp which is in seconds.
     resourceSize: resourceSizeInKb * 1024,
+    transferSize: resourceSizeInKb * 1024,
   };
 }
 
@@ -408,6 +409,7 @@ describe('OffscreenImages audit', () => {
     const recordA = {
       url: 'https://example.com/a',
       resourceSize: wastedSize,
+      transferSize: wastedSize,
       requestId: 'a',
       startTime: 1,
       priority: 'High',
@@ -416,6 +418,7 @@ describe('OffscreenImages audit', () => {
     const recordB = {
       url: 'https://example.com/b',
       resourceSize: wastedSize,
+      transferSize: wastedSize,
       requestId: 'b',
       startTime: 2.25,
       priority: 'High',
@@ -461,6 +464,7 @@ describe('OffscreenImages audit', () => {
     const recordA = {
       url: 'https://example.com/a',
       resourceSize: wastedSize,
+      transferSize: wastedSize,
       requestId: 'a',
       startTime: 1,
       priority: 'High',
@@ -469,6 +473,7 @@ describe('OffscreenImages audit', () => {
     const recordB = {
       url: 'https://example.com/b',
       resourceSize: wastedSize,
+      transferSize: wastedSize,
       requestId: 'b',
       startTime: 1.25,
       priority: 'High',

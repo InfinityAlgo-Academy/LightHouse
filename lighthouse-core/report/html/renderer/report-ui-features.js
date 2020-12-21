@@ -315,7 +315,7 @@ class ReportUIFeatures {
       this.json.audits['full-page-screenshot'] &&
       this.json.audits['full-page-screenshot'].details &&
       this.json.audits['full-page-screenshot'].details.type === 'full-page-screenshot' &&
-      this.json.audits['full-page-screenshot'].details.fullPageScreenshot;
+      this.json.audits['full-page-screenshot'].details;
     if (!fullPageScreenshot) return;
 
     ElementScreenshotRenderer.installOverlayFeature(
@@ -594,10 +594,9 @@ class ReportUIFeatures {
     if ('onbeforeprint' in self) {
       self.addEventListener('afterprint', this.collapseAllDetails);
     } else {
-      const win = /** @type {Window} */ (self);
       // Note: FF implements both window.onbeforeprint and media listeners. However,
       // it doesn't matchMedia doesn't fire when matching 'print'.
-      win.matchMedia('print').addListener(mql => {
+      self.matchMedia('print').addListener(mql => {
         if (mql.matches) {
           this.expandAllDetails();
         } else {

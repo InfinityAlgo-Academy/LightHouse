@@ -88,8 +88,9 @@ async function collectStacks(passContext) {
     deps: [libDetectorSource],
   });
 
+  /** @type {LH.Artifacts['Stacks']} */
   const stacks = jsLibraries.map(lib => ({
-    detector: /** @type {'js'} */ ('js'),
+    detector: 'js',
     id: lib.id,
     name: lib.name,
     version: typeof lib.version === 'number' ? String(lib.version) : (lib.version || undefined),

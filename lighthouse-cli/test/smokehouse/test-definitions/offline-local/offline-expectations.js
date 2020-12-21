@@ -41,13 +41,7 @@ module.exports = [
         'service-worker': {
           score: 0,
         },
-        'works-offline': {
-          score: 0,
-        },
         'viewport': {
-          score: 1,
-        },
-        'without-javascript': {
           score: 1,
         },
         'user-timings': {
@@ -58,8 +52,7 @@ module.exports = [
         },
         'installable-manifest': {
           score: 0,
-          explanation: 'Failures: No manifest was fetched.',
-          details: {items: [{isParseFailure: true}]},
+          details: {items: [{reason: 'No manifest was fetched'}]},
         },
         'splash-screen': {
           score: 0,
@@ -107,9 +100,16 @@ module.exports = [
         },
       },
       InstallabilityErrors: {
-        errors: [
-          {errorId: 'no-icon-available'},
-        ],
+        errors: {
+          length: '>= 1',
+          0: {
+            // COMPAT: In m89 the `warn-not-offline-capable` error was added.
+            // https://bugs.chromium.org/p/chromium/issues/detail?id=965802#c46
+            // We've seen this errorId pop up there: https://github.com/GoogleChrome/lighthouse/issues/11800
+            // Our length and errorId assertions allows for just the no-icon-available error or both
+            errorId: /(no-icon-available)|(warn-not-offline-capable)/,
+          },
+        },
       },
     },
     lhr: {
@@ -129,13 +129,7 @@ module.exports = [
             scopeUrl: 'http://localhost:10503/',
           },
         },
-        'works-offline': {
-          score: 1,
-        },
         'viewport': {
-          score: 1,
-        },
-        'without-javascript': {
           score: 1,
         },
         'user-timings': {
@@ -146,7 +140,7 @@ module.exports = [
         },
         'installable-manifest': {
           score: 0,
-          explanation: 'Failures: Manifest icon failed to be fetched.',
+          details: {items: [{reason: 'Downloaded icon was empty or corrupted'}]},
         },
         'splash-screen': {
           score: 0,
@@ -190,9 +184,6 @@ module.exports = [
             scriptUrl: 'http://localhost:10503/offline-ready-sw.js?delay=5000&slow',
             scopeUrl: 'http://localhost:10503/',
           },
-        },
-        'works-offline': {
-          score: 1,
         },
       },
     },

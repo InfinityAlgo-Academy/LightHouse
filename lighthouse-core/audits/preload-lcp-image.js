@@ -90,7 +90,7 @@ class PreloadLCPImageAudit extends Audit {
     if (!lcpElement) return undefined;
 
     const lcpImageElement = imageElements.find(elem => {
-      return elem.devtoolsNodePath === lcpElement.devtoolsNodePath;
+      return elem.node.devtoolsNodePath === lcpElement.node.devtoolsNodePath;
     });
 
     if (!lcpImageElement) return undefined;
@@ -134,11 +134,10 @@ class PreloadLCPImageAudit extends Audit {
     for (const {node} of modifiedGraph.traverseGenerator()) {
       if (node.type !== 'network') continue;
 
-      const networkNode = /** @type {LH.Gatherer.Simulation.GraphNetworkNode} */ (node);
       if (node.isMainDocument()) {
-        mainDocumentNode = networkNode;
-      } else if (networkNode.id === lcpNode.id) {
-        modifiedLCPNode = networkNode;
+        mainDocumentNode = node;
+      } else if (node.id === lcpNode.id) {
+        modifiedLCPNode = node;
       }
     }
 

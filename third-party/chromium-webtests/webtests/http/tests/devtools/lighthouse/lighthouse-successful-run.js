@@ -16,7 +16,6 @@
     'metrics',
     'screenshot-thumbnails',
     // misc trace-based audits
-    'load-fast-enough-for-pwa',
     'long-tasks',
     'user-timings',
     'bootup-time',
@@ -60,7 +59,6 @@
   TestRunner.addResult('\n=============== Lighthouse Results ===============');
   TestRunner.addResult(`URL: ${lhr.finalUrl}`);
   TestRunner.addResult(`Version: ${lhr.lighthouseVersion}`);
-  TestRunner.addResult(`TestedAsMobileDevice: ${artifacts.TestedAsMobileDevice}`);
   TestRunner.addResult(`ViewportDimensions: ${JSON.stringify(artifacts.ViewportDimensions, null, 2)}`);
   TestRunner.addResult('\n');
 
@@ -80,8 +78,9 @@
 
   const resultsElement = LighthouseTestRunner.getResultsElement();
   const auditElements = [...resultsElement.querySelectorAll('.lh-audit')];
+  const auditElementNames = auditElements.map(e => e.id).sort((a, b) => a.localeCompare(b));
   TestRunner.addResult(`\n# of .lh-audit divs: ${auditElements.length}`);
-  TestRunner.addResult(`\n.lh-audit divs:\n${auditElements.map(e => e.id).join('\n')}`);
+  TestRunner.addResult(`\n.lh-audit divs:\n${auditElementNames.join('\n')}`);
 
   TestRunner.completeTest();
 })();

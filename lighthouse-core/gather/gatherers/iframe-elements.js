@@ -29,7 +29,7 @@ function collectIFrameElements() {
       // @ts-expect-error - put into scope via stringification
       isPositionFixed: isPositionFixed(node), // eslint-disable-line no-undef
       // @ts-expect-error - getNodeDetails put into scope via stringification
-      ...getNodeDetails(node),
+      node: getNodeDetails(node),
     };
   });
 }

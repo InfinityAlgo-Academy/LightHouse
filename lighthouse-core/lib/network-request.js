@@ -110,7 +110,8 @@ class NetworkRequest {
     this.failed = false;
     this.localizedFailDescription = '';
 
-    this.initiator = /** @type {LH.Crdp.Network.Initiator} */ ({type: 'other'});
+    /** @type {LH.Crdp.Network.Initiator} */
+    this.initiator = {type: 'other'};
     /** @type {LH.Crdp.Network.ResourceTiming|undefined} */
     this.timing = undefined;
     /** @type {LH.Crdp.Network.ResourceType|undefined} */

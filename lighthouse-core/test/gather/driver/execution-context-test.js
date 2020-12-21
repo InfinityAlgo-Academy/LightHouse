@@ -21,7 +21,8 @@ const createMockSendCommandFn = createMockSendCommandFn_.bind(null, {useSessionI
 
 /** @return {LH.Gatherer.FRProtocolSession} */
 function createMockSession() {
-  const session = /** @type {*} */ ({});
+  /** @type {any} */
+  const session = {};
   session.hasNextProtocolTimeout = jest.fn().mockReturnValue(false);
   session.setNextProtocolTimeout = jest.fn();
   return session;

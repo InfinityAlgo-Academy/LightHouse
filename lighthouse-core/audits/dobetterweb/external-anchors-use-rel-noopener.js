@@ -60,7 +60,7 @@ class ExternalAnchorsUseRelNoopenerAudit extends Audit {
         try {
           return new URL(anchor.href).host !== pageHost;
         } catch (err) {
-          warnings.push(str_(UIStrings.warning, {anchorHTML: anchor.snippet}));
+          warnings.push(str_(UIStrings.warning, {anchorHTML: anchor.node.snippet}));
           return true;
         }
       })
@@ -71,15 +71,15 @@ class ExternalAnchorsUseRelNoopenerAudit extends Audit {
         return {
           node: {
             type: /** @type {'node'} */ ('node'),
-            path: anchor.devtoolsNodePath || '',
-            selector: anchor.selector || '',
-            nodeLabel: anchor.nodeLabel || '',
-            snippet: anchor.snippet || '',
+            path: anchor.node.devtoolsNodePath || '',
+            selector: anchor.node.selector || '',
+            nodeLabel: anchor.node.nodeLabel || '',
+            snippet: anchor.node.snippet || '',
           },
           href: anchor.href || 'Unknown',
           target: anchor.target || '',
           rel: anchor.rel || '',
-          outerHTML: anchor.snippet || '',
+          outerHTML: anchor.node.snippet || '',
         };
       });
 

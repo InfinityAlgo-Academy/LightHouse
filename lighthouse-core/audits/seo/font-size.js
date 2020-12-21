@@ -233,7 +233,7 @@ class FontSize extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['FontSize', 'URL', 'MetaElements', 'TestedAsMobileDevice'],
+      requiredArtifacts: ['FontSize', 'URL', 'MetaElements'],
     };
   }
 
@@ -243,7 +243,7 @@ class FontSize extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    if (!artifacts.TestedAsMobileDevice) {
+    if (context.settings.formFactor === 'desktop') {
       // Font size isn't important to desktop SEO
       return {
         score: 1,

@@ -9,7 +9,8 @@ set -e
 # This test can be expensive, we'll only run the tests if we touched files that affect the simulations.
 CHANGED_FILES=""
 if [[ "$CI" ]]; then
-  CHANGED_FILES=$(git --no-pager diff --name-only $TRAVIS_COMMIT_RANGE)
+  if [[ -z "$GITHUB_ACTIONS_COMMIT_RANGE" ]]; then echo "No commit range available!" && exit 1 ; fi
+  CHANGED_FILES=$(git --no-pager diff --name-only "$GITHUB_ACTIONS_COMMIT_RANGE")
 else
   CHANGED_FILES=$(git --no-pager diff --name-only master)
 fi
@@ -24,4 +25,11 @@ fi
 printf "\n\nRunning test...\n"
 cd "$LH_ROOT/lighthouse-core/scripts/legacy-javascript"
 yarn
+
+# This script will update the summary sizes file with the latest data.
 node run.js
+
+# We want to fail in CI if there are any changes.
+if [[ -n "$CI" ]]; then
+  git add summary-sizes.txt && git diff --cached --exit-code
+fi

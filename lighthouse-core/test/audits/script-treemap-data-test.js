@@ -9,7 +9,8 @@
 
 const ScriptTreemapData_ = require('../../audits/script-treemap-data.js');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
-const {loadSourceMapAndUsageFixture, makeParamsOptional} = require('../test-utils.js');
+const {loadSourceMapAndUsageFixture, loadSourceMapFixture, makeParamsOptional} =
+  require('../test-utils.js');
 
 const ScriptTreemapData = {
   audit: makeParamsOptional(ScriptTreemapData_.audit),
@@ -32,6 +33,7 @@ describe('ScriptTreemapData audit', () => {
     beforeAll(async () => {
       const context = {computedCache: new Map()};
       const {map, content, usage} = loadSourceMapAndUsageFixture('squoosh');
+      expect(map.sourceRoot).not.toBeTruthy();
       const mainUrl = 'https://squoosh.app';
       const scriptUrl = 'https://squoosh.app/main-app.js';
       const networkRecords = [generateRecord(scriptUrl, content.length, 'Script')];
@@ -69,6 +71,52 @@ describe('ScriptTreemapData audit', () => {
 
       expect(JSON.stringify(treemapData).length).toMatchInlineSnapshot(`6621`);
       expect(treemapData).toMatchSnapshot();
+    });
+  });
+
+  describe('coursehero fixture', () => {
+    /** @type {import('../../audits/script-treemap-data.js').TreemapData} */
+    let treemapData;
+    beforeAll(async () => {
+      const context = {computedCache: new Map()};
+      const {map, content} = loadSourceMapFixture('coursehero-bundle-1');
+      expect(map.sourceRoot).toBeTruthy();
+      const mainUrl = 'https://courshero.com';
+      const scriptUrl1 = 'https://courshero.com/script1.js';
+      const scriptUrl2 = 'https://courshero.com/script2.js';
+      const networkRecords = [
+        generateRecord(scriptUrl1, content.length, 'Script'),
+        generateRecord(scriptUrl2, content.length, 'Script'),
+      ];
+
+      const artifacts = {
+        URL: {requestedUrl: mainUrl, finalUrl: mainUrl},
+        // Audit should still work even without usage data.
+        JsUsage: {},
+        devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(networkRecords)},
+        SourceMaps: [{scriptUrl: scriptUrl1, map}, {scriptUrl: scriptUrl2, map}],
+        ScriptElements: [{src: scriptUrl1, content}, {src: scriptUrl2, content}],
+      };
+      const results = await ScriptTreemapData.audit(artifacts, context);
+
+      // @ts-expect-error: Debug data.
+      treemapData = results.details.treemapData;
+    });
+
+    it('has root nodes', () => {
+      expect(JSON.stringify(treemapData).length).toMatchInlineSnapshot(`86635`);
+      expect(treemapData).toMatchSnapshot();
+    });
+
+    it('finds duplicates', () => {
+      expect(JSON.stringify(treemapData).length).toMatchInlineSnapshot(`86635`);
+      // @ts-ignore all these children exist.
+      const leafNode = treemapData[0].node.
+        children[0].
+        children[0].
+        children[0].
+        children[0].duplicatedNormalizedModuleName;
+      expect(leafNode).toBe('Control/assets/js/vendor/jquery.typeahead.js');
     });
   });
 

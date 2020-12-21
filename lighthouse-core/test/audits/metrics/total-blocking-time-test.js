@@ -7,6 +7,7 @@
 
 const TBTAudit = require('../../../audits/metrics/total-blocking-time.js');
 const defaultOptions = TBTAudit.defaultOptions;
+const constants = require('../../../config/constants.js');
 
 const trace = require('../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
@@ -14,24 +15,35 @@ const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.
 const lcpTrace = require('../../fixtures/traces/lcp-m78.json');
 const lcpDevtoolsLog = require('../../fixtures/traces/lcp-m78.devtools.log.json');
 
-function generateArtifacts({trace, devtoolsLog, TestedAsMobileDevice}) {
+function generateArtifacts({trace, devtoolsLog}) {
   return {
     traces: {[TBTAudit.DEFAULT_PASS]: trace},
     devtoolsLogs: {[TBTAudit.DEFAULT_PASS]: devtoolsLog},
-    TestedAsMobileDevice,
   };
 }
 
-function generateContext({throttlingMethod}) {
-  const settings = {throttlingMethod};
-  return {options: defaultOptions, settings, computedCache: new Map()};
-}
+/**
+ * @param {{
+ * {LH.SharedFlagsSettings['formFactor']} formFactor
+ * {LH.SharedFlagsSettings['throttlingMethod']} throttlingMethod
+ * }} param0
+ */
+const getFakeContext = ({formFactor, throttlingMethod}) => ({
+  options: defaultOptions,
+  computedCache: new Map(),
+  settings: {
+    formFactor: formFactor,
+    throttlingMethod,
+    screenEmulation: constants.screenEmulationMetrics[formFactor],
+  },
+});
+
 /* eslint-env jest */
 
 describe('Performance: total-blocking-time audit', () => {
   it('evaluates Total Blocking Time metric properly', async () => {
-    const artifacts = generateArtifacts({trace, devtoolsLog, TestedAsMobileDevice: true});
-    const context = generateContext({throttlingMethod: 'provided'});
+    const artifacts = generateArtifacts({trace, devtoolsLog});
+    const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
 
     const output = await TBTAudit.audit(artifacts, context);
     expect(output.numericValue).toBeCloseTo(48.3, 1);
@@ -41,8 +53,8 @@ describe('Performance: total-blocking-time audit', () => {
 
   it('adjusts scoring based on form factor', async () => {
     const artifactsMobile = generateArtifacts({trace: lcpTrace,
-      devtoolsLog: lcpDevtoolsLog, TestedAsMobileDevice: true});
-    const contextMobile = generateContext({throttlingMethod: 'provided'});
+      devtoolsLog: lcpDevtoolsLog});
+    const contextMobile = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
 
     const outputMobile = await TBTAudit.audit(artifactsMobile, contextMobile);
     expect(outputMobile.numericValue).toBeCloseTo(333, 1);
@@ -50,8 +62,8 @@ describe('Performance: total-blocking-time audit', () => {
     expect(outputMobile.displayValue).toBeDisplayString('330\xa0ms');
 
     const artifactsDesktop = generateArtifacts({trace: lcpTrace,
-      devtoolsLog: lcpDevtoolsLog, TestedAsMobileDevice: false});
-    const contextDesktop = generateContext({throttlingMethod: 'provided'});
+      devtoolsLog: lcpDevtoolsLog});
+    const contextDesktop = getFakeContext({formFactor: 'desktop', throttlingMethod: 'provided'});
 
     const outputDesktop = await TBTAudit.audit(artifactsDesktop, contextDesktop);
     expect(outputDesktop.numericValue).toBeCloseTo(333, 1);

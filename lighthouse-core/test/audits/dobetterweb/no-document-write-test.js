@@ -27,10 +27,10 @@ describe('Page does not use document.write()', () => {
     const auditResult = DocWriteUseAudit.audit({
       URL: {finalUrl: URL},
       ConsoleMessages: [
-        {entry: {source: 'violation', url: 'https://example.com/', text}},
-        {entry: {source: 'violation', url: 'https://example2.com/two', text}},
-        {entry: {source: 'violation', url: 'http://abc.com/', text: 'Long event handler!'}},
-        {entry: {source: 'deprecation', url: 'https://example.com/two'}},
+        {source: 'violation', url: 'https://example.com/', text},
+        {source: 'violation', url: 'https://example2.com/two', text},
+        {source: 'violation', url: 'http://abc.com/', text: 'Long event handler!'},
+        {source: 'deprecation', url: 'https://example.com/two'},
       ],
     });
     assert.equal(auditResult.score, 0);

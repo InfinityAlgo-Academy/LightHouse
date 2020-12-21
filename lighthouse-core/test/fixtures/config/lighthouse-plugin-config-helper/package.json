@@ -1,0 +1,5 @@
+{
+  "name": "lighthouse-plugin-config",
+  "private": true,
+  "main": "./plugin-config-helper.js"
+}

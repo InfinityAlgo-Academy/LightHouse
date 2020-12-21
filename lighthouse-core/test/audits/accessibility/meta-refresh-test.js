@@ -31,7 +31,7 @@ describe('Accessibility: meta-refresh audit', () => {
       Accessibility: {
         violations: [{
           id: 'meta-refresh',
-          nodes: [{}],
+          nodes: [],
           help: 'http://example.com/',
         }],
       },

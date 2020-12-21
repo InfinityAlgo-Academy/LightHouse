@@ -263,7 +263,7 @@ describe('PerfCategoryRenderer', () => {
 
     it('also appends device and version number', () => {
       Util.reportJson = {
-        configSettings: {emulatedFormFactor: 'mobile'},
+        configSettings: {formFactor: 'mobile'},
         lighthouseVersion: '6.0.0',
       };
       const href = renderer._getScoringCalculatorHref(category.auditRefs);

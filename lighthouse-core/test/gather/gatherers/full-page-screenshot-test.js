@@ -62,7 +62,11 @@ describe('FullPageScreenshot gatherer', () => {
     });
     const passContext = {
       settings: {
-        emulatedFormFactor: 'mobile',
+        formFactor: 'mobile',
+        screenEmulation: {
+          mobile: true,
+          disabled: false,
+        },
       },
       driver,
       baseArtifacts: {},
@@ -89,7 +93,11 @@ describe('FullPageScreenshot gatherer', () => {
     });
     const passContext = {
       settings: {
-        emulatedFormFactor: 'mobile',
+        formFactor: 'mobile',
+        screenEmulation: {
+          mobile: true,
+          disabled: false,
+        },
       },
       driver,
       baseArtifacts: {},
@@ -97,7 +105,8 @@ describe('FullPageScreenshot gatherer', () => {
 
     await fpsGatherer.afterPass(passContext);
 
-    expect(driver.beginEmulation).toHaveBeenCalledWith({emulatedFormFactor: 'mobile'});
+    const expectedArgs = {formFactor: 'mobile', screenEmulation: {disabled: false, mobile: true}};
+    expect(driver.beginEmulation).toHaveBeenCalledWith(expectedArgs);
     expect(driver.beginEmulation).toHaveBeenCalledTimes(1);
   });
 
@@ -116,12 +125,13 @@ describe('FullPageScreenshot gatherer', () => {
     });
     const passContext = {
       settings: {
-        emulatedFormFactor: 'none',
+        screenEmulation: {
+          mobile: true,
+          disabled: true,
+        },
+        formFactor: 'mobile',
       },
       driver,
-      baseArtifacts: {
-        TestedAsMobileDevice: true,
-      },
     };
 
     await fpsGatherer.afterPass(passContext);
@@ -166,7 +176,11 @@ describe('FullPageScreenshot gatherer', () => {
     });
     const passContext = {
       settings: {
-        emulatedFormFactor: 'mobile',
+        formFactor: 'mobile',
+        screenEmulation: {
+          mobile: true,
+          disabled: false,
+        },
       },
       driver,
       baseArtifacts: {},

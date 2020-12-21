@@ -7,6 +7,7 @@
 
 const LCPAudit = require('../../../audits/metrics/largest-contentful-paint.js');
 const defaultOptions = LCPAudit.defaultOptions;
+const constants = require('../../../config/constants.js');
 
 const trace = require('../../fixtures/traces/lcp-m78.json');
 const devtoolsLog = require('../../fixtures/traces/lcp-m78.devtools.log.json');
@@ -14,19 +15,30 @@ const devtoolsLog = require('../../fixtures/traces/lcp-m78.devtools.log.json');
 const preLcpTrace = require('../../fixtures/traces/progressive-app-m60.json');
 const preLcpDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
 
-function generateArtifacts({trace, devtoolsLog, TestedAsMobileDevice, HostUserAgent}) {
+function generateArtifacts({trace, devtoolsLog, HostUserAgent}) {
   return {
     traces: {[LCPAudit.DEFAULT_PASS]: trace},
     devtoolsLogs: {[LCPAudit.DEFAULT_PASS]: devtoolsLog},
-    TestedAsMobileDevice,
     HostUserAgent,
   };
 }
 
-function generateContext({throttlingMethod}) {
-  const settings = {throttlingMethod};
-  return {options: defaultOptions, settings, computedCache: new Map()};
-}
+/**
+ * @param {{
+ * {LH.SharedFlagsSettings['formFactor']} formFactor
+ * {LH.SharedFlagsSettings['throttlingMethod']} throttlingMethod
+ * }} param0
+ */
+const getFakeContext = ({formFactor, throttlingMethod}) => ({
+  options: defaultOptions,
+  computedCache: new Map(),
+  settings: {
+    formFactor: formFactor,
+    throttlingMethod,
+    screenEmulation: constants.screenEmulationMetrics[formFactor],
+  },
+});
+
 /* eslint-env jest */
 
 describe('Performance: largest-contentful-paint audit', () => {
@@ -34,12 +46,8 @@ describe('Performance: largest-contentful-paint audit', () => {
     const artifactsMobile = generateArtifacts({
       trace,
       devtoolsLog,
-      TestedAsMobileDevice: true,
-      HostUserAgent: 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) ' +
-        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 ' +
-        'Mobile Safari/537.36 Chrome-Lighthouse',
     });
-    const contextMobile = generateContext({throttlingMethod: 'provided'});
+    const contextMobile = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
 
     const outputMobile = await LCPAudit.audit(artifactsMobile, contextMobile);
     expect(outputMobile.numericValue).toBeCloseTo(1121.711, 1);
@@ -49,12 +57,8 @@ describe('Performance: largest-contentful-paint audit', () => {
     const artifactsDesktop = generateArtifacts({
       trace,
       devtoolsLog,
-      TestedAsMobileDevice: false,
-      HostUserAgent: 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) ' +
-        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 ' +
-        'Mobile Safari/537.36 Chrome-Lighthouse',
     });
-    const contextDesktop = generateContext({throttlingMethod: 'provided'});
+    const contextDesktop = getFakeContext({formFactor: 'desktop', throttlingMethod: 'provided'});
 
     const outputDesktop = await LCPAudit.audit(artifactsDesktop, contextDesktop);
     expect(outputDesktop.numericValue).toBeCloseTo(1121.711, 1);
@@ -66,12 +70,11 @@ describe('Performance: largest-contentful-paint audit', () => {
     const artifactsOldChrome = generateArtifacts({
       trace: preLcpTrace,
       devtoolsLog: preLcpDevtoolsLog,
-      TestedAsMobileDevice: true,
       HostUserAgent: 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) ' +
         'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 ' +
         'Mobile Safari/537.36 Chrome-Lighthouse',
     });
-    const contextOldChrome = generateContext({throttlingMethod: 'provided'});
+    const contextOldChrome = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
 
     await expect(LCPAudit.audit(artifactsOldChrome, contextOldChrome))
       .rejects.toThrow(/UNSUPPORTED_OLD_CHROME/);
@@ -79,12 +82,11 @@ describe('Performance: largest-contentful-paint audit', () => {
     const artifactsNewChrome = generateArtifacts({
       trace: preLcpTrace,
       devtoolsLog: preLcpDevtoolsLog,
-      TestedAsMobileDevice: true,
       HostUserAgent: 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) ' +
         'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 ' +
         'Mobile Safari/537.36 Chrome-Lighthouse',
     });
-    const contextNewChrome = generateContext({throttlingMethod: 'provided'});
+    const contextNewChrome = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
 
     await expect(LCPAudit.audit(artifactsNewChrome, contextNewChrome)).rejects.toThrow(/NO_LCP/);
   });

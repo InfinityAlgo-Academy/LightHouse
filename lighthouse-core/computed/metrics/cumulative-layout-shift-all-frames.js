@@ -6,14 +6,17 @@
 'use strict';
 
 const makeComputedArtifact = require('../computed-artifact.js');
+const TraceOfTab = require('../trace-of-tab.js');
 
 class CumulativeLayoutShiftAllFrames {
   /**
    * @param {LH.Trace} trace
+   * @param {LH.Audit.Context} context
    * @return {Promise<{value: number}>}
    */
-  static async compute_(trace) {
-    const cumulativeShift = trace.traceEvents
+  static async compute_(trace, context) {
+    const traceOfTab = await TraceOfTab.request(trace, context);
+    const cumulativeShift = traceOfTab.frameTreeEvents
       .filter(e =>
         e.name === 'LayoutShift' &&
         e.args &&

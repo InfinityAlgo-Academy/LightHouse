@@ -42,7 +42,8 @@ class FullPageScreenshot extends Gatherer {
     const height = Math.min(metrics.contentSize.height, MAX_SCREENSHOT_HEIGHT);
 
     await driver.sendCommand('Emulation.setDeviceMetricsOverride', {
-      mobile: passContext.baseArtifacts.TestedAsMobileDevice,
+      // If we're gathering with mobile screenEmulation on (overlay scrollbars, etc), continue to use that for this screenshot.
+      mobile: passContext.settings.screenEmulation.mobile,
       height,
       width,
       deviceScaleFactor: 1,
@@ -105,7 +106,7 @@ class FullPageScreenshot extends Gatherer {
     }
 
     // Collect nodes with the page context (`useIsolation: false`) and with our own, reused
-    // context (`useIsolation: false`). Gatherers use both modes when collecting node details,
+    // context (`useIsolation: true`). Gatherers use both modes when collecting node details,
     // so we must do the same here too.
     const pageContextResult = await evaluateInPage(false);
     const isolatedContextResult = await evaluateInPage(true);
@@ -121,8 +122,7 @@ class FullPageScreenshot extends Gatherer {
 
     // In case some other program is controlling emulation, try to remember what the device looks
     // like now and reset after gatherer is done.
-    const lighthouseControlsEmulation = passContext.settings.emulatedFormFactor !== 'none' &&
-      !passContext.settings.internalDisableDeviceScreenEmulation;
+    const lighthouseControlsEmulation = !passContext.settings.screenEmulation.disabled;
 
     try {
       return {
@@ -161,7 +161,7 @@ class FullPageScreenshot extends Gatherer {
           deps: [snakeCaseToCamelCase],
         });
         await driver.sendCommand('Emulation.setDeviceMetricsOverride', {
-          mobile: passContext.baseArtifacts.TestedAsMobileDevice, // could easily be wrong
+          mobile: passContext.settings.formFactor === 'mobile',
           ...observedDeviceMetrics,
         });
       }
