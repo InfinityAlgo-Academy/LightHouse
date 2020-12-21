@@ -16,7 +16,7 @@ function createMockDriver({contentSize, screenSize, screenshotData}) {
   return {
     evaluate: async function(fn) {
       if (fn.name === 'resolveNodes') {
-        return contentSize.width;
+        return {};
       } else if (fn.name === 'getObservedDeviceMetrics') {
         return {
           width: screenSize.width,
