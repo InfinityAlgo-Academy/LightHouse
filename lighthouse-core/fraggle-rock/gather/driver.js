@@ -58,11 +58,13 @@ class Driver {
 
   /**
    * @template {any[]} T, R
-   * @param {((...args: T) => R)} mainFn
-   * @param {{args: T, useIsolation?: boolean, deps?: Array<Function|string>}} options
+   * @param {((...args: T) => R)} mainFn The main function to call.
+   * @param {{args: T, useIsolation?: boolean, deps?: Array<Function|string>}} options `args` should
+   *   match the args of `mainFn`, and can be any serializable value. `deps` are functions that must be
+   *   defined for `mainFn` to work.
    * @return {FlattenedPromise<R>}
    */
-  async evaluate(mainFn, options) {
+  evaluate(mainFn, options) {
     if (!this._executionContext) throw new Error('Driver not connected to page');
     return this._executionContext.evaluate(mainFn, options);
   }
