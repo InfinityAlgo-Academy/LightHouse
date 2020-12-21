@@ -466,8 +466,11 @@ declare global {
         endTime: number;
         transferSize: number;
         tag: {
-          tagName: string;
+          tagName: 'LINK'|'SCRIPT';
+          /** The value of `HTMLLinkElement.href` or `HTMLScriptElement.src`. */
           url: string;
+          /** A record of when changes to the `HTMLLinkElement.media` attribute occurred and if the new media type matched the page. */
+          mediaChanges?: Array<{href: string, media: string, msSinceHTMLEnd: number, matches: boolean}>;
         };
       }
 

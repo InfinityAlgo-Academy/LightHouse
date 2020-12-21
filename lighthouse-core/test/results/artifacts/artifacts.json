@@ -2906,63 +2906,82 @@
       "tag": {
         "tagName": "LINK",
         "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
-        "href": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
-        "rel": "stylesheet",
-        "media": "",
-        "disabled": false
+        "mediaChanges": []
       },
-      "transferSize": 821,
-      "startTime": 185603.956717,
-      "endTime": 185604.52588
+      "transferSize": 903,
+      "startTime": 169919.055906,
+      "endTime": 169919.619605
     },
     {
       "tag": {
         "tagName": "LINK",
         "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
-        "href": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
-        "rel": "stylesheet",
-        "media": "",
-        "disabled": false
+        "mediaChanges": []
       },
-      "transferSize": 139,
-      "startTime": 185603.957861,
-      "endTime": 185604.534512
+      "transferSize": 209,
+      "startTime": 169919.05668,
+      "endTime": 169919.629186
     },
     {
       "tag": {
         "tagName": "LINK",
         "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
-        "href": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
-        "rel": "stylesheet",
-        "media": "",
-        "disabled": false
+        "mediaChanges": []
       },
-      "transferSize": 821,
-      "startTime": 185603.959225,
-      "endTime": 185606.170588
+      "transferSize": 903,
+      "startTime": 169919.057516,
+      "endTime": 169921.272625
     },
     {
       "tag": {
         "tagName": "LINK",
         "url": "http://localhost:10200/dobetterweb/dbw_partial_a.html?delay=200",
-        "href": "http://localhost:10200/dobetterweb/dbw_partial_a.html?delay=200",
-        "rel": "import",
-        "media": "",
-        "disabled": false
+        "mediaChanges": []
       },
-      "transferSize": 736,
-      "startTime": 185603.961819,
-      "endTime": 185604.549739
+      "transferSize": 843,
+      "startTime": 169919.060649,
+      "endTime": 169920.191732
+    },
+    {
+      "tag": {
+        "tagName": "LINK",
+        "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped",
+        "mediaChanges": [
+          {
+            "href": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped",
+            "media": "not-matching",
+            "msSinceHTMLEnd": 1461,
+            "matches": false
+          },
+          {
+            "href": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped",
+            "media": "screen",
+            "msSinceHTMLEnd": 3014,
+            "matches": true
+          }
+        ]
+      },
+      "transferSize": 903,
+      "startTime": 169919.062719,
+      "endTime": 169920.56968699998
     },
     {
       "tag": {
         "tagName": "SCRIPT",
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-        "src": "http://localhost:10200/dobetterweb/dbw_tester.js"
+        "url": "http://localhost:10200/dobetterweb/dbw_tester.js"
       },
-      "transferSize": 1703,
-      "startTime": 185603.965303,
-      "endTime": 185605.113307
+      "transferSize": 1052,
+      "startTime": 169919.064749,
+      "endTime": 169920.755946
+    },
+    {
+      "tag": {
+        "tagName": "SCRIPT",
+        "url": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000"
+      },
+      "transferSize": 223,
+      "startTime": 169919.10607,
+      "endTime": 169925.764663
     }
   ],
   "FontSize": {
