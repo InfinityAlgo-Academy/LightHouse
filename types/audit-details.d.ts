@@ -207,7 +207,7 @@ declare global {
         selector?: string;
         boundingRect?: Artifacts.Rect;
         /** An HTML snippet used to identify the node. */
-        snippet?: string;
+        snippet: string;
         /** A human-friendly text descriptor that's used to identify the node more quickly. */
         nodeLabel?: string;
       }

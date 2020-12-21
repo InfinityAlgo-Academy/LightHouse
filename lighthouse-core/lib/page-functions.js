@@ -370,7 +370,7 @@ function isPositionFixed(element) {
  * strings like the innerText or alt attribute.
  * Falls back to the tagName if no useful label is found.
  * @param {Element} node
- * @return {string|null}
+ * @return {string}
  */
 /* istanbul ignore next */
 function getNodeLabel(node) {
@@ -460,6 +460,7 @@ function wrapRequestIdleCallback(cpuSlowdownMultiplier) {
 
 /**
  * @param {HTMLElement} element
+ * @return {LH.Artifacts.NodeDetails}
  */
 function getNodeDetailsImpl(element) {
   // This bookkeeping is for the FullPageScreenshot gatherer.
@@ -490,11 +491,11 @@ function getNodeDetailsImpl(element) {
 
   const details = {
     lhId,
-    devtoolsNodePath: getNodePath(element),
-    selector: getNodeSelector(htmlElement),
+    devtoolsNodePath: getNodePath(element) || '',
+    selector: getNodeSelector(htmlElement) || '',
     boundingRect: getBoundingClientRect(htmlElement),
-    snippet: getOuterHTMLSnippet(element),
-    nodeLabel: getNodeLabel(htmlElement),
+    snippet: getOuterHTMLSnippet(element) || '',
+    nodeLabel: getNodeLabel(htmlElement) || '',
   };
 
   return details;

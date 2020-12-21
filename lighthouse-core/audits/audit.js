@@ -217,6 +217,20 @@ class Audit {
   }
 
   /**
+   * @param {LH.Artifacts.NodeDetails} node
+   * @return {LH.Audit.Details.NodeValue}
+   */
+  static makeNodeValue(node) {
+    const {devtoolsNodePath, ...rest} = node;
+
+    return {
+      type: 'node',
+      ...rest,
+      path: devtoolsNodePath,
+    };
+  }
+
+  /**
    * @param {number|null} score
    * @param {LH.Audit.ScoreDisplayMode} scoreDisplayMode
    * @param {string} auditId

@@ -129,18 +129,20 @@ class NonCompositedAnimations extends Audit {
       };
     }
 
-    /** @type LH.Audit.Details.TableItem[] */
+    /** @type {LH.Audit.Details.TableItem[]} */
     const results = [];
     let shouldAddAnimationNameColumn = false;
     artifacts.TraceElements.forEach(element => {
       if (element.traceEventType !== 'animation') return;
-      /** @type LH.Audit.Details.NodeValue */
+      /** @type {LH.Audit.Details.NodeValue} */
       const node = {
         type: 'node',
+        lhId: element.node.lhId,
         path: element.node.devtoolsNodePath,
         selector: element.node.selector,
         nodeLabel: element.node.nodeLabel,
         snippet: element.node.snippet,
+        boundingRect: element.node.boundingRect,
       };
 
       const animations = element.animations || [];
