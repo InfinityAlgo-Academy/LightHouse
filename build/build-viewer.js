@@ -20,7 +20,7 @@ async function run() {
   const generatorBrowserify = browserify(generatorFilename, {standalone: 'ReportGenerator'})
     .transform('@wardpeet/brfs', {
       readFileSyncTransform: minifyFileTransform,
-    });
+    }).ignore(require.resolve('../lighthouse-core/report/html/html-report-assets.js'));
 
   /** @type {Promise<string>} */
   const generatorJsPromise = new Promise((resolve, reject) => {
