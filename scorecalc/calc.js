@@ -200,6 +200,11 @@ function makeScoringGuide(curves) {
 }
 
 var scoringGuides = {
+  // v7 scoring is identical to v6
+  v7: {
+    mobile: makeScoringGuide(curves.v6.mobile),
+    desktop: makeScoringGuide(curves.v6.desktop),
+  },
   v6: {
     mobile: makeScoringGuide(curves.v6.mobile),
     desktop: makeScoringGuide(curves.v6.desktop),
@@ -673,7 +678,7 @@ var ScoringGuide = /*@__PURE__*/(function (Component) {
 
     var title = h( 'h2', null, name );
     if (name === 'v6') {
-      title = h( 'h2', null, h( 'a', { href: "https://github.com/GoogleChrome/lighthouse/releases/tag/v6.0.0", target: "_blank" }, "v6") );
+      title = h( 'h2', null, "latest", h( 'br', null ), h( 'i', null, h( 'a', { href: "https://github.com/GoogleChrome/lighthouse/releases/" }, "v6, v7") ) );
     }
 
     return h( 'form', { class: "wrapper" },
@@ -761,6 +766,17 @@ var App = /*@__PURE__*/(function (Component) {
     this.setState({versions: e.target.value.split(',')});
   };
 
+  App.prototype.normalizeVersions = function normalizeVersions (versions) {
+    return versions.map(function (version) {
+      if (parseInt(version) < 5) {
+        throw new Error(("Unsupported Lighthouse version (" + version + ")"));
+      }
+      // In the future we might want a more generalized `version % 2 === 1` thing, but for now, hardcode the change.
+      if (parseInt(version) === 7) { return 6..toString(); }
+      return version.toString();
+    }).sort().reverse();
+  };
+
   App.prototype.render = function render () {
     var this$1 = this;
 
@@ -769,7 +785,9 @@ var App = /*@__PURE__*/(function (Component) {
     var device = ref.device;
     var metricValues = ref.metricValues;
 
-    var scoringGuideEls = versions.map(function (version) {
+    var normalizedVersions = this.normalizeVersions(versions);
+
+    var scoringGuideEls = normalizedVersions.map(function (version) {
       var key = "v" + version;
       return h( ScoringGuide, { app: this$1, name: key, values: metricValues, scoring: scoringGuides[key][device] });
     });
@@ -780,9 +798,9 @@ var App = /*@__PURE__*/(function (Component) {
             h( 'option', { value: "desktop" }, "Desktop")
           )
         ),
-        h( 'label', null, "Versions: ", h( 'select', { name: "versions", value: versions.sort().reverse().join(','), onChange: this.onVersionsChange },
+        h( 'label', null, "Versions: ", h( 'select', { name: "versions", value: normalizedVersions.join(','), onChange: this.onVersionsChange },
             h( 'option', { value: "6,5" }, "show all"),
-            h( 'option', { value: "6" }, "v6"),
+            h( 'option', { value: "6" }, "v6, v7"),
             h( 'option', { value: "5" }, "v5")
           )
         )
@@ -795,10 +813,9 @@ var App = /*@__PURE__*/(function (Component) {
 }(m));
 
 function getInitialState() {
-  // Default to 6 and 5.
   var versions = params.has('version') ?
     params.getAll('version').map(getMajorVersion) :
-    ['6', '5'];
+    ['6'];
 
   // Default to mobile if it's not matching our known emulatedFormFactors. https://github.com/GoogleChrome/lighthouse/blob/master/types/externs.d.ts#:~:text=emulatedFormFactor
   var device = params.get('device');
