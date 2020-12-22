@@ -297,7 +297,6 @@ class ImageElements extends Gatherer {
         getPosition,
         getHTMLImages,
         getCSSImages,
-        collectImageElementInfo,
       ],
     });
 
