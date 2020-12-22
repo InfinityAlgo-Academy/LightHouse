@@ -134,16 +134,6 @@ class NonCompositedAnimations extends Audit {
     let shouldAddAnimationNameColumn = false;
     artifacts.TraceElements.forEach(element => {
       if (element.traceEventType !== 'animation') return;
-      /** @type {LH.Audit.Details.NodeValue} */
-      const node = {
-        type: 'node',
-        lhId: element.node.lhId,
-        path: element.node.devtoolsNodePath,
-        selector: element.node.selector,
-        nodeLabel: element.node.nodeLabel,
-        snippet: element.node.snippet,
-        boundingRect: element.node.boundingRect,
-      };
 
       const animations = element.animations || [];
       const animationReasons = new Map();
@@ -173,7 +163,7 @@ class NonCompositedAnimations extends Audit {
       }
 
       results.push({
-        node,
+        node: Audit.makeNodeValue(element.node),
         subItems: {
           type: 'subitems',
           items: allFailureReasons,

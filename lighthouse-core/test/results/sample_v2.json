@@ -2033,10 +2033,10 @@
           {
             "node": {
               "type": "node",
-              "path": "1,HTML,1,BODY,0,DIV",
               "selector": "body > div#animated-boi",
               "nodeLabel": "div",
-              "snippet": "<div id=\"animated-boi\">"
+              "snippet": "<div id=\"animated-boi\">",
+              "path": "1,HTML,1,BODY,0,DIV"
             },
             "subItems": {
               "type": "subitems",
@@ -2088,20 +2088,38 @@
             "url": "blob:http://localhost:54657/822c70a0-b912-41c7-9a21-56c3d309e75b",
             "node": {
               "type": "node",
-              "path": "3,HTML,1,BODY,63,IMG",
+              "lhId": "page-7-IMG",
               "selector": "body > img",
+              "boundingRect": {
+                "top": 1295,
+                "bottom": 1311,
+                "left": 322,
+                "right": 338,
+                "width": 16,
+                "height": 16
+              },
+              "snippet": "<img src=\"blob:http://localhost:54657/822c70a0-b912-41c7-9a21-56c3d309e75b\">",
               "nodeLabel": "img",
-              "snippet": "<img src=\"blob:http://localhost:54657/822c70a0-b912-41c7-9a21-56c3d309e75b\">"
+              "path": "3,HTML,1,BODY,63,IMG"
             }
           },
           {
             "url": "filesystem:http://localhost:54657/temporary/empty-0.8423185960902964.png",
             "node": {
               "type": "node",
-              "path": "3,HTML,1,BODY,72,IMG",
+              "lhId": "page-8-IMG",
               "selector": "body > img",
+              "boundingRect": {
+                "top": 1317,
+                "bottom": 1333,
+                "left": 8,
+                "right": 24,
+                "width": 16,
+                "height": 16
+              },
+              "snippet": "<img src=\"filesystem:http://localhost:54657/temporary/empty-0.8423185960902964.png\">",
               "nodeLabel": "img",
-              "snippet": "<img src=\"filesystem:http://localhost:54657/temporary/empty-0.8423185960902964.png\">"
+              "path": "3,HTML,1,BODY,72,IMG"
             }
           }
         ]
@@ -4603,19 +4621,35 @@
           {
             "node": {
               "type": "node",
-              "path": "3,HTML,1,BODY,38,A",
               "selector": "body > a",
+              "boundingRect": {
+                "top": 1166,
+                "bottom": 1184,
+                "left": 175,
+                "right": 255,
+                "width": 80,
+                "height": 18
+              },
+              "snippet": "<a target=\"_blank\">",
               "nodeLabel": "external link",
-              "snippet": "<a target=\"_blank\">"
+              "path": "3,HTML,1,BODY,38,A"
             }
           },
           {
             "node": {
               "type": "node",
-              "path": "3,HTML,1,BODY,54,A",
               "selector": "body > a",
+              "boundingRect": {
+                "top": 1275,
+                "bottom": 1293,
+                "left": 192,
+                "right": 192,
+                "width": 0,
+                "height": 18
+              },
+              "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\">",
               "nodeLabel": "a",
-              "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\">"
+              "path": "3,HTML,1,BODY,54,A"
             }
           }
         ]
@@ -4671,8 +4705,8 @@
             "tapTarget": {
               "type": "node",
               "snippet": "<button class=\"small-button\">Do something</button>",
-              "path": "3,HTML,1,BODY,17,BUTTON",
               "selector": "body > button.small-button",
+              "nodeLabel": "Do something",
               "boundingRect": {
                 "left": 8,
                 "right": 208,
@@ -4681,13 +4715,13 @@
                 "width": 200,
                 "height": 18
               },
-              "nodeLabel": "Do something"
+              "path": "3,HTML,1,BODY,17,BUTTON"
             },
             "overlappingTarget": {
               "type": "node",
               "snippet": "<button class=\"small-button\">Do something else</button>",
-              "path": "3,HTML,1,BODY,18,BUTTON",
               "selector": "body > button.small-button",
+              "nodeLabel": "Do something else",
               "boundingRect": {
                 "left": 8,
                 "right": 208,
@@ -4696,7 +4730,7 @@
                 "width": 200,
                 "height": 18
               },
-              "nodeLabel": "Do something else"
+              "path": "3,HTML,1,BODY,18,BUTTON"
             },
             "tapTargetScore": 864,
             "overlappingTargetScore": 720,
