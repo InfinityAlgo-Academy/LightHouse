@@ -29,7 +29,7 @@ class Doctype extends Gatherer {
    */
   afterPass(passContext) {
     const driver = passContext.driver;
-    return driver.evaluateAsync(`(${getDoctype.toString()}())`);
+    return driver.evaluate(getDoctype, {args: []});
   }
 }
 

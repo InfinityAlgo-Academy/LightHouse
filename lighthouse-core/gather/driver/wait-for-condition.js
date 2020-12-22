@@ -213,7 +213,6 @@ function waitForCPUIdle(session, waitForCPUQuiet) {
   let lastTimeout;
   let canceled = false;
 
-  const checkForQuietExpression = `(${pageFunctions.checkTimeSinceLastLongTaskString})()`;
   /**
    * @param {ExecutionContext} executionContext
    * @param {() => void} resolve
@@ -221,7 +220,8 @@ function waitForCPUIdle(session, waitForCPUQuiet) {
    */
   async function checkForQuiet(executionContext, resolve) {
     if (canceled) return;
-    const timeSinceLongTask = await executionContext.evaluateAsync(checkForQuietExpression);
+    const timeSinceLongTask =
+      await executionContext.evaluate(pageFunctions.checkTimeSinceLastLongTask, {args: []});
     if (canceled) return;
 
     if (typeof timeSinceLongTask === 'number') {

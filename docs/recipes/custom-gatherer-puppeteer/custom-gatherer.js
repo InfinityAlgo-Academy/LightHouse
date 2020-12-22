@@ -33,7 +33,7 @@ class CustomGatherer extends Gatherer {
       el.type = 'number';
       document.body.append(el);
     }
-    await driver.evaluateAsync(`(${makeInput})()`);
+    await driver.evaluate(makeInput, {args: []});
     await new Promise(resolve => setTimeout(resolve, 100));
 
     // Prove that `driver` (Lighthouse) and `page` (Puppeteer) are talking to the same page.

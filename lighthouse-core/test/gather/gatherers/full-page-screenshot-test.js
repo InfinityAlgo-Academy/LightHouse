@@ -14,22 +14,23 @@ const FullPageScreenshotGatherer = require('../../../gather/gatherers/full-page-
  */
 function createMockDriver({contentSize, screenSize, screenshotData}) {
   return {
-    evaluateAsync: async function(code) {
-      if (code === 'window.innerWidth') {
-        return contentSize.width;
-      }
-      if (code.includes('document.documentElement.clientWidth')) {
+    evaluate: async function(fn) {
+      if (fn.name === 'resolveNodes') {
+        return {};
+      } else if (fn.name === 'getObservedDeviceMetrics') {
         return {
           width: screenSize.width,
           height: screenSize.height,
           screenWidth: screenSize.width,
           screenHeight: screenSize.height,
           screenOrientation: {
-            type: 'landscape-primary',
+            type: 'landscapePrimary',
             angle: 30,
           },
           deviceScaleFactor: screenSize.dpr,
         };
+      } else {
+        throw new Error(`unexpected fn ${fn.name}`);
       }
     },
     beginEmulation: jest.fn(),

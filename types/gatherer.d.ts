@@ -26,6 +26,7 @@ declare global {
     export interface FRTransitionalDriver {
       defaultSession: FRProtocolSession;
       evaluateAsync(expression: string, options?: {useIsolation?: boolean}): Promise<any>;
+      evaluate<T extends any[], R>(mainFn: (...args: T) => R, options: {args: T, useIsolation?: boolean, deps?: Array<Function|string>}): FlattenedPromise<R>;
     }
 
     /** The limited context interface shared between pre and post Fraggle Rock Lighthouse. */

@@ -43,15 +43,14 @@ class IFrameElements extends Gatherer {
   async afterPass(passContext) {
     const driver = passContext.driver;
 
-    const expression = `(() => {
-      ${pageFunctions.getElementsInDocumentString};
-      ${pageFunctions.isPositionFixedString};
-      ${pageFunctions.getNodeDetailsString};
-      return (${collectIFrameElements})();
-    })()`;
-
-    /** @type {LH.Artifacts['IFrameElements']} */
-    const iframeElements = await driver.evaluateAsync(expression, {useIsolation: true});
+    const iframeElements = await driver.evaluate(collectIFrameElements, {
+      args: [],
+      deps: [
+        pageFunctions.getElementsInDocumentString,
+        pageFunctions.isPositionFixedString,
+        pageFunctions.getNodeDetailsString,
+      ],
+    });
     return iframeElements;
   }
 }

@@ -3668,27 +3668,27 @@
         "items": [
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
-            "totalBytes": 821,
+            "totalBytes": 903,
             "wastedMs": 873
           },
           {
             "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
-            "totalBytes": 139,
+            "totalBytes": 209,
             "wastedMs": 873
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
-            "totalBytes": 821,
+            "totalBytes": 903,
             "wastedMs": 873
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_partial_a.html?delay=200",
-            "totalBytes": 736,
+            "totalBytes": 843,
             "wastedMs": 873
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-            "totalBytes": 1703,
+            "totalBytes": 1052,
             "wastedMs": 723
           }
         ],
