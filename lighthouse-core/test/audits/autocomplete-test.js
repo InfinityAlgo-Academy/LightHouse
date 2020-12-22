@@ -114,18 +114,18 @@ describe('Best Practices: autocomplete audit', () => {
       {
         current: 'namez',
         node: {
+          type: 'node',
           nodeLabel: 'input',
           snippet: '<input type="text" name="name_cc" autocomplete="namez">',
-          type: 'node',
         },
         suggestion: expect.toBeDisplayString('Requires manual review'),
       },
       {
         current: 'ccc-num',
         node: {
+          type: 'node',
           nodeLabel: 'input',
           snippet: '<input type="text" name="CCNo" autocomplete="ccc-num">',
-          type: 'node',
         },
         suggestion: 'cc-number',
       },
@@ -310,20 +310,20 @@ describe('Best Practices: autocomplete audit', () => {
       {
         current: 'shipping section-red cc-name',
         node: {
+          type: 'node',
           nodeLabel: 'textarea',
           // eslint-disable-next-line max-len
           snippet: '<textarea type="text" name="name_cc2" autocomplete="shipping section-red cc-name">',
-          type: 'node',
         },
         suggestion: 'Review order of tokens',
       },
       {
         current: 'shipping section-red mobile tel',
         node: {
+          type: 'node',
           nodeLabel: 'input',
           // eslint-disable-next-line max-len
           snippet: '<input type="text" name="CCNo2" autocomplete="shipping section-red mobile tel">',
-          type: 'node',
         },
         suggestion: 'Review order of tokens',
       },
