@@ -107,13 +107,15 @@ class Accessibility extends Gatherer {
    */
   afterPass(passContext) {
     const driver = passContext.driver;
-    const expression = `(function () {
-      ${pageFunctions.getNodeDetailsString};
-      ${axeLibSource};
-      return (${runA11yChecks.toString()}());
-    })()`;
 
-    return driver.evaluateAsync(expression, {useIsolation: true}).then(returnedValue => {
+    return driver.evaluate(runA11yChecks, {
+      args: [],
+      useIsolation: true,
+      deps: [
+        axeLibSource,
+        pageFunctions.getNodeDetailsString,
+      ],
+    }).then(returnedValue => {
       if (!returnedValue) {
         throw new Error('No axe-core results returned');
       }

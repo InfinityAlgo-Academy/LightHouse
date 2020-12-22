@@ -10,20 +10,20 @@ const Gatherer = require('./gatherer.js');
 /* global window */
 
 /**
- * @return {Promise<LH.Artifacts.ViewportDimensions>}
+ * @return {LH.Artifacts.ViewportDimensions}
  */
 /* istanbul ignore next */
 function getViewportDimensions() {
   // window.innerWidth to get the scrollable size of the window (irrespective of zoom)
   // window.outerWidth to get the size of the visible area
   // window.devicePixelRatio to get ratio of logical pixels to physical pixels
-  return Promise.resolve({
+  return {
     innerWidth: window.innerWidth,
     innerHeight: window.innerHeight,
     outerWidth: window.outerWidth,
     outerHeight: window.outerHeight,
     devicePixelRatio: window.devicePixelRatio,
-  });
+  };
 }
 
 class ViewportDimensions extends Gatherer {
@@ -34,9 +34,10 @@ class ViewportDimensions extends Gatherer {
   async afterPass(passContext) {
     const driver = passContext.driver;
 
-    /** @type {LH.Artifacts.ViewportDimensions} */
-    const dimensions = await driver.evaluateAsync(`(${getViewportDimensions.toString()}())`,
-      {useIsolation: true});
+    const dimensions = await driver.evaluate(getViewportDimensions, {
+      args: [],
+      useIsolation: true,
+    });
 
     const allNumeric = Object.values(dimensions).every(Number.isFinite);
     if (!allNumeric) {

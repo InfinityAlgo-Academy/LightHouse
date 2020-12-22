@@ -32,7 +32,8 @@ class RobotsTxt extends Gatherer {
    * @return {Promise<LH.Artifacts['RobotsTxt']>}
    */
   afterPass(passContext) {
-    return passContext.driver.evaluateAsync(`(${getRobotsTxtContent.toString()}())`, {
+    return passContext.driver.evaluate(getRobotsTxtContent, {
+      args: [],
       useIsolation: true,
     });
   }

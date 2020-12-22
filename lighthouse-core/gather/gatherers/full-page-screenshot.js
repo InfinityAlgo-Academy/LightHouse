@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* globals window getBoundingClientRect */
+/* globals window document getBoundingClientRect */
 
 const Gatherer = require('./gatherer.js');
 const pageFunctions = require('../../lib/page-functions.js');
@@ -93,18 +93,23 @@ class FullPageScreenshot extends Gatherer {
 
       return nodes;
     }
-    const expression = `(function () {
-      ${pageFunctions.getBoundingClientRectString};
-      return (${resolveNodes.toString()}());
-    })()`;
+
+    /**
+     * @param {{useIsolation: boolean}} _
+     */
+    function resolveNodesInPage({useIsolation}) {
+      return passContext.driver.evaluate(resolveNodes, {
+        args: [],
+        useIsolation,
+        deps: [pageFunctions.getBoundingClientRectString],
+      });
+    }
 
     // Collect nodes with the page context (`useIsolation: false`) and with our own, reused
     // context (`useIsolation: true`). Gatherers use both modes when collecting node details,
     // so we must do the same here too.
-    const pageContextResult =
-      await passContext.driver.evaluateAsync(expression, {useIsolation: false});
-    const isolatedContextResult =
-      await passContext.driver.evaluateAsync(expression, {useIsolation: true});
+    const pageContextResult = await resolveNodesInPage({useIsolation: false});
+    const isolatedContextResult = await resolveNodesInPage({useIsolation: true});
     return {...pageContextResult, ...isolatedContextResult};
   }
 
@@ -136,20 +141,28 @@ class FullPageScreenshot extends Gatherer {
         // in the LH runner api, which for ex. puppeteer consumers would setup puppeteer emulation,
         // and then just call that to reset?
         // https://github.com/GoogleChrome/lighthouse/issues/11122
-        const observedDeviceMetrics = await driver.evaluateAsync(`(function() {
+
+        // eslint-disable-next-line no-inner-declarations
+        function getObservedDeviceMetrics() {
+          // Convert the Web API's snake case (landscape-primary) to camel case (landscapePrimary).
+          const screenOrientationType = /** @type {LH.Crdp.Emulation.ScreenOrientationType} */ (
+            snakeCaseToCamelCase(window.screen.orientation.type));
           return {
             width: document.documentElement.clientWidth,
             height: document.documentElement.clientHeight,
             screenOrientation: {
-              type: window.screen.orientation.type,
+              type: screenOrientationType,
               angle: window.screen.orientation.angle,
             },
             deviceScaleFactor: window.devicePixelRatio,
           };
-        })()`, {useIsolation: true});
-        // Convert the Web API's snake case (landscape-primary) to camel case (landscapePrimary).
-        observedDeviceMetrics.screenOrientation.type =
-          snakeCaseToCamelCase(observedDeviceMetrics.screenOrientation.type);
+        }
+
+        const observedDeviceMetrics = await driver.evaluate(getObservedDeviceMetrics, {
+          args: [],
+          useIsolation: true,
+          deps: [snakeCaseToCamelCase],
+        });
         await driver.sendCommand('Emulation.setDeviceMetricsOverride', {
           mobile: passContext.settings.formFactor === 'mobile',
           ...observedDeviceMetrics,

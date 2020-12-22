@@ -21,14 +21,14 @@ describe('PasswordInputsWithPreventedPaste gatherer', () => {
     return gatherer
       .afterPass({
         driver: {
-          evaluateAsync() {
-            return Promise.resolve([
+          async evaluate() {
+            return [
               {
                 node: {
                   snippet: '<input type="password" onpaste="return false"/>',
                 },
               },
-            ]);
+            ];
           },
         },
       })

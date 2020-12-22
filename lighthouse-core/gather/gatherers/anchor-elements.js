@@ -95,15 +95,15 @@ class AnchorElements extends Gatherer {
    */
   async afterPass(passContext) {
     const driver = passContext.driver;
-    const expression = `(() => {
-      ${pageFunctions.getElementsInDocumentString};
-      ${pageFunctions.getNodeDetailsString};
 
-      return (${collectAnchorElements})();
-    })()`;
-
-    /** @type {LH.Artifacts['AnchorElements']} */
-    const anchors = await driver.evaluateAsync(expression, {useIsolation: true});
+    const anchors = await driver.evaluate(collectAnchorElements, {
+      args: [],
+      useIsolation: true,
+      deps: [
+        pageFunctions.getElementsInDocumentString,
+        pageFunctions.getNodeDetailsString,
+      ],
+    });
     await driver.sendCommand('DOM.enable');
 
     // DOM.getDocument is necessary for pushNodesByBackendIdsToFrontend to properly retrieve nodeIds if the `DOM` domain was enabled before this gatherer, invoke it to be safe.

@@ -64,6 +64,8 @@ declare global {
   type FirstParamType<T extends (arg1: any, ...args: any[]) => any> =
     T extends (arg1: infer P, ...args: any[]) => any ? P : never;
 
+  type FlattenedPromise<A extends any> = Promise<A extends Promise<infer X> ? X : A>;
+
   /**
    * Split string `S` on delimiter `D`.
    * From https://github.com/microsoft/TypeScript/pull/40336#issue-476562046
