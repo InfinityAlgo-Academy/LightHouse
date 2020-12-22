@@ -73,7 +73,7 @@ declare global {
       /** All the link elements on the page or equivalently declared in `Link` headers. @see https://html.spec.whatwg.org/multipage/links.html */
       LinkElements: Artifacts.LinkElement[];
       /** The values of the <meta> elements in the head. */
-      MetaElements: Array<{name?: string, content?: string, property?: string, httpEquiv?: string, charset?: string}>;
+      MetaElements: Array<{name?: string, content?: string, property?: string, httpEquiv?: string, charset?: string, node: LH.Artifacts.NodeDetails}>;
       /** Information on all script elements in the page. Also contains the content of all requested scripts and the networkRecord requestId that contained their content. Note, HTML documents will have one entry per script tag, all with the same requestId. */
       ScriptElements: Array<Artifacts.ScriptElement>;
       /** The dimensions and devicePixelRatio of the loaded viewport. */
@@ -205,7 +205,8 @@ declare global {
         src: string | null;
         data: string | null;
         code: string | null;
-        params: {name: string; value: string}[];
+        params: Array<{name: string; value: string}>;
+        node: LH.Artifacts.NodeDetails;
       }
 
       export interface IFrameElement {

@@ -16,31 +16,37 @@ describe('SEO: Avoids plugins', () => {
       [{
         tagName: 'APPLET',
         params: [],
+        node: {},
       }],
       [{
         tagName: 'OBJECT',
         type: 'application/x-shockwave-flash',
         params: [],
+        node: {},
       }],
       [{
         tagName: 'EMBED',
         type: 'application/x-java-applet;jpi-version=1.4',
         params: [],
+        node: {},
       }],
       [{
         tagName: 'OBJECT',
         type: 'application/x-silverlight-2',
         params: [],
+        node: {},
       }],
       [{
         tagName: 'OBJECT',
         data: 'https://example.com/movie_name.swf?uid=123',
         params: [],
+        node: {},
       }],
       [{
         tagName: 'EMBED',
         src: '/path/to/movie_name.latest.swf',
         params: [],
+        node: {},
       }],
       [{
         tagName: 'OBJECT',
@@ -48,12 +54,14 @@ describe('SEO: Avoids plugins', () => {
           {name: 'quality', value: 'low'},
           {name: 'movie', value: 'movie.swf?id=123'},
         ],
+        node: {},
       }],
       [{
         tagName: 'OBJECT',
         params: [
           {name: 'code', value: '../HelloWorld.class'},
         ],
+        node: {},
       }],
     ];
 
@@ -75,15 +83,18 @@ describe('SEO: Avoids plugins', () => {
           tagName: 'EMBED',
           type: 'application/x-java-applet;jpi-version=1.4',
           params: [],
+          node: {},
         },
         {
           tagName: 'OBJECT',
           type: 'application/x-silverlight-2',
           params: [],
+          node: {},
         },
         {
           tagName: 'APPLET',
           params: [],
+          node: {},
         },
       ],
     };
@@ -110,17 +121,20 @@ describe('SEO: Avoids plugins', () => {
           type: 'image/svg+xml',
           data: 'https://example.com/test.svg',
           params: [],
+          node: {},
         },
         {
           tagName: 'OBJECT',
           data: 'https://example.com',
           params: [],
+          node: {},
         },
         {
           tagName: 'EMBED',
           type: 'video/quicktime',
           src: 'movie.mov',
           params: [],
+          node: {},
         },
         {
           tagName: 'OBJECT',
@@ -131,6 +145,7 @@ describe('SEO: Avoids plugins', () => {
             name: 'movie',
             value: 'http://www.youtube.com/v/example',
           }],
+          node: {},
         },
       ],
     };

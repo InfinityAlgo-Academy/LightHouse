@@ -523,6 +523,7 @@ module.exports = {
   computeBenchmarkIndex: computeBenchmarkIndex,
   computeBenchmarkIndexString: computeBenchmarkIndex.toString(),
   getNodeDetailsString,
+  getNodeDetails: getNodeDetailsImpl,
   getNodePathString: getNodePath.toString(),
   getNodeSelectorString: getNodeSelector.toString(),
   getNodePath,

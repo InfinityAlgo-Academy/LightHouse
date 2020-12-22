@@ -8,12 +8,18 @@
 const Gatherer = require('./gatherer.js');
 const pageFunctions = require('../../lib/page-functions.js');
 
-/* globals getElementsInDocument */
+/* globals getElementsInDocument getNodeDetails */
 
 /* istanbul ignore next */
 function collectMetaElements() {
-  // @ts-expect-error - getElementsInDocument put into scope via stringification
-  const metas = /** @type {HTMLMetaElement[]} */ (getElementsInDocument('head meta'));
+  const functions = /** @type {typeof pageFunctions} */({
+    // @ts-expect-error - getElementsInDocument put into scope via stringification
+    getElementsInDocument,
+    // @ts-expect-error - getNodeDetails put into scope via stringification
+    getNodeDetails,
+  });
+
+  const metas = /** @type {HTMLMetaElement[]} */ (functions.getElementsInDocument('head meta'));
   return metas.map(meta => {
     /** @param {string} name */
     const getAttribute = name => {
@@ -27,6 +33,7 @@ function collectMetaElements() {
       property: getAttribute('property'),
       httpEquiv: meta.httpEquiv ? meta.httpEquiv.toLowerCase() : undefined,
       charset: getAttribute('charset'),
+      node: functions.getNodeDetails(meta),
     };
   });
 }

@@ -113,13 +113,20 @@ class Hreflang extends Audit {
       }
 
       if (link.source === 'head') {
-        source = {
-          type: 'node',
-          snippet: `<link rel="alternate" hreflang="${link.hreflang}" href="${link.hrefRaw}" />`,
-          path: link.node !== null ? link.node.devtoolsNodePath : '',
-          selector: link.node !== null ? link.node.selector : '',
-          nodeLabel: link.node !== null ? link.node.nodeLabel : '',
-        };
+        if (link.node) {
+          source = {
+            ...Audit.makeNodeValue(link.node),
+            snippet: `<link rel="alternate" hreflang="${link.hreflang}" href="${link.hrefRaw}" />`,
+          };
+        } else {
+          source = {
+            type: 'node',
+            snippet: `<link rel="alternate" hreflang="${link.hreflang}" href="${link.hrefRaw}" />`,
+            // path: '',
+            // selector: '',
+            // nodeLabel: '',
+          };
+        }
       } else if (link.source === 'headers') {
         source = `Link: <${link.hrefRaw}>; rel="alternate"; hreflang="${link.hreflang}"`;
       }
