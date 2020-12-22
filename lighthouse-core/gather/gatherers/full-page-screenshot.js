@@ -95,9 +95,9 @@ class FullPageScreenshot extends Gatherer {
     }
 
     /**
-     * @param {boolean} useIsolation
+     * @param {{useIsolation: boolean}} _
      */
-    function evaluateInPage(useIsolation) {
+    function resolveNodesInPage({useIsolation}) {
       return passContext.driver.evaluate(resolveNodes, {
         args: [],
         useIsolation,
@@ -108,8 +108,8 @@ class FullPageScreenshot extends Gatherer {
     // Collect nodes with the page context (`useIsolation: false`) and with our own, reused
     // context (`useIsolation: true`). Gatherers use both modes when collecting node details,
     // so we must do the same here too.
-    const pageContextResult = await evaluateInPage(false);
-    const isolatedContextResult = await evaluateInPage(true);
+    const pageContextResult = await resolveNodesInPage({useIsolation: false});
+    const isolatedContextResult = await resolveNodesInPage({useIsolation: true});
     return {...pageContextResult, ...isolatedContextResult};
   }
 
@@ -142,7 +142,8 @@ class FullPageScreenshot extends Gatherer {
         // and then just call that to reset?
         // https://github.com/GoogleChrome/lighthouse/issues/11122
 
-        const observedDeviceMetrics = await driver.evaluate(function getObservedDeviceMetrics() {
+        // eslint-disable-next-line no-inner-declarations
+        function getObservedDeviceMetrics() {
           // Convert the Web API's snake case (landscape-primary) to camel case (landscapePrimary).
           const screenOrientationType = /** @type {LH.Crdp.Emulation.ScreenOrientationType} */ (
             snakeCaseToCamelCase(window.screen.orientation.type));
@@ -155,7 +156,9 @@ class FullPageScreenshot extends Gatherer {
             },
             deviceScaleFactor: window.devicePixelRatio,
           };
-        }, {
+        }
+
+        const observedDeviceMetrics = await driver.evaluate(getObservedDeviceMetrics, {
           args: [],
           useIsolation: true,
           deps: [snakeCaseToCamelCase],

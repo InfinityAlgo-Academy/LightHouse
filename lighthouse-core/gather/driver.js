@@ -491,7 +491,7 @@ class Driver {
    *   defined for `mainFn` to work.
    * @return {FlattenedPromise<R>}
    */
-  async evaluate(mainFn, options) {
+  evaluate(mainFn, options) {
     return this._executionContext.evaluate(mainFn, options);
   }
 

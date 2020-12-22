@@ -45,6 +45,7 @@ class IFrameElements extends Gatherer {
 
     const iframeElements = await driver.evaluate(collectIFrameElements, {
       args: [],
+      useIsolation: true,
       deps: [
         pageFunctions.getElementsInDocumentString,
         pageFunctions.isPositionFixedString,
