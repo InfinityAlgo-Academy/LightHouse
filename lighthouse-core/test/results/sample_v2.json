@@ -252,43 +252,43 @@
         "items": [
           {
             "source": "other",
-            "description": "Application Cache Error event: Manifest fetch failed (404) http://localhost:56620/dobetterweb/clock.appcache",
-            "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+            "description": "Application Cache Error event: Manifest fetch failed (404) http://localhost:10200/dobetterweb/clock.appcache",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           },
           {
             "source": "exception",
-            "description": "Error: A distinctive error\n    at http://localhost:56620/dobetterweb/dbw_tester.html:58:54",
-            "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+            "description": "Error: A distinctive error\n    at http://localhost:10200/dobetterweb/dbw_tester.html:58:54",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           },
           {
             "source": "exception",
-            "description": "Error: An ignored error\n    at http://localhost:56620/dobetterweb/dbw_tester.html:61:38",
-            "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+            "description": "Error: An ignored error\n    at http://localhost:10200/dobetterweb/dbw_tester.html:61:38",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           },
           {
             "source": "console.error",
             "description": "Error! Error!",
-            "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           },
           {
             "source": "network",
             "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-            "url": "http://localhost:56620/dobetterweb/unknown404.css?delay=200"
+            "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200"
           },
           {
             "source": "network",
             "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-            "url": "http://localhost:56620/dobetterweb/fcp-delayer.js?delay=5000"
+            "url": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000"
           },
           {
             "source": "network",
             "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-            "url": "http://localhost:56620/favicon.ico"
+            "url": "http://localhost:10200/favicon.ico"
           },
           {
             "source": "network",
             "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-            "url": "http://localhost:56620/dobetterweb/unknown404.css?delay=200"
+            "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200"
           }
         ]
       }
@@ -637,7 +637,7 @@
         ],
         "items": [
           {
-            "url": "http://localhost:54657/dobetterweb/lighthouse-480x318.jpg?iar1",
+            "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?iar1",
             "displayedAspectRatio": "120 x 15\n        (8.00)",
             "actualAspectRatio": "480 x 318\n        (1.51)",
             "doRatiosMatch": false
@@ -682,8 +682,8 @@
         ],
         "items": [
           {
-            "url": "http://localhost:54657/dobetterweb/lighthouse-480x318.jpg?isr1",
-            "elidedUrl": "http://localhost:54657/dobetterweb/lighthouse-480x318.jpg?isr1",
+            "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr1",
+            "elidedUrl": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr1",
             "displayedSize": "4800 x 3180",
             "actualSize": "480 x 318",
             "actualPixels": 152640,
@@ -691,8 +691,8 @@
             "expectedPixels": 61056000
           },
           {
-            "url": "http://localhost:54657/dobetterweb/lighthouse-rotating.gif",
-            "elidedUrl": "http://localhost:54657/dobetterweb/lighthouse-rotating.gif",
+            "url": "http://localhost:10200/dobetterweb/lighthouse-rotating.gif",
+            "elidedUrl": "http://localhost:10200/dobetterweb/lighthouse-rotating.gif",
             "displayedSize": "811 x 462",
             "actualSize": "811 x 462",
             "actualPixels": 374682,
@@ -719,7 +719,7 @@
         ],
         "items": [
           {
-            "url": "http://localhost:10503/perf/lobster-two-v10-latin-700.woff2?cors=true"
+            "url": "http://localhost:10200/perf/lobster-two-v10-latin-700.woff2?cors=true"
           }
         ]
       }
@@ -750,7 +750,7 @@
             "value": "Application Cache API manifest selection is deprecated and will be removed in M85, around August 2020. See https://www.chromestatus.com/features/6192449487634432 for more details.",
             "source": {
               "type": "source-location",
-              "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
               "urlProvider": "network",
               "line": 8,
               "column": 0
@@ -760,7 +760,7 @@
             "value": "'window.webkitStorageInfo' is deprecated. Please use 'navigator.webkitTemporaryStorage' or 'navigator.webkitPersistentStorage' instead.",
             "source": {
               "type": "source-location",
-              "url": "http://localhost:56620/dobetterweb/dbw_tester.js",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
               "urlProvider": "network",
               "line": 13,
               "column": 9
@@ -770,7 +770,7 @@
             "value": "Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/.",
             "source": {
               "type": "source-location",
-              "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
               "urlProvider": "network",
               "line": 371,
               "column": 6
@@ -780,7 +780,7 @@
             "value": "/deep/ combinator is no longer supported in CSS dynamic profile. It is now effectively no-op, acting as if it were a descendant combinator. /deep/ combinator will be removed, and will be invalid at M65. You should remove it. See https://www.chromestatus.com/features/4964279606312960 for more details.",
             "source": {
               "type": "source-location",
-              "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
               "urlProvider": "network",
               "line": 0,
               "column": 0
@@ -1991,7 +1991,7 @@
           {
             "source": {
               "type": "source-location",
-              "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
               "urlProvider": "network",
               "line": 386,
               "column": 36
@@ -2085,23 +2085,23 @@
         ],
         "items": [
           {
-            "url": "blob:http://localhost:54657/822c70a0-b912-41c7-9a21-56c3d309e75b",
+            "url": "blob:http://localhost:10200/822c70a0-b912-41c7-9a21-56c3d309e75b",
             "node": {
               "type": "node",
               "path": "3,HTML,1,BODY,63,IMG",
               "selector": "body > img",
               "nodeLabel": "img",
-              "snippet": "<img src=\"blob:http://localhost:54657/822c70a0-b912-41c7-9a21-56c3d309e75b\">"
+              "snippet": "<img src=\"blob:http://localhost:10200/822c70a0-b912-41c7-9a21-56c3d309e75b\">"
             }
           },
           {
-            "url": "filesystem:http://localhost:54657/temporary/empty-0.8423185960902964.png",
+            "url": "filesystem:http://localhost:10200/temporary/empty-0.8423185960902964.png",
             "node": {
               "type": "node",
               "path": "3,HTML,1,BODY,72,IMG",
               "selector": "body > img",
               "nodeLabel": "img",
-              "snippet": "<img src=\"filesystem:http://localhost:54657/temporary/empty-0.8423185960902964.png\">"
+              "snippet": "<img src=\"filesystem:http://localhost:10200/temporary/empty-0.8423185960902964.png\">"
             }
           }
         ]
@@ -3036,7 +3036,7 @@
               "type": "node",
               "selector": "body > img",
               "path": "3,HTML,1,BODY,63,IMG",
-              "snippet": "<img src=\"blob:http://localhost:53943/75859e89-fbad-4471-b196-9304adbb874a\">",
+              "snippet": "<img src=\"blob:http://localhost:10200/75859e89-fbad-4471-b196-9304adbb874a\">",
               "boundingRect": {
                 "top": 1295,
                 "bottom": 1311,
@@ -3054,7 +3054,7 @@
               "type": "node",
               "selector": "body > img",
               "path": "3,HTML,1,BODY,72,IMG",
-              "snippet": "<img src=\"filesystem:http://localhost:53943/temporary/empty-0.34660357368794004.png\">",
+              "snippet": "<img src=\"filesystem:http://localhost:10200/temporary/empty-0.34660357368794004.png\">",
               "boundingRect": {
                 "top": 1317,
                 "bottom": 1333,
@@ -3745,12 +3745,12 @@
           {
             "url": "http://localhost:10200/zone.js",
             "totalBytes": 71654,
-            "wastedBytes": 30470,
-            "wastedPercent": 42.52388078488413
+            "wastedBytes": 30472,
+            "wastedPercent": 42.526292235399424
           }
         ],
         "overallSavingsMs": 150,
-        "overallSavingsBytes": 30470
+        "overallSavingsBytes": 30472
       }
     },
     "unused-css-rules": {
@@ -3791,9 +3791,9 @@
       "id": "uses-webp-images",
       "title": "Serve images in next-gen formats",
       "description": "Image formats like JPEG 2000, JPEG XR, and WebP often provide better compression than PNG or JPEG, which means faster downloads and less data consumption. [Learn more](https://web.dev/uses-webp-images/).",
-      "score": 1,
+      "score": 0.88,
       "scoreDisplayMode": "numeric",
-      "numericValue": 0,
+      "numericValue": 150,
       "numericUnit": "millisecond",
       "displayValue": "Potential savings of 9 KiB",
       "warnings": [],
@@ -3823,14 +3823,14 @@
         ],
         "items": [
           {
-            "url": "http://localhost:54819/dobetterweb/lighthouse-480x318.jpg",
+            "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
             "fromProtocol": true,
-            "isCrossOrigin": true,
+            "isCrossOrigin": false,
             "totalBytes": 24620,
             "wastedBytes": 9028
           }
         ],
-        "overallSavingsMs": 0,
+        "overallSavingsMs": 150,
         "overallSavingsBytes": 9028
       }
     },
@@ -3985,7 +3985,7 @@
         "items": [
           {
             "url": "http://localhost:10200/zone.js",
-            "wastedBytes": 21205,
+            "wastedBytes": 21204,
             "subItems": {
               "type": "subitems",
               "items": [
@@ -4015,7 +4015,7 @@
           }
         ],
         "overallSavingsMs": 0,
-        "overallSavingsBytes": 21205
+        "overallSavingsBytes": 21204
       }
     },
     "appcache-manifest": {
@@ -4155,19 +4155,6 @@
             "target": "_blank",
             "rel": "nofollow",
             "outerHTML": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"nofollow\">"
-          },
-          {
-            "node": {
-              "type": "node",
-              "path": "3,HTML,1,BODY,52,A",
-              "selector": "body > a",
-              "nodeLabel": "internal link is ok",
-              "snippet": "<a href=\"./doesnotexist\" target=\"_blank\">"
-            },
-            "href": "http://localhost:53522/dobetterweb/doesnotexist",
-            "target": "_blank",
-            "rel": "",
-            "outerHTML": "<a href=\"./doesnotexist\" target=\"_blank\">"
           }
         ]
       }
@@ -4195,11 +4182,11 @@
         "items": [
           {
             "label": "line: 331",
-            "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           },
           {
             "label": "line: 335",
-            "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           }
         ]
       }
@@ -4235,15 +4222,15 @@
         "items": [
           {
             "label": "line: 269",
-            "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           },
           {
             "label": "line: 270",
-            "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           },
           {
             "label": "line: 271",
-            "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           }
         ]
       }
@@ -4359,7 +4346,7 @@
         "items": [
           {
             "label": "line: 341",
-            "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           }
         ]
       }
@@ -4508,7 +4495,7 @@
         "items": [
           {
             "label": "line: 302",
-            "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           }
         ]
       }
@@ -6763,6 +6750,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:uses-webp-images",
         "duration": 100,
         "entryType": "measure"
@@ -8077,7 +8070,7 @@
       "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": [
         {
           "values": {
-            "wastedBytes": 30470
+            "wastedBytes": 30472
           },
           "path": "audits[unminified-javascript].displayValue"
         },
@@ -8095,7 +8088,7 @@
         },
         {
           "values": {
-            "wastedBytes": 21205
+            "wastedBytes": 21204
           },
           "path": "audits[legacy-javascript].displayValue"
         }

@@ -91,6 +91,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       const bundle = bundles.find(b => b.script.src === url);
       const unusedJsSummary =
         await UnusedJavaScriptSummary.request({url, scriptCoverages, bundle}, context);
+      if (unusedJsSummary.wastedBytes === 0 || unusedJsSummary.totalBytes === 0) continue;
 
       const transfer = ByteEfficiencyAudit
         .estimateTransferSize(networkRecord, unusedJsSummary.totalBytes, 'Script');
