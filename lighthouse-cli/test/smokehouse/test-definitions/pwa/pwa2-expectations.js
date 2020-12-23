@@ -19,28 +19,18 @@ module.exports = [
       requestedUrl: 'https://jakearchibald.github.io/svgomg/',
       finalUrl: 'https://jakearchibald.github.io/svgomg/',
       audits: {
-        'is-on-https': {
-          score: 1,
-        },
         'redirects-http': {
           score: 1,
         },
         'service-worker': {
           score: 1,
         },
-        'works-offline': {
-          score: 1,
-        },
-        'offline-start-url': {
-          score: 1,
-        },
         'viewport': {
           score: 1,
         },
         'installable-manifest': {
-          score: 0,
-          details: {items: [jakeExpectations]},
-          explanation: /^Failures: .*short_name/,
+          score: 1,
+          details: {items: [], debugData: {manifestUrl: 'https://jakearchibald.github.io/svgomg/manifest.json'}},
         },
         'splash-screen': {
           score: 1,
@@ -82,19 +72,10 @@ module.exports = [
       requestedUrl: 'https://caltrainschedule.io/',
       finalUrl: 'https://caltrainschedule.io/',
       audits: {
-        'is-on-https': {
-          score: 1,
-        },
         'redirects-http': {
           score: 1,
         },
         'service-worker': {
-          score: 1,
-        },
-        'works-offline': {
-          score: 1,
-        },
-        'offline-start-url': {
           score: 1,
         },
         'viewport': {
@@ -102,7 +83,7 @@ module.exports = [
         },
         'installable-manifest': {
           score: 1,
-          details: {items: [{...pwaDetailsExpectations, manifestUrl: 'https://caltrainschedule.io/manifest.json'}]},
+          details: {items: [], debugData: {manifestUrl: 'https://caltrainschedule.io/manifest.json'}},
         },
         'splash-screen': {
           score: 1,

@@ -38,7 +38,6 @@ async function snapshot(options) {
         settings: config.settings,
         // TODO(FR-COMPAT): convert these to regular artifacts
         HostFormFactor: 'mobile',
-        TestedAsMobileDevice: true,
         HostUserAgent: 'unknown',
         NetworkUserAgent: 'unknown',
         BenchmarkIndex: 0,

@@ -28,8 +28,6 @@ declare global {
       fetchTime: string;
       /** A set of warnings about unexpected things encountered while loading and testing the page. */
       LighthouseRunWarnings: Array<string | IcuMessage>;
-      /** Whether the page was loaded on either a real or emulated mobile device. */
-      TestedAsMobileDevice: boolean;
       /** Device which Chrome is running on. */
       HostFormFactor: 'desktop'|'mobile';
       /** The user agent string of the version of Chrome used. */
@@ -64,8 +62,8 @@ declare global {
      * on a major version bump.
      */
     export interface PublicGathererArtifacts {
-      /** Console deprecation and intervention warnings logged by Chrome during page load. */
-      ConsoleMessages: Crdp.Log.EntryAddedEvent[];
+      /** ConsoleMessages deprecation and intervention warnings, console API calls, and exceptions logged by Chrome during page load. */
+      ConsoleMessages: Artifacts.ConsoleMessage[];
       /** All the iframe elements in the page.*/
       IFrameElements: Artifacts.IFrameElement[];
       /** The contents of the main HTML document network resource. */
@@ -76,8 +74,6 @@ declare global {
       LinkElements: Artifacts.LinkElement[];
       /** The values of the <meta> elements in the head. */
       MetaElements: Array<{name?: string, content?: string, property?: string, httpEquiv?: string, charset?: string}>;
-      /** Set of exceptions thrown during page load. */
-      RuntimeExceptions: Crdp.Runtime.ExceptionThrownEvent[];
       /** Information on all script elements in the page. Also contains the content of all requested scripts and the networkRecord requestId that contained their content. Note, HTML documents will have one entry per script tag, all with the same requestId. */
       ScriptElements: Array<Artifacts.ScriptElement>;
       /** The dimensions and devicePixelRatio of the loaded viewport. */
@@ -126,8 +122,6 @@ declare global {
       Manifest: Artifacts.Manifest | null;
       /** The URL loaded with interception */
       MixedContent: {url: string};
-      /** The status code of the attempted load of the page while network access is disabled. */
-      Offline: number;
       /** Size and compression opportunity information for all the images in the page. */
       OptimizedImages: Array<Artifacts.OptimizedImage | Artifacts.OptimizedImageError>;
       /** HTML snippets and node paths from any password inputs that prevent pasting. */
@@ -140,8 +134,6 @@ declare global {
       ServiceWorker: {versions: Crdp.ServiceWorker.ServiceWorkerVersion[], registrations: Crdp.ServiceWorker.ServiceWorkerRegistration[]};
       /** Source maps of scripts executed in the page. */
       SourceMaps: Array<Artifacts.SourceMap>;
-      /** The status of an offline fetch of the page's start_url. -1 and a explanation if missing or there was an error. */
-      StartUrl: {url?: string, statusCode: number, explanation?: string};
       /** Information on <script> and <link> tags blocking first paint. */
       TagsBlockingFirstPaint: Artifacts.TagBlockingFirstPaint[];
       /** Information about tap targets including their position and size. */
@@ -171,7 +163,7 @@ declare global {
 
       export interface AxeRuleResult {
         id: string;
-        impact: string;
+        impact?: string;
         tags: Array<string>;
         nodes: Array<{
           html: string;
@@ -179,8 +171,6 @@ declare global {
           failureSummary?: string;
           node: NodeDetails;
         }>;
-        // When rules error they set these properties
-        // https://github.com/dequelabs/axe-core/blob/eeff122c2de11dd690fbad0e50ba2fdb244b50e8/lib/core/base/audit.js#L684-L693
         error?: RuleExecutionError;
       }
 
@@ -476,8 +466,11 @@ declare global {
         endTime: number;
         transferSize: number;
         tag: {
-          tagName: string;
+          tagName: 'LINK'|'SCRIPT';
+          /** The value of `HTMLLinkElement.href` or `HTMLScriptElement.src`. */
           url: string;
+          /** A record of when changes to the `HTMLLinkElement.media` attribute occurred and if the new media type matched the page. */
+          mediaChanges?: Array<{href: string, media: string, msSinceHTMLEnd: number, matches: boolean}>;
         };
       }
 
@@ -613,10 +606,12 @@ declare global {
         processEvents: Array<TraceEvent>;
         /** The subset of trace events from the page's main thread, sorted by timestamp. */
         mainThreadEvents: Array<TraceEvent>;
+        /** The subset of trace events from the main frame and any child frames, sorted by timestamp. */
+        frameTreeEvents: Array<TraceEvent>;
         /** IDs for the trace's main frame, process, and thread. */
         mainFrameIds: {pid: number, tid: number, frameId: string};
         /** The list of frames committed in the trace. */
-        frames: Array<{frame: string, url: string}>;
+        frames: Array<{id: string, url: string}>;
         /** The trace event marking the time at which the page load should consider to have begun. Typically the same as the navigationStart but might differ due to SPA navigations, client-side redirects, etc. */
         timeOriginEvt: TraceEvent;
         /** The trace event marking firstPaint, if it was found. */
@@ -759,6 +754,57 @@ declare global {
         /** Column number in the script (0-based). */
         columnNumber: number;
       }
+
+      /** Describes a generic console message. */
+      interface BaseConsoleMessage {
+        /**
+         * The text printed to the console, as shown on the browser console.
+         *
+         * For console API calls, all values are formatted into the text. Primitive values and
+         * function will be printed as-is while objects will be formatted as if the object were
+         * passed to String(). For example, a div will be formatted as "[object HTMLDivElement]".
+         *
+         * For exceptions the text will be the same as err.message at runtime.
+         */
+        text: string;
+        /** Time of the console log in milliseconds since epoch. */
+        timestamp: number;
+        /** The stack trace of the log/exception, if known. */
+        stackTrace?: Crdp.Runtime.StackTrace;
+        /** The URL of the log/exception, if known. */
+        url?: string;
+        /** Line number in the script (0-based), if known. */
+        lineNumber?: number;
+        /** Column number in the script (0-based), if known. */
+        columnNumber?: number;
+      }
+
+      /** Describes a console message logged by a script using the console API. */
+      interface ConsoleAPICall extends BaseConsoleMessage {
+        eventType: 'consoleAPI';
+        /** The console API invoked. Only the following console API calls are gathered. */
+        source: 'console.warn' | 'console.error';
+        /** Corresponds to the API call. */
+        level: 'warning' | 'error';
+      }
+
+      interface ConsoleException extends BaseConsoleMessage {
+        eventType: 'exception';
+        source: 'exception';
+        level: 'error';
+      }
+
+      /**
+       * Describes a report logged to the console by the browser regarding interventions,
+       * deprecations, violations, and more.
+       */
+      interface ConsoleProtocolLog extends BaseConsoleMessage {
+        source: Crdp.Log.LogEntry['source'],
+        level: Crdp.Log.LogEntry['level'],
+        eventType: 'protocolLog';
+      }
+
+      export type ConsoleMessage = ConsoleAPICall | ConsoleException | ConsoleProtocolLog;
     }
   }
 }

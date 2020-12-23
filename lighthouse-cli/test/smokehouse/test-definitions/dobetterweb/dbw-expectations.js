@@ -13,7 +13,6 @@ const expectations = [
   {
     artifacts: {
       HostFormFactor: 'desktop',
-      TestedAsMobileDevice: true,
       Stacks: [{
         id: 'jquery',
       }, {
@@ -211,48 +210,43 @@ const expectations = [
         'errors-in-console': {
           score: 0,
           details: {
-            items: {
-              length: '6 +/- 1',
-              // COMPAT: In 89.0.4351.0 we observed one additional runtime error and it's origin is currently unknown
-              // TODO: Investigate and resolve it's presence. https://github.com/GoogleChrome/lighthouse/issues/11803
-              //     {
-              //       source: 'Runtime.exception',
-              //       description: 'TypeError: the given value is not a Promise',
-              //       url: 'http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js',
-              //     },
-            },
-            // items: [
-            //   {
-            //     source: 'other',
-            //     description: 'Application Cache Error event: Manifest fetch failed (404) http://localhost:10200/dobetterweb/clock.appcache',
-            //     url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
-            //   },
-            //   {
-            //     source: 'Runtime.exception',
-            //     description: /^Error: A distinctive error\s+at http:\/\/localhost:10200\/dobetterweb\/dbw_tester.html:\d+:\d+$/,
-            //     url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
-            //   },
-            //   {
-            //     source: 'network',
-            //     description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
-            //     url: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200',
-            //   },
-            //   {
-            //     source: 'network',
-            //     description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
-            //     url: 'http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000',
-            //   },
-            //   {
-            //     source: 'network',
-            //     description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
-            //     url: 'http://localhost:10200/favicon.ico',
-            //   },
-            //   {
-            //     source: 'network',
-            //     description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
-            //     url: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200',
-            //   },
-            // ],
+            items: [
+              {
+                source: 'other',
+                description: 'Application Cache Error event: Manifest fetch failed (404) http://localhost:10200/dobetterweb/clock.appcache',
+                url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+              },
+              {
+                source: 'exception',
+                description: /^Error: A distinctive error\s+at http:\/\/localhost:10200\/dobetterweb\/dbw_tester.html:\d+:\d+$/,
+                url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+              },
+              {
+                source: 'console.error',
+                description: 'Error! Error!',
+                url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+              },
+              {
+                source: 'network',
+                description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
+                url: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200',
+              },
+              {
+                source: 'network',
+                description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
+                url: 'http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000',
+              },
+              {
+                source: 'network',
+                description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
+                url: 'http://localhost:10200/favicon.ico',
+              },
+              {
+                source: 'network',
+                description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
+                url: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200',
+              },
+            ],
           },
         },
         'is-on-https': {
@@ -408,10 +402,10 @@ const expectations = [
         },
         'dom-size': {
           score: 1,
-          numericValue: 148,
+          numericValue: 149,
           details: {
             items: [
-              {statistic: 'Total DOM Elements', value: 148},
+              {statistic: 'Total DOM Elements', value: 149},
               {statistic: 'Maximum DOM Depth', value: 4},
               {
                 statistic: 'Maximum Child Elements',
@@ -433,6 +427,30 @@ const expectations = [
                 column: '>30',
               },
             }],
+          },
+        },
+        'full-page-screenshot': {
+          score: null,
+          details: {
+            type: 'full-page-screenshot',
+            screenshot: {
+              width: 360,
+              // Allow for differences in platforms.
+              height: '3755±5',
+              data: /^data:image\/jpeg;.{500,}/,
+            },
+            nodes: {
+              'page-0-IMG': {
+                // Test that these are numbers and in the ballpark.
+                top: '650±50',
+                bottom: '650±50',
+                left: '10±10',
+                right: '120±20',
+                width: '120±20',
+                height: '20±20',
+              },
+              // And then many more nodes.
+            },
           },
         },
       },

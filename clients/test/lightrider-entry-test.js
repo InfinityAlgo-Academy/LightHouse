@@ -80,7 +80,7 @@ describe('lightrider-entry', () => {
       const lrDevice = 'desktop';
       await lhBackground.runLighthouseInLR(mockConnection, url, {}, {lrDevice});
       const config = runStub.mock.calls[0][1].config;
-      assert.equal(config.settings.emulatedFormFactor, 'desktop');
+      assert.equal(config.settings.formFactor, 'desktop');
 
       runStub.mockRestore();
     });
@@ -94,7 +94,7 @@ describe('lightrider-entry', () => {
       const lrDevice = 'mobile';
       await lhBackground.runLighthouseInLR(mockConnection, url, {}, {lrDevice});
       const config = runStub.mock.calls[0][1].config;
-      assert.equal(config.settings.emulatedFormFactor, 'mobile');
+      assert.equal(config.settings.formFactor, 'mobile');
 
       runStub.mockRestore();
     });

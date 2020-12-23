@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Alla formulärelement har etiketter"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "I en tabell som används i layoutsyfte ska det inte finnas dataelement som th eller caption eller attributet summary, eftersom det kan bli missvisande för den som använder skärmläsare. [Läs mer](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "Det finns `<table>`-element som används i layoutsyfte men som ändå har `<th>`- eller `<caption>`-element eller `[summary]`-attribut, vilket bör undvikas."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "Inga `<th>`- eller `<caption>`-element eller `[summary]`-attribut förekommer i `<table>`-element som används i layoutsyfte."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Det blir enklare att navigera för den som använder en skärmläsare om alla länktexter (och alternativtexter för alla bilder som används som länkar) är igenkännliga, unika och möjliga att flytta fokus till. [Läs mer](https://web.dev/link-name/)."
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Alla `<video>`-element innehåller ett `<track>`-element med `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Upplästa beskrivningar ger viktig information om videon som inte framgår av dialogen, t.ex. ansiktsuttryck och naturvyer. [Läs mer](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "Alla `<video>`-element har inte ett underordnat `<track>`-element med `[kind=\"description\"]`."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "Alla `<video>`-element innehåller ett `<track>`-element med `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "Definiera en `apple-touch-icon` för att få bästa möjliga utseende i iOS när användare lägger till en progressiv webbapp på startskärmen. Den måste peka på en icke-transparent, kvadratisk PNG med sidan 192 pixlar (eller 180 pixlar). [Läs mer](https://web.dev/apple-touch-icon/)."
@@ -1001,21 +983,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Effekten har tidsparametrar som inte stöds"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Med en tjänstefunktion kan appen användas under oförutsägbara nätverksförhållanden. [Läs mer](https://web.dev/offline-start-url/)."
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "Ett fel uppstod när {url} skulle läsas in i Service Worker. Statuskoden {statusCode} returnerades"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "HTTP-statuskoden 200 visas inte när `start_url` är offline"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "HTTP-statuskoden 200 visas när `start_url` är offline."
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Lighthouse kunde inte läsa `start_url` i manifestet. Därför antogs det att `start_url` var dokumentets webbadress. Felmeddelande: {manifestWarning}."
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "Håll antal och storlek för nätverksbegäranden under de mål som anges i den angivna prestandabudgeten. [Läs mer](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
@@ -1397,18 +1364,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Har en `<meta name=\"viewport\">`-tagg med `width` eller `initial-scale`"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Om du skapar en progressiv webbapp rekommenderar vi att du använder en tjänstefunktion så att appen kan användas offline. [Läs mer](https://web.dev/works-offline/)."
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "HTTP-statuskoden 200 visas inte för den aktuella sidan när den är offline"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "HTTP-statuskoden 200 visas för den aktuella sidan när den är offline"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "Sidan kanske inte läses in offline eftersom testwebbadressen ({requested}) omdirigerades till {final}. Testa den andra webbadressen direkt i stället."
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Det här är förslag på hur ARIA kan förbättras i appen så att den fungerar bättre för den som använder skärmläsare eller andra hjälpmedel."
   },
@@ -1525,9 +1480,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Progressiv webbapp"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "Snabb och pålitlig"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Kan installeras"

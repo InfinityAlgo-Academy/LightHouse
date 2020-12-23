@@ -17,6 +17,15 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "`[aria-*]` attributes match their roles"
   },
+  "lighthouse-core/audits/accessibility/aria-command-name.js | description": {
+    "message": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-command-name.js | failureTitle": {
+    "message": "`button`, `link`, and `menuitem` elements do not have accessible names."
+  },
+  "lighthouse-core/audits/accessibility/aria-command-name.js | title": {
+    "message": "`button`, `link`, and `menuitem` elements have accessible names"
+  },
   "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
     "message": "Assistive technologies, like screen readers, work inconsistently when `aria-hidden=\"true\"` is set on the document `<body>`. [Learn more](https://web.dev/aria-hidden-body/)."
   },
@@ -36,13 +45,31 @@
     "message": "`[aria-hidden=\"true\"]` elements do not contain focusable descendents"
   },
   "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
-    "message": "When an input field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-input-field-name/)."
+    "message": "When an input field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
     "message": "ARIA input fields do not have accessible names"
   },
   "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
     "message": "ARIA input fields have accessible names"
+  },
+  "lighthouse-core/audits/accessibility/aria-meter-name.js | description": {
+    "message": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-meter-name.js | failureTitle": {
+    "message": "ARIA `meter` elements do not have accessible names."
+  },
+  "lighthouse-core/audits/accessibility/aria-meter-name.js | title": {
+    "message": "ARIA `meter` elements have accessible names"
+  },
+  "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
+    "message": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
+    "message": "ARIA `progressbar` elements do not have accessible names."
+  },
+  "lighthouse-core/audits/accessibility/aria-progressbar-name.js | title": {
+    "message": "ARIA `progressbar` elements have accessible names"
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Some ARIA roles have required attributes that describe the state of the element to screen readers. [Learn more](https://web.dev/aria-required-attr/)."
@@ -81,13 +108,31 @@
     "message": "`[role]` values are valid"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-toggle-field-name/)."
+    "message": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "ARIA toggle fields do not have accessible names"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
     "message": "ARIA toggle fields have accessible names"
+  },
+  "lighthouse-core/audits/accessibility/aria-tooltip-name.js | description": {
+    "message": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-tooltip-name.js | failureTitle": {
+    "message": "ARIA `tooltip` elements do not have accessible names."
+  },
+  "lighthouse-core/audits/accessibility/aria-tooltip-name.js | title": {
+    "message": "ARIA `tooltip` elements have accessible names"
+  },
+  "lighthouse-core/audits/accessibility/aria-treeitem-name.js | description": {
+    "message": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-treeitem-name.js | failureTitle": {
+    "message": "ARIA `treeitem` elements do not have accessible names."
+  },
+  "lighthouse-core/audits/accessibility/aria-treeitem-name.js | title": {
+    "message": "ARIA `treeitem` elements have accessible names"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "Assistive technologies, like screen readers, can't interpret ARIA attributes with invalid values. [Learn more](https://web.dev/aria-valid-attr-value/)."
@@ -254,15 +299,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Form elements have associated labels"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "A table being used for layout purposes should not include data elements, such as the th or caption elements or the summary attribute, because this can create a confusing experience for screen reader users. [Learn more](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "Presentational `<table>` elements do not avoid using `<th>`, `<caption>` or the `[summary]` attribute."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "Presentational `<table>` elements avoid using `<th>`, `<caption>` or the `[summary]` attribute."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Link text (and alternate text for images, when used as links) that is discernible, unique, and focusable improves the navigation experience for screen reader users. [Learn more](https://web.dev/link-name/)."
   },
@@ -361,15 +397,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>` elements contain a `<track>` element with `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Audio descriptions provide relevant information for videos that dialogue cannot, such as facial expressions and scenes. [Learn more](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "`<video>` elements do not contain a `<track>` element with `[kind=\"description\"]`."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "`<video>` elements contain a `<track>` element with `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "For ideal appearance on iOS when users add a progressive web app to the home screen, define an `apple-touch-icon`. It must point to a non-transparent 192px (or 180px) square PNG. [Learn More](https://web.dev/apple-touch-icon/)."
@@ -753,7 +780,7 @@
     "message": "Protocol"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | description": {
-    "message": "HTTP/2 offers many benefits over HTTP/1.1, including binary headers, multiplexing, and server push. [Learn more](https://web.dev/uses-http2/)."
+    "message": "HTTP/2 offers many benefits over HTTP/1.1, including binary headers and multiplexing. [Learn more](https://web.dev/uses-http2/)."
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount, plural,\n    =1 {1 request not served via HTTP/2}\n    other {# requests not served via HTTP/2}\n    }"
@@ -824,14 +851,98 @@
   "lighthouse-core/audits/image-size-responsive.js | title": {
     "message": "Serves images with appropriate resolution"
   },
+  "lighthouse-core/audits/installable-manifest.js | already-installed": {
+    "message": "The app is already installed"
+  },
+  "lighthouse-core/audits/installable-manifest.js | cannot-download-icon": {
+    "message": "Downloaded icon was empty or corrupted"
+  },
+  "lighthouse-core/audits/installable-manifest.js | columnValue": {
+    "message": "Failure reason"
+  },
   "lighthouse-core/audits/installable-manifest.js | description": {
-    "message": "Browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://web.dev/installable-manifest/)."
+    "message": "Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. With proper service worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://web.dev/installable-manifest/)."
+  },
+  "lighthouse-core/audits/installable-manifest.js | displayValue": {
+    "message": "{itemCount, plural,\n    =1 {1 reason}\n    other {# reasons}\n    }"
   },
   "lighthouse-core/audits/installable-manifest.js | failureTitle": {
-    "message": "Web app manifest does not meet the installability requirements"
+    "message": "Web app manifest or service worker do not meet the installability requirements"
+  },
+  "lighthouse-core/audits/installable-manifest.js | ids-do-not-match": {
+    "message": "The Play Store app URL and Play Store ID do not match"
+  },
+  "lighthouse-core/audits/installable-manifest.js | in-incognito": {
+    "message": "Page is loaded in an incognito window"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-display-not-supported": {
+    "message": "Manifest 'display' property must be one of 'standalone', 'fullscreen', or 'minimal-ui'"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-display-override-not-supported": {
+    "message": "Manifest contains 'display_override' field, and the first supported display mode must be one of 'standalone', 'fullscreen', or 'minimal-ui'"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-empty": {
+    "message": "Manifest could not be fetched, is empty, or could not be parsed"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-location-changed": {
+    "message": "Manifest URL changed while the manifest was being fetched."
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-missing-name-or-short-name": {
+    "message": "Manifest does not contain a 'name' or 'short_name' field"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
+    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\" or \"maskable\"."
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
+    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format"
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
+    "message": "Downloaded icon was empty or corrupted"
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-id-specified": {
+    "message": "No Play store ID provided"
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-manifest": {
+    "message": "Page has no manifest <link> URL"
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-matching-service-worker": {
+    "message": "No matching service worker detected. You may need to reload the page, or check that the scope of the service worker for the current page encloses the scope and start URL from the manifest."
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-url-for-service-worker": {
+    "message": "Could not check service worker without a 'start_url' field in the manifest"
+  },
+  "lighthouse-core/audits/installable-manifest.js | noErrorId": {
+    "message": "Installability error id '{errorId}' is not recognized"
+  },
+  "lighthouse-core/audits/installable-manifest.js | not-from-secure-origin": {
+    "message": "Page is not served from a secure origin"
+  },
+  "lighthouse-core/audits/installable-manifest.js | not-in-main-frame": {
+    "message": "Page is not loaded in the main frame"
+  },
+  "lighthouse-core/audits/installable-manifest.js | not-offline-capable": {
+    "message": "Page does not work offline"
+  },
+  "lighthouse-core/audits/installable-manifest.js | platform-not-supported-on-android": {
+    "message": "The specified application platform is not supported on Android"
+  },
+  "lighthouse-core/audits/installable-manifest.js | prefer-related-applications": {
+    "message": "Manifest specifies prefer_related_applications: true"
+  },
+  "lighthouse-core/audits/installable-manifest.js | prefer-related-applications-only-beta-stable": {
+    "message": "prefer_related_applications is only supported on Chrome Beta and Stable channels on Android."
+  },
+  "lighthouse-core/audits/installable-manifest.js | start-url-not-valid": {
+    "message": "Manifest start URL is not valid"
   },
   "lighthouse-core/audits/installable-manifest.js | title": {
-    "message": "Web app manifest meets the installability requirements"
+    "message": "Web app manifest and service worker meet the installability requirements"
+  },
+  "lighthouse-core/audits/installable-manifest.js | url-not-supported-for-webapk": {
+    "message": "A URL in the manifest contains a username, password, or port"
+  },
+  "lighthouse-core/audits/installable-manifest.js | warn-not-offline-capable": {
+    "message": "Page does not work offline. The page will not be regarded as installable after Chrome 93, stable release August 2021."
   },
   "lighthouse-core/audits/is-on-https.js | allowed": {
     "message": "Allowed"
@@ -1018,21 +1129,6 @@
   },
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Effect has unsupported timing parameters"
-  },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "A service worker enables your web app to be reliable in unpredictable network conditions. [Learn more](https://web.dev/offline-start-url/)."
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "Error loading {url} in Service Worker, got status code {statusCode}"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "`start_url` does not respond with a 200 when offline"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "`start_url` responds with a 200 when offline"
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Lighthouse couldn't read the `start_url` from the manifest. As a result, the `start_url` was assumed to be the document's URL. Error message: '{manifestWarning}'."
   },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "Keep the quantity and size of network requests under the targets set by the provided performance budget. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
@@ -1442,18 +1538,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Has a `<meta name=\"viewport\">` tag with `width` or `initial-scale`"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "If you're building a Progressive Web App, consider using a service worker so that your app can work offline. [Learn more](https://web.dev/works-offline/)."
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "Current page does not respond with a 200 when offline"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "Current page responds with a 200 when offline"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "The page may not be loading offline because your test URL ({requested}) was redirected to \"{final}\". Try testing the second URL directly."
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "These are opportunities to improve the usage of ARIA in your application which may enhance the experience for users of assistive technology, like a screen reader."
   },
@@ -1570,9 +1654,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Progressive Web App"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "Fast and reliable"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Installable"

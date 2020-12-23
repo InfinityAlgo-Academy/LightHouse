@@ -113,8 +113,8 @@ describe('Performance: metrics', () => {
     const {details} = await MetricsAudit.audit(artifacts, context);
     expect(details.items[0].cumulativeLayoutShift).toBeCloseTo(0.0011);
     expect(details.items[0].observedCumulativeLayoutShift).toBeCloseTo(0.0011);
-    expect(details.items[0].cumulativeLayoutShiftAllFrames).toBeCloseTo(0.54);
-    expect(details.items[0].observedCumulativeLayoutShiftAllFrames).toBeCloseTo(0.54);
+    expect(details.items[0].cumulativeLayoutShiftAllFrames).toBeCloseTo(0.459);
+    expect(details.items[0].observedCumulativeLayoutShiftAllFrames).toBeCloseTo(0.459);
   });
 
   it('does not fail the entire audit when TTI errors', async () => {

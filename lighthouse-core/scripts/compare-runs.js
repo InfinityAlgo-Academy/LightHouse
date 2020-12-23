@@ -27,7 +27,7 @@ const {ProgressLogger} = require('./lantern/collect/common.js');
 const LH_ROOT = `${__dirname}/../..`;
 const ROOT_OUTPUT_DIR = `${LH_ROOT}/timings-data`;
 
-const argv = yargs
+const rawArgv = yargs
   .help('help')
   .describe({
     // common flags
@@ -51,12 +51,14 @@ const argv = yargs
     'delta-property-sort': 'Property to sort by its delta',
     'desc': 'Set to override default ascending sort',
   })
+  .option('n', {type: 'number', default: 1})
   .string('filter')
+  .string('url-filter')
   .alias({'gather': 'G', 'audit': 'A'})
   .default('report-exclude', 'key|min|max|stdev|^n$')
   .default('delta-property-sort', 'mean')
   .default('output', 'table')
-  .array('urls')
+  .option('urls', {array: true, type: 'string'})
   .string('lh-flags')
   .default('desc', false)
   .default('sort-by-absolute-value', false)
@@ -64,6 +66,10 @@ const argv = yargs
   .strict() // fail on unknown commands
   .wrap(yargs.terminalWidth())
   .argv;
+
+// Augmenting yargs type with auto-camelCasing breaks in tsc@4.1.2 and @types/yargs@15.0.11,
+// so for now cast to add yarg's camelCase properties to type.
+const argv = /** @type {typeof rawArgv & CamelCasify<typeof rawArgv>} */ (rawArgv);
 
 const reportExcludeRegex =
   argv.reportExclude !== 'none' ? new RegExp(argv.reportExclude, 'i') : null;
@@ -120,12 +126,15 @@ function round(value) {
  * @param {number} total
  * @return {string}
  */
-function getProgressBar(i, total = argv.n * argv.urls.length) {
+function getProgressBar(i, total = argv.n * (argv.urls || []).length) {
   const bars = new Array(Math.round(i * 40 / total)).fill('▄').join('').padEnd(40);
   return `${i + 1} / ${total} [${bars}]`;
 }
 
 async function gather() {
+  if (typeof argv.name !== 'string') {
+    throw new Error('expected entry for name option');
+  }
   const outputDir = dir(argv.name);
   if (fs.existsSync(outputDir)) {
     console.log('Collection already started - resuming.');
@@ -136,7 +145,7 @@ async function gather() {
   progress.log('Gathering…');
 
   let progressCount = 0;
-  for (const url of argv.urls) {
+  for (const url of argv.urls || []) {
     const urlFolder = `${outputDir}/${urlToFolder(url)}`;
     await mkdir(urlFolder, {recursive: true});
 
@@ -161,12 +170,15 @@ async function gather() {
 }
 
 async function audit() {
+  if (typeof argv.name !== 'string') {
+    throw new Error('expected entry for name option');
+  }
   const outputDir = dir(argv.name);
   const progress = new ProgressLogger();
   progress.log('Auditing…');
 
   let progressCount = 0;
-  for (const url of argv.urls) {
+  for (const url of argv.urls || []) {
     const urlDir = `${outputDir}/${urlToFolder(url)}`;
     for (let i = 0; i < argv.n; i++) {
       const gatherDir = `${urlDir}/${i}`;
@@ -309,6 +321,9 @@ function isNumber(value) {
 }
 
 function summarize() {
+  if (typeof argv.name !== 'string') {
+    throw new Error('expected entry for name option');
+  }
   const results = aggregateResults(argv.name);
   print(filter(results));
 }

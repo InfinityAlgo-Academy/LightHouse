@@ -46,12 +46,7 @@ class CacheContents extends Gatherer {
   async afterPass(passContext) {
     const driver = passContext.driver;
 
-    /** @type {Array<string>|void} */
-    const cacheUrls = await driver.evaluateAsync(`(${getCacheContents.toString()}())`);
-    if (!cacheUrls || !Array.isArray(cacheUrls)) {
-      throw new Error('Unable to retrieve cache contents');
-    }
-
+    const cacheUrls = await driver.evaluate(getCacheContents, {args: []});
     return cacheUrls;
   }
 }

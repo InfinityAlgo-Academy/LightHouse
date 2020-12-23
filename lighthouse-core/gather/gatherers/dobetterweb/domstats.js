@@ -3,19 +3,18 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-// @ts-nocheck
+
 /**
  * @fileoverview Gathers stats about the max height and width of the DOM tree
  * and total number of elements used on the page.
  */
 
-/* global getNodeDetails */
+/* global getNodeDetails document */
 
 'use strict';
 
 const Gatherer = require('../gatherer.js');
 const pageFunctions = require('../../../lib/page-functions.js');
-
 
 /**
  * Calculates the maximum tree depth of the DOM.
@@ -24,7 +23,7 @@ const pageFunctions = require('../../../lib/page-functions.js');
  * @return {LH.Artifacts.DOMStats}
  */
 /* istanbul ignore next */
-function getDOMStats(element, deep = true) {
+function getDOMStats(element = document.body, deep = true) {
   let deepestElement = null;
   let maxDepth = -1;
   let maxWidth = -1;
@@ -32,7 +31,7 @@ function getDOMStats(element, deep = true) {
   let parentWithMostChildren = null;
 
   /**
-   * @param {Element} element
+   * @param {Element|ShadowRoot} element
    * @param {number} depth
    */
   const _calcDOMWidthAndHeight = function(element, depth = 1) {
@@ -64,10 +63,12 @@ function getDOMStats(element, deep = true) {
   return {
     depth: {
       max: result.maxDepth,
+      // @ts-expect-error - getNodeDetails put into scope via stringification
       ...getNodeDetails(deepestElement),
     },
     width: {
       max: result.maxWidth,
+      // @ts-expect-error - getNodeDetails put into scope via stringification
       ...getNodeDetails(parentWithMostChildren),
     },
     totalBodyElements: result.numElements,
@@ -82,12 +83,12 @@ class DOMStats extends Gatherer {
   async afterPass(passContext) {
     const driver = passContext.driver;
 
-    const expression = `(function() {
-      ${pageFunctions.getNodeDetailsString};
-      return (${getDOMStats.toString()}(document.body));
-    })()`;
     await driver.sendCommand('DOM.enable');
-    const results = await driver.evaluateAsync(expression, {useIsolation: true});
+    const results = await driver.evaluate(getDOMStats, {
+      args: [],
+      useIsolation: true,
+      deps: [pageFunctions.getNodeDetailsString],
+    });
     await driver.sendCommand('DOM.disable');
     return results;
   }

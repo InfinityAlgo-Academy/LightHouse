@@ -28,7 +28,6 @@ const {requireAudits, resolveModule} = require('./config-helpers.js');
 const BASE_ARTIFACT_BLANKS = {
   fetchTime: '',
   LighthouseRunWarnings: '',
-  TestedAsMobileDevice: '',
   HostFormFactor: '',
   HostUserAgent: '',
   NetworkUserAgent: '',
@@ -159,6 +158,48 @@ function assertValidGatherer(gathererInstance, gathererName) {
 
   if (typeof gathererInstance.afterPass !== 'function') {
     throw new Error(`${gathererName} has no afterPass() method.`);
+  }
+}
+
+
+/**
+ * Validate the LH.Flags
+ * @param {LH.Flags} flags
+ */
+function assertValidFlags(flags) {
+  // COMPAT: compatibility layer for devtools as it uses the old way and we need tests to pass
+  // TODO(paulirish): remove this from LH once emulation refactor has rolled into DevTools
+  // @ts-expect-error Deprecated flag
+  if (flags.channel === 'devtools' && flags.internalDisableDeviceScreenEmulation) {
+    // @ts-expect-error Deprecated flag
+    flags.formFactor = flags.emulatedFormFactor;
+    // @ts-expect-error Deprecated flag
+    flags.emulatedFormFactor = flags.internalDisableDeviceScreenEmulation = undefined;
+  }
+
+
+  // @ts-expect-error Checking for removed flags
+  if (flags.emulatedFormFactor || flags.internalDisableDeviceScreenEmulation) {
+    throw new Error('Invalid emulation flag. Emulation configuration changed in LH 7.0. See https://github.com/GoogleChrome/lighthouse/blob/master/docs/emulation.md');
+  }
+}
+
+/**
+ * Validate the settings after they've been built
+ * @param {LH.Config.Settings} settings
+ */
+function assertValidSettings(settings) {
+  if (!settings.formFactor) {
+    throw new Error(`\`settings.formFactor\` must be defined as 'mobile' or 'desktop'. See https://github.com/GoogleChrome/lighthouse/blob/master/docs/emulation.md`);
+  }
+
+  if (!settings.screenEmulation.disabled) {
+    // formFactor doesn't control emulation. So we don't want a mismatch:
+    //   Bad mismatch A: user wants mobile emulation but scoring is configured for desktop
+    //   Bad mismtach B: user wants everything desktop and set formFactor, but accidentally not screenEmulation
+    if (settings.screenEmulation.mobile !== (settings.formFactor === 'mobile')) {
+      throw new Error(`Screen emulation mobile setting (${settings.screenEmulation.mobile}) does not match formFactor setting (${settings.formFactor}). See https://github.com/GoogleChrome/lighthouse/blob/master/docs/emulation.md`);
+    }
   }
 }
 
@@ -325,6 +366,9 @@ class Config {
 
     // Extend the default config if specified
     if (configJSON.extends) {
+      if (configJSON.extends !== 'lighthouse:default') {
+        throw new Error('`lighthouse:default` is the only valid extension method.');
+      }
       configJSON = Config.extendConfigJSON(deepCloneConfigJson(defaultConfig), configJSON);
     }
 
@@ -334,6 +378,9 @@ class Config {
     // Validate and merge in plugins (if any).
     configJSON = Config.mergePlugins(configJSON, flags, configDir);
 
+    if (flags) {
+      assertValidFlags(flags);
+    }
     const settings = Config.initSettings(configJSON.settings, flags);
 
     // Augment passes with necessary defaults and require gatherers.
@@ -354,6 +401,7 @@ class Config {
 
     Config.filterConfigIfNeeded(this);
 
+    assertValidSettings(this.settings);
     assertValidPasses(this.passes, this.audits);
     assertValidCategories(this.categories, this.audits, this.groups);
 
@@ -483,6 +531,12 @@ class Config {
     }
     // Locale is special and comes only from flags/settings/lookupLocale.
     settingsWithFlags.locale = locale;
+
+    // Default constants uses the mobile UA. Explicitly stating to true asks LH to use the associated UA.
+    // It's a little awkward, but the alternatives are not allowing `true` or a dedicated `disableUAEmulation` setting.
+    if (settingsWithFlags.emulatedUserAgent === true) {
+      settingsWithFlags.emulatedUserAgent = constants.userAgents[settingsWithFlags.formFactor];
+    }
 
     return settingsWithFlags;
   }
@@ -655,6 +709,16 @@ class Config {
         category.auditRefs.forEach(audit => includedAudits.add(audit.id));
       }
     });
+
+    // The `full-page-screenshot` audit belongs to no category, but we still want to include
+    // it (unless explictly excluded) because there are audits in every category that can use it.
+    if (settings.onlyCategories) {
+      const explicitlyExcludesFullPageScreenshot =
+        settings.skipAudits && settings.skipAudits.includes('full-page-screenshot');
+      if (!explicitlyExcludesFullPageScreenshot) {
+        includedAudits.add('full-page-screenshot');
+      }
+    }
 
     return {categories, requestedAuditNames: includedAudits};
   }

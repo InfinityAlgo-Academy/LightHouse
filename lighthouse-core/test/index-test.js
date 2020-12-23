@@ -116,6 +116,7 @@ describe('Module Tests', function() {
     }, {
       settings: {
         auditMode: __dirname + '/fixtures/artifacts/perflog/',
+        formFactor: 'mobile',
       },
       audits: [
         'viewport',
@@ -141,6 +142,7 @@ describe('Module Tests', function() {
     const results = await lighthouse(exampleUrl, {}, {
       settings: {
         auditMode: __dirname + '/fixtures/artifacts/perflog/',
+        formFactor: 'mobile',
       },
       audits: [],
     });
@@ -152,6 +154,7 @@ describe('Module Tests', function() {
     const results = await lighthouse(exampleUrl, {}, {
       settings: {
         auditMode: __dirname + '/fixtures/artifacts/perflog/',
+        formFactor: 'mobile',
         channel: 'custom',
       },
       audits: [],

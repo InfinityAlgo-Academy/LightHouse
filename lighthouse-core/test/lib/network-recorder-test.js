@@ -291,6 +291,23 @@ describe('network recorder', function() {
       expect(recorder.isCriticalIdle()).toBe(false);
     });
 
+    it('should not consider cross frame requests critical', () => {
+      for (const message of devtoolsLog) recorder.dispatch(message);
+      expect(recorder.isIdle()).toBe(true);
+      expect(recorder.is2Idle()).toBe(true);
+      expect(recorder.isCriticalIdle()).toBe(true);
+
+      const crossFrameLog = networkRecordsToDevtoolsLog([
+        {requestId: '5', url: 'http://3p.example.com', priority: 'VeryHigh', frameId: 'OOPIF'},
+      ]);
+      const startMessage = crossFrameLog.find(e => e.method === 'Network.requestWillBeSent');
+      recorder.dispatch(startMessage);
+
+      expect(recorder.isIdle()).toBe(false);
+      expect(recorder.is2Idle()).toBe(true);
+      expect(recorder.isCriticalIdle()).toBe(true);
+    });
+
     it('should capture single low-pri request state in getters', () => {
       const startMessage = devtoolsLog.find(event => event.method === 'Network.requestWillBeSent');
       startMessage.params.request.initialPriority = 'Low';

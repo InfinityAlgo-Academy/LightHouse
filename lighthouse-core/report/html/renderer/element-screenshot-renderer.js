@@ -139,24 +139,34 @@ class ElementScreenshotRenderer {
    * @param {LH.Artifacts.FullPageScreenshot} fullPageScreenshot
    */
   static installOverlayFeature(dom, templateContext, fullPageScreenshot) {
-    const reportEl = dom.find('.lh-report', dom.document());
-    const screenshotOverlayClass = 'lh-feature-screenshot-overlay';
-    if (reportEl.classList.contains(screenshotOverlayClass)) return;
-    reportEl.classList.add(screenshotOverlayClass);
+    const rootEl = dom.find('.lh-root', dom.document());
+    if (!rootEl) {
+      console.warn('No lh-root. Overlay install failed.'); // eslint-disable-line no-console
+      return;
+    }
 
-    const maxLightboxSize = {
-      width: dom.document().documentElement.clientWidth,
-      height: dom.document().documentElement.clientHeight * 0.75,
-    };
+    const screenshotOverlayClass = 'lh-screenshot-overlay--enabled';
+    // Don't install the feature more than once.
+    if (rootEl.classList.contains(screenshotOverlayClass)) return;
+    rootEl.classList.add(screenshotOverlayClass);
 
-    dom.document().addEventListener('click', e => {
+    // Add a single listener to the root element to handle all clicks within (event delegation).
+    rootEl.addEventListener('click', e => {
       const target = /** @type {?HTMLElement} */ (e.target);
       if (!target) return;
-      const el = /** @type {?HTMLElement} */ (target.closest('.lh-element-screenshot'));
+      // Only activate the overlay for clicks on the screenshot *preview* of an element, not the full-size too.
+      const el = /** @type {?HTMLElement} */ (target.closest('.lh-node > .lh-element-screenshot'));
       if (!el) return;
 
-      const overlay = dom.createElement('div');
-      overlay.classList.add('lh-element-screenshot__overlay');
+      const overlay = dom.createElement('div', 'lh-element-screenshot__overlay');
+      rootEl.append(overlay);
+
+      // The newly-added overlay has the dimensions we need.
+      const maxLightboxSize = {
+        width: overlay.clientWidth * 0.95,
+        height: overlay.clientHeight * 0.80,
+      };
+
       const elementRectSC = {
         width: Number(el.dataset['rectWidth']),
         height: Number(el.dataset['rectHeight']),
@@ -172,14 +182,15 @@ class ElementScreenshotRenderer {
         elementRectSC,
         maxLightboxSize
       );
-      if (!screenshotElement) return;
 
-      overlay.appendChild(screenshotElement);
-      overlay.addEventListener('click', () => {
+      // This would be unexpected here.
+      // When `screenshotElement` is `null`, there is also no thumbnail element for the user to have clicked to make it this far.
+      if (!screenshotElement) {
         overlay.remove();
-      });
-
-      reportEl.appendChild(overlay);
+        return;
+      }
+      overlay.appendChild(screenshotElement);
+      overlay.addEventListener('click', () => overlay.remove());
     });
   }
 

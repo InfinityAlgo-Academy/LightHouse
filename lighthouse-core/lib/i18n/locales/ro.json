@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Elementele formularului au etichete asociate"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Un tabel care este folosit pentru aspect nu ar trebui să includă elemente de date, precum elementele th sau de subtitrare sau atributul rezumat, deoarece poate crea confuzie pentru utilizatorii cititoarelor de ecran. [Află mai multe](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "Elementele `<table>` de prezentare nu evită folosirea `<th>`, `<caption>` sau a atributului `[summary]`."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "Elementele `<table>` de prezentare evită să folosească `<th>`, `<caption>` sau atributul `[summary]`."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Textul linkurilor (și textul alternativ pentru imagini, când sunt folosite ca linkuri) care se poate distinge, unic și pe care se poate focaliza, îmbunătățește navigarea pentru utilizatorii de cititoare de ecran. [Află mai multe](https://web.dev/link-name/)."
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Elementele `<video>` conțin un element `<track>` cu `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Descrierile audio oferă informații relevante pentru videoclipuri pe care dialogul nu le poate oferi, precum scene și expresii faciale. [Află mai multe](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "Elementele `<video>` nu conțin un element `<track>` cu `[kind=\"description\"]`."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "Elementele `<video>` conțin un element `<track>` cu `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "Pentru un aspect ideal în iOS atunci când utilizatorii adaugă o aplicație web progresivă în ecranul de pornire, definește o `apple-touch-icon`. Aceasta trebuie să indice spre un PNG pătrat netransparent, de 192 px (sau 180 px). [Află mai multe](https://web.dev/apple-touch-icon/)."
@@ -1001,21 +983,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Efectul are parametri de temporizare neacceptați"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Un service worker permite ca aplicația să fie fiabilă în condiții de rețea imprevizibile. [Află mai multe](https://web.dev/offline-start-url/)."
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "Eroare la încărcarea {url} în Service Worker. S-a generat codul de stare {statusCode}"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "`start_url` nu răspunde cu codul de stare 200 când este offline"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "`start_url` răspunde cu codul de stare 200 când este offline"
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Lighthouse nu a putut citi `start_url` din manifest. Prin urmare, s-a presupus că `start_url` este adresa URL a documentului. Mesaj de eroare: „{manifestWarning}”."
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "Păstrează cantitatea și dimensiunea solicitărilor din rețea sub obiectivele stabilite de bugetul de performanță solicitat. [Află mai multe](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
@@ -1397,18 +1364,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Are o etichetă `<meta name=\"viewport\">` cu `width` sau `initial-scale`"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Dacă creezi o aplicație web progresivă, poți folosi un service worker pentru ca aplicația să poată funcționa offline. [Află mai multe](https://web.dev/works-offline/)."
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "Pagina curentă nu răspunde cu codul de stare 200 când este offline"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "Pagina curentă răspunde cu codul de stare 200 când este offline"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "Este posibil ca pagina să nu se încarce offline, deoarece adresa URL de testare ({requested}) a fost redirecționată spre „{final}”. Încearcă să testezi direct a doua adresă URL."
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Acestea sunt oportunități de a îmbunătăți utilizarea ARIA în aplicație, lucru care poate îmbunătăți experiența pentru utilizatorii tehnologiei care asigură asistență, precum un cititor de ecran."
   },
@@ -1525,9 +1480,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Aplicație web progresivă"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "Rapid și sigur"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Poate fi instalat"

@@ -17,7 +17,7 @@ declare global {
        * The pre-normalization Lighthouse Config format.
        */
       export interface Json {
-        extends?: 'lighthouse:default' | string | boolean;
+        extends?: 'lighthouse:default' | string;
         settings?: SharedFlagsSettings;
         passes?: PassJson[] | null;
         audits?: Config.AuditJson[] | null;
@@ -84,6 +84,7 @@ declare global {
 
       export interface Settings extends Required<SharedFlagsSettings> {
         throttling: Required<ThrottlingSettings>;
+        screenEmulation: ScreenEmulationSettings;
       }
 
       export interface Pass extends Required<PassJson> {

@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Skjemaelementene har tilknyttede etiketter"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Tabeller som brukes til layoutformål, skal ikke inneholde dataelementer, som th-elementer, caption-elementer eller summary-attributtet, da disse kan skape en forvirrende opplevelse for brukere av skjermlesere. [Finn ut mer](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "Presentasjonsmessige `<table>`-elementer unngår ikke å bruke `<th>`, `<caption>` eller `[summary]`-attributtet."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "Presentasjonsmessige `<table>`-elementer unngår å bruke `<th>`, `<caption>` og `[summary]`-attributtet."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Når du bruker linktekst (og alternativ tekst for bilder som brukes som linker) som er tydelig, unik og mulig å sette fokus på, blir navigeringsopplevelsen bedre for brukere av skjermlesere. [Finn ut mer](https://web.dev/link-name/)."
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>`-elementer inneholder et `<track>`-element med `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Lydbeskrivelser gir relevant videoinformasjon som dialog ikke kan formidle, for eksempel ansiktsuttrykk og scener. [Finn ut mer](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "`<video>`-elementer mangler et `<track>`-element med `[kind=\"description\"]`."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "`<video>`-elementer inneholder et `<track>`-element med `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "For å oppnå det ideelle utseendet på iOS når brukere legger til progressive nettprogrammer på startskjermen, definer et `apple-touch-icon`. Det må peke til et ugjennomsiktig, kvadratisk PNG-bilde med sidelengde på 192 (eller 180) piksler. [Finn ut mer](https://web.dev/apple-touch-icon/)."
@@ -1001,21 +983,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Effekten har tidsparametere som ikke støttes"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Med en tjenestearbeider kan nettprogrammet ditt vært pålitelig under uforutsigbare nettverksforhold. [Finn ut mer](https://web.dev/offline-start-url/)."
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "Feil ved innlasting av {url} i Service Worker – fikk statuskode {statusCode}"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "`start_url` svarer ikke med 200 når siden er uten nett"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "`start_url` svarer med 200 når siden er uten nett"
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Lighthouse kunne ikke lese `start_url` i manifestet. Derfor ble det antatt at `start_url` var dokumentets nettadresse. Feilmelding: «{manifestWarning}»."
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "Sørg for at antall nettverksforespørsler og størrelsen på disse er lavere enn målene som er angitt i det aktuelle ytelsesbudsjettet. [Finn ut mer](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
@@ -1397,18 +1364,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Har en `<meta name=\"viewport\">`-tag med `width` eller `initial-scale`"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Hvis du utvikler et progressivt nettprogram, kan du vurdere å bruke en tjenestearbeider, så appen fungerer uten nett. [Finn ut mer](https://web.dev/works-offline/)."
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "Den gjeldende siden svarer ikke med 200 når den er uten nett"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "Den gjeldende siden svarer med 200 når den er uten nett"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "Siden lastes kanskje ikke inn uten nett, fordi testnettadressen ({requested}) ble viderekoblet til «{final}». Prøv å teste den andre nettadressen direkte."
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Dette er muligheter til å forbedre bruken av ARIA i programmet ditt, noe som kan gjøre opplevelsen bedre for brukere av assisterende teknologi, som skjermlesere."
   },
@@ -1525,9 +1480,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Progressivt nettprogram"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "Rask og pålitelig"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Kan installeres"

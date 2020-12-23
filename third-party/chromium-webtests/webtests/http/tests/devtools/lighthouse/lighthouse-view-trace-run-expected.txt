@@ -26,6 +26,7 @@ first-contentful-paint
 first-cpu-idle
 first-meaningful-paint
 font-display
+full-page-screenshot
 interactive
 largest-contentful-paint
 largest-contentful-paint-element

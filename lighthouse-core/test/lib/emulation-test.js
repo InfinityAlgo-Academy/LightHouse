@@ -7,6 +7,7 @@
 
 const emulation = require('../../lib/emulation.js');
 const Driver = require('../../gather/driver.js');
+const constants = require('../../config/constants.js');
 const Connection = require('../../gather/connections/connection.js');
 const {createMockSendCommandFn} = require('../gather/mock-commands.js');
 
@@ -31,16 +32,24 @@ describe('emulation', () => {
         .mockResponse('Emulation.setTouchEmulationEnabled');
     });
 
-    const getSettings = (formFactor, disableDeviceScreenEmulation) => ({
-      emulatedFormFactor: formFactor,
-      internalDisableDeviceScreenEmulation: disableDeviceScreenEmulation,
+    /**
+     * @param {LH.SharedFlagsSettings['formFactor']} formFactor
+     * @param {LH.SharedFlagsSettings['screenEmulation']} screenEmulation
+     * @param {LH.SharedFlagsSettings['emulatedUserAgent']} emulatedUserAgent
+     */
+    const getSettings = (formFactor, screenEmulation, emulatedUserAgent) => ({
+      formFactor: formFactor,
+      screenEmulation,
+      emulatedUserAgent: emulatedUserAgent === undefined ? constants.userAgents[formFactor] : false,
     });
 
-    it('handles: emulatedFormFactor: mobile / disableDeviceScreenEmulation: false', async () => {
-      await emulation.emulate(driver, getSettings('mobile', false));
+    const metrics = constants.screenEmulationMetrics;
+
+    it('default: mobile w/ screenEmulation', async () => {
+      await emulation.emulate(driver, getSettings('mobile', metrics.mobile));
 
       const uaArgs = connectionStub.sendCommand.findInvocation('Network.setUserAgentOverride');
-      expect(uaArgs).toMatchObject({userAgent: emulation.MOBILE_USERAGENT});
+      expect(uaArgs).toMatchObject({userAgent: constants.userAgents.mobile});
 
       const emulateArgs = connectionStub.sendCommand.findInvocation(
         'Emulation.setDeviceMetricsOverride'
@@ -48,62 +57,84 @@ describe('emulation', () => {
       expect(emulateArgs).toMatchObject({mobile: true});
     });
 
-    it('handles: emulatedFormFactor: desktop / disableDeviceScreenEmulation: false', async () => {
-      await emulation.emulate(driver, getSettings('desktop', false));
+    it('default desktop: w/ desktop screen emu', async () => {
+      await emulation.emulate(driver, getSettings('desktop', metrics.desktop));
 
       const uaArgs = connectionStub.sendCommand.findInvocation('Network.setUserAgentOverride');
-      expect(uaArgs).toMatchObject({userAgent: emulation.DESKTOP_USERAGENT});
+      expect(uaArgs).toMatchObject({userAgent: constants.userAgents.desktop});
 
       const emulateArgs = connectionStub.sendCommand.findInvocation(
         'Emulation.setDeviceMetricsOverride'
       );
+      expect(emulateArgs).toMatchObject({
+        mobile: metrics.desktop.mobile,
+        width: metrics.desktop.width,
+        height: metrics.desktop.height,
+        deviceScaleFactor: metrics.desktop.deviceScaleFactor,
+      });
       expect(emulateArgs).toMatchObject({mobile: false});
     });
 
-    it('handles: emulatedFormFactor: none / disableDeviceScreenEmulation: false', async () => {
-      await emulation.emulate(driver, getSettings('none', false));
+    it('mobile but screenEmu disabled (scenarios: on-device or external emu applied)', async () => {
+      await emulation.emulate(driver, getSettings('mobile', false));
+      const uaArgs = connectionStub.sendCommand.findInvocation('Network.setUserAgentOverride');
+      expect(uaArgs).toMatchObject({userAgent: constants.userAgents.mobile});
+
+      expect(connectionStub.sendCommand).not.toHaveBeenCalledWith(
+        'Emulation.setDeviceMetricsOverride',
+        expect.anything()
+      );
+    });
+
+    it('desktop but screenEmu disabled (scenario: DevTools  or external emu applied)', async () => {
+      await emulation.emulate(driver, getSettings('desktop', false));
+      const uaArgs = connectionStub.sendCommand.findInvocation('Network.setUserAgentOverride');
+      expect(uaArgs).toMatchObject({userAgent: constants.userAgents.desktop});
+
+      expect(connectionStub.sendCommand).not.toHaveBeenCalledWith(
+        'Emulation.setDeviceMetricsOverride',
+        expect.anything()
+      );
+    });
+
+    it('mobile but UA emu disabled', async () => {
+      await emulation.emulate(driver, getSettings('mobile', metrics.mobile, false));
+
       expect(connectionStub.sendCommand).not.toHaveBeenCalledWith(
         'Network.setUserAgentOverride',
         expect.anything()
       );
-      expect(connectionStub.sendCommand).not.toHaveBeenCalledWith(
-        'Emulation.setDeviceMetricsOverride',
-        expect.anything()
+
+      const emulateArgs = connectionStub.sendCommand.findInvocation(
+        'Emulation.setDeviceMetricsOverride'
       );
+      expect(emulateArgs).toMatchObject({
+        mobile: metrics.mobile.mobile,
+        width: metrics.mobile.width,
+        height: metrics.mobile.height,
+        deviceScaleFactor: metrics.mobile.deviceScaleFactor,
+      });
+      expect(emulateArgs).toMatchObject({mobile: true});
     });
 
-    it('handles: emulatedFormFactor: mobile / disableDeviceScreenEmulation: true', async () => {
-      await emulation.emulate(driver, getSettings('mobile', true));
-      const uaArgs = connectionStub.sendCommand.findInvocation('Network.setUserAgentOverride');
-      expect(uaArgs).toMatchObject({userAgent: emulation.MOBILE_USERAGENT});
+    it('desktop but UA emu disabled', async () => {
+      await emulation.emulate(driver, getSettings('desktop', metrics.desktop, false));
 
-      expect(connectionStub.sendCommand).not.toHaveBeenCalledWith(
-        'Emulation.setDeviceMetricsOverride',
-        expect.anything()
-      );
-    });
-
-    it('handles: emulatedFormFactor: desktop / disableDeviceScreenEmulation: true', async () => {
-      await emulation.emulate(driver, getSettings('desktop', true));
-      const uaArgs = connectionStub.sendCommand.findInvocation('Network.setUserAgentOverride');
-      expect(uaArgs).toMatchObject({userAgent: emulation.DESKTOP_USERAGENT});
-
-      expect(connectionStub.sendCommand).not.toHaveBeenCalledWith(
-        'Emulation.setDeviceMetricsOverride',
-        expect.anything()
-      );
-    });
-
-    it('handles: emulatedFormFactor: none / disableDeviceScreenEmulation: true', async () => {
-      await emulation.emulate(driver, getSettings('none', true));
       expect(connectionStub.sendCommand).not.toHaveBeenCalledWith(
         'Network.setUserAgentOverride',
         expect.anything()
       );
-      expect(connectionStub.sendCommand).not.toHaveBeenCalledWith(
-        'Emulation.setDeviceMetricsOverride',
-        expect.anything()
+
+      const emulateArgs = connectionStub.sendCommand.findInvocation(
+        'Emulation.setDeviceMetricsOverride'
       );
+      expect(emulateArgs).toMatchObject({
+        mobile: metrics.desktop.mobile,
+        width: metrics.desktop.width,
+        height: metrics.desktop.height,
+        deviceScaleFactor: metrics.desktop.deviceScaleFactor,
+      });
+      expect(emulateArgs).toMatchObject({mobile: false});
     });
   });
 });

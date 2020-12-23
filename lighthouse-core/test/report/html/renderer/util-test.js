@@ -35,9 +35,8 @@ describe('util helpers', () => {
 
   it('builds device emulation string', () => {
     const get = opts => Util.getEmulationDescriptions(opts).deviceEmulation;
-    assert.equal(get({emulatedFormFactor: 'none'}), 'No emulation');
-    assert.equal(get({emulatedFormFactor: 'mobile'}), 'Emulated Moto G4');
-    assert.equal(get({emulatedFormFactor: 'desktop'}), 'Emulated Desktop');
+    assert.equal(get({formFactor: 'mobile'}), 'Emulated Moto G4');
+    assert.equal(get({formFactor: 'desktop'}), 'Emulated Desktop');
   });
 
   it('builds throttling strings when provided', () => {

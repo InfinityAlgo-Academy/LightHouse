@@ -223,7 +223,7 @@ class ImageElements extends Gatherer {
    * @return {Promise<LH.Artifacts.ImageElement>}
    */
   async fetchElementWithSizeInformation(driver, element) {
-    const url = JSON.stringify(element.src);
+    const url = element.src;
     if (this._naturalSizeCache.has(url)) {
       return Object.assign(element, this._naturalSizeCache.get(url));
     }
@@ -231,8 +231,9 @@ class ImageElements extends Gatherer {
     try {
       // We don't want this to take forever, 250ms should be enough for images that are cached
       driver.setNextProtocolTimeout(250);
-      /** @type {{naturalWidth: number, naturalHeight: number}} */
-      const size = await driver.evaluateAsync(`(${determineNaturalSize.toString()})(${url})`);
+      const size = await driver.evaluate(determineNaturalSize, {
+        args: [url],
+      });
       this._naturalSizeCache.set(url, size);
       return Object.assign(element, size);
     } catch (_) {
@@ -286,21 +287,18 @@ class ImageElements extends Gatherer {
       return map;
     }, /** @type {Object<string, LH.Artifacts.NetworkRequest>} */ ({}));
 
-    const expression = `(function() {
-      ${pageFunctions.getElementsInDocumentString}; // define function on page
-      ${pageFunctions.getBoundingClientRectString};
-      ${pageFunctions.getNodeDetailsString};
-      ${getClientRect.toString()};
-      ${getPosition.toString()};
-      ${getHTMLImages.toString()};
-      ${getCSSImages.toString()};
-      ${collectImageElementInfo.toString()};
-
-      return collectImageElementInfo();
-    })()`;
-
-    /** @type {Array<LH.Artifacts.ImageElement>} */
-    const elements = await driver.evaluateAsync(expression);
+    const elements = await driver.evaluate(collectImageElementInfo, {
+      args: [],
+      deps: [
+        pageFunctions.getElementsInDocumentString,
+        pageFunctions.getBoundingClientRectString,
+        pageFunctions.getNodeDetailsString,
+        getClientRect,
+        getPosition,
+        getHTMLImages,
+        getCSSImages,
+      ],
+    });
 
     /** @type {Array<LH.Artifacts.ImageElement>} */
     const imageUsage = [];

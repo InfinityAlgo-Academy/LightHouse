@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Formularelementerne har tilknyttede etiketter"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "En tabel, der bruges til layoutformål, bør ikke indeholde dataelementer som f.eks. th- eller tekstelementer eller oversigtsattributten, da dette kan forvirre brugere af skærmlæsere. [Få flere oplysninger](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "`<table>`-præsentationselementerne undgår ikke at bruge `<th>`, `<caption>` eller attributten `[summary]`."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "`<table>`-præsentationselementerne undgår at bruge `<th>`, `<caption>` eller attributten `[summary]`."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Linktekst (og alternativ tekst til billeder, når de bruges som links), der er skelnelig, unik og fokuserbar, gør det nemmere for brugere af skærmlæsere at finde rundt. [Få flere oplysninger](https://web.dev/link-name/)."
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>`-elementerne indeholder et `<track>`-element med `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Lydbeskrivelser giver relevante oplysninger om videoer, som ikke fremgår af dialogen, f.eks. ansigtsudtryk og scener. [Få flere oplysninger](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "`<video>`-elementerne indeholder ikke et `<track>`-element med `[kind=\"description\"]`."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "`<video>`-elementerne indeholder et `<track>`-element med `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "Angiv et `apple-touch-icon` for at optimere iOS-brugerfladen, når brugere føjer en progressiv app til startskærmen. Det skal føre til en ikke-transparent firkantet PNG på 192 px (eller 180 px). [Få flere oplysninger](https://web.dev/apple-touch-icon/)."
@@ -1001,21 +983,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Effekten har timingparametre, der ikke understøttes"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "En scripttjeneste gør din webapp pålidelig ved uforudseelige netværksforhold. [Få flere oplysninger](https://web.dev/offline-start-url/)."
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "Der opstod en fejl under indlæsning af {url} i scripttjeneste. Statuskode: {statusCode}"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "`start_url` svarer ikke med en 200-kode, når det er offline"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "`start_url` svarer med 200-kode, når det er offline"
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Lighthouse kunne ikke læse `start_url` fra manifestet. `start_url` blev derfor betragtet som dokumentets webadresse. Fejlmeddelelse: \"{manifestWarning}\"."
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "Sørg for, at antallet af og størrelsen på netværksanmodningerne ikke overskrider målene i det angivne budget for ydeevne. [Få flere oplysninger](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
@@ -1397,18 +1364,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Der er et `<meta name=\"viewport\">`-tag med `width` eller `initial-scale`"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Hvis du er ved at udvikle en progressiv webapp, kan du overveje at bruge en scripttjeneste, så din app kan fungere offline. [Få flere oplysninger](https://web.dev/works-offline/)."
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "Den aktuelle side svarer ikke med en 200-kode, når den er offline"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "Den aktuelle side svarer med en 200-kode, når den er offline"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "Siden indlæser muligvis ikke offline, da din testwebadresse ({requested}) blev omdirigeret til \"{final}\". Prøv at teste den anden webadresse direkte."
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Disse er muligheder for at forbedre brugen af ARIA i din app, hvilket kan forbedre oplevelsen for brugere af hjælpeteknologi, f.eks. skærmlæsere."
   },
@@ -1525,9 +1480,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Progressiv webapp"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "Hurtig og pålidelig"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Websitet kan installeres"

@@ -131,7 +131,7 @@ function createTestTrace(options) {
       tid,
       ph: 'R',
       cat: 'loading,rail,devtools.timeline',
-      args: {frame},
+      args: {frame, data: {size: 50}},
     });
   }
 

@@ -424,12 +424,10 @@ class Util {
         networkThrottling = Util.i18n.strings.runtimeUnknown;
     }
 
-    let deviceEmulation = Util.i18n.strings.runtimeNoEmulation;
-    if (settings.emulatedFormFactor === 'mobile') {
-      deviceEmulation = Util.i18n.strings.runtimeMobileEmulation;
-    } else if (settings.emulatedFormFactor === 'desktop') {
-      deviceEmulation = Util.i18n.strings.runtimeDesktopEmulation;
-    }
+    // TODO(paulirish): revise Runtime Settings strings: https://github.com/GoogleChrome/lighthouse/pull/11796
+    const deviceEmulation = settings.formFactor === 'mobile'
+      ? Util.i18n.strings.runtimeMobileEmulation
+      : Util.i18n.strings.runtimeDesktopEmulation;
 
     return {
       deviceEmulation,

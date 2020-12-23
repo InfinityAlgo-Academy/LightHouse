@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Form öğelerinin ilişkili etiketleri var"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Düzen amaçlı kullanılan bir tablonun, veri öğeleri (ör. th veya başlık öğeleri ya da özet özelliği) içermemesi gerekir. Zira bu durum, ekran okuyucu kullanıcılarının kafa karıştırıcı bir deneyim yaşamalarına neden olabilir. [Daha fazla bilgi](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "Sunu amaçlı `<table>` öğeleri `<th>`, `<caption>` veya `[summary]` özelliğini kullanmaktan kaçınmıyor."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "Sunum amaçlı `<table>` öğeleri `<th>`, `<caption>` veya `[summary]` özelliğini kullanmaktan kaçınıyor."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Ayırt edilebilir, benzersiz ve odaklanılabilir bağlantı metni (ve bağlantı olarak kullanıldığında resimler için alternatif metin), ekran okuyucu kullanıcılarına daha iyi bir gezinme deneyimi sunar. [Daha fazla bilgi](https://web.dev/link-name/)."
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>` öğelerinde `[kind=\"captions\"]`içeren bir `<track>` öğesi bulunuyor"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Sesli açıklamalar, videolarla ilgili olarak diyaloğun sağlayamayacağı bilgiler (ör. yüz ifadeleri ve sahneler) sağlar. [Daha fazla bilgi](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "`<video>` öğelerinde `[kind=\"description\"]` içeren bir `<track>` öğesi bulunmuyor."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "`<video>` öğelerinde `[kind=\"description\"]`içeren bir `<track>` öğesi bulunuyor"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "Kullanıcılar ana ekranlarına progresif web uygulaması eklerinde iOS'ta ideal görünüm için bir `apple-touch-icon` öğesi tanımlayın. Tanım, saydam olmayan bir 192 piksel (veya 180 piksel) kare PNG'ye götürmelidir. [Daha Fazla Bilgi](https://web.dev/apple-touch-icon/)."
@@ -1001,21 +983,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Efektin desteklenmeyen zamanlama parametreleri var"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Hizmet çalışanı web uygulamanızın öngörülemeyen ağ koşullarında güvenilir olmasını sağlar. [Daha fazla bilgi](https://web.dev/offline-start-url/)."
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "Hizmet Çalışanında {url} sitesi yüklenirken hata oluştu, {statusCode} durum kodu alındı"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "`start_url` çevrimdışıyken 200 koduyla yanıt vermiyor"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "`start_url` çevrimdışıyken 200 koduyla yanıt veriyor"
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Lighthouse, manifest dosyasından `start_url` öğesini okuyamadı. Bu yüzden `start_url` dokümanın URL'si olarak kabul edildi. Hata mesajı: \"{manifestWarning}\"."
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "Ağ isteklerinin miktarını ve büyüklüğünü, performans bütçesi tarafından belirlenen hedeflerin altında tutun. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
@@ -1397,18 +1364,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "`width` veya `initial-scale` değerleri olan bir `<meta name=\"viewport\">` etiketi var"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Progresif Web Uygulaması oluşturuyorsanız uygulamanızın çevrimdışı da çalışabilmesi için hizmet çalışanı kullanmayı düşünün. [Daha fazla bilgi](https://web.dev/works-offline/)."
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "Geçerli sayfa çevrimdışıyken 200 koduyla yanıt vermiyor"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "Geçerli sayfa çevrimdışıyken 200 koduyla yanıt veriyor"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "Sayfa, test URL'niz ({requested}) \"{final}\" adresine yönlendirildiğinden çevrimdışı yüklenmiyor olabilir. Doğrudan ikinci URL'yi test etmeyi deneyin."
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Bu fırsatlar, uygulamanızda ARIA kullanımının iyileştirilmesine olanak tanır. Bu da ekran okuyucu gibi yardımcı teknolojilerin kullanıcılarına daha iyi bir deneyim sunulmasını sağlayabilir."
   },
@@ -1525,9 +1480,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Progresif Web Uygulaması"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "Hızlı ve güvenilir"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Yüklenebilir"

@@ -58,7 +58,7 @@ describe('Metrics: FMP', () => {
   });
 
   it('should compute an observed value (desktop)', async () => {
-    settings = {throttlingMethod: 'provided'};
+    settings = {throttlingMethod: 'provided', formFactor: 'desktop'};
     const context = {computedCache: new Map()};
     const result = await FirstMeaningfulPaint.request({trace, devtoolsLog, settings}, context);
 
@@ -67,10 +67,9 @@ describe('Metrics: FMP', () => {
   });
 
   it('should compute an observed value (mobile)', async () => {
-    settings = {throttlingMethod: 'provided'};
+    settings = {throttlingMethod: 'provided', formFactor: 'mobile'};
     const context = {computedCache: new Map()};
-    const result = await FirstMeaningfulPaint.request(
-      {trace, devtoolsLog, settings, TestedAsMobileDevice: true}, context);
+    const result = await FirstMeaningfulPaint.request({trace, devtoolsLog, settings}, context);
 
     assert.equal(Math.round(result.timing), 783);
     assert.equal(result.timestamp, 225414955343);

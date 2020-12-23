@@ -254,15 +254,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "表格元素具有相關聯的標籤"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "用於版面配置的表格不應包含資料元素 (例如 th、字幕元素或摘要屬性)，因為這些元素可能會對螢幕閱讀器使用者造成混淆。[瞭解詳情](https://web.dev/layout-table/)。"
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "展示性元素 `<table>` 使用了 `<th>`、`<caption>` 元素或 `[summary]` 屬性。"
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "展示性元素 `<table>` 並未使用`<th>`、`<caption>` `[summary]` 屬性。"
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "使用可辨別、不重複且可聚焦的連結文字 (以及連結圖片的替代文字)，有助改善螢幕閱讀器使用者的瀏覽體驗。[瞭解詳情](https://web.dev/link-name/)。"
   },
@@ -361,15 +352,6 @@
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>` 元素包含帶有 `[kind=\"captions\"]` 的`<track>` 元素"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "音訊說明可為影片提供對話功能無法提供的相關資料，例如面部表情和場景。[瞭解詳情](https://web.dev/video-description/)。"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "`<video>` 元素不含任何帶有 `[kind=\"description\"]``<track>` 的元素"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "`<video>` 元素包含帶有 `[kind=\"description\"]` 的`<track>` 元素"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "請定義 `apple-touch-icon`。這樣，當 iOS 使用者將漸進式網絡應用程式新增到主畫面時，系統才會顯示正確圖示。apple-touch-icon 必須指向大小為 192 像素 (或 180 像素) 的不透明正方形 PNG。[瞭解詳情](https://web.dev/apple-touch-icon/)。"
@@ -1001,21 +983,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "效果包含不支援的時間參數"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Service Worker 可確保您的網絡應用程式運作可靠，即使網絡連線不穩定亦然。[瞭解詳情](https://web.dev/offline-start-url/)。"
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "在 Service Worker 中載入 {url} 時發生錯誤，狀態碼為 {statusCode}"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "`start_url` 在離線時不會傳回狀態碼 200 的回應"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "`start_url` 在離線時會傳回狀態碼 200 的回應"
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Lighthouse 無法從資訊清單中讀取 `start_url`，因此將 `start_url` 假設為文件的網址。錯誤訊息：「{manifestWarning}」。"
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "讓網絡要求的數量和大小低於使用者根據效能預算所設定的目標。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/budgets)。"
   },
@@ -1397,18 +1364,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "具備包括 `<meta name=\"viewport\">` 或 `width` 的 `initial-scale` 標籤"
   },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "如果您正在建立漸進式網絡應用程式，請考慮使用 Service Worker，以便您的應用程式離線運作。[瞭解詳情](https://web.dev/works-offline/)。"
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "目前的網頁在離線時不會傳回狀態碼 200 的回應"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "目前的網頁在離線時會傳回狀態碼 200 的回應"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "由於您的測試網址 ({requested}) 已重新導向至「{final}」，因此此頁面可能無法在離線時載入。請試著直接測試第二個網址。"
-  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "這些提示可協助改善 ARIA 在應用程式中的使用情況，進而提升輔助技術 (例如螢幕閱讀器) 使用者的體驗。"
   },
@@ -1525,9 +1480,6 @@
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "漸進式網絡應用程式"
-  },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "運作快速，效能可靠"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "可安裝"
