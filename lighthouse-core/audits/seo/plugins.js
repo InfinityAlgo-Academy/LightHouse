@@ -146,7 +146,7 @@ class Plugins extends Audit {
 
         return {
           source: {
-            ...Audit.makeNodeValue(plugin.node),
+            ...Audit.makeNodeItem(plugin.node),
             snippet: `<${tagName}${attributes}>${params}</${tagName}>`,
           },
         };

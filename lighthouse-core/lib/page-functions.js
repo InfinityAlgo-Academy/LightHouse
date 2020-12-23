@@ -492,11 +492,11 @@ function getNodeDetails(element) {
 
   const details = {
     lhId,
-    devtoolsNodePath: getNodePath(element) || '',
-    selector: getNodeSelector(htmlElement) || '',
+    devtoolsNodePath: getNodePath(element),
+    selector: getNodeSelector(htmlElement),
     boundingRect: getBoundingClientRect(htmlElement),
-    snippet: getOuterHTMLSnippet(element) || '',
-    nodeLabel: getNodeLabel(htmlElement) || '',
+    snippet: getOuterHTMLSnippet(element),
+    nodeLabel: getNodeLabel(htmlElement),
   };
 
   return details;

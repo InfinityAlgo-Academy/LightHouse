@@ -99,7 +99,7 @@ class UnsizedImages extends Audit {
 
       unsizedImages.push({
         url,
-        node: Audit.makeNodeValue(image.node),
+        node: Audit.makeNodeItem(image.node),
       });
     }
 

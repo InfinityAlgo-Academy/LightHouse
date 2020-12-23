@@ -220,7 +220,7 @@ class Audit {
    * @param {LH.Artifacts.NodeDetails} node
    * @return {LH.Audit.Details.NodeValue}
    */
-  static makeNodeValue(node) {
+  static makeNodeItem(node) {
     const {devtoolsNodePath, ...rest} = node;
 
     return {

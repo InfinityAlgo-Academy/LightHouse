@@ -115,7 +115,7 @@ class Hreflang extends Audit {
       if (link.source === 'head') {
         if (link.node) {
           source = {
-            ...Audit.makeNodeValue(link.node),
+            ...Audit.makeNodeItem(link.node),
             snippet: `<link rel="alternate" hreflang="${link.hreflang}" href="${link.hrefRaw}" />`,
           };
         } else {

@@ -42,7 +42,7 @@ class LargestContentfulPaintElement extends Audit {
     const lcpElementDetails = [];
     if (lcpElement) {
       lcpElementDetails.push({
-        node: Audit.makeNodeValue(lcpElement.node),
+        node: Audit.makeNodeItem(lcpElement.node),
       });
     }
 

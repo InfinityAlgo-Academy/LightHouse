@@ -43,7 +43,7 @@ class LayoutShiftElements extends Audit {
 
     const clsElementData = clsElements.map(element => {
       return {
-        node: Audit.makeNodeValue(element.node),
+        node: Audit.makeNodeItem(element.node),
         score: element.score,
       };
     });

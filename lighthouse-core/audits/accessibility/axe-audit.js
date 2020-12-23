@@ -76,7 +76,7 @@ class AxeAudit extends Audit {
     if (rule && rule.nodes) {
       items = rule.nodes.map(axeNode => ({
         node: {
-          ...Audit.makeNodeValue(axeNode.node),
+          ...Audit.makeNodeItem(axeNode.node),
           explanation: axeNode.failureSummary,
         },
       }));

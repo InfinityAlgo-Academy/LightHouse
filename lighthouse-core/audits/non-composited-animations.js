@@ -163,7 +163,7 @@ class NonCompositedAnimations extends Audit {
       }
 
       results.push({
-        node: Audit.makeNodeValue(element.node),
+        node: Audit.makeNodeItem(element.node),
         subItems: {
           type: 'subitems',
           items: allFailureReasons,

@@ -46,7 +46,7 @@ class PasswordInputsCanBePastedIntoAudit extends Audit {
 
     passwordInputsWithPreventedPaste.forEach(input => {
       items.push({
-        node: Audit.makeNodeValue(input.node),
+        node: Audit.makeNodeItem(input.node),
       });
     });
 

@@ -248,7 +248,7 @@ function targetToTableNode(target) {
   const boundingRect = getBoundingRect(target.clientRects);
 
   return {
-    ...Audit.makeNodeValue(target.node),
+    ...Audit.makeNodeItem(target.node),
     boundingRect,
   };
 }

@@ -69,7 +69,7 @@ class ExternalAnchorsUseRelNoopenerAudit extends Audit {
       })
       .map(anchor => {
         return {
-          node: Audit.makeNodeValue(anchor.node),
+          node: Audit.makeNodeItem(anchor.node),
           href: anchor.href || 'Unknown',
           target: anchor.target || '',
           rel: anchor.rel || '',
