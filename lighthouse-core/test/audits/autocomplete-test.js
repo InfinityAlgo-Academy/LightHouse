@@ -69,7 +69,7 @@ describe('Best Practices: autocomplete audit', () => {
     ];
     const {score, details} = Autocomplete.audit(artifacts);
     expect(score).toBe(0);
-    expect(details.items).toStrictEqual(expectedItems);
+    expect(details.items).toMatchObject(expectedItems);
   });
 
   it('fails when an there is an invalid autocomplete attribute set', () => {
@@ -110,7 +110,7 @@ describe('Best Practices: autocomplete audit', () => {
     };
     const {score, details} = Autocomplete.audit(artifacts);
     expect(score).toBe(0);
-    expect(details.items).toStrictEqual([
+    expect(details.items).toMatchObject([
       {
         current: 'namez',
         node: {
@@ -330,7 +330,7 @@ describe('Best Practices: autocomplete audit', () => {
     ];
     const {score, details} = Autocomplete.audit(artifacts);
     expect(score).toBe(0);
-    expect(details.items).toStrictEqual(expectedItems);
+    expect(details.items).toMatchObject(expectedItems);
   });
 
   it('creates a warning when there is an invalid attribute set', () => {
@@ -449,7 +449,7 @@ describe('Autocomplete Audit: Check Attribute Validity', () => {
     };
     const output = Autocomplete.checkAttributeValidity(input);
     const expectedOutput = {hasValidTokens: false};
-    expect(output).toStrictEqual(expectedOutput);
+    expect(output).toMatchObject(expectedOutput);
   });
 
   it('returns true if attribute has optional "section=" token', () => {
@@ -468,7 +468,7 @@ describe('Autocomplete Audit: Check Attribute Validity', () => {
     };
     const output = Autocomplete.checkAttributeValidity(input);
     const expectedOutput = {hasValidTokens: true, isValidOrder: true};
-    expect(output).toStrictEqual(expectedOutput);
+    expect(output).toMatchObject(expectedOutput);
   });
 
   it('returns true if all tokens are valid and in order', () => {
@@ -487,7 +487,7 @@ describe('Autocomplete Audit: Check Attribute Validity', () => {
     };
     const output = Autocomplete.checkAttributeValidity(input);
     const expectedOutput = {hasValidTokens: true, isValidOrder: true};
-    expect(output).toStrictEqual(expectedOutput);
+    expect(output).toMatchObject(expectedOutput);
   });
 
   it(`returns true for hasValidTokens and false for isValidOrder
@@ -507,7 +507,7 @@ describe('Autocomplete Audit: Check Attribute Validity', () => {
     };
     const output = Autocomplete.checkAttributeValidity(input);
     const expectedOutput = {hasValidTokens: true, isValidOrder: false};
-    expect(output).toStrictEqual(expectedOutput);
+    expect(output).toMatchObject(expectedOutput);
   });
 
   it('returns false for invalid tokens', () => {
@@ -526,6 +526,6 @@ describe('Autocomplete Audit: Check Attribute Validity', () => {
     };
     const output = Autocomplete.checkAttributeValidity(input);
     const expectedOutput = {hasValidTokens: false};
-    expect(output).toStrictEqual(expectedOutput);
+    expect(output).toMatchObject(expectedOutput);
   });
 });
