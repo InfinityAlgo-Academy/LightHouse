@@ -48,7 +48,10 @@ class EmbeddedContent extends Gatherer {
   afterPass(passContext) {
     return passContext.driver.evaluate(getEmbeddedContent, {
       args: [],
-      deps: [pageFunctions.getElementsInDocument],
+      deps: [
+        pageFunctions.getElementsInDocument,
+        pageFunctions.getNodeDetails,
+      ],
     });
   }
 }

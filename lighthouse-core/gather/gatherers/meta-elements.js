@@ -51,7 +51,10 @@ class MetaElements extends Gatherer {
     return driver.evaluate(collectMetaElements, {
       args: [],
       useIsolation: true,
-      deps: [pageFunctions.getElementsInDocument],
+      deps: [
+        pageFunctions.getElementsInDocument,
+        pageFunctions.getNodeDetails,
+      ],
     });
   }
 }
