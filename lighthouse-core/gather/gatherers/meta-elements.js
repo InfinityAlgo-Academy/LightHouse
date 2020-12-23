@@ -53,7 +53,7 @@ class MetaElements extends Gatherer {
       useIsolation: true,
       deps: [
         pageFunctions.getElementsInDocument,
-        pageFunctions.getNodeDetails,
+        pageFunctions.getNodeDetailsString,
       ],
     });
   }

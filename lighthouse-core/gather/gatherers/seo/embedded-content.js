@@ -50,7 +50,7 @@ class EmbeddedContent extends Gatherer {
       args: [],
       deps: [
         pageFunctions.getElementsInDocument,
-        pageFunctions.getNodeDetails,
+        pageFunctions.getNodeDetailsString,
       ],
     });
   }
