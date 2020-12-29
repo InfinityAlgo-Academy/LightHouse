@@ -4195,9 +4195,13 @@
       "id": "inspector-issues",
       "title": "No issues in the `Issues` panel in Chrome Devtools",
       "description": "Issues logged to the `Issues` panel in Chrome Devtools indicate unresolved problems. They can come from network request failures, insufficient security controls, and other browser concerns. Open up the Issues panel in Chrome DevTools for more details on each issue.",
-      "score": null,
-      "scoreDisplayMode": "error",
-      "errorMessage": "Cannot read property 'length' of undefined"
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
     },
     "no-document-write": {
       "id": "no-document-write",
@@ -5519,7 +5523,7 @@
         }
       ],
       "id": "best-practices",
-      "score": null
+      "score": 0.13
     },
     "seo": {
       "title": "SEO",
