@@ -88,7 +88,7 @@ class FullPageScreenshot extends Gatherer {
       for (const [node, id] of lhIdToElements.entries()) {
         // @ts-expect-error - getBoundingClientRect put into scope via stringification
         const rect = getBoundingClientRect(node);
-        if (rect.width || rect.height) nodes[id] = rect;
+        nodes[id] = rect;
       }
 
       return nodes;

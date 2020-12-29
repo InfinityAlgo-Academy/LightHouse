@@ -434,7 +434,7 @@ describe('DetailsRenderer', () => {
         assert.equal(screenshotEl.dataset['rectTop'], '1');
       });
 
-      it('renders screenshot using item boundingRect if missing in FullPageScreenshot', () => {
+      it('does not render screenshot if rect missing in FullPageScreenshot', () => {
         createRenderer({
           fullPageScreenshot: {
             screenshot: {
@@ -462,8 +462,7 @@ describe('DetailsRenderer', () => {
         const el = renderer.render(details);
         const nodeEl = el.querySelector('.lh-node');
         const screenshotEl = nodeEl.querySelector('.lh-element-screenshot');
-        assert.equal(screenshotEl.dataset['rectLeft'], '0');
-        assert.equal(screenshotEl.dataset['rectTop'], '0');
+        expect(screenshotEl).toBeNull();
       });
     });
 
