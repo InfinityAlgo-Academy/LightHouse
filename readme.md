@@ -366,6 +366,8 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[lighthouse-plugin-publisher-ads](https://github.com/googleads/publisher-ads-lighthouse-plugin)** - a tool to improve ad speed and overall quality through a series of automated audits. At the moment, this is primarily targeted at sites using Google Ad Manager. This tool will aid in resolving discovered problems, providing a tool to be used to evaluate effectiveness of iterative changes while suggesting actionable feedback.
 
+* **[lighthouse-plugin-crux](https://github.com/dvelasquez/lighthouse-plugin-crux)** - a plugin that quickly gathers real-user-metrics data from the [Chrome UX Report API](https://developers.google.com/web/tools/chrome-user-experience-report/api/reference).
+
 ## Related Projects
 Other awesome open source projects that use Lighthouse.
 
