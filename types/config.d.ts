@@ -1,3 +1,4 @@
+/* eslint-disable strict */
 /**
  * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -19,11 +20,34 @@ declare global {
       export interface Json {
         extends?: 'lighthouse:default' | string;
         settings?: SharedFlagsSettings;
+        artifacts?: ArtifactJson[] | null;
         passes?: PassJson[] | null;
         audits?: Config.AuditJson[] | null;
         categories?: Record<string, CategoryJson> | null;
         groups?: Record<string, Config.GroupJson> | null;
         plugins?: Array<string>,
+      }
+
+      /**
+       * The normalized and fully resolved config.
+       */
+      export interface Config {
+        settings: Settings;
+        passes: Pass[] | null;
+        audits: AuditDefn[] | null;
+        categories: Record<string, Category> | null;
+        groups: Record<string, Group> | null;
+      }
+
+      /**
+       * The normalized and fully resolved Fraggle Rock config.
+       */
+      export interface FRConfig {
+        settings: Settings;
+        artifacts: ArtifactDefn[] | null;
+        audits: AuditDefn[] | null;
+        categories: Record<string, Category> | null;
+        groups: Record<string, Group> | null;
       }
 
       export interface PassJson {
@@ -38,6 +62,11 @@ declare global {
         blockedUrlPatterns?: string[];
         blankPage?: string;
         gatherers?: GathererJson[];
+      }
+
+      export interface ArtifactJson {
+        id: string;
+        gatherer: GathererJson;
       }
 
       export type GathererJson = {
@@ -89,6 +118,11 @@ declare global {
 
       export interface Pass extends Required<PassJson> {
         gatherers: GathererDefn[];
+      }
+
+      export interface ArtifactDefn {
+        id: string;
+        gatherer: GathererDefn;
       }
 
       export interface GathererDefn {

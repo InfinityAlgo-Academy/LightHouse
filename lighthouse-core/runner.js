@@ -22,7 +22,7 @@ const generateReport = require('./report/report-generator.js').generateReport;
 const LHError = require('./lib/lh-error.js');
 
 /** @typedef {import('./gather/connections/connection.js')} Connection */
-/** @typedef {import('./config/config.js')} Config */
+/** @typedef {LH.Config.Config} Config */
 
 class Runner {
   /**

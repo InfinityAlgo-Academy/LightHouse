@@ -16,7 +16,12 @@ const path = require('path');
 const Runner = require('../runner.js');
 const ConfigPlugin = require('./config-plugin.js');
 const Budget = require('./budget.js');
-const {requireAudits, resolveModule} = require('./config-helpers.js');
+const {
+  requireAudits,
+  resolveModule,
+  deepClone,
+  deepCloneConfigJson,
+} = require('./config-helpers.js');
 
 /** @typedef {typeof import('../gather/gatherers/gatherer.js')} GathererConstructor */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
@@ -282,64 +287,7 @@ function _merge(base, extension, overwriteArrays = false) {
 const merge = _merge;
 
 /**
- * @template T
- * @param {Array<T>} array
- * @return {Array<T>}
- */
-function cloneArrayWithPluginSafety(array) {
-  return array.map(item => {
-    if (typeof item === 'object') {
-      // Return copy of instance and prototype chain (in case item is instantiated class).
-      return Object.assign(
-        Object.create(
-          Object.getPrototypeOf(item)
-        ),
-        item
-      );
-    }
-
-    return item;
-  });
-}
-
-/**
- * // TODO(bckenny): could adopt "jsonified" type to ensure T will survive JSON
- * round trip: https://github.com/Microsoft/TypeScript/issues/21838
- * @template T
- * @param {T} json
- * @return {T}
- */
-function deepClone(json) {
-  return JSON.parse(JSON.stringify(json));
-}
-
-/**
- * Deep clone a ConfigJson, copying over any "live" gatherer or audit that
- * wouldn't make the JSON round trip.
- * @param {LH.Config.Json} json
- * @return {LH.Config.Json}
- */
-function deepCloneConfigJson(json) {
-  const cloned = deepClone(json);
-
-  // Copy arrays that could contain plugins to allow for programmatic
-  // injection of plugins.
-  if (Array.isArray(cloned.passes) && Array.isArray(json.passes)) {
-    for (let i = 0; i < cloned.passes.length; i++) {
-      const pass = cloned.passes[i];
-      pass.gatherers = cloneArrayWithPluginSafety(json.passes[i].gatherers || []);
-    }
-  }
-
-  if (Array.isArray(json.audits)) {
-    cloned.audits = cloneArrayWithPluginSafety(json.audits);
-  }
-
-  return cloned;
-}
-
-/**
- * @implements {LH.Config.Json}
+ * @implements {LH.Config.Config}
  */
 class Config {
   /**

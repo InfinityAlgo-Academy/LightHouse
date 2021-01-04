@@ -255,7 +255,75 @@ function resolveModule(moduleIdentifier, configDir, category) {
        ${relativePath}`);
 }
 
+/**
+ * Many objects in the config can be an object whose properties are not serializable.
+ * We use a shallow clone for these objects instead.
+ * Any value that isn't an object will not be cloned.
+ *
+ * @template T
+ * @param {T} item
+ * @return {T}
+ */
+function shallowClone(item) {
+  if (typeof item === 'object') {
+    // Return copy of instance and prototype chain (in case item is instantiated class).
+    return Object.assign(
+      Object.create(
+        Object.getPrototypeOf(item)
+      ),
+      item
+    );
+  }
+
+  return item;
+}
+
+/**
+ * // TODO(bckenny): could adopt "jsonified" type to ensure T will survive JSON
+ * round trip: https://github.com/Microsoft/TypeScript/issues/21838
+ * @template T
+ * @param {T} json
+ * @return {T}
+ */
+function deepClone(json) {
+  return JSON.parse(JSON.stringify(json));
+}
+
+/**
+ * Deep clone a ConfigJson, copying over any "live" gatherer or audit that
+ * wouldn't make the JSON round trip.
+ * @param {LH.Config.Json} json
+ * @return {LH.Config.Json}
+ */
+function deepCloneConfigJson(json) {
+  const cloned = deepClone(json);
+
+  // Copy arrays that could contain non-serializable properties to allow for programmatic
+  // injection of audit and gatherer implementations.
+  if (Array.isArray(cloned.passes) && Array.isArray(json.passes)) {
+    for (let i = 0; i < cloned.passes.length; i++) {
+      const pass = cloned.passes[i];
+      pass.gatherers = (json.passes[i].gatherers || []).map(gatherer => shallowClone(gatherer));
+    }
+  }
+
+  if (Array.isArray(json.audits)) {
+    cloned.audits = json.audits.map(audit => shallowClone(audit));
+  }
+
+  if (Array.isArray(json.artifacts)) {
+    cloned.artifacts = json.artifacts.map(artifact => ({
+      ...artifact,
+      gatherer: shallowClone(artifact.gatherer),
+    }));
+  }
+
+  return cloned;
+}
+
 module.exports = {
+  deepClone,
+  deepCloneConfigJson,
   mergeOptionsOfItems,
   requireAudits,
   resolveModule,
