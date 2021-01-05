@@ -20,8 +20,6 @@ module.exports = [
             items: [
               {'url': 'http://localhost:10200/oopif/oopif-outer.html'},
               {'url': 'http://oopifdomain:10503/oopif/oopif-inner.html'},
-              // This is a BUG. There should not be a second network request the oopif document
-              {'url': 'http://oopifdomain:10503/oopif/oopif-inner.html'},
               {'url': 'http://localhost:10200/favicon.ico'},
             ],
           },
