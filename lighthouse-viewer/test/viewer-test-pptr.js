@@ -22,6 +22,10 @@ const defaultConfig =
 const lighthouseCategories = Object.keys(defaultConfig.categories);
 const getAuditsOfCategory = category => defaultConfig.categories[category].auditRefs;
 
+// These tests run in Chromium and have their own timeouts.
+// Make sure we get the more helpful test-specific timeout error instead of jest's generic one.
+jest.setTimeout(35_000);
+
 // TODO: should be combined in some way with clients/test/extension/extension-test.js
 describe('Lighthouse Viewer', () => {
   // eslint-disable-next-line no-console
