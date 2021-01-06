@@ -10,12 +10,11 @@ const Runner = require('../runner.js');
 const Config = require('../config/config.js');
 
 /**
- * @param {LH.Gatherer.GathererInstance} gatherer
+ * @param {LH.Gatherer.GathererInstance|LH.Gatherer.FRGathererInstance} gatherer
  * @return {gatherer is LH.Gatherer.FRGathererInstance}
  */
 function isFRGatherer(gatherer) {
-  // TODO(FR-COMPAT): use configuration on gatherer.meta to detect interface compatibility
-  return gatherer.name === 'Accessibility';
+  return 'meta' in gatherer;
 }
 
 /** @param {{page: import('puppeteer').Page, config?: LH.Config.Json}} options */
@@ -55,13 +54,13 @@ async function snapshot(options) {
       const artifacts = {};
 
       for (const {instance} of gatherers) {
-        // TODO(FR-COMPAT): use configuration on gatherer.meta to detect snapshot support
         if (!isFRGatherer(instance)) continue;
+        if (!instance.meta.supportedModes.includes('snapshot')) continue;
 
         /** @type {keyof LH.GathererArtifacts} */
         const artifactName = instance.name;
         const artifact = await Promise.resolve()
-          .then(() => instance.afterPass({driver}))
+          .then(() => instance.snapshot({gatherMode: 'snapshot', driver}))
           .catch(err => err);
 
         artifacts[artifactName] = artifact;
