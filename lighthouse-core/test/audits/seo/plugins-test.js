@@ -16,31 +16,53 @@ describe('SEO: Avoids plugins', () => {
       [{
         tagName: 'APPLET',
         params: [],
+        node: {},
       }],
       [{
         tagName: 'OBJECT',
         type: 'application/x-shockwave-flash',
         params: [],
+        node: {
+          lhId: 'page-11-OBJECT',
+          // eslint-disable-next-line max-len
+          devtoolsNodePath: '1,HTML,1,BODY,1,DIV,0,ARTICLE,12,FORM,0,DIV,1,DIV,1,DIV,0,DIV,0,OBJECT',
+          selector: 'div.code-group > div.result-pane > div.result > object',
+          boundingRect: {
+            top: 1173,
+            bottom: 1268,
+            left: 27,
+            right: 377,
+            width: 350,
+            height: 95,
+          },
+          // eslint-disable-next-line max-len
+          snippet: '<object type="application/x-shockwave-flash" data="/web_design/paris_vegas.swf" width="350" height="95">',
+          nodeLabel: 'object',
+        },
       }],
       [{
         tagName: 'EMBED',
         type: 'application/x-java-applet;jpi-version=1.4',
         params: [],
+        node: {},
       }],
       [{
         tagName: 'OBJECT',
         type: 'application/x-silverlight-2',
         params: [],
+        node: {},
       }],
       [{
         tagName: 'OBJECT',
         data: 'https://example.com/movie_name.swf?uid=123',
         params: [],
+        node: {},
       }],
       [{
         tagName: 'EMBED',
         src: '/path/to/movie_name.latest.swf',
         params: [],
+        node: {},
       }],
       [{
         tagName: 'OBJECT',
@@ -48,12 +70,14 @@ describe('SEO: Avoids plugins', () => {
           {name: 'quality', value: 'low'},
           {name: 'movie', value: 'movie.swf?id=123'},
         ],
+        node: {},
       }],
       [{
         tagName: 'OBJECT',
         params: [
           {name: 'code', value: '../HelloWorld.class'},
         ],
+        node: {},
       }],
     ];
 
@@ -75,15 +99,18 @@ describe('SEO: Avoids plugins', () => {
           tagName: 'EMBED',
           type: 'application/x-java-applet;jpi-version=1.4',
           params: [],
+          node: {},
         },
         {
           tagName: 'OBJECT',
           type: 'application/x-silverlight-2',
           params: [],
+          node: {},
         },
         {
           tagName: 'APPLET',
           params: [],
+          node: {},
         },
       ],
     };
@@ -110,17 +137,20 @@ describe('SEO: Avoids plugins', () => {
           type: 'image/svg+xml',
           data: 'https://example.com/test.svg',
           params: [],
+          node: {},
         },
         {
           tagName: 'OBJECT',
           data: 'https://example.com',
           params: [],
+          node: {},
         },
         {
           tagName: 'EMBED',
           type: 'video/quicktime',
           src: 'movie.mov',
           params: [],
+          node: {},
         },
         {
           tagName: 'OBJECT',
@@ -131,6 +161,7 @@ describe('SEO: Avoids plugins', () => {
             name: 'movie',
             value: 'http://www.youtube.com/v/example',
           }],
+          node: {},
         },
       ],
     };

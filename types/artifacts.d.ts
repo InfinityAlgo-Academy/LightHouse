@@ -148,10 +148,10 @@ declare global {
       export type MetaElement = LH.Artifacts['MetaElements'][0];
 
       export interface NodeDetails {
-        lhId?: string,
+        lhId: string,
         devtoolsNodePath: string,
         selector: string,
-        boundingRect?: Rect,
+        boundingRect: Rect,
         snippet: string,
         nodeLabel: string,
       }
@@ -205,7 +205,8 @@ declare global {
         src: string | null;
         data: string | null;
         code: string | null;
-        params: {name: string; value: string}[];
+        params: Array<{name: string; value: string}>;
+        node: LH.Artifacts.NodeDetails;
       }
 
       export interface IFrameElement {

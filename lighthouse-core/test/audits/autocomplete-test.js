@@ -69,7 +69,7 @@ describe('Best Practices: autocomplete audit', () => {
     ];
     const {score, details} = Autocomplete.audit(artifacts);
     expect(score).toBe(0);
-    expect(details.items).toStrictEqual(expectedItems);
+    expect(details.items).toMatchObject(expectedItems);
   });
 
   it('fails when an there is an invalid autocomplete attribute set', () => {
@@ -110,22 +110,22 @@ describe('Best Practices: autocomplete audit', () => {
     };
     const {score, details} = Autocomplete.audit(artifacts);
     expect(score).toBe(0);
-    expect(details.items).toStrictEqual([
+    expect(details.items).toMatchObject([
       {
         current: 'namez',
         node: {
+          type: 'node',
           nodeLabel: 'input',
           snippet: '<input type="text" name="name_cc" autocomplete="namez">',
-          type: 'node',
         },
         suggestion: expect.toBeDisplayString('Requires manual review'),
       },
       {
         current: 'ccc-num',
         node: {
+          type: 'node',
           nodeLabel: 'input',
           snippet: '<input type="text" name="CCNo" autocomplete="ccc-num">',
-          type: 'node',
         },
         suggestion: 'cc-number',
       },
@@ -310,27 +310,27 @@ describe('Best Practices: autocomplete audit', () => {
       {
         current: 'shipping section-red cc-name',
         node: {
+          type: 'node',
           nodeLabel: 'textarea',
           // eslint-disable-next-line max-len
           snippet: '<textarea type="text" name="name_cc2" autocomplete="shipping section-red cc-name">',
-          type: 'node',
         },
         suggestion: 'Review order of tokens',
       },
       {
         current: 'shipping section-red mobile tel',
         node: {
+          type: 'node',
           nodeLabel: 'input',
           // eslint-disable-next-line max-len
           snippet: '<input type="text" name="CCNo2" autocomplete="shipping section-red mobile tel">',
-          type: 'node',
         },
         suggestion: 'Review order of tokens',
       },
     ];
     const {score, details} = Autocomplete.audit(artifacts);
     expect(score).toBe(0);
-    expect(details.items).toStrictEqual(expectedItems);
+    expect(details.items).toMatchObject(expectedItems);
   });
 
   it('creates a warning when there is an invalid attribute set', () => {
@@ -449,7 +449,7 @@ describe('Autocomplete Audit: Check Attribute Validity', () => {
     };
     const output = Autocomplete.checkAttributeValidity(input);
     const expectedOutput = {hasValidTokens: false};
-    expect(output).toStrictEqual(expectedOutput);
+    expect(output).toMatchObject(expectedOutput);
   });
 
   it('returns true if attribute has optional "section=" token', () => {
@@ -468,7 +468,7 @@ describe('Autocomplete Audit: Check Attribute Validity', () => {
     };
     const output = Autocomplete.checkAttributeValidity(input);
     const expectedOutput = {hasValidTokens: true, isValidOrder: true};
-    expect(output).toStrictEqual(expectedOutput);
+    expect(output).toMatchObject(expectedOutput);
   });
 
   it('returns true if all tokens are valid and in order', () => {
@@ -487,7 +487,7 @@ describe('Autocomplete Audit: Check Attribute Validity', () => {
     };
     const output = Autocomplete.checkAttributeValidity(input);
     const expectedOutput = {hasValidTokens: true, isValidOrder: true};
-    expect(output).toStrictEqual(expectedOutput);
+    expect(output).toMatchObject(expectedOutput);
   });
 
   it(`returns true for hasValidTokens and false for isValidOrder
@@ -507,7 +507,7 @@ describe('Autocomplete Audit: Check Attribute Validity', () => {
     };
     const output = Autocomplete.checkAttributeValidity(input);
     const expectedOutput = {hasValidTokens: true, isValidOrder: false};
-    expect(output).toStrictEqual(expectedOutput);
+    expect(output).toMatchObject(expectedOutput);
   });
 
   it('returns false for invalid tokens', () => {
@@ -526,6 +526,6 @@ describe('Autocomplete Audit: Check Attribute Validity', () => {
     };
     const output = Autocomplete.checkAttributeValidity(input);
     const expectedOutput = {hasValidTokens: false};
-    expect(output).toStrictEqual(expectedOutput);
+    expect(output).toMatchObject(expectedOutput);
   });
 });

@@ -371,7 +371,7 @@ function isPositionFixed(element) {
  * strings like the innerText or alt attribute.
  * Falls back to the tagName if no useful label is found.
  * @param {Element} node
- * @return {string|null}
+ * @return {string}
  */
 /* istanbul ignore next */
 function getNodeLabel(node) {
@@ -461,8 +461,9 @@ function wrapRequestIdleCallback(cpuSlowdownMultiplier) {
 
 /**
  * @param {HTMLElement} element
+ * @return {LH.Artifacts.NodeDetails}
  */
-function getNodeDetailsImpl(element) {
+function getNodeDetails(element) {
   // This bookkeeping is for the FullPageScreenshot gatherer.
   if (!window.__lighthouseNodesDontTouchOrAllVarianceGoesAway) {
     window.__lighthouseNodesDontTouchOrAllVarianceGoesAway = new Map();
@@ -507,8 +508,7 @@ const getNodeDetailsString = `function getNodeDetails(element) {
   ${getBoundingClientRect.toString()};
   ${getOuterHTMLSnippet.toString()};
   ${getNodeLabel.toString()};
-  ${getNodeDetailsImpl.toString()};
-  return getNodeDetailsImpl(element);
+  return (${getNodeDetails.toString()})(element);
 }`;
 
 module.exports = {
@@ -522,6 +522,7 @@ module.exports = {
   computeBenchmarkIndex: computeBenchmarkIndex,
   computeBenchmarkIndexString: computeBenchmarkIndex.toString(),
   getNodeDetailsString,
+  getNodeDetails,
   getNodePathString: getNodePath.toString(),
   getNodeSelectorString: getNodeSelector.toString(),
   getNodePath,

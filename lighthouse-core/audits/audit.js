@@ -217,6 +217,22 @@ class Audit {
   }
 
   /**
+   * @param {LH.Artifacts.NodeDetails} node
+   * @return {LH.Audit.Details.NodeValue}
+   */
+  static makeNodeItem(node) {
+    return {
+      type: 'node',
+      lhId: node.lhId,
+      path: node.devtoolsNodePath,
+      selector: node.selector,
+      boundingRect: node.boundingRect,
+      snippet: node.snippet,
+      nodeLabel: node.nodeLabel,
+    };
+  }
+
+  /**
    * @param {number|null} score
    * @param {LH.Audit.ScoreDisplayMode} scoreDisplayMode
    * @param {string} auditId

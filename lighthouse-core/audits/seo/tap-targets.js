@@ -248,13 +248,8 @@ function targetToTableNode(target) {
   const boundingRect = getBoundingRect(target.clientRects);
 
   return {
-    type: 'node',
-    lhId: target.node.lhId,
-    snippet: target.node.snippet,
-    path: target.node.devtoolsNodePath,
-    selector: target.node.selector,
+    ...Audit.makeNodeItem(target.node),
     boundingRect,
-    nodeLabel: target.node.nodeLabel,
   };
 }
 
