@@ -13,6 +13,7 @@
 /* eslint-disable no-console */
 
 const path = require('path');
+const {execFileSync} = require('child_process');
 const yargs = require('yargs');
 const log = require('lighthouse-logger');
 
@@ -29,6 +30,14 @@ const runnerPaths = {
   cli: '../lighthouse-runners/cli.js',
   bundle: '../lighthouse-runners/bundle.js',
 };
+
+/**
+ * https://stackoverflow.com/a/6969486/2788187
+ * @param {string} str
+ */
+function escapeRegExp(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
 
 /**
  * Determine batches of smoketests to run, based on the `requestedIds`.
@@ -62,7 +71,7 @@ function getDefinitionsToRun(allTestDefns, requestedIds, {invertMatch, onlyUrls}
     smokes = smokes.filter(smoke => {
       smoke.expectations = smoke.expectations.filter(expectation => {
         const url = expectation.lhr.requestedUrl;
-        const shouldRunUrl = onlyUrls.some(pattern => new RegExp(pattern).test(url));
+        const shouldRunUrl = onlyUrls.some(pattern => new RegExp(escapeRegExp(pattern)).test(url));
         if (!shouldRunUrl) console.log(`skipping: ${url}`);
         return shouldRunUrl;
       });
@@ -163,17 +172,17 @@ async function begin() {
   }
 
   const failingUrls = testResults.testResults
-    .filter(result => !result.success)
     .flatMap(result => result.expectationResults)
+    .filter(result => result.failed > 0)
     .map(result => result.url);
 
   if (failingUrls.length) {
-    const rerunCommand = [
+    const rerunCommand = execFileSync('echo', [
       'node',
       path.relative(process.cwd(), __filename),
-      // This is the good bit.
-      `--only-urls ${failingUrls.join(' ')}`,
-    ].filter(Boolean).join(' ');
+      '--only-urls',
+      ...failingUrls,
+    ], {encoding: 'utf8'}).trim();
     console.error(`To run just these failing smoke tests:\n   ${rerunCommand}`);
   }
 
