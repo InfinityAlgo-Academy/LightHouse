@@ -174,7 +174,7 @@ async function begin() {
   const failingUrls = testResults.testResults
     .flatMap(result => result.expectationResults)
     .filter(result => result.failed > 0)
-    .map(result => result.url);
+    .map(result => result.requestedUrl);
 
   if (failingUrls.length) {
     const rerunCommand = execFileSync('echo', [

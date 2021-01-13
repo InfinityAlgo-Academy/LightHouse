@@ -29,7 +29,7 @@ const DEFAULT_RETRIES = 0;
  * @typedef SmokehouseResult
  * @property {string} id
  * @property {boolean} success
- * @property {Array<{url: string, passed: number, failed: number, log: string}>} expectationResults
+ * @property {Array<{requestedUrl: string, passed: number, failed: number, log: string}>} expectationResults
  */
 
 /**
@@ -172,7 +172,7 @@ function purpleify(str) {
  * Run Lighthouse in the selected runner. Returns `log`` for logging once
  * all tests in a defn are complete.
  * @param {{requestedUrl: string, configJson?: LH.Config.Json, expectation: Smokehouse.ExpectedRunnerResult, lighthouseRunner: Smokehouse.LighthouseRunner, retries: number, isDebug?: boolean}} testOptions
- * @return {Promise<{url: string, passed: number, failed: number, log: string}>}
+ * @return {Promise<{requestedUrl: string, passed: number, failed: number, log: string}>}
  */
 async function runSmokeTest(testOptions) {
   // Use a buffered LocalConsole to keep logged output so it's not interleaved
@@ -216,7 +216,7 @@ async function runSmokeTest(testOptions) {
   // Without an assertion report, not much detail to share but a failure.
   if (!report) {
     return {
-      url: requestedUrl,
+      requestedUrl,
       passed: 0,
       failed: 1,
       log: localConsole.getLog(),
@@ -225,7 +225,7 @@ async function runSmokeTest(testOptions) {
 
   localConsole.write(report.log);
   return {
-    url: requestedUrl,
+    requestedUrl,
     passed: report.passed,
     failed: report.failed,
     log: localConsole.getLog(),
