@@ -1,16 +1,20 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
+const Fetcher = require('./fetcher.js');
+const ExecutionContext = require('./driver/execution-context.js');
+const {waitForFullyLoaded, waitForFrameNavigated} = require('./driver/wait-for-condition.js');
 const NetworkRecorder = require('../lib/network-recorder.js');
 const emulation = require('../lib/emulation.js');
-const Element = require('../lib/element.js');
+const LHElement = require('../lib/lh-element.js');
 const LHError = require('../lib/lh-error.js');
 const NetworkRequest = require('../lib/network-request.js');
 const EventEmitter = require('events').EventEmitter;
+const i18n = require('../lib/i18n/i18n.js');
 const URL = require('../lib/url-shim.js');
 const constants = require('../config/constants.js');
 
@@ -23,6 +27,26 @@ const pageFunctions = require('../lib/page-functions.js');
 // eslint-disable-next-line no-unused-vars
 const Connection = require('./connections/connection.js');
 
+const UIStrings = {
+  /**
+   * @description A warning that previously-saved data may have affected the measured performance and instructions on how to avoid the problem. "locations" will be a list of possible types of data storage locations, e.g. "IndexedDB",  "Local Storage", or "Web SQL".
+   * @example {IndexedDB, Local Storage} locations
+   */
+  warningData: `{locationCount, plural,
+    =1 {There may be stored data affecting loading performance in this location: {locations}. ` +
+      `Audit this page in an incognito window to prevent those resources ` +
+      `from affecting your scores.}
+    other {There may be stored data affecting loading ` +
+      `performance in these locations: {locations}. ` +
+      `Audit this page in an incognito window to prevent those resources ` +
+      `from affecting your scores.}
+  }`,
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+
+// Controls how long to wait after FCP before continuing
+const DEFAULT_PAUSE_AFTER_FCP = 0;
 // Controls how long to wait after onLoad before continuing
 const DEFAULT_PAUSE_AFTER_LOAD = 0;
 // Controls how long to wait between network requests before determining the network is quiet
@@ -36,73 +60,83 @@ const DEFAULT_PROTOCOL_TIMEOUT = 30000;
  * @typedef {LH.Protocol.StrictEventEmitter<LH.CrdpEvents>} CrdpEventEmitter
  */
 
+/**
+ * @implements {LH.Gatherer.FRTransitionalDriver}
+ */
 class Driver {
+  /** @private */
+  _traceCategories = Driver.traceCategories;
+
+  /**
+   * @pri_vate (This should be private, but that makes our tests harder).
+   * An event emitter that enforces mapping between Crdp event names and payload types.
+   */
+  _eventEmitter = /** @type {CrdpEventEmitter} */ (new EventEmitter());
+
+  /**
+   * @private
+   * Used to save network and lifecycle protocol traffic. Just Page and Network are needed.
+   */
+  _devtoolsLog = new DevtoolsLog(/^(Page|Network)\./);
+
+  /**
+   * @private
+   * @type {Map<string, number>}
+   */
+  _domainEnabledCounts = new Map();
+
+  /**
+   * Used for monitoring network status events during gotoURL.
+   * @type {?NetworkRecorder}
+   * @private
+   */
+  _networkStatusMonitor = null;
+
+  /**
+   * Used for monitoring url redirects during gotoURL.
+   * @type {?string}
+   * @private
+   */
+  _monitoredUrl = null;
+
+  /**
+   * Used for monitoring frame navigations during gotoURL.
+   * @type {Array<LH.Crdp.Page.Frame>}
+   * @private
+   */
+  _monitoredUrlNavigations = [];
+
+  /**
+   * @type {number}
+   * @private
+   */
+  _nextProtocolTimeout = DEFAULT_PROTOCOL_TIMEOUT;
+
+  online = true;
+
+  // eslint-disable-next-line no-invalid-this
+  fetcher = new Fetcher(this);
+
+  // eslint-disable-next-line no-invalid-this
+  _executionContext = new ExecutionContext(this);
+
+  // eslint-disable-next-line no-invalid-this
+  defaultSession = this;
+
   /**
    * @param {Connection} connection
    */
   constructor(connection) {
-    this._traceCategories = Driver.traceCategories;
-    /**
-     * An event emitter that enforces mapping between Crdp event names and payload types.
-     */
-    this._eventEmitter = /** @type {CrdpEventEmitter} */ (new EventEmitter());
     this._connection = connection;
-    // Used to save network and lifecycle protocol traffic. Just Page and Network are needed.
-    this._devtoolsLog = new DevtoolsLog(/^(Page|Network)\./);
-    this.online = true;
-    /** @type {Map<string, number>} */
-    this._domainEnabledCounts = new Map();
-    /** @type {number|undefined} */
-    this._isolatedExecutionContextId = undefined;
-
-    /**
-     * Used for monitoring network status events during gotoURL.
-     * @type {?NetworkRecorder}
-     * @private
-     */
-    this._networkStatusMonitor = null;
-
-    /**
-     * Used for monitoring url redirects during gotoURL.
-     * @type {?string}
-     * @private
-     */
-    this._monitoredUrl = null;
-
-    /**
-     * Used for sending messages to subtargets. Each message needs a unique ID even if we don't bother
-     * reading back the result of each command.
-     *
-     * @type {number}
-     * @private
-     */
-    this._targetProxyMessageId = 0;
 
     this.on('Target.attachedToTarget', event => {
-      this._handleTargetAttached(event, []).catch(this._handleEventError);
+      this._handleTargetAttached(event).catch(this._handleEventError);
     });
 
-    this.on('Target.receivedMessageFromTarget', event => {
-      this._handleReceivedMessageFromTarget(event, []).catch(this._handleEventError);
-    });
-
-    // We use isolated execution contexts for `evaluateAsync` that can be destroyed through navigation
-    // and other page actions. Cleanup our relevant bookkeeping as we see those events.
-    this.on('Runtime.executionContextDestroyed', event => {
-      if (event.executionContextId === this._isolatedExecutionContextId) {
-        this._clearIsolatedContextId();
-      }
-    });
-
-    this.on('Page.frameNavigated', () => this._clearIsolatedContextId());
+    this.on('Page.frameNavigated', evt => this._monitoredUrlNavigations.push(evt.frame));
+    this.on('Debugger.paused', () => this.sendCommand('Debugger.resume'));
 
     connection.on('protocolevent', this._handleProtocolEvent.bind(this));
-
-    /**
-     * @type {number}
-     * @private
-     */
-    this._nextProtocolTimeout = DEFAULT_PROTOCOL_TIMEOUT;
   }
 
   static get traceCategories() {
@@ -112,6 +146,9 @@ class Driver {
 
       // Used instead of 'toplevel' in Chrome 71+
       'disabled-by-default-lighthouse',
+
+      // Used for Cumulative Layout Shift metric
+      'loading',
 
       // All compile/execute events are captured by parent events in devtools.timeline..
       // But the v8 category provides some nice context for only <0.5% of the trace size
@@ -126,7 +163,7 @@ class Driver {
       // Not mandatory but not used much
       'blink.console',
 
-      // Most the events we need come in on these two
+      // Most of the events we need are from these two categories
       'devtools.timeline',
       'disabled-by-default-devtools.timeline',
 
@@ -156,13 +193,13 @@ class Driver {
   }
 
   /**
-   * Computes the ULTRADUMB™ benchmark index to get a rough estimate of device class.
+   * Computes the benchmark index to get a rough estimate of device class.
    * @return {Promise<number>}
    */
   async getBenchmarkIndex() {
     const status = {msg: 'Benchmarking machine', id: 'lh:gather:getBenchmarkIndex'};
     log.time(status);
-    const indexVal = await this.evaluateAsync(`(${pageFunctions.ultradumbBenchmarkString})()`);
+    const indexVal = await this.evaluateAsync(`(${pageFunctions.computeBenchmarkIndexString})()`);
     log.timeEnd(status);
     return indexVal;
   }
@@ -247,14 +284,16 @@ class Driver {
    * user of that domain (e.g. two gatherers have enabled a domain, both need to
    * disable it for it to be disabled). Returns true otherwise.
    * @param {string} domain
+   * @param {string|undefined} sessionId
    * @param {boolean} enable
    * @return {boolean}
    * @private
    */
-  _shouldToggleDomain(domain, enable) {
-    const enabledCount = this._domainEnabledCounts.get(domain) || 0;
+  _shouldToggleDomain(domain, sessionId, enable) {
+    const key = domain + (sessionId || '');
+    const enabledCount = this._domainEnabledCounts.get(key) || 0;
     const newCount = enabledCount + (enable ? 1 : -1);
-    this._domainEnabledCounts.set(domain, Math.max(0, newCount));
+    this._domainEnabledCounts.set(key, Math.max(0, newCount));
 
     // Switching to enabled or disabled, respectively.
     if ((enable && newCount === 1) || (!enable && newCount === 0)) {
@@ -266,6 +305,20 @@ class Driver {
       }
       return false;
     }
+  }
+
+  /**
+   * @return {boolean}
+   */
+  hasNextProtocolTimeout() {
+    return this._nextProtocolTimeout !== DEFAULT_PROTOCOL_TIMEOUT;
+  }
+
+  /**
+   * @return {number}
+   */
+  getNextProtocolTimeout() {
+    return this._nextProtocolTimeout;
   }
 
   /**
@@ -287,7 +340,7 @@ class Driver {
       this._networkStatusMonitor.dispatch(event);
     }
 
-    // @ts-ignore TODO(bckenny): tsc can't type event.params correctly yet,
+    // @ts-expect-error TODO(bckenny): tsc can't type event.params correctly yet,
     // typing as property of union instead of narrowing from union of
     // properties. See https://github.com/Microsoft/TypeScript/pull/22348.
     this._eventEmitter.emit(event.method, event.params);
@@ -301,107 +354,44 @@ class Driver {
   }
 
   /**
-   * @param {LH.Crdp.Target.ReceivedMessageFromTargetEvent} event
-   * @param {string[]} parentSessionIds The list of session ids of the parents from youngest to oldest.
-   */
-  async _handleReceivedMessageFromTarget(event, parentSessionIds) {
-    const {targetId, sessionId, message} = event;
-    /** @type {LH.Protocol.RawMessage} */
-    const protocolMessage = JSON.parse(message);
-
-    // Message was a response to some command, not an event, so we'll ignore it.
-    if ('id' in protocolMessage) return;
-
-    // We receive messages from the outermost subtarget which wraps the messages from the inner subtargets.
-    // We are recursively processing them from outside in, so build the list of parentSessionIds accordingly.
-    const sessionIdPath = [sessionId, ...parentSessionIds];
-
-    if (protocolMessage.method === 'Target.receivedMessageFromTarget') {
-      // Unravel any messages from subtargets by recursively processing
-      await this._handleReceivedMessageFromTarget(protocolMessage.params, sessionIdPath);
-    }
-
-    if (protocolMessage.method === 'Target.attachedToTarget') {
-      // Process any attachedToTarget messages from subtargets
-      await this._handleTargetAttached(protocolMessage.params, sessionIdPath);
-    }
-
-    if (protocolMessage.method.startsWith('Network')) {
-      this._handleProtocolEvent({...protocolMessage, source: {targetId, sessionId}});
-    }
-  }
-
-  /**
    * @param {LH.Crdp.Target.AttachedToTargetEvent} event
-   * @param {string[]} parentSessionIds The list of session ids of the parents from youngest to oldest.
    */
-  async _handleTargetAttached(event, parentSessionIds) {
-    const sessionIdPath = [event.sessionId, ...parentSessionIds];
-
+  async _handleTargetAttached(event) {
     // We're only interested in network requests from iframes for now as those are "part of the page".
     // If it's not an iframe, just resume it and move on.
     if (event.targetInfo.type !== 'iframe') {
       // We suspended the target when we auto-attached, so make sure it goes back to being normal.
-      await this.sendMessageToTarget(sessionIdPath, 'Runtime.runIfWaitingForDebugger');
+      await this.sendCommandToSession('Runtime.runIfWaitingForDebugger', event.sessionId);
       return;
     }
 
     // Events from subtargets will be stringified and sent back on `Target.receivedMessageFromTarget`.
     // We want to receive information about network requests from iframes, so enable the Network domain.
-    await this.sendMessageToTarget(sessionIdPath, 'Network.enable');
+    await this.sendCommandToSession('Network.enable', event.sessionId);
+
     // We also want to receive information about subtargets of subtargets, so make sure we autoattach recursively.
-    await this.sendMessageToTarget(sessionIdPath, 'Target.setAutoAttach', {
+    await this.sendCommandToSession('Target.setAutoAttach', event.sessionId, {
       autoAttach: true,
+      flatten: true,
       // Pause targets on startup so we don't miss anything
       waitForDebuggerOnStart: true,
     });
 
     // We suspended the target when we auto-attached, so make sure it goes back to being normal.
-    await this.sendMessageToTarget(sessionIdPath, 'Runtime.runIfWaitingForDebugger');
-  }
-
-  /**
-   * Send protocol commands to a subtarget, wraps the message in as many `Target.sendMessageToTarget`
-   * commands as necessary.
-   *
-   * @template {keyof LH.CrdpCommands} C
-   * @param {string[]} sessionIdPath List of session ids to send to, from youngest-oldest/inside-out.
-   * @param {C} method
-   * @param {LH.CrdpCommands[C]['paramsType']} params
-   * @return {Promise<LH.CrdpCommands[C]['returnType']>}
-   */
-  sendMessageToTarget(sessionIdPath, method, ...params) {
-    this._targetProxyMessageId++;
-    /** @type {LH.Crdp.Target.SendMessageToTargetRequest} */
-    let payload = {
-      sessionId: sessionIdPath[0],
-      message: JSON.stringify({id: this._targetProxyMessageId, method, params: params[0]}),
-    };
-
-    for (const sessionId of sessionIdPath.slice(1)) {
-      this._targetProxyMessageId++;
-      payload = {
-        sessionId,
-        message: JSON.stringify({
-          id: this._targetProxyMessageId,
-          method: 'Target.sendMessageToTarget',
-          params: payload,
-        }),
-      };
-    }
-
-    return this.sendCommand('Target.sendMessageToTarget', payload);
+    await this.sendCommandToSession('Runtime.runIfWaitingForDebugger', event.sessionId);
   }
 
   /**
    * Call protocol methods, with a timeout.
    * To configure the timeout for the next call, use 'setNextProtocolTimeout'.
+   * If 'sessionId' is undefined, the message is sent to the main session.
    * @template {keyof LH.CrdpCommands} C
    * @param {C} method
+   * @param {string|undefined} sessionId
    * @param {LH.CrdpCommands[C]['paramsType']} params
    * @return {Promise<LH.CrdpCommands[C]['returnType']>}
    */
-  sendCommand(method, ...params) {
+  sendCommandToSession(method, sessionId, ...params) {
     const timeout = this._nextProtocolTimeout;
     this._nextProtocolTimeout = DEFAULT_PROTOCOL_TIMEOUT;
     return new Promise(async (resolve, reject) => {
@@ -413,7 +403,7 @@ class Driver {
         reject(err);
       }), timeout);
       try {
-        const result = await this._innerSendCommand(method, ...params);
+        const result = await this._innerSendCommand(method, sessionId, ...params);
         resolve(result);
       } catch (err) {
         reject(err);
@@ -424,22 +414,34 @@ class Driver {
   }
 
   /**
-   * Call protocol methods.
-   * @private
+   * Alias for 'sendCommandToSession(method, undefined, ...params)'
    * @template {keyof LH.CrdpCommands} C
    * @param {C} method
    * @param {LH.CrdpCommands[C]['paramsType']} params
    * @return {Promise<LH.CrdpCommands[C]['returnType']>}
    */
-  _innerSendCommand(method, ...params) {
+  sendCommand(method, ...params) {
+    return this.sendCommandToSession(method, undefined, ...params);
+  }
+
+  /**
+   * Call protocol methods.
+   * @private
+   * @template {keyof LH.CrdpCommands} C
+   * @param {C} method
+   * @param {string|undefined} sessionId
+   * @param {LH.CrdpCommands[C]['paramsType']} params
+   * @return {Promise<LH.CrdpCommands[C]['returnType']>}
+   */
+  _innerSendCommand(method, sessionId, ...params) {
     const domainCommand = /^(\w+)\.(enable|disable)$/.exec(method);
     if (domainCommand) {
       const enable = domainCommand[2] === 'enable';
-      if (!this._shouldToggleDomain(domainCommand[1], enable)) {
+      if (!this._shouldToggleDomain(domainCommand[1], sessionId, enable)) {
         return Promise.resolve();
       }
     }
-    return this._connection.sendCommand(method, ...params);
+    return this._connection.sendCommand(method, sessionId, ...params);
   }
 
   /**
@@ -464,6 +466,7 @@ class Driver {
   }
 
   /**
+   * Note: Prefer `evaluate` instead.
    * Evaluate an expression in the context of the current page. If useIsolation is true, the expression
    * will be evaluated in a content script that has access to the page's DOM but whose JavaScript state
    * is completely separate.
@@ -472,76 +475,24 @@ class Driver {
    * @param {{useIsolation?: boolean}=} options
    * @return {Promise<*>}
    */
-  async evaluateAsync(expression, options = {}) {
-    const contextId = options.useIsolation ? await this._getOrCreateIsolatedContextId() : undefined;
-
-    try {
-      // `await` is not redundant here because we want to `catch` the async errors
-      return await this._evaluateInContext(expression, contextId);
-    } catch (err) {
-      // If we were using isolation and the context disappeared on us, retry one more time.
-      if (contextId && err.message.includes('Cannot find context')) {
-        this._clearIsolatedContextId();
-        const freshContextId = await this._getOrCreateIsolatedContextId();
-        return this._evaluateInContext(expression, freshContextId);
-      }
-
-      throw err;
-    }
+  evaluateAsync(expression, options) {
+    return this._executionContext.evaluateAsync(expression, options);
   }
 
   /**
-   * Evaluate an expression in the given execution context; an undefined contextId implies the main
-   * page without isolation.
-   * @param {string} expression
-   * @param {number|undefined} contextId
-   * @return {Promise<*>}
+   * Evaluate a function in the context of the current page.
+   * If `useIsolation` is true, the function will be evaluated in a content script that has
+   * access to the page's DOM but whose JavaScript state is completely separate.
+   * Returns a promise that resolves on a value of `mainFn`'s return type.
+   * @template {any[]} T, R
+   * @param {((...args: T) => R)} mainFn The main function to call.
+   * @param {{args: T, useIsolation?: boolean, deps?: Array<Function|string>}} options `args` should
+   *   match the args of `mainFn`, and can be any serializable value. `deps` are functions that must be
+   *   defined for `mainFn` to work.
+   * @return {FlattenedPromise<R>}
    */
-  async _evaluateInContext(expression, contextId) {
-    // Use a higher than default timeout if the user hasn't specified a specific timeout.
-    // Otherwise, use whatever was requested.
-    const timeout = this._nextProtocolTimeout === DEFAULT_PROTOCOL_TIMEOUT ?
-      60000 : this._nextProtocolTimeout;
-    const evaluationParams = {
-      // We need to explicitly wrap the raw expression for several purposes:
-      // 1. Ensure that the expression will be a native Promise and not a polyfill/non-Promise.
-      // 2. Ensure that errors in the expression are captured by the Promise.
-      // 3. Ensure that errors captured in the Promise are converted into plain-old JS Objects
-      //    so that they can be serialized properly b/c JSON.stringify(new Error('foo')) === '{}'
-      expression: `(function wrapInNativePromise() {
-        const __nativePromise = window.__nativePromise || Promise;
-        const URL = window.__nativeURL || window.URL;
-        return new __nativePromise(function (resolve) {
-          return __nativePromise.resolve()
-            .then(_ => ${expression})
-            .catch(${pageFunctions.wrapRuntimeEvalErrorInBrowserString})
-            .then(resolve);
-        });
-      }())`,
-      includeCommandLineAPI: true,
-      awaitPromise: true,
-      returnByValue: true,
-      timeout,
-      contextId,
-    };
-
-    this.setNextProtocolTimeout(timeout);
-    const response = await this.sendCommand('Runtime.evaluate', evaluationParams);
-    if (response.exceptionDetails) {
-      // An error occurred before we could even create a Promise, should be *very* rare
-      return Promise.reject(new Error(`Evaluation exception: ${response.exceptionDetails.text}`));
-    }
-    // Protocol should always return a 'result' object, but it is sometimes undefined.  See #6026.
-    if (response.result === undefined) {
-      return Promise.reject(
-        new Error('Runtime.evaluate response did not contain a "result" object'));
-    }
-    const value = response.result.value;
-    if (value && value.__failedInBrowser) {
-      return Promise.reject(Object.assign(new Error(), value));
-    } else {
-      return value;
-    }
+  evaluate(mainFn, options) {
+    return this._executionContext.evaluate(mainFn, options);
   }
 
   /**
@@ -679,359 +630,7 @@ class Driver {
   }
 
   /**
-   * Returns a promise that resolves immediately.
-   * Used for placeholder conditions that we don't want to start waiting for just yet, but still want
-   * to satisfy the same interface.
-   * @return {{promise: Promise<void>, cancel: function(): void}}
-   */
-  _waitForNothing() {
-    return {promise: Promise.resolve(), cancel() {}};
-  }
-
-  /**
-   * Returns a promise that resolve when a frame has been navigated.
-   * Used for detecting that our about:blank reset has been completed.
-   */
-  _waitForFrameNavigated() {
-    return new Promise(resolve => {
-      this.once('Page.frameNavigated', resolve);
-    });
-  }
-
-  /**
-   * Returns a promise that resolve when a frame has a FCP.
-   * @param {number} maxWaitForFCPMs
-   * @return {{promise: Promise<void>, cancel: function(): void}}
-   */
-  _waitForFCP(maxWaitForFCPMs) {
-    /** @type {(() => void)} */
-    let cancel = () => {
-      throw new Error('_waitForFCP.cancel() called before it was defined');
-    };
-
-    const promise = new Promise((resolve, reject) => {
-      const maxWaitTimeout = setTimeout(() => {
-        reject(new LHError(LHError.errors.NO_FCP));
-      }, maxWaitForFCPMs);
-
-      /** @param {LH.Crdp.Page.LifecycleEventEvent} e */
-      const lifecycleListener = e => {
-        if (e.name === 'firstContentfulPaint') {
-          resolve();
-          cancel();
-        }
-      };
-
-      this.on('Page.lifecycleEvent', lifecycleListener);
-
-      let canceled = false;
-      cancel = () => {
-        if (canceled) return;
-        canceled = true;
-        this.off('Page.lifecycleEvent', lifecycleListener);
-        maxWaitTimeout && clearTimeout(maxWaitTimeout);
-        reject(new Error('Wait for FCP canceled'));
-      };
-    });
-
-    return {
-      promise,
-      cancel,
-    };
-  }
-
-  /**
-   * Returns a promise that resolves when the network has been idle (after DCL) for
-   * `networkQuietThresholdMs` ms and a method to cancel internal network listeners/timeout.
-   * @param {number} networkQuietThresholdMs
-   * @return {{promise: Promise<void>, cancel: function(): void}}
-   * @private
-   */
-  _waitForNetworkIdle(networkQuietThresholdMs) {
-    let hasDCLFired = false;
-    /** @type {NodeJS.Timer|undefined} */
-    let idleTimeout;
-    /** @type {(() => void)} */
-    let cancel = () => {
-      throw new Error('_waitForNetworkIdle.cancel() called before it was defined');
-    };
-
-    // Check here for _networkStatusMonitor to satisfy type checker. Any further race condition
-    // will be caught at runtime on calls to it.
-    if (!this._networkStatusMonitor) {
-      throw new Error('Driver._waitForNetworkIdle called with no networkStatusMonitor');
-    }
-    const networkStatusMonitor = this._networkStatusMonitor;
-
-    const promise = new Promise((resolve, reject) => {
-      const onIdle = () => {
-        // eslint-disable-next-line no-use-before-define
-        networkStatusMonitor.once('network-2-busy', onBusy);
-        idleTimeout = setTimeout(_ => {
-          cancel();
-          resolve();
-        }, networkQuietThresholdMs);
-      };
-
-      const onBusy = () => {
-        networkStatusMonitor.once('network-2-idle', onIdle);
-        idleTimeout && clearTimeout(idleTimeout);
-      };
-
-      const domContentLoadedListener = () => {
-        hasDCLFired = true;
-        if (networkStatusMonitor.is2Idle()) {
-          onIdle();
-        } else {
-          onBusy();
-        }
-      };
-
-      // We frequently need to debug why LH is still waiting for the page.
-      // This listener is added to all network events to verbosely log what URLs we're waiting on.
-      const logStatus = () => {
-        if (!hasDCLFired) {
-          log.verbose('Driver', 'Waiting on DomContentLoaded');
-          return;
-        }
-
-        const inflightRecords = networkStatusMonitor.getInflightRecords();
-        // If there are more than 20 inflight requests, load is still in full swing.
-        // Wait until it calms down a bit to be a little less spammy.
-        if (inflightRecords.length < 20) {
-          for (const record of inflightRecords) {
-            log.verbose('Driver', `Waiting on ${record.url.slice(0, 120)} to finish`);
-          }
-        }
-      };
-
-      networkStatusMonitor.on('requeststarted', logStatus);
-      networkStatusMonitor.on('requestloaded', logStatus);
-      networkStatusMonitor.on('network-2-busy', logStatus);
-
-      this.once('Page.domContentEventFired', domContentLoadedListener);
-      let canceled = false;
-      cancel = () => {
-        if (canceled) return;
-        canceled = true;
-        idleTimeout && clearTimeout(idleTimeout);
-        this.off('Page.domContentEventFired', domContentLoadedListener);
-        networkStatusMonitor.removeListener('network-2-busy', onBusy);
-        networkStatusMonitor.removeListener('network-2-idle', onIdle);
-        networkStatusMonitor.removeListener('requeststarted', logStatus);
-        networkStatusMonitor.removeListener('requestloaded', logStatus);
-        networkStatusMonitor.removeListener('network-2-busy', logStatus);
-      };
-    });
-
-    return {
-      promise,
-      cancel,
-    };
-  }
-
-  /**
-   * Resolves when there have been no long tasks for at least waitForCPUQuiet ms.
-   * @param {number} waitForCPUQuiet
-   * @return {{promise: Promise<void>, cancel: function(): void}}
-   */
-  _waitForCPUIdle(waitForCPUQuiet) {
-    if (!waitForCPUQuiet) {
-      return {
-        promise: Promise.resolve(),
-        cancel: () => undefined,
-      };
-    }
-
-    /** @type {NodeJS.Timer|undefined} */
-    let lastTimeout;
-    let canceled = false;
-
-    const checkForQuietExpression = `(${pageFunctions.checkTimeSinceLastLongTaskString})()`;
-    /**
-     * @param {Driver} driver
-     * @param {() => void} resolve
-     * @return {Promise<void>}
-     */
-    async function checkForQuiet(driver, resolve) {
-      if (canceled) return;
-      const timeSinceLongTask = await driver.evaluateAsync(checkForQuietExpression);
-      if (canceled) return;
-
-      if (typeof timeSinceLongTask === 'number') {
-        if (timeSinceLongTask >= waitForCPUQuiet) {
-          log.verbose('Driver', `CPU has been idle for ${timeSinceLongTask} ms`);
-          resolve();
-        } else {
-          log.verbose('Driver', `CPU has been idle for ${timeSinceLongTask} ms`);
-          const timeToWait = waitForCPUQuiet - timeSinceLongTask;
-          lastTimeout = setTimeout(() => checkForQuiet(driver, resolve), timeToWait);
-        }
-      }
-    }
-
-    /** @type {(() => void)} */
-    let cancel = () => {
-      throw new Error('_waitForCPUIdle.cancel() called before it was defined');
-    };
-    const promise = new Promise((resolve, reject) => {
-      checkForQuiet(this, resolve).catch(reject);
-      cancel = () => {
-        if (canceled) return;
-        canceled = true;
-        if (lastTimeout) clearTimeout(lastTimeout);
-        reject(new Error('Wait for CPU idle canceled'));
-      };
-    });
-
-    return {
-      promise,
-      cancel,
-    };
-  }
-
-  /**
-   * Return a promise that resolves `pauseAfterLoadMs` after the load event
-   * fires and a method to cancel internal listeners and timeout.
-   * @param {number} pauseAfterLoadMs
-   * @return {{promise: Promise<void>, cancel: function(): void}}
-   * @private
-   */
-  _waitForLoadEvent(pauseAfterLoadMs) {
-    /** @type {(() => void)} */
-    let cancel = () => {
-      throw new Error('_waitForLoadEvent.cancel() called before it was defined');
-    };
-
-    const promise = new Promise((resolve, reject) => {
-      /** @type {NodeJS.Timer|undefined} */
-      let loadTimeout;
-      const loadListener = function() {
-        loadTimeout = setTimeout(resolve, pauseAfterLoadMs);
-      };
-      this.once('Page.loadEventFired', loadListener);
-
-      let canceled = false;
-      cancel = () => {
-        if (canceled) return;
-        canceled = true;
-        this.off('Page.loadEventFired', loadListener);
-        loadTimeout && clearTimeout(loadTimeout);
-      };
-    });
-
-    return {
-      promise,
-      cancel,
-    };
-  }
-
-  /**
-   * Returns whether the page appears to be hung.
-   * @return {Promise<boolean>}
-   */
-  async isPageHung() {
-    try {
-      this.setNextProtocolTimeout(1000);
-      await this.sendCommand('Runtime.evaluate', {
-        expression: '"ping"',
-        returnByValue: true,
-        timeout: 1000,
-      });
-
-      return false;
-    } catch (err) {
-      return true;
-    }
-  }
-
-  /**
-   * Returns a promise that resolves when:
-   * - All of the following conditions have been met:
-   *    - page has no security issues
-   *    - pauseAfterLoadMs milliseconds have passed since the load event.
-   *    - networkQuietThresholdMs milliseconds have passed since the last network request that exceeded
-   *      2 inflight requests (network-2-quiet has been reached).
-   *    - cpuQuietThresholdMs have passed since the last long task after network-2-quiet.
-   * - maxWaitForLoadedMs milliseconds have passed.
-   * See https://github.com/GoogleChrome/lighthouse/issues/627 for more.
-   * @param {number} pauseAfterLoadMs
-   * @param {number} networkQuietThresholdMs
-   * @param {number} cpuQuietThresholdMs
-   * @param {number} maxWaitForLoadedMs
-   * @param {number=} maxWaitForFCPMs
-   * @return {Promise<void>}
-   * @private
-   */
-  async _waitForFullyLoaded(pauseAfterLoadMs, networkQuietThresholdMs, cpuQuietThresholdMs,
-      maxWaitForLoadedMs, maxWaitForFCPMs) {
-    /** @type {NodeJS.Timer|undefined} */
-    let maxTimeoutHandle;
-
-    // Listener for onload. Resolves on first FCP event.
-    const waitForFCP = maxWaitForFCPMs ? this._waitForFCP(maxWaitForFCPMs) : this._waitForNothing();
-    // Listener for onload. Resolves pauseAfterLoadMs ms after load.
-    const waitForLoadEvent = this._waitForLoadEvent(pauseAfterLoadMs);
-    // Network listener. Resolves when the network has been idle for networkQuietThresholdMs.
-    const waitForNetworkIdle = this._waitForNetworkIdle(networkQuietThresholdMs);
-    // CPU listener. Resolves when the CPU has been idle for cpuQuietThresholdMs after network idle.
-    let waitForCPUIdle = this._waitForNothing();
-
-    // Wait for both load promises. Resolves on cleanup function the clears load
-    // timeout timer.
-    const loadPromise = Promise.all([
-      waitForFCP.promise,
-      waitForLoadEvent.promise,
-      waitForNetworkIdle.promise,
-    ]).then(() => {
-      waitForCPUIdle = this._waitForCPUIdle(cpuQuietThresholdMs);
-      return waitForCPUIdle.promise;
-    }).then(() => {
-      return function() {
-        log.verbose('Driver', 'loadEventFired and network considered idle');
-      };
-    }).catch(err => {
-      // Throw the error in the cleanupFn so we still cleanup all our handlers.
-      return function() {
-        throw err;
-      };
-    });
-
-    // Last resort timeout. Resolves maxWaitForLoadedMs ms from now on
-    // cleanup function that removes loadEvent and network idle listeners.
-    const maxTimeoutPromise = new Promise((resolve, reject) => {
-      maxTimeoutHandle = setTimeout(resolve, maxWaitForLoadedMs);
-    }).then(_ => {
-      return async () => {
-        log.warn('Driver', 'Timed out waiting for page load. Checking if page is hung...');
-        if (await this.isPageHung()) {
-          log.warn('Driver', 'Page appears to be hung, killing JavaScript...');
-          await this.sendCommand('Emulation.setScriptExecutionDisabled', {value: true});
-          await this.sendCommand('Runtime.terminateExecution');
-          throw new LHError(LHError.errors.PAGE_HUNG);
-        }
-      };
-    });
-
-    // Wait for load or timeout and run the cleanup function the winner returns.
-    const cleanupFn = await Promise.race([
-      loadPromise,
-      maxTimeoutPromise,
-    ]);
-
-    maxTimeoutHandle && clearTimeout(maxTimeoutHandle);
-    waitForFCP.cancel();
-    waitForLoadEvent.cancel();
-    waitForNetworkIdle.cancel();
-    waitForCPUIdle.cancel();
-
-    await cleanupFn();
-  }
-
-  /**
-   * Set up listener for network quiet events and URL redirects. Passed in URL
-   * will be monitored for redirects, with the final loaded URL passed back in
-   * _endNetworkStatusMonitoring.
+   * Set up listener for network quiet events and reset the monitored navigation events.
    * @param {string} startingUrl
    * @return {Promise<void>}
    * @private
@@ -1039,20 +638,9 @@ class Driver {
   _beginNetworkStatusMonitoring(startingUrl) {
     this._networkStatusMonitor = new NetworkRecorder();
 
-    // Update startingUrl if it's ever redirected.
     this._monitoredUrl = startingUrl;
-    /** @param {LH.Artifacts.NetworkRequest} redirectRequest */
-    const requestLoadedListener = redirectRequest => {
-      // Ignore if this is not a redirected request.
-      if (!redirectRequest.redirectSource) {
-        return;
-      }
-      const earlierRequest = redirectRequest.redirectSource;
-      if (earlierRequest.url === this._monitoredUrl) {
-        this._monitoredUrl = redirectRequest.url;
-      }
-    };
-    this._networkStatusMonitor.on('requestloaded', requestLoadedListener);
+    // Reset back to empty
+    this._monitoredUrlNavigations = [];
 
     return this.sendCommand('Network.enable');
   }
@@ -1060,46 +648,26 @@ class Driver {
   /**
    * End network status listening. Returns the final, possibly redirected,
    * loaded URL starting with the one passed into _endNetworkStatusMonitoring.
-   * @return {string}
+   * @return {Promise<string>}
    * @private
    */
-  _endNetworkStatusMonitoring() {
-    this._networkStatusMonitor = null;
-    const finalUrl = this._monitoredUrl;
-    this._monitoredUrl = null;
-
-    if (!finalUrl) {
-      throw new Error('Network Status Monitoring ended with an undefined finalUrl');
-    }
-
-    return finalUrl;
-  }
-
-  /**
-   * Returns the cached isolated execution context ID or creates a new execution context for the main
-   * frame. The cached execution context is cleared on every gotoURL invocation, so a new one will
-   * always be created on the first call on a new page.
-   * @return {Promise<number>}
-   */
-  async _getOrCreateIsolatedContextId() {
-    if (typeof this._isolatedExecutionContextId === 'number') {
-      return this._isolatedExecutionContextId;
-    }
+  async _endNetworkStatusMonitoring() {
+    const startingUrl = this._monitoredUrl;
+    const frameNavigations = this._monitoredUrlNavigations;
 
     const resourceTreeResponse = await this.sendCommand('Page.getResourceTree');
     const mainFrameId = resourceTreeResponse.frameTree.frame.id;
+    const mainFrameNavigations = frameNavigations.filter(frame => frame.id === mainFrameId);
+    const finalNavigation = mainFrameNavigations[mainFrameNavigations.length - 1];
 
-    const isolatedWorldResponse = await this.sendCommand('Page.createIsolatedWorld', {
-      frameId: mainFrameId,
-      worldName: 'lighthouse_isolated_context',
-    });
+    this._networkStatusMonitor = null;
+    this._monitoredUrl = null;
+    this._monitoredUrlNavigations = [];
 
-    this._isolatedExecutionContextId = isolatedWorldResponse.executionContextId;
-    return isolatedWorldResponse.executionContextId;
-  }
-
-  _clearIsolatedContextId() {
-    this._isolatedExecutionContextId = undefined;
+    const finalUrl = (finalNavigation && finalNavigation.url) || startingUrl;
+    if (!finalNavigation) log.warn('Driver', 'No detected navigations');
+    if (!finalUrl) throw new Error('Unable to determine finalUrl');
+    return finalUrl;
   }
 
   /**
@@ -1110,25 +678,26 @@ class Driver {
    * possible workaround.
    * Resolves on the url of the loaded page, taking into account any redirects.
    * @param {string} url
-   * @param {{waitForFCP?: boolean, waitForLoad?: boolean, waitForNavigated?: boolean, passContext?: LH.Gatherer.PassContext}} options
-   * @return {Promise<string>}
+   * @param {{waitForFcp?: boolean, waitForLoad?: boolean, waitForNavigated?: boolean, passContext?: LH.Gatherer.PassContext}} options
+   * @return {Promise<{finalUrl: string, timedOut: boolean}>}
    */
   async gotoURL(url, options = {}) {
-    const waitForFCP = options.waitForFCP || false;
+    const waitForFcp = options.waitForFcp || false;
     const waitForNavigated = options.waitForNavigated || false;
     const waitForLoad = options.waitForLoad || false;
-    const passContext = /** @type {Partial<LH.Gatherer.PassContext>} */ (options.passContext || {});
-    const disableJS = passContext.disableJavaScript || false;
+    /** @type {Partial<LH.Gatherer.PassContext>} */
+    const passContext = options.passContext || {};
 
-    if (waitForNavigated && (waitForFCP || waitForLoad)) {
+    if (waitForNavigated && (waitForFcp || waitForLoad)) {
       throw new Error('Cannot use both waitForNavigated and another event, pick just one');
     }
 
     await this._beginNetworkStatusMonitoring(url);
-    await this._clearIsolatedContextId();
+    await this._executionContext.clearContextId();
 
     // Enable auto-attaching to subtargets so we receive iframe information
     await this.sendCommand('Target.setAutoAttach', {
+      flatten: true,
       autoAttach: true,
       // Pause targets on startup so we don't miss anything
       waitForDebuggerOnStart: true,
@@ -1136,35 +705,45 @@ class Driver {
 
     await this.sendCommand('Page.enable');
     await this.sendCommand('Page.setLifecycleEventsEnabled', {enabled: true});
-    await this.sendCommand('Emulation.setScriptExecutionDisabled', {value: disableJS});
     // No timeout needed for Page.navigate. See https://github.com/GoogleChrome/lighthouse/pull/6413.
-    const waitforPageNavigateCmd = this._innerSendCommand('Page.navigate', {url});
+    const waitforPageNavigateCmd = this._innerSendCommand('Page.navigate', undefined, {url});
 
+    let timedOut = false;
     if (waitForNavigated) {
-      await this._waitForFrameNavigated();
+      await waitForFrameNavigated(this).promise;
     } else if (waitForLoad) {
-      const passConfig = /** @type {Partial<LH.Config.Pass>} */ (passContext.passConfig || {});
-      let {pauseAfterLoadMs, networkQuietThresholdMs, cpuQuietThresholdMs} = passConfig;
+      const networkMonitor = this._networkStatusMonitor;
+      /** @type {Partial<LH.Config.Pass>} */
+      const passConfig = passContext.passConfig || {};
+
+      /* eslint-disable max-len */
+      let {pauseAfterFcpMs, pauseAfterLoadMs, networkQuietThresholdMs, cpuQuietThresholdMs} = passConfig;
       let maxWaitMs = passContext.settings && passContext.settings.maxWaitForLoad;
       let maxFCPMs = passContext.settings && passContext.settings.maxWaitForFcp;
 
-      /* eslint-disable max-len */
+      if (typeof pauseAfterFcpMs !== 'number') pauseAfterFcpMs = DEFAULT_PAUSE_AFTER_FCP;
       if (typeof pauseAfterLoadMs !== 'number') pauseAfterLoadMs = DEFAULT_PAUSE_AFTER_LOAD;
       if (typeof networkQuietThresholdMs !== 'number') networkQuietThresholdMs = DEFAULT_NETWORK_QUIET_THRESHOLD;
       if (typeof cpuQuietThresholdMs !== 'number') cpuQuietThresholdMs = DEFAULT_CPU_QUIET_THRESHOLD;
       if (typeof maxWaitMs !== 'number') maxWaitMs = constants.defaultSettings.maxWaitForLoad;
       if (typeof maxFCPMs !== 'number') maxFCPMs = constants.defaultSettings.maxWaitForFcp;
+      if (!networkMonitor) throw new Error('Failed to instantiate networkStatusMonitor');
       /* eslint-enable max-len */
 
-      if (!waitForFCP) maxFCPMs = undefined;
-      await this._waitForFullyLoaded(pauseAfterLoadMs, networkQuietThresholdMs, cpuQuietThresholdMs,
-          maxWaitMs, maxFCPMs);
+      if (!waitForFcp) maxFCPMs = undefined;
+      const waitOptions = {pauseAfterFcpMs, pauseAfterLoadMs, networkQuietThresholdMs,
+        cpuQuietThresholdMs, maxWaitForLoadedMs: maxWaitMs, maxWaitForFcpMs: maxFCPMs};
+      const loadResult = await waitForFullyLoaded(this, networkMonitor, waitOptions);
+      timedOut = loadResult.timedOut;
     }
 
     // Bring `Page.navigate` errors back into the promise chain. See https://github.com/GoogleChrome/lighthouse/pull/6739.
     await waitforPageNavigateCmd;
 
-    return this._endNetworkStatusMonitoring();
+    return {
+      finalUrl: await this._endNetworkStatusMonitoring(),
+      timedOut,
+    };
   }
 
   /**
@@ -1208,23 +787,8 @@ class Driver {
   }
 
   /**
-   * @param {string} name The name of API whose permission you wish to query
-   * @return {Promise<string>} The state of permissions, resolved in a promise.
-   *    See https://developer.mozilla.org/en-US/docs/Web/API/Permissions/query.
-   */
-  queryPermissionState(name) {
-    const expressionToEval = `
-      navigator.permissions.query({name: '${name}'}).then(result => {
-        return result.state;
-      })
-    `;
-
-    return this.evaluateAsync(expressionToEval);
-  }
-
-  /**
    * @param {string} selector Selector to find in the DOM
-   * @return {Promise<Element|null>} The found element, or null, resolved in a promise
+   * @return {Promise<LHElement|null>} The found element, or null, resolved in a promise
    */
   async querySelector(selector) {
     const documentResponse = await this.sendCommand('DOM.getDocument');
@@ -1238,57 +802,50 @@ class Driver {
     if (targetNode.nodeId === 0) {
       return null;
     }
-    return new Element(targetNode, this);
+    return new LHElement(targetNode, this);
   }
 
   /**
-   * @param {string} selector Selector to find in the DOM
-   * @return {Promise<Array<Element>>} The found elements, or [], resolved in a promise
+   * Resolves a backend node ID (from a trace event, protocol, etc) to the object ID for use with
+   * `Runtime.callFunctionOn`. `undefined` means the node could not be found.
+   *
+   * @param {number} backendNodeId
+   * @return {Promise<string|undefined>}
    */
-  async querySelectorAll(selector) {
-    const documentResponse = await this.sendCommand('DOM.getDocument');
-    const rootNodeId = documentResponse.root.nodeId;
-
-    const targetNodeList = await this.sendCommand('DOM.querySelectorAll', {
-      nodeId: rootNodeId,
-      selector,
-    });
-
-    /** @type {Array<Element>} */
-    const elementList = [];
-    targetNodeList.nodeIds.forEach(nodeId => {
-      if (nodeId !== 0) {
-        elementList.push(new Element({nodeId}, this));
-      }
-    });
-    return elementList;
+  async resolveNodeIdToObjectId(backendNodeId) {
+    try {
+      const resolveNodeResponse = await this.sendCommand('DOM.resolveNode', {backendNodeId});
+      return resolveNodeResponse.object.objectId;
+    } catch (err) {
+      if (/No node.*found/.test(err.message) ||
+        /Node.*does not belong to the document/.test(err.message)) return undefined;
+      throw err;
+    }
   }
 
   /**
-   * Returns the flattened list of all DOM elements within the document.
-   * @param {boolean=} pierce Whether to pierce through shadow trees and iframes.
-   *     True by default.
-   * @return {Promise<Array<Element>>} The found elements, or [], resolved in a promise
+   * Resolves a proprietary devtools node path (created from page-function.js) to the object ID for use
+   * with `Runtime.callFunctionOn`. `undefined` means the node could not be found.
+   * Requires `DOM.getDocument` to have been called since the object's creation or it will always be `undefined`.
+   *
+   * @param {string} devtoolsNodePath
+   * @return {Promise<string|undefined>}
    */
-  getElementsInDocument(pierce = true) {
-    return this.getNodesInDocument(pierce)
-      .then(nodes => nodes
-        .filter(node => node.nodeType === 1)
-        .map(node => new Element({nodeId: node.nodeId}, this))
-      );
-  }
+  async resolveDevtoolsNodePathToObjectId(devtoolsNodePath) {
+    try {
+      const {nodeId} = await this.sendCommand('DOM.pushNodeByPathToFrontend', {
+        path: devtoolsNodePath,
+      });
 
-  /**
-   * Returns the flattened list of all DOM nodes within the document.
-   * @param {boolean=} pierce Whether to pierce through shadow trees and iframes.
-   *     True by default.
-   * @return {Promise<Array<LH.Crdp.DOM.Node>>} The found nodes, or [], resolved in a promise
-   */
-  async getNodesInDocument(pierce = true) {
-    const flattenedDocument = await this.sendCommand('DOM.getFlattenedDocument',
-        {depth: -1, pierce});
+      const {object: {objectId}} = await this.sendCommand('DOM.resolveNode', {
+        nodeId,
+      });
 
-    return flattenedDocument.nodes ? flattenedDocument.nodes : [];
+      return objectId;
+    } catch (err) {
+      if (/No node.*found/.test(err.message)) return undefined;
+      throw err;
+    }
   }
 
   /**
@@ -1409,12 +966,7 @@ class Driver {
    * @return {Promise<void>}
    */
   async beginEmulation(settings) {
-    if (settings.emulatedFormFactor === 'mobile') {
-      await emulation.enableNexus5X(this);
-    } else if (settings.emulatedFormFactor === 'desktop') {
-      await emulation.enableDesktop(this);
-    }
-
+    await emulation.emulate(this, settings);
     await this.setThrottling(settings, {useThrottling: true});
   }
 
@@ -1494,16 +1046,15 @@ class Driver {
   async clearDataForOrigin(url) {
     const origin = new URL(url).origin;
 
-    // Clear all types of storage except cookies, so the user isn't logged out.
+    // Clear some types of storage.
+    // Cookies are not cleared, so the user isn't logged out.
+    // indexeddb, websql, and localstorage are not cleared to prevent loss of potentially important data.
     //   https://chromedevtools.github.io/debugger-protocol-viewer/tot/Storage/#type-StorageType
     const typesToClear = [
       'appcache',
       // 'cookies',
       'file_systems',
-      'indexeddb',
-      'local_storage',
       'shader_cache',
-      'websql',
       'service_workers',
       'cache_storage',
     ].join(',');
@@ -1523,6 +1074,33 @@ class Driver {
       } else {
         throw err;
       }
+    }
+  }
+
+  /**
+   * @param {string} url
+   * @return {Promise<LH.IcuMessage | undefined>}
+   */
+  async getImportantStorageWarning(url) {
+    const usageData = await this.sendCommand('Storage.getUsageAndQuota', {
+      origin: url,
+    });
+    /** @type {Record<string, string>} */
+    const storageTypeNames = {
+      local_storage: 'Local Storage',
+      indexeddb: 'IndexedDB',
+      websql: 'Web SQL',
+    };
+    const locations = usageData.usageBreakdown
+      .filter(usage => usage.usage)
+      .map(usage => storageTypeNames[usage.storageType] || '')
+      .filter(Boolean);
+    if (locations.length) {
+      // TODO(#11495): Use Intl.ListFormat with Node 12
+      return str_(
+        UIStrings.warningData,
+        {locations: locations.join(', '), locationCount: locations.length}
+      );
     }
   }
 
@@ -1551,13 +1129,27 @@ class Driver {
   }
 
   /**
+   * Use a RequestIdleCallback shim for tests run with simulated throttling, so that the deadline can be used without
+   * a penalty
+   * @param {LH.Config.Settings} settings
+   * @return {Promise<void>}
+   */
+  async registerRequestIdleCallbackWrap(settings) {
+    if (settings.throttlingMethod === 'simulate') {
+      const scriptStr = `(${pageFunctions.wrapRequestIdleCallbackString})
+        (${settings.throttling.cpuSlowdownMultiplier})`;
+      await this.evaluateScriptOnNewDocument(scriptStr);
+    }
+  }
+
+  /**
    * @param {Array<string>} urls URL patterns to block. Wildcards ('*') are allowed.
    * @return {Promise<void>}
    */
   blockUrlPatterns(urls) {
     return this.sendCommand('Network.setBlockedURLs', {urls})
       .catch(err => {
-        // TODO: remove this handler once m59 hits stable
+        // TODO(COMPAT): remove this handler once m59 hits stable
         if (!/wasn't found/.test(err.message)) {
           throw err;
         }
@@ -1584,3 +1176,4 @@ class Driver {
 }
 
 module.exports = Driver;
+module.exports.UIStrings = UIStrings;

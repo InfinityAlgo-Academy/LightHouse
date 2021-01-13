@@ -1,9 +1,11 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
+
+require('./test-utils.js').makeMocksForGatherRunner();
 
 const Runner = require('../runner.js');
 const GatherRunner = require('../gather/gather-runner.js');
@@ -13,18 +15,25 @@ const Audit = require('../audits/audit.js');
 const Gatherer = require('../gather/gatherers/gatherer.js');
 const assetSaver = require('../lib/asset-saver.js');
 const fs = require('fs');
-const assert = require('assert');
+const assert = require('assert').strict;
 const path = require('path');
 const rimraf = require('rimraf');
 const LHError = require('../lib/lh-error.js');
+const i18n = require('../lib/i18n/i18n.js');
 
 /* eslint-env jest */
 
-jest.mock('../lib/stack-collector.js', () => () => Promise.resolve([]));
-
 describe('Runner', () => {
+  const defaultGatherFn = opts => Runner._gatherArtifactsFromBrowser(
+    opts.requestedUrl,
+    opts,
+    null
+  );
+
   /** @type {jest.Mock} */
   let saveArtifactsSpy;
+  /** @type {jest.Mock} */
+  let saveLhrSpy;
   /** @type {jest.Mock} */
   let loadArtifactsSpy;
   /** @type {jest.Mock} */
@@ -34,6 +43,7 @@ describe('Runner', () => {
 
   beforeEach(() => {
     saveArtifactsSpy = jest.spyOn(assetSaver, 'saveArtifacts');
+    saveLhrSpy = jest.spyOn(assetSaver, 'saveLhr').mockImplementation(() => {});
     loadArtifactsSpy = jest.spyOn(assetSaver, 'loadArtifacts');
     gatherRunnerRunSpy = jest.spyOn(GatherRunner, 'run');
     runAuditSpy = jest.spyOn(Runner, '_runAudit');
@@ -41,6 +51,7 @@ describe('Runner', () => {
 
   afterEach(() => {
     saveArtifactsSpy.mockRestore();
+    saveLhrSpy.mockRestore();
     loadArtifactsSpy.mockRestore();
     gatherRunnerRunSpy.mockRestore();
     runAuditSpy.mockRestore();
@@ -71,7 +82,7 @@ describe('Runner', () => {
 
     it('-G gathers, quits, and doesn\'t run audits', () => {
       const opts = {url, config: generateConfig({gatherMode: artifactsPath}), driverMock};
-      return Runner.run(null, opts).then(_ => {
+      return Runner.run(defaultGatherFn, opts).then(_ => {
         expect(loadArtifactsSpy).not.toHaveBeenCalled();
         expect(saveArtifactsSpy).toHaveBeenCalled();
 
@@ -81,6 +92,7 @@ describe('Runner', () => {
 
         expect(gatherRunnerRunSpy).toHaveBeenCalled();
         expect(runAuditSpy).not.toHaveBeenCalled();
+        expect(saveLhrSpy).not.toHaveBeenCalled();
 
         assert.ok(fs.existsSync(resolvedPath));
         assert.ok(fs.existsSync(`${resolvedPath}/artifacts.json`));
@@ -90,19 +102,21 @@ describe('Runner', () => {
     // uses the files on disk from the -G test. ;)
     it('-A audits from saved artifacts and doesn\'t gather', () => {
       const opts = {config: generateConfig({auditMode: artifactsPath}), driverMock};
-      return Runner.run(null, opts).then(_ => {
+      return Runner.run(defaultGatherFn, opts).then(_ => {
         expect(loadArtifactsSpy).toHaveBeenCalled();
         expect(gatherRunnerRunSpy).not.toHaveBeenCalled();
         expect(saveArtifactsSpy).not.toHaveBeenCalled();
+        expect(saveLhrSpy).not.toHaveBeenCalled();
         expect(runAuditSpy).toHaveBeenCalled();
       });
     });
 
     it('-A throws if the settings change', async () => {
-      const settings = {auditMode: artifactsPath, emulatedFormFactor: 'desktop'};
+      // Change throttlingMethod from its default of 'simulate'
+      const settings = {auditMode: artifactsPath, throttlingMethod: 'provided'};
       const opts = {config: generateConfig(settings), driverMock};
       try {
-        await Runner.run(null, opts);
+        await Runner.run(defaultGatherFn, opts);
         assert.fail('should have thrown');
       } catch (err) {
         assert.ok(/Cannot change settings/.test(err.message), 'should have prevented run');
@@ -110,10 +124,10 @@ describe('Runner', () => {
     });
 
     it('-A throws if the URL changes', async () => {
-      const settings = {auditMode: artifactsPath, emulatedFormFactor: 'desktop'};
+      const settings = {auditMode: artifactsPath};
       const opts = {url: 'https://differenturl.com', config: generateConfig(settings), driverMock};
       try {
-        await Runner.run(null, opts);
+        await Runner.run(defaultGatherFn, opts);
         assert.fail('should have thrown');
       } catch (err) {
         assert.ok(/different URL/.test(err.message), 'should have prevented run');
@@ -135,24 +149,83 @@ describe('Runner', () => {
       assert.strictEqual(lhr.runtimeError, undefined);
     });
 
-    it('-GA is a normal run but it saves artifacts to disk', () => {
+    it('-GA is a normal run but it saves artifacts and LHR to disk', () => {
       const settings = {auditMode: artifactsPath, gatherMode: artifactsPath};
       const opts = {url, config: generateConfig(settings), driverMock};
-      return Runner.run(null, opts).then(_ => {
+      return Runner.run(defaultGatherFn, opts).then(_ => {
         expect(loadArtifactsSpy).not.toHaveBeenCalled();
         expect(gatherRunnerRunSpy).toHaveBeenCalled();
         expect(saveArtifactsSpy).toHaveBeenCalled();
+        expect(saveLhrSpy).toHaveBeenCalled();
         expect(runAuditSpy).toHaveBeenCalled();
       });
     });
 
     it('non -G/-A run doesn\'t save artifacts to disk', () => {
       const opts = {url, config: generateConfig(), driverMock};
-      return Runner.run(null, opts).then(_ => {
+      return Runner.run(defaultGatherFn, opts).then(_ => {
         expect(loadArtifactsSpy).not.toHaveBeenCalled();
         expect(gatherRunnerRunSpy).toHaveBeenCalled();
         expect(saveArtifactsSpy).not.toHaveBeenCalled();
+        expect(saveLhrSpy).not.toHaveBeenCalled();
         expect(runAuditSpy).toHaveBeenCalled();
+      });
+    });
+
+    it('serializes IcuMessages in gatherMode and is able to use them in auditMode', async () => {
+      // Can use this to access shared UIStrings in i18n.js.
+      // For future changes: exact messages aren't important, just choose ones with replacements.
+      const str_ = i18n.createMessageInstanceIdFn(__filename, {});
+
+      // A gatherer that produces an IcuMessage runWarning and LighthouseError artifact.
+      class WarningAndErrorGatherer extends Gatherer {
+        afterPass(passContext) {
+          const warning = str_(i18n.UIStrings.displayValueByteSavings, {wastedBytes: 2222});
+          passContext.LighthouseRunWarnings.push(warning);
+          throw new LHError(LHError.errors.UNSUPPORTED_OLD_CHROME, {featureName: 'VRML'});
+        }
+      }
+      const gatherConfig = new Config({
+        settings: {gatherMode: artifactsPath},
+        passes: [{gatherers: [WarningAndErrorGatherer]}],
+      });
+      await Runner.run(defaultGatherFn, {url, config: gatherConfig, driverMock});
+
+      // Artifacts are still localizable.
+      const artifacts = assetSaver.loadArtifacts(resolvedPath);
+      expect(artifacts.LighthouseRunWarnings[0]).not.toBe('string');
+      expect(artifacts.LighthouseRunWarnings[0]).toBeDisplayString('Potential savings of 2 KiB');
+      expect(artifacts.WarningAndErrorGatherer).toMatchObject({
+        name: 'LHError',
+        code: 'UNSUPPORTED_OLD_CHROME',
+        // eslint-disable-next-line max-len
+        friendlyMessage: expect.toBeDisplayString(`This version of Chrome is too old to support 'VRML'. Use a newer version to see full results.`),
+      });
+
+      // Now run auditMode using errored artifacts to ensure the errors come through.
+      class DummyAudit extends Audit {
+        static get meta() {
+          return {
+            id: 'dummy-audit',
+            title: 'Dummy',
+            description: 'Will fail because required artifact is an error',
+            requiredArtifacts: ['WarningAndErrorGatherer'],
+          };
+        }
+        static audit() {}
+      }
+      const auditConfig = new Config({
+        settings: {auditMode: artifactsPath},
+        audits: [{implementation: DummyAudit}],
+      });
+      const {lhr} = await Runner.run(defaultGatherFn, {url, config: auditConfig});
+
+      // Messages are now localized and formatted.
+      expect(lhr.runWarnings[0]).toBe('Potential savings of 2 KiB');
+      expect(lhr.audits['dummy-audit']).toMatchObject({
+        scoreDisplayMode: 'error',
+        // eslint-disable-next-line max-len
+        errorMessage: 'Required WarningAndErrorGatherer gatherer encountered an error: UNSUPPORTED_OLD_CHROME',
       });
     });
   });
@@ -168,7 +241,7 @@ describe('Runner', () => {
       ],
     });
 
-    return Runner.run(null, {url, config, driverMock}).then(_ => {
+    return Runner.run(defaultGatherFn, {url, config, driverMock}).then(_ => {
       expect(gatherRunnerRunSpy).toHaveBeenCalled();
       assert.ok(typeof config.passes[0].gatherers[0] === 'object');
     });
@@ -183,7 +256,7 @@ describe('Runner', () => {
       ],
     });
 
-    return Runner.run(null, {url, config, driverMock})
+    return Runner.run(defaultGatherFn, {url, config, driverMock})
       .then(_ => {
         assert.ok(false);
       }, err => {
@@ -340,7 +413,6 @@ describe('Runner', () => {
       const artifacts = {
         ...baseArtifacts,
         ViewportDimensions: new Error(errorMessage),
-        TestedAsMobileDevice: true,
       };
       const artifactsPath = '.tmp/test_artifacts';
       const resolvedPath = path.resolve(process.cwd(), artifactsPath);
@@ -352,7 +424,7 @@ describe('Runner', () => {
           auditMode: resolvedPath,
         },
         audits: [
-          // requires ViewportDimensions and TestedAsMobileDevice artifacts
+          // requires ViewportDimensions artifact
           'content-width',
         ],
       });
@@ -366,7 +438,7 @@ describe('Runner', () => {
       rimraf.sync(resolvedPath);
     });
 
-    it('only passes the required artifacts to the audit', async () => {
+    it('only passes the requested artifacts to the audit (no optional artifacts)', async () => {
       class SimpleAudit extends Audit {
         static get meta() {
           return {
@@ -395,6 +467,40 @@ describe('Runner', () => {
       expect(auditMockFn.mock.calls[0][0]).toEqual({
         ArtifactA: 'apple',
         ArtifactC: 'cherry',
+      });
+    });
+
+    it('only passes the requested artifacts to the audit (w/ optional artifacts)', async () => {
+      class SimpleAudit extends Audit {
+        static get meta() {
+          return {
+            id: 'simple',
+            title: 'Requires some artifacts',
+            failureTitle: 'Artifacts',
+            description: 'Test for always throwing',
+            requiredArtifacts: ['ArtifactA', 'ArtifactC'],
+            __internalOptionalArtifacts: ['ArtifactD'],
+          };
+        }
+      }
+
+      const auditMockFn = SimpleAudit.audit = jest.fn().mockReturnValue({score: 1});
+      const config = new Config({
+        settings: {
+          auditMode: __dirname + '/fixtures/artifacts/alphabet-artifacts/',
+        },
+        audits: [
+          SimpleAudit,
+        ],
+      });
+
+      const results = await Runner.run({}, {config});
+      expect(results.lhr).toMatchObject({audits: {simple: {score: 1}}});
+      expect(auditMockFn).toHaveBeenCalled();
+      expect(auditMockFn.mock.calls[0][0]).toEqual({
+        ArtifactA: 'apple',
+        ArtifactC: 'cherry',
+        ArtifactD: 'date',
       });
     });
   });
@@ -460,7 +566,7 @@ describe('Runner', () => {
       }],
     });
 
-    return Runner.run(null, {url, config, driverMock})
+    return Runner.run(defaultGatherFn, {url, config, driverMock})
       .then(_ => {
         assert.ok(false);
       }, err => {
@@ -479,7 +585,7 @@ describe('Runner', () => {
       ],
     });
 
-    return Runner.run(null, {url, config, driverMock}).then(results => {
+    return Runner.run(defaultGatherFn, {url, config, driverMock}).then(results => {
       assert.ok(results.lhr.lighthouseVersion);
       assert.ok(results.lhr.fetchTime);
       assert.equal(results.lhr.requestedUrl, url);
@@ -509,7 +615,7 @@ describe('Runner', () => {
       },
     });
 
-    return Runner.run(null, {url, config, driverMock}).then(results => {
+    return Runner.run(defaultGatherFn, {url, config, driverMock}).then(results => {
       expect(gatherRunnerRunSpy).toHaveBeenCalled();
       assert.ok(results.lhr.lighthouseVersion);
       assert.ok(results.lhr.fetchTime);
@@ -581,7 +687,7 @@ describe('Runner', () => {
       ],
     });
 
-    return Runner.run(null, {url, config, driverMock}).then(results => {
+    return Runner.run(defaultGatherFn, {url, config, driverMock}).then(results => {
       // User-specified artifact.
       assert.ok(results.artifacts.ViewportDimensions);
 
@@ -600,7 +706,7 @@ describe('Runner', () => {
       audits: [],
     });
 
-    return Runner.run(null, {config, driverMock}).then(results => {
+    return Runner.run(defaultGatherFn, {config, driverMock}).then(results => {
       assert.deepStrictEqual(results.lhr.runWarnings, [
         'I\'m a warning!',
         'Also a warning',
@@ -620,43 +726,18 @@ describe('Runner', () => {
           static get meta() {
             return basicAuditMeta;
           }
-          static audit(artifacts, context) {
-            context.LighthouseRunWarnings.push(warningString);
+          static audit() {
             return {
               numericValue: 5,
               score: 1,
+              runWarnings: [warningString],
             };
           }
         },
       ],
     });
 
-    return Runner.run(null, {config, driverMock}).then(results => {
-      assert.deepStrictEqual(results.lhr.runWarnings, [warningString]);
-    });
-  });
-
-  it('includes any LighthouseRunWarnings from errored audits in LHR', () => {
-    const warningString = 'Audit warning just before a terrible error!';
-
-    const config = new Config({
-      settings: {
-        auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
-      },
-      audits: [
-        class WarningAudit extends Audit {
-          static get meta() {
-            return basicAuditMeta;
-          }
-          static audit(artifacts, context) {
-            context.LighthouseRunWarnings.push(warningString);
-            throw new Error('Terrible.');
-          }
-        },
-      ],
-    });
-
-    return Runner.run(null, {config, driverMock}).then(results => {
+    return Runner.run(defaultGatherFn, {config, driverMock}).then(results => {
       assert.deepStrictEqual(results.lhr.runWarnings, [warningString]);
     });
   });
@@ -697,7 +778,7 @@ describe('Runner', () => {
 
     it('includes a top-level runtimeError when a gatherer throws one', async () => {
       const config = new Config(configJson);
-      const {lhr} = await Runner.run(null, {url: 'https://example.com/', config, driverMock});
+      const {lhr} = await Runner.run(defaultGatherFn, {url: 'https://example.com/', config, driverMock});
 
       // Audit error included the runtimeError
       expect(lhr.audits['test-audit'].scoreDisplayMode).toEqual('error');
@@ -705,7 +786,7 @@ describe('Runner', () => {
 
       // And it bubbled up to the runtimeError.
       expect(lhr.runtimeError.code).toEqual(NO_FCP.code);
-      expect(lhr.runtimeError.message).toBeDisplayString(/Something .*\(NO_FCP\)/);
+      expect(lhr.runtimeError.message).toBeDisplayString(/did not paint any content.*\(NO_FCP\)/);
     });
 
     it('includes a pageLoadError runtimeError over any gatherer runtimeErrors', async () => {
@@ -715,10 +796,10 @@ describe('Runner', () => {
         online: true,
         // Loads the page successfully in the first pass, fails with PAGE_HUNG in the second.
         async gotoURL(url) {
-          if (url.includes('blank')) return null;
+          if (url.includes('blank')) return {finalUrl: '', timedOut: false};
           if (firstLoad) {
             firstLoad = false;
-            return url;
+            return {finalUrl: url, timedOut: false};
           } else {
             throw new LHError(LHError.errors.PAGE_HUNG);
           }
@@ -726,7 +807,7 @@ describe('Runner', () => {
       });
 
       const config = new Config(configJson);
-      const {lhr} = await Runner.run(null, {url, config, driverMock: errorDriverMock});
+      const {lhr} = await Runner.run(defaultGatherFn, {url, config, driverMock: errorDriverMock});
 
       // Audit error still includes the gatherer runtimeError.
       expect(lhr.audits['test-audit'].scoreDisplayMode).toEqual('error');
@@ -750,7 +831,7 @@ describe('Runner', () => {
     };
 
     try {
-      await Runner.run(null, {url: 'https://example.com/', driverMock: erroringDriver, config: new Config()});
+      await Runner.run(defaultGatherFn, {url: 'https://example.com/', driverMock: erroringDriver, config: new Config()});
       assert.fail('should have thrown');
     } catch (err) {
       assert.equal(err.code, LHError.errors.PROTOCOL_TIMEOUT.code);
@@ -769,7 +850,7 @@ describe('Runner', () => {
       },
     });
 
-    const results = await Runner.run(null, {url, config, driverMock});
+    const results = await Runner.run(defaultGatherFn, {url, config, driverMock});
     assert.ok(Array.isArray(results.report) && results.report.length === 2,
       'did not return multiple reports');
     assert.ok(JSON.parse(results.report[0]), 'did not return json output');

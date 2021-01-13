@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -45,6 +45,7 @@ class LighthouseReportViewer {
      */
     this._reportIsFromGist = false;
     this._reportIsFromPSI = false;
+    this._reportIsFromJSON = false;
 
     this._addEventListeners();
     this._loadFromDeepLink();
@@ -84,7 +85,7 @@ class LighthouseReportViewer {
     placeholderTarget.addEventListener('click', e => {
       const target = /** @type {?Element} */ (e.target);
 
-      if (target && target.localName !== 'input') {
+      if (target && target.localName !== 'input' && target.localName !== 'a') {
         fileInput.click();
       }
     });
@@ -100,8 +101,9 @@ class LighthouseReportViewer {
 
     const gistId = params.get('gist');
     const psiurl = params.get('psiurl');
+    const jsonurl = params.get('jsonurl');
 
-    if (!gistId && !psiurl) return Promise.resolve();
+    if (!gistId && !psiurl && !jsonurl) return Promise.resolve();
 
     this._toggleLoadingBlur(true);
     let loadPromise = Promise.resolve();
@@ -118,6 +120,21 @@ class LighthouseReportViewer {
         this._reportIsFromGist = true;
         this._replaceReportHtml(reportJson);
       }).catch(err => logger.error(err.message));
+    } else if (jsonurl) {
+      const firebaseAuth = this._github.getFirebaseAuth();
+      loadPromise = firebaseAuth.getAccessTokenIfLoggedIn()
+        .then(token => {
+          return token
+            ? Promise.reject(new Error('Can only use jsonurl when not logged in'))
+            : null;
+        })
+        .then(() => fetch(jsonurl))
+        .then(resp => resp.json())
+        .then(json => {
+          this._reportIsFromJSON = true;
+          this._replaceReportHtml(json);
+        })
+        .catch(err => logger.error(err.message));
     }
 
     return loadPromise.finally(() => this._toggleLoadingBlur(false));
@@ -161,6 +178,16 @@ class LighthouseReportViewer {
     if ('lhr' in json) {
       json = /** @type {LH.RunnerResult} */ (json).lhr;
     }
+    // Allow users to drop in PSI's json
+    if ('lighthouseResult' in json) {
+      json = /** @type {{lighthouseResult: LH.Result}} */ (json).lighthouseResult;
+    }
+
+    // Install as global for easier debugging
+    // @ts-expect-error
+    window.__LIGHTHOUSE_JSON__ = json;
+    // eslint-disable-next-line no-console
+    console.log('window.__LIGHTHOUSE_JSON__', json);
 
     this._validateReportJson(json);
 
@@ -184,7 +211,7 @@ class LighthouseReportViewer {
       }
 
       // Only clear query string if current report isn't from a gist or PSI.
-      if (!this._reportIsFromGist && !this._reportIsFromPSI) {
+      if (!this._reportIsFromGist && !this._reportIsFromPSI && !this._reportIsFromJSON) {
         history.pushState({}, '', LighthouseReportViewer.APP_URL);
       }
 
@@ -196,7 +223,7 @@ class LighthouseReportViewer {
       container.textContent = '';
       throw e;
     } finally {
-      this._reportIsFromGist = this._reportIsFromPSI = false;
+      this._reportIsFromGist = this._reportIsFromPSI = this._reportIsFromJSON = false;
     }
 
     // Remove the placeholder UI once the user has loaded a report.
@@ -377,8 +404,8 @@ class LighthouseReportViewer {
    */
   _listenForMessages() {
     window.addEventListener('message', e => {
-      if (e.source === self.opener && e.data.lhresults) {
-        this._replaceReportHtml(e.data.lhresults);
+      if (e.source === self.opener && (e.data.lhr || e.data.lhresults)) {
+        this._replaceReportHtml(e.data.lhr || e.data.lhresults);
 
         if (self.opener && !self.opener.closed) {
           self.opener.postMessage({rendered: true}, '*');

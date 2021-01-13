@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -11,13 +11,13 @@ const ComputedChains = require('../computed/critical-request-chains.js');
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to reduce the depth of critical network requests to enhance initial load of a page. Critical request chains are series of dependent network requests that are important for page rendering. For example, here's a 4-request-deep chain: The biglogo.jpg image is required, but is requested via the styles.css style code, which is requested by the initialize.js javascript, which is requested by the page's HTML. This is displayed in a list of audit titles that Lighthouse generates. */
-  title: 'Minimize Critical Requests Depth',
+  title: 'Avoid chaining critical requests',
   /** Description of a Lighthouse audit that tells the user *why* they should reduce the depth of critical network requests to enhance initial load of a page . This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'The Critical Request Chains below show you what resources are ' +
       'loaded with a high priority. Consider reducing ' +
       'the length of chains, reducing the download size of resources, or ' +
       'deferring the download of unnecessary resources to improve page load. ' +
-      '[Learn more](https://web.dev/critical-request-chains).',
+      '[Learn more](https://web.dev/critical-request-chains/).',
   /** [ICU Syntax] Label for an audit identifying the number of sequences of dependent network requests used to load the page. */
   displayValue: `{itemCount, plural,
     =1 {1 chain found}
@@ -37,7 +37,7 @@ class CriticalRequestChains extends Audit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
-      requiredArtifacts: ['devtoolsLogs', 'URL'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL'],
     };
   }
 
@@ -167,9 +167,10 @@ class CriticalRequestChains extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static audit(artifacts, context) {
+    const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const URL = artifacts.URL;
-    return ComputedChains.request({devtoolsLog, URL}, context).then(chains => {
+    return ComputedChains.request({devtoolsLog, trace, URL}, context).then(chains => {
       let chainCount = 0;
       /**
        * @param {LH.Audit.SimpleCriticalRequestNode} node
@@ -204,14 +205,8 @@ class CriticalRequestChains extends Audit {
         score: Number(chainCount === 0),
         notApplicable: chainCount === 0,
         displayValue: chainCount ? str_(UIStrings.displayValue, {itemCount: chainCount}) : '',
-        extendedInfo: {
-          value: {
-            chains: flattenedChains,
-            longestChain,
-          },
-        },
         details: {
-          type: /** @type {'criticalrequestchain'} */('criticalrequestchain'),
+          type: 'criticalrequestchain',
           chains: flattenedChains,
           longestChain,
         },

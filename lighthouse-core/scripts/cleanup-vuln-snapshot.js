@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -51,16 +51,25 @@ function cleanAndFormat(vulnString) {
     }
   }
 
-  for (const libEntries of Object.values(snapshot.npm)) {
+  for (const [packageName, libEntries] of Object.entries(snapshot.npm)) {
     libEntries.forEach((entry, i) => {
+      // snyk uses a convention for <0.0.0 to represent a mistaken vulnerability in their database.
+      // https://github.com/GoogleChrome/lighthouse/pull/11144#discussion_r465713835
+      // From Lighthouse's perspective we don't need to care about these.
+      const vulnerableVersions = entry.semver.vulnerable.filter(vuln => vuln !== '<0.0.0');
+
       const pruned = {
         id: entry.id,
         severity: entry.severity,
-        semver: {vulnerable: entry.semver.vulnerable},
+        semver: {vulnerable: vulnerableVersions},
       };
 
       libEntries[i] = pruned;
     });
+
+    const filteredEntries = libEntries.filter(entry => entry.semver.vulnerable.length);
+    snapshot.npm[packageName] = filteredEntries;
+    if (!filteredEntries.length) delete snapshot.npm[packageName];
   }
 
   // Normal pretty JSON-stringify has too many newlines. This strikes the right signal:noise ratio

@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,14 +7,14 @@
 
 /* eslint-env jest */
 
-const bin = require('../../bin.js');
-
 jest.mock('../../run.js', () => ({runLighthouse: jest.fn()}));
 jest.mock('../../cli-flags.js', () => ({getFlags: jest.fn()}));
 jest.mock('../../sentry-prompt.js', () => ({askPermission: jest.fn()}));
 jest.mock('../../../lighthouse-core/lib/sentry.js', () => ({init: jest.fn()}));
 jest.mock('lighthouse-logger', () => ({setLevel: jest.fn()}));
 jest.mock('update-notifier', () => () => ({notify: () => {}}));
+
+const bin = require('../../bin.js');
 
 /** @type {jest.Mock} */
 let getCLIFlagsFn;
@@ -45,6 +45,7 @@ beforeEach(() => {
   cliFlags = {
     _: ['http://example.com'],
     output: ['html'],
+    chromeIgnoreDefaultFlags: false,
     chromeFlags: '',
     outputPath: '',
     saveAssets: false,
@@ -84,18 +85,11 @@ describe('CLI bin', function() {
     });
 
     it('should load the config from the preset', async () => {
-      cliFlags = {...cliFlags, preset: 'full'};
-      const actualConfig = require('../../../lighthouse-core/config/full-config.js');
+      cliFlags = {...cliFlags, preset: 'experimental'};
+      const actualConfig = require('../../../lighthouse-core/config/experimental-config.js');
       await bin.begin();
 
       expect(getRunLighthouseArgs()[2]).toEqual(actualConfig);
-    });
-
-    it('should add headless when using mixed content', async () => {
-      cliFlags = {...cliFlags, preset: 'mixed-content'};
-      await bin.begin();
-
-      expect(getRunLighthouseArgs()[1].chromeFlags).toContain('--headless');
     });
   });
 
@@ -148,25 +142,6 @@ describe('CLI bin', function() {
       await bin.begin();
 
       expect(getRunLighthouseArgs()[1]).toHaveProperty('outputPath', '');
-    });
-  });
-
-  describe('extraHeaders', () => {
-    it('should convert extra headers to object', async () => {
-      // @ts-ignore - see TODO: in bin.js
-      cliFlags = {...cliFlags, extraHeaders: '{"foo": "bar"}'};
-      await bin.begin();
-
-      expect(getRunLighthouseArgs()[1]).toHaveProperty('extraHeaders', {foo: 'bar'});
-    });
-
-    it('should read extra headers from file', async () => {
-      const headersFile = require.resolve('../fixtures/extra-headers/valid.json');
-      // @ts-ignore - see TODO: in bin.js
-      cliFlags = {...cliFlags, extraHeaders: headersFile};
-      await bin.begin();
-
-      expect(getRunLighthouseArgs()[1]).toHaveProperty('extraHeaders', require(headersFile));
     });
   });
 

@@ -2,6 +2,8 @@
 
 If you just want to view the code for using Lighthouse with Puppeteer, see [example-lh-auth.js](./example-lh-auth.js).
 
+See [the integration test docs](../integration-test) for an example of how to run Lighthouse in your Jest tests on pages in both an authenticated and non-authenticated session.
+
 ## The Example Site
 
 There are two pages on the site:
@@ -21,7 +23,7 @@ The server responds with different HTML for each of these pages and session stat
 yarn # install global project deps
 cd docs/auth
 yarn # install deps related to just this recipe
-yarn start # start the server on http://localhost:8000
+yarn start # start the server on http://localhost:10632
 ```
 
 Now that the server is started, let's login with Puppeteer and then run Lighthouse:
@@ -54,7 +56,7 @@ const browser = await puppeteer.launch({
 Navigate to the login form:
 ```js
 const page = await browser.newPage();
-await page.goto('http://localhost:8000');
+await page.goto('http://localhost:10632');
 ```
 
 Given a login form like this:
@@ -94,10 +96,10 @@ await page.close();
 
 Now run Lighthouse, using the same port as before:
 ```js
-// The local server is running on port 8000.
-const url = 'http://localhost:8000/dashboard';
+// The local server is running on port 10632.
+const url = 'http://localhost:10632/dashboard';
 // Direct Lighthouse to use the same port.
-const result = await lighthouse(url, { port: PORT });
+const result = await lighthouse(url, {port: PORT, disableStorageReset: true});
 const lhr = result.lhr;
 
 // Direct Puppeteer to close the browser - we're done with it.
@@ -108,4 +110,20 @@ All of the above is done in the example script. To run:
 ```sh
 # make sure server is running (see beginning of recipe) ...
 node example-lh-auth.js # login via puppeteer and run lighthouse
+```
+
+## Alternatives
+
+### [`page.setCookie`](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagesetcookiecookies)
+
+**NOTE:** We strongly recommend your tests use the form-based login flow above instead. Only directly set the token like this as a last resort.
+
+If you don't have user credentials to login but you do have direct access to a token for authentication, you can instead directly set a cookie.
+
+```js
+await page.setCookie({
+  name: 'myAuthCookie',
+  value: '<auth token goes here>',
+  url: 'http://localhost:10632/dashboard',
+});
 ```

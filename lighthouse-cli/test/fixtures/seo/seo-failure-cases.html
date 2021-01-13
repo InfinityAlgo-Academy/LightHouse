@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
- * Copyright 2017 Google Inc. All Rights Reserved.
+ * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 -->
@@ -16,6 +16,10 @@
   <meta name="RoBots" content="nofollow, NOINDEX, all">
   <!-- FAIL(hreflang): invalid language code, vary the case to make sure we are case insensitive -->
   <link rel="alTeRnate" hreflang="xx" href="https://xx.example.com" />
+  <!-- FAIL(hreflang): valid language code but no href -->
+  <link rel="alternate" hreflang="es" />
+  <!-- FAIL(hreflang): valid language code but a relative href -->
+  <link rel="alternate" hreflang="es" href="/example.html" />
   <!-- FAIL(hreflang): spece before a valid code -->
   <link rel="alternate" href="http://example.com/" hreflang=" x-default" />
   <!-- FAIL(canonical): multiple canonical URLs provided (another one is in the HTTP header) -->
@@ -34,6 +38,24 @@
       <text x="0" y="0" >click this</text>
     </a>
   </svg>
+
+  <!-- FAIL(crawlable-anchors): Link using window.open() -->
+  <a onclick="window.open(`http://example.com`)">Some link</a>
+
+  <!-- FAIL(crawlable-anchors): Link using javascript:void -->
+  <a href="javascript:void(0)">Some link</a>
+
+  <!-- FAIL(crawlable-anchors): Link with a mousedown event listener -->
+  <a class="some-link">Some link</a>
+  <script>
+    document.querySelector('.some-link').addEventListener('mousedown', () => {});
+  </script>
+
+  <!-- FAIL(crawlable-anchors): Link event listener on parent -->
+  <div class="link-parent"><a>Some link</a></div>
+  <script>
+    document.querySelector('.link-parent').addEventListener('click', () => {});
+  </script>
 
   <!-- FAIL(plugins): java applet on page -->
   <applet code=HelloWorld.class width="200" height="200" id='applet'>

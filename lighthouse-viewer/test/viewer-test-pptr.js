@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -9,12 +9,12 @@
 
 const path = require('path');
 const fs = require('fs');
-const assert = require('assert');
+const assert = require('assert').strict;
 const puppeteer = require('../../node_modules/puppeteer/index.js');
 
 const {server} = require('../../lighthouse-cli/test/fixtures/static-server.js');
 const portNumber = 10200;
-const viewerUrl = `http://localhost:${portNumber}/dist/viewer/index.html`;
+const viewerUrl = `http://localhost:${portNumber}/dist/gh-pages/viewer/index.html`;
 const sampleLhr = __dirname + '/../../lighthouse-core/test/results/sample_v2.json';
 
 const defaultConfig =
@@ -22,12 +22,18 @@ const defaultConfig =
 const lighthouseCategories = Object.keys(defaultConfig.categories);
 const getAuditsOfCategory = category => defaultConfig.categories[category].auditRefs;
 
+// These tests run in Chromium and have their own timeouts.
+// Make sure we get the more helpful test-specific timeout error instead of jest's generic one.
+jest.setTimeout(35_000);
+
 // TODO: should be combined in some way with clients/test/extension/extension-test.js
 describe('Lighthouse Viewer', () => {
   // eslint-disable-next-line no-console
   console.log('\n✨ Be sure to have recently run this: yarn build-viewer');
 
+  /** @type {import('puppeteer').Browser} */
   let browser;
+  /** @type {import('puppeteer').Page} */
   let viewerPage;
   const pageErrors = [];
 
@@ -56,13 +62,12 @@ describe('Lighthouse Viewer', () => {
       });
   }
 
-  beforeAll(async function() {
-    server.listen(portNumber, 'localhost');
+  beforeAll(async () => {
+    await server.listen(portNumber, 'localhost');
 
     // start puppeteer
     browser = await puppeteer.launch({
       headless: true,
-      executablePath: process.env.CHROME_PATH,
     });
     viewerPage = await browser.newPage();
     viewerPage.on('pageerror', pageError => pageErrors.push(pageError));
@@ -193,7 +198,7 @@ describe('Lighthouse Viewer', () => {
       await viewerPage.goto(url);
 
       // Wait for report to render.
-      await viewerPage.waitForSelector('.lh-columns');
+      await viewerPage.waitForSelector('.lh-metrics-container');
 
       const interceptedUrl = new URL(interceptedRequest.url());
       expect(interceptedUrl.origin + interceptedUrl.pathname)
@@ -250,7 +255,7 @@ describe('Lighthouse Viewer', () => {
       await viewerPage.goto(url);
 
       // Wait for report to render.call out to PSI with specified categories
-      await viewerPage.waitForSelector('.lh-columns');
+      await viewerPage.waitForSelector('.lh-metrics-container');
 
       const interceptedUrl = new URL(interceptedRequest.url());
       expect(interceptedUrl.origin + interceptedUrl.pathname)

@@ -1,12 +1,19 @@
-# Ignore js files inside local chromium download on Travis.
-**/chrome-linux/**
-**/chrome-win32/**
-
 **/node_modules/**
 **/third_party/**
+**/generated/**
+**/source-maps/**
+
+lighthouse-cli/test/fixtures/byte-efficiency/bundle.js
 
 /dist/**
 
 coverage/**
 
 !.eslintrc.js
+
+lighthouse-core/scripts/legacy-javascript/variants
+
+third-party/chromium-webtests
+
+# ignore d.ts files until we can properly lint them
+*.d.ts

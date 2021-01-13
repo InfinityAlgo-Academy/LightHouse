@@ -4,9 +4,11 @@ Default runs of Lighthouse load a page as a "new user", with no previous session
 
 ## Option 1: Script the login with Puppeteer
 
-[Puppeteer](https://pptr.dev) is the most flexible approach for running Lighthouse on pages requiring authentication. 
+[Puppeteer](https://pptr.dev) is the most flexible approach for running Lighthouse on pages requiring authentication.
 
 See [a working demo at /docs/recipes/auth](./recipes/auth).
+
+View our full documentation for using [Lighthouse along with Puppeteer](https://github.com/GoogleChrome/lighthouse/blob/master/docs/puppeteer.md).
 
 ## Option 2: Leverage logged-in state with Chrome DevTools
 
@@ -28,14 +30,14 @@ const result = await lighthouse('http://www.example.com', {
 });
 ```
 
-You could also set the `Cookie` header, but beware: it will [override any other Cookies you expect to be there](https://github.com/GoogleChrome/lighthouse/pull/9170). A workaround is to use Puppeteer's [`page.setCookie`](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagesetcookiecookies).
+You could also set the `Cookie` header, but beware: it will [override any other Cookies you expect to be there](https://github.com/GoogleChrome/lighthouse/pull/9170). For a more flexible cookie-based approach, use [puppeteer (Option 1)](./recipes/auth/README.md) instead.
 
 ## Option 4: Open a debug instance of Chrome and manually log in
 
 1. Globally install lighthouse: `npm i -g lighthouse` or `yarn global add lighthouse`. `chrome-debug` is now in your PATH. This binary launches a standalone Chrome instance with an open debugging port.
 1. Run chrome-debug. This logs the debugging port of your Chrome instance.
 1. Navigate to your site and log in.
-1. In a separate terminal, run `lighthouse http://mysite.com --port port-number`, using the port number from chrome-debug.
+1. In a separate terminal, run `lighthouse http://mysite.com --disable-storage-reset --port port-number`, using the port number from chrome-debug.
 
 ## Option 5: Reuse a prepared Chrome User Profile
 

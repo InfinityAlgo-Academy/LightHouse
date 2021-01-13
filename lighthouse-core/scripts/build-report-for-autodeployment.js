@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -10,7 +10,6 @@
 /* eslint-disable no-console */
 const fs = require('fs');
 const path = require('path');
-const mkdirp = require('mkdirp').sync;
 const rimraf = require('rimraf').sync;
 const swapLocale = require('../lib/i18n/swap-locale.js');
 
@@ -45,7 +44,7 @@ const DIST = path.join(__dirname, `../../dist/now`);
         html = html.replace(`"lh-root lh-vars"`, `"lh-root lh-vars lh-devtools"`);
       }
       const filepath = `${DIST}/${variant}${filename}/index.html`;
-      mkdirp(path.dirname(filepath));
+      fs.mkdirSync(path.dirname(filepath), {recursive: true});
       fs.writeFileSync(filepath, html, {encoding: 'utf-8'});
       console.log('✅', filepath, 'written.');
     }
@@ -77,11 +76,12 @@ async function generateErrorLHR() {
     LighthouseRunWarnings: [
       `Something went wrong with recording the trace over your page load. Please run Lighthouse again. (NO_FCP)`, // eslint-disable-line max-len
     ],
-    TestedAsMobileDevice: true,
+    HostFormFactor: 'desktop',
     HostUserAgent: 'Mozilla/5.0 ErrorUserAgent Chrome/66',
     NetworkUserAgent: 'Mozilla/5.0 ErrorUserAgent Chrome/66',
     BenchmarkIndex: 1000,
     WebAppManifest: null,
+    InstallabilityErrors: {errors: []},
     Stacks: [],
     settings: defaultSettings,
     URL: {
@@ -96,7 +96,7 @@ async function generateErrorLHR() {
 
   // Save artifacts to disk then run `lighthouse -G` with them.
   const TMP = `${DIST}/.tmp/`;
-  mkdirp(TMP);
+  fs.mkdirSync(TMP, {recursive: true});
   fs.writeFileSync(`${TMP}/artifacts.json`, JSON.stringify(artifacts), 'utf-8');
   const errorRunnerResult = await lighthouse(artifacts.URL.requestedUrl, {auditMode: TMP});
 

@@ -1,0 +1,68 @@
+name: DevTools
+
+on:
+  push:
+    branches: [master]
+  pull_request: # run on all PRs, not just PRs to a particular branch
+
+jobs:
+  smoke-devtools:
+    runs-on: macos-latest # while macbots are much slower, linux reliably crashes running this
+
+    steps:
+    - name: Set $DEPOT_TOOLS_PATH
+      run: echo "DEPOT_TOOLS_PATH=$GITHUB_WORKSPACE/depot-tools" >> $GITHUB_ENV
+    - name: Set $DEVTOOLS_PATH
+      run: echo "DEVTOOLS_PATH=$GITHUB_WORKSPACE/devtools-frontend" >> $GITHUB_ENV
+    - name: Set $BLINK_TOOLS_PATH
+      run: echo "BLINK_TOOLS_PATH=$GITHUB_WORKSPACE/blink_tools" >> $GITHUB_ENV
+    - name: Set $PATH
+      run: echo "$DEPOT_TOOLS_PATH" >> $GITHUB_PATH
+
+    - name: git clone
+      uses: actions/checkout@v2
+      with:
+        path: lighthouse
+
+    - name: Cache depot tools, devtools, blink tools and content shell
+      uses: actions/cache@v2
+      with:
+        path: |
+          ${{ env.DEPOT_TOOLS_PATH }}
+          ${{ env.DEVTOOLS_PATH }}
+          ${{ env.BLINK_TOOLS_PATH }}
+          ${{ github.workspace }}/lighthouse/.tmp/chromium-web-tests/content-shells
+        # The number is how many times this hash key was manually updated to break the cache.
+        key: ${{ runner.os }}-0-${{ hashFiles('third-party/chromium-webtests/webtests/http/tests/devtools/lighthouse/*.js', 'lighthouse/.github/workflows/devtools.yml', 'lighthouse/lighthouse-core/test/chromium-web-tests/*', 'lighthouse/clients/devtools-entry.js', 'lighthouse/clients/devtools-report-assets.js', 'lighthouse/build/build-bundle.js', 'lighthouse/build/build-dt-report-resources.js') }}
+
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+
+    - run: yarn --frozen-lockfile
+      working-directory: ${{ github.workspace }}/lighthouse
+    - run: yarn build-devtools
+      working-directory: ${{ github.workspace }}/lighthouse
+
+    - name: Download depot tools
+      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-depot-tools.sh
+    - name: Download DevTools Frontend
+      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-devtools.sh
+    - name: Download Blink Tools
+      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-blink-tools.sh
+    - name: Download Content Shell
+      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-content-shell.sh
+
+    - name: Run Web Tests
+      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/run-web-tests.sh
+
+    - name: Print diff
+      if: failure()
+      run: find "$GITHUB_WORKSPACE/lighthouse/.tmp/layout-test-results/retry_3" -name '*-diff.txt' -exec cat {} \;
+    - name: Upload results
+      uses: actions/upload-artifact@v2
+      if: failure()
+      with:
+        name: results
+        path: ${{ github.workspace }}/lighthouse/.tmp/layout-test-results

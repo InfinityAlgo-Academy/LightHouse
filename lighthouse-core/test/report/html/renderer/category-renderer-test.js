@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,11 +7,11 @@
 
 /* eslint-env jest, browser */
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const fs = require('fs');
 const jsdom = require('jsdom');
 const Util = require('../../../../report/html/renderer/util.js');
-const URL = require('../../../../lib/url-shim.js');
+const I18n = require('../../../../report/html/renderer/i18n.js');
 const DOM = require('../../../../report/html/renderer/dom.js');
 const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
 const CriticalRequestChainRenderer = require(
@@ -27,8 +27,8 @@ describe('CategoryRenderer', () => {
   let sampleResults;
 
   beforeAll(() => {
-    global.URL = URL;
     global.Util = Util;
+    global.Util.i18n = new I18n('en', {...Util.UIStrings});
     global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
 
     const {document} = new jsdom.JSDOM(TEMPLATE_FILE).window;
@@ -40,14 +40,14 @@ describe('CategoryRenderer', () => {
   });
 
   afterAll(() => {
-    global.URL = undefined;
+    global.Util.i18n = undefined;
     global.Util = undefined;
     global.CriticalRequestChainRenderer = undefined;
   });
 
   it('renders an audit', () => {
     const auditRef = sampleResults.categories.pwa.auditRefs
-      .find(a => a.id === 'works-offline');
+      .find(a => a.id === 'redirects-http');
 
     const auditDOM = renderer.renderAudit(auditRef);
     assert.equal(auditDOM.nodeType, 1, 'Audit returns an element');
@@ -212,23 +212,53 @@ describe('CategoryRenderer', () => {
         'no manual description');
   });
 
-  it('renders not applicable audits if the category contains them', () => {
-    const a11yCategory = sampleResults.categories.accessibility;
-    const categoryDOM = renderer.render(a11yCategory, sampleResults.categoryGroups);
-    assert.ok(categoryDOM.querySelector(
+  describe('categories with not applicable audits', () => {
+    let a11yCategory;
+
+    beforeEach(()=> {
+      a11yCategory = JSON.parse(JSON.stringify(sampleResults.categories.accessibility));
+    });
+
+    it('renders not applicable audits if the category contains them', () => {
+      const categoryDOM = renderer.render(a11yCategory, sampleResults.categoryGroups);
+      assert.ok(categoryDOM.querySelector(
         '.lh-clump--notapplicable .lh-audit-group__summary'));
 
-    const notApplicableCount = a11yCategory.auditRefs.reduce((sum, audit) =>
+      const notApplicableCount = a11yCategory.auditRefs.reduce((sum, audit) =>
         sum += audit.result.scoreDisplayMode === 'notApplicable' ? 1 : 0, 0);
-    assert.equal(
-      categoryDOM.querySelectorAll('.lh-clump--notapplicable .lh-audit').length,
-      notApplicableCount,
-      'score shows informative and dash icon'
-    );
+      assert.equal(
+        categoryDOM.querySelectorAll('.lh-clump--notapplicable .lh-audit').length,
+        notApplicableCount,
+        'score shows informative and dash icon'
+      );
 
-    const bestPracticeCat = sampleResults.categories['best-practices'];
-    const categoryDOM2 = renderer.render(bestPracticeCat, sampleResults.categoryGroups);
-    assert.ok(!categoryDOM2.querySelector('.lh-clump--notapplicable'));
+      const bestPracticeCat = sampleResults.categories['best-practices'];
+      const categoryDOM2 = renderer.render(bestPracticeCat, sampleResults.categoryGroups);
+      assert.ok(!categoryDOM2.querySelector('.lh-clump--notapplicable'));
+    });
+
+    it('renders a dash score if the category contains 0 applicable audits', () => {
+      for (const auditRef of a11yCategory.auditRefs) {
+        auditRef.result.scoreDisplayMode = 'notApplicable';
+      }
+
+      const categoryDOM = renderer.render(a11yCategory, sampleResults.categoryGroups);
+      const percentageEl = categoryDOM.querySelectorAll('[title="Not applicable"]');
+
+      assert.equal(percentageEl[0].textContent, '-', 'score shows a dash');
+    });
+
+    it('renders a non-dash score if the category contains at least 1 applicable audit', () => {
+      for (const auditRef of a11yCategory.auditRefs) {
+        auditRef.result.scoreDisplayMode = 'notApplicable';
+      }
+      a11yCategory.auditRefs[0].result.scoreDisplayMode = 'numeric';
+
+      const categoryDOM = renderer.render(a11yCategory, sampleResults.categoryGroups);
+      const percentageEl = categoryDOM.querySelectorAll('.lh-gauge__percentage');
+
+      assert.equal(percentageEl[0].textContent, '81', 'score shows a non-dash value');
+    });
   });
 
   describe('category with groups', () => {
@@ -242,7 +272,7 @@ describe('CategoryRenderer', () => {
       const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
 
       const gauge = categoryDOM.querySelector('.lh-gauge__percentage');
-      assert.equal(gauge.textContent.trim(), '46', 'score is 0-100');
+      assert.equal(gauge.textContent.trim(), '81', 'score is 0-100');
 
       const score = categoryDOM.querySelector('.lh-category-header');
       const value = categoryDOM.querySelector('.lh-gauge__percentage');
@@ -364,8 +394,8 @@ describe('CategoryRenderer', () => {
       const warningAudits = elem.querySelectorAll('.lh-clump--warning .lh-audit');
       const manualAudits = elem.querySelectorAll('.lh-clump--manual .lh-audit');
 
-      assert.equal(passedAudits.length, 2);
-      assert.equal(failedAudits.length, 9);
+      assert.equal(passedAudits.length, 0);
+      assert.equal(failedAudits.length, 7);
       assert.equal(warningAudits.length, 2);
       assert.equal(manualAudits.length, 3);
     });
@@ -379,13 +409,14 @@ describe('CategoryRenderer', () => {
       const failedAudits = elem.querySelectorAll('.lh-clump--failed .lh-audit');
 
       assert.equal(passedAudits.length, 0);
-      assert.equal(failedAudits.length, 13);
+      assert.equal(failedAudits.length, 9);
     });
 
     it('expands warning audit group', () => {
       const category = sampleResults.categories.pwa;
       const categoryClone = JSON.parse(JSON.stringify(category));
-      categoryClone.auditRefs[0].result.warnings = ['Some warning'];
+      const failingAudit = categoryClone.auditRefs.find(ref => ref.id === 'content-width');
+      failingAudit.result.warnings = ['Some warning'];
 
       const auditDOM = renderer.render(categoryClone, sampleResults.categoryGroups);
       const warningClumpEl = auditDOM.querySelector('.lh-clump--warning');

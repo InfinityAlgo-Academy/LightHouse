@@ -1,12 +1,12 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
 /* eslint-env jest */
-const assert = require('assert');
+const assert = require('assert').strict;
 const getFlags = require('../../cli-flags.js').getFlags;
 
 describe('CLI bin', function() {
@@ -14,14 +14,14 @@ describe('CLI bin', function() {
     getFlags('chrome://version');
     const yargs = require('yargs');
 
-    // @ts-ignore - getGroups is private
+    // @ts-expect-error - getGroups is private
     const optionGroups = yargs.getGroups();
     /** @type {string[]} */
     const allOptions = [];
     Object.keys(optionGroups).forEach(key => {
       allOptions.push(...optionGroups[key]);
     });
-    // @ts-ignore - getUsageInstance is private
+    // @ts-expect-error - getUsageInstance is private
     const optionsWithDescriptions = Object.keys(yargs.getUsageInstance().getDescriptions());
 
     allOptions.forEach(opt => {
@@ -40,6 +40,7 @@ describe('CLI bin', function() {
       budgetsPath: 'path/to/my/budget-from-command-line.json',
       onlyCategories: ['performance', 'seo'],
       chromeFlags: '--window-size 800,600',
+      extraHeaders: {'X-Men': 'wolverine'},
       throttlingMethod: 'devtools',
       throttling: {
         requestLatencyMs: 700,
@@ -71,5 +72,26 @@ describe('CLI bin', function() {
       '--enabled-features=NetworkService,VirtualTime',
     ]);
     expect(flags.blockedUrlPatterns).toEqual(['.*x,y\\.png']);
+  });
+
+  describe('extraHeaders', () => {
+    it('should convert extra headers to object', async () => {
+      const flags = getFlags([
+        'http://www.example.com',
+        '--extra-headers="{"foo": "bar"}"',
+      ].join(' '));
+
+      expect(flags).toHaveProperty('extraHeaders', {foo: 'bar'});
+    });
+
+    it('should read extra headers from file', async () => {
+      const headersFile = require.resolve('../fixtures/extra-headers/valid.json');
+      const flags = getFlags([
+        'http://www.example.com',
+        `--extra-headers=${headersFile}`,
+      ].join(' '));
+
+      expect(flags).toHaveProperty('extraHeaders', require(headersFile));
+    });
   });
 });

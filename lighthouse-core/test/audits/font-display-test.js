@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -301,7 +301,8 @@ describe('Performance: Font Display audit', () => {
     expect(result.details.items).toEqual([]);
     expect(result.score).toEqual(1);
     expect(result.warnings).toHaveLength(1);
-    expect(result.warnings[0]).toBeDisplayString(/font-0.woff/);
+    expect(result.warnings[0])
+      .toBeDisplayString(/value for the origin https:\/\/example\.com\.$/);
   });
 
   it('should handle mixed content', async () => {
@@ -335,6 +336,40 @@ describe('Performance: Font Display audit', () => {
     }]);
     expect(result.score).toEqual(0);
     expect(result.warnings).toHaveLength(1);
-    expect(result.warnings[0]).toBeDisplayString(/font-1.woff/);
+    expect(result.warnings[0])
+      .toBeDisplayString(/value for the origin https:\/\/example\.com\.$/);
+  });
+
+  it('should dedupe warnings by origin when there are multiple uncheckable fonts', async () => {
+    stylesheet.content = ``;
+
+    networkRecords = [{
+      url: 'https://example.com/foo/bar/font-a.woff',
+      endTime: 3, startTime: 1,
+      resourceType: 'Font',
+    }, {
+      url: 'https://example.com/foo/font-b.woff',
+      endTime: 5, startTime: 1,
+      resourceType: 'Font',
+    }, {
+      url: 'https://example.com/foo/bar/font.woff',
+      endTime: 2, startTime: 1,
+      resourceType: 'Font',
+    }, {
+      url: 'https://fonts.gstatic.com/s/would-you-look-at-this-font.woff2',
+      endTime: 7, startTime: 1,
+      resourceType: 'Font',
+    }];
+
+    const result = await FontDisplayAudit.audit(getArtifacts(), context);
+    expect(result.details.items).toHaveLength(0);
+    expect(result.score).toEqual(1);
+
+    expect(result.warnings).toHaveLength(2);
+    expect(result.warnings[0])
+      // Plural 'values' for multiple fonts.
+      .toBeDisplayString(/values for the origin https:\/\/example\.com\.$/);
+    expect(result.warnings[1])
+      .toBeDisplayString(/value for the origin https:\/\/fonts\.gstatic\.com\.$/);
   });
 });

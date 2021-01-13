@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -9,7 +9,7 @@
 
 const TagsBlockingFirstPaint =
     require('../../../../gather/gatherers/dobetterweb/tags-blocking-first-paint.js');
-const assert = require('assert');
+const assert = require('assert').strict;
 let tagsBlockingFirstPaint;
 const traceData = {
   networkRecords: [
@@ -105,7 +105,7 @@ describe('First paint blocking tags', () => {
   it('return filtered and indexed requests', () => {
     const actual = TagsBlockingFirstPaint
       ._filteredAndIndexedByUrl(traceData.networkRecords);
-    return assert.deepEqual(actual, {
+    return expect(Object.fromEntries(actual)).toMatchObject({
       'http://google.com/css/style.css': {
         isLinkPreload: false,
         transferSize: 10,
@@ -133,7 +133,7 @@ describe('First paint blocking tags', () => {
     });
   });
 
-  it('returns an artifact', () => {
+  it('returns an artifact', async () => {
     const linkDetails = {
       tagName: 'LINK',
       url: 'http://google.com/css/style.css',
@@ -141,6 +141,7 @@ describe('First paint blocking tags', () => {
       disabled: false,
       media: '',
       rel: 'stylesheet',
+      mediaChanges: [],
     };
 
     const scriptDetails = {
@@ -149,28 +150,28 @@ describe('First paint blocking tags', () => {
       src: 'http://google.com/js/app.js',
     };
 
-    return tagsBlockingFirstPaint.afterPass({
+    const artifact = await tagsBlockingFirstPaint.afterPass({
       driver: {
-        evaluateAsync() {
+        evaluate() {
           return Promise.resolve([linkDetails, linkDetails, scriptDetails]);
         },
       },
-    }, traceData).then(artifact => {
-      const expected = [
-        {
-          tag: linkDetails,
-          transferSize: 10,
-          startTime: 10,
-          endTime: 10,
-        },
-        {
-          tag: scriptDetails,
-          transferSize: 12,
-          startTime: 12,
-          endTime: 22,
-        },
-      ];
-      assert.deepEqual(artifact, expected);
-    });
+    }, traceData);
+
+    const expected = [
+      {
+        tag: {tagName: 'LINK', url: linkDetails.url, mediaChanges: []},
+        transferSize: 10,
+        startTime: 10,
+        endTime: 10,
+      },
+      {
+        tag: {tagName: 'SCRIPT', url: scriptDetails.url, mediaChanges: undefined},
+        transferSize: 12,
+        startTime: 12,
+        endTime: 22,
+      },
+    ];
+    assert.deepEqual(artifact, expected);
   });
 });

@@ -1,12 +1,12 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
 /* eslint-env jest */
-const assert = require('assert');
+const assert = require('assert').strict;
 const childProcess = require('child_process');
 const path = require('path');
 const indexPath = path.resolve(__dirname, '../../index.js');
@@ -93,6 +93,45 @@ describe('CLI Tests', function() {
       assert.strictEqual(config.audits.length, 1);
 
       expect(config).toMatchSnapshot();
+    });
+  });
+
+  describe('preset', () => {
+    it('desktop should set appropriate config', () => {
+      const ret = spawnSync('node', [indexPath, '--print-config', '--preset=desktop'], {
+        encoding: 'utf8',
+      });
+
+      const config = JSON.parse(ret.stdout);
+      const {emulatedUserAgent, formFactor, screenEmulation, throttling, throttlingMethod} =
+        config.settings;
+      const emulationSettings =
+            {emulatedUserAgent, formFactor, screenEmulation, throttling, throttlingMethod};
+
+      /* eslint-disable max-len */
+      expect(emulationSettings).toMatchInlineSnapshot(`
+        Object {
+          "emulatedUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4143.7 Safari/537.36 Chrome-Lighthouse",
+          "formFactor": "desktop",
+          "screenEmulation": Object {
+            "deviceScaleFactor": 1,
+            "disabled": false,
+            "height": 940,
+            "mobile": false,
+            "width": 1350,
+          },
+          "throttling": Object {
+            "cpuSlowdownMultiplier": 1,
+            "downloadThroughputKbps": 0,
+            "requestLatencyMs": 0,
+            "rttMs": 40,
+            "throughputKbps": 10240,
+            "uploadThroughputKbps": 0,
+          },
+          "throttlingMethod": "simulate",
+        }
+      `);
+      /* eslint-enable max-len */
     });
   });
 });

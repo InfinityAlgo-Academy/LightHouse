@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2017 Google Inc. All Rights Reserved.
+ * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,7 +55,30 @@ class DOM {
   }
 
   /**
-   * @return {DocumentFragment}
+   * @param {string} namespaceURI
+   * @param {string} name
+   * @param {string=} className
+   * @param {Object<string, (string|undefined)>=} attrs Attribute key/val pairs.
+   *     Note: if an attribute key has an undefined value, this method does not
+   *     set the attribute on the node.
+   * @return {Element}
+   */
+  createElementNS(namespaceURI, name, className, attrs = {}) {
+    const element = this._document.createElementNS(namespaceURI, name);
+    if (className) {
+      element.className = className;
+    }
+    Object.keys(attrs).forEach(key => {
+      const value = attrs[key];
+      if (typeof value !== 'undefined') {
+        element.setAttribute(key, value);
+      }
+    });
+    return element;
+  }
+
+  /**
+   * @return {!DocumentFragment}
    */
   createFragment() {
     return this._document.createDocumentFragment();
@@ -80,7 +103,7 @@ class DOM {
   /**
    * @param {string} selector
    * @param {ParentNode} context
-   * @return {DocumentFragment} A clone of the template content.
+   * @return {!DocumentFragment} A clone of the template content.
    * @throws {Error}
    */
   cloneTemplate(selector, context) {
@@ -192,7 +215,7 @@ class DOM {
    * nothing matches query.
    * @param {string} query
    * @param {ParentNode} context
-   * @return {HTMLElement}
+   * @return {!HTMLElement}
    */
   find(query, context) {
     /** @type {?HTMLElement} */
@@ -207,7 +230,7 @@ class DOM {
    * Helper for context.querySelectorAll. Returns an Array instead of a NodeList.
    * @param {string} query
    * @param {ParentNode} context
-   * @return {Array<HTMLElement>}
+   * @return {!Array<HTMLElement>}
    */
   findAll(query, context) {
     return Array.from(context.querySelectorAll(query));

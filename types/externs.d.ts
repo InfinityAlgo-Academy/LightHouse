@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -27,10 +27,29 @@ declare global {
   };
 
   /** Make optional all properties on T and any properties on object properties of T. */
-  type RecursivePartial<T> = {
-    [P in keyof T]+?: T[P] extends object ?
-      RecursivePartial<T[P]> :
-      T[P];
+  type RecursivePartial<T> =
+    // Recurse into arrays and tuples: elements aren't (newly) optional, but any properties they have are.
+    T extends (infer U)[] ? RecursivePartial<U>[] :
+    // Recurse into objects: properties and any of their properties are optional.
+    T extends object ? {[P in keyof T]?: RecursivePartial<T[P]>} :
+    // Strings, numbers, etc. (terminal types) end here.
+    T;
+
+  /** Recursively makes all properties of T read-only. */
+  export type Immutable<T> =
+    T extends Function ? T :
+    T extends Array<infer R> ? ImmutableArray<R> :
+    T extends Map<infer K, infer V> ? ImmutableMap<K, V> :
+    T extends Set<infer M> ? ImmutableSet<M> :
+    T extends object ? ImmutableObject<T> :
+    T
+
+  // Intermediate immutable types. Prefer e.g. Immutable<Set<T>> over direct use.
+  type ImmutableArray<T> = ReadonlyArray<Immutable<T>>;
+  type ImmutableMap<K, V> = ReadonlyMap<Immutable<K>, Immutable<V>>;
+  type ImmutableSet<T> = ReadonlySet<Immutable<T>>;
+  type ImmutableObject<T> = {
+    readonly [K in keyof T]: Immutable<T[K]>;
   };
 
   /**
@@ -44,6 +63,36 @@ declare global {
   /** Obtain the type of the first parameter of a function. */
   type FirstParamType<T extends (arg1: any, ...args: any[]) => any> =
     T extends (arg1: infer P, ...args: any[]) => any ? P : never;
+
+  type FlattenedPromise<A> = Promise<A extends Promise<infer X> ? X : A>;
+
+  /**
+   * Split string `S` on delimiter `D`.
+   * From https://github.com/microsoft/TypeScript/pull/40336#issue-476562046
+   */
+  type Split<S extends string, D extends string> =
+    string extends S ? string[] :
+    S extends '' ? [] :
+    S extends `${infer T}${D}${infer U}` ? [T, ...Split<U, D>] :
+    [S];
+
+  /**
+  * Join an array of strings using camelCase capitalization rules.
+  */
+  type StringsToCamelCase<T extends unknown[]> =
+    T extends [] ? '' :
+    T extends [string, ...infer U] ? `${T[0]}${Capitalize<StringsToCamelCase<U>>}` :
+    string;
+
+  /**
+  * If `S` is a kebab-style string `S`, convert to camelCase.
+  */
+  type KebabToCamelCase<S> = S extends string ? StringsToCamelCase<Split<S, '-'>> : S;
+
+  /** Returns T with any kebab-style property names rewritten as camelCase. */
+  type CamelCasify<T> = {
+    [K in keyof T as KebabToCamelCase<K>]: T[K];
+  }
 
   module LH {
     // re-export useful type modules under global LH module.
@@ -74,9 +123,22 @@ declare global {
       serverResponseTimeByOrigin: {[origin: string]: number};
     }
 
-    export type Locale = 'en-US'|'en'|'en-AU'|'en-GB'|'en-IE'|'en-SG'|'en-ZA'|'en-IN'|'ar-XB'|'ar'|'bg'|'bs'|'ca'|'cs'|'da'|'de'|'el'|'en-XA'|'en-XL'|'es'|'es-419'|'es-AR'|'es-BO'|'es-BR'|'es-BZ'|'es-CL'|'es-CO'|'es-CR'|'es-CU'|'es-DO'|'es-EC'|'es-GT'|'es-HN'|'es-MX'|'es-NI'|'es-PA'|'es-PE'|'es-PR'|'es-PY'|'es-SV'|'es-US'|'es-UY'|'es-VE'|'fi'|'fil'|'fr'|'he'|'hi'|'hr'|'hu'|'gsw'|'id'|'in'|'it'|'iw'|'ja'|'ko'|'ln'|'lt'|'lv'|'mo'|'nl'|'nb'|'no'|'pl'|'pt'|'pt-PT'|'ro'|'ru'|'sk'|'sl'|'sr'|'sr-Latn'|'sv'|'ta'|'te'|'th'|'tl'|'tr'|'uk'|'vi'|'zh'|'zh-HK'|'zh-TW';
+    export type Locale = 'en-US'|'en'|'en-AU'|'en-GB'|'en-IE'|'en-SG'|'en-ZA'|'en-IN'|'ar-XB'|'ar'|'bg'|'ca'|'cs'|'da'|'de'|'el'|'en-XA'|'en-XL'|'es'|'es-419'|'es-AR'|'es-BO'|'es-BR'|'es-BZ'|'es-CL'|'es-CO'|'es-CR'|'es-CU'|'es-DO'|'es-EC'|'es-GT'|'es-HN'|'es-MX'|'es-NI'|'es-PA'|'es-PE'|'es-PR'|'es-PY'|'es-SV'|'es-US'|'es-UY'|'es-VE'|'fi'|'fil'|'fr'|'he'|'hi'|'hr'|'hu'|'gsw'|'id'|'in'|'it'|'iw'|'ja'|'ko'|'lt'|'lv'|'mo'|'nl'|'nb'|'no'|'pl'|'pt'|'pt-PT'|'ro'|'ru'|'sk'|'sl'|'sr'|'sr-Latn'|'sv'|'ta'|'te'|'th'|'tl'|'tr'|'uk'|'vi'|'zh'|'zh-HK'|'zh-TW';
 
     export type OutputMode = 'json' | 'html' | 'csv';
+
+    export type ScreenEmulationSettings = {
+      /** Overriding width value in pixels (minimum 0, maximum 10000000). 0 disables the override. */
+      width: number;
+      /** Overriding height value in pixels (minimum 0, maximum 10000000). 0 disables the override. */
+      height: number;
+      /** Overriding device scale factor value. 0 disables the override. */
+      deviceScaleFactor: number;
+      /** Whether to emulate mobile device. This includes viewport meta tag, overlay scrollbars, text autosizing and more. */
+      mobile: boolean;
+      /** Whether screen emulation is disabled. If true, the other emulation settings are ignored. */
+      disabled: boolean;
+    };
 
     /**
      * Options that are found in both the flags used by the Lighthouse module
@@ -101,8 +163,14 @@ declare global {
       gatherMode?: boolean | string;
       /** Flag indicating that the browser storage should not be reset for the audit. */
       disableStorageReset?: boolean;
-      /** The form factor the emulation should use. */
-      emulatedFormFactor?: 'mobile'|'desktop'|'none';
+
+      /** How Lighthouse should interpret this run in regards to scoring performance metrics and skipping mobile-only tests in desktop. Must be set even if throttling/emulation is being applied outside of Lighthouse. */
+      formFactor?: 'mobile'|'desktop';
+      /** Screen emulation properties (width, height, dpr, mobile viewport) to apply or an object of `{disabled: true}` if Lighthouse should avoid applying screen emulation. If either emulation is applied outside of Lighthouse, or it's being run on a mobile device, it typically should be set to disabled. For desktop, we recommend applying consistent desktop screen emulation. */
+      screenEmulation?: Partial<ScreenEmulationSettings>;
+      /** User Agent string to apply, `false` to not change the host's UA string, or `true` to use Lighthouse's default UA string. */
+      emulatedUserAgent?: string | boolean;
+
       /** The method used to throttle the network. */
       throttlingMethod?: 'devtools'|'simulate'|'provided';
       /** The throttling config settings. */
@@ -146,9 +214,10 @@ declare global {
      */
     export interface CliFlags extends Flags {
       _: string[];
-      chromeFlags: string;
+      chromeIgnoreDefaultFlags: boolean;
+      chromeFlags: string | string[];
       /** Output path for the generated results. */
-      outputPath: string;
+      outputPath?: string;
       /** Flag to save the trace contents and screenshots to disk. */
       saveAssets: boolean;
       /** Flag to open the report immediately. */
@@ -160,7 +229,7 @@ declare global {
       /** Flag to print a list of all required trace categories. */
       listTraceCategories: boolean;
       /** A preset audit of selected audit categories to run. */
-      preset?: 'full'|'mixed-content'|'perf';
+      preset?: 'experimental'|'perf'|'desktop';
       /** A flag to enable logLevel 'verbose'. */
       verbose: boolean;
       /** A flag to enable logLevel 'silent'. */
@@ -211,6 +280,13 @@ declare global {
       [futureProps: string]: any;
     }
 
+    /** The type of the Profile & ProfileChunk event in Chromium traces. Note that this is subtly different from Crdp.Profiler.Profile. */
+    export interface TraceCpuProfile {
+      nodes?: Array<{id: number, callFrame: {functionName: string, url?: string}, parent?: number}>
+      samples?: Array<number>
+      timeDeltas?: Array<number>
+    }
+
     /**
      * @see https://docs.google.com/document/d/1CvAClvFfyA5R-PhYUmn5OOQtYMH4h6I0nSsKchNAySU/preview
      */
@@ -220,7 +296,13 @@ declare global {
       args: {
         fileName?: string;
         snapshot?: string;
+        beginData?: {
+          frame?: string;
+          startLine?: number;
+          url?: string;
+        };
         data?: {
+          frame?: string;
           isLoadingMainFrame?: boolean;
           documentLoaderURL?: string;
           frames?: {
@@ -231,12 +313,35 @@ declare global {
           page?: string;
           readyState?: number;
           requestId?: string;
+          startTime?: number;
+          timeDeltas?: TraceCpuProfile['timeDeltas'];
+          cpuProfile?: TraceCpuProfile;
+          callFrame?: Required<TraceCpuProfile>['nodes'][0]['callFrame']
+          /** Marker for each synthetic CPU profiler event for the range of _potential_ ts values. */
+          _syntheticProfilerRange?: {
+            earliestPossibleTimestamp: number
+            latestPossibleTimestamp: number
+          }
           stackTrace?: {
             url: string
           }[];
           styleSheetUrl?: string;
           timerId?: string;
           url?: string;
+          is_main_frame?: boolean;
+          cumulative_score?: number;
+          id?: string;
+          nodeId?: number;
+          impacted_nodes?: Array<{
+            node_id: number,
+            old_rect?: Array<number>,
+            new_rect?: Array<number>,
+          }>;
+          score?: number;
+          had_recent_input?: boolean;
+          compositeFailed?: number;
+          unsupportedProperties?: string[];
+          size?: number;
         };
         frame?: string;
         name?: string;
@@ -244,11 +349,15 @@ declare global {
       };
       pid: number;
       tid: number;
+      /** Timestamp of the event in microseconds. */
       ts: number;
       dur: number;
       ph: 'B'|'b'|'D'|'E'|'e'|'F'|'I'|'M'|'N'|'n'|'O'|'R'|'S'|'T'|'X';
       s?: 't';
       id?: string;
+      id2?: {
+        local?: string;
+      };
     }
 
     export interface DevToolsJsonTarget {
@@ -260,5 +369,11 @@ declare global {
       url: string;
       webSocketDebuggerUrl: string;
     }
+  }
+
+  interface Window {
+    /** Used by FullPageScreenshot gatherer. */
+    __lighthouseNodesDontTouchOrAllVarianceGoesAway: Map<HTMLElement, string>;
+    __lighthouseExecutionContextId?: number;
   }
 }

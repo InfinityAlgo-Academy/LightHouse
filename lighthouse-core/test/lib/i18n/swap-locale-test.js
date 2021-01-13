@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -11,31 +11,42 @@ const lhr = require('../../results/sample_v2.json');
 
 /* eslint-env jest */
 describe('swap-locale', () => {
-  it('can change golden LHR english strings into spanish', () => {
-    const lhrEn = /** @type {LH.Result} */ (JSON.parse(JSON.stringify(lhr)));
-    const lhrEs = swapLocale(lhrEn, 'es').lhr;
+  it('does not mutate the original lhr', () => {
+    /** @type {LH.Result} */
+    const lhrClone = JSON.parse(JSON.stringify(lhr));
+
+    const lhrPt = swapLocale(lhr, 'pt').lhr;
+    expect(lhrPt).not.toStrictEqual(lhr);
+    expect(lhr).toStrictEqual(lhrClone);
+  });
+
+  it('can change golden LHR english strings into german', () => {
+    /** @type {LH.Result} */
+    const lhrEn = JSON.parse(JSON.stringify(lhr));
+    const lhrDe = swapLocale(lhrEn, 'de').lhr;
 
     // Basic replacement
     expect(lhrEn.audits.plugins.title).toEqual('Document avoids plugins');
-    expect(lhrEs.audits.plugins.title).toEqual('El documento no usa complementos');
+    expect(lhrDe.audits.plugins.title).toEqual('Dokument verwendet keine Plug-ins');
 
     // With ICU string argument values
-    expect(lhrEn.audits['dom-size'].displayValue).toEqual('31 elements');
-    expect(lhrEs.audits['dom-size'].displayValue).toEqual('31 elementos');
+    expect(lhrEn.audits['dom-size'].displayValue).toEqual('148 elements');
+    expect(lhrDe.audits['dom-size'].displayValue).toEqual('148 Elemente');
 
     // Renderer formatted strings
     expect(lhrEn.i18n.rendererFormattedStrings.labDataTitle).toEqual('Lab Data');
-    expect(lhrEs.i18n.rendererFormattedStrings.labDataTitle).toEqual('Datos de prueba');
+    expect(lhrDe.i18n.rendererFormattedStrings.labDataTitle).toEqual('Labdaten');
 
     // Formatted numbers in placeholders.
     expect(lhrEn.audits['render-blocking-resources'].displayValue)
       .toEqual('Potential savings of 1,130 ms');
-    expect(lhrEs.audits['render-blocking-resources'].displayValue)
-      .toEqual('Ahorro potencial de 1.130 ms');
+    expect(lhrDe.audits['render-blocking-resources'].displayValue)
+      .toEqual('Mögliche Einsparung von 1.130 ms');
   });
 
   it('can roundtrip back to english correctly', () => {
-    const lhrEn = /** @type {LH.Result} */ (JSON.parse(JSON.stringify(lhr)));
+    /** @type {LH.Result} */
+    const lhrEn = JSON.parse(JSON.stringify(lhr));
 
     // via Spanish
     const lhrEnEsRT = swapLocale(swapLocale(lhrEn, 'es').lhr, 'en-US').lhr;
@@ -52,6 +63,7 @@ describe('swap-locale', () => {
         redirects: {
           id: 'redirects',
           title: 'Avoid multiple page redirects',
+          doesntExist: 'A string that does not have localized versions',
         },
         fakeaudit: {
           id: 'fakeaudit',
@@ -64,7 +76,9 @@ describe('swap-locale', () => {
       i18n: {
         icuMessagePaths: {
           'lighthouse-core/audits/redirects.js | title': ['audits.redirects.title'],
+          // File that exists, but `doesntExist` message within it does not.
           'lighthouse-core/audits/redirects.js | doesntExist': ['audits.redirects.doesntExist'],
+          // File and message which do not exist.
           'lighthouse-core/audits/fakeaudit.js | title': ['audits.fakeaudit.title'],
         },
       },
@@ -78,5 +92,35 @@ Array [
   "lighthouse-core/audits/fakeaudit.js | title",
 ]
 `);
+  });
+
+  it('does not change properties that are not strings', () => {
+    // Unlikely, but possible e.g. if an audit details changed shape over LH versions.
+    const miniLhr = {
+      audits: {
+        redirects: {
+          id: 'redirects',
+          title: 'Avoid multiple page redirects',
+        },
+      },
+      configSettings: {
+        locale: 'en-US',
+      },
+      i18n: {
+        icuMessagePaths: {
+          // Points to audit object, not string.
+          'lighthouse-core/audits/redirects.js | title': ['audits.redirects'],
+          // Path does not point to anything in LHR.
+          'lighthouse-core/audits/redirects.js | description': ['gatherers..X'],
+        },
+      },
+    };
+    const testLocale = 'ru';
+    const {lhr} = swapLocale(miniLhr, testLocale);
+
+    // LHR remains unchanged except for locale and injected `rendererFormattedStrings`.
+    miniLhr.configSettings.locale = testLocale;
+    miniLhr.i18n.rendererFormattedStrings = expect.any(Object);
+    expect(lhr).toEqual(miniLhr);
   });
 });

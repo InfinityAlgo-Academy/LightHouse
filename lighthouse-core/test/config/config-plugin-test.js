@@ -1,12 +1,13 @@
 /**
- * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const ConfigPlugin = require('../../config/config-plugin.js');
+const i18n = require('../../lib/i18n/i18n.js');
 
 /* eslint-env jest */
 
@@ -62,6 +63,46 @@ describe('ConfigPlugin', () => {
 
     assert.throws(() => ConfigPlugin.parsePlugin(pluginClone, nicePluginName),
       /^Error: lighthouse-plugin-nice-plugin has unrecognized properties: \[extraProperty\]$/);
+  });
+
+  it('accepts a plugin using IcuMessages for strings', () => {
+    // Create some local-only UIStrings for the test.
+    const UIStrings = {
+      title: 'this is a title',
+      description: 'this is a description',
+    };
+    const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+
+    const localizedPlugin = {
+      groups: {
+        group: {
+          title: str_(UIStrings.title),
+          description: str_(UIStrings.description),
+        },
+      },
+      category: {
+        title: str_(UIStrings.title),
+        description: str_(UIStrings.description),
+        manualDescription: str_(UIStrings.description),
+        auditRefs: [{id: 'installable-manifest', weight: 220, group: 'group'}],
+      },
+    };
+    const pluginJson = ConfigPlugin.parsePlugin(localizedPlugin, 'lighthouse-plugin-localized');
+    expect(pluginJson).toMatchObject({
+      groups: {
+        'lighthouse-plugin-localized-group': {
+          title: expect.toBeDisplayString(UIStrings.title),
+          description: expect.toBeDisplayString(UIStrings.description),
+        },
+      },
+      categories: {
+        'lighthouse-plugin-localized': {
+          title: expect.toBeDisplayString(UIStrings.title),
+          description: expect.toBeDisplayString(UIStrings.description),
+          manualDescription: expect.toBeDisplayString(UIStrings.description),
+        },
+      },
+    });
   });
 
   it('deals only with the JSON roundtrip version of the passed-in object', () => {

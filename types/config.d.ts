@@ -1,11 +1,15 @@
+/* eslint-disable strict */
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import Gatherer = require('../lighthouse-core/gather/gatherers/gatherer.js');
 import Audit = require('../lighthouse-core/audits/audit.js');
+
+interface ClassOf<T> {
+  new (): T;
+}
 
 declare global {
   module LH {
@@ -14,8 +18,9 @@ declare global {
        * The pre-normalization Lighthouse Config format.
        */
       export interface Json {
-        extends?: 'lighthouse:default' | 'lighthouse:full' | string | boolean;
+        extends?: 'lighthouse:default' | string;
         settings?: SharedFlagsSettings;
+        artifacts?: ArtifactJson[] | null;
         passes?: PassJson[] | null;
         audits?: Config.AuditJson[] | null;
         categories?: Record<string, CategoryJson> | null;
@@ -23,10 +28,34 @@ declare global {
         plugins?: Array<string>,
       }
 
+      /**
+       * The normalized and fully resolved config.
+       */
+      export interface Config {
+        settings: Settings;
+        passes: Pass[] | null;
+        audits: AuditDefn[] | null;
+        categories: Record<string, Category> | null;
+        groups: Record<string, Group> | null;
+      }
+
+      /**
+       * The normalized and fully resolved Fraggle Rock config.
+       */
+      export interface FRConfig {
+        settings: Settings;
+        artifacts: ArtifactDefn[] | null;
+        audits: AuditDefn[] | null;
+        categories: Record<string, Category> | null;
+        groups: Record<string, Group> | null;
+      }
+
       export interface PassJson {
         passName: string;
+        loadFailureMode?: 'fatal'|'warn'|'ignore';
         recordTrace?: boolean;
         useThrottling?: boolean;
+        pauseAfterFcpMs?: number;
         pauseAfterLoadMs?: number;
         networkQuietThresholdMs?: number;
         cpuQuietThresholdMs?: number;
@@ -35,27 +64,33 @@ declare global {
         gatherers?: GathererJson[];
       }
 
+      export interface ArtifactJson {
+        id: string;
+        gatherer: GathererJson;
+      }
+
       export type GathererJson = {
         path: string;
         options?: {};
       } | {
-        implementation: typeof Gatherer;
+        implementation: ClassOf<Gatherer.GathererInstance>;
         options?: {};
       } | {
-        instance: InstanceType<typeof Gatherer>;
+        instance: Gatherer.GathererInstance;
         options?: {};
-      } | Gatherer | typeof Gatherer | string;
+      } | Gatherer.GathererInstance | ClassOf<Gatherer.GathererInstance> | string;
+
 
       export interface CategoryJson {
-        title: string;
+        title: string | IcuMessage;
         auditRefs: AuditRefJson[];
-        description?: string;
-        manualDescription?: string;
+        description?: string | IcuMessage;
+        manualDescription?: string | IcuMessage;
       }
 
       export interface GroupJson {
-        title: string;
-        description?: string;
+        title: string | IcuMessage;
+        description?: string | IcuMessage;
       }
 
       export type AuditJson = {
@@ -78,17 +113,22 @@ declare global {
 
       export interface Settings extends Required<SharedFlagsSettings> {
         throttling: Required<ThrottlingSettings>;
+        screenEmulation: ScreenEmulationSettings;
       }
 
       export interface Pass extends Required<PassJson> {
         gatherers: GathererDefn[];
       }
 
+      export interface ArtifactDefn {
+        id: string;
+        gatherer: GathererDefn;
+      }
+
       export interface GathererDefn {
-        implementation?: typeof Gatherer;
-        instance: InstanceType<typeof Gatherer>;
+        implementation?: ClassOf<Gatherer.GathererInstance>;
+        instance: Gatherer.GathererInstance;
         path?: string;
-        options: {};
       }
 
       export interface AuditDefn {
@@ -124,4 +164,4 @@ declare global {
 }
 
 // empty export to keep file a module
-export {}
+export {};

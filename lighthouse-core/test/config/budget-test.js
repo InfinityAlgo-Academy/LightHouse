@@ -1,12 +1,12 @@
 /**
- * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
 const Budget = require('../../config/budget.js');
-const assert = require('assert');
+const assert = require('assert').strict;
 /* eslint-env jest */
 
 describe('Budget', () => {
@@ -14,6 +14,9 @@ describe('Budget', () => {
   beforeEach(() => {
     budgets = [
       {
+        options: {
+          firstPartyHostnames: ['example.com'],
+        },
         resourceSizes: [
           {
             resourceType: 'script',
@@ -38,12 +41,10 @@ describe('Budget', () => {
           {
             metric: 'interactive',
             budget: 2000,
-            tolerance: 1000,
           },
           {
             metric: 'first-contentful-paint',
             budget: 1000,
-            // tolerance is optional, so not defined here.
           },
         ],
       },
@@ -62,6 +63,9 @@ describe('Budget', () => {
   it('initializes correctly', () => {
     const result = Budget.initializeBudget(budgets);
     assert.equal(result.length, 2);
+
+    // Sets options correctly
+    assert.equal(result[0].options.firstPartyHostnames[0], 'example.com');
 
     // Missing paths are not overwritten
     assert.equal(result[0].path, undefined);
@@ -83,16 +87,14 @@ describe('Budget', () => {
     assert.deepStrictEqual(result[0].timings[0], {
       metric: 'interactive',
       budget: 2000,
-      tolerance: 1000,
     });
     assert.deepStrictEqual(result[0].timings[1], {
       metric: 'first-contentful-paint',
       budget: 1000,
-      tolerance: undefined,
     });
 
     // Does not set unsupplied result
-    assert.equal(result[1].timings, null);
+    assert.equal(result[1].timings, undefined);
   });
 
   it('accepts an empty array', () => {
@@ -135,6 +137,67 @@ describe('Budget', () => {
       assert.throws(_ => Budget.initializeBudget(budgets),
         /^Error: Invalid timings entry in budget at index 1$/);
     });
+
+    it('throws when budget contains an invalid options entry', () => {
+      budgets[0].options = 'Turtles';
+      assert.throws(_ => Budget.initializeBudget(budgets),
+        /^Error: Invalid options property in budget at index 0$/);
+    });
+  });
+
+  describe('firstPartyHostname validation', () => {
+    it('with valid inputs', () => {
+      const validHostnames = [
+        'yolo.com',
+        'so.many.subdomains.org',
+        '127.0.0.1',
+        'localhost',
+        '*.example.gov.uk',
+        '*.example.com',
+      ];
+      budgets[0].options = {firstPartyHostnames: validHostnames};
+
+      const result = Budget.initializeBudget(budgets);
+      expect(result[0].options.firstPartyHostnames).toEqual(validHostnames);
+    });
+
+    it('validates that input does not include a protocol', () => {
+      budgets[0].options = {firstPartyHostnames: ['https://yolo.com']};
+      assert.throws(_ => Budget.initializeBudget(budgets),
+        /https:\/\/yolo.com is not a valid hostname./);
+    });
+
+    it('validates that input does not include ports', () => {
+      budgets[0].options = {firstPartyHostnames: ['yolo.com:8080']};
+      assert.throws(_ => Budget.initializeBudget(budgets),
+        /yolo.com:8080 is not a valid hostname./);
+    });
+
+    it('validates that input does not include path', () => {
+      budgets[0].options = {firstPartyHostnames: ['dogs.com/fido']};
+      assert.throws(_ => Budget.initializeBudget(budgets),
+        /dogs.com\/fido is not a valid hostname./);
+    });
+
+    it('validates that input does not include a trailing slash', () => {
+      budgets[0].options = {firstPartyHostnames: ['dogs.com/']};
+      assert.throws(_ => Budget.initializeBudget(budgets),
+        /dogs.com\/ is not a valid hostname./);
+    });
+
+    describe('wild card validation', () => {
+      it('validates that a wildcard is only used once', () => {
+        budgets[0].options = {firstPartyHostnames: ['*.*.com']};
+        assert.throws(_ => Budget.initializeBudget(budgets),
+          /\*.\*.com is not a valid hostname./);
+      });
+
+      it('validates that a wildcard is only used at the start of the hostname', () => {
+        budgets[0].options = {firstPartyHostnames: ['cats.*.com']};
+        assert.throws(_ => Budget.initializeBudget(budgets),
+          /cats.\*.com is not a valid hostname./);
+      });
+    });
   });
 
   describe('resource budget validation', () => {
@@ -170,6 +233,26 @@ describe('Budget', () => {
   });
 
   describe('timing budget validation', () => {
+    it('supports all timing metrics', () => {
+      budgets[0].timings = [{metric: 'blah', budget: 0}];
+      const metrics = [
+        'first-contentful-paint',
+        'first-cpu-idle',
+        'interactive',
+        'first-meaningful-paint',
+        'max-potential-fid',
+        'estimated-input-latency',
+        'total-blocking-time',
+        'speed-index',
+        'largest-contentful-paint',
+        'cumulative-layout-shift',
+      ];
+      for (const metric of metrics) {
+        budgets[0].timings[0].metric = metric;
+        const result = Budget.initializeBudget(budgets);
+        expect(result[0].timings[0].metric).toEqual(metric);
+      }
+    });
     it('throws when an invalid metric is supplied', () => {
       budgets[0].timings[0].metric = 'medianMeaningfulPaint';
       assert.throws(_ => Budget.initializeBudget(budgets),
@@ -178,13 +261,13 @@ describe('Budget', () => {
     });
 
     it('throws when an invalid budget is supplied', () => {
-      budgets[0].timings[0].budget = '100KB';
-      assert.throws(_ => Budget.initializeBudget(budgets), /Invalid budget: 100KB/);
+      budgets[0].timings[0].budget = '100KiB';
+      assert.throws(_ => Budget.initializeBudget(budgets), /Invalid budget: 100KiB/);
     });
 
-    it('throws when an invalid tolerance is supplied', () => {
+    it('throws when a tolerance is supplied', () => {
       budgets[0].timings[0].tolerance = '100ms';
-      assert.throws(_ => Budget.initializeBudget(budgets), /Invalid tolerance: 100ms/);
+      assert.throws(_ => Budget.initializeBudget(budgets), /unrecognized properties/);
     });
 
     it('throws when an invalid property is supplied', () => {
@@ -198,6 +281,53 @@ describe('Budget', () => {
       budgets[0].timings.push({metric: 'interactive', budget: 1000});
       assert.throws(_ => Budget.initializeBudget(budgets),
         /has duplicate entry of type 'interactive'/);
+    });
+  });
+
+  describe('budget matching', () => {
+    const budgets = [{
+      path: '/',
+      resourceSizes: [
+        {
+          resourceType: 'script',
+          budget: 0,
+        },
+      ],
+    },
+    {
+      path: '/file.html',
+      resourceSizes: [
+        {
+          resourceType: 'image',
+          budget: 0,
+        },
+      ],
+    },
+    {
+      path: '/not-a-match',
+      resourceSizes: [
+        {
+          resourceType: 'document',
+          budget: 0,
+        },
+      ],
+    },
+    ];
+    it('returns the last matching budget', () => {
+      const budget = Budget.getMatchingBudget(budgets, 'http://example.com/file.html');
+      expect(budget).toEqual(budgets[1]);
+    });
+
+    it('does not mutate the budget config', async () => {
+      const configBefore = JSON.parse(JSON.stringify(budgets));
+      Budget.getMatchingBudget(configBefore, 'https://example.com');
+      const configAfter = JSON.parse(JSON.stringify(budgets));
+      expect(configBefore).toEqual(configAfter);
+    });
+
+    it('returns "undefined" when there is no budget config', () => {
+      const budget = Budget.getMatchingBudget(null, 'https://example.com');
+      expect(budget).toEqual(undefined);
     });
   });
 

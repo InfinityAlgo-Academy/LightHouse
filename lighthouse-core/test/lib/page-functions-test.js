@@ -1,11 +1,11 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const jsdom = require('jsdom');
 const DOM = require('../../report/html/renderer/dom.js');
 const pageFunctions = require('../../lib/page-functions.js');
@@ -16,13 +16,15 @@ describe('Page Functions', () => {
   let dom;
 
   beforeAll(() => {
-    const {document, ShadowRoot} = new jsdom.JSDOM().window;
+    const {document, ShadowRoot, Node} = new jsdom.JSDOM().window;
     global.ShadowRoot = ShadowRoot;
+    global.Node = Node;
     dom = new DOM(document);
   });
 
   afterAll(() => {
     global.ShadowRoot = undefined;
+    global.Node = undefined;
   });
 
   describe('get outer HTML snippets', () => {
@@ -61,6 +63,28 @@ describe('Page Functions', () => {
       assert.equal(pageFunctions.getOuterHTMLSnippet(
         dom.createElement('div', '', {style: 'style1\nstyle2'})), '<div style="style1\nstyle2">');
     });
+
+    it('truncates attribute values that are too long', () => {
+      const longClass = 'a'.repeat(200);
+      const truncatedExpectation = 'a'.repeat(74) + '…';
+      assert.equal(pageFunctions.getOuterHTMLSnippet(
+        dom.createElement('div', '', {class: longClass})), `<div class="${truncatedExpectation}">`
+      );
+    });
+
+    it('removes attributes if the length of the attribute name + value is too long', () => {
+      const longValue = 'a'.repeat(200);
+      const truncatedValue = 'a'.repeat(74) + '…';
+      const element = dom.createElement('div', '', {
+        class: longValue,
+        id: longValue,
+        att1: 'shouldn\'t see this',
+        att2: 'shouldn\'t see this either',
+      });
+      const snippet = pageFunctions.getOuterHTMLSnippet(element, [], 150);
+      assert.equal(snippet, `<div class="${truncatedValue}" id="${truncatedValue}" …>`
+      );
+    });
   });
 
   describe('getNodeSelector', () => {
@@ -92,6 +116,14 @@ describe('Page Functions', () => {
       assert.equal(pageFunctions.getNodeLabel(el).length, 80);
     });
 
+    it('Truncates long text containing unicode surrogate pairs', () => {
+      const el = dom.createElement('div');
+      // `getNodeLabel` truncates to 80 characters internally.
+      // We want to test a unicode character on the boundary.
+      el.innerText = Array(78).fill('a').join('') + '💡💡💡';
+      assert.equal(pageFunctions.getNodeLabel(el), Array(78).fill('a').join('') + '💡…');
+    });
+
     it('Uses tag name for html tags', () => {
       const el = dom.createElement('html');
       assert.equal(pageFunctions.getNodeLabel(el), 'html');
@@ -102,6 +134,34 @@ describe('Page Functions', () => {
       const childEl = dom.createElement('span');
       el.appendChild(childEl);
       assert.equal(pageFunctions.getNodeLabel(el), 'div');
+    });
+  });
+
+  describe('getNodePath', () => {
+    it('returns basic node path', () => {
+      const el = dom.createElement('div');
+      el.innerHTML = `
+        <section>
+          <span>Sup</span>
+          <img src="#">
+        </section>
+      `;
+      const img = el.querySelector('img');
+      // The img is index 1 of section's children (excluding some whitespace only text nodes).
+      assert.equal(pageFunctions.getNodePath(img), '0,SECTION,1,IMG');
+    });
+
+    it('returns node path through shadow root', () => {
+      const el = dom.createElement('div');
+      const main = el.appendChild(dom.createElement('main'));
+      const shadowRoot = main.attachShadow({mode: 'open'});
+      const sectionEl = dom.createElement('section');
+      const img = dom.createElement('img');
+      img.src = '#';
+      sectionEl.append(img);
+      shadowRoot.append(sectionEl);
+
+      assert.equal(pageFunctions.getNodePath(img), '0,MAIN,a,#document-fragment,0,SECTION,0,IMG');
     });
   });
 });

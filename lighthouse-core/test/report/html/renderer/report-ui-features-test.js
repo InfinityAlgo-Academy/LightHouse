@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,14 +7,18 @@
 
 /* eslint-env jest */
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const fs = require('fs');
 const jsdom = require('jsdom');
 const Util = require('../../../../report/html/renderer/util.js');
+const I18n = require('../../../../report/html/renderer/i18n.js');
 const DOM = require('../../../../report/html/renderer/dom.js');
 const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
 const ReportUIFeatures = require('../../../../report/html/renderer/report-ui-features.js');
 const CategoryRenderer = require('../../../../report/html/renderer/category-renderer.js');
+const ElementScreenshotRenderer =
+  require('../../../../report/html/renderer/element-screenshot-renderer.js');
+const RectHelpers = require('../../../../../lighthouse-core/lib/rect-helpers.js');
 const CriticalRequestChainRenderer = require(
     '../../../../report/html/renderer/crc-details-renderer.js');
 const ReportRenderer = require('../../../../report/html/renderer/report-renderer.js');
@@ -45,10 +49,13 @@ describe('ReportUIFeatures', () => {
 
   beforeAll(() => {
     global.Util = Util;
+    global.I18n = I18n;
     global.ReportUIFeatures = ReportUIFeatures;
     global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
     global.DetailsRenderer = DetailsRenderer;
     global.CategoryRenderer = CategoryRenderer;
+    global.ElementScreenshotRenderer = ElementScreenshotRenderer;
+    global.RectHelpers = RectHelpers;
 
     // lazy loaded because they depend on CategoryRenderer to be available globally
     global.PerformanceCategoryRenderer =
@@ -86,17 +93,21 @@ describe('ReportUIFeatures', () => {
 
     dom = new DOM(document.window.document);
     sampleResults = Util.prepareReportResult(sampleResultsOrig);
+    render(sampleResults);
   });
 
   afterAll(() => {
     global.self = undefined;
     global.Util = undefined;
+    global.I18n = undefined;
     global.ReportUIFeatures = undefined;
     global.matchMedia = undefined;
     global.self.matchMedia = undefined;
     global.CriticalRequestChainRenderer = undefined;
     global.DetailsRenderer = undefined;
     global.CategoryRenderer = undefined;
+    global.ElementScreenshotRenderer = undefined;
+    global.RectHelpers = undefined;
     global.PerformanceCategoryRenderer = undefined;
     global.PwaCategoryRenderer = undefined;
     global.window = undefined;
@@ -130,6 +141,7 @@ describe('ReportUIFeatures', () => {
           sampleResults.audits['render-blocking-resources'].details.items[0];
         const textCompressionAuditItemTemplate =
           sampleResults.audits['uses-text-compression'].details.items[0];
+
         // Interleave first/third party URLs to test restoring order.
         lhr.audits['uses-webp-images'].details.items = [
           {
@@ -144,6 +156,53 @@ describe('ReportUIFeatures', () => {
             ...webpAuditItemTemplate,
             url: 'http://www.notexample.com/img3.jpg', // Third party, will be filtered.
           },
+        ];
+
+        // Test sub-item rows.
+        lhr.audits['unused-javascript'].details.items = [
+          {
+            ...webpAuditItemTemplate,
+            url: 'http://www.cdn.com/script1.js', // Third party, will be filtered.
+            subItems: {
+              type: 'subitems',
+              items: [
+                {source: '1', sourceBytes: 1, sourceWastedBytes: 1},
+                {source: '2', sourceBytes: 2, sourceWastedBytes: 2},
+              ],
+            },
+          },
+          {
+            ...webpAuditItemTemplate,
+            url: 'http://www.example.com/script2.js', // First party, not filtered.
+            subItems: {
+              type: 'subitems',
+              items: [
+                {source: '3', sourceBytes: 3, sourceWastedBytes: 3},
+                {source: '4', sourceBytes: 4, sourceWastedBytes: 4},
+              ],
+            },
+          },
+          {
+            ...webpAuditItemTemplate,
+            url: 'http://www.notexample.com/script3.js', // Third party, will be filtered.
+            subItems: {
+              type: 'subitems',
+              items: [
+                {source: '5', sourceBytes: 5, sourceWastedBytes: 5},
+                {source: '6', sourceBytes: 6, sourceWastedBytes: 6},
+              ],
+            },
+          },
+        ];
+        // Sample json currently doesn't have any results for `unused-javascript`, so
+        // headings is empty. Can delete this block of code if that changes.
+        expect(lhr.audits['unused-javascript'].details.headings).toHaveLength(0);
+        lhr.audits['unused-javascript'].details.headings = [
+          /* t-disable max-len */
+          {key: 'url', valueType: 'url', subItemsHeading: {key: 'source', valueType: 'code'}},
+          {key: 'totalBytes', valueType: 'bytes', subItemsHeading: {key: 'sourceBytes'}},
+          {key: 'wastedBytes', valueType: 'bytes', subItemsHeading: {key: 'sourceWastedBytes'}},
+          /* eslint-enable max-len */
         ];
 
         // Only third party URLs to test that checkbox is hidden
@@ -182,12 +241,13 @@ describe('ReportUIFeatures', () => {
         container = render(lhr);
       });
 
-      it('filters out third party resources in details tables when checkbox is clicked', () => {
+      it('filters out third party resources in on click', () => {
         const filterCheckbox = dom.find('#uses-webp-images .lh-3p-filter-input', container);
 
         function getUrlsInTable() {
           return dom
-            .findAll('#uses-webp-images .lh-details .lh-text__url a:first-child', container)
+            .findAll(
+              '#uses-webp-images tr:not(.lh-row--hidden) .lh-text__url a:first-child', container)
             .map(el => el.textContent);
         }
 
@@ -196,6 +256,40 @@ describe('ReportUIFeatures', () => {
         expect(getUrlsInTable()).toEqual(['/img2.jpg']);
         filterCheckbox.click();
         expect(getUrlsInTable()).toEqual(['/img1.jpg', '/img2.jpg', '/img3.jpg']);
+      });
+
+      it('filters out sub-item rows of third party resources on click', () => {
+        dom.find('#unused-javascript', container);
+        const filterCheckbox = dom.find('#unused-javascript .lh-3p-filter-input', container);
+
+        function getRowIdentifiers() {
+          return dom
+            .findAll(
+              '#unused-javascript tbody tr:not(.lh-row--hidden)', container)
+            .map(el => el.textContent);
+        }
+
+        const initialExpected = [
+          '/script1.js(www.cdn.com)24.0 KiB8.8 KiB',
+          '10.0 KiB0.0 KiB',
+          '20.0 KiB0.0 KiB',
+          '/script2.js(www.example.com)24.0 KiB8.8 KiB',
+          '30.0 KiB0.0 KiB',
+          '40.0 KiB0.0 KiB',
+          '/script3.js(www.notexample.com)24.0 KiB8.8 KiB',
+          '50.0 KiB0.0 KiB',
+          '60.0 KiB0.0 KiB',
+        ];
+
+        expect(getRowIdentifiers()).toEqual(initialExpected);
+        filterCheckbox.click();
+        expect(getRowIdentifiers()).toEqual([
+          '/script2.js(www.example.com)24.0 KiB8.8 KiB',
+          '30.0 KiB0.0 KiB',
+          '40.0 KiB0.0 KiB',
+        ]);
+        filterCheckbox.click();
+        expect(getRowIdentifiers()).toEqual(initialExpected);
       });
 
       it('adds no filter for audits in thirdPartyFilterAuditExclusions', () => {
@@ -236,6 +330,17 @@ describe('ReportUIFeatures', () => {
       Object.values(lhr.categories).forEach(element => {
         element.score = 1;
       });
+      const container = render(lhr);
+      assert.ok(container.querySelector('.score100'), 'has fireworks treatment');
+    });
+
+    it('should show fireworks for all 100s except PWA', () => {
+      const lhr = JSON.parse(JSON.stringify(sampleResults));
+      Object.values(lhr.categories).forEach(element => {
+        element.score = 1;
+      });
+      lhr.categories.pwa.score = 0;
+
       const container = render(lhr);
       assert.ok(container.querySelector('.score100'), 'has fireworks treatment');
     });
@@ -350,6 +455,22 @@ describe('ReportUIFeatures', () => {
         createDiv = () => dom.document().createElement('div');
       });
 
+      it('should return undefined when nodes is empty', () => {
+        const nodes = [];
+
+        const nextNode = dropDown._getNextSelectableNode(nodes);
+
+        assert.strictEqual(nextNode, undefined);
+      });
+
+      it('should return the only node when start is defined', () => {
+        const node = createDiv();
+
+        const nextNode = dropDown._getNextSelectableNode([node], node);
+
+        assert.strictEqual(nextNode, node);
+      });
+
       it('should return first node when start is undefined', () => {
         const nodes = [createDiv(), createDiv()];
 
@@ -391,6 +512,54 @@ describe('ReportUIFeatures', () => {
 
         assert.strictEqual(nextNode, nodes[2]);
       });
+    });
+
+    describe('onMenuFocusOut', () => {
+      beforeEach(() => {
+        dropDown._toggleEl.click();
+        assert.ok(dropDown._toggleEl.classList.contains('active'));
+      });
+
+      it('should toggle active class when focus relatedTarget is null', () => {
+        const event = new window.FocusEvent('focusout', {relatedTarget: null});
+        dropDown.onMenuFocusOut(event);
+
+        assert.ok(!dropDown._toggleEl.classList.contains('active'));
+      });
+
+      it('should toggle active class when focus relatedTarget is document.body', () => {
+        const relatedTarget = dom.document().body;
+        const event = new window.FocusEvent('focusout', {relatedTarget});
+        dropDown.onMenuFocusOut(event);
+
+        assert.ok(!dropDown._toggleEl.classList.contains('active'));
+      });
+
+      it('should toggle active class when focus relatedTarget is _toggleEl', () => {
+        const relatedTarget = dropDown._toggleEl;
+        const event = new window.FocusEvent('focusout', {relatedTarget});
+        dropDown.onMenuFocusOut(event);
+
+        assert.ok(!dropDown._toggleEl.classList.contains('active'));
+      });
+
+      it('should not toggle active class when focus relatedTarget is a menu item', () => {
+        const relatedTarget = dropDown._getNextMenuItem();
+        const event = new window.FocusEvent('focusout', {relatedTarget});
+        dropDown.onMenuFocusOut(event);
+
+        assert.ok(dropDown._toggleEl.classList.contains('active'));
+      });
+    });
+  });
+
+  describe('data-i18n', () => {
+    it('should have only valid data-i18n values in template', () => {
+      const container = render(sampleResults);
+      for (const node of dom.findAll('[data-i18n]', container)) {
+        const val = node.getAttribute('data-i18n');
+        assert.ok(val in Util.UIStrings, `Invalid data-i18n value of: "${val}" found.`);
+      }
     });
   });
 });

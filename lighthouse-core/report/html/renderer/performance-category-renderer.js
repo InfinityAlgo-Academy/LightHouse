@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2018 Google Inc. All Rights Reserved.
+ * Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@
 class PerformanceCategoryRenderer extends CategoryRenderer {
   /**
    * @param {LH.ReportResult.AuditRef} audit
-   * @return {Element}
+   * @return {!Element}
    */
   _renderMetric(audit) {
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-metric', this.templateContext);
@@ -54,7 +54,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
   /**
    * @param {LH.ReportResult.AuditRef} audit
    * @param {number} scale
-   * @return {Element}
+   * @return {!Element}
    */
   _renderOpportunity(audit, scale) {
     const oppTmpl = this.dom.cloneTemplate('#tmpl-lh-opportunity', this.templateContext);
@@ -73,7 +73,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     const displayEl = this.dom.find('.lh-audit__display-text', element);
     const sparklineWidthPct = `${details.overallSavingsMs / scale * 100}%`;
     this.dom.find('.lh-sparkline__bar', element).style.width = sparklineWidthPct;
-    displayEl.textContent = Util.formatSeconds(details.overallSavingsMs, 0.01);
+    displayEl.textContent = Util.i18n.formatSeconds(details.overallSavingsMs, 0.01);
 
     // Set [title] tooltips
     if (audit.result.displayValue) {
@@ -105,6 +105,62 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
   }
 
   /**
+   * Get a link to the interactive scoring calculator with the metric values.
+   * @param {LH.ReportResult.AuditRef[]} auditRefs
+   * @return {string}
+   */
+  _getScoringCalculatorHref(auditRefs) {
+    const v5andv6metrics = auditRefs.filter(audit => audit.group === 'metrics');
+    const fci = auditRefs.find(audit => audit.id === 'first-cpu-idle');
+    const fmp = auditRefs.find(audit => audit.id === 'first-meaningful-paint');
+    if (fci) v5andv6metrics.push(fci);
+    if (fmp) v5andv6metrics.push(fmp);
+
+    /** @type {Record<string, string>} */
+    const acronymMapping = {
+      'cumulative-layout-shift': 'CLS',
+      'first-contentful-paint': 'FCP',
+      'first-cpu-idle': 'FCI',
+      'first-meaningful-paint': 'FMP',
+      'interactive': 'TTI',
+      'largest-contentful-paint': 'LCP',
+      'speed-index': 'SI',
+      'total-blocking-time': 'TBT',
+    };
+
+    /**
+     * Clamp figure to 2 decimal places
+     * @param {number} val
+     * @return {number}
+     */
+    const clampTo2Decimals = val => Math.round(val * 100) / 100;
+
+    const metricPairs = v5andv6metrics.map(audit => {
+      let value;
+      if (typeof audit.result.numericValue === 'number') {
+        value = audit.id === 'cumulative-layout-shift' ?
+          clampTo2Decimals(audit.result.numericValue) :
+          Math.round(audit.result.numericValue);
+        value = value.toString();
+      } else {
+        value = 'null';
+      }
+      return [acronymMapping[audit.id] || audit.id, value];
+    });
+    const paramPairs = [...metricPairs];
+
+    if (Util.reportJson) {
+      paramPairs.push(['device', Util.reportJson.configSettings.formFactor]);
+      paramPairs.push(['version', Util.reportJson.lighthouseVersion]);
+    }
+
+    const params = new URLSearchParams(paramPairs);
+    const url = new URL('https://googlechrome.github.io/lighthouse/scorecalc/');
+    url.hash = params.toString();
+    return url.href;
+  }
+
+  /**
    * @param {LH.ReportResult.Category} category
    * @param {Object<string, LH.Result.ReportGroup>} groups
    * @param {'PSI'=} environment 'PSI' and undefined are the only valid values
@@ -112,6 +168,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
    * @override
    */
   render(category, groups, environment) {
+    const strings = Util.i18n.strings;
     const element = this.dom.createElement('div', 'lh-category');
     if (environment === 'PSI') {
       const gaugeEl = this.dom.createElement('div', 'lh-score__gauge');
@@ -131,26 +188,22 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     metricAuditsEl.append(..._toggleEl.childNodes);
 
     const metricAudits = category.auditRefs.filter(audit => audit.group === 'metrics');
-    const keyMetrics = metricAudits.filter(a => a.weight >= 3);
-    const otherMetrics = metricAudits.filter(a => a.weight < 3);
+    const metricsBoxesEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-metrics-container');
 
-    const metricsBoxesEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-columns');
-    const metricsColumn1El = this.dom.createChildOf(metricsBoxesEl, 'div', 'lh-column');
-    const metricsColumn2El = this.dom.createChildOf(metricsBoxesEl, 'div', 'lh-column');
-
-    keyMetrics.forEach(item => {
-      metricsColumn1El.appendChild(this._renderMetric(item));
-    });
-    otherMetrics.forEach(item => {
-      metricsColumn2El.appendChild(this._renderMetric(item));
+    metricAudits.forEach(item => {
+      metricsBoxesEl.appendChild(this._renderMetric(item));
     });
 
-    // 'Values are estimated and may vary' is used as the category description for PSI
-    if (environment !== 'PSI') {
-      const estValuesEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-metrics__disclaimer');
-      const disclaimerEl = this.dom.convertMarkdownLinkSnippets(Util.UIStrings.varianceDisclaimer);
-      estValuesEl.appendChild(disclaimerEl);
-    }
+    const estValuesEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-metrics__disclaimer');
+    const disclaimerEl = this.dom.convertMarkdownLinkSnippets(strings.varianceDisclaimer);
+    estValuesEl.appendChild(disclaimerEl);
+
+    // Add link to score calculator.
+    const calculatorLink = this.dom.createChildOf(estValuesEl, 'a', 'lh-calclink');
+    calculatorLink.target = '_blank';
+    calculatorLink.textContent = strings.calculatorLink;
+    calculatorLink.href = this._getScoringCalculatorHref(category.auditRefs);
+
 
     metricAuditsEl.classList.add('lh-audit-group--metrics');
     element.appendChild(metricAuditsEl);
@@ -166,17 +219,24 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     }
 
     // Budgets
-    const budgetAudit = category.auditRefs.find(audit => audit.id === 'performance-budget');
-    if (budgetAudit && budgetAudit.result.details) {
-      const table = this.detailsRenderer.render(budgetAudit.result.details);
-      if (table) {
-        table.id = budgetAudit.id;
-        table.classList.add('lh-audit');
-        const budgetsGroupEl = this.renderAuditGroup(groups.budgets);
-        budgetsGroupEl.appendChild(table);
-        budgetsGroupEl.classList.add('lh-audit-group--budgets');
-        element.appendChild(budgetsGroupEl);
+    /** @type {Array<Element>} */
+    const budgetTableEls = [];
+    ['performance-budget', 'timing-budget'].forEach((id) => {
+      const audit = category.auditRefs.find(audit => audit.id === id);
+      if (audit && audit.result.details) {
+        const table = this.detailsRenderer.render(audit.result.details);
+        if (table) {
+          table.id = id;
+          table.classList.add('lh-audit');
+          budgetTableEls.push(table);
+        }
       }
+    });
+    if (budgetTableEls.length > 0) {
+      const budgetsGroupEl = this.renderAuditGroup(groups.budgets);
+      budgetTableEls.forEach(table => budgetsGroupEl.appendChild(table));
+      budgetsGroupEl.classList.add('lh-audit-group--budgets');
+      element.appendChild(budgetsGroupEl);
     }
 
     // Opportunities
@@ -194,9 +254,9 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       const tmpl = this.dom.cloneTemplate('#tmpl-lh-opportunity-header', this.templateContext);
 
       this.dom.find('.lh-load-opportunity__col--one', tmpl).textContent =
-        Util.UIStrings.opportunityResourceColumnLabel;
+        strings.opportunityResourceColumnLabel;
       this.dom.find('.lh-load-opportunity__col--two', tmpl).textContent =
-        Util.UIStrings.opportunitySavingsColumnLabel;
+        strings.opportunitySavingsColumnLabel;
 
       const headerEl = this.dom.find('.lh-load-opportunity__header', tmpl);
       groupEl.appendChild(headerEl);

@@ -1,15 +1,18 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const assert = require('assert');
+const assert = require('assert').strict;
 
 const NetworkAnalyzer = require('../../../../lib/dependency-graph/simulator/network-analyzer.js');
 const NetworkRecords = require('../../../../computed/network-records.js');
 const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtools.log.json');
+const devtoolsLogWithRedirect = require(
+  '../../../fixtures/traces/site-with-redirect.devtools.log.json'
+);
 
 /* eslint-env jest */
 describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
@@ -383,6 +386,28 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
       ];
       const mainDocument = NetworkAnalyzer.findMainDocument(records);
       assert.equal(mainDocument.url, 'https://www.example.com');
+    });
+  });
+
+  describe('#resolveRedirects', () => {
+    it('should resolve to the same document when no redirect', async () => {
+      const records = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
+
+      const mainDocument = NetworkAnalyzer.findMainDocument(records, 'https://pwa.rocks/');
+      const finalDocument = NetworkAnalyzer.resolveRedirects(mainDocument);
+      assert.equal(mainDocument.url, finalDocument.url);
+      assert.equal(finalDocument.url, 'https://pwa.rocks/');
+    });
+
+    it('should resolve to the final document with redirects', async () => {
+      const records = await NetworkRecords.request(devtoolsLogWithRedirect, {
+        computedCache: new Map(),
+      });
+
+      const mainDocument = NetworkAnalyzer.findMainDocument(records, 'http://www.vkontakte.ru/');
+      const finalDocument = NetworkAnalyzer.resolveRedirects(mainDocument);
+      assert.notEqual(mainDocument.url, finalDocument.url);
+      assert.equal(finalDocument.url, 'https://m.vk.com/');
     });
   });
 });

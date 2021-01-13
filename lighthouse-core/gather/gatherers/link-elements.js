@@ -1,17 +1,17 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const Gatherer = require('./gatherer.js');
-const URL = require('../../lib/url-shim.js').URL;
-const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
 const LinkHeader = require('http-link-header');
-const {getElementsInDocumentString} = require('../../lib/page-functions.js');
+const Gatherer = require('./gatherer.js');
+const {URL} = require('../../lib/url-shim.js');
+const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
+const pageFunctions = require('../../lib/page-functions.js');
 
-/* globals HTMLLinkElement */
+/* globals HTMLLinkElement getNodeDetails */
 
 /**
  * @fileoverview
@@ -49,7 +49,7 @@ function getCrossoriginFromHeader(value) {
 /* istanbul ignore next */
 function getLinkElementsInDOM() {
   /** @type {Array<HTMLOrSVGElement>} */
-  // @ts-ignore - getElementsInDocument put into scope via stringification
+  // @ts-expect-error - getElementsInDocument put into scope via stringification
   const browserElements = getElementsInDocument('link'); // eslint-disable-line no-undef
   /** @type {LH.Artifacts['LinkElements']} */
   const linkElements = [];
@@ -59,14 +59,19 @@ function getLinkElementsInDOM() {
     // https://github.com/GoogleChrome/lighthouse/issues/9764
     if (!(link instanceof HTMLLinkElement)) continue;
 
+    const hrefRaw = link.getAttribute('href') || '';
+    const source = link.closest('head') ? 'head' : 'body';
+
     linkElements.push({
       rel: link.rel,
       href: link.href,
-      hrefRaw: link.href,
       hreflang: link.hreflang,
       as: link.as,
       crossOrigin: link.crossOrigin,
-      source: link.closest('head') ? 'head' : 'body',
+      hrefRaw,
+      source,
+      // @ts-expect-error - put into scope via stringification
+      node: getNodeDetails(link),
     });
   }
 
@@ -81,12 +86,14 @@ class LinkElements extends Gatherer {
   static getLinkElementsInDOM(passContext) {
     // We'll use evaluateAsync because the `node.getAttribute` method doesn't actually normalize
     // the values like access from JavaScript does.
-    return passContext.driver.evaluateAsync(`(() => {
-      ${getElementsInDocumentString};
-      ${getLinkElementsInDOM};
-
-      return getLinkElementsInDOM();
-    })()`, {useIsolation: true});
+    return passContext.driver.evaluate(getLinkElementsInDOM, {
+      args: [],
+      useIsolation: true,
+      deps: [
+        pageFunctions.getNodeDetailsString,
+        pageFunctions.getElementsInDocument,
+      ],
+    });
   }
 
   /**
@@ -114,6 +121,7 @@ class LinkElements extends Gatherer {
           as: link.as || '',
           crossOrigin: getCrossoriginFromHeader(link.crossorigin),
           source: 'headers',
+          node: null,
         });
       }
     }

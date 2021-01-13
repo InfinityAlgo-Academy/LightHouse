@@ -1,5 +1,6 @@
+// @ts-nocheck
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -16,7 +17,7 @@ const redirectSuffix = ':redirect';
 
 /**
  * Extract requestId without any `:redirect` strings.
- * @param {Partial<NetworkRequest>} requestId
+ * @param {Partial<NetworkRequest>} record
  */
 function getBaseRequestId(record) {
   if (!record.requestId) return;
@@ -45,7 +46,7 @@ function headersArrayToHeadersDict(headersArray = []) {
  * @return {LH.Protocol.RawEventMessage}
  */
 function getRequestWillBeSentEvent(networkRecord, index) {
-  let initiator;
+  let initiator = {type: 'other'};
   if (networkRecord.initiator) {
     initiator = {...networkRecord.initiator};
   }
@@ -62,12 +63,25 @@ function getRequestWillBeSentEvent(networkRecord, index) {
         initialPriority: networkRecord.priority || 'Low',
         isLinkPreload: networkRecord.isLinkPreload,
       },
-      timestamp: networkRecord.startTime || 0,
+      timestamp: networkRecord.redirectResponseTimestamp || networkRecord.startTime || 0,
       wallTime: 0,
-      initiator: initiator || {type: 'other'},
+      initiator,
       type: networkRecord.resourceType || 'Document',
-      frameId: `${idBase}.1`,
+      frameId: networkRecord.frameId || `${idBase}.1`,
       redirectResponse: networkRecord.redirectResponse,
+    },
+  };
+}
+
+/**
+ * @param {Partial<NetworkRequest>} networkRecord
+ * @return {LH.Protocol.RawEventMessage}
+ */
+function getRequestServedFromCacheEvent(networkRecord, index) {
+  return {
+    method: 'Network.requestServedFromCache',
+    params: {
+      requestId: getBaseRequestId(networkRecord) || `${idBase}.${index}`,
     },
   };
 }
@@ -96,16 +110,16 @@ function getResponseReceivedEvent(networkRecord, index) {
         url: networkRecord.url || exampleUrl,
         status: networkRecord.statusCode || 200,
         headers,
-        mimeType: networkRecord.mimeType || 'text/html',
+        mimeType: typeof networkRecord.mimeType === 'string' ? networkRecord.mimeType : 'text/html',
         connectionReused: networkRecord.connectionReused || false,
         connectionId: networkRecord.connectionId || 140,
-        fromDiskCache: networkRecord.fromDiskCache || undefined,
-        fromServiceWorker: networkRecord.fetchedViaServiceWorker || undefined,
+        fromDiskCache: networkRecord.fromDiskCache || false,
+        fromServiceWorker: networkRecord.fetchedViaServiceWorker || false,
         encodedDataLength: networkRecord.transferSize || 0,
         timing,
         protocol: networkRecord.protocol || 'http/1.1',
       },
-      frameId: `${idBase}.1`,
+      frameId: networkRecord.frameId || `${idBase}.1`,
     },
   };
 }
@@ -176,7 +190,11 @@ function addRedirectResponseIfNeeded(networkRecords, record) {
   // populate `redirectResponse` with original's data, more or less.
   const originalResponse = getResponseReceivedEvent(originalRecord).params.response;
   originalResponse.status = originalRecord.statusCode || 302;
-  return Object.assign({}, record, {redirectResponse: originalResponse});
+  return {
+    ...record,
+    redirectResponseTimestamp: originalRecord.endTime,
+    redirectResponse: originalResponse,
+  };
 }
 
 /**
@@ -198,6 +216,10 @@ function networkRecordsToDevtoolsLog(networkRecords, options = {}) {
     if (willBeRedirected(networkRecords, networkRecord)) {
       // If record is going to redirect, only issue the first event.
       return;
+    }
+
+    if (networkRecord.fromMemoryCache) {
+      devtoolsLog.push(getRequestServedFromCacheEvent(networkRecord, index));
     }
 
     devtoolsLog.push(getResponseReceivedEvent(networkRecord, index));

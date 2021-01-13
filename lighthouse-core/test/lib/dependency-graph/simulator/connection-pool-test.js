@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,7 +7,7 @@
 
 const ConnectionPool = require('../../../../lib/dependency-graph/simulator/connection-pool.js');
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const URL = require('url').URL;
 
 /* eslint-env jest */
@@ -71,6 +71,7 @@ describe('DependencyGraph/Simulator/ConnectionPool', () => {
       const pool = new ConnectionPool([recordA], simulationOptions({rtt, throughput}));
       const connection = pool._connectionsByOrigin.get('http://example.com')[0];
       assert.ok(connection.isH2(), 'should have set HTTP/2');
+      assert.equal(pool._connectionsByOrigin.get('http://example.com').length, 1);
     });
 
     it('should set origin-specific RTT properly', () => {
