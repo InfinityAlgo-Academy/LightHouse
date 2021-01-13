@@ -27,6 +27,20 @@ class FRGatherer {
   snapshot(passContext) { }
 
   /**
+   * Method to start observing a page for an arbitrary period of time.
+   * @param {LH.Gatherer.FRTransitionalContext} passContext
+   * @return {Promise<void>|void}
+   */
+  beforeTimespan(passContext) { }
+
+  /**
+   * Method to end observing a page after an arbitrary period of time and return the results.
+   * @param {LH.Gatherer.FRTransitionalContext} passContext
+   * @return {LH.Gatherer.PhaseResult}
+   */
+  afterTimespan(passContext) { }
+
+  /**
    * Legacy property used to define the artifact ID. In Fraggle Rock, the artifact ID lives on the config.
    * @return {keyof LH.GathererArtifacts}
    */
@@ -38,9 +52,11 @@ class FRGatherer {
   /**
    * Legacy method. Called before navigation to target url, roughly corresponds to `beforeTimespan`.
    * @param {LH.Gatherer.PassContext} passContext
-   * @return {LH.Gatherer.PhaseResult}
+   * @return {Promise<LH.Gatherer.PhaseResultNonPromise>}
    */
-  beforePass(passContext) { }
+  async beforePass(passContext) {
+    await this.beforeTimespan(passContext);
+  }
 
   /**
    * Legacy method. Should never be used by a Fraggle Rock gatherer, here for compat only.
@@ -53,9 +69,13 @@ class FRGatherer {
    * Legacy method. Roughly corresponds to `afterTimespan` or `snapshot` depending on type of gatherer.
    * @param {LH.Gatherer.PassContext} passContext
    * @param {LH.Gatherer.LoadData} loadData
-   * @return {LH.Gatherer.PhaseResult}
+   * @return {Promise<LH.Gatherer.PhaseResultNonPromise>}
    */
-  afterPass(passContext, loadData) {
+  async afterPass(passContext, loadData) {
+    if (this.meta.supportedModes.includes('timespan')) {
+      return this.afterTimespan(passContext);
+    }
+
     return this.snapshot(passContext);
   }
 }

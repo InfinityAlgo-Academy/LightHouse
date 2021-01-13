@@ -11,6 +11,7 @@ const legacyDefaultConfig = require('../../config/default-config.js');
 const defaultConfig = {
   artifacts: [
     {id: 'Accessibility', gatherer: 'accessibility'},
+    {id: 'ConsoleMessages', gatherer: 'console-messages'},
   ],
   settings: legacyDefaultConfig.settings,
   audits: legacyDefaultConfig.audits,

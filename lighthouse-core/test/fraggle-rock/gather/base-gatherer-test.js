@@ -13,7 +13,7 @@ const Gatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
 const fakeParam = {};
 
 describe('BaseGatherer', () => {
-  it('should fullfill the contract of both interfaces', () => {
+  it('should fullfill the contract of both interfaces', async () => {
     const gatherer = new Gatherer();
 
     // Fraggle Rock Gatherer contract
@@ -22,13 +22,25 @@ describe('BaseGatherer', () => {
 
     // Legacy Gatherer contract
     expect(typeof gatherer.name).toBe('string');
-    expect(gatherer.beforePass(fakeParam)).toBe(undefined);
-    expect(gatherer.pass(fakeParam)).toBe(undefined);
-    expect(gatherer.afterPass(fakeParam, fakeParam)).toBe(undefined);
+    expect(await gatherer.beforePass(fakeParam)).toBe(undefined);
+    expect(await gatherer.pass(fakeParam)).toBe(undefined);
+    expect(await gatherer.afterPass(fakeParam, fakeParam)).toBe(undefined);
+  });
+
+  describe('.beforePass', () => {
+    it('delegates to beforeTimespan by default', async () => {
+      class MyGatherer extends Gatherer {
+        beforeTimespan = jest.fn()
+      }
+
+      const gatherer = new MyGatherer();
+      await gatherer.beforePass(fakeParam);
+      expect(gatherer.beforeTimespan).toHaveBeenCalledWith(fakeParam);
+    });
   });
 
   describe('.afterPass', () => {
-    it('delegates to snapshot', () => {
+    it('delegates to snapshot by default', async () => {
       class MyGatherer extends Gatherer {
         /** @param {*} _ */
         snapshot(_) {
@@ -38,7 +50,27 @@ describe('BaseGatherer', () => {
 
       const gatherer = new MyGatherer();
       expect(gatherer.snapshot(fakeParam)).toEqual('Hello, Fraggle!');
-      expect(gatherer.afterPass(fakeParam, fakeParam)).toEqual('Hello, Fraggle!');
+      expect(await gatherer.afterPass(fakeParam, fakeParam)).toEqual('Hello, Fraggle!');
+    });
+
+    it('delegates to afterTimespan when supported', async () => {
+      class MyGatherer extends Gatherer {
+        /** @type {LH.Gatherer.GathererMeta} */
+        meta = {supportedModes: ['timespan']};
+
+        /** @param {*} _ */
+        snapshot(_) {
+          return 'Oops, wrong method!';
+        }
+
+        /** @param {*} _ */
+        afterTimespan(_) {
+          return 'Hello, Fraggle!';
+        }
+      }
+
+      const gatherer = new MyGatherer();
+      expect(await gatherer.afterPass(fakeParam, fakeParam)).toEqual('Hello, Fraggle!');
     });
   });
 });

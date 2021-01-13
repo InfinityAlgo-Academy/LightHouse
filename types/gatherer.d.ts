@@ -53,8 +53,8 @@ declare global {
       trace?: Trace;
     }
 
-    type PhaseResult_ = void|LH.GathererArtifacts[keyof LH.GathererArtifacts]
-    export type PhaseResult = PhaseResult_ | Promise<PhaseResult_>
+    export type PhaseResultNonPromise = void|LH.GathererArtifacts[keyof LH.GathererArtifacts]
+    export type PhaseResult = PhaseResultNonPromise | Promise<PhaseResultNonPromise>
 
     export type GatherMode = 'snapshot'|'timespan'|'navigation';
 
@@ -73,6 +73,8 @@ declare global {
       name: keyof LH.GathererArtifacts; // temporary COMPAT measure until artifact config support is available
       meta: GathererMeta;
       snapshot(context: FRTransitionalContext): PhaseResult;
+      beforeTimespan(context: FRTransitionalContext): Promise<void>|void;
+      afterTimespan(context: FRTransitionalContext): PhaseResult;
     }
 
     namespace Simulation {

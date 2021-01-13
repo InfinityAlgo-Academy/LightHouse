@@ -10,7 +10,7 @@
 const ConsoleMessagesGatherer = require('../../../gather/gatherers/console-messages.js');
 const assert = require('assert').strict;
 
-class MockDriver {
+class MockSession {
   constructor() {
     this.listeners = new Map();
   }
@@ -28,6 +28,10 @@ class MockDriver {
   fireForTest(command, event) {
     this.listeners.get(command)(event);
   }
+}
+
+class MockDriver {
+  defaultSession = new MockSession
 }
 
 describe('ConsoleMessages', () => {
@@ -61,7 +65,7 @@ describe('ConsoleMessages', () => {
     const options = {driver};
 
     await consoleGatherer.beforePass(options);
-    driver.fireForTest('Runtime.exceptionThrown', runtimeEx);
+    driver.defaultSession.fireForTest('Runtime.exceptionThrown', runtimeEx);
 
     const artifact = await consoleGatherer.afterPass(options);
 
@@ -103,7 +107,7 @@ describe('ConsoleMessages', () => {
     const options = {driver};
 
     await consoleGatherer.beforePass(options);
-    driver.fireForTest('Runtime.consoleAPICalled', consoleWarnEvent);
+    driver.defaultSession.fireForTest('Runtime.consoleAPICalled', consoleWarnEvent);
 
     const artifact = await consoleGatherer.afterPass(options);
 
@@ -135,7 +139,7 @@ describe('ConsoleMessages', () => {
     const options = {driver};
 
     await consoleGatherer.beforePass(options);
-    driver.fireForTest('Runtime.consoleAPICalled', consoleWarnEvent);
+    driver.defaultSession.fireForTest('Runtime.consoleAPICalled', consoleWarnEvent);
 
     const artifact = await consoleGatherer.afterPass(options);
 
@@ -259,7 +263,7 @@ describe('ConsoleMessages', () => {
     const options = {driver};
 
     await consoleGatherer.beforePass(options);
-    driver.fireForTest('Runtime.consoleAPICalled', consoleWarnEvent);
+    driver.defaultSession.fireForTest('Runtime.consoleAPICalled', consoleWarnEvent);
 
     const artifact = await consoleGatherer.afterPass(options);
 
@@ -317,7 +321,7 @@ describe('ConsoleMessages', () => {
     const options = {driver};
 
     await consoleGatherer.beforePass(options);
-    driver.fireForTest('Runtime.consoleAPICalled', consoleErrorEvent);
+    driver.defaultSession.fireForTest('Runtime.consoleAPICalled', consoleErrorEvent);
 
     const artifact = await consoleGatherer.afterPass(options);
 
@@ -357,7 +361,7 @@ describe('ConsoleMessages', () => {
     const options = {driver};
 
     await consoleGatherer.beforePass(options);
-    driver.fireForTest('Runtime.consoleAPICalled', consoleLog);
+    driver.defaultSession.fireForTest('Runtime.consoleAPICalled', consoleLog);
 
     const artifact = await consoleGatherer.afterPass(options);
 
@@ -405,8 +409,8 @@ describe('ConsoleMessages', () => {
     const options = {driver};
 
     await consoleGatherer.beforePass(options);
-    driver.fireForTest('Log.entryAdded', logEntries[0]);
-    driver.fireForTest('Log.entryAdded', logEntries[1]);
+    driver.defaultSession.fireForTest('Log.entryAdded', logEntries[0]);
+    driver.defaultSession.fireForTest('Log.entryAdded', logEntries[1]);
 
     const artifact = await consoleGatherer.afterPass(options);
 

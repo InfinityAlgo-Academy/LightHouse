@@ -5,61 +5,10 @@
  */
 'use strict';
 
-const Driver = require('./gather/driver.js');
-const Runner = require('../runner.js');
-const {initializeConfig} = require('./config/config.js');
-
-/** @param {{page: import('puppeteer').Page, config?: LH.Config.Json}} options */
-async function snapshot(options) {
-  const {config} = initializeConfig(options.config, {gatherMode: 'snapshot'});
-  const driver = new Driver(options.page);
-  await driver.connect();
-
-  const url = await options.page.url();
-
-  return Runner.run(
-    async () => {
-      /** @type {LH.BaseArtifacts} */
-      const baseArtifacts = {
-        fetchTime: new Date().toJSON(),
-        LighthouseRunWarnings: [],
-        URL: {requestedUrl: url, finalUrl: url},
-        Timing: [],
-        Stacks: [],
-        settings: config.settings,
-        // TODO(FR-COMPAT): convert these to regular artifacts
-        HostFormFactor: 'mobile',
-        HostUserAgent: 'unknown',
-        NetworkUserAgent: 'unknown',
-        BenchmarkIndex: 0,
-        InstallabilityErrors: {errors: []},
-        traces: {},
-        devtoolsLogs: {},
-        WebAppManifest: null,
-        PageLoadError: null,
-      };
-
-      /** @type {Partial<LH.GathererArtifacts>} */
-      const artifacts = {};
-
-      for (const {id, gatherer} of config.artifacts || []) {
-        const artifactName = /** @type {keyof LH.GathererArtifacts} */ (id);
-        const artifact = await Promise.resolve()
-          .then(() => gatherer.instance.snapshot({gatherMode: 'snapshot', driver}))
-          .catch(err => err);
-
-        artifacts[artifactName] = artifact;
-      }
-
-      return /** @type {LH.Artifacts} */ ({...baseArtifacts, ...artifacts}); // Cast to drop Partial<>
-    },
-    {
-      url,
-      config,
-    }
-  );
-}
+const {snapshot} = require('./gather/snapshot-runner.js');
+const {startTimespan} = require('./gather/timespan-runner.js');
 
 module.exports = {
   snapshot,
+  startTimespan,
 };
