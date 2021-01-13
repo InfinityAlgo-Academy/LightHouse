@@ -10,11 +10,11 @@
 const Gatherer = require('./gatherer.js');
 const pageFunctions = require('../../lib/page-functions.js');
 
+/** @typedef {import('../driver.js')} Driver */
+
 // JPEG quality setting
 // Exploration and examples of reports using different quality settings: https://docs.google.com/document/d/1ZSffucIca9XDW2eEwfoevrk-OTl7WQFeMf0CgeJAA8M/edit#
 const FULL_PAGE_SCREENSHOT_QUALITY = 30;
-// Maximum screenshot height in Chrome https://bugs.chromium.org/p/chromium/issues/detail?id=770769
-const MAX_SCREENSHOT_HEIGHT = 16384;
 
 /**
  * @param {string} str
@@ -25,11 +25,25 @@ function snakeCaseToCamelCase(str) {
 
 class FullPageScreenshot extends Gatherer {
   /**
+   * @param {Driver} driver
+   * @return {Promise<number>}
+   * @see https://bugs.chromium.org/p/chromium/issues/detail?id=770769
+   */
+  async getMaxScreenshotHeight(driver) {
+    return await driver.evaluate(pageFunctions.getMaxTextureSize, {
+      args: [],
+      useIsolation: true,
+      deps: [],
+    });
+  }
+
+  /**
    * @param {LH.Gatherer.PassContext} passContext
    * @return {Promise<LH.Artifacts.FullPageScreenshot['screenshot']>}
    */
   async _takeScreenshot(passContext) {
     const driver = passContext.driver;
+    const maxScreenshotHeight = await this.getMaxScreenshotHeight(driver);
     const metrics = await driver.sendCommand('Page.getLayoutMetrics');
 
     // Width should match emulated width, without considering content overhang.
@@ -38,8 +52,8 @@ class FullPageScreenshot extends Gatherer {
     // Note: If the page is zoomed, many assumptions fail.
     //
     // Height should be as tall as the content. So we use contentSize.height
-    const width = Math.min(metrics.layoutViewport.clientWidth, MAX_SCREENSHOT_HEIGHT);
-    const height = Math.min(metrics.contentSize.height, MAX_SCREENSHOT_HEIGHT);
+    const width = Math.min(metrics.layoutViewport.clientWidth, maxScreenshotHeight);
+    const height = Math.min(metrics.contentSize.height, maxScreenshotHeight);
 
     await driver.sendCommand('Emulation.setDeviceMetricsOverride', {
       // If we're gathering with mobile screenEmulation on (overlay scrollbars, etc), continue to use that for this screenshot.
@@ -173,4 +187,3 @@ class FullPageScreenshot extends Gatherer {
 }
 
 module.exports = FullPageScreenshot;
-module.exports.MAX_SCREENSHOT_HEIGHT = MAX_SCREENSHOT_HEIGHT;
