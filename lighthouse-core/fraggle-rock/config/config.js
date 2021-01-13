@@ -9,6 +9,8 @@ const path = require('path');
 const log = require('lighthouse-logger');
 const Runner = require('../../runner.js');
 const defaultConfig = require('./default-config.js');
+const {isFRGathererDefn} = require('./validation.js');
+const {filterConfigByGatherMode} = require('./filters.js');
 const {
   deepCloneConfigJson,
   resolveSettings,
@@ -58,9 +60,14 @@ function resolveArtifactsToDefns(artifacts, configDir) {
 
   const coreGathererList = Runner.getGathererList();
   const artifactDefns = artifacts.map(artifactJson => {
+    const gatherer = resolveGathererToDefn(artifactJson.gatherer, coreGathererList, configDir);
+    if (!isFRGathererDefn(gatherer)) {
+      throw new Error(`${gatherer.instance.name} gatherer does not support Fraggle Rock`);
+    }
+
     return {
       id: artifactJson.id,
-      gatherer: resolveGathererToDefn(artifactJson.gatherer, coreGathererList, configDir),
+      gatherer,
     };
   });
 
@@ -70,7 +77,7 @@ function resolveArtifactsToDefns(artifacts, configDir) {
 
 /**
  * @param {LH.Config.Json|undefined} configJSON
- * @param {{configPath?: string, settingsOverrides?: LH.SharedFlagsSettings}} context
+ * @param {{gatherMode: LH.Gatherer.GatherMode, configPath?: string, settingsOverrides?: LH.SharedFlagsSettings}} context
  * @return {{config: LH.Config.FRConfig, warnings: string[]}}
  */
 function initializeConfig(configJSON, context) {
@@ -87,7 +94,7 @@ function initializeConfig(configJSON, context) {
   const artifacts = resolveArtifactsToDefns(configWorkingCopy.artifacts, configDir);
 
   /** @type {LH.Config.FRConfig} */
-  const config = {
+  let config = {
     artifacts,
     audits: resolveAuditsToDefns(configWorkingCopy.audits, configDir),
     categories: configWorkingCopy.categories || null,
@@ -95,10 +102,12 @@ function initializeConfig(configJSON, context) {
     settings,
   };
 
-  // TODO(FR-COMPAT): filter config
   // TODO(FR-COMPAT): validate navigations
   // TODO(FR-COMPAT): validate audits
   // TODO(FR-COMPAT): validate categories
+  // TODO(FR-COMPAT): filter config using onlyAudits/onlyCategories
+
+  config = filterConfigByGatherMode(config, context.gatherMode);
 
   log.timeEnd(status);
   return {config, warnings: []};

@@ -122,7 +122,13 @@ declare global {
 
       export interface ArtifactDefn {
         id: string;
-        gatherer: GathererDefn;
+        gatherer: FRGathererDefn;
+      }
+
+      export interface FRGathererDefn {
+        implementation?: ClassOf<Gatherer.FRGathererInstance>;
+        instance: Gatherer.FRGathererInstance;
+        path?: string;
       }
 
       export interface GathererDefn {

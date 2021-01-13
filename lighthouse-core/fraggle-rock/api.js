@@ -7,19 +7,11 @@
 
 const Driver = require('./gather/driver.js');
 const Runner = require('../runner.js');
-const Config = require('../config/config.js');
-
-/**
- * @param {LH.Gatherer.GathererInstance|LH.Gatherer.FRGathererInstance} gatherer
- * @return {gatherer is LH.Gatherer.FRGathererInstance}
- */
-function isFRGatherer(gatherer) {
-  return 'meta' in gatherer;
-}
+const {initializeConfig} = require('./config/config.js');
 
 /** @param {{page: import('puppeteer').Page, config?: LH.Config.Json}} options */
 async function snapshot(options) {
-  const config = new Config(options.config);
+  const {config} = initializeConfig(options.config, {gatherMode: 'snapshot'});
   const driver = new Driver(options.page);
   await driver.connect();
 
@@ -47,20 +39,13 @@ async function snapshot(options) {
         PageLoadError: null,
       };
 
-      const gatherers = (config.passes || [])
-        .flatMap(pass => pass.gatherers);
-
       /** @type {Partial<LH.GathererArtifacts>} */
       const artifacts = {};
 
-      for (const {instance} of gatherers) {
-        if (!isFRGatherer(instance)) continue;
-        if (!instance.meta.supportedModes.includes('snapshot')) continue;
-
-        /** @type {keyof LH.GathererArtifacts} */
-        const artifactName = instance.name;
+      for (const {id, gatherer} of config.artifacts || []) {
+        const artifactName = /** @type {keyof LH.GathererArtifacts} */ (id);
         const artifact = await Promise.resolve()
-          .then(() => instance.snapshot({gatherMode: 'snapshot', driver}))
+          .then(() => gatherer.instance.snapshot({gatherMode: 'snapshot', driver}))
           .catch(err => err);
 
         artifacts[artifactName] = artifact;

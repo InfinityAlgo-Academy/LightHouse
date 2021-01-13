@@ -66,13 +66,16 @@ describe('Fraggle Rock API', () => {
       const accessibility = lhr.categories.accessibility;
       expect(accessibility.score).toBeLessThan(1);
 
-      const auditResults = accessibility.auditRefs.map(ref => lhr.audits[ref.id]);
-      const irrelevantDisplayModes = new Set(['notApplicable', 'manual']);
-      const applicableAudits = auditResults
-        .filter(audit => !irrelevantDisplayModes.has(audit.scoreDisplayMode));
+      const auditResults = Object.values(lhr.audits);
+      // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
+      expect(auditResults.length).toMatchInlineSnapshot(`58`);
 
-      const erroredAudits = applicableAudits
-        .filter(audit => audit.score === null);
+      const irrelevantDisplayModes = new Set(['notApplicable', 'manual']);
+      const applicableAudits = auditResults.filter(
+        audit => !irrelevantDisplayModes.has(audit.scoreDisplayMode)
+      );
+
+      const erroredAudits = applicableAudits.filter(audit => audit.score === null);
       expect(erroredAudits).toHaveLength(0);
 
       const failedAuditIds = applicableAudits

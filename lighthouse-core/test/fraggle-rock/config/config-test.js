@@ -5,27 +5,31 @@
  */
 'use strict';
 
+const BaseGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
 const {initializeConfig} = require('../../../fraggle-rock/config/config.js');
 
 /* eslint-env jest */
 
 describe('Fraggle Rock Config', () => {
+  const gatherMode = 'snapshot';
+
   it('should throw if the config path is not absolute', () => {
-    const configFn = () => initializeConfig(undefined, {configPath: '../relative/path'});
+    const configFn = () =>
+      initializeConfig(undefined, {gatherMode, configPath: '../relative/path'});
     expect(configFn).toThrow(/must be an absolute path/);
   });
 
   it('should not mutate the original input', () => {
-    const configJson = {artifacts: [{id: 'ImageElements', gatherer: 'image-elements'}]};
-    const {config} = initializeConfig(configJson, {});
-    expect(configJson).toEqual({artifacts: [{id: 'ImageElements', gatherer: 'image-elements'}]});
+    const configJson = {artifacts: [{id: 'Accessibility', gatherer: 'accessibility'}]};
+    const {config} = initializeConfig(configJson, {gatherMode});
+    expect(configJson).toEqual({artifacts: [{id: 'Accessibility', gatherer: 'accessibility'}]});
     expect(config).not.toBe(configJson);
     expect(config).not.toEqual(configJson);
-    expect(config.artifacts).toMatchObject([{gatherer: {path: 'image-elements'}}]);
+    expect(config.artifacts).toMatchObject([{gatherer: {path: 'accessibility'}}]);
   });
 
   it('should use default config when none passed in', () => {
-    const {config} = initializeConfig(undefined, {});
+    const {config} = initializeConfig(undefined, {gatherMode});
     expect(config.settings).toMatchObject({formFactor: 'mobile'});
     if (!config.audits) throw new Error('Did not define audits');
     expect(config.audits.length).toBeGreaterThan(0);
@@ -34,7 +38,7 @@ describe('Fraggle Rock Config', () => {
   it('should resolve settings with defaults', () => {
     const {config} = initializeConfig(
       {settings: {output: 'csv', maxWaitForFcp: 1234}},
-      {settingsOverrides: {maxWaitForFcp: 12345}}
+      {settingsOverrides: {maxWaitForFcp: 12345}, gatherMode}
     );
 
     expect(config.settings).toMatchObject({
@@ -45,11 +49,35 @@ describe('Fraggle Rock Config', () => {
   });
 
   it('should resolve artifact definitions', () => {
-    const configJson = {artifacts: [{id: 'ImageElements', gatherer: 'image-elements'}]};
-    const {config} = initializeConfig(configJson, {});
+    const configJson = {artifacts: [{id: 'Accessibility', gatherer: 'accessibility'}]};
+    const {config} = initializeConfig(configJson, {gatherMode});
 
     expect(config).toMatchObject({
-      artifacts: [{id: 'ImageElements', gatherer: {path: 'image-elements'}}],
+      artifacts: [{id: 'Accessibility', gatherer: {path: 'accessibility'}}],
+    });
+  });
+
+  it('should throw on invalid artifact definitions', () => {
+    const configJson = {artifacts: [{id: 'ImageElements', gatherer: 'image-elements'}]};
+    expect(() => initializeConfig(configJson, {gatherMode})).toThrow(/ImageElements gatherer/);
+  });
+
+  it('should filter configuration by gatherMode', () => {
+    const timespanGatherer = new BaseGatherer();
+    timespanGatherer.meta = {supportedModes: ['timespan']};
+
+    const configJson = {
+      artifacts: [
+        {id: 'Accessibility', gatherer: 'accessibility'},
+        {id: 'Timespan', gatherer: {instance: timespanGatherer}},
+      ],
+    };
+
+    const {config} = initializeConfig(configJson, {gatherMode: 'snapshot'});
+    expect(config).toMatchObject({
+      artifacts: [
+        {id: 'Accessibility', gatherer: {path: 'accessibility'}},
+      ],
     });
   });
 
@@ -59,6 +87,7 @@ describe('Fraggle Rock Config', () => {
   it.todo('should adjust default pass options for throttling method');
   it.todo('should normalize gatherer inputs');
   it.todo('should require gatherers from their paths');
-  it.todo('should filter configuration');
+  it.todo('should filter configuration by inclusive settings');
+  it.todo('should filter configuration by exclusive settings');
   it.todo('should validate audit/gatherer interdependencies');
 });
