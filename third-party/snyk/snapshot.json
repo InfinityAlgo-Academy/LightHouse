@@ -133,6 +133,7 @@
       {"id":"npm:riot:20131114","severity":"medium","semver":{"vulnerable":["<0.9.6"]}}
     ],
     "socket.io":[
+      {"id":"SNYK-JS-SOCKETIO-1024859","severity":"medium","semver":{"vulnerable":["<2.4.0"]}},
       {"id":"npm:socket.io:20120417","severity":"medium","semver":{"vulnerable":["<0.9.6"]}},
       {"id":"npm:socket.io:20120323","severity":"medium","semver":{"vulnerable":["<0.9.7"]}}
     ],
