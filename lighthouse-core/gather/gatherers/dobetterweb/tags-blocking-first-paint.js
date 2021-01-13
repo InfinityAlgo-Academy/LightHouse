@@ -27,7 +27,7 @@ const Gatherer = require('../gatherer.js');
 /** @typedef {{tagName: 'SCRIPT', url: string, src: string}} ScriptTag */
 /** @typedef {import('../../driver.js')} Driver */
 
-/* istanbul ignore next */
+/* c8 ignore start */
 function installMediaListener() {
   // @ts-expect-error - inserted in page to track media changes.
   window.___linkMediaChanges = [];
@@ -47,11 +47,12 @@ function installMediaListener() {
     },
   });
 }
+/* c8 ignore stop */
 
 /**
  * @return {Promise<Array<LinkTag | ScriptTag>>}
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 async function collectTagsThatBlockFirstPaint() {
   /** @type {Array<MediaChange>} */
   // @ts-expect-error - `___linkMediaChanges` created in `installMediaListener`.
@@ -112,6 +113,7 @@ async function collectTagsThatBlockFirstPaint() {
     throw new Error(`${friendly}: ${e.message}`);
   }
 }
+/* c8 ignore stop */
 
 class TagsBlockingFirstPaint extends Gatherer {
   /**

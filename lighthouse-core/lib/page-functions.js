@@ -10,6 +10,9 @@
  * @fileoverview
  * Helper functions that are passed by `toString()` by Driver to be evaluated in target page.
  *
+ * Every function in this module only runs in the browser, so it is ignored from
+ * the c8 code coverage tool. See c8.sh
+ *
  * Important: this module should only be imported like this:
  *     const pageFunctions = require('...');
  * Never like this:
@@ -27,7 +30,6 @@
  * promise. Instead, map to a successful object that contains this information.
  * @param {string|Error} err The error to convert
  */
-/* istanbul ignore next */
 function wrapRuntimeEvalErrorInBrowser(err) {
   err = err || new Error();
   const fallbackMessage = typeof err === 'string' ? err : 'unknown error';
@@ -44,7 +46,6 @@ function wrapRuntimeEvalErrorInBrowser(err) {
  * Used by _waitForCPUIdle and executed in the context of the page, updates the ____lastLongTask
  * property on window to the end time of the last long task.
  */
-/* istanbul ignore next */
 function registerPerformanceObserverInPage() {
   window.____lastLongTask = window.__perfNow();
   const observer = new window.PerformanceObserver(entryList => {
@@ -70,7 +71,6 @@ function registerPerformanceObserverInPage() {
  * Used by _waitForCPUIdle and executed in the context of the page, returns time since last long task.
  * @return {number}
  */
-/* istanbul ignore next */
 function checkTimeSinceLastLongTask() {
   // Wait for a delta before returning so that we're sure the PerformanceObserver
   // has had time to register the last longtask
@@ -93,7 +93,6 @@ function checkTimeSinceLastLongTask() {
  *     Combinators are not supported.
  * @return {Array<HTMLElementByTagName[T]>}
  */
-/* istanbul ignore next */
 function getElementsInDocument(selector) {
   const realMatchesFn = window.__ElementMatches || window.Element.prototype.matches;
   /** @type {Array<HTMLElement>} */
@@ -122,7 +121,6 @@ function getElementsInDocument(selector) {
  * @param {Array<string>=} ignoreAttrs An optional array of attribute tags to not include in the HTML snippet.
  * @return {string}
  */
-/* istanbul ignore next */
 function getOuterHTMLSnippet(element, ignoreAttrs = [], snippetCharacterLimit = 500) {
   const ATTRIBUTE_CHAR_LIMIT = 75;
   // Autofill information that is injected into the snippet via AutofillShowTypePredictions
@@ -209,7 +207,6 @@ function getMaxTextureSize() {
  *  - 125+ is a mid-tier Android phone, Moto G4, etc
  *  - <125 is a budget Android phone, Alcatel Ideal, Galaxy J2, etc
  */
-/* istanbul ignore next */
 function computeBenchmarkIndex() {
   /**
    * The GC-heavy benchmark that creates a string of length 10000 in a loop.
@@ -274,7 +271,6 @@ function computeBenchmarkIndex() {
  * TODO: DevTools nodePath handling doesn't support iframes, but probably could. https://crbug.com/1127635
  * @param {Node} node
  */
-/* istanbul ignore next */
 function getNodePath(node) {
   // For our purposes, there's no worthwhile difference between shadow root and document fragment
   // We can consider them entirely synonymous.
@@ -320,7 +316,6 @@ function getNodePath(node) {
  *  - nodePath: 0,HTML,1,BODY,1,DIV,a,#document-fragment,0,SECTION,0,IMG
  *  - nodeSelector: section > img
  */
-/* istanbul ignore next */
 function getNodeSelector(node) {
   /**
    * @param {Element} node
@@ -356,7 +351,6 @@ function getNodeSelector(node) {
  * @param {HTMLElement} element
  * @return {boolean}
  */
-/* istanbul ignore next */
 function isPositionFixed(element) {
   /**
    * @param {HTMLElement} element
@@ -393,7 +387,6 @@ function isPositionFixed(element) {
  * @param {Element} node
  * @return {string}
  */
-/* istanbul ignore next */
 function getNodeLabel(node) {
   // Inline so that audits that import getNodeLabel don't
   // also need to import truncate
@@ -432,7 +425,6 @@ function getNodeLabel(node) {
  * @param {HTMLElement} element
  * @return {LH.Artifacts.Rect}
  */
-/* istanbul ignore next */
 function getBoundingClientRect(element) {
   // The protocol does not serialize getters, so extract the values explicitly.
   const rect = element.getBoundingClientRect();
@@ -453,7 +445,6 @@ function getBoundingClientRect(element) {
  * @param {number} cpuSlowdownMultiplier
  * @return {null}
  */
-/* istanbul ignore next */
 function wrapRequestIdleCallback(cpuSlowdownMultiplier) {
   const safetyAllowanceMs = 10;
   const maxExecutionTimeMs = Math.floor((50 - safetyAllowanceMs) / cpuSlowdownMultiplier);

@@ -141,7 +141,7 @@ class Fetcher {
     /**
      * @param {string} src
      */
-    /* istanbul ignore next */
+    /* c8 ignore start */
     function injectIframe(src) {
       /** @type {HTMLIFrameElement} */
       const iframe = document.createElement('iframe');
@@ -161,6 +161,7 @@ class Fetcher {
       };
       document.body.appendChild(iframe);
     }
+    /* c8 ignore stop */
 
     /** @type {NodeJS.Timeout} */
     let timeoutHandle;

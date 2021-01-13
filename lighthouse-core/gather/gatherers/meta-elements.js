@@ -10,7 +10,7 @@ const pageFunctions = require('../../lib/page-functions.js');
 
 /* globals getElementsInDocument */
 
-/* istanbul ignore next */
+/* c8 ignore start */
 function collectMetaElements() {
   // @ts-expect-error - getElementsInDocument put into scope via stringification
   const metas = /** @type {HTMLMetaElement[]} */ (getElementsInDocument('head meta'));
@@ -30,6 +30,7 @@ function collectMetaElements() {
     };
   });
 }
+/* c8 ignore stop */
 
 class MetaElements extends Gatherer {
   /**

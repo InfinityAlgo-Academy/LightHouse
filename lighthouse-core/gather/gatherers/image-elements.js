@@ -17,7 +17,7 @@ const FontSize = require('./seo/font-size.js');
 /* global window, getElementsInDocument, Image, getNodeDetails, ShadowRoot */
 
 /** @param {Element} element */
-/* istanbul ignore next */
+/* c8 ignore start */
 function getClientRect(element) {
   const clientRect = element.getBoundingClientRect();
   return {
@@ -28,6 +28,7 @@ function getClientRect(element) {
     right: clientRect.right,
   };
 }
+/* c8 ignore stop */
 
 /**
  * If an image is within `picture`, the `picture` element's css position
@@ -35,7 +36,7 @@ function getClientRect(element) {
  * @param {Element} element
  * @param {CSSStyleDeclaration} computedStyle
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 function getPosition(element, computedStyle) {
   if (element.parentElement && element.parentElement.tagName === 'PICTURE') {
     const parentStyle = window.getComputedStyle(element.parentElement);
@@ -43,12 +44,13 @@ function getPosition(element, computedStyle) {
   }
   return computedStyle.getPropertyValue('position');
 }
+/* c8 ignore stop */
 
 /**
  * @param {Array<Element>} allElements
  * @return {Array<LH.Artifacts.ImageElement>}
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 function getHTMLImages(allElements) {
   const allImageElements = /** @type {Array<HTMLImageElement>} */ (allElements.filter(element => {
     return element.localName === 'img';
@@ -84,12 +86,13 @@ function getHTMLImages(allElements) {
     };
   });
 }
+/* c8 ignore stop */
 
 /**
  * @param {Array<Element>} allElements
  * @return {Array<LH.Artifacts.ImageElement>}
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 function getCSSImages(allElements) {
   // Chrome normalizes background image style from getComputedStyle to be an absolute URL in quotes.
   // Only match basic background-image: url("http://host/image.jpeg") declarations
@@ -130,21 +133,23 @@ function getCSSImages(allElements) {
 
   return images;
 }
+/* c8 ignore stop */
 
 /** @return {Array<LH.Artifacts.ImageElement>} */
-/* istanbul ignore next */
+/* c8 ignore start */
 function collectImageElementInfo() {
   /** @type {Array<Element>} */
   // @ts-expect-error - added by getElementsInDocumentFnString
   const allElements = getElementsInDocument();
   return getHTMLImages(allElements).concat(getCSSImages(allElements));
 }
+/* c8 ignore stop */
 
 /**
  * @param {string} url
  * @return {Promise<{naturalWidth: number, naturalHeight: number}>}
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 function determineNaturalSize(url) {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -159,6 +164,7 @@ function determineNaturalSize(url) {
     img.src = url;
   });
 }
+/* c8 ignore stop */
 
 /**
  * @param {Partial<Pick<LH.Crdp.CSS.CSSStyle, 'cssProperties'>>|undefined} rule

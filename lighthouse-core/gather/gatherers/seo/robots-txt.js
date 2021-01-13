@@ -10,7 +10,7 @@ const Gatherer = require('../gatherer.js');
 /* global fetch, URL, location */
 
 /** @return {Promise<LH.Artifacts['RobotsTxt']>} */
-/* istanbul ignore next */
+/* c8 ignore start */
 async function getRobotsTxtContent() {
   try {
     const response = await fetch(new URL('/robots.txt', location.href).href);
@@ -24,6 +24,7 @@ async function getRobotsTxtContent() {
     return {status: null, content: null};
   }
 }
+/* c8 ignore stop */
 
 
 class RobotsTxt extends Gatherer {

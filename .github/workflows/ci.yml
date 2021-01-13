@@ -112,8 +112,14 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
 
     - name: yarn unit
-      run: xvfb-run --auto-servernum yarn unit
+      run: xvfb-run --auto-servernum yarn unit:cicoverage
       if: matrix.os == 'ubuntu-latest'
+    - name: Upload test coverage to Codecov
+      if: matrix.os == 'ubuntu-latest'
+      uses: codecov/codecov-action@6004246
+      with:
+        flags: unit
+        file: ./unit-coverage.lcov
 
     # For windows, just test the potentially platform-specific code.
     - name: yarn unit-cli
@@ -164,7 +170,14 @@ jobs:
 
     - run: sudo apt-get install xvfb
     - name: Run smoke tests
-      run: xvfb-run --auto-servernum yarn smoke --debug -j=1 --retries=2 --invert-match ${{ matrix.smoke-test-invert }} $SMOKE_GROUP_1
+      run: xvfb-run --auto-servernum yarn smoke:cicoverage --debug -j=1 --retries=2 --invert-match ${{ matrix.smoke-test-invert }} $SMOKE_GROUP_1
+
+    - name: Upload test coverage to Codecov
+      if: matrix.chrome-channel == 'ToT'
+      uses: codecov/codecov-action@6004246
+      with:
+        flags: smoke
+        file: ./smoke-coverage.lcov
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code

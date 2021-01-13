@@ -17,7 +17,7 @@ const pageFunctions = require('../../lib/page-functions.js');
  * containing any violations.
  * @return {Promise<LH.Artifacts.Accessibility>}
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 async function runA11yChecks() {
   /** @type {import('axe-core/axe')} */
   // @ts-expect-error axe defined by axeLibSource
@@ -96,6 +96,7 @@ async function runA11yChecks() {
     version: axeResults.testEngine.version,
   };
 }
+/* c8 ignore stop */
 
 /**
  * @implements {LH.Gatherer.GathererInstance}

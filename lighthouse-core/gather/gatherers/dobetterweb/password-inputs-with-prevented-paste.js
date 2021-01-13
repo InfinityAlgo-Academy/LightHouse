@@ -14,7 +14,7 @@ const pageFunctions = require('../../../lib/page-functions.js');
 /**
  * @return {LH.Artifacts['PasswordInputsWithPreventedPaste']}
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 function findPasswordInputsWithPreventedPaste() {
   return Array.from(document.querySelectorAll('input[type="password"]'))
     .filter(passwordInput =>
@@ -27,6 +27,7 @@ function findPasswordInputsWithPreventedPaste() {
       node: getNodeDetails(passwordInput),
     }));
 }
+/* c8 ignore stop */
 
 class PasswordInputsWithPreventedPaste extends Gatherer {
   /**

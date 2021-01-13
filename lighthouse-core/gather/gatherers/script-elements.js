@@ -15,7 +15,7 @@ const pageFunctions = require('../../lib/page-functions.js');
 /**
  * @return {LH.Artifacts['ScriptElements']}
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 function collectAllScriptElements() {
   /** @type {HTMLScriptElement[]} */
   // @ts-expect-error - getElementsInDocument put into scope via stringification
@@ -36,6 +36,7 @@ function collectAllScriptElements() {
     };
   });
 }
+/* c8 ignore stop */
 
 /**
  * @template T, U

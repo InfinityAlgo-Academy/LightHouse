@@ -21,7 +21,7 @@ const pageFunctions = require('../../lib/page-functions.js');
  *
  * @return {LH.Artifacts['AnchorElements']}
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 function collectAnchorElements() {
   /** @param {string} url */
   const resolveURLOrEmpty = url => {
@@ -71,6 +71,7 @@ function collectAnchorElements() {
     };
   });
 }
+/* c8 ignore stop */
 
 /**
  * @param {LH.Gatherer.PassContext['driver']} driver

@@ -24,7 +24,7 @@ const Sentry = require('../../lib/sentry.js');
 /**
  * @this {HTMLElement}
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 function getNodeDetailsData() {
   const elem = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement; // eslint-disable-line no-undef
   let traceElement;
@@ -34,6 +34,7 @@ function getNodeDetailsData() {
   }
   return traceElement;
 }
+/* c8 ignore stop */
 
 class TraceElements extends Gatherer {
   /**

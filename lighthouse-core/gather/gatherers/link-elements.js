@@ -46,7 +46,7 @@ function getCrossoriginFromHeader(value) {
 /**
  * @return {LH.Artifacts['LinkElements']}
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 function getLinkElementsInDOM() {
   /** @type {Array<HTMLOrSVGElement>} */
   // @ts-expect-error - getElementsInDocument put into scope via stringification
@@ -77,6 +77,7 @@ function getLinkElementsInDOM() {
 
   return linkElements;
 }
+/* c8 ignore stop */
 
 class LinkElements extends Gatherer {
   /**

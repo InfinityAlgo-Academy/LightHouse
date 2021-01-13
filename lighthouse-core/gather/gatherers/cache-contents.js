@@ -13,7 +13,7 @@ const Gatherer = require('./gatherer.js');
  * This is run in the page, not Lighthouse itself.
  * @return {Promise<Array<string>>}
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 function getCacheContents() {
   // Get every cache by name.
   return caches.keys()
@@ -36,6 +36,7 @@ function getCacheContents() {
         });
       });
 }
+/* c8 ignore stop */
 
 class CacheContents extends Gatherer {
   /**
