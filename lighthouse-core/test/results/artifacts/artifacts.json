@@ -729,7 +729,7 @@
       "source": "deprecation",
       "level": "warning",
       "text": "Application Cache API manifest selection is deprecated and will be removed in M85, around August 2020. See https://www.chromestatus.com/features/6192449487634432 for more details.",
-      "timestamp": 1607553416382.3718,
+      "timestamp": 1610571259470.294,
       "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
       "lineNumber": 8
     },
@@ -738,7 +738,7 @@
       "source": "rendering",
       "level": "warning",
       "text": "HTML Imports is deprecated and has now been removed as of M80. See https://www.chromestatus.com/features/5144752345317376 and https://developers.google.com/web/updates/2019/07/web-components-time-to-upgrade for more details.",
-      "timestamp": 1607553416397.66,
+      "timestamp": 1610571259487.268,
       "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
       "lineNumber": 37
     },
@@ -747,7 +747,7 @@
       "source": "rendering",
       "level": "warning",
       "text": "HTML Imports is deprecated and has now been removed as of M80. See https://www.chromestatus.com/features/5144752345317376 and https://developers.google.com/web/updates/2019/07/web-components-time-to-upgrade for more details.",
-      "timestamp": 1607553416398.7441,
+      "timestamp": 1610571259488.205,
       "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
       "lineNumber": 38
     },
@@ -756,7 +756,7 @@
       "source": "other",
       "level": "info",
       "text": "Creating Application Cache with manifest http://localhost:10200/dobetterweb/clock.appcache",
-      "timestamp": 1607553416401.031,
+      "timestamp": 1610571259490.48,
       "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
     },
     {
@@ -764,7 +764,15 @@
       "source": "other",
       "level": "info",
       "text": "Application Cache Checking event",
-      "timestamp": 1607553416403.637,
+      "timestamp": 1610571259493.267,
+      "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
+    },
+    {
+      "eventType": "protocolLog",
+      "source": "other",
+      "level": "error",
+      "text": "Application Cache Error event: Manifest fetch failed (404) http://localhost:10200/dobetterweb/clock.appcache",
+      "timestamp": 1610571259493.3628,
       "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
     },
     {
@@ -772,16 +780,8 @@
       "source": "network",
       "level": "error",
       "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-      "timestamp": 1607553416961.176,
+      "timestamp": 1610571260048.604,
       "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200"
-    },
-    {
-      "eventType": "protocolLog",
-      "source": "other",
-      "level": "error",
-      "text": "Application Cache Error event: Manifest fetch failed (404) http://localhost:10200/dobetterweb/clock.appcache",
-      "timestamp": 1607553418293.846,
-      "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
     },
     {
       "eventType": "protocolLog",
@@ -806,9 +806,10 @@
           }
         ]
       },
-      "timestamp": 1607553418610.9011,
+      "timestamp": 1610571261691.184,
       "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-      "lineNumber": 13
+      "lineNumber": 13,
+      "columnNumber": 9
     },
     {
       "eventType": "exception",
@@ -826,7 +827,7 @@
           }
         ]
       },
-      "timestamp": 1607553418613.646,
+      "timestamp": 1610571261697.4448,
       "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
       "lineNumber": 57,
       "columnNumber": 53
@@ -847,7 +848,7 @@
           }
         ]
       },
-      "timestamp": 1607553418615.6199,
+      "timestamp": 1610571261700.9102,
       "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
       "lineNumber": 60,
       "columnNumber": 37
@@ -857,7 +858,7 @@
       "source": "network",
       "level": "error",
       "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-      "timestamp": 1607553423097.062,
+      "timestamp": 1610571266183.4868,
       "url": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000"
     },
     {
@@ -883,9 +884,10 @@
           }
         ]
       },
-      "timestamp": 1607553423315.5798,
+      "timestamp": 1610571266303.927,
       "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "lineNumber": 269
+      "lineNumber": 269,
+      "columnNumber": 11
     },
     {
       "eventType": "protocolLog",
@@ -910,9 +912,10 @@
           }
         ]
       },
-      "timestamp": 1607553423317.417,
+      "timestamp": 1610571266304.047,
       "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "lineNumber": 270
+      "lineNumber": 270,
+      "columnNumber": 11
     },
     {
       "eventType": "protocolLog",
@@ -937,9 +940,10 @@
           }
         ]
       },
-      "timestamp": 1607553423317.817,
+      "timestamp": 1610571266304.96,
       "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "lineNumber": 271
+      "lineNumber": 271,
+      "columnNumber": 11
     },
     {
       "eventType": "consoleAPI",
@@ -964,7 +968,7 @@
           }
         ]
       },
-      "timestamp": 1607553423321.635,
+      "timestamp": 1610571266306.376,
       "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
       "lineNumber": 260,
       "columnNumber": 12
@@ -992,9 +996,10 @@
           }
         ]
       },
-      "timestamp": 1607553423339.645,
+      "timestamp": 1610571266308.7039,
       "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "lineNumber": 302
+      "lineNumber": 302,
+      "columnNumber": 5
     },
     {
       "eventType": "protocolLog",
@@ -1019,9 +1024,10 @@
           }
         ]
       },
-      "timestamp": 1607553423346.242,
+      "timestamp": 1610571266310.699,
       "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "lineNumber": 331
+      "lineNumber": 331,
+      "columnNumber": 24
     },
     {
       "eventType": "protocolLog",
@@ -1046,9 +1052,10 @@
           }
         ]
       },
-      "timestamp": 1607553423349.061,
+      "timestamp": 1610571266311.541,
       "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "lineNumber": 335
+      "lineNumber": 335,
+      "columnNumber": 40
     },
     {
       "eventType": "protocolLog",
@@ -1073,9 +1080,10 @@
           }
         ]
       },
-      "timestamp": 1607553423352.7751,
+      "timestamp": 1610571266312.659,
       "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "lineNumber": 341
+      "lineNumber": 341,
+      "columnNumber": 15
     },
     {
       "eventType": "protocolLog",
@@ -1100,17 +1108,10 @@
           }
         ]
       },
-      "timestamp": 1607553423368.14,
+      "timestamp": 1610571266318.583,
       "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "lineNumber": 371
-    },
-    {
-      "eventType": "protocolLog",
-      "source": "deprecation",
-      "level": "warning",
-      "text": "/deep/ combinator is no longer supported in CSS dynamic profile. It is now effectively no-op, acting as if it were a descendant combinator. /deep/ combinator will be removed, and will be invalid at M65. You should remove it. See https://www.chromestatus.com/features/4964279606312960 for more details.",
-      "timestamp": 1607553424345.382,
-      "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
+      "lineNumber": 371,
+      "columnNumber": 6
     },
     {
       "eventType": "consoleAPI",
@@ -1128,7 +1129,7 @@
           }
         ]
       },
-      "timestamp": 1607553424476.799,
+      "timestamp": 1610571267507.3171,
       "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
       "lineNumber": 474,
       "columnNumber": 10
@@ -1138,7 +1139,7 @@
       "source": "recommendation",
       "level": "verbose",
       "text": "[DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o",
-      "timestamp": 1607553424484.2788,
+      "timestamp": 1610571267517.221,
       "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
     },
     {
@@ -1146,7 +1147,7 @@
       "source": "recommendation",
       "level": "verbose",
       "text": "[DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o",
-      "timestamp": 1607553424484.4028,
+      "timestamp": 1610571267517.9739,
       "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
     },
     {
@@ -1154,7 +1155,7 @@
       "source": "recommendation",
       "level": "verbose",
       "text": "[DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o",
-      "timestamp": 1607553424484.47,
+      "timestamp": 1610571267518.324,
       "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
     },
     {
@@ -1162,7 +1163,7 @@
       "source": "network",
       "level": "error",
       "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-      "timestamp": 1607553429740.8171,
+      "timestamp": 1610571272820.478,
       "url": "http://localhost:10200/favicon.ico"
     },
     {
@@ -1170,7 +1171,7 @@
       "source": "network",
       "level": "error",
       "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-      "timestamp": 1607553435609.589,
+      "timestamp": 1610571282421.4858,
       "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200"
     }
   ],

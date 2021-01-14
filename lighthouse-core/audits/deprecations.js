@@ -57,33 +57,16 @@ class Deprecations extends Audit {
     const entries = artifacts.ConsoleMessages;
 
     const deprecations = entries.filter(log => log.source === 'deprecation').map(log => {
-      // HTML deprecations will have no url and no way to attribute to a specific line.
-      /** @type {LH.Audit.Details.SourceLocationValue=} */
-      let source;
-      if (log.url) {
-        // JS deprecations will have a stack trace.
-        // CSS deprecations only expose a line number.
-        const topCallFrame = log.stackTrace && log.stackTrace.callFrames[0];
-        const line = log.lineNumber || 0;
-        const column = topCallFrame ? topCallFrame.columnNumber : 0;
-        source = {
-          type: 'source-location',
-          url: log.url,
-          urlProvider: 'network',
-          line,
-          column,
-        };
-      }
       return {
         value: log.text,
-        source,
+        source: Audit.makeSourceLocationFromConsoleMessage(log),
       };
     });
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'value', itemType: 'text', text: str_(UIStrings.columnDeprecate)},
-      {key: 'source', itemType: 'source-location', text: str_(i18n.UIStrings.columnURL)},
+      {key: 'source', itemType: 'source-location', text: str_(i18n.UIStrings.columnSource)},
     ];
     const details = Audit.makeTableDetails(headings, deprecations);
 

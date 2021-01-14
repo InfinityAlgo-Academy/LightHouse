@@ -774,9 +774,9 @@ declare global {
         stackTrace?: Crdp.Runtime.StackTrace;
         /** The URL of the log/exception, if known. */
         url?: string;
-        /** Line number in the script (0-based), if known. */
+        /** Line number in the script (0-indexed), if known. */
         lineNumber?: number;
-        /** Column number in the script (0-based), if known. */
+        /** Column number in the script (0-indexed), if known. */
         columnNumber?: number;
       }
 

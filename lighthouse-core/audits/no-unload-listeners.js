@@ -47,7 +47,7 @@ class NoUnloadListeners extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'source', itemType: 'source-location', text: str_(i18n.UIStrings.columnURL)},
+      {key: 'source', itemType: 'source-location', text: str_(i18n.UIStrings.columnSource)},
     ];
 
     // Look up scriptId to script URL via the JsUsage artifact.

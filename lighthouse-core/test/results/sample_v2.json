@@ -239,9 +239,9 @@
         "type": "table",
         "headings": [
           {
-            "key": "url",
-            "itemType": "url",
-            "text": "URL"
+            "key": "sourceLocation",
+            "itemType": "source-location",
+            "text": "Source"
           },
           {
             "key": "description",
@@ -253,42 +253,98 @@
           {
             "source": "other",
             "description": "Application Cache Error event: Manifest fetch failed (404) http://localhost:10200/dobetterweb/clock.appcache",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "sourceLocation": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 0,
+              "column": 0
+            }
           },
           {
             "source": "exception",
             "description": "Error: A distinctive error\n    at http://localhost:10200/dobetterweb/dbw_tester.html:58:54",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "sourceLocation": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 57,
+              "column": 53
+            }
           },
           {
             "source": "exception",
             "description": "Error: An ignored error\n    at http://localhost:10200/dobetterweb/dbw_tester.html:61:38",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "sourceLocation": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 60,
+              "column": 37
+            }
           },
           {
             "source": "console.error",
             "description": "Error! Error!",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "sourceLocation": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 474,
+              "column": 10
+            }
           },
           {
             "source": "network",
             "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-            "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200"
+            "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
+            "sourceLocation": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
+              "urlProvider": "network",
+              "line": 0,
+              "column": 0
+            }
           },
           {
             "source": "network",
             "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-            "url": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000"
+            "url": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000",
+            "sourceLocation": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000",
+              "urlProvider": "network",
+              "line": 0,
+              "column": 0
+            }
           },
           {
             "source": "network",
             "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-            "url": "http://localhost:10200/favicon.ico"
+            "url": "http://localhost:10200/favicon.ico",
+            "sourceLocation": {
+              "type": "source-location",
+              "url": "http://localhost:10200/favicon.ico",
+              "urlProvider": "network",
+              "line": 0,
+              "column": 0
+            }
           },
           {
             "source": "network",
             "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-            "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200"
+            "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
+            "sourceLocation": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
+              "urlProvider": "network",
+              "line": 0,
+              "column": 0
+            }
           }
         ]
       }
@@ -730,7 +786,7 @@
       "description": "Deprecated APIs will eventually be removed from the browser. [Learn more](https://web.dev/deprecations/).",
       "score": 0,
       "scoreDisplayMode": "binary",
-      "displayValue": "4 warnings found",
+      "displayValue": "3 warnings found",
       "details": {
         "type": "table",
         "headings": [
@@ -742,7 +798,7 @@
           {
             "key": "source",
             "itemType": "source-location",
-            "text": "URL"
+            "text": "Source"
           }
         ],
         "items": [
@@ -774,16 +830,6 @@
               "urlProvider": "network",
               "line": 371,
               "column": 6
-            }
-          },
-          {
-            "value": "/deep/ combinator is no longer supported in CSS dynamic profile. It is now effectively no-op, acting as if it were a descendant combinator. /deep/ combinator will be removed, and will be invalid at M65. You should remove it. See https://www.chromestatus.com/features/4964279606312960 for more details.",
-            "source": {
-              "type": "source-location",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "urlProvider": "network",
-              "line": 0,
-              "column": 0
             }
           }
         ]
@@ -1984,7 +2030,7 @@
           {
             "key": "source",
             "itemType": "source-location",
-            "text": "URL"
+            "text": "Source"
           }
         ],
         "items": [
@@ -4227,24 +4273,29 @@
         "type": "table",
         "headings": [
           {
-            "key": "url",
-            "itemType": "url",
-            "text": "URL"
-          },
-          {
-            "key": "label",
-            "itemType": "text",
-            "text": "Location"
+            "key": "source",
+            "itemType": "source-location",
+            "text": "Source"
           }
         ],
         "items": [
           {
-            "label": "line: 331",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
+            "source": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 331,
+              "column": 24
+            }
           },
           {
-            "label": "line: 335",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
+            "source": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 335,
+              "column": 40
+            }
           }
         ]
       }
@@ -4271,28 +4322,38 @@
         "type": "table",
         "headings": [
           {
-            "key": "url",
-            "itemType": "url",
-            "text": "URL"
-          },
-          {
-            "key": "label",
-            "itemType": "text",
-            "text": "Location"
+            "key": "source",
+            "itemType": "source-location",
+            "text": "Source"
           }
         ],
         "items": [
           {
-            "label": "line: 269",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
+            "source": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 269,
+              "column": 11
+            }
           },
           {
-            "label": "line: 270",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
+            "source": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 270,
+              "column": 11
+            }
           },
           {
-            "label": "line: 271",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
+            "source": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 271,
+              "column": 11
+            }
           }
         ]
       }
@@ -4395,20 +4456,20 @@
         "type": "table",
         "headings": [
           {
-            "key": "url",
-            "itemType": "url",
-            "text": "URL"
-          },
-          {
-            "key": "label",
-            "itemType": "text",
-            "text": "Location"
+            "key": "source",
+            "itemType": "source-location",
+            "text": "Source"
           }
         ],
         "items": [
           {
-            "label": "line: 341",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
+            "source": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 341,
+              "column": 15
+            }
           }
         ]
       }
@@ -4564,20 +4625,20 @@
         "type": "table",
         "headings": [
           {
-            "key": "url",
-            "itemType": "url",
-            "text": "URL"
-          },
-          {
-            "key": "label",
-            "itemType": "text",
-            "text": "Location"
+            "key": "source",
+            "itemType": "source-location",
+            "text": "Source"
           }
         ],
         "items": [
           {
-            "label": "line: 302",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
+            "source": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 302,
+              "column": 5
+            }
           }
         ]
       }
@@ -7300,31 +7361,15 @@
       "lighthouse-core/audits/errors-in-console.js | description": [
         "audits[errors-in-console].description"
       ],
-      "lighthouse-core/lib/i18n/i18n.js | columnURL": [
+      "lighthouse-core/lib/i18n/i18n.js | columnSource": [
         "audits[errors-in-console].details.headings[0].text",
-        "audits[server-response-time].details.headings[0].label",
-        "audits[image-aspect-ratio].details.headings[1].text",
-        "audits[image-size-responsive].details.headings[1].text",
-        "audits[preload-fonts].details.headings[0].text",
         "audits.deprecations.details.headings[1].text",
-        "audits[bootup-time].details.headings[0].text",
-        "audits[network-rtt].details.headings[0].text",
-        "audits[network-server-latency].details.headings[0].text",
-        "audits[long-tasks].details.headings[0].text",
         "audits[no-unload-listeners].details.headings[0].text",
-        "audits[unsized-images].details.headings[1].text",
-        "audits[uses-long-cache-ttl].details.headings[0].text",
-        "audits[total-byte-weight].details.headings[0].text",
-        "audits[render-blocking-resources].details.headings[0].label",
-        "audits[unminified-javascript].details.headings[0].label",
-        "audits[uses-webp-images].details.headings[1].label",
-        "audits[uses-text-compression].details.headings[0].label",
-        "audits[legacy-javascript].details.headings[0].label",
         "audits[geolocation-on-start].details.headings[0].text",
         "audits[no-document-write].details.headings[0].text",
         "audits[notification-on-start].details.headings[0].text",
-        "audits[uses-http2].details.headings[0].label",
-        "audits[uses-passive-event-listeners].details.headings[0].text"
+        "audits[uses-passive-event-listeners].details.headings[0].text",
+        "audits[font-size].details.headings[0].text"
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnDescription": [
         "audits[errors-in-console].details.headings[1].text"
@@ -7342,6 +7387,25 @@
           },
           "path": "audits[server-response-time].displayValue"
         }
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnURL": [
+        "audits[server-response-time].details.headings[0].label",
+        "audits[image-aspect-ratio].details.headings[1].text",
+        "audits[image-size-responsive].details.headings[1].text",
+        "audits[preload-fonts].details.headings[0].text",
+        "audits[bootup-time].details.headings[0].text",
+        "audits[network-rtt].details.headings[0].text",
+        "audits[network-server-latency].details.headings[0].text",
+        "audits[long-tasks].details.headings[0].text",
+        "audits[unsized-images].details.headings[1].text",
+        "audits[uses-long-cache-ttl].details.headings[0].text",
+        "audits[total-byte-weight].details.headings[0].text",
+        "audits[render-blocking-resources].details.headings[0].label",
+        "audits[unminified-javascript].details.headings[0].label",
+        "audits[uses-webp-images].details.headings[1].label",
+        "audits[uses-text-compression].details.headings[0].label",
+        "audits[legacy-javascript].details.headings[0].label",
+        "audits[uses-http2].details.headings[0].label"
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": [
         "audits[server-response-time].details.headings[1].label",
@@ -7478,7 +7542,7 @@
       "lighthouse-core/audits/deprecations.js | displayValue": [
         {
           "values": {
-            "itemCount": 4
+            "itemCount": 3
           },
           "path": "audits.deprecations.displayValue"
         }
@@ -8326,12 +8390,6 @@
       "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": [
         "audits[geolocation-on-start].description"
       ],
-      "lighthouse-core/lib/i18n/i18n.js | columnLocation": [
-        "audits[geolocation-on-start].details.headings[1].text",
-        "audits[no-document-write].details.headings[1].text",
-        "audits[notification-on-start].details.headings[1].text",
-        "audits[uses-passive-event-listeners].details.headings[1].text"
-      ],
       "lighthouse-core/audits/dobetterweb/inspector-issues.js | title": [
         "audits[inspector-issues].title"
       ],
@@ -8439,9 +8497,6 @@
           },
           "path": "audits[font-size].displayValue"
         }
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | columnSource": [
-        "audits[font-size].details.headings[0].text"
       ],
       "lighthouse-core/audits/seo/font-size.js | columnSelector": [
         "audits[font-size].details.headings[1].text"

@@ -233,6 +233,22 @@ class Audit {
   }
 
   /**
+   * @param {LH.Artifacts.ConsoleMessage} entry
+   * @return {LH.Audit.Details.SourceLocationValue | undefined}
+   */
+  static makeSourceLocationFromConsoleMessage(entry) {
+    if (!entry.url) return;
+
+    return {
+      type: 'source-location',
+      url: entry.url,
+      urlProvider: 'network',
+      line: entry.lineNumber || 0,
+      column: entry.columnNumber || 0,
+    };
+  }
+
+  /**
    * @param {number|null} score
    * @param {LH.Audit.ScoreDisplayMode} scoreDisplayMode
    * @param {string} auditId
