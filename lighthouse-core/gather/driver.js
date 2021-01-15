@@ -1112,7 +1112,6 @@ class Driver {
   async cacheNatives() {
     await this.evaluateScriptOnNewDocument(`
         window.__nativePromise = Promise;
-        window.__nativeError = Error;
         window.__nativeURL = URL;
         window.__ElementMatches = Element.prototype.matches;
         window.__perfNow = performance.now.bind(performance);

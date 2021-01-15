@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-// @ts-nocheck
 'use strict';
 
 /**
@@ -22,23 +21,25 @@
 
 /** @typedef {HTMLElementTagNameMap & {[id: string]: HTMLElement}} HTMLElementByTagName */
 
-/* global window document Node ShadowRoot */
+/* global window document Node ShadowRoot HTMLElement */
 
 /**
  * The `exceptionDetails` provided by the debugger protocol does not contain the useful
  * information such as name, message, and stack trace of the error when it's wrapped in a
  * promise. Instead, map to a successful object that contains this information.
- * @param {string|Error} err The error to convert
+ * @param {string|Error} [err] The error to convert
+ * @return {{__failedInBrowser: boolean, name: string, message: string, stack: string|undefined}}
  */
 function wrapRuntimeEvalErrorInBrowser(err) {
-  err = err || new Error();
-  const fallbackMessage = typeof err === 'string' ? err : 'unknown error';
+  if (!err || typeof err === 'string') {
+    err = new Error(err);
+  }
 
   return {
     __failedInBrowser: true,
     name: err.name || 'Error',
-    message: err.message || fallbackMessage,
-    stack: err.stack || (new Error()).stack,
+    message: err.message || 'unknown error',
+    stack: err.stack,
   };
 }
 
@@ -53,23 +54,17 @@ function registerPerformanceObserverInPage() {
     for (const entry of entries) {
       if (entry.entryType === 'longtask') {
         const taskEnd = entry.startTime + entry.duration;
-        window.____lastLongTask = Math.max(window.____lastLongTask, taskEnd);
+        window.____lastLongTask = Math.max(window.____lastLongTask || 0, taskEnd);
       }
     }
   });
 
   observer.observe({entryTypes: ['longtask']});
-  // HACK(COMPAT): A PerformanceObserver will be GC'd if there are no more references to it, so attach it to
-  // window to ensure we still receive longtask notifications. See https://crbug.com/742530.
-  // For an example test of this behavior see https://gist.github.com/patrickhulce/69d8bed1807e762218994b121d06fea6.
-  //   FIXME COMPAT: This hack isn't neccessary as of Chrome 62.0.3176.0
-  //   https://bugs.chromium.org/p/chromium/issues/detail?id=742530#c7
-  window.____lhPerformanceObserver = observer;
 }
 
 /**
  * Used by _waitForCPUIdle and executed in the context of the page, returns time since last long task.
- * @return {number}
+ * @return {Promise<number>}
  */
 function checkTimeSinceLastLongTask() {
   // Wait for a delta before returning so that we're sure the PerformanceObserver
@@ -80,8 +75,9 @@ function checkTimeSinceLastLongTask() {
     setTimeout(() => {
       // Double check that a long task hasn't happened since setTimeout
       const timeoutFired = window.__perfNow();
+      const lastLongTask = window.____lastLongTask || 0;
       const timeSinceLongTask = timeoutFired - timeoutRequested < 50 ?
-          timeoutFired - window.____lastLongTask : 0;
+          timeoutFired - lastLongTask : 0;
       resolve(timeSinceLongTask);
     }, 50);
   });
@@ -127,13 +123,16 @@ function getOuterHTMLSnippet(element, ignoreAttrs = [], snippetCharacterLimit = 
   // TODO(paulirish): Don't clean title attribute from all elements if it's unnecessary
   const autoFillIgnoreAttrs = ['autofill-information', 'autofill-prediction', 'title'];
 
-  try {
-    // ShadowRoots are sometimes passed in; use their hosts' outerHTML.
-    if (element instanceof ShadowRoot) {
-      element = element.host;
-    }
+  // ShadowRoots are sometimes passed in; use their hosts' outerHTML.
+  if (element instanceof ShadowRoot) {
+    element = element.host;
+  }
 
+  try {
+    /** @type {Element} */
+    // @ts-expect-error - clone will be same type as element - see https://github.com/microsoft/TypeScript/issues/283
     const clone = element.cloneNode();
+
     // Prevent any potential side-effects by appending to a template element.
     // See https://github.com/GoogleChrome/lighthouse/issues/11465
     const template = element.ownerDocument.createElement('template');
@@ -147,6 +146,7 @@ function getOuterHTMLSnippet(element, ignoreAttrs = [], snippetCharacterLimit = 
         clone.removeAttribute(attributeName);
       } else {
         let attributeValue = clone.getAttribute(attributeName);
+        if (attributeValue === null) continue;
         if (attributeValue.length > ATTRIBUTE_CHAR_LIMIT) {
           attributeValue = attributeValue.slice(0, ATTRIBUTE_CHAR_LIMIT - 1) + '…';
           clone.setAttribute(attributeName, attributeValue);
@@ -170,14 +170,14 @@ function getOuterHTMLSnippet(element, ignoreAttrs = [], snippetCharacterLimit = 
 /**
  * Get the maximum size of a texture the GPU can handle
  * @see https://bugs.chromium.org/p/chromium/issues/detail?id=770769#c13
+ * @return {number}
  */
-/* istanbul ignore next */
 function getMaxTextureSize() {
   try {
-    let canvas = document.createElement('canvas');
-    let gl = canvas.getContext('webgl');
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl');
+    if (!gl) throw new Error('no webgl');
     const maxTextureSize = gl.getParameter(gl.MAX_TEXTURE_SIZE);
-    canvas = gl = undefined; // Cleanup for GC
     return maxTextureSize;
   } catch (e) {
     // If the above fails for any reason we need a fallback number;
@@ -206,6 +206,7 @@ function getMaxTextureSize() {
  *  - 800+ is a high-end Android phone, Galaxy S8, low-end Chromebook, etc
  *  - 125+ is a mid-tier Android phone, Moto G4, etc
  *  - <125 is a budget Android phone, Alcatel Ideal, Galaxy J2, etc
+ * @return {number}
  */
 function computeBenchmarkIndex() {
   /**
@@ -270,14 +271,17 @@ function computeBenchmarkIndex() {
  *
  * TODO: DevTools nodePath handling doesn't support iframes, but probably could. https://crbug.com/1127635
  * @param {Node} node
+ * @return {string}
  */
 function getNodePath(node) {
   // For our purposes, there's no worthwhile difference between shadow root and document fragment
   // We can consider them entirely synonymous.
+  /** @param {Node} node @return {node is ShadowRoot} */
   const isShadowRoot = node => node.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
+  /** @param {Node} node */
   const getNodeParent = node => isShadowRoot(node) ? node.host : node.parentNode;
 
-  /** @param {Node} node */
+  /** @param {Node} node @return {number|'a'} */
   function getNodeIndex(node) {
     if (isShadowRoot(node)) {
       // User-agent shadow roots get 'u'. Non-UA shadow roots get 'a'.
@@ -288,24 +292,26 @@ function getNodePath(node) {
     while (prevNode = node.previousSibling) {
       node = prevNode;
       // skip empty text nodes
-      if (node.nodeType === Node.TEXT_NODE && node.nodeValue.trim().length === 0) continue;
+      if (node.nodeType === Node.TEXT_NODE && (node.nodeValue || '').trim().length === 0) continue;
       index++;
     }
     return index;
   }
 
+  /** @type {Node|null} */
+  let currentNode = node;
   const path = [];
-  while (node && getNodeParent(node)) {
-    const index = getNodeIndex(node);
-    path.push([index, node.nodeName]);
-    node = getNodeParent(node);
+  while (currentNode && getNodeParent(currentNode)) {
+    const index = getNodeIndex(currentNode);
+    path.push([index, currentNode.nodeName]);
+    currentNode = getNodeParent(currentNode);
   }
   path.reverse();
   return path.join(',');
 }
 
 /**
- * @param {Element} node
+ * @param {Element} element
  * @return {string}
  *
  * Note: CSS Selectors having no standard mechanism to describe shadow DOM piercing. So we can't.
@@ -316,28 +322,28 @@ function getNodePath(node) {
  *  - nodePath: 0,HTML,1,BODY,1,DIV,a,#document-fragment,0,SECTION,0,IMG
  *  - nodeSelector: section > img
  */
-function getNodeSelector(node) {
+function getNodeSelector(element) {
   /**
-   * @param {Element} node
+   * @param {Element} element
    */
-  function getSelectorPart(node) {
-    let part = node.tagName.toLowerCase();
-    if (node.id) {
-      part += '#' + node.id;
-    } else if (node.classList.length > 0) {
-      part += '.' + node.classList[0];
+  function getSelectorPart(element) {
+    let part = element.tagName.toLowerCase();
+    if (element.id) {
+      part += '#' + element.id;
+    } else if (element.classList.length > 0) {
+      part += '.' + element.classList[0];
     }
     return part;
   }
 
   const parts = [];
   while (parts.length < 4) {
-    parts.unshift(getSelectorPart(node));
-    if (!node.parentElement) {
+    parts.unshift(getSelectorPart(element));
+    if (!element.parentElement) {
       break;
     }
-    node = node.parentElement;
-    if (node.tagName === 'HTML') {
+    element = element.parentElement;
+    if (element.tagName === 'HTML') {
       break;
     }
   }
@@ -354,7 +360,7 @@ function getNodeSelector(node) {
 function isPositionFixed(element) {
   /**
    * @param {HTMLElement} element
-   * @param {string} attr
+   * @param {'overflowY'|'position'} attr
    * @return {string}
    */
   function getStyleAttrValue(element, attr) {
@@ -364,11 +370,13 @@ function isPositionFixed(element) {
 
   // Position fixed/sticky has no effect in case when document does not scroll.
   const htmlEl = document.querySelector('html');
+  if (!htmlEl) throw new Error('html element not found in document');
   if (htmlEl.scrollHeight <= htmlEl.clientHeight ||
       !['scroll', 'auto', 'visible'].includes(getStyleAttrValue(htmlEl, 'overflowY'))) {
     return false;
   }
 
+  /** @type {HTMLElement | null} */
   let currentEl = element;
   while (currentEl) {
     const position = getStyleAttrValue(currentEl, 'position');
@@ -384,10 +392,10 @@ function isPositionFixed(element) {
  * Generate a human-readable label for the given element, based on end-user facing
  * strings like the innerText or alt attribute.
  * Falls back to the tagName if no useful label is found.
- * @param {Element} node
+ * @param {Element} element
  * @return {string}
  */
-function getNodeLabel(node) {
+function getNodeLabel(element) {
   // Inline so that audits that import getNodeLabel don't
   // also need to import truncate
   /**
@@ -403,16 +411,18 @@ function getNodeLabel(node) {
     // Regular `.slice` will ignore unicode character boundaries and lead to malformed text.
     return Array.from(str).slice(0, maxLength - 1).join('') + '…';
   }
-  const tagName = node.tagName.toLowerCase();
+
+  const tagName = element.tagName.toLowerCase();
   // html and body content is too broad to be useful, since they contain all page content
   if (tagName !== 'html' && tagName !== 'body') {
-    const nodeLabel = node.innerText || node.getAttribute('alt') || node.getAttribute('aria-label');
+    const nodeLabel = element instanceof HTMLElement && element.innerText ||
+        element.getAttribute('alt') || element.getAttribute('aria-label');
     if (nodeLabel) {
       return truncate(nodeLabel, 80);
     } else {
       // If no useful label was found then try to get one from a child.
       // E.g. if an a tag contains an image but no text we want the image alt/aria-label attribute.
-      const nodeToUseForLabel = node.querySelector('[alt], [aria-label]');
+      const nodeToUseForLabel = element.querySelector('[alt], [aria-label]');
       if (nodeToUseForLabel) {
         return getNodeLabel(nodeToUseForLabel);
       }
@@ -422,7 +432,7 @@ function getNodeLabel(node) {
 }
 
 /**
- * @param {HTMLElement} element
+ * @param {Element} element
  * @return {LH.Artifacts.Rect}
  */
 function getBoundingClientRect(element) {
@@ -438,32 +448,36 @@ function getBoundingClientRect(element) {
   };
 }
 
-/*
+/**
  * RequestIdleCallback shim that calculates the remaining deadline time in order to avoid a potential lighthouse
  * penalty for tests run with simulated throttling. Reduces the deadline time to (50 - safetyAllowance) / cpuSlowdownMultiplier to
  * ensure a long task is very unlikely if using the API correctly.
  * @param {number} cpuSlowdownMultiplier
- * @return {null}
  */
 function wrapRequestIdleCallback(cpuSlowdownMultiplier) {
   const safetyAllowanceMs = 10;
   const maxExecutionTimeMs = Math.floor((50 - safetyAllowanceMs) / cpuSlowdownMultiplier);
   const nativeRequestIdleCallback = window.requestIdleCallback;
-  window.requestIdleCallback = (cb) => {
-    const cbWrap = (deadline, timeout) => {
+  window.requestIdleCallback = (cb, options) => {
+    /**
+     * @type {Parameters<typeof window['requestIdleCallback']>[0]}
+     */
+    const cbWrap = (deadline) => {
       const start = Date.now();
+      // @ts-expect-error - save original on non-standard property.
       deadline.__timeRemaining = deadline.timeRemaining;
       deadline.timeRemaining = () => {
-        return Math.min(
-          deadline.__timeRemaining(), Math.max(0, maxExecutionTimeMs - (Date.now() - start))
+        // @ts-expect-error - access non-standard property.
+        const timeRemaining = deadline.__timeRemaining();
+        return Math.min(timeRemaining, Math.max(0, maxExecutionTimeMs - (Date.now() - start))
         );
       };
       deadline.timeRemaining.toString = () => {
         return 'function timeRemaining() { [native code] }';
       };
-      cb(deadline, timeout);
+      cb(deadline);
     };
-    return nativeRequestIdleCallback(cbWrap);
+    return nativeRequestIdleCallback(cbWrap, options);
   };
   window.requestIdleCallback.toString = () => {
     return 'function requestIdleCallback() { [native code] }';
@@ -471,7 +485,7 @@ function wrapRequestIdleCallback(cpuSlowdownMultiplier) {
 }
 
 /**
- * @param {HTMLElement} element
+ * @param {Element|ShadowRoot} element
  * @return {LH.Artifacts.NodeDetails}
  */
 function getNodeDetails(element) {
@@ -480,7 +494,7 @@ function getNodeDetails(element) {
     window.__lighthouseNodesDontTouchOrAllVarianceGoesAway = new Map();
   }
 
-  const htmlElement = element instanceof ShadowRoot ? element.host : element;
+  element = element instanceof ShadowRoot ? element.host : element;
 
   // Create an id that will be unique across all execution contexts.
   // The id could be any arbitrary string, the exact value is not important.
@@ -489,25 +503,25 @@ function getNodeDetails(element) {
   // We also dedupe this id so that details collected for an element within the same
   // pass and execution context will share the same id. Not technically important, but
   // cuts down on some duplication.
-  let lhId = window.__lighthouseNodesDontTouchOrAllVarianceGoesAway.get(htmlElement);
+  let lhId = window.__lighthouseNodesDontTouchOrAllVarianceGoesAway.get(element);
   if (!lhId) {
     lhId = [
       window.__lighthouseExecutionContextId !== undefined ?
         window.__lighthouseExecutionContextId :
         'page',
       window.__lighthouseNodesDontTouchOrAllVarianceGoesAway.size,
-      htmlElement.tagName,
+      element.tagName,
     ].join('-');
-    window.__lighthouseNodesDontTouchOrAllVarianceGoesAway.set(htmlElement, lhId);
+    window.__lighthouseNodesDontTouchOrAllVarianceGoesAway.set(element, lhId);
   }
 
   const details = {
     lhId,
     devtoolsNodePath: getNodePath(element),
-    selector: getNodeSelector(htmlElement),
-    boundingRect: getBoundingClientRect(htmlElement),
+    selector: getNodeSelector(element),
+    boundingRect: getBoundingClientRect(element),
     snippet: getOuterHTMLSnippet(element),
-    nodeLabel: getNodeLabel(htmlElement),
+    nodeLabel: getNodeLabel(element),
   };
 
   return details;
@@ -524,6 +538,7 @@ const getNodeDetailsString = `function getNodeDetails(element) {
 
 module.exports = {
   wrapRuntimeEvalErrorInBrowserString: wrapRuntimeEvalErrorInBrowser.toString(),
+  wrapRuntimeEvalErrorInBrowser,
   registerPerformanceObserverInPageString: registerPerformanceObserverInPage.toString(),
   checkTimeSinceLastLongTask,
   getElementsInDocument,

@@ -16,15 +16,55 @@ describe('Page Functions', () => {
   let dom;
 
   beforeAll(() => {
-    const {document, ShadowRoot, Node} = new jsdom.JSDOM().window;
+    const {document, ShadowRoot, Node, HTMLElement} = new jsdom.JSDOM().window;
     global.ShadowRoot = ShadowRoot;
     global.Node = Node;
+    global.HTMLElement = HTMLElement;
     dom = new DOM(document);
   });
 
   afterAll(() => {
     global.ShadowRoot = undefined;
     global.Node = undefined;
+  });
+
+  describe('wrapRuntimeEvalErrorInBrowser()', () => {
+    it('returns an error summary object of a regular Error', () => {
+      const testMsg = 'custom test error';
+      const err = new TypeError(testMsg); // TypeError to ensure `name` is copied over.
+
+      const wrapped = pageFunctions.wrapRuntimeEvalErrorInBrowser(err);
+      expect(wrapped).toEqual({
+        __failedInBrowser: true,
+        name: 'TypeError',
+        message: testMsg,
+        stack: expect.stringMatching(/^TypeError:.*page-functions-test\.js:\d+:\d+/s),
+      });
+    });
+
+    it('creates an error summary object from a string error message', () => {
+      const errMsg = 'just a string error';
+
+      const wrapped = pageFunctions.wrapRuntimeEvalErrorInBrowser(errMsg);
+      expect(wrapped).toEqual({
+        __failedInBrowser: true,
+        name: 'Error',
+        message: errMsg,
+        // eslint-disable-next-line max-len
+        stack: expect.stringMatching(/^Error:.*wrapRuntimeEvalErrorInBrowser.*page-functions\.js:\d+:\d+/s),
+      });
+    });
+
+    it('creates the best error summary it can when passed nothing', () => {
+      const wrapped = pageFunctions.wrapRuntimeEvalErrorInBrowser();
+      expect(wrapped).toEqual({
+        __failedInBrowser: true,
+        name: 'Error',
+        message: 'unknown error',
+        // eslint-disable-next-line max-len
+        stack: expect.stringMatching(/^Error:.*wrapRuntimeEvalErrorInBrowser.*page-functions\.js:\d+:\d+/s),
+      });
+    });
   });
 
   describe('get outer HTML snippets', () => {
