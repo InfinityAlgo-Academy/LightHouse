@@ -225,6 +225,29 @@ describe('TraceProcessor', () => {
         'Event2',
       ]);
     });
+
+    it('frameTreeEvents includes main frame events if no FrameCommittedInBrowser found', () => {
+      const testTrace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
+      const mainFrame = testTrace.traceEvents[0].args.frame;
+      const childFrame = 'CHILDFRAME';
+      const otherMainFrame = 'ANOTHERTAB';
+      const cat = 'loading,rail,devtools.timeline';
+      testTrace.traceEvents.push(
+        /* eslint-disable max-len */
+        {name: 'Event1', cat, args: {frame: mainFrame}},
+        {name: 'Event2', cat, args: {frame: childFrame}},
+        {name: 'Event3', cat, args: {frame: otherMainFrame}}
+        /* eslint-enable max-len */
+      );
+      const trace = TraceProcessor.computeTraceOfTab(testTrace);
+      expect(trace.frameTreeEvents.map(e => e.name)).toEqual([
+        'navigationStart',
+        'domContentLoadedEventEnd',
+        'firstContentfulPaint',
+        'firstMeaningfulPaint',
+        'Event1',
+      ]);
+    });
   });
 
   describe('getMainThreadTopLevelEvents', () => {
@@ -505,34 +528,65 @@ Object {
       });
     });
 
-    describe('finds correct LCP from all frames', () => {
+    describe('finds correct metrics from all frames', () => {
       it('in a trace', () => {
         const trace = TraceProcessor.computeTraceOfTab(lcpAllFramesTrace);
         expect({
+          // Main frame
+          'mainFrameIds.frameId': trace.mainFrameIds.frameId,
           'firstContentfulPaintEvt.ts': trace.firstContentfulPaintEvt.ts,
           'largestContentfulPaintEvt.ts': trace.largestContentfulPaintEvt.ts,
-          'mainFrameIds.frameId': trace.mainFrameIds.frameId,
-          'timeOriginEvt.ts': trace.timeOriginEvt.ts,
           'timestamps.firstContentfulPaint': trace.timestamps.firstContentfulPaint,
           'timestamps.largestContentfulPaint': trace.timestamps.largestContentfulPaint,
-          'timestamps.largestContentfulPaintAllFrames': trace.timestamps.largestContentfulPaintAllFrames, // eslint-disable-line max-len
           'timings.firstContentfulPaint': trace.timings.firstContentfulPaint,
           'timings.largestContentfulPaint': trace.timings.largestContentfulPaint,
+          // All frames
+          'firstContentfulPaintAllFramesEvt.ts': trace.firstContentfulPaintAllFramesEvt.ts,
+          'largestContentfulPaintAllFramesEvt.ts': trace.largestContentfulPaintAllFramesEvt.ts,
+          'timestamps.firstContentfulPaintAllFrames': trace.timestamps.firstContentfulPaintAllFrames, // eslint-disable-line max-len
+          'timestamps.largestContentfulPaintAllFrames': trace.timestamps.largestContentfulPaintAllFrames, // eslint-disable-line max-len
+          'timings.firstContentfulPaintAllFrames': trace.timings.firstContentfulPaintAllFrames,
           'timings.largestContentfulPaintAllFrames': trace.timings.largestContentfulPaintAllFrames,
         }).toMatchInlineSnapshot(`
           Object {
+            "firstContentfulPaintAllFramesEvt.ts": 23466705983,
             "firstContentfulPaintEvt.ts": 23466886143,
+            "largestContentfulPaintAllFramesEvt.ts": 23466705983,
             "largestContentfulPaintEvt.ts": 23466886143,
             "mainFrameIds.frameId": "207613A6AD77B492759226780A40F6F4",
-            "timeOriginEvt.ts": 23466023130,
             "timestamps.firstContentfulPaint": 23466886143,
+            "timestamps.firstContentfulPaintAllFrames": 23466705983,
             "timestamps.largestContentfulPaint": 23466886143,
             "timestamps.largestContentfulPaintAllFrames": 23466705983,
             "timings.firstContentfulPaint": 863.013,
+            "timings.firstContentfulPaintAllFrames": 682.853,
             "timings.largestContentfulPaint": 863.013,
             "timings.largestContentfulPaintAllFrames": 682.853,
           }
         `);
+      });
+
+      it('finds FCP from all frames', () => {
+        const testTrace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
+        const mainFrame = testTrace.traceEvents[0].args.frame;
+        const childFrame = 'CHILDFRAME';
+        const cat = 'loading,rail,devtools.timeline';
+
+        // Remove default FCP event because we will define them manually.
+        testTrace.traceEvents
+          = testTrace.traceEvents.filter(e => e.name !== 'firstContentfulPaint');
+
+        testTrace.traceEvents.push(
+          /* eslint-disable max-len */
+          {name: 'FrameCommittedInBrowser', cat, args: {data: {frame: mainFrame, url: 'https://example.com'}}, ts: 900, duration: 10},
+          {name: 'FrameCommittedInBrowser', cat, args: {data: {frame: childFrame, parent: mainFrame, url: 'https://frame.com'}}, ts: 910, duration: 10},
+          {name: 'firstContentfulPaint', cat, args: {frame: childFrame}, ts: 1000, duration: 10},
+          {name: 'firstContentfulPaint', cat, args: {frame: mainFrame}, ts: 1100, duration: 10}
+          /* eslint-enable max-len */
+        );
+        const trace = TraceProcessor.computeTraceOfTab(testTrace);
+        assert.equal(trace.timestamps.firstContentfulPaint, 1100);
+        assert.equal(trace.timestamps.firstContentfulPaintAllFrames, 1000);
       });
 
       it('finds LCP from all frames', () => {
