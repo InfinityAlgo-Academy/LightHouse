@@ -591,6 +591,11 @@ function collectAllStringsInDir(dir) {
             strings[seenId].meaning = strings[seenId].description;
             collisions++;
           }
+
+          if (ctc.meaning === strings[seenId].meaning) {
+            throw new Error(`'${messageKey}' is an exact duplicate of '${seenId}' when placeholders are removed. Each strings' \`message\` or \`description\` must be different for the translation pipeline`);
+          }
+
           collisionStrings.push(ctc.message);
           collisions++;
         }
@@ -631,7 +636,7 @@ if (require.main === module) {
 
   if (collisions > 0) {
     console.log(`MEANING COLLISION: ${collisions} string(s) have the same content.`);
-    assert.equal(collisions, 32, `The number of duplicate strings have changed, update this assertion if that is expected, or reword strings. Collisions: ${collisionStrings.join('\n')}`);
+    assert.equal(collisions, 30, `The number of duplicate strings have changed, update this assertion if that is expected, or reword strings. Collisions: ${collisionStrings.join('\n')}`);
   }
 
   writeStringsToCtcFiles('en-US', strings);
