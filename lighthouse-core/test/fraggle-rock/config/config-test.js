@@ -11,7 +11,12 @@ const {initializeConfig} = require('../../../fraggle-rock/config/config.js');
 /* eslint-env jest */
 
 describe('Fraggle Rock Config', () => {
-  const gatherMode = 'snapshot';
+  /** @type {LH.Gatherer.GatherMode} */
+  let gatherMode = 'snapshot';
+
+  beforeEach(() => {
+    gatherMode = 'snapshot';
+  });
 
   it('should throw if the config path is not absolute', () => {
     const configFn = () =>
@@ -62,6 +67,61 @@ describe('Fraggle Rock Config', () => {
     expect(() => initializeConfig(configJson, {gatherMode})).toThrow(/ImageElements gatherer/);
   });
 
+  it('should resolve navigation definitions', () => {
+    gatherMode = 'navigation';
+    const configJson = {
+      artifacts: [{id: 'Accessibility', gatherer: 'accessibility'}],
+      navigations: [{id: 'default', artifacts: ['Accessibility']}],
+    };
+    const {config} = initializeConfig(configJson, {gatherMode});
+
+    expect(config).toMatchObject({
+      artifacts: [{id: 'Accessibility', gatherer: {path: 'accessibility'}}],
+      navigations: [
+        {id: 'default', artifacts: [{id: 'Accessibility', gatherer: {path: 'accessibility'}}]},
+      ],
+    });
+  });
+
+  it('should throw when navigations are defined without artifacts', () => {
+    const configJson = {
+      navigations: [{id: 'default', artifacts: ['Accessibility']}],
+    };
+
+    expect(() => initializeConfig(configJson, {gatherMode})).toThrow(/Cannot use navigations/);
+  });
+
+  it('should throw when navigations use unrecognized artifacts', () => {
+    const configJson = {
+      artifacts: [],
+      navigations: [{id: 'default', artifacts: ['Accessibility']}],
+    };
+
+    expect(() => initializeConfig(configJson, {gatherMode})).toThrow(/Unrecognized artifact/);
+  });
+
+  it('should set default properties on navigations', () => {
+    gatherMode = 'navigation';
+    const configJson = {
+      artifacts: [],
+      navigations: [{id: 'default'}],
+    };
+    const {config} = initializeConfig(configJson, {gatherMode});
+
+    expect(config).toMatchObject({
+      navigations: [
+        {
+          id: 'default',
+          blankPage: 'about:blank',
+          artifacts: [],
+          disableThrottling: false,
+          networkQuietThresholdMs: 0,
+          cpuQuietThresholdMs: 0,
+        },
+      ],
+    });
+  });
+
   it('should filter configuration by gatherMode', () => {
     const timespanGatherer = new BaseGatherer();
     timespanGatherer.meta = {supportedModes: ['timespan']};
@@ -83,10 +143,7 @@ describe('Fraggle Rock Config', () => {
 
   it.todo('should support extension');
   it.todo('should support plugins');
-  it.todo('should set default properties on navigations');
   it.todo('should adjust default pass options for throttling method');
-  it.todo('should normalize gatherer inputs');
-  it.todo('should require gatherers from their paths');
   it.todo('should filter configuration by inclusive settings');
   it.todo('should filter configuration by exclusive settings');
   it.todo('should validate audit/gatherer interdependencies');

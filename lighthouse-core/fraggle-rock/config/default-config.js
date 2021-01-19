@@ -13,6 +13,12 @@ const defaultConfig = {
     {id: 'Accessibility', gatherer: 'accessibility'},
     {id: 'ConsoleMessages', gatherer: 'console-messages'},
   ],
+  navigations: [
+    {
+      id: 'default',
+      artifacts: ['Accessibility', 'ConsoleMessages'],
+    },
+  ],
   settings: legacyDefaultConfig.settings,
   audits: legacyDefaultConfig.audits,
   categories: legacyDefaultConfig.categories,

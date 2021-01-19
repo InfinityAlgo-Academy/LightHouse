@@ -129,7 +129,14 @@ describe('Fraggle Rock Config Filtering', () => {
 
   describe('filterConfigByGatherMode', () => {
     it('should filter the entire config', () => {
-      const config = {artifacts, audits, categories, groups: null, settings: defaultSettings};
+      const config = {
+        artifacts,
+        navigations: null,
+        audits,
+        categories,
+        groups: null,
+        settings: defaultSettings,
+      };
       expect(filters.filterConfigByGatherMode(config, 'snapshot')).toMatchObject({
         artifacts: [{id: 'Snapshot'}],
         audits: [{implementation: SnapshotAudit}],

@@ -9,6 +9,7 @@ const path = require('path');
 const log = require('lighthouse-logger');
 const Runner = require('../../runner.js');
 const defaultConfig = require('./default-config.js');
+const {defaultNavigationConfig} = require('../../config/constants.js');
 const {isFRGathererDefn} = require('./validation.js');
 const {filterConfigByGatherMode} = require('./filters.js');
 const {
@@ -76,6 +77,39 @@ function resolveArtifactsToDefns(artifacts, configDir) {
 }
 
 /**
+ *
+ * @param {LH.Config.NavigationJson[]|null|undefined} navigations
+ * @param {LH.Config.ArtifactDefn[]|null|undefined} artifactDefns
+ * @return {LH.Config.NavigationDefn[] | null}
+ */
+function resolveNavigationsToDefns(navigations, artifactDefns) {
+  if (!navigations) return null;
+  if (!artifactDefns) throw new Error('Cannot use navigations without defining artifacts');
+
+  const status = {msg: 'Resolve navigation definitions', id: 'lh:config:resolveNavigationsToDefns'};
+  log.time(status, 'verbose');
+
+  const artifactsById = new Map(artifactDefns.map(defn => [defn.id, defn]));
+
+  const navigationDefns = navigations.map(navigation => {
+    const navigationWithDefaults = {...defaultNavigationConfig, ...navigation};
+    const navId = navigationWithDefaults.id;
+    const artifacts = navigationWithDefaults.artifacts.map(id => {
+      const artifact = artifactsById.get(id);
+      if (!artifact) throw new Error(`Unrecognized artifact "${id}" in navigation "${navId}"`);
+      return artifact;
+    });
+
+    // TODO(FR-COMPAT): enforce navigation throttling invariants
+
+    return {...navigationWithDefaults, artifacts};
+  });
+
+  log.timeEnd(status);
+  return navigationDefns;
+}
+
+/**
  * @param {LH.Config.Json|undefined} configJSON
  * @param {{gatherMode: LH.Gatherer.GatherMode, configPath?: string, settingsOverrides?: LH.SharedFlagsSettings}} context
  * @return {{config: LH.Config.FRConfig, warnings: string[]}}
@@ -88,14 +122,15 @@ function initializeConfig(configJSON, context) {
 
   // TODO(FR-COMPAT): handle config extension
   // TODO(FR-COMPAT): handle config plugins
-  // TODO(FR-COMPAT): enforce navigation invariants
 
   const settings = resolveSettings(configWorkingCopy.settings || {}, context.settingsOverrides);
   const artifacts = resolveArtifactsToDefns(configWorkingCopy.artifacts, configDir);
+  const navigations = resolveNavigationsToDefns(configWorkingCopy.navigations, artifacts);
 
   /** @type {LH.Config.FRConfig} */
   let config = {
     artifacts,
+    navigations,
     audits: resolveAuditsToDefns(configWorkingCopy.audits, configDir),
     categories: configWorkingCopy.categories || null,
     groups: configWorkingCopy.groups || null,
