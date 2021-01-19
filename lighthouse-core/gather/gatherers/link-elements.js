@@ -9,9 +9,9 @@ const LinkHeader = require('http-link-header');
 const Gatherer = require('./gatherer.js');
 const {URL} = require('../../lib/url-shim.js');
 const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
-const pageFunctions = require('../../lib/page-functions.js');
+const {getNodeDetails, getElementsInDocument} = require('../../lib/page-functions.js');
 
-/* globals HTMLLinkElement getNodeDetails */
+/* globals HTMLLinkElement */
 
 /**
  * @fileoverview
@@ -48,9 +48,8 @@ function getCrossoriginFromHeader(value) {
  */
 /* c8 ignore start */
 function getLinkElementsInDOM() {
-  /** @type {Array<HTMLOrSVGElement>} */
-  // @ts-expect-error - getElementsInDocument put into scope via stringification
-  const browserElements = getElementsInDocument('link'); // eslint-disable-line no-undef
+  /** @type {Array<Element>} */
+  const browserElements = getElementsInDocument('link');
   /** @type {LH.Artifacts['LinkElements']} */
   const linkElements = [];
 
@@ -70,7 +69,6 @@ function getLinkElementsInDOM() {
       crossOrigin: link.crossOrigin,
       hrefRaw,
       source,
-      // @ts-expect-error - put into scope via stringification
       node: getNodeDetails(link),
     });
   }
@@ -91,8 +89,8 @@ class LinkElements extends Gatherer {
       args: [],
       useIsolation: true,
       deps: [
-        pageFunctions.getNodeDetailsString,
-        pageFunctions.getElementsInDocument,
+        getNodeDetails,
+        getElementsInDocument,
       ],
     });
   }

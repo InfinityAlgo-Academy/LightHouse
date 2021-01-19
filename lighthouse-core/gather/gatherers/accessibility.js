@@ -5,11 +5,11 @@
  */
 'use strict';
 
-/* global window, document, getNodeDetails */
+/* global window, document */
 
 const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
 const axeLibSource = require('../../lib/axe.js').source;
-const pageFunctions = require('../../lib/page-functions.js');
+const {getNodeDetails} = require('../../lib/page-functions.js');
 
 /**
  * This is run in the page, not Lighthouse itself.
@@ -20,7 +20,7 @@ const pageFunctions = require('../../lib/page-functions.js');
 /* c8 ignore start */
 async function runA11yChecks() {
   /** @type {import('axe-core/axe')} */
-  // @ts-expect-error axe defined by axeLibSource
+  // @ts-expect-error - axe defined by axeLibSource
   const axe = window.axe;
   const axeResults = await axe.run(document, {
     elementRef: true,
@@ -57,42 +57,51 @@ async function runA11yChecks() {
   // are relative to the top of the page
   document.documentElement.scrollTop = 0;
 
-  /** @param {import('axe-core/axe').Result} result */
-  const augmentAxeNodes = result => {
-    result.nodes.forEach(node => {
-      // @ts-expect-error - getNodeDetails put into scope via stringification
-      node.node = getNodeDetails(node.element);
-      // @ts-expect-error - avoid circular JSON concerns
-      node.element = node.any = node.all = node.none = undefined;
+  /**
+   * @param {import('axe-core/axe').Result} result
+   * @return {LH.Artifacts.AxeRuleResult}
+   */
+  const createAxeRuleResultArtifact = (result) => {
+    // Simplify `nodes` and fetch nodeDetails for each.
+    const nodes = result.nodes.map(node => {
+      const {html, target, failureSummary, element} = node;
+      // TODO: with `elementRef: true`, `element` _should_ always be defined, but need to verify.
+      const nodeDetails = getNodeDetails(/** @type {HTMLElement} */ (element));
+
+      return {
+        html,
+        target,
+        failureSummary,
+        node: nodeDetails,
+      };
     });
 
-    // Ensure errors can be serialized over the protocol
-    /** @type {(Error & {message: string, errorNode: any}) | undefined} */
-    // @ts-expect-error - when rules error axe sets these properties
+    // Ensure errors can be serialized over the protocol.
+    /** @type {Error | undefined} */
+    // @ts-expect-error - when rules throw an error, axe saves it here.
     // see https://github.com/dequelabs/axe-core/blob/eeff122c2de11dd690fbad0e50ba2fdb244b50e8/lib/core/base/audit.js#L684-L693
-    const error = result.error;
-    if (error instanceof Error) {
-      // @ts-expect-error
-      result.error = {
-        name: error.name,
-        message: error.message,
-        stack: error.stack,
-        errorNode: error.errorNode,
+    const resultError = result.error;
+    let error;
+    if (resultError instanceof Error) {
+      error = {
+        name: resultError.name,
+        message: resultError.message,
       };
     }
+
+    return {
+      id: result.id,
+      impact: result.impact || undefined,
+      tags: result.tags,
+      nodes,
+      error,
+    };
   };
 
-  // Augment the node objects with outerHTML snippet & custom path string
-  axeResults.violations.forEach(augmentAxeNodes);
-  axeResults.incomplete.forEach(augmentAxeNodes);
-
-  // We only need violations, and circular references are possible outside of violations
   return {
-    // @ts-expect-error value is augmented above.
-    violations: axeResults.violations,
-    notApplicable: axeResults.inapplicable,
-    // @ts-expect-error value is augmented above.
-    incomplete: axeResults.incomplete,
+    violations: axeResults.violations.map(createAxeRuleResultArtifact),
+    notApplicable: axeResults.inapplicable.map(result => ({id: result.id})),
+    incomplete: axeResults.incomplete.map(createAxeRuleResultArtifact),
     version: axeResults.testEngine.version,
   };
 }
@@ -108,25 +117,25 @@ class Accessibility extends FRGatherer {
    * @param {LH.Gatherer.FRTransitionalContext} passContext
    * @return {Promise<LH.Artifacts.Accessibility>}
    */
-  snapshot(passContext) {
+  async snapshot(passContext) {
     const driver = passContext.driver;
 
-    return driver.executionContext.evaluate(runA11yChecks, {
+    const accessibilityArtifacts = await driver.executionContext.evaluate(runA11yChecks, {
       args: [],
       useIsolation: true,
       deps: [
         axeLibSource,
-        pageFunctions.getNodeDetailsString,
+        getNodeDetails,
       ],
-    }).then(returnedValue => {
-      if (!returnedValue) {
-        throw new Error('No axe-core results returned');
-      }
-      if (!Array.isArray(returnedValue.violations)) {
-        throw new Error('Unable to parse axe results' + returnedValue);
-      }
-      return returnedValue;
     });
+
+    if (!accessibilityArtifacts) {
+      throw new Error('No axe-core results returned');
+    }
+    if (!Array.isArray(accessibilityArtifacts.violations)) {
+      throw new Error('Unable to parse axe results' + accessibilityArtifacts);
+    }
+    return accessibilityArtifacts;
   }
 }
 

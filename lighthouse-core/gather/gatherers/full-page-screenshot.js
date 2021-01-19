@@ -5,10 +5,10 @@
  */
 'use strict';
 
-/* globals window document getBoundingClientRect */
+/* globals window document */
 
 const Gatherer = require('./gatherer.js');
-const pageFunctions = require('../../lib/page-functions.js');
+const {getBoundingClientRect, getMaxTextureSize} = require('../../lib/page-functions.js');
 
 /** @typedef {import('../driver.js')} Driver */
 
@@ -30,7 +30,7 @@ class FullPageScreenshot extends Gatherer {
    * @see https://bugs.chromium.org/p/chromium/issues/detail?id=770769
    */
   async getMaxScreenshotHeight(driver) {
-    return await driver.executionContext.evaluate(pageFunctions.getMaxTextureSize, {
+    return await driver.executionContext.evaluate(getMaxTextureSize, {
       args: [],
       useIsolation: true,
       deps: [],
@@ -100,7 +100,6 @@ class FullPageScreenshot extends Gatherer {
 
       const lhIdToElements = window.__lighthouseNodesDontTouchOrAllVarianceGoesAway;
       for (const [node, id] of lhIdToElements.entries()) {
-        // @ts-expect-error - getBoundingClientRect put into scope via stringification
         const rect = getBoundingClientRect(node);
         nodes[id] = rect;
       }
@@ -115,7 +114,7 @@ class FullPageScreenshot extends Gatherer {
       return passContext.driver.executionContext.evaluate(resolveNodes, {
         args: [],
         useIsolation,
-        deps: [pageFunctions.getBoundingClientRectString],
+        deps: [getBoundingClientRect],
       });
     }
 

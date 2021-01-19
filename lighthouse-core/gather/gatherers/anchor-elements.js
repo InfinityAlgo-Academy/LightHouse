@@ -5,10 +5,8 @@
  */
 'use strict';
 
-/* global getNodeDetails */
-
 const Gatherer = require('./gatherer.js');
-const pageFunctions = require('../../lib/page-functions.js');
+const {getElementsInDocument, getNodeDetails} = require('../../lib/page-functions.js');
 
 /* eslint-env browser, node */
 
@@ -38,9 +36,9 @@ function collectAnchorElements() {
     return onclick.slice(0, 1024);
   }
 
+  // Manually widen type to include SVG. See https://github.com/GoogleChrome/lighthouse/issues/12011.
   /** @type {Array<HTMLAnchorElement|SVGAElement>} */
-  // @ts-expect-error - put into scope via stringification
-  const anchorElements = getElementsInDocument('a'); // eslint-disable-line no-undef
+  const anchorElements = getElementsInDocument('a');
 
   return anchorElements.map(node => {
     if (node instanceof HTMLAnchorElement) {
@@ -53,7 +51,6 @@ function collectAnchorElements() {
         text: node.innerText, // we don't want to return hidden text, so use innerText
         rel: node.rel,
         target: node.target,
-        // @ts-expect-error - getNodeDetails put into scope via stringification
         node: getNodeDetails(node),
       };
     }
@@ -66,7 +63,6 @@ function collectAnchorElements() {
       text: node.textContent || '',
       rel: '',
       target: node.target.baseVal || '',
-      // @ts-expect-error - getNodeDetails put into scope via stringification
       node: getNodeDetails(node),
     };
   });
@@ -101,8 +97,8 @@ class AnchorElements extends Gatherer {
       args: [],
       useIsolation: true,
       deps: [
-        pageFunctions.getElementsInDocumentString,
-        pageFunctions.getNodeDetailsString,
+        getElementsInDocument,
+        getNodeDetails,
       ],
     });
     await driver.sendCommand('DOM.enable');

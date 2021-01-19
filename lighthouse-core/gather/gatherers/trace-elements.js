@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* global getNodeDetails */
+/* global document */
 
 /**
  * @fileoverview
@@ -14,7 +14,7 @@
  */
 
 const Gatherer = require('./gatherer.js');
-const pageFunctions = require('../../lib/page-functions.js');
+const {getNodeDetails} = require('../../lib/page-functions.js');
 const TraceProcessor = require('../../lib/tracehouse/trace-processor.js');
 const RectHelpers = require('../../lib/rect-helpers.js');
 const Sentry = require('../../lib/sentry.js');
@@ -22,14 +22,13 @@ const Sentry = require('../../lib/sentry.js');
 /** @typedef {{nodeId: number, score?: number, animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[]}} TraceElementData */
 
 /**
- * @this {HTMLElement}
+ * @this {Element}
  */
 /* c8 ignore start */
 function getNodeDetailsData() {
-  const elem = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement; // eslint-disable-line no-undef
+  const elem = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement;
   let traceElement;
   if (elem) {
-    // @ts-expect-error - getNodeDetails put into scope via stringification
     traceElement = {node: getNodeDetails(elem)};
   }
   return traceElement;
@@ -281,7 +280,7 @@ class TraceElements extends Gatherer {
             objectId,
             functionDeclaration: `function () {
               ${getNodeDetailsData.toString()};
-              ${pageFunctions.getNodeDetailsString};
+              ${getNodeDetails.toString()};
               return getNodeDetailsData.call(this);
             }`,
             returnByValue: true,

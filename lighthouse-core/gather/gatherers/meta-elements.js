@@ -6,14 +6,12 @@
 'use strict';
 
 const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
-const pageFunctions = require('../../lib/page-functions.js');
+const {getElementsInDocument} = require('../../lib/page-functions.js');
 
-/* globals getElementsInDocument */
 
 /* c8 ignore start */
 function collectMetaElements() {
-  // @ts-expect-error - getElementsInDocument put into scope via stringification
-  const metas = /** @type {HTMLMetaElement[]} */ (getElementsInDocument('head meta'));
+  const metas = getElementsInDocument('head meta');
   return metas.map(meta => {
     /** @param {string} name */
     const getAttribute = name => {
@@ -50,7 +48,7 @@ class MetaElements extends FRGatherer {
     return driver.executionContext.evaluate(collectMetaElements, {
       args: [],
       useIsolation: true,
-      deps: [pageFunctions.getElementsInDocument],
+      deps: [getElementsInDocument],
     });
   }
 }

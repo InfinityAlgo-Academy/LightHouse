@@ -8,18 +8,14 @@
 const Gatherer = require('./gatherer.js');
 const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
 const NetworkRequest = require('../../lib/network-request.js');
-const pageFunctions = require('../../lib/page-functions.js');
-
-/* global getNodeDetails */
+const {getElementsInDocument, getNodeDetails} = require('../../lib/page-functions.js');
 
 /**
  * @return {LH.Artifacts['ScriptElements']}
  */
 /* c8 ignore start */
 function collectAllScriptElements() {
-  /** @type {HTMLScriptElement[]} */
-  // @ts-expect-error - getElementsInDocument put into scope via stringification
-  const scripts = getElementsInDocument('script'); // eslint-disable-line no-undef
+  const scripts = getElementsInDocument('script');
 
   return scripts.map(script => {
     return {
@@ -31,7 +27,6 @@ function collectAllScriptElements() {
       source: script.closest('head') ? 'head' : 'body',
       content: script.src ? null : script.text,
       requestId: null,
-      // @ts-expect-error - getNodeDetails put into scope via stringification
       node: getNodeDetails(script),
     };
   });
@@ -76,8 +71,8 @@ class ScriptElements extends Gatherer {
       args: [],
       useIsolation: true,
       deps: [
-        pageFunctions.getNodeDetailsString,
-        pageFunctions.getElementsInDocument,
+        getNodeDetails,
+        getElementsInDocument,
       ],
     });
 
