@@ -81,7 +81,7 @@ function computeDescription(ast, message) {
     return {description: coerceToSingleLineAndTrim(ast.comment), examples: {}};
   }
 
-  throw Error(`Missing description comment for message "${message}"`);
+  throw new Error(`Missing description comment for message "${message}"`);
 }
 
 /**
@@ -591,6 +591,18 @@ function collectAllStringsInDir(dir) {
             strings[seenId].meaning = strings[seenId].description;
             collisions++;
           }
+          // But if the meanings are also the same, we got a problem
+          if (strings[seenId].meaning === ctc.meaning) {
+            const errMsg = `TC cannot distinguish between the following two strings, having identical messages & descriptions:
+  - ${messageKey}
+  - ${seenId}`;
+            // Duplicate descriptions isn't as big a problem as title/failureTitle/etc
+            if (key === 'description') {
+              console.warn(errMsg);
+            } else {
+              throw new Error(errMsg);
+            }
+          }
           collisionStrings.push(ctc.message);
           collisions++;
         }
@@ -632,6 +644,7 @@ if (require.main === module) {
   if (collisions > 0) {
     console.log(`MEANING COLLISION: ${collisions} string(s) have the same content.`);
     assert.equal(collisions, 32, `The number of duplicate strings have changed, update this assertion if that is expected, or reword strings. Collisions: ${collisionStrings.join('\n')}`);
+    console.log(collisionStrings);
   }
 
   writeStringsToCtcFiles('en-US', strings);
