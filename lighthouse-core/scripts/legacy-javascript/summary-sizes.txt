@@ -116,9 +116,9 @@ core-js-3-only-polyfill
    4515        es-function-name/main.bundle.min.js
 
 core-js-3-preset-env-esmodules
-  410517       false/main.bundle.min.js
-  305001       true/main.bundle.min.js
-  304320       true-and-bugfixes/main.bundle.min.js
+  411807       false/main.bundle.min.js
+  306297       true/main.bundle.min.js
+  305616       true-and-bugfixes/main.bundle.min.js
 
 only-plugin
   1787         -babel-plugin-transform-spread/main.bundle.min.js
