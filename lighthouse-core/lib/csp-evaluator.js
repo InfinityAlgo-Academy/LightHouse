@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const csp_ = require('../../optimized_binary-bundle.js');
+const csp_ = require('../../third-party/csp-evaluator/optimized_binary-bundle.js');
 
 /**
  * @typedef Finding
@@ -18,19 +18,31 @@ const csp_ = require('../../optimized_binary-bundle.js');
 
 /* eslint-disable max-len */
 const Parser = csp_.module.getInternal_('google3.javascript.security.csp.csp_evaluator.parser').CspParser;
-const Evaluator = csp_.module.getInternal_('google3.javascript.security.csp.csp_evaluator.evaluator').CspEvaluator;
-const Version = csp_.module.getInternal_('google3.javascript.security.csp.csp_evaluator.csp').Version;
-const strictCSPChecks = csp_.module.getInternal_('google3.javascript.security.csp.csp_evaluator.checks.strictcsp_checks');
+const lighthouseChecks = csp_.module.getInternal_('google3.javascript.security.csp.csp_evaluator.lighthouse.lighthouse_checks');
 /* eslint-enable max-len */
 
 /**
- * @param {string} rawCsp
+ * @param {Array<string>} rawCsps
  * @return {Array<Finding>}
  */
-function evaluateRawCsp(rawCsp) {
-  const parser = new Parser(rawCsp);
-  const evaluator = new Evaluator(parser.csp, Version.CSP3);
-  return evaluator.evaluate(Object.values(strictCSPChecks));
+function evaluateRawCspForFailures(rawCsps) {
+  return lighthouseChecks.evaluateForFailure(rawCsps.map(c => new Parser(c).csp));
 }
 
-module.exports = {evaluateRawCsp};
+/**
+ * @param {Array<string>} rawCsps
+ * @return {Array<Finding>}
+ */
+function evaluateRawCspForWarnings(rawCsps) {
+  return lighthouseChecks.evaluateForWarnings(rawCsps.map(c => new Parser(c).csp));
+}
+
+/**
+ * @param {Array<string>} rawCsps
+ * @return {Array<Array<Finding>>}
+ */
+function evaluateRawCspForSyntax(rawCsps) {
+  return lighthouseChecks.evaluateForSyntaxErrors(rawCsps.map(c => new Parser(c).csp));
+}
+
+module.exports = {evaluateRawCspForFailures, evaluateRawCspForWarnings, evaluateRawCspForSyntax};
