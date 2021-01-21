@@ -67,19 +67,30 @@ function registerPerformanceObserverInPage() {
  * @return {Promise<number>}
  */
 function checkTimeSinceLastLongTask() {
-  // Wait for a delta before returning so that we're sure the PerformanceObserver
-  // has had time to register the last longtask
+  // This function attempts to return the time since the last long task occurred.
+  // `PerformanceObserver`s don't always immediately fire though, so we check twice with some time in
+  // between to make sure nothing has happened very recently.
+
+  // Chrome 88 introduced heavy throttling of timers which means our `setTimeout` will be executed
+  // at some point farish (several hundred ms) into the future and the time at which it executes isn't
+  // a reliable indicator of long task existence, instead we check if any information has changed.
+  // See https://developer.chrome.com/blog/timer-throttling-in-chrome-88/
   return new window.__nativePromise(resolve => {
-    const timeoutRequested = window.__perfNow() + 50;
+    const firstAttemptTs = window.__perfNow();
+    const firstAttemptLastLongTaskTs = window.____lastLongTask || 0;
 
     setTimeout(() => {
-      // Double check that a long task hasn't happened since setTimeout
-      const timeoutFired = window.__perfNow();
-      const lastLongTask = window.____lastLongTask || 0;
-      const timeSinceLongTask = timeoutFired - timeoutRequested < 50 ?
-          timeoutFired - lastLongTask : 0;
+      // We can't be sure a long task hasn't occurred since our first attempt, but if the `____lastLongTask`
+      // value is the same (i.e. the perf observer didn't have any new information), we can be pretty
+      // confident that the long task info was accurate *at the time of our first attempt*.
+      const secondAttemptLastLongTaskTs = window.____lastLongTask || 0;
+      const timeSinceLongTask = firstAttemptLastLongTaskTs === secondAttemptLastLongTaskTs ?
+        // The time of the last long task hasn't changed, the information from our first attempt is accurate.
+        firstAttemptTs - firstAttemptLastLongTaskTs :
+        // The time of the last long task *did* change, we can't really trust the information we have.
+        0;
       resolve(timeSinceLongTask);
-    }, 50);
+    }, 150);
   });
 }
 
