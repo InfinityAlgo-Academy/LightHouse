@@ -22,18 +22,18 @@ const UIStrings = {
   description: 'A strong Content Security Policy (CSP) can significantly ' +
     'reduce the risk of XSS attacks. ' +
     '[Learn more](https://developers.google.com/web/fundamentals/security/csp)',
-  metaTagWarning: 'The page contains a CSP defined in a meta tag. ' +
+  noCsp: 'No CSP found in enforcement mode',
+  additionalWarning: 'Additional CSP suggestions are available.',
+  metaTagMessage: 'The page contains a CSP defined in a meta tag. ' +
     'It is not recommended to use a CSP this way, ' +
     'consider defining the CSP in an HTTP header.',
-  noCsp: 'No CSP found in enforcement mode',
-  additionalWarning: 'Additional suggestions are available.',
   /**
-   * @description [ICU Syntax] Warning message shown when one or more CSPs contain syntax errors.
-   * @example {2} numSyntax
+   * @description [ICU Syntax] Message identifying a CSP which contains one or more syntax errors. Shown in a table with a list of other CSP vulnerabilities and suggestions.
+   * @example {script-src 'none'; object-src 'self';} rawCsp
    */
-  syntaxWarning: `{numSyntax, plural,
-    =1 {Syntax error found.}
-    other {Syntax errors found.}
+  syntaxMessage: `{numSyntax, plural,
+    =1 {Syntax error in CSP "{rawCsp}"}
+    other {Syntax errors in CSP "{rawCsp}"}
   }`,
 };
 
@@ -54,6 +54,18 @@ class CSPEvaluator extends Audit {
   }
 
   /**
+   * TODO: Replace description with i18n string.
+   * @param {Finding} finding
+   * @return {LH.Audit.Details.TableItem}
+   */
+  static findingToTableItem(finding) {
+    return {
+      directive: finding.directive,
+      description: finding.description,
+    };
+  }
+
+  /**
    * @param {Array<string>} rawCsps
    * @return {LH.Audit.Details.TableItem[]}
    */
@@ -63,12 +75,16 @@ class CSPEvaluator extends Audit {
 
     const syntaxFindingsByCsp = evaluateRawCspForSyntax(rawCsps);
     for (let i = 0; i < rawCsps.length; ++i) {
-      const items = syntaxFindingsByCsp[i].map(f => {
-        return {description: f.description};
-      });
+      const items = syntaxFindingsByCsp[i].map(this.findingToTableItem);
       if (!items.length) continue;
+
+      const description = str_(UIStrings.syntaxMessage, {
+        numSyntax: items.length,
+        rawCsp: rawCsps[i],
+      });
+
       results.push({
-        description: `Syntax errors in CSP "${rawCsps[i]}"`,
+        description,
         subItems: {
           type: 'subitems',
           items,
@@ -80,25 +96,32 @@ class CSPEvaluator extends Audit {
   }
 
   /**
-   * @param {Array<string>} rawCsps
+   * @param {Array<string>} cspHeaders
+   * @param {Array<string>} cspMetaTags
    * @return {LH.Audit.Details.TableItem[]}
    */
-  static collectFailureResults(rawCsps) {
+  static collectFailureResults(cspHeaders, cspMetaTags) {
+    const rawCsps = [...cspHeaders, ...cspMetaTags];
     const findings = evaluateRawCspForFailures(rawCsps);
-    return findings.map(f => {
-      return {description: f.description};
-    });
+    return findings.map(this.findingToTableItem);
   }
 
   /**
-   * @param {Array<string>} rawCsps
+   * @param {Array<string>} cspHeaders
+   * @param {Array<string>} cspMetaTags
    * @return {LH.Audit.Details.TableItem[]}
    */
-  static collectWarningResults(rawCsps) {
+  static collectSuggestionResults(cspHeaders, cspMetaTags) {
+    const rawCsps = [...cspHeaders, ...cspMetaTags];
     const findings = evaluateRawCspForWarnings(rawCsps);
-    return findings.map(f => {
-      return {description: f.description};
-    });
+    const results = [
+      ...findings.map(this.findingToTableItem),
+      ...this.collectSyntaxResults(rawCsps),
+    ];
+    if (cspMetaTags.length) {
+      results.push({description: str_(UIStrings.metaTagMessage)});
+    }
+    return results;
   }
 
   /**
@@ -110,53 +133,44 @@ class CSPEvaluator extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
 
-    // CSP defined in meta tag is not recommended, warn if a CSP is defined this way.
-    const cspMetaTags = artifacts.MetaElements.filter(m => {
-      return m.httpEquiv && m.httpEquiv.toLowerCase() === 'content-security-policy';
-    }).map(m => m.content || '');
+    const cspMetaTags = artifacts.MetaElements
+      .filter(m => {
+        return m.httpEquiv && m.httpEquiv.toLowerCase() === 'content-security-policy';
+      })
+      .map(m => m.content || '');
+    const cspHeaders = mainResource.responseHeaders
+      .filter(h => {
+        return h.name.toLowerCase() === 'content-security-policy';
+      })
+      .map(h => h.value);
 
-    const warnings = cspMetaTags.length ? [str_(UIStrings.metaTagWarning)] : [];
-
-    const cspHeaders = mainResource.responseHeaders.filter(h => {
-      return h.name.toLowerCase() === 'content-security-policy';
-    }).map(h => h.value);
-    if (!cspHeaders.length) {
+    if (!cspHeaders.length && !cspMetaTags.length) {
       return {
-        warnings,
         score: 0,
         notApplicable: false,
-        displayValue: UIStrings.noCsp,
+        displayValue: str_(UIStrings.noCsp),
       };
     }
-    const rawCsps = [...cspHeaders, ...cspMetaTags];
 
-    const syntaxResults = this.collectSyntaxResults(rawCsps);
-    const failureResults = this.collectFailureResults(rawCsps);
-    const warningResults = this.collectWarningResults(rawCsps);
+    const failures = this.collectFailureResults(cspHeaders, cspMetaTags);
+    const suggestions = this.collectSuggestionResults(cspHeaders, cspMetaTags);
 
-    const results = [...failureResults, ...warningResults, ...syntaxResults];
-    if (syntaxResults.length) {
-      const numSyntax = syntaxResults.reduce((sum, r) => {
-        if (!r.subItems) return sum;
-        return sum + r.subItems.items.length;
-      }, 0);
-      warnings.push(str_(UIStrings.syntaxWarning, {numSyntax}));
-    }
-    if (warningResults.length && !failureResults.length) {
-      warnings.push(str_(UIStrings.additionalWarning));
-    }
+    const results = [...failures, ...suggestions];
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
       {key: 'description', itemType: 'text', subItemsHeading: {key: 'description'}, text: 'Description'},
+      {key: 'directive', itemType: 'text', subItemsHeading: {key: 'directive'}, text: 'Directive'},
       /* eslint-enable max-len */
     ];
     const details = Audit.makeTableDetails(headings, results);
+    const warnings = suggestions.length && !failures.length ?
+      [str_(UIStrings.additionalWarning)] : [];
 
     return {
       warnings,
-      score: failureResults.length ? 0 : 1,
+      score: failures.length ? 0 : 1,
       notApplicable: false,
       details,
     };

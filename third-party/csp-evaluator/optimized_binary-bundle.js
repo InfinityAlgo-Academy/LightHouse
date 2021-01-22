@@ -6,6 +6,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+const { evaluateRawCspForWarnings } = require("../../lighthouse-core/lib/csp-evaluator");
+
 /**
  * @fileoverview Bootstrap for the Google JS Library (Closure).
  *

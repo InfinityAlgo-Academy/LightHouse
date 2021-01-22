@@ -45,4 +45,8 @@ function evaluateRawCspForSyntax(rawCsps) {
   return lighthouseChecks.evaluateForSyntaxErrors(rawCsps.map(c => new Parser(c).csp));
 }
 
-module.exports = {evaluateRawCspForFailures, evaluateRawCspForWarnings, evaluateRawCspForSyntax};
+module.exports = {
+  evaluateRawCspForFailures,
+  evaluateRawCspForWarnings,
+  evaluateRawCspForSyntax,
+};
