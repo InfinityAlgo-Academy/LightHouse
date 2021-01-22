@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const csp_ = require('../../third-party/csp-evaluator/optimized_binary-bundle.js');
+const evaluator = require('../../third-party/csp-evaluator/optimized_binary-bundle.js');
 
 /**
  * @typedef Finding
@@ -17,8 +17,8 @@ const csp_ = require('../../third-party/csp-evaluator/optimized_binary-bundle.js
  */
 
 /* eslint-disable max-len */
-const Parser = csp_.module.getInternal_('google3.javascript.security.csp.csp_evaluator.parser').CspParser;
-const lighthouseChecks = csp_.module.getInternal_('google3.javascript.security.csp.csp_evaluator.lighthouse.lighthouse_checks');
+const Parser = evaluator.module.get('google3.javascript.security.csp.csp_evaluator.parser').CspParser;
+const lighthouseChecks = evaluator.module.get('google3.javascript.security.csp.csp_evaluator.lighthouse.lighthouse_checks');
 /* eslint-enable max-len */
 
 /**
