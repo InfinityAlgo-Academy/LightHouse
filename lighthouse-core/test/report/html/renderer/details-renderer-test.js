@@ -434,7 +434,7 @@ describe('DetailsRenderer', () => {
         assert.equal(screenshotEl.dataset['rectTop'], '1');
       });
 
-      it('renders screenshot using item boundingRect if missing in FullPageScreenshot', () => {
+      it('does not render screenshot if rect missing in FullPageScreenshot', () => {
         createRenderer({
           fullPageScreenshot: {
             screenshot: {
@@ -462,8 +462,7 @@ describe('DetailsRenderer', () => {
         const el = renderer.render(details);
         const nodeEl = el.querySelector('.lh-node');
         const screenshotEl = nodeEl.querySelector('.lh-element-screenshot');
-        assert.equal(screenshotEl.dataset['rectLeft'], '0');
-        assert.equal(screenshotEl.dataset['rectTop'], '0');
+        expect(screenshotEl).toBeNull();
       });
     });
 
@@ -487,6 +486,37 @@ describe('DetailsRenderer', () => {
       assert.strictEqual(sourceLocationEl.localName, 'div');
       assert.equal(anchorEl.href, 'https://www.example.com/script.js');
       assert.equal(sourceLocationEl.textContent, '/script.js:11:5(www.example.com)');
+      assert.equal(sourceLocationEl.getAttribute('data-source-url'), sourceLocation.url);
+      assert.equal(sourceLocationEl.getAttribute('data-source-line'), `${sourceLocation.line}`);
+      assert.equal(sourceLocationEl.getAttribute('data-source-column'), `${sourceLocation.column}`);
+    });
+
+    it('renders source-location values using source map data', () => {
+      const sourceLocation = {
+        type: 'source-location',
+        url: 'https://www.example.com/script.js',
+        urlProvider: 'network',
+        line: 10,
+        column: 5,
+        original: {
+          file: 'main.js',
+          line: 100,
+          column: 10,
+        },
+      };
+      const details = {
+        type: 'table',
+        headings: [{key: 'content', itemType: 'source-location', text: 'Heading'}],
+        items: [{content: sourceLocation}],
+      };
+
+      const el = renderer.render(details);
+      const sourceLocationEl = el.querySelector('.lh-source-location.lh-link');
+      assert.strictEqual(sourceLocationEl.localName, 'a');
+      assert.equal(sourceLocationEl.href, 'https://www.example.com/script.js');
+      assert.equal(sourceLocationEl.textContent, 'main.js:101:10');
+      assert.equal(sourceLocationEl.title, 'maps to generated location https://www.example.com/script.js:11:5');
+      // DevTools should still use the generated location.
       assert.equal(sourceLocationEl.getAttribute('data-source-url'), sourceLocation.url);
       assert.equal(sourceLocationEl.getAttribute('data-source-line'), `${sourceLocation.line}`);
       assert.equal(sourceLocationEl.getAttribute('data-source-column'), `${sourceLocation.column}`);

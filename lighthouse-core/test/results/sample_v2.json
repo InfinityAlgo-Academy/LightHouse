@@ -239,9 +239,9 @@
         "type": "table",
         "headings": [
           {
-            "key": "url",
-            "itemType": "url",
-            "text": "URL"
+            "key": "sourceLocation",
+            "itemType": "source-location",
+            "text": "Source"
           },
           {
             "key": "description",
@@ -252,43 +252,99 @@
         "items": [
           {
             "source": "other",
-            "description": "Application Cache Error event: Manifest fetch failed (404) http://localhost:56620/dobetterweb/clock.appcache",
-            "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+            "description": "Application Cache Error event: Manifest fetch failed (404) http://localhost:10200/dobetterweb/clock.appcache",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "sourceLocation": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 0,
+              "column": 0
+            }
           },
           {
             "source": "exception",
-            "description": "Error: A distinctive error\n    at http://localhost:56620/dobetterweb/dbw_tester.html:58:54",
-            "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+            "description": "Error: A distinctive error\n    at http://localhost:10200/dobetterweb/dbw_tester.html:58:54",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "sourceLocation": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 57,
+              "column": 53
+            }
           },
           {
             "source": "exception",
-            "description": "Error: An ignored error\n    at http://localhost:56620/dobetterweb/dbw_tester.html:61:38",
-            "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+            "description": "Error: An ignored error\n    at http://localhost:10200/dobetterweb/dbw_tester.html:61:38",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "sourceLocation": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 60,
+              "column": 37
+            }
           },
           {
             "source": "console.error",
             "description": "Error! Error!",
-            "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "sourceLocation": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 474,
+              "column": 10
+            }
           },
           {
             "source": "network",
             "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-            "url": "http://localhost:56620/dobetterweb/unknown404.css?delay=200"
+            "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
+            "sourceLocation": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
+              "urlProvider": "network",
+              "line": 0,
+              "column": 0
+            }
           },
           {
             "source": "network",
             "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-            "url": "http://localhost:56620/dobetterweb/fcp-delayer.js?delay=5000"
+            "url": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000",
+            "sourceLocation": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000",
+              "urlProvider": "network",
+              "line": 0,
+              "column": 0
+            }
           },
           {
             "source": "network",
             "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-            "url": "http://localhost:56620/favicon.ico"
+            "url": "http://localhost:10200/favicon.ico",
+            "sourceLocation": {
+              "type": "source-location",
+              "url": "http://localhost:10200/favicon.ico",
+              "urlProvider": "network",
+              "line": 0,
+              "column": 0
+            }
           },
           {
             "source": "network",
             "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-            "url": "http://localhost:56620/dobetterweb/unknown404.css?delay=200"
+            "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
+            "sourceLocation": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
+              "urlProvider": "network",
+              "line": 0,
+              "column": 0
+            }
           }
         ]
       }
@@ -637,7 +693,7 @@
         ],
         "items": [
           {
-            "url": "http://localhost:54657/dobetterweb/lighthouse-480x318.jpg?iar1",
+            "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?iar1",
             "displayedAspectRatio": "120 x 15\n        (8.00)",
             "actualAspectRatio": "480 x 318\n        (1.51)",
             "doRatiosMatch": false
@@ -682,8 +738,8 @@
         ],
         "items": [
           {
-            "url": "http://localhost:54657/dobetterweb/lighthouse-480x318.jpg?isr1",
-            "elidedUrl": "http://localhost:54657/dobetterweb/lighthouse-480x318.jpg?isr1",
+            "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr1",
+            "elidedUrl": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr1",
             "displayedSize": "4800 x 3180",
             "actualSize": "480 x 318",
             "actualPixels": 152640,
@@ -691,8 +747,8 @@
             "expectedPixels": 61056000
           },
           {
-            "url": "http://localhost:54657/dobetterweb/lighthouse-rotating.gif",
-            "elidedUrl": "http://localhost:54657/dobetterweb/lighthouse-rotating.gif",
+            "url": "http://localhost:10200/dobetterweb/lighthouse-rotating.gif",
+            "elidedUrl": "http://localhost:10200/dobetterweb/lighthouse-rotating.gif",
             "displayedSize": "811 x 462",
             "actualSize": "811 x 462",
             "actualPixels": 374682,
@@ -719,7 +775,7 @@
         ],
         "items": [
           {
-            "url": "http://localhost:10503/perf/lobster-two-v10-latin-700.woff2?cors=true"
+            "url": "http://localhost:10200/perf/lobster-two-v10-latin-700.woff2?cors=true"
           }
         ]
       }
@@ -730,7 +786,7 @@
       "description": "Deprecated APIs will eventually be removed from the browser. [Learn more](https://web.dev/deprecations/).",
       "score": 0,
       "scoreDisplayMode": "binary",
-      "displayValue": "4 warnings found",
+      "displayValue": "3 warnings found",
       "details": {
         "type": "table",
         "headings": [
@@ -742,7 +798,7 @@
           {
             "key": "source",
             "itemType": "source-location",
-            "text": "URL"
+            "text": "Source"
           }
         ],
         "items": [
@@ -750,7 +806,7 @@
             "value": "Application Cache API manifest selection is deprecated and will be removed in M85, around August 2020. See https://www.chromestatus.com/features/6192449487634432 for more details.",
             "source": {
               "type": "source-location",
-              "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
               "urlProvider": "network",
               "line": 8,
               "column": 0
@@ -760,7 +816,7 @@
             "value": "'window.webkitStorageInfo' is deprecated. Please use 'navigator.webkitTemporaryStorage' or 'navigator.webkitPersistentStorage' instead.",
             "source": {
               "type": "source-location",
-              "url": "http://localhost:56620/dobetterweb/dbw_tester.js",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
               "urlProvider": "network",
               "line": 13,
               "column": 9
@@ -770,20 +826,10 @@
             "value": "Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/.",
             "source": {
               "type": "source-location",
-              "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
               "urlProvider": "network",
               "line": 371,
               "column": 6
-            }
-          },
-          {
-            "value": "/deep/ combinator is no longer supported in CSS dynamic profile. It is now effectively no-op, acting as if it were a descendant combinator. /deep/ combinator will be removed, and will be invalid at M65. You should remove it. See https://www.chromestatus.com/features/4964279606312960 for more details.",
-            "source": {
-              "type": "source-location",
-              "url": "http://localhost:56620/dobetterweb/dbw_tester.html",
-              "urlProvider": "network",
-              "line": 0,
-              "column": 0
             }
           }
         ]
@@ -1453,10 +1499,14 @@
           {
             "firstContentfulPaint": 3969,
             "firstContentfulPaintTs": 185607289047,
+            "firstContentfulPaintAllFrames": 3969,
+            "firstContentfulPaintAllFramesTs": 185607289047,
             "firstMeaningfulPaint": 3969,
             "firstMeaningfulPaintTs": 185607289048,
             "largestContentfulPaint": 4927,
             "largestContentfulPaintTs": 185608247190,
+            "largestContentfulPaintAllFrames": 4927,
+            "largestContentfulPaintAllFramesTs": 185608247190,
             "firstCPUIdle": 4927,
             "firstCPUIdleTs": 185608247190,
             "interactive": 4927,
@@ -1476,10 +1526,14 @@
             "observedFirstPaintTs": 185607289043,
             "observedFirstContentfulPaint": 3969,
             "observedFirstContentfulPaintTs": 185607289047,
+            "observedFirstContentfulPaintAllFrames": 3969,
+            "observedFirstContentfulPaintAllFramesTs": 185607289047,
             "observedFirstMeaningfulPaint": 3969,
             "observedFirstMeaningfulPaintTs": 185607289048,
             "observedLargestContentfulPaint": 4927,
             "observedLargestContentfulPaintTs": 185608247190,
+            "observedLargestContentfulPaintAllFrames": 4927,
+            "observedLargestContentfulPaintAllFramesTs": 185608247190,
             "observedTraceEnd": 10281,
             "observedTraceEndTs": 185613601189,
             "observedLoad": 4924,
@@ -1843,8 +1897,6 @@
               "lhId": "page-1-IMG",
               "path": "3,HTML,1,BODY,14,IMG",
               "selector": "body > img",
-              "nodeLabel": "img",
-              "snippet": "<img src=\"lighthouse-480x318.jpg?iar2\" width=\"120\" height=\"80\">",
               "boundingRect": {
                 "top": 574,
                 "bottom": 654,
@@ -1852,7 +1904,9 @@
                 "right": 252,
                 "width": 120,
                 "height": 80
-              }
+              },
+              "snippet": "<img src=\"lighthouse-480x318.jpg?iar2\" width=\"120\" height=\"80\">",
+              "nodeLabel": "img"
             }
           }
         ]
@@ -1886,8 +1940,8 @@
               "type": "node",
               "path": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,3,H5",
               "selector": "div.blog-index > article > div.entry-content > h5",
-              "nodeLabel": "Debugging Node.js with Chrome DevTools",
-              "snippet": "<h5>"
+              "snippet": "<h5>",
+              "nodeLabel": "Debugging Node.js with Chrome DevTools"
             }
           },
           {
@@ -1895,8 +1949,8 @@
               "type": "node",
               "path": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,4,P",
               "selector": "div.blog-index > article > div.entry-content > p",
-              "nodeLabel": "The canonical guide to using the Chrome DevTools UI for debugging Node.js. It d…",
-              "snippet": "<p>"
+              "snippet": "<p>",
+              "nodeLabel": "The canonical guide to using the Chrome DevTools UI for debugging Node.js. It d…"
             }
           },
           {
@@ -1904,8 +1958,8 @@
               "type": "node",
               "path": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,5,HR",
               "selector": "div.blog-index > article > div.entry-content > hr",
-              "nodeLabel": "hr",
-              "snippet": "<hr>"
+              "snippet": "<hr>",
+              "nodeLabel": "hr"
             }
           },
           {
@@ -1913,8 +1967,8 @@
               "type": "node",
               "path": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,6,P",
               "selector": "div.blog-index > article > div.entry-content > p",
-              "nodeLabel": "Aside from that, I’ve been busy working on Lighthouse, performance metrics, too…",
-              "snippet": "<p>"
+              "snippet": "<p>",
+              "nodeLabel": "Aside from that, I’ve been busy working on Lighthouse, performance metrics, too…"
             }
           }
         ]
@@ -1984,14 +2038,14 @@
           {
             "key": "source",
             "itemType": "source-location",
-            "text": "URL"
+            "text": "Source"
           }
         ],
         "items": [
           {
             "source": {
               "type": "source-location",
-              "url": "http://localhost:58599/dobetterweb/dbw_tester.html",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
               "urlProvider": "network",
               "line": 386,
               "column": 36
@@ -2035,8 +2089,8 @@
               "type": "node",
               "path": "1,HTML,1,BODY,0,DIV",
               "selector": "body > div#animated-boi",
-              "nodeLabel": "div",
-              "snippet": "<div id=\"animated-boi\">"
+              "snippet": "<div id=\"animated-boi\">",
+              "nodeLabel": "div"
             },
             "subItems": {
               "type": "subitems",
@@ -2085,23 +2139,41 @@
         ],
         "items": [
           {
-            "url": "blob:http://localhost:54657/822c70a0-b912-41c7-9a21-56c3d309e75b",
+            "url": "blob:http://localhost:10200/822c70a0-b912-41c7-9a21-56c3d309e75b",
             "node": {
               "type": "node",
+              "lhId": "page-7-IMG",
               "path": "3,HTML,1,BODY,63,IMG",
               "selector": "body > img",
-              "nodeLabel": "img",
-              "snippet": "<img src=\"blob:http://localhost:54657/822c70a0-b912-41c7-9a21-56c3d309e75b\">"
+              "boundingRect": {
+                "top": 1295,
+                "bottom": 1311,
+                "left": 322,
+                "right": 338,
+                "width": 16,
+                "height": 16
+              },
+              "snippet": "<img src=\"blob:http://localhost:10200/822c70a0-b912-41c7-9a21-56c3d309e75b\">",
+              "nodeLabel": "img"
             }
           },
           {
-            "url": "filesystem:http://localhost:54657/temporary/empty-0.8423185960902964.png",
+            "url": "filesystem:http://localhost:10200/temporary/empty-0.8423185960902964.png",
             "node": {
               "type": "node",
+              "lhId": "page-8-IMG",
               "path": "3,HTML,1,BODY,72,IMG",
               "selector": "body > img",
-              "nodeLabel": "img",
-              "snippet": "<img src=\"filesystem:http://localhost:54657/temporary/empty-0.8423185960902964.png\">"
+              "boundingRect": {
+                "top": 1317,
+                "bottom": 1333,
+                "left": 8,
+                "right": 24,
+                "width": 16,
+                "height": 16
+              },
+              "snippet": "<img src=\"filesystem:http://localhost:10200/temporary/empty-0.8423185960902964.png\">",
+              "nodeLabel": "img"
             }
           }
         ]
@@ -2720,9 +2792,8 @@
           {
             "node": {
               "type": "node",
-              "selector": "body > div > h2",
               "path": "3,HTML,1,BODY,7,DIV,0,H2",
-              "snippet": "<h2>",
+              "selector": "body > div > h2",
               "boundingRect": {
                 "top": 336,
                 "bottom": 364,
@@ -2731,16 +2802,16 @@
                 "width": 344,
                 "height": 28
               },
-              "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 18.0pt (24px), font weight: bold). Expected contrast ratio of 3:1",
-              "nodeLabel": "Do better web tester page"
+              "snippet": "<h2>",
+              "nodeLabel": "Do better web tester page",
+              "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 18.0pt (24px), font weight: bold). Expected contrast ratio of 3:1"
             }
           },
           {
             "node": {
               "type": "node",
-              "selector": "body > div > span",
               "path": "3,HTML,1,BODY,7,DIV,1,SPAN",
-              "snippet": "<span>",
+              "selector": "body > div > span",
               "boundingRect": {
                 "top": 384,
                 "bottom": 402,
@@ -2749,8 +2820,9 @@
                 "width": 57,
                 "height": 18
               },
-              "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1",
-              "nodeLabel": "Hi there!"
+              "snippet": "<span>",
+              "nodeLabel": "Hi there!",
+              "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
             }
           }
         ],
@@ -2855,9 +2927,8 @@
           {
             "node": {
               "type": "node",
-              "selector": "html",
               "path": "3,HTML",
-              "snippet": "<html manifest=\"clock.appcache\">",
+              "selector": "html",
               "boundingRect": {
                 "top": 0,
                 "bottom": 1345,
@@ -2866,8 +2937,9 @@
                 "width": 360,
                 "height": 1345
               },
-              "explanation": "Fix any of the following:\n  The <html> element does not have a lang attribute",
-              "nodeLabel": "html"
+              "snippet": "<html manifest=\"clock.appcache\">",
+              "nodeLabel": "html",
+              "explanation": "Fix any of the following:\n  The <html> element does not have a lang attribute"
             }
           }
         ],
@@ -2908,9 +2980,8 @@
           {
             "node": {
               "type": "node",
-              "selector": "body > img",
               "path": "3,HTML,1,BODY,12,IMG",
-              "snippet": "<img src=\"lighthouse-480x318.jpg?iar1\" width=\"120\" height=\"15\">",
+              "selector": "body > img",
               "boundingRect": {
                 "top": 639,
                 "bottom": 654,
@@ -2919,16 +2990,16 @@
                 "width": 120,
                 "height": 15
               },
-              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-              "nodeLabel": "img"
+              "snippet": "<img src=\"lighthouse-480x318.jpg?iar1\" width=\"120\" height=\"15\">",
+              "nodeLabel": "img",
+              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\""
             }
           },
           {
             "node": {
               "type": "node",
-              "selector": "body > img",
               "path": "3,HTML,1,BODY,14,IMG",
-              "snippet": "<img src=\"lighthouse-480x318.jpg?iar2\" width=\"120\" height=\"80\">",
+              "selector": "body > img",
               "boundingRect": {
                 "top": 574,
                 "bottom": 654,
@@ -2937,16 +3008,16 @@
                 "width": 120,
                 "height": 80
               },
-              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-              "nodeLabel": "img"
+              "snippet": "<img src=\"lighthouse-480x318.jpg?iar2\" width=\"120\" height=\"80\">",
+              "nodeLabel": "img",
+              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\""
             }
           },
           {
             "node": {
               "type": "node",
-              "selector": "body > img",
               "path": "3,HTML,1,BODY,16,IMG",
-              "snippet": "<img src=\"lighthouse-480x318.jpg?isr1\" width=\"4800\" height=\"3180\" style=\"position: absolute;\">",
+              "selector": "body > img",
               "boundingRect": {
                 "top": 574,
                 "bottom": 3754,
@@ -2955,16 +3026,16 @@
                 "width": 4800,
                 "height": 3180
               },
-              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-              "nodeLabel": "img"
+              "snippet": "<img src=\"lighthouse-480x318.jpg?isr1\" width=\"4800\" height=\"3180\" style=\"position: absolute;\">",
+              "nodeLabel": "img",
+              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\""
             }
           },
           {
             "node": {
               "type": "node",
-              "selector": "body > img",
               "path": "3,HTML,1,BODY,18,IMG",
-              "snippet": "<img src=\"lighthouse-480x318.jpg?isr2\" width=\"120\" height=\"80\" style=\"position: absolute;\">",
+              "selector": "body > img",
               "boundingRect": {
                 "top": 574,
                 "bottom": 654,
@@ -2973,34 +3044,34 @@
                 "width": 120,
                 "height": 80
               },
-              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-              "nodeLabel": "img"
+              "snippet": "<img src=\"lighthouse-480x318.jpg?isr2\" width=\"120\" height=\"80\" style=\"position: absolute;\">",
+              "nodeLabel": "img",
+              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\""
             }
           },
           {
             "node": {
               "type": "node",
-              "selector": "body > img",
               "path": "3,HTML,1,BODY,20,IMG",
+              "selector": "body > img",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 1210,
+                "left": 252,
+                "right": 1212,
+                "width": 960,
+                "height": 636
+              },
               "snippet": "<img src=\"lighthouse-480x318.jpg?isr3\" width=\"960\" height=\"636\" style=\"image-rendering: pixelated; position: absolute;\">",
-              "boundingRect": {
-                "top": 574,
-                "bottom": 1210,
-                "left": 252,
-                "right": 1212,
-                "width": 960,
-                "height": 636
-              },
-              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-              "nodeLabel": "img"
+              "nodeLabel": "img",
+              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\""
             }
           },
           {
             "node": {
               "type": "node",
-              "selector": "body > img",
               "path": "3,HTML,1,BODY,22,IMG",
-              "snippet": "<img src=\"lighthouse-480x318.jpg?isr4\" srcset=\"lighthouse-480x318.jpg 2x\" width=\"960\" height=\"636\" style=\"position: absolute;\">",
+              "selector": "body > img",
               "boundingRect": {
                 "top": 574,
                 "bottom": 1210,
@@ -3009,16 +3080,16 @@
                 "width": 960,
                 "height": 636
               },
-              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-              "nodeLabel": "img"
+              "snippet": "<img src=\"lighthouse-480x318.jpg?isr4\" srcset=\"lighthouse-480x318.jpg 2x\" width=\"960\" height=\"636\" style=\"position: absolute;\">",
+              "nodeLabel": "img",
+              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\""
             }
           },
           {
             "node": {
               "type": "node",
-              "selector": "body > img",
               "path": "3,HTML,1,BODY,24,IMG",
-              "snippet": "<img src=\"lighthouse-rotating.gif\" width=\"811\" height=\"462\">",
+              "selector": "body > img",
               "boundingRect": {
                 "top": 658,
                 "bottom": 1120,
@@ -3027,16 +3098,16 @@
                 "width": 811,
                 "height": 462
               },
-              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-              "nodeLabel": "img"
+              "snippet": "<img src=\"lighthouse-rotating.gif\" width=\"811\" height=\"462\">",
+              "nodeLabel": "img",
+              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\""
             }
           },
           {
             "node": {
               "type": "node",
-              "selector": "body > img",
               "path": "3,HTML,1,BODY,63,IMG",
-              "snippet": "<img src=\"blob:http://localhost:53943/75859e89-fbad-4471-b196-9304adbb874a\">",
+              "selector": "body > img",
               "boundingRect": {
                 "top": 1295,
                 "bottom": 1311,
@@ -3045,16 +3116,16 @@
                 "width": 16,
                 "height": 16
               },
-              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-              "nodeLabel": "img"
+              "snippet": "<img src=\"blob:http://localhost:10200/75859e89-fbad-4471-b196-9304adbb874a\">",
+              "nodeLabel": "img",
+              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\""
             }
           },
           {
             "node": {
               "type": "node",
-              "selector": "body > img",
               "path": "3,HTML,1,BODY,72,IMG",
-              "snippet": "<img src=\"filesystem:http://localhost:53943/temporary/empty-0.34660357368794004.png\">",
+              "selector": "body > img",
               "boundingRect": {
                 "top": 1317,
                 "bottom": 1333,
@@ -3063,8 +3134,9 @@
                 "width": 16,
                 "height": 16
               },
-              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-              "nodeLabel": "img"
+              "snippet": "<img src=\"filesystem:http://localhost:10200/temporary/empty-0.34660357368794004.png\">",
+              "nodeLabel": "img",
+              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\""
             }
           }
         ],
@@ -3107,9 +3179,8 @@
           {
             "node": {
               "type": "node",
-              "selector": "body > input",
               "path": "3,HTML,1,BODY,58,INPUT",
-              "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">",
+              "selector": "body > input",
               "boundingRect": {
                 "top": 1274,
                 "bottom": 1295,
@@ -3118,16 +3189,16 @@
                 "width": 153,
                 "height": 21
               },
-              "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
-              "nodeLabel": "input"
+              "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">",
+              "nodeLabel": "input",
+              "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty"
             }
           },
           {
             "node": {
               "type": "node",
-              "selector": "body > input",
               "path": "3,HTML,1,BODY,60,INPUT",
-              "snippet": "<input type=\"password\">",
+              "selector": "body > input",
               "boundingRect": {
                 "top": 1296,
                 "bottom": 1317,
@@ -3136,16 +3207,16 @@
                 "width": 153,
                 "height": 21
               },
-              "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
-              "nodeLabel": "input"
+              "snippet": "<input type=\"password\">",
+              "nodeLabel": "input",
+              "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty"
             }
           },
           {
             "node": {
               "type": "node",
-              "selector": "body > input",
               "path": "3,HTML,1,BODY,62,INPUT",
-              "snippet": "<input type=\"password\" onpaste=\"return false;\">",
+              "selector": "body > input",
               "boundingRect": {
                 "top": 1296,
                 "bottom": 1317,
@@ -3154,8 +3225,9 @@
                 "width": 153,
                 "height": 21
               },
-              "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
-              "nodeLabel": "input"
+              "snippet": "<input type=\"password\" onpaste=\"return false;\">",
+              "nodeLabel": "input",
+              "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty"
             }
           }
         ],
@@ -3192,9 +3264,8 @@
           {
             "node": {
               "type": "node",
-              "selector": "body > a",
               "path": "3,HTML,1,BODY,54,A",
-              "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\">",
+              "selector": "body > a",
               "boundingRect": {
                 "top": 1275,
                 "bottom": 1293,
@@ -3203,16 +3274,16 @@
                 "width": 0,
                 "height": 18
               },
-              "explanation": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-              "nodeLabel": "a"
+              "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\">",
+              "nodeLabel": "a",
+              "explanation": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\""
             }
           },
           {
             "node": {
               "type": "node",
-              "selector": "body > a",
               "path": "3,HTML,1,BODY,56,A",
-              "snippet": "<a href=\"mailto:inbox@email.com\" target=\"_blank\">",
+              "selector": "body > a",
               "boundingRect": {
                 "top": 1275,
                 "bottom": 1293,
@@ -3221,8 +3292,9 @@
                 "width": 0,
                 "height": 18
               },
-              "explanation": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-              "nodeLabel": "a"
+              "snippet": "<a href=\"mailto:inbox@email.com\" target=\"_blank\">",
+              "nodeLabel": "a",
+              "explanation": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\""
             }
           }
         ],
@@ -3292,9 +3364,8 @@
           {
             "node": {
               "type": "node",
-              "selector": "body > object#5934a",
               "path": "3,HTML,1,BODY,2,OBJECT",
-              "snippet": "<object id=\"5934a\">",
+              "selector": "body > object#5934a",
               "boundingRect": {
                 "top": 8,
                 "bottom": 158,
@@ -3303,16 +3374,16 @@
                 "width": 300,
                 "height": 150
               },
-              "explanation": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-              "nodeLabel": "object"
+              "snippet": "<object id=\"5934a\">",
+              "nodeLabel": "object",
+              "explanation": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\""
             }
           },
           {
             "node": {
               "type": "node",
-              "selector": "body > object#5934b",
               "path": "3,HTML,1,BODY,3,OBJECT",
-              "snippet": "<object id=\"5934b\">",
+              "selector": "body > object#5934b",
               "boundingRect": {
                 "top": 162,
                 "bottom": 312,
@@ -3321,8 +3392,9 @@
                 "width": 300,
                 "height": 150
               },
-              "explanation": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-              "nodeLabel": "object"
+              "snippet": "<object id=\"5934b\">",
+              "nodeLabel": "object",
+              "explanation": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\""
             }
           }
         ],
@@ -3745,12 +3817,12 @@
           {
             "url": "http://localhost:10200/zone.js",
             "totalBytes": 71654,
-            "wastedBytes": 30470,
-            "wastedPercent": 42.52388078488413
+            "wastedBytes": 30472,
+            "wastedPercent": 42.526292235399424
           }
         ],
         "overallSavingsMs": 150,
-        "overallSavingsBytes": 30470
+        "overallSavingsBytes": 30472
       }
     },
     "unused-css-rules": {
@@ -3791,9 +3863,9 @@
       "id": "uses-webp-images",
       "title": "Serve images in next-gen formats",
       "description": "Image formats like JPEG 2000, JPEG XR, and WebP often provide better compression than PNG or JPEG, which means faster downloads and less data consumption. [Learn more](https://web.dev/uses-webp-images/).",
-      "score": 1,
+      "score": 0.88,
       "scoreDisplayMode": "numeric",
-      "numericValue": 0,
+      "numericValue": 150,
       "numericUnit": "millisecond",
       "displayValue": "Potential savings of 9 KiB",
       "warnings": [],
@@ -3823,14 +3895,14 @@
         ],
         "items": [
           {
-            "url": "http://localhost:54819/dobetterweb/lighthouse-480x318.jpg",
+            "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
             "fromProtocol": true,
-            "isCrossOrigin": true,
+            "isCrossOrigin": false,
             "totalBytes": 24620,
             "wastedBytes": 9028
           }
         ],
-        "overallSavingsMs": 0,
+        "overallSavingsMs": 150,
         "overallSavingsBytes": 9028
       }
     },
@@ -3985,7 +4057,7 @@
         "items": [
           {
             "url": "http://localhost:10200/zone.js",
-            "wastedBytes": 21205,
+            "wastedBytes": 21204,
             "subItems": {
               "type": "subitems",
               "items": [
@@ -4015,7 +4087,7 @@
           }
         ],
         "overallSavingsMs": 0,
-        "overallSavingsBytes": 21205
+        "overallSavingsBytes": 21204
       }
     },
     "appcache-manifest": {
@@ -4077,8 +4149,16 @@
             "node": {
               "type": "node",
               "path": "3,HTML,1,BODY,7,DIV,3,svg,0,title",
-              "snippet": "<title id=\"social-facebook-5\">",
               "selector": "body > div > svg.social-facebook > title#social-facebook-5",
+              "boundingRect": {
+                "top": 0,
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "width": 0,
+                "height": 0
+              },
+              "snippet": "<title id=\"social-facebook-5\">",
               "nodeLabel": "title"
             },
             "statistic": "Maximum DOM Depth",
@@ -4088,8 +4168,16 @@
             "node": {
               "type": "node",
               "path": "3,HTML,1,BODY,4,DIV,a,#document-fragment",
-              "snippet": "<div id=\"shadow-root-container\">",
               "selector": "body > div#shadow-root-container",
+              "boundingRect": {
+                "top": 316,
+                "bottom": 316,
+                "left": 8,
+                "right": 352,
+                "width": 344,
+                "height": 0
+              },
+              "snippet": "<div id=\"shadow-root-container\">",
               "nodeLabel": "div"
             },
             "statistic": "Maximum Child Elements",
@@ -4122,8 +4210,16 @@
               "type": "node",
               "path": "3,HTML,1,BODY,36,A",
               "selector": "body > a",
-              "nodeLabel": "external link",
-              "snippet": "<a href=\"https://www.google.com/\" target=\"_blank\">"
+              "boundingRect": {
+                "top": 1166,
+                "bottom": 1184,
+                "left": 91,
+                "right": 171,
+                "width": 80,
+                "height": 18
+              },
+              "snippet": "<a href=\"https://www.google.com/\" target=\"_blank\">",
+              "nodeLabel": "external link"
             },
             "href": "https://www.google.com/",
             "target": "_blank",
@@ -4135,8 +4231,16 @@
               "type": "node",
               "path": "3,HTML,1,BODY,38,A",
               "selector": "body > a",
-              "nodeLabel": "external link",
-              "snippet": "<a target=\"_blank\">"
+              "boundingRect": {
+                "top": 1166,
+                "bottom": 1184,
+                "left": 175,
+                "right": 255,
+                "width": 80,
+                "height": 18
+              },
+              "snippet": "<a target=\"_blank\">",
+              "nodeLabel": "external link"
             },
             "href": "Unknown",
             "target": "_blank",
@@ -4148,26 +4252,21 @@
               "type": "node",
               "path": "3,HTML,1,BODY,40,A",
               "selector": "body > a",
-              "nodeLabel": "external link",
-              "snippet": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"nofollow\">"
+              "boundingRect": {
+                "top": 1166,
+                "bottom": 1184,
+                "left": 259,
+                "right": 340,
+                "width": 80,
+                "height": 18
+              },
+              "snippet": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"nofollow\">",
+              "nodeLabel": "external link"
             },
             "href": "https://www.google.com/",
             "target": "_blank",
             "rel": "nofollow",
             "outerHTML": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"nofollow\">"
-          },
-          {
-            "node": {
-              "type": "node",
-              "path": "3,HTML,1,BODY,52,A",
-              "selector": "body > a",
-              "nodeLabel": "internal link is ok",
-              "snippet": "<a href=\"./doesnotexist\" target=\"_blank\">"
-            },
-            "href": "http://localhost:53522/dobetterweb/doesnotexist",
-            "target": "_blank",
-            "rel": "",
-            "outerHTML": "<a href=\"./doesnotexist\" target=\"_blank\">"
           }
         ]
       }
@@ -4182,24 +4281,29 @@
         "type": "table",
         "headings": [
           {
-            "key": "url",
-            "itemType": "url",
-            "text": "URL"
-          },
-          {
-            "key": "label",
-            "itemType": "text",
-            "text": "Location"
+            "key": "source",
+            "itemType": "source-location",
+            "text": "Source"
           }
         ],
         "items": [
           {
-            "label": "line: 331",
-            "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+            "source": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 331,
+              "column": 24
+            }
           },
           {
-            "label": "line: 335",
-            "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+            "source": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 335,
+              "column": 40
+            }
           }
         ]
       }
@@ -4208,9 +4312,13 @@
       "id": "inspector-issues",
       "title": "No issues in the `Issues` panel in Chrome Devtools",
       "description": "Issues logged to the `Issues` panel in Chrome Devtools indicate unresolved problems. They can come from network request failures, insufficient security controls, and other browser concerns. Open up the Issues panel in Chrome DevTools for more details on each issue.",
-      "score": null,
-      "scoreDisplayMode": "error",
-      "errorMessage": "Cannot read property 'length' of undefined"
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
     },
     "no-document-write": {
       "id": "no-document-write",
@@ -4222,28 +4330,38 @@
         "type": "table",
         "headings": [
           {
-            "key": "url",
-            "itemType": "url",
-            "text": "URL"
-          },
-          {
-            "key": "label",
-            "itemType": "text",
-            "text": "Location"
+            "key": "source",
+            "itemType": "source-location",
+            "text": "Source"
           }
         ],
         "items": [
           {
-            "label": "line: 269",
-            "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+            "source": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 269,
+              "column": 11
+            }
           },
           {
-            "label": "line: 270",
-            "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+            "source": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 270,
+              "column": 11
+            }
           },
           {
-            "label": "line: 271",
-            "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+            "source": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 271,
+              "column": 11
+            }
           }
         ]
       }
@@ -4346,20 +4464,20 @@
         "type": "table",
         "headings": [
           {
-            "key": "url",
-            "itemType": "url",
-            "text": "URL"
-          },
-          {
-            "key": "label",
-            "itemType": "text",
-            "text": "Location"
+            "key": "source",
+            "itemType": "source-location",
+            "text": "Source"
           }
         ],
         "items": [
           {
-            "label": "line: 341",
-            "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+            "source": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 341,
+              "column": 15
+            }
           }
         ]
       }
@@ -4383,15 +4501,35 @@
           {
             "node": {
               "type": "node",
+              "path": "3,HTML,1,BODY,58,INPUT",
+              "selector": "body > input",
+              "boundingRect": {
+                "top": 1274,
+                "bottom": 1295,
+                "left": 192,
+                "right": 345,
+                "width": 153,
+                "height": 21
+              },
               "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">",
-              "path": "3,HTML,1,BODY,58,INPUT"
+              "nodeLabel": "input"
             }
           },
           {
             "node": {
               "type": "node",
+              "path": "3,HTML,1,BODY,62,INPUT",
+              "selector": "body > input",
+              "boundingRect": {
+                "top": 1296,
+                "bottom": 1317,
+                "left": 165,
+                "right": 318,
+                "width": 153,
+                "height": 21
+              },
               "snippet": "<input type=\"password\" onpaste=\"return false;\">",
-              "path": "3,HTML,1,BODY,62,INPUT"
+              "nodeLabel": "input"
             }
           }
         ]
@@ -4495,20 +4633,20 @@
         "type": "table",
         "headings": [
           {
-            "key": "url",
-            "itemType": "url",
-            "text": "URL"
-          },
-          {
-            "key": "label",
-            "itemType": "text",
-            "text": "Location"
+            "key": "source",
+            "itemType": "source-location",
+            "text": "Source"
           }
         ],
         "items": [
           {
-            "label": "line: 302",
-            "url": "http://localhost:56620/dobetterweb/dbw_tester.html"
+            "source": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 302,
+              "column": 5
+            }
           }
         ]
       }
@@ -4605,8 +4743,16 @@
               "type": "node",
               "path": "3,HTML,1,BODY,38,A",
               "selector": "body > a",
-              "nodeLabel": "external link",
-              "snippet": "<a target=\"_blank\">"
+              "boundingRect": {
+                "top": 1166,
+                "bottom": 1184,
+                "left": 175,
+                "right": 255,
+                "width": 80,
+                "height": 18
+              },
+              "snippet": "<a target=\"_blank\">",
+              "nodeLabel": "external link"
             }
           },
           {
@@ -4614,8 +4760,16 @@
               "type": "node",
               "path": "3,HTML,1,BODY,54,A",
               "selector": "body > a",
-              "nodeLabel": "a",
-              "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\">"
+              "boundingRect": {
+                "top": 1275,
+                "bottom": 1293,
+                "left": 192,
+                "right": 192,
+                "width": 0,
+                "height": 18
+              },
+              "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\">",
+              "nodeLabel": "a"
             }
           }
         ]
@@ -4670,7 +4824,6 @@
           {
             "tapTarget": {
               "type": "node",
-              "snippet": "<button class=\"small-button\">Do something</button>",
               "path": "3,HTML,1,BODY,17,BUTTON",
               "selector": "body > button.small-button",
               "boundingRect": {
@@ -4681,11 +4834,11 @@
                 "width": 200,
                 "height": 18
               },
+              "snippet": "<button class=\"small-button\">Do something</button>",
               "nodeLabel": "Do something"
             },
             "overlappingTarget": {
               "type": "node",
-              "snippet": "<button class=\"small-button\">Do something else</button>",
               "path": "3,HTML,1,BODY,18,BUTTON",
               "selector": "body > button.small-button",
               "boundingRect": {
@@ -4696,6 +4849,7 @@
                 "width": 200,
                 "height": 18
               },
+              "snippet": "<button class=\"small-button\">Do something else</button>",
               "nodeLabel": "Do something else"
             },
             "tapTargetScore": 864,
@@ -5532,7 +5686,7 @@
         }
       ],
       "id": "best-practices",
-      "score": null
+      "score": 0.13
     },
     "seo": {
       "title": "SEO",
@@ -6235,6 +6389,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:FirstContentfulPaintAllFrames",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:computed:LargestContentfulPaintAllFrames",
         "duration": 100,
         "entryType": "measure"
@@ -6763,6 +6923,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:uses-webp-images",
         "duration": 100,
         "entryType": "measure"
@@ -7209,31 +7375,15 @@
       "lighthouse-core/audits/errors-in-console.js | description": [
         "audits[errors-in-console].description"
       ],
-      "lighthouse-core/lib/i18n/i18n.js | columnURL": [
+      "lighthouse-core/lib/i18n/i18n.js | columnSource": [
         "audits[errors-in-console].details.headings[0].text",
-        "audits[server-response-time].details.headings[0].label",
-        "audits[image-aspect-ratio].details.headings[1].text",
-        "audits[image-size-responsive].details.headings[1].text",
-        "audits[preload-fonts].details.headings[0].text",
         "audits.deprecations.details.headings[1].text",
-        "audits[bootup-time].details.headings[0].text",
-        "audits[network-rtt].details.headings[0].text",
-        "audits[network-server-latency].details.headings[0].text",
-        "audits[long-tasks].details.headings[0].text",
         "audits[no-unload-listeners].details.headings[0].text",
-        "audits[unsized-images].details.headings[1].text",
-        "audits[uses-long-cache-ttl].details.headings[0].text",
-        "audits[total-byte-weight].details.headings[0].text",
-        "audits[render-blocking-resources].details.headings[0].label",
-        "audits[unminified-javascript].details.headings[0].label",
-        "audits[uses-webp-images].details.headings[1].label",
-        "audits[uses-text-compression].details.headings[0].label",
-        "audits[legacy-javascript].details.headings[0].label",
         "audits[geolocation-on-start].details.headings[0].text",
         "audits[no-document-write].details.headings[0].text",
         "audits[notification-on-start].details.headings[0].text",
-        "audits[uses-http2].details.headings[0].label",
-        "audits[uses-passive-event-listeners].details.headings[0].text"
+        "audits[uses-passive-event-listeners].details.headings[0].text",
+        "audits[font-size].details.headings[0].text"
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnDescription": [
         "audits[errors-in-console].details.headings[1].text"
@@ -7251,6 +7401,25 @@
           },
           "path": "audits[server-response-time].displayValue"
         }
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnURL": [
+        "audits[server-response-time].details.headings[0].label",
+        "audits[image-aspect-ratio].details.headings[1].text",
+        "audits[image-size-responsive].details.headings[1].text",
+        "audits[preload-fonts].details.headings[0].text",
+        "audits[bootup-time].details.headings[0].text",
+        "audits[network-rtt].details.headings[0].text",
+        "audits[network-server-latency].details.headings[0].text",
+        "audits[long-tasks].details.headings[0].text",
+        "audits[unsized-images].details.headings[1].text",
+        "audits[uses-long-cache-ttl].details.headings[0].text",
+        "audits[total-byte-weight].details.headings[0].text",
+        "audits[render-blocking-resources].details.headings[0].label",
+        "audits[unminified-javascript].details.headings[0].label",
+        "audits[uses-webp-images].details.headings[1].label",
+        "audits[uses-text-compression].details.headings[0].label",
+        "audits[legacy-javascript].details.headings[0].label",
+        "audits[uses-http2].details.headings[0].label"
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": [
         "audits[server-response-time].details.headings[1].label",
@@ -7387,7 +7556,7 @@
       "lighthouse-core/audits/deprecations.js | displayValue": [
         {
           "values": {
-            "itemCount": 4
+            "itemCount": 3
           },
           "path": "audits.deprecations.displayValue"
         }
@@ -8077,7 +8246,7 @@
       "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": [
         {
           "values": {
-            "wastedBytes": 30470
+            "wastedBytes": 30472
           },
           "path": "audits[unminified-javascript].displayValue"
         },
@@ -8095,7 +8264,7 @@
         },
         {
           "values": {
-            "wastedBytes": 21205
+            "wastedBytes": 21204
           },
           "path": "audits[legacy-javascript].displayValue"
         }
@@ -8235,12 +8404,6 @@
       "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": [
         "audits[geolocation-on-start].description"
       ],
-      "lighthouse-core/lib/i18n/i18n.js | columnLocation": [
-        "audits[geolocation-on-start].details.headings[1].text",
-        "audits[no-document-write].details.headings[1].text",
-        "audits[notification-on-start].details.headings[1].text",
-        "audits[uses-passive-event-listeners].details.headings[1].text"
-      ],
       "lighthouse-core/audits/dobetterweb/inspector-issues.js | title": [
         "audits[inspector-issues].title"
       ],
@@ -8348,9 +8511,6 @@
           },
           "path": "audits[font-size].displayValue"
         }
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | columnSource": [
-        "audits[font-size].details.headings[0].text"
       ],
       "lighthouse-core/audits/seo/font-size.js | columnSelector": [
         "audits[font-size].details.headings[1].text"

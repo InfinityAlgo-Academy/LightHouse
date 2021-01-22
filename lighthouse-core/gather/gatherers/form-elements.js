@@ -15,7 +15,7 @@ const pageFunctions = require('../../lib/page-functions.js');
 /**
  * @return {LH.Artifacts['FormElements']}
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 function collectFormElements() {
   // @ts-expect-error - put into scope via stringification
   const formChildren = getElementsInDocument('textarea, input, label, select'); // eslint-disable-line no-undef
@@ -82,6 +82,7 @@ function collectFormElements() {
   }
   return [...forms.values()];
 }
+/* c8 ignore stop */
 
 class FormElements extends Gatherer {
   /**

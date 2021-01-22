@@ -16,9 +16,9 @@
  * 4. Return all those items in one handy bundle.
  */
 
-/** @typedef {Omit<LH.Artifacts.TraceTimes, 'firstContentfulPaint'> & {firstContentfulPaint?: number}} TraceTimesWithoutFCP */
+/** @typedef {Omit<LH.Artifacts.TraceTimes, 'firstContentfulPaint'|'firstContentfulPaintAllFrames'> & {firstContentfulPaint?: number, firstContentfulPaintAllFrames?: number}} TraceTimesWithoutFCP */
 /** @typedef {Omit<TraceTimesWithoutFCP, 'traceEnd'>} TraceTimesWithoutFCPAndTraceEnd */
-/** @typedef {Omit<LH.Artifacts.TraceOfTab, 'firstContentfulPaintEvt'|'timings'|'timestamps'> & {timings: TraceTimesWithoutFCP, timestamps: TraceTimesWithoutFCP, firstContentfulPaintEvt?: LH.Artifacts.TraceOfTab['firstContentfulPaintEvt']}} TraceOfTabWithoutFCP */
+/** @typedef {Omit<LH.Artifacts.TraceOfTab, 'firstContentfulPaintEvt'|'firstContentfulPaintAllFramesEvt'|'timings'|'timestamps'> & {timings: TraceTimesWithoutFCP, timestamps: TraceTimesWithoutFCP, firstContentfulPaintEvt?: LH.Artifacts.TraceOfTab['firstContentfulPaintEvt'], firstContentfulPaintAllFramesEvt?: LH.Artifacts.TraceOfTab['largestContentfulPaintAllFramesEvt']}} TraceOfTabWithoutFCP */
 /** @typedef {'lastNavigationStart'|'firstResourceSendRequest'} TimeOriginDeterminationMethod */
 /** @typedef {Omit<LH.TraceEvent, 'name'|'args'> & {name: 'FrameCommittedInBrowser', args: {data: {frame: string, url: string, parent?: string}}}} FrameCommittedEvent */
 /** @typedef {Omit<LH.TraceEvent, 'name'|'args'> & {name: 'largestContentfulPaint::Invalidate'|'largestContentfulPaint::Candidate', args: {data?: {size?: number}, frame: string}}} LCPEvent */
@@ -611,15 +611,26 @@ class TraceProcessor {
       });
     const frameIdToRootFrameId = this.resolveRootFrames(frames);
 
-    // Filter to just events matching the frame ID, just to make sure.
+    // Filter to just events matching the main frame ID, just to make sure.
     const frameEvents = keyEvents.filter(e => e.args.frame === mainFrameIds.frameId);
 
     // Filter to just events matching the main frame ID or any child frame IDs.
-    const frameTreeEvents = keyEvents.filter(e => {
-      return e.args &&
-        e.args.frame &&
-        frameIdToRootFrameId.get(e.args.frame) === mainFrameIds.frameId;
-    });
+    // In practice, there should always be FrameCommittedInBrowser events to define the frame tree.
+    // Unfortunately, many test traces do not include FrameCommittedInBrowser events due to minification.
+    // This ensures there is always a minimal frame tree and events so those tests don't fail.
+    let frameTreeEvents = [];
+    if (frameIdToRootFrameId.has(mainFrameIds.frameId)) {
+      frameTreeEvents = keyEvents.filter(e => {
+        return e.args.frame && frameIdToRootFrameId.get(e.args.frame) === mainFrameIds.frameId;
+      });
+    } else {
+      log.warn(
+        'trace-of-tab',
+        'frameTreeEvents may be incomplete, make sure the trace has FrameCommittedInBrowser events'
+      );
+      frameIdToRootFrameId.set(mainFrameIds.frameId, mainFrameIds.frameId);
+      frameTreeEvents = frameEvents;
+    }
 
     // Compute our time origin to use for all relative timings.
     const timeOriginEvt = this.computeTimeOrigin(
@@ -629,6 +640,11 @@ class TraceProcessor {
 
     // Compute the key frame timings for the main frame.
     const frameTimings = this.computeKeyTimingsForFrame(frameEvents, {timeOriginEvt});
+
+    // Compute FCP for all frames.
+    const fcpAllFramesEvt = frameTreeEvents.find(
+      e => e.name === 'firstContentfulPaint' && e.ts > timeOriginEvt.ts
+    );
 
     // Compute LCP for all frames.
     const lcpAllFramesEvt = this.computeValidLCPAllFrames(frameTreeEvents, timeOriginEvt).lcp;
@@ -658,6 +674,7 @@ class TraceProcessor {
         timeOrigin: frameTimings.timings.timeOrigin,
         firstPaint: frameTimings.timings.firstPaint,
         firstContentfulPaint: frameTimings.timings.firstContentfulPaint,
+        firstContentfulPaintAllFrames: maybeGetTiming(fcpAllFramesEvt && fcpAllFramesEvt.ts),
         firstMeaningfulPaint: frameTimings.timings.firstMeaningfulPaint,
         largestContentfulPaint: frameTimings.timings.largestContentfulPaint,
         largestContentfulPaintAllFrames: maybeGetTiming(lcpAllFramesEvt && lcpAllFramesEvt.ts),
@@ -669,6 +686,7 @@ class TraceProcessor {
         timeOrigin: frameTimings.timestamps.timeOrigin,
         firstPaint: frameTimings.timestamps.firstPaint,
         firstContentfulPaint: frameTimings.timestamps.firstContentfulPaint,
+        firstContentfulPaintAllFrames: fcpAllFramesEvt && fcpAllFramesEvt.ts,
         firstMeaningfulPaint: frameTimings.timestamps.firstMeaningfulPaint,
         largestContentfulPaint: frameTimings.timestamps.largestContentfulPaint,
         largestContentfulPaintAllFrames: lcpAllFramesEvt && lcpAllFramesEvt.ts,
@@ -679,6 +697,7 @@ class TraceProcessor {
       timeOriginEvt: frameTimings.timeOriginEvt,
       firstPaintEvt: frameTimings.firstPaintEvt,
       firstContentfulPaintEvt: frameTimings.firstContentfulPaintEvt,
+      firstContentfulPaintAllFramesEvt: fcpAllFramesEvt,
       firstMeaningfulPaintEvt: frameTimings.firstMeaningfulPaintEvt,
       largestContentfulPaintEvt: frameTimings.largestContentfulPaintEvt,
       largestContentfulPaintAllFramesEvt: lcpAllFramesEvt,

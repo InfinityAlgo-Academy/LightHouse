@@ -102,6 +102,7 @@ describe('LegacyJavaScript audit', () => {
               "location": Object {
                 "column": 0,
                 "line": 0,
+                "original": undefined,
                 "type": "source-location",
                 "url": "https://www.googletagmanager.com/a.js",
                 "urlProvider": "network",

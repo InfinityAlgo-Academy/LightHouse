@@ -15,7 +15,7 @@ const pageFunctions = require('../../lib/page-functions.js');
 /**
  * @return {LH.Artifacts['IFrameElements']}
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 function collectIFrameElements() {
   // @ts-expect-error - put into scope via stringification
   const iFrameElements = getElementsInDocument('iframe'); // eslint-disable-line no-undef
@@ -33,6 +33,7 @@ function collectIFrameElements() {
     };
   });
 }
+/* c8 ignore stop */
 
 class IFrameElements extends Gatherer {
   /**

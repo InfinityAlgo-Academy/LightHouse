@@ -213,12 +213,12 @@ class DOM {
   /**
    * Guaranteed context.querySelector. Always returns an element or throws if
    * nothing matches query.
-   * @param {string} query
+   * @template {string} T
+   * @param {T} query
    * @param {ParentNode} context
-   * @return {!HTMLElement}
    */
   find(query, context) {
-    /** @type {?HTMLElement} */
+    /** @type {?import('typed-query-selector/parser').ParseSelector<T>} */
     const result = context.querySelector(query);
     if (result === null) {
       throw new Error(`query ${query} not found`);
@@ -228,12 +228,14 @@ class DOM {
 
   /**
    * Helper for context.querySelectorAll. Returns an Array instead of a NodeList.
-   * @param {string} query
+   * @template {string} T
+   * @param {T} query
    * @param {ParentNode} context
-   * @return {!Array<HTMLElement>}
    */
   findAll(query, context) {
-    return Array.from(context.querySelectorAll(query));
+    /** @type {Array<import('typed-query-selector/parser').ParseSelector<T>>} */
+    const elements = Array.from(context.querySelectorAll(query));
+    return elements;
   }
 }
 

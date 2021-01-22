@@ -136,6 +136,21 @@ const defaultPassConfig = {
   gatherers: [],
 };
 
+/** @type {Required<LH.Config.NavigationJson>} */
+const defaultNavigationConfig = {
+  id: 'default',
+  loadFailureMode: 'fatal',
+  disableThrottling: false,
+  disableStorageReset: false,
+  pauseAfterFcpMs: 0,
+  pauseAfterLoadMs: 0,
+  networkQuietThresholdMs: 0,
+  cpuQuietThresholdMs: 0,
+  blockedUrlPatterns: [],
+  blankPage: 'about:blank',
+  artifacts: [],
+};
+
 const nonSimulatedPassConfigOverrides = {
   pauseAfterFcpMs: 5250,
   pauseAfterLoadMs: 5250,
@@ -149,5 +164,6 @@ module.exports = {
   userAgents,
   defaultSettings,
   defaultPassConfig,
+  defaultNavigationConfig,
   nonSimulatedPassConfigOverrides,
 };

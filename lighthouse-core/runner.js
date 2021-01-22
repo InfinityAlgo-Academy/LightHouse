@@ -22,12 +22,13 @@ const generateReport = require('./report/report-generator.js').generateReport;
 const LHError = require('./lib/lh-error.js');
 
 /** @typedef {import('./gather/connections/connection.js')} Connection */
-/** @typedef {import('./config/config.js')} Config */
+/** @typedef {LH.Config.Config} Config */
 
 class Runner {
   /**
-   * @param {(runnerData: {requestedUrl: string, config: Config, driverMock?: Driver}) => Promise<LH.Artifacts>} gatherFn
-   * @param {{config: Config, url?: string, driverMock?: Driver}} runOpts
+   * @template {LH.Config.Config | LH.Config.FRConfig} TConfig
+   * @param {(runnerData: {requestedUrl: string, config: TConfig, driverMock?: Driver}) => Promise<LH.Artifacts>} gatherFn
+   * @param {{config: TConfig, url?: string, driverMock?: Driver}} runOpts
    * @return {Promise<LH.RunnerResult|undefined>}
    */
   static async run(gatherFn, runOpts) {

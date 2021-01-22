@@ -8,6 +8,7 @@
 const TraceOfTab = require('../trace-of-tab.js');
 const Speedline = require('../speedline.js');
 const FirstContentfulPaint = require('./first-contentful-paint.js');
+const FirstContentfulPaintAllFrames = require('./first-contentful-paint-all-frames.js');
 const FirstMeaningfulPaint = require('./first-meaningful-paint.js');
 const LargestContentfulPaint = require('./largest-contentful-paint.js');
 const LargestContentfulPaintAllFrames = require('./largest-contentful-paint-all-frames.js');
@@ -44,6 +45,7 @@ class TimingSummary {
     const traceOfTab = await TraceOfTab.request(trace, context);
     const speedline = await Speedline.request(trace, context);
     const firstContentfulPaint = await FirstContentfulPaint.request(metricComputationData, context);
+    const firstContentfulPaintAllFrames = await requestOrUndefined(FirstContentfulPaintAllFrames, metricComputationData); // eslint-disable-line max-len
     const firstMeaningfulPaint = await FirstMeaningfulPaint.request(metricComputationData, context);
     const largestContentfulPaint = await requestOrUndefined(LargestContentfulPaint, metricComputationData); // eslint-disable-line max-len
     const largestContentfulPaintAllFrames = await requestOrUndefined(LargestContentfulPaintAllFrames, metricComputationData); // eslint-disable-line max-len
@@ -67,6 +69,8 @@ class TimingSummary {
       // Include the simulated/observed performance metrics
       firstContentfulPaint: firstContentfulPaint.timing,
       firstContentfulPaintTs: firstContentfulPaint.timestamp,
+      firstContentfulPaintAllFrames: firstContentfulPaintAllFrames && firstContentfulPaintAllFrames.timing, // eslint-disable-line max-len
+      firstContentfulPaintAllFramesTs: firstContentfulPaintAllFrames && firstContentfulPaintAllFrames.timestamp, // eslint-disable-line max-len
       firstMeaningfulPaint: firstMeaningfulPaint.timing,
       firstMeaningfulPaintTs: firstMeaningfulPaint.timestamp,
       largestContentfulPaint: largestContentfulPaint && largestContentfulPaint.timing,
@@ -97,6 +101,8 @@ class TimingSummary {
       observedFirstPaintTs: traceOfTab.timestamps.firstPaint,
       observedFirstContentfulPaint: traceOfTab.timings.firstContentfulPaint,
       observedFirstContentfulPaintTs: traceOfTab.timestamps.firstContentfulPaint,
+      observedFirstContentfulPaintAllFrames: traceOfTab.timings.firstContentfulPaintAllFrames,
+      observedFirstContentfulPaintAllFramesTs: traceOfTab.timestamps.firstContentfulPaintAllFrames,
       observedFirstMeaningfulPaint: traceOfTab.timings.firstMeaningfulPaint,
       observedFirstMeaningfulPaintTs: traceOfTab.timestamps.firstMeaningfulPaint,
       observedLargestContentfulPaint: traceOfTab.timings.largestContentfulPaint,

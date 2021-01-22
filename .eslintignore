@@ -1,7 +1,3 @@
-# Ignore js files inside local chromium download on Travis.
-**/chrome-linux/**
-**/chrome-win32/**
-
 **/node_modules/**
 **/third_party/**
 **/generated/**

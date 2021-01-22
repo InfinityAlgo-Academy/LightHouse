@@ -703,6 +703,7 @@ class GatherRunner {
       for (const passConfig of passConfigs) {
         /** @type {LH.Gatherer.PassContext} */
         const passContext = {
+          gatherMode: 'navigation',
           driver,
           url: options.requestedUrl,
           settings: options.settings,

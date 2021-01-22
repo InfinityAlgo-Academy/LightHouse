@@ -70,7 +70,7 @@ class ReportRenderer {
    */
   _renderReportTopbar(report) {
     const el = this._dom.cloneTemplate('#tmpl-lh-topbar', this._templateContext);
-    const metadataUrl = /** @type {HTMLAnchorElement} */ (this._dom.find('.lh-topbar__url', el));
+    const metadataUrl = this._dom.find('a.lh-topbar__url', el);
     metadataUrl.href = metadataUrl.textContent = report.finalUrl;
     metadataUrl.title = report.finalUrl;
     return el;

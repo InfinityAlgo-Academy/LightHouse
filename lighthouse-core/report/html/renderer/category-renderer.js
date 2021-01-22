@@ -100,7 +100,7 @@ class CategoryRenderer {
       });
     }
 
-    const header = /** @type {HTMLDetailsElement} */ (this.dom.find('details', auditEl));
+    const header = this.dom.find('details', auditEl);
     if (audit.result.details) {
       const elem = this.detailsRenderer.render(audit.result.details);
       if (elem) {
@@ -144,11 +144,11 @@ class CategoryRenderer {
   }
 
   /**
-   * @return {HTMLElement}
+   * @return {Element}
    */
   _createChevron() {
     const chevronTmpl = this.dom.cloneTemplate('#tmpl-lh-chevron', this.templateContext);
-    const chevronEl = this.dom.find('.lh-chevron', chevronTmpl);
+    const chevronEl = this.dom.find('svg.lh-chevron', chevronTmpl);
     return chevronEl;
   }
 
@@ -287,9 +287,9 @@ class CategoryRenderer {
       clumpElement.setAttribute('open', '');
     }
 
-    const summaryInnerEl = this.dom.find('.lh-audit-group__summary', clumpElement);
-    const chevronEl = summaryInnerEl.appendChild(this._createChevron());
-    chevronEl.title = Util.i18n.strings.auditGroupExpandTooltip;
+    const summaryInnerEl = this.dom.find('div.lh-audit-group__summary', clumpElement);
+    summaryInnerEl.appendChild(this._createChevron());
+    summaryInnerEl.title = Util.i18n.strings.auditGroupExpandTooltip;
 
     const headerEl = this.dom.find('.lh-audit-group__header', clumpElement);
     const title = this._clumpTitles[clumpId];
@@ -326,7 +326,7 @@ class CategoryRenderer {
    */
   renderScoreGauge(category, groupDefinitions) { // eslint-disable-line no-unused-vars
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-gauge', this.templateContext);
-    const wrapper = /** @type {HTMLAnchorElement} */ (this.dom.find('.lh-gauge__wrapper', tmpl));
+    const wrapper = this.dom.find('a.lh-gauge__wrapper', tmpl);
     wrapper.href = `#${category.id}`;
 
     if (Util.isPluginCategory(category.id)) {
@@ -342,7 +342,7 @@ class CategoryRenderer {
     if (gaugeArc) this._setGaugeArc(gaugeArc, numericScore);
 
     const scoreOutOf100 = Math.round(numericScore * 100);
-    const percentageEl = this.dom.find('.lh-gauge__percentage', tmpl);
+    const percentageEl = this.dom.find('div.lh-gauge__percentage', tmpl);
     percentageEl.textContent = scoreOutOf100.toString();
     if (category.score === null) {
       percentageEl.textContent = '?';

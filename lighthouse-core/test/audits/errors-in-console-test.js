@@ -224,4 +224,21 @@ describe('ConsoleMessages error logs audit', () => {
       expect(result.details.items).toHaveLength(0);
     });
   });
+
+  describe('defaultOptions', () => {
+    // See https://github.com/GoogleChrome/lighthouse/issues/10198
+    it('filters out blocked_by_client.inspector messages by default', () => {
+      const auditResult = ErrorLogsAudit.audit({
+        ConsoleMessages: [{
+          'source': 'exception',
+          'level': 'error',
+          'timestamp': 1506535813608.003,
+          'url': 'https://www.facebook.com/tr/',
+          'text': 'Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector',
+        }],
+      }, {options: ErrorLogsAudit.defaultOptions()});
+      assert.equal(auditResult.score, 1);
+      assert.equal(auditResult.details.items.length, 0);
+    });
+  });
 });

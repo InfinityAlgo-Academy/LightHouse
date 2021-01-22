@@ -59,6 +59,10 @@ const smokeTests = [{
   config: require('./perf/perf-config.js'),
   runSerially: true,
 }, {
+  id: 'perf-diagnostics',
+  expectations: require('./perf-diagnostics/expectations.js'),
+  config: require('./perf-diagnostics/perf-diagnostics-config.js'),
+}, {
   id: 'lantern',
   expectations: require('./lantern/lantern-expectations.js'),
   config: require('./lantern/lantern-config.js'),

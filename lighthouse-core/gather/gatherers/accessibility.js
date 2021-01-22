@@ -7,7 +7,7 @@
 
 /* global window, document, getNodeDetails */
 
-const Gatherer = require('./gatherer.js');
+const Gatherer = require('../../fraggle-rock/gather/base-gatherer.js');
 const axeLibSource = require('../../lib/axe.js').source;
 const pageFunctions = require('../../lib/page-functions.js');
 
@@ -17,7 +17,7 @@ const pageFunctions = require('../../lib/page-functions.js');
  * containing any violations.
  * @return {Promise<LH.Artifacts.Accessibility>}
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 async function runA11yChecks() {
   /** @type {import('axe-core/axe')} */
   // @ts-expect-error axe defined by axeLibSource
@@ -96,16 +96,23 @@ async function runA11yChecks() {
     version: axeResults.testEngine.version,
   };
 }
+/* c8 ignore stop */
 
 /**
+ * @implements {LH.Gatherer.GathererInstance}
  * @implements {LH.Gatherer.FRGathererInstance}
  */
 class Accessibility extends Gatherer {
+  /** @type {LH.Gatherer.GathererMeta} */
+  meta = {
+    supportedModes: ['snapshot', 'navigation'],
+  }
+
   /**
    * @param {LH.Gatherer.FRTransitionalContext} passContext
    * @return {Promise<LH.Artifacts.Accessibility>}
    */
-  afterPass(passContext) {
+  snapshot(passContext) {
     const driver = passContext.driver;
 
     return driver.evaluate(runA11yChecks, {

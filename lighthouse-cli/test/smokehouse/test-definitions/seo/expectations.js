@@ -222,7 +222,7 @@ const expectations = [
                 source: {type: 'url', value: /seo-tester\.html.+$/},
                 selector: {
                   type: 'node',
-                  selector: 'body',
+                  selector: 'div',
                   snippet: '<p style="font-size:10px">',
                 },
                 fontSize: '10px',

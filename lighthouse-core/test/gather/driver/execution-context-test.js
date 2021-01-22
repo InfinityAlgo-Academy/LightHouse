@@ -212,14 +212,15 @@ describe('.evaluate', () => {
       return main(1);
     })())
             .catch(function wrapRuntimeEvalErrorInBrowser(err) {
-  err = err || new Error();
-  const fallbackMessage = typeof err === 'string' ? err : 'unknown error';
+  if (!err || typeof err === 'string') {
+    err = new Error(err);
+  }
 
   return {
     __failedInBrowser: true,
     name: err.name || 'Error',
-    message: err.message || fallbackMessage,
-    stack: err.stack || (new Error()).stack,
+    message: err.message || 'unknown error',
+    stack: err.stack,
   };
 })
             .then(resolve);

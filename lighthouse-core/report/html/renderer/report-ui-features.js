@@ -147,8 +147,7 @@ class ReportUIFeatures {
     const hasMetricError = report.categories.performance && report.categories.performance.auditRefs
       .some(audit => Boolean(audit.group === 'metrics' && report.audits[audit.id].errorMessage));
     if (hasMetricError) {
-      const toggleInputEl = /** @type {HTMLInputElement} */ (
-        this._dom.find('.lh-metrics-toggle__input', this._document));
+      const toggleInputEl = this._dom.find('input.lh-metrics-toggle__input', this._document);
       toggleInputEl.checked = true;
     }
 
@@ -172,7 +171,7 @@ class ReportUIFeatures {
 
   /**
    * Finds the first scrollable ancestor of `element`. Falls back to the document.
-   * @param {HTMLElement} element
+   * @param {Element} element
    * @return {Node}
    */
   _getScrollParent(element) {
@@ -256,8 +255,7 @@ class ReportUIFeatures {
 
       // create input box
       const filterTemplate = this._dom.cloneTemplate('#tmpl-lh-3p-filter', this._templateContext);
-      const filterInput =
-        /** @type {HTMLInputElement} */ (this._dom.find('input', filterTemplate));
+      const filterInput = this._dom.find('input', filterTemplate);
       const id = `lh-3p-filter-label--${index}`;
 
       filterInput.id = id;
@@ -352,19 +350,10 @@ class ReportUIFeatures {
     return thirdPartyRows;
   }
 
-  /**
-   * From a table, finds and returns URL items.
-   * @param {HTMLTableElement} tableEl
-   * @return {Array<HTMLElement>}
-   */
-  _getUrlItems(tableEl) {
-    return this._dom.findAll('.lh-text__url', tableEl);
-  }
-
   _setupStickyHeaderElements() {
-    this.topbarEl = this._dom.find('.lh-topbar', this._document);
-    this.scoreScaleEl = this._dom.find('.lh-scorescale', this._document);
-    this.stickyHeaderEl = this._dom.find('.lh-sticky-header', this._document);
+    this.topbarEl = this._dom.find('div.lh-topbar', this._document);
+    this.scoreScaleEl = this._dom.find('div.lh-scorescale', this._document);
+    this.stickyHeaderEl = this._dom.find('div.lh-sticky-header', this._document);
 
     // Highlighter will be absolutely positioned at first gauge, then transformed on scroll.
     this.highlightEl = this._dom.createChildOf(this.stickyHeaderEl, 'div', 'lh-highlighter');
@@ -570,8 +559,7 @@ class ReportUIFeatures {
    * open a `<details>` element.
    */
   expandAllDetails() {
-    const details = /** @type {Array<HTMLDetailsElement>} */ (this._dom.findAll(
-        '.lh-categories details', this._document));
+    const details = this._dom.findAll('.lh-categories details', this._document);
     details.map(detail => detail.open = true);
   }
 
@@ -580,8 +568,7 @@ class ReportUIFeatures {
    * open a `<details>` element.
    */
   collapseAllDetails() {
-    const details = /** @type {Array<HTMLDetailsElement>} */ (this._dom.findAll(
-        '.lh-categories details', this._document));
+    const details = this._dom.findAll('.lh-categories details', this._document);
     details.map(detail => detail.open = false);
   }
 
@@ -718,11 +705,11 @@ class DropDown {
    * @param {function(MouseEvent): any} menuClickHandler
    */
   setup(menuClickHandler) {
-    this._toggleEl = this._dom.find('.lh-tools__button', this._dom.document());
+    this._toggleEl = this._dom.find('button.lh-tools__button', this._dom.document());
     this._toggleEl.addEventListener('click', this.onToggleClick);
     this._toggleEl.addEventListener('keydown', this.onToggleKeydown);
 
-    this._menuEl = this._dom.find('.lh-tools__dropdown', this._dom.document());
+    this._menuEl = this._dom.find('div.lh-tools__dropdown', this._dom.document());
     this._menuEl.addEventListener('keydown', this.onMenuKeydown);
     this._menuEl.addEventListener('click', menuClickHandler);
   }

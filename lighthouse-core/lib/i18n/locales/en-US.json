@@ -855,7 +855,7 @@
     "message": "The app is already installed"
   },
   "lighthouse-core/audits/installable-manifest.js | cannot-download-icon": {
-    "message": "Downloaded icon was empty or corrupted"
+    "message": "Could not download a required icon from the manifest"
   },
   "lighthouse-core/audits/installable-manifest.js | columnValue": {
     "message": "Failure reason"

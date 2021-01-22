@@ -325,68 +325,24 @@ module.exports = [
   },
   {
     lhr: {
-      requestedUrl: 'http://localhost:10200/perf/animations.html',
-      finalUrl: 'http://localhost:10200/perf/animations.html',
+      requestedUrl: 'http://localhost:10200/perf/frame-metrics.html',
+      finalUrl: 'http://localhost:10200/perf/frame-metrics.html',
       audits: {
-        'non-composited-animations': {
-          // Requires compositor failure reasons to be in the trace
-          // https://chromiumdash.appspot.com/commit/995baabedf9e70d16deafc4bc37a2b215a9b8ec9
-          _minChromiumMilestone: 86,
+        'metrics': {
           score: null,
-          displayValue: '1 animated element found',
           details: {
+            type: 'debugdata',
             items: [
               {
-                node: {
-                  type: 'node',
-                  path: '2,HTML,1,BODY,1,DIV',
-                  selector: 'body > div#animated-boi',
-                  nodeLabel: 'This is changing font size',
-                  snippet: '<div id="animated-boi">',
-                },
-                subItems: {
-                  items: [
-                    {
-                      // From JavaScript `.animate` which has no animation display name
-                      failureReason: 'Unsupported CSS Property: width',
-                    },
-                    {
-                      failureReason: 'Unsupported CSS Property: height',
-                      animation: 'alpha',
-                    },
-                    {
-                      failureReason: 'Unsupported CSS Property: font-size',
-                      animation: 'beta',
-                    },
-                  ],
-                },
+                firstContentfulPaint: '>5000',
+                firstContentfulPaintAllFrames: '<5000',
+                largestContentfulPaint: '>5000',
+                largestContentfulPaintAllFrames: '<5000',
+                cumulativeLayoutShift: '0.001 +/- 0.0005',
+                cumulativeLayoutShiftAllFrames: '0.068 +/- 0.0005',
               },
-            ],
-          },
-        },
-      },
-    },
-  },
-  {
-    lhr: {
-      requestedUrl: 'http://localhost:10200/perf/third-party.html',
-      finalUrl: 'http://localhost:10200/perf/third-party.html',
-      audits: {
-        'third-party-facades': {
-          score: 0,
-          displayValue: '1 facade alternative available',
-          details: {
-            items: [
               {
-                product: 'YouTube Embedded Player (Video)',
-                blockingTime: 0,
-                transferSize: '>400000', // Transfer size is imprecise.
-                subItems: {
-                  type: 'subitems',
-                  items: {
-                    length: '>5', // We don't care exactly how many it has, just ensure we surface the subresources.
-                  },
-                },
+                lcpInvalidated: false,
               },
             ],
           },

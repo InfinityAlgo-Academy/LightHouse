@@ -59,6 +59,9 @@
       {"id":"SNYK-JS-GOOGLECLOSURELIBRARY-561341","severity":"medium","semver":{"vulnerable":["<20200315.0.0"]}},
       {"id":"SNYK-JS-GOOGLECLOSURELIBRARY-174519","severity":"medium","semver":{"vulnerable":[">=20190121.0.0 <20190301.0.0"]}}
     ],
+    "gsap":[
+      {"id":"SNYK-JS-GSAP-1054614","severity":"high","semver":{"vulnerable":["<3.6.0"]}}
+    ],
     "handlebars":[
       {"id":"SNYK-JS-HANDLEBARS-567742","severity":"medium","semver":{"vulnerable":["<4.6.0"]}},
       {"id":"SNYK-JS-HANDLEBARS-534988","severity":"high","semver":{"vulnerable":[">=4.0.0 <4.5.3","<3.0.8"]}},
@@ -133,6 +136,7 @@
       {"id":"npm:riot:20131114","severity":"medium","semver":{"vulnerable":["<0.9.6"]}}
     ],
     "socket.io":[
+      {"id":"SNYK-JS-SOCKETIO-1024859","severity":"medium","semver":{"vulnerable":["<2.4.0"]}},
       {"id":"npm:socket.io:20120417","severity":"medium","semver":{"vulnerable":["<0.9.6"]}},
       {"id":"npm:socket.io:20120323","severity":"medium","semver":{"vulnerable":["<0.9.7"]}}
     ],

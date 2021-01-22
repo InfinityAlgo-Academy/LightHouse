@@ -228,7 +228,7 @@ class ElementScreenshotRenderer {
     }
 
     const tmpl = dom.cloneTemplate('#tmpl-lh-element-screenshot', templateContext);
-    const containerEl = dom.find('.lh-element-screenshot', tmpl);
+    const containerEl = dom.find('div.lh-element-screenshot', tmpl);
 
     containerEl.dataset['rectWidth'] = elementRectSC.width.toString();
     containerEl.dataset['rectHeight'] = elementRectSC.height.toString();
@@ -256,10 +256,10 @@ class ElementScreenshotRenderer {
       {width: screenshot.width, height: screenshot.height}
     );
 
-    const contentEl = dom.find('.lh-element-screenshot__content', containerEl);
+    const contentEl = dom.find('div.lh-element-screenshot__content', containerEl);
     contentEl.style.top = `-${elementPreviewSizeDC.height}px`;
 
-    const imageEl = dom.find('.lh-element-screenshot__image', containerEl);
+    const imageEl = dom.find('div.lh-element-screenshot__image', containerEl);
     imageEl.style.width = elementPreviewSizeDC.width + 'px';
     imageEl.style.height = elementPreviewSizeDC.height + 'px';
 
@@ -268,13 +268,13 @@ class ElementScreenshotRenderer {
     imageEl.style.backgroundSize =
       `${screenshot.width * zoomFactor}px ${screenshot.height * zoomFactor}px`;
 
-    const markerEl = dom.find('.lh-element-screenshot__element-marker', containerEl);
+    const markerEl = dom.find('div.lh-element-screenshot__element-marker', containerEl);
     markerEl.style.width = elementRectSC.width * zoomFactor + 'px';
     markerEl.style.height = elementRectSC.height * zoomFactor + 'px';
     markerEl.style.left = positions.clip.left * zoomFactor + 'px';
     markerEl.style.top = positions.clip.top * zoomFactor + 'px';
 
-    const maskEl = dom.find('.lh-element-screenshot__mask', containerEl);
+    const maskEl = dom.find('div.lh-element-screenshot__mask', containerEl);
     maskEl.style.width = elementPreviewSizeDC.width + 'px';
     maskEl.style.height = elementPreviewSizeDC.height + 'px';
 

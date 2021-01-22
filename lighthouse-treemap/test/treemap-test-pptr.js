@@ -15,6 +15,10 @@ const portNumber = 10200;
 const treemapUrl = `http://localhost:${portNumber}/dist/gh-pages/treemap/index.html`;
 const debugOptions = require('../app/debug.json');
 
+// These tests run in Chromium and have their own timeouts.
+// Make sure we get the more helpful test-specific timeout error instead of jest's generic one.
+jest.setTimeout(35_000);
+
 describe('Lighthouse Treemap', () => {
   // eslint-disable-next-line no-console
   console.log('\n✨ Be sure to have recently run this: yarn build-treemap');

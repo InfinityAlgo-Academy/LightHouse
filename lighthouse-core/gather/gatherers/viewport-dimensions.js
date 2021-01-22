@@ -12,7 +12,7 @@ const Gatherer = require('./gatherer.js');
 /**
  * @return {LH.Artifacts.ViewportDimensions}
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 function getViewportDimensions() {
   // window.innerWidth to get the scrollable size of the window (irrespective of zoom)
   // window.outerWidth to get the size of the visible area
@@ -25,6 +25,7 @@ function getViewportDimensions() {
     devicePixelRatio: window.devicePixelRatio,
   };
 }
+/* c8 ignore stop */
 
 class ViewportDimensions extends Gatherer {
   /**

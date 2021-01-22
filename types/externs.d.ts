@@ -64,7 +64,7 @@ declare global {
   type FirstParamType<T extends (arg1: any, ...args: any[]) => any> =
     T extends (arg1: infer P, ...args: any[]) => any ? P : never;
 
-  type FlattenedPromise<A extends any> = Promise<A extends Promise<infer X> ? X : A>;
+  type FlattenedPromise<A> = Promise<A extends Promise<infer X> ? X : A>;
 
   /**
    * Split string `S` on delimiter `D`.
@@ -372,8 +372,21 @@ declare global {
   }
 
   interface Window {
+    // Cached native functions/objects for use in case the page overwrites them.
+    // See: `driver.cacheNatives`.
+    __nativePromise: PromiseConstructor;
+    __nativeURL: URL;
+    __ElementMatches: Element['matches'];
+    __perfNow: Performance['now'];
+
+    /** Used for monitoring long tasks in the test page. */
+    ____lastLongTask?: number;
+
     /** Used by FullPageScreenshot gatherer. */
-    __lighthouseNodesDontTouchOrAllVarianceGoesAway: Map<HTMLElement, string>;
+    __lighthouseNodesDontTouchOrAllVarianceGoesAway: Map<Element, string>;
     __lighthouseExecutionContextId?: number;
+
+    // Not defined in tsc yet: https://github.com/microsoft/TypeScript/issues/40807
+    requestIdleCallback(callback: (deadline: {didTimeout: boolean, timeRemaining: () => DOMHighResTimeStamp}) => void, options?: {timeout: number}): number;
   }
 }
