@@ -143,7 +143,6 @@ class Fetcher {
      */
     /* c8 ignore start */
     function injectIframe(src) {
-      /** @type {HTMLIFrameElement} */
       const iframe = document.createElement('iframe');
       // Try really hard not to affect the page.
       iframe.style.display = 'none';

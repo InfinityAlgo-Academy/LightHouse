@@ -52,12 +52,11 @@ class TreemapUtil {
   /**
    * Guaranteed context.querySelector. Always returns an element or throws if
    * nothing matches query.
-   * @param {string} query
+   * @template {string} T
+   * @param {T} query
    * @param {ParentNode=} context
-   * @return {HTMLElement}
    */
   static find(query, context = document) {
-    /** @type {?HTMLElement} */
     const result = context.querySelector(query);
     if (result === null) {
       throw new Error(`query ${query} not found`);

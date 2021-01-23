@@ -61,13 +61,10 @@ async function collectTagsThatBlockFirstPaint() {
   try {
     /** @type {Array<LinkTag>} */
     const linkTags = [...document.querySelectorAll('link')]
-      .filter(/** @return {tag is HTMLLinkElement} */ tag => {
-        if (tag.tagName !== 'LINK') return false;
-
+      .filter(linkTag => {
         // Filter stylesheet/HTML imports that block rendering.
         // https://www.igvita.com/2012/06/14/debunking-responsive-css-performance-myths/
         // https://www.w3.org/TR/html-imports/#dfn-import-async-attribute
-        const linkTag = /** @type {HTMLLinkElement} */ (tag);
         const blockingStylesheet = linkTag.rel === 'stylesheet' &&
           window.matchMedia(linkTag.media).matches && !linkTag.disabled;
         const blockingImport = linkTag.rel === 'import' && !linkTag.hasAttribute('async');
@@ -87,10 +84,7 @@ async function collectTagsThatBlockFirstPaint() {
 
     /** @type {Array<ScriptTag>} */
     const scriptTags = [...document.querySelectorAll('head script[src]')]
-      .filter(/** @return {tag is HTMLScriptElement} */ tag => {
-        if (tag.tagName !== 'SCRIPT') return false;
-
-        const scriptTag = /** @type {HTMLScriptElement} */ (tag);
+      .filter(scriptTag => {
         return (
           !scriptTag.hasAttribute('async') &&
           !scriptTag.hasAttribute('defer') &&

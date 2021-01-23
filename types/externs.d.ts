@@ -7,6 +7,9 @@
 import _Crdp from 'devtools-protocol/types/protocol';
 import _CrdpMappings from 'devtools-protocol/types/protocol-mapping'
 
+// Import for side effects improving types of querySelector/querySelectorAll.
+import 'typed-query-selector';
+
 declare global {
   // Augment Intl to include
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/getCanonicalLocales

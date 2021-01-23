@@ -83,7 +83,7 @@ class ReportRenderer {
     const el = this._dom.cloneTemplate('#tmpl-lh-heading', this._templateContext);
     const domFragment = this._dom.cloneTemplate('#tmpl-lh-scores-wrapper', this._templateContext);
     const placeholder = this._dom.find('.lh-scores-wrapper-placeholder', el);
-    /** @type {HTMLDivElement} */ (placeholder.parentNode).replaceChild(domFragment, placeholder);
+    placeholder.replaceWith(domFragment);
     return el;
   }
 
