@@ -147,4 +147,5 @@ describe('Fraggle Rock Config', () => {
   it.todo('should filter configuration by inclusive settings');
   it.todo('should filter configuration by exclusive settings');
   it.todo('should validate audit/gatherer interdependencies');
+  it.todo('should validate gatherers do not support all 3 modes');
 });

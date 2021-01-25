@@ -7,8 +7,10 @@
 
 const {snapshot} = require('./gather/snapshot-runner.js');
 const {startTimespan} = require('./gather/timespan-runner.js');
+const {navigation} = require('./gather/navigation-runner.js');
 
 module.exports = {
   snapshot,
   startTimespan,
+  navigation,
 };

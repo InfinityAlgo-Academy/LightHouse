@@ -102,7 +102,7 @@ declare global {
 
       export interface ArtifactJson {
         id: string;
-        gatherer: GathererJson;
+        gatherer: FRGathererJson;
       }
 
       export type GathererJson = {
@@ -116,6 +116,7 @@ declare global {
         options?: {};
       } | Gatherer.GathererInstance | ClassOf<Gatherer.GathererInstance> | string;
 
+      export type FRGathererJson = string | {instance: Gatherer.FRGathererInstance}
 
       export interface CategoryJson {
         title: string | IcuMessage;

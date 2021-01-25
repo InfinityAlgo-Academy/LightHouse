@@ -61,7 +61,11 @@ function resolveArtifactsToDefns(artifacts, configDir) {
 
   const coreGathererList = Runner.getGathererList();
   const artifactDefns = artifacts.map(artifactJson => {
-    const gatherer = resolveGathererToDefn(artifactJson.gatherer, coreGathererList, configDir);
+    /** @type {LH.Config.GathererJson} */
+    // @ts-expect-error FR-COMPAT - eventually move the config-helpers to support new types
+    const gathererJson = artifactJson.gatherer;
+
+    const gatherer = resolveGathererToDefn(gathererJson, coreGathererList, configDir);
     if (!isFRGathererDefn(gatherer)) {
       throw new Error(`${gatherer.instance.name} gatherer does not support Fraggle Rock`);
     }
