@@ -23,15 +23,32 @@ const Sentry = require('../../lib/sentry.js');
 
 /**
  * @this {HTMLElement}
+ * @param {string} traceEventType
  */
 /* c8 ignore start */
-function getNodeDetailsData() {
+function getNodeDetailsData(traceEventType) {
   const elem = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement; // eslint-disable-line no-undef
-  let traceElement;
-  if (elem) {
-    // @ts-expect-error - getNodeDetails put into scope via stringification
-    traceElement = {node: getNodeDetails(elem)};
+  if (!elem) return;
+
+  /** @type {import('../../lib/page-functions.js').NodeDetailsOptions=} */
+  let options;
+  if (traceEventType === 'largest-contentful-paint') {
+    options = {
+      snippet: {
+        attrMapper(name, value) {
+          if (name === 'src') {
+            const imgElement = /** @type {HTMLImageElement} */ (elem);
+            return imgElement.currentSrc;
+          }
+
+          return value;
+        },
+      },
+    };
   }
+
+  // @ts-expect-error - getNodeDetails put into scope via stringification
+  const traceElement = {node: getNodeDetails(elem, options)};
   return traceElement;
 }
 /* c8 ignore stop */
@@ -282,7 +299,7 @@ class TraceElements extends Gatherer {
             functionDeclaration: `function () {
               ${getNodeDetailsData.toString()};
               ${pageFunctions.getNodeDetailsString};
-              return getNodeDetailsData.call(this);
+              return getNodeDetailsData.call(this, '${traceEventType}');
             }`,
             returnByValue: true,
             awaitPromise: true,

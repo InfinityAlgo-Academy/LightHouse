@@ -21,6 +21,9 @@
 
 /** @typedef {HTMLElementTagNameMap & {[id: string]: HTMLElement}} HTMLElementByTagName */
 
+/** @typedef {(name: string, value: string|null) => string|null} AttrMapper */
+/** @typedef {{snippet?: {attrMapper?: AttrMapper, characterLimit?: number}}} NodeDetailsOptions */
+
 /* global window document Node ShadowRoot HTMLElement */
 
 /**
@@ -125,10 +128,10 @@ function getElementsInDocument(selector) {
 /**
  * Gets the opening tag text of the given node.
  * @param {Element|ShadowRoot} element
- * @param {Array<string>=} ignoreAttrs An optional array of attribute tags to not include in the HTML snippet.
+ * @param {AttrMapper} attrMapper An optional array of attribute tags to not include in the HTML snippet.
  * @return {string}
  */
-function getOuterHTMLSnippet(element, ignoreAttrs = [], snippetCharacterLimit = 500) {
+function getOuterHTMLSnippet(element, attrMapper = ((_, v) => v), snippetCharacterLimit = 500) {
   const ATTRIBUTE_CHAR_LIMIT = 75;
   // Autofill information that is injected into the snippet via AutofillShowTypePredictions
   // TODO(paulirish): Don't clean title attribute from all elements if it's unnecessary
@@ -148,20 +151,20 @@ function getOuterHTMLSnippet(element, ignoreAttrs = [], snippetCharacterLimit = 
     // See https://github.com/GoogleChrome/lighthouse/issues/11465
     const template = element.ownerDocument.createElement('template');
     template.content.append(clone);
-    ignoreAttrs.concat(autoFillIgnoreAttrs).forEach(attribute =>{
+    autoFillIgnoreAttrs.forEach(attribute =>{
       clone.removeAttribute(attribute);
     });
     let charCount = 0;
     for (const attributeName of clone.getAttributeNames()) {
-      if (charCount > snippetCharacterLimit) {
+      let attributeValue = attrMapper(attributeName, clone.getAttribute(attributeName));
+
+      if (attributeValue === null || charCount > snippetCharacterLimit) {
         clone.removeAttribute(attributeName);
       } else {
-        let attributeValue = clone.getAttribute(attributeName);
-        if (attributeValue === null) continue;
         if (attributeValue.length > ATTRIBUTE_CHAR_LIMIT) {
           attributeValue = attributeValue.slice(0, ATTRIBUTE_CHAR_LIMIT - 1) + '…';
-          clone.setAttribute(attributeName, attributeValue);
         }
+        clone.setAttribute(attributeName, attributeValue);
         charCount += attributeName.length + attributeValue.length;
       }
     }
@@ -497,9 +500,10 @@ function wrapRequestIdleCallback(cpuSlowdownMultiplier) {
 
 /**
  * @param {Element|ShadowRoot} element
+ * @param {NodeDetailsOptions} options
  * @return {LH.Artifacts.NodeDetails}
  */
-function getNodeDetails(element) {
+function getNodeDetails(element, options = {}) {
   // This bookkeeping is for the FullPageScreenshot gatherer.
   if (!window.__lighthouseNodesDontTouchOrAllVarianceGoesAway) {
     window.__lighthouseNodesDontTouchOrAllVarianceGoesAway = new Map();
@@ -531,20 +535,23 @@ function getNodeDetails(element) {
     devtoolsNodePath: getNodePath(element),
     selector: getNodeSelector(element),
     boundingRect: getBoundingClientRect(element),
-    snippet: getOuterHTMLSnippet(element),
+    snippet: getOuterHTMLSnippet(element,
+      options.snippet ? options.snippet.attrMapper : undefined,
+      options.snippet ? options.snippet.characterLimit : undefined
+    ),
     nodeLabel: getNodeLabel(element),
   };
 
   return details;
 }
 
-const getNodeDetailsString = `function getNodeDetails(element) {
+const getNodeDetailsString = `function getNodeDetails(element, options) {
   ${getNodePath.toString()};
   ${getNodeSelector.toString()};
   ${getBoundingClientRect.toString()};
   ${getOuterHTMLSnippet.toString()};
   ${getNodeLabel.toString()};
-  return (${getNodeDetails.toString()})(element);
+  return (${getNodeDetails.toString()})(element, options);
 }`;
 
 module.exports = {
