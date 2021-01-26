@@ -32,7 +32,7 @@ function getNodeDetailsData(traceEventType) {
 
   /** @type {import('../../lib/page-functions.js').NodeDetailsOptions=} */
   let options;
-  if (traceEventType === 'largest-contentful-paint') {
+  if (elem.tagName === 'img' && traceEventType === 'largest-contentful-paint') {
     options = {
       snippet: {
         attrMapper(name, value) {
