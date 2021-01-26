@@ -68,6 +68,16 @@ describe('Page Functions', () => {
   });
 
   describe('get outer HTML snippets', () => {
+    /**
+     * @param {string[]} ignoreAttrs
+     */
+    function ignoreAttrMapper(ignoreAttrs) {
+      return (name, value) => {
+        if (ignoreAttrs.includes(name)) return null;
+        return value;
+      };
+    }
+
     it('gets full HTML snippet', () => {
       assert.equal(pageFunctions.getOuterHTMLSnippet(
         dom.createElement('div', '', {id: '1', style: 'style'})), '<div id="1" style="style">');
@@ -75,14 +85,26 @@ describe('Page Functions', () => {
 
     it('removes a specific attribute', () => {
       assert.equal(pageFunctions.getOuterHTMLSnippet(
-        dom.createElement('div', '', {id: '1', style: 'style'}), ['style']), '<div id="1">');
+        dom.createElement('div', '', {id: '1', style: 'style'}),
+        ignoreAttrMapper(['style'])
+      ), '<div id="1">');
     });
 
     it('removes multiple attributes', () => {
       assert.equal(pageFunctions.getOuterHTMLSnippet(
         dom.createElement('div', '', {'id': '1', 'style': 'style', 'aria-label': 'label'}),
-        ['style', 'aria-label']
+        ignoreAttrMapper(['style', 'aria-label'])
       ), '<div id="1">');
+    });
+
+    it('maps an attribute', () => {
+      assert.equal(pageFunctions.getOuterHTMLSnippet(
+        dom.createElement('div', '', {'id': '1', 'whiz': 'man'}),
+        (name, value) => {
+          if (name === 'whiz') return 'kid';
+          return value;
+        }
+      ), '<div id="1" whiz="kid">');
     });
 
     it('should handle dom nodes that cannot be cloned', () => {
@@ -95,7 +117,7 @@ describe('Page Functions', () => {
     it('ignores when attribute not found', () => {
       assert.equal(pageFunctions.getOuterHTMLSnippet(
         dom.createElement('div', '', {'id': '1', 'style': 'style', 'aria-label': 'label'}),
-        ['style-missing', 'aria-label-missing']
+        ignoreAttrMapper(['style-missing', 'aria-label-missing'])
       ), '<div id="1" style="style" aria-label="label">');
     });
 
@@ -121,9 +143,8 @@ describe('Page Functions', () => {
         att1: 'shouldn\'t see this',
         att2: 'shouldn\'t see this either',
       });
-      const snippet = pageFunctions.getOuterHTMLSnippet(element, [], 150);
-      assert.equal(snippet, `<div class="${truncatedValue}" id="${truncatedValue}" …>`
-      );
+      const snippet = pageFunctions.getOuterHTMLSnippet(element, undefined, 150);
+      assert.equal(snippet, `<div class="${truncatedValue}" id="${truncatedValue}" …>`);
     });
   });
 

@@ -21,7 +21,7 @@
 
 /** @typedef {HTMLElementTagNameMap & {[id: string]: HTMLElement}} HTMLElementByTagName */
 
-/** @typedef {(name: string, value: string|null) => string|null} AttrMapper */
+/** @typedef {(name: string, value: string) => string|null} AttrMapper */
 /** @typedef {{snippet?: {attrMapper?: AttrMapper, characterLimit?: number}}} NodeDetailsOptions */
 
 /* global window document Node ShadowRoot HTMLElement */
@@ -128,7 +128,7 @@ function getElementsInDocument(selector) {
 /**
  * Gets the opening tag text of the given node.
  * @param {Element|ShadowRoot} element
- * @param {AttrMapper} attrMapper An optional array of attribute tags to not include in the HTML snippet.
+ * @param {AttrMapper} attrMapper Maps an attribute value to something else to show. Attribute is hidden if this function returns null.
  * @return {string}
  */
 function getOuterHTMLSnippet(element, attrMapper = ((_, v) => v), snippetCharacterLimit = 500) {
@@ -156,17 +156,18 @@ function getOuterHTMLSnippet(element, attrMapper = ((_, v) => v), snippetCharact
     });
     let charCount = 0;
     for (const attributeName of clone.getAttributeNames()) {
-      let attributeValue = attrMapper(attributeName, clone.getAttribute(attributeName));
-
+      let attributeValue = clone.getAttribute(attributeName);
+      if (attributeValue !== null) attributeValue = attrMapper(attributeName, attributeValue);
       if (attributeValue === null || charCount > snippetCharacterLimit) {
         clone.removeAttribute(attributeName);
-      } else {
-        if (attributeValue.length > ATTRIBUTE_CHAR_LIMIT) {
-          attributeValue = attributeValue.slice(0, ATTRIBUTE_CHAR_LIMIT - 1) + '…';
-        }
-        clone.setAttribute(attributeName, attributeValue);
-        charCount += attributeName.length + attributeValue.length;
+        continue;
       }
+
+      if (attributeValue.length > ATTRIBUTE_CHAR_LIMIT) {
+        attributeValue = attributeValue.slice(0, ATTRIBUTE_CHAR_LIMIT - 1) + '…';
+      }
+      clone.setAttribute(attributeName, attributeValue);
+      charCount += attributeName.length + attributeValue.length;
     }
 
     const reOpeningTag = /^[\s\S]*?>/;
