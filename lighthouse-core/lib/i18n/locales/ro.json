@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Adresa URL furnizată pare să fie nevalidă."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "Afișează audituri"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "Accesează calculatorul."
   },

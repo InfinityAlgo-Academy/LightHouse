@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "您提供的網址無效。"
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "顯示審核結果"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "查看計算機。"
   },

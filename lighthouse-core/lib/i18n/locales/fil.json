@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Mukhang invalid ang URL na ibinigay mo."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "Ipakita ang mga pag-audit"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "Tingnan ang calculator."
   },

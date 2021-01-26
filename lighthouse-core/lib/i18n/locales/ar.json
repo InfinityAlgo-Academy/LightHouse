@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "يبدو أن عنوان URL الذي قدمته غير صحيح."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "عرض عمليات التدقيق"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "اطّلِع على الآلة الحاسبة."
   },

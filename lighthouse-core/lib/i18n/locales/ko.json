@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "사용자가 제공한 URL이 잘못되었습니다."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "감사 보기"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "계산기 보기"
   },

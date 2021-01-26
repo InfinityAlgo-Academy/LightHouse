@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Den angivne webadresse lader til at være ugyldig."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "Se revisioner"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "Se beregner."
   },

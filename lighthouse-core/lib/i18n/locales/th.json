@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "ดูเหมือนว่า URL ที่ระบุจะไม่ถูกต้อง"
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "แสดงการตรวจสอบ"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "ดูเครื่องคิดเลข"
   },

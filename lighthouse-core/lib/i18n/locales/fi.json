@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Kirjoittamasi URL-osoite näyttää olevan virheellinen."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "Näytä tarkastukset"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "Katso laskin."
   },

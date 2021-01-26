@@ -1895,9 +1895,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "T̂h́ê ÚR̂Ĺ ŷóû h́âv́ê ṕr̂óv̂íd̂éd̂ áp̂ṕêár̂ś t̂ó b̂é îńv̂ál̂íd̂."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "Ŝh́ôẃ âúd̂ít̂ś"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "Ŝéê ćâĺĉúl̂át̂ór̂."
   },

@@ -289,7 +289,6 @@ class CategoryRenderer {
 
     const summaryInnerEl = this.dom.find('div.lh-audit-group__summary', clumpElement);
     summaryInnerEl.appendChild(this._createChevron());
-    summaryInnerEl.title = Util.i18n.strings.auditGroupExpandTooltip;
 
     const headerEl = this.dom.find('.lh-audit-group__header', clumpElement);
     const title = this._clumpTitles[clumpId];

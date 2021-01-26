@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Sağladığınız URL'nin geçersiz olduğu anlaşılıyor."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "Denetimleri göster"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "Hesap makinesini göster."
   },

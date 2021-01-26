@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Το URL που παρείχατε φαίνεται ότι δεν είναι έγκυρο."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "Εμφάνιση ελέγχων"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "Προβολή αριθμομηχανής."
   },

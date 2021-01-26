@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Poskytnutá webová adresa je zrejme neplatná."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "Zobraziť kontroly"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "Zobraziť kalkulačku"
   },

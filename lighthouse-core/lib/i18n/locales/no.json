@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Nettadressen du oppga, ser ut til å være ugyldig."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "Vis revisjoner"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "Se kalkulatoren."
   },

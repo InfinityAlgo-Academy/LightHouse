@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Недействительный URL."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "Показать аудиты"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "Показать калькулятор"
   },

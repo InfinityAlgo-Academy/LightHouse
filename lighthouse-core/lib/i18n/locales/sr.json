@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Изгледа да је URL који сте навели неважећи."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "Прикажи провере"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "Погледајте калкулатор."
   },
