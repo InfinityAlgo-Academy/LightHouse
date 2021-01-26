@@ -56,7 +56,7 @@
     "coveralls": "cat unit-coverage.lcov | coveralls",
     "devtools": "bash lighthouse-core/scripts/roll-to-devtools.sh",
     "chrome": "node lighthouse-core/scripts/manual-chrome-launcher.js",
-    "fast": "yarn start --emulated-form-factor=none --throttlingMethod=provided",
+    "fast": "yarn start --preset=desktop --throttlingMethod=provided",
     "deploy-treemap": "yarn build-treemap --deploy",
     "deploy-viewer": "yarn build-viewer --deploy",
     "now-build": "node lighthouse-core/scripts/build-report-for-autodeployment.js && yarn build-viewer && yarn build-treemap && cp -r dist/gh-pages dist/now/gh-pages",
