@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const Gatherer = require('./gatherer.js');
+const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
 
 /* global window */
 
@@ -27,12 +27,17 @@ function getViewportDimensions() {
 }
 /* c8 ignore stop */
 
-class ViewportDimensions extends Gatherer {
+class ViewportDimensions extends FRGatherer {
+  /** @type {LH.Gatherer.GathererMeta} */
+  meta = {
+    supportedModes: ['snapshot', 'navigation'],
+  }
+
   /**
-   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.FRTransitionalContext} passContext
    * @return {Promise<LH.Artifacts.ViewportDimensions>}
    */
-  async afterPass(passContext) {
+  async snapshot(passContext) {
     const driver = passContext.driver;
 
     const dimensions = await driver.evaluate(getViewportDimensions, {
