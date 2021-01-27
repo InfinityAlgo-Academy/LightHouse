@@ -55,7 +55,6 @@ class CSPEvaluator extends Audit {
   }
 
   /**
-   * TODO: Replace description with i18n string.
    * @param {Finding} finding
    * @return {LH.Audit.Details.TableItem}
    */
