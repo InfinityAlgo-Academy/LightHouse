@@ -5,10 +5,8 @@
  */
 
 import _Crdp from 'devtools-protocol/types/protocol';
-import _CrdpMappings from 'devtools-protocol/types/protocol-mapping'
-
-// Import for side effects improving types of querySelector/querySelectorAll.
-import 'typed-query-selector';
+import _CrdpMappings from 'devtools-protocol/types/protocol-mapping';
+import {ParseSelector} from 'typed-query-selector/parser';
 
 declare global {
   // Augment Intl to include
@@ -391,5 +389,11 @@ declare global {
 
     // Not defined in tsc yet: https://github.com/microsoft/TypeScript/issues/40807
     requestIdleCallback(callback: (deadline: {didTimeout: boolean, timeRemaining: () => DOMHighResTimeStamp}) => void, options?: {timeout: number}): number;
+  }
+
+  // Stricter querySelector/querySelectorAll using typed-query-selector.
+  interface ParentNode {
+    querySelector<S extends string>(selector: S): ParseSelector<S> | null;
+    querySelectorAll<S extends string>(selector: S): NodeListOf<ParseSelector<S>>;
   }
 }
