@@ -12,6 +12,7 @@ const {
   evaluateRawCspForFailures,
   evaluateRawCspForWarnings,
   evaluateRawCspForSyntax,
+  getTranslatedDescription,
 } = require('../lib/csp-evaluator.js');
 
 /** @typedef {import('../lib/csp-evaluator.js').Finding} Finding */
@@ -61,7 +62,7 @@ class CSPEvaluator extends Audit {
   static findingToTableItem(finding) {
     return {
       directive: finding.directive,
-      description: finding.description,
+      description: getTranslatedDescription(finding),
     };
   }
 
