@@ -5,6 +5,7 @@
  */
 'use strict';
 
+const {EventEmitter} = require('events');
 const ProtocolSession = require('../../../fraggle-rock/gather/session.js');
 
 /* eslint-env jest */
@@ -17,8 +18,47 @@ describe('ProtocolSession', () => {
 
   beforeEach(() => {
     // @ts-expect-error - Individual mock functions are applied as necessary.
-    puppeteerSession = {};
+    puppeteerSession = {emit: jest.fn()};
     session = new ProtocolSession(puppeteerSession);
+  });
+
+  describe('ProtocolSession', () => {
+    it('should emit a copy of events on "*"', () => {
+      // @ts-expect-error - we want to use a more limited test of a real event emitter.
+      puppeteerSession = new EventEmitter();
+      session = new ProtocolSession(puppeteerSession);
+
+      const regularListener = jest.fn();
+      const allListener = jest.fn();
+
+      puppeteerSession.on('Foo', regularListener);
+      puppeteerSession.on('*', allListener);
+      puppeteerSession.emit('Foo', 1, 2, 3);
+      puppeteerSession.emit('Bar', 1, 2, 3);
+
+      expect(regularListener).toHaveBeenCalledTimes(1);
+      expect(allListener).toHaveBeenCalledTimes(2);
+      expect(allListener).toHaveBeenCalledWith({method: 'Foo', params: [1, 2, 3]});
+      expect(allListener).toHaveBeenCalledWith({method: 'Bar', params: [1, 2, 3]});
+    });
+
+    it('should not fire duplicate events', () => {
+      // @ts-expect-error - we want to use a more limited test of a real event emitter.
+      puppeteerSession = new EventEmitter();
+      session = new ProtocolSession(puppeteerSession);
+      session = new ProtocolSession(puppeteerSession);
+
+      const regularListener = jest.fn();
+      const allListener = jest.fn();
+
+      puppeteerSession.on('Foo', regularListener);
+      puppeteerSession.on('*', allListener);
+      puppeteerSession.emit('Foo', 1, 2, 3);
+      puppeteerSession.emit('Bar', 1, 2, 3);
+
+      expect(regularListener).toHaveBeenCalledTimes(1);
+      expect(allListener).toHaveBeenCalledTimes(2);
+    });
   });
 
   /** @type {Array<'on'|'off'|'once'>} */
@@ -34,6 +74,32 @@ describe('ProtocolSession', () => {
       });
     });
   }
+
+  describe('.onAnyProtocolMessage', () => {
+    it('should listen for any event', () => {
+      // @ts-expect-error - we want to use a more limited test of a real event emitter.
+      puppeteerSession = new EventEmitter();
+      session = new ProtocolSession(puppeteerSession);
+
+      const regularListener = jest.fn();
+      const allListener = jest.fn();
+
+      session.on('Page.frameNavigated', regularListener);
+      session.onAnyProtocolMessage(allListener);
+
+      puppeteerSession.emit('Page.frameNavigated');
+      puppeteerSession.emit('Debugger.scriptParsed', {script: 'details'});
+
+      expect(regularListener).toHaveBeenCalledTimes(1);
+      expect(regularListener).toHaveBeenCalledWith();
+      expect(allListener).toHaveBeenCalledTimes(2);
+      expect(allListener).toHaveBeenCalledWith({method: 'Page.frameNavigated', params: []});
+      expect(allListener).toHaveBeenCalledWith({
+        method: 'Debugger.scriptParsed',
+        params: [{script: 'details'}],
+      });
+    });
+  });
 
   describe('.sendCommand', () => {
     it('delegates to puppeteer', async () => {

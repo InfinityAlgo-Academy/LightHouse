@@ -5,6 +5,8 @@
  */
 'use strict';
 
+const SessionEmitMonkeypatch = Symbol('monkeypatch');
+
 /** @implements {LH.Gatherer.FRProtocolSession} */
 class ProtocolSession {
   /**
@@ -12,6 +14,18 @@ class ProtocolSession {
    */
   constructor(session) {
     this._session = session;
+
+    // FIXME: Monkeypatch puppeteer to be able to listen to *all* protocol events.
+    // This patched method will now emit a copy of every event on `*`.
+    const originalEmit = session.emit;
+    // @ts-expect-error - Test for the monkeypatch.
+    if (originalEmit[SessionEmitMonkeypatch]) return;
+    session.emit = (method, ...params) => {
+      originalEmit.call(session, '*', {method, params});
+      return originalEmit.call(session, method, ...params);
+    };
+    // @ts-expect-error - It's monkeypatching 🤷‍♂️.
+    session.emit[SessionEmitMonkeypatch] = true;
   }
 
   /**
@@ -53,6 +67,14 @@ class ProtocolSession {
    */
   once(eventName, callback) {
     this._session.once(eventName, /** @type {*} */ (callback));
+  }
+
+  /**
+   * Bind to our custom event that fires for *any* protocol event.
+   * @param {(payload: LH.Protocol.RawEventMessage) => void} callback
+   */
+  onAnyProtocolMessage(callback) {
+    this._session.on('*', /** @type {*} */ (callback));
   }
 
   /**

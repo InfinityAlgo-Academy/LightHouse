@@ -34,7 +34,7 @@ beforeEach(() => {
   // @ts-expect-error - Individual mock functions are applied as necessary.
   pageTarget = {createCDPSession: () => puppeteerSession};
   // @ts-expect-error - Individual mock functions are applied as necessary.
-  puppeteerSession = {on: jest.fn(), off: jest.fn(), send: jest.fn()};
+  puppeteerSession = {on: jest.fn(), off: jest.fn(), send: jest.fn(), emit: jest.fn()};
   driver = new Driver(page);
 });
 
