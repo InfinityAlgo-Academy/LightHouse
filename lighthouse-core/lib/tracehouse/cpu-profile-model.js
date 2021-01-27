@@ -10,7 +10,7 @@ const MainThreadTasks = require('./main-thread-tasks.js');
 const SAMPLER_TRACE_EVENT_NAME = 'FunctionCall-SynthesizedByProfilerModel';
 
 /**
- * @file
+ * @fileoverview
  *
  * This model converts the `Profile` and `ProfileChunk` mega trace events from the `disabled-by-default-v8.cpu_profiler`
  * category into B/E-style trace events that main-thread-tasks.js already knows how to parse into a task tree.

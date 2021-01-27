@@ -6,7 +6,7 @@
 'use strict';
 
 /**
- * @file
+ * @fileoverview
  * Creates treemap data for treemap app.
  */
 

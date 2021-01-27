@@ -8,7 +8,7 @@
 const BaseNode = require('../base-node.js');
 
 /**
- * @file
+ * @fileoverview
  *
  * This class encapsulates the type-related validation logic for moving timing information for nodes
  * through the different simulation phases. Methods here ensure that the invariants of simulation hold

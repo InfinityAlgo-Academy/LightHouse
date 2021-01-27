@@ -8,7 +8,7 @@
 /* global URL */
 
 /**
- * @file
+ * @fileoverview
  * @suppress {reportUnknownTypes}
  */
 

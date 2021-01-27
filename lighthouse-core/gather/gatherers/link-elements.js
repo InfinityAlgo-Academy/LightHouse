@@ -14,7 +14,7 @@ const pageFunctions = require('../../lib/page-functions.js');
 /* globals HTMLLinkElement getNodeDetails */
 
 /**
- * @file
+ * @fileoverview
  * This gatherer collects all the effect `link` elements, both in the page and declared in the
  * headers of the main resource.
  */

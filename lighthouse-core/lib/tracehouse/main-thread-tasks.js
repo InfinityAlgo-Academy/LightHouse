@@ -8,7 +8,7 @@
 const {taskGroups, taskNameToGroup} = require('./task-groups.js');
 
 /**
- * @file
+ * @fileoverview
  *
  * This artifact converts the array of raw trace events into an array of hierarchical
  * tasks for easier consumption and bottom-up analysis.

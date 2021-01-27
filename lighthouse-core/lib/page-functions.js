@@ -6,7 +6,7 @@
 'use strict';
 
 /**
- * @file
+ * @fileoverview
  * Helper functions that are passed by `toString()` by Driver to be evaluated in target page.
  *
  * Every function in this module only runs in the browser, so it is ignored from

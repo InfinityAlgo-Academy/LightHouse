@@ -6,7 +6,7 @@
 'use strict';
 
 /**
- * @file
+ * @fileoverview
  * Audit that checks whether fonts that use `font-display: optional` were preloaded.
  */
 

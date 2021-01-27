@@ -99,7 +99,7 @@ const UIStrings = {
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 /**
- * @file
+ * @fileoverview
  * Audits if the page's web app manifest and service worker qualify for triggering a beforeinstallprompt event.
  * https://github.com/GoogleChrome/lighthouse/issues/23#issuecomment-270453303
  *

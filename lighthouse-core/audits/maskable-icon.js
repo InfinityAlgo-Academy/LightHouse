@@ -23,7 +23,7 @@ const UIStrings = {
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 /**
- * @file
+ * @fileoverview
  * Audits if a manifest contains at least one icon that is maskable
  *
  * Requirements:

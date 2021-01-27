@@ -24,7 +24,7 @@ const IGNORE_THRESHOLD_IN_PERCENT = 5;
 const IGNORE_THRESHOLD_IN_BYTES = 2048;
 
 /**
- * @file
+ * @fileOverview
  */
 class UnminifiedCSS extends ByteEfficiencyAudit {
   /**

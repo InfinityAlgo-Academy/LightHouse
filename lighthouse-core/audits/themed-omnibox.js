@@ -23,7 +23,7 @@ const UIStrings = {
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 /**
- * @file
+ * @fileoverview
  * Audits if a page is configured for a themed address bar
  *
  * Requirements:
