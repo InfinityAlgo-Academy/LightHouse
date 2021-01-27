@@ -23,7 +23,7 @@ const UIStrings = {
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 /**
- * @fileoverview
+ * @file
  * Audits if a page is configured for a custom splash screen when launched
  * https://github.com/GoogleChrome/lighthouse/issues/24
  *

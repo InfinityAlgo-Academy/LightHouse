@@ -7,15 +7,15 @@
 
 /* eslint-env jest */
 
+/**
+ * @fileoverview Mock fraggle rock driver for testing.
+ */
+
 const {
   createMockOnFn,
   createMockOnceFn,
   createMockSendCommandFn,
 } = require('../../gather/mock-commands.js');
-
-/**
- * @fileoverview Mock fraggle rock driver for testing.
- */
 
 /** @typedef {import('../../../fraggle-rock/gather/driver.js')} Driver */
 /** @typedef {import('../../../gather/driver/execution-context.js')} ExecutionContext */

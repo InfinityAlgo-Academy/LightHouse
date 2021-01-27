@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/** @fileoverview
+/** @file
  * Define message file to be used for a given locale. A few aliases are defined below.
  *
  * Google locale inheritance rules: https://goto.google.com/ccssm

@@ -8,7 +8,7 @@
 /* global getNodeDetails */
 
 /**
- * @fileoverview
+ * @file
  * This gatherer identifies elements that contribrute to metrics in the trace (LCP, CLS, etc.).
  * We take the backend nodeId from the trace and use it to find the corresponding element in the DOM.
  */

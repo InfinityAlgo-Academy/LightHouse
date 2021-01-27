@@ -6,7 +6,7 @@
 'use strict';
 
 /**
- * @fileoverview
+ * @file
  * A gatherer to collect information about the event listeners registered on the
  * global object. For now, the scope is narrowed to events that occur on and
  * around page unload, but this can be expanded in the future.
