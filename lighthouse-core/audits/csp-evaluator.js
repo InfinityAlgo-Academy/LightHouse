@@ -161,8 +161,8 @@ class CSPEvaluator extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'description', itemType: 'text', subItemsHeading: {key: 'description'}, text: 'Description'},
       {key: 'directive', itemType: 'text', subItemsHeading: {key: 'directive'}, text: 'Directive'},
+      {key: 'description', itemType: 'text', subItemsHeading: {key: 'description'}, text: 'Description'},
       /* eslint-enable max-len */
     ];
     const details = Audit.makeTableDetails(headings, results);
