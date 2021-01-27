@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Panašu, kad pateiktas URL netinkamas."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "Rodyti patikras"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "Žr. skaičiuotuvą."
   },

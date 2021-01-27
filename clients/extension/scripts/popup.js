@@ -26,12 +26,11 @@ const STRINGS = BROWSER_BRAND === 'chrome' ? CHROME_STRINGS : FIREFOX_STRINGS;
 /**
  * Guaranteed context.querySelector. Always returns an element or throws if
  * nothing matches query.
- * @param {string} query
+ * @template {string} T
+ * @param {T} query
  * @param {ParentNode=} context
- * @return {HTMLElement}
  */
 function find(query, context = document) {
-  /** @type {?HTMLElement} */
   const result = context.querySelector(query);
   if (result === null) {
     throw new Error(`query ${query} not found`);
@@ -108,10 +107,9 @@ function fillDevToolsShortcut() {
 function readSettingsFromDomAndPersist() {
   const optionsEl = find('.section--options');
   // Save settings when options page is closed.
-  const checkboxes = /** @type {NodeListOf<HTMLInputElement>} */
-    (optionsEl.querySelectorAll('.options__categories input:checked'));
+  const checkboxes = optionsEl.querySelectorAll('.options__categories input:checked');
   const selectedCategories = Array.from(checkboxes).map(input => input.value);
-  const device = /** @type {HTMLInputElement} */ (find('input[name="device"]:checked')).value;
+  const device = find('input[name="device"]:checked').value;
 
   const settings = {
     selectedCategories,
@@ -155,8 +153,8 @@ async function initPopup() {
 
   const mainEl = find('main');
   const optionsEl = find('.button--configure');
-  const generateReportButton = /** @type {HTMLButtonElement} */ (find('.button--generate'));
-  const configureButton = /** @type {HTMLButtonElement} */ (find('.button--configure'));
+  const generateReportButton = find('button.button--generate');
+  const configureButton = find('button.button--configure');
   const psiDisclaimerEl = find('.psi-disclaimer');
   const errorMessageEl = find('.errormsg');
   const optionsFormEl = find('.options__form');

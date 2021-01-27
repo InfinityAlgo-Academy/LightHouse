@@ -132,4 +132,23 @@ describe('Fraggle Rock API', () => {
       if (!matchingLog) expect(errorLogs).toContain({description: /violations added/});
     });
   });
+
+  describe('navigation', () => {
+    beforeEach(() => {
+      server.baseDir = path.join(__dirname, '../fixtures/fraggle-rock/navigation-basic');
+    });
+
+    it('should compute both Accessibility & ConsoleMessage results', async () => {
+      const result = await lighthouse.navigation({page, url: `${serverBaseUrl}/index.html`});
+      if (!result) throw new Error('Lighthouse failed to produce a result');
+
+      const {lhr} = result;
+      const {failedAudits, erroredAudits} = getAuditsBreakdown(lhr);
+      expect(erroredAudits).toHaveLength(0);
+
+      const failedAuditIds = failedAudits.map(audit => audit.id);
+      expect(failedAuditIds).toContain('label');
+      expect(failedAuditIds).toContain('errors-in-console');
+    });
+  });
 });

@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "指定した URL は無効の可能性があります。"
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "監査を表示"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "計算ツールはこちら。"
   },

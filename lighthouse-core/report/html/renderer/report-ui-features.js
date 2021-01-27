@@ -238,8 +238,7 @@ class ReportUIFeatures {
     ];
 
     // Get all tables with a text url column.
-    /** @type {Array<HTMLTableElement>} */
-    const tables = Array.from(this._document.querySelectorAll('.lh-table'));
+    const tables = Array.from(this._document.querySelectorAll('table.lh-table'));
     const tablesWithUrls = tables
       .filter(el =>
         el.querySelector('td.lh-table-column--url, td.lh-table-column--source-location'))
@@ -335,8 +334,7 @@ class ReportUIFeatures {
     for (const rowEl of rowEls) {
       if (rowEl.classList.contains('lh-sub-item-row')) continue;
 
-      /** @type {HTMLElement|null} */
-      const urlItem = rowEl.querySelector('.lh-text__url');
+      const urlItem = rowEl.querySelector('div.lh-text__url');
       if (!urlItem) continue;
 
       const datasetUrl = urlItem.dataset.url;
@@ -834,11 +832,11 @@ class DropDown {
 
   /**
    * @param {Array<Node>} allNodes
-   * @param {?Node=} startNode
-   * @returns {Node}
+   * @param {?HTMLElement=} startNode
+   * @returns {HTMLElement}
    */
   _getNextSelectableNode(allNodes, startNode) {
-    const nodes = allNodes.filter((node) => {
+    const nodes = allNodes.filter(/** @return {node is HTMLElement} */ (node) => {
       if (!(node instanceof HTMLElement)) {
         return false;
       }
@@ -865,21 +863,21 @@ class DropDown {
   }
 
   /**
-   * @param {?Element=} startEl
+   * @param {?HTMLElement=} startEl
    * @returns {HTMLElement}
    */
   _getNextMenuItem(startEl) {
     const nodes = Array.from(this._menuEl.childNodes);
-    return /** @type {HTMLElement} */ (this._getNextSelectableNode(nodes, startEl));
+    return this._getNextSelectableNode(nodes, startEl);
   }
 
   /**
-   * @param {?Element=} startEl
+   * @param {?HTMLElement=} startEl
    * @returns {HTMLElement}
    */
   _getPreviousMenuItem(startEl) {
     const nodes = Array.from(this._menuEl.childNodes).reverse();
-    return /** @type {HTMLElement} */ (this._getNextSelectableNode(nodes, startEl));
+    return this._getNextSelectableNode(nodes, startEl);
   }
 }
 

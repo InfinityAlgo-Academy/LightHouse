@@ -277,6 +277,14 @@ class Driver {
   }
 
   /**
+   * Bind to *any* protocol event.
+   * @param {(payload: LH.Protocol.RawEventMessage) => void} callback
+   */
+  onAnyProtocolMessage(callback) {
+    this._connection.on('protocolevent', callback);
+  }
+
+  /**
    * Debounce enabling or disabling domains to prevent driver users from
    * stomping on each other. Maintains an internal count of the times a domain
    * has been enabled. Returns false if the command would have no effect (domain

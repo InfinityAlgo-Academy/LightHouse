@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "आपका दिया हुआ यूआरएल गलत लगता है."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "ऑडिट दिखाएं"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "कैलकुलेटर देखें."
   },

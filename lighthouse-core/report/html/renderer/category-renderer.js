@@ -170,7 +170,7 @@ class CategoryRenderer {
   /**
    * @param {LH.ReportResult.Category} category
    * @param {Record<string, LH.Result.ReportGroup>} groupDefinitions
-   * @return {Element}
+   * @return {DocumentFragment}
    */
   renderCategoryHeader(category, groupDefinitions) {
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-category-header', this.templateContext);
@@ -184,7 +184,7 @@ class CategoryRenderer {
       this.dom.find('.lh-category-header__description', tmpl).appendChild(descEl);
     }
 
-    return /** @type {Element} */ (tmpl.firstElementChild);
+    return tmpl;
   }
 
   /**
@@ -289,7 +289,6 @@ class CategoryRenderer {
 
     const summaryInnerEl = this.dom.find('div.lh-audit-group__summary', clumpElement);
     summaryInnerEl.appendChild(this._createChevron());
-    summaryInnerEl.title = Util.i18n.strings.auditGroupExpandTooltip;
 
     const headerEl = this.dom.find('.lh-audit-group__header', clumpElement);
     const title = this._clumpTitles[clumpId];
@@ -336,8 +335,7 @@ class CategoryRenderer {
     // Cast `null` to 0
     const numericScore = Number(category.score);
     const gauge = this.dom.find('.lh-gauge', tmpl);
-    /** @type {?SVGCircleElement} */
-    const gaugeArc = gauge.querySelector('.lh-gauge-arc');
+    const gaugeArc = this.dom.find('circle.lh-gauge-arc', gauge);
 
     if (gaugeArc) this._setGaugeArc(gaugeArc, numericScore);
 

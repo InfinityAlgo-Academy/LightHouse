@@ -167,8 +167,7 @@ class ExecutionContext {
     const depsSerialized = options.deps ? options.deps.join('\n') : '';
     const expression = `(() => {
       ${depsSerialized}
-      ${mainFn}
-      return ${mainFn.name}(${argsSerialized});
+      return (${mainFn})(${argsSerialized});
     })()`;
     return this.evaluateAsync(expression, options);
   }

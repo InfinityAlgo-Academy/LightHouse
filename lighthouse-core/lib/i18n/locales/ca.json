@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Sembla que l'URL que has proporcionat no és vàlid."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "Mostra les auditories"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "Consulta la calculadora."
   },

@@ -7,7 +7,7 @@
 
 /* global document, window, getComputedStyle, getElementsInDocument, Node, getNodeDetails, getRectCenterPoint */
 
-const Gatherer = require('../gatherer.js');
+const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
 const pageFunctions = require('../../../lib/page-functions.js');
 const RectHelpers = require('../../../lib/rect-helpers.js');
 
@@ -287,9 +287,9 @@ function gatherTapTargets(tapTargetsSelector) {
 }
 /* c8 ignore stop */
 
-class TapTargets extends Gatherer {
+class TapTargets extends FRGatherer {
   /**
-   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.FRTransitionalContext} passContext
    * @return {Promise<LH.Artifacts.TapTarget[]>} All visible tap targets with their positions and sizes
    */
   afterPass(passContext) {

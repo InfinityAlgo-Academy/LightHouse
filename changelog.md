@@ -1,3 +1,85 @@
+<a name="7.0.1"></a>
+# 7.0.1 (2021-01-26)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v7.0.0...v7.0.1)
+
+We expect this release to ship in the DevTools of [Chrome 90](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## New contributors
+
+Thanks to our new contributors 👽🐷🐰🐯🐻!
+
+- Tyler Kindy @tkindy
+
+## Core
+
+* handle timer throttling in DevTools to avoid timeouts ([#11987](https://github.com/GoogleChrome/lighthouse/pull/11987))
+* console-messages: use source-location ([#11899](https://github.com/GoogleChrome/lighthouse/pull/11899))
+* errors-in-console: ignore BLOCKED_BY_CLIENT.Inspector errors ([#11901](https://github.com/GoogleChrome/lighthouse/pull/11901))
+* font-size: handle valueless attributes for inline styles ([#11934](https://github.com/GoogleChrome/lighthouse/pull/11934))
+* full-page-screenshot: get the MAX_TEXTURE_SIZE from the browser ([#11847](https://github.com/GoogleChrome/lighthouse/pull/11847))
+* metrics: support FCP for all frames with devtools throttling ([#11874](https://github.com/GoogleChrome/lighthouse/pull/11874))
+* normalize creation of NodeValue ([#11877](https://github.com/GoogleChrome/lighthouse/pull/11877))
+* full-page-screenshot: do not render zero size rects ([#11853](https://github.com/GoogleChrome/lighthouse/pull/11853))
+* replace most usages of evaluateAsync with structured evaluate ([#11754](https://github.com/GoogleChrome/lighthouse/pull/11754))
+* trace: compute trace for main frame and any child frames ([#11760](https://github.com/GoogleChrome/lighthouse/pull/11760))
+
+## Fraggle Rock
+
+Support for auditing user flows ([#11313](https://github.com/GoogleChrome/lighthouse/issues/11313))
+
+* add navigation runner ([#11975](https://github.com/GoogleChrome/lighthouse/pull/11975))
+* config: refactor config cloning for fraggle rock ([#11759](https://github.com/GoogleChrome/lighthouse/pull/11759))
+* add navigations to config ([#11957](https://github.com/GoogleChrome/lighthouse/pull/11957))
+* add timespan runner ([#11944](https://github.com/GoogleChrome/lighthouse/pull/11944))
+* filter configs by gather mode ([#11941](https://github.com/GoogleChrome/lighthouse/pull/11941))
+* add base config ([#11915](https://github.com/GoogleChrome/lighthouse/pull/11915))
+* add base gatherer class ([#11917](https://github.com/GoogleChrome/lighthouse/pull/11917))
+
+## Report
+
+* remove title from audit clump expand ([#11989](https://github.com/GoogleChrome/lighthouse/pull/11989))
+* use source maps to show original file name ([#10930](https://github.com/GoogleChrome/lighthouse/pull/10930))
+* convert v6 emulatedFormFactor to v7 formFactor ([#11876](https://github.com/GoogleChrome/lighthouse/pull/11876))
+
+## Deps
+
+* snyk: update snyk snapshot ([#11979](https://github.com/GoogleChrome/lighthouse/pull/11979), [#11952](https://github.com/GoogleChrome/lighthouse/pull/11952))
+
+## I18n
+
+* prevent strings with identical message and description ([#11976](https://github.com/GoogleChrome/lighthouse/pull/11976))
+* import ([#11947](https://github.com/GoogleChrome/lighthouse/pull/11947))
+
+## Docs
+
+* chromium-web-tests: add debugging tips ([#11684](https://github.com/GoogleChrome/lighthouse/pull/11684))
+* readme: add plugin: lighthouse-plugin-crux ([#11868](https://github.com/GoogleChrome/lighthouse/pull/11868))
+
+## Tests
+
+* legacy-javascript: sync results ([#11980](https://github.com/GoogleChrome/lighthouse/pull/11980))
+* smoke: add category to run some perf tests in parallel ([#11932](https://github.com/GoogleChrome/lighthouse/pull/11932))
+* revert mistaken change to yarn unit-core ([#11955](https://github.com/GoogleChrome/lighthouse/pull/11955))
+* run code coverage in github actions ([#11770](https://github.com/GoogleChrome/lighthouse/pull/11770))
+* remove travis ([#11902](https://github.com/GoogleChrome/lighthouse/pull/11902))
+* increase treemap pptr timeouts ([#11916](https://github.com/GoogleChrome/lighthouse/pull/11916))
+* add missing arrays to InspectorIssues sample artifact ([#11871](https://github.com/GoogleChrome/lighthouse/pull/11871))
+* add more files in lighthouse-core/tests to tsconfig ([#11728](https://github.com/GoogleChrome/lighthouse/pull/11728))
+* add warn-not-offline-capable smoketest ([#11842](https://github.com/GoogleChrome/lighthouse/pull/11842))
+
+## Misc
+
+* add type checking to page functions ([#11958](https://github.com/GoogleChrome/lighthouse/pull/11958))
+* proto: clarify deprecated state of EmulatedFormFactor enum ([#11946](https://github.com/GoogleChrome/lighthouse/pull/11946))
+* fix "fast" npm script ([#11997](https://github.com/GoogleChrome/lighthouse/pull/11997))
+* use typed-query-selector for native querySelector ([#11990](https://github.com/GoogleChrome/lighthouse/pull/11990))
+* return specific html element type for dom.find ([#11526](https://github.com/GoogleChrome/lighthouse/pull/11526))
+* build: extract 'yarn link…' rigamarole to own npm script ([#11977](https://github.com/GoogleChrome/lighthouse/pull/11977))
+* proto: backport proto formatting fixes ([#11978](https://github.com/GoogleChrome/lighthouse/pull/11978))
+* scripts: fix unbound variable in open-devtools ([#11845](https://github.com/GoogleChrome/lighthouse/pull/11845))
+* update-report-fixtures: use a consistent server port ([#11848](https://github.com/GoogleChrome/lighthouse/pull/11848))
+* add type checking to TagsBlockingFirstPaint ([#11841](https://github.com/GoogleChrome/lighthouse/pull/11841))
+
 <a name="7.0.0"></a>
 # 7.0.0 (2020-12-16)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v6.5.0...v7.0.0)
@@ -210,7 +292,7 @@ This is a minor release to fix an issue in the npm package where v6.4.0 was publ
 
 ## New Contributors
 
-Thanks to our new contributor 👽🐷🐰🐯🐻! 
+Thanks to our new contributor 👽🐷🐰🐯🐻!
 
 - Csaba Palfi @csabapalfi
 
@@ -235,7 +317,7 @@ We expect this release to ship in the DevTools of [Chrome 88](https://chromiumda
 
 ## New Contributors
 
-Thanks to our new contributors 👽🐷🐰🐯🐻! 
+Thanks to our new contributors 👽🐷🐰🐯🐻!
 
 - Denis Seleznev @hcodes
 - Irfan Maulana @mazipan
@@ -438,9 +520,9 @@ Insights within 2 weeks.
 
 ## New Contributors
 
-Thanks to our new contributors 👽🐷🐰🐯🐻! 
+Thanks to our new contributors 👽🐷🐰🐯🐻!
 
-* Adam Raine @adamraine 
+* Adam Raine @adamraine
 * Saavan Nanavati @saavannanavati
 * lemcardenas @lemcardenas
 * George Makunde Martin @gMakunde

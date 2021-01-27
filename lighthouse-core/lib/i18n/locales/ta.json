@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "நீங்கள் அளித்துள்ள URL செல்லாததெனத் தோன்றுகிறது."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "தணிக்கைகளைக் காட்டு"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "கால்குலேட்டரைக் காட்டு."
   },

@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "URL yang Anda berikan tampaknya tidak valid."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "Tampilkan audit"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "Lihat kalkulator."
   },

@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "మీరు అందించిన URL చెల్లనిదిగా కనిపిస్తోంది."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "ఆడిట్‌లను చూపించండి"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "కాలిక్యులేటర్‌ను చూడండి."
   },

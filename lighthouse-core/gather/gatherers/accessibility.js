@@ -7,7 +7,7 @@
 
 /* global window, document, getNodeDetails */
 
-const Gatherer = require('../../fraggle-rock/gather/base-gatherer.js');
+const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
 const axeLibSource = require('../../lib/axe.js').source;
 const pageFunctions = require('../../lib/page-functions.js');
 
@@ -98,11 +98,7 @@ async function runA11yChecks() {
 }
 /* c8 ignore stop */
 
-/**
- * @implements {LH.Gatherer.GathererInstance}
- * @implements {LH.Gatherer.FRGathererInstance}
- */
-class Accessibility extends Gatherer {
+class Accessibility extends FRGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
     supportedModes: ['snapshot', 'navigation'],

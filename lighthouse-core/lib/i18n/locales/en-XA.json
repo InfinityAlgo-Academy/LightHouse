@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "[Ţĥé ÛŔĻ ýöû ĥåvé þŕövîðéð åþþéåŕš ţö бé îñvåļîð. one two three four five six seven eight nine ten]"
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "[Šĥöŵ åûðîţš one two]"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "[Šéé çåļçûļåţöŕ. one two]"
   },

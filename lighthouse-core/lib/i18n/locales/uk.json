@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Схоже, указана вами URL-адреса недійсна."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "Показати перевірки"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "Показати калькулятор."
   },

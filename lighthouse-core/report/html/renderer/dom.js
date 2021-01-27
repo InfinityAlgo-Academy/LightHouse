@@ -218,7 +218,6 @@ class DOM {
    * @param {ParentNode} context
    */
   find(query, context) {
-    /** @type {?import('typed-query-selector/parser').ParseSelector<T>} */
     const result = context.querySelector(query);
     if (result === null) {
       throw new Error(`query ${query} not found`);
@@ -233,7 +232,6 @@ class DOM {
    * @param {ParentNode} context
    */
   findAll(query, context) {
-    /** @type {Array<import('typed-query-selector/parser').ParseSelector<T>>} */
     const elements = Array.from(context.querySelectorAll(query));
     return elements;
   }

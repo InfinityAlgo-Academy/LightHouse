@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "נראה שכתובת ה-URL שסיפקת אינה חוקית."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "הצגת בדיקות"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "להצגת המחשבון."
   },

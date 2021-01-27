@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Den angivna webbadressen verkar vara ogiltig."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "Visa granskningar"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "Visa kalkylator."
   },

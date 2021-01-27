@@ -13,7 +13,7 @@
 
 'use strict';
 
-const Gatherer = require('../gatherer.js');
+const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
 const pageFunctions = require('../../../lib/page-functions.js');
 
 /**
@@ -76,21 +76,26 @@ function getDOMStats(element = document.body, deep = true) {
 }
 /* c8 ignore stop */
 
-class DOMStats extends Gatherer {
+class DOMStats extends FRGatherer {
+  /** @type {LH.Gatherer.GathererMeta} */
+  meta = {
+    supportedModes: ['snapshot', 'navigation'],
+  }
+
   /**
-   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.FRTransitionalContext} passContext
    * @return {Promise<LH.Artifacts['DOMStats']>}
    */
-  async afterPass(passContext) {
+  async snapshot(passContext) {
     const driver = passContext.driver;
 
-    await driver.sendCommand('DOM.enable');
+    await driver.defaultSession.sendCommand('DOM.enable');
     const results = await driver.evaluate(getDOMStats, {
       args: [],
       useIsolation: true,
       deps: [pageFunctions.getNodeDetailsString],
     });
-    await driver.sendCommand('DOM.disable');
+    await driver.defaultSession.sendCommand('DOM.disable');
     return results;
   }
 }

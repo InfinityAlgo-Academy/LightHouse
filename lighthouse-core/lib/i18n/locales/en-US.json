@@ -1895,9 +1895,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "The URL you have provided appears to be invalid."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "Show audits"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "See calculator."
   },

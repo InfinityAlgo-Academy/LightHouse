@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Šķiet, ka jūsu norādītais URL nav derīgs."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "Rādīt pārbaudes"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "Skatiet kalkulatoru."
   },

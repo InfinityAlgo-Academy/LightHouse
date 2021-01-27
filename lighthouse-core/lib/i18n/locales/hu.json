@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Úgy tűnik, a megadott URL érvénytelen."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "Ellenőrzések megjelenítése"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "Számológép megtekintése"
   },

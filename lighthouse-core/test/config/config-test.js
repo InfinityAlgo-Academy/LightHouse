@@ -1291,8 +1291,13 @@ describe('Config', () => {
       // Round-trip through JSON to drop live 'instance'/'implementation' props.
       const mergedJson = JSON.parse(JSON.stringify(merged));
 
+      const expectedInstance = {
+        meta: {
+          supportedModes: ['snapshot', 'navigation'],
+        },
+      };
       assert.deepEqual(mergedJson[0].gatherers,
-        [{path: 'viewport-dimensions', instance: {}}]);
+        [{path: 'viewport-dimensions', instance: expectedInstance}]);
     });
 
     function loadGatherer(gathererEntry) {

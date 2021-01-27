@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "URL bạn cung cấp có vẻ không hợp lệ."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "Hiển thị kết quả kiểm tra"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "Xem máy tính."
   },

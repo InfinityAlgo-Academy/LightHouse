@@ -1850,9 +1850,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Het lijkt erop dat je een ongeldige URL hebt opgegeven."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "Controles weergeven"
-  },
   "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
     "message": "Rekenmachine bekijken"
   },
