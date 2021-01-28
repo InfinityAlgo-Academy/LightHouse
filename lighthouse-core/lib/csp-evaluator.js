@@ -30,13 +30,13 @@ const UIStrings = {
     'This can allow the execution of unsafe scripts.',
   missingObjectSrc: 'Missing object-src allows the injection of plugins which can ' +
     'execute JavaScript. Can you set it to \'none\'?',
-  strictDynamic: 'Host whitelists can frequently be bypassed. Consider using ' +
+  strictDynamic: 'Host allowlists can frequently be bypassed. Consider using ' +
     '\'strict-dynamic\' in combination with CSP nonces or hashes.',
   unsafeInline: '\'unsafe-inline\' allows the execution of unsafe in-page scripts ' +
     'and event handlers. Consider using CSP nonces or hashes to allow scripts individually.',
   unsafeInlineFallback: 'Consider adding \'unsafe-inline\' (ignored by browsers supporting ' +
     'nonces/hashes) to be backward compatible with older browsers.',
-  whitelistFallback: 'Consider adding https: and http: url schemes (ignored by browsers ' +
+  allowlistFallback: 'Consider adding https: and http: url schemes (ignored by browsers ' +
     'supporting \'strict-dynamic\') to be backward compatible with older browsers.',
   reportToOnly: 'This CSP policy only provides a reporting ' +
     'destination via the \'report-to\' directive. ' +
@@ -75,7 +75,7 @@ const FINDING_TO_UI_STRING = {
   },
   400: UIStrings.strictDynamic,
   403: UIStrings.unsafeInlineFallback,
-  404: UIStrings.whitelistFallback,
+  404: UIStrings.allowlistFallback,
   600: UIStrings.reportingDestinationMissing,
   601: UIStrings.reportToOnly,
 };
