@@ -68,6 +68,7 @@ module.exports = {
     'jsdoc/require-file-overview': [2, {
       tags: {
         file: {
+          mustExist: false,
           initialCommentsOnly: true,
           preventDuplicates: true,
         },
