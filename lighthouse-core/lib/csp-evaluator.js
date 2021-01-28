@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
+ * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,11 +7,11 @@
 
 /**
  * @typedef Finding
- * @property {number} type Type of the finding.
- * @property {string} description Description of the finding.
- * @property {number} severity Severity of the finding.
- * @property {string} directive The CSP directive in which the finding occurred.
- * @property {string|undefined} value The directive value, if exists.
+ * @property {number} type
+ * @property {string} description
+ * @property {number} severity
+ * @property {string} directive The directive the finding applies to.
+ * @property {string|undefined} value Keyword if the finding applies to one.
  */
 
 const log = require('lighthouse-logger');
@@ -48,7 +48,7 @@ const UIStrings = {
   nonceLength: 'Nonces should be at least 8 characters long and use the base64 charset.',
   missingSemicolon: 'Did you forget the semicolon? ' +
     '{keyword} seems to be a directive, not a keyword.',
-  unknownDirective: 'Unknown CSP directive',
+  unknownDirective: 'Unknown CSP directive.',
   unknownKeyword: '{keyword} seems to be an invalid keyword.',
   deprecatedReflectedXSS: 'reflected-xss is deprecated since CSP2. ' +
     'Please, use the X-XSS-Protection header instead.',
@@ -58,56 +58,57 @@ const UIStrings = {
     'Please, use the Cross-Origin-Opener-Policy header instead.',
 };
 
-/** @type {Record<number, Record<string, string>|string>} */
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+
+/** @type {Record<number, Record<string, LH.IcuMessage>|string|LH.IcuMessage>} */
 const FINDING_TO_UI_STRING = {
-  [Type.UNKNOWN_DIRECTIVE]: UIStrings.unknownDirective,
+  [Type.MISSING_SEMICOLON]: UIStrings.missingSemicolon,
+  [Type.UNKNOWN_DIRECTIVE]: str_(UIStrings.unknownDirective),
   [Type.INVALID_KEYWORD]: UIStrings.unknownKeyword,
   [Type.MISSING_DIRECTIVES]: {
-    'base-uri': UIStrings.missingBaseUri,
-    'script-src': UIStrings.missingScriptSrc,
-    'object-src': UIStrings.missingObjectSrc,
+    'base-uri': str_(UIStrings.missingBaseUri),
+    'script-src': str_(UIStrings.missingScriptSrc),
+    'object-src': str_(UIStrings.missingObjectSrc),
   },
-  [Type.SCRIPT_UNSAFE_INLINE]: UIStrings.unsafeInline,
-  [Type.NONCE_LENGTH]: UIStrings.nonceLength,
+  [Type.SCRIPT_UNSAFE_INLINE]: str_(UIStrings.unsafeInline),
+  [Type.NONCE_LENGTH]: str_(UIStrings.nonceLength),
   [Type.DEPRECATED_DIRECTIVE]: {
-    'reflected-xss': UIStrings.deprecatedReflectedXSS,
-    'referrer': UIStrings.deprecatedReferrer,
-    'disown-opener': UIStrings.deprecatedDisownOpener,
+    'reflected-xss': str_(UIStrings.deprecatedReflectedXSS),
+    'referrer': str_(UIStrings.deprecatedReferrer),
+    'disown-opener': str_(UIStrings.deprecatedDisownOpener),
   },
-  [Type.STRICT_DYNAMIC]: UIStrings.strictDynamic,
-  [Type.UNSAFE_INLINE_FALLBACK]: UIStrings.unsafeInlineFallback,
-  [Type.WHITELIST_FALLBACK]: UIStrings.allowlistFallback,
-  [Type.REPORTING_DESTINATION_MISSING]: UIStrings.reportingDestinationMissing,
-  [Type.REPORT_TO_ONLY]: UIStrings.reportToOnly,
+  [Type.STRICT_DYNAMIC]: str_(UIStrings.strictDynamic),
+  [Type.UNSAFE_INLINE_FALLBACK]: str_(UIStrings.unsafeInlineFallback),
+  [Type.WHITELIST_FALLBACK]: str_(UIStrings.allowlistFallback),
+  [Type.REPORTING_DESTINATION_MISSING]: str_(UIStrings.reportingDestinationMissing),
+  [Type.REPORT_TO_ONLY]: str_(UIStrings.reportToOnly),
 };
-
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 /**
  * @param {Finding} finding
  * @return {LH.IcuMessage|string}
  */
 function getTranslatedDescription(finding) {
-  const typeResults = FINDING_TO_UI_STRING[finding.type];
-  if (!typeResults) {
-    log.warn('CSP Evaluator', 'No translation found for description');
-    return finding.description;
-  }
-
-  if (typeof typeResults === 'string') {
-    if ([UIStrings.unknownKeyword, UIStrings.missingSemicolon].includes(typeResults)) {
-      return str_(typeResults, {keyword: finding.value || ''});
-    }
-    return str_(typeResults);
-  }
-
-  const result = typeResults[finding.directive];
+  let result = FINDING_TO_UI_STRING[finding.type];
   if (!result) {
-    log.warn('CSP Evaluator', 'No translation found for description');
+    log.warn('CSP Evaluator', `No translation found for description: ${finding.description}`);
     return finding.description;
   }
 
-  return str_(result);
+  // Return if translated result found.
+  if (i18n.isIcuMessage(result)) return result;
+
+  // If result was not translated, that means `finding.value` is included in the UI string.
+  if (typeof result === 'string') return str_(result, {keyword: finding.value || ''});
+
+  // Result is a record object, UI string depends on the directive.
+  result = result[finding.directive];
+  if (!result) {
+    log.warn('CSP Evaluator', `No translation found for description: ${finding.description}`);
+    return finding.description;
+  }
+
+  return result;
 }
 
 /**
