@@ -20,6 +20,7 @@ const evaluator = require('../../third-party/csp-evaluator/optimized_binary-bund
 
 const Parser = evaluator.module.get('google3.javascript.security.csp.csp_evaluator.parser').CspParser; // eslint-disable-line max-len
 const lighthouseChecks = evaluator.module.get('google3.javascript.security.csp.csp_evaluator.lighthouse.lighthouse_checks'); // eslint-disable-line max-len
+const Type = evaluator.module.get('google3.javascript.security.csp.csp_evaluator.finding').Type; // eslint-disable-line max-len
 
 const UIStrings = {
   missingBaseUri: 'Missing base-uri allows the injection of base tags. ' +
@@ -59,25 +60,25 @@ const UIStrings = {
 
 /** @type {Record<number, Record<string, string>|string>} */
 const FINDING_TO_UI_STRING = {
-  101: UIStrings.unknownDirective,
-  102: UIStrings.unknownKeyword,
-  300: {
+  [Type.UNKNOWN_DIRECTIVE]: UIStrings.unknownDirective,
+  [Type.INVALID_KEYWORD]: UIStrings.unknownKeyword,
+  [Type.MISSING_DIRECTIVES]: {
     'base-uri': UIStrings.missingBaseUri,
     'script-src': UIStrings.missingScriptSrc,
     'object-src': UIStrings.missingObjectSrc,
   },
-  301: UIStrings.unsafeInline,
-  307: UIStrings.nonceLength,
-  309: {
+  [Type.SCRIPT_UNSAFE_INLINE]: UIStrings.unsafeInline,
+  [Type.NONCE_LENGTH]: UIStrings.nonceLength,
+  [Type.DEPRECATED_DIRECTIVE]: {
     'reflected-xss': UIStrings.deprecatedReflectedXSS,
     'referrer': UIStrings.deprecatedReferrer,
     'disown-opener': UIStrings.deprecatedDisownOpener,
   },
-  400: UIStrings.strictDynamic,
-  403: UIStrings.unsafeInlineFallback,
-  404: UIStrings.allowlistFallback,
-  600: UIStrings.reportingDestinationMissing,
-  601: UIStrings.reportToOnly,
+  [Type.STRICT_DYNAMIC]: UIStrings.strictDynamic,
+  [Type.UNSAFE_INLINE_FALLBACK]: UIStrings.unsafeInlineFallback,
+  [Type.WHITELIST_FALLBACK]: UIStrings.allowlistFallback,
+  [Type.REPORTING_DESTINATION_MISSING]: UIStrings.reportingDestinationMissing,
+  [Type.REPORT_TO_ONLY]: UIStrings.reportToOnly,
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
