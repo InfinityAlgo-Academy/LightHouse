@@ -73,8 +73,16 @@ class ProtocolSession {
    * Bind to our custom event that fires for *any* protocol event.
    * @param {(payload: LH.Protocol.RawEventMessage) => void} callback
    */
-  onAnyProtocolMessage(callback) {
+  addProtocolMessageListener(callback) {
     this._session.on('*', /** @type {*} */ (callback));
+  }
+
+  /**
+   * Unbind to our custom event that fires for *any* protocol event.
+   * @param {(payload: LH.Protocol.RawEventMessage) => void} callback
+   */
+  removeProtocolMessageListener(callback) {
+    this._session.off('*', /** @type {*} */ (callback));
   }
 
   /**

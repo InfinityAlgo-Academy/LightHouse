@@ -8,7 +8,6 @@
 const Fetcher = require('./fetcher.js');
 const ExecutionContext = require('./driver/execution-context.js');
 const {waitForFullyLoaded, waitForFrameNavigated} = require('./driver/wait-for-condition.js');
-const NetworkRecorder = require('../lib/network-recorder.js');
 const emulation = require('../lib/emulation.js');
 const LHElement = require('../lib/lh-element.js');
 const LHError = require('../lib/lh-error.js');
@@ -26,6 +25,7 @@ const pageFunctions = require('../lib/page-functions.js');
 // Pulled in for Connection type checking.
 // eslint-disable-next-line no-unused-vars
 const Connection = require('./connections/connection.js');
+const NetworkMonitor = require('./driver/network-monitor.js');
 
 const UIStrings = {
   /**
@@ -86,13 +86,6 @@ class Driver {
   _domainEnabledCounts = new Map();
 
   /**
-   * Used for monitoring network status events during gotoURL.
-   * @type {?NetworkRecorder}
-   * @private
-   */
-  _networkStatusMonitor = null;
-
-  /**
    * Used for monitoring url redirects during gotoURL.
    * @type {?string}
    * @private
@@ -128,6 +121,7 @@ class Driver {
    */
   constructor(connection) {
     this._connection = connection;
+    this._networkMonitor = new NetworkMonitor(this);
 
     this.on('Target.attachedToTarget', event => {
       this._handleTargetAttached(event).catch(this._handleEventError);
@@ -280,8 +274,16 @@ class Driver {
    * Bind to *any* protocol event.
    * @param {(payload: LH.Protocol.RawEventMessage) => void} callback
    */
-  onAnyProtocolMessage(callback) {
+  addProtocolMessageListener(callback) {
     this._connection.on('protocolevent', callback);
+  }
+
+  /**
+   * Unbind to *any* protocol event.
+   * @param {(payload: LH.Protocol.RawEventMessage) => void} callback
+   */
+  removeProtocolMessageListener(callback) {
+    this._connection.off('protocolevent', callback);
   }
 
   /**
@@ -344,9 +346,6 @@ class Driver {
    */
   _handleProtocolEvent(event) {
     this._devtoolsLog.record(event);
-    if (this._networkStatusMonitor) {
-      this._networkStatusMonitor.dispatch(event);
-    }
 
     // @ts-expect-error TODO(bckenny): tsc can't type event.params correctly yet,
     // typing as property of union instead of narrowing from union of
@@ -638,47 +637,6 @@ class Driver {
   }
 
   /**
-   * Set up listener for network quiet events and reset the monitored navigation events.
-   * @param {string} startingUrl
-   * @return {Promise<void>}
-   * @private
-   */
-  _beginNetworkStatusMonitoring(startingUrl) {
-    this._networkStatusMonitor = new NetworkRecorder();
-
-    this._monitoredUrl = startingUrl;
-    // Reset back to empty
-    this._monitoredUrlNavigations = [];
-
-    return this.sendCommand('Network.enable');
-  }
-
-  /**
-   * End network status listening. Returns the final, possibly redirected,
-   * loaded URL starting with the one passed into _endNetworkStatusMonitoring.
-   * @return {Promise<string>}
-   * @private
-   */
-  async _endNetworkStatusMonitoring() {
-    const startingUrl = this._monitoredUrl;
-    const frameNavigations = this._monitoredUrlNavigations;
-
-    const resourceTreeResponse = await this.sendCommand('Page.getResourceTree');
-    const mainFrameId = resourceTreeResponse.frameTree.frame.id;
-    const mainFrameNavigations = frameNavigations.filter(frame => frame.id === mainFrameId);
-    const finalNavigation = mainFrameNavigations[mainFrameNavigations.length - 1];
-
-    this._networkStatusMonitor = null;
-    this._monitoredUrl = null;
-    this._monitoredUrlNavigations = [];
-
-    const finalUrl = (finalNavigation && finalNavigation.url) || startingUrl;
-    if (!finalNavigation) log.warn('Driver', 'No detected navigations');
-    if (!finalUrl) throw new Error('Unable to determine finalUrl');
-    return finalUrl;
-  }
-
-  /**
    * Navigate to the given URL. Direct use of this method isn't advised: if
    * the current page is already at the given URL, navigation will not occur and
    * so the returned promise will only resolve after the MAX_WAIT_FOR_FULLY_LOADED
@@ -700,7 +658,7 @@ class Driver {
       throw new Error('Cannot use both waitForNavigated and another event, pick just one');
     }
 
-    await this._beginNetworkStatusMonitoring(url);
+    await this._networkMonitor.enable();
     await this._executionContext.clearContextId();
 
     // Enable auto-attaching to subtargets so we receive iframe information
@@ -720,7 +678,6 @@ class Driver {
     if (waitForNavigated) {
       await waitForFrameNavigated(this).promise;
     } else if (waitForLoad) {
-      const networkMonitor = this._networkStatusMonitor;
       /** @type {Partial<LH.Config.Pass>} */
       const passConfig = passContext.passConfig || {};
 
@@ -735,21 +692,23 @@ class Driver {
       if (typeof cpuQuietThresholdMs !== 'number') cpuQuietThresholdMs = DEFAULT_CPU_QUIET_THRESHOLD;
       if (typeof maxWaitMs !== 'number') maxWaitMs = constants.defaultSettings.maxWaitForLoad;
       if (typeof maxFCPMs !== 'number') maxFCPMs = constants.defaultSettings.maxWaitForFcp;
-      if (!networkMonitor) throw new Error('Failed to instantiate networkStatusMonitor');
       /* eslint-enable max-len */
 
       if (!waitForFcp) maxFCPMs = undefined;
       const waitOptions = {pauseAfterFcpMs, pauseAfterLoadMs, networkQuietThresholdMs,
         cpuQuietThresholdMs, maxWaitForLoadedMs: maxWaitMs, maxWaitForFcpMs: maxFCPMs};
-      const loadResult = await waitForFullyLoaded(this, networkMonitor, waitOptions);
+      const loadResult = await waitForFullyLoaded(this, this._networkMonitor, waitOptions);
       timedOut = loadResult.timedOut;
     }
 
+    const finalUrl = await this._networkMonitor.getFinalNavigationUrl() || url;
+
     // Bring `Page.navigate` errors back into the promise chain. See https://github.com/GoogleChrome/lighthouse/pull/6739.
     await waitforPageNavigateCmd;
+    await this._networkMonitor.disable();
 
     return {
-      finalUrl: await this._endNetworkStatusMonitoring(),
+      finalUrl,
       timedOut,
     };
   }

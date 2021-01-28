@@ -318,11 +318,12 @@ describe('.gotoURL', () => {
     await flushAllTimersAndMicrotasks();
     expect(loadPromise).not.toBeDone('Did not wait for frameNavigated');
 
-    // Use `findListener` instead of `mockEvent` so we can control exactly when the promise resolves
-    const loadListener = driver.on.findListener('Page.frameNavigated');
+    // Use `getListeners` instead of `mockEvent` so we can control exactly when the promise resolves
+    // The first listener is from the network monitor and the second is from the load watcher.
+    const [networkMonitorListener, loadListener] = driver.on.getListeners('Page.frameNavigated');
 
     /** @param {LH.Crdp.Page.Frame} frame */
-    const navigate = frame => driver._eventEmitter.emit('Page.frameNavigated', {frame});
+    const navigate = frame => networkMonitorListener({frame});
     const baseFrame = {
       id: 'ABC', loaderId: '', securityOrigin: '', mimeType: 'text/html', domainAndRegistry: '',
       secureContextType: /** @type {'Secure'} */ ('Secure'),
@@ -337,7 +338,7 @@ describe('.gotoURL', () => {
     navigate({...baseFrame, id: 'ad2', url: 'https://frame-b.example.com'});
     navigate({...baseFrame, id: 'ad3', url: 'https://frame-c.example.com'});
 
-    loadListener();
+    loadListener(baseFrame);
     await flushAllTimersAndMicrotasks();
     expect(loadPromise).toBeDone('Did not resolve after frameNavigated');
 
@@ -358,9 +359,9 @@ describe('.gotoURL', () => {
       await flushAllTimersAndMicrotasks();
       expect(loadPromise).not.toBeDone('Did not wait for frameNavigated');
 
-      // Use `findListener` instead of `mockEvent` so we can control exactly when the promise resolves
-      const listener = driver.on.findListener('Page.frameNavigated');
-      listener();
+      // Use `getListeners` instead of `mockEvent` so we can control exactly when the promise resolves
+      const [_, listener] = driver.on.getListeners('Page.frameNavigated');
+      listener({frame: {url: 'https://www.example.com'}});
       await flushAllTimersAndMicrotasks();
       expect(loadPromise).toBeDone('Did not resolve after frameNavigated');
 

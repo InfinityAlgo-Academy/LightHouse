@@ -75,7 +75,7 @@ describe('ProtocolSession', () => {
     });
   }
 
-  describe('.onAnyProtocolMessage', () => {
+  describe('.addProtocolMessageListener', () => {
     it('should listen for any event', () => {
       // @ts-expect-error - we want to use a more limited test of a real event emitter.
       puppeteerSession = new EventEmitter();
@@ -85,7 +85,7 @@ describe('ProtocolSession', () => {
       const allListener = jest.fn();
 
       session.on('Page.frameNavigated', regularListener);
-      session.onAnyProtocolMessage(allListener);
+      session.addProtocolMessageListener(allListener);
 
       puppeteerSession.emit('Page.frameNavigated');
       puppeteerSession.emit('Debugger.scriptParsed', {script: 'details'});
@@ -98,6 +98,23 @@ describe('ProtocolSession', () => {
         method: 'Debugger.scriptParsed',
         params: [{script: 'details'}],
       });
+    });
+  });
+
+  describe('.removeProtocolMessageListener', () => {
+    it('should stop listening for any event', () => {
+      // @ts-expect-error - we want to use a more limited test of a real event emitter.
+      puppeteerSession = new EventEmitter();
+      session = new ProtocolSession(puppeteerSession);
+
+      const allListener = jest.fn();
+
+      session.addProtocolMessageListener(allListener);
+      puppeteerSession.emit('Page.frameNavigated');
+      expect(allListener).toHaveBeenCalled();
+      session.removeProtocolMessageListener(allListener);
+      puppeteerSession.emit('Page.frameNavigated');
+      expect(allListener).toHaveBeenCalledTimes(1);
     });
   });
 
