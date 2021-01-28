@@ -10,8 +10,11 @@ const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
 /* global document */
 
 class AppCacheManifest extends FRGatherer {
+  static GathererSymbol = Symbol('AppCacheManifest');
+
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
+    symbol: AppCacheManifest.GathererSymbol,
     supportedModes: ['snapshot', 'navigation'],
   }
 
@@ -21,6 +24,8 @@ class AppCacheManifest extends FRGatherer {
    */
   snapshot(passContext) {
     const driver = passContext.driver;
+    // This won't typecheck because no dependencies declared.
+    passContext.dependencies.Accessibility;
 
     return driver.evaluate(() => {
       return document.documentElement && document.documentElement.getAttribute('manifest');

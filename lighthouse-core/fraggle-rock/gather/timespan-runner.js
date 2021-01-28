@@ -26,7 +26,7 @@ async function startTimespan(options) {
 
   for (const {id, gatherer} of config.artifacts || []) {
     artifactErrors[id] = await Promise.resolve()
-      .then(() => gatherer.instance.beforeTimespan({gatherMode: 'timespan', driver}))
+      .then(() => gatherer.instance.beforeTimespan({gatherMode: 'timespan', driver, dependencies: {}}))
       .catch(err => err);
   }
 
@@ -47,7 +47,7 @@ async function startTimespan(options) {
             const artifact = artifactErrors[id]
               ? Promise.reject(artifactErrors[id])
               : await Promise.resolve()
-                  .then(() => gatherer.instance.afterTimespan({gatherMode: 'timespan', driver}))
+                  .then(() => gatherer.instance.afterTimespan({gatherMode: 'timespan', driver, dependencies: /** @type {LH.Artifacts} */ (artifacts)}))
                   .catch(err => err);
 
             artifacts[artifactName] = artifact;

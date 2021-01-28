@@ -135,8 +135,44 @@ describe('Fraggle Rock Config', () => {
 
     const {config} = initializeConfig(configJson, {gatherMode: 'snapshot'});
     expect(config).toMatchObject({
+      artifacts: [{id: 'Accessibility', gatherer: {path: 'accessibility'}}],
+    });
+  });
+
+  it('should support artifact dependencies', () => {
+    const configJson = {
       artifacts: [
-        {id: 'Accessibility', gatherer: {path: 'accessibility'}},
+        {id: 'AppCacheManifest', gatherer: 'appcache'},
+        {id: 'Accessiblity', gatherer: 'accessibility'},
+
+        // Optional extension in a potential future where there is not a static mapping anymore.
+        {
+          id: 'ExtraAppCacheManifest',
+          gatherer: {path: 'appcache', options: {ignoreTheStuff: true}},
+        },
+        {
+          id: 'ExtraAccessibility',
+          gatherer: {
+            path: 'accessibility',
+            dependencies: {AppCacheManifest: 'ExtraAppCacheManifest'},
+          },
+        },
+      ],
+    };
+
+    const {config} = initializeConfig(configJson, {gatherMode: 'snapshot'});
+    expect(config).toMatchObject({
+      artifacts: [
+        {id: 'AppCacheManifest', gatherer: {path: 'appcache'}},
+        {
+          id: 'Accessiblity',
+          gatherer: {
+            path: 'accessibility',
+            dependencies: {
+              AppCacheManifest: {id: 'AppCacheManifest', gatherer: {path: 'appcache'}},
+            },
+          },
+        },
       ],
     });
   });

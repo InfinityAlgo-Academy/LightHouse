@@ -98,14 +98,16 @@ async function runA11yChecks() {
 }
 /* c8 ignore stop */
 
+/** @implements {LH.Gatherer.FRGathererInstance<'AppCacheManifest'>} */
 class Accessibility extends FRGatherer {
-  /** @type {LH.Gatherer.GathererMeta} */
+  /** @type {LH.Gatherer.GathererMeta<'AppCacheManifest'>} */
   meta = {
+    dependencies: {AppCacheManifest: require('./dobetterweb/appcache.js').GathererSymbol},
     supportedModes: ['snapshot', 'navigation'],
   }
 
   /**
-   * @param {LH.Gatherer.FRTransitionalContext} passContext
+   * @param {LH.Gatherer.FRTransitionalContext<'AppCacheManifest'>} passContext
    * @return {Promise<LH.Artifacts.Accessibility>}
    */
   snapshot(passContext) {

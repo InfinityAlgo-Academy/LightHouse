@@ -56,7 +56,7 @@ async function _beforeTimespanPhase(navigationContext, artifacts) {
     if (!gatherer.meta.supportedModes.includes('timespan')) continue;
 
     const artifactPromise = Promise.resolve().then(() =>
-      gatherer.beforeTimespan({driver: navigationContext.driver, gatherMode: 'navigation'})
+      gatherer.beforeTimespan({driver: navigationContext.driver, gatherMode: 'navigation', dependencies: {}})
     );
     artifacts[artifactDefn.id] = artifactPromise;
     await artifactPromise.catch(() => {});
@@ -85,7 +85,7 @@ async function _afterTimespanPhase(navigationContext, artifacts) {
     if (!gatherer.meta.supportedModes.includes('timespan')) continue;
 
     const artifactPromise = (artifacts[artifactDefn.id] || Promise.resolve()).then(() =>
-      gatherer.afterTimespan({driver: navigationContext.driver, gatherMode: 'navigation'})
+      gatherer.afterTimespan({driver: navigationContext.driver, gatherMode: 'navigation', dependencies: /** @type {LH.Artifacts} */ (artifacts)})
     );
     artifacts[artifactDefn.id] = artifactPromise;
     await artifactPromise.catch(() => {});
@@ -102,7 +102,7 @@ async function _snapshotPhase(navigationContext, artifacts) {
     if (!gatherer.meta.supportedModes.includes('snapshot')) continue;
 
     const artifactPromise = Promise.resolve().then(() =>
-      gatherer.snapshot({driver: navigationContext.driver, gatherMode: 'navigation'})
+      gatherer.snapshot({driver: navigationContext.driver, gatherMode: 'navigation', dependencies: /** @type {LH.Artifacts} */ (artifacts)})
     );
     artifacts[artifactDefn.id] = artifactPromise;
     await artifactPromise.catch(() => {});
