@@ -18,18 +18,24 @@ const {
 /** @typedef {import('../lib/csp-evaluator.js').Finding} Finding */
 
 const UIStrings = {
+  /** Title of a Lighthouse audit that evaluates the security of a page's CSP. This descriptive title is shown to users when no security vulnerabilities are found in the CSP. "CSP" stands for "Content Security Policy". "XSS" stands for "Cross Site Scripting". "CSP" and "XSS" do not need to be translated. */
   title: 'CSP is robust against XSS attacks',
+  /** Title of a Lighthouse audit that evaluates the security of a page's CSP. This descriptive title is shown to users when at least one security vulnerability is found in the CSP. "CSP" stands for "Content Security Policy". "XSS" stands for "Cross Site Scripting". "CSP" and "XSS" do not need to be translated. */
   failureTitle: 'CSP is not robust against XSS attacks',
+  /** Description of a Lighthouse audit that evaluates the security of a page's CSP. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. "CSP" stands for "Content Security Policy". "XSS" stands for "Cross Site Scripting". "CSP" and "XSS" do not need to be translated. */
   description: 'A strong Content Security Policy (CSP) can significantly ' +
     'reduce the risk of XSS attacks. ' +
     '[Learn more](https://developers.google.com/web/fundamentals/security/csp)',
+  /** Summary text for the results of a Lighthouse audit that evaluates the security of a page's CSP. This is displayed if no CSP is being enforced. "CSP" stands for "Content Security Policy". "CSP" does not need to be translated. */
   noCsp: 'No CSP found in enforcement mode',
+  /** Warning message for a Lighthouse audit that evaluates the security of a page's CSP. This is displayed if no security vulnerabilities are found, but additional suggestions are available for tuning the CSP. "CSP" stands for "Content Security Policy". "CSP" does not need to be translated. */
   additionalWarning: 'Additional CSP suggestions are available.',
-  metaTagMessage: 'The page contains a CSP defined in a meta tag. ' +
+  /** Message shown when one or more CSPs are defined in a <meta> tag. Shown in a table with a list of other CSP vulnerabilities and suggestions. "CSP" stands for "Content Security Policy". "CSP" and "HTTP" do not need to be translated. */
+  metaTagMessage: 'The page contains a CSP defined in a <meta> tag. ' +
     'It is not recommended to use a CSP this way, ' +
     'consider defining the CSP in an HTTP header.',
   /**
-   * @description [ICU Syntax] Message identifying a CSP which contains one or more syntax errors. Shown in a table with a list of other CSP vulnerabilities and suggestions.
+   * @description [ICU Syntax] Message identifying a CSP which contains one or more syntax errors. Shown in a table with a list of other CSP vulnerabilities and suggestions. "CSP" stands for "Content Security Policy". "CSP" does not need to be translated.
    * @example {script-src 'none'; object-src 'self';} rawCsp
    */
   syntaxMessage: `{numSyntax, plural,
