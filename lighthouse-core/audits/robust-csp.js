@@ -52,7 +52,7 @@ class CSPEvaluator extends Audit {
    */
   static get meta() {
     return {
-      id: 'csp-evaluator',
+      id: 'robust-csp',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
