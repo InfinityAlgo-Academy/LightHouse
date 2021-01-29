@@ -106,7 +106,7 @@ class RobustCSP extends Audit {
    * @param {Array<string>} cspMetaTags
    * @return {LH.Audit.Details.TableItem[]}
    */
-  static collectFailureResults(cspHeaders, cspMetaTags) {
+  static collectVulnerabilityResults(cspHeaders, cspMetaTags) {
     const rawCsps = [...cspHeaders, ...cspMetaTags];
     const findings = evaluateRawCspForFailures(rawCsps);
     return findings.map(this.findingToTableItem);
@@ -158,10 +158,11 @@ class RobustCSP extends Audit {
       };
     }
 
-    const failures = this.collectFailureResults(cspHeaders, cspMetaTags);
+    // TODO: Add severity icons for vulnerabilities and suggestions.
+    const vulnerabilities = this.collectVulnerabilityResults(cspHeaders, cspMetaTags);
     const suggestions = this.collectSuggestionResults(cspHeaders, cspMetaTags);
 
-    const results = [...failures, ...suggestions];
+    const results = [...vulnerabilities, ...suggestions];
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
@@ -171,12 +172,12 @@ class RobustCSP extends Audit {
       /* eslint-enable max-len */
     ];
     const details = Audit.makeTableDetails(headings, results);
-    const warnings = suggestions.length && !failures.length ?
+    const warnings = suggestions.length && !vulnerabilities.length ?
       [str_(UIStrings.additionalWarning)] : [];
 
     return {
       warnings,
-      score: failures.length ? 0 : 1,
+      score: vulnerabilities.length ? 0 : 1,
       notApplicable: false,
       details,
     };

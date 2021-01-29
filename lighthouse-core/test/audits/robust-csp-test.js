@@ -176,9 +176,9 @@ describe('collectSyntaxResults', () => {
   });
 });
 
-describe('collectFailureReasons', () => {
+describe('collectVulnerabilityResults', () => {
   it('basic case', () => {
-    const results = RobustCSP.collectFailureResults([`script-src 'nonce-12345678'`], []);
+    const results = RobustCSP.collectVulnerabilityResults([`script-src 'nonce-12345678'`], []);
     expect(results).toMatchObject(
       [
         {
@@ -204,8 +204,8 @@ describe('collectFailureReasons', () => {
 
   it('header and meta tag are treated the same', () => {
     const rawCsp = `script-src 'nonce-12345678'`;
-    const resultsHeader = RobustCSP.collectFailureResults([rawCsp], []);
-    const resultsMeta = RobustCSP.collectFailureResults([], [rawCsp]);
+    const resultsHeader = RobustCSP.collectVulnerabilityResults([rawCsp], []);
+    const resultsMeta = RobustCSP.collectVulnerabilityResults([], [rawCsp]);
     expect(resultsHeader).toEqual(resultsMeta);
     expect(resultsHeader).toMatchObject(
       [

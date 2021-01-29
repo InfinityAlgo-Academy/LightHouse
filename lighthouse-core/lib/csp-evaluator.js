@@ -29,8 +29,8 @@ const UIStrings = {
     'Can you set it to \'none\' or \'self\'?',
   missingScriptSrc: 'script-src directive is missing. ' +
     'This can allow the execution of unsafe scripts.',
-  missingObjectSrc: 'Missing object-src allows the injection of plugins which can ' +
-    'execute JavaScript. Can you set it to \'none\'?',
+  missingObjectSrc: 'Consider setting object-src to \'none\' to prevent the injection of ' +
+    'plugins that execute JavaScript.',
   strictDynamic: 'Host allowlists can frequently be bypassed. Consider using ' +
     '\'strict-dynamic\' in combination with CSP nonces or hashes.',
   unsafeInline: '\'unsafe-inline\' allows the execution of unsafe in-page scripts ' +
