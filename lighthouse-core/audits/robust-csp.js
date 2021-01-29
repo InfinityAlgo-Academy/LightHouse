@@ -46,7 +46,7 @@ const UIStrings = {
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
-class CSPEvaluator extends Audit {
+class RobustCSP extends Audit {
   /**
    * @return {LH.Audit.Meta}
    */
@@ -183,5 +183,5 @@ class CSPEvaluator extends Audit {
   }
 }
 
-module.exports = CSPEvaluator;
+module.exports = RobustCSP;
 module.exports.UIStrings = UIStrings;
