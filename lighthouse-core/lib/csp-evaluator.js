@@ -16,11 +16,14 @@
 
 const log = require('lighthouse-logger');
 const i18n = require('../lib/i18n/i18n.js');
-const evaluator = require('../../third-party/csp-evaluator/optimized_binary-bundle.js');
-
-const Parser = evaluator.module.get('google3.javascript.security.csp.csp_evaluator.parser').CspParser; // eslint-disable-line max-len
-const lighthouseChecks = evaluator.module.get('google3.javascript.security.csp.csp_evaluator.lighthouse.lighthouse_checks'); // eslint-disable-line max-len
-const Type = evaluator.module.get('google3.javascript.security.csp.csp_evaluator.finding').Type; // eslint-disable-line max-len
+const {
+  Parser,
+  Type,
+  Directive,
+  evaluateForFailure,
+  evaluateForSyntaxErrors,
+  evaluateForWarnings,
+} = require('../../third-party/csp-evaluator/optimized_binary.js');
 
 const UIStrings = {
   missingBaseUri: 'Missing base-uri allows the injection of base tags. ' +
@@ -66,16 +69,16 @@ const FINDING_TO_UI_STRING = {
   [Type.UNKNOWN_DIRECTIVE]: str_(UIStrings.unknownDirective),
   [Type.INVALID_KEYWORD]: UIStrings.unknownKeyword,
   [Type.MISSING_DIRECTIVES]: {
-    'base-uri': str_(UIStrings.missingBaseUri),
-    'script-src': str_(UIStrings.missingScriptSrc),
-    'object-src': str_(UIStrings.missingObjectSrc),
+    [Directive.BASE_URI]: str_(UIStrings.missingBaseUri),
+    [Directive.SCRIPT_SRC]: str_(UIStrings.missingScriptSrc),
+    [Directive.OBJECT_SRC]: str_(UIStrings.missingObjectSrc),
   },
   [Type.SCRIPT_UNSAFE_INLINE]: str_(UIStrings.unsafeInline),
   [Type.NONCE_LENGTH]: str_(UIStrings.nonceLength),
   [Type.DEPRECATED_DIRECTIVE]: {
-    'reflected-xss': str_(UIStrings.deprecatedReflectedXSS),
-    'referrer': str_(UIStrings.deprecatedReferrer),
-    'disown-opener': str_(UIStrings.deprecatedDisownOpener),
+    [Directive.REFLECTED_XSS]: str_(UIStrings.deprecatedReflectedXSS),
+    [Directive.REFERRER]: str_(UIStrings.deprecatedReferrer),
+    [Directive.DISOWN_OPENER]: str_(UIStrings.deprecatedDisownOpener),
   },
   [Type.STRICT_DYNAMIC]: str_(UIStrings.strictDynamic),
   [Type.UNSAFE_INLINE_FALLBACK]: str_(UIStrings.unsafeInlineFallback),
@@ -116,7 +119,7 @@ function getTranslatedDescription(finding) {
  * @return {Array<Finding>}
  */
 function evaluateRawCspForFailures(rawCsps) {
-  return lighthouseChecks.evaluateForFailure(rawCsps.map(c => new Parser(c).csp));
+  return evaluateForFailure(rawCsps.map(c => new Parser(c).csp));
 }
 
 /**
@@ -124,7 +127,7 @@ function evaluateRawCspForFailures(rawCsps) {
  * @return {Array<Finding>}
  */
 function evaluateRawCspForWarnings(rawCsps) {
-  return lighthouseChecks.evaluateForWarnings(rawCsps.map(c => new Parser(c).csp));
+  return evaluateForWarnings(rawCsps.map(c => new Parser(c).csp));
 }
 
 /**
@@ -132,7 +135,7 @@ function evaluateRawCspForWarnings(rawCsps) {
  * @return {Array<Array<Finding>>}
  */
 function evaluateRawCspForSyntax(rawCsps) {
-  return lighthouseChecks.evaluateForSyntaxErrors(rawCsps.map(c => new Parser(c).csp));
+  return evaluateForSyntaxErrors(rawCsps.map(c => new Parser(c).csp));
 }
 
 module.exports = {
