@@ -6,13 +6,11 @@
 'use strict';
 
 const {isIcuMessage} = require('../../lib/i18n/i18n.js');
-const evaluator = require('../../../third-party/csp-evaluator/optimized_binary-bundle.js');
+const {Type} = require('../../../third-party/csp-evaluator/optimized_binary.js');
 const {
   evaluateRawCspForFailures,
   getTranslatedDescription,
 } = require('../../lib/csp-evaluator.js');
-
-const Type = evaluator.module.get('google3.javascript.security.csp.csp_evaluator.finding').Type; // eslint-disable-line max-len
 
 /* eslint-env jest */
 

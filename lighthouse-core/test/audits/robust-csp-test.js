@@ -31,8 +31,8 @@ it('audit basic header', async () => {
       {
         description: {
           formattedDefault:
-            'Missing object-src allows the injection of plugins which ' +
-            'can execute JavaScript. Can you set it to \'none\'?',
+            'Consider setting object-src to \'none\' to prevent ' +
+            'the injection of plugins that execute JavaScript.',
         },
         directive: 'object-src',
       },
@@ -184,8 +184,8 @@ describe('collectVulnerabilityResults', () => {
         {
           description: {
             formattedDefault:
-              'Missing object-src allows the injection of plugins which ' +
-              'can execute JavaScript. Can you set it to \'none\'?',
+              'Consider setting object-src to \'none\' to prevent ' +
+              'the injection of plugins that execute JavaScript.',
           },
           directive: 'object-src',
         },
@@ -212,8 +212,8 @@ describe('collectVulnerabilityResults', () => {
         {
           description: {
             formattedDefault:
-              'Missing object-src allows the injection of plugins which ' +
-              'can execute JavaScript. Can you set it to \'none\'?',
+              'Consider setting object-src to \'none\' to prevent ' +
+              'the injection of plugins that execute JavaScript.',
           },
           directive: 'object-src',
         },
