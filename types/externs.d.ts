@@ -339,6 +339,7 @@ declare global {
             new_rect?: Array<number>,
           }>;
           score?: number;
+          weighted_score_delta?: number;
           had_recent_input?: boolean;
           compositeFailed?: number;
           unsupportedProperties?: string[];

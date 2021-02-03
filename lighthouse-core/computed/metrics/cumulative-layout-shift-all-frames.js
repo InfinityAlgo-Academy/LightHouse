@@ -5,10 +5,26 @@
  */
 'use strict';
 
+/** @typedef {Omit<LH.TraceEvent, 'name'|'args'> & {name: 'LayoutShift', args: {data: {score: number, weighted_score_delta: number, had_recent_input: boolean}}}} LayoutShiftEvent */
+
 const makeComputedArtifact = require('../computed-artifact.js');
 const TraceOfTab = require('../trace-of-tab.js');
+const log = require('lighthouse-logger');
 
 class CumulativeLayoutShiftAllFrames {
+  /**
+   * @param {LH.TraceEvent} event
+   * @return {event is LayoutShiftEvent}
+   */
+  static isLayoutShiftEvent(event) {
+    return Boolean(
+      event.name === 'LayoutShift' &&
+      event.args &&
+      event.args.data &&
+      event.args.data.score !== undefined
+    );
+  }
+
   /**
    * @param {LH.Trace} trace
    * @param {LH.Audit.Context} context
@@ -16,19 +32,32 @@ class CumulativeLayoutShiftAllFrames {
    */
   static async compute_(trace, context) {
     const traceOfTab = await TraceOfTab.request(trace, context);
-    const cumulativeShift = traceOfTab.frameTreeEvents
-      .filter(e =>
-        e.name === 'LayoutShift' &&
-        e.args &&
-        e.args.data &&
-        e.args.data.score &&
-        !e.args.data.had_recent_input
-      )
+    const layoutShiftEvents = traceOfTab.frameTreeEvents.filter(this.isLayoutShiftEvent);
+
+    let traceHasWeightedScore = true;
+    const cumulativeShift = layoutShiftEvents
       .map(e => {
-        // @ts-expect-error Events without score are filtered out.
-        return /** @type {number} */ (e.args.data.score);
+        if (e.args.data.had_recent_input) return 0;
+
+        // COMPAT: remove after m90 hits stable
+        // We should replace with a LHError at that point:
+        // https://github.com/GoogleChrome/lighthouse/pull/12034#discussion_r568150032
+        if (e.args.data.weighted_score_delta !== undefined) {
+          return e.args.data.weighted_score_delta;
+        }
+
+        traceHasWeightedScore = false;
+        return e.args.data.score;
       })
       .reduce((sum, score) => sum + score, 0);
+
+    if (traceHasWeightedScore) {
+      log.warn(
+        'CLS-AF',
+        'Trace does not have weighted layout shift scores. CLS-AF may not be accurate.'
+      );
+    }
+
     return {
       value: cumulativeShift,
     };

@@ -14,8 +14,11 @@ const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.
 const lcpTrace = require('../fixtures/traces/lcp-m78.json');
 const lcpDevtoolsLog = require('../fixtures/traces/lcp-m78.devtools.log.json');
 
-const metricsAllFramesTrace = require('../fixtures/traces/frame-metrics-m89.json');
-const metricsAllFramesDevtoolsLog = require('../fixtures/traces/frame-metrics-m89.devtools.log.json'); // eslint-disable-line max-len
+const lcpAllFramesTrace = require('../fixtures/traces/frame-metrics-m89.json');
+const lcpAllFramesDevtoolsLog = require('../fixtures/traces/frame-metrics-m89.devtools.log.json'); // eslint-disable-line max-len
+
+const clsAllFramesTrace = require('../fixtures/traces/frame-metrics-m90.json');
+const clsAllFramesDevtoolsLog = require('../fixtures/traces/frame-metrics-m90.devtools.log.json'); // eslint-disable-line max-len
 
 const artifactsTrace = require('../results/artifacts/defaultPass.trace.json');
 const artifactsDevtoolsLog = require('../results/artifacts/defaultPass.devtoolslog.json');
@@ -71,10 +74,10 @@ describe('Performance: metrics', () => {
   it('evaluates valid input (with lcp from all frames) correctly', async () => {
     const artifacts = {
       traces: {
-        [MetricsAudit.DEFAULT_PASS]: metricsAllFramesTrace,
+        [MetricsAudit.DEFAULT_PASS]: lcpAllFramesTrace,
       },
       devtoolsLogs: {
-        [MetricsAudit.DEFAULT_PASS]: metricsAllFramesDevtoolsLog,
+        [MetricsAudit.DEFAULT_PASS]: lcpAllFramesDevtoolsLog,
       },
     };
 
@@ -102,19 +105,19 @@ describe('Performance: metrics', () => {
   it('evaluates valid input (with CLS from all frames) correctly', async () => {
     const artifacts = {
       traces: {
-        [MetricsAudit.DEFAULT_PASS]: metricsAllFramesTrace,
+        [MetricsAudit.DEFAULT_PASS]: clsAllFramesTrace,
       },
       devtoolsLogs: {
-        [MetricsAudit.DEFAULT_PASS]: metricsAllFramesDevtoolsLog,
+        [MetricsAudit.DEFAULT_PASS]: clsAllFramesDevtoolsLog,
       },
     };
 
-    const context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
+    const context = {settings: {throttlingMethod: 'provided'}, computedCache: new Map()};
     const {details} = await MetricsAudit.audit(artifacts, context);
     expect(details.items[0].cumulativeLayoutShift).toBeCloseTo(0.0011);
     expect(details.items[0].observedCumulativeLayoutShift).toBeCloseTo(0.0011);
-    expect(details.items[0].cumulativeLayoutShiftAllFrames).toBeCloseTo(0.459);
-    expect(details.items[0].observedCumulativeLayoutShiftAllFrames).toBeCloseTo(0.459);
+    expect(details.items[0].cumulativeLayoutShiftAllFrames).toBeCloseTo(0.0276);
+    expect(details.items[0].observedCumulativeLayoutShiftAllFrames).toBeCloseTo(0.0276);
   });
 
   it('does not fail the entire audit when TTI errors', async () => {

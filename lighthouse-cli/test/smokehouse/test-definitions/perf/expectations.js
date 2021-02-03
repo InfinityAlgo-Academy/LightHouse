@@ -334,12 +334,15 @@ module.exports = [
             type: 'debugdata',
             items: [
               {
+                // Weighted CLS score was added to the trace in m90:
+                // https://bugs.chromium.org/p/chromium/issues/detail?id=1173139
+                _minChromiumMilestone: 90,
                 firstContentfulPaint: '>5000',
                 firstContentfulPaintAllFrames: '<5000',
                 largestContentfulPaint: '>5000',
                 largestContentfulPaintAllFrames: '<5000',
                 cumulativeLayoutShift: '0.001 +/- 0.0005',
-                cumulativeLayoutShiftAllFrames: '0.068 +/- 0.0005',
+                cumulativeLayoutShiftAllFrames: '0.0276 +/- 0.0005',
               },
               {
                 lcpInvalidated: false,
