@@ -48,7 +48,8 @@ const UIStrings = {
     'recommended to also use a \'report-uri\' directive.',
   reportingDestinationMissing: 'This CSP policy does not configure a reporting destination. ' +
     'This makes it difficult to maintain the CSP policy over time and monitor for any breakages.',
-  nonceLength: 'Nonces should be at least 8 characters long and use the base64 charset.',
+  nonceLength: 'Nonces should be at least 8 characters long.',
+  nonceCharset: 'Nonces should use the base64 charset.',
   missingSemicolon: 'Did you forget the semicolon? ' +
     '{keyword} seems to be a directive, not a keyword.',
   unknownDirective: 'Unknown CSP directive.',
@@ -75,6 +76,7 @@ const FINDING_TO_UI_STRING = {
   },
   [Type.SCRIPT_UNSAFE_INLINE]: str_(UIStrings.unsafeInline),
   [Type.NONCE_LENGTH]: str_(UIStrings.nonceLength),
+  [Type.NONCE_CHARSET]: str_(UIStrings.nonceCharset),
   [Type.DEPRECATED_DIRECTIVE]: {
     [Directive.REFLECTED_XSS]: str_(UIStrings.deprecatedReflectedXSS),
     [Directive.REFERRER]: str_(UIStrings.deprecatedReferrer),
@@ -82,7 +84,7 @@ const FINDING_TO_UI_STRING = {
   },
   [Type.STRICT_DYNAMIC]: str_(UIStrings.strictDynamic),
   [Type.UNSAFE_INLINE_FALLBACK]: str_(UIStrings.unsafeInlineFallback),
-  [Type.WHITELIST_FALLBACK]: str_(UIStrings.allowlistFallback),
+  [Type.ALLOWLIST_FALLBACK]: str_(UIStrings.allowlistFallback),
   [Type.REPORTING_DESTINATION_MISSING]: str_(UIStrings.reportingDestinationMissing),
   [Type.REPORT_TO_ONLY]: str_(UIStrings.reportToOnly),
 };
