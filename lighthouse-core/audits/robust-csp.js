@@ -143,12 +143,12 @@ class RobustCSP extends Audit {
       .filter(m => {
         return m.httpEquiv && m.httpEquiv.toLowerCase() === 'content-security-policy';
       })
-      .map(m => m.content || '');
+      .flatMap(m => (m.content || '').split(','));
     const cspHeaders = mainResource.responseHeaders
       .filter(h => {
         return h.name.toLowerCase() === 'content-security-policy';
       })
-      .map(h => h.value);
+      .flatMap(h => h.value.split(','));
 
     if (!cspHeaders.length && !cspMetaTags.length) {
       return {
