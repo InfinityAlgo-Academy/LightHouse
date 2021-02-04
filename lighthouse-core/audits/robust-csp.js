@@ -34,6 +34,8 @@ const UIStrings = {
   metaTagMessage: 'The page contains a CSP defined in a <meta> tag. ' +
     'It is not recommended to use a CSP this way, ' +
     'consider defining the CSP in an HTTP header.',
+  /** Message shown when a CSP has no syntax errors. Shown in a table with a list of other CSP vulnerabilities and suggestions. "CSP" stands for "Content Security Policy". */
+  noSyntaxErrors: 'No syntax errors.',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -89,17 +91,21 @@ class RobustCSP extends Audit {
   }
 
   /**
-   * @param {Array<string>} rawCsps
+   * @param {Array<string>} cspHeaders
+   * @param {Array<string>} cspMetaTags
    * @return {LH.Audit.Details.TableItem[]}
    */
-  static collectSyntaxResults(rawCsps) {
+  static collectSyntaxResults(cspHeaders, cspMetaTags) {
     /** @type {LH.Audit.Details.TableItem[]} */
     const results = [];
 
+    const rawCsps = [...cspHeaders, ...cspMetaTags];
     const syntaxFindingsByCsp = evaluateRawCspForSyntax(rawCsps);
     for (let i = 0; i < rawCsps.length; ++i) {
       const items = syntaxFindingsByCsp[i].map(this.findingToTableItem);
-      if (!items.length) continue;
+      if (!items.length) {
+        items.push({description: str_(UIStrings.noSyntaxErrors)});
+      }
 
       results.push({
         description: {
@@ -137,7 +143,6 @@ class RobustCSP extends Audit {
     const findings = evaluateRawCspForWarnings(rawCsps);
     const results = [
       ...findings.map(this.findingToTableItem),
-      ...this.collectSyntaxResults(rawCsps),
     ];
     if (cspMetaTags.length) {
       results.push({description: str_(UIStrings.metaTagMessage)});
@@ -163,14 +168,15 @@ class RobustCSP extends Audit {
     // TODO: Add severity icons for vulnerabilities and suggestions.
     const vulnerabilities = this.collectVulnerabilityResults(cspHeaders, cspMetaTags);
     const suggestions = this.collectSuggestionResults(cspHeaders, cspMetaTags);
+    const syntax = this.collectSyntaxResults(cspHeaders, cspMetaTags);
 
-    const results = [...vulnerabilities, ...suggestions];
+    const results = [...syntax, ...vulnerabilities, ...suggestions];
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'directive', itemType: 'code', subItemsHeading: {key: 'directive'}, text: 'Directive'},
       {key: 'description', itemType: 'text', subItemsHeading: {key: 'description'}, text: 'Description'},
+      {key: 'directive', itemType: 'code', subItemsHeading: {key: 'directive'}, text: 'Directive'},
       /* eslint-enable max-len */
     ];
     const details = Audit.makeTableDetails(headings, results);
