@@ -64,7 +64,7 @@ const UIStrings = {
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
-/** @type {Record<number, Record<string, LH.IcuMessage>|string|LH.IcuMessage>} */
+/** @type {Record<number, string|LH.IcuMessage|Record<string, LH.IcuMessage>>} */
 const FINDING_TO_UI_STRING = {
   [Type.MISSING_SEMICOLON]: UIStrings.missingSemicolon,
   [Type.UNKNOWN_DIRECTIVE]: str_(UIStrings.unknownDirective),
