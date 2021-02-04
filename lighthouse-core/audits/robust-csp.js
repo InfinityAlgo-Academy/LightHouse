@@ -34,14 +34,6 @@ const UIStrings = {
   metaTagMessage: 'The page contains a CSP defined in a <meta> tag. ' +
     'It is not recommended to use a CSP this way, ' +
     'consider defining the CSP in an HTTP header.',
-  /**
-   * @description [ICU Syntax] Message identifying a CSP which contains one or more syntax errors. Shown in a table with a list of other CSP vulnerabilities and suggestions. "CSP" stands for "Content Security Policy". "CSP" does not need to be translated.
-   * @example {script-src 'none'; object-src 'self';} rawCsp
-   */
-  syntaxMessage: `{numSyntax, plural,
-    =1 {Syntax error in CSP "{rawCsp}"}
-    other {Syntax errors in CSP "{rawCsp}"}
-  }`,
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -58,6 +50,31 @@ class RobustCSP extends Audit {
       description: str_(UIStrings.description),
       requiredArtifacts: ['devtoolsLogs', 'MetaElements', 'URL'],
     };
+  }
+
+  /**
+   * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
+   * @return {Promise<{cspHeaders: Array<string>, cspMetaTags: Array<string>}>}
+   */
+  static async getRawCsps(artifacts, context) {
+    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
+
+    const cspMetaTags = artifacts.MetaElements
+      .filter(m => {
+        return m.httpEquiv && m.httpEquiv.toLowerCase() === 'content-security-policy';
+      })
+      .flatMap(m => (m.content || '').split(','))
+      .filter(rawCsp => rawCsp.replace(/\s/g, ''));
+    const cspHeaders = mainResource.responseHeaders
+      .filter(h => {
+        return h.name.toLowerCase() === 'content-security-policy';
+      })
+      .flatMap(h => h.value.split(','))
+      .filter(rawCsp => rawCsp.replace(/\s/g, ''));
+
+    return {cspHeaders, cspMetaTags};
   }
 
   /**
@@ -84,13 +101,11 @@ class RobustCSP extends Audit {
       const items = syntaxFindingsByCsp[i].map(this.findingToTableItem);
       if (!items.length) continue;
 
-      const description = str_(UIStrings.syntaxMessage, {
-        numSyntax: items.length,
-        rawCsp: rawCsps[i],
-      });
-
       results.push({
-        description,
+        description: {
+          type: 'code',
+          value: rawCsps[i],
+        },
         subItems: {
           type: 'subitems',
           items,
@@ -136,20 +151,7 @@ class RobustCSP extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
-
-    const cspMetaTags = artifacts.MetaElements
-      .filter(m => {
-        return m.httpEquiv && m.httpEquiv.toLowerCase() === 'content-security-policy';
-      })
-      .flatMap(m => (m.content || '').split(','));
-    const cspHeaders = mainResource.responseHeaders
-      .filter(h => {
-        return h.name.toLowerCase() === 'content-security-policy';
-      })
-      .flatMap(h => h.value.split(','));
-
+    const {cspHeaders, cspMetaTags} = await this.getRawCsps(artifacts, context);
     if (!cspHeaders.length && !cspMetaTags.length) {
       return {
         score: 0,
@@ -167,7 +169,7 @@ class RobustCSP extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'directive', itemType: 'text', subItemsHeading: {key: 'directive'}, text: 'Directive'},
+      {key: 'directive', itemType: 'code', subItemsHeading: {key: 'directive'}, text: 'Directive'},
       {key: 'description', itemType: 'text', subItemsHeading: {key: 'description'}, text: 'Description'},
       /* eslint-enable max-len */
     ];

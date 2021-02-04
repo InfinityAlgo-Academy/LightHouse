@@ -64,9 +64,8 @@ it('audit basic header', async () => {
       },
       {
         description: {
-          formattedDefault:
-            'Syntax error in CSP "script-src ' +
-            '\'nonce-12345678\'; foo-bar \'none\'"',
+          value:
+            'script-src \'nonce-12345678\'; foo-bar \'none\'',
         },
         subItems: {
           type: 'subitems',
@@ -84,6 +83,13 @@ it('audit basic header', async () => {
   );
 });
 
+describe('getRawCsps', () => {
+  it.todo('basic case');
+  it.todo('split on comma');
+  it.todo('ignore if empty');
+  it.todo('ignore if only whitespace');
+});
+
 describe('collectSyntaxResults', () => {
   it('single syntax error', () => {
     const rawCsp = `foo-bar 'none'`;
@@ -91,7 +97,7 @@ describe('collectSyntaxResults', () => {
     expect(results).toMatchObject([
       {
         description: {
-          formattedDefault: 'Syntax error in CSP "foo-bar \'none\'"',
+          value: 'foo-bar \'none\'',
         },
         subItems: {
           type: 'subitems',
@@ -114,7 +120,7 @@ describe('collectSyntaxResults', () => {
     expect(results).toMatchObject([
       {
         description: {
-          formattedDefault: 'Syntax errors in CSP "foo-bar \'asdf\'"',
+          value: 'foo-bar \'asdf\'',
         },
         subItems: {
           type: 'subitems',
@@ -142,7 +148,7 @@ describe('collectSyntaxResults', () => {
     expect(results).toMatchObject([
       {
         description: {
-          formattedDefault: 'Syntax error in CSP "foo-bar \'none\'"',
+          value: 'foo-bar \'none\'',
         },
         subItems: {
           type: 'subitems',
@@ -158,7 +164,7 @@ describe('collectSyntaxResults', () => {
       },
       {
         description: {
-          formattedDefault: 'Syntax error in CSP "object-src \'asdf\'"',
+          value: 'object-src \'asdf\'',
         },
         subItems: {
           type: 'subitems',
@@ -282,9 +288,8 @@ describe('collectSuggestionResults', () => {
         },
         {
           description: {
-            formattedDefault:
-              'Syntax error in CSP "script-src ' +
-              '\'nonce-12345678\'; foo-bar \'none\'"',
+            value:
+              'script-src \'nonce-12345678\'; foo-bar \'none\'',
           },
           subItems: {
             type: 'subitems',
