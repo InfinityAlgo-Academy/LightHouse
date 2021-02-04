@@ -235,7 +235,7 @@ const defaultConfig = {
     'non-composited-animations',
     'unsized-images',
     'valid-source-maps',
-    'robust-csp',
+    'csp-xss',
     'preload-lcp-image',
     'full-page-screenshot',
     'manual/pwa-cross-browser',
@@ -558,7 +558,7 @@ const defaultConfig = {
         {id: 'geolocation-on-start', weight: 1, group: 'best-practices-trust-safety'},
         {id: 'notification-on-start', weight: 1, group: 'best-practices-trust-safety'},
         {id: 'no-vulnerable-libraries', weight: 1, group: 'best-practices-trust-safety'},
-        {id: 'robust-csp', weight: 1, group: 'best-practices-trust-safety'},
+        {id: 'csp-xss', weight: 0, group: 'best-practices-trust-safety'},
         // User Experience
         {id: 'password-inputs-can-be-pasted-into', weight: 1, group: 'best-practices-ux'},
         {id: 'image-aspect-ratio', weight: 1, group: 'best-practices-ux'},

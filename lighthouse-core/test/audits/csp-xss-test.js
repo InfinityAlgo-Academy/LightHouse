@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const RobustCSP = require('../../audits/robust-csp.js');
+const CspXss = require('../../audits/csp-xss.js');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
 /* eslint-env jest */
@@ -25,7 +25,7 @@ it('audit basic header', async () => {
       ]),
     },
   };
-  const results = await RobustCSP.audit(artifacts, {computedCache: new Map()});
+  const results = await CspXss.audit(artifacts, {computedCache: new Map()});
   expect(results.details.items).toMatchObject(
     [
       {
@@ -93,7 +93,7 @@ describe('getRawCsps', () => {
 describe('collectSyntaxResults', () => {
   it('single syntax error', () => {
     const rawCsp = `foo-bar 'none'`;
-    const results = RobustCSP.collectSyntaxResults([rawCsp]);
+    const results = CspXss.collectSyntaxResults([rawCsp]);
     expect(results).toMatchObject([
       {
         description: {
@@ -116,7 +116,7 @@ describe('collectSyntaxResults', () => {
 
   it('multiple syntax errors', () => {
     const rawCsp = `foo-bar 'asdf'`;
-    const results = RobustCSP.collectSyntaxResults([rawCsp]);
+    const results = CspXss.collectSyntaxResults([rawCsp]);
     expect(results).toMatchObject([
       {
         description: {
@@ -144,7 +144,7 @@ describe('collectSyntaxResults', () => {
   });
 
   it('multiple CSPs', () => {
-    const results = RobustCSP.collectSyntaxResults([`foo-bar 'none'`, `object-src 'asdf'`]);
+    const results = CspXss.collectSyntaxResults([`foo-bar 'none'`, `object-src 'asdf'`]);
     expect(results).toMatchObject([
       {
         description: {
@@ -184,7 +184,7 @@ describe('collectSyntaxResults', () => {
 
 describe('collectVulnerabilityResults', () => {
   it('basic case', () => {
-    const results = RobustCSP.collectVulnerabilityResults([`script-src 'nonce-12345678'`], []);
+    const results = CspXss.collectVulnerabilityResults([`script-src 'nonce-12345678'`], []);
     expect(results).toMatchObject(
       [
         {
@@ -210,8 +210,8 @@ describe('collectVulnerabilityResults', () => {
 
   it('header and meta tag are treated the same', () => {
     const rawCsp = `script-src 'nonce-12345678'`;
-    const resultsHeader = RobustCSP.collectVulnerabilityResults([rawCsp], []);
-    const resultsMeta = RobustCSP.collectVulnerabilityResults([], [rawCsp]);
+    const resultsHeader = CspXss.collectVulnerabilityResults([rawCsp], []);
+    const resultsMeta = CspXss.collectVulnerabilityResults([], [rawCsp]);
     expect(resultsHeader).toEqual(resultsMeta);
     expect(resultsHeader).toMatchObject(
       [
@@ -240,7 +240,7 @@ describe('collectVulnerabilityResults', () => {
 describe('collectSuggestionResults', () => {
   it('basic case', () => {
     const rawCsp = `script-src 'nonce-12345678'`;
-    const results = RobustCSP.collectSuggestionResults([rawCsp], []);
+    const results = CspXss.collectSuggestionResults([rawCsp], []);
     expect(results).toMatchObject(
       [
         {
@@ -266,7 +266,7 @@ describe('collectSuggestionResults', () => {
 
   it('includes syntax results', () => {
     const rawCsp = `script-src 'nonce-12345678'; foo-bar 'none'`;
-    const results = RobustCSP.collectSuggestionResults([rawCsp], []);
+    const results = CspXss.collectSuggestionResults([rawCsp], []);
     expect(results).toMatchObject(
       [
         {
@@ -309,7 +309,7 @@ describe('collectSuggestionResults', () => {
 
   it('adds result when using meta tag', () => {
     const rawCsp = `script-src 'nonce-12345678'`;
-    const results = RobustCSP.collectSuggestionResults([], [rawCsp]);
+    const results = CspXss.collectSuggestionResults([], [rawCsp]);
     expect(results).toMatchObject(
       [
         {

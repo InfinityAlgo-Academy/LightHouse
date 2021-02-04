@@ -40,13 +40,13 @@ const UIStrings = {
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
-class RobustCSP extends Audit {
+class CspXss extends Audit {
   /**
    * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
-      id: 'robust-csp',
+      id: 'csp-xss',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
@@ -192,5 +192,5 @@ class RobustCSP extends Audit {
   }
 }
 
-module.exports = RobustCSP;
+module.exports = CspXss;
 module.exports.UIStrings = UIStrings;
