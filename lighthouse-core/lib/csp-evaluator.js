@@ -9,7 +9,7 @@
  * @typedef Finding
  * @property {number} type
  * @property {string} description
- * @property {number} severity
+ * @property {number} severity Severity value 0-100 where 0 is the most severe.
  * @property {string} directive The directive the finding applies to.
  * @property {string|undefined} value Keyword if the finding applies to one.
  */
