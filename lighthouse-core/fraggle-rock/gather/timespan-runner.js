@@ -7,6 +7,7 @@
 
 const Driver = require('./driver.js');
 const Runner = require('../../runner.js');
+const {collectArtifactDependencies} = require('./runner-helpers.js');
 const {initializeConfig} = require('../config/config.js');
 const {getBaseArtifacts} = require('./base-artifacts.js');
 
@@ -21,13 +22,16 @@ async function startTimespan(options) {
 
   const requestedUrl = await options.page.url();
 
-  /** @type {Record<string, Promise<Error|undefined>>} */
+  /** @type {Record<string, Promise<void>>} */
   const artifactErrors = {};
 
   for (const {id, gatherer} of config.artifacts || []) {
-    artifactErrors[id] = await Promise.resolve()
-      .then(() => gatherer.instance.beforeTimespan({gatherMode: 'timespan', driver}))
-      .catch(err => err);
+    artifactErrors[id] = Promise.resolve().then(() =>
+      gatherer.instance.beforeTimespan({gatherMode: 'timespan', driver, dependencies: {}})
+    );
+
+    // Run each beforeTimespan serially, but handle errors in the next pass.
+    await artifactErrors[id].catch(() => {});
   }
 
   return {
@@ -42,13 +46,15 @@ async function startTimespan(options) {
           /** @type {Partial<LH.GathererArtifacts>} */
           const artifacts = {};
 
-          for (const {id, gatherer} of config.artifacts || []) {
+          for (const artifactDefn of config.artifacts || []) {
+            const {id, gatherer} = artifactDefn;
             const artifactName = /** @type {keyof LH.GathererArtifacts} */ (id);
-            const artifact = artifactErrors[id]
-              ? Promise.reject(artifactErrors[id])
-              : await Promise.resolve()
-                  .then(() => gatherer.instance.afterTimespan({gatherMode: 'timespan', driver}))
-                  .catch(err => err);
+            const dependencies = await collectArtifactDependencies(artifactDefn, artifacts);
+            const artifact = await artifactErrors[id]
+              .then(() =>
+                gatherer.instance.afterTimespan({gatherMode: 'timespan', driver, dependencies})
+              )
+              .catch(err => err);
 
             artifacts[artifactName] = artifact;
           }

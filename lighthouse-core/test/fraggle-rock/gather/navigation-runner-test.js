@@ -209,6 +209,30 @@ describe('NavigationRunner', () => {
       expect(gatherers.snapshot.afterTimespan).not.toHaveBeenCalled();
     });
 
+    it('should pass dependencies to gatherers', async () => {
+      artifacts = {
+        Dependency: Promise.resolve([{src: 'https://example.com/image.jpg'}]),
+      };
+
+      const {navigation, gatherers} = createNavigation();
+      navigation.artifacts = [
+        {...navigation.artifacts[0], dependencies: {ImageElements: {id: 'Dependency'}}},
+        navigation.artifacts[1],
+      ];
+
+      await runner._afterTimespanPhase({driver, navigation, requestedUrl}, artifacts);
+      expect(artifacts).toEqual({
+        Dependency: expect.any(Promise),
+        Timespan: expect.any(Promise),
+      });
+      expect(gatherers.timespan.afterTimespan).toHaveBeenCalled();
+
+      const receivedDependencies = gatherers.timespan.afterTimespan.mock.calls[0][0].dependencies;
+      expect(receivedDependencies).toEqual({
+        ImageElements: [{src: 'https://example.com/image.jpg'}],
+      });
+    });
+
     it('should combine the previous promises', async () => {
       artifacts = {Timespan: Promise.reject(new Error('beforeTimespan rejection'))};
 
@@ -237,6 +261,29 @@ describe('NavigationRunner', () => {
       expect(gatherers.timespan.snapshot).not.toHaveBeenCalled();
       expect(gatherers.snapshot.snapshot).toHaveBeenCalled();
     });
+
+    it('should pass dependencies to gatherers', async () => {
+      artifacts = {
+        Dependency: Promise.resolve([{src: 'https://example.com/image.jpg'}]),
+      };
+
+      const {navigation, gatherers} = createNavigation();
+      navigation.artifacts = [
+        navigation.artifacts[0],
+        {...navigation.artifacts[1], dependencies: {ImageElements: {id: 'Dependency'}}},
+      ];
+
+      await runner._snapshotPhase({driver, navigation, requestedUrl}, artifacts);
+      expect(artifacts).toEqual({
+        Dependency: expect.any(Promise),
+        Snapshot: expect.any(Promise),
+      });
+      expect(gatherers.snapshot.snapshot).toHaveBeenCalled();
+
+      const receivedDependencies = gatherers.snapshot.snapshot.mock.calls[0][0].dependencies;
+      expect(receivedDependencies).toEqual({
+        ImageElements: [{src: 'https://example.com/image.jpg'}],
+      });
+    });
   });
 });
-

@@ -135,9 +135,105 @@ describe('Fraggle Rock Config', () => {
 
     const {config} = initializeConfig(configJson, {gatherMode: 'snapshot'});
     expect(config).toMatchObject({
-      artifacts: [
-        {id: 'Accessibility', gatherer: {path: 'accessibility'}},
-      ],
+      artifacts: [{id: 'Accessibility', gatherer: {path: 'accessibility'}}],
+    });
+  });
+
+  describe('resolveArtifactDependencies', () => {
+    /** @type {LH.Gatherer.FRGathererInstance} */
+    let dependencyGatherer;
+    /** @type {LH.Gatherer.FRGathererInstance<'ImageElements'>} */
+    let dependentGatherer;
+    /** @type {LH.Config.Json} */
+    let configJson;
+
+    beforeEach(() => {
+      const dependencySymbol = Symbol('dependency');
+      dependencyGatherer = new BaseGatherer();
+      dependencyGatherer.meta = {symbol: dependencySymbol, supportedModes: ['snapshot']};
+      // @ts-expect-error - we satisfy the interface on the next line
+      dependentGatherer = new BaseGatherer();
+      dependentGatherer.meta = {
+        supportedModes: ['snapshot'],
+        dependencies: {ImageElements: dependencySymbol},
+      };
+
+      configJson = {
+        artifacts: [
+          {id: 'Dependency', gatherer: {instance: dependencyGatherer}},
+          {id: 'Dependent', gatherer: {instance: dependentGatherer}},
+        ],
+        navigations: [
+          {id: 'default', artifacts: ['Dependency']},
+          {id: 'second', artifacts: ['Dependent']},
+        ],
+      };
+    });
+
+    it('should resolve artifact dependencies', () => {
+      const {config} = initializeConfig(configJson, {gatherMode: 'snapshot'});
+      expect(config).toMatchObject({
+        artifacts: [
+          {id: 'Dependency', gatherer: {instance: dependencyGatherer}},
+          {
+            id: 'Dependent',
+            gatherer: {
+              instance: dependentGatherer,
+            },
+            dependencies: {
+              ImageElements: {id: 'Dependency'},
+            },
+          },
+        ],
+      });
+    });
+
+    it('should resolve artifact dependencies in navigations', () => {
+      const {config} = initializeConfig(configJson, {gatherMode: 'snapshot'});
+      expect(config).toMatchObject({
+        navigations: [
+          {artifacts: [{id: 'Dependency'}]},
+          {
+            artifacts: [
+              {
+                id: 'Dependent',
+                dependencies: {
+                  ImageElements: {id: 'Dependency'},
+                },
+              },
+            ],
+          },
+        ],
+      });
+    });
+
+    it('should throw when dependencies are out of order in artifacts', () => {
+      if (!configJson.artifacts) throw new Error('Failed to run beforeEach');
+      configJson.artifacts = [configJson.artifacts[1], configJson.artifacts[0]];
+      expect(() => initializeConfig(configJson, {gatherMode: 'snapshot'}))
+        .toThrow(/Failed to find dependency/);
+    });
+
+    it('should throw when dependencies are out of order within a navigation', () => {
+      if (!configJson.navigations) throw new Error('Failed to run beforeEach');
+      const invalidNavigation = {id: 'default', artifacts: ['Dependent', 'Dependency']};
+      configJson.navigations = [invalidNavigation];
+      expect(() => initializeConfig(configJson, {gatherMode: 'snapshot'}))
+        .toThrow(/Failed to find dependency/);
+    });
+
+    it('should throw when dependencies are out of order between navigations', () => {
+      if (!configJson.navigations) throw new Error('Failed to run beforeEach');
+      const invalidNavigation = {id: 'default', artifacts: ['Dependent']};
+      configJson.navigations = [invalidNavigation];
+      expect(() => initializeConfig(configJson, {gatherMode: 'snapshot'}))
+        .toThrow(/Failed to find dependency/);
+    });
+
+    it('should throw when dependencies are have an invalid phase relationship', () => {
+      dependentGatherer.meta.supportedModes = ['timespan'];
+      expect(() => initializeConfig(configJson, {gatherMode: 'navigation'}))
+        .toThrow(/Dependency.*is invalid/);
     });
   });
 

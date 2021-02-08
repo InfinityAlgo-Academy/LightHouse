@@ -11,6 +11,8 @@ const validation = require('../../../fraggle-rock/config/validation.js');
 
 /* eslint-env jest */
 
+/** @typedef {LH.Gatherer.GathererMeta['supportedModes']} SupportedModes */
+
 describe('Fraggle Rock Config Validation', () => {
   describe('isFRGathererDefn', () => {
     it('should identify fraggle rock gatherer definitions', () => {
@@ -20,5 +22,30 @@ describe('Fraggle Rock Config Validation', () => {
     it('should identify legacy gatherer definitions', () => {
       expect(validation.isFRGathererDefn({instance: new BaseLegacyGatherer()})).toBe(false);
     });
+  });
+
+  describe('isValidArtifactDependency', () => {
+    /** @type {Array<{dependent: SupportedModes, dependency: SupportedModes, isValid: boolean}>} */
+    const combinations = [
+      {dependent: ['timespan'], dependency: ['timespan'], isValid: true},
+      {dependent: ['timespan'], dependency: ['snapshot'], isValid: false},
+      {dependent: ['timespan'], dependency: ['navigation'], isValid: false},
+      {dependent: ['snapshot'], dependency: ['timespan'], isValid: true},
+      {dependent: ['snapshot'], dependency: ['snapshot'], isValid: true},
+      {dependent: ['snapshot'], dependency: ['navigation'], isValid: false},
+      {dependent: ['navigation'], dependency: ['timespan'], isValid: true},
+      {dependent: ['navigation'], dependency: ['snapshot'], isValid: true},
+      {dependent: ['navigation'], dependency: ['navigation'], isValid: true},
+    ];
+
+    for (const {dependent, dependency, isValid} of combinations) {
+      it(`should identify ${dependent.join(',')} / ${dependency.join(',')} correctly`, () => {
+        const dependentDefn = {instance: new BaseFRGatherer()};
+        dependentDefn.instance.meta.supportedModes = dependent;
+        const dependencyDefn = {instance: new BaseFRGatherer()};
+        dependencyDefn.instance.meta.supportedModes = dependency;
+        expect(validation.isValidArtifactDependency(dependentDefn, dependencyDefn)).toBe(isValid);
+      });
+    }
   });
 });

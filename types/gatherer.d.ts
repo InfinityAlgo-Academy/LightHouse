@@ -32,9 +32,12 @@ declare global {
     }
 
     /** The limited context interface shared between pre and post Fraggle Rock Lighthouse. */
-    export interface FRTransitionalContext {
+    export interface FRTransitionalContext<TDependencies extends DependencyKey = DefaultDependenciesKey> {
       gatherMode: GatherMode
       driver: FRTransitionalDriver;
+      dependencies: TDependencies extends DefaultDependenciesKey ?
+        {} :
+        Pick<GathererArtifacts, Exclude<TDependencies, DefaultDependenciesKey>>;
     }
 
     export interface PassContext {
@@ -55,14 +58,37 @@ declare global {
       trace?: Trace;
     }
 
-    export type PhaseResultNonPromise = void|LH.GathererArtifacts[keyof LH.GathererArtifacts]
+    export type PhaseArtifact = LH.GathererArtifacts[keyof LH.GathererArtifacts]
+    export type PhaseResultNonPromise = void|PhaseArtifact
     export type PhaseResult = PhaseResultNonPromise | Promise<PhaseResultNonPromise>
 
     export type GatherMode = 'snapshot'|'timespan'|'navigation';
 
-    export interface GathererMeta {
+    export type DefaultDependenciesKey = '__none__'
+    export type DependencyKey = keyof GathererArtifacts | DefaultDependenciesKey
+
+    interface GathererMetaNoDependencies {
+      /**
+       * Used to validate the dependency requirements of gatherers.
+       * If this property is not defined, this gatherer cannot be the dependency of another. */
+      symbol?: Symbol;
+      /** Lists the modes in which this gatherer can run. */
       supportedModes: Array<GatherMode>;
     }
+
+    interface GathererMetaWithDependencies<
+      TDependencies extends DependencyKey = DefaultDependenciesKey
+    > extends GathererMetaNoDependencies {
+      /**
+       * The set of required dependencies that this gatherer needs before it can compute its results.
+       */
+      dependencies: Record<TDependencies, Symbol>;
+    }
+
+    export type GathererMeta<TDependencies extends DependencyKey = DefaultDependenciesKey> =
+      TDependencies extends DefaultDependenciesKey ?
+        GathererMetaNoDependencies :
+        GathererMetaWithDependencies<TDependencies>;
 
     export interface GathererInstance {
       name: keyof LH.GathererArtifacts;
@@ -71,12 +97,12 @@ declare global {
       afterPass(context: LH.Gatherer.PassContext, loadData: LH.Gatherer.LoadData): PhaseResult;
     }
 
-    export interface FRGathererInstance {
+    export interface FRGathererInstance<TDependencies extends DependencyKey = DefaultDependenciesKey> {
       name: keyof LH.GathererArtifacts; // temporary COMPAT measure until artifact config support is available
-      meta: GathererMeta;
-      snapshot(context: FRTransitionalContext): PhaseResult;
-      beforeTimespan(context: FRTransitionalContext): Promise<void>|void;
-      afterTimespan(context: FRTransitionalContext): PhaseResult;
+      meta: GathererMeta<TDependencies>;
+      snapshot(context: FRTransitionalContext<TDependencies>): PhaseResult;
+      beforeTimespan(context: FRTransitionalContext<DefaultDependenciesKey>): Promise<void>|void;
+      afterTimespan(context: FRTransitionalContext<TDependencies>): PhaseResult;
     }
 
     namespace Simulation {
