@@ -718,6 +718,11 @@ declare global {
         observedLastVisualChangeTs: number;
         observedSpeedIndex: number;
         observedSpeedIndexTs: number;
+        layoutShiftAvgSessionGap5s: number,
+        layoutShiftMaxSessionGap1s: number,
+        layoutShiftMaxSessionGap1sLimit5s: number,
+        layoutShiftMaxSliding1s: number,
+        layoutShiftMaxSliding300ms: number,
       }
 
       export interface Form {

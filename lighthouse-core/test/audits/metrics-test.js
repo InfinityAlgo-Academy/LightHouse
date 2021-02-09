@@ -23,6 +23,9 @@ const clsAllFramesDevtoolsLog = require('../fixtures/traces/frame-metrics-m90.de
 const artifactsTrace = require('../results/artifacts/defaultPass.trace.json');
 const artifactsDevtoolsLog = require('../results/artifacts/defaultPass.devtoolslog.json');
 
+const jumpyClsTrace = require('../fixtures/traces/jumpy-cls-m90.json');
+const jumpyClsDevtoolsLog = require('../fixtures/traces/jumpy-cls-m90.devtoolslog.json');
+
 /* eslint-env jest */
 
 describe('Performance: metrics', () => {
@@ -135,5 +138,28 @@ describe('Performance: metrics', () => {
     const context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
     const result = await MetricsAudit.audit(artifacts, context);
     expect(result.details.items[0].interactive).toEqual(undefined);
+  });
+
+  it('evaluates LayoutShift variants correctly', async () => {
+    const artifacts = {
+      traces: {
+        [MetricsAudit.DEFAULT_PASS]: jumpyClsTrace,
+      },
+      devtoolsLogs: {
+        [MetricsAudit.DEFAULT_PASS]: jumpyClsDevtoolsLog,
+      },
+    };
+
+    const context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
+    const {details} = await MetricsAudit.audit(artifacts, context);
+    expect(details.items[0]).toMatchObject({
+      cumulativeLayoutShift: expect.toBeApproximately(4.809794, 6),
+      cumulativeLayoutShiftAllFrames: expect.toBeApproximately(4.809794, 6),
+      layoutShiftAvgSessionGap5s: expect.toBeApproximately(4.809794, 6),
+      layoutShiftMaxSessionGap1s: expect.toBeApproximately(2.897995, 6),
+      layoutShiftMaxSessionGap1sLimit5s: expect.toBeApproximately(2.268816, 6),
+      layoutShiftMaxSliding1s: expect.toBeApproximately(1.911799, 6),
+      layoutShiftMaxSliding300ms: expect.toBeApproximately(1.436742, 6),
+    });
   });
 });

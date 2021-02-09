@@ -348,6 +348,11 @@ module.exports = [
                 largestContentfulPaintAllFrames: '<5000',
                 cumulativeLayoutShift: '0.001 +/- 0.0005',
                 cumulativeLayoutShiftAllFrames: '0.0276 +/- 0.0005',
+                layoutShiftAvgSessionGap5s: '>0',
+                layoutShiftMaxSessionGap1s: '>0',
+                layoutShiftMaxSessionGap1sLimit5s: '>0',
+                layoutShiftMaxSliding1s: '>0',
+                layoutShiftMaxSliding300ms: '>0',
               },
               {
                 lcpInvalidated: false,

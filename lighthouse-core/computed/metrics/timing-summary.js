@@ -20,6 +20,7 @@ const SpeedIndex = require('./speed-index.js');
 const EstimatedInputLatency = require('./estimated-input-latency.js');
 const MaxPotentialFID = require('./max-potential-fid.js');
 const TotalBlockingTime = require('./total-blocking-time.js');
+const LayoutShiftVariants = require('../layout-shift-variants.js');
 const makeComputedArtifact = require('../computed-artifact.js');
 
 class TimingSummary {
@@ -57,6 +58,7 @@ class TimingSummary {
     const speedIndex = await requestOrUndefined(SpeedIndex, metricComputationData);
     const estimatedInputLatency = await EstimatedInputLatency.request(metricComputationData, context); // eslint-disable-line max-len
     const totalBlockingTime = await TotalBlockingTime.request(metricComputationData, context); // eslint-disable-line max-len
+    const layoutShiftVariants = await LayoutShiftVariants.request(trace, context);
 
     const cumulativeLayoutShiftValue = cumulativeLayoutShift &&
       cumulativeLayoutShift.value !== null ?
@@ -125,6 +127,13 @@ class TimingSummary {
       observedLastVisualChangeTs: (speedline.complete + speedline.beginning) * 1000,
       observedSpeedIndex: speedline.speedIndex,
       observedSpeedIndexTs: (speedline.speedIndex + speedline.beginning) * 1000,
+
+      // Include experimental LayoutShift variants.
+      layoutShiftAvgSessionGap5s: layoutShiftVariants.avgSessionGap5s,
+      layoutShiftMaxSessionGap1s: layoutShiftVariants.maxSessionGap1s,
+      layoutShiftMaxSessionGap1sLimit5s: layoutShiftVariants.maxSessionGap1sLimit5s,
+      layoutShiftMaxSliding1s: layoutShiftVariants.maxSliding1s,
+      layoutShiftMaxSliding300ms: layoutShiftVariants.maxSliding300ms,
     };
     /** @type {Record<string,boolean>} */
     const debugInfo = {lcpInvalidated: traceOfTab.lcpInvalidated};
