@@ -27,7 +27,7 @@ class CSSUsage extends Gatherer {
     await driver.sendCommand('DOM.enable');
     await driver.sendCommand('CSS.enable');
     await driver.sendCommand('CSS.startRuleUsageTracking');
-    await driver.evaluateAsync('getComputedStyle(document.body)');
+    await driver.executionContext.evaluateAsync('getComputedStyle(document.body)');
     driver.off('CSS.styleSheetAdded', onStylesheetAdded);
 
     // Fetch style sheet content in parallel.

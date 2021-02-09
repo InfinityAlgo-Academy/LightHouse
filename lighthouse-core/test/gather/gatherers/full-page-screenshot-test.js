@@ -17,26 +17,28 @@ const maxTextureSizeMock = 1024 * 8;
  */
 function createMockDriver({contentSize, screenSize, screenshotData}) {
   return {
-    evaluate: async function(fn) {
-      if (fn.name === 'resolveNodes') {
-        return {};
-      } if (fn.name === 'getMaxTextureSize') {
-        return maxTextureSizeMock;
-      } else if (fn.name === 'getObservedDeviceMetrics') {
-        return {
-          width: screenSize.width,
-          height: screenSize.height,
-          screenWidth: screenSize.width,
-          screenHeight: screenSize.height,
-          screenOrientation: {
-            type: 'landscapePrimary',
-            angle: 30,
-          },
-          deviceScaleFactor: screenSize.dpr,
-        };
-      } else {
-        throw new Error(`unexpected fn ${fn.name}`);
-      }
+    executionContext: {
+      evaluate: async function(fn) {
+        if (fn.name === 'resolveNodes') {
+          return {};
+        } if (fn.name === 'getMaxTextureSize') {
+          return maxTextureSizeMock;
+        } else if (fn.name === 'getObservedDeviceMetrics') {
+          return {
+            width: screenSize.width,
+            height: screenSize.height,
+            screenWidth: screenSize.width,
+            screenHeight: screenSize.height,
+            screenOrientation: {
+              type: 'landscapePrimary',
+              angle: 30,
+            },
+            deviceScaleFactor: screenSize.dpr,
+          };
+        } else {
+          throw new Error(`unexpected fn ${fn.name}`);
+        }
+      },
     },
     beginEmulation: jest.fn(),
     sendCommand: jest.fn().mockImplementation(method => {

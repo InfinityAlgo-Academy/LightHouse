@@ -51,7 +51,7 @@ class CacheContents extends FRGatherer {
   async snapshot(passContext) {
     const driver = passContext.driver;
 
-    const cacheUrls = await driver.evaluate(getCacheContents, {args: []});
+    const cacheUrls = await driver.executionContext.evaluate(getCacheContents, {args: []});
     return cacheUrls;
   }
 }

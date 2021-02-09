@@ -151,11 +151,11 @@ describe('First paint blocking tags', () => {
     };
 
     const artifact = await tagsBlockingFirstPaint.afterPass({
-      driver: {
+      driver: {executionContext: {
         evaluate() {
           return Promise.resolve([linkDetails, linkDetails, scriptDetails]);
         },
-      },
+      }},
     }, traceData);
 
     const expected = [

@@ -445,7 +445,7 @@ if (location.search === '') {
 }
 </script>
 
-<!-- Including this script validates that driver.evaluateAsync() still works even with
+<!-- Including this script validates that driver.executionContext.evaluateAsync() still works even with
   window.Promise being mucked with. See file source for details.
   Also, script is located down here to avoid being flagged in render-blocking-resources. -->
 <script src="./third_party/aggressive-promise-polyfill.js"></script>

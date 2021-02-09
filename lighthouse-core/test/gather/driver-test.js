@@ -23,6 +23,8 @@ jest.useFakeTimers();
 
 /**
  * @typedef DriverMockMethods
+ * @property {Driver['evaluate']} evaluate redefined to remove "private" designation
+ * @property {Driver['evaluateAsync']} evaluateAsync redefined to remove "private" designation
  * @property {ReturnType<typeof createMockOnceFn>} on
  * @property {ReturnType<typeof createMockOnceFn>} once
  * @property {(...args: RecursivePartial<Parameters<Driver['gotoURL']>>) => ReturnType<Driver['gotoURL']>} gotoURL
@@ -125,8 +127,8 @@ describe('.getRequestContent', () => {
 });
 
 describe('.evaluateAsync', () => {
-  // Most of the logic here is tested by lighthouse-core/test/gather/driver/execution-context-test.js
-  // Just exercise a bit of the plumbing here to ensure we delegate correctly.
+  // The logic here is tested by lighthouse-core/test/gather/driver/execution-context-test.js
+  // Just exercise a bit of the plumbing here to ensure we delegate correctly for plugin backcompat.
   it('evaluates an expression', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
       .mockResponse('Runtime.evaluate', {result: {value: 2}});
@@ -310,6 +312,7 @@ describe('.gotoURL', () => {
     driver.on = driver.once = createMockOnceFn();
 
     const url = 'https://www.example.com';
+
     const loadOptions = {
       waitForNavigated: true,
     };

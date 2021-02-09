@@ -237,7 +237,7 @@ class ImageElements extends Gatherer {
     try {
       // We don't want this to take forever, 250ms should be enough for images that are cached
       driver.setNextProtocolTimeout(250);
-      const size = await driver.evaluate(determineNaturalSize, {
+      const size = await driver.executionContext.evaluate(determineNaturalSize, {
         args: [url],
       });
       this._naturalSizeCache.set(url, size);
@@ -293,7 +293,7 @@ class ImageElements extends Gatherer {
       return map;
     }, /** @type {Object<string, LH.Artifacts.NetworkRequest>} */ ({}));
 
-    const elements = await driver.evaluate(collectImageElementInfo, {
+    const elements = await driver.executionContext.evaluate(collectImageElementInfo, {
       args: [],
       deps: [
         pageFunctions.getElementsInDocumentString,

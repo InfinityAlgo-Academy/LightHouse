@@ -30,7 +30,7 @@ class FullPageScreenshot extends Gatherer {
    * @see https://bugs.chromium.org/p/chromium/issues/detail?id=770769
    */
   async getMaxScreenshotHeight(driver) {
-    return await driver.evaluate(pageFunctions.getMaxTextureSize, {
+    return await driver.executionContext.evaluate(pageFunctions.getMaxTextureSize, {
       args: [],
       useIsolation: true,
       deps: [],
@@ -112,7 +112,7 @@ class FullPageScreenshot extends Gatherer {
      * @param {{useIsolation: boolean}} _
      */
     function resolveNodesInPage({useIsolation}) {
-      return passContext.driver.evaluate(resolveNodes, {
+      return passContext.driver.executionContext.evaluate(resolveNodes, {
         args: [],
         useIsolation,
         deps: [pageFunctions.getBoundingClientRectString],
@@ -133,6 +133,7 @@ class FullPageScreenshot extends Gatherer {
    */
   async afterPass(passContext) {
     const {driver} = passContext;
+    const executionContext = driver.executionContext;
 
     // In case some other program is controlling emulation, try to remember what the device looks
     // like now and reset after gatherer is done.
@@ -172,7 +173,7 @@ class FullPageScreenshot extends Gatherer {
           };
         }
 
-        const observedDeviceMetrics = await driver.evaluate(getObservedDeviceMetrics, {
+        const observedDeviceMetrics = await executionContext.evaluate(getObservedDeviceMetrics, {
           args: [],
           useIsolation: true,
           deps: [snakeCaseToCamelCase],

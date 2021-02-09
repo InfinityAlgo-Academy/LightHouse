@@ -97,7 +97,7 @@ class FormElements extends FRGatherer {
   async snapshot(passContext) {
     const driver = passContext.driver;
 
-    const formElements = await driver.evaluate(collectFormElements, {
+    const formElements = await driver.executionContext.evaluate(collectFormElements, {
       args: [],
       useIsolation: true,
       deps: [

@@ -111,7 +111,7 @@ class Accessibility extends FRGatherer {
   snapshot(passContext) {
     const driver = passContext.driver;
 
-    return driver.evaluate(runA11yChecks, {
+    return driver.executionContext.evaluate(runA11yChecks, {
       args: [],
       useIsolation: true,
       deps: [

@@ -111,7 +111,7 @@ class Driver {
   fetcher = new Fetcher(this);
 
   // eslint-disable-next-line no-invalid-this
-  _executionContext = new ExecutionContext(this);
+  executionContext = new ExecutionContext(this);
 
   // eslint-disable-next-line no-invalid-this
   defaultSession = this;
@@ -131,6 +131,11 @@ class Driver {
     this.on('Debugger.paused', () => this.sendCommand('Debugger.resume'));
 
     connection.on('protocolevent', this._handleProtocolEvent.bind(this));
+
+    /** @private @deprecated Only available for plugin backcompat. */
+    this.evaluate = this.executionContext.evaluate.bind(this.executionContext);
+    /** @private @deprecated Only available for plugin backcompat. */
+    this.evaluateAsync = this.executionContext.evaluateAsync.bind(this.executionContext);
   }
 
   static get traceCategories() {
@@ -193,7 +198,9 @@ class Driver {
   async getBenchmarkIndex() {
     const status = {msg: 'Benchmarking machine', id: 'lh:gather:getBenchmarkIndex'};
     log.time(status);
-    const indexVal = await this.evaluateAsync(`(${pageFunctions.computeBenchmarkIndexString})()`);
+    const indexVal = await this.executionContext.evaluate(pageFunctions.computeBenchmarkIndex, {
+      args: [],
+    });
     log.timeEnd(status);
     return indexVal;
   }
@@ -473,36 +480,6 @@ class Driver {
   }
 
   /**
-   * Note: Prefer `evaluate` instead.
-   * Evaluate an expression in the context of the current page. If useIsolation is true, the expression
-   * will be evaluated in a content script that has access to the page's DOM but whose JavaScript state
-   * is completely separate.
-   * Returns a promise that resolves on the expression's value.
-   * @param {string} expression
-   * @param {{useIsolation?: boolean}=} options
-   * @return {Promise<*>}
-   */
-  evaluateAsync(expression, options) {
-    return this._executionContext.evaluateAsync(expression, options);
-  }
-
-  /**
-   * Evaluate a function in the context of the current page.
-   * If `useIsolation` is true, the function will be evaluated in a content script that has
-   * access to the page's DOM but whose JavaScript state is completely separate.
-   * Returns a promise that resolves on a value of `mainFn`'s return type.
-   * @template {any[]} T, R
-   * @param {((...args: T) => R)} mainFn The main function to call.
-   * @param {{args: T, useIsolation?: boolean, deps?: Array<Function|string>}} options `args` should
-   *   match the args of `mainFn`, and can be any serializable value. `deps` are functions that must be
-   *   defined for `mainFn` to work.
-   * @return {FlattenedPromise<R>}
-   */
-  evaluate(mainFn, options) {
-    return this._executionContext.evaluate(mainFn, options);
-  }
-
-  /**
    * @return {Promise<{url: string, data: string}|null>}
    */
   async getAppManifest() {
@@ -659,7 +636,7 @@ class Driver {
     }
 
     await this._networkMonitor.enable();
-    await this._executionContext.clearContextId();
+    await this.executionContext.clearContextId();
 
     // Enable auto-attaching to subtargets so we receive iframe information
     await this.sendCommand('Target.setAutoAttach', {
@@ -821,14 +798,15 @@ class Driver {
    */
   scrollTo(position) {
     const scrollExpression = `window.scrollTo(${position.x}, ${position.y})`;
-    return this.evaluateAsync(scrollExpression, {useIsolation: true});
+    return this.executionContext.evaluateAsync(scrollExpression, {useIsolation: true});
   }
 
   /**
    * @return {Promise<{x: number, y: number}>}
    */
   getScrollPosition() {
-    return this.evaluateAsync(`({x: window.scrollX, y: window.scrollY})`, {useIsolation: true});
+    return this.executionContext.evaluateAsync(`({x: window.scrollX, y: window.scrollY})`,
+      {useIsolation: true});
   }
 
   /**
