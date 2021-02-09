@@ -30,6 +30,23 @@ it('audit basic header', async () => {
     [
       {
         description: {
+          value:
+            'script-src \'nonce-12345678\'; foo-bar \'none\'',
+        },
+        subItems: {
+          type: 'subitems',
+          items: [
+            {
+              description: {
+                formattedDefault: 'Unknown CSP directive.',
+              },
+              directive: 'foo-bar',
+            },
+          ],
+        },
+      },
+      {
+        description: {
           formattedDefault:
             'Consider setting object-src to \'none\' to prevent ' +
             'the injection of plugins that execute JavaScript.',
@@ -62,23 +79,6 @@ it('audit basic header', async () => {
         },
         directive: 'script-src',
       },
-      {
-        description: {
-          value:
-            'script-src \'nonce-12345678\'; foo-bar \'none\'',
-        },
-        subItems: {
-          type: 'subitems',
-          items: [
-            {
-              description: {
-                formattedDefault: 'Unknown CSP directive.',
-              },
-              directive: 'foo-bar',
-            },
-          ],
-        },
-      },
     ]
   );
 });
@@ -93,7 +93,7 @@ describe('getRawCsps', () => {
 describe('collectSyntaxResults', () => {
   it('single syntax error', () => {
     const rawCsp = `foo-bar 'none'`;
-    const results = CspXss.collectSyntaxResults([rawCsp]);
+    const results = CspXss.collectSyntaxResults([rawCsp], []);
     expect(results).toMatchObject([
       {
         description: {
@@ -114,9 +114,48 @@ describe('collectSyntaxResults', () => {
     ]);
   });
 
+  it('no syntax errors', () => {
+    const results = CspXss.collectSyntaxResults([
+      `script-src 'none'`,
+      `object-src 'none'`,
+    ], []);
+    expect(results).toMatchObject([
+      {
+        description: {
+          value: 'script-src \'none\'',
+        },
+        subItems: {
+          type: 'subitems',
+          items: [
+            {
+              description: {
+                formattedDefault: 'No syntax errors.',
+              },
+            },
+          ],
+        },
+      },
+      {
+        description: {
+          value: 'object-src \'none\'',
+        },
+        subItems: {
+          type: 'subitems',
+          items: [
+            {
+              description: {
+                formattedDefault: 'No syntax errors.',
+              },
+            },
+          ],
+        },
+      },
+    ]);
+  });
+
   it('multiple syntax errors', () => {
     const rawCsp = `foo-bar 'asdf'`;
-    const results = CspXss.collectSyntaxResults([rawCsp]);
+    const results = CspXss.collectSyntaxResults([rawCsp], []);
     expect(results).toMatchObject([
       {
         description: {
@@ -144,7 +183,7 @@ describe('collectSyntaxResults', () => {
   });
 
   it('multiple CSPs', () => {
-    const results = CspXss.collectSyntaxResults([`foo-bar 'none'`, `object-src 'asdf'`]);
+    const results = CspXss.collectSyntaxResults([`foo-bar 'none'`, `object-src 'asdf'`], []);
     expect(results).toMatchObject([
       {
         description: {
@@ -259,49 +298,6 @@ describe('collectSuggestionResults', () => {
               'nonces/hashes) to be backward compatible with older browsers.',
           },
           directive: 'script-src',
-        },
-      ]
-    );
-  });
-
-  it('includes syntax results', () => {
-    const rawCsp = `script-src 'nonce-12345678'; foo-bar 'none'`;
-    const results = CspXss.collectSuggestionResults([rawCsp], []);
-    expect(results).toMatchObject(
-      [
-        {
-          description: {
-            formattedDefault:
-              'This CSP policy does not configure a reporting destination. ' +
-              'This makes it difficult to maintain the CSP policy over ' +
-              'time and monitor for any breakages.',
-          },
-          directive: 'report-uri',
-        },
-        {
-          description: {
-            formattedDefault:
-              'Consider adding \'unsafe-inline\' (ignored by browsers supporting ' +
-              'nonces/hashes) to be backward compatible with older browsers.',
-          },
-          directive: 'script-src',
-        },
-        {
-          description: {
-            value:
-              'script-src \'nonce-12345678\'; foo-bar \'none\'',
-          },
-          subItems: {
-            type: 'subitems',
-            items: [
-              {
-                description: {
-                  formattedDefault: 'Unknown CSP directive.',
-                },
-                directive: 'foo-bar',
-              },
-            ],
-          },
         },
       ]
     );
