@@ -10,13 +10,46 @@ const legacyDefaultConfig = require('../../config/default-config.js');
 /** @type {LH.Config.Json} */
 const defaultConfig = {
   artifacts: [
+    /* eslint-disable max-len */
     {id: 'Accessibility', gatherer: 'accessibility'},
+    {id: 'Appcache', gatherer: 'dobetterweb/appcache'},
+    {id: 'CacheContents', gatherer: 'cache-contents'},
     {id: 'ConsoleMessages', gatherer: 'console-messages'},
+    {id: 'Doctype', gatherer: 'dobetterweb/doctype'},
+    {id: 'Domstats', gatherer: 'dobetterweb/domstats'},
+    {id: 'EmbeddedContent', gatherer: 'seo/embedded-content'},
+    {id: 'FontSize', gatherer: 'seo/font-size'},
+    {id: 'FormElements', gatherer: 'form-elements'},
+    {id: 'GlobalListeners', gatherer: 'global-listeners'},
+    {id: 'IframeElements', gatherer: 'iframe-elements'},
+    {id: 'MetaElements', gatherer: 'meta-elements'},
+    {id: 'PasswordInputsWithPreventedPaste', gatherer: 'dobetterweb/password-inputs-with-prevented-paste'},
+    {id: 'RobotsTxt', gatherer: 'seo/robots-txt'},
+    {id: 'TapTargets', gatherer: 'seo/tap-targets'},
+    {id: 'ViewportDimensions', gatherer: 'viewport-dimensions'},
+    /* eslint-enable max-len */
   ],
   navigations: [
     {
       id: 'default',
-      artifacts: ['Accessibility', 'ConsoleMessages'],
+      artifacts: [
+        'Accessibility',
+        'Appcache',
+        'CacheContents',
+        'ConsoleMessages',
+        'Doctype',
+        'Domstats',
+        'EmbeddedContent',
+        'FontSize',
+        'FormElements',
+        'GlobalListeners',
+        'IframeElements',
+        'MetaElements',
+        'PasswordInputsWithPreventedPaste',
+        'RobotsTxt',
+        'TapTargets',
+        'ViewportDimensions',
+      ],
     },
   ],
   settings: legacyDefaultConfig.settings,
