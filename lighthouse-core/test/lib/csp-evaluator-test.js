@@ -95,7 +95,7 @@ describe('getTranslatedDescription', () => {
     expect(isIcuMessage(translated[0])).toBeTruthy();
     expect(translated[0]).toBeDisplayString(
       'Consider setting object-src to \'none\' to prevent ' +
-      'the injection of plugins that execute JavaScript.'
+      'the injection of plugins that execute unsafe scripts.'
     );
   });
 
@@ -148,8 +148,8 @@ describe('getTranslatedDescription', () => {
     expect(translated).toHaveLength(1);
     expect(isIcuMessage(translated[0])).toBeTruthy();
     expect(translated[0]).toBeDisplayString(
-      'This CSP policy does not configure a reporting destination. ' +
-      'This makes it difficult to maintain the CSP policy over time and monitor for any breakages.'
+      'This CSP does not configure a reporting destination. ' +
+      'This makes it difficult to maintain the CSP over time and monitor for any breakages.'
     );
   });
 
@@ -161,10 +161,10 @@ describe('getTranslatedDescription', () => {
     expect(translated).toHaveLength(1);
     expect(isIcuMessage(translated[0])).toBeTruthy();
     expect(translated[0]).toBeDisplayString(
-      'This CSP policy only provides a reporting ' +
-      'destination via the \'report-to\' directive. ' +
+      'This CSP only provides a reporting ' +
+      'destination via the report-to directive. ' +
       'This directive is only supported in Chromium-based browsers so it is ' +
-      'recommended to also use a \'report-uri\' directive.'
+      'recommended to also use a report-uri directive.'
     );
   });
 

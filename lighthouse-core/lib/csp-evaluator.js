@@ -34,9 +34,9 @@ const UIStrings = {
   /** Message shown when a CSP does not have a script-src directive. Shown in a table with a list of other CSP vulnerabilities and suggestions. "CSP" stands for "Content Security Policy". "script-src" does not need to be translated. */
   missingScriptSrc: 'script-src directive is missing. ' +
     'This can allow the execution of unsafe scripts.',
-  /** Message shown when a CSP does not have a script-src directive. Shown in a table with a list of other CSP vulnerabilities and suggestions. "CSP" stands for "Content Security Policy". "object-src", "'none'", and "JavaScript" do not need to be translated. */
+  /** Message shown when a CSP does not have a script-src directive. Shown in a table with a list of other CSP vulnerabilities and suggestions. "CSP" stands for "Content Security Policy". "object-src" and "'none'" do not need to be translated. */
   missingObjectSrc: 'Consider setting object-src to \'none\' to prevent the injection of ' +
-    'plugins that execute JavaScript.',
+    'plugins that execute unsafe scripts.',
   /** Message shown when a CSP uses a domain allowlist to filter out malicious scripts. Shown in a table with a list of other CSP vulnerabilities and suggestions. "CSP" stands for "Content Security Policy". "CSP", "'strict-dynamic'", "nonces", and "hashes" do not need to be translated. "allowlists" can be interpreted as "whitelist". */
   strictDynamic: 'Host allowlists can frequently be bypassed. Consider using ' +
     '\'strict-dynamic\' in combination with CSP nonces or hashes.',
@@ -50,13 +50,13 @@ const UIStrings = {
   allowlistFallback: 'Consider adding https: and http: url schemes (ignored by browsers ' +
     'supporting \'strict-dynamic\') to be backward compatible with older browsers.',
   /** Message shown when a CSP only provides a reporting destination through the report-to directive. Shown in a table with a list of other CSP vulnerabilities and suggestions. "CSP" stands for "Content Security Policy". "CSP", "report-to", "report-uri", and "Chromium" do not need to be translated. */
-  reportToOnly: 'This CSP policy only provides a reporting ' +
-    'destination via the \'report-to\' directive. ' +
+  reportToOnly: 'This CSP only provides a reporting ' +
+    'destination via the report-to directive. ' +
     'This directive is only supported in Chromium-based browsers so it is ' +
-    'recommended to also use a \'report-uri\' directive.',
+    'recommended to also use a report-uri directive.',
   /** Message shown when a CSP does not provide a reporting destination. Shown in a table with a list of other CSP vulnerabilities and suggestions. "CSP" stands for "Content Security Policy". "CSP" does not need to be translated. */
-  reportingDestinationMissing: 'This CSP policy does not configure a reporting destination. ' +
-    'This makes it difficult to maintain the CSP policy over time and monitor for any breakages.',
+  reportingDestinationMissing: 'This CSP does not configure a reporting destination. ' +
+    'This makes it difficult to maintain the CSP over time and monitor for any breakages.',
   /** Message shown when a CSP nonce has less than 8 characters. Shown in a table with a list of other CSP vulnerabilities and suggestions. "CSP" stands for "Content Security Policy". "Nonces" does not need to be translated. */
   nonceLength: 'Nonces should be at least 8 characters long.',
   /** Message shown when a CSP nonce does not use teh base64 charset. Shown in a table with a list of other CSP vulnerabilities and suggestions. "CSP" stands for "Content Security Policy". "Nonces" and "base84" do not need to be translated. "charset" can be interpreted as "a set of characters". */

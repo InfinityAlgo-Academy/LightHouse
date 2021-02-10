@@ -49,7 +49,7 @@ it('audit basic header', async () => {
         description: {
           formattedDefault:
             'Consider setting object-src to \'none\' to prevent ' +
-            'the injection of plugins that execute JavaScript.',
+            'the injection of plugins that execute unsafe scripts.',
         },
         directive: 'object-src',
       },
@@ -65,8 +65,8 @@ it('audit basic header', async () => {
       {
         description: {
           formattedDefault:
-            'This CSP policy does not configure a reporting destination. ' +
-            'This makes it difficult to maintain the CSP policy over ' +
+            'This CSP does not configure a reporting destination. ' +
+            'This makes it difficult to maintain the CSP over ' +
             'time and monitor for any breakages.',
         },
         directive: 'report-uri',
@@ -355,7 +355,7 @@ describe('collectVulnerabilityResults', () => {
           description: {
             formattedDefault:
               'Consider setting object-src to \'none\' to prevent ' +
-              'the injection of plugins that execute JavaScript.',
+              'the injection of plugins that execute unsafe scripts.',
           },
           directive: 'object-src',
         },
@@ -383,7 +383,7 @@ describe('collectVulnerabilityResults', () => {
           description: {
             formattedDefault:
               'Consider setting object-src to \'none\' to prevent ' +
-              'the injection of plugins that execute JavaScript.',
+              'the injection of plugins that execute unsafe scripts.',
           },
           directive: 'object-src',
         },
@@ -410,8 +410,8 @@ describe('collectSuggestionResults', () => {
         {
           description: {
             formattedDefault:
-              'This CSP policy does not configure a reporting destination. ' +
-              'This makes it difficult to maintain the CSP policy over ' +
+              'This CSP does not configure a reporting destination. ' +
+              'This makes it difficult to maintain the CSP over ' +
               'time and monitor for any breakages.',
           },
           directive: 'report-uri',
@@ -436,8 +436,8 @@ describe('collectSuggestionResults', () => {
         {
           description: {
             formattedDefault:
-              'This CSP policy does not configure a reporting destination. ' +
-              'This makes it difficult to maintain the CSP policy over ' +
+              'This CSP does not configure a reporting destination. ' +
+              'This makes it difficult to maintain the CSP over ' +
               'time and monitor for any breakages.',
           },
           directive: 'report-uri',
