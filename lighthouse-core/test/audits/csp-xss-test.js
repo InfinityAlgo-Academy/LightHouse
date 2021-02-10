@@ -83,6 +83,41 @@ it('audit basic header', async () => {
   );
 });
 
+it('adds result when using meta tag', async () => {
+  const artifacts = {
+    URL: 'https://example.com',
+    MetaElements: [
+      {
+        httpEquiv: 'Content-Security-Policy',
+        content: `base-uri 'none'`,
+      },
+    ],
+    devtoolsLogs: {
+      defaultPass: networkRecordsToDevtoolsLog([
+        {
+          url: 'https://example.com',
+          responseHeaders: [
+            {name: 'Content-Security-Policy', value: `script-src 'none'; object-src 'none'; report-uri https://example.com`},
+          ],
+        },
+      ]),
+    },
+  };
+  const results = await CspXss.audit(artifacts, {computedCache: new Map()});
+  expect(results.details.items).toHaveLength(3);
+  expect(results.details.items[2]).toMatchObject(
+    {
+      description: {
+        formattedDefault:
+          'The page contains a CSP defined in a <meta> tag. ' +
+          'It is not recommended to use a CSP this way, ' +
+          'consider defining the CSP in an HTTP header.',
+      },
+      directive: undefined,
+    }
+  );
+});
+
 describe('getRawCsps', () => {
   it('basic case', async () => {
     const artifacts = {
@@ -218,7 +253,7 @@ describe('getRawCsps', () => {
 describe('collectSyntaxResults', () => {
   it('single syntax error', () => {
     const rawCsp = `foo-bar 'none'`;
-    const results = CspXss.collectSyntaxResults([rawCsp], []);
+    const results = CspXss.collectSyntaxResults([rawCsp]);
     expect(results).toMatchObject([
       {
         description: {
@@ -243,7 +278,7 @@ describe('collectSyntaxResults', () => {
     const results = CspXss.collectSyntaxResults([
       `script-src 'none'`,
       `object-src 'none'`,
-    ], []);
+    ]);
     expect(results).toMatchObject([
       {
         description: {
@@ -280,7 +315,7 @@ describe('collectSyntaxResults', () => {
 
   it('multiple syntax errors', () => {
     const rawCsp = `foo-bar 'asdf'`;
-    const results = CspXss.collectSyntaxResults([rawCsp], []);
+    const results = CspXss.collectSyntaxResults([rawCsp]);
     expect(results).toMatchObject([
       {
         description: {
@@ -308,7 +343,7 @@ describe('collectSyntaxResults', () => {
   });
 
   it('multiple CSPs', () => {
-    const results = CspXss.collectSyntaxResults([`foo-bar 'none'`, `object-src 'asdf'`], []);
+    const results = CspXss.collectSyntaxResults([`foo-bar 'none'`, `object-src 'asdf'`]);
     expect(results).toMatchObject([
       {
         description: {
@@ -348,36 +383,8 @@ describe('collectSyntaxResults', () => {
 
 describe('collectVulnerabilityResults', () => {
   it('basic case', () => {
-    const results = CspXss.collectVulnerabilityResults([`script-src 'nonce-12345678'`], []);
+    const results = CspXss.collectVulnerabilityResults([`script-src 'nonce-12345678'`]);
     expect(results).toMatchObject(
-      [
-        {
-          description: {
-            formattedDefault:
-              'Consider setting object-src to \'none\' to prevent ' +
-              'the injection of plugins that execute unsafe scripts.',
-          },
-          directive: 'object-src',
-        },
-        {
-          description: {
-            formattedDefault:
-              'Missing base-uri allows the injection of base tags. ' +
-              'They can be used to set the base URL for all relative (script) URLs to ' +
-              'an attacker controlled domain. Can you set it to \'none\' or \'self\'?',
-          },
-          directive: 'base-uri',
-        },
-      ]
-    );
-  });
-
-  it('header and meta tag are treated the same', () => {
-    const rawCsp = `script-src 'nonce-12345678'`;
-    const resultsHeader = CspXss.collectVulnerabilityResults([rawCsp], []);
-    const resultsMeta = CspXss.collectVulnerabilityResults([], [rawCsp]);
-    expect(resultsHeader).toEqual(resultsMeta);
-    expect(resultsHeader).toMatchObject(
       [
         {
           description: {
@@ -404,7 +411,7 @@ describe('collectVulnerabilityResults', () => {
 describe('collectSuggestionResults', () => {
   it('basic case', () => {
     const rawCsp = `script-src 'nonce-12345678'`;
-    const results = CspXss.collectSuggestionResults([rawCsp], []);
+    const results = CspXss.collectSuggestionResults([rawCsp]);
     expect(results).toMatchObject(
       [
         {
@@ -423,39 +430,6 @@ describe('collectSuggestionResults', () => {
               'nonces/hashes) to be backward compatible with older browsers.',
           },
           directive: 'script-src',
-        },
-      ]
-    );
-  });
-
-  it('adds result when using meta tag', () => {
-    const rawCsp = `script-src 'nonce-12345678'`;
-    const results = CspXss.collectSuggestionResults([], [rawCsp]);
-    expect(results).toMatchObject(
-      [
-        {
-          description: {
-            formattedDefault:
-              'This CSP does not configure a reporting destination. ' +
-              'This makes it difficult to maintain the CSP over ' +
-              'time and monitor for any breakages.',
-          },
-          directive: 'report-uri',
-        },
-        {
-          description: {
-            formattedDefault:
-              'Consider adding \'unsafe-inline\' (ignored by browsers supporting ' +
-              'nonces/hashes) to be backward compatible with older browsers.',
-          },
-          directive: 'script-src',
-        },
-        {
-          description: {
-            formattedDefault:
-              'The page contains a CSP defined in a <meta> tag. It is not recommended to ' +
-              'use a CSP this way, consider defining the CSP in an HTTP header.',
-          },
         },
       ]
     );

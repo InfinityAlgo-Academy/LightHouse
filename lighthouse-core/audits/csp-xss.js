@@ -91,15 +91,13 @@ class CspXss extends Audit {
   }
 
   /**
-   * @param {Array<string>} cspHeaders
-   * @param {Array<string>} cspMetaTags
+   * @param {Array<string>} rawCsps
    * @return {LH.Audit.Details.TableItem[]}
    */
-  static collectSyntaxResults(cspHeaders, cspMetaTags) {
+  static collectSyntaxResults(rawCsps) {
     /** @type {LH.Audit.Details.TableItem[]} */
     const results = [];
 
-    const rawCsps = [...cspHeaders, ...cspMetaTags];
     const syntaxFindingsByCsp = evaluateRawCspForSyntax(rawCsps);
     for (let i = 0; i < rawCsps.length; ++i) {
       const items = syntaxFindingsByCsp[i].map(this.findingToTableItem);
@@ -123,30 +121,23 @@ class CspXss extends Audit {
   }
 
   /**
-   * @param {Array<string>} cspHeaders
-   * @param {Array<string>} cspMetaTags
+   * @param {Array<string>} rawCsps
    * @return {LH.Audit.Details.TableItem[]}
    */
-  static collectVulnerabilityResults(cspHeaders, cspMetaTags) {
-    const rawCsps = [...cspHeaders, ...cspMetaTags];
+  static collectVulnerabilityResults(rawCsps) {
     const findings = evaluateRawCspForFailures(rawCsps);
     return findings.map(this.findingToTableItem);
   }
 
   /**
-   * @param {Array<string>} cspHeaders
-   * @param {Array<string>} cspMetaTags
+   * @param {Array<string>} rawCsps
    * @return {LH.Audit.Details.TableItem[]}
    */
-  static collectSuggestionResults(cspHeaders, cspMetaTags) {
-    const rawCsps = [...cspHeaders, ...cspMetaTags];
+  static collectSuggestionResults(rawCsps) {
     const findings = evaluateRawCspForWarnings(rawCsps);
     const results = [
       ...findings.map(this.findingToTableItem),
     ];
-    if (cspMetaTags.length) {
-      results.push({description: str_(UIStrings.metaTagMessage)});
-    }
     return results;
   }
 
@@ -157,7 +148,8 @@ class CspXss extends Audit {
    */
   static async audit(artifacts, context) {
     const {cspHeaders, cspMetaTags} = await this.getRawCsps(artifacts, context);
-    if (!cspHeaders.length && !cspMetaTags.length) {
+    const rawCsps = [...cspHeaders, ...cspMetaTags];
+    if (!rawCsps.length) {
       return {
         score: 0,
         notApplicable: false,
@@ -166,9 +158,14 @@ class CspXss extends Audit {
     }
 
     // TODO: Add severity icons for vulnerabilities and suggestions.
-    const vulnerabilities = this.collectVulnerabilityResults(cspHeaders, cspMetaTags);
-    const suggestions = this.collectSuggestionResults(cspHeaders, cspMetaTags);
-    const syntax = this.collectSyntaxResults(cspHeaders, cspMetaTags);
+    const vulnerabilities = this.collectVulnerabilityResults(rawCsps);
+    const suggestions = this.collectSuggestionResults(rawCsps);
+    const syntax = this.collectSyntaxResults(rawCsps);
+
+    // Add extra warning for a CSP defined in a meta tag.
+    if (cspMetaTags.length) {
+      suggestions.push({description: str_(UIStrings.metaTagMessage), directive: undefined});
+    }
 
     const results = [...syntax, ...vulnerabilities, ...suggestions];
 
