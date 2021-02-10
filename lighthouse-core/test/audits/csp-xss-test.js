@@ -84,10 +84,135 @@ it('audit basic header', async () => {
 });
 
 describe('getRawCsps', () => {
-  it.todo('basic case');
-  it.todo('split on comma');
-  it.todo('ignore if empty');
-  it.todo('ignore if only whitespace');
+  it('basic case', async () => {
+    const artifacts = {
+      URL: 'https://example.com',
+      MetaElements: [
+        {
+          httpEquiv: 'Content-Security-Policy',
+          content: `default-src 'none'`,
+        },
+      ],
+      devtoolsLogs: {
+        defaultPass: networkRecordsToDevtoolsLog([
+          {
+            url: 'https://example.com',
+            responseHeaders: [
+              {
+                name: 'Content-Security-Policy',
+                value: `script-src 'none'`,
+              },
+              {
+                name: 'Content-Security-Policy',
+                value: `object-src 'none'`,
+              },
+            ],
+          },
+        ]),
+      },
+    };
+    const {cspHeaders, cspMetaTags}
+      = await CspXss.getRawCsps(artifacts, {computedCache: new Map()});
+    expect(cspHeaders).toEqual([
+      `script-src 'none'`,
+      `object-src 'none'`,
+    ]);
+    expect(cspMetaTags).toEqual([
+      `default-src 'none'`,
+    ]);
+  });
+
+  it('split on comma', async () => {
+    const artifacts = {
+      URL: 'https://example.com',
+      MetaElements: [],
+      devtoolsLogs: {
+        defaultPass: networkRecordsToDevtoolsLog([
+          {
+            url: 'https://example.com',
+            responseHeaders: [
+              {
+                name: 'Content-Security-Policy',
+                value: `script-src 'none',default-src 'none'`,
+              },
+              {
+                name: 'Content-Security-Policy',
+                value: `object-src 'none'`,
+              },
+            ],
+          },
+        ]),
+      },
+    };
+    const {cspHeaders, cspMetaTags}
+      = await CspXss.getRawCsps(artifacts, {computedCache: new Map()});
+    expect(cspHeaders).toEqual([
+      `script-src 'none'`,
+      `default-src 'none'`,
+      `object-src 'none'`,
+    ]);
+    expect(cspMetaTags).toEqual([]);
+  });
+
+  it('ignore if empty', async () => {
+    const artifacts = {
+      URL: 'https://example.com',
+      MetaElements: [],
+      devtoolsLogs: {
+        defaultPass: networkRecordsToDevtoolsLog([
+          {
+            url: 'https://example.com',
+            responseHeaders: [
+              {
+                name: 'Content-Security-Policy',
+                value: ``,
+              },
+              {
+                name: 'Content-Security-Policy',
+                value: `object-src 'none'`,
+              },
+            ],
+          },
+        ]),
+      },
+    };
+    const {cspHeaders, cspMetaTags}
+      = await CspXss.getRawCsps(artifacts, {computedCache: new Map()});
+    expect(cspHeaders).toEqual([
+      `object-src 'none'`,
+    ]);
+    expect(cspMetaTags).toEqual([]);
+  });
+
+  it('ignore if only whitespace', async () => {
+    const artifacts = {
+      URL: 'https://example.com',
+      MetaElements: [],
+      devtoolsLogs: {
+        defaultPass: networkRecordsToDevtoolsLog([
+          {
+            url: 'https://example.com',
+            responseHeaders: [
+              {
+                name: 'Content-Security-Policy',
+                value: '   \t',
+              },
+              {
+                name: 'Content-Security-Policy',
+                value: `object-src 'none'`,
+              },
+            ],
+          },
+        ]),
+      },
+    };
+    const {cspHeaders, cspMetaTags}
+      = await CspXss.getRawCsps(artifacts, {computedCache: new Map()});
+    expect(cspHeaders).toEqual([
+      `object-src 'none'`,
+    ]);
+    expect(cspMetaTags).toEqual([]);
+  });
 });
 
 describe('collectSyntaxResults', () => {
