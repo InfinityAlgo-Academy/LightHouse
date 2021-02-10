@@ -8,7 +8,7 @@
 const makeComputedArtifact = require('./computed-artifact.js');
 const TraceOfTab = require('./trace-of-tab.js');
 
-/** @typedef {{ts: number, score: number}} LayoutShiftEvent */
+/** @typedef {{ts: number, score: number, isMainFrame: boolean, weightedScoreDelta?: number}} LayoutShiftEvent */
 
 /**
  * @fileoverview An implementation of the Layout Shift variants being considered
@@ -97,11 +97,11 @@ class LayoutShiftVariants {
   }
 
   /**
-   * Returns all main process LayoutShift events.
-   * @param {LH.Artifacts.TraceOfTab} traceOfTab
+   * Returns all LayoutShift events that had no recent input.
+   * @param {LH.TraceEvent[]} traceEvents
    * @return {Array<LayoutShiftEvent>}
    */
-  static getLayoutShiftEvents(traceOfTab) {
+  static getLayoutShiftEvents(traceEvents) {
     const layoutShiftEvents = [];
 
     // Chromium will set `had_recent_input` if there was recent user input, which
@@ -111,10 +111,10 @@ class LayoutShiftVariants {
     // See https://bugs.chromium.org/p/chromium/issues/detail?id=1094974.
     let ignoreHadRecentInput = true;
 
-    for (const event of traceOfTab.mainThreadEvents) {
+    for (const event of traceEvents) {
       if (event.name !== 'LayoutShift' ||
           !event.args.data ||
-          !event.args.data.is_main_frame || // Main frame only for now.
+          event.args.data.is_main_frame === undefined ||
           event.args.data.score === undefined) { // Keep tsc happy, but a score-less event would be useless regardless.
         continue;
       }
@@ -130,6 +130,8 @@ class LayoutShiftVariants {
       layoutShiftEvents.push({
         ts: event.ts,
         score: event.args.data.score,
+        isMainFrame: event.args.data.is_main_frame,
+        weightedScoreDelta: event.args.data.weighted_score_delta,
       });
     }
 
@@ -143,7 +145,8 @@ class LayoutShiftVariants {
    */
   static async compute_(trace, context) {
     const traceOfTab = await TraceOfTab.request(trace, context);
-    const layoutShiftEvents = LayoutShiftVariants.getLayoutShiftEvents(traceOfTab);
+    const layoutShiftEvents = LayoutShiftVariants.getLayoutShiftEvents(traceOfTab.mainThreadEvents)
+      .filter(e => e.isMainFrame); // Only main frame for now.
 
     return {
       avgSessionGap5s: LayoutShiftVariants.avgSessionGap5s(layoutShiftEvents),

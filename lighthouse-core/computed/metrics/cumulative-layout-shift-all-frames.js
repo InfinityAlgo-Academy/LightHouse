@@ -10,21 +10,9 @@
 const makeComputedArtifact = require('../computed-artifact.js');
 const TraceOfTab = require('../trace-of-tab.js');
 const log = require('lighthouse-logger');
+const LayoutShiftVariants = require('../layout-shift-variants.js');
 
 class CumulativeLayoutShiftAllFrames {
-  /**
-   * @param {LH.TraceEvent} event
-   * @return {event is LayoutShiftEvent}
-   */
-  static isLayoutShiftEvent(event) {
-    return Boolean(
-      event.name === 'LayoutShift' &&
-      event.args &&
-      event.args.data &&
-      event.args.data.score !== undefined
-    );
-  }
-
   /**
    * @param {LH.Trace} trace
    * @param {LH.Audit.Context} context
@@ -32,22 +20,20 @@ class CumulativeLayoutShiftAllFrames {
    */
   static async compute_(trace, context) {
     const traceOfTab = await TraceOfTab.request(trace, context);
-    const layoutShiftEvents = traceOfTab.frameTreeEvents.filter(this.isLayoutShiftEvent);
+    const layoutShiftEvents = LayoutShiftVariants.getLayoutShiftEvents(traceOfTab.frameTreeEvents);
 
     let traceHasWeightedScore = true;
     const cumulativeShift = layoutShiftEvents
       .map(e => {
-        if (e.args.data.had_recent_input) return 0;
-
         // COMPAT: remove after m90 hits stable
         // We should replace with a LHError at that point:
         // https://github.com/GoogleChrome/lighthouse/pull/12034#discussion_r568150032
-        if (e.args.data.weighted_score_delta !== undefined) {
-          return e.args.data.weighted_score_delta;
+        if (e.weightedScoreDelta === undefined) {
+          traceHasWeightedScore = false;
+          return e.score;
         }
 
-        traceHasWeightedScore = false;
-        return e.args.data.score;
+        return e.weightedScoreDelta;
       })
       .reduce((sum, score) => sum + score, 0);
 
