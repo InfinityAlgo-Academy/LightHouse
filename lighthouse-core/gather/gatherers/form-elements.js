@@ -57,6 +57,7 @@ function collectFormElements() {
         placeholder: child instanceof HTMLSelectElement ? undefined : child.placeholder,
         autocomplete: {
           property: child.autocomplete,
+          // Requires `--enable-features=AutofillShowTypePredictions`.
           attribute: child.getAttribute('autocomplete'),
           prediction: child.getAttribute('autofill-prediction'),
         },

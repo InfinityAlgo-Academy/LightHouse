@@ -79,10 +79,11 @@ const smokeTests = [{
   expectations: require('./source-maps/expectations.js'),
   config: require('./source-maps/source-maps-config.js'),
 }, {
-  id: 'forms',
-  expectations: require('./forms/form-expectations.js'),
-  config: require('./forms/form-config.js'),
-}, {
+// TODO: restore when --enable-features=AutofillShowTypePredictions is not needed.
+//   id: 'forms',
+//   expectations: require('./forms/form-expectations.js'),
+//   config: require('./forms/form-config.js'),
+// }, {
   id: 'screenshot',
   expectations: require('./screenshot/expectations.js'),
   config: require('./screenshot/screenshot-config.js'),
