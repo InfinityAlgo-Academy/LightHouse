@@ -7,7 +7,12 @@
 
 const {isIcuMessage} = require('../../lib/i18n/i18n.js');
 const {Type} = require('../../../third-party/csp-evaluator/optimized_binary.js');
-const {evaluateRawCspForFailures, getTranslatedDescription} = require('../../lib/csp-evaluator.js');
+const {
+  evaluateRawCspForFailures,
+  getTranslatedDescription,
+  evaluateRawCspForWarnings,
+  evaluateRawCspForSyntax,
+} = require('../../lib/csp-evaluator.js');
 
 /* eslint-env jest */
 
@@ -66,13 +71,12 @@ describe('Evaluator compatibility', () => {
       }
     `);
   });
-  it.todo('descriptions');
 });
 
 describe('getTranslatedDescription', () => {
   // Missing directives
   it('missing script-src', () => {
-    const rawCsp = `base-uri 'none'; object-src 'none'`;
+    const rawCsp = `object-src 'none'`;
     const findings = evaluateRawCspForFailures([rawCsp]);
     const translated = findings.map(getTranslatedDescription);
 
@@ -82,24 +86,232 @@ describe('getTranslatedDescription', () => {
       'script-src directive is missing. This can allow the execution of unsafe scripts.'
     );
   });
-  it.todo('missing object-src');
-  it.todo('missing base-uri');
+
+  it('missing object-src', () => {
+    const rawCsp = `script-src 'none'`;
+    const findings = evaluateRawCspForFailures([rawCsp]);
+    const translated = findings.map(getTranslatedDescription);
+
+    expect(translated).toHaveLength(1);
+    expect(isIcuMessage(translated[0])).toBeTruthy();
+    expect(translated[0]).toBeDisplayString(
+      'Consider setting object-src to \'none\' to prevent ' +
+      'the injection of plugins that execute JavaScript.'
+    );
+  });
+
+  it('missing base-uri', () => {
+    const rawCsp = `script-src 'nonce-000000000'; object-src 'none'`;
+    const findings = evaluateRawCspForFailures([rawCsp]);
+    const translated = findings.map(getTranslatedDescription);
+
+    expect(translated).toHaveLength(1);
+    expect(isIcuMessage(translated[0])).toBeTruthy();
+    expect(translated[0]).toBeDisplayString(
+      'Missing base-uri allows the injection of base tags. ' +
+      'They can be used to set the base URL for all relative (script) ' +
+      'URLs to an attacker controlled domain. ' +
+      'Can you set it to \'none\' or \'self\'?'
+    );
+  });
+
   // Allowlist bypass
-  it.todo('unsafe-inline');
-  it.todo('strict-dynamic');
+  it('unsafe-inline', () => {
+    const rawCsp = `script-src 'unsafe-inline'; object-src 'none'`;
+    const findings = evaluateRawCspForFailures([rawCsp]);
+    const translated = findings.map(getTranslatedDescription);
+
+    expect(translated).toHaveLength(1);
+    expect(isIcuMessage(translated[0])).toBeTruthy();
+    expect(translated[0]).toBeDisplayString(
+      '\'unsafe-inline\' allows the execution of unsafe in-page scripts ' +
+      'and event handlers. Consider using CSP nonces or hashes to allow scripts individually.'
+    );
+  });
+
+  it('strict-dynamic', () => {
+    const rawCsp = `script-src http:; object-src 'none'`;
+    const findings = evaluateRawCspForFailures([rawCsp]);
+    const translated = findings.map(getTranslatedDescription);
+
+    expect(translated).toHaveLength(1);
+    expect(isIcuMessage(translated[0])).toBeTruthy();
+    expect(translated[0]).toBeDisplayString(
+      'Host allowlists can frequently be bypassed. Consider using ' +
+      '\'strict-dynamic\' in combination with CSP nonces or hashes.'
+    );
+  });
+
   // Reporting destination
-  it.todo('no reporting destination');
-  it.todo('report-to only');
+  it('no reporting destination', () => {
+    const rawCsp = `script-src 'none'`;
+    const findings = evaluateRawCspForWarnings([rawCsp]);
+    const translated = findings.map(getTranslatedDescription);
+
+    expect(translated).toHaveLength(1);
+    expect(isIcuMessage(translated[0])).toBeTruthy();
+    expect(translated[0]).toBeDisplayString(
+      'This CSP policy does not configure a reporting destination. ' +
+      'This makes it difficult to maintain the CSP policy over time and monitor for any breakages.'
+    );
+  });
+
+  it('report-to only', () => {
+    const rawCsp = `script-src 'none'; report-to https://example.com`;
+    const findings = evaluateRawCspForWarnings([rawCsp]);
+    const translated = findings.map(getTranslatedDescription);
+
+    expect(translated).toHaveLength(1);
+    expect(isIcuMessage(translated[0])).toBeTruthy();
+    expect(translated[0]).toBeDisplayString(
+      'This CSP policy only provides a reporting ' +
+      'destination via the \'report-to\' directive. ' +
+      'This directive is only supported in Chromium-based browsers so it is ' +
+      'recommended to also use a \'report-uri\' directive.'
+    );
+  });
+
   // Backwards compatibility
-  it.todo('no allowlist fallback');
-  it.todo('no unsafe-inline fallback');
+  it('no allowlist fallback', () => {
+    const rawCsp = `script-src 'strict-dynamic'; report-uri https://example.com`;
+    const findings = evaluateRawCspForWarnings([rawCsp]);
+    const translated = findings.map(getTranslatedDescription);
+
+    expect(translated).toHaveLength(1);
+    expect(isIcuMessage(translated[0])).toBeTruthy();
+    expect(translated[0]).toBeDisplayString(
+      'Consider adding https: and http: url schemes (ignored by browsers ' +
+      'supporting \'strict-dynamic\') to be backward compatible with older browsers.'
+    );
+  });
+
+  it('no unsafe-inline fallback', () => {
+    const rawCsp = `script-src 'nonce-00000000'; report-uri https://example.com`;
+    const findings = evaluateRawCspForWarnings([rawCsp]);
+    const translated = findings.map(getTranslatedDescription);
+
+    expect(translated).toHaveLength(1);
+    expect(isIcuMessage(translated[0])).toBeTruthy();
+    expect(translated[0]).toBeDisplayString(
+      'Consider adding \'unsafe-inline\' (ignored by browsers supporting ' +
+      'nonces/hashes) to be backward compatible with older browsers.'
+    );
+  });
+
   // Syntax
-  it.todo('missing semicolon');
-  it.todo('unknown directive');
-  it.todo('unknown keyword');
-  it.todo('nonce length');
-  it.todo('nonce charset');
-  it.todo('deprecated reflected-xss');
-  it.todo('deprecated referrer');
-  it.todo('deprecated disown-opener');
+  it('missing semicolon', () => {
+    const rawCsp = `script-src 'none' object-src 'none'`;
+    const findings = evaluateRawCspForSyntax([rawCsp]);
+
+    expect(findings).toHaveLength(1);
+
+    const translated = findings[0].map(getTranslatedDescription);
+    expect(translated).toHaveLength(1);
+    expect(isIcuMessage(translated[0])).toBeTruthy();
+    expect(translated[0]).toBeDisplayString(
+      'Did you forget the semicolon? ' +
+      'object-src seems to be a directive, not a keyword.'
+    );
+  });
+
+  it('unknown directive', () => {
+    const rawCsp = `foo-bar 'none'`;
+    const findings = evaluateRawCspForSyntax([rawCsp]);
+
+    expect(findings).toHaveLength(1);
+
+    const translated = findings[0].map(getTranslatedDescription);
+    expect(translated).toHaveLength(1);
+    expect(isIcuMessage(translated[0])).toBeTruthy();
+    expect(translated[0]).toBeDisplayString(
+      'Unknown CSP directive.'
+    );
+  });
+
+  it('unknown keyword', () => {
+    const rawCsp = `script-src 'asdf'`;
+    const findings = evaluateRawCspForSyntax([rawCsp]);
+
+    expect(findings).toHaveLength(1);
+
+    const translated = findings[0].map(getTranslatedDescription);
+    expect(translated).toHaveLength(1);
+    expect(isIcuMessage(translated[0])).toBeTruthy();
+    expect(translated[0]).toBeDisplayString(
+      '\'asdf\' seems to be an invalid keyword.'
+    );
+  });
+
+  it('nonce length', () => {
+    const rawCsp = `script-src 'nonce-0000'`;
+    const findings = evaluateRawCspForSyntax([rawCsp]);
+
+    expect(findings).toHaveLength(1);
+
+    const translated = findings[0].map(getTranslatedDescription);
+    expect(translated).toHaveLength(1);
+    expect(isIcuMessage(translated[0])).toBeTruthy();
+    expect(translated[0]).toBeDisplayString(
+      'Nonces should be at least 8 characters long.'
+    );
+  });
+
+  it('nonce charset', () => {
+    const rawCsp = `script-src 'nonce-::::::::'`;
+    const findings = evaluateRawCspForSyntax([rawCsp]);
+
+    expect(findings).toHaveLength(1);
+
+    const translated = findings[0].map(getTranslatedDescription);
+    expect(translated).toHaveLength(1);
+    expect(isIcuMessage(translated[0])).toBeTruthy();
+    expect(translated[0]).toBeDisplayString(
+      'Nonces should use the base64 charset.'
+    );
+  });
+
+  it('deprecated reflected-xss', () => {
+    const rawCsp = `reflected-xss 'none'`;
+    const findings = evaluateRawCspForSyntax([rawCsp]);
+
+    expect(findings).toHaveLength(1);
+
+    const translated = findings[0].map(getTranslatedDescription);
+    expect(translated).toHaveLength(1);
+    expect(isIcuMessage(translated[0])).toBeTruthy();
+    expect(translated[0]).toBeDisplayString(
+      'reflected-xss is deprecated since CSP2. ' +
+      'Please, use the X-XSS-Protection header instead.'
+    );
+  });
+
+  it('deprecated referrer', () => {
+    const rawCsp = `referrer 'none'`;
+    const findings = evaluateRawCspForSyntax([rawCsp]);
+
+    expect(findings).toHaveLength(1);
+
+    const translated = findings[0].map(getTranslatedDescription);
+    expect(translated).toHaveLength(1);
+    expect(isIcuMessage(translated[0])).toBeTruthy();
+    expect(translated[0]).toBeDisplayString(
+      'referrer is deprecated since CSP2. ' +
+      'Please, use the Referrer-Policy header instead.'
+    );
+  });
+
+  it('deprecated disown-opener', () => {
+    const rawCsp = `disown-opener 'none'`;
+    const findings = evaluateRawCspForSyntax([rawCsp]);
+
+    expect(findings).toHaveLength(1);
+
+    const translated = findings[0].map(getTranslatedDescription);
+    expect(translated).toHaveLength(1);
+    expect(isIcuMessage(translated[0])).toBeTruthy();
+    expect(translated[0]).toBeDisplayString(
+      'disown-opener is deprecated since CSP3. ' +
+      'Please, use the Cross-Origin-Opener-Policy header instead.'
+    );
+  });
 });
