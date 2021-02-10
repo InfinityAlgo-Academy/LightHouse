@@ -74,7 +74,6 @@ describe('Evaluator compatibility', () => {
 });
 
 describe('getTranslatedDescription', () => {
-  // Missing directives
   it('missing script-src', () => {
     const rawCsp = `object-src 'none'`;
     const findings = evaluateRawCspForFailures([rawCsp]);
@@ -115,7 +114,6 @@ describe('getTranslatedDescription', () => {
     );
   });
 
-  // Allowlist bypass
   it('unsafe-inline', () => {
     const rawCsp = `script-src 'unsafe-inline'; object-src 'none'`;
     const findings = evaluateRawCspForFailures([rawCsp]);
@@ -142,7 +140,6 @@ describe('getTranslatedDescription', () => {
     );
   });
 
-  // Reporting destination
   it('no reporting destination', () => {
     const rawCsp = `script-src 'none'`;
     const findings = evaluateRawCspForWarnings([rawCsp]);
@@ -171,7 +168,6 @@ describe('getTranslatedDescription', () => {
     );
   });
 
-  // Backwards compatibility
   it('no allowlist fallback', () => {
     const rawCsp = `script-src 'strict-dynamic'; report-uri https://example.com`;
     const findings = evaluateRawCspForWarnings([rawCsp]);
@@ -198,7 +194,6 @@ describe('getTranslatedDescription', () => {
     );
   });
 
-  // Syntax
   it('missing semicolon', () => {
     const rawCsp = `script-src 'none' object-src 'none'`;
     const findings = evaluateRawCspForSyntax([rawCsp]);
