@@ -239,6 +239,7 @@ Auditing: Avoids `unload` event listeners
 Auditing: Avoid non-composited animations
 Auditing: Image elements have explicit `width` and `height`
 Auditing: Page has valid source maps
+Auditing: CSP is robust against XSS attacks
 Auditing: Preload Largest Contentful Paint image
 Computing artifact: LanternLargestContentfulPaint
 Computing artifact: LanternFirstContentfulPaint
@@ -428,6 +429,7 @@ color-contrast: pass
 content-width: fail
 crawlable-anchors: pass
 critical-request-chains: notApplicable
+csp-xss: fail
 cumulative-ad-shift: notApplicable
 cumulative-layout-shift: numeric
 custom-controls-labels: manual
@@ -565,7 +567,7 @@ viewport: fail
 viewport-ad-density: notApplicable
 visual-order-follows-dom: manual
 
-# of .lh-audit divs: 156
+# of .lh-audit divs: 157
 
 .lh-audit divs:
 accesskeys
@@ -606,6 +608,7 @@ color-contrast
 content-width
 crawlable-anchors
 critical-request-chains
+csp-xss
 cumulative-ad-shift
 custom-controls-labels
 custom-controls-roles
