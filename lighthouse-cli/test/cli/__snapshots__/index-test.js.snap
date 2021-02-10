@@ -166,6 +166,9 @@ Object {
       "path": "valid-source-maps",
     },
     Object {
+      "path": "csp-xss",
+    },
+    Object {
       "path": "preload-lcp-image",
     },
     Object {
@@ -760,6 +763,11 @@ Object {
           "group": "best-practices-trust-safety",
           "id": "no-vulnerable-libraries",
           "weight": 1,
+        },
+        Object {
+          "group": "best-practices-trust-safety",
+          "id": "csp-xss",
+          "weight": 0,
         },
         Object {
           "group": "best-practices-ux",
