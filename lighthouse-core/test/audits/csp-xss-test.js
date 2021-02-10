@@ -252,8 +252,7 @@ describe('getRawCsps', () => {
 
 describe('collectSyntaxResults', () => {
   it('single syntax error', () => {
-    const rawCsp = `foo-bar 'none'`;
-    const results = CspXss.collectSyntaxResults([rawCsp]);
+    const results = CspXss.collectSyntaxResults([`foo-bar 'none'`]);
     expect(results).toMatchObject([
       {
         description: {
@@ -314,8 +313,7 @@ describe('collectSyntaxResults', () => {
   });
 
   it('multiple syntax errors', () => {
-    const rawCsp = `foo-bar 'asdf'`;
-    const results = CspXss.collectSyntaxResults([rawCsp]);
+    const results = CspXss.collectSyntaxResults([`foo-bar 'asdf'`]);
     expect(results).toMatchObject([
       {
         description: {
@@ -410,8 +408,7 @@ describe('collectVulnerabilityResults', () => {
 
 describe('collectSuggestionResults', () => {
   it('basic case', () => {
-    const rawCsp = `script-src 'nonce-12345678'`;
-    const results = CspXss.collectSuggestionResults([rawCsp]);
+    const results = CspXss.collectSuggestionResults([`script-src 'nonce-12345678'`]);
     expect(results).toMatchObject(
       [
         {
