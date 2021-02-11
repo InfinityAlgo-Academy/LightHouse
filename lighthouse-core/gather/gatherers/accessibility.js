@@ -22,6 +22,14 @@ async function runA11yChecks() {
   /** @type {import('axe-core/axe')} */
   // @ts-expect-error axe defined by axeLibSource
   const axe = window.axe;
+  const application = `lighthouse-${Math.random()}`;
+  axe.configure({
+    branding: {
+      application,
+    },
+    // @ts-expect-error axe types don't yet include this new field
+    noHtml: true,
+  });
   const axeResults = await axe.run(document, {
     elementRef: true,
     runOnly: {
@@ -59,11 +67,14 @@ async function runA11yChecks() {
 
   /** @param {import('axe-core/axe').Result} result */
   const augmentAxeNodes = result => {
+    result.helpUrl = result.helpUrl.replace(application, 'lighthouse');
+    if (axeResults.inapplicable.includes(result)) return;
+
     result.nodes.forEach(node => {
       // @ts-expect-error - getNodeDetails put into scope via stringification
       node.node = getNodeDetails(node.element);
       // @ts-expect-error - avoid circular JSON concerns
-      node.element = node.any = node.all = node.none = undefined;
+      node.element = node.any = node.all = node.none = node.html = undefined;
     });
 
     // Ensure errors can be serialized over the protocol
@@ -85,6 +96,7 @@ async function runA11yChecks() {
   // Augment the node objects with outerHTML snippet & custom path string
   axeResults.violations.forEach(augmentAxeNodes);
   axeResults.incomplete.forEach(augmentAxeNodes);
+  axeResults.inapplicable.forEach(augmentAxeNodes);
 
   // We only need violations, and circular references are possible outside of violations
   return {

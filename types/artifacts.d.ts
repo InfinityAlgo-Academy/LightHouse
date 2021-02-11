@@ -166,7 +166,6 @@ declare global {
         impact?: string;
         tags: Array<string>;
         nodes: Array<{
-          html: string;
           target: Array<string>;
           failureSummary?: string;
           node: NodeDetails;
