@@ -50,6 +50,7 @@ describe('Performance: layout-shift-elements audit', () => {
 
     const auditResult = await LayoutShiftElementsAudit.audit(artifacts);
     expect(auditResult.score).toEqual(1);
+    expect(auditResult.notApplicable).toEqual(false);
     expect(auditResult.displayValue).toBeDisplayString('4 elements found');
     expect(auditResult.details.items).toHaveLength(4);
   });
@@ -61,6 +62,7 @@ describe('Performance: layout-shift-elements audit', () => {
 
     const auditResult = await LayoutShiftElementsAudit.audit(artifacts);
     expect(auditResult.score).toEqual(1);
+    expect(auditResult.notApplicable).toEqual(true);
     expect(auditResult.displayValue).toBeUndefined();
     expect(auditResult.details.items).toHaveLength(0);
   });
