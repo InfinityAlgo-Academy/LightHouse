@@ -18,7 +18,6 @@ const {
   allRectsContainedWithinEachOther,
   getLargestRect,
   getBoundingRectWithPadding,
-  getBoundingRect,
 } = require('../../lib/rect-helpers.js');
 const {getTappableRectsFromClientRects} = require('../../lib/tappable-rects.js');
 const i18n = require('../../lib/i18n/i18n.js');
@@ -222,8 +221,8 @@ function getTableItems(overlapFailures) {
     const height = Math.floor(largestCR.height);
     const size = width + 'x' + height;
     return {
-      tapTarget: targetToTableNode(failure.tapTarget),
-      overlappingTarget: targetToTableNode(failure.overlappingTarget),
+      tapTarget: Audit.makeNodeItem(failure.tapTarget.node),
+      overlappingTarget: Audit.makeNodeItem(failure.overlappingTarget.node),
       tapTargetScore: failure.tapTargetScore,
       overlappingTargetScore: failure.overlappingTargetScore,
       overlapScoreRatio: failure.overlapScoreRatio,
@@ -238,19 +237,6 @@ function getTableItems(overlapFailures) {
   });
 
   return tableItems;
-}
-
-/**
- * @param {LH.Artifacts.TapTarget} target
- * @returns {LH.Audit.Details.NodeValue}
- */
-function targetToTableNode(target) {
-  const boundingRect = getBoundingRect(target.clientRects);
-
-  return {
-    ...Audit.makeNodeItem(target.node),
-    boundingRect,
-  };
 }
 
 class TapTargets extends Audit {

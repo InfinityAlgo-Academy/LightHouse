@@ -3060,18 +3060,18 @@
       "clientRects": [
         {
           "width": 200,
-          "height": 18,
+          "height": 21,
           "left": 8,
-          "top": 1268.8125,
+          "top": 1123.8125,
           "right": 208,
-          "bottom": 1286.8125
+          "bottom": 1144.8125
         }
       ],
+      "href": "",
       "node": {
-        "snippet": "<button class=\"small-button\">Do something</button>",
-        "devtoolsNodePath": "3,HTML,1,BODY,17,BUTTON",
+        "lhId": "5-44-BUTTON",
+        "devtoolsNodePath": "3,HTML,1,BODY,27,BUTTON",
         "selector": "body > button.small-button",
-        "nodeLabel": "Do something",
         "boundingRect": {
           "top": 484,
           "bottom": 505,
@@ -3079,26 +3079,27 @@
           "right": 208,
           "width": 200,
           "height": 21
-        }
-      },
-      "href": ""
+        },
+        "snippet": "<button class=\"small-button\">",
+        "nodeLabel": "Do something"
+      }
     },
     {
       "clientRects": [
         {
           "width": 200,
-          "height": 18,
+          "height": 21,
           "left": 8,
-          "top": 1286.8125,
+          "top": 1144.8125,
           "right": 208,
-          "bottom": 1304.8125
+          "bottom": 1165.8125
         }
       ],
+      "href": "",
       "node": {
-        "snippet": "<button class=\"small-button\">Do something else</button>",
-        "devtoolsNodePath": "3,HTML,1,BODY,18,BUTTON",
+        "lhId": "5-45-BUTTON",
+        "devtoolsNodePath": "3,HTML,1,BODY,28,BUTTON",
         "selector": "body > button.small-button",
-        "nodeLabel": "Do something else",
         "boundingRect": {
           "top": 505,
           "bottom": 526,
@@ -3106,9 +3107,10 @@
           "right": 208,
           "width": 200,
           "height": 21
-        }
-      },
-      "href": ""
+        },
+        "snippet": "<button class=\"small-button\">",
+        "nodeLabel": "Do something else"
+      }
     }
   ],
   "TraceElements": [
