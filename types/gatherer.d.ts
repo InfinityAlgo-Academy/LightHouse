@@ -58,7 +58,7 @@ declare global {
       trace?: Trace;
     }
 
-    export type PhaseArtifact = LH.GathererArtifacts[keyof LH.GathererArtifacts]
+    export type PhaseArtifact = LH.GathererArtifacts[keyof LH.GathererArtifacts] | LH.Artifacts['devtoolsLogs'] | LH.Artifacts['traces']
     export type PhaseResultNonPromise = void|PhaseArtifact
     export type PhaseResult = PhaseResultNonPromise | Promise<PhaseResultNonPromise>
 

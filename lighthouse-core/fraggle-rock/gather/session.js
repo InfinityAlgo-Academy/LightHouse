@@ -20,9 +20,9 @@ class ProtocolSession {
     const originalEmit = session.emit;
     // @ts-expect-error - Test for the monkeypatch.
     if (originalEmit[SessionEmitMonkeypatch]) return;
-    session.emit = (method, ...params) => {
-      originalEmit.call(session, '*', {method, params});
-      return originalEmit.call(session, method, ...params);
+    session.emit = (method, ...args) => {
+      originalEmit.call(session, '*', {method, params: args[0]});
+      return originalEmit.call(session, method, ...args);
     };
     // @ts-expect-error - It's monkeypatching 🤷‍♂️.
     session.emit[SessionEmitMonkeypatch] = true;

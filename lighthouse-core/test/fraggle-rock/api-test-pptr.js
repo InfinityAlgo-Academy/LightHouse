@@ -24,11 +24,15 @@ function getAuditsBreakdown(lhr) {
     audit => !irrelevantDisplayModes.has(audit.scoreDisplayMode)
   );
 
-  const erroredAudits = applicableAudits.filter(audit => audit.score === null);
+  const informativeAudits = applicableAudits
+    .filter(audit => audit.scoreDisplayMode === 'informative');
+
+  const erroredAudits = applicableAudits
+    .filter(audit => audit.score === null && audit && !informativeAudits.includes(audit));
 
   const failedAudits = applicableAudits.filter(audit => audit.score !== null && audit.score < 1);
 
-  return {auditResults, erroredAudits, failedAudits};
+  return {auditResults, erroredAudits, failedAudits, informativeAudits};
 }
 
 describe('Fraggle Rock API', () => {
@@ -130,6 +134,12 @@ describe('Fraggle Rock API', () => {
       // If we couldn't find it, assert something similar on the object that we know will fail
       // for a better debug message.
       if (!matchingLog) expect(errorLogs).toContain({description: /violations added/});
+
+      // Check that network request information was computed.
+      expect(lhr.audits).toHaveProperty('total-byte-weight');
+      const details = lhr.audits['total-byte-weight'].details;
+      if (!details || details.type !== 'table') throw new Error('Unexpected byte weight details');
+      expect(details.items).toMatchObject([{url: `${serverBaseUrl}/onclick.html`}]);
     });
   });
 
@@ -138,7 +148,7 @@ describe('Fraggle Rock API', () => {
       server.baseDir = path.join(__dirname, '../fixtures/fraggle-rock/navigation-basic');
     });
 
-    it('should compute both Accessibility & ConsoleMessage results', async () => {
+    it('should compute both snapshot & timespan results', async () => {
       const result = await lighthouse.navigation({page, url: `${serverBaseUrl}/index.html`});
       if (!result) throw new Error('Lighthouse failed to produce a result');
 
@@ -149,6 +159,12 @@ describe('Fraggle Rock API', () => {
       const failedAuditIds = failedAudits.map(audit => audit.id);
       expect(failedAuditIds).toContain('label');
       expect(failedAuditIds).toContain('errors-in-console');
+
+      // Check that network request information was computed.
+      expect(lhr.audits).toHaveProperty('total-byte-weight');
+      const details = lhr.audits['total-byte-weight'].details;
+      if (!details || details.type !== 'table') throw new Error('Unexpected byte weight details');
+      expect(details.items).toMatchObject([{url: `${serverBaseUrl}/index.html`}]);
     });
   });
 });

@@ -95,6 +95,8 @@ declare global {
       CacheContents: string[];
       /** CSS coverage information for styles used by page's final state. */
       CSSUsage: {rules: Crdp.CSS.RuleUsage[], stylesheets: Artifacts.CSSStyleSheetInfo[]};
+      /** The primary log of devtools protocol activity. Used in Fraggle Rock gathering. */
+      DevtoolsLog: DevtoolsLog;
       /** Information on the document's doctype(or null if not present), specifically the name, publicId, and systemId.
           All properties default to an empty string if not present */
       Doctype: Artifacts.Doctype | null;

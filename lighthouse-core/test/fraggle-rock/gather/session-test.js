@@ -38,8 +38,8 @@ describe('ProtocolSession', () => {
 
       expect(regularListener).toHaveBeenCalledTimes(1);
       expect(allListener).toHaveBeenCalledTimes(2);
-      expect(allListener).toHaveBeenCalledWith({method: 'Foo', params: [1, 2, 3]});
-      expect(allListener).toHaveBeenCalledWith({method: 'Bar', params: [1, 2, 3]});
+      expect(allListener).toHaveBeenCalledWith({method: 'Foo', params: 1});
+      expect(allListener).toHaveBeenCalledWith({method: 'Bar', params: 1});
     });
 
     it('should not fire duplicate events', () => {
@@ -93,10 +93,10 @@ describe('ProtocolSession', () => {
       expect(regularListener).toHaveBeenCalledTimes(1);
       expect(regularListener).toHaveBeenCalledWith();
       expect(allListener).toHaveBeenCalledTimes(2);
-      expect(allListener).toHaveBeenCalledWith({method: 'Page.frameNavigated', params: []});
+      expect(allListener).toHaveBeenCalledWith({method: 'Page.frameNavigated', params: undefined});
       expect(allListener).toHaveBeenCalledWith({
         method: 'Debugger.scriptParsed',
-        params: [{script: 'details'}],
+        params: {script: 'details'},
       });
     });
   });
