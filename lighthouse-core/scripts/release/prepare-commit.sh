@@ -48,7 +48,7 @@ NEW_CONTRIBUTORS=$(node lighthouse-core/scripts/print-contributors.js v${OLD_VER
 
 set +x
 
-if [[ $(echo "$NEW_CONTRIBUTORS" | wc -l) -gt 1 ]]; then
+if [[ $(echo "$NEW_CONTRIBUTORS" | wc -l) -ge 1 ]]; then
   printf "Thanks to our new contributors 👽🐷🐰🐯🐻! \n$NEW_CONTRIBUTORS\n" | cat - changelog.md > tmp-changelog
   mv tmp-changelog changelog.md
 fi

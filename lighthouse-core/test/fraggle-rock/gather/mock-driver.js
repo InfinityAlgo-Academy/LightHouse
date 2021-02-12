@@ -29,8 +29,27 @@ function createMockSession() {
   };
 }
 
+/**
+ * @param {LH.Gatherer.FRGathererInstance<LH.Gatherer.DependencyKey>['meta']} meta
+ */
+function createMockGathererInstance(meta) {
+  return {
+    meta,
+    beforeTimespan: jest.fn(),
+    afterTimespan: jest.fn(),
+    snapshot: jest.fn(),
+
+    /** @return {LH.Gatherer.FRGathererInstance} */
+    asGatherer() {
+      // @ts-expect-error - We'll rely on the tests passing to know this matches.
+      return this;
+    },
+  };
+}
+
 function createMockPage() {
   return {
+    url: jest.fn().mockReturnValue('https://example.com'),
     goto: jest.fn(),
     target: () => ({createCDPSession: () => createMockSession()}),
 
@@ -68,8 +87,29 @@ function createMockDriver() {
   };
 }
 
+/** @param {() => jest.Mock} runProvider */
+function mockRunnerModule(runProvider) {
+  const runnerModule = {getGathererList: () => []};
+  Object.defineProperty(runnerModule, 'run', {
+    get: runProvider,
+  });
+  return runnerModule;
+}
+
+/** @param {() => Driver} driverProvider */
+function mockDriverModule(driverProvider) {
+  // This must be a regular function becaues Driver is always invoked as a constructor.
+  // Arrow functions cannot be invoked with `new`.
+  return function() {
+    return driverProvider();
+  };
+}
+
 module.exports = {
+  mockRunnerModule,
+  mockDriverModule,
   createMockDriver,
   createMockPage,
   createMockSession,
+  createMockGathererInstance,
 };

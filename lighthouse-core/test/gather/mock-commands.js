@@ -153,6 +153,12 @@ function createMockOnceFn() {
       expect(mockFn).toHaveBeenCalledWith(event, expect.anything());
       return mockFn.mock.calls.find(call => call[0] === event)[1];
     },
+    /**
+     * @param {keyof LH.CrdpEvents} event
+     */
+    getListeners(event) {
+      return mockFn.mock.calls.filter(call => call[0] === event).map(call => call[1]);
+    },
   });
 
   return mockFn;

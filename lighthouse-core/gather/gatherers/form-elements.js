@@ -57,6 +57,7 @@ function collectFormElements() {
         placeholder: child instanceof HTMLSelectElement ? undefined : child.placeholder,
         autocomplete: {
           property: child.autocomplete,
+          // Requires `--enable-features=AutofillShowTypePredictions`.
           attribute: child.getAttribute('autocomplete'),
           prediction: child.getAttribute('autofill-prediction'),
         },
@@ -97,7 +98,7 @@ class FormElements extends FRGatherer {
   async snapshot(passContext) {
     const driver = passContext.driver;
 
-    const formElements = await driver.evaluate(collectFormElements, {
+    const formElements = await driver.executionContext.evaluate(collectFormElements, {
       args: [],
       useIsolation: true,
       deps: [

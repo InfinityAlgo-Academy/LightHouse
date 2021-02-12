@@ -494,6 +494,9 @@ describe('Trace Elements gatherer - Animated Elements', () => {
       .mockResponse('Runtime.callFunctionOn', {result: {value: LCPNodeData}})
       .mockResponse('DOM.resolveNode', {object: {objectId: 2}})
       .mockResponse('Runtime.callFunctionOn', {result: {value: layoutShiftNodeData}})
+      .mockResponse('DOM.resolveNode', () => { // 2nd CLS node
+        throw Error('No node found');
+      })
       .mockResponse('Animation.resolveAnimation', {remoteObject: {objectId: 4}})
       .mockResponse('Runtime.getProperties', {result: [{
         name: 'animationName',
@@ -507,9 +510,14 @@ describe('Trace Elements gatherer - Animated Elements', () => {
     trace.traceEvents.push(
       makeLayoutShiftTraceEvent(1, [
         {
-          new_rect: [0, 100, 200, 200],
           node_id: 4,
           old_rect: [0, 100, 200, 200],
+          new_rect: [0, 300, 200, 200], // shift down 200px
+        },
+        { // 2nd LS node that will be 'no node found'
+          node_id: 7,
+          old_rect: [400, 100, 200, 200],
+          new_rect: [400, 300, 200, 200], // shift down 200px
         },
       ])
     );
@@ -530,7 +538,7 @@ describe('Trace Elements gatherer - Animated Elements', () => {
       },
       {
         ...layoutShiftNodeData,
-        score: 1,
+        score: 0.5, // the other CLS node contributed an additional 0.5, but it was 'no node found'
         nodeId: 4,
       },
       {

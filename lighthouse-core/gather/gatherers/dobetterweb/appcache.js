@@ -22,7 +22,7 @@ class AppCacheManifest extends FRGatherer {
   snapshot(passContext) {
     const driver = passContext.driver;
 
-    return driver.evaluate(() => {
+    return driver.executionContext.evaluate(() => {
       return document.documentElement && document.documentElement.getAttribute('manifest');
     }, {
       args: [],

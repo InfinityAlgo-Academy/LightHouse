@@ -35,7 +35,7 @@ describe('BaseGatherer', () => {
 
       const gatherer = new MyGatherer();
       await gatherer.beforePass(fakeParam);
-      expect(gatherer.beforeTimespan).toHaveBeenCalledWith(fakeParam);
+      expect(gatherer.beforeTimespan).toHaveBeenCalled();
     });
   });
 

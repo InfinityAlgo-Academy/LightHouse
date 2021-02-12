@@ -40,7 +40,7 @@ class ViewportDimensions extends FRGatherer {
   async snapshot(passContext) {
     const driver = passContext.driver;
 
-    const dimensions = await driver.evaluate(getViewportDimensions, {
+    const dimensions = await driver.executionContext.evaluate(getViewportDimensions, {
       args: [],
       useIsolation: true,
     });

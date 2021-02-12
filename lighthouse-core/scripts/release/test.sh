@@ -53,7 +53,7 @@ read -n 1 -r unused_variable
 
 echo "✅   Test the viewer. Open http://localhost:8000"
 echo "Run: "
-echo "    cd dist/viewer; python -m SimpleHTTPServer"
+echo "    cd dist/gh-pages/viewer; python -m SimpleHTTPServer"
 echo ""
 echo "    - Works with v4 report? http://localhost:8000/?gist=7251f9eba409f385e4c0424515fe8009"
 echo "    - Works with v5 report? http://localhost:8000/?gist=6093e41b9b50c8d642a7e6bbc784e32f"

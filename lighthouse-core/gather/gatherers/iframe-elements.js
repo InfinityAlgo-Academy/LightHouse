@@ -49,7 +49,7 @@ class IFrameElements extends FRGatherer {
   async snapshot(passContext) {
     const driver = passContext.driver;
 
-    const iframeElements = await driver.evaluate(collectIFrameElements, {
+    const iframeElements = await driver.executionContext.evaluate(collectIFrameElements, {
       args: [],
       useIsolation: true,
       deps: [

@@ -37,7 +37,7 @@ class RobotsTxt extends FRGatherer {
    * @return {Promise<LH.Artifacts['RobotsTxt']>}
    */
   snapshot(passContext) {
-    return passContext.driver.evaluate(getRobotsTxtContent, {
+    return passContext.driver.executionContext.evaluate(getRobotsTxtContent, {
       args: [],
       useIsolation: true,
     });

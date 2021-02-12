@@ -19,7 +19,11 @@
  * Otherwise, minification will mangle the variable names and break usage.
  */
 
-/** @typedef {HTMLElementTagNameMap & {[id: string]: HTMLElement}} HTMLElementByTagName */
+/**
+ * `typed-query-selector`'s CSS selector parser.
+ * @template {string} T
+ * @typedef {import('typed-query-selector/parser').ParseSelector<T>} ParseSelector
+ */
 
 /* global window document Node ShadowRoot HTMLElement */
 
@@ -98,19 +102,23 @@ function checkTimeSinceLastLongTask() {
  * @template {string} T
  * @param {T} selector Optional simple CSS selector to filter nodes on.
  *     Combinators are not supported.
- * @return {Array<HTMLElementByTagName[T]>}
+ * @return {Array<ParseSelector<T>>}
  */
 function getElementsInDocument(selector) {
   const realMatchesFn = window.__ElementMatches || window.Element.prototype.matches;
-  /** @type {Array<HTMLElement>} */
+  /** @type {Array<ParseSelector<T>>} */
   const results = [];
 
-  /** @param {NodeListOf<HTMLElement>} nodes */
+  /** @param {NodeListOf<Element>} nodes */
   const _findAllElements = nodes => {
     for (let i = 0, el; el = nodes[i]; ++i) {
       if (!selector || realMatchesFn.call(el, selector)) {
-        results.push(el);
+        /** @type {ParseSelector<T>} */
+        // @ts-expect-error - el is verified as matching above, tsc just can't verify it through the .call().
+        const matchedEl = el;
+        results.push(matchedEl);
       }
+
       // If the element has a shadow root, dig deeper.
       if (el.shadowRoot) {
         _findAllElements(el.shadowRoot.querySelectorAll('*'));
@@ -155,15 +163,34 @@ function getOuterHTMLSnippet(element, ignoreAttrs = [], snippetCharacterLimit = 
     for (const attributeName of clone.getAttributeNames()) {
       if (charCount > snippetCharacterLimit) {
         clone.removeAttribute(attributeName);
-      } else {
-        let attributeValue = clone.getAttribute(attributeName);
-        if (attributeValue === null) continue;
-        if (attributeValue.length > ATTRIBUTE_CHAR_LIMIT) {
-          attributeValue = attributeValue.slice(0, ATTRIBUTE_CHAR_LIMIT - 1) + '…';
-          clone.setAttribute(attributeName, attributeValue);
-        }
-        charCount += attributeName.length + attributeValue.length;
+        continue;
       }
+
+      let attributeValue = clone.getAttribute(attributeName);
+      if (attributeValue === null) continue; // Can't happen.
+
+      let dirty = false;
+
+      // Replace img.src with img.currentSrc. Same for audio and video.
+      if (attributeName === 'src' && 'currentSrc' in element) {
+        const elementWithSrc = /** @type {HTMLImageElement|HTMLMediaElement} */ (element);
+        const currentSrc = elementWithSrc.currentSrc;
+        // Only replace if the two URLs do not resolve to the same location.
+        const documentHref = elementWithSrc.ownerDocument.location.href;
+        if (new URL(attributeValue, documentHref).toString() !== currentSrc) {
+          attributeValue = currentSrc;
+          dirty = true;
+        }
+      }
+
+      // Elide attribute value if too long.
+      if (attributeValue.length > ATTRIBUTE_CHAR_LIMIT) {
+        attributeValue = attributeValue.slice(0, ATTRIBUTE_CHAR_LIMIT - 1) + '…';
+        dirty = true;
+      }
+
+      if (dirty) clone.setAttribute(attributeName, attributeValue);
+      charCount += attributeName.length + attributeValue.length;
     }
 
     const reOpeningTag = /^[\s\S]*?>/;

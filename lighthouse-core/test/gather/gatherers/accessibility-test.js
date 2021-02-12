@@ -20,7 +20,9 @@ describe('Accessibility gatherer', () => {
   it('fails if nothing is returned', () => {
     return accessibilityGather.afterPass({
       driver: {
-        async evaluate() {},
+        executionContext: {
+          async evaluate() {},
+        },
       },
     }).then(
       _ => assert.ok(false),
@@ -30,10 +32,12 @@ describe('Accessibility gatherer', () => {
   it('fails if result has no violations array', () => {
     return accessibilityGather.afterPass({
       driver: {
-        async evaluate() {
-          return {
-            url: 'https://example.com',
-          };
+        executionContext: {
+          async evaluate() {
+            return {
+              url: 'https://example.com',
+            };
+          },
         },
       },
     }).then(
@@ -45,8 +49,10 @@ describe('Accessibility gatherer', () => {
     const error = 'There was an error.';
     return accessibilityGather.afterPass({
       driver: {
-        async evaluate() {
-          throw new Error(error);
+        executionContext: {
+          async evaluate() {
+            throw new Error(error);
+          },
         },
       },
     }).then(

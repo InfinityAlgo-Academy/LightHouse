@@ -14,11 +14,11 @@ describe('stack collector', () => {
   let passContext;
 
   beforeEach(() => {
-    passContext = {driver: {evaluate: jest.fn()}};
+    passContext = {driver: {executionContext: {evaluate: jest.fn()}}};
   });
 
   it('returns the detected stacks', async () => {
-    passContext.driver.evaluate.mockResolvedValue([
+    passContext.driver.executionContext.evaluate.mockResolvedValue([
       {id: 'jquery', name: 'jQuery', version: '2.1.0', npm: 'jquery'},
       {id: 'angular', name: 'Angular', version: '', npm: ''},
       {id: 'magento', name: 'Magento', version: 2},

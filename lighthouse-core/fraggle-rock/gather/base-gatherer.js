@@ -55,7 +55,7 @@ class FRGatherer {
    * @return {Promise<LH.Gatherer.PhaseResultNonPromise>}
    */
   async beforePass(passContext) {
-    await this.beforeTimespan(passContext);
+    await this.beforeTimespan({...passContext, dependencies: {}});
   }
 
   /**
@@ -73,10 +73,10 @@ class FRGatherer {
    */
   async afterPass(passContext, loadData) {
     if (this.meta.supportedModes.includes('timespan')) {
-      return this.afterTimespan(passContext);
+      return this.afterTimespan({...passContext, dependencies: {}});
     }
 
-    return this.snapshot(passContext);
+    return this.snapshot({...passContext, dependencies: {}});
   }
 }
 

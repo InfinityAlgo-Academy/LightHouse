@@ -68,11 +68,13 @@ function makeFakeDriver({protocolGetVersionResponse}) {
     cacheNatives() {
       return Promise.resolve();
     },
-    evaluateAsync() {
-      return Promise.resolve({});
-    },
-    evaluate() {
-      return Promise.resolve({});
+    executionContext: {
+      evaluateAsync() {
+        return Promise.resolve({});
+      },
+      evaluate() {
+        return Promise.resolve({});
+      },
     },
     /** @param {{x: number, y: number}} position */
     scrollTo(position) {

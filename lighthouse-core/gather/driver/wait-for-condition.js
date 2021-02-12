@@ -10,8 +10,8 @@ const LHError = require('../../lib/lh-error.js');
 const ExecutionContext = require('./execution-context.js');
 const pageFunctions = require('../../lib/page-functions.js');
 
-/** @typedef {import('../../lib/network-recorder.js')} NetworkRecorder */
-/** @typedef {import('../../lib/network-recorder.js').NetworkRecorderEvent} NetworkRecorderEvent */
+/** @typedef {import('./network-monitor.js')} NetworkMonitor */
+/** @typedef {import('./network-monitor.js').NetworkMonitorEvent} NetworkMonitorEvent */
 /** @typedef {{promise: Promise<void>, cancel: function(): void}} CancellableWait */
 
 /**
@@ -112,8 +112,8 @@ function waitForFcp(session, pauseAfterFcpMs, maxWaitForFcpMs) {
  * Returns a promise that resolves when the network has been idle (after DCL) for
  * `networkQuietThresholdMs` ms and a method to cancel internal network listeners/timeout.
  * @param {LH.Gatherer.FRProtocolSession} session
- * @param {NetworkRecorder} networkMonitor
- * @param {{networkQuietThresholdMs: number, busyEvent: NetworkRecorderEvent, idleEvent: NetworkRecorderEvent, isIdle(recorder: NetworkRecorder): boolean}} networkQuietOptions
+ * @param {NetworkMonitor} networkMonitor
+ * @param {{networkQuietThresholdMs: number, busyEvent: NetworkMonitorEvent, idleEvent: NetworkMonitorEvent, isIdle(recorder: NetworkMonitor): boolean}} networkQuietOptions
  * @return {CancellableWait}
  */
 function waitForNetworkIdle(session, networkMonitor, networkQuietOptions) {
@@ -160,7 +160,7 @@ function waitForNetworkIdle(session, networkMonitor, networkQuietOptions) {
         return;
       }
 
-      const inflightRecords = networkMonitor.getInflightRecords();
+      const inflightRecords = networkMonitor.getInflightRequests();
       // If there are more than 20 inflight requests, load is still in full swing.
       // Wait until it calms down a bit to be a little less spammy.
       if (inflightRecords.length < 20) {
@@ -329,7 +329,7 @@ const DEFAULT_WAIT_FUNCTIONS = {waitForFcp, waitForLoadEvent, waitForCPUIdle, wa
  * - maxWaitForLoadedMs milliseconds have passed.
  * See https://github.com/GoogleChrome/lighthouse/issues/627 for more.
  * @param {LH.Gatherer.FRProtocolSession} session
- * @param {NetworkRecorder} networkMonitor
+ * @param {NetworkMonitor} networkMonitor
  * @param {WaitOptions} options
  * @return {Promise<{timedOut: boolean}>}
  */

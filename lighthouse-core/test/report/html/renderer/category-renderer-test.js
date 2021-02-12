@@ -340,7 +340,7 @@ describe('CategoryRenderer', () => {
       const categoryClone = JSON.parse(JSON.stringify(category));
 
       // Remove groups from some audits.
-      const ungroupedAudits = ['color-contrast', 'image-alt', 'link-name'];
+      const ungroupedAudits = ['image-alt', 'link-name'];
       for (const auditRef of categoryClone.auditRefs) {
         if (ungroupedAudits.includes(auditRef.id)) {
           assert.ok(auditRef.group); // Make sure this will change something.

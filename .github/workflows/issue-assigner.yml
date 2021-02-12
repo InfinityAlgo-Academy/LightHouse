@@ -1,0 +1,12 @@
+name: 'Issue assigner'
+on:
+  issues:
+    types: [opened]
+jobs:
+  assign:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: patrickhulce/issue-assigner@eeec7a1
+        with:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          maintainers: 'patrickhulce,paulirish,connorjclark,adamraine,brendankenny'

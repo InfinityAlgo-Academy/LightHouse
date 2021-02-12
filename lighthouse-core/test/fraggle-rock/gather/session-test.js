@@ -38,8 +38,8 @@ describe('ProtocolSession', () => {
 
       expect(regularListener).toHaveBeenCalledTimes(1);
       expect(allListener).toHaveBeenCalledTimes(2);
-      expect(allListener).toHaveBeenCalledWith({method: 'Foo', params: [1, 2, 3]});
-      expect(allListener).toHaveBeenCalledWith({method: 'Bar', params: [1, 2, 3]});
+      expect(allListener).toHaveBeenCalledWith({method: 'Foo', params: 1});
+      expect(allListener).toHaveBeenCalledWith({method: 'Bar', params: 1});
     });
 
     it('should not fire duplicate events', () => {
@@ -75,7 +75,7 @@ describe('ProtocolSession', () => {
     });
   }
 
-  describe('.onAnyProtocolMessage', () => {
+  describe('.addProtocolMessageListener', () => {
     it('should listen for any event', () => {
       // @ts-expect-error - we want to use a more limited test of a real event emitter.
       puppeteerSession = new EventEmitter();
@@ -85,7 +85,7 @@ describe('ProtocolSession', () => {
       const allListener = jest.fn();
 
       session.on('Page.frameNavigated', regularListener);
-      session.onAnyProtocolMessage(allListener);
+      session.addProtocolMessageListener(allListener);
 
       puppeteerSession.emit('Page.frameNavigated');
       puppeteerSession.emit('Debugger.scriptParsed', {script: 'details'});
@@ -93,11 +93,28 @@ describe('ProtocolSession', () => {
       expect(regularListener).toHaveBeenCalledTimes(1);
       expect(regularListener).toHaveBeenCalledWith();
       expect(allListener).toHaveBeenCalledTimes(2);
-      expect(allListener).toHaveBeenCalledWith({method: 'Page.frameNavigated', params: []});
+      expect(allListener).toHaveBeenCalledWith({method: 'Page.frameNavigated', params: undefined});
       expect(allListener).toHaveBeenCalledWith({
         method: 'Debugger.scriptParsed',
-        params: [{script: 'details'}],
+        params: {script: 'details'},
       });
+    });
+  });
+
+  describe('.removeProtocolMessageListener', () => {
+    it('should stop listening for any event', () => {
+      // @ts-expect-error - we want to use a more limited test of a real event emitter.
+      puppeteerSession = new EventEmitter();
+      session = new ProtocolSession(puppeteerSession);
+
+      const allListener = jest.fn();
+
+      session.addProtocolMessageListener(allListener);
+      puppeteerSession.emit('Page.frameNavigated');
+      expect(allListener).toHaveBeenCalled();
+      session.removeProtocolMessageListener(allListener);
+      puppeteerSession.emit('Page.frameNavigated');
+      expect(allListener).toHaveBeenCalledTimes(1);
     });
   });
 

@@ -23,6 +23,8 @@ jest.useFakeTimers();
 
 /**
  * @typedef DriverMockMethods
+ * @property {Driver['evaluate']} evaluate redefined to remove "private" designation
+ * @property {Driver['evaluateAsync']} evaluateAsync redefined to remove "private" designation
  * @property {ReturnType<typeof createMockOnceFn>} on
  * @property {ReturnType<typeof createMockOnceFn>} once
  * @property {(...args: RecursivePartial<Parameters<Driver['gotoURL']>>) => ReturnType<Driver['gotoURL']>} gotoURL
@@ -125,8 +127,8 @@ describe('.getRequestContent', () => {
 });
 
 describe('.evaluateAsync', () => {
-  // Most of the logic here is tested by lighthouse-core/test/gather/driver/execution-context-test.js
-  // Just exercise a bit of the plumbing here to ensure we delegate correctly.
+  // The logic here is tested by lighthouse-core/test/gather/driver/execution-context-test.js
+  // Just exercise a bit of the plumbing here to ensure we delegate correctly for plugin backcompat.
   it('evaluates an expression', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
       .mockResponse('Runtime.evaluate', {result: {value: 2}});
@@ -310,6 +312,7 @@ describe('.gotoURL', () => {
     driver.on = driver.once = createMockOnceFn();
 
     const url = 'https://www.example.com';
+
     const loadOptions = {
       waitForNavigated: true,
     };
@@ -318,11 +321,12 @@ describe('.gotoURL', () => {
     await flushAllTimersAndMicrotasks();
     expect(loadPromise).not.toBeDone('Did not wait for frameNavigated');
 
-    // Use `findListener` instead of `mockEvent` so we can control exactly when the promise resolves
-    const loadListener = driver.on.findListener('Page.frameNavigated');
+    // Use `getListeners` instead of `mockEvent` so we can control exactly when the promise resolves
+    // The first listener is from the network monitor and the second is from the load watcher.
+    const [networkMonitorListener, loadListener] = driver.on.getListeners('Page.frameNavigated');
 
     /** @param {LH.Crdp.Page.Frame} frame */
-    const navigate = frame => driver._eventEmitter.emit('Page.frameNavigated', {frame});
+    const navigate = frame => networkMonitorListener({frame});
     const baseFrame = {
       id: 'ABC', loaderId: '', securityOrigin: '', mimeType: 'text/html', domainAndRegistry: '',
       secureContextType: /** @type {'Secure'} */ ('Secure'),
@@ -337,7 +341,7 @@ describe('.gotoURL', () => {
     navigate({...baseFrame, id: 'ad2', url: 'https://frame-b.example.com'});
     navigate({...baseFrame, id: 'ad3', url: 'https://frame-c.example.com'});
 
-    loadListener();
+    loadListener(baseFrame);
     await flushAllTimersAndMicrotasks();
     expect(loadPromise).toBeDone('Did not resolve after frameNavigated');
 
@@ -358,9 +362,9 @@ describe('.gotoURL', () => {
       await flushAllTimersAndMicrotasks();
       expect(loadPromise).not.toBeDone('Did not wait for frameNavigated');
 
-      // Use `findListener` instead of `mockEvent` so we can control exactly when the promise resolves
-      const listener = driver.on.findListener('Page.frameNavigated');
-      listener();
+      // Use `getListeners` instead of `mockEvent` so we can control exactly when the promise resolves
+      const [_, listener] = driver.on.getListeners('Page.frameNavigated');
+      listener({frame: {url: 'https://www.example.com'}});
       await flushAllTimersAndMicrotasks();
       expect(loadPromise).toBeDone('Did not resolve after frameNavigated');
 

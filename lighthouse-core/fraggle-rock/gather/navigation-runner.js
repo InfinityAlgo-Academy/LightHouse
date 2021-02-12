@@ -7,6 +7,7 @@
 
 const Driver = require('./driver.js');
 const Runner = require('../../runner.js');
+const {collectArtifactDependencies} = require('./runner-helpers.js');
 const {defaultNavigationConfig} = require('../../config/constants.js');
 const {initializeConfig} = require('../config/config.js');
 const {getBaseArtifacts} = require('./base-artifacts.js');
@@ -56,7 +57,11 @@ async function _beforeTimespanPhase(navigationContext, artifacts) {
     if (!gatherer.meta.supportedModes.includes('timespan')) continue;
 
     const artifactPromise = Promise.resolve().then(() =>
-      gatherer.beforeTimespan({driver: navigationContext.driver, gatherMode: 'navigation'})
+      gatherer.beforeTimespan({
+        driver: navigationContext.driver,
+        gatherMode: 'navigation',
+        dependencies: {},
+      })
     );
     artifacts[artifactDefn.id] = artifactPromise;
     await artifactPromise.catch(() => {});
@@ -84,8 +89,12 @@ async function _afterTimespanPhase(navigationContext, artifacts) {
     const gatherer = artifactDefn.gatherer.instance;
     if (!gatherer.meta.supportedModes.includes('timespan')) continue;
 
-    const artifactPromise = (artifacts[artifactDefn.id] || Promise.resolve()).then(() =>
-      gatherer.afterTimespan({driver: navigationContext.driver, gatherMode: 'navigation'})
+    const artifactPromise = (artifacts[artifactDefn.id] || Promise.resolve()).then(async () =>
+      gatherer.afterTimespan({
+        driver: navigationContext.driver,
+        gatherMode: 'navigation',
+        dependencies: await collectArtifactDependencies(artifactDefn, artifacts),
+      })
     );
     artifacts[artifactDefn.id] = artifactPromise;
     await artifactPromise.catch(() => {});
@@ -101,8 +110,12 @@ async function _snapshotPhase(navigationContext, artifacts) {
     const gatherer = artifactDefn.gatherer.instance;
     if (!gatherer.meta.supportedModes.includes('snapshot')) continue;
 
-    const artifactPromise = Promise.resolve().then(() =>
-      gatherer.snapshot({driver: navigationContext.driver, gatherMode: 'navigation'})
+    const artifactPromise = Promise.resolve().then(async () =>
+      gatherer.snapshot({
+        driver: navigationContext.driver,
+        gatherMode: 'navigation',
+        dependencies: await collectArtifactDependencies(artifactDefn, artifacts),
+      })
     );
     artifacts[artifactDefn.id] = artifactPromise;
     await artifactPromise.catch(() => {});

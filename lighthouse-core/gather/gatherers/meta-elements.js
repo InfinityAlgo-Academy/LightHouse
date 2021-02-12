@@ -47,7 +47,7 @@ class MetaElements extends FRGatherer {
 
     // We'll use evaluateAsync because the `node.getAttribute` method doesn't actually normalize
     // the values like access from JavaScript does.
-    return driver.evaluate(collectMetaElements, {
+    return driver.executionContext.evaluate(collectMetaElements, {
       args: [],
       useIsolation: true,
       deps: [pageFunctions.getElementsInDocument],

@@ -292,8 +292,8 @@ class TapTargets extends FRGatherer {
    * @param {LH.Gatherer.FRTransitionalContext} passContext
    * @return {Promise<LH.Artifacts.TapTarget[]>} All visible tap targets with their positions and sizes
    */
-  afterPass(passContext) {
-    return passContext.driver.evaluate(gatherTapTargets, {
+  snapshot(passContext) {
+    return passContext.driver.executionContext.evaluate(gatherTapTargets, {
       args: [tapTargetsSelector],
       useIsolation: true,
       deps: [

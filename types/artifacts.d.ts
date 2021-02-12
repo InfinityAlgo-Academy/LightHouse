@@ -95,6 +95,8 @@ declare global {
       CacheContents: string[];
       /** CSS coverage information for styles used by page's final state. */
       CSSUsage: {rules: Crdp.CSS.RuleUsage[], stylesheets: Artifacts.CSSStyleSheetInfo[]};
+      /** The primary log of devtools protocol activity. Used in Fraggle Rock gathering. */
+      DevtoolsLog: DevtoolsLog;
       /** Information on the document's doctype(or null if not present), specifically the name, publicId, and systemId.
           All properties default to an empty string if not present */
       Doctype: Artifacts.Doctype | null;
@@ -166,7 +168,6 @@ declare global {
         impact?: string;
         tags: Array<string>;
         nodes: Array<{
-          html: string;
           target: Array<string>;
           failureSummary?: string;
           node: NodeDetails;
@@ -403,16 +404,35 @@ declare global {
         displayedHeight: number;
         /** The natural width of the underlying image, uses img.naturalWidth. See https://codepen.io/patrickhulce/pen/PXvQbM for examples. */
         naturalWidth?: number;
-        /** The natural height of the underlying image, uses img.naturalHeight. See https://codepen.io/patrickhulce/pen/PXvQbM for examples. */
+        /**
+         * The natural height of the underlying image, uses img.naturalHeight. See https://codepen.io/patrickhulce/pen/PXvQbM for examples.
+         * TODO: explore revising the shape of this data. https://github.com/GoogleChrome/lighthouse/issues/12077
+         */
         naturalHeight?: number;
         /** The raw width attribute of the image element. CSS images will be set to the empty string. */
         attributeWidth: string;
         /** The raw height attribute of the image element. CSS images will be set to the empty string. */
         attributeHeight: string;
-        /** The CSS width property of the image element. */
+        /**
+         * The CSS width property of the image element.
+         * TODO: explore deprecating this in favor of _privateCssSizing. https://github.com/GoogleChrome/lighthouse/issues/12077
+         */
         cssWidth?: string;
-        /** The CSS height property of the image element. */
+        /**
+         * The CSS height property of the image element.
+         * TODO: explore deprecating this in favor of _privateCssSizing
+         */
         cssHeight?: string;
+        /**
+         * The width/height of the element as defined by matching CSS rules. Set to `undefined` if the data was not collected.
+         * TODO: Finalize naming/shape of this data prior to Lighthouse 8. https://github.com/GoogleChrome/lighthouse/issues/12077
+         */
+        _privateCssSizing?: {
+          /** The width of the image as expressed by CSS rules. Set to `null` if there was no width set in CSS. */
+          width: string | null;
+          /** The height of the image as expressed by CSS rules. Set to `null` if there was no height set in CSS. */
+          height: string | null;
+        }
         /** The BoundingClientRect of the element. */
         clientRect: {
           top: number;
@@ -718,6 +738,11 @@ declare global {
         observedLastVisualChangeTs: number;
         observedSpeedIndex: number;
         observedSpeedIndexTs: number;
+        layoutShiftAvgSessionGap5s: number,
+        layoutShiftMaxSessionGap1s: number,
+        layoutShiftMaxSessionGap1sLimit5s: number,
+        layoutShiftMaxSliding1s: number,
+        layoutShiftMaxSliding300ms: number,
       }
 
       export interface Form {

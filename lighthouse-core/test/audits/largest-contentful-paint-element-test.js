@@ -25,6 +25,7 @@ describe('Performance: largest-contentful-paint-element audit', () => {
 
     const auditResult = await LargestContentfulPaintElementAudit.audit(artifacts);
     expect(auditResult.score).toEqual(1);
+    expect(auditResult.notApplicable).toEqual(false);
     expect(auditResult.displayValue).toBeDisplayString('1 element found');
     expect(auditResult.details.items).toHaveLength(1);
     expect(auditResult.details.items[0].node.path).toEqual('1,HTML,3,BODY,5,DIV,0,HEADER');
@@ -39,6 +40,7 @@ describe('Performance: largest-contentful-paint-element audit', () => {
 
     const auditResult = await LargestContentfulPaintElementAudit.audit(artifacts);
     expect(auditResult.score).toEqual(1);
+    expect(auditResult.notApplicable).toEqual(true);
     expect(auditResult.displayValue).toBeDisplayString('0 elements found');
     expect(auditResult.details.items).toHaveLength(0);
   });

@@ -84,7 +84,7 @@ async function collectStacks(passContext) {
   const status = {msg: 'Collect stacks', id: 'lh:gather:collectStacks'};
   log.time(status);
 
-  const jsLibraries = await passContext.driver.evaluate(detectLibraries, {
+  const jsLibraries = await passContext.driver.executionContext.evaluate(detectLibraries, {
     args: [],
     deps: [libDetectorSource],
   });

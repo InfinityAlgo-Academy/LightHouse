@@ -90,7 +90,7 @@ class DOMStats extends FRGatherer {
     const driver = passContext.driver;
 
     await driver.defaultSession.sendCommand('DOM.enable');
-    const results = await driver.evaluate(getDOMStats, {
+    const results = await driver.executionContext.evaluate(getDOMStats, {
       args: [],
       useIsolation: true,
       deps: [pageFunctions.getNodeDetailsString],

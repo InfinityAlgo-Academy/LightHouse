@@ -7,6 +7,7 @@
 
 const Driver = require('./driver.js');
 const Runner = require('../../runner.js');
+const {collectArtifactDependencies} = require('./runner-helpers.js');
 const {initializeConfig} = require('../config/config.js');
 const {getBaseArtifacts} = require('./base-artifacts.js');
 
@@ -27,10 +28,12 @@ async function snapshot(options) {
       /** @type {Partial<LH.GathererArtifacts>} */
       const artifacts = {};
 
-      for (const {id, gatherer} of config.artifacts || []) {
+      for (const artifactDefn of config.artifacts || []) {
+        const {id, gatherer} = artifactDefn;
         const artifactName = /** @type {keyof LH.GathererArtifacts} */ (id);
+        const dependencies = await collectArtifactDependencies(artifactDefn, artifacts);
         const artifact = await Promise.resolve()
-          .then(() => gatherer.instance.snapshot({gatherMode: 'snapshot', driver}))
+          .then(() => gatherer.instance.snapshot({gatherMode: 'snapshot', driver, dependencies}))
           .catch(err => err);
 
         artifacts[artifactName] = artifact;

@@ -161,14 +161,17 @@ declare global {
         artifacts: ArtifactDefn[];
       }
 
-      export interface ArtifactDefn {
+      export interface ArtifactDefn<TDependencies extends Gatherer.DependencyKey = Gatherer.DependencyKey> {
         id: string;
-        gatherer: FRGathererDefn;
+        gatherer: FRGathererDefn<TDependencies>;
+        dependencies?: TDependencies extends Gatherer.DefaultDependenciesKey ?
+          undefined :
+          Record<Exclude<TDependencies, Gatherer.DefaultDependenciesKey>, {id: string}>;
       }
 
-      export interface FRGathererDefn {
-        implementation?: ClassOf<Gatherer.FRGathererInstance>;
-        instance: Gatherer.FRGathererInstance;
+      export interface FRGathererDefn<TDependencies extends Gatherer.DependencyKey = Gatherer.DependencyKey> {
+        implementation?: ClassOf<Gatherer.FRGathererInstance<TDependencies>>;
+        instance: Gatherer.FRGathererInstance<TDependencies>;
         path?: string;
       }
 

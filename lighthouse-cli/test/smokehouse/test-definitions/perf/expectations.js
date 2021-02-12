@@ -292,39 +292,6 @@ module.exports = [
   },
   {
     lhr: {
-      requestedUrl: 'http://localhost:10200/perf/trace-elements.html?evicted',
-      finalUrl: 'http://localhost:10200/perf/trace-elements.html?evicted',
-      audits: {
-        'largest-contentful-paint-element': {
-          score: null,
-          scoreDisplayMode: /(notApplicable|informative)/,
-          details: {
-            // LCP in m88 was changed to allow selection of removed nodes.
-            // When this happens we aren't able to identify the LCP element anymore.
-            // https://chromiumdash.appspot.com/commit/a5484e6310a38223fde757b6f094a673ce032cc0
-            _maxChromiumMilestone: 87,
-            items: [
-              {
-                node: {
-                  type: 'node',
-                  selector: 'body',
-                },
-              },
-            ],
-          },
-        },
-        'layout-shift-elements': {
-          score: null,
-          scoreDisplayMode: 'notApplicable',
-          details: {
-            items: [],
-          },
-        },
-      },
-    },
-  },
-  {
-    lhr: {
       requestedUrl: 'http://localhost:10200/perf/frame-metrics.html',
       finalUrl: 'http://localhost:10200/perf/frame-metrics.html',
       audits: {
@@ -334,12 +301,20 @@ module.exports = [
             type: 'debugdata',
             items: [
               {
+                // Weighted CLS score was added to the trace in m90:
+                // https://bugs.chromium.org/p/chromium/issues/detail?id=1173139
+                _minChromiumMilestone: 90,
                 firstContentfulPaint: '>5000',
                 firstContentfulPaintAllFrames: '<5000',
                 largestContentfulPaint: '>5000',
                 largestContentfulPaintAllFrames: '<5000',
                 cumulativeLayoutShift: '0.001 +/- 0.0005',
-                cumulativeLayoutShiftAllFrames: '0.068 +/- 0.0005',
+                cumulativeLayoutShiftAllFrames: '0.0276 +/- 0.0005',
+                layoutShiftAvgSessionGap5s: '>0',
+                layoutShiftMaxSessionGap1s: '>0',
+                layoutShiftMaxSessionGap1sLimit5s: '>0',
+                layoutShiftMaxSliding1s: '>0',
+                layoutShiftMaxSliding300ms: '>0',
               },
               {
                 lcpInvalidated: false,

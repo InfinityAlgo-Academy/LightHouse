@@ -1,3 +1,57 @@
+ <a name="7.1.0"></a>
+# 7.1.0 (2021-02-11)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v7.0.1...v7.1.0)
+
+We expect this release to ship in the DevTools of [Chrome 90](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## New contributors
+
+Thanks to our new contributors 👽🐷🐰🐯🐻!
+
+- EEEEEEYHN @EYHN
+
+## Core
+
+* add hidden layout-shift variant metrics ([#12046](https://github.com/GoogleChrome/lighthouse/pull/12046))
+* cls: refactor CLS and CLS-AF ([#12069](https://github.com/GoogleChrome/lighthouse/pull/12069), [#12034](https://github.com/GoogleChrome/lighthouse/pull/12034))
+* image-elements: set 5s time budget, add _privateCssSizing ([#12065](https://github.com/GoogleChrome/lighthouse/pull/12065))
+* unsized-images: skip images that are zero-sized ([#12054](https://github.com/GoogleChrome/lighthouse/pull/12054))
+* tap-targets: drop custom node rect creation ([#12005](https://github.com/GoogleChrome/lighthouse/pull/12005))
+* alias element.currentSrc to element.src in node snippet ([#12007](https://github.com/GoogleChrome/lighthouse/pull/12007))
+* fix js edge case in minification estimator ([#12067](https://github.com/GoogleChrome/lighthouse/pull/12067))
+
+## Fraggle Rock
+
+Support for auditing user flows ([#11313](https://github.com/GoogleChrome/lighthouse/issues/11313))
+
+* fr: eliminate driver delegate from internal invocations ([#12015](https://github.com/GoogleChrome/lighthouse/pull/12015))
+* fr: add more gatherers to config ([#12016](https://github.com/GoogleChrome/lighthouse/pull/12016))
+* fr: add artifact dependency support ([#12045](https://github.com/GoogleChrome/lighthouse/pull/12045))
+* fr: extract network monitor class ([#12006](https://github.com/GoogleChrome/lighthouse/pull/12006))
+* fr: initial gatherer migration for snapshot, navigation ([#11993](https://github.com/GoogleChrome/lighthouse/pull/11993))
+* fr: add session.onAnyProtocolMessage listener ([#11995](https://github.com/GoogleChrome/lighthouse/pull/11995))
+
+## CLI
+
+* do not set AutofillShowTypePredictions ([#12038](https://github.com/GoogleChrome/lighthouse/pull/12038))
+
+## Deps
+
+* axe-core: upgrade to 4.1.2 ([#12075](https://github.com/GoogleChrome/lighthouse/pull/12075))
+* snyk: update snyk snapshot ([#12071](https://github.com/GoogleChrome/lighthouse/pull/12071))
+
+## Tests
+
+* smoke: tweak expectations based on feedback from LR ([#11962](https://github.com/GoogleChrome/lighthouse/pull/11962))
+* trace-elements: test node eviction with unit rather than smoke ([#12056](https://github.com/GoogleChrome/lighthouse/pull/12056))
+
+## Misc
+
+* ci: increase fetch-depth for codecov SHA ([#12079](https://github.com/GoogleChrome/lighthouse/pull/12079))
+* git3po: merge when green for unstable state too ([#12078](https://github.com/GoogleChrome/lighthouse/pull/12078))
+* add issue assigner bot ([#12052](https://github.com/GoogleChrome/lighthouse/pull/12052))
+* tighten querySelector types ([#12013](https://github.com/GoogleChrome/lighthouse/pull/12013))
+
 <a name="7.0.1"></a>
 # 7.0.1 (2021-01-26)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v7.0.0...v7.0.1)

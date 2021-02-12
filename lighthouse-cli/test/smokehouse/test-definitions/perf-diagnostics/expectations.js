@@ -66,7 +66,7 @@ module.exports = [
             items: [
               {
                 product: 'YouTube Embedded Player (Video)',
-                blockingTime: 0,
+                blockingTime: 0, // Note: Only 0 if the iframe was out-of-process
                 transferSize: '>400000', // Transfer size is imprecise.
                 subItems: {
                   type: 'subitems',

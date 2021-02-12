@@ -51,7 +51,7 @@ class EmbeddedContent extends FRGatherer {
    * @return {Promise<LH.Artifacts['EmbeddedContent']>}
    */
   snapshot(passContext) {
-    return passContext.driver.evaluate(getEmbeddedContent, {
+    return passContext.driver.executionContext.evaluate(getEmbeddedContent, {
       args: [],
       deps: [
         pageFunctions.getElementsInDocument,

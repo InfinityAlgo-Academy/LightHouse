@@ -36,7 +36,7 @@ class Doctype extends FRGatherer {
    */
   snapshot(passContext) {
     const driver = passContext.driver;
-    return driver.evaluate(getDoctype, {
+    return driver.executionContext.evaluate(getDoctype, {
       args: [],
       useIsolation: true,
     });

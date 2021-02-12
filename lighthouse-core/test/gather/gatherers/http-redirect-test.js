@@ -29,8 +29,10 @@ describe('HTTP Redirect gatherer', () => {
     const opts = {
       url: 'https://example.com',
       driver: {
-        evaluateAsync: function() {
-          return Promise.resolve(true);
+        executionContext: {
+          evaluateAsync: function() {
+            return Promise.resolve(true);
+          },
         },
       },
     };
@@ -46,8 +48,10 @@ describe('HTTP Redirect gatherer', () => {
   it('returns an artifact', () => {
     return httpRedirectGather.afterPass({
       driver: {
-        evaluateAsync: function() {
-          return Promise.resolve(true);
+        executionContext: {
+          evaluateAsync: function() {
+            return Promise.resolve(true);
+          },
         },
       },
     }).then(artifact => {
@@ -58,8 +62,10 @@ describe('HTTP Redirect gatherer', () => {
   it('fails a non-redirecting page', () => {
     return httpRedirectGather.afterPass({
       driver: {
-        evaluateAsync: function() {
-          return Promise.resolve(false);
+        executionContext: {
+          evaluateAsync: function() {
+            return Promise.resolve(false);
+          },
         },
       },
     }).then(artifact => {
@@ -70,8 +76,10 @@ describe('HTTP Redirect gatherer', () => {
   it('throws an error on driver failure', () => {
     return httpRedirectGather.afterPass({
       driver: {
-        evaluateAsync: function() {
-          return Promise.reject(new Error('an unexpected driver error occurred'));
+        executionContext: {
+          evaluateAsync: function() {
+            return Promise.reject(new Error('an unexpected driver error occurred'));
+          },
         },
       },
     }).then(

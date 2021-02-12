@@ -175,7 +175,7 @@ class Fetcher {
       requestInterceptionPromise,
     ]).finally(() => clearTimeout(timeoutHandle));
 
-    const injectionPromise = this.driver.evaluate(injectIframe, {
+    const injectionPromise = this.driver.executionContext.evaluate(injectIframe, {
       args: [url],
       useIsolation: true,
     });

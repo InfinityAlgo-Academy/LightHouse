@@ -97,7 +97,7 @@ class AnchorElements extends Gatherer {
   async afterPass(passContext) {
     const driver = passContext.driver;
 
-    const anchors = await driver.evaluate(collectAnchorElements, {
+    const anchors = await driver.executionContext.evaluate(collectAnchorElements, {
       args: [],
       useIsolation: true,
       deps: [
