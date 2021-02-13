@@ -30,7 +30,7 @@ gcloud --project="$CLOUDSDK_CORE_PROJECT" compute instances create $INSTANCE_NAM
 cat > .tmp_env <<EOF
 export NUMBER_OF_RUNS=$NUMBER_OF_RUNS
 export LIGHTHOUSE_GIT_REF=$LIGHTHOUSE_GIT_REF
-export BASE_LIGHTHOUSE_FLAGS=$BASE_LIGHTHOUSE_FLAGS
+export BASE_LIGHTHOUSE_FLAGS="$BASE_LIGHTHOUSE_FLAGS"
 EOF
 
 # Instance needs time to start up.
