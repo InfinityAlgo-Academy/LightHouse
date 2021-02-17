@@ -92,7 +92,7 @@ jobs:
         node-version: 12.x
 
     - name: Set up protoc
-      uses: arduino/setup-protoc@64c0c85
+      uses: arduino/setup-protoc@64c0c85d18e984422218383b81c52f8b077404d3
       with:
         version: '3.7.1'
         repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -118,7 +118,7 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
     - name: Upload test coverage to Codecov
       if: matrix.os == 'ubuntu-latest'
-      uses: codecov/codecov-action@6004246
+      uses: codecov/codecov-action@6004246f47ab62d32be025ce173b241cd84ac58e
       with:
         flags: unit
         file: ./unit-coverage.lcov
@@ -178,7 +178,7 @@ jobs:
 
     - name: Upload test coverage to Codecov
       if: matrix.chrome-channel == 'ToT'
-      uses: codecov/codecov-action@6004246
+      uses: codecov/codecov-action@6004246f47ab62d32be025ce173b241cd84ac58e
       with:
         flags: smoke
         file: ./smoke-coverage.lcov
