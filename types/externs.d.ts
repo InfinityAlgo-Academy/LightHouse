@@ -329,6 +329,7 @@ declare global {
           styleSheetUrl?: string;
           timerId?: string;
           url?: string;
+          renderBlocking?: 'blocking' | 'non_blocking' | 'dynamically_injected_non_blocking' | 'in_body_parser_blocking' | 'potentially_blocking';
           is_main_frame?: boolean;
           cumulative_score?: number;
           id?: string;

@@ -17,6 +17,7 @@ const UnusedCSS = require('../../computed/unused-css.js');
 const NetworkRequest = require('../../lib/network-request.js');
 const TraceOfTab = require('../../computed/trace-of-tab.js');
 const LoadSimulator = require('../../computed/load-simulator.js');
+const PageDependencyGraph = require('../../computed/page-dependency-graph.js');
 const FirstContentfulPaint = require('../../computed/metrics/first-contentful-paint.js');
 
 /** @typedef {import('../../lib/dependency-graph/simulator/simulator')} Simulator */
@@ -148,14 +149,65 @@ class RenderBlockingResources extends Audit {
     const nodesByUrl = getNodesAndTimingByUrl(fcpSimulation.optimisticEstimate.nodeTimings);
 
     const results = [];
+    /** @type {Set<string>} */
     const deferredNodeIds = new Set();
-    for (const resource of artifacts.TagsBlockingFirstPaint) {
+
+    const pageGraph = await PageDependencyGraph.request({trace, devtoolsLog}, context);
+
+    /** @type {Array<{url: string, endTime: number, transferSize: number}>} */
+    const renderBlockingResources = [];
+
+    pageGraph.traverse(node => {
+      if (node.type !== 'network') return;
+      if (node.isMainDocument()) return;
+      if (!node.isRenderBlocking()) return;
+
+      renderBlockingResources.push({
+        url: node.record.url,
+        endTime: node.record.endTime,
+        transferSize: node.record.transferSize,
+      });
+
+      // debugging.
+      // const isInTagsBlockingPaint =
+      //   artifacts.TagsBlockingFirstPaint.some(resource => resource.tag.url === node.record.url);
+      // console.log({
+      //   url: node.record.url,
+      //   renderBlocking: node.renderBlocking,
+      //   isInTagsBlockingPaint,
+      // });
+    });
+
+    pageGraph.traverse(node => {
+      if (node.type !== 'network') return;
+      if (node.isMainDocument()) return;
+
+      console.log(node.record.url, node.renderBlocking);
+    });
+
+    console.log('renderBlocking trace', renderBlockingResources.map(r => r.url));
+
+    // COMPAT(90): the 'renderBlocking' property was added to the trace in M90. For now,
+    // continue to use the old TagsBlockingFirstPaint gatherer.
+    // for (const {endTime, transferSize, tag} of artifacts.TagsBlockingFirstPaint) {
+    //   if (renderBlockingResources.some(resource => resource.url === tag.url)) continue;
+
+    //   renderBlockingResources.push({
+    //     url: tag.url,
+    //     endTime,
+    //     transferSize,
+    //   });
+    // }
+
+    console.log('Tags artifact', artifacts.TagsBlockingFirstPaint.map(t => t.tag.url));
+
+    for (const resource of renderBlockingResources) {
       // Ignore any resources that finished after observed FCP (they're clearly not render-blocking)
       if (resource.endTime * 1000 > fcpTsInMs) continue;
       // TODO: beacon to Sentry, https://github.com/GoogleChrome/lighthouse/issues/7041
-      if (!nodesByUrl[resource.tag.url]) continue;
+      if (!nodesByUrl[resource.url]) continue;
 
-      const {node, nodeTiming} = nodesByUrl[resource.tag.url];
+      const {node, nodeTiming} = nodesByUrl[resource.url];
 
       const stackSpecificTiming = computeStackSpecificTiming(node, nodeTiming, artifacts.Stacks);
 
@@ -167,7 +219,7 @@ class RenderBlockingResources extends Audit {
       if (wastedMs < MINIMUM_WASTED_MS) continue;
 
       results.push({
-        url: resource.tag.url,
+        url: resource.url,
         totalBytes: resource.transferSize,
         wastedMs,
       });

@@ -164,6 +164,8 @@ class PageDependencyGraph {
         directInitiatorNode.addDependent(node);
       }
 
+      // console.log(node.eve);
+
       // Make sure the nodes are attached to the graph if the initiator information was invalid.
       if (node !== rootNode && node.getDependencies().length === 0) node.addDependency(rootNode);
 
@@ -253,6 +255,17 @@ class PageDependencyGraph {
       cpuNode.addDependency(minCandidate);
     }
 
+    /**
+     * @param {string} url
+     * @param {string} renderBlocking
+     */
+    function setRenderBlocking(url, renderBlocking) {
+      const nodes = networkNodeOutput.urlToNodeMap.get(url) || [];
+      for (const node of nodes) {
+        node.renderBlocking = renderBlocking;
+      }
+    }
+
     /** @type {Map<string, CPUNode>} */
     const timers = new Map();
     for (const node of cpuNodes) {
@@ -313,6 +326,9 @@ class PageDependencyGraph {
             break;
 
           case 'ResourceSendRequest':
+            if (evt.args.data.url && evt.args.data.renderBlocking) {
+              setRenderBlocking(evt.args.data.url, evt.args.data.renderBlocking);
+            }
             addDependencyOnFrame(node, evt.args.data.frame);
             // @ts-expect-error - 'ResourceSendRequest' event means requestId is defined.
             addDependentNetworkRequest(node, evt.args.data.requestId);

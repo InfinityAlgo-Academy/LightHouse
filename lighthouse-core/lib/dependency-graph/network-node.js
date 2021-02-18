@@ -75,6 +75,13 @@ class NetworkNode extends BaseNode {
     return this.fromDiskCache || this.isNonNetworkProtocol;
   }
 
+  /** @type {Required<Required<LH.TraceEvent['args']>['data']>['renderBlocking']=} */
+  renderBlocking = undefined;
+
+  isRenderBlocking() {
+    return this.renderBlocking === 'blocking' || this.renderBlocking === 'in_body_parser_blocking';
+  }
+
   /**
    * @return {boolean}
    */
