@@ -96,6 +96,16 @@ class UnsizedImages extends Audit {
   }
 
   /**
+   * @param {LH.Artifacts.ImageElement} image
+   * @return {boolean}
+   */
+  static isNonNetworkSvg(image) {
+    const isSvg = image.mimeType === 'image/svg+xml';
+    const isNonNetwork = URL.NON_NETWORK_PROTOCOLS.some(protocol => image.src.startsWith(protocol));
+    return isSvg && isNonNetwork;
+  }
+
+  /**
    * @param {LH.Artifacts} artifacts
    * @return {Promise<LH.Audit.Product>}
    */
@@ -109,6 +119,10 @@ class UnsizedImages extends Audit {
       const isFixedImage =
         image.cssComputedPosition === 'fixed' || image.cssComputedPosition === 'absolute';
       if (isFixedImage) continue;
+
+      // Non-network SVGs with dimensions don't cause layout shifts in practice, skip them.
+      // See https://github.com/GoogleChrome/lighthouse/issues/11631
+      if (UnsizedImages.isNonNetworkSvg(image)) continue;
 
       // The image was sized with HTML or CSS. Good job.
       if (UnsizedImages.isSizedImage(image)) continue;

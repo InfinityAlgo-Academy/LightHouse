@@ -78,6 +78,21 @@ describe('Sized images audit', () => {
     expect(result.score).toEqual(1);
   });
 
+  it('passes when an image is a non-network SVG', async () => {
+    const result = await runAudit({
+      cssComputedPosition: '',
+      attributeWidth: '',
+      attributeHeight: '',
+      _privateCssSizing: {
+        width: null,
+        height: null,
+      },
+      mimeType: 'image/svg+xml',
+      src: 'data:image/svg+xml;base64,foo',
+    });
+    expect(result.score).toEqual(1);
+  });
+
   describe('has empty width', () => {
     it('fails when an image only has attribute height', async () => {
       const result = await runAudit({
@@ -111,6 +126,19 @@ describe('Sized images audit', () => {
           width: null,
           height: '100',
         },
+      });
+      expect(result.score).toEqual(0);
+    });
+
+    it('fails a network svg', async () => {
+      const result = await runAudit({
+        attributeWidth: '',
+        attributeHeight: '100',
+        _privateCssSizing: {
+          width: null,
+          height: '100',
+        },
+        mimeType: 'image/svg+xml',
       });
       expect(result.score).toEqual(0);
     });
