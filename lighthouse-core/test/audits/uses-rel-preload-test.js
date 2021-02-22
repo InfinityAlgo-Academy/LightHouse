@@ -244,6 +244,21 @@ describe('Performance: uses-rel-preload audit', () => {
     expect(result.warnings).toBeUndefined();
   });
 
+  it(`should not warn for records served from cache`, async () => {
+    const networkRecords = getMockNetworkRecords();
+    networkRecords[2].isLinkPreload = true;
+    networkRecords.push({
+      url: networkRecords[2].url,
+      isLinkPreload: false,
+      fromDiskCache: true,
+    });
+
+    const artifacts = mockArtifacts(networkRecords, defaultMainResourceUrl);
+    const context = {settings: {}, computedCache: new Map()};
+    const result = await UsesRelPreload.audit(artifacts, context);
+    expect(result.warnings).toBeUndefined();
+  });
+
   it(`shouldn't suggest preload for already preloaded records`, () => {
     const networkRecords = getMockNetworkRecords();
     networkRecords[2].isLinkPreload = true;

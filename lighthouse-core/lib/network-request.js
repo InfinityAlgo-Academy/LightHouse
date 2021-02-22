@@ -94,6 +94,7 @@ class NetworkRequest {
     this.resourceSize = 0;
     this.fromDiskCache = false;
     this.fromMemoryCache = false;
+    this.fromPrefetchCache = false;
 
     /** @type {LightriderStatistics|undefined} Extra timing information available only when run in Lightrider. */
     this.lrStatistics = undefined;
@@ -292,6 +293,9 @@ class NetworkRequest {
 
     this.transferSize = response.encodedDataLength;
     if (typeof response.fromDiskCache === 'boolean') this.fromDiskCache = response.fromDiskCache;
+    if (typeof response.fromPrefetchCache === 'boolean') {
+      this.fromPrefetchCache = response.fromPrefetchCache;
+    }
 
     this.statusCode = response.status;
 
