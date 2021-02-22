@@ -6,6 +6,15 @@
 'use strict';
 
 /**
+ *
+ * @param {{id: string}} dependency
+ * @param {Error} error
+ */
+function createDependencyError(dependency, error) {
+  return new Error(`Dependency "${dependency.id}" failed with exception: ${error.message}`);
+}
+
+/**
  * @param {LH.Config.ArtifactDefn} artifact
  * @param {Record<string, LH.Gatherer.PhaseResult>} artifactsById
  * @return {Promise<LH.Gatherer.FRTransitionalContext<LH.Gatherer.DependencyKey>['dependencies']>}
@@ -17,14 +26,13 @@ async function collectArtifactDependencies(artifact, artifactsById) {
     async ([dependencyName, dependency]) => {
       const dependencyArtifact = artifactsById[dependency.id];
       if (dependencyArtifact === undefined) throw new Error(`"${dependency.id}" did not run`);
+      if (dependencyArtifact instanceof Error) {
+        throw createDependencyError(dependency, dependencyArtifact);
+      }
 
       const dependencyPromise = Promise.resolve()
         .then(() => dependencyArtifact)
-        .catch(err =>
-          Promise.reject(
-            new Error(`Dependency "${dependency.id}" failed with exception: ${err.message}`)
-          )
-        );
+        .catch(err => Promise.reject(createDependencyError(dependency, err)));
 
       return [dependencyName, await dependencyPromise];
     }

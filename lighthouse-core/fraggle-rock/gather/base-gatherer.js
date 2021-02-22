@@ -20,11 +20,11 @@ class FRGatherer {
   meta = {supportedModes: []}
 
   /**
-   * Method to gather results about a page in a particular state.
+   * Method to start observing a page before a navigation.
    * @param {LH.Gatherer.FRTransitionalContext} passContext
-   * @return {LH.Gatherer.PhaseResult}
+   * @return {Promise<void>|void}
    */
-  snapshot(passContext) { }
+  beforeNavigation(passContext) { }
 
   /**
    * Method to start observing a page for an arbitrary period of time.
@@ -39,6 +39,20 @@ class FRGatherer {
    * @return {LH.Gatherer.PhaseResult}
    */
   afterTimespan(passContext) { }
+
+  /**
+   * Method to end observing a page after a navigation and return the results.
+   * @param {LH.Gatherer.FRTransitionalContext} passContext
+   * @return {LH.Gatherer.PhaseResult}
+   */
+  afterNavigation(passContext) { }
+
+  /**
+   * Method to gather results about a page in a particular state.
+   * @param {LH.Gatherer.FRTransitionalContext} passContext
+   * @return {LH.Gatherer.PhaseResult}
+   */
+  snapshot(passContext) { }
 
   /**
    * Legacy property used to define the artifact ID. In Fraggle Rock, the artifact ID lives on the config.

@@ -57,7 +57,6 @@ Gathering setup: InspectorIssues
 Gathering setup: SourceMaps
 Gathering setup: FullPageScreenshot
 Beginning devtoolsLog and trace
-Getting browser version
 Loading page & waiting for onload
 Running pass methods
 Gathering in-page: CSSUsage

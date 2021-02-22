@@ -201,20 +201,6 @@ describe('.beginTrace', () => {
     // Make sure it deduplicates categories too
     expect(tracingStartArgs.categories).not.toMatch(/loading.*loading/);
   });
-
-  it('will adjust traceCategories based on chrome version', async () => {
-    connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Browser.getVersion', {product: 'Chrome/70.0.3577.0'})
-      .mockResponse('Page.enable')
-      .mockResponse('Tracing.start');
-
-    await driver.beginTrace();
-
-    const tracingStartArgs = connectionStub.sendCommand.findInvocation('Tracing.start');
-    // COMPAT: m70 doesn't have disabled-by-default-lighthouse, so 'toplevel' is used instead.
-    expect(tracingStartArgs.categories).toContain('toplevel');
-    expect(tracingStartArgs.categories).not.toContain('disabled-by-default-lighthouse');
-  });
 });
 
 describe('.setExtraHTTPHeaders', () => {

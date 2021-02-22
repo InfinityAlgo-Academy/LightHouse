@@ -230,8 +230,23 @@ describe('Fraggle Rock Config', () => {
         .toThrow(/Failed to find dependency/);
     });
 
-    it('should throw when dependencies are have an invalid phase relationship', () => {
+    it('should throw when timespan needs snapshot', () => {
       dependentGatherer.meta.supportedModes = ['timespan'];
+      dependencyGatherer.meta.supportedModes = ['snapshot'];
+      expect(() => initializeConfig(configJson, {gatherMode: 'navigation'}))
+        .toThrow(/Dependency.*is invalid/);
+    });
+
+    it('should throw when timespan needs navigation', () => {
+      dependentGatherer.meta.supportedModes = ['timespan'];
+      dependencyGatherer.meta.supportedModes = ['navigation'];
+      expect(() => initializeConfig(configJson, {gatherMode: 'navigation'}))
+        .toThrow(/Dependency.*is invalid/);
+    });
+
+    it('should throw when navigation needs snapshot', () => {
+      dependentGatherer.meta.supportedModes = ['navigation'];
+      dependencyGatherer.meta.supportedModes = ['snapshot'];
       expect(() => initializeConfig(configJson, {gatherMode: 'navigation'}))
         .toThrow(/Dependency.*is invalid/);
     });

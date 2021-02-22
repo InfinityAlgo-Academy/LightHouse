@@ -34,7 +34,7 @@ describe('Fraggle Rock Config Validation', () => {
       {dependent: ['snapshot'], dependency: ['snapshot'], isValid: true},
       {dependent: ['snapshot'], dependency: ['navigation'], isValid: false},
       {dependent: ['navigation'], dependency: ['timespan'], isValid: true},
-      {dependent: ['navigation'], dependency: ['snapshot'], isValid: true},
+      {dependent: ['navigation'], dependency: ['snapshot'], isValid: false},
       {dependent: ['navigation'], dependency: ['navigation'], isValid: true},
     ];
 

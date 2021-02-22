@@ -22,6 +22,15 @@ const {getBaseArtifacts} = require('./base-artifacts.js');
 /** @typedef {Record<string, Promise<any>>} IntermediateArtifacts */
 
 /**
+ * @typedef CollectPhaseArtifactOptions
+ * @property {NavigationContext} navigationContext
+ * @property {ArtifactState} artifacts
+ * @property {keyof Omit<LH.Gatherer.FRGathererInstance, 'name'|'meta'>} phase
+ */
+
+/** @typedef {Record<CollectPhaseArtifactOptions['phase'], IntermediateArtifacts>} ArtifactState */
+
+/**
  * @param {{driver: Driver, config: LH.Config.FRConfig, requestedUrl: string}} args
  */
 async function _setup({driver, config, requestedUrl}) {
@@ -47,24 +56,59 @@ async function _setupNavigation({driver, navigation}) {
   // TODO(FR-COMPAT): setup network conditions (throttling & cache state)
 }
 
+/** @type {Set<CollectPhaseArtifactOptions['phase']>} */
+const phasesRequiringDependencies = new Set(['afterTimespan', 'afterNavigation', 'snapshot']);
+/** @type {Record<CollectPhaseArtifactOptions['phase'], LH.Gatherer.GatherMode>} */
+const phaseToGatherMode = {
+  beforeNavigation: 'navigation',
+  beforeTimespan: 'timespan',
+  afterTimespan: 'timespan',
+  afterNavigation: 'navigation',
+  snapshot: 'snapshot',
+};
+/** @type {Record<CollectPhaseArtifactOptions['phase'], CollectPhaseArtifactOptions['phase'] | undefined>} */
+const phaseToPriorPhase = {
+  beforeNavigation: undefined,
+  beforeTimespan: undefined,
+  afterTimespan: 'beforeTimespan',
+  afterNavigation: 'beforeNavigation',
+  snapshot: undefined,
+};
+
 /**
- * @param {NavigationContext} navigationContext
- * @param {IntermediateArtifacts} artifacts
+ * Runs the gatherer methods for a particular navigation phase (beforeTimespan/afterNavigation/etc).
+ * All gatherer method return values are stored on the artifact state object, organized by phase.
+ * This method collects required dependencies, runs the applicable gatherer methods, and saves the
+ * result on the artifact state object that was passed as part of `options`.
+ *
+ * @param {CollectPhaseArtifactOptions} options
  */
-async function _beforeTimespanPhase(navigationContext, artifacts) {
+async function _collectPhaseArtifacts({navigationContext, artifacts, phase}) {
+  const gatherMode = phaseToGatherMode[phase];
+  const priorPhase = phaseToPriorPhase[phase];
+  const priorPhaseArtifacts = (priorPhase && artifacts[priorPhase]) || {};
+
   for (const artifactDefn of navigationContext.navigation.artifacts) {
     const gatherer = artifactDefn.gatherer.instance;
-    if (!gatherer.meta.supportedModes.includes('timespan')) continue;
+    if (!gatherer.meta.supportedModes.includes(gatherMode)) continue;
 
-    const artifactPromise = Promise.resolve().then(() =>
-      gatherer.beforeTimespan({
+    const priorArtifactPromise = priorPhaseArtifacts[artifactDefn.id] || Promise.resolve();
+    const artifactPromise = priorArtifactPromise.then(async () => {
+      const dependencies = phasesRequiringDependencies.has(phase)
+        ? await collectArtifactDependencies(artifactDefn, await _mergeArtifacts(artifacts))
+        : {};
+
+      return gatherer[phase]({
         driver: navigationContext.driver,
         gatherMode: 'navigation',
-        dependencies: {},
-      })
-    );
-    artifacts[artifactDefn.id] = artifactPromise;
-    await artifactPromise.catch(() => {});
+        dependencies,
+      });
+    });
+
+    // Do not set the artifact promise if the result was `undefined`.
+    const result = await artifactPromise.catch(err => err);
+    if (result === undefined) continue;
+    artifacts[phase][artifactDefn.id] = artifactPromise;
   }
 }
 
@@ -81,57 +125,32 @@ async function _navigate(navigationContext) {
 }
 
 /**
- * @param {NavigationContext} navigationContext
- * @param {IntermediateArtifacts} artifacts
- */
-async function _afterTimespanPhase(navigationContext, artifacts) {
-  for (const artifactDefn of navigationContext.navigation.artifacts) {
-    const gatherer = artifactDefn.gatherer.instance;
-    if (!gatherer.meta.supportedModes.includes('timespan')) continue;
-
-    const artifactPromise = (artifacts[artifactDefn.id] || Promise.resolve()).then(async () =>
-      gatherer.afterTimespan({
-        driver: navigationContext.driver,
-        gatherMode: 'navigation',
-        dependencies: await collectArtifactDependencies(artifactDefn, artifacts),
-      })
-    );
-    artifacts[artifactDefn.id] = artifactPromise;
-    await artifactPromise.catch(() => {});
-  }
-}
-
-/**
- * @param {NavigationContext} navigationContext
- * @param {IntermediateArtifacts} artifacts
- */
-async function _snapshotPhase(navigationContext, artifacts) {
-  for (const artifactDefn of navigationContext.navigation.artifacts) {
-    const gatherer = artifactDefn.gatherer.instance;
-    if (!gatherer.meta.supportedModes.includes('snapshot')) continue;
-
-    const artifactPromise = Promise.resolve().then(async () =>
-      gatherer.snapshot({
-        driver: navigationContext.driver,
-        gatherMode: 'navigation',
-        dependencies: await collectArtifactDependencies(artifactDefn, artifacts),
-      })
-    );
-    artifacts[artifactDefn.id] = artifactPromise;
-    await artifactPromise.catch(() => {});
-  }
-}
-
-/**
- * @param {IntermediateArtifacts} timespanArtifacts
- * @param {IntermediateArtifacts} snapshotArtifacts
+ * Merges artifact in Lighthouse order of specificity.
+ * If a gatherer method returns `undefined`, the artifact is skipped for that phase (treated as not set).
+ *
+ *  - Navigation artifacts are the most specific. These win over anything.
+ *  - Snapshot artifacts win out next as they have access to all available information.
+ *  - Timespan artifacts win when nothing else is defined.
+ *
+ * @param {ArtifactState} artifactState
  * @return {Promise<Partial<LH.GathererArtifacts>>}
  */
-async function _mergeArtifacts(timespanArtifacts, snapshotArtifacts) {
+async function _mergeArtifacts(artifactState) {
   /** @type {IntermediateArtifacts} */
   const artifacts = {};
-  for (const [id, promise] of Object.entries({...timespanArtifacts, ...snapshotArtifacts})) {
-    artifacts[id] = await promise.catch(err => err);
+
+  const artifactResultsInIncreasingPriority = [
+    artifactState.afterTimespan,
+    artifactState.snapshot,
+    artifactState.afterNavigation,
+  ];
+
+  for (const artifactResults of artifactResultsInIncreasingPriority) {
+    for (const [id, promise] of Object.entries(artifactResults)) {
+      const artifact = await promise.catch(err => err);
+      if (artifact === undefined) continue;
+      artifacts[id] = artifact;
+    }
   }
 
   return artifacts;
@@ -141,18 +160,26 @@ async function _mergeArtifacts(timespanArtifacts, snapshotArtifacts) {
  * @param {NavigationContext} navigationContext
  */
 async function _navigation(navigationContext) {
-  /** @type {IntermediateArtifacts} */
-  const timespanArtifacts = {};
-  /** @type {IntermediateArtifacts} */
-  const snapshotArtifacts = {};
+  /** @type {ArtifactState} */
+  const artifactState = {
+    beforeNavigation: {},
+    beforeTimespan: {},
+    afterTimespan: {},
+    afterNavigation: {},
+    snapshot: {},
+  };
+
+  const options = {navigationContext, artifacts: artifactState};
 
   await _setupNavigation(navigationContext);
-  await _beforeTimespanPhase(navigationContext, timespanArtifacts);
+  await _collectPhaseArtifacts({phase: 'beforeNavigation', ...options});
+  await _collectPhaseArtifacts({phase: 'beforeTimespan', ...options});
   await _navigate(navigationContext);
-  await _afterTimespanPhase(navigationContext, timespanArtifacts);
-  await _snapshotPhase(navigationContext, snapshotArtifacts);
+  await _collectPhaseArtifacts({phase: 'afterTimespan', ...options});
+  await _collectPhaseArtifacts({phase: 'afterNavigation', ...options});
+  await _collectPhaseArtifacts({phase: 'snapshot', ...options});
 
-  const artifacts = await _mergeArtifacts(timespanArtifacts, snapshotArtifacts);
+  const artifacts = await _mergeArtifacts(artifactState);
   return {artifacts};
 }
 
@@ -214,9 +241,7 @@ module.exports = {
   navigation,
   _setup,
   _setupNavigation,
-  _beforeTimespanPhase,
-  _afterTimespanPhase,
-  _snapshotPhase,
+  _collectPhaseArtifacts,
   _navigate,
   _navigation,
   _navigations,

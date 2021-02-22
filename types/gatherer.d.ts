@@ -100,9 +100,11 @@ declare global {
     export interface FRGathererInstance<TDependencies extends DependencyKey = DefaultDependenciesKey> {
       name: keyof LH.GathererArtifacts; // temporary COMPAT measure until artifact config support is available
       meta: GathererMeta<TDependencies>;
-      snapshot(context: FRTransitionalContext<TDependencies>): PhaseResult;
+      beforeNavigation(context: FRTransitionalContext<DefaultDependenciesKey>): Promise<void>|void;
       beforeTimespan(context: FRTransitionalContext<DefaultDependenciesKey>): Promise<void>|void;
       afterTimespan(context: FRTransitionalContext<TDependencies>): PhaseResult;
+      afterNavigation(context: FRTransitionalContext<TDependencies>): PhaseResult;
+      snapshot(context: FRTransitionalContext<TDependencies>): PhaseResult;
     }
 
     namespace Simulation {

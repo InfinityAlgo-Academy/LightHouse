@@ -12,6 +12,7 @@ const defaultConfig = {
   artifacts: [
     // Artifacts which can be depended on come first.
     {id: 'DevtoolsLog', gatherer: 'devtools-log'},
+    {id: 'Trace', gatherer: 'trace'},
 
     /* eslint-disable max-len */
     {id: 'Accessibility', gatherer: 'accessibility'},
@@ -34,6 +35,7 @@ const defaultConfig = {
 
     // Artifact copies are renamed for compatibility with legacy artifacts.
     {id: 'devtoolsLogs', gatherer: 'devtools-log-compat'},
+    {id: 'traces', gatherer: 'trace-compat'},
   ],
   navigations: [
     {
@@ -41,6 +43,7 @@ const defaultConfig = {
       artifacts: [
         // Artifacts which can be depended on come first.
         'DevtoolsLog',
+        'Trace',
 
         'Accessibility',
         'Appcache',
@@ -61,6 +64,7 @@ const defaultConfig = {
 
         // Compat artifacts come last.
         'devtoolsLogs',
+        'traces',
       ],
     },
   ],

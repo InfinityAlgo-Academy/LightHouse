@@ -165,6 +165,10 @@ describe('Fraggle Rock API', () => {
       const details = lhr.audits['total-byte-weight'].details;
       if (!details || details.type !== 'table') throw new Error('Unexpected byte weight details');
       expect(details.items).toMatchObject([{url: `${serverBaseUrl}/index.html`}]);
+
+      // Check that performance metrics were computed.
+      expect(lhr.audits).toHaveProperty('first-contentful-paint');
+      expect(Number.isFinite(lhr.audits['first-contentful-paint'].numericValue)).toBe(true);
     });
   });
 });
