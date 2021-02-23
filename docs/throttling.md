@@ -25,7 +25,7 @@ Within web performance testing, there are four typical styles of network throttl
 
 Lighthouse, by default, uses simulated throttling as it provides both quick evaluation and minimized variance. However, some may want to experiment with more accurate throttling... [Learn more about these throttling types and how they behave in in different scenarios](https://www.debugbear.com/blog/network-throttling-methods).
 
-## DevTools' Audits Panel Throttling
+## DevTools' Lighthouse Panel Throttling
 
 In Chrome 79 and earlier, you could choose between [the throttling types](#types-of-throttling) of Simulated, Applied, and none.
 
