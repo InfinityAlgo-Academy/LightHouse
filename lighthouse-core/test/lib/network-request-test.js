@@ -278,4 +278,28 @@ describe('NetworkRequest', () => {
       });
     });
   });
+
+  describe('#isSecureRequest', () => {
+    const isSecureRequest = NetworkRequest.isSecureRequest;
+
+    it('correctly identifies insecure records', () => {
+      expect(isSecureRequest({parsedURL: {scheme: 'http', host: 'google.com'}})).toBe(false);
+      expect(isSecureRequest({parsedURL: {scheme: 'http', host: '54.33.21.23'}})).toBe(false);
+      expect(isSecureRequest({parsedURL: {scheme: 'ws', host: 'my-service.com'}})).toBe(false);
+      expect(isSecureRequest({parsedURL: {scheme: '', host: 'google.com'}})).toBe(false);
+    });
+
+    it('correctly identifies secure records', () => {
+      expect(isSecureRequest({parsedURL: {scheme: 'http', host: 'localhost'}})).toBe(true);
+      expect(isSecureRequest({parsedURL: {scheme: 'https', host: 'google.com'}})).toBe(true);
+      expect(isSecureRequest({parsedURL: {scheme: 'wss', host: 'my-service.com'}})).toBe(true);
+      expect(isSecureRequest({parsedURL: {scheme: 'data', host: ''}})).toBe(true);
+      expect(isSecureRequest({parsedURL: {scheme: 'blob', host: ''}})).toBe(true);
+      expect(isSecureRequest({parsedURL: {scheme: 'filesystem', host: ''}})).toBe(true);
+      expect(isSecureRequest({parsedURL: {scheme: 'about', host: ''}})).toBe(true);
+      expect(isSecureRequest({parsedURL: {scheme: '', host: ''}, protocol: 'blob'})).toBe(true);
+      expect(isSecureRequest({parsedURL: {scheme: 'chrome', host: ''}})).toBe(true);
+      expect(isSecureRequest({parsedURL: {scheme: 'chrome-extension', host: ''}})).toBe(true);
+    });
+  });
 });

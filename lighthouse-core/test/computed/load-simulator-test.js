@@ -15,6 +15,7 @@ const NetworkNode = require('../../lib/dependency-graph/network-node.js');
 function createNetworkNode() {
   return new NetworkNode({
     requestId: '1',
+    protocol: 'http',
     parsedURL: {securityOrigin: 'https://pwa.rocks'},
   });
 }

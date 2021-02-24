@@ -16,6 +16,7 @@ function generateNetworkRecords(records, timeOrigin) {
   const timeOriginInMs = timeOrigin / 1000;
   return records.map(item => {
     return {
+      protocol: 'http',
       failed: item.failed || false,
       statusCode: item.statusCode || 200,
       requestMethod: item.requestMethod || 'GET',

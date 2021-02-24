@@ -518,7 +518,7 @@ pwa-cross-browser: manual
 pwa-each-page-has-url: manual
 pwa-page-transitions: manual
 redirects: flaky
-redirects-http: fail
+redirects-http: notApplicable
 render-blocking-resources: flaky
 resource-summary: informative
 robots-txt: notApplicable

@@ -89,40 +89,4 @@ describe('Security: HTTPS audit', () => {
 
     expect(result.score).toBe(0);
   });
-
-  describe('#isSecureRecord', () => {
-    it('correctly identifies insecure records', () => {
-      assert.strictEqual(Audit.isSecureRecord({parsedURL: {scheme: 'http', host: 'google.com'}}),
-        false);
-      assert.strictEqual(Audit.isSecureRecord({parsedURL: {scheme: 'http', host: '54.33.21.23'}}),
-        false);
-      assert.strictEqual(Audit.isSecureRecord({parsedURL: {scheme: 'ws', host: 'my-service.com'}}),
-        false);
-      assert.strictEqual(Audit.isSecureRecord({parsedURL: {scheme: '', host: 'google.com'}}),
-        false);
-    });
-
-    it('correctly identifies secure records', () => {
-      assert.strictEqual(Audit.isSecureRecord({parsedURL: {scheme: 'http', host: 'localhost'}}),
-        true);
-      assert.strictEqual(Audit.isSecureRecord({parsedURL: {scheme: 'https', host: 'google.com'}}),
-        true);
-      assert.strictEqual(Audit.isSecureRecord({parsedURL: {scheme: 'wss', host: 'my-service.com'}}),
-        true);
-      assert.strictEqual(Audit.isSecureRecord({parsedURL: {scheme: 'data', host: ''}}),
-        true);
-      assert.strictEqual(Audit.isSecureRecord({parsedURL: {scheme: 'blob', host: ''}}),
-        true);
-      assert.strictEqual(Audit.isSecureRecord({parsedURL: {scheme: 'filesystem', host: ''}}),
-        true);
-      assert.strictEqual(Audit.isSecureRecord({parsedURL: {scheme: 'about', host: ''}}),
-        true);
-      assert.strictEqual(Audit.isSecureRecord({parsedURL: {scheme: '', host: ''},
-        protocol: 'blob'}), true);
-      assert.strictEqual(Audit.isSecureRecord({parsedURL: {scheme: 'chrome', host: ''}}),
-        true);
-      assert.strictEqual(Audit.isSecureRecord({parsedURL: {scheme: 'chrome-extension', host: ''}}),
-        true);
-    });
-  });
 });

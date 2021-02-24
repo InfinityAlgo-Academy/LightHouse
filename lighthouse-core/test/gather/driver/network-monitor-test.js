@@ -336,7 +336,7 @@ describe('NetworkMonitor', () => {
     it('should ignore data URIs', () => {
       const records = [
         record({startTime: 0, endTime: 1}),
-        record({startTime: 0, endTime: 2, url: 'data:image/png;base64,'}),
+        record({startTime: 0, endTime: 2, url: 'data:image/png;base64,', protocol: 'data'}),
       ];
 
       const periods = NetworkMonitor.findNetworkQuietPeriods(records, 0);

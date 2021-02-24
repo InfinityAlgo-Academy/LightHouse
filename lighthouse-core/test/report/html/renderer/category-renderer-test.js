@@ -47,7 +47,7 @@ describe('CategoryRenderer', () => {
 
   it('renders an audit', () => {
     const auditRef = sampleResults.categories.pwa.auditRefs
-      .find(a => a.id === 'redirects-http');
+      .find(a => a.id === 'installable-manifest');
 
     const auditDOM = renderer.renderAudit(auditRef);
     assert.equal(auditDOM.nodeType, 1, 'Audit returns an element');
@@ -393,11 +393,18 @@ describe('CategoryRenderer', () => {
       const failedAudits = elem.querySelectorAll('.lh-clump--failed .lh-audit');
       const warningAudits = elem.querySelectorAll('.lh-clump--warning .lh-audit');
       const manualAudits = elem.querySelectorAll('.lh-clump--manual .lh-audit');
+      const naAudits = elem.querySelectorAll('.lh-clump--notapplicable .lh-audit');
 
       assert.equal(passedAudits.length, 0);
-      assert.equal(failedAudits.length, 7);
+      assert.equal(failedAudits.length, 6);
       assert.equal(warningAudits.length, 2);
       assert.equal(manualAudits.length, 3);
+      assert.equal(naAudits.length, 1);
+
+      const allAudits = elem.querySelectorAll('.lh-audit');
+      // No unaccounted audits
+      assert.equal(allAudits.length - passedAudits.length - failedAudits.length -
+        warningAudits.length - manualAudits.length - naAudits.length, 0);
     });
 
     it('doesnt create a passed section if there were 0 passed', () => {
@@ -409,7 +416,7 @@ describe('CategoryRenderer', () => {
       const failedAudits = elem.querySelectorAll('.lh-clump--failed .lh-audit');
 
       assert.equal(passedAudits.length, 0);
-      assert.equal(failedAudits.length, 9);
+      assert.equal(failedAudits.length, 8);
     });
 
     it('expands warning audit group', () => {

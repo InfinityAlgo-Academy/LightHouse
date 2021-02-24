@@ -12,6 +12,10 @@ const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.
 /* eslint-env jest */
 
 function mockArtifacts(networkRecords) {
+  for (const record of networkRecords) {
+    record.protocol = record.url.slice(0, record.url.indexOf(':'));
+  }
+
   return {
     devtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
     URL: {requestedUrl: networkRecords[0].url, finalUrl: networkRecords[0].url},
@@ -55,6 +59,10 @@ describe('Resource summary computed', () => {
       {url: 'http://third-party.com/another-file.html', resourceType: 'manifest', transferSize: 50},
     ];
 
+    for (const record of networkRecords) {
+      record.protocol = record.url.slice(0, record.url.indexOf(':'));
+    }
+
     const result = ComputedResourceSummary.summarize(
       networkRecords, networkRecords[0].url, context);
     assert.equal(result.other.count, 1);
@@ -82,9 +90,12 @@ describe('Resource summary computed', () => {
 
     artifacts = mockArtifacts([
       {url: 'http://example.com/file.html', resourceType: 'Document', transferSize: 30},
-      {url: 'data:image/png;base64,iVBORw0KGgoAA', resourceType: 'Image', transferSize: 10},
-      {url: 'blob:http://www.example.com/dflskdfjlkj', resourceType: 'Other', transferSize: 99},
-      {url: 'intent://example.com', resourceType: 'Other', transferSize: 1},
+      {url: 'data:image/png;base64,iVBORw0KGgoAA', resourceType: 'Image', transferSize: 10,
+        protocol: 'data'},
+      {url: 'blob:http://www.example.com/dflskdfjlkj', resourceType: 'Other', transferSize: 99,
+        protocol: 'blob'},
+      {url: 'intent://example.com', resourceType: 'Other', transferSize: 1,
+        protocol: 'intent'},
     ]);
 
     const result = await ComputedResourceSummary.request(artifacts, context);

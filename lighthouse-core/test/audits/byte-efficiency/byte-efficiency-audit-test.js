@@ -33,6 +33,7 @@ describe('Byte efficiency base audit', () => {
     const networkRecord = {
       requestId: 1,
       url: 'http://example.com/',
+      protocol: 'http',
       parsedURL: {scheme: 'http', securityOrigin: 'http://example.com'},
       transferSize: 400000,
       timing: {receiveHeadersEnd: 0},

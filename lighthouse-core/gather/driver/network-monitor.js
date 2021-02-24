@@ -13,14 +13,12 @@
 const log = require('lighthouse-logger');
 const {EventEmitter} = require('events');
 const NetworkRecorder = require('../../lib/network-recorder.js');
-const {NON_NETWORK_PROTOCOLS} = require('../../lib/url-shim.js');
+const NetworkRequest = require('../../lib/network-request.js');
+const URL = require('../../lib/url-shim.js');
 
 /** @typedef {import('../../lib/network-recorder.js').NetworkRecorderEvent} NetworkRecorderEvent */
-/** @typedef {import('../../lib/network-request.js')} NetworkRequest */
 /** @typedef {'network-2-idle'|'network-critical-idle'|'networkidle'|'networkbusy'|'network-critical-busy'|'network-2-busy'} NetworkMonitorEvent_ */
 /** @typedef {NetworkRecorderEvent|NetworkMonitorEvent_} NetworkMonitorEvent */
-
-const IGNORED_NETWORK_SCHEMES = [...NON_NETWORK_PROTOCOLS, 'ws'];
 
 class NetworkMonitor extends EventEmitter {
   /** @type {NetworkRecorder|undefined} */
@@ -162,7 +160,7 @@ class NetworkMonitor extends EventEmitter {
       const request = requests[i];
       if (request.finished) continue;
       if (requestFilter && !requestFilter(request)) continue;
-      if (NON_NETWORK_PROTOCOLS.includes(request.parsedURL.scheme)) continue;
+      if (NetworkRequest.isNonNetworkRequest(request)) continue;
       inflightRequests++;
     }
 
@@ -199,10 +197,8 @@ class NetworkMonitor extends EventEmitter {
     /** @type {Array<{time: number, isStart: boolean}>} */
     let timeBoundaries = [];
     requests.forEach(request => {
-      const scheme = request.parsedURL && request.parsedURL.scheme;
-      if (IGNORED_NETWORK_SCHEMES.includes(scheme)) {
-        return;
-      }
+      if (URL.isNonNetworkProtocol(request.protocol)) return;
+      if (request.protocol === 'ws' || request.protocol === 'wss') return;
 
       // convert the network timestamp to ms
       timeBoundaries.push({time: request.startTime * 1000, isStart: true});

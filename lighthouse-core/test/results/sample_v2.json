@@ -45,10 +45,10 @@
     },
     "redirects-http": {
       "id": "redirects-http",
-      "title": "Does not redirect HTTP traffic to HTTPS",
+      "title": "Redirects HTTP traffic to HTTPS",
       "description": "If you've already set up HTTPS, make sure that you redirect all HTTP traffic to HTTPS in order to enable secure web features for all your users. [Learn more](https://web.dev/redirects-http/).",
-      "score": 0,
-      "scoreDisplayMode": "binary"
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
     },
     "service-worker": {
       "id": "service-worker",
@@ -4488,88 +4488,15 @@
       "id": "uses-http2",
       "title": "Use HTTP/2",
       "description": "HTTP/2 offers many benefits over HTTP/1.1, including binary headers and multiplexing. [Learn more](https://web.dev/uses-http2/).",
-      "score": 0.34,
+      "score": 1,
       "scoreDisplayMode": "binary",
-      "numericValue": 2130,
+      "numericValue": 0,
       "numericUnit": "millisecond",
-      "displayValue": "15 requests not served via HTTP/2",
       "details": {
         "type": "opportunity",
-        "headings": [
-          {
-            "key": "url",
-            "valueType": "url",
-            "label": "URL"
-          },
-          {
-            "key": "protocol",
-            "valueType": "text",
-            "label": "Protocol"
-          }
-        ],
-        "items": [
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:10200/dobetterweb/dbw_partial_a.html?delay=200"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:10200/dobetterweb/dbw_partial_b.html?delay=200&isasync"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.js"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:10200/dobetterweb/empty_module.js?delay=500"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:10200/zone.js"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:10200/favicon.ico"
-          }
-        ],
-        "overallSavingsMs": 2130
+        "headings": [],
+        "items": [],
+        "overallSavingsMs": 0
       }
     },
     "uses-passive-event-listeners": {
@@ -5739,7 +5666,7 @@
         },
         {
           "id": "redirects-http",
-          "weight": 2,
+          "weight": 0,
           "group": "pwa-optimized"
         },
         {
@@ -5786,7 +5713,7 @@
         }
       ],
       "id": "pwa",
-      "score": 0.25
+      "score": 0.3
     }
   },
   "categoryGroups": {
@@ -7174,7 +7101,7 @@
       "lighthouse-core/audits/is-on-https.js | allowed": [
         "audits[is-on-https].details.items[0].resolution"
       ],
-      "lighthouse-core/audits/redirects-http.js | failureTitle": [
+      "lighthouse-core/audits/redirects-http.js | title": [
         "audits[redirects-http].title"
       ],
       "lighthouse-core/audits/redirects-http.js | description": [
@@ -7374,8 +7301,7 @@
         "audits[unminified-javascript].details.headings[0].label",
         "audits[uses-webp-images].details.headings[1].label",
         "audits[uses-text-compression].details.headings[0].label",
-        "audits[legacy-javascript].details.headings[0].label",
-        "audits[uses-http2].details.headings[0].label"
+        "audits[legacy-javascript].details.headings[0].label"
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": [
         "audits[server-response-time].details.headings[1].label",
@@ -8423,17 +8349,6 @@
       ],
       "lighthouse-core/audits/dobetterweb/uses-http2.js | description": [
         "audits[uses-http2].description"
-      ],
-      "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": [
-        {
-          "values": {
-            "itemCount": 15
-          },
-          "path": "audits[uses-http2].displayValue"
-        }
-      ],
-      "lighthouse-core/audits/dobetterweb/uses-http2.js | columnProtocol": [
-        "audits[uses-http2].details.headings[1].label"
       ],
       "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | failureTitle": [
         "audits[uses-passive-event-listeners].title"

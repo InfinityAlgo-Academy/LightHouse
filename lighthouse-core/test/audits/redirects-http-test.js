@@ -16,6 +16,9 @@ describe('Security: HTTP->HTTPS audit', () => {
       HTTPRedirect: {
         value: false,
       },
+      URL: {
+        finalUrl: 'https://paulirish.com/',
+      },
     }).score, 0);
   });
 
@@ -24,6 +27,23 @@ describe('Security: HTTP->HTTPS audit', () => {
       HTTPRedirect: {
         value: true,
       },
+      URL: {
+        finalUrl: 'https://paulirish.com/',
+      },
     }).score, 1);
+  });
+
+  it('not applicable on localhost when no redirect detected', () => {
+    const product = Audit.audit({
+      HTTPRedirect: {
+        value: false,
+      },
+      URL: {
+        finalUrl: 'http://localhost:8080/page.html',
+      },
+    });
+
+    assert.equal(product.score, 1);
+    assert.equal(product.notApplicable, true);
   });
 });

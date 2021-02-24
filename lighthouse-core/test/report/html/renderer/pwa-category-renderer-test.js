@@ -103,17 +103,37 @@ describe('PwaCategoryRenderer', () => {
       auditRefs = category.auditRefs
         .filter(audit => audit.result.scoreDisplayMode !== 'manual');
 
-      // Expect results to all be scorable.
+      // Expect results to all be scorable or n/a
       for (const auditRef of auditRefs) {
-        assert.strictEqual(auditRef.result.scoreDisplayMode, 'binary');
+        const matcher = expect.stringMatching(/(binary)|(notApplicable)/);
+        expect(auditRef.result.scoreDisplayMode).toEqual(matcher);
       }
 
       groupIds = [...new Set(auditRefs.map(ref => ref.group))];
     });
 
+    it('gives passing even if an audit is notApplicable', () => {
+      const clone = JSON.parse(JSON.stringify(sampleResults));
+      const category = clone.categories.pwa;
+
+      // Set everything to passing, except redirects-http set to n/a (as it is on localhost)
+      for (const auditRef of category.auditRefs) {
+        auditRef.result.score = 1;
+        auditRef.result.scoreDisplayMode = 'binary';
+      }
+      const audit = category.auditRefs.find(ref => ref.id === 'redirects-http');
+      audit.result.scoreDisplayMode = 'notApplicable';
+      audit.result.score = null;
+
+      const categoryElem = pwaRenderer.render(category, clone.categoryGroups);
+      const badgedElems = categoryElem.querySelectorAll(`.lh-audit-group--pwa-optimized.lh-badged`);
+      expect(badgedElems.length).toEqual(1);
+    });
+
     it('only gives a group a badge when all the group\'s audits are passing', () => {
       for (const auditRef of auditRefs) {
         auditRef.result.score = 0;
+        auditRef.result.scoreDisplayMode = 'binary';
       }
 
       const targetGroupId = 'pwa-optimized';
@@ -179,6 +199,7 @@ describe('PwaCategoryRenderer', () => {
     it('renders no badges when no audit groups are passing', () => {
       for (const auditRef of auditRefs) {
         auditRef.result.score = 0;
+        auditRef.result.scoreDisplayMode = 'binary';
       }
 
       const categoryElem = pwaRenderer.render(category, sampleResults.categoryGroups);
