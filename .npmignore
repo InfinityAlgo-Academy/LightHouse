@@ -13,6 +13,7 @@ lighthouse-core/scripts/*
 lighthouse-core/test/
 lighthouse-core/third_party/src/
 lighthouse-viewer/
+lighthouse-treemap/
 clients/
 lighthouse-cli/results/
 lighthouse-logger/

@@ -5,6 +5,93 @@
  */
 
 body {
+  font-family: '.SFNSDisplay-Regular', 'Helvetica Neue', 'Lucida Grande', sans-serif;
   margin: 0;
   overflow-y: hidden;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.lh-text-dim {
+  color: grey;
+}
+
+.lh-main {
+  display: grid;
+  height: 100vh;
+  grid-template-rows: 0.1fr 1fr 0fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.lh-header--section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 20px;
+}
+.lh-header--url {
+  font-weight: bold;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.lh-modes {
+  display: flex;
+}
+
+.lh-treemap {
+  margin: 10px;
+}
+
+.view-mode {
+  cursor: pointer;
+  border: solid 1px blue;
+  padding: 5px;
+  font-size: 16px;
+}
+.view-mode:first-child {
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+.view-mode:last-child {
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+.view-mode--active {
+  background-color: lightblue;
+}
+
+header {
+  margin: 5px;
+}
+
+.webtreemap-node {
+  cursor: pointer;
+  position: absolute;
+  border: solid 1px #666;
+  border-radius: 2px;
+  overflow: hidden;
+  background: white;
+  transition: left .15s, top .15s, width .15s, height .15s;
+}
+.webtreemap-node--root {
+  border: none;
+  background-color: transparent !important;
+}
+.webtreemap-node--root > .webtreemap-node {
+  margin: 5px;
+}
+
+.webtreemap-node--hover {
+  outline: 2px solid black;
+}
+
+.webtreemap-caption {
+  font-size: 12px;
+  text-align: center;
+  word-break: break-word;
 }

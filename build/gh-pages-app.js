@@ -156,6 +156,8 @@ class GhPagesApp {
       versionJs,
       ...this._resolveSourcesList(this.opts.javascripts),
     ];
+    if (process.env.DEBUG) return contents.join('\n');
+
     const options = {
       output: {preamble: license}, // Insert license at top.
     };
