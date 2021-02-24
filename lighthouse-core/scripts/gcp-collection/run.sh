@@ -18,6 +18,7 @@ INSTANCE_NAME="lighthouse-collection-$GCLOUD_USER-$INSTANCE_SUFFIX"
 CLOUDSDK_CORE_PROJECT=${LIGHTHOUSE_COLLECTION_GCLOUD_PROJECT:-lighthouse-lantern-collect}
 LIGHTHOUSE_GIT_REF=${TARGET_GIT_REF:-master}
 NUMBER_OF_RUNS=${TARGET_RUNS:-1}
+BASE_LIGHTHOUSE_FLAGS="--max-wait-for-load=90000 $LIGHTHOUSE_FLAGS"
 ZONE=us-central1-a
 
 gcloud --project="$CLOUDSDK_CORE_PROJECT" compute instances create $INSTANCE_NAME \
@@ -29,7 +30,7 @@ gcloud --project="$CLOUDSDK_CORE_PROJECT" compute instances create $INSTANCE_NAM
 cat > .tmp_env <<EOF
 export NUMBER_OF_RUNS=$NUMBER_OF_RUNS
 export LIGHTHOUSE_GIT_REF=$LIGHTHOUSE_GIT_REF
-export BASE_LIGHTHOUSE_FLAGS="--max-wait-for-load=90000"
+export BASE_LIGHTHOUSE_FLAGS="$BASE_LIGHTHOUSE_FLAGS"
 EOF
 
 # Instance needs time to start up.
