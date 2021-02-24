@@ -35,5 +35,5 @@ printf "\n\nRunning lantern on all sites...\n"
 printf "\n\n"
 "$LH_ROOT/lighthouse-core/scripts/lantern/print-correlations.js"
 
-printf "\n\nComparing to master computed values...\n"
-"$LH_ROOT/lighthouse-core/scripts/lantern/assert-master-lantern-values-unchanged.js"
+printf "\n\nComparing to baseline computed values...\n"
+"$LH_ROOT/lighthouse-core/scripts/lantern/assert-baseline-lantern-values-unchanged.js"

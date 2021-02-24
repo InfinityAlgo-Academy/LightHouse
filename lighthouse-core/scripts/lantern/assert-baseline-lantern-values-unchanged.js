@@ -16,15 +16,15 @@ const chalk = require('chalk').default;
 
 const INPUT_PATH = process.argv[2] || constants.SITE_INDEX_WITH_GOLDEN_WITH_COMPUTED_PATH;
 const HEAD_PATH = path.resolve(process.cwd(), INPUT_PATH);
-const MASTER_PATH = constants.MASTER_COMPUTED_PATH;
-const MASTER_ACCURACY_PATH = constants.MASTER_ACCURACY_PATH;
+const BASELINE_PATH = constants.BASELINE_COMPUTED_PATH;
+const BASELINE_ACCURACY_PATH = constants.BASELINE_ACCURACY_PATH;
 
-if (!fs.existsSync(HEAD_PATH) || !fs.existsSync(MASTER_PATH)) {
+if (!fs.existsSync(HEAD_PATH) || !fs.existsSync(BASELINE_PATH)) {
   throw new Error('Usage $0 <computed file>');
 }
 
 const computedResults = require(HEAD_PATH);
-const expectedResults = require(MASTER_PATH);
+const expectedResults = require(BASELINE_PATH);
 
 /** @type {Array<{url: string, maxDiff: number, diffsForSite: Array<DiffForSite>}>} */
 const diffs = [];
@@ -58,7 +58,7 @@ if (diffs.length) {
       const metric = `    - ${entry.metricName.padEnd(25)}`;
       const diff = entry.diff > 0 ? chalk.yellow(`+${entry.diff}`) : chalk.cyan(`${entry.diff}`);
       const actual = `${entry.actual} ${chalk.gray('(HEAD)')}`;
-      const expected = `${entry.expected} ${chalk.gray('(master)')}`;
+      const expected = `${entry.expected} ${chalk.gray('(baseline)')}`;
       console.log(`${metric}${diff}\t${actual}\tvs.\t${expected}`);
     });
   });
@@ -67,7 +67,7 @@ if (diffs.length) {
 } else {
   assert.deepStrictEqual(
     constants.evaluateAllMetrics(computedResults, expectedResults),
-    require(MASTER_ACCURACY_PATH)
+    require(BASELINE_ACCURACY_PATH)
   );
   console.log('✅  PASS    No changes between expected and computed!');
 }

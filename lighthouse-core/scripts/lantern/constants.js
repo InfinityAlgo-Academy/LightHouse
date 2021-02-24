@@ -81,9 +81,9 @@ module.exports = {
   // prettier-ignore
   SITE_INDEX_WITH_GOLDEN_WITH_COMPUTED_PATH: path.join(__dirname, '../../../.tmp/site-index-plus-golden-expectations-plus-computed.json'),
   // prettier-ignore
-  MASTER_COMPUTED_PATH: path.join(__dirname, '../../test/fixtures/lantern-master-computed-values.json'),
+  BASELINE_COMPUTED_PATH: path.join(__dirname, '../../test/fixtures/lantern-baseline-computed-values.json'),
   // prettier-ignore
-  MASTER_ACCURACY_PATH: path.join(__dirname, '../../test/fixtures/lantern-master-accuracy.json'),
+  BASELINE_ACCURACY_PATH: path.join(__dirname, '../../test/fixtures/lantern-baseline-accuracy.json'),
   /**
    * @param {{sites: Array<LanternSiteDefinition>}} siteIndexWithComputed
    * @param {{sites: Array<LanternMetrics & {url: string}>}} baselineLanternData
