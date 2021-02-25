@@ -1,4 +1,56 @@
- <a name="7.1.0"></a>
+<a name="7.2.0"></a>
+# 7.2.0 (2021-02-24)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v7.1.0...v7.2.0)
+
+We expect this release to ship in the DevTools of [Chrome 90](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## New contributors
+
+Thanks to our new contributors 👽🐷🐰🐯🐻!
+
+- @1d0n7kn0w
+- Benajmin Franz @BennyAlex
+
+## Core
+
+* emulation: bump chrome versions ([#12104](https://github.com/GoogleChrome/lighthouse/pull/12104))
+* unsized-images: ignore non-network SVGs ([#12120](https://github.com/GoogleChrome/lighthouse/pull/12120))
+* preload: do not warn for cache loads ([#12122](https://github.com/GoogleChrome/lighthouse/pull/12122))
+* be more lenient for some audits on localhost ([#11766](https://github.com/GoogleChrome/lighthouse/pull/11766))
+
+## Fraggle Rock
+
+Support for auditing user flows ([#11313](https://github.com/GoogleChrome/lighthouse/issues/11313))
+
+* fr: add navigation phase + trace gatherer ([#12098](https://github.com/GoogleChrome/lighthouse/pull/12098))
+* fr: add DevtoolsLog artifact ([#12074](https://github.com/GoogleChrome/lighthouse/pull/12074))
+
+## Deps
+
+* update snyk snapshot ([#12132](https://github.com/GoogleChrome/lighthouse/pull/12132))
+
+## Clients
+
+* lr: skip uses-http2 audit for mobile ([#12115](https://github.com/GoogleChrome/lighthouse/pull/12115))
+
+## Docs
+
+* auth: correct path in readme ([#12112](https://github.com/GoogleChrome/lighthouse/pull/12112))
+* throttling: retitle devtools panel h2 ([#12126](https://github.com/GoogleChrome/lighthouse/pull/12126))
+
+## Tests
+
+* sync devtools tests ([#12127](https://github.com/GoogleChrome/lighthouse/pull/12127))
+
+## Misc
+
+* treemap: first pass ([#11832](https://github.com/GoogleChrome/lighthouse/pull/11832))
+* add LIGHTHOUSE_FLAGS to gcp script. tweak extract script ([#12100](https://github.com/GoogleChrome/lighthouse/pull/12100))
+* rename lantern baseline values ([#10950](https://github.com/GoogleChrome/lighthouse/pull/10950))
+* fixed typos More => more ([#12092](https://github.com/GoogleChrome/lighthouse/pull/12092))
+* ci: update GH actions commit SHAs ([#12099](https://github.com/GoogleChrome/lighthouse/pull/12099))
+
+<a name="7.1.0"></a>
 # 7.1.0 (2021-02-11)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v7.0.1...v7.1.0)
 
