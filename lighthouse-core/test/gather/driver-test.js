@@ -227,42 +227,6 @@ describe('.setExtraHTTPHeaders', () => {
   });
 });
 
-describe('.getAppManifest', () => {
-  it('should return null when no manifest', async () => {
-    connectionStub.sendCommand = createMockSendCommandFn().mockResponse(
-      'Page.getAppManifest',
-      {data: undefined, url: '/manifest'}
-    );
-    const result = await driver.getAppManifest();
-    expect(result).toEqual(null);
-  });
-
-  it('should return the manifest', async () => {
-    const manifest = {name: 'The App'};
-    connectionStub.sendCommand = createMockSendCommandFn().mockResponse(
-      'Page.getAppManifest',
-      {data: JSON.stringify(manifest), url: '/manifest'}
-    );
-    const result = await driver.getAppManifest();
-    expect(result).toEqual({data: JSON.stringify(manifest), url: '/manifest'});
-  });
-
-  it('should handle BOM-encoded manifest', async () => {
-    const fs = require('fs');
-    const manifestWithoutBOM = fs.readFileSync(__dirname + '/../fixtures/manifest.json').toString();
-    const manifestWithBOM = fs
-      .readFileSync(__dirname + '/../fixtures/manifest-bom.json')
-      .toString();
-
-    connectionStub.sendCommand = createMockSendCommandFn().mockResponse(
-      'Page.getAppManifest',
-      {data: manifestWithBOM, url: '/manifest'}
-    );
-    const result = await driver.getAppManifest();
-    expect(result).toEqual({data: manifestWithoutBOM, url: '/manifest'});
-  });
-});
-
 describe('.goOffline', () => {
   it('should send offline emulation', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()

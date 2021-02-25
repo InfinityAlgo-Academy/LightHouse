@@ -40,7 +40,7 @@ async function _setup({driver, config, requestedUrl}) {
 
   // TODO(FR-COMPAT): setupDriver
 
-  const baseArtifacts = getBaseArtifacts(config);
+  const baseArtifacts = await getBaseArtifacts(config, driver);
   baseArtifacts.URL.requestedUrl = requestedUrl;
 
   return {baseArtifacts};
@@ -99,6 +99,7 @@ async function _collectPhaseArtifacts({navigationContext, artifacts, phase}) {
         : {};
 
       return gatherer[phase]({
+        url: await navigationContext.driver.url(),
         driver: navigationContext.driver,
         gatherMode: 'navigation',
         dependencies,

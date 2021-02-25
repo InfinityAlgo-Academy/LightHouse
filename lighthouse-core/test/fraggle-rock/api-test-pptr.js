@@ -24,11 +24,13 @@ function getAuditsBreakdown(lhr) {
     audit => !irrelevantDisplayModes.has(audit.scoreDisplayMode)
   );
 
-  const informativeAudits = applicableAudits
-    .filter(audit => audit.scoreDisplayMode === 'informative');
+  const informativeAudits = applicableAudits.filter(
+    audit => audit.scoreDisplayMode === 'informative'
+  );
 
-  const erroredAudits = applicableAudits
-    .filter(audit => audit.score === null && audit && !informativeAudits.includes(audit));
+  const erroredAudits = applicableAudits.filter(
+    audit => audit.score === null && audit && !informativeAudits.includes(audit)
+  );
 
   const failedAudits = applicableAudits.filter(audit => audit.score !== null && audit.score < 1);
 
@@ -93,7 +95,7 @@ describe('Fraggle Rock API', () => {
 
       const {auditResults, erroredAudits, failedAudits} = getAuditsBreakdown(lhr);
       // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
-      expect(auditResults.length).toMatchInlineSnapshot(`65`);
+      expect(auditResults.length).toMatchInlineSnapshot(`72`);
 
       expect(erroredAudits).toHaveLength(0);
       expect(failedAudits.map(audit => audit.id)).toContain('label');
@@ -117,7 +119,9 @@ describe('Fraggle Rock API', () => {
       const bestPractices = lhr.categories['best-practices'];
       expect(bestPractices.score).toBeLessThan(1);
 
-      const {erroredAudits, failedAudits} = getAuditsBreakdown(lhr);
+      const {auditResults, erroredAudits, failedAudits} = getAuditsBreakdown(lhr);
+      // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
+      expect(auditResults.length).toMatchInlineSnapshot(`24`);
 
       expect(erroredAudits).toHaveLength(0);
       expect(failedAudits.map(audit => audit.id)).toContain('errors-in-console');
@@ -153,7 +157,9 @@ describe('Fraggle Rock API', () => {
       if (!result) throw new Error('Lighthouse failed to produce a result');
 
       const {lhr} = result;
-      const {failedAudits, erroredAudits} = getAuditsBreakdown(lhr);
+      const {auditResults, failedAudits, erroredAudits} = getAuditsBreakdown(lhr);
+      // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
+      expect(auditResults.length).toMatchInlineSnapshot(`102`);
       expect(erroredAudits).toHaveLength(0);
 
       const failedAuditIds = failedAudits.map(audit => audit.id);

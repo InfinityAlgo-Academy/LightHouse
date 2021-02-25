@@ -23,9 +23,16 @@ const {
 function createMockSession() {
   return {
     sendCommand: createMockSendCommandFn({useSessionId: false}),
+    setNextProtocolTimeout: jest.fn(),
     once: createMockOnceFn(),
     on: createMockOnFn(),
     off: jest.fn(),
+
+    /** @return {LH.Gatherer.FRProtocolSession} */
+    asSession() {
+      // @ts-expect-error - We'll rely on the tests passing to know this matches.
+      return this;
+    },
   };
 }
 
@@ -67,17 +74,18 @@ function createMockExecutionContext() {
 }
 
 function createMockDriver() {
+  const page = createMockPage();
   const session = createMockSession();
   const context = createMockExecutionContext();
 
   return {
-    _page: createMockPage(),
+    _page: page,
     _executionContext: context,
     _session: session,
+    url: () => page.url(),
     defaultSession: session,
     connect: jest.fn(),
-    evaluate: context.evaluate,
-    evaluateAsync: context.evaluateAsync,
+    executionContext: context,
 
     /** @return {Driver} */
     asDriver() {

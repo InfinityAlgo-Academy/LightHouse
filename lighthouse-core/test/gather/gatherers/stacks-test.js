@@ -7,24 +7,26 @@
 
 /* eslint-env jest */
 
-const collectStacks = require('../../lib/stack-collector.js');
+const StacksGatherer = require('../../../gather/gatherers/stacks.js');
 
-describe('stack collector', () => {
-  /** @type {{driver: {evaluate: jest.Mock}}} */
-  let passContext;
+describe('StacksGatherer', () => {
+  /** @type {{executionContext: {evaluate: jest.Mock}}} */
+  let driver;
 
   beforeEach(() => {
-    passContext = {driver: {executionContext: {evaluate: jest.fn()}}};
+    driver = {executionContext: {evaluate: jest.fn()}};
   });
 
   it('returns the detected stacks', async () => {
-    passContext.driver.executionContext.evaluate.mockResolvedValue([
+    driver.executionContext.evaluate.mockResolvedValue([
       {id: 'jquery', name: 'jQuery', version: '2.1.0', npm: 'jquery'},
       {id: 'angular', name: 'Angular', version: '', npm: ''},
       {id: 'magento', name: 'Magento', version: 2},
     ]);
 
-    expect(await collectStacks(passContext)).toEqual([
+    /** @type {*} */
+    const executionContext = driver.executionContext;
+    expect(await StacksGatherer.collectStacks(executionContext)).toEqual([
       {detector: 'js', id: 'jquery', name: 'jQuery', npm: 'jquery', version: '2.1.0'},
       {detector: 'js', id: 'angular', name: 'Angular', npm: undefined, version: undefined},
       {detector: 'js', id: 'magento', name: 'Magento', npm: undefined, version: '2'},

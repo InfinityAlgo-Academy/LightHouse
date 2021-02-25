@@ -5,30 +5,51 @@
  */
 'use strict';
 
+const {getBrowserVersion, getBenchmarkIndex} = require('../../gather/driver/environment.js');
+
 /**
  * @param {LH.Config.FRConfig} config
- * @return {LH.BaseArtifacts}
+ * @param {LH.Gatherer.FRTransitionalDriver} driver
+ * @return {Promise<LH.BaseArtifacts>}
  */
-function getBaseArtifacts(config) {
-  // TODO(FR-COMPAT): convert these to regular artifacts
+async function getBaseArtifacts(config, driver) {
+  const HostUserAgent = (await getBrowserVersion(driver.defaultSession)).userAgent;
+
+  // Whether Lighthouse was run on a mobile device (i.e. not on a desktop machine).
+  const HostFormFactor =
+    HostUserAgent.includes('Android') || HostUserAgent.includes('Mobile') ? 'mobile' : 'desktop';
+
+  const BenchmarkIndex = await getBenchmarkIndex(driver.executionContext);
+
+  /** @type {Array<string | LH.IcuMessage>} */
+  const LighthouseRunWarnings = [];
+
+  // TODO(FR-COMPAT): support slow host CPU warning
+  // TODO(FR-COMPAT): support redirected URL warning
 
   return {
+    // Meta artifacts.
     fetchTime: new Date().toJSON(),
-    LighthouseRunWarnings: [],
-    URL: {requestedUrl: '', finalUrl: ''},
     Timing: [],
-    Stacks: [],
+    LighthouseRunWarnings,
     settings: config.settings,
-    HostFormFactor: 'mobile',
-    HostUserAgent: 'unknown',
-    NetworkUserAgent: 'unknown',
-    BenchmarkIndex: 0,
-    InstallabilityErrors: {errors: []},
+    // Environment artifacts that can always be computed.
+    HostFormFactor,
+    HostUserAgent,
+    BenchmarkIndex,
+    // Contextual artifacts whose collection changes based on gather mode.
+    URL: {requestedUrl: '', finalUrl: ''},
+    PageLoadError: null, // TODO(FR-COMPAT): support PageLoadError
+    // Artifacts that have been replaced by regular gatherers in Fraggle Rock.
+    Stacks: [],
+    NetworkUserAgent: '',
+    WebAppManifest: null, // replaced by standard gatherer
+    InstallabilityErrors: {errors: []}, // replaced by standard gatherer
     traces: {},
     devtoolsLogs: {},
-    WebAppManifest: null,
-    PageLoadError: null,
   };
 }
 
-module.exports = {getBaseArtifacts};
+module.exports = {
+  getBaseArtifacts,
+};

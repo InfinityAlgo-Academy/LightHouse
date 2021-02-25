@@ -191,6 +191,7 @@ function initializeConfig(configJSON, context) {
   // TODO(FR-COMPAT): validate audits
   // TODO(FR-COMPAT): validate categories
   // TODO(FR-COMPAT): filter config using onlyAudits/onlyCategories
+  // TODO(FR-COMPAT): always keep base/shared artifacts/audits (Stacks, FullPageScreenshot, etc)
 
   config = filterConfigByGatherMode(config, context.gatherMode);
 

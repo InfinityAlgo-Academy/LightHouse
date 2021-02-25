@@ -30,7 +30,7 @@ let driver;
 
 beforeEach(() => {
   // @ts-expect-error - Individual mock functions are applied as necessary.
-  page = {target: () => pageTarget};
+  page = {target: () => pageTarget, url: jest.fn()};
   // @ts-expect-error - Individual mock functions are applied as necessary.
   pageTarget = {createCDPSession: () => puppeteerSession};
   // @ts-expect-error - Individual mock functions are applied as necessary.
@@ -59,6 +59,13 @@ for (const fnName of DELEGATED_FUNCTIONS) {
     });
   });
 }
+
+describe('.url', () => {
+  it('should return the page url', async () => {
+    page.url = jest.fn().mockReturnValue('https://example.com');
+    expect(await driver.url()).toEqual('https://example.com');
+  });
+});
 
 describe('.executionContext', () => {
   it('should fail if called before connect', () => {

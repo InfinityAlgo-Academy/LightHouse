@@ -21,7 +21,7 @@ async function snapshot(options) {
 
   return Runner.run(
     async () => {
-      const baseArtifacts = getBaseArtifacts(config);
+      const baseArtifacts = await getBaseArtifacts(config, driver);
       baseArtifacts.URL.requestedUrl = url;
       baseArtifacts.URL.finalUrl = url;
 
@@ -32,8 +32,15 @@ async function snapshot(options) {
         const {id, gatherer} = artifactDefn;
         const artifactName = /** @type {keyof LH.GathererArtifacts} */ (id);
         const dependencies = await collectArtifactDependencies(artifactDefn, artifacts);
+        /** @type {LH.Gatherer.FRTransitionalContext} */
+        const context = {
+          gatherMode: 'snapshot',
+          url,
+          driver,
+          dependencies,
+        };
         const artifact = await Promise.resolve()
-          .then(() => gatherer.instance.snapshot({gatherMode: 'snapshot', driver, dependencies}))
+          .then(() => gatherer.instance.snapshot(context))
           .catch(err => err);
 
         artifacts[artifactName] = artifact;

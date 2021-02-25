@@ -6,14 +6,17 @@
 'use strict';
 
 const log = require('lighthouse-logger');
-const manifestParser = require('../lib/manifest-parser.js');
-const stacksGatherer = require('../lib/stack-collector.js');
 const LHError = require('../lib/lh-error.js');
 const NetworkAnalyzer = require('../lib/dependency-graph/simulator/network-analyzer.js');
 const NetworkRecorder = require('../lib/network-recorder.js');
 const constants = require('../config/constants.js');
 const i18n = require('../lib/i18n/i18n.js');
 const URL = require('../lib/url-shim.js');
+const {getBenchmarkIndex} = require('./driver/environment.js');
+const WebAppManifest = require('./gatherers/web-app-manifest.js');
+const InstallabilityErrors = require('./gatherers/installability-errors.js');
+const NetworkUserAgent = require('./gatherers/network-user-agent.js');
+const Stacks = require('./gatherers/stacks.js');
 
 const UIStrings = {
   /**
@@ -576,27 +579,6 @@ class GatherRunner {
   }
 
   /**
-   * Creates an Artifacts.InstallabilityErrors, tranforming data from the protocol
-   * for old versions of Chrome.
-   * @param {LH.Gatherer.PassContext} passContext
-   * @return {Promise<LH.Artifacts.InstallabilityErrors>}
-   */
-  static async getInstallabilityErrors(passContext) {
-    const status = {
-      msg: 'Get webapp installability errors',
-      id: 'lh:gather:getInstallabilityErrors',
-    };
-    log.time(status);
-    const response =
-      await passContext.driver.sendCommand('Page.getInstallabilityErrors');
-
-    const errors = response.installabilityErrors;
-
-    log.timeEnd(status);
-    return {errors};
-  }
-
-  /**
    * Populates the important base artifacts from a fully loaded test page.
    * Currently must be run before `start-url` gatherer so that `WebAppManifest`
    * will be available to it.
@@ -618,24 +600,19 @@ class GatherRunner {
     }
 
     // Fetch the manifest, if it exists.
-    baseArtifacts.WebAppManifest = await GatherRunner.getWebAppManifest(passContext);
+    baseArtifacts.WebAppManifest = await WebAppManifest.getWebAppManifest(
+      passContext.driver.defaultSession, passContext.url);
 
     if (baseArtifacts.WebAppManifest) {
-      baseArtifacts.InstallabilityErrors = await GatherRunner.getInstallabilityErrors(passContext);
+      baseArtifacts.InstallabilityErrors = await InstallabilityErrors.getInstallabilityErrors(
+        passContext.driver.defaultSession);
     }
 
-    baseArtifacts.Stacks = await stacksGatherer(passContext);
+    baseArtifacts.Stacks = await Stacks.collectStacks(passContext.driver.executionContext);
 
     // Find the NetworkUserAgent actually used in the devtoolsLogs.
     const devtoolsLog = baseArtifacts.devtoolsLogs[passContext.passConfig.passName];
-    const userAgentEntry = devtoolsLog.find(entry =>
-      entry.method === 'Network.requestWillBeSent' &&
-      !!entry.params.request.headers['User-Agent']
-    );
-    if (userAgentEntry) {
-      // @ts-expect-error - guaranteed to exist by the find above
-      baseArtifacts.NetworkUserAgent = userAgentEntry.params.request.headers['User-Agent'];
-    }
+    baseArtifacts.NetworkUserAgent = NetworkUserAgent.getNetworkUserAgent(devtoolsLog);
 
     const slowCpuWarning = GatherRunner.getSlowHostCpuWarning(passContext);
     if (slowCpuWarning) baseArtifacts.LighthouseRunWarnings.push(slowCpuWarning);
@@ -656,28 +633,6 @@ class GatherRunner {
   }
 
   /**
-   * Uses the debugger protocol to fetch the manifest from within the context of
-   * the target page, reusing any credentials, emulation, etc, already established
-   * there.
-   *
-   * Returns the parsed manifest or null if the page had no manifest. If the manifest
-   * was unparseable as JSON, manifest.value will be undefined and manifest.warning
-   * will have the reason. See manifest-parser.js for more information.
-   *
-   * @param {LH.Gatherer.PassContext} passContext
-   * @return {Promise<LH.Artifacts.Manifest|null>}
-   */
-  static async getWebAppManifest(passContext) {
-    const status = {msg: 'Get webapp manifest', id: 'lh:gather:getWebAppManifest'};
-    log.time(status);
-    const response = await passContext.driver.getAppManifest();
-    if (!response) return null;
-    const manifest = manifestParser(response.data, response.url, passContext.url);
-    log.timeEnd(status);
-    return manifest;
-  }
-
-  /**
    * @param {Array<LH.Config.Pass>} passConfigs
    * @param {{driver: Driver, requestedUrl: string, settings: LH.Config.Settings}} options
    * @return {Promise<LH.Artifacts>}
@@ -695,7 +650,7 @@ class GatherRunner {
       await GatherRunner.loadBlank(driver);
 
       const baseArtifacts = await GatherRunner.initializeBaseArtifacts(options);
-      baseArtifacts.BenchmarkIndex = await options.driver.getBenchmarkIndex();
+      baseArtifacts.BenchmarkIndex = await getBenchmarkIndex(driver.executionContext);
 
       await GatherRunner.setupDriver(driver, options, baseArtifacts.LighthouseRunWarnings);
 

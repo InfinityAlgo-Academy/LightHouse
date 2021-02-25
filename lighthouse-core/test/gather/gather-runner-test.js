@@ -28,12 +28,10 @@ const GatherRunner = {
   beginRecording: makeParamsOptional(GatherRunner_.beginRecording),
   collectArtifacts: makeParamsOptional(GatherRunner_.collectArtifacts),
   endRecording: makeParamsOptional(GatherRunner_.endRecording),
-  getInstallabilityErrors: makeParamsOptional(GatherRunner_.getInstallabilityErrors),
   getInterstitialError: makeParamsOptional(GatherRunner_.getInterstitialError),
   getNetworkError: makeParamsOptional(GatherRunner_.getNetworkError),
   getNonHtmlError: makeParamsOptional(GatherRunner_.getNonHtmlError),
   getPageLoadError: makeParamsOptional(GatherRunner_.getPageLoadError),
-  getWebAppManifest: makeParamsOptional(GatherRunner_.getWebAppManifest),
   getSlowHostCpuWarning: makeParamsOptional(GatherRunner_.getSlowHostCpuWarning),
   initializeBaseArtifacts: makeParamsOptional(GatherRunner_.initializeBaseArtifacts),
   loadPage: makeParamsOptional(GatherRunner_.loadPage),
@@ -1648,28 +1646,6 @@ describe('GatherRunner', function() {
     });
   });
 
-  describe('.getInstallabilityErrors', () => {
-    /** @type {RecursivePartial<LH.Gatherer.PassContext>} */
-    let passContext;
-
-    beforeEach(() => {
-      passContext = {
-        driver,
-      };
-    });
-
-    it('should return the response from the protocol', async () => {
-      connectionStub.sendCommand
-        .mockResponse('Page.getInstallabilityErrors', {
-          installabilityErrors: [{errorId: 'no-icon-available', errorArguments: []}],
-        });
-      const result = await GatherRunner.getInstallabilityErrors(passContext);
-      expect(result).toEqual({
-        errors: [{errorId: 'no-icon-available', errorArguments: []}],
-      });
-    });
-  });
-
   describe('.getSlowHostCpuWarning', () => {
     /** @type {RecursivePartial<LH.Gatherer.PassContext>} */
     let passContext;
@@ -1715,43 +1691,6 @@ describe('GatherRunner', function() {
     it('should ignore high benchmarkindex values', () => {
       Object.assign(passContext.baseArtifacts, {BenchmarkIndex: 1500});
       expect(GatherRunner.getSlowHostCpuWarning(passContext)).toBe(undefined);
-    });
-  });
-
-  describe('.getWebAppManifest', () => {
-    const MANIFEST_URL = 'https://example.com/manifest.json';
-    /** @type {RecursivePartial<LH.Gatherer.PassContext>} */
-    let passContext;
-
-    beforeEach(() => {
-      passContext = {
-        url: 'https://example.com/index.html',
-        baseArtifacts: {},
-        driver,
-      };
-    });
-
-    it('should return null when there is no manifest', async () => {
-      connectionStub.sendCommand
-        .mockResponse('Page.getAppManifest', {})
-        .mockResponse('Page.getInstallabilityErrors', {installabilityErrors: []});
-      const result = await GatherRunner.getWebAppManifest(passContext);
-      expect(result).toEqual(null);
-    });
-
-    it('should parse the manifest when found', async () => {
-      const manifest = {name: 'App'};
-      connectionStub.sendCommand
-        .mockResponse('Page.getAppManifest', {data: JSON.stringify(manifest), url: MANIFEST_URL})
-        .mockResponse('Page.getInstallabilityErrors', {installabilityErrors: []});
-
-      const result = await GatherRunner.getWebAppManifest(passContext);
-      expect(result).toHaveProperty('raw', JSON.stringify(manifest));
-      expect(result && result.value).toMatchObject({
-        name: {value: 'App', raw: 'App'},
-        start_url: {value: passContext.url, raw: undefined},
-      });
-      expect(result && result.url).toMatch(MANIFEST_URL);
     });
   });
 });

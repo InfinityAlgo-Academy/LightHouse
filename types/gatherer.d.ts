@@ -33,8 +33,13 @@ declare global {
 
     /** The limited context interface shared between pre and post Fraggle Rock Lighthouse. */
     export interface FRTransitionalContext<TDependencies extends DependencyKey = DefaultDependenciesKey> {
-      gatherMode: GatherMode
+      /** The URL of the page that is currently active. Might be `about:blank` in the before phases */
+      url: string;
+      /** The gather mode Lighthouse is currently in. */
+      gatherMode: GatherMode;
+      /** The connection to the page being analyzed. */
       driver: FRTransitionalDriver;
+      /** The set of available dependencies requested by the current gatherer. */
       dependencies: TDependencies extends DefaultDependenciesKey ?
         {} :
         Pick<GathererArtifacts, Exclude<TDependencies, DefaultDependenciesKey>>;
@@ -58,7 +63,12 @@ declare global {
       trace?: Trace;
     }
 
-    export type PhaseArtifact = LH.GathererArtifacts[keyof LH.GathererArtifacts] | LH.Artifacts['devtoolsLogs'] | LH.Artifacts['traces']
+    export type PhaseArtifact = |
+        LH.GathererArtifacts[keyof LH.GathererArtifacts] |
+      LH.Artifacts['devtoolsLogs'] |
+      LH.Artifacts['traces'] |
+      LH.Artifacts['WebAppManifest'] |
+      LH.Artifacts['InstallabilityErrors'];
     export type PhaseResultNonPromise = void|PhaseArtifact
     export type PhaseResult = PhaseResultNonPromise | Promise<PhaseResultNonPromise>
 

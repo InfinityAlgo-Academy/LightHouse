@@ -81,6 +81,13 @@ describe('NavigationRunner', () => {
   });
 
   describe('_setup', () => {
+    beforeEach(() => {
+      mockDriver._session.sendCommand.mockResponse('Browser.getVersion', {
+        product: 'Chrome/88.0',
+        userAgent: 'Chrome',
+      });
+    });
+
     it('should connect the driver', async () => {
       await runner._setup({driver, config, requestedUrl});
       expect(mockDriver.connect).toHaveBeenCalled();

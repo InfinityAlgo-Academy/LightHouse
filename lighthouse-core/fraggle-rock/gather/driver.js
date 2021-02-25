@@ -47,6 +47,11 @@ class Driver {
     return this._executionContext;
   }
 
+  /** @return {Promise<string>} */
+  async url() {
+    return this._page.url();
+  }
+
   /** @return {Promise<void>} */
   async connect() {
     if (this._session) return;

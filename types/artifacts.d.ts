@@ -18,12 +18,42 @@ declare global {
   module LH {
     export interface Artifacts extends BaseArtifacts, GathererArtifacts {}
 
+    export type FRArtifacts = StrictOmit<Artifacts,
+      | 'AnchorElements'
+      | 'CSSUsage'
+      | 'Fonts'
+      | 'FullPageScreenshot'
+      | 'HTTPRedirect'
+      | 'ImageElements'
+      | 'InspectorIssues'
+      | 'JsUsage'
+      | 'LinkElements'
+      | 'MainDocumentContent'
+      | 'Manifest'
+      | 'MixedContent'
+      | 'OptimizedImages'
+      | 'ResponseCompression'
+      | 'ScriptElements'
+      | 'ServiceWorker'
+      | 'SourceMaps'
+      | 'TagsBlockingFirstPaint'
+      | 'TraceElements'
+      | keyof FRBaseArtifacts
+    >;
+
     /**
-     * Artifacts always created by GatherRunner. These artifacts are available to Lighthouse plugins.
+     * Artifacts always created by gathering. These artifacts are available to Lighthouse plugins.
      * NOTE: any breaking changes here are considered breaking Lighthouse changes that must be done
      * on a major version bump.
      */
-    export interface BaseArtifacts {
+    export type BaseArtifacts = UniversalBaseArtifacts & ContextualBaseArtifacts & LegacyBaseArtifacts
+
+    export type FRBaseArtifacts = UniversalBaseArtifacts & ContextualBaseArtifacts;
+
+    /**
+     * The set of base artifacts that are available in every mode of Lighthouse operation.
+     */
+    export interface UniversalBaseArtifacts {
       /** The ISO-8601 timestamp of when the test page was fetched and artifacts collected. */
       fetchTime: string;
       /** A set of warnings about unexpected things encountered while loading and testing the page. */
@@ -32,28 +62,40 @@ declare global {
       HostFormFactor: 'desktop'|'mobile';
       /** The user agent string of the version of Chrome used. */
       HostUserAgent: string;
-      /** The user agent string that Lighthouse used to load the page. */
-      NetworkUserAgent: string;
       /** The benchmark index that indicates rough device class. */
       BenchmarkIndex: number;
-      /** Parsed version of the page's Web App Manifest, or null if none found. */
-      WebAppManifest: Artifacts.Manifest | null;
-      /** Errors preventing page being installable as PWA. */
-      InstallabilityErrors: Artifacts.InstallabilityErrors;
+      /** An object containing information about the testing configuration used by Lighthouse. */
+      settings: Config.Settings;
+      /** The timing instrumentation of the gather portion of a run. */
+      Timing: Artifacts.MeasureEntry[];
+    }
+
+    /**
+     * The set of base artifacts whose semantics differ or may be valueless in certain Lighthouse gather modes.
+     */
+    export interface ContextualBaseArtifacts {
+      /** The URL initially requested and the post-redirects URL that was actually loaded. */
+      URL: {requestedUrl: string, finalUrl: string};
+      /** If loading the page failed, value is the error that caused it. Otherwise null. */
+      PageLoadError: LighthouseError | null;
+    }
+
+    /**
+     * The set of base artifacts that were replaced by standard gatherers in Fraggle Rock.
+     */
+    export interface LegacyBaseArtifacts {
+      /** The user agent string that Lighthouse used to load the page. Set to the empty string if unknown. */
+      NetworkUserAgent: string;
       /** Information on detected tech stacks (e.g. JS libraries) used by the page. */
       Stacks: Artifacts.DetectedStack[];
+      /** Parsed version of the page's Web App Manifest, or null if none found. This moved to a regular artifact in Fraggle Rock. */
+      WebAppManifest: Artifacts.Manifest | null;
+      /** Errors preventing page being installable as PWA. This moved to a regular artifact in Fraggle Rock. */
+      InstallabilityErrors: Artifacts.InstallabilityErrors;
       /** A set of page-load traces, keyed by passName. */
       traces: {[passName: string]: Trace};
       /** A set of DevTools debugger protocol records, keyed by passName. */
       devtoolsLogs: {[passName: string]: DevtoolsLog};
-      /** An object containing information about the testing configuration used by Lighthouse. */
-      settings: Config.Settings;
-      /** The URL initially requested and the post-redirects URL that was actually loaded. */
-      URL: {requestedUrl: string, finalUrl: string};
-      /** The timing instrumentation of the gather portion of a run. */
-      Timing: Artifacts.MeasureEntry[];
-      /** If loading the page failed, value is the error that caused it. Otherwise null. */
-      PageLoadError: LighthouseError | null;
     }
 
     /**
@@ -64,7 +106,7 @@ declare global {
     export interface PublicGathererArtifacts {
       /** ConsoleMessages deprecation and intervention warnings, console API calls, and exceptions logged by Chrome during page load. */
       ConsoleMessages: Artifacts.ConsoleMessage[];
-      /** All the iframe elements in the page.*/
+      /** All the iframe elements in the page. */
       IFrameElements: Artifacts.IFrameElement[];
       /** The contents of the main HTML document network resource. */
       MainDocumentContent: string;
