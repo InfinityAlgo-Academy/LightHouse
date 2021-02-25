@@ -179,6 +179,7 @@ const defaultConfig = {
     gatherers: [
       'http-redirect',
     ],
+    skipPageLoad: true,
   }],
   audits: [
     'is-on-https',

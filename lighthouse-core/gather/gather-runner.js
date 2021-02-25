@@ -94,9 +94,20 @@ class GatherRunner {
     };
     log.time(status);
     try {
+      let waitForFcp;
+      let waitForLoad;
+      let waitForNavigated;
+      if (passContext.passConfig.skipPageLoad) {
+        waitForNavigated = true;
+      } else {
+        waitForLoad = true;
+        waitForFcp = passContext.passConfig.recordTrace;
+      }
+
       const {finalUrl, timedOut} = await driver.gotoURL(passContext.url, {
-        waitForFcp: passContext.passConfig.recordTrace,
-        waitForLoad: true,
+        waitForFcp,
+        waitForLoad,
+        waitForNavigated,
         passContext,
       });
       passContext.url = finalUrl;

@@ -64,6 +64,8 @@ declare global {
          * Ignore means a failure is expected and no action should be taken.
          */
         loadFailureMode?: 'fatal'|'warn'|'ignore';
+        /** Whether the pass should skip the page load. If false, gathering begins as soon as navigation completes. */
+        skipPageLoad?: boolean;
         /** The number of milliseconds to wait after FCP until the page should be considered loaded. */
         pauseAfterFcpMs?: number;
         /** The number of milliseconds to wait after the load event until the page should be considered loaded. */
