@@ -7,14 +7,6 @@
 
 /** @typedef {import('../gather/driver.js')} Driver */
 
-const OFFLINE_METRICS = {
-  offline: true,
-  // values of 0 remove any active throttling. crbug.com/456324#c9
-  latency: 0,
-  downloadThroughput: 0,
-  uploadThroughput: 0,
-};
-
 const NO_THROTTLING_METRICS = {
   latency: 0,
   downloadThroughput: 0,
@@ -82,14 +74,6 @@ function clearAllNetworkEmulation(driver) {
 
 /**
  * @param {Driver} driver
- * @return {Promise<void>}
- */
-function goOffline(driver) {
-  return driver.sendCommand('Network.emulateNetworkConditions', OFFLINE_METRICS);
-}
-
-/**
- * @param {Driver} driver
  * @param {Required<LH.ThrottlingSettings>} throttlingSettings
  * @return {Promise<void>}
  */
@@ -112,5 +96,4 @@ module.exports = {
   clearAllNetworkEmulation,
   enableCPUThrottling,
   disableCPUThrottling,
-  goOffline,
 };

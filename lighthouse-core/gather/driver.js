@@ -85,20 +85,6 @@ class Driver {
   _domainEnabledCounts = new Map();
 
   /**
-   * Used for monitoring url redirects during gotoURL.
-   * @type {?string}
-   * @private
-   */
-  _monitoredUrl = null;
-
-  /**
-   * Used for monitoring frame navigations during gotoURL.
-   * @type {Array<LH.Crdp.Page.Frame>}
-   * @private
-   */
-  _monitoredUrlNavigations = [];
-
-  /**
    * @type {number}
    * @private
    */
@@ -125,8 +111,6 @@ class Driver {
     this.on('Target.attachedToTarget', event => {
       this._handleTargetAttached(event).catch(this._handleEventError);
     });
-
-    this.on('Page.frameNavigated', evt => this._monitoredUrlNavigations.push(evt.frame));
     this.on('Debugger.paused', () => this.sendCommand('Debugger.resume'));
 
     connection.on('protocolevent', this._handleProtocolEvent.bind(this));
@@ -803,26 +787,6 @@ class Driver {
         emulation.clearAllNetworkEmulation(this);
 
     await Promise.all([cpuPromise, networkPromise]);
-  }
-
-  /**
-   * Emulate internet disconnection.
-   * @return {Promise<void>}
-   */
-  async goOffline() {
-    await this.sendCommand('Network.enable');
-    await emulation.goOffline(this);
-    this.online = false;
-  }
-
-  /**
-   * Enable internet connection, using emulated mobile settings if applicable.
-   * @param {{settings: LH.Config.Settings, passConfig: LH.Config.Pass}} options
-   * @return {Promise<void>}
-   */
-  async goOnline(options) {
-    await this.setThrottling(options.settings, options.passConfig);
-    this.online = true;
   }
 
   /**
