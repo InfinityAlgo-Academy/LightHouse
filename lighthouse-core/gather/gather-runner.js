@@ -97,7 +97,7 @@ class GatherRunner {
       let waitForFcp;
       let waitForLoad;
       let waitForNavigated;
-      if (passContext.passConfig.skipPageLoad) {
+      if (passContext.passConfig.skipWaitingForPageLoad) {
         waitForNavigated = true;
       } else {
         waitForLoad = true;
