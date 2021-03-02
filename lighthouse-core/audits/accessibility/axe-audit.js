@@ -37,7 +37,7 @@ class AxeAudit extends Audit {
     const isNotApplicable = notApplicables.find(result => result.id === this.meta.id);
     if (isNotApplicable) {
       return {
-        score: 1,
+        score: null,
         notApplicable: true,
       };
     }
@@ -66,7 +66,7 @@ class AxeAudit extends Audit {
     // Since there is no score impact from informative rules, display the rule as not applicable
     if (isInformative && !rule) {
       return {
-        score: 1,
+        score: null,
         notApplicable: true,
       };
     }

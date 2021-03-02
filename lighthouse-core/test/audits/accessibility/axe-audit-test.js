@@ -102,10 +102,9 @@ describe('Accessibility: axe-audit', () => {
       }
       const artifacts = {
         Accessibility: {
-          passes: [{
-            id: 'fake-axe-pass',
-            help: 'http://example.com/',
-          }],
+          violations: [],
+          notApplicable: [],
+          incomplete: [],
         },
       };
 
@@ -134,15 +133,7 @@ describe('Accessibility: axe-audit', () => {
             }],
             help: 'http://example.com/',
           }],
-          // TODO: remove: axe-core v3.3.0 backwards-compatibility test
-          violations: [{
-            id: 'fake-axe-failure-case',
-            nodes: [{
-              html: '<input id="multi-label-form-element" />',
-              node: {},
-            }],
-            help: 'http://example.com/',
-          }],
+          violations: [],
         },
       };
 
