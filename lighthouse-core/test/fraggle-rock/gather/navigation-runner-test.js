@@ -133,16 +133,18 @@ describe('NavigationRunner', () => {
         {
           ...config,
           navigations: [
-            {id: 'default', artifacts: ['Accessibility']},
+            {id: 'default', artifacts: ['FontSize']},
             {id: 'second', artifacts: ['ConsoleMessages']},
           ],
         },
         {gatherMode: 'navigation'}
       ).config;
 
+      // Both gatherers will error in these test conditions, but artifact errors
+      // will be merged into single `artifacts` object.
       const {artifacts} = await runner._navigations({driver, config, requestedUrl});
       const artifactIds = Object.keys(artifacts);
-      expect(artifactIds).toContain('Accessibility');
+      expect(artifactIds).toContain('FontSize');
       expect(artifactIds).toContain('ConsoleMessages');
     });
   });
