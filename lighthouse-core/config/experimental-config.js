@@ -17,6 +17,7 @@ const config = {
     'autocomplete',
     'large-javascript-libraries',
     'script-treemap-data',
+    'csp-xss',
   ],
   categories: {
     // @ts-ignore: `title` is required in CategoryJson. setting to the same value as the default
@@ -30,6 +31,7 @@ const config = {
     // config is awkward - easier to omit the property here. Will defer to default config.
     'best-practices': {
       auditRefs: [
+        {id: 'csp-xss', weight: 0, group: 'best-practices-trust-safety'},
         {id: 'autocomplete', weight: 0, group: 'best-practices-ux'},
       ],
     },
