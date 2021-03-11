@@ -623,7 +623,7 @@ function writeStringsToCtcFiles(locale, strings) {
   fs.writeFileSync(fullPath, JSON.stringify(output, null, 2) + '\n');
 }
 
-// @ts-expect-error Test if called from the CLI or as a module.
+// Test if called from the CLI or as a module.
 if (require.main === module) {
   /** @type {Record<string, CtcMessage>} */
   const strings = {};

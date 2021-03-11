@@ -198,7 +198,7 @@ async function cli(argv) {
   build(entryPath, distPath);
 }
 
-// @ts-expect-error Test if called from the CLI or as a module.
+// Test if called from the CLI or as a module.
 if (require.main === module) {
   cli(process.argv);
 } else {
