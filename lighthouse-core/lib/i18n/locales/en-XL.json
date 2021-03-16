@@ -593,9 +593,6 @@
   "lighthouse-core/audits/csp-xss.js | noCsp": {
     "message": "N̂ó ĈŚP̂ f́ôún̂d́ îń êńf̂ór̂ćêḿêńt̂ ḿôd́ê"
   },
-  "lighthouse-core/audits/csp-xss.js | noSyntaxErrors": {
-    "message": "N̂ó ŝýn̂t́âx́ êŕr̂ór̂ś."
-  },
   "lighthouse-core/audits/csp-xss.js | title": {
     "message": "Êńŝúr̂é ĈŚP̂ íŝ éf̂f́êćt̂ív̂é âǵâín̂śt̂ X́ŜŚ ât́t̂áĉḱŝ"
   },
@@ -1731,7 +1728,7 @@
     "message": "r̂éf̂ĺêćt̂éd̂-x́ŝś îś d̂ép̂ŕêćât́êd́ ŝín̂ćê ĆŜṔ2. P̂ĺêáŝé, ûśê t́ĥé X̂-X́ŜŚ-P̂ŕôt́êćt̂íôń ĥéâd́êŕ îńŝt́êád̂."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "M̂íŝśîńĝ b́âśê-úr̂í âĺl̂óŵś t̂h́ê ín̂j́êćt̂íôń ôf́ <b̂áŝé> t̂áĝś. T̂h́êý ĉán̂ b́ê úŝéd̂ t́ô śêt́ t̂h́ê b́âśê ÚR̂Ĺ f̂ór̂ ál̂ĺ r̂él̂át̂ív̂é (ŝćr̂íp̂t́) ÛŔL̂ś t̂ó âń ât́t̂áĉḱêŕ ĉón̂t́r̂ól̂ĺêd́ d̂óm̂áîń. Ĉán̂ ýôú ŝét̂ ít̂ t́ô 'ńôńê' ór̂ 'śêĺf̂'?"
+    "message": "M̂íŝśîńĝ b́âśê-úr̂í âĺl̂óŵś îńĵéĉt́êd́ <b̂áŝé> t̂áĝś t̂ó ŝét̂ t́ĥé b̂áŝé ÛŔL̂ f́ôŕ âĺl̂ ŕêĺât́îv́ê ÚR̂Ĺŝ (é.ĝ. śĉŕîṕt̂ś) t̂ó âń ât́t̂áĉḱêŕ ĉón̂t́r̂ól̂ĺêd́ d̂óm̂áîń. Ĉón̂śîd́êŕ ŝét̂t́îńĝ b́âśê-úr̂í t̂ó 'n̂ón̂é' ôŕ 'ŝél̂f́'."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "Êĺêḿêńt̂ś ĉón̂t́r̂ól̂ĺêd́ b̂ý ôb́ĵéĉt́-ŝŕĉ ár̂é ĉón̂śîd́êŕêd́ l̂éĝáĉý f̂éât́ûŕêś. Ĉón̂śîd́êŕ ŝét̂t́îńĝ ób̂j́êćt̂-śr̂ć t̂ó 'n̂ón̂é' t̂ó p̂ŕêv́êńt̂ t́ĥé îńĵéĉt́îón̂ óf̂ ṕl̂úĝín̂ś t̂h́ât́ êx́êćût́ê ún̂śâf́ê śĉŕîṕt̂ś."

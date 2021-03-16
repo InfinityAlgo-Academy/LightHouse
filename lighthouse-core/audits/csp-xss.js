@@ -9,9 +9,7 @@ const Audit = require('./audit.js');
 const MainResource = require('../computed/main-resource.js');
 const i18n = require('../lib/i18n/i18n.js');
 const {
-  evaluateRawCspForFailures,
-  evaluateRawCspForWarnings,
-  evaluateRawCspForSyntax,
+  evaluateRawCspsForXss,
   getTranslatedDescription,
 } = require('../lib/csp-evaluator.js');
 
@@ -29,8 +27,6 @@ const UIStrings = {
   /** Message shown when one or more CSPs are defined in a <meta> tag. Shown in a table with a list of other CSP bypasses and warnings. "CSP" stands for "Content Security Policy". "CSP" and "HTTP" do not need to be translated. */
   metaTagMessage: 'The page contains a CSP defined in a <meta> tag. ' +
     'Consider defining the CSP in an HTTP header if you can.',
-  /** Message shown when a CSP has no syntax errors. Shown in a table with a list of other CSP bypasses and warnings. "CSP" stands for "Content Security Policy". */
-  noSyntaxErrors: 'No syntax errors.',
   /** Label for a column in a data table; entries will be a directive of a CSP. "CSP" stands for "Content Security Policy". */
   columnDirective: 'Directive',
 };
@@ -88,20 +84,17 @@ class CspXss extends Audit {
   }
 
   /**
+   * @param {import('../lib/csp-evaluator').Finding[][]} syntaxFindings
    * @param {string[]} rawCsps
    * @return {LH.Audit.Details.TableItem[]}
    */
-  static collectSyntaxResults(rawCsps) {
+  static constructSyntaxResults(syntaxFindings, rawCsps) {
     /** @type {LH.Audit.Details.TableItem[]} */
     const results = [];
 
-    const syntaxFindingsByCsp = evaluateRawCspForSyntax(rawCsps);
-    for (let i = 0; i < rawCsps.length; ++i) {
-      const items = syntaxFindingsByCsp[i].map(this.findingToTableItem);
-      if (!items.length) {
-        items.push({description: str_(UIStrings.noSyntaxErrors)});
-      }
-
+    for (let i = 0; i < syntaxFindings.length; ++i) {
+      const items = syntaxFindings[i].map(this.findingToTableItem);
+      if (!items.length) continue;
       results.push({
         description: {
           type: 'code',
@@ -114,27 +107,6 @@ class CspXss extends Audit {
       });
     }
 
-    return results;
-  }
-
-  /**
-   * @param {string[]} rawCsps
-   * @return {LH.Audit.Details.TableItem[]}
-   */
-  static collectBypassResults(rawCsps) {
-    const findings = evaluateRawCspForFailures(rawCsps);
-    return findings.map(this.findingToTableItem);
-  }
-
-  /**
-   * @param {string[]} rawCsps
-   * @return {LH.Audit.Details.TableItem[]}
-   */
-  static collectWarningResults(rawCsps) {
-    const findings = evaluateRawCspForWarnings(rawCsps);
-    const results = [
-      ...findings.map(this.findingToTableItem),
-    ];
     return results;
   }
 
@@ -155,16 +127,18 @@ class CspXss extends Audit {
     }
 
     // TODO: Add severity icons for bypasses and warnings.
-    const bypasses = this.collectBypassResults(rawCsps);
-    const warnings = this.collectWarningResults(rawCsps);
-    const syntax = this.collectSyntaxResults(rawCsps);
+    const {bypasses, warnings, syntax} = evaluateRawCspsForXss(rawCsps);
+
+    const results = [
+      ...this.constructSyntaxResults(syntax, rawCsps),
+      ...bypasses.map(this.findingToTableItem),
+      ...warnings.map(this.findingToTableItem),
+    ];
 
     // Add extra warning for a CSP defined in a meta tag.
     if (cspMetaTags.length) {
-      warnings.push({description: str_(UIStrings.metaTagMessage), directive: undefined});
+      results.push({description: str_(UIStrings.metaTagMessage), directive: undefined});
     }
-
-    const results = [...syntax, ...bypasses, ...warnings];
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [

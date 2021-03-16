@@ -593,9 +593,6 @@
   "lighthouse-core/audits/csp-xss.js | noCsp": {
     "message": "No CSP found in enforcement mode"
   },
-  "lighthouse-core/audits/csp-xss.js | noSyntaxErrors": {
-    "message": "No syntax errors."
-  },
   "lighthouse-core/audits/csp-xss.js | title": {
     "message": "Ensure CSP is effective against XSS attacks"
   },
@@ -1731,7 +1728,7 @@
     "message": "reflected-xss is deprecated since CSP2. Please, use the X-XSS-Protection header instead."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows the injection of <base> tags. They can be used to set the base URL for all relative (script) URLs to an attacker controlled domain. Can you set it to 'none' or 'self'?"
+    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "Elements controlled by object-src are considered legacy features. Consider setting object-src to 'none' to prevent the injection of plugins that execute unsafe scripts."
