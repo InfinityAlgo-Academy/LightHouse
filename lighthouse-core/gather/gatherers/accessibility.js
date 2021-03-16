@@ -27,7 +27,6 @@ async function runA11yChecks() {
     branding: {
       application,
     },
-    // @ts-expect-error axe types don't yet include this new field
     noHtml: true,
   });
   const axeResults = await axe.run(document, {
