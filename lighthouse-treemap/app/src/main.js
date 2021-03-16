@@ -9,6 +9,9 @@
 
 /* globals webtreemap TreemapUtil */
 
+const UNUSED_BYTES_IGNORE_THRESHOLD = 20 * 1024;
+const UNUSED_BYTES_IGNORE_BUNDLE_SOURCE_RATIO = 0.5;
+
 /** @type {TreemapViewer} */
 let treemapViewer;
 
@@ -45,14 +48,25 @@ class TreemapViewer {
       }
     }
 
-    /** @type {LH.Treemap.Node} */
-    this.currentTreemapRoot; // eslint-disable-line no-unused-expressions
+    /** @type {WeakMap<LH.Treemap.Node, LH.Treemap.NodePath>} */
+    this.nodeToPathMap = new WeakMap();
+
     this.documentUrl = options.lhr.requestedUrl;
     this.el = el;
     this.getHueForKey = TreemapUtil.stableHasher(TreemapUtil.COLOR_HUES);
 
+    // TODO: make "DataSelector" to switch between different groups or specific d1 nodes
+    const group = 'scripts';
+    const depthOneNodes = this.depthOneNodesByGroup[group];
+    this.currentTreemapRoot = this.wrapNodesInNewRootNode(depthOneNodes);
+    TreemapUtil.walk(this.currentTreemapRoot, (node, path) => this.nodeToPathMap.set(node, path));
+
+    this.viewModes = this.createViewModes();
+    this.currentViewMode = this.viewModes[0];
+
+    renderViewModeButtons(this.viewModes);
     this.createHeader();
-    this.show();
+    this.render();
     this.initListeners();
   }
 
@@ -110,13 +124,56 @@ class TreemapViewer {
     };
   }
 
-  show() {
-    const group = 'scripts';
+  createViewModes() {
+    /**
+     * @param {LH.Treemap.Node} root
+     * @return {LH.Treemap.ViewMode|undefined}
+     */
+    function createUnusedBytesViewMode(root) {
+      if (root.unusedBytes === undefined) return;
 
-    const depthOneNodes = this.depthOneNodesByGroup[group];
-    this.currentTreemapRoot = this.wrapNodesInNewRootNode(depthOneNodes);
-    renderViewModeOptions(this.currentTreemapRoot.resourceBytes);
+      /** @type {LH.Treemap.NodePath[]} */
+      const highlightNodePaths = [];
+      for (const d1Node of root.children || []) {
+        // Only highlight leaf nodes if entire node (ie a JS bundle) has greater than a certain
+        // number of unused bytes.
+        if (!d1Node.unusedBytes || d1Node.unusedBytes < UNUSED_BYTES_IGNORE_THRESHOLD) continue;
 
+        TreemapUtil.walk(d1Node, (node, path) => {
+          // Only highlight leaf nodes of a certain ratio of unused bytes.
+          if (node.children) return;
+          if (!node.unusedBytes || !node.resourceBytes) return;
+          if (node.unusedBytes / node.resourceBytes < UNUSED_BYTES_IGNORE_BUNDLE_SOURCE_RATIO) {
+            return;
+          }
+
+          highlightNodePaths.push([root.name, ...path]);
+        });
+      }
+      return {
+        id: 'unused-bytes',
+        label: 'Unused Bytes',
+        subLabel: TreemapUtil.formatBytes(root.unusedBytes),
+        highlightNodePaths,
+      };
+    }
+
+    /** @type {LH.Treemap.ViewMode[]} */
+    const viewModes = [];
+
+    viewModes.push({
+      id: 'all',
+      label: `All`,
+      subLabel: TreemapUtil.formatBytes(this.currentTreemapRoot.resourceBytes),
+    });
+
+    const unusedBytesViewMode = createUnusedBytesViewMode(this.currentTreemapRoot);
+    if (unusedBytesViewMode) viewModes.push(unusedBytesViewMode);
+
+    return viewModes;
+  }
+
+  render() {
     TreemapUtil.walk(this.currentTreemapRoot, node => {
       // @ts-ignore: webtreemap will store `dom` on the data to speed up operations.
       // However, when we change the underlying data representation, we need to delete
@@ -125,22 +182,22 @@ class TreemapViewer {
       delete node.dom;
 
       // @ts-ignore: webtreemap uses `size` to partition the treemap.
-      node.size = node.resourceBytes || 0;
+      node.size = node[this.currentViewMode.partitionBy || 'resourceBytes'] || 0;
     });
     webtreemap.sort(this.currentTreemapRoot);
 
-    this.el.innerHTML = '';
-    this.render();
-  }
-
-  render() {
     this.treemap = new webtreemap.TreeMap(this.currentTreemapRoot, {
       padding: [16, 3, 3, 3],
       spacing: 10,
       caption: node => this.makeCaption(node),
     });
+
+    this.el.innerHTML = '';
     this.treemap.render(this.el);
+
+    applyActiveClass(this.currentViewMode.id);
     TreemapUtil.find('.webtreemap-node').classList.add('webtreemap-node--root');
+
     this.updateColors();
   }
 
@@ -156,17 +213,21 @@ class TreemapViewer {
    * @param {LH.Treemap.Node} node
    */
   makeCaption(node) {
-    const size = node.resourceBytes;
-    const total = this.currentTreemapRoot.resourceBytes;
+    const partitionBy = this.currentViewMode.partitionBy || 'resourceBytes';
+    const bytes = node[partitionBy];
+    const total = this.currentTreemapRoot[partitionBy];
 
     const parts = [
       TreemapUtil.elide(node.name, 60),
-      `${TreemapUtil.formatBytes(size)} (${Math.round(size / total * 100)}%)`,
     ];
 
-    // Only add label for bytes on the root node.
-    if (node === this.currentTreemapRoot) {
-      parts[1] = `resource bytes: ${parts[1]}`;
+    if (bytes !== undefined && total !== undefined) {
+      let str = `${TreemapUtil.formatBytes(bytes)} (${Math.round(bytes / total * 100)}%)`;
+      // Only add label for bytes on the root node.
+      if (node === this.currentTreemapRoot) {
+        str = `${partitionBy}: ${str}`;
+      }
+      parts.push(str);
     }
 
     return parts.join(' · ');
@@ -191,6 +252,14 @@ class TreemapViewer {
         // Ran out of colors.
       }
 
+      // A view can set nodes to highlight. If so, don't color anything else.
+      if (this.currentViewMode.highlightNodePaths) {
+        const path = this.nodeToPathMap.get(node);
+        const shouldHighlight = path && this.currentViewMode.highlightNodePaths
+          .some(pathToHighlight => TreemapUtil.pathsAreEqual(pathToHighlight, path));
+        if (!shouldHighlight) backgroundColor = 'white';
+      }
+
       // @ts-ignore: webtreemap will add a dom node property to every node.
       const dom = /** @type {HTMLElement?} */ (node.dom);
       if (dom) {
@@ -202,30 +271,49 @@ class TreemapViewer {
 }
 
 /**
- * @param {number} scriptsResourceSize
+ * @param {LH.Treemap.ViewMode[]} viewModes
  */
-function renderViewModeOptions(scriptsResourceSize) {
-  const viewModesEl = TreemapUtil.find('.lh-modes');
-  viewModesEl.innerHTML = '';
-
+function renderViewModeButtons(viewModes) {
   /**
-   * @param {string} label
-   * @param {number} bytes
+   * @param {LH.Treemap.ViewMode} viewMode
    */
-  function makeViewMode(label, bytes) {
-    const modesEl = TreemapUtil.createChildOf(viewModesEl, 'div', 'view-mode');
-    modesEl.classList.add('view-mode--active');
+  function render(viewMode) {
+    const viewModeEl = TreemapUtil.createChildOf(viewModesEl, 'div', 'view-mode');
+    viewModeEl.id = `view-mode--${viewMode.id}`;
 
-    TreemapUtil.createChildOf(modesEl, 'span').textContent = label;
-    TreemapUtil.createChildOf(modesEl, 'span', 'lh-text-dim').textContent =
-    ` (${TreemapUtil.formatBytes(bytes)})`;
+    const labelEl =
+      TreemapUtil.createChildOf(viewModeEl, 'label', 'view-mode__label');
+    TreemapUtil.createChildOf(labelEl, 'span').textContent = viewMode.label;
+    TreemapUtil.createChildOf(labelEl, 'span', 'lh-text-dim').textContent =
+      ` (${viewMode.subLabel})`;
 
-    modesEl.addEventListener('click', () => {
-      treemapViewer.show();
+    const inputEl = TreemapUtil.createChildOf(labelEl, 'input', 'view-mode__button', {
+      type: 'radio',
+      name: 'view-mode',
+    });
+
+    inputEl.addEventListener('click', () => {
+      treemapViewer.currentViewMode = viewMode;
+      treemapViewer.render();
     });
   }
 
-  makeViewMode('All', scriptsResourceSize);
+  const viewModesEl = TreemapUtil.find('.lh-modes');
+  viewModesEl.innerHTML = '';
+  viewModes.forEach(render);
+}
+
+/**
+ * @param {string} currentViewModeId
+ */
+function applyActiveClass(currentViewModeId) {
+  const viewModesEl = TreemapUtil.find('.lh-modes');
+  for (const viewModeEl of viewModesEl.querySelectorAll('.view-mode')) {
+    if (!(viewModeEl instanceof HTMLElement)) continue;
+
+    viewModeEl.classList
+      .toggle('view-mode--active', viewModeEl.id === `view-mode--${currentViewModeId}`);
+  }
 }
 
 /**
