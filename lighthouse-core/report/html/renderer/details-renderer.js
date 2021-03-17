@@ -184,7 +184,7 @@ class DetailsRenderer {
    * @param {string} md
    * @return {HTMLDivElement}
    */
-  _renderMarkdownText(md) {
+  _renderMarkdown(md) {
     const element = this._dom.createElement('div', 'lh-text lh-text--md');
     const span = this._dom.convertMarkdownCodeSnippets(md);
     element.appendChild(span);
@@ -299,8 +299,8 @@ class DetailsRenderer {
         const strValue = String(value);
         return this._renderText(strValue);
       }
-      case 'markdowntext': {
-        return this._renderMarkdownText(String(value));
+      case 'markdown': {
+        return this._renderMarkdown(String(value));
       }
       case 'thumbnail': {
         const strValue = String(value);
