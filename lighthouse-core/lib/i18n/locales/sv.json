@@ -17,6 +17,15 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "Attributen av typen `[aria-*]` stämmer med elementets roll"
   },
+  "lighthouse-core/audits/accessibility/aria-command-name.js | description": {
+    "message": "Utan ett igenkännligt namn läses element upp med ett generellt namn av skärmläsarna. Det gör dem oanvändbara för personer som behöver använda en skärmläsare. [Läs mer](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-command-name.js | failureTitle": {
+    "message": "Namnen för `button`-, `link`- och `menuitem`-elementen är inte igenkännliga."
+  },
+  "lighthouse-core/audits/accessibility/aria-command-name.js | title": {
+    "message": "Namnen för `button`-, `link`- och `menuitem`-elementen är igenkännliga"
+  },
   "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
     "message": "Hjälpmedelstekniker som skärmläsare fungerar inte ordentligt när `aria-hidden=\"true\"` har angetts för dokumentet `<body>`. [Läs mer](https://web.dev/aria-hidden-body/)."
   },
@@ -36,13 +45,31 @@
     "message": "Alla `[aria-hidden=\"true\"]`-element har inte fokuserbara underordnade element"
   },
   "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
-    "message": "Utan ett igenkännligt namn läses inmatningsfält upp med ett generellt namn av skärmläsarna. Det gör dem oanvändbara för personer som behöver använda en skärmläsare. [Läs mer](https://web.dev/aria-input-field-name/)."
+    "message": "Utan ett igenkännligt namn läses inmatningsfält upp med ett generellt namn av skärmläsarna. Det gör dem oanvändbara för personer som behöver använda en skärmläsare. [Läs mer](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
     "message": "Namnen för inmatningsfälten för ARIA är inte tillgängliga"
   },
   "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
     "message": "Namnen för inmatningsfälten för ARIA är tillgängliga"
+  },
+  "lighthouse-core/audits/accessibility/aria-meter-name.js | description": {
+    "message": "Utan ett igenkännligt namn läses element upp med ett generellt namn av skärmläsarna. Det gör dem oanvändbara för personer som behöver använda en skärmläsare. [Läs mer](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-meter-name.js | failureTitle": {
+    "message": "Namnen för `meter`-elementen för ARIA är inte igenkännliga."
+  },
+  "lighthouse-core/audits/accessibility/aria-meter-name.js | title": {
+    "message": "Namnen för `meter`-elementen för ARIA är igenkännliga"
+  },
+  "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
+    "message": "Utan ett igenkännligt namn läses element upp med ett generellt namn av skärmläsarna. Det gör dem oanvändbara för personer som behöver använda en skärmläsare. [Läs mer](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
+    "message": "Namnen för `progressbar`-elementen för ARIA är inte igenkännliga."
+  },
+  "lighthouse-core/audits/accessibility/aria-progressbar-name.js | title": {
+    "message": "Namnen för `progressbar`-elementen för ARIA är igenkännliga"
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Vissa ARIA-roller har obligatoriska attribut som beskriver elementets tillstånd för skärmläsare. [Läs mer](https://web.dev/aria-required-attr/)."
@@ -81,13 +108,31 @@
     "message": "Alla `[role]`-värden är giltiga"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Utan ett igenkännligt namn läses av/på-fält upp med ett generellt namn av skärmläsarna. Det gör dem oanvändbara för personer som behöver använda en skärmläsare. [Läs mer](https://web.dev/aria-toggle-field-name/)."
+    "message": "Utan ett igenkännligt namn läses av/på-fält upp med ett generellt namn av skärmläsarna. Det gör dem oanvändbara för personer som behöver använda en skärmläsare. [Läs mer](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "Namnen för på/av-fälten för ARIA är inte tillgängliga"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
     "message": "Namnen för på/av-fälten för ARIA är tillgängliga"
+  },
+  "lighthouse-core/audits/accessibility/aria-tooltip-name.js | description": {
+    "message": "Utan ett igenkännligt namn läses element upp med ett generellt namn av skärmläsarna. Det gör dem oanvändbara för personer som behöver använda en skärmläsare. [Läs mer](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-tooltip-name.js | failureTitle": {
+    "message": "Namnen för `tooltip`-elementen för ARIA är inte igenkännliga."
+  },
+  "lighthouse-core/audits/accessibility/aria-tooltip-name.js | title": {
+    "message": "Namnen för `tooltip`-elementen för ARIA är igenkännliga"
+  },
+  "lighthouse-core/audits/accessibility/aria-treeitem-name.js | description": {
+    "message": "Utan ett igenkännligt namn läses element upp med ett generellt namn av skärmläsarna. Det gör dem oanvändbara för personer som behöver använda en skärmläsare. [Läs mer](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-treeitem-name.js | failureTitle": {
+    "message": "Namnen för `treeitem`-elementen för ARIA är inte igenkännliga."
+  },
+  "lighthouse-core/audits/accessibility/aria-treeitem-name.js | title": {
+    "message": "Namnen för `treeitem`-elementen för ARIA är igenkännliga"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "Skärmläsare och andra hjälpmedel kan inte tolka ARIA-attribut med ogiltiga värden. [Läs mer](https://web.dev/aria-valid-attr-value/)."
@@ -536,6 +581,21 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Undvik att kedjekoppla kritiska förfrågningar"
   },
+  "lighthouse-core/audits/csp-xss.js | columnDirective": {
+    "message": "Direktiv"
+  },
+  "lighthouse-core/audits/csp-xss.js | description": {
+    "message": "En stark säkerhetspolicy för innehåll (CSP) minskar avsevärt risken för XSS-attacker. [Läs mer](https://csp.withgoogle.com/docs/index.html)"
+  },
+  "lighthouse-core/audits/csp-xss.js | metaTagMessage": {
+    "message": "Sidan har en CSP som definieras i en <meta>-tagg. Om du har möjlighet kan du definiera CSP i ett HTTP-huvud."
+  },
+  "lighthouse-core/audits/csp-xss.js | noCsp": {
+    "message": "CPS hittades inte i åtgärdsläget"
+  },
+  "lighthouse-core/audits/csp-xss.js | title": {
+    "message": "Kontrollera att CPS är effektiv mot XSS-attacker"
+  },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "Utfasning/varning"
   },
@@ -810,7 +870,7 @@
     "message": "Appen har redan installerats"
   },
   "lighthouse-core/audits/installable-manifest.js | cannot-download-icon": {
-    "message": "Ikonen som laddades ned var tom eller skadad"
+    "message": "Det gick inte att ladda ned en obligatorisk ikon från manifestet"
   },
   "lighthouse-core/audits/installable-manifest.js | columnValue": {
     "message": "Felorsak"
@@ -1050,7 +1110,7 @@
     "message": "Serverlatens"
   },
   "lighthouse-core/audits/no-unload-listeners.js | description": {
-    "message": "Händelsen `unload` aktiveras inte på ett tillförlitligt sätt och att lyssna efter den kan förhindra webbläsaroptimeringar, t.ex. cachelagring för bakåt- och framåtknapparna. Vi rekommenderar att du använder händelserna `pagehide` eller `visibilitychange` i stället. [Läs mer](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
+    "message": "Händelsen `unload` aktiveras inte på ett tillförlitligt sätt och att lyssna efter den kan förhindra webbläsaroptimeringar, t.ex. vilocacheminne. Vi rekommenderar att du använder händelserna `pagehide` eller `visibilitychange` i stället. [Läs mer](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
   },
   "lighthouse-core/audits/no-unload-listeners.js | failureTitle": {
     "message": "Registrerar en lyssnare för `unload`"
@@ -1655,6 +1715,57 @@
   "lighthouse-core/gather/gather-runner.js | warningTimeout": {
     "message": "Sidan lästes in för långsamt för att slutföra sidhämtningen inom tidsgränsen. Resultatet kan vara ofullständigt."
   },
+  "lighthouse-core/lib/csp-evaluator.js | allowlistFallback": {
+    "message": "Du kan lägga till webbadressscheman https: och http: (ignoreras av webbläsare med stöd för strict-dynamic) för bakåtkompatibilitet med äldre webbläsare."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | deprecatedDisownOpener": {
+    "message": "disown-opener har utfasats sedan CSP3. Använd huvudet Cross-Origin-Opener-Policy i stället."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | deprecatedReferrer": {
+    "message": "referrer har utfasats sedan CSP2. Använd huvudet Referrer-Policy i stället."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | deprecatedReflectedXSS": {
+    "message": "reflected-xss har utfasats sedan CSP2. Använd huvudet X-XSS-Protection i stället."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
+    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
+    "message": "Element som styrs av object-src anses vara äldre funktioner. Du kan ställa in object-src på none för att förhindra användningen av pluginprogram som kör osäkra skript."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | missingScriptSrc": {
+    "message": "Direktivet script-src saknas. Detta kan möjliggöra att osäkra skript körs."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | missingSemicolon": {
+    "message": "Glömde du semikolon? {keyword} verkar vara ett direktiv, inte ett sökord."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | nonceCharset": {
+    "message": "Noncevärden bör använda teckenuppsättningen base64."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | nonceLength": {
+    "message": "Noncevärden måste bestå av minst åtta tecken."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | reportToOnly": {
+    "message": "Rapporteringsdestinationen konfigureras enbart via direktivet report-to. Direktivet stöds endast i Chromium-baserade webbläsare och vi rekommenderar därför att du även använder direktivet report-uri."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | reportingDestinationMissing": {
+    "message": "Det finns ingen CPS som konfigurerar en rapporteringsdestination. Detta gör det svårt att bevara CSP med tiden och övervaka eventuella intrång."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | strictDynamic": {
+    "message": "Värdens godkännandelistor kan ofta passeras. Du kan använda strict-dynamic i kombination med CSP-noncevärden eller -hashvärden."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unknownDirective": {
+    "message": "Okänt CSP-direktiv."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
+    "message": "{keyword} verkar vara ett ogiltigt sökord."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unsafeInline": {
+    "message": "unsafe-inline möjliggör att osäkra skript och händelsehanterare körs på sidan. Du kan använda CSP-noncevärden eller -hashvärden om du vill godkänna skript separat."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
+    "message": "Du kan lägga till unsafe-inline (ignoreras av webbläsare med stöd för noncevärden/hashvärden) för bakåtkompatibilitet med äldre webbläsare."
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnBlockingTime": {
     "message": "Tidsåtgång för blockering av huvudtråd"
   },
@@ -1797,7 +1908,7 @@
     "message": "Tidsgränsen överskreds under väntan på den första anslutningen till felsökningsprotokollet."
   },
   "lighthouse-core/lib/lh-error.js | didntCollectScreenshots": {
-    "message": "Inga skärmdumpar togs i Chrome medan sidan lästes in. Kontrollera att det finns synligt innehåll på sidan och kör Lighthouse igen. ({errorCode})"
+    "message": "Inga skärmbilder togs i Chrome medan sidan lästes in. Kontrollera att det finns synligt innehåll på sidan och kör Lighthouse igen. ({errorCode})"
   },
   "lighthouse-core/lib/lh-error.js | dnsFailure": {
     "message": "Uppslagningen av den angivna domänen misslyckades på DNS-servern."

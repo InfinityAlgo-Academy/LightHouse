@@ -17,6 +17,15 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "`[aria-*]`-kenmerken komen overeen met hun rollen"
   },
+  "lighthouse-core/audits/accessibility/aria-command-name.js | description": {
+    "message": "Als een element geen toegankelijke naam heeft, kondigen schermlezers dit aan met een generieke naam, waardoor het veld onbruikbaar wordt voor gebruikers die afhankelijk zijn van schermlezers. [Meer informatie](https://web.dev/aria-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-command-name.js | failureTitle": {
+    "message": "`button`-, `link`- en `menuitem`-elementen hebben geen toegankelijke namen."
+  },
+  "lighthouse-core/audits/accessibility/aria-command-name.js | title": {
+    "message": "`button`- `link`- en `menuitem`-elementen hebben toegankelijke namen"
+  },
   "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
     "message": "Ondersteunende technologieën, zoals schermlezers, werken inconsistent als `aria-hidden=\"true\"` is ingesteld in het document `<body>`. [Meer informatie](https://web.dev/aria-hidden-body/)"
   },
@@ -36,13 +45,31 @@
     "message": "`[aria-hidden=\"true\"]`-elementen bevatten geen focusbare onderliggende elementen"
   },
   "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
-    "message": "Als een invoerveld geen toegankelijke naam heeft, kondigen schermlezers dit aan met een generieke naam, waardoor het veld onbruikbaar wordt voor gebruikers die afhankelijk zijn van schermlezers. [Meer informatie](https://web.dev/aria-input-field-name/)"
+    "message": "Als een invoerveld geen toegankelijke naam heeft, kondigen schermlezers dit aan met een generieke naam, waardoor het veld onbruikbaar wordt voor gebruikers die afhankelijk zijn van schermlezers. [Meer informatie](https://web.dev/aria-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
     "message": "ARIA-invoervelden hebben geen toegankelijke namen"
   },
   "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
     "message": "ARIA-invoervelden hebben toegankelijke namen"
+  },
+  "lighthouse-core/audits/accessibility/aria-meter-name.js | description": {
+    "message": "Als een element geen toegankelijke naam heeft, kondigen schermlezers dit aan met een generieke naam, waardoor het veld onbruikbaar wordt voor gebruikers die afhankelijk zijn van schermlezers. [Meer informatie](https://web.dev/aria-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-meter-name.js | failureTitle": {
+    "message": "ARIA `meter`-elementen hebben geen toegankelijke namen."
+  },
+  "lighthouse-core/audits/accessibility/aria-meter-name.js | title": {
+    "message": "ARIA `meter`-elementen hebben toegankelijke namen"
+  },
+  "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
+    "message": "Als een element geen toegankelijke naam heeft, kondigen schermlezers dit aan met een generieke naam, waardoor het veld onbruikbaar wordt voor gebruikers die afhankelijk zijn van schermlezers. [Meer informatie](https://web.dev/aria-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
+    "message": "ARIA `progressbar`-elementen hebben geen toegankelijke namen."
+  },
+  "lighthouse-core/audits/accessibility/aria-progressbar-name.js | title": {
+    "message": "ARIA `progressbar`-elementen hebben toegankelijke namen"
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Sommige ARIA-rollen hebben vereiste kenmerken die de status van het element beschrijven voor schermlezers. [Meer informatie](https://web.dev/aria-required-attr/)"
@@ -81,13 +108,31 @@
     "message": "`[role]`-waarden zijn geldig"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Als een schakelveld geen toegankelijke naam heeft, kondigen schermlezers dit aan met een generieke naam, waardoor het veld onbruikbaar wordt voor gebruikers die afhankelijk zijn van schermlezers. [Meer informatie](https://web.dev/aria-toggle-field-name/)"
+    "message": "Als een schakelveld geen toegankelijke naam heeft, kondigen schermlezers dit aan met een generieke naam, waardoor het veld onbruikbaar wordt voor gebruikers die afhankelijk zijn van schermlezers. [Meer informatie](https://web.dev/aria-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "ARIA-schakelvelden hebben geen toegankelijke namen"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
     "message": "ARIA-schakelvelden hebben toegankelijke namen"
+  },
+  "lighthouse-core/audits/accessibility/aria-tooltip-name.js | description": {
+    "message": "Als een element geen toegankelijke naam heeft, kondigen schermlezers dit aan met een generieke naam, waardoor het veld onbruikbaar wordt voor gebruikers die afhankelijk zijn van schermlezers. [Meer informatie](https://web.dev/aria-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-tooltip-name.js | failureTitle": {
+    "message": "ARIA `tooltip`-elementen hebben geen toegankelijke namen."
+  },
+  "lighthouse-core/audits/accessibility/aria-tooltip-name.js | title": {
+    "message": "ARIA `tooltip`-elementen hebben toegankelijke namen"
+  },
+  "lighthouse-core/audits/accessibility/aria-treeitem-name.js | description": {
+    "message": "Als een element geen toegankelijke naam heeft, kondigen schermlezers dit aan met een generieke naam, waardoor het veld onbruikbaar wordt voor gebruikers die afhankelijk zijn van schermlezers. [Meer informatie](https://web.dev/aria-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-treeitem-name.js | failureTitle": {
+    "message": "ARIA `treeitem`-elementen hebben geen toegankelijke namen."
+  },
+  "lighthouse-core/audits/accessibility/aria-treeitem-name.js | title": {
+    "message": "ARIA `treeitem`-elementen hebben toegankelijke namen"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "ARIA-kenmerken met ongeldige waarden kunnen niet worden geïnterpreteerd door hulptechnologieën, zoals schermlezers. [Meer informatie](https://web.dev/aria-valid-attr-value/)"
@@ -225,7 +270,7 @@
     "message": "`<html>`-element bevat geen geldige waarde voor het `[lang]`-kenmerk."
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | title": {
-    "message": "`<html>`-element bevat een geldige waarde voor het`[lang]`-kenmerk"
+    "message": "`<html>`-element bevat een geldige waarde voor het `[lang]`-kenmerk"
   },
   "lighthouse-core/audits/accessibility/image-alt.js | description": {
     "message": "Voor informatieve elementen moet een korte, beschrijvende alternatieve tekst worden gebruikt. Decoratieve elementen kunnen worden genegeerd met een leeg alt-kenmerk. [Meer informatie](https://web.dev/image-alt/)"
@@ -536,6 +581,21 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Doorlinken van kritieke verzoeken voorkomen"
   },
+  "lighthouse-core/audits/csp-xss.js | columnDirective": {
+    "message": "Instructie"
+  },
+  "lighthouse-core/audits/csp-xss.js | description": {
+    "message": "Een sterk Content Security Policy (CSP) verkleint het risico op XSS-aanvallen aanzienlijk. [Meer informatie](https://csp.withgoogle.com/docs/index.html)"
+  },
+  "lighthouse-core/audits/csp-xss.js | metaTagMessage": {
+    "message": "De pagina bevat een CSP dat is gedefinieerd in een <meta>-tag. Overweeg het CSP te definiëren in een HTTP-header als dat mogelijk is."
+  },
+  "lighthouse-core/audits/csp-xss.js | noCsp": {
+    "message": "Geen CSP gevonden in de handhavingsmodus"
+  },
+  "lighthouse-core/audits/csp-xss.js | title": {
+    "message": "Zorgen dat het CSP effectief is tegen XSS-aanvallen"
+  },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "Beëindiging / Waarschuwing"
   },
@@ -810,7 +870,7 @@
     "message": "De app is al geïnstalleerd"
   },
   "lighthouse-core/audits/installable-manifest.js | cannot-download-icon": {
-    "message": "Het gedownloade icoon is leeg of beschadigd"
+    "message": "Kan een vereist icoon niet downloaden uit het manifest"
   },
   "lighthouse-core/audits/installable-manifest.js | columnValue": {
     "message": "Oorzaak van fout"
@@ -1011,7 +1071,7 @@
     "message": "Cumulatieve indelingsverschuiving (CLS) meet de beweging van zichtbare elementen binnen het kijkvenster. [Meer informatie](https://web.dev/cls/)"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Geschatte invoerwachttijd is een schatting van de tijd die je app nodig heeft om te reageren op gebruikersinvoer (in milliseconden), gemeten voor de drukste periode van 5 seconden tijdens het laden van de pagina. Als de wachttijd langer dan 50 ms is, kunnen gebruikers je app als traag beschouwen. [Meer informatie](https://web.dev/estimated-input-latency/)"
+    "message": "Geschatte invoerlatentie is een schatting van de tijd die je app nodig heeft om te reageren op gebruikersinvoer (in milliseconden), gemeten voor de drukste periode van 5 seconden tijdens het laden van de pagina. Als de latentie langer dan 50 ms is, kunnen gebruikers je app als traag beschouwen. [Meer informatie](https://web.dev/estimated-input-latency/)"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "'Eerste tekenbewerking met content' (FCP) geeft het tijdstip aan waarop de eerste tekst of afbeelding wordt weergegeven. [Meer informatie](https://web.dev/first-contentful-paint/)"
@@ -1026,7 +1086,7 @@
     "message": "'Tijd tot interactief' is de hoeveelheid tijd die nodig is voordat een pagina volledig interactief is. [Meer informatie](https://web.dev/interactive/)"
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
-    "message": "'Grootste tekenbewerking met content' (LCP) geeft het tijdstip aan waarop de grootste tekst of afbeelding is weergegeven. [Meer informatie](https://web.dev/lighthouse-largest-contentful-paint/)"
+    "message": "Grootste weergave met content (LCP) geeft het tijdstip aan waarop de grootste tekst of afbeelding is weergegeven. [Meer informatie](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "De maximale potentiële vertraging voor de eerste invoer die gebruikers kunnen ervaren, is de duur van de langste taak. [Meer informatie](https://web.dev/lighthouse-max-potential-fid/)"
@@ -1044,7 +1104,7 @@
     "message": "Retourtijden van netwerk"
   },
   "lighthouse-core/audits/network-server-latency.js | description": {
-    "message": "Serverwachttijden kunnen invloed hebben op webprestaties. Als de serverwachttijd van een beginpunt hoog is, is dit een indicatie dat de server overbelast is of slechte backend-prestaties levert. [Meer informatie](https://hpbn.co/primer-on-web-performance/#analyzing-the-resource-waterfall)"
+    "message": "Serverlatenties kunnen invloed hebben op de webprestaties. Als de serverlatentie van een beginpunt hoog is, is dit een indicatie dat de server overbelast is of slechte backend-prestaties levert. [Meer informatie](https://hpbn.co/primer-on-web-performance/#analyzing-the-resource-waterfall)"
   },
   "lighthouse-core/audits/network-server-latency.js | title": {
     "message": "Wachttijden van server-backend"
@@ -1655,6 +1715,57 @@
   "lighthouse-core/gather/gather-runner.js | warningTimeout": {
     "message": "De pagina is te langzaam geladen om binnen de tijdslimiet te voltooien. De resultaten kunnen onvolledig zijn."
   },
+  "lighthouse-core/lib/csp-evaluator.js | allowlistFallback": {
+    "message": "Voor compatibiliteit met oudere browsers kun je overwegen https: en http: URL-schema's toe te voegen (deze worden genegeerd door browsers die 'strict-dynamic' ondersteunen)."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | deprecatedDisownOpener": {
+    "message": "disown-opener is beëindigd sinds CSP3. Gebruik in plaats daarvan de header Cross-Origin-Opener-Policy."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | deprecatedReferrer": {
+    "message": "referrer is beëindigd sinds CSP2. Gebruik in plaats daarvan de header Referrer-Policy."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | deprecatedReflectedXSS": {
+    "message": "reflected-xss is beëindigd sinds CSP2. Gebruik in plaats daarvan de header X-XSS-Protection."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
+    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
+    "message": "Elementen die worden beheerd door object-src, worden gezien als verouderde functies. Overweeg object-src in te stellen op 'none' om te voorkomen dat er plug-ins worden ingevoegd die onveilige scripts uitvoeren."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | missingScriptSrc": {
+    "message": "De instructie script-src ontbreekt. Dit kan tot gevolg hebben dat onveilige scripts kunnen worden uitgevoerd."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | missingSemicolon": {
+    "message": "Ben je de puntkomma vergeten? Zo te zien is {keyword} een instructie en geen zoekwoord."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | nonceCharset": {
+    "message": "Nonces moeten de base64-tekenset gebruiken."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | nonceLength": {
+    "message": "Nonces moeten ten minste 8 tekens lang zijn."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | reportToOnly": {
+    "message": "De rapportagebestemming is alleen ingesteld via de instructie report-to. Deze instructie wordt alleen ondersteund in op Chromium gebaseerde browsers, dus het wordt aanbevolen ook een instructie report-uri te gebruiken."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | reportingDestinationMissing": {
+    "message": "Er is geen CSP waarmee een rapportagebestemming wordt ingesteld. Hierdoor is het moeilijk om het CSP na verloop van tijd te onderhouden en te monitoren op kwetsbaarheden."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | strictDynamic": {
+    "message": "Toelatingslijsten van hosts kunnen vaak worden omzeild. Overweeg 'strict-dynamic' te gebruiken in combinatie met CSP-nonces of -hashes."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unknownDirective": {
+    "message": "Onbekende CSP-instructie."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
+    "message": "Zo te zien is {keyword} een ongeldig zoekwoord."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unsafeInline": {
+    "message": "Met 'unsafe-inline' kunnen onveilige scripts en gebeurtenishandlers op de pagina worden uitgevoerd. Overweeg CSP-nonces of -hashes te gebruiken om scripts afzonderlijk toe te staan."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
+    "message": "Voor compatibiliteit met oudere browsers kun je overwegen 'unsafe-inline' toe te voegen (dit wordt genegeerd door browsers die nonces/hashes ondersteunen)."
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnBlockingTime": {
     "message": "Tijd dat primaire thread is geblokkeerd"
   },
@@ -1731,7 +1842,7 @@
     "message": "Document"
   },
   "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Geschatte invoerwachttijd"
+    "message": "Geschatte invoerlatentie"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
     "message": "Eerste keer dat CPU inactief was"
@@ -1857,7 +1968,7 @@
     "message": "Beginnavigatie"
   },
   "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
-    "message": "Maximum wachttijd voor kritiek pad:"
+    "message": "Maximum latentie voor kritiek pad:"
   },
   "lighthouse-core/report/html/renderer/util.js | dropdownCopyJSON": {
     "message": "Json kopiëren"
