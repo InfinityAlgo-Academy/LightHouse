@@ -98,7 +98,7 @@ describe('JSON-LD validation', () => {
     const errors = await validateJSONLD(`{
       "@context": {
         "image": {
-          "@id": "@error"
+          "@id": "/error/"
         }
       }
     }`);
