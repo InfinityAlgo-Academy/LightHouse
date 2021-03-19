@@ -1537,6 +1537,8 @@
   overflow: hidden;
 }
 .lh-element-screenshot__image {
+  /* Set by ElementScreenshotRenderer.installFullPageScreenshotCssVariable */
+  background-image: var(--element-screenshot-url);
   outline: 2px solid #777;
   background-color: white;
   background-repeat: no-repeat;
