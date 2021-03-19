@@ -3,6 +3,7 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
+'use strict';
 
 /**
  * @fileoverview Gathers a list of detected JS libraries and their versions.
@@ -11,10 +12,9 @@
 /* global window */
 /* global d41d8cd98f00b204e9800998ecf8427e_LibraryDetectorTests */
 
-'use strict';
-
 const fs = require('fs');
 const log = require('lighthouse-logger');
+const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
 const libDetectorSource = fs.readFileSync(
   require.resolve('js-library-detector/library/libraries.js'), 'utf8');
 
@@ -76,29 +76,53 @@ async function detectLibraries() {
 }
 /* c8 ignore stop */
 
-/**
- * @param {LH.Gatherer.PassContext} passContext
- * @return {Promise<LH.Artifacts['Stacks']>}
- */
-async function collectStacks(passContext) {
-  const status = {msg: 'Collect stacks', id: 'lh:gather:collectStacks'};
-  log.time(status);
 
-  const jsLibraries = await passContext.driver.executionContext.evaluate(detectLibraries, {
-    args: [],
-    deps: [libDetectorSource],
-  });
+/** @implements {LH.Gatherer.FRGathererInstance} */
+class Stacks extends FRGatherer {
+  constructor() {
+    super();
 
-  /** @type {LH.Artifacts['Stacks']} */
-  const stacks = jsLibraries.map(lib => ({
-    detector: 'js',
-    id: lib.id,
-    name: lib.name,
-    version: typeof lib.version === 'number' ? String(lib.version) : (lib.version || undefined),
-    npm: lib.npm || undefined,
-  }));
-  log.timeEnd(status);
-  return stacks;
+    // Because this file uses `fs.readFile` it gets parsed by a different branch of the browserify internals
+    // that cannot handle the latest ECMAScript features.
+    // See https://github.com/GoogleChrome/lighthouse/issues/12134
+    /** @type {LH.Gatherer.GathererMeta} */
+    this.meta = {
+      supportedModes: ['snapshot', 'navigation'],
+    };
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalDriver['executionContext']} executionContext
+   * @return {Promise<LH.Artifacts['Stacks']>}
+   */
+  static async collectStacks(executionContext) {
+    const status = {msg: 'Collect stacks', id: 'lh:gather:collectStacks'};
+    log.time(status);
+
+    const jsLibraries = await executionContext.evaluate(detectLibraries, {
+      args: [],
+      deps: [libDetectorSource],
+    });
+
+    /** @type {LH.Artifacts['Stacks']} */
+    const stacks = jsLibraries.map(lib => ({
+      detector: 'js',
+      id: lib.id,
+      name: lib.name,
+      version: typeof lib.version === 'number' ? String(lib.version) : (lib.version || undefined),
+      npm: lib.npm || undefined,
+    }));
+    log.timeEnd(status);
+    return stacks;
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   * @return {Promise<LH.Artifacts['Stacks']>}
+   */
+  async snapshot(context) {
+    return Stacks.collectStacks(context.driver.executionContext);
+  }
 }
 
-module.exports = collectStacks;
+module.exports = Stacks;

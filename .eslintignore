@@ -13,7 +13,7 @@ coverage/**
 
 lighthouse-core/scripts/legacy-javascript/variants
 
-third-party/chromium-webtests
+third-party/**
 
 # ignore d.ts files until we can properly lint them
 *.d.ts

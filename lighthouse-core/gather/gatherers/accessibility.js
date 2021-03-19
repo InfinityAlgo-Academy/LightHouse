@@ -20,14 +20,13 @@ const pageFunctions = require('../../lib/page-functions.js');
 /* c8 ignore start */
 async function runA11yChecks() {
   /** @type {import('axe-core/axe')} */
-  // @ts-expect-error axe defined by axeLibSource
+  // @ts-expect-error - axe defined by axeLibSource
   const axe = window.axe;
   const application = `lighthouse-${Math.random()}`;
   axe.configure({
     branding: {
       application,
     },
-    // @ts-expect-error axe types don't yet include this new field
     noHtml: true,
   });
   const axeResults = await axe.run(document, {
@@ -65,47 +64,52 @@ async function runA11yChecks() {
   // are relative to the top of the page
   document.documentElement.scrollTop = 0;
 
-  /** @param {import('axe-core/axe').Result} result */
-  const augmentAxeNodes = result => {
-    result.helpUrl = result.helpUrl.replace(application, 'lighthouse');
-    if (axeResults.inapplicable.includes(result)) return;
-
-    result.nodes.forEach(node => {
-      // @ts-expect-error - getNodeDetails put into scope via stringification
-      node.node = getNodeDetails(node.element);
-      // @ts-expect-error - avoid circular JSON concerns
-      node.element = node.any = node.all = node.none = node.html = undefined;
-    });
-
-    // Ensure errors can be serialized over the protocol
-    /** @type {(Error & {message: string, errorNode: any}) | undefined} */
-    // @ts-expect-error - when rules error axe sets these properties
-    // see https://github.com/dequelabs/axe-core/blob/eeff122c2de11dd690fbad0e50ba2fdb244b50e8/lib/core/base/audit.js#L684-L693
-    const error = result.error;
-    if (error instanceof Error) {
-      // @ts-expect-error
-      result.error = {
-        name: error.name,
-        message: error.message,
-        stack: error.stack,
-        errorNode: error.errorNode,
-      };
-    }
-  };
-
-  // Augment the node objects with outerHTML snippet & custom path string
-  axeResults.violations.forEach(augmentAxeNodes);
-  axeResults.incomplete.forEach(augmentAxeNodes);
-  axeResults.inapplicable.forEach(augmentAxeNodes);
-
-  // We only need violations, and circular references are possible outside of violations
   return {
-    // @ts-expect-error value is augmented above.
-    violations: axeResults.violations,
-    notApplicable: axeResults.inapplicable,
-    // @ts-expect-error value is augmented above.
-    incomplete: axeResults.incomplete,
+    violations: axeResults.violations.map(createAxeRuleResultArtifact),
+    incomplete: axeResults.incomplete.map(createAxeRuleResultArtifact),
+    notApplicable: axeResults.inapplicable.map(result => ({id: result.id})),
     version: axeResults.testEngine.version,
+  };
+}
+
+/**
+ * @param {import('axe-core/axe').Result} result
+ * @return {LH.Artifacts.AxeRuleResult}
+ */
+function createAxeRuleResultArtifact(result) {
+  // Simplify `nodes` and collect nodeDetails for each.
+  const nodes = result.nodes.map(node => {
+    const {target, failureSummary, element} = node;
+    // TODO: with `elementRef: true`, `element` _should_ always be defined, but need to verify.
+    // @ts-expect-error - getNodeDetails put into scope via stringification
+    const nodeDetails = getNodeDetails(/** @type {HTMLElement} */ (element));
+
+    return {
+      target,
+      failureSummary,
+      node: nodeDetails,
+    };
+  });
+
+  // Ensure errors can be serialized over the protocol.
+  /** @type {Error | undefined} */
+  // @ts-expect-error - when rules throw an error, axe saves it here.
+  // see https://github.com/dequelabs/axe-core/blob/eeff122c2de11dd690fbad0e50ba2fdb244b50e8/lib/core/base/audit.js#L684-L693
+  const resultError = result.error;
+  let error;
+  if (resultError instanceof Error) {
+    error = {
+      name: resultError.name,
+      message: resultError.message,
+    };
+  }
+
+  return {
+    id: result.id,
+    impact: result.impact || undefined,
+    tags: result.tags,
+    nodes,
+    error,
   };
 }
 /* c8 ignore stop */
@@ -129,15 +133,8 @@ class Accessibility extends FRGatherer {
       deps: [
         axeLibSource,
         pageFunctions.getNodeDetailsString,
+        createAxeRuleResultArtifact,
       ],
-    }).then(returnedValue => {
-      if (!returnedValue) {
-        throw new Error('No axe-core results returned');
-      }
-      if (!Array.isArray(returnedValue.violations)) {
-        throw new Error('Unable to parse axe results' + returnedValue);
-      }
-      return returnedValue;
     });
   }
 }

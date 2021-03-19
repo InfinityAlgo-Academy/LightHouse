@@ -45,6 +45,11 @@ describe('Snapshot Runner', () => {
     mockRunnerRun = jest.fn();
     page = mockPage.asPage();
 
+    mockDriver._session.sendCommand.mockResponse('Browser.getVersion', {
+      product: 'Chrome/88.0',
+      userAgent: 'Chrome',
+    });
+
     gathererA = createMockGathererInstance({supportedModes: ['snapshot']});
     gathererA.snapshot.mockResolvedValue('Artifact A');
 

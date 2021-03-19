@@ -236,7 +236,7 @@ describe('ConsoleMessages error logs audit', () => {
           'url': 'https://www.facebook.com/tr/',
           'text': 'Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector',
         }],
-      }, {options: ErrorLogsAudit.defaultOptions()});
+      }, {options: ErrorLogsAudit.defaultOptions});
       assert.equal(auditResult.score, 1);
       assert.equal(auditResult.details.items.length, 0);
     });

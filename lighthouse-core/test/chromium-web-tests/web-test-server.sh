@@ -14,10 +14,10 @@ export latest_content_shell="$LH_ROOT/.tmp/chromium-web-tests/content-shells/$la
 
 # Run a very basic server on port 8000. Only thing we need is:
 #   - /devtools -> the layout tests for devtools frontend
-#   - /inspector-sources -> the inspector resources from the content shell
+#   - /inspector-sources -> the generated resources from devtools
 #   - CORS (Access-Control-Allow-Origin header)
 
-ln -s "$DEVTOOLS_PATH/out/Default/resources/inspector" "$DEVTOOLS_PATH/test/webtests/http/tests/inspector-sources"
+ln -s "$DEVTOOLS_PATH/out/Default/gen/front_end" "$DEVTOOLS_PATH/test/webtests/http/tests/inspector-sources"
 
 # Kill background jobs when script ends.
 cleanup() {

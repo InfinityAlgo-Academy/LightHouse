@@ -10,6 +10,16 @@ declare global {
       lhr: LH.Result;
     }
 
+    type NodePath = string[];
+
+    interface ViewMode {
+      id: 'all' | 'unused-bytes';
+      label: string;
+      subLabel: string;
+      partitionBy?: 'resourceBytes' | 'unusedBytes';
+      highlightNodePaths?: NodePath[];
+    }
+
     interface Node {
       /** Could be a url, a path component from a source map, or an arbitrary string. */
       name: string;

@@ -28,7 +28,6 @@ jest.useFakeTimers();
  * @property {ReturnType<typeof createMockOnceFn>} on
  * @property {ReturnType<typeof createMockOnceFn>} once
  * @property {(...args: RecursivePartial<Parameters<Driver['gotoURL']>>) => ReturnType<Driver['gotoURL']>} gotoURL
- * @property {(...args: RecursivePartial<Parameters<Driver['goOnline']>>) => ReturnType<Driver['goOnline']>} goOnline
 */
 
 /** @typedef {Omit<Driver, keyof DriverMockMethods> & DriverMockMethods} TestDriver */
@@ -224,60 +223,6 @@ describe('.setExtraHTTPHeaders', () => {
     connectionStub.sendCommand = createMockSendCommandFn();
     await driver.setExtraHTTPHeaders(null);
     expect(connectionStub.sendCommand).not.toHaveBeenCalled();
-  });
-});
-
-describe('.getAppManifest', () => {
-  it('should return null when no manifest', async () => {
-    connectionStub.sendCommand = createMockSendCommandFn().mockResponse(
-      'Page.getAppManifest',
-      {data: undefined, url: '/manifest'}
-    );
-    const result = await driver.getAppManifest();
-    expect(result).toEqual(null);
-  });
-
-  it('should return the manifest', async () => {
-    const manifest = {name: 'The App'};
-    connectionStub.sendCommand = createMockSendCommandFn().mockResponse(
-      'Page.getAppManifest',
-      {data: JSON.stringify(manifest), url: '/manifest'}
-    );
-    const result = await driver.getAppManifest();
-    expect(result).toEqual({data: JSON.stringify(manifest), url: '/manifest'});
-  });
-
-  it('should handle BOM-encoded manifest', async () => {
-    const fs = require('fs');
-    const manifestWithoutBOM = fs.readFileSync(__dirname + '/../fixtures/manifest.json').toString();
-    const manifestWithBOM = fs
-      .readFileSync(__dirname + '/../fixtures/manifest-bom.json')
-      .toString();
-
-    connectionStub.sendCommand = createMockSendCommandFn().mockResponse(
-      'Page.getAppManifest',
-      {data: manifestWithBOM, url: '/manifest'}
-    );
-    const result = await driver.getAppManifest();
-    expect(result).toEqual({data: manifestWithoutBOM, url: '/manifest'});
-  });
-});
-
-describe('.goOffline', () => {
-  it('should send offline emulation', async () => {
-    connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Network.enable')
-      .mockResponse('Network.emulateNetworkConditions');
-
-    await driver.goOffline();
-    const emulateArgs = connectionStub.sendCommand
-      .findInvocation('Network.emulateNetworkConditions');
-    expect(emulateArgs).toEqual({
-      offline: true,
-      latency: 0,
-      downloadThroughput: 0,
-      uploadThroughput: 0,
-    });
   });
 });
 
@@ -486,79 +431,6 @@ describe('.assertNoSameOriginServiceWorkerClients', () => {
     await flushAllTimersAndMicrotasks();
     expect(inspectable).toBeDone();
     await assertPromise;
-  });
-});
-
-describe('.goOnline', () => {
-  beforeEach(() => {
-    connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Network.enable')
-      .mockResponse('Emulation.setCPUThrottlingRate')
-      .mockResponse('Network.emulateNetworkConditions');
-  });
-
-  it('re-establishes previous throttling settings', async () => {
-    await driver.goOnline({
-      passConfig: {useThrottling: true},
-      settings: {
-        throttlingMethod: 'devtools',
-        throttling: {
-          requestLatencyMs: 500,
-          downloadThroughputKbps: 1000,
-          uploadThroughputKbps: 1000,
-        },
-      },
-    });
-
-    const emulateArgs = connectionStub.sendCommand
-      .findInvocation('Network.emulateNetworkConditions');
-    expect(emulateArgs).toEqual({
-      offline: false,
-      latency: 500,
-      downloadThroughput: (1000 * 1024) / 8,
-      uploadThroughput: (1000 * 1024) / 8,
-    });
-  });
-
-  it('clears network emulation when throttling is not devtools', async () => {
-    await driver.goOnline({
-      passConfig: {useThrottling: true},
-      settings: {
-        throttlingMethod: 'provided',
-      },
-    });
-
-    const emulateArgs = connectionStub.sendCommand
-      .findInvocation('Network.emulateNetworkConditions');
-    expect(emulateArgs).toEqual({
-      offline: false,
-      latency: 0,
-      downloadThroughput: 0,
-      uploadThroughput: 0,
-    });
-  });
-
-  it('clears network emulation when useThrottling is false', async () => {
-    await driver.goOnline({
-      passConfig: {useThrottling: false},
-      settings: {
-        throttlingMethod: 'devtools',
-        throttling: {
-          requestLatencyMs: 500,
-          downloadThroughputKbps: 1000,
-          uploadThroughputKbps: 1000,
-        },
-      },
-    });
-
-    const emulateArgs = connectionStub.sendCommand
-      .findInvocation('Network.emulateNetworkConditions');
-    expect(emulateArgs).toEqual({
-      offline: false,
-      latency: 0,
-      downloadThroughput: 0,
-      uploadThroughput: 0,
-    });
   });
 });
 

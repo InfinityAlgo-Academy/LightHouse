@@ -40,7 +40,7 @@ function runCommand(command, args) {
 }
 
 /**
- * @param {number} version
+ * @param {string} version
  */
 function installCoreJs(version) {
   runCommand('yarn', [
@@ -233,7 +233,8 @@ async function main() {
     });
   }
 
-  for (const coreJsVersion of [2, 3]) {
+  for (const coreJsVersion of ['2.6.12', '3.9.1']) {
+    const major = coreJsVersion.split('.')[0];
     removeCoreJs();
     installCoreJs(coreJsVersion);
 
@@ -245,7 +246,7 @@ async function main() {
     ];
     for (const {esmodules, bugfixes} of moduleOptions) {
       await createVariant({
-        group: `core-js-${coreJsVersion}-preset-env-esmodules`,
+        group: `core-js-${major}-preset-env-esmodules`,
         name: String(esmodules) + (bugfixes ? '_and_bugfixes' : ''),
         code: `require('core-js');\n${mainCode}`,
         babelrc: {
@@ -255,7 +256,7 @@ async function main() {
               {
                 targets: {esmodules},
                 useBuiltIns: 'entry',
-                corejs: coreJsVersion,
+                corejs: major,
                 bugfixes,
               },
             ],
@@ -265,21 +266,21 @@ async function main() {
     }
 
     for (const polyfill of polyfills) {
-      const module = coreJsVersion === 2 ? polyfill.coreJs2Module : polyfill.coreJs3Module;
+      const module = major === '2' ? polyfill.coreJs2Module : polyfill.coreJs3Module;
       await createVariant({
-        group: `core-js-${coreJsVersion}-only-polyfill`,
+        group: `core-js-${major}-only-polyfill`,
         name: module,
         code: makeRequireCodeForPolyfill(module),
       });
     }
 
     const allPolyfillCode = polyfills.map(polyfill => {
-      const module = coreJsVersion === 2 ? polyfill.coreJs2Module : polyfill.coreJs3Module;
+      const module = major === '2' ? polyfill.coreJs2Module : polyfill.coreJs3Module;
       return makeRequireCodeForPolyfill(module);
     }).join('\n');
     await createVariant({
       group: 'all-legacy-polyfills',
-      name: `all-legacy-polyfills-core-js-${coreJsVersion}`,
+      name: `all-legacy-polyfills-core-js-${major}`,
       code: allPolyfillCode,
     });
   }

@@ -20,8 +20,8 @@ const UIStrings = {
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
-const IGNORE_THRESHOLD_IN_BYTES = 20 * 1024;
-const IGNORE_BUNDLE_SOURCE_THRESHOLD_IN_BYTES = 512;
+const UNUSED_BYTES_IGNORE_THRESHOLD = 20 * 1024;
+const UNUSED_BYTES_IGNORE_BUNDLE_SOURCE_THRESHOLD = 512;
 
 /**
  * @param {string[]} strings
@@ -80,8 +80,8 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
   static async audit_(artifacts, networkRecords, context) {
     const bundles = await JsBundles.request(artifacts, context);
     const {
-      unusedThreshold = IGNORE_THRESHOLD_IN_BYTES,
-      bundleSourceUnusedThreshold = IGNORE_BUNDLE_SOURCE_THRESHOLD_IN_BYTES,
+      unusedThreshold = UNUSED_BYTES_IGNORE_THRESHOLD,
+      bundleSourceUnusedThreshold = UNUSED_BYTES_IGNORE_BUNDLE_SOURCE_THRESHOLD,
     } = context.options || {};
 
     const items = [];

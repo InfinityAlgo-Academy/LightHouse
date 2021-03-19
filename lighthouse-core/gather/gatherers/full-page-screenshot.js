@@ -76,9 +76,9 @@ class FullPageScreenshot extends Gatherer {
     const data = 'data:image/jpeg;base64,' + result.data;
 
     return {
+      data,
       width,
       height,
-      data,
     };
   }
 

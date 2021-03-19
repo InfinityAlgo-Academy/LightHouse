@@ -91,7 +91,7 @@ class ReportUIFeatures {
     this._setupMediaQueryListeners();
     this._dropDown.setup(this.onDropDownMenuClick);
     this._setupThirdPartyFilter();
-    this._setupElementScreenshotOverlay();
+    this._setupElementScreenshotOverlay(this._dom.find('.lh-container', this._document));
     this._setUpCollapseDetailsAfterPrinting();
     this._resetUIState();
     this._document.addEventListener('keyup', this.onKeyUp);
@@ -307,7 +307,10 @@ class ReportUIFeatures {
     });
   }
 
-  _setupElementScreenshotOverlay() {
+  /**
+   * @param {Element} el
+   */
+  _setupElementScreenshotOverlay(el) {
     const fullPageScreenshot =
       this.json.audits['full-page-screenshot'] &&
       this.json.audits['full-page-screenshot'].details &&
@@ -315,8 +318,12 @@ class ReportUIFeatures {
       this.json.audits['full-page-screenshot'].details;
     if (!fullPageScreenshot) return;
 
-    ElementScreenshotRenderer.installOverlayFeature(
-      this._dom, this._templateContext, fullPageScreenshot);
+    ElementScreenshotRenderer.installOverlayFeature({
+      dom: this._dom,
+      el,
+      templateContext: this._templateContext,
+      fullPageScreenshot,
+    });
   }
 
   /**

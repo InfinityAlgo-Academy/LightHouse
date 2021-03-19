@@ -20,5 +20,5 @@ roll_devtools() {
 cd "$DEVTOOLS_PATH"
 git --no-pager log -1
 roll_devtools
-autoninja -C out/Default # Build devtools resources.
+autoninja -C out/Default build_release_devtools # Build devtools resources.
 cd -

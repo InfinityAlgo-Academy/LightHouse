@@ -27,7 +27,12 @@ async function startTimespan(options) {
 
   for (const {id, gatherer} of config.artifacts || []) {
     artifactErrors[id] = Promise.resolve().then(() =>
-      gatherer.instance.beforeTimespan({gatherMode: 'timespan', driver, dependencies: {}})
+      gatherer.instance.beforeTimespan({
+        gatherMode: 'timespan',
+        url: requestedUrl,
+        driver,
+        dependencies: {},
+      })
     );
 
     // Run each beforeTimespan serially, but handle errors in the next pass.
@@ -39,7 +44,7 @@ async function startTimespan(options) {
       const finalUrl = await options.page.url();
       return Runner.run(
         async () => {
-          const baseArtifacts = getBaseArtifacts(config);
+          const baseArtifacts = await getBaseArtifacts(config, driver);
           baseArtifacts.URL.requestedUrl = requestedUrl;
           baseArtifacts.URL.finalUrl = finalUrl;
 
@@ -50,9 +55,16 @@ async function startTimespan(options) {
             const {id, gatherer} = artifactDefn;
             const artifactName = /** @type {keyof LH.GathererArtifacts} */ (id);
             const dependencies = await collectArtifactDependencies(artifactDefn, artifacts);
+            /** @type {LH.Gatherer.FRTransitionalContext} */
+            const context = {
+              gatherMode: 'timespan',
+              url: finalUrl,
+              driver,
+              dependencies,
+            };
             const artifact = await artifactErrors[id]
               .then(() =>
-                gatherer.instance.afterTimespan({gatherMode: 'timespan', driver, dependencies})
+                gatherer.instance.afterTimespan(context)
               )
               .catch(err => err);
 

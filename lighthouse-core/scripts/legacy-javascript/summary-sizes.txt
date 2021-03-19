@@ -1,5 +1,5 @@
 all-legacy-polyfills
-  86520        all-legacy-polyfills-core-js-3/main.bundle.min.js
+  84149        all-legacy-polyfills-core-js-3/main.bundle.min.js
   55778        all-legacy-polyfills-core-js-2/main.bundle.min.js
 
 core-js-2-only-polyfill
@@ -62,18 +62,18 @@ core-js-2-preset-env-esmodules
    63536       true-and-bugfixes/main.bundle.min.js
 
 core-js-3-only-polyfill
-  29905        es-array-find-index/main.bundle.min.js
-  29833        es-array-find/main.bundle.min.js
-  27930        es-array-from/main.bundle.min.js
-  27225        es-array-filter/main.bundle.min.js
-  27198        es-array-map/main.bundle.min.js
-  26417        es-array-includes/main.bundle.min.js
-  26374        es-array-for-each/main.bundle.min.js
-  26153        es-array-some/main.bundle.min.js
-  26091        es-array-fill/main.bundle.min.js
+  30090        es-array-find-index/main.bundle.min.js
+  30024        es-array-find/main.bundle.min.js
+  29184        es-array-from/main.bundle.min.js
+  27345        es-array-fill/main.bundle.min.js
+  26687        es-array-filter/main.bundle.min.js
+  26663        es-array-map/main.bundle.min.js
+  26579        es-array-includes/main.bundle.min.js
+  26563        es-array-for-each/main.bundle.min.js
+  26342        es-array-some/main.bundle.min.js
   25662        es-reflect-construct/main.bundle.min.js
-  24190        es-array-reduce-right/main.bundle.min.js
-  24152        es-array-reduce/main.bundle.min.js
+  23119        es-array-reduce-right/main.bundle.min.js
+  23081        es-array-reduce/main.bundle.min.js
   22464        es-date-to-iso-string/main.bundle.min.js
   21968        es-object-prevent-extensions/main.bundle.min.js
   21906        es-reflect-get/main.bundle.min.js
@@ -82,7 +82,7 @@ core-js-3-only-polyfill
   21606        es-object-get-prototype-of/main.bundle.min.js
   21456        es-reflect-get-prototype-of/main.bundle.min.js
   21329        es-object-get-own-property-descriptors/main.bundle.min.js
-  21285        es-number-parse-int/main.bundle.min.js
+  21288        es-number-parse-int/main.bundle.min.js
   21214        es-reflect-set-prototype-of/main.bundle.min.js
   21073        es-object-entries/main.bundle.min.js
   21070        es-object-define-properties/main.bundle.min.js
@@ -116,9 +116,9 @@ core-js-3-only-polyfill
    4515        es-function-name/main.bundle.min.js
 
 core-js-3-preset-env-esmodules
-  411807       false/main.bundle.min.js
-  306297       true/main.bundle.min.js
-  305616       true-and-bugfixes/main.bundle.min.js
+  408753       false/main.bundle.min.js
+  304901       true/main.bundle.min.js
+  304220       true-and-bugfixes/main.bundle.min.js
 
 only-plugin
   1787         -babel-plugin-transform-spread/main.bundle.min.js
