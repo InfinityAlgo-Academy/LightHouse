@@ -39,7 +39,6 @@ function getProgressBar(i, total) {
  */
 async function query(qs) {
   return await graphql(qs, {
-    owner: 'GooglChrome',
     repo: 'Lighthouse',
     headers: {
       authorization: `token ${ARGS.token}`,
@@ -71,24 +70,28 @@ async function paginate(qs, getPageInfo) {
 
 /**
  * @param {string} comment
+ * @return {string[]}
  */
-function parseCommentForUrl(comment) {
+function parseCommentForUrls(comment) {
   // https://stackoverflow.com/a/29288898
   // eslint-disable-next-line max-len
-  const matches = /(?:(?:https?|file):\/\/|www\.)(?:\([-A-Z0-9+&@#/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#/%=~_|$?!:,.]*\)|[A-Z0-9+&@#/%=~_|$])/igm.exec(comment);
-  if (!matches) return null;
+  const re = /(?:(?:https?|file):\/\/|www\.)(?:\([-A-Z0-9+&@#/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#/%=~_|$?!:,.]*\)|[A-Z0-9+&@#/%=~_|$])/igm;
+  const matches = comment.matchAll(re);
+  const urls = [];
 
-  try {
-    const url = new URL(matches[0]);
+  for (const match of matches) {
+    try {
+      const url = new URL(match[0]);
+      if (url.href.match(/localhost|github.com/)) {
+        continue;
+      }
 
-    if (url.href.match(/localhost|github.com/)) {
-      return null;
+      urls.push(url.href);
+    } catch (_) {
     }
-
-    return url.href;
-  } catch (_) {
-    return null;
   }
+
+  return urls;
 }
 
 /**
@@ -171,8 +174,7 @@ async function main() {
     const promise = getCommentsForIssue(issue.number)
       .then((comments) => {
         for (const comment of comments) {
-          const url = parseCommentForUrl(comment);
-          if (url) urls.add(url);
+          for (const url of parseCommentForUrls(comment)) urls.add(url);
         }
 
         finishCount += 1;
