@@ -1,3 +1,63 @@
+<a name="7.3.0"></a>
+# 7.3.0 (2021-03-18)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v7.2.0...v7.3.0)
+
+We expect this release to ship in the DevTools of [Chrome 91](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## New contributors
+
+Thanks to our new contributor 👽🐷🐰🐯🐻!
+
+- Ryuichi Watanabe @ryuichi1208
+
+## New Audits
+
+* new_audit: csp-xss (experimental config) ([#12044](https://github.com/GoogleChrome/lighthouse/pull/12044))
+
+## Core
+
+* csp-xss: csp evaluator npm module ([#12221](https://github.com/GoogleChrome/lighthouse/pull/12221))
+* driver: remove unused goOffline/goOnline methods ([#12135](https://github.com/GoogleChrome/lighthouse/pull/12135))
+* errors-in-console: properly define default options ([#12200](https://github.com/GoogleChrome/lighthouse/pull/12200))
+* fr: convert base artifacts to gatherer artifacts ([#12129](https://github.com/GoogleChrome/lighthouse/pull/12129))
+
+## CLI
+
+* correctly parse screenEmulation boolean flags ([#12250](https://github.com/GoogleChrome/lighthouse/pull/12250))
+* only launch Chrome when running against localhost ([#12140](https://github.com/GoogleChrome/lighthouse/pull/12140))
+
+## Report
+
+* use css var for element screenshots, move overlay to container ([#12201](https://github.com/GoogleChrome/lighthouse/pull/12201))
+
+## Deps
+
+* update jsonld to latest ([#12257](https://github.com/GoogleChrome/lighthouse/pull/12257))
+* update typescript and axe-core to latest ([#12207](https://github.com/GoogleChrome/lighthouse/pull/12207))
+
+## I18n
+
+* import ([#12255](https://github.com/GoogleChrome/lighthouse/pull/12255))
+
+## Docs
+
+* fixed typo in documentation throttling.md ([#12154](https://github.com/GoogleChrome/lighthouse/pull/12154))
+
+## Tests
+
+* devtools: dynamically fetch chromium version ([#12232](https://github.com/GoogleChrome/lighthouse/pull/12232))
+* devtools: fix webserver ([#12236](https://github.com/GoogleChrome/lighthouse/pull/12236))
+* devtools: update chromium dependencies ([#12130](https://github.com/GoogleChrome/lighthouse/pull/12130))
+* fr: update test artifact ([#12202](https://github.com/GoogleChrome/lighthouse/pull/12202))
+* legacy-javascript: pin to specific versions of core-js ([#12265](https://github.com/GoogleChrome/lighthouse/pull/12265))
+* smoke: ignore lantern script attribution in ToT ([#12256](https://github.com/GoogleChrome/lighthouse/pull/12256))
+
+## Misc
+
+* treemap: unused-bytes view mode ([#12142](https://github.com/GoogleChrome/lighthouse/pull/12142))
+* remove patrickhulce from issue assigner ([#12220](https://github.com/GoogleChrome/lighthouse/pull/12220))
+* reorganize accessibility gatherer ([#12076](https://github.com/GoogleChrome/lighthouse/pull/12076))
+
 <a name="7.2.0"></a>
 # 7.2.0 (2021-02-24)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v7.1.0...v7.2.0)
