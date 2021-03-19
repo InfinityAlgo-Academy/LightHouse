@@ -15,14 +15,24 @@
 
 'use strict';
 
-/* eslint-disable no-console */
+const {graphql} = require('@octokit/graphql');
+const {ProgressLogger} = require('./lantern/collect/common.js');
 
 const ARGS = {
   number: process.argv[2],
   token: process.env.GH_TOKEN_ISSUE_SCRAPER,
 };
 
-const {graphql} = require('@octokit/graphql');
+/**
+ * Get box-drawing progress bar
+ * @param {number} i
+ * @param {number} total
+ * @return {string}
+ */
+function getProgressBar(i, total) {
+  const bars = new Array(Math.round(i * 40 / total)).fill('▄').join('').padEnd(40);
+  return `${i + 1} / ${total} [${bars}]`;
+}
 
 /**
  * @param {string} qs
@@ -35,6 +45,28 @@ async function query(qs) {
       authorization: `token ${ARGS.token}`,
     },
   });
+}
+
+/**
+ * @param {string} qs
+ * @param {(response: any) => {endCursor: string, hasNextPage: boolean}} getPageInfo
+ */
+async function paginate(qs, getPageInfo) {
+  if (!qs.includes('CURSOR')) throw new Error('put CURSOR in the query');
+
+  const responses = [];
+
+  let pageInfo = {endCursor: '', hasNextPage: true};
+  while (pageInfo.hasNextPage) {
+    const thisQs = pageInfo.endCursor ?
+      qs.replace('CURSOR', `, after: "${pageInfo.endCursor}"`) :
+      qs.replace('CURSOR', '');
+    const response = await query(thisQs);
+    responses.push(response);
+    pageInfo = getPageInfo(response);
+  }
+
+  return responses;
 }
 
 /**
@@ -64,33 +96,40 @@ function parseCommentForUrl(comment) {
  * @return {Promise<string[]>}
  */
 async function getCommentsForIssue(number) {
-  const response = await query(`query {
+  const responses = await paginate(`query {
     repository(owner: "GoogleChrome", name: "Lighthouse") {
       issue(number: ${number}) {
         body
 
-        comments(first: 100) {
+        comments(first: 100 CURSOR) {
           nodes {
             body
+          }
+          pageInfo {
+            endCursor
+            hasNextPage
           }
         }
       }
     }
-  }`);
+  }`, response => response.repository.issue.comments.pageInfo);
 
-  const first = response.repository.issue.body;
-  // @ts-expect-error: octokit graphql has no types.
-  const rest = response.repository.issue.comments.nodes.map((node => node.body));
+  const first = responses[0].repository.issue.body;
+  const nodes = responses.flatMap(r => r.repository.issue.comments.nodes);
+  const rest = nodes.map((node => node.body));
   return [first, ...rest];
 }
 
 async function main() {
-  const response = await query(`query {
+  const progress = new ProgressLogger();
+
+  progress.log('Fetching initial issue');
+  const responses = await paginate(`query {
     repository(owner: "GoogleChrome", name: "Lighthouse") {
       issue(number: ${ARGS.number}) {
         title
 
-        timelineItems(first: 250) {
+        timelineItems(first: 250 CURSOR) {
           nodes {
             ... on CrossReferencedEvent {
               source {
@@ -101,32 +140,39 @@ async function main() {
               }
             }
           }
+          pageInfo {
+            endCursor
+            hasNextPage
+          }
         }
       }
     }
-  }`);
+  }`, response => response.repository.issue.timelineItems.pageInfo);
 
-  const issues = response.repository.issue.timelineItems.nodes
-    // @ts-expect-error: octokit graphql has no types.
+  const nodes = responses.flatMap(r => r.repository.issue.timelineItems.nodes);
+  const issues = nodes
     .filter((node) => node.source && node.source.number)
     .filter(Boolean)
-    // @ts-expect-error: octokit graphql has no types.
     .map((node) => node.source);
   issues.unshift({number: ARGS.number});
 
-  console.log(`title: ${response.repository.issue.title}`);
-  console.log(`parsing ${issues.length} issues for URLs`);
+  progress.log(`title: ${responses[0].repository.issue.title}`);
+  progress.log(`parsing ${issues.length} issues for URLs`);
 
   /** @type {Set<string>} */
   const urls = new Set();
   for (const issue of issues) {
+    progress.progress(getProgressBar(issues.indexOf(issue), issues.length));
     for (const comment of await getCommentsForIssue(issue.number)) {
       const url = parseCommentForUrl(comment);
       if (url) urls.add(url);
     }
   }
 
+  progress.closeProgress();
+
   for (const url of urls) {
+    // eslint-disable-next-line no-console
     console.log(url);
   }
 }
