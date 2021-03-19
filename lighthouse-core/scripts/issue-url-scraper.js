@@ -161,13 +161,30 @@ async function main() {
 
   /** @type {Set<string>} */
   const urls = new Set();
+  const promises = [];
+  let finishCount = 0;
+  progress.progress(getProgressBar(0, issues.length));
   for (const issue of issues) {
-    progress.progress(getProgressBar(issues.indexOf(issue), issues.length));
-    for (const comment of await getCommentsForIssue(issue.number)) {
-      const url = parseCommentForUrl(comment);
-      if (url) urls.add(url);
-    }
+    // Throttle to avoid rate limiting.
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    const promise = getCommentsForIssue(issue.number)
+      .then((comments) => {
+        for (const comment of comments) {
+          const url = parseCommentForUrl(comment);
+          if (url) urls.add(url);
+        }
+
+        finishCount += 1;
+        progress.progress(getProgressBar(finishCount, issues.length));
+      })
+      .catch(error => {
+        // eslint-disable-next-line no-console
+        console.error(error);
+      });
+    promises.push(promise);
   }
+  await Promise.all(promises);
 
   progress.closeProgress();
 
