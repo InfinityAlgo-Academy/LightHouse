@@ -65,6 +65,16 @@ body {
   background-color: lightblue;
 }
 
+.view-mode__button {
+  /* Hide the default browser UI. */
+  position: absolute;
+  left: -9999px;
+}
+
+label.view-mode__label {
+  cursor: pointer;
+}
+
 header {
   margin: 5px;
 }
