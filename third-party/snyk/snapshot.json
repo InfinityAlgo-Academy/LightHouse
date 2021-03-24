@@ -48,7 +48,7 @@
       {"id":"SNYK-JS-DOJO-559224","severity":"medium","semver":{"vulnerable":["<1.11.10",">=1.12.0 <1.12.8",">=1.13.0 <1.13.7",">=1.14.0 <1.14.6",">=1.15.0 <1.15.3",">=1.16.0 <1.16.2"]}},
       {"id":"SNYK-JS-DOJO-174934","severity":"medium","semver":{"vulnerable":[">=1.0.0 <1.0.3",">=1.1.0 <1.1.2",">=1.2.0 <1.2.4",">=1.3.0 <1.3.3",">=1.4.0 <1.4.2"]}},
       {"id":"SNYK-JS-DOJO-174933","severity":"medium","semver":{"vulnerable":["<1.2.0"]}},
-      {"id":"SNYK-JS-DOJO-72305","severity":"medium","semver":{"vulnerable":["<1.14"]}},
+      {"id":"SNYK-JS-DOJO-72305","severity":"medium","semver":{"vulnerable":[">=1.14.0-pre <1.14.0",">=1.13.0 <1.13.1",">=1.12.1 <1.12.4",">=1.11.0-rc1 <1.11.6","<1.10.10"]}},
       {"id":"npm:dojo:20180818","severity":"medium","semver":{"vulnerable":["<1.10.10",">=1.11.0 <1.11.6",">=1.12.0 <1.12.4",">=1.13.0 <1.13.1"]}},
       {"id":"npm:dojo:20100614-6","severity":"medium","semver":{"vulnerable":["<1.4.2"]}},
       {"id":"npm:dojo:20100614","severity":"medium","semver":{"vulnerable":[">=0.4.0 <0.4.4",">=1.0.0 <1.0.3",">=1.1.0 <1.1.2",">=1.2.0 <1.2.4",">=1.3.0 <1.3.3",">=1.4.0 <1.4.2"]}}
