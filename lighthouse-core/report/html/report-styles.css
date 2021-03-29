@@ -351,12 +351,7 @@
   word-break: break-word;
 }
 
-.lh-audit-group a,
-.lh-category-header__description a,
-.lh-audit__description a,
-.lh-warnings a,
-.lh-footer a,
-.lh-table-column--link a {
+a {
   color: var(--color-informative);
 }
 
