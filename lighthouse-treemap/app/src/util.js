@@ -8,6 +8,7 @@
 /* eslint-env browser */
 
 /** @typedef {HTMLElementTagNameMap & {[id: string]: HTMLElement}} HTMLElementByTagName */
+/** @template {string} T @typedef {import('typed-query-selector/parser').ParseSelector<T, Element>} ParseSelector */
 
 const KiB = 1024;
 const MiB = KiB * KiB;
@@ -108,13 +109,17 @@ class TreemapUtil {
    * @template {string} T
    * @param {T} query
    * @param {ParentNode=} context
+   * @return {ParseSelector<T>}
    */
   static find(query, context = document) {
     const result = context.querySelector(query);
     if (result === null) {
       throw new Error(`query ${query} not found`);
     }
-    return result;
+    // Because we control the treemap layout and templates, use the simpler
+    // `typed-query-selector` types that don't require differentiating between
+    // e.g. HTMLAnchorElement and SVGAElement. See https://github.com/GoogleChrome/lighthouse/issues/12011
+    return /** @type {ParseSelector<T>} */ (result);
   }
 
   /**

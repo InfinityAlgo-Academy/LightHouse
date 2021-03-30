@@ -6,7 +6,25 @@
 
 import _Crdp from 'devtools-protocol/types/protocol';
 import _CrdpMappings from 'devtools-protocol/types/protocol-mapping';
-import {ParseSelector} from 'typed-query-selector/parser';
+import {ParseSelectorToTagNames} from 'typed-query-selector/parser';
+
+/** Merge properties of the types in union `T`. Where properties overlap, property types becomes the union of the two (or more) possible types. */
+type MergeTypes<T> = {
+  [K in (T extends unknown ? keyof T : never)]: T extends Record<K, infer U> ? U : never;
+};
+
+// Helper types for strict querySelector/querySelectorAll that includes the overlap
+// between HTML and SVG node names (<a>, <script>, etc).
+// see https://github.com/GoogleChrome/lighthouse/issues/12011
+type HtmlAndSvgElementTagNameMap = MergeTypes<HTMLElementTagNameMap|SVGElementTagNameMap> & {
+  // Fall back to Element (base of HTMLElement and SVGElement) if no specific tag name matches.
+  [id: string]: Element;
+};
+type QuerySelectorParse<I extends string> = ParseSelectorToTagNames<I> extends infer TagNames ?
+  TagNames extends Array<string> ?
+    HtmlAndSvgElementTagNameMap[TagNames[number]] :
+    Element: // Fall back for queries typed-query-selector fails to parse, e.g. `'[alt], [aria-label]'`.
+  never;
 
 declare global {
   // Augment Intl to include
@@ -394,7 +412,7 @@ declare global {
 
   // Stricter querySelector/querySelectorAll using typed-query-selector.
   interface ParentNode {
-    querySelector<S extends string>(selector: S): ParseSelector<S> | null;
-    querySelectorAll<S extends string>(selector: S): NodeListOf<ParseSelector<S>>;
+    querySelector<S extends string>(selector: S): QuerySelectorParse<S>;
+    querySelectorAll<S extends string>(selector: S): NodeListOf<QuerySelectorParse<S>>;
   }
 }

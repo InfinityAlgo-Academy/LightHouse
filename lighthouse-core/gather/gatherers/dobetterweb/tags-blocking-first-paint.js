@@ -20,7 +20,7 @@
 
 const Gatherer = require('../gatherer.js');
 
-/* global document, window, HTMLLinkElement */
+/* global document, window, HTMLLinkElement, SVGScriptElement */
 
 /** @typedef {{href: string, media: string, msSinceHTMLEnd: number, matches: boolean}} MediaChange */
 /** @typedef {{tagName: 'LINK', url: string, href: string, rel: string, media: string, disabled: boolean, mediaChanges: Array<MediaChange>}} LinkTag */
@@ -84,7 +84,11 @@ async function collectTagsThatBlockFirstPaint() {
 
     /** @type {Array<ScriptTag>} */
     const scriptTags = [...document.querySelectorAll('head script[src]')]
-      .filter(scriptTag => {
+      .filter(/** @return {scriptTag is HTMLScriptElement} */ scriptTag => {
+        // SVGScriptElement can't appear in <head> (it'll be kicked to <body>), but keep tsc happy.
+        // https://html.spec.whatwg.org/multipage/semantics.html#the-head-element
+        if (scriptTag instanceof SVGScriptElement) return false;
+
         return (
           !scriptTag.hasAttribute('async') &&
           !scriptTag.hasAttribute('defer') &&
