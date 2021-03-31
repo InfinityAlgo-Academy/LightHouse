@@ -1,0 +1,11 @@
+
+/* Duplication of the sticky case from seo-tap-targets.html to confirm disableFixedAndStickyElementPointerEvents doesn't have a problem w/ CSP style-src */
+.stickylink {
+  background: red; position: sticky; top: 0; left: 0; display: block; width: 100vw; height: 30px; z-index: 1;
+}
+.undertext {
+  background: #afa; position: absolute; top: 0; display: block; width: calc(100% - 40px); height: 60px;
+}
+
+
+body { min-height: 3000px; }

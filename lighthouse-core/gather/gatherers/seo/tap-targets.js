@@ -170,10 +170,14 @@ function elementCenterIsAtZAxisTop(el, elCenterPoint) {
  */
 /* c8 ignore start */
 function disableFixedAndStickyElementPointerEvents() {
+  return () => {};
   const className = 'lighthouse-disable-pointer-events';
-  const styleTag = document.createElement('style');
-  styleTag.textContent = `.${className} { pointer-events: none !important }`;
-  document.body.appendChild(styleTag);
+  /// Use constructable stylesheets to avoid any problems with a style-srec csp directive
+  const sheet = new CSSStyleSheet();
+  // @ts-expect-error Constructable Stylesheets arent in the TS dom lib yet..
+  sheet.replaceSync(`.${className} { pointer-events: none !important }`);
+  // @ts-expect-error Constructable Stylesheets arent in the TS dom lib yet.. (Also can't push() because https://developers.google.com/web/updates/2019/02/constructable-stylesheets#:~:text=the%20array%20is%20frozen)
+  document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
 
   document.querySelectorAll('*').forEach(el => {
     const position = getComputedStyle(el).position;
@@ -186,7 +190,8 @@ function disableFixedAndStickyElementPointerEvents() {
     Array.from(document.getElementsByClassName(className)).forEach(el => {
       el.classList.remove(className);
     });
-    styleTag.remove();
+    // @ts-expect-error Constructable Stylesheets arent in the TS dom lib yet..
+    document.adoptedStyleSheets = document.adoptedStyleSheets.filter(s => s !== sheet)
   };
 }
 /* c8 ignore stop */

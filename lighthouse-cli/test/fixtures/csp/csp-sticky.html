@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <link rel=stylesheet href="csp-style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  </head>
+  <body>
+    <!-- Duplication of the sticky case from seo-tap-targets.html to confirm disableFixedAndStickyElementPointerEvents doesn't have a problem w/ CSP style-src -->
+    <a class=stickylink>sticky</a>
+    <a class=undertext>
+      This link is intentionally placed at the top of the page, so that the sticky header is hard to tap on.
+      It should not fail though because overlap with a sticky element depends on the scroll position.
+    </a>
+
+
+    <h1>This page has a CSP and sticky elements that tap-targets should ignore</h1>
+  </body>
+</html>

@@ -133,6 +133,7 @@ const defaultConfig = {
     networkQuietThresholdMs: 1000,
     cpuQuietThresholdMs: 1000,
     gatherers: [
+      'inspector-issues', // first, as we don't want any issues created from our gathering
       'css-usage',
       'js-usage',
       'viewport-dimensions',
@@ -159,7 +160,6 @@ const defaultConfig = {
       'seo/tap-targets',
       'accessibility',
       'trace-elements',
-      'inspector-issues',
       'source-maps',
       'full-page-screenshot',
     ],

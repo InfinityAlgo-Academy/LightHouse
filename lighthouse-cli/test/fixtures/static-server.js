@@ -117,6 +117,10 @@ class Server {
           const redirectUrl = redirectsRemaining ? recursiveRedirectUrl : params.get('redirect');
           return setTimeout(sendRedirect, delay, redirectUrl);
         }
+
+        if (params.has('csp')) {
+          headers['Content-Security-Policy'] = params.get('csp');
+        }
       }
 
       if (useGzip) {
