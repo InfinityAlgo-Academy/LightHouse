@@ -12,6 +12,8 @@ const MainThreadTasks = require('../computed/main-thread-tasks.js');
 const BootupTime = require('./bootup-time.js');
 const PageDependencyGraph = require('../computed/page-dependency-graph.js');
 const LoadSimulator = require('../computed/load-simulator.js');
+const TBT = require('./metrics/total-blocking-time.js');
+
 
 /** We don't always have timing data for short tasks, if we're missing timing data. Treat it as though it were 0ms. */
 const DEFAULT_TIMING = {startTime: 0, endTime: 0, duration: 0};
@@ -39,7 +41,7 @@ class LongTasks extends Audit {
   static get meta() {
     return {
       id: 'long-tasks',
-      scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
+      scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       requiredArtifacts: ['traces', 'devtoolsLogs'],
@@ -111,8 +113,10 @@ class LongTasks extends Audit {
       displayValue = str_(UIStrings.displayValue, {itemCount: results.length});
     }
 
+    const tbtProduct = await TBT.audit(artifacts, {...context, options: TBT.defaultOptions});
+
     return {
-      score: results.length === 0 ? 1 : 0,
+      score: tbtProduct.score,
       notApplicable: results.length === 0,
       details: tableDetails,
       displayValue,

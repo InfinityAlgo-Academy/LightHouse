@@ -1983,8 +1983,8 @@
       "id": "long-tasks",
       "title": "Avoid long main-thread tasks",
       "description": "Lists the longest tasks on the main thread, useful for identifying worst contributors to input delay. [Learn more](https://web.dev/long-tasks-devtools/)",
-      "score": null,
-      "scoreDisplayMode": "informative",
+      "score": 1,
+      "scoreDisplayMode": "numeric",
       "displayValue": "4 long tasks found",
       "details": {
         "type": "table",
