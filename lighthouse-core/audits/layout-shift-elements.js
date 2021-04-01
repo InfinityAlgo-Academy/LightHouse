@@ -64,7 +64,7 @@ class LayoutShiftElements extends Audit {
         {nodeCount: clsElementData.length});
     }
 
-    const clsProduct = await CLS.audit(artifacts, context);
+    const clsProduct = await CLS.audit(artifacts, {...context, options: CLS.defaultOptions});
 
     return {
       score: clsProduct.score,

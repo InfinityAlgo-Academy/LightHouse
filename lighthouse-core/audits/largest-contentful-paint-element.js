@@ -58,7 +58,7 @@ class LargestContentfulPaintElement extends Audit {
     const displayValue = str_(i18n.UIStrings.displayValueElementsFound,
       {nodeCount: lcpElementDetails.length});
 
-    const lcpProduct = await LCP.audit(artifacts, context);
+    const lcpProduct = await LCP.audit(artifacts, {...context, options: LCP.defaultOptions});
     return {
       score: lcpProduct.score,
       notApplicable: lcpElementDetails.length === 0,

@@ -1883,17 +1883,101 @@
       "id": "largest-contentful-paint-element",
       "title": "Largest Contentful Paint element",
       "description": "This is the largest contentful element painted within the viewport. [Learn More](https://web.dev/lighthouse-largest-contentful-paint/)",
-      "score": null,
-      "scoreDisplayMode": "error",
-      "errorMessage": "Cannot read property 'scoring' of undefined"
+      "score": 0.28,
+      "scoreDisplayMode": "numeric",
+      "displayValue": "1 element found",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "node",
+            "itemType": "node",
+            "text": "Element"
+          }
+        ],
+        "items": [
+          {
+            "node": {
+              "type": "node",
+              "lhId": "page-1-IMG",
+              "path": "3,HTML,1,BODY,14,IMG",
+              "selector": "body > img",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 654,
+                "left": 132,
+                "right": 252,
+                "width": 120,
+                "height": 80
+              },
+              "snippet": "<img src=\"lighthouse-480x318.jpg?iar2\" width=\"120\" height=\"80\">",
+              "nodeLabel": "img"
+            }
+          }
+        ]
+      }
     },
     "layout-shift-elements": {
       "id": "layout-shift-elements",
       "title": "Avoid large layout shifts",
       "description": "These DOM elements contribute most to the CLS of the page.",
-      "score": null,
-      "scoreDisplayMode": "error",
-      "errorMessage": "Invalid score for layout-shift-elements: NaN"
+      "score": 0.23,
+      "scoreDisplayMode": "numeric",
+      "displayValue": "4 elements found",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "node",
+            "itemType": "node",
+            "text": "Element"
+          },
+          {
+            "key": "score",
+            "itemType": "numeric",
+            "granularity": 0.001,
+            "text": "CLS Contribution"
+          }
+        ],
+        "items": [
+          {
+            "node": {
+              "type": "node",
+              "path": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,3,H5",
+              "selector": "div.blog-index > article > div.entry-content > h5",
+              "snippet": "<h5>",
+              "nodeLabel": "Debugging Node.js with Chrome DevTools"
+            }
+          },
+          {
+            "node": {
+              "type": "node",
+              "path": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,4,P",
+              "selector": "div.blog-index > article > div.entry-content > p",
+              "snippet": "<p>",
+              "nodeLabel": "The canonical guide to using the Chrome DevTools UI for debugging Node.js. It d…"
+            }
+          },
+          {
+            "node": {
+              "type": "node",
+              "path": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,5,HR",
+              "selector": "div.blog-index > article > div.entry-content > hr",
+              "snippet": "<hr>",
+              "nodeLabel": "hr"
+            }
+          },
+          {
+            "node": {
+              "type": "node",
+              "path": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,6,P",
+              "selector": "div.blog-index > article > div.entry-content > p",
+              "snippet": "<p>",
+              "nodeLabel": "Aside from that, I’ve been busy working on Lighthouse, performance metrics, too…"
+            }
+          }
+        ]
+      }
     },
     "long-tasks": {
       "id": "long-tasks",
@@ -7565,11 +7649,34 @@
       "lighthouse-core/audits/largest-contentful-paint-element.js | description": [
         "audits[largest-contentful-paint-element].description"
       ],
+      "lighthouse-core/lib/i18n/i18n.js | displayValueElementsFound": [
+        {
+          "values": {
+            "nodeCount": 1
+          },
+          "path": "audits[largest-contentful-paint-element].displayValue"
+        },
+        {
+          "values": {
+            "nodeCount": 4
+          },
+          "path": "audits[layout-shift-elements].displayValue"
+        }
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnElement": [
+        "audits[largest-contentful-paint-element].details.headings[0].text",
+        "audits[layout-shift-elements].details.headings[0].text",
+        "audits[non-composited-animations].details.headings[0].text",
+        "audits[dom-size].details.headings[1].text"
+      ],
       "lighthouse-core/audits/layout-shift-elements.js | title": [
         "audits[layout-shift-elements].title"
       ],
       "lighthouse-core/audits/layout-shift-elements.js | description": [
         "audits[layout-shift-elements].description"
+      ],
+      "lighthouse-core/audits/layout-shift-elements.js | columnContribution": [
+        "audits[layout-shift-elements].details.headings[1].text"
       ],
       "lighthouse-core/audits/long-tasks.js | title": [
         "audits[long-tasks].title"
@@ -7610,10 +7717,6 @@
           },
           "path": "audits[non-composited-animations].displayValue"
         }
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | columnElement": [
-        "audits[non-composited-animations].details.headings[0].text",
-        "audits[dom-size].details.headings[1].text"
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnName": [
         "audits[non-composited-animations].details.headings[1].text",
