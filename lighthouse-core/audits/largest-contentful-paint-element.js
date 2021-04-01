@@ -29,7 +29,7 @@ class LargestContentfulPaintElement extends Audit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['TraceElements', 'HostUserAgent', 'traces', 'devtoolsLogs', 'TestedAsMobileDevice'],
+      requiredArtifacts: ['TraceElements', 'HostUserAgent', 'traces', 'devtoolsLogs'],
     };
   }
 
