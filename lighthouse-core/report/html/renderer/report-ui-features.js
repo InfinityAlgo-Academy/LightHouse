@@ -75,13 +75,13 @@ function getAppsOrigin() {
 class ReportUIFeatures {
   /**
    * @param {DOM} dom
-   * @param {FeatureSet=} featureSet
+   * @param {Partial<FeatureSet>} featureSet
    */
-  constructor(dom, featureSet = DEFAULT_FEATURE_SET) {
+  constructor(dom, featureSet = {}) {
     /** @type {LH.Result} */
     this.json; // eslint-disable-line no-unused-expressions
     /** @type {FeatureSet} */
-    this.featureSet = featureSet;
+    this.featureSet = {...DEFAULT_FEATURE_SET, ...featureSet};
     /** @type {DOM} */
     this._dom = dom;
     /** @type {Document} */
