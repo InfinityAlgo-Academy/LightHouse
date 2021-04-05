@@ -16,7 +16,7 @@
  */
 'use strict';
 
-/* globals URL self Util */
+/* globals self Util */
 
 /** @typedef {HTMLElementTagNameMap & {[id: string]: HTMLElement}} HTMLElementByTagName */
 /** @template {string} T @typedef {import('typed-query-selector/parser').ParseSelector<T, Element>} ParseSelector */

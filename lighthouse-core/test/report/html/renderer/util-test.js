@@ -11,7 +11,6 @@ const I18n = require('../../../../report/html/renderer/i18n.js');
 const sampleResult = require('../../../results/sample_v2.json');
 
 /* eslint-env jest */
-/* global URL */
 
 describe('util helpers', () => {
   beforeEach(() => {

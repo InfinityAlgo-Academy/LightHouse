@@ -64,12 +64,12 @@ function hasBeenRecentlyScraped(library) {
  * @return {library is BundlePhobiaLibrary}
  */
 function validateLibraryObject(library) {
-  return library.hasOwnProperty('name') &&
-    library.hasOwnProperty('size') &&
-    library.hasOwnProperty('gzip') &&
-    library.hasOwnProperty('description') &&
-    library.hasOwnProperty('repository') &&
-    library.hasOwnProperty('version') &&
+  return typeof library.name === 'string' &&
+    typeof library.size === 'number' &&
+    typeof library.gzip === 'number' &&
+    typeof library.description === 'string' &&
+    typeof library.repository === 'string' &&
+    typeof library.version === 'string' &&
     !library.version.match(/^([0-9]+) packages$/);
 }
 

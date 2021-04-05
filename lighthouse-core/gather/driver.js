@@ -336,22 +336,24 @@ class Driver {
   sendCommandToSession(method, sessionId, ...params) {
     const timeout = this._nextProtocolTimeout;
     this._nextProtocolTimeout = DEFAULT_PROTOCOL_TIMEOUT;
-    return new Promise(async (resolve, reject) => {
-      const asyncTimeout = setTimeout((() => {
+
+    /** @type {NodeJS.Timer|undefined} */
+    let asyncTimeout;
+    const timeoutPromise = new Promise((resolve, reject) => {
+      asyncTimeout = setTimeout((() => {
         const err = new LHError(
           LHError.errors.PROTOCOL_TIMEOUT,
           {protocolMethod: method}
         );
         reject(err);
       }), timeout);
-      try {
-        const result = await this._innerSendCommand(method, sessionId, ...params);
-        resolve(result);
-      } catch (err) {
-        reject(err);
-      } finally {
-        clearTimeout(asyncTimeout);
-      }
+    });
+
+    return Promise.race([
+      this._innerSendCommand(method, sessionId, ...params),
+      timeoutPromise,
+    ]).finally(() => {
+      asyncTimeout && clearTimeout(asyncTimeout);
     });
   }
 

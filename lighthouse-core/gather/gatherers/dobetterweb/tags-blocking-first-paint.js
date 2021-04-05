@@ -43,7 +43,7 @@ function installMediaListener() {
       // @ts-expect-error - `___linkMediaChanges` created above.
       window.___linkMediaChanges.push(mediaChange);
 
-      return this.setAttribute('media', val);
+      this.setAttribute('media', val);
     },
   });
 }

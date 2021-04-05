@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* globals self, URL */
+/* globals self */
 
 // Not named `NBSP` because that creates a duplicate identifier (util.js).
 const NBSP2 = '\xa0';

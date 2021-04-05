@@ -258,8 +258,8 @@ function computeBenchmarkIndex() {
     let iterations = 0;
 
     while (Date.now() - start < 500) {
-      let s = ''; // eslint-disable-line no-unused-vars
-      for (let j = 0; j < 10000; j++) s += 'a';
+      let s = '';
+      for (let j = 0; j < 10000; j++) s += 'a'; // eslint-disable-line no-unused-vars
 
       iterations++;
     }
