@@ -16,7 +16,7 @@
  */
 'use strict';
 
-/* globals self, URL */
+/* globals self */
 
 /** @typedef {import('./i18n')} I18n */
 

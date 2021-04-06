@@ -18,7 +18,7 @@ const traceData = {
   networkRecords: [
     {
       url: 'http://google.com/index.js',
-      _statusCode: 200,
+      statusCode: 200,
       mimeType: 'text/javascript',
       requestId: 0,
       resourceSize: 9,
@@ -33,7 +33,7 @@ const traceData = {
     },
     {
       url: 'http://google.com/index.css',
-      _statusCode: 200,
+      statusCode: 200,
       mimeType: 'text/css',
       requestId: 1,
       resourceSize: 6,
@@ -45,7 +45,7 @@ const traceData = {
     },
     {
       url: 'http://google.com/index.json',
-      _statusCode: 200,
+      statusCode: 200,
       mimeType: 'application/json',
       requestId: 2,
       resourceSize: 7,
@@ -57,7 +57,7 @@ const traceData = {
     },
     {
       url: 'http://google.com/index.json',
-      _statusCode: 200,
+      statusCode: 200,
       mimeType: 'application/json',
       requestId: 27,
       resourceSize: 7,
@@ -70,7 +70,7 @@ const traceData = {
     },
     {
       url: 'http://google.com/index.json',
-      _statusCode: 304, // ignore for being a cache not modified response
+      statusCode: 304, // ignore for being a cache not modified response
       mimeType: 'application/json',
       requestId: 22,
       resourceSize: 7,
@@ -82,7 +82,7 @@ const traceData = {
     },
     {
       url: 'http://google.com/other.json',
-      _statusCode: 200,
+      statusCode: 200,
       mimeType: 'application/json',
       requestId: 23,
       resourceSize: 7,
@@ -94,7 +94,7 @@ const traceData = {
     },
     {
       url: 'http://google.com/index.jpg',
-      _statusCode: 200,
+      statusCode: 200,
       mimeType: 'image/jpg',
       requestId: 3,
       resourceSize: 10,
@@ -106,7 +106,7 @@ const traceData = {
     },
     {
       url: 'http://google.com/helloworld.mp4',
-      _statusCode: 200,
+      statusCode: 200,
       mimeType: 'video/mp4',
       requestId: 4,
       resourceSize: 100,
@@ -136,7 +136,7 @@ describe('Optimized responses', () => {
   });
 
   it('returns only text and non encoded responses', () => {
-    return responseCompression.afterPass(options, createNetworkRequests(traceData))
+    return responseCompression.afterPass(options, traceData)
       .then(artifact => {
         assert.equal(artifact.length, 2);
         assert.ok(/index\.css$/.test(artifact[0].url));
@@ -145,7 +145,7 @@ describe('Optimized responses', () => {
   });
 
   it('computes sizes', () => {
-    return responseCompression.afterPass(options, createNetworkRequests(traceData))
+    return responseCompression.afterPass(options, traceData)
       .then(artifact => {
         assert.equal(artifact.length, 2);
         assert.equal(artifact[0].resourceSize, 6);
@@ -155,7 +155,7 @@ describe('Optimized responses', () => {
 
   it('recovers from driver errors', () => {
     options.driver.getRequestContent = () => Promise.reject(new Error('Failed'));
-    return responseCompression.afterPass(options, createNetworkRequests(traceData))
+    return responseCompression.afterPass(options, traceData)
       .then(artifact => {
         assert.equal(artifact.length, 2);
         assert.equal(artifact[0].resourceSize, 6);
@@ -191,27 +191,10 @@ describe('Optimized responses', () => {
       ],
     };
 
-    return responseCompression.afterPass(options, createNetworkRequests(traceData))
+    return responseCompression.afterPass(options, traceData)
       .then(artifact => {
         assert.equal(artifact.length, 1);
         assert.equal(artifact[0].resourceSize, 123);
       });
   });
-
-  // Change into SDK.networkRequest when examples are ready
-  function createNetworkRequests(traceData) {
-    traceData.networkRecords = traceData.networkRecords.map(record => {
-      record.url = record.url;
-      record.statusCode = record._statusCode;
-      record.mimeType = record.mimeType;
-      record.resourceSize = record.resourceSize;
-      record.transferSize = record.transferSize;
-      record.responseHeaders = record.responseHeaders;
-      record.requestId = record.requestId;
-
-      return record;
-    });
-
-    return traceData;
-  }
 });

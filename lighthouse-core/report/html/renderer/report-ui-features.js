@@ -320,7 +320,8 @@ class ReportUIFeatures {
 
     ElementScreenshotRenderer.installOverlayFeature({
       dom: this._dom,
-      el,
+      reportEl: el,
+      overlayContainerEl: el,
       templateContext: this._templateContext,
       fullPageScreenshot,
     });

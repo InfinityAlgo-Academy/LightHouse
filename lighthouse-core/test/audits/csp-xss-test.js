@@ -11,6 +11,63 @@ const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.
 
 /* eslint-env jest */
 
+/** Using tooltips while severity icons are just for testing. */
+const ICONS = {
+  bypass: 'Bypass',
+  warning: 'Warning',
+  syntax: 'Syntax',
+};
+
+const STATIC_RESULTS = {
+  noObjectSrc: {
+    severity: ICONS.bypass,
+    description: {
+      formattedDefault:
+        'Elements controlled by object-src are considered legacy features. ' +
+        'Consider setting object-src to \'none\' to prevent the injection of ' +
+        'plugins that execute unsafe scripts.',
+    },
+    directive: 'object-src',
+  },
+  noBaseUri: {
+    severity: ICONS.bypass,
+    description: {
+      formattedDefault:
+        'Missing base-uri allows injected <base> tags to set the base URL for all ' +
+        'relative URLs (e.g. scripts) to an attacker controlled domain. ' +
+        'Consider setting base-uri to \'none\' or \'self\'.',
+    },
+    directive: 'base-uri',
+  },
+  noReportingDestination: {
+    severity: ICONS.warning,
+    description: {
+      formattedDefault:
+        'No CSP configures a reporting destination. ' +
+        'This makes it difficult to maintain the CSP over time and monitor for any breakages.',
+    },
+    directive: 'report-uri',
+  },
+  metaTag: {
+    severity: ICONS.warning,
+    description: {
+      formattedDefault:
+        'The page contains a CSP defined in a <meta> tag. ' +
+        'Consider defining the CSP in an HTTP header if you can.',
+    },
+    directive: undefined,
+  },
+  unsafeInlineFallback: {
+    severity: ICONS.warning,
+    description: {
+      formattedDefault:
+        'Consider adding \'unsafe-inline\' (ignored by browsers supporting ' +
+        'nonces/hashes) to be backward compatible with older browsers.',
+    },
+    directive: 'script-src',
+  },
+};
+
 it('audit basic header', async () => {
   const artifacts = {
     URL: 'https://example.com',
@@ -30,6 +87,7 @@ it('audit basic header', async () => {
   expect(results.details.items).toMatchObject(
     [
       {
+        severity: ICONS.syntax,
         description: {
           value:
             'script-src \'nonce-12345678\'; foo-bar \'none\'',
@@ -46,75 +104,11 @@ it('audit basic header', async () => {
           ],
         },
       },
-      {
-        description: {
-          formattedDefault:
-          'Elements controlled by object-src are considered legacy features. ' +
-          'Consider setting object-src to \'none\' to prevent the injection of ' +
-          'plugins that execute unsafe scripts.',
-        },
-        directive: 'object-src',
-      },
-      {
-        description: {
-          formattedDefault:
-            'Missing base-uri allows injected <base> tags to set the base URL for all ' +
-            'relative URLs (e.g. scripts) to an attacker controlled domain. ' +
-            'Consider setting base-uri to \'none\' or \'self\'.',
-        },
-        directive: 'base-uri',
-      },
-      {
-        description: {
-          formattedDefault:
-          'No CSP configures a reporting destination. ' +
-          'This makes it difficult to maintain the CSP over time and monitor for any breakages.',
-        },
-        directive: 'report-uri',
-      },
-      {
-        description: {
-          formattedDefault:
-            'Consider adding \'unsafe-inline\' (ignored by browsers supporting ' +
-            'nonces/hashes) to be backward compatible with older browsers.',
-        },
-        directive: 'script-src',
-      },
+      STATIC_RESULTS.noObjectSrc,
+      STATIC_RESULTS.noBaseUri,
+      STATIC_RESULTS.noReportingDestination,
+      STATIC_RESULTS.unsafeInlineFallback,
     ]
-  );
-});
-
-it('adds result when using meta tag', async () => {
-  const artifacts = {
-    URL: 'https://example.com',
-    MetaElements: [
-      {
-        httpEquiv: 'Content-Security-Policy',
-        content: `base-uri 'none'`,
-      },
-    ],
-    devtoolsLogs: {
-      defaultPass: networkRecordsToDevtoolsLog([
-        {
-          url: 'https://example.com',
-          responseHeaders: [
-            {name: 'Content-Security-Policy', value: `script-src 'none'; object-src 'none'; report-uri https://example.com`},
-          ],
-        },
-      ]),
-    },
-  };
-  const results = await CspXss.audit(artifacts, {computedCache: new Map()});
-  expect(results.details.items).toHaveLength(1);
-  expect(results.details.items[0]).toMatchObject(
-    {
-      description: {
-        formattedDefault:
-        'The page contains a CSP defined in a <meta> tag. ' +
-        'Consider defining the CSP in an HTTP header if you can.',
-      },
-      directive: undefined,
-    }
   );
 });
 
@@ -250,6 +244,64 @@ describe('getRawCsps', () => {
   });
 });
 
+describe('constructResults', () => {
+  it('converts findings to table items', () => {
+    const {score, results} = CspXss.constructResults([`script-src 'none'; foo-bar 'none'`], []);
+    expect(score).toEqual(0);
+    expect(results).toMatchObject([
+      {
+        severity: ICONS.syntax,
+        description: {
+          value: 'script-src \'none\'; foo-bar \'none\'',
+        },
+        subItems: {
+          type: 'subitems',
+          items: [
+            {
+              description: {
+                formattedDefault: 'Unknown CSP directive.',
+              },
+              directive: 'foo-bar',
+            },
+          ],
+        },
+      },
+      STATIC_RESULTS.noObjectSrc,
+      STATIC_RESULTS.noReportingDestination,
+    ]);
+  });
+
+  it('passes with no findings', () => {
+    const {score, results} = CspXss.constructResults([
+      `script-src 'none'; object-src 'none'; report-uri https://example.com`,
+    ], []);
+    expect(score).toEqual(1);
+    expect(results).toEqual([]);
+  });
+
+  it('adds item for CSP in meta tag', () => {
+    const {score, results} = CspXss.constructResults([], [
+      `script-src 'none'; object-src 'none'; report-uri https://example.com`,
+    ]);
+    expect(score).toEqual(1);
+    expect(results).toMatchObject([STATIC_RESULTS.metaTag]);
+  });
+
+  it('single item for no CSP', () => {
+    const {score, results} = CspXss.constructResults([], []);
+    expect(score).toEqual(0);
+    expect(results).toMatchObject([
+      {
+        severity: ICONS.bypass,
+        description: {
+          formattedDefault: 'No CSP found in enforcement mode',
+        },
+        directive: undefined,
+      },
+    ]);
+  });
+});
+
 describe('constructSyntaxResults', () => {
   it('single syntax error', () => {
     const rawCsps = [`foo-bar 'none'`];
@@ -259,6 +311,7 @@ describe('constructSyntaxResults', () => {
     const results = CspXss.constructSyntaxResults(syntaxFindings, rawCsps);
     expect(results).toMatchObject([
       {
+        severity: ICONS.syntax,
         description: {
           value: 'foo-bar \'none\'',
         },
@@ -298,6 +351,7 @@ describe('constructSyntaxResults', () => {
     const results = CspXss.constructSyntaxResults(syntaxFindings, rawCsps);
     expect(results).toMatchObject([
       {
+        severity: ICONS.syntax,
         description: {
           value: 'foo-bar \'asdf\'',
         },
@@ -335,6 +389,7 @@ describe('constructSyntaxResults', () => {
     const results = CspXss.constructSyntaxResults(syntaxFindings, rawCsps);
     expect(results).toMatchObject([
       {
+        severity: ICONS.syntax,
         description: {
           value: 'foo-bar \'none\'',
         },
@@ -351,6 +406,7 @@ describe('constructSyntaxResults', () => {
         },
       },
       {
+        severity: ICONS.syntax,
         description: {
           value: 'object-src \'asdf\'',
         },

@@ -68,7 +68,8 @@ declare global {
       LH.Artifacts['devtoolsLogs'] |
       LH.Artifacts['traces'] |
       LH.Artifacts['WebAppManifest'] |
-      LH.Artifacts['InstallabilityErrors'];
+      LH.Artifacts['InstallabilityErrors'] |
+      LH.Artifacts['Stacks'];
     export type PhaseResultNonPromise = void|PhaseArtifact
     export type PhaseResult = PhaseResultNonPromise | Promise<PhaseResultNonPromise>
 

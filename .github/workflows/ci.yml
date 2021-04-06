@@ -114,7 +114,9 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
 
     - name: yarn unit
-      run: xvfb-run --auto-servernum yarn unit:cicoverage
+      run: |
+        xvfb-run --auto-servernum yarn unit:cicoverage
+        yarn c8 report --reporter text-lcov > unit-coverage.lcov
       if: matrix.os == 'ubuntu-latest'
     - name: Upload test coverage to Codecov
       if: matrix.os == 'ubuntu-latest'
@@ -174,7 +176,9 @@ jobs:
 
     - run: sudo apt-get install xvfb
     - name: Run smoke tests
-      run: xvfb-run --auto-servernum yarn smoke:cicoverage --debug -j=1 --retries=2 --invert-match ${{ matrix.smoke-test-invert }} $SMOKE_GROUP_1
+      run: |
+        xvfb-run --auto-servernum yarn c8 yarn smoke --debug -j=1 --retries=2 --invert-match ${{ matrix.smoke-test-invert }} $SMOKE_GROUP_1
+        yarn c8 report --reporter text-lcov > smoke-coverage.lcov
 
     - name: Upload test coverage to Codecov
       if: matrix.chrome-channel == 'ToT'

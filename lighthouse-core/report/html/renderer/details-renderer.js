@@ -16,7 +16,7 @@
  */
 'use strict';
 
-/* globals self CriticalRequestChainRenderer SnippetRenderer ElementScreenshotRenderer Util URL */
+/* globals self CriticalRequestChainRenderer SnippetRenderer ElementScreenshotRenderer Util */
 
 /** @typedef {import('./dom.js')} DOM */
 

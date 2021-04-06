@@ -7,7 +7,7 @@
 
 const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
 
-/* global fetch, URL, location */
+/* global fetch, location */
 
 /** @return {Promise<LH.Artifacts['RobotsTxt']>} */
 /* c8 ignore start */
