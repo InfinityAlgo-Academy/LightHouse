@@ -154,12 +154,17 @@ describe('PerfCategoryRenderer', () => {
 
   it('renders the failing diagnostics', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
-    const diagnosticSection = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group')[3];
+    const diagnosticSection = categoryDOM.querySelector(
+        '.lh-category > .lh-audit-group.lh-audit-group--diagnostics');
 
-    const diagnosticAudits = category.auditRefs.filter(audit => audit.group === 'diagnostics' &&
-        !Util.showAsPassed(audit.result));
-    const diagnosticElements = diagnosticSection.querySelectorAll('.lh-audit');
-    assert.equal(diagnosticElements.length, diagnosticAudits.length);
+    const diagnosticAuditIds = category.auditRefs.filter(audit => {
+      return audit.group === 'diagnostics' && !Util.showAsPassed(audit.result);
+    }).map(audit => audit.id).sort();
+    assert.ok(diagnosticAuditIds.length > 0);
+
+    const diagnosticElementIds = [...diagnosticSection.querySelectorAll('.lh-audit')]
+      .map(el => el.id).sort();
+    assert.deepStrictEqual(diagnosticElementIds, diagnosticAuditIds);
   });
 
   it('renders the passed audits', () => {
