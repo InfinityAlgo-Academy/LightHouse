@@ -117,7 +117,7 @@ async function saveArtifacts(artifacts, basePath) {
   }
 
   // save everything else, using a replacer to serialize LHErrors in the artifacts.
-  const restArtifactsString = JSON.stringify(restArtifacts, stringifyReplacer, 2);
+  const restArtifactsString = JSON.stringify(restArtifacts, stringifyReplacer, 2) + '\n';
   fs.writeFileSync(`${basePath}/${artifactsFilename}`, restArtifactsString, 'utf8');
   log.log('Artifacts saved to disk in folder:', basePath);
   log.timeEnd(status);

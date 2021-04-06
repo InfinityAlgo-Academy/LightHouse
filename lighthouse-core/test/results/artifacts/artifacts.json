@@ -711,16 +711,62 @@
   "MetaElements": [
     {
       "name": "",
-      "content": ""
+      "content": "",
+      "charset": "utf-8",
+      "node": {
+        "lhId": "5-22-META",
+        "devtoolsNodePath": "3,HTML,0,HEAD,1,META",
+        "selector": "head > meta",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<meta charset=\"utf-8\">",
+        "nodeLabel": "meta"
+      }
     },
     {
       "name": "viewport",
-      "content": "width=device-width, initial-scale=1, minimum-scale=1"
+      "content": "width=device-width, initial-scale=1, minimum-scale=1",
+      "node": {
+        "lhId": "5-23-META",
+        "devtoolsNodePath": "3,HTML,0,HEAD,2,META",
+        "selector": "head > meta",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, minimum-scale=1\">",
+        "nodeLabel": "meta"
+      }
     },
     {
       "name": "",
       "content": "Open Graph smoke test description",
-      "property": "og:description"
+      "property": "og:description",
+      "node": {
+        "lhId": "5-24-META",
+        "devtoolsNodePath": "3,HTML,0,HEAD,3,META",
+        "selector": "head > meta",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<meta property=\"og:description\" content=\"Open Graph smoke test description\">",
+        "nodeLabel": "meta"
+      }
     }
   ],
   "ConsoleMessages": [

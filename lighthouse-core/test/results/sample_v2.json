@@ -4056,9 +4056,9 @@
     },
     "charset": {
       "id": "charset",
-      "title": "Charset declaration is missing or occurs too late in the HTML",
+      "title": "Properly defines charset",
       "description": "A character encoding declaration is required. It can be done with a `<meta>` tag in the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more](https://web.dev/charset/).",
-      "score": 0,
+      "score": 1,
       "scoreDisplayMode": "binary"
     },
     "dom-size": {
@@ -5564,7 +5564,7 @@
         }
       ],
       "id": "best-practices",
-      "score": 0.13
+      "score": 0.19
     },
     "seo": {
       "title": "SEO",
@@ -8227,7 +8227,7 @@
       "lighthouse-core/audits/dobetterweb/doctype.js | description": [
         "audits.doctype.description"
       ],
-      "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": [
+      "lighthouse-core/audits/dobetterweb/charset.js | title": [
         "audits.charset.title"
       ],
       "lighthouse-core/audits/dobetterweb/charset.js | description": [
