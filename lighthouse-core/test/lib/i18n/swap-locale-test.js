@@ -38,10 +38,10 @@ describe('swap-locale', () => {
     expect(lhrDe.i18n.rendererFormattedStrings.labDataTitle).toEqual('Labdaten');
 
     // Formatted numbers in placeholders.
-    expect(lhrEn.audits['render-blocking-resources'].displayValue)
-      .toEqual('Potential savings of 1,130 ms');
-    expect(lhrDe.audits['render-blocking-resources'].displayValue)
-      .toEqual('Mögliche Einsparung von 1.130 ms');
+    expect(lhrEn.audits['mainthread-work-breakdown'].displayValue)
+      .toEqual('1.5 s');
+    expect(lhrDe.audits['mainthread-work-breakdown'].displayValue)
+      .toEqual('1,5 s');
   });
 
   it('can roundtrip back to english correctly', () => {
