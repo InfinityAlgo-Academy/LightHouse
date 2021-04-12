@@ -303,13 +303,16 @@ module.exports = [
               {
                 // Weighted CLS score was added to the trace in m90:
                 // https://bugs.chromium.org/p/chromium/issues/detail?id=1173139
-                _minChromiumMilestone: 90,
+                //
+                // Weighted score on emulated mobile bug fixed in m92:
+                // https://chromium.googlesource.com/chromium/src/+/042fbfb4cc6a675da0dff4bf3fc08622af42422b
+                _minChromiumMilestone: 92,
                 firstContentfulPaint: '>5000',
                 firstContentfulPaintAllFrames: '<5000',
                 largestContentfulPaint: '>5000',
                 largestContentfulPaintAllFrames: '<5000',
                 cumulativeLayoutShift: '0.001 +/- 0.0005',
-                cumulativeLayoutShiftAllFrames: '0.0276 +/- 0.0005',
+                cumulativeLayoutShiftAllFrames: '0.197 +/- 0.001',
                 layoutShiftAvgSessionGap5s: '>0',
                 layoutShiftMaxSessionGap1s: '>0',
                 layoutShiftMaxSessionGap1sLimit5s: '>0',
