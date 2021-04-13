@@ -25,7 +25,7 @@ else
   dt_dir="$HOME/src/devtools/devtools-frontend"
 fi
 
-if [[ ! -d "$dt_dir" || ! -a "$dt_dir/front_end/shell.js" ]]; then
+if [[ ! -d "$dt_dir" || ! -a "$dt_dir/front_end/OWNERS" ]]; then
   echo -e "\033[31m✖ Error!\033[39m"
   echo "This script requires a devtools frontend folder. We didn't find one here:"
   echo "    $dt_dir"
