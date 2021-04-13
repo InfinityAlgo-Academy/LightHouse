@@ -3662,11 +3662,11 @@
       "id": "render-blocking-resources",
       "title": "Eliminate render-blocking resources",
       "description": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. [Learn more](https://web.dev/render-blocking-resources/).",
-      "score": 0.46,
+      "score": 0.47,
       "scoreDisplayMode": "numeric",
-      "numericValue": 1129,
+      "numericValue": 979,
       "numericUnit": "millisecond",
-      "displayValue": "Potential savings of 1,130 ms",
+      "displayValue": "Potential savings of 980 ms",
       "details": {
         "type": "opportunity",
         "headings": [
@@ -3703,17 +3703,12 @@
             "wastedMs": 873
           },
           {
-            "url": "http://localhost:10200/dobetterweb/dbw_partial_a.html?delay=200",
-            "totalBytes": 843,
-            "wastedMs": 873
-          },
-          {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
             "totalBytes": 1052,
             "wastedMs": 723
           }
         ],
-        "overallSavingsMs": 1129
+        "overallSavingsMs": 979
       }
     },
     "unminified-css": {
@@ -3877,9 +3872,9 @@
       "id": "uses-text-compression",
       "title": "Enable text compression",
       "description": "Text-based resources should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more](https://web.dev/uses-text-compression/).",
-      "score": 0.75,
+      "score": 0.88,
       "scoreDisplayMode": "numeric",
-      "numericValue": 300,
+      "numericValue": 150,
       "numericUnit": "millisecond",
       "displayValue": "Potential savings of 63 KiB",
       "details": {
@@ -3903,7 +3898,7 @@
         ],
         "items": [
           {
-            "url": "http://localhost:10200/zone.js",
+            "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
             "totalBytes": 71501,
             "wastedBytes": 56204
           },
@@ -3913,7 +3908,7 @@
             "wastedBytes": 8442
           }
         ],
-        "overallSavingsMs": 300,
+        "overallSavingsMs": 150,
         "overallSavingsBytes": 64646
       }
     },
@@ -4056,9 +4051,9 @@
     },
     "charset": {
       "id": "charset",
-      "title": "Charset declaration is missing or occurs too late in the HTML",
+      "title": "Properly defines charset",
       "description": "A character encoding declaration is required. It can be done with a `<meta>` tag in the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more](https://web.dev/charset/).",
-      "score": 0,
+      "score": 1,
       "scoreDisplayMode": "binary"
     },
     "dom-size": {
@@ -5564,7 +5559,7 @@
         }
       ],
       "id": "best-practices",
-      "score": 0.13
+      "score": 0.19
     },
     "seo": {
       "title": "SEO",
@@ -8100,7 +8095,7 @@
       "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": [
         {
           "values": {
-            "wastedMs": 1129
+            "wastedMs": 979
           },
           "path": "audits[render-blocking-resources].displayValue"
         }
@@ -8227,7 +8222,7 @@
       "lighthouse-core/audits/dobetterweb/doctype.js | description": [
         "audits.doctype.description"
       ],
-      "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": [
+      "lighthouse-core/audits/dobetterweb/charset.js | title": [
         "audits.charset.title"
       ],
       "lighthouse-core/audits/dobetterweb/charset.js | description": [

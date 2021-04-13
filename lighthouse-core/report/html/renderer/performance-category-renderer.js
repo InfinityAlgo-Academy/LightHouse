@@ -220,27 +220,6 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       filmstripEl && timelineEl.appendChild(filmstripEl);
     }
 
-    // Budgets
-    /** @type {Array<Element>} */
-    const budgetTableEls = [];
-    ['performance-budget', 'timing-budget'].forEach((id) => {
-      const audit = category.auditRefs.find(audit => audit.id === id);
-      if (audit && audit.result.details) {
-        const table = this.detailsRenderer.render(audit.result.details);
-        if (table) {
-          table.id = id;
-          table.classList.add('lh-audit');
-          budgetTableEls.push(table);
-        }
-      }
-    });
-    if (budgetTableEls.length > 0) {
-      const budgetsGroupEl = this.renderAuditGroup(groups.budgets);
-      budgetTableEls.forEach(table => budgetsGroupEl.appendChild(table));
-      budgetsGroupEl.classList.add('lh-audit-group--budgets');
-      element.appendChild(budgetsGroupEl);
-    }
-
     // Opportunities
     const opportunityAudits = category.auditRefs
         .filter(audit => audit.group === 'load-opportunities' && !Util.showAsPassed(audit.result))
@@ -296,6 +275,28 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     };
     const passedElem = this.renderClump('passed', clumpOpts);
     element.appendChild(passedElem);
+
+    // Budgets
+    /** @type {Array<Element>} */
+    const budgetTableEls = [];
+    ['performance-budget', 'timing-budget'].forEach((id) => {
+      const audit = category.auditRefs.find(audit => audit.id === id);
+      if (audit && audit.result.details) {
+        const table = this.detailsRenderer.render(audit.result.details);
+        if (table) {
+          table.id = id;
+          table.classList.add('lh-audit');
+          budgetTableEls.push(table);
+        }
+      }
+    });
+    if (budgetTableEls.length > 0) {
+      const budgetsGroupEl = this.renderAuditGroup(groups.budgets);
+      budgetTableEls.forEach(table => budgetsGroupEl.appendChild(table));
+      budgetsGroupEl.classList.add('lh-audit-group--budgets');
+      element.appendChild(budgetsGroupEl);
+    }
+
     return element;
   }
 }

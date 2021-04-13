@@ -89,6 +89,29 @@ describe('asset-saver helper', () => {
       fs.unlinkSync(traceFilename);
     });
 
+    it('prints traces with an event per line', async () => {
+      const trace = {
+        traceEvents: [
+          {args: {}, cat: 'devtools.timeline', pid: 1, ts: 2},
+          {args: {}, cat: 'v8', pid: 1, ts: 3},
+          {args: {IsMainFrame: true}, cat: 'v8', pid: 1, ts: 5},
+          {args: {data: {encodedDataLength: 20, requestId: '1.22'}}, pid: 1, ts: 6},
+        ],
+      };
+      await assetSaver.saveTrace(trace, traceFilename);
+
+      const traceFileContents = fs.readFileSync(traceFilename, 'utf8');
+      expect(traceFileContents).toEqual(
+`{
+"traceEvents": [
+  {"args":{},"cat":"devtools.timeline","pid":1,"ts":2},
+  {"args":{},"cat":"v8","pid":1,"ts":3},
+  {"args":{"IsMainFrame":true},"cat":"v8","pid":1,"ts":5},
+  {"args":{"data":{"encodedDataLength":20,"requestId":"1.22"}},"pid":1,"ts":6}
+]}
+`);
+    });
+
     it('correctly saves a trace with metadata to disk', () => {
       return assetSaver.saveTrace(fullTraceObj, traceFilename)
         .then(_ => {
@@ -96,7 +119,7 @@ describe('asset-saver helper', () => {
           const traceEventsFromDisk = JSON.parse(traceFileContents).traceEvents;
           assertTraceEventsEqual(traceEventsFromDisk, fullTraceObj.traceEvents);
         });
-    }, 10000);
+    });
 
     it('correctly saves a trace with no trace events to disk', () => {
       const trace = {
@@ -159,6 +182,29 @@ describe('asset-saver helper', () => {
           assert.ok(fileStats.size > Math.pow(2, 28));
         });
     }, 40 * 1000);
+  });
+
+  describe('saveDevtoolsLog', () => {
+    const devtoolsLogFilename = 'test-devtoolslog-0.json';
+
+    afterEach(() => {
+      fs.unlinkSync(devtoolsLogFilename);
+    });
+
+    it('prints devtoolsLogs with an event per line', async () => {
+      const devtoolsLog = [
+        {method: 'Network.requestServedFromCache', params: {requestId: '1.22'}},
+        {method: 'Network.responseReceived', params: {status: 301, headers: {':method': 'POST'}}},
+      ];
+      await assetSaver.saveDevtoolsLog(devtoolsLog, devtoolsLogFilename);
+
+      const devtoolsLogFileContents = fs.readFileSync(devtoolsLogFilename, 'utf8');
+      expect(devtoolsLogFileContents).toEqual(
+`[
+  {"method":"Network.requestServedFromCache","params":{"requestId":"1.22"}},
+  {"method":"Network.responseReceived","params":{"status":301,"headers":{":method":"POST"}}}
+]`);
+    });
   });
 
   describe('loadArtifacts', () => {

@@ -60,24 +60,6 @@ const expectations = [
           source: 'head',
         },
         {
-          rel: 'import',
-          href: 'http://localhost:10200/dobetterweb/dbw_partial_a.html?delay=200',
-          hrefRaw: './dbw_partial_a.html?delay=200',
-          hreflang: '',
-          as: '',
-          crossOrigin: null,
-          source: 'head',
-        },
-        {
-          rel: 'import',
-          href: 'http://localhost:10200/dobetterweb/dbw_partial_b.html?delay=200&isasync',
-          hrefRaw: './dbw_partial_b.html?delay=200&isasync',
-          hreflang: '',
-          as: '',
-          crossOrigin: null,
-          source: 'head',
-        },
-        {
           rel: 'stylesheet',
           href: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped',
           hrefRaw: './dbw_tester.css?delay=3000&capped',
@@ -158,12 +140,6 @@ const expectations = [
             url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200',
           },
 
-        },
-        {
-          tag: {
-            tagName: 'LINK',
-            url: 'http://localhost:10200/dobetterweb/dbw_partial_a.html?delay=200',
-          },
         },
         {
           tag: {
@@ -308,9 +284,6 @@ const expectations = [
               },
               {
                 url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200',
-              },
-              {
-                url: 'http://localhost:10200/dobetterweb/dbw_partial_a.html?delay=200',
               },
               {
                 url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped',

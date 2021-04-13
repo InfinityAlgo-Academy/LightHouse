@@ -44,4 +44,4 @@ gn gen out/Default
 gclient sync
 autoninja -C out/Default
 
-"$CHROME_PATH" --custom-devtools-frontend=file://"$DEVTOOLS_PATH"/out/Default/resources/inspector $*
+"$CHROME_PATH" --custom-devtools-frontend=file://"$DEVTOOLS_PATH"/out/Default/gen/front_end $*
