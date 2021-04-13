@@ -175,12 +175,25 @@ class Fetcher {
       requestInterceptionPromise,
     ]).finally(() => clearTimeout(timeoutHandle));
 
+    // Temporarily disable auto-attaching for this iframe.
+    await this.driver.sendCommand('Target.setAutoAttach', {
+      autoAttach: false,
+      waitForDebuggerOnStart: false,
+    });
+
     const injectionPromise = this.driver.executionContext.evaluate(injectIframe, {
       args: [url],
       useIsolation: true,
     });
 
     const [fetchResult] = await Promise.all([racePromise, injectionPromise]);
+
+    await this.driver.sendCommand('Target.setAutoAttach', {
+      flatten: true,
+      autoAttach: true,
+      waitForDebuggerOnStart: true,
+    });
+
     return fetchResult;
   }
 }
