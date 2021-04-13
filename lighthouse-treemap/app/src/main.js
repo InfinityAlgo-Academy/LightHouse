@@ -281,10 +281,9 @@ function renderViewModeButtons(viewModes) {
     const viewModeEl = TreemapUtil.createChildOf(viewModesEl, 'div', 'view-mode');
     viewModeEl.id = `view-mode--${viewMode.id}`;
 
-    const labelEl =
-      TreemapUtil.createChildOf(viewModeEl, 'label', 'view-mode__label');
-    TreemapUtil.createChildOf(labelEl, 'span').textContent = viewMode.label;
-    TreemapUtil.createChildOf(labelEl, 'span', 'lh-text-dim').textContent =
+    const labelEl = TreemapUtil.createChildOf(viewModeEl, 'label');
+    TreemapUtil.createChildOf(labelEl, 'span', 'view-mode__label').textContent = viewMode.label;
+    TreemapUtil.createChildOf(labelEl, 'span', 'view-mode__sublabel lh-text-dim').textContent =
       ` (${viewMode.subLabel})`;
 
     const inputEl = TreemapUtil.createChildOf(labelEl, 'input', 'view-mode__button', {
