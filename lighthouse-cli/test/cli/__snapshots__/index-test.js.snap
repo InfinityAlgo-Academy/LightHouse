@@ -1432,6 +1432,7 @@ Object {
       "pauseAfterFcpMs": 1000,
       "pauseAfterLoadMs": 1000,
       "recordTrace": true,
+      "skipWaitingForPageLoad": false,
       "useThrottling": true,
     },
     Object {
@@ -1449,6 +1450,7 @@ Object {
       "pauseAfterFcpMs": 0,
       "pauseAfterLoadMs": 0,
       "recordTrace": false,
+      "skipWaitingForPageLoad": false,
       "useThrottling": false,
     },
     Object {
@@ -1476,6 +1478,7 @@ Object {
       "pauseAfterFcpMs": 0,
       "pauseAfterLoadMs": 0,
       "recordTrace": false,
+      "skipWaitingForPageLoad": true,
       "useThrottling": false,
     },
   ],
@@ -1629,6 +1632,7 @@ Object {
       "pauseAfterFcpMs": 1000,
       "pauseAfterLoadMs": 1000,
       "recordTrace": true,
+      "skipWaitingForPageLoad": false,
       "useThrottling": true,
     },
   ],
