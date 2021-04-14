@@ -308,8 +308,8 @@ Computing artifact: FirstContentfulPaint
 Computing artifact: LanternFirstContentfulPaint
 Auditing: Minify CSS
 Auditing: Minify JavaScript
-Auditing: Remove unused CSS
-Auditing: Remove unused JavaScript
+Auditing: Reduce unused CSS
+Auditing: Reduce unused JavaScript
 Computing artifact: JSBundles
 Auditing: Serve images in next-gen formats
 Auditing: Efficiently encode images

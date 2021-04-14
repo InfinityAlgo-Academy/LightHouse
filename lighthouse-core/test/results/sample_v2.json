@@ -3771,8 +3771,8 @@
     },
     "unused-css-rules": {
       "id": "unused-css-rules",
-      "title": "Remove unused CSS",
-      "description": "Remove dead rules from stylesheets and defer the loading of CSS not used for above-the-fold content to reduce unnecessary bytes consumed by network activity. [Learn more](https://web.dev/unused-css-rules/).",
+      "title": "Reduce unused CSS",
+      "description": "Reduce unused rules from stylesheets and defer CSS not used for above-the-fold content to decrease bytes consumed by network activity. [Learn more](https://web.dev/unused-css-rules/).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
@@ -3788,8 +3788,8 @@
     },
     "unused-javascript": {
       "id": "unused-javascript",
-      "title": "Remove unused JavaScript",
-      "description": "Remove unused JavaScript to reduce bytes consumed by network activity. [Learn more](https://web.dev/unused-javascript/).",
+      "title": "Reduce unused JavaScript",
+      "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn more](https://web.dev/unused-javascript/).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
