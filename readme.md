@@ -330,6 +330,8 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[Treo](https://treo.sh)** - Treo is Lighthouse as a Service. It provides regression testing, geographical regions, custom networks, and integrations with GitHub & Slack. Treo is a paid product with plans for solo-developers and teams.
 
+* **[Alertdesk](https://www.alertdesk.com/)** - Alertdesk is based on Lighthouse and helps you to keep track of your site’s quality & performance. Run daily quality & performance tests from both Mobile and Desktop and dive into the powerful & intuitive reports. You can also monitor your uptime (every minute - 24/7) & domain health. Alertdesk is a paid product with a free 14-day trial.
+
 * **[Screpy](https://screpy.com)** - Screpy is a web analysis tool that can analyze all pages of your websites in one dashboard and monitor them with your team. It's powered by Lighthouse and it also includes some different analysis tools (SERP, W3C, Uptime, etc). Screpy has free and paid plans.
 
 * **[Lighthouse Keeper](https://lighthouse-keeper.com/)** - Lighthouse Keeper monitors your pages' Lighthouse scores and notifies you if they drop below your thresholds. Lighthouse Keeper is a free service that monitors up to 3 URLs once per day.
