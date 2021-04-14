@@ -341,7 +341,6 @@ describe('GatherRunner', function() {
       enableAsyncStacks: asyncFunc,
       cacheNatives: asyncFunc,
       gotoURL: asyncFunc,
-      registerPerformanceObserver: asyncFunc,
       registerRequestIdleCallbackWrap: asyncFunc,
       cleanBrowserCaches: createCheck('calledCleanBrowserCaches'),
       clearDataForOrigin: createCheck('calledClearStorage'),

@@ -900,15 +900,6 @@ class Driver {
   }
 
   /**
-   * Install a performance observer that watches longtask timestamps for waitForCPUIdle.
-   * @return {Promise<void>}
-   */
-  async registerPerformanceObserver() {
-    const scriptStr = `(${pageFunctions.registerPerformanceObserverInPageString})()`;
-    await this.evaluateScriptOnNewDocument(scriptStr);
-  }
-
-  /**
    * Use a RequestIdleCallback shim for tests run with simulated throttling, so that the deadline can be used without
    * a penalty
    * @param {LH.Config.Settings} settings

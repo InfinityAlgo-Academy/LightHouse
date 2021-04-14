@@ -84,9 +84,6 @@ function makeFakeDriver({protocolGetVersionResponse}) {
     getScrollPosition() {
       return Promise.resolve(scrollPosition);
     },
-    registerPerformanceObserver() {
-      return Promise.resolve();
-    },
     beginTrace() {
       return Promise.resolve();
     },

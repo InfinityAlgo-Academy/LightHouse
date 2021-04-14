@@ -48,57 +48,6 @@ function wrapRuntimeEvalErrorInBrowser(err) {
 }
 
 /**
- * Used by _waitForCPUIdle and executed in the context of the page, updates the ____lastLongTask
- * property on window to the end time of the last long task.
- */
-function registerPerformanceObserverInPage() {
-  window.____lastLongTask = window.__perfNow();
-  const observer = new window.PerformanceObserver(entryList => {
-    const entries = entryList.getEntries();
-    for (const entry of entries) {
-      if (entry.entryType === 'longtask') {
-        const taskEnd = entry.startTime + entry.duration;
-        window.____lastLongTask = Math.max(window.____lastLongTask || 0, taskEnd);
-      }
-    }
-  });
-
-  observer.observe({entryTypes: ['longtask']});
-}
-
-/**
- * Used by _waitForCPUIdle and executed in the context of the page, returns time since last long task.
- * @return {Promise<number>}
- */
-function checkTimeSinceLastLongTask() {
-  // This function attempts to return the time since the last long task occurred.
-  // `PerformanceObserver`s don't always immediately fire though, so we check twice with some time in
-  // between to make sure nothing has happened very recently.
-
-  // Chrome 88 introduced heavy throttling of timers which means our `setTimeout` will be executed
-  // at some point farish (several hundred ms) into the future and the time at which it executes isn't
-  // a reliable indicator of long task existence, instead we check if any information has changed.
-  // See https://developer.chrome.com/blog/timer-throttling-in-chrome-88/
-  return new window.__nativePromise(resolve => {
-    const firstAttemptTs = window.__perfNow();
-    const firstAttemptLastLongTaskTs = window.____lastLongTask || 0;
-
-    setTimeout(() => {
-      // We can't be sure a long task hasn't occurred since our first attempt, but if the `____lastLongTask`
-      // value is the same (i.e. the perf observer didn't have any new information), we can be pretty
-      // confident that the long task info was accurate *at the time of our first attempt*.
-      const secondAttemptLastLongTaskTs = window.____lastLongTask || 0;
-      const timeSinceLongTask = firstAttemptLastLongTaskTs === secondAttemptLastLongTaskTs ?
-        // The time of the last long task hasn't changed, the information from our first attempt is accurate.
-        firstAttemptTs - firstAttemptLastLongTaskTs :
-        // The time of the last long task *did* change, we can't really trust the information we have.
-        0;
-      resolve(timeSinceLongTask);
-    }, 150);
-  });
-}
-
-/**
  * @template {string} T
  * @param {T} selector Optional simple CSS selector to filter nodes on.
  *     Combinators are not supported.
@@ -577,8 +526,6 @@ const getNodeDetailsString = `function getNodeDetails(element) {
 module.exports = {
   wrapRuntimeEvalErrorInBrowserString: wrapRuntimeEvalErrorInBrowser.toString(),
   wrapRuntimeEvalErrorInBrowser,
-  registerPerformanceObserverInPageString: registerPerformanceObserverInPage.toString(),
-  checkTimeSinceLastLongTask,
   getElementsInDocument,
   getElementsInDocumentString: getElementsInDocument.toString(),
   getOuterHTMLSnippetString: getOuterHTMLSnippet.toString(),
