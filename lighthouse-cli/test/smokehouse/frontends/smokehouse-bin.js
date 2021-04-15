@@ -132,7 +132,11 @@ async function begin() {
   const invertMatch = argv.invertMatch;
   const testDefns = getDefinitionsToRun(allTestDefns, requestedTestIds, {invertMatch});
 
-  const options = {jobs, retries, isDebug: argv.debug, lighthouseRunner};
+  const takeNetworkRequestUrls = () => {
+    return server.takeRequestUrls();
+  };
+
+  const options = {jobs, retries, isDebug: argv.debug, lighthouseRunner, takeNetworkRequestUrls};
 
   let isPassing;
   try {

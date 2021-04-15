@@ -35,6 +35,7 @@ const smokeTests = [{
   id: 'dbw',
   expectations: require('./dobetterweb/dbw-expectations.js'),
   config: require('./dobetterweb/dbw-config.js'),
+  runSerially: true, // Need access to network request assertions.
 }, {
   id: 'redirects',
   expectations: require('./redirects/expectations.js'),

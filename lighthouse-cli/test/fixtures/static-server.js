@@ -28,6 +28,8 @@ class Server {
     this._server = http.createServer(this._requestHandler.bind(this));
     /** @type {(data: string) => string=} */
     this._dataTransformer = undefined;
+    /** @type {string[]} */
+    this._requestUrls = [];
   }
 
   getPort() {
@@ -62,8 +64,32 @@ class Server {
     this._dataTransformer = fn;
   }
 
+  /**
+   * @return {string[]}
+   */
+  takeRequestUrls() {
+    const requestUrls = this._requestUrls;
+    this._requestUrls = [];
+    return requestUrls;
+  }
+
+  /**
+   * @param {http.IncomingMessage} request
+   */
+  _updateRequestUrls(request) {
+    // Favicon is not fetched in headless mode and robots is not fetched by every test.
+    // Ignoring these makes the assertion much simpler.
+    if (['/favicon.ico', '/robots.txt'].includes(request.url)) return;
+    this._requestUrls.push(request.url);
+  }
+
+  /**
+   * @param {http.IncomingMessage} request
+   * @param {http.ServerResponse} response
+   */
   _requestHandler(request, response) {
     const requestUrl = parseURL(request.url);
+    this._updateRequestUrls(request);
     const filePath = requestUrl.pathname;
     const queryString = requestUrl.search && parseQueryString(requestUrl.search.slice(1));
     let absoluteFilePath = path.join(this.baseDir, filePath);

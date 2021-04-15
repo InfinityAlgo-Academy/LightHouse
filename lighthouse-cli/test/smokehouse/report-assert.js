@@ -157,13 +157,13 @@ function makeComparison(name, actualResult, expectedResult) {
  * @param {LocalConsole} localConsole
  * @param {LH.Result} lhr
  * @param {Smokehouse.ExpectedRunnerResult} expected
+ * @param {boolean|undefined} isSync
  */
-function pruneExpectations(localConsole, lhr, expected) {
+function pruneExpectations(localConsole, lhr, expected, isSync) {
   const userAgent = lhr.environment.hostUserAgent;
   const userAgentMatch = /Chrome\/(\d+)/.exec(userAgent); // Chrome/85.0.4174.0
   if (!userAgentMatch) throw new Error('Could not get chrome version.');
   const actualChromeVersion = Number(userAgentMatch[1]);
-
   /**
    * @param {*} obj
    */
@@ -199,6 +199,19 @@ function pruneExpectations(localConsole, lhr, expected) {
   }
 
   const cloned = cloneDeep(expected);
+
+  // Tests must be run synchronously so we can clear the request list between tests.
+  // We do not have a good way to map requests to test definitions if the tests are run in parallel.
+  if (!isSync && expected.networkRequests) {
+    const msg = 'Network requests should only be asserted on tests run synchronously';
+    if (process.env.CI) {
+      throw new Error(msg);
+    } else {
+      localConsole.log(`${msg}, pruning expectation: ${JSON.stringify(expected.networkRequests)}`);
+      delete cloned.networkRequests;
+    }
+  }
+
   pruneNewerChromeExpectations(cloned);
   return cloned;
 }
@@ -206,7 +219,7 @@ function pruneExpectations(localConsole, lhr, expected) {
 /**
  * Collate results into comparisons of actual and expected scores on each audit/artifact.
  * @param {LocalConsole} localConsole
- * @param {{lhr: LH.Result, artifacts: LH.Artifacts}} actual
+ * @param {{lhr: LH.Result, artifacts: LH.Artifacts, networkRequests: string[]}} actual
  * @param {Smokehouse.ExpectedRunnerResult} expected
  * @return {Comparison[]}
  */
@@ -254,6 +267,16 @@ function collateResults(localConsole, actual, expected) {
     return makeComparison(auditName + ' audit', actualResult, expectedResult);
   });
 
+  /** @type {Comparison[]} */
+  const requestCountAssertion = [];
+  if (expected.networkRequests) {
+    requestCountAssertion.push(makeComparison(
+      'Requests',
+      actual.networkRequests,
+      expected.networkRequests
+    ));
+  }
+
   return [
     {
       name: 'final url',
@@ -263,6 +286,7 @@ function collateResults(localConsole, actual, expected) {
     },
     runtimeErrorAssertion,
     runWarningsAssertion,
+    ...requestCountAssertion,
     ...artifactAssertions,
     ...auditAssertions,
   ];
@@ -334,15 +358,15 @@ function assertLogString(count) {
 /**
  * Log all the comparisons between actual and expected test results, then print
  * summary. Returns count of passed and failed tests.
- * @param {{lhr: LH.Result, artifacts: LH.Artifacts}} actual
+ * @param {{lhr: LH.Result, artifacts: LH.Artifacts, networkRequests: string[]}} actual
  * @param {Smokehouse.ExpectedRunnerResult} expected
- * @param {{isDebug?: boolean}=} reportOptions
+ * @param {{isDebug?: boolean, isSync?: boolean}=} reportOptions
  * @return {{passed: number, failed: number, log: string}}
  */
 function report(actual, expected, reportOptions = {}) {
   const localConsole = new LocalConsole();
 
-  expected = pruneExpectations(localConsole, actual.lhr, expected);
+  expected = pruneExpectations(localConsole, actual.lhr, expected, reportOptions.isSync);
   const comparisons = collateResults(localConsole, actual, expected);
 
   let correctCount = 0;
