@@ -47,6 +47,14 @@ describe('Fraggle Rock Config Filtering', () => {
       ...auditMeta,
     };
   }
+  class ManualAudit extends BaseAudit {
+    static meta = {
+      id: 'manual',
+      scoreDisplayMode: BaseAudit.SCORING_MODES.MANUAL,
+      requiredArtifacts: /** @type {any} */ ([]),
+      ...auditMeta,
+    };
+  }
   class TimespanAudit extends BaseAudit {
     static meta = {
       id: 'timespan',
@@ -62,7 +70,7 @@ describe('Fraggle Rock Config Filtering', () => {
     };
   }
 
-  const audits = [SnapshotAudit, TimespanAudit, NavigationAudit].map(audit => ({
+  const audits = [SnapshotAudit, TimespanAudit, NavigationAudit, ManualAudit].map(audit => ({
     implementation: audit,
     options: {},
   }));
@@ -76,6 +84,7 @@ describe('Fraggle Rock Config Filtering', () => {
       const partialArtifacts = [{id: 'Snapshot', gatherer: {instance: snapshotGatherer}}];
       expect(filters.filterAuditsByAvailableArtifacts(audits, partialArtifacts)).toEqual([
         {implementation: SnapshotAudit, options: {}},
+        {implementation: ManualAudit, options: {}},
       ]);
     });
 
@@ -89,6 +98,7 @@ describe('Fraggle Rock Config Filtering', () => {
     snapshot: {title: 'Snapshot', auditRefs: [{id: 'snapshot', weight: 0}]},
     timespan: {title: 'Timespan', auditRefs: [{id: 'timespan', weight: 0}]},
     navigation: {title: 'Navigation', auditRefs: [{id: 'navigation', weight: 0}]},
+    manual: {title: 'Manual', auditRefs: [{id: 'manual', weight: 0}]},
     mixed: {
       title: 'Mixed',
       auditRefs: [
@@ -106,10 +116,34 @@ describe('Fraggle Rock Config Filtering', () => {
 
     it('should filter entire categories', () => {
       const partialAudits = [{implementation: SnapshotAudit, options: {}}];
-      expect(filters.filterCategoriesByAvailableAudits(categories, partialAudits)).toMatchObject({
+      const filtered = filters.filterCategoriesByAvailableAudits(categories, partialAudits);
+      expect(filtered).not.toMatchObject({
+        timespan: {},
+        navigation: {},
+      });
+      expect(filtered).toMatchObject({
         snapshot: {},
         mixed: {},
       });
+    });
+
+    it('should filter entire categories when all remaining audits are manual', () => {
+      const partialAudits = [
+        {implementation: SnapshotAudit, options: {}},
+        {implementation: ManualAudit, options: {}},
+      ];
+
+      const filteredCategories = filters.filterCategoriesByAvailableAudits({
+        snapshot: categories.snapshot,
+        timespanWithManual: {
+          title: 'Timespan + Manual',
+          auditRefs: [
+            {id: 'timespan', weight: 0},
+            {id: 'manual', weight: 0},
+          ],
+        },
+      }, partialAudits);
+      expect(filteredCategories).not.toHaveProperty('timespanWithManual');
     });
 
     it('should filter audits within categories', () => {
@@ -139,8 +173,12 @@ describe('Fraggle Rock Config Filtering', () => {
       };
       expect(filters.filterConfigByGatherMode(config, 'snapshot')).toMatchObject({
         artifacts: [{id: 'Snapshot'}],
-        audits: [{implementation: SnapshotAudit}],
-        categories: {snapshot: {}, mixed: {auditRefs: [{id: 'snapshot'}]}},
+        audits: [{implementation: SnapshotAudit}, {implementation: ManualAudit}],
+        categories: {
+          snapshot: {},
+          manual: {},
+          mixed: {auditRefs: [{id: 'snapshot'}]},
+        },
       });
     });
   });
