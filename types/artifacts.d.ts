@@ -476,6 +476,8 @@ declare global {
           width: string | null;
           /** The height of the image as expressed by CSS rules. Set to `null` if there was no height set in CSS. */
           height: string | null;
+          /** The aspect ratio of the image as expressed by CSS rules. Set to `null` if there was no aspect ratio set in CSS. */
+          aspectRatio: string | null;
         }
         /** The BoundingClientRect of the element. */
         clientRect: {

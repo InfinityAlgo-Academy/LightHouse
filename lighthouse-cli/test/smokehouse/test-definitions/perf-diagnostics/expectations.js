@@ -81,4 +81,49 @@ module.exports = [
       },
     },
   },
+  {
+    lhr: {
+      requestedUrl: 'http://localhost:10200/perf/unsized-images.html',
+      finalUrl: 'http://localhost:10200/perf/unsized-images.html',
+      audits: {
+        'unsized-images': {
+          score: 0,
+          details: {
+            items: [
+              {
+                node: {
+                  snippet: '<img src="../launcher-icon-100x100.png" width="100">',
+                },
+              },
+              {
+                node: {
+                  snippet: '<img src="../launcher-icon-100x100.png" height="100">',
+                },
+              },
+              {
+                node: {
+                  snippet: '<img src="../launcher-icon-100x100.png" style="width: 100;">',
+                },
+              },
+              {
+                node: {
+                  snippet: '<img src="../launcher-icon-100x100.png" style="height: 100;">',
+                },
+              },
+              {
+                node: {
+                  snippet: '<img src="../launcher-icon-100x100.png" style="aspect-ratio: 1 / 1;">',
+                },
+              },
+              {
+                node: {
+                  snippet: '<img src="../launcher-icon-100x100.png" style="width: 100; height: auto;">',
+                },
+              },
+            ],
+          },
+        },
+      },
+    },
+  },
 ];

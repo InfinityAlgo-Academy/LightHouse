@@ -64,9 +64,9 @@ class UnsizedImages extends Audit {
    * @param {string | null} property
    * @return {boolean}
    */
-  static doesCssPropProvideExplicitSize(property) {
+  static isCssPropExplicitlySet(property) {
     if (!property) return false;
-    return property !== 'auto';
+    return !['auto', 'initial', 'unset', 'inherit'].includes(property);
   }
 
   /**
@@ -86,13 +86,17 @@ class UnsizedImages extends Audit {
     const attrHeight = image.attributeHeight;
     const cssWidth = image._privateCssSizing.width;
     const cssHeight = image._privateCssSizing.height;
+    const cssAspectRatio = image._privateCssSizing.aspectRatio;
     const htmlWidthIsExplicit = UnsizedImages.doesHtmlAttrProvideExplicitSize(attrWidth);
-    const cssWidthIsExplicit = UnsizedImages.doesCssPropProvideExplicitSize(cssWidth);
+    const cssWidthIsExplicit = UnsizedImages.isCssPropExplicitlySet(cssWidth);
     const htmlHeightIsExplicit = UnsizedImages.doesHtmlAttrProvideExplicitSize(attrHeight);
-    const cssHeightIsExplicit = UnsizedImages.doesCssPropProvideExplicitSize(cssHeight);
+    const cssHeightIsExplicit = UnsizedImages.isCssPropExplicitlySet(cssHeight);
+    const explicitAspectRatio = UnsizedImages.isCssPropExplicitlySet(cssAspectRatio);
     const explicitWidth = htmlWidthIsExplicit || cssWidthIsExplicit;
     const explicitHeight = htmlHeightIsExplicit || cssHeightIsExplicit;
-    return explicitWidth && explicitHeight;
+    return (explicitWidth && explicitHeight) ||
+      (explicitWidth && explicitAspectRatio) ||
+      (explicitHeight && explicitAspectRatio);
   }
 
   /**
