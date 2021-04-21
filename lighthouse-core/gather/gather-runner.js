@@ -9,6 +9,7 @@ const log = require('lighthouse-logger');
 const LHError = require('../lib/lh-error.js');
 const NetworkAnalyzer = require('../lib/dependency-graph/simulator/network-analyzer.js');
 const NetworkRecorder = require('../lib/network-recorder.js');
+const emulation = require('../lib/emulation.js');
 const constants = require('../config/constants.js');
 const i18n = require('../lib/i18n/i18n.js');
 const URL = require('../lib/url-shim.js');
@@ -129,7 +130,7 @@ class GatherRunner {
     log.time(status);
     const resetStorage = !options.settings.disableStorageReset;
     await driver.assertNoSameOriginServiceWorkerClients(options.requestedUrl);
-    await driver.beginEmulation(options.settings);
+    await emulation.emulate(driver.defaultSession, options.settings);
     await driver.enableRuntimeEvents();
     await driver.enableAsyncStacks();
     await driver.cacheNatives();
@@ -344,8 +345,10 @@ class GatherRunner {
     const status = {msg: 'Setting up network for the pass trace', id: `lh:gather:setupPassNetwork`};
     log.time(status);
 
+    const session = passContext.driver.defaultSession;
     const passConfig = passContext.passConfig;
-    await passContext.driver.setThrottling(passContext.settings, passConfig);
+    if (passConfig.useThrottling) await emulation.throttle(session, passContext.settings);
+    else await emulation.clearThrottling(session);
 
     const blockedUrls = (passContext.passConfig.blockedUrlPatterns || [])
       .concat(passContext.settings.blockedUrlPatterns || []);
@@ -752,7 +755,7 @@ class GatherRunner {
     const loadData = await GatherRunner.endRecording(passContext);
 
     // Disable throttling so the afterPass analysis isn't throttled
-    await driver.setThrottling(passContext.settings, {useThrottling: false});
+    await emulation.clearThrottling(driver.defaultSession);
 
     // In case of load error, save log and trace with an error prefix, return no artifacts for this pass.
     const pageLoadError = GatherRunner.getPageLoadError(passContext, loadData, possibleNavError);

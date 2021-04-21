@@ -36,12 +36,6 @@ function makeFakeDriver({protocolGetVersionResponse}) {
     gotoURL(url) {
       return Promise.resolve({finalUrl: url, timedOut: false});
     },
-    beginEmulation() {
-      return Promise.resolve();
-    },
-    setThrottling() {
-      return Promise.resolve();
-    },
     dismissJavaScriptDialogs() {
       return Promise.resolve();
     },

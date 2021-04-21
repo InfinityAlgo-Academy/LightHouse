@@ -129,6 +129,17 @@ function resetDefaultMockResponses() {
     .mockResponse('ServiceWorker.enable');
 }
 
+/**
+ * Restore the emulation to its original implementation for testing emulation-sensitive logic.
+ */
+function restoreActualEmulation() {
+  const actualEmulation = jest.requireActual('../../lib/emulation.js');
+  const emulation = require('../../lib/emulation.js');
+  emulation.emulate = actualEmulation.emulate;
+  emulation.throttle = actualEmulation.throttle;
+  emulation.clearThrottling = actualEmulation.clearThrottling;
+}
+
 beforeEach(() => {
   // @ts-expect-error - connectionStub has a mocked version of sendCommand implemented in each test
   connectionStub = new Connection();
@@ -138,6 +149,11 @@ beforeEach(() => {
   };
   driver = new EmulationDriver(connectionStub);
   resetDefaultMockResponses();
+
+  const emulation = require('../../lib/emulation.js');
+  emulation.emulate = jest.fn();
+  emulation.throttle = jest.fn();
+  emulation.clearThrottling = jest.fn();
 });
 
 describe('GatherRunner', function() {
@@ -275,17 +291,14 @@ describe('GatherRunner', function() {
   });
 
   it('sets up the driver to begin emulation when all flags are undefined', async () => {
+    restoreActualEmulation();
     await GatherRunner.setupDriver(driver, {settings: getSettings('mobile')});
 
     connectionStub.sendCommand.findInvocation('Emulation.setDeviceMetricsOverride');
-    expect(connectionStub.sendCommand.findInvocation('Network.emulateNetworkConditions')).toEqual({
-      latency: 0, downloadThroughput: 0, uploadThroughput: 0, offline: false,
-    });
-    expect(() =>
-      connectionStub.sendCommand.findInvocation('Emulation.setCPUThrottlingRate')).toThrow();
   });
 
   it('applies the correct emulation given a particular formFactor', async () => {
+    restoreActualEmulation();
     await GatherRunner.setupDriver(driver, {settings: getSettings('mobile')});
     expect(connectionStub.sendCommand.findInvocation('Emulation.setDeviceMetricsOverride'))
       .toMatchObject({mobile: true});
@@ -294,30 +307,6 @@ describe('GatherRunner', function() {
     await GatherRunner.setupDriver(driver, {settings: getSettings('desktop')});
     expect(connectionStub.sendCommand.findInvocation('Emulation.setDeviceMetricsOverride'))
       .toMatchObject({mobile: false});
-  });
-
-  it('sets throttling according to settings', async () => {
-    await GatherRunner.setupDriver(driver, {
-      settings: {
-        formFactor: 'mobile',
-        screenEmulation: constants.screenEmulationMetrics.mobile,
-        throttlingMethod: 'devtools',
-        throttling: {
-          requestLatencyMs: 100,
-          downloadThroughputKbps: 8,
-          uploadThroughputKbps: 8,
-          cpuSlowdownMultiplier: 1,
-        },
-      },
-    });
-
-    connectionStub.sendCommand.findInvocation('Emulation.setDeviceMetricsOverride');
-    expect(connectionStub.sendCommand.findInvocation('Network.emulateNetworkConditions')).toEqual({
-      latency: 100, downloadThroughput: 1024, uploadThroughput: 1024, offline: false,
-    });
-    expect(connectionStub.sendCommand.findInvocation('Emulation.setCPUThrottlingRate')).toEqual({
-      rate: 1,
-    });
   });
 
   it('clears origin storage', () => {
@@ -334,8 +323,6 @@ describe('GatherRunner', function() {
     };
     const driver = {
       assertNoSameOriginServiceWorkerClients: asyncFunc,
-      beginEmulation: asyncFunc,
-      setThrottling: asyncFunc,
       dismissJavaScriptDialogs: asyncFunc,
       enableRuntimeEvents: asyncFunc,
       enableAsyncStacks: asyncFunc,
@@ -371,7 +358,6 @@ describe('GatherRunner', function() {
       beginTrace: asyncFunc,
       gotoURL: async () => ({}),
       cleanBrowserCaches: createCheck('calledCleanBrowserCaches'),
-      setThrottling: asyncFunc,
       blockUrlPatterns: asyncFunc,
       setExtraHTTPHeaders: asyncFunc,
       endTrace: asyncFunc,
@@ -525,8 +511,6 @@ describe('GatherRunner', function() {
     };
     const driver = {
       assertNoSameOriginServiceWorkerClients: asyncFunc,
-      beginEmulation: asyncFunc,
-      setThrottling: asyncFunc,
       dismissJavaScriptDialogs: asyncFunc,
       enableRuntimeEvents: asyncFunc,
       enableAsyncStacks: asyncFunc,
@@ -545,6 +529,64 @@ describe('GatherRunner', function() {
     }).then(_ => {
       assert.equal(tests.calledCleanBrowserCaches, false);
       assert.equal(tests.calledClearStorage, false);
+    });
+  });
+
+  it('sets throttling appropriately', async () => {
+    restoreActualEmulation();
+    await GatherRunner.setupPassNetwork({
+      driver,
+      settings: {
+        formFactor: 'mobile',
+        screenEmulation: constants.screenEmulationMetrics.mobile,
+        throttlingMethod: 'devtools',
+        throttling: {
+          requestLatencyMs: 100,
+          downloadThroughputKbps: 8,
+          uploadThroughputKbps: 8,
+          cpuSlowdownMultiplier: 2,
+        },
+      },
+      passConfig: {
+        useThrottling: true,
+        gatherers: [],
+      },
+    });
+
+    expect(connectionStub.sendCommand.findInvocation('Network.emulateNetworkConditions')).toEqual({
+      latency: 100, downloadThroughput: 1024, uploadThroughput: 1024, offline: false,
+    });
+    expect(connectionStub.sendCommand.findInvocation('Emulation.setCPUThrottlingRate')).toEqual({
+      rate: 2,
+    });
+  });
+
+  it('clears throttling when useThrottling=false', async () => {
+    restoreActualEmulation();
+    await GatherRunner.setupPassNetwork({
+      driver,
+      settings: {
+        formFactor: 'mobile',
+        screenEmulation: constants.screenEmulationMetrics.mobile,
+        throttlingMethod: 'devtools',
+        throttling: {
+          requestLatencyMs: 100,
+          downloadThroughputKbps: 8,
+          uploadThroughputKbps: 8,
+          cpuSlowdownMultiplier: 2,
+        },
+      },
+      passConfig: {
+        useThrottling: false,
+        gatherers: [],
+      },
+    });
+
+    expect(connectionStub.sendCommand.findInvocation('Network.emulateNetworkConditions')).toEqual({
+      latency: 0, downloadThroughput: 0, uploadThroughput: 0, offline: false,
+    });
+    expect(connectionStub.sendCommand.findInvocation('Emulation.setCPUThrottlingRate')).toEqual({
+      rate: 1,
     });
   });
 

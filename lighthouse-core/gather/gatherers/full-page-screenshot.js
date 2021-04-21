@@ -8,6 +8,7 @@
 /* globals window document getBoundingClientRect */
 
 const Gatherer = require('./gatherer.js');
+const emulation = require('../../lib/emulation.js');
 const pageFunctions = require('../../lib/page-functions.js');
 
 /** @typedef {import('../driver.js')} Driver */
@@ -147,7 +148,7 @@ class FullPageScreenshot extends Gatherer {
     } finally {
       // Revert resized page.
       if (lighthouseControlsEmulation) {
-        await driver.beginEmulation(passContext.settings);
+        await emulation.emulate(driver.defaultSession, passContext.settings);
       } else {
         // Best effort to reset emulation to what it was.
         // https://github.com/GoogleChrome/lighthouse/pull/10716#discussion_r428970681

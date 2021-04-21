@@ -8,7 +8,6 @@
 const Fetcher = require('./fetcher.js');
 const ExecutionContext = require('./driver/execution-context.js');
 const {waitForFullyLoaded, waitForFrameNavigated} = require('./driver/wait-for-condition.js');
-const emulation = require('../lib/emulation.js');
 const LHElement = require('../lib/lh-element.js');
 const LHError = require('../lib/lh-error.js');
 const NetworkRequest = require('../lib/network-request.js');
@@ -760,35 +759,6 @@ class Driver {
     await this.sendCommand('Debugger.enable');
     await this.sendCommand('Debugger.setSkipAllPauses', {skip: true});
     await this.sendCommand('Debugger.setAsyncCallStackDepth', {maxDepth: 8});
-  }
-
-  /**
-   * @param {LH.Config.Settings} settings
-   * @return {Promise<void>}
-   */
-  async beginEmulation(settings) {
-    await emulation.emulate(this, settings);
-    await this.setThrottling(settings, {useThrottling: true});
-  }
-
-  /**
-   * @param {LH.Config.Settings} settings
-   * @param {{useThrottling?: boolean}} passConfig
-   * @return {Promise<void>}
-   */
-  async setThrottling(settings, passConfig) {
-    if (settings.throttlingMethod !== 'devtools') {
-      return emulation.clearAllNetworkEmulation(this);
-    }
-
-    const cpuPromise = passConfig.useThrottling ?
-        emulation.enableCPUThrottling(this, settings.throttling) :
-        emulation.disableCPUThrottling(this);
-    const networkPromise = passConfig.useThrottling ?
-        emulation.enableNetworkThrottling(this, settings.throttling) :
-        emulation.clearAllNetworkEmulation(this);
-
-    await Promise.all([cpuPromise, networkPromise]);
   }
 
   /**

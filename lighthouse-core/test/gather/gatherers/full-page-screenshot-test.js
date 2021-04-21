@@ -7,6 +7,9 @@
 
 /* eslint-env jest */
 
+let mockEmulate = jest.fn();
+jest.mock('../../../lib/emulation.js', () => ({emulate: (...args) => mockEmulate(...args)}));
+
 const FullPageScreenshotGatherer = require('../../../gather/gatherers/full-page-screenshot.js');
 
 // Headless's default value is (1024 * 16), but this varies by device
@@ -16,6 +19,21 @@ const maxTextureSizeMock = 1024 * 8;
  * @param {{contentSize: {width: number, height: number}, screenSize: {width?: number, height?: number, dpr: number}, screenshotData: string[]}}
  */
 function createMockDriver({contentSize, screenSize, screenshotData}) {
+  const sendCommand = jest.fn().mockImplementation(method => {
+    if (method === 'Page.getLayoutMetrics') {
+      return {
+        contentSize,
+        // See comment within _takeScreenshot() implementation
+        layoutViewport: {clientWidth: contentSize.width, clientHeight: contentSize.height},
+      };
+    }
+    if (method === 'Page.captureScreenshot') {
+      return {
+        data: screenshotData && screenshotData.length ? screenshotData.shift() : 'abc',
+      };
+    }
+  });
+
   return {
     executionContext: {
       evaluate: async function(fn) {
@@ -40,25 +58,16 @@ function createMockDriver({contentSize, screenSize, screenshotData}) {
         }
       },
     },
-    beginEmulation: jest.fn(),
-    sendCommand: jest.fn().mockImplementation(method => {
-      if (method === 'Page.getLayoutMetrics') {
-        return {
-          contentSize,
-          // See comment within _takeScreenshot() implementation
-          layoutViewport: {clientWidth: contentSize.width, clientHeight: contentSize.height},
-        };
-      }
-      if (method === 'Page.captureScreenshot') {
-        return {
-          data: screenshotData && screenshotData.length ? screenshotData.shift() : 'abc',
-        };
-      }
-    }),
+    sendCommand,
+    defaultSession: {sendCommand},
   };
 }
 
 describe('FullPageScreenshot gatherer', () => {
+  beforeEach(() => {
+    mockEmulate = jest.fn();
+  });
+
   it('captures a full-page screenshot', async () => {
     const fpsGatherer = new FullPageScreenshotGatherer();
     const driver = createMockDriver({
@@ -113,8 +122,8 @@ describe('FullPageScreenshot gatherer', () => {
     await fpsGatherer.afterPass(passContext);
 
     const expectedArgs = {formFactor: 'mobile', screenEmulation: {disabled: false, mobile: true}};
-    expect(driver.beginEmulation).toHaveBeenCalledWith(expectedArgs);
-    expect(driver.beginEmulation).toHaveBeenCalledTimes(1);
+    expect(mockEmulate).toHaveBeenCalledTimes(1);
+    expect(mockEmulate).toHaveBeenCalledWith(driver.defaultSession, expectedArgs);
   });
 
   it('resets the emulation correctly when Lighthouse does not control it', async () => {

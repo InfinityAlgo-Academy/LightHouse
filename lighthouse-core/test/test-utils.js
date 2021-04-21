@@ -235,6 +235,11 @@ function makeMocksForGatherRunner() {
   jest.mock('../gather/gatherers/web-app-manifest.js', () => ({
     getWebAppManifest: async () => null,
   }));
+  jest.mock('../lib/emulation.js', () => ({
+    emulate: jest.fn(),
+    throttle: jest.fn(),
+    clearThrottling: jest.fn(),
+  }));
 }
 
 module.exports = {
