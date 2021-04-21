@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* global window */
+/* global window, performance */
 
 const log = require('lighthouse-logger');
 const LHError = require('../../lib/lh-error.js');
@@ -274,7 +274,7 @@ function registerPerformanceObserverInPage() {
   // Do not re-register if we've already run this script.
   if (window.____lastLongTask !== undefined) return;
 
-  window.____lastLongTask = window.__perfNow();
+  window.____lastLongTask = performance.now();
   const observer = new window.PerformanceObserver(entryList => {
     const entries = entryList.getEntries();
     for (const entry of entries) {
@@ -303,8 +303,8 @@ function checkTimeSinceLastLongTaskInPage() {
   // at some point farish (several hundred ms) into the future and the time at which it executes isn't
   // a reliable indicator of long task existence, instead we check if any information has changed.
   // See https://developer.chrome.com/blog/timer-throttling-in-chrome-88/
-  return new window.__nativePromise(resolve => {
-    const firstAttemptTs = window.__perfNow();
+  return new Promise(resolve => {
+    const firstAttemptTs = performance.now();
     const firstAttemptLastLongTaskTs = window.____lastLongTask || 0;
 
     setTimeout(() => {

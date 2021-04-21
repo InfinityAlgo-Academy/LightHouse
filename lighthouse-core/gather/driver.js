@@ -398,17 +398,6 @@ class Driver {
   }
 
   /**
-   * Add a script to run at load time of all future page loads.
-   * @param {string} scriptSource
-   * @return {Promise<LH.Crdp.Page.AddScriptToEvaluateOnLoadResponse>} Identifier of the added script.
-   */
-  evaluateScriptOnNewDocument(scriptSource) {
-    return this.sendCommand('Page.addScriptToEvaluateOnLoad', {
-      scriptSource,
-    });
-  }
-
-  /**
    * @return {Promise<LH.Crdp.ServiceWorker.WorkerVersionUpdatedEvent>}
    */
   getServiceWorkerVersions() {
@@ -856,20 +845,6 @@ class Driver {
   }
 
   /**
-   * Cache native functions/objects inside window
-   * so we are sure polyfills do not overwrite the native implementations
-   * @return {Promise<void>}
-   */
-  async cacheNatives() {
-    await this.evaluateScriptOnNewDocument(`
-        window.__nativePromise = Promise;
-        window.__nativeURL = URL;
-        window.__ElementMatches = Element.prototype.matches;
-        window.__perfNow = performance.now.bind(performance);
-    `);
-  }
-
-  /**
    * Use a RequestIdleCallback shim for tests run with simulated throttling, so that the deadline can be used without
    * a penalty
    * @param {LH.Config.Settings} settings
@@ -877,9 +852,10 @@ class Driver {
    */
   async registerRequestIdleCallbackWrap(settings) {
     if (settings.throttlingMethod === 'simulate') {
-      const scriptStr = `(${pageFunctions.wrapRequestIdleCallbackString})
-        (${settings.throttling.cpuSlowdownMultiplier})`;
-      await this.evaluateScriptOnNewDocument(scriptStr);
+      await this.executionContext.evaluateOnNewDocument(
+        pageFunctions.wrapRequestIdleCallback,
+        {args: [settings.throttling.cpuSlowdownMultiplier]}
+      );
     }
   }
 

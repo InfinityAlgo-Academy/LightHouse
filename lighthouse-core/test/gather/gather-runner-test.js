@@ -88,9 +88,6 @@ class EmulationDriver extends Driver {
   assertNoSameOriginServiceWorkerClients() {
     return Promise.resolve();
   }
-  cacheNatives() {
-    return Promise.resolve();
-  }
   registerPerformanceObserver() {
     return Promise.resolve();
   }
@@ -125,6 +122,7 @@ function resetDefaultMockResponses() {
     .mockResponse('Network.setBlockedURLs')
     .mockResponse('Network.setExtraHTTPHeaders')
     .mockResponse('Network.setUserAgentOverride')
+    .mockResponse('Page.addScriptToEvaluateOnNewDocument')
     .mockResponse('Page.enable')
     .mockResponse('ServiceWorker.enable');
 }
@@ -326,7 +324,7 @@ describe('GatherRunner', function() {
       dismissJavaScriptDialogs: asyncFunc,
       enableRuntimeEvents: asyncFunc,
       enableAsyncStacks: asyncFunc,
-      cacheNatives: asyncFunc,
+      executionContext: {cacheNativesOnNewDocument: asyncFunc},
       gotoURL: asyncFunc,
       registerRequestIdleCallbackWrap: asyncFunc,
       cleanBrowserCaches: createCheck('calledCleanBrowserCaches'),
@@ -514,7 +512,7 @@ describe('GatherRunner', function() {
       dismissJavaScriptDialogs: asyncFunc,
       enableRuntimeEvents: asyncFunc,
       enableAsyncStacks: asyncFunc,
-      cacheNatives: asyncFunc,
+      executionContext: {cacheNativesOnNewDocument: asyncFunc},
       gotoURL: asyncFunc,
       registerPerformanceObserver: asyncFunc,
       registerRequestIdleCallbackWrap: asyncFunc,

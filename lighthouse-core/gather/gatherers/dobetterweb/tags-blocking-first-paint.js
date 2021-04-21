@@ -20,7 +20,7 @@
 
 const Gatherer = require('../gatherer.js');
 
-/* global document, window, HTMLLinkElement, SVGScriptElement */
+/* global document, window, performance, HTMLLinkElement, SVGScriptElement */
 
 /** @typedef {{href: string, media: string, msSinceHTMLEnd: number, matches: boolean}} MediaChange */
 /** @typedef {{tagName: 'LINK', url: string, href: string, rel: string, media: string, disabled: boolean, mediaChanges: Array<MediaChange>}} LinkTag */
@@ -37,7 +37,7 @@ function installMediaListener() {
       const mediaChange = {
         href: this.href,
         media: val,
-        msSinceHTMLEnd: Date.now() - window.performance.timing.responseEnd,
+        msSinceHTMLEnd: Date.now() - performance.timing.responseEnd,
         matches: window.matchMedia(val).matches,
       };
       // @ts-expect-error - `___linkMediaChanges` created above.
@@ -203,8 +203,9 @@ class TagsBlockingFirstPaint extends Gatherer {
    * @param {LH.Gatherer.PassContext} passContext
    */
   async beforePass(passContext) {
-    // Don't return return value of `evaluateScriptOnNewDocument`.
-    await passContext.driver.evaluateScriptOnNewDocument(`(${installMediaListener.toString()})()`);
+    const {executionContext} = passContext.driver;
+    // Don't return return value of `evaluateOnNewDocument`.
+    await executionContext.evaluateOnNewDocument(installMediaListener, {args: []});
   }
 
   /**

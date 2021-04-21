@@ -393,11 +393,11 @@ declare global {
 
   interface Window {
     // Cached native functions/objects for use in case the page overwrites them.
-    // See: `driver.cacheNatives`.
+    // See: `executionContext.cacheNativesOnNewDocument`.
     __nativePromise: PromiseConstructor;
-    __nativeURL: URL;
+    __nativePerformance: Performance;
+    __nativeURL: typeof URL;
     __ElementMatches: Element['matches'];
-    __perfNow: Performance['now'];
 
     /** Used for monitoring long tasks in the test page. */
     ____lastLongTask?: number;

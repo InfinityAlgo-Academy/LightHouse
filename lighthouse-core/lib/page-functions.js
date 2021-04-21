@@ -542,6 +542,6 @@ module.exports = {
   getNodeLabel: getNodeLabel,
   getNodeLabelString: getNodeLabel.toString(),
   isPositionFixedString: isPositionFixed.toString(),
-  wrapRequestIdleCallbackString: wrapRequestIdleCallback.toString(),
+  wrapRequestIdleCallback,
   getBoundingClientRectString: getBoundingClientRect.toString(),
 };
