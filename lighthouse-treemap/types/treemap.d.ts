@@ -14,6 +14,11 @@ declare global {
     showNode?(node: LH.Treemap.Node): boolean;
   }
 
+  interface RenderState {
+    root: LH.Treemap.Node;
+    viewMode: LH.Treemap.ViewMode;
+  }
+
   var webtreemap: {
     TreeMap: typeof WebTreeMap;
     render(el: HTMLElement, data: any, options: WebTreeMapOptions): void;

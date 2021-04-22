@@ -55,19 +55,25 @@ class TreemapViewer {
     this.el = el;
     this.getHueForKey = TreemapUtil.stableHasher(TreemapUtil.COLOR_HUES);
 
-    // TODO: make "DataSelector" to switch between different groups or specific d1 nodes
-    const group = 'scripts';
-    const depthOneNodes = this.depthOneNodesByGroup[group];
-    this.currentTreemapRoot = this.wrapNodesInNewRootNode(depthOneNodes);
-    TreemapUtil.walk(this.currentTreemapRoot, (node, path) => this.nodeToPathMap.set(node, path));
+    /* eslint-disable no-unused-expressions */
+    /** @type {LH.Treemap.Node} */
+    this.currentTreemapRoot;
+    /** @type {LH.Treemap.ViewMode} */
+    this.currentViewMode;
+    /** @type {LH.Treemap.Selector} */
+    this.selector;
+    /** @type {LH.Treemap.ViewMode[]} */
+    this.viewModes;
+    /** @type {RenderState=} */
+    this.previousRenderState;
+    /** @type {WebTreeMap} */
+    this.treemap;
+    /*  eslint-enable no-unused-expressions */
 
-    this.viewModes = this.createViewModes();
-    this.currentViewMode = this.viewModes[0];
-
-    renderViewModeButtons(this.viewModes);
     this.createHeader();
-    this.render();
     this.initListeners();
+    this.setSelector({type: 'group', value: 'scripts'});
+    this.render();
   }
 
   createHeader() {
@@ -77,6 +83,50 @@ class TreemapViewer {
 
     const bytes = this.wrapNodesInNewRootNode(this.depthOneNodesByGroup.scripts).resourceBytes;
     TreemapUtil.find('.lh-header--size').textContent = TreemapUtil.formatBytes(bytes);
+
+    this.createBundleSelector();
+  }
+
+  createBundleSelector() {
+    const bundleSelectorEl = TreemapUtil.find('select.bundle-selector');
+    bundleSelectorEl.innerHTML = ''; // Clear just in case document was saved with Ctrl+S.
+
+    /** @type {LH.Treemap.Selector[]} */
+    const selectors = [];
+
+    /**
+     * @param {LH.Treemap.Selector} selector
+     * @param {string} text
+     */
+    function makeOption(selector, text) {
+      const optionEl = TreemapUtil.createChildOf(bundleSelectorEl, 'option');
+      optionEl.value = String(selectors.length);
+      selectors.push(selector);
+      optionEl.textContent = text;
+    }
+
+    for (const [group, depthOneNodes] of Object.entries(this.depthOneNodesByGroup)) {
+      makeOption({type: 'group', value: group}, `All ${group}`);
+      for (const depthOneNode of depthOneNodes) {
+        // Only add bundles.
+        if (!depthOneNode.children) continue;
+
+        makeOption({type: 'depthOneNode', value: depthOneNode.name}, depthOneNode.name);
+      }
+    }
+
+    const currentSelectorIndex = selectors.findIndex(s => {
+      return this.selector &&
+        s.type === this.selector.type &&
+        s.value === this.selector.value;
+    });
+    bundleSelectorEl.value = String(currentSelectorIndex !== -1 ? currentSelectorIndex : 0);
+    bundleSelectorEl.addEventListener('change', () => {
+      const index = Number(bundleSelectorEl.value);
+      const selector = selectors[index];
+      this.setSelector(selector);
+      this.render();
+    });
   }
 
   initListeners() {
@@ -173,32 +223,88 @@ class TreemapViewer {
     return viewModes;
   }
 
+  /**
+   * @param {LH.Treemap.Selector} selector
+   */
+  setSelector(selector) {
+    this.selector = selector;
+
+    if (selector.type === 'group') {
+      this.currentTreemapRoot =
+        this.wrapNodesInNewRootNode(this.depthOneNodesByGroup[selector.value]);
+    } else if (selector.type === 'depthOneNode') {
+      let node;
+      outer: for (const depthOneNodes of Object.values(this.depthOneNodesByGroup)) {
+        for (const depthOneNode of depthOneNodes) {
+          if (depthOneNode.name === selector.value) {
+            node = depthOneNode;
+            break outer;
+          }
+        }
+      }
+
+      if (!node) {
+        throw new Error('unknown depthOneNode: ' + selector.value);
+      }
+
+      this.currentTreemapRoot = node;
+    } else {
+      throw new Error('unknown selector: ' + JSON.stringify(selector));
+    }
+
+    this.viewModes = this.createViewModes();
+    if (!this.currentViewMode) this.currentViewMode = this.viewModes[0];
+  }
+
+  /**
+   * @param {LH.Treemap.ViewMode} viewMode
+   */
+  setViewMode(viewMode) {
+    this.currentViewMode = viewMode;
+  }
+
   render() {
-    TreemapUtil.walk(this.currentTreemapRoot, node => {
-      // @ts-ignore: webtreemap will store `dom` on the data to speed up operations.
-      // However, when we change the underlying data representation, we need to delete
-      // all the cached DOM elements. Otherwise, the rendering will be incorrect when,
-      // for example, switching between "All JavaScript" and a specific bundle.
-      delete node.dom;
+    const rootChanged =
+      !this.previousRenderState || this.previousRenderState.root !== this.currentTreemapRoot;
+    const viewChanged =
+      !this.previousRenderState || this.previousRenderState.viewMode !== this.currentViewMode;
 
-      // @ts-ignore: webtreemap uses `size` to partition the treemap.
-      node.size = node[this.currentViewMode.partitionBy || 'resourceBytes'] || 0;
-    });
-    webtreemap.sort(this.currentTreemapRoot);
+    if (rootChanged) {
+      this.nodeToPathMap = new Map();
+      TreemapUtil.walk(this.currentTreemapRoot, (node, path) => this.nodeToPathMap.set(node, path));
+      renderViewModeButtons(this.viewModes);
 
-    this.treemap = new webtreemap.TreeMap(this.currentTreemapRoot, {
-      padding: [16, 3, 3, 3],
-      spacing: 10,
-      caption: node => this.makeCaption(node),
-    });
+      TreemapUtil.walk(this.currentTreemapRoot, node => {
+        // @ts-ignore: webtreemap will store `dom` on the data to speed up operations.
+        // However, when we change the underlying data representation, we need to delete
+        // all the cached DOM elements. Otherwise, the rendering will be incorrect when,
+        // for example, switching between "All JavaScript" and a specific bundle.
+        delete node.dom;
 
-    this.el.innerHTML = '';
-    this.treemap.render(this.el);
+        // @ts-ignore: webtreemap uses `size` to partition the treemap.
+        node.size = node[this.currentViewMode.partitionBy || 'resourceBytes'] || 0;
+      });
+      webtreemap.sort(this.currentTreemapRoot);
 
-    applyActiveClass(this.currentViewMode.id);
-    TreemapUtil.find('.webtreemap-node').classList.add('webtreemap-node--root');
+      this.treemap = new webtreemap.TreeMap(this.currentTreemapRoot, {
+        padding: [16, 3, 3, 3],
+        spacing: 10,
+        caption: node => this.makeCaption(node),
+      });
+      this.el.innerHTML = '';
+      this.treemap.render(this.el);
+      TreemapUtil.find('.webtreemap-node').classList.add('webtreemap-node--root');
+    }
 
-    this.updateColors();
+    if (rootChanged || viewChanged) {
+      this.updateColors();
+      applyActiveClass(this.currentViewMode.id);
+    }
+
+    this.previousRenderState = {
+      root: this.currentTreemapRoot,
+      viewMode: this.currentViewMode,
+    };
   }
 
   resize() {
@@ -292,7 +398,7 @@ function renderViewModeButtons(viewModes) {
     });
 
     inputEl.addEventListener('click', () => {
-      treemapViewer.currentViewMode = viewMode;
+      treemapViewer.setViewMode(viewMode);
       treemapViewer.render();
     });
   }
