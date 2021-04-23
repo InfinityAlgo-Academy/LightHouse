@@ -552,11 +552,6 @@
 .lh-expandable-details > summary::-webkit-details-marker {
   display: none;
 }
-/* When the details-element-polyfill is used, it adds an ugly arrow. Hide it. https://github.com/javan/details-element-polyfill/blob/main/src/styles.js */
-.lh-audit-group > summary:before,
-.lh-expandable-details > summary:before {
-  display: none;
-}
 
 /* Perf Metric */
 

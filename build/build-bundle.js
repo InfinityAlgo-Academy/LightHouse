@@ -79,7 +79,6 @@ async function browserifyFile(entryPath, distPath) {
     .ignore('intl')
     .ignore('intl-pluralrules')
     .ignore('raven')
-    .ignore('rimraf')
     .ignore('pako/lib/zlib/inflate.js');
 
   // Don't include the desktop protocol connection.

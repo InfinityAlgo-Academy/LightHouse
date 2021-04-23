@@ -17,7 +17,6 @@ const assetSaver = require('../lib/asset-saver.js');
 const fs = require('fs');
 const assert = require('assert').strict;
 const path = require('path');
-const rimraf = require('rimraf');
 const LHError = require('../lib/lh-error.js');
 const i18n = require('../lib/i18n/i18n.js');
 
@@ -77,7 +76,7 @@ describe('Runner', () => {
     const resolvedPath = path.resolve(process.cwd(), artifactsPath);
 
     afterAll(() => {
-      rimraf.sync(resolvedPath);
+      fs.rmdirSync(resolvedPath, {recursive: true});
     });
 
     it('-G gathers, quits, and doesn\'t run audits', () => {
@@ -435,7 +434,7 @@ describe('Runner', () => {
       assert.strictEqual(auditResult.scoreDisplayMode, 'error');
       assert.ok(auditResult.errorMessage.includes(errorMessage));
 
-      rimraf.sync(resolvedPath);
+      fs.rmdirSync(resolvedPath, {recursive: true});
     });
 
     it('only passes the requested artifacts to the audit (no optional artifacts)', async () => {

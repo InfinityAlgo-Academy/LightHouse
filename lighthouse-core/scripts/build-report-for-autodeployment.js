@@ -10,7 +10,6 @@
 /* eslint-disable no-console */
 const fs = require('fs');
 const path = require('path');
-const rimraf = require('rimraf').sync;
 const swapLocale = require('../lib/i18n/swap-locale.js');
 
 const ReportGenerator = require('../../lighthouse-core/report/report-generator.js');
@@ -125,6 +124,6 @@ async function generateErrorLHR() {
   appleTouchIconAudit.scoreDisplayMode = 'binary';
   appleTouchIconAudit.score = 1;
 
-  rimraf(TMP);
+  fs.rmdirSync(TMP, {recursive: true});
   return errorLhr;
 }

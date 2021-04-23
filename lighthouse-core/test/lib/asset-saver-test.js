@@ -9,7 +9,6 @@ const assetSaver = require('../../lib/asset-saver.js');
 const Metrics = require('../../lib/traces/pwmetrics-events.js');
 const assert = require('assert').strict;
 const fs = require('fs');
-const rimraf = require('rimraf');
 const LHError = require('../../lib/lh-error.js');
 
 const traceEvents = require('../fixtures/traces/progressive-app.json');
@@ -222,7 +221,7 @@ describe('asset-saver helper', () => {
     const outputPath = __dirname + '/json-serialization-test-data/';
 
     afterEach(() => {
-      rimraf.sync(outputPath);
+      fs.rmdirSync(outputPath, {recursive: true});
     });
 
     it('round trips saved artifacts', async () => {
@@ -230,6 +229,27 @@ describe('asset-saver helper', () => {
       const originalArtifacts = await assetSaver.loadArtifacts(artifactsPath);
 
       await assetSaver.saveArtifacts(originalArtifacts, outputPath);
+      const roundTripArtifacts = await assetSaver.loadArtifacts(outputPath);
+      expect(roundTripArtifacts).toStrictEqual(originalArtifacts);
+    });
+
+    it('deletes existing artifact files before saving', async () => {
+      // Write some fake artifact files to start with.
+      fs.mkdirSync(outputPath, {recursive: true});
+      fs.writeFileSync(`${outputPath}/artifacts.json`, '{"BenchmarkIndex": 1731.5}');
+      const existingTracePath = `${outputPath}/bestPass.trace.json`;
+      fs.writeFileSync(existingTracePath, '{"traceEvents": []}');
+      const existingDevtoolslogPath = `${outputPath}/bestPass.devtoolslog.json`;
+      fs.writeFileSync(existingDevtoolslogPath, '[]');
+
+      const artifactsPath = __dirname + '/../results/artifacts/';
+      const originalArtifacts = await assetSaver.loadArtifacts(artifactsPath);
+
+      await assetSaver.saveArtifacts(originalArtifacts, outputPath);
+
+      expect(fs.existsSync(existingDevtoolslogPath)).toBe(false);
+      expect(fs.existsSync(existingTracePath)).toBe(false);
+
       const roundTripArtifacts = await assetSaver.loadArtifacts(outputPath);
       expect(roundTripArtifacts).toStrictEqual(originalArtifacts);
     });

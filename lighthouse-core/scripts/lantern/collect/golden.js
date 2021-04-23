@@ -10,7 +10,6 @@
 /** @typedef {import('../run-on-all-assets.js').Golden} Golden */
 
 const fs = require('fs');
-const rimraf = require('rimraf');
 const common = require('./common.js');
 
 /**
@@ -110,7 +109,7 @@ async function main() {
   /** @type {Golden} */
   const golden = {sites: goldenSites};
 
-  rimraf.sync(common.goldenFolder);
+  fs.rmdirSync(common.goldenFolder, {recursive: true});
   fs.mkdirSync(common.goldenFolder);
   saveGoldenData('site-index-plus-golden-expectations.json', JSON.stringify(golden, null, 2));
   for (const result of goldenSites) {

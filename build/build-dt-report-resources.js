@@ -8,7 +8,6 @@
 const browserify = require('browserify');
 const fs = require('fs');
 const path = require('path');
-const rimraf = require('rimraf');
 const assert = require('assert').strict;
 
 const distDir = path.join(__dirname, '..', 'dist', 'dt-report-resources');
@@ -26,7 +25,7 @@ function writeFile(name, content) {
   fs.writeFileSync(`${distDir}/${name}`, content);
 }
 
-rimraf.sync(distDir);
+fs.rmdirSync(distDir, {recursive: true});
 fs.mkdirSync(distDir);
 
 writeFile('report.js', htmlReportAssets.REPORT_JAVASCRIPT);

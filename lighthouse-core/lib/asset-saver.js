@@ -13,7 +13,6 @@ const {promisify} = require('util');
 const Simulator = require('./dependency-graph/simulator/simulator.js');
 const lanternTraceSaver = require('./lantern-trace-saver.js');
 const Metrics = require('./traces/pwmetrics-events.js');
-const rimraf = require('rimraf');
 const NetworkAnalysisComputed = require('../computed/network-analysis.js');
 const LoadSimulatorComputed = require('../computed/load-simulator.js');
 const LHError = require('../lib/lh-error.js');
@@ -102,8 +101,15 @@ async function saveArtifacts(artifacts, basePath) {
   const status = {msg: 'Saving artifacts', id: 'lh:assetSaver:saveArtifacts'};
   log.time(status);
   fs.mkdirSync(basePath, {recursive: true});
-  rimraf.sync(`${basePath}/*${traceSuffix}`);
-  rimraf.sync(`${basePath}/${artifactsFilename}`);
+
+  // Delete any previous artifacts in this directory.
+  const filenames = fs.readdirSync(basePath);
+  for (const filename of filenames) {
+    if (filename.endsWith(traceSuffix) || filename.endsWith(devtoolsLogSuffix) ||
+        filename === artifactsFilename) {
+      fs.unlinkSync(`${basePath}/${filename}`);
+    }
+  }
 
   const {traces, devtoolsLogs, ...restArtifacts} = artifacts;
 

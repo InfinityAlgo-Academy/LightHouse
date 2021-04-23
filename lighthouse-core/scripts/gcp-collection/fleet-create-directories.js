@@ -14,7 +14,6 @@
 
 const fs = require('fs');
 const path = require('path');
-const rimraf = require('rimraf');
 
 const LH_ROOT = path.join(__dirname, '../../../');
 const TMP_DIR = path.join(LH_ROOT, '.tmp/gcp-instances');
@@ -22,7 +21,7 @@ const URLS_LIST = process.argv[2]
   ? path.resolve(process.cwd(), process.argv[2])
   : path.join(__dirname, 'urls.txt');
 
-rimraf.sync(TMP_DIR);
+fs.rmdirSync(TMP_DIR, {recursive: true});
 fs.mkdirSync(TMP_DIR);
 
 const MACHINE_BASE_INDEX = 0;
