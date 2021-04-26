@@ -1703,9 +1703,6 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "适合移动设备"
   },
-  "lighthouse-core/gather/driver.js | warningData": {
-    "message": "{locationCount,plural, =1{下列位置可能存储了会影响加载性能的数据：{locations}。请在无痕式窗口中审核此页面，以防止这些资源影响您的得分。}other{下列位置可能存储了会影响加载性能的数据：{locations}。请在无痕式窗口中审核此页面，以防止这些资源影响您的得分。}}"
-  },
   "lighthouse-core/gather/gather-runner.js | warningRedirected": {
     "message": "相应网页可能无法按预期加载，因为您所测试的网址 ({requested}) 重定向到了 {final}。请尝试直接测试第二个网址。"
   },

@@ -12,8 +12,6 @@ const LHElement = require('../lib/lh-element.js');
 const LHError = require('../lib/lh-error.js');
 const NetworkRequest = require('../lib/network-request.js');
 const EventEmitter = require('events').EventEmitter;
-const i18n = require('../lib/i18n/i18n.js');
-const URL = require('../lib/url-shim.js');
 const constants = require('../config/constants.js');
 
 const log = require('lighthouse-logger');
@@ -27,24 +25,6 @@ const pageFunctions = require('../lib/page-functions.js');
 const Connection = require('./connections/connection.js');
 const NetworkMonitor = require('./driver/network-monitor.js');
 const {getBrowserVersion} = require('./driver/environment.js');
-
-const UIStrings = {
-  /**
-   * @description A warning that previously-saved data may have affected the measured performance and instructions on how to avoid the problem. "locations" will be a list of possible types of data storage locations, e.g. "IndexedDB",  "Local Storage", or "Web SQL".
-   * @example {IndexedDB, Local Storage} locations
-   */
-  warningData: `{locationCount, plural,
-    =1 {There may be stored data affecting loading performance in this location: {locations}. ` +
-      `Audit this page in an incognito window to prevent those resources ` +
-      `from affecting your scores.}
-    other {There may be stored data affecting loading ` +
-      `performance in these locations: {locations}. ` +
-      `Audit this page in an incognito window to prevent those resources ` +
-      `from affecting your scores.}
-  }`,
-};
-
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 // Controls how long to wait after FCP before continuing
 const DEFAULT_PAUSE_AFTER_FCP = 0;
@@ -110,7 +90,6 @@ class Driver {
     this.on('Target.attachedToTarget', event => {
       this._handleTargetAttached(event).catch(this._handleEventError);
     });
-    this.on('Debugger.paused', () => this.sendCommand('Debugger.resume'));
 
     connection.on('protocolevent', this._handleProtocolEvent.bind(this));
 
@@ -398,93 +377,6 @@ class Driver {
   }
 
   /**
-   * @return {Promise<LH.Crdp.ServiceWorker.WorkerVersionUpdatedEvent>}
-   */
-  getServiceWorkerVersions() {
-    return new Promise((resolve, reject) => {
-      /**
-       * @param {LH.Crdp.ServiceWorker.WorkerVersionUpdatedEvent} data
-       */
-      const versionUpdatedListener = data => {
-        // find a service worker with runningStatus that looks like active
-        // on slow connections the serviceworker might still be installing
-        const activateCandidates = data.versions.filter(sw => {
-          return sw.status !== 'redundant';
-        });
-        const hasActiveServiceWorker = activateCandidates.find(sw => {
-          return sw.status === 'activated';
-        });
-
-        if (!activateCandidates.length || hasActiveServiceWorker) {
-          this.off('ServiceWorker.workerVersionUpdated', versionUpdatedListener);
-          this.sendCommand('ServiceWorker.disable')
-            .then(_ => resolve(data), reject);
-        }
-      };
-
-      this.on('ServiceWorker.workerVersionUpdated', versionUpdatedListener);
-
-      this.sendCommand('ServiceWorker.enable').catch(reject);
-    });
-  }
-
-  /**
-   * @return {Promise<LH.Crdp.ServiceWorker.WorkerRegistrationUpdatedEvent>}
-   */
-  getServiceWorkerRegistrations() {
-    return new Promise((resolve, reject) => {
-      this.once('ServiceWorker.workerRegistrationUpdated', data => {
-        this.sendCommand('ServiceWorker.disable')
-          .then(_ => resolve(data), reject);
-      });
-
-      this.sendCommand('ServiceWorker.enable').catch(reject);
-    });
-  }
-
-  /**
-   * Rejects if any open tabs would share a service worker with the target URL.
-   * This includes the target tab, so navigation to something like about:blank
-   * should be done before calling.
-   * @param {string} pageUrl
-   * @return {Promise<void>}
-   */
-  assertNoSameOriginServiceWorkerClients(pageUrl) {
-    /** @type {Array<LH.Crdp.ServiceWorker.ServiceWorkerRegistration>} */
-    let registrations;
-    /** @type {Array<LH.Crdp.ServiceWorker.ServiceWorkerVersion>} */
-    let versions;
-
-    return this.getServiceWorkerRegistrations().then(data => {
-      registrations = data.registrations;
-    }).then(_ => this.getServiceWorkerVersions()).then(data => {
-      versions = data.versions;
-    }).then(_ => {
-      const origin = new URL(pageUrl).origin;
-
-      registrations
-        .filter(reg => {
-          const swOrigin = new URL(reg.scopeURL).origin;
-
-          return origin === swOrigin;
-        })
-        .forEach(reg => {
-          versions.forEach(ver => {
-            // Ignore workers unaffiliated with this registration
-            if (ver.registrationId !== reg.registrationId) {
-              return;
-            }
-
-            // Throw if service worker for this origin has active controlledClients.
-            if (ver.controlledClients && ver.controlledClients.length > 0) {
-              throw new Error('You probably have multiple tabs open to the same origin.');
-            }
-          });
-        });
-    });
-  }
-
-  /**
    * Navigate to the given URL. Direct use of this method isn't advised: if
    * the current page is already at the given URL, navigation will not occur and
    * so the returned promise will only resolve after the MAX_WAIT_FOR_FULLY_LOADED
@@ -732,119 +624,6 @@ class Driver {
   }
 
   /**
-   * @return {Promise<void>}
-   */
-  enableRuntimeEvents() {
-    return this.sendCommand('Runtime.enable');
-  }
-
-  /**
-   * Enables `Debugger` domain to receive async stacktrace information on network request initiators.
-   * This is critical for tracing certain performance simulation situations.
-   *
-   * @return {Promise<void>}
-   */
-  async enableAsyncStacks() {
-    await this.sendCommand('Debugger.enable');
-    await this.sendCommand('Debugger.setSkipAllPauses', {skip: true});
-    await this.sendCommand('Debugger.setAsyncCallStackDepth', {maxDepth: 8});
-  }
-
-  /**
-   * Clear the network cache on disk and in memory.
-   * @return {Promise<void>}
-   */
-  async cleanBrowserCaches() {
-    const status = {msg: 'Cleaning browser cache', id: 'lh:driver:cleanBrowserCaches'};
-    log.time(status);
-
-    // Wipe entire disk cache
-    await this.sendCommand('Network.clearBrowserCache');
-    // Toggle 'Disable Cache' to evict the memory cache
-    await this.sendCommand('Network.setCacheDisabled', {cacheDisabled: true});
-    await this.sendCommand('Network.setCacheDisabled', {cacheDisabled: false});
-
-    log.timeEnd(status);
-  }
-
-  /**
-   * @param {LH.Crdp.Network.Headers|null} headers key/value pairs of HTTP Headers.
-   * @return {Promise<void>}
-   */
-  async setExtraHTTPHeaders(headers) {
-    if (!headers) {
-      return;
-    }
-
-    return this.sendCommand('Network.setExtraHTTPHeaders', {headers});
-  }
-
-  /**
-   * @param {string} url
-   * @return {Promise<void>}
-   */
-  async clearDataForOrigin(url) {
-    const origin = new URL(url).origin;
-
-    // Clear some types of storage.
-    // Cookies are not cleared, so the user isn't logged out.
-    // indexeddb, websql, and localstorage are not cleared to prevent loss of potentially important data.
-    //   https://chromedevtools.github.io/debugger-protocol-viewer/tot/Storage/#type-StorageType
-    const typesToClear = [
-      'appcache',
-      // 'cookies',
-      'file_systems',
-      'shader_cache',
-      'service_workers',
-      'cache_storage',
-    ].join(',');
-
-    // `Storage.clearDataForOrigin` is one of our PROTOCOL_TIMEOUT culprits and this command is also
-    // run in the context of PAGE_HUNG to cleanup. We'll keep the timeout low and just warn if it fails.
-    this.setNextProtocolTimeout(5000);
-
-    try {
-      await this.sendCommand('Storage.clearDataForOrigin', {
-        origin: origin,
-        storageTypes: typesToClear,
-      });
-    } catch (err) {
-      if (/** @type {LH.LighthouseError} */(err).code === 'PROTOCOL_TIMEOUT') {
-        log.warn('Driver', 'clearDataForOrigin timed out');
-      } else {
-        throw err;
-      }
-    }
-  }
-
-  /**
-   * @param {string} url
-   * @return {Promise<LH.IcuMessage | undefined>}
-   */
-  async getImportantStorageWarning(url) {
-    const usageData = await this.sendCommand('Storage.getUsageAndQuota', {
-      origin: url,
-    });
-    /** @type {Record<string, string>} */
-    const storageTypeNames = {
-      local_storage: 'Local Storage',
-      indexeddb: 'IndexedDB',
-      websql: 'Web SQL',
-    };
-    const locations = usageData.usageBreakdown
-      .filter(usage => usage.usage)
-      .map(usage => storageTypeNames[usage.storageType] || '')
-      .filter(Boolean);
-    if (locations.length) {
-      // TODO(#11495): Use Intl.ListFormat with Node 12
-      return str_(
-        UIStrings.warningData,
-        {locations: locations.join(', '), locationCount: locations.length}
-      );
-    }
-  }
-
-  /**
    * Use a RequestIdleCallback shim for tests run with simulated throttling, so that the deadline can be used without
    * a penalty
    * @param {LH.Config.Settings} settings
@@ -857,20 +636,6 @@ class Driver {
         {args: [settings.throttling.cpuSlowdownMultiplier]}
       );
     }
-  }
-
-  /**
-   * @param {Array<string>} urls URL patterns to block. Wildcards ('*') are allowed.
-   * @return {Promise<void>}
-   */
-  blockUrlPatterns(urls) {
-    return this.sendCommand('Network.setBlockedURLs', {urls})
-      .catch(err => {
-        // TODO(COMPAT): remove this handler once m59 hits stable
-        if (!/wasn't found/.test(err.message)) {
-          throw err;
-        }
-      });
   }
 
   /**
@@ -893,4 +658,3 @@ class Driver {
 }
 
 module.exports = Driver;
-module.exports.UIStrings = UIStrings;

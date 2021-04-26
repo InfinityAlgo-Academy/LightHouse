@@ -1703,7 +1703,7 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "M̂ób̂íl̂é F̂ŕîén̂d́l̂ý"
   },
-  "lighthouse-core/gather/driver.js | warningData": {
+  "lighthouse-core/gather/driver/storage.js | warningData": {
     "message": "{locationCount, plural,\n    =1 {T̂h́êŕê ḿâý b̂é ŝt́ôŕêd́ d̂át̂á âf́f̂éĉt́îńĝ ĺôád̂ín̂ǵ p̂ér̂f́ôŕm̂án̂ćê ín̂ t́ĥíŝ ĺôćât́îón̂: {locations}. Áûd́ît́ t̂h́îś p̂áĝé îń âń îńĉóĝńît́ô ẃîńd̂óŵ t́ô ṕr̂év̂én̂t́ t̂h́ôśê ŕêśôúr̂ćêś f̂ŕôḿ âf́f̂éĉt́îńĝ ýôúr̂ śĉór̂éŝ.}\n    other {T́ĥér̂é m̂áŷ b́ê śt̂ór̂éd̂ d́ât́â áf̂f́êćt̂ín̂ǵ l̂óâd́îńĝ ṕêŕf̂ór̂ḿâńĉé îń t̂h́êśê ĺôćât́îón̂ś: {locations}. Âúd̂ít̂ t́ĥíŝ ṕâǵê ín̂ án̂ ín̂ćôǵn̂ít̂ó ŵín̂d́ôẃ t̂ó p̂ŕêv́êńt̂ t́ĥóŝé r̂éŝóûŕĉéŝ f́r̂óm̂ áf̂f́êćt̂ín̂ǵ ŷóûŕ ŝćôŕêś.}\n  }"
   },
   "lighthouse-core/gather/gather-runner.js | warningRedirected": {

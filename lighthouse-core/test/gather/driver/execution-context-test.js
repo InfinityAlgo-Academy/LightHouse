@@ -44,6 +44,8 @@ describe('ExecutionContext', () => {
 
     forceNewContextId = async (executionContext, executionContextId) => {
       executionContext._session.sendCommand = createMockSendCommandFn()
+        .mockResponse('Page.enable')
+        .mockResponse('Runtime.enable')
         .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: '1337'}}})
         .mockResponse('Page.createIsolatedWorld', {executionContextId})
         .mockResponse('Runtime.evaluate', {result: {value: 2}});
@@ -139,6 +141,8 @@ describe('.evaluateAsync', () => {
 
   it('evaluates an expression in isolation', async () => {
     let sendCommand = (sessionMock.sendCommand = createMockSendCommandFn()
+      .mockResponse('Page.enable')
+      .mockResponse('Runtime.enable')
       .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: '1337'}}})
       .mockResponse('Page.createIsolatedWorld', {executionContextId: 1})
       .mockResponse('Runtime.evaluate', {result: {value: 2}}));
@@ -168,9 +172,13 @@ describe('.evaluateAsync', () => {
 
   it('recovers from isolation failures', async () => {
     sessionMock.sendCommand = createMockSendCommandFn()
+      .mockResponse('Page.enable')
+      .mockResponse('Runtime.enable')
       .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: '1337'}}})
       .mockResponse('Page.createIsolatedWorld', {executionContextId: 9001})
       .mockResponse('Runtime.evaluate', Promise.reject(new Error('Cannot find context')))
+      .mockResponse('Page.enable')
+      .mockResponse('Runtime.enable')
       .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: '1337'}}})
       .mockResponse('Page.createIsolatedWorld', {executionContextId: 9002})
       .mockResponse('Runtime.evaluate', {result: {value: 'mocked value'}});
@@ -251,8 +259,8 @@ const performance = globalThis.__nativePerformance || globalThis.performance;
     const value = await executionContext.evaluate(mainFn, {args: [1]}); // eslint-disable-line no-unused-vars
 
     const code = mockFn.mock.calls[0][0];
-    expect(code).toBe(`(() => {
-      
+    expect(trimTrailingWhitespace(code)).toBe(`(() => {
+
       return (function mainFn(value) {
       return value;
     })(1);
@@ -274,8 +282,8 @@ const performance = globalThis.__nativePerformance || globalThis.performance;
     const value = await executionContext.evaluate(mainFn, {args: [1]}); // eslint-disable-line no-unused-vars
 
     const code = mockFn.mock.calls[0][0];
-    expect(code).toBe(`(() => {
-      
+    expect(trimTrailingWhitespace(code)).toBe(`(() => {
+
       return ((value) => {
       return value;
     })(1);

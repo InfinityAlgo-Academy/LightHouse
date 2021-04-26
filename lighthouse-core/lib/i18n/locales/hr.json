@@ -1703,9 +1703,6 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Prilagođeno mobilnim uređajima"
   },
-  "lighthouse-core/gather/driver.js | warningData": {
-    "message": "{locationCount,plural, =1{Na ovoj lokaciji možda ima pohranjenih podataka koji utječu na izvedbu učitavanja: {locations}. Provjerite stranicu u anonimnom prozoru da ti resursi ne bi utjecali na rezultate.}one{Na ovim lokacijama možda ima pohranjenih podataka koji utječu na izvedbu učitavanja: {locations}. Provjerite stranicu u anonimnom prozoru da ti resursi ne bi utjecali na rezultate.}few{Na ovim lokacijama možda ima pohranjenih podataka koji utječu na izvedbu učitavanja: {locations}. Provjerite stranicu u anonimnom prozoru da ti resursi ne bi utjecali na rezultate.}other{Na ovim lokacijama možda ima pohranjenih podataka koji utječu na izvedbu učitavanja: {locations}. Provjerite stranicu u anonimnom prozoru da ti resursi ne bi utjecali na rezultate.}}"
-  },
   "lighthouse-core/gather/gather-runner.js | warningRedirected": {
     "message": "Stranica se možda ne učitava kako je očekivano jer je vaš testni URL ({requested}) bio preusmjeren na {final}. Pokušajte izravno testirati drugi URL"
   },

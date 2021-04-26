@@ -1703,9 +1703,6 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "適合透過流動裝置瀏覽"
   },
-  "lighthouse-core/gather/driver.js | warningData": {
-    "message": "{locationCount,plural, =1{此位置可能有儲存資料正在影響載入效能：{locations}。請透過無痕式視窗審核此頁面，以免這些資源影響分數。}other{這些位置可能有儲存資料正在影響載入效能：{locations}。請透過無痕式視窗審核此頁面，以免這些資源影響分數。}}"
-  },
   "lighthouse-core/gather/gather-runner.js | warningRedirected": {
     "message": "您的測試網址 ({requested}) 已重新導向至 {final}，因此頁面未必可以如預期載入。請嘗試直接測試第二個網址。"
   },

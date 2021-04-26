@@ -1703,9 +1703,6 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Piemērota mobilajām ierīcēm"
   },
-  "lighthouse-core/gather/driver.js | warningData": {
-    "message": "{locationCount,plural, =1{Iespējams, ielādes veiktspēju ietekmē dati, kas tiek glabāti šajā atrašanās vietā: {locations}. Lai šie resursi neietekmētu jūsu rezultātus, pārbaudiet šo lapu inkognito logā.}zero{Iespējams, ielādes veiktspēju ietekmē dati, kas tiek glabāti šajās atrašanās vietās: {locations}. Lai šie resursi neietekmētu jūsu rezultātus, pārbaudiet šo lapu inkognito logā.}one{Iespējams, ielādes veiktspēju ietekmē dati, kas tiek glabāti šajās atrašanās vietās: {locations}. Lai šie resursi neietekmētu jūsu rezultātus, pārbaudiet šo lapu inkognito logā.}other{Iespējams, ielādes veiktspēju ietekmē dati, kas tiek glabāti šajās atrašanās vietās: {locations}. Lai šie resursi neietekmētu jūsu rezultātus, pārbaudiet šo lapu inkognito logā.}}"
-  },
   "lighthouse-core/gather/gather-runner.js | warningRedirected": {
     "message": "Iespējams, lapa netiek ielādēta, kā paredzēts, jo jūsu testa URL ({requested}) tika novirzīts uz: {final}. Mēģiniet tieši testēt otro URL."
   },

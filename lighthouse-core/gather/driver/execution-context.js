@@ -19,6 +19,7 @@ class ExecutionContext {
 
     // We use isolated execution contexts for `evaluateAsync` that can be destroyed through navigation
     // and other page actions. Cleanup our relevant bookkeeping as we see those events.
+    // Domains are enabled when a dedicated execution context is requested.
     session.on('Page.frameNavigated', () => this.clearContextId());
     session.on('Runtime.executionContextDestroyed', event => {
       if (event.executionContextId === this._executionContextId) {
@@ -50,6 +51,9 @@ class ExecutionContext {
    */
   async _getOrCreateIsolatedContextId() {
     if (typeof this._executionContextId === 'number') return this._executionContextId;
+
+    await this._session.sendCommand('Page.enable');
+    await this._session.sendCommand('Runtime.enable');
 
     const resourceTreeResponse = await this._session.sendCommand('Page.getResourceTree');
     const mainFrameId = resourceTreeResponse.frameTree.frame.id;

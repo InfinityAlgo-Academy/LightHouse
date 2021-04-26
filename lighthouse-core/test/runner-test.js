@@ -7,6 +7,11 @@
 
 require('./test-utils.js').makeMocksForGatherRunner();
 
+jest.mock('../gather/driver/service-workers.js', () => ({
+  getServiceWorkerVersions: jest.fn().mockResolvedValue({versions: []}),
+  getServiceWorkerRegistrations: jest.fn().mockResolvedValue({registrations: []}),
+}));
+
 const Runner = require('../runner.js');
 const GatherRunner = require('../gather/gather-runner.js');
 const driverMock = require('./gather/fake-driver.js');

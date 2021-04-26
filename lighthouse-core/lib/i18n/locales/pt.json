@@ -1703,9 +1703,6 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Otimizada para dispositivos móveis"
   },
-  "lighthouse-core/gather/driver.js | warningData": {
-    "message": "{locationCount,plural, =1{Pode haver dados armazenados afetando o desempenho de carregamento neste local: {locations}. Examine esta página em uma janela anônima para evitar que esses recursos afetem suas pontuações.}one{Pode haver dados armazenados afetando o desempenho de carregamento neste local: {locations}. Examine esta página em uma janela anônima para evitar que esses recursos afetem suas pontuações.}other{Pode haver dados armazenados afetando o desempenho de carregamento nestes locais: {locations}. Examine esta página em uma janela anônima para evitar que esses recursos afetem suas pontuações.}}"
-  },
   "lighthouse-core/gather/gather-runner.js | warningRedirected": {
     "message": "A página pode não ser carregada conforme esperado porque seu URL de teste ({requested}) foi redirecionado para {final}. Teste o segundo URL diretamente."
   },

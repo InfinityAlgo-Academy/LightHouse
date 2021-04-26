@@ -1703,9 +1703,6 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Mobilvenlig"
   },
-  "lighthouse-core/gather/driver.js | warningData": {
-    "message": "{locationCount,plural, =1{Der kan være gemte data, som påvirker indlæsningseffektiviteten på følgende placering: {locations}. Gennemgå denne side i et inkognitovindue for at forhindre, at disse ressourcer påvirker dine resultater.}one{Der kan være gemte data, som påvirker indlæsningseffektiviteten på følgende placering: {locations}. Gennemgå denne side i et inkognitovindue for at forhindre, at disse ressourcer påvirker dine resultater.}other{Der kan være gemte data, som påvirker indlæsningseffektiviteten på følgende placeringer: {locations}. Gennemgå denne side i et inkognitovindue for at forhindre, at disse ressourcer påvirker dine resultater.}}"
-  },
   "lighthouse-core/gather/gather-runner.js | warningRedirected": {
     "message": "Siden indlæses muligvis ikke som forventet, da din testwebadresse ({requested}) blev omdirigeret til {final}. Prøv at teste den anden webadresse direkte."
   },

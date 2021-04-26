@@ -1703,9 +1703,6 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Optimalizováno pro mobily"
   },
-  "lighthouse-core/gather/driver.js | warningData": {
-    "message": "{locationCount,plural, =1{Rychlost načítání může být ovlivněna daty uloženými v následujícím umístění: {locations}. Spusťte audit této stránky v anonymním okně, aby tyto zdroje na skóre neměly vliv.}few{Rychlost načítání může být ovlivněna daty uloženými v následujících umístěních: {locations}. Spusťte audit této stránky v anonymním okně, aby tyto zdroje na skóre neměly vliv.}many{Rychlost načítání může být ovlivněna daty uloženými v následujících umístěních: {locations}. Spusťte audit této stránky v anonymním okně, aby tyto zdroje na skóre neměly vliv.}other{Rychlost načítání může být ovlivněna daty uloženými v následujících umístěních: {locations}. Spusťte audit této stránky v anonymním okně, aby tyto zdroje na skóre neměly vliv.}}"
-  },
   "lighthouse-core/gather/gather-runner.js | warningRedirected": {
     "message": "Stránka se možná nenačítá očekávaným způsobem, protože testovací adresa URL ({requested}) byla přesměrována na adresu {final}. Zkuste přímo otestovat druhou URL."
   },

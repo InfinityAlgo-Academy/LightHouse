@@ -1703,7 +1703,7 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Mobile Friendly"
   },
-  "lighthouse-core/gather/driver.js | warningData": {
+  "lighthouse-core/gather/driver/storage.js | warningData": {
     "message": "{locationCount, plural,\n    =1 {There may be stored data affecting loading performance in this location: {locations}. Audit this page in an incognito window to prevent those resources from affecting your scores.}\n    other {There may be stored data affecting loading performance in these locations: {locations}. Audit this page in an incognito window to prevent those resources from affecting your scores.}\n  }"
   },
   "lighthouse-core/gather/gather-runner.js | warningRedirected": {

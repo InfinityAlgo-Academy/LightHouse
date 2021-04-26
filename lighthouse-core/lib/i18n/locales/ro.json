@@ -1703,9 +1703,6 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Pentru dispozitivele mobile"
   },
-  "lighthouse-core/gather/driver.js | warningData": {
-    "message": "{locationCount,plural, =1{Este posibil să existe date stocate care afectează performanța de încărcare în următoarea locație: {locations}. Verifică pagina într-o fereastră incognito pentru a împiedica resursele să îți afecteze scorurile.}few{Este posibil să existe date stocate care afectează performanța de încărcare în următoarele locații: {locations}. Verifică pagina într-o fereastră incognito pentru a împiedica resursele să îți afecteze scorurile.}other{Este posibil să existe date stocate care afectează performanța de încărcare în următoarele locații: {locations}. Verifică pagina într-o fereastră incognito pentru a împiedica resursele să îți afecteze scorurile.}}"
-  },
   "lighthouse-core/gather/gather-runner.js | warningRedirected": {
     "message": "Este posibil ca pagina să nu se încarce conform așteptărilor, deoarece adresa URL de testare ({requested}) a fost redirecționată spre {final}. Încearcă să testezi direct a doua adresă URL."
   },

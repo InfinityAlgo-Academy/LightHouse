@@ -1703,9 +1703,6 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Geschikt voor mobiele apparaten"
   },
-  "lighthouse-core/gather/driver.js | warningData": {
-    "message": "{locationCount,plural, =1{Er kunnen op de volgende locatie gegevens zijn opgeslagen die van invloed zijn op de laadprestaties: {locations}. Controleer deze pagina in een incognitovenster om te voorkomen dat die bronnen van invloed zijn op je scores.}other{Er kunnen op de volgende locaties gegevens zijn opgeslagen die van invloed zijn op de laadprestaties: {locations}. Controleer deze pagina in een incognitovenster om te voorkomen dat die bronnen van invloed zijn op je scores.}}"
-  },
   "lighthouse-core/gather/gather-runner.js | warningRedirected": {
     "message": "De pagina wordt mogelijk niet geladen zoals verwacht omdat je test-URL ({requested}) is omgeleid naar {final}. Probeer de tweede URL rechtstreeks te testen."
   },

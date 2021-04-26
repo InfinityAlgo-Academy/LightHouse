@@ -1703,9 +1703,6 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Pritaikyta mobiliesiems"
   },
-  "lighthouse-core/gather/driver.js | warningData": {
-    "message": "{locationCount,plural, =1{Šioje vietoje gali būti išsaugotų duomenų, turinčių poveikio įkėlimo našumui: {locations}. Patikrinkite šį puslapį inkognito lange, kad šie šaltiniai nepaveiktų rezultatų.}one{Šiose vietose gali būti išsaugotų duomenų, turinčių poveikio įkėlimo našumui: {locations}. Patikrinkite šį puslapį inkognito lange, kad šie šaltiniai nepaveiktų rezultatų.}few{Šiose vietose gali būti išsaugotų duomenų, turinčių poveikio įkėlimo našumui: {locations}. Patikrinkite šį puslapį inkognito lange, kad šie šaltiniai nepaveiktų rezultatų.}many{Šiose vietose gali būti išsaugotų duomenų, turinčių poveikio įkėlimo našumui: {locations}. Patikrinkite šį puslapį inkognito lange, kad šie šaltiniai nepaveiktų rezultatų.}other{Šiose vietose gali būti išsaugotų duomenų, turinčių poveikio įkėlimo našumui: {locations}. Patikrinkite šį puslapį inkognito lange, kad šie šaltiniai nepaveiktų rezultatų.}}"
-  },
   "lighthouse-core/gather/gather-runner.js | warningRedirected": {
     "message": "Puslapis gali būti neįkeliamas, kaip numatyta, nes bandomasis URL ({requested}) peradresavo į {final}. Išbandykite antrąjį URL tiesiogiai."
   },

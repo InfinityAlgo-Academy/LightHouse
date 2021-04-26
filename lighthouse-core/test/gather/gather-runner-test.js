@@ -20,8 +20,12 @@ const LHError = require('../../lib/lh-error.js');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 const Driver = require('../../gather/driver.js');
 const Connection = require('../../gather/connections/connection.js');
-const {createMockSendCommandFn} = require('./mock-commands.js');
-const {makeParamsOptional} = require('../test-utils.js');
+const {createMockSendCommandFn, createMockOnceFn} = require('./mock-commands.js');
+const {
+  makeParamsOptional,
+  makePromiseInspectable,
+  flushAllTimersAndMicrotasks,
+} = require('../test-utils.js');
 
 const GatherRunner = {
   afterPass: makeParamsOptional(GatherRunner_.afterPass),
@@ -39,6 +43,9 @@ const GatherRunner = {
   runPass: makeParamsOptional(GatherRunner_.runPass),
   setupDriver: makeParamsOptional(GatherRunner_.setupDriver),
   setupPassNetwork: makeParamsOptional(GatherRunner_.setupPassNetwork),
+  // Spies that should have mock implemenations most of the time.
+  assertNoSameOriginServiceWorkerClients: jest.spyOn(GatherRunner_,
+    'assertNoSameOriginServiceWorkerClients'),
 };
 
 /**
@@ -79,24 +86,6 @@ class TestGathererNoArtifact extends Gatherer {
 }
 
 class EmulationDriver extends Driver {
-  enableRuntimeEvents() {
-    return Promise.resolve();
-  }
-  enableAsyncStacks() {
-    return Promise.resolve();
-  }
-  assertNoSameOriginServiceWorkerClients() {
-    return Promise.resolve();
-  }
-  registerPerformanceObserver() {
-    return Promise.resolve();
-  }
-  cleanBrowserCaches() {
-    return Promise.resolve();
-  }
-  clearDataForOrigin() {
-    return Promise.resolve();
-  }
   registerRequestIdleCallbackWrap() {
     return Promise.resolve();
   }
@@ -113,7 +102,15 @@ let driver;
 let connectionStub;
 
 function resetDefaultMockResponses() {
+  GatherRunner.assertNoSameOriginServiceWorkerClients = jest.spyOn(GatherRunner_,
+    'assertNoSameOriginServiceWorkerClients');
+  GatherRunner.assertNoSameOriginServiceWorkerClients.mockReset();
+  GatherRunner.assertNoSameOriginServiceWorkerClients.mockResolvedValue();
+
   connectionStub.sendCommand = createMockSendCommandFn()
+    .mockResponse('Debugger.enable')
+    .mockResponse('Debugger.setSkipAllPauses')
+    .mockResponse('Debugger.setAsyncCallStackDepth')
     .mockResponse('Emulation.setCPUThrottlingRate')
     .mockResponse('Emulation.setDeviceMetricsOverride')
     .mockResponse('Emulation.setTouchEmulationEnabled')
@@ -139,6 +136,7 @@ function restoreActualEmulation() {
 }
 
 beforeEach(() => {
+  jest.useFakeTimers();
   // @ts-expect-error - connectionStub has a mocked version of sendCommand implemented in each test
   connectionStub = new Connection();
   // @ts-expect-error
@@ -152,6 +150,14 @@ beforeEach(() => {
   emulation.emulate = jest.fn();
   emulation.throttle = jest.fn();
   emulation.clearThrottling = jest.fn();
+
+  const storage = require('../../gather/driver/storage.js');
+  storage.clearDataForOrigin = jest.fn();
+});
+
+afterEach(() => {
+  GatherRunner.assertNoSameOriginServiceWorkerClients.mockRestore();
+  jest.useRealTimers();
 });
 
 describe('GatherRunner', function() {
@@ -307,63 +313,157 @@ describe('GatherRunner', function() {
       .toMatchObject({mobile: false});
   });
 
-  it('clears origin storage', () => {
-    const asyncFunc = () => Promise.resolve();
-    /** @type {Record<string, boolean>} */
-    const tests = {
-      calledCleanBrowserCaches: false,
-      calledClearStorage: false,
-    };
-    /** @param {string} variable */
-    const createCheck = variable => () => {
-      tests[variable] = true;
-      return Promise.resolve();
-    };
-    const driver = {
-      assertNoSameOriginServiceWorkerClients: asyncFunc,
-      dismissJavaScriptDialogs: asyncFunc,
-      enableRuntimeEvents: asyncFunc,
-      enableAsyncStacks: asyncFunc,
-      executionContext: {cacheNativesOnNewDocument: asyncFunc},
-      gotoURL: asyncFunc,
-      registerRequestIdleCallbackWrap: asyncFunc,
-      cleanBrowserCaches: createCheck('calledCleanBrowserCaches'),
-      clearDataForOrigin: createCheck('calledClearStorage'),
-      blockUrlPatterns: asyncFunc,
-      setExtraHTTPHeaders: asyncFunc,
-      getImportantStorageWarning: asyncFunc,
-    };
+  describe('.assertNoSameOriginServiceWorkerClients', () => {
+    /** @type {LH.Gatherer.FRProtocolSession} */
+    let session;
+    /** @type {typeof GatherRunner_['assertNoSameOriginServiceWorkerClients']} */
+    let assertNoSameOriginServiceWorkerClients;
 
-    return GatherRunner.setupDriver(driver, {settings: {}}).then(_ => {
-      assert.equal(tests.calledCleanBrowserCaches, false);
-      assert.equal(tests.calledClearStorage, true);
+    beforeEach(() => {
+      GatherRunner.assertNoSameOriginServiceWorkerClients.mockRestore();
+      assertNoSameOriginServiceWorkerClients = GatherRunner_.assertNoSameOriginServiceWorkerClients;
+      session = driver.defaultSession;
+      connectionStub.sendCommand = createMockSendCommandFn()
+        .mockResponse('ServiceWorker.enable')
+        .mockResponse('ServiceWorker.disable')
+        .mockResponse('ServiceWorker.enable')
+        .mockResponse('ServiceWorker.disable');
+    });
+
+    /**
+   * @param {number} id
+   * @param {string} url
+   * @param {boolean=} isDeleted
+   */
+    function createSWRegistration(id, url, isDeleted) {
+      return {
+        isDeleted: !!isDeleted,
+        registrationId: String(id),
+        scopeURL: url,
+      };
+    }
+
+    /**
+   * @param {number} id
+   * @param {string} url
+   * @param {string[]} controlledClients
+   * @param {LH.Crdp.ServiceWorker.ServiceWorkerVersionStatus=} status
+   */
+    function createActiveWorker(id, url, controlledClients, status = 'activated') {
+      return {
+        registrationId: String(id),
+        scriptURL: url,
+        controlledClients,
+        status,
+      };
+    }
+
+    it('will pass if there are no current service workers', async () => {
+      const pageUrl = 'https://example.com/';
+
+      driver.on = driver.once = createMockOnceFn()
+      .mockEvent('ServiceWorker.workerRegistrationUpdated', {registrations: []})
+      .mockEvent('ServiceWorker.workerVersionUpdated', {versions: []});
+
+      const assertPromise = assertNoSameOriginServiceWorkerClients(session, pageUrl);
+      await flushAllTimersAndMicrotasks();
+      await assertPromise;
+    });
+
+    it('will pass if there is an active service worker for a different origin', async () => {
+      const pageUrl = 'https://example.com/';
+      const secondUrl = 'https://example.edu';
+      const swUrl = `${secondUrl}sw.js`;
+
+      const registrations = [createSWRegistration(1, secondUrl)];
+      const versions = [createActiveWorker(1, swUrl, ['uniqueId'])];
+
+      driver.on = driver.once = createMockOnceFn()
+      .mockEvent('ServiceWorker.workerRegistrationUpdated', {registrations})
+      .mockEvent('ServiceWorker.workerVersionUpdated', {versions});
+
+      const assertPromise = assertNoSameOriginServiceWorkerClients(session, pageUrl);
+      await flushAllTimersAndMicrotasks();
+      await assertPromise;
+    });
+
+    it('will fail if a service worker with a matching origin has a controlled client', async () => {
+      const pageUrl = 'https://example.com/';
+      const swUrl = `${pageUrl}sw.js`;
+      const registrations = [createSWRegistration(1, pageUrl)];
+      const versions = [createActiveWorker(1, swUrl, ['uniqueId'])];
+
+      driver.on = driver.once = createMockOnceFn()
+      .mockEvent('ServiceWorker.workerRegistrationUpdated', {registrations})
+      .mockEvent('ServiceWorker.workerVersionUpdated', {versions});
+
+      expect.assertions(1);
+
+      try {
+        const assertPromise = assertNoSameOriginServiceWorkerClients(session, pageUrl);
+        await flushAllTimersAndMicrotasks();
+        await assertPromise;
+      } catch (err) {
+        expect(err.message.toLowerCase()).toContain('multiple tabs');
+      }
+    });
+
+    it('will succeed if a service worker with has no controlled clients', async () => {
+      const pageUrl = 'https://example.com/';
+      const swUrl = `${pageUrl}sw.js`;
+      const registrations = [createSWRegistration(1, pageUrl)];
+      const versions = [createActiveWorker(1, swUrl, [])];
+
+      driver.on = driver.once = createMockOnceFn()
+      .mockEvent('ServiceWorker.workerRegistrationUpdated', {registrations})
+      .mockEvent('ServiceWorker.workerVersionUpdated', {versions});
+
+      const assertPromise = assertNoSameOriginServiceWorkerClients(session, pageUrl);
+      await flushAllTimersAndMicrotasks();
+      await assertPromise;
+    });
+
+    it('will wait for serviceworker to be activated', async () => {
+      const pageUrl = 'https://example.com/';
+      const swUrl = `${pageUrl}sw.js`;
+      const registrations = [createSWRegistration(1, pageUrl)];
+      const versions = [createActiveWorker(1, swUrl, [], 'installing')];
+      const activatedVersions = [createActiveWorker(1, swUrl, [], 'activated')];
+
+      const mockOn = driver.on = driver.once = createMockOnceFn()
+      .mockEvent('ServiceWorker.workerRegistrationUpdated', {registrations})
+      .mockEvent('ServiceWorker.workerVersionUpdated', {versions});
+
+      const assertPromise = assertNoSameOriginServiceWorkerClients(session, pageUrl);
+      const inspectable = makePromiseInspectable(assertPromise);
+
+      // After receiving the empty versions the promise still shouldn't be resolved
+      await flushAllTimersAndMicrotasks();
+      expect(inspectable).not.toBeDone();
+
+      // Use `findListener` instead of `mockEvent` so we can control exactly when the promise resolves
+      // After we invoke the listener with the activated versions we expect the promise to have resolved
+      const listener = mockOn.findListener('ServiceWorker.workerVersionUpdated');
+      listener({versions: activatedVersions});
+      await flushAllTimersAndMicrotasks();
+      expect(inspectable).toBeDone();
+      await assertPromise;
     });
   });
 
+  it('clears origin storage', async () => {
+    const storage = jest.requireMock('../../gather/driver/storage.js');
+    await GatherRunner.setupDriver(driver, {settings: {}});
+    expect(storage.clearDataForOrigin).toHaveBeenCalled();
+  });
+
+  it('does not clear origin storage with flag --disable-storage-reset', async () => {
+    const storage = jest.requireMock('../../gather/driver/storage.js');
+    await GatherRunner.setupDriver(driver, {settings: {disableStorageReset: true}});
+    expect(storage.clearDataForOrigin).not.toHaveBeenCalled();
+  });
+
   it('clears the disk & memory cache on a perf run', async () => {
-    const asyncFunc = () => Promise.resolve();
-    /** @type {Record<string, boolean>} */
-    const tests = {
-      calledCleanBrowserCaches: false,
-    };
-    /** @param {string} variable */
-    const createCheck = variable => () => {
-      tests[variable] = true;
-      return Promise.resolve();
-    };
-    const driver = {
-      beginDevtoolsLog: asyncFunc,
-      beginTrace: asyncFunc,
-      gotoURL: async () => ({}),
-      cleanBrowserCaches: createCheck('calledCleanBrowserCaches'),
-      blockUrlPatterns: asyncFunc,
-      setExtraHTTPHeaders: asyncFunc,
-      endTrace: asyncFunc,
-      endDevtoolsLog: () => [],
-      getBrowserVersion: async () => ({userAgent: ''}),
-      getScrollPosition: async () => 1,
-      scrollTo: async () => {},
-    };
     const passConfig = {
       passName: 'default',
       loadFailureMode: LoadFailureMode.ignore,
@@ -376,14 +476,15 @@ describe('GatherRunner', function() {
     };
     const requestedUrl = 'https://example.com';
     const passContext = {
-      driver,
+      driver: fakeDriver,
       passConfig,
       settings,
       baseArtifacts: await GatherRunner.initializeBaseArtifacts({driver, settings, requestedUrl}),
     };
 
+    const storage = jest.requireMock('../../gather/driver/storage.js');
     await GatherRunner.runPass(passContext);
-    assert.equal(tests.calledCleanBrowserCaches, true);
+    expect(storage.cleanBrowserCaches).toHaveBeenCalled();
   });
 
   it('returns a pageLoadError and no artifacts when there is a network error', async () => {
@@ -493,41 +594,6 @@ describe('GatherRunner', function() {
     // @ts-expect-error: Test-only gatherer.
     expect(artifacts.TestGatherer).toBeUndefined();
     expect(artifacts.devtoolsLogs).toHaveProperty('pageLoadError-nextPass');
-  });
-
-  it('does not clear origin storage with flag --disable-storage-reset', () => {
-    const asyncFunc = () => Promise.resolve();
-    /** @type {Record<string, boolean>} */
-    const tests = {
-      calledCleanBrowserCaches: false,
-      calledClearStorage: false,
-    };
-    /** @param {string} variable */
-    const createCheck = variable => () => {
-      tests[variable] = true;
-      return Promise.resolve();
-    };
-    const driver = {
-      assertNoSameOriginServiceWorkerClients: asyncFunc,
-      dismissJavaScriptDialogs: asyncFunc,
-      enableRuntimeEvents: asyncFunc,
-      enableAsyncStacks: asyncFunc,
-      executionContext: {cacheNativesOnNewDocument: asyncFunc},
-      gotoURL: asyncFunc,
-      registerPerformanceObserver: asyncFunc,
-      registerRequestIdleCallbackWrap: asyncFunc,
-      cleanBrowserCaches: createCheck('calledCleanBrowserCaches'),
-      clearDataForOrigin: createCheck('calledClearStorage'),
-      blockUrlPatterns: asyncFunc,
-      setExtraHTTPHeaders: asyncFunc,
-    };
-
-    return GatherRunner.setupDriver(driver, {
-      settings: {disableStorageReset: true},
-    }).then(_ => {
-      assert.equal(tests.calledCleanBrowserCaches, false);
-      assert.equal(tests.calledClearStorage, false);
-    });
   });
 
   it('sets throttling appropriately', async () => {
@@ -1291,6 +1357,7 @@ describe('GatherRunner', function() {
   describe('artifact collection', () => {
     // Make sure our gatherers never execute in parallel
     it('runs gatherer lifecycle methods strictly in sequence', async () => {
+      jest.useRealTimers();
       /** @type {Record<string, number>} */
       const counter = {
         beforePass: 0,

@@ -1703,9 +1703,6 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "スマホ対応"
   },
-  "lighthouse-core/gather/driver.js | warningData": {
-    "message": "{locationCount,plural, =1{次の場所に保存されているデータが読み込みパフォーマンスに影響を与えている可能性があります: {locations}。これらのリソースがスコアに影響しないようにするためには、シークレット ウィンドウでこのページを監査してください。}other{次の場所に保存されているデータが読み込みパフォーマンスに影響を与えている可能性があります: {locations}。これらのリソースがスコアに影響しないようにするためには、シークレット ウィンドウでこのページを監査してください。}}"
-  },
   "lighthouse-core/gather/gather-runner.js | warningRedirected": {
     "message": "テスト URL（{requested}）が「{final}」にリダイレクトされているため、このページは想定どおりに読み込まれない可能性があります。2 番目の URL を直接テストしてみてください。"
   },

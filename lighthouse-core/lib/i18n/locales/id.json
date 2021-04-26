@@ -1703,9 +1703,6 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Mobile Friendly"
   },
-  "lighthouse-core/gather/driver.js | warningData": {
-    "message": "{locationCount,plural, =1{Mungkin terdapat data tersimpan yang memengaruhi performa pemuatan di lokasi ini: {locations}. Audit halaman ini di jendela Samaran untuk mencegah resource tersebut memengaruhi performa Anda.}other{Mungkin terdapat data tersimpan yang memengaruhi performa pemuatan di lokasi ini {locations}. Audit halaman ini di jendela Samaran untuk mencegah resource tersebut memengaruhi performa Anda.}}"
-  },
   "lighthouse-core/gather/gather-runner.js | warningRedirected": {
     "message": "Halaman tersebut mungkin tidak dimuat sesuai harapan karena URL uji Anda ({requested}) dialihkan ke {final}. Coba uji URL kedua secara langsung."
   },

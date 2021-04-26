@@ -1703,9 +1703,6 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Mobilbarát"
   },
-  "lighthouse-core/gather/driver.js | warningData": {
-    "message": "{locationCount,plural, =1{Előfordulhat, hogy a tárolt adatok befolyásolják a betöltési sebességet ezen a helyen: {locations}. Ellenőrizze ezt az oldalt inkognitó ablakban, hogy az érintett források ne lehessenek hatással a teljesítmény értékelésére.}other{Előfordulhat, hogy a tárolt adatok befolyásolják a betöltési sebességet ezeken a helyeken: {locations}. Ellenőrizze ezt az oldalt inkognitó ablakban, hogy az érintett források ne lehessenek hatással a teljesítmény értékelésére.}}"
-  },
   "lighthouse-core/gather/gather-runner.js | warningRedirected": {
     "message": "Előfordulhat, hogy az oldal nem az elvártaknak megfelelően töltődik be, mert a teszt-URL ({requested}) átirányít ide: {final}. Próbálkozzon a második URL közvetlen tesztelésével."
   },
