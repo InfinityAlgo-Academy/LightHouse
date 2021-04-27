@@ -128,7 +128,7 @@
     "cpy": "^7.0.1",
     "cross-env": "^7.0.2",
     "csv-validator": "^0.0.3",
-    "devtools-protocol": "0.0.805376",
+    "devtools-protocol": "0.0.859327",
     "eslint": "^7.23.0",
     "eslint-config-google": "^0.9.1",
     "eslint-plugin-local-rules": "0.1.0",

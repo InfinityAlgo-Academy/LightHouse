@@ -45,6 +45,7 @@ describe('SourceMaps gatherer', () => {
     const sendCommandMock = createMockSendCommandFn()
       .mockResponse('Debugger.enable', {})
       .mockResponse('Debugger.disable', {})
+      .mockResponse('Network.enable', {})
       .mockResponse('Fetch.enable', {})
       .mockResponse('Fetch.disable', {});
     const fetchMock = jest.fn();

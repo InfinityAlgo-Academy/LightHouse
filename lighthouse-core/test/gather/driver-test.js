@@ -238,6 +238,7 @@ describe('.gotoURL', () => {
       id: 'ABC', loaderId: '', securityOrigin: '', mimeType: 'text/html', domainAndRegistry: '',
       secureContextType: /** @type {'Secure'} */ ('Secure'),
       crossOriginIsolatedContextType: /** @type {'Isolated'} */ ('Isolated'),
+      gatedAPIFeatures: [],
     };
     navigate({...baseFrame, url: 'http://example.com'});
     navigate({...baseFrame, url: 'https://example.com'});

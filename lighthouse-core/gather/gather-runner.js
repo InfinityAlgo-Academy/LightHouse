@@ -233,7 +233,7 @@ class GatherRunner {
       // Disable fetcher, in case a gatherer enabled it.
       // This cleanup should be removed once the only usage of
       // fetcher (fetching arbitrary URLs) is replaced by new protocol support.
-      await driver.fetcher.disableRequestInterception();
+      await driver.fetcher.disable();
 
       await driver.disconnect();
     } catch (err) {
@@ -757,7 +757,7 @@ class GatherRunner {
         // Noop if fetcher was never enabled.
         // This cleanup should be removed once the only usage of
         // fetcher (fetching arbitrary URLs) is replaced by new protocol support.
-        await driver.fetcher.disableRequestInterception();
+        await driver.fetcher.disable();
       }
 
       await GatherRunner.disposeDriver(driver, options);

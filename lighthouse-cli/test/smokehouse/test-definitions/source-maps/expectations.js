@@ -14,6 +14,9 @@ const map = JSON.parse(mapJson);
 /**
  * @type {Array<Smokehouse.ExpectedRunnerResult>}
  * Expected Lighthouse audit values for seo tests
+ *
+ * We have experienced timeouts in the past when fetching source maps.
+ * We should verify the timing issue in Chromium if this gets flaky.
  */
 const expectations = [
   {

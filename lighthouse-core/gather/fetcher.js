@@ -28,6 +28,10 @@ class Fetcher {
   }
 
   /**
+   * Chrome M92 and above:
+   * We use `Network.loadNetworkResource` to fetch each resource.
+   *
+   * Chrome <M92:
    * The Fetch domain accepts patterns for controlling what requests are intercepted, but we
    * enable the domain for all patterns and filter events at a lower level to support multiple
    * concurrent usages. Reasons for this:
@@ -41,7 +45,7 @@ class Fetcher {
    * So instead we have one global `Fetch.enable` / `Fetch.requestPaused` pair, and allow specific
    * urls to be intercepted via `fetcher._setOnRequestPausedHandler`.
    */
-  async enableRequestInterception() {
+  async enable() {
     if (this._enabled) return;
 
     this._enabled = true;
@@ -51,7 +55,7 @@ class Fetcher {
     await this.driver.on('Fetch.requestPaused', this._onRequestPaused);
   }
 
-  async disableRequestInterception() {
+  async disable() {
     if (!this._enabled) return;
 
     this._enabled = false;
@@ -84,19 +88,109 @@ class Fetcher {
   }
 
   /**
-   * Requires that `driver.enableRequestInterception` has been called.
+   * Requires that `fetcher.enable` has been called.
    *
    * Fetches any resource in a way that circumvents CORS.
    *
    * @param {string} url
+   * @param {{timeout: number}=} options timeout is in ms
+   * @return {Promise<string>}
+   */
+  async fetchResource(url, options = {timeout: 500}) {
+    if (!this._enabled) {
+      throw new Error('Must call `enable` before using fetchResource');
+    }
+
+    // `Network.loadNetworkResource` was introduced in M88.
+    // The long timeout bug with `IO.read` was fixed in M92:
+    // https://bugs.chromium.org/p/chromium/issues/detail?id=1191757
+    const milestone = await this.driver.getBrowserVersion().then(v => v.milestone);
+    if (milestone >= 92) {
+      return await this._fetchResourceOverProtocol(url, options);
+    }
+    return await this._fetchResourceIframe(url, options);
+  }
+
+  /**
+   * @param {string} handle
+   * @param {{timeout: number}=} options,
+   * @return {Promise<string>}
+   */
+  async _readIOStream(handle, options = {timeout: 500}) {
+    const startTime = Date.now();
+
+    let ioResponse;
+    let data = '';
+    while (!ioResponse || !ioResponse.eof) {
+      const elapsedTime = Date.now() - startTime;
+      if (elapsedTime > options.timeout) {
+        throw new Error('Waiting for the end of the IO stream exceeded the allotted time.');
+      }
+      ioResponse = await this.driver.sendCommand('IO.read', {handle});
+      const responseData = ioResponse.base64Encoded ?
+        Buffer.from(ioResponse.data, 'base64').toString('utf-8') :
+        ioResponse.data;
+      data = data.concat(responseData);
+    }
+
+    return data;
+  }
+
+  /**
+   * @param {string} url
+   * @return {Promise<LH.Crdp.IO.StreamHandle>}
+   */
+  async _loadNetworkResource(url) {
+    await this.driver.sendCommand('Network.enable');
+    const frameTreeResponse = await this.driver.sendCommand('Page.getFrameTree');
+    const networkResponse = await this.driver.sendCommand('Network.loadNetworkResource', {
+      frameId: frameTreeResponse.frameTree.frame.id,
+      url,
+      options: {
+        disableCache: true,
+        includeCredentials: true,
+      },
+    });
+    await this.driver.sendCommand('Network.disable');
+
+    if (!networkResponse.resource.success || !networkResponse.resource.stream) {
+      const statusCode = networkResponse.resource.httpStatusCode || '';
+      throw new Error(`Loading network resource failed (${statusCode})`);
+    }
+
+    return networkResponse.resource.stream;
+  }
+
+  /**
+   * @param {string} url
    * @param {{timeout: number}} options timeout is in ms
    * @return {Promise<string>}
    */
-  async fetchResource(url, {timeout = 500}) {
-    if (!this._enabled) {
-      throw new Error('Must call `enableRequestInterception` before using fetchResource');
-    }
+  async _fetchResourceOverProtocol(url, options) {
+    const startTime = Date.now();
 
+    /** @type {NodeJS.Timeout} */
+    let timeoutHandle;
+    const timeoutPromise = new Promise((_, reject) => {
+      timeoutHandle = setTimeout(() => {
+        reject(new Error('Timed out fetching resource'));
+      }, options.timeout);
+    });
+
+    const fetchStreamPromise = this._loadNetworkResource(url);
+    const stream = await Promise.race([fetchStreamPromise, timeoutPromise])
+      .finally(() => clearTimeout(timeoutHandle));
+
+    return await this._readIOStream(stream, {timeout: options.timeout - (Date.now() - startTime)});
+  }
+
+  /**
+   * Fetches resource by injecting an iframe into the page.
+   * @param {string} url
+   * @param {{timeout: number}} options timeout is in ms
+   * @return {Promise<string>}
+   */
+  async _fetchResourceIframe(url, options) {
     /** @type {Promise<string>} */
     const requestInterceptionPromise = new Promise((resolve, reject) => {
       /** @param {LH.Crdp.Fetch.RequestPausedEvent} event */
@@ -167,7 +261,7 @@ class Fetcher {
     /** @type {Promise<never>} */
     const timeoutPromise = new Promise((_, reject) => {
       const errorMessage = 'Timed out fetching resource.';
-      timeoutHandle = setTimeout(() => reject(new Error(errorMessage)), timeout);
+      timeoutHandle = setTimeout(() => reject(new Error(errorMessage)), options.timeout);
     });
 
     const racePromise = Promise.race([

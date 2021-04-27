@@ -131,7 +131,7 @@ class SourceMaps extends Gatherer {
     driver.off('Debugger.scriptParsed', this.onScriptParsed);
     await driver.sendCommand('Debugger.disable');
 
-    await driver.fetcher.enableRequestInterception();
+    await driver.fetcher.enable();
     const eventProcessPromises = this._scriptParsedEvents
       .map((event) => this._retrieveMapFromScriptParsedEvent(driver, event));
     return Promise.all(eventProcessPromises);
